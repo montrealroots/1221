@@ -47,8 +47,8 @@ import { savingsDebit } from './accountlife';
 import { recordInterest } from './earnings';
 import { marksFallOff } from './credit';
 import { checkingAt } from './lending';
-import { sendBetweenBanks } from './bankmoves';
-import { abroadRefusal, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
+import { sendBetweenBanks, usPerson } from './bankmoves';
+import { abroadRefusal, balanceText, heldOf, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -515,7 +515,10 @@ function payInterest(sim: Simulation, account: Account, memo: string): void {
   sim.post({ memo, category: 'interest', postings });
   account.accrued = (account.accrued ?? 0) - earned;
   const owner = account.ownerId ? sim.universe.people[account.ownerId] : undefined;
-  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);
+  // A bank outside America's interest is recorded with its country and the tax this transaction took at source, for the
+  // US return's foreign interest and its credit (from 2026-10-16: until then as any bank's, the tax lost to the return).
+  const iso = account.bankId ? bankById(account.bankId)?.iso : undefined;
+  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned, iso && iso !== 'US' ? { iso, withheld: tax } : undefined);
 }
 
 function scheduleMonthEnd(sim: Simulation, after: Instant): void {
@@ -528,6 +531,17 @@ export function registerBanking(sim: Simulation): void {
   // Every day: interest builds on what each account holds at the day's end,
   // and the lowest it stood at this month is kept for the fee's waiver.
   sim.onEvent('world.day_rollover', 'bank.day', (_event, { sim: s }) => {
+    // The day just ended's year (the rollover runs at the next day's midnight): a US person's account at a bank outside
+    // America keeps the year's most and its last day's figure for America's reports (from 2026-10-16).
+    const year = String(zonedParts(s.now - 1, s.homeZone).year);
+    for (const account of Object.values(s.universe.accounts)) {
+      if (account.closedAt || !isEveryday(account) || !account.bankId || bankById(account.bankId)?.iso === 'US') continue;
+      const owner = s.universe.people[account.ownerId];
+      if (!owner || !usPerson(owner, s.now)) continue;
+      const held = heldOf(account);
+      const was = (account.peak ??= {})[year];
+      account.peak[year] = { max: Math.max(was?.max ?? held, held), last: held };
+    }
     for (const account of Object.values(s.universe.accounts)) {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       if (account.dormant && ACCOUNT_LIFE[account.bankId]?.stopsInterest) continue;
@@ -602,7 +616,8 @@ export function registerBanking(sim: Simulation): void {
       // The current account's statement, monthly, or at Germany's quarterly closing.
       if (account.kind === 'checking' && (!quarterly || month % 3 === 0)) {
         const owner = s.universe.people[account.ownerId];
-        if (owner) statementReady(s, owner, account, `${formatMoney(account.balance, saveCurrency(s.universe))} at the close.`);
+        // An account kept at home in its own money, the dollars beside (from 2026-10-16).
+        if (owner) statementReady(s, owner, account, `${balanceText(s, account)} at the close.`);
       }
       account.lowest = account.balance;
       account.monthOpen = account.balance;

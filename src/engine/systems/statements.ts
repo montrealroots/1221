@@ -29,7 +29,6 @@ import type { Simulation } from '../core/simulation';
 import { accountAlerts } from './obligations';
 import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { formatMoney, saveCurrency } from '../core/money';
 import type { Account, LedgerTransaction } from '../core/ledger';
 import { isLiability } from '../core/ledger';
 import type { Money } from '../core/money';
@@ -37,6 +36,7 @@ import { MS_DAY, instantFromZoned, normalDate, zonedParts, type Instant, type Ti
 import { bankById } from '../content/banks';
 import { cardTerms, minimumDue, stateOf, statementDayOf, type CardTerms } from './credit';
 import { closesQuarterly } from './banking';
+import { balanceText } from './abroad';
 
 /** One entry, as the account saw it. */
 export interface StatementLine {
@@ -51,6 +51,9 @@ export interface StatementLine {
   /** Authorized and not yet posted, and when it posts (A95). */
   pending?: boolean;
   postsAt?: Instant;
+  /** On an account kept in another currency (from 2026-10-16): the line and the balance after it in the bank's own money. */
+  native?: Money;
+  heldAfter?: Money;
 }
 
 /** A statement's period. `rebuilt`: drawn on a statement day from before its cuts were kept, not the cut itself (from 2026-10-10). */
@@ -60,11 +63,14 @@ export interface Period { from: Instant; to: Instant; label: string; rebuilt?: b
 const sense = (account: Account) => (isLiability(account.kind) ? -1 : 1);
 
 /** Every entry on an account between two instants, oldest first, each with the balance after it. */
-export function activity(sim: Simulation, account: Account, from: Instant, to: Instant): { opening: Money; closing: Money; lines: StatementLine[] } {
+export function activity(sim: Simulation, account: Account, from: Instant, to: Instant): { opening: Money; closing: Money; lines: StatementLine[]; held?: { opening: Money; closing: Money } } {
   const k = sense(account);
   const list = sim.universe.transactions as LedgerTransaction[];
-  // The balance now, walked back to the period's end and start.
+  // The balance now, walked back to the period's end and start; on an account kept in another currency its own figure
+  // beside it, walked the same way (from 2026-10-16), so the statement is in the money the bank keeps it in.
   let atEnd = account.balance;
+  let heldEnd = account.held ?? 0;
+  const own = (txn: LedgerTransaction) => txn.postings.reduce((s, p) => (p.accountId === account.id ? s + (p.native ?? 0) : s), 0);
   const inside: { txn: LedgerTransaction; delta: Money }[] = [];
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const txn = list[i]!;
@@ -74,17 +80,21 @@ export function activity(sim: Simulation, account: Account, from: Instant, to: I
     // A closed account’s last period takes in what posted at the closing itself: the interest and fees settled and what
     // it held sent on, so it ends at nothing (from 2026-10-13: until then they fell after its end, and its last statement
     // closed at the balance before them; found by that day’s second round of evidence).
-    if (txn.at > to || (txn.at === to && account.closedAt !== to)) { atEnd -= delta; continue; }
+    if (txn.at > to || (txn.at === to && account.closedAt !== to)) { atEnd -= delta; heldEnd -= own(txn); continue; }
     inside.push({ txn, delta });
   }
   inside.reverse();
   const opening = atEnd - inside.reduce((s, one) => s + one.delta, 0);
+  const heldOpening = heldEnd - inside.reduce((s, one) => s + own(one.txn), 0);
   let running = opening;
+  let heldRunning = heldOpening;
   const lines = inside.map(({ txn, delta }) => {
     running += delta;
-    return { id: txn.id, at: txn.at, memo: txn.memo, category: txn.category, amount: delta * k, balance: running * k, ...(txn.postsAt !== undefined ? { postsAt: txn.postsAt, ...(txn.postsAt > sim.now ? { pending: true } : {}) } : {}) };
+    const native = account.currency ? own(txn) : undefined;
+    if (native !== undefined) heldRunning += native;
+    return { id: txn.id, at: txn.at, memo: txn.memo, category: txn.category, amount: delta * k, balance: running * k, ...(native !== undefined ? { native: native * k, heldAfter: heldRunning * k } : {}), ...(txn.postsAt !== undefined ? { postsAt: txn.postsAt, ...(txn.postsAt > sim.now ? { pending: true } : {}) } : {}) };
   });
-  return { opening: opening * k, closing: atEnd * k, lines };
+  return { opening: opening * k, closing: atEnd * k, lines, ...(account.currency ? { held: { opening: heldOpening * k, closing: heldEnd * k } } : {}) };
 }
 
 
@@ -217,6 +227,8 @@ export interface AccountStatement {
   interest: Money;
   fees: Money;
   lines: StatementLine[];
+  /** The same figures in the bank's own money, on an account kept in another currency (from 2026-10-16). */
+  held?: { opening: Money; closing: Money; moneyIn: Money; moneyOut: Money; interest: Money; fees: Money };
 }
 
 const FEE_CATEGORIES = new Set(['bank_fee', 'fees']);
@@ -241,19 +253,25 @@ function byId(sim: Simulation): Map<string, LedgerTransaction> {
 }
 
 export function accountStatement(sim: Simulation, account: Account, period: Period): AccountStatement {
-  const { opening, closing, lines } = activity(sim, account, period.from, period.to);
+  const { opening, closing, lines, held } = activity(sim, account, period.from, period.to);
   let moneyIn = 0;
   let moneyOut = 0;
   let interest = 0;
   let fees = 0;
+  const own = { moneyIn: 0, moneyOut: 0, interest: 0, fees: 0 };
   const txns = byId(sim);
   for (const line of lines) {
     if (line.amount > 0) moneyIn += line.amount; else moneyOut += -line.amount;
     const paid = interestIn(sim, txns.get(line.id));
     interest += paid.gross - paid.tax;
     if (FEE_CATEGORIES.has(line.category)) fees += -line.amount;
+    // In the bank's own money: what the line moved there, interest after the tax taken at source as it landed.
+    const n = line.native ?? 0;
+    if (n > 0) own.moneyIn += n; else own.moneyOut += -n;
+    if (paid.gross > 0) own.interest += n;
+    if (FEE_CATEGORIES.has(line.category)) own.fees += -n;
   }
-  return { period, opening, closing, moneyIn, moneyOut, interest, fees: Math.max(0, fees), lines };
+  return { period, opening, closing, moneyIn, moneyOut, interest, fees: Math.max(0, fees), lines, ...(held ? { held: { ...held, ...own, fees: Math.max(0, own.fees) } } : {}) };
 }
 
 export interface CardStatement {
@@ -473,7 +491,6 @@ export function registerStatements(sim: Simulation): void {
     accountAlerts(s, person);
     const alerts = person.alerts;
     if (!alerts) return;
-    const cur = saveCurrency(s.universe);
     const list = s.universe.transactions as LedgerTransaction[];
     const from = Math.min(alerts.seenUpTo ?? list.length, list.length);
     if (alerts.largePayment !== undefined) {
@@ -485,7 +502,9 @@ export function registerStatements(sim: Simulation): void {
           if (!watched.has(p.accountId) || p.amount >= 0 || -p.amount < alerts.largePayment) continue;
           // A stranger's charge is told of where it's taken (`somebodyElse`, systems/security.ts); until 2026-10-10 the alert said it twice.
           if (txn.category === 'transfer' || txn.category === 'card-fraud' || txn.category === 'account-fraud') continue;
-          s.notify({ category: 'bank', title: 'A Large Payment', body: `${formatMoney(-p.amount, cur)} for ${inSentence(txn.memo)}, from ${s.universe.accounts[p.accountId]!.name}.`, importance: 45, route: '/workspace/bank' });
+          // From an account kept at home, in its own money with the dollars beside (from 2026-10-16).
+          const from = s.universe.accounts[p.accountId]!;
+          s.notify({ category: 'bank', title: 'A Large Payment', body: `${balanceText(s, from, -p.amount, p.native !== undefined ? -p.native : undefined)} for ${inSentence(txn.memo)}, from ${from.name}.`, importance: 45, route: '/workspace/bank' });
         }
       }
     }

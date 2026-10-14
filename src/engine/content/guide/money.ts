@@ -36,7 +36,7 @@ import { BREAK_NOTICE, END_WORDS, ESCHEAT_NOTICE_DAYS } from '../../systems/acco
 import { roundUpMoney } from '../../systems/roundups';
 import { LOOKAHEAD_DAYS } from '../../systems/obligations';
 import { wealthIn } from '../../world/bootstrap';
-import { ASSUMED_DAYS, ASSUMED_MARGIN, ASSUMED_OPENING_AGE, NON_RESIDENT_TAX, RETENTION_CONFIDENCE, US_WIRES, allHomeTerms, homeTerms } from '../homeaccounts';
+import { ASSUMED_DAYS, ASSUMED_MARGIN, ASSUMED_OPENING_AGE, NON_RESIDENT_TAX, RETENTION_CONFIDENCE, US_REPORTS, US_WIRES, allHomeTerms, homeTerms } from '../homeaccounts';
 import { splitOf } from '../../systems/homeaccount';
 import type { GuideEntry } from './types';
 
@@ -1330,11 +1330,15 @@ export const MONEY: readonly GuideEntry[] = [
       `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
       `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
       'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
+      // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).
+      'On an F-1 its interest is foreign income America doesn’t tax: it stays off your 1040-NR and Connecticut’s return. A US citizen reports it on the 1040 and Connecticut’s, and the tax its country took is credited against the US tax on the interest, up to that tax.',
+      `A US citizen whose accounts abroad together held over ${usd(US_REPORTS.fbar.over)} at any time in a year is told once, with the next February’s return, that FinCEN’s FBAR is due April 15, extended to October 15, and, past ${usd(US_REPORTS.form8938.yearEnd)} at the year’s end or ${usd(US_REPORTS.form8938.anyTime)} at any time, Form 8938 with a return. SLATE files neither, charges no penalty, and converts at its own rate.`,
     ],
     interpret: [
       '“Kept At … : £… In …” is the figure the bank holds, in its money.',
       `What follows from keeping it says how sure the research was: ${RETENTION_CONFIDENCE.H.toLowerCase().replace(/\.$/, '')}; or only partly; or the bank publishes nothing and it’s SLATE’s assumption.`,
       'Move Money’s line under the amount says what the bank sends, for what fee, at what margin, what arrives after the receiving bank’s fee, and on what day.',
+      'Each account there shows its balance in its money, Held From Abroad beside its number and its dollars at SLATE’s rate under it, with the bank’s fee for a customer abroad, its card’s fees here and its closing day where it closes. Its statements, Home’s money line and the alerts say it in its money too.',
     ],
     unavailable: [
       '“You lived in America before Yale; your account is the one here.”',
@@ -1350,6 +1354,7 @@ export const MONEY: readonly GuideEntry[] = [
       { to: 'bank.accounts', kind: 'immediate', why: 'The accounts kept at home are among your accounts from the first morning, beside the American ones.' },
       { to: 'bank.upkeep', kind: 'scheduled', why: 'The bank there pays its interest and charges its own fee at the month’s end, as any bank does.' },
       { to: 'bank.transfer', kind: 'optional', why: 'Money moves between it and your American account as a payment abroad, in both countries’ business days.' },
+      { to: 'taxes.return', kind: 'scheduled', why: 'Each February’s return reads its interest by its country, and a US citizen is told there of the FBAR and Form 8938.' },
     ],
     example: {
       setup: `A student who grew up in London from a Modest family, banking at ${BARCLAYS.name}, with Chase in New Haven.`,

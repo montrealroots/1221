@@ -33,7 +33,7 @@ import { addDays, dateKey, formatDate, formatWeekdayDate, instantFromZoned, zone
 import { exchange } from '../content/currency';
 import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDaysIn, daysOfAccount } from '../content/bankdays';
-import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, type AbroadTerms } from '../content/homeaccounts';
+import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, US_REPORTS, type AbroadTerms, type Charge } from '../content/homeaccounts';
 import { homeOf } from './earnings';
 import { isoOf, dropPaymentsFor, settleFees, settleInterest } from './banking';
 import { ARRIVES_KIND, inTransitOf, usPerson } from './bankmoves';
@@ -62,6 +62,66 @@ export function heldText(sim: Simulation, account: Account, amount: Money = held
 
 /** What an account holds in its own money: `held` on an account in another currency, the balance otherwise. */
 export const heldOf = (account: Account): Money => (account.currency ? account.held ?? 0 : account.balance);
+
+/**
+ * An account's money written for a screen or a notice (from 2026-10-16, module 7): on an account in another currency,
+ * its own money first, as its bank shows it, and the save's beside it; on any other, the save's alone, as before. A sum
+ * that isn't the balance is given with its own figure (`native`) where it has one. Until then every line but Move
+ * Money's wrote a home account in dollars only.
+ */
+export function balanceText(sim: Simulation, account: Account, amount: Money = account.balance, native: Money | undefined = account.currency ? heldOf(account) : undefined, opts: { cents?: boolean } = {}): string {
+  const save = formatMoney(amount, saveCurrency(sim.universe), opts);
+  return account.currency && native !== undefined ? `${formatMoney(native, account.currency, opts)} (${save})` : save;
+}
+
+const share = (rate: number) => `${Number((rate * 100).toFixed(3))}%`;
+
+/** A bank's charge in words, in its money: "¥110 and 3.05% of the cash", a share's bounds beside it. */
+export function chargeWords(charge: Charge, currency: string, of: string): string {
+  const parts: string[] = [];
+  let shared = false;
+  for (let c: Charge | undefined = charge; c; c = c.plus) {
+    const money = c.currency ?? currency;
+    if (c.fixed) parts.push(formatMoney(c.fixed, money));
+    if (c.share) {
+      shared = true;
+      const bounds = [c.min !== undefined ? `at least ${formatMoney(c.min, money)}` : '', c.max !== undefined ? `at most ${formatMoney(c.max, money)}` : ''].filter(Boolean).join(', ');
+      parts.push(`${share(c.share)}${bounds ? ` (${bounds})` : ''}`);
+    }
+  }
+  return `${parts.join(' and ') || 'nothing'}${shared ? ` of ${of}` : ''}${charge.upTo?.length ? ', less on smaller sums' : ''}`;
+}
+
+/**
+ * What an account kept at home costs and comes to, for its panel on the bank screen (from 2026-10-16, module 7), from
+ * the terms the engine charges by: the bank's fee for a customer abroad, its debit card's on a purchase in dollars and at
+ * a machine here, and its closing, with the date, where it closes. Nothing for an account at a bank where they live.
+ */
+export function homeAccountLines(sim: Simulation, account: Account): string[] {
+  if (!heldFromAbroad(sim, account)) return [];
+  const bank = bankById(account.bankId!)!;
+  const terms = homeTerms(bank.id);
+  const owner = sim.universe.people[account.ownerId];
+  const lines: string[] = [];
+  const fee = terms?.nonResidentFee;
+  if (account.kind === 'checking' && fee) {
+    const every = fee.months === 1 ? 'a month' : fee.months === 3 ? 'a quarter' : fee.months === 24 ? 'every two years' : `every ${fee.months} months`;
+    const spared = fee.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < fee.ageBelow ? `, not yet: it doesn’t charge one under ${fee.ageBelow}` : '';
+    lines.push(`For a customer abroad ${bank.name} charges ${formatMoney(fee.amount, bank.currency)} ${every}${spared}.`);
+  }
+  const abroad = terms?.abroad;
+  if (account.kind === 'checking') {
+    const refused = cardAbroadRefusal(bank);
+    if (refused) lines.push(refused);
+    else if (abroad?.card) lines.push(`Its debit card costs ${chargeWords(abroad.card, bank.currency, 'each purchase in dollars')}${abroad.cardFreeMonthly ? `, past the first ${formatMoney(abroad.cardFreeMonthly, bank.currency)} a month` : ''}${abroad.atm ? `, and ${chargeWords(abroad.atm, bank.currency, 'the cash')} at another bank’s machine here, with the machine’s own fee` : abroad.atmRefused ? `. ${abroad.atmRefused}` : ''}.`);
+  }
+  const closing = sim.universe.scheduled.find((i) => i.kind === HOME_CLOSES_KIND && i.status === 'pending' && i.payload.personId === account.ownerId && i.payload.bankId === bank.id);
+  if (closing) {
+    const into = owner ? checkingsOf(sim, owner).find((a) => !heldFromAbroad(sim, a)) : undefined;
+    lines.push(`${bank.name} closes it on ${formatDate(closing.at, sim.zone)}, and sends what it holds then to ${into ? into.name : 'your account here'} by its own payment abroad.`);
+  }
+  return lines;
+}
 
 /** Whether an account's bank is in another country than the one its owner lives in. */
 export function heldFromAbroad(sim: Simulation, account: Account): boolean {
@@ -439,6 +499,44 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
       importance: 70, route: '/workspace/bank',
     });
   }
+}
+
+/**
+ * What America asks a US person to report of their accounts abroad for a year, said once at its return (from
+ * 2026-10-16): FinCEN's FBAR where the accounts' highest figures together passed $10,000, and Form 8938 where they passed
+ * $50,000 at the year's end or $75,000 at any time, with the return (`US_REPORTS`). Each account's figures are its own
+ * money's, kept each night (`Account.peak`), converted at SLATE's rate, which doesn't move. Nothing for an F-1 student,
+ * or anyone with no account abroad or under the line. What SLATE doesn't model is said: filing either form, the
+ * penalties, and Treasury's rate for the year's end.
+ */
+export function foreignAccountsNotice(sim: Simulation, person: Person, year: number, returned: boolean): string | undefined {
+  if (!usPerson(person, instantFromZoned({ year, month: 12, day: 31, hour: 12 }, sim.homeZone))) return undefined;
+  let most = 0;
+  let end = 0;
+  for (const account of Object.values(sim.universe.accounts)) {
+    const p = account.ownerId === person.id ? account.peak?.[String(year)] : undefined;
+    if (!p) continue;
+    // An overdrawn account counts as holding nothing: its value to report is never below zero.
+    most += toSave(sim, Math.max(0, p.max), moneyOf(sim, account));
+    // An account closed in the year held nothing at its end.
+    if (!account.closedAt || zonedParts(account.closedAt, sim.homeZone).year > year) end += toSave(sim, Math.max(0, p.last), moneyOf(sim, account));
+  }
+  const usd = (cents: Money) => toSave(sim, cents, 'USD');
+  if (most <= usd(US_REPORTS.fbar.over)) return undefined;
+  const cur = saveCurrency(sim.universe);
+  const money = (cents: Money) => formatMoney(cents, cur);
+  const line = (cents: Money) => formatMoney(usd(cents), cur, { cents: false });
+  const on = (d: { month: number; day: number }) => formatDate(instantFromZoned({ year: year + 1, ...d, hour: 12 }, sim.homeZone), sim.homeZone);
+  const fbar = `Your accounts at banks outside America held ${money(most)} together at most in ${year} (the highest each held at a day’s end, at SLATE’s rate), over ${line(US_REPORTS.fbar.over)}. So FinCEN Form 114, the FBAR, is due ${on(US_REPORTS.fbar.due)}, extended automatically to ${on(US_REPORTS.fbar.extended)}, and is filed online with FinCEN, not with your return.`;
+  const t = US_REPORTS.form8938;
+  const over = [
+    ...(end > usd(t.yearEnd) ? [`${money(end)} on December 31, over Form 8938’s ${line(t.yearEnd)} at the year’s end`] : []),
+    ...(most > usd(t.anyTime) ? [`${money(most)} at most, over Form 8938’s ${line(t.anyTime)} at any time`] : []),
+  ];
+  const form8938 = over.length === 0 ? ''
+    : returned ? ` They held ${over.join(', and ')}, so Form 8938 goes with your ${year} return.`
+    : ` They held ${over.join(', and ')}, but the form goes only with an income tax return, and you have none to file for ${year}.`;
+  return `${fbar}${form8938} SLATE doesn’t file either form for you or charge the penalties for not filing one, and it converts at its own rate, not Treasury’s for the year’s end.`;
 }
 
 export function registerAbroad(sim: Simulation): void {

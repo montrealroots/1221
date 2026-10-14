@@ -36,6 +36,7 @@ import { lendingOf } from '@/engine/systems/lending';
 import { cashOwedOn } from '@/engine/systems/cash';
 import { planLeftOf, transferRate } from '@/engine/systems/cardoffers';
 import { bankById } from '@/engine/content/banks';
+import { balanceText } from '@/engine/systems/abroad';
 
 /** The window every "lately" sentence in this file means, and its word. */
 const RECENT_DAYS = 30;
@@ -220,12 +221,13 @@ function accountSentence(a: Account, sim: Simulation): string {
   }
 
   if (a.balance < 0) {
-    return `You’re ${formatMoney(-a.balance, cur)} under${where}, and every day it stays under costs you.`;
+    return `You’re ${a.currency ? balanceText(sim, a, -a.balance, -(a.held ?? 0)) : formatMoney(-a.balance, cur)} under${where}, and every day it stays under costs you.`;
   }
   if (a.balance === 0) {
     return `There’s nothing in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
   }
-  return `You have ${formatMoney(a.balance, cur)} in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
+  // An account kept at home in its own money, the dollars beside (`balanceText`, from 2026-10-16).
+  return `You have ${balanceText(sim, a)} in it${where}, ${tailFor(a.kind, spendsFromIt)}`;
 }
 
 /** What has crossed it lately, without saying "and nothing" twice. */
@@ -265,7 +267,7 @@ function accountBody(a: Account, sim: Simulation) {
     <Stat
       key="balance"
       label={liability ? 'Owed' : 'Balance'}
-      value={<span className="mono">{formatMoney(liability ? owed : a.balance, cur)}</span>}
+      value={<span className="mono">{liability ? formatMoney(owed, cur) : balanceText(sim, a)}</span>}
       tone={liability ? (owed > 0 ? 'negative' : undefined) : (a.balance < 0 ? 'negative' : undefined)}
       note={liability ? 'What is standing against it' : 'What is in it right now'}
     />,
@@ -338,7 +340,7 @@ defineLook<Holdings>('networth', {
       label: a.name,
       detail: isLiability(a.kind)
         ? `${a.institution ?? 'A lender'}, and ${formatMoney(owedOn(a), cur)} owed on it`
-        : `${a.institution ?? 'A bank'}, and ${formatMoney(a.balance, cur)} in it`,
+        : `${a.institution ?? 'A bank'}, and ${balanceText(sim, a)} in it`,
     }));
     if (worth.liabilities > 0) {
       ways.push({

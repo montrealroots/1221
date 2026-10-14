@@ -22,6 +22,7 @@ import { orderSource } from './routing';
 import { autopayAsk, autopaySource, cardsOf, DUE_KIND } from './credit';
 import { checkingsOf, LOAN_DUE_KIND, repaymentAccount } from './lending';
 import { alertsOf } from './statements';
+import { balanceText } from './abroad';
 
 export const LOOKAHEAD_DAYS = 3;
 
@@ -77,7 +78,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     for (const account of checkingsOf(sim, person)) {
       if (account.balance < settings.lowBalance && !sent.has(account.id)) {
         sent.add(account.id);
-        sim.notify({ category: 'bank', title: `Low Balance: ${account.name}`, body: `${account.name} at ${account.institution ?? 'your bank'} is down to ${formatMoney(account.balance, cur)}, under the ${formatMoney(settings.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
+        sim.notify({ category: 'bank', title: `Low Balance: ${account.name}`, body: `${account.name} at ${account.institution ?? 'your bank'} is down to ${balanceText(sim, account)}, under the ${formatMoney(settings.lowBalance, cur)} you set.`, importance: 55, route: '/workspace/bank' });
       } else if (account.balance >= settings.lowBalance) sent.delete(account.id);
     }
     alerts.lowSentFor = [...sent].filter((id) => checkingsOf(sim, person).some((a) => a.id === id));
@@ -94,7 +95,7 @@ export function accountAlerts(sim: Simulation, person: Person): void {
     owing.set(o.accountId, total);
     if (!account || account.closedAt || inReach(account) >= total || said.has(o.key)) continue;
     said.add(o.key);
-    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and it holds ${formatMoney(account.balance, cur)}. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
+    sim.notify({ category: 'bank', title: `Short For A Payment: ${account.name}`, body: `${o.what}, ${formatMoney(o.amount, cur)}, comes from ${account.name} at ${account.institution ?? 'your bank'} on ${formatDate(o.at, sim.zone)}, and it holds ${balanceText(sim, account)}. ${o.remedy}`, importance: 65, route: '/workspace/bank' });
   }
   // Kept only for payments still ahead, so the list doesn't grow with the years.
   const live = new Set(ahead.map((o) => o.key));

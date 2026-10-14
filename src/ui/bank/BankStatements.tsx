@@ -74,18 +74,22 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const owed = account.kind === 'loan';
   const pending = pendingOn(sim, account);
   const look = at('account', account.id);
+  // An account kept at home, in its bank's money as the bank's statement has it, the dollars under each (from 2026-10-16).
+  const h = st.held;
+  const own = (native: number, dollars: number) => (h && account.currency ? { value: formatMoney(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
   return (
     <LookRegion className="col gap-3">
+      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with the dollars at SLATE’s rate under each figure.</p>}
       <div className="grid grid-3">
-        <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} value={money(st.opening)} />
-        <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} value={money(owed ? st.moneyOut : st.moneyIn)} />
-        <Figure look={look} label={owed ? 'Added' : 'Money Out'} value={money(owed ? st.moneyIn : st.moneyOut)} />
-        {!owed && <Figure look={look} label="Interest, After Tax" value={money(st.interest)} />}
-        {!owed && <Figure look={look} label="Fees" value={money(st.fees)} />}
-        <Figure look={look} label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} value={money(st.closing)} />
+        <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} {...own(h?.opening ?? 0, st.opening)} />
+        <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} {...own(h?.moneyIn ?? 0, owed ? st.moneyOut : st.moneyIn)} />
+        <Figure look={look} label={owed ? 'Added' : 'Money Out'} {...own(h?.moneyOut ?? 0, owed ? st.moneyIn : st.moneyOut)} />
+        {!owed && <Figure look={look} label="Interest, After Tax" {...own(h?.interest ?? 0, st.interest)} />}
+        {!owed && <Figure look={look} label="Fees" {...own(h?.fees ?? 0, st.fees)} />}
+        <Figure look={look} label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} {...own(h?.closing ?? 0, st.closing)} />
         {!owed && period.to > sim.now && pending !== 0 && <Figure look={look} label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
       </div>
-      <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} />
+      <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} currency={account.currency} />
       {!owed && account.bankId && PENDING[account.bankId] && <PendingTerms bankId={account.bankId} />}
     </LookRegion>
   );
@@ -251,9 +255,11 @@ function Figure({ label, value, note, look }: { label: string; value: string; no
 }
 
 /** The entries, newest first as a banking app shows them, each with the balance after it. */
-function Lines({ lines, sign, empty, card, valueDated }: { lines: StatementLine[]; sign: 1 | -1; empty: string; card?: boolean; valueDated?: boolean }) {
+function Lines({ lines, sign, empty, card, valueDated, currency }: { lines: StatementLine[]; sign: 1 | -1; empty: string; card?: boolean; valueDated?: boolean; currency?: string }) {
   const { sim } = useGame();
   const cur = saveCurrency(sim.universe);
+  // An account kept at home: each line and the balance after it in the bank's money (from 2026-10-16).
+  const shownIn = (dollars: number, native: number | undefined) => (currency && native !== undefined ? formatMoney(native, currency) : formatMoney(dollars, cur));
   if (lines.length === 0) return <p className="small muted" style={{ margin: 0 }}>{empty}</p>;
   return (
     <div className="statement-lines">
@@ -271,9 +277,9 @@ function Lines({ lines, sign, empty, card, valueDated }: { lines: StatementLine[
             <span className="dim" style={{ flex: '0 0 110px' }}><Open subject={at('day', dateKey(line.at, sim.homeZone))}>{formatDate(line.at, sim.zone)}</Open></span>
             <span style={{ flex: 1 }}><Open subject={at('transaction', line.id)}>{line.memo}</Open>{line.pending ? <span className="xs dim"> · Pending, posts {formatDate(line.postsAt!, sim.zone)}</span> : valueDated && line.postsAt !== undefined ? <span className="xs dim"> · Booked {formatDate(line.postsAt, sim.zone)}, value {formatDate(line.at, sim.zone)}</span> : null}</span>
             <span className={`mono ${credit ? 'positive' : ''}`} style={{ flex: '0 0 130px', textAlign: 'right' }}>
-              <Open subject={at('transaction', line.id)}>{credit ? '+' : '−'}{formatMoney(Math.abs(shown), cur)}</Open>
+              <Open subject={at('transaction', line.id)}>{credit ? '+' : '−'}{shownIn(Math.abs(shown), line.native === undefined ? undefined : Math.abs(line.native))}</Open>
             </span>
-            <span className="mono dim" style={{ flex: '0 0 130px', textAlign: 'right' }}>{formatMoney(line.balance * sign, cur)}</span>
+            <span className="mono dim" style={{ flex: '0 0 130px', textAlign: 'right' }}>{shownIn(line.balance * sign, line.heldAfter === undefined ? undefined : line.heldAfter * sign)}</span>
           </div>
         );
       })}

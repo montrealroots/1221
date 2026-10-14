@@ -289,10 +289,19 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
   (`tests/home-account-abroad.test.ts`, `tests/home-account-transfers.test.ts`).
   What's still said and not read: the conditions an account is kept on (that
   the move was reported, a self-certification given, Spain's certificate
-  renewed), which SLATE takes as met and nothing checks; the American side of
-  the interest, which `recordInterest` records as ordinary interest, with no
-  FBAR or Form 8938 for a US person (module 6); and the dollars every screen
-  but Move Money shows for a home account's money (module 7).
+  renewed), which SLATE takes as met and nothing checks. The American side
+  of the interest and the screens' dollars were here too until modules 6 and
+  7, the same day: `recordInterest` took the bank's country and the tax taken
+  at source, an F-1 student's interest from a bank at home stayed off the
+  1040-NR and Connecticut's return, a US citizen's went on the 1040 with that
+  tax credited up to the US tax on it, and a US citizen was told once, with
+  the return, of the FBAR and Form 8938 from each account's highest and
+  year-end figures, kept each night (`tests/home-account-tax.test.ts`); and
+  the bank screen, its statements, Home's money line, the looks and the
+  alerts said a home account in its own money with the dollars beside
+  (`tests/home-account-screens.test.ts`). Said and not done: filing either
+  form, their penalties and Treasury's year-end rate, which the notice says
+  SLATE doesn't model.
 
 - **The connected attributes' words that are said, not read.** Each
   interest's caveat and actor's use were shown on its look and read by nothing,

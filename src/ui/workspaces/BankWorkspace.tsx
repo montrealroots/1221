@@ -43,7 +43,8 @@ import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CHEX, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
-import { abroadQuote, heldText, quoteWords } from '@/engine/systems/abroad';
+import { abroadQuote, heldOf, heldText, homeAccountLines, quoteWords } from '@/engine/systems/abroad';
+import { exchange } from '@/engine/content/currency';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -115,34 +116,41 @@ export function BankWorkspace() {
           const tax = interestTaxOn(sim, account);
           // As the bank counts them: until 2026-09-27 wages only, where the bank counts any electronic deposit.
           const paidIn = directDeposits(sim, account, monthStart, product?.deposits);
+          // Each account by its own bank's terms and money (from 2026-10-16): until then every panel read the primary
+          // account's bank's currency, and an account kept at home showed its balance, fees and rates in dollars.
+          const own = (account.bankId ? bankById(account.bankId) : undefined) ?? bank;
+          const home = account.currency !== undefined;
+          const inBank = (x: number) => (home ? formatMoney(x, own.currency, { cents: false }) : money(inSaveMoney(sim, x, own.currency)));
           return (
-            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.institution} {account.number}</Open>} look={at('account', account.id)} help="bank.accounts">
+            <Panel key={account.id} title={account.name} subtitle={<Open subject={at('account', account.id)}>{account.institution} {account.number}{home ? ', Held From Abroad' : ''}</Open>} look={at('account', account.id)} help={home ? 'bank.home-account' : 'bank.accounts'}>
               <div className="col gap-3">
                 <div className="stat">
                   <Open subject={at('account', account.id)}>
                     <span className="stat-label">Balance</span>
-                    <span className="stat-value mono">{money(account.balance)}</span>
+                    <span className="stat-value mono">{home ? heldText(sim, account) : money(account.balance)}</span>
                   </Open>
+                  {home && <span className="stat-note">{formatMoney(account.balance, cur)} in dollars, at SLATE’s rate</span>}
                 </div>
-                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, bank.currency, account.openedAt, closesQuarterly(account), account)}</p>
+                <p className="small" style={{ margin: 0 }}>{interestWords(sim, product, tax, money, own.currency, account.openedAt, closesQuarterly(account), account, home ? inBank : undefined)}</p>
                 {account.secondChance ? (
                   <p className="small" style={{ margin: 0 }}>A second-chance account: {formatMoney(inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), cur)} a month, SLATE’s estimate, in place of the ordinary fee, and no overdraft.</p>
                 ) : product?.monthlyFee ? (
                   <p className="small" style={{ margin: 0 }}>
-                    {formatMoney(inSaveMoney(sim, product.monthlyFee, bank.currency), cur)} a month
-                    {waiverWords(product, (c) => money(inSaveMoney(sim, c, bank.currency)))}
+                    {home ? formatMoney(product.monthlyFee, own.currency) : formatMoney(inSaveMoney(sim, product.monthlyFee, own.currency), cur)} a month
+                    {waiverWords(product, inBank)}
                     {'. '}
                     {fee.fee === 0
                       ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
                       : fee.waivedBy
-                        ? `This month’s is lowered to ${formatMoney(fee.fee, cur)} so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, ${closesQuarterly(account) ? 'for the quarter’s closing' : `due ${formatDate(monthEnd, sim.zone)}`}.`
+                        ? `This month’s is lowered to ${home && fee.native !== undefined ? formatMoney(fee.native, own.currency) : formatMoney(fee.fee, cur)} so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, ${closesQuarterly(account) ? 'for the quarter’s closing' : `due ${formatDate(monthEnd, sim.zone)}`}.`
                         : closesQuarterly(account) ? 'This month’s goes to the quarter’s closing unless that changes.' : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
-                    {closesQuarterly(account) && (account.feesDue ?? 0) > 0 ? ` The quarter’s fees so far, ${money(account.feesDue ?? 0)}, come off at its closing.` : ''}
+                    {closesQuarterly(account) && (account.feesDue ?? 0) > 0 ? ` The quarter’s fees so far, ${home ? formatMoney(account.feesDueHeld ?? 0, own.currency) : money(account.feesDue ?? 0)}, come off at its closing.` : ''}
                   </p>
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
                 )}
-                {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[bank.confidence ?? 'H']}</Fine>}
+                {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
+                {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}</Fine>}
                 {account.kind === 'savings' && (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
@@ -243,11 +251,11 @@ export function BankWorkspace() {
             reads: no bank fails, and no rate follows it. */}
         {/* The primary account's bank, and the others kept beside it (from 2026-10-10: until then every account was at one bank, and it said so). */}
         <p className="muted">
-          <Open subject={at('bank', bank.id)}>{money(here.reduce((sum, a) => sum + a.balance, 0))}</Open> held here, in{' '}
+          <Open subject={at('bank', bank.id)}>{sumText(here, money)}</Open> held here, in{' '}
           {here.length === 1 && here[0]
             ? <Open subject={at('account', here[0].id)}>one account</Open>
             : <Open subject={at('bank', bank.id)}>{here.length} accounts</Open>}
-          {accounts.length > here.length ? `, and ${money(accounts.filter((a) => a.bankId !== bank.id).reduce((sum, a) => sum + a.balance, 0))} at your other banks` : ''}.
+          {accounts.length > here.length ? `, and ${othersText(accounts.filter((a) => a.bankId !== bank.id), money)}` : ''}.
         </p>
       </LookRegion>
 
@@ -324,6 +332,26 @@ function BankTabs({ tab, onTab }: { tab: BankTab; onTab: (tab: BankTab) => void 
   );
 }
 
+/**
+ * What a set of accounts holds, for the page's head line (from 2026-10-16): accounts all kept in one other currency, in
+ * it with the dollars beside; any other set, in the save's money.
+ */
+function sumText(list: Account[], money: (cents: number) => string): string {
+  const total = money(list.reduce((sum, a) => sum + a.balance, 0));
+  const kept = list[0]?.currency;
+  if (!kept || list.some((a) => a.currency !== kept)) return total;
+  return `${formatMoney(list.reduce((sum, a) => sum + heldOf(a), 0), kept, { cents: false })} (${total})`;
+}
+
+/** The other banks' sum in the save's money, and of it what each bank abroad holds in its own: "$7,065 at your other banks, £5,581 of it at HSBC UK". */
+function othersText(list: Account[], money: (cents: number) => string): string {
+  const byBank = new Map<string, Account[]>();
+  for (const a of list) if (a.currency) byBank.set(a.institution ?? '', [...(byBank.get(a.institution ?? '') ?? []), a]);
+  const total = money(list.reduce((sum, a) => sum + a.balance, 0));
+  if (byBank.size === 0) return `${total} at your other banks`;
+  return `${total} at your other banks, ${[...byBank].map(([name, held]) => `${formatMoney(held.reduce((sum, a) => sum + heldOf(a), 0), held[0]!.currency!, { cents: false })} of it at ${name}`).join(' and ')}`;
+}
+
 /** How sure the research was of a bank outside the thirteen, where it wasn't sure. */
 const CONFIDENCE: Record<'H' | 'M' | 'L', string> = {
   H: '',
@@ -340,8 +368,10 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
  * change announced, a floor or a cap, a bonus and what earns it, when it is
  * paid, and what the bank takes off it for tax.
  */
-function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number, quarterly = false, account?: Account): string {
+function interestWords(sim: Simulation, product: Product | undefined, tax: number, money: (cents: number) => string, currency: string, openedAt: number, quarterly = false, account?: Account, own?: (units: number) => string): string {
   const step = introStep(sim, product, openedAt, sim.now);
+  // The bank's own figures: in its money on an account kept in it (`own`, from 2026-10-16), in the save's otherwise.
+  const inBank = (x: number) => (own ? own(x) : money(inSaveMoney(sim, x, currency)));
   // The tier the balance is in leads, as the engine pays it: until 2026-09-27 the headline was the base rate.
   const bankMoney = (x: number) => inSaveMoney(sim, x, currency);
   const tiered = account ? tierRate(product, account, earningBalance(product, account.balance, bankMoney), bankMoney) : undefined;
@@ -364,14 +394,14 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
   // The bank's day, as the engine reads it: until 2026-09-27 a UTC one.
   const next = (product.changes ?? []).find((c) => c.from > dateKey(sim.now, sim.homeZone));
   if (next) { const [y, m, d] = next.from.split('-').map(Number); said.push(`, ${pct(next.rate)} from ${formatDate(Date.UTC(y!, m! - 1, d!, 12), 'UTC')}`); }
-  for (const tier of product.tiers ?? []) said.push(`, ${pct(tier.rate)} on the whole balance from ${money(inSaveMoney(sim, tier.from, currency))}`);
-  if (product.rateFrom !== undefined) said.push(`, on a balance of ${money(inSaveMoney(sim, product.rateFrom, currency))} or more`);
-  if (product.rateUpTo !== undefined) said.push(`, on up to ${money(inSaveMoney(sim, product.rateUpTo, currency))}`);
+  for (const tier of product.tiers ?? []) said.push(`, ${pct(tier.rate)} on the whole balance from ${inBank(tier.from)}`);
+  if (product.rateFrom !== undefined) said.push(`, on a balance of ${inBank(product.rateFrom)} or more`);
+  if (product.rateUpTo !== undefined) said.push(`, on up to ${inBank(product.rateUpTo)}`);
   said.push('.');
   if (product.bonus) {
     const earn = product.bonus.when === 'no_withdrawals'
       ? 'a month with nothing taken out'
-      : product.bonus.growBy !== undefined ? `a month the balance grows by ${money(inSaveMoney(sim, product.bonus.growBy, currency))}` : 'a month the balance grows';
+      : product.bonus.growBy !== undefined ? `a month the balance grows by ${inBank(product.bonus.growBy)}` : 'a month the balance grows';
     said.push(` Another ${pct(product.bonus.rate)} for ${earn}.`);
   }
   // As the engine pays it: in the bank’s months, at Germany’s quarterly closing, or each month’s end.
@@ -387,7 +417,7 @@ function interestWords(sim: Simulation, product: Product | undefined, tax: numbe
     const levy = iso ? bankingIn(iso)?.interestTax : undefined;
     const left = account ? interestAllowanceLeft(sim, account) : undefined;
     said.push(levy?.allowance !== undefined
-      ? ` The bank takes ${pct(tax)} of what’s paid past the first ${money(inSaveMoney(sim, levy.allowance, currency))} of the year’s interest${left !== undefined ? `; ${money(left)} of that is left this year` : ''}.`
+      ? ` The bank takes ${pct(tax)} of what’s paid past the first ${inBank(levy.allowance)} of the year’s interest${left !== undefined ? `; ${money(left)} of that is left this year` : ''}.`
       : ` The bank takes ${pct(tax)} of it for tax.`);
     if (levy?.source) said.push(` Source: ${levy.source}.`);
   }
@@ -430,6 +460,11 @@ function closingWords(sim: Simulation, account: Account, money: (c: number) => s
   const net = earned - (earned > 0 ? interestTaxFor(sim, account, earned) : 0);
   const left = savingsLeftThisMonth(sim, account);
   if (left !== undefined && account.balance + earned > left) return `It holds more than the ${money(left)} the month lets out without notice: closing it gives the law’s three months’ notice, and it moves to ${into} then.`;
+  // An account kept at home in its own money, the month's interest so far turned into it at SLATE's rate (from 2026-10-16).
+  if (account.currency) {
+    const built = exchange(net, saveCurrency(sim.universe), account.currency) ?? 0;
+    return `Its ${heldText(sim, account, heldOf(account) + built)}${built > 0 ? `, with ${heldText(sim, account, built)} of interest built this month` : ''}, moves to ${into}.`;
+  }
   return `Its ${money(account.balance + net)}${net > 0 ? `, with ${money(net)} of interest built this month` : ''}, moves to ${into}.`;
 }
 

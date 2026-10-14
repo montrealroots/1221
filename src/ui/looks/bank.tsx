@@ -22,6 +22,7 @@ import { titleCaseLabel } from '@/engine/core/text';
 import { bankById, type Bank } from '@/engine/content/banks';
 import { COUNTRIES } from '@/engine/content/geography';
 import { bankOf } from '@/engine/systems/banking';
+import { balanceText, heldOf } from '@/engine/systems/abroad';
 import type { Simulation } from '@/engine';
 import { Stat } from '@/ui/components/primitives';
 import { defineLook, lookExists, type Way } from './registry';
@@ -70,11 +71,20 @@ function latestThrough(sim: Simulation, ids: ReadonlySet<string>, count: number)
 /** The country a bank is in, by its ISO code, where the world has it. */
 const countryOfIso = (iso: string) => COUNTRIES.all().find((c) => c.iso2?.toUpperCase() === iso.toUpperCase());
 
-/** What an owed or held figure says about an account, in a few words. */
-function standing(a: Account, cur: string): string {
+/**
+ * What an owed or held figure says about an account, in a few words: an account kept at home in its own money, with the
+ * dollars beside (`balanceText`, from 2026-10-16).
+ */
+function standing(sim: Simulation, a: Account, cur: string): string {
   return isLiability(a.kind)
     ? `${formatMoney(Math.max(0, -a.balance), cur)} owed on it`
-    : `${formatMoney(a.balance, cur)} in it`;
+    : `${balanceText(sim, a)} in it`;
+}
+
+/** What a line moved on an account kept in another currency, in that currency: the sum of its postings’ own figures. */
+function nativeOn(txn: LedgerTransaction, account: Account): number | undefined {
+  if (!account.currency) return undefined;
+  return txn.postings.filter((p) => p.accountId === account.id).reduce((sum, p) => sum + (p.native ?? 0), 0);
 }
 
 // ---------------------------------------------------------------------------
@@ -104,11 +114,14 @@ defineLook<TheBank>('bank', {
     const held = accounts.filter((a) => !isLiability(a.kind)).reduce((s, a) => s + a.balance, 0);
     const owed = accounts.filter((a) => isLiability(a.kind)).reduce((s, a) => s + Math.max(0, -a.balance), 0);
     const country = countryOfIso(bank.iso);
+    // A bank kept at home holds its accounts in its own money: said in it, with the dollars beside (from 2026-10-16).
+    const kept = accounts.some((a) => a.currency);
+    const heldWords = kept ? `${formatMoney(accounts.filter((a) => !isLiability(a.kind)).reduce((s, a) => s + heldOf(a), 0), bank.currency)} (${formatMoney(held, cur)})` : formatMoney(held, cur);
 
     const ways: Way[] = accounts.map((a) => ({
       to: at('account', a.id),
       label: a.name,
-      detail: `${a.last4 ? `Ending ${a.last4}, ` : ''}${standing(a, cur)}`,
+      detail: `${a.last4 ? `Ending ${a.last4}, ` : ''}${standing(sim, a, cur)}`,
     }));
     for (const txn of latestThrough(sim, new Set(accounts.map((a) => a.id)), RECENT_LINES)) {
       ways.push({
@@ -132,8 +145,8 @@ defineLook<TheBank>('bank', {
       summary: accounts.length === 0
         ? 'You hold nothing open here today.'
         : owed > 0
-          ? `You have ${formatMoney(held, cur)} here and owe it ${formatMoney(owed, cur)}, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`
-          : `You have ${formatMoney(held, cur)} here, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`,
+          ? `You have ${heldWords} here and owe it ${formatMoney(owed, cur)}, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`
+          : `You have ${heldWords} here, across ${named.length === 1 ? 'one account' : `${named.length} accounts`}.`,
       body: (
         <>
           <p className="small">
@@ -142,7 +155,7 @@ defineLook<TheBank>('bank', {
             {home ? ' Your current account is here, so the day’s spending and your pay go through it.' : ' Your current account is at another bank; what’s here stays here until you move it.'}
           </p>
           <div className="grid grid-3">
-            <Stat label="Held Here" value={<span className="mono">{formatMoney(held, cur)}</span>} note="Across what it holds for you" />
+            <Stat label="Held Here" value={<span className="mono">{kept ? heldWords : formatMoney(held, cur)}</span>} note="Across what it holds for you" />
             <Stat label="Owed Here" value={<span className="mono">{formatMoney(owed, cur)}</span>} tone={owed > 0 ? 'negative' : undefined} note="On its cards and loans" />
             <Stat label="Accounts" value={String(accounts.length)} note="Open in your name" />
           </div>
@@ -167,9 +180,9 @@ function transactionById(sim: Simulation, id: string): LedgerTransaction | undef
   return undefined;
 }
 
-/** What one account saw of a line, in words. */
-function movedWords(account: Account, delta: number, cur: string): string {
-  const amount = formatMoney(Math.abs(delta), cur);
+/** What one account saw of a line, in words: on an account kept at home, its own figure with the dollars beside. */
+function movedWords(account: Account, delta: number, cur: string, native?: number): string {
+  const amount = native !== undefined && account.currency ? `${formatMoney(Math.abs(native), account.currency)} (${formatMoney(Math.abs(delta), cur)})` : formatMoney(Math.abs(delta), cur);
   if (isLiability(account.kind)) {
     return delta < 0 ? `added ${amount} to what you owe on ${account.name}` : `took ${amount} off what you owe on ${account.name}`;
   }
@@ -199,7 +212,7 @@ defineLook<TheLine>('transaction', {
     const zone = sim.homeZone;
     const when = formatWeekdayDate(txn.at, zone);
     const pending = txn.postsAt !== undefined && txn.postsAt > sim.now;
-    const said = touched.map((one) => movedWords(one.account, one.delta, cur));
+    const said = touched.map((one) => movedWords(one.account, one.delta, cur, nativeOn(txn, one.account)));
     const first = touched[0]!;
     const category = titleCaseLabel(txn.category.replace(/_/g, ' '));
 
@@ -208,7 +221,7 @@ defineLook<TheLine>('transaction', {
       .map((one) => ({
         to: at('account', one.account.id),
         label: one.account.name,
-        detail: `The account it ${one.delta > 0 ? 'came into' : 'came out of'}, and ${standing(one.account, cur)} now`,
+        detail: `The account it ${one.delta > 0 ? 'came into' : 'came out of'}, and ${standing(sim, one.account, cur)} now`,
       }));
     ways.push({ to: at('day', dateKey(txn.at, zone)), label: when, detail: 'The day it went through, and everything else on it' });
     for (const other of [txn.reverses, txn.reversedBy]) {
@@ -237,7 +250,7 @@ defineLook<TheLine>('transaction', {
           <div className="grid grid-3">
             <Stat
               label="Amount"
-              value={<span className="mono">{formatMoney(Math.abs(first.delta), cur)}</span>}
+              value={<span className="mono">{first.account.currency ? `${formatMoney(Math.abs(nativeOn(txn, first.account) ?? 0), first.account.currency)} (${formatMoney(Math.abs(first.delta), cur)})` : formatMoney(Math.abs(first.delta), cur)}</span>}
               tone={first.delta < 0 ? 'negative' : 'positive'}
               note={first.delta > 0 ? (isLiability(first.account.kind) ? 'Off what’s owed' : 'In') : (isLiability(first.account.kind) ? 'Onto what’s owed' : 'Out')}
             />

@@ -1278,6 +1278,74 @@ if (DIR && existsSync(`${DIR}/missed-plan.json`)) {
   });
   await overflow('papers tax (missed-plan save)');
 }
+/**
+ * An account kept at home (from 2026-10-16, modules 6 and 7 of that day's banking work): a new life in another slot,
+ * born and raised in London, at Yale on an F-1, keeping HSBC UK, made through creation's Before Yale card with its
+ * checkboxes ticked from the keyboard; then money moved from Chase to HSBC UK by Move Money, its quote read, and both
+ * currencies on the bank screen and Home's money line. Nothing in the steps before it changed.
+ */
+await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show', async () => {
+  await page.goto(BASE, { waitUntil: 'networkidle' }); await wait(1500);
+  const slot = page.getByRole('button', { name: /^New Save$/ }).first();
+  if (!(await slot.count())) skip('no empty slot for a second life');
+  await slot.click(); await wait(1000);
+  const billed = page.getByRole('group', { name: 'Billed As' });
+  if (await billed.count()) await billed.getByRole('button', { name: 'Actress' }).click();
+  if (!(await page.locator('#first').inputValue())) await page.locator('#first').fill('Ada');
+  const uk = await page.locator('#born-country option').evaluateAll((os) => os.find((o) => /United Kingdom|Britain/.test(o.textContent ?? ''))?.value);
+  must(uk, 'no United Kingdom among the countries');
+  await page.locator('#born-country').selectOption(uk); await wait(1500);
+  await page.locator('#born-search').fill('London'); await wait(1200);
+  const london = page.getByRole('listbox', { name: 'Matching Places' }).getByRole('option', { name: /^London/ }).first();
+  must(await london.count(), 'no London, England among the places');
+  await london.click(); await wait(500);
+  const cont = page.getByRole('button', { name: /^Continue$/ });
+  for (let i = 0; i < 3 && !(await page.locator('#lived-born').count()); i += 1) { await cont.click(); await wait(900); }
+  must(await page.locator('#lived-born').count(), 'no Before Yale on Starting Point');
+  // From the keyboard: focus each box and press Space, as a player without a mouse does.
+  await page.locator('#lived-born').focus(); await page.keyboard.press('Space'); await wait(400);
+  await page.locator('#kept-account').focus(); await page.keyboard.press('Space'); await wait(400);
+  await page.locator('#home-bank').selectOption({ label: 'HSBC UK' }); await wait(400);
+  const kept = (await page.getByText(/^Kept At HSBC UK/).first().innerText().catch(() => '')).trim();
+  must(/£[\d,]+(\.\d{2})? In /.test(kept), `the savings kept said: ${kept}`);
+  await overflow('creation before yale');
+  await cont.click(); await wait(900);
+  const review = await page.locator('body').innerText();
+  must(/Before Yale/.test(review) && /HSBC UK/.test(review), 'Review left out Before Yale or the bank');
+  await page.getByRole('button', { name: /^Begin$/ }).click();
+  await page.getByRole('group', { name: 'Time Controls' }).first().waitFor({ timeout: 30000 }); await wait(2500);
+  // A new life's guide, read as the guide step reads it, where its controls are locked until it is.
+  for (let i = 0; i < 40; i += 1) {
+    let b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
+    if (!(await b.count()) || !(await b.isVisible().catch(() => false))) {
+      const g = page.getByRole('button', { name: /^Guide \(\d+ Left\)/ }).first();
+      if (!(await g.count())) break;
+      await g.click({ timeout: 5000 }); await wait(500);
+      b = page.locator('[role=dialog] button', { hasText: /^(I’ve Read It|Next: )/ }).first();
+      if (!(await b.count())) break;
+    }
+    await b.click({ timeout: 5000 }); await wait(400);
+  }
+  await page.keyboard.press('Escape'); await wait(300);
+  await rail('Money'); await tab('Accounts');
+  const panels = await page.locator('section.card').filter({ hasText: 'Held From Abroad' }).allInnerTexts();
+  must(panels.length >= 2, `${panels.length} panels held from abroad`);
+  must(panels.every((p) => /£[\d,]+/.test(p) && /in dollars, at SLATE’s rate/.test(p)), 'a home account’s panel without both currencies');
+  await page.locator('#move-from').selectOption({ label: (await page.locator('#move-from option', { hasText: 'Chase Total Checking' }).first().innerText()).trim() }); await wait(400);
+  await page.locator('#move-to').selectOption({ label: (await page.locator('#move-to option', { hasText: 'HSBC Bank Account' }).first().innerText()).trim() }); await wait(400);
+  await page.locator('#move-amount').fill('100'); await wait(500);
+  const quote = (await page.locator('p.xs.dim', { hasText: /receives/ }).first().innerText().catch(() => '')).trim();
+  must(/\$100\.00/.test(quote) && /£[\d,]+/.test(quote), `the quote said: ${quote}`);
+  await overflow('money move abroad');
+  await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
+  const sent = await toast();
+  must(/Sent \$100(\.00)?: it arrives/.test(sent), `the toast said: ${sent}`);
+  await rail('Home');
+  const line = (await page.locator('body').innerText()).match(/Chase Total Checking: [^\n]*/)?.[0] ?? '';
+  must(/at HSBC UK/.test(line) && /£/.test(line) && /\$/.test(line), `Home's money line said: ${line}`);
+  return `${kept} / ${quote} / ${sent} / ${line}`;
+});
+
 if (PHONE) {
   await step('phone: the drawer opens and closes, and Home is reachable from it', async () => {
     await page.getByRole('button', { name: /^(Toggle Navigation|Menu)$/ }).first().click(); await wait(400);

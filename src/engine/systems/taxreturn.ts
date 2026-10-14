@@ -47,6 +47,7 @@ import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
 import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateDueOf, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
+import { foreignAccountsNotice } from './abroad';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_NOTICE_KIND = 'tax.notice';
@@ -889,7 +890,13 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   // banks' deposit interest isn't (IRC 871(i)), and nor would a foreign pension be.
   const nra = nonresidentFor(person, year);
   const ss = y.socialSecurity ?? 0;
-  const otherIncome = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : (y.interest ?? 0) + (y.pension ?? 0) - ss);
+  // Interest from a bank outside America, kept at home (from 2026-10-16), is foreign-source (IRC 862(a)(1)): a
+  // nonresident alien isn't taxed on it (IRC 872(a), Pub. 519), so it stays off the 1040-NR, on its own term here beside
+  // the American banks' (IRC 871(i)); a US person reports it on the 1040, with a credit for the tax taken at source below.
+  const abroad = Object.values(y.foreignInterest ?? {});
+  const interestAbroad = abroad.reduce((sum, f) => sum + f.gross, 0);
+  const interestHere = (y.interest ?? 0) - interestAbroad;
+  const otherIncome = y.acting + y.workStudy + y.unemployment + (y.scholarship ?? 0) + (nra ? 0 : interestHere) + (nra ? 0 : interestAbroad) + (nra ? 0 : (y.pension ?? 0) - ss);
   const income = otherIncome + (nra ? 0 : taxableSocialSecurity(ss, otherIncome, into));
   const employers = Object.values(y.employers).filter((pay) => pay >= usd(RETURN.performingArtistEmployerPay, into)).length;
   // The rest of the work's costs, the ones there was a receipt for (`RECEIPTS.kept` times the `receipts` knob), were
@@ -929,6 +936,12 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   for (const [city, amount] of Object.entries(y.byResidence)) entry(stateOf(city), city).resident += amount;
   for (const [key, amount] of Object.entries(y.elsewhere)) { const city = key.split('>')[1]!; entry(stateOf(city), city).source += amount; }
   const lastState = stateOf(cityId);
+  // A state starts from the federal return's income. Connecticut's adjusted gross income is the federal one, modified
+  // (Conn. Gen. Stat. 12-701(a)(19)), the 1040-NR's for a nonresident alien (Form CT-1040's instructions, line 1); and it
+  // taxes a resident on all of it. So a US person's interest from a bank at home is Connecticut income, with no credit
+  // for the other country's tax, which Connecticut gives only for another state's (12-704(a)); and an F-1 student's,
+  // which isn't on the 1040-NR, isn't (decided 2026-10-16: the year's interest is under where they lived, `byResidence`,
+  // but a share past the whole doesn't count).
   const stateTaxed = taxed;
   // California doesn't tax unemployment, which goes to where they lived at the year's end; nor does the District; Indiana
   // only to half of income over $12,000 (`STATE_RETURN`, from 2026-10-11).
@@ -1000,7 +1013,13 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const federalBefore = computeAnnualTax(taxed + (nra ? usd(usStandardDeduction(at), into) : 0), cityId, at, { currency: into }).federal;
   // 3.8% on investment income, the banks' interest, over $200,000 of income.
   const gainTax = nra ? 0 : Math.round(NIIT.rate * Math.min(y.interest ?? 0, Math.max(0, taxed - usd(NIIT.from, into))));
-  const foreignCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
+  const wagesCredit = taxed > 0 ? Math.min(foreignTax, Math.round(federalBefore * Math.min(1, foreignIncome / taxed))) : 0;
+  // The tax a bank abroad took at source on a US person's interest (from 2026-10-16), credited up to the US tax on the
+  // interest: Form 1116's own limit for passive income, apart from the wages' (IRC 904(d)(1)). A bank abroad sends no
+  // 1099, so the $300 election without the form (IRC 904(j)) isn't open. Both together never past the tax before them.
+  const interestTax = nra ? 0 : abroad.reduce((sum, f) => sum + f.withheld, 0);
+  const interestCredit = taxed > 0 ? Math.min(interestTax, Math.round(federalBefore * Math.min(1, interestAbroad / taxed))) : 0;
+  const foreignCredit = Math.min(federalBefore, wagesCredit + interestCredit);
   // The Child Tax Credit and the adoption credit came off it (`systems/children.ts`, `systems/adoption.ts`) until the
   // children went in the scope reset of 2026-10-09.
   const federal = federalBefore - foreignCredit + gainTax;
@@ -1227,7 +1246,12 @@ export function registerTaxReturn(sim: Simulation): void {
     // in the US: someone who isn't a citizen and earned nothing there that year
     // has no US return. Until 2026-09-29 a British actor working in London was
     // given one on their pounds.
-    if (!owesUsReturn(person, year)) return;
+    // A US person's accounts abroad, told once here, with or without a return (`foreignAccountsNotice`, from 2026-10-16).
+    const tell = (returned: boolean) => {
+      const words = person.id === s.universe.playerId ? foreignAccountsNotice(s, person, year, returned) : undefined;
+      if (words) s.notify({ category: 'tax', title: `Your ${year} Accounts Abroad`, body: words, importance: 75, route: '/workspace/papers' });
+    };
+    if (!owesUsReturn(person, year)) { tell(false); return; }
     const figures = figuresFor(person, year, cur);
     // Nothing owed, nothing due back, and gross income under the filing threshold, the standard deduction of a single
     // filer under 65: no return to file. A nonresident student files Form 8843 every year, income or none (from
@@ -1237,7 +1261,8 @@ export function registerTaxReturn(sim: Simulation): void {
     // $15,750 for 2025: until 2026-10-14 it was 2024's $14,600 for every year, so a 2026 income between the two made a
     // return the IRS doesn't ask for.
     const nra = figures.form === '1040-NR';
-    if (!nra && figures.balance === 0 && figures.foreignRefund === 0 && figures.income < usd(usStandardDeduction(instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME)), cur)) return;
+    if (!nra && figures.balance === 0 && figures.foreignRefund === 0 && figures.income < usd(usStandardDeduction(instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME)), cur)) { tell(false); return; }
+    tell(true);
     const due = nra ? nonresidentDeadline(year, figures.workStudy + figures.acting > 0) : deadline(year);
     returnsOf(person)[year] = { year, due, figures };
     s.schedule({ at: due, kind: TAX_DUE_KIND, label: `Tax Return Due: ${year}`, category: 'personal', priority: 25, payload: { personId: person.id, year } });

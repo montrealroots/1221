@@ -25,6 +25,7 @@ import {
   dateKey, formatDate, formatRelative, formatTime, formatWeekdayDate, seasonOf, zoneAbbreviation,
 } from '@/engine/core/time';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
+import { balanceText, heldOf } from '@/engine/systems/abroad';
 import { cardsOf, stateOf } from '@/engine/systems/credit';
 import { troubles } from '@/engine/systems/spending';
 import { latePenaltyAll, owedEverywhere, unassessedBalance } from '@/engine/systems/taxreturn';
@@ -81,6 +82,14 @@ export function Home() {
   const ready = readiness(player);
   const accounts = useWorld((s) => s.ledger.accountsOf(s.player.id));
   const primary = accounts.find((a) => a.id === player.primaryAccountId) ?? accounts[0];
+  // Accounts kept at home, by bank, in their own money (from 2026-10-16): the money line says them beside the primary.
+  const kept = new Map<string, { currency: string; held: number }>();
+  for (const a of accounts) {
+    if (!a.currency || a.closedAt || a.id === primary?.id) continue;
+    const was = kept.get(a.institution ?? '') ?? { currency: a.currency, held: 0 };
+    kept.set(a.institution ?? '', { currency: was.currency, held: was.held + heldOf(a) });
+  }
+  const keptWords = [...kept].map(([bank, k]) => `, and ${formatMoney(k.held, k.currency)} at ${bank}`).join('');
   const place = city ? placeProfile(sim, city.id) : undefined;
   const today = dateKey(sim.now, sim.zone);
   const season = seasonOf(sim.now, sim.zone, city?.latitude ?? 34);
@@ -454,7 +463,7 @@ export function Home() {
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"
-              line={`${primary?.name ?? 'No account'}: ${formatMoney(primary?.balance ?? 0, cur)}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
+              line={`${primary?.name ?? 'No account'}: ${primary ? balanceText(sim, primary) : formatMoney(0, cur)}${keptWords}. Worth ${formatMoney(worth.total, cur, { cents: false })}${worth.liabilities > 0 ? `, ${formatMoney(worth.liabilities, cur, { cents: false })} of it owed` : ''}.`}
               alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}
               action={<Gated feature="ui.bank" className="btn btn-sm" onClick={() => navigate('/workspace/bank', 'Money')}>{primary?.institution ?? 'Your Bank'}</Gated>}
               help="bank.accounts"

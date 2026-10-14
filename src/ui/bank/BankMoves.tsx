@@ -22,6 +22,7 @@ import { bankById } from '@/engine/content/banks';
 import { SECURITY } from '@/engine/content/security';
 import { bankAccountsOf, banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
+import { balanceText } from '@/engine/systems/abroad';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
 import { cardsOf, autopaySource } from '@/engine/systems/credit';
@@ -118,7 +119,7 @@ export function BankMoves() {
             return (
               <div key={a.id} className="col gap-2" style={{ borderTop: '1px solid var(--line)', paddingTop: 'var(--s2)' }}>
                 <p className="small" style={{ margin: 0 }}>
-                  <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {money(a.balance)}
+                  <Open subject={at('account', a.id)}><strong>{a.name}</strong></Open> at {a.institution}, {balanceText(sim, a, a.balance, undefined, { cents: false })}
                   {a.id === person.primaryAccountId ? '. Primary.' : '.'}
                   {a.awaitingFunds !== undefined ? ` Waiting for ${a.awaitingFunds > 1 ? `its opening deposit of ${money(a.awaitingFunds)}` : 'its first deposit'}${a.fundBy ? `, by ${formatDate(a.fundBy, sim.zone)}` : ''}.` : ''}
                   {a.plastic?.stopped === 'new' && a.plastic.replacementAt ? ` Its debit card arrives ${formatDate(a.plastic.replacementAt, sim.zone)}.` : ''}

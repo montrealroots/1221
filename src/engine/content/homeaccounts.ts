@@ -413,6 +413,20 @@ export const NON_RESIDENT_TAX: Readonly<Record<string, { rate: number; note: str
   NZ: { rate: 0.1, note: 'New Zealand’s banks withhold 10% from a customer in a treaty country, America among them.' },
 };
 
+/**
+ * America's reports on a US person's accounts abroad, read from `RESEARCH.us` on 2026-10-16 (from that day), in dollars'
+ * cents. FinCEN Form 114, the FBAR: the accounts' aggregate value over $10,000 at any time in the calendar year, due
+ * 15 April with an automatic extension to 15 October, filed with FinCEN and not with the return (31 CFR 1010.350). Form
+ * 8938: an unmarried taxpayer living in America, over $50,000 on the year's last day or $75,000 at any time, and only
+ * with an income tax return ("If you do not have to file an income tax return for the tax year, you do not need to
+ * file Form 8938"). Neither is asked of an F-1 student, a nonresident alien and not a US person. The aggregate is the
+ * sum of each account's most in the year, as FinCEN's instructions total it; SLATE reads 8938's the same way.
+ */
+export const US_REPORTS = {
+  fbar: { over: 10_000_00, due: { month: 4, day: 15 }, extended: { month: 10, day: 15 } },
+  form8938: { yearEnd: 50_000_00, anyTime: 75_000_00 },
+} as const;
+
 /** A charge on an amount, both in the bank's money's hundredths. */
 export function chargeOf(charge: Charge, amount: Money, bankCurrency: string, exchange: (cents: Money, from: string, to: string) => Money | undefined): Money {
   const step = charge.upTo?.find((one) => amount <= one.amount);

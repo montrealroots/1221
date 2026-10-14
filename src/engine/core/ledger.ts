@@ -182,6 +182,12 @@ export interface Account {
    * have gone inactive at its first month's end (`systems/lending.ts` `lastUsed`).
    */
   lastUsedBefore?: Instant;
+  /**
+   * At a bank outside America, held by a US person: by calendar year, the most it held at a day's end and what it held
+   * at the last day's end, in its own money (from 2026-10-16, written each night by `systems/banking.ts`). America's
+   * reports on accounts abroad read it, FinCEN's FBAR the most and Form 8938 both (`foreignAccountsNotice`).
+   */
+  peak?: Record<string, { max: Money; last: Money }>;
 }
 
 export interface Posting {

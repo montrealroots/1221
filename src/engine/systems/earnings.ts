@@ -31,6 +31,13 @@ export interface YearEarnings {
   scholarship?: Money;
   /** Interest the bank paid, before any tax taken at source: a 1099-INT's, taxable, with no payroll tax. */
   interest?: Money;
+  /**
+   * Of it, what a bank outside America paid, by the bank's country, with what that country took at source (from
+   * 2026-10-16, for an account kept at home): foreign-source interest (IRC 862(a)(1)), which a US person's return takes
+   * with a credit for that tax and a nonresident alien's leaves out (`figuresFor`). Until then a home bank's interest was
+   * recorded as any bank's, and the tax it took at source was lost to the return.
+   */
+  foreignInterest?: Record<string, { gross: Money; withheld: Money }>;
   /** A pension paid: a 1099-R's, taxable, with no payroll tax (`systems/pension.ts`). */
   pension?: Money;
   /** Of the pension, Social Security, which the return taxes in part (from 2026-10-10). */
@@ -234,12 +241,19 @@ export function recordBenefit(person: Person, at: Instant, zone: string, amount:
  * Interest paid on an account, to the year's return and the month's income.
  * Until 2026-09-27 it was posted as income and read by nothing, so the
  * wealthy start's savings earned about $11,000 a year that no return taxed
- * and no income test for Medicaid or the premium credit saw.
+ * and no income test for Medicaid or the premium credit saw. From a bank
+ * outside America its country and the tax it took at source go with it
+ * (`abroad`, from 2026-10-16).
  */
-export function recordInterest(person: Person, at: Instant, zone: string, amount: Money): void {
+export function recordInterest(person: Person, at: Instant, zone: string, amount: Money, abroad?: { iso: string; withheld: Money }): void {
   const p = zonedParts(at, zone);
   const y = yearOf(person, p.year);
   y.interest = (y.interest ?? 0) + amount;
+  if (abroad) {
+    const f = ((y.foreignInterest ??= {})[abroad.iso] ??= { gross: 0, withheld: 0 });
+    f.gross += amount;
+    f.withheld += abroad.withheld;
+  }
   const home = homeOf(person);
   y.byResidence[home] = (y.byResidence[home] ?? 0) + amount;
   const month = `${p.year}-${String(p.month).padStart(2, '0')}`;
