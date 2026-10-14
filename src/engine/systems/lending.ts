@@ -93,6 +93,7 @@ import { markRecord } from './credit';
 import { openingOf, usPerson } from './bankmoves';
 import { hasSsn } from './taxid';
 import { pendingOn } from './pending';
+import { abroadRefusal, cardFeeAbroad } from './abroad';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -492,7 +493,7 @@ export function loanOffer(sim: Simulation, person: Person, amount: Money, months
   return { apr, payment, terms };
 }
 
-function post(sim: Simulation, memo: string, category: string, postings: { accountId: string; amount: Money }[]): void {
+function post(sim: Simulation, memo: string, category: string, postings: { accountId: string; amount: Money; native?: Money }[]): void {
   sim.post({ memo, category, postings });
 }
 
@@ -509,11 +510,11 @@ export function monthOrder(sim: Simulation, person: Person, rent: Money, bills: 
   return (low ? bills < rent : bills > rent) ? ['bills', 'rent'] : ['rent', 'bills'];
 }
 
-/** A fee or interest out of the current account, to the bank. */
-function charge(sim: Simulation, account: Account, amount: Money, memo: string, category: string, expense: string): void {
+/** A fee or interest out of the current account, to the bank; with the bank's own figure where it's kept in another currency. */
+function charge(sim: Simulation, account: Account, amount: Money, memo: string, category: string, expense: string, native?: Money): void {
   if (amount <= 0) return;
   post(sim, memo, category, [
-    { accountId: account.id, amount: -amount },
+    { accountId: account.id, amount: -amount, ...(native !== undefined && account.currency ? { native: -native } : {}) },
     { accountId: sim.nominalAccount('expense', expense).id, amount },
   ]);
 }
@@ -602,14 +603,21 @@ export function chargeReturned(sim: Simulation, person: Person, short: Money, fr
 }
 
 
-/** A debit card purchase's fee, where the bank charges one and the age isn't spared. */
-export function chargeForPurchase(sim: Simulation, person: Person): void {
+/**
+ * A debit card purchase's fee, where the bank charges one and the age isn't spared; and on a card from a bank in another
+ * country (from 2026-10-16), its fee on a purchase in another currency, worked on `paid`, what the card took from the
+ * account, in the bank's own money (`cardFeeAbroad`).
+ */
+export function chargeForPurchase(sim: Simulation, person: Person, paid = 0): void {
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
-  const card = bank?.card;
-  if (!current || !bank || !card?.perPurchase) return;
+  if (!current || !bank) return;
+  const abroad = cardFeeAbroad(sim, current, paid);
+  if (abroad) charge(sim, current, abroad.fee, 'Foreign transaction fee', 'bank_fee', 'Bank Fees', abroad.native);
+  const card = bank.card;
+  if (!card?.perPurchase) return;
   if (card.freeUnder !== undefined && ageOn(sim, person, sim.now) < card.freeUnder) return;
-  charge(sim, current, inSaveMoney(sim, card.perPurchase, bank.currency), 'Debit card purchase fee', 'bank_fee', 'Bank Fees');
+  charge(sim, current, inSaveMoney(sim, card.perPurchase, bank.currency), 'Debit card purchase fee', 'bank_fee', 'Bank Fees', card.perPurchase);
 }
 
 /**
@@ -973,7 +981,10 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   // Holding a current account at another bank, the charged-off one closes and that one carries on, primary if this
   // was (from 2026-10-10). With none elsewhere, SLATE re-banks them where they live, as it always has: a simplification,
   // since a closed customer opens their own account, kept so a life always has somewhere to be paid.
-  const elsewhere = checkingsOf(sim, person).find((a) => a.bankId !== bank.id);
+  // At a bank where they live (from 2026-10-16): an account kept at home, at a bank abroad, can't take their wages or be
+  // where they're re-banked, and is left as it is.
+  const here = isoOf(homeOf(person));
+  const elsewhere = checkingsOf(sim, person).find((a) => a.bankId !== bank.id && bankById(a.bankId ?? '')?.iso === here);
   // Every bank owed a charged-off debt is left out, as each refuses to open an account (from 2026-10-13: each bank's debt
   // its own since then, the bank closing now alone was left out, and a broke life went back to one it owed).
   const others = banksFor(homeOf(person)).filter((b) => b.id !== bank.id && !collectionsOf(sim, person, b.name));
@@ -1225,6 +1236,8 @@ export function registerLending(sim: Simulation): void {
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const terms = lendingOf(bank).overdraft;
     if (!current || !bank || terms?.kind !== 'per_item' || !terms.debitCard) throw new CommandError('Your bank doesn’t ask you this.');
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     if (terms.debitCard === 'never') throw new CommandError(`${bank.name} never pays a debit card purchase into an overdraft.`);
     current.debitOverdraft = p.on === true;
     return { on: current.debitOverdraft };
@@ -1263,6 +1276,9 @@ export function registerLending(sim: Simulation): void {
       delete current.overdraftPerUse;
       return { limit: 0 };
     }
+    // Nothing new at a bank in another country (from 2026-10-16), in its words.
+    const away = abroadRefusal(person, bankById(current.bankId ?? ''));
+    if (away) throw new CommandError(away);
     const offer = overdraftOffer(s, person, current);
     if ('refused' in offer) throw new CommandError(offer.refused);
     if (limit < offer.min || limit > offer.max) {
@@ -1297,6 +1313,8 @@ export function registerLending(sim: Simulation): void {
     // At the bank named, any they keep a current account at (from 2026-10-10), else the primary's.
     const bank = p.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
     if (!bank) throw new CommandError('That isn’t a bank you keep an account at.');
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     const offer = loanOffer(s, person, amount, months, bank.id, p.purpose === 'education' ? 'education' : 'other');
     if ('refused' in offer) throw new CommandError(offer.refused);
     // Paid into the current account named, else the one at the lender (or the primary, for a lender they don't bank
@@ -1388,6 +1406,8 @@ export function registerLending(sim: Simulation): void {
     // At any bank they keep a current account at (from 2026-10-10), from that account, else the primary's.
     const bank = p.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
     const term = lendingOf(bank).term;
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     if (!bank || !term) throw new CommandError(`${bank?.name ?? 'Your bank'} publishes no term deposit rate SLATE has.`);
     const current = checkingAt(s, person, bank.id);
     if (!current) throw new CommandError(`A term deposit at ${bank.name} is funded from your current account there: open one first.`);

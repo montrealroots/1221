@@ -43,6 +43,7 @@ import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { CHEX, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
+import { abroadQuote, heldText, quoteWords } from '@/engine/systems/abroad';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -84,13 +85,22 @@ export function BankWorkspace() {
   const freeLeft = rules?.freeWithdrawals !== undefined && rules.withdrawalFee ? savingsTerms!.fee === 0 : undefined;
   const allowanceLeft = moving ? savingsLeftThisMonth(sim, moving) : undefined;
 
+  // In the sending account's own money where it's kept in another (from 2026-10-16): pounds from a pound account.
+  const sendIn = moving?.currency ?? cur;
+  const target = accounts.find((a) => a.id === toId);
+  // Between banks in two countries, what the payment costs and when it lands, from the rule the command keeps.
+  const abroad = moving && target && moving.bankId && target.bankId && bankById(moving.bankId)?.iso !== bankById(target.bankId)?.iso && centsFromTyped(amount) > 0
+    ? abroadQuote(sim, sim.player, moving, target, centsFromTyped(amount))
+    : undefined;
+
   const move = () => {
     // Typed in whole units of the money, as a banking app takes it.
     const cents = centsFromTyped(amount);
-    const answer = run<{ moved: number; arrivesAt?: number }>('bank.transfer', { fromId, toId, amount: cents });
+    const answer = run<{ moved: number; arrivesAt?: number; sent?: number; sentIn?: string }>('bank.transfer', { fromId, toId, amount: cents, ...(moving?.currency ? { in: moving.currency } : {}) });
     if (answer.ok && answer.value) {
       const later = answer.value.arrivesAt !== undefined && answer.value.arrivesAt > sim.now;
-      toast(later ? `Sent ${money(answer.value.moved)}: it arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${money(answer.value.moved)}.`, 'positive');
+      const what = answer.value.sentIn ? formatMoney(answer.value.sent!, answer.value.sentIn) : money(answer.value.moved);
+      toast(later ? `Sent ${what}: it arrives ${formatDate(answer.value.arrivesAt!, sim.zone)}.` : `Moved ${what}.`, 'positive');
       setAmount('');
     }
   };
@@ -162,13 +172,13 @@ export function BankWorkspace() {
       </div>
 
       {accounts.length > 1 && (
-        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days." help="bank.transfer">
+        <Panel title="Move Money" subtitle="Between your own accounts: at once at one bank; to another bank, in the sending bank’s days; abroad, in both countries’ days, less the exchange and the fees." help="bank.transfer">
           <div className="field-row">
             <div className="field">
               <label htmlFor="move-from">From</label>
               <select id="move-from" value={fromId} onChange={(e) => setFrom(e.target.value)}>
                 {/* By balance, the most in it last. */}
-                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution} ({money(a.balance)})</option>)}
+                {[...accounts].sort((a, b) => a.balance - b.balance).map((a) => <option key={a.id} value={a.id}>{a.name} ···{a.last4}, {a.institution} ({a.currency ? heldText(sim, a) : money(a.balance)})</option>)}
               </select>
             </div>
             <div className="field">
@@ -178,7 +188,7 @@ export function BankWorkspace() {
               </select>
             </div>
             <div className="field">
-              <label htmlFor="move-amount">Amount ({cur})</label>
+              <label htmlFor="move-amount">Amount ({sendIn})</label>
               <input id="move-amount" type="text" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
             </div>
           </div>
@@ -189,6 +199,7 @@ export function BankWorkspace() {
               {allowanceLeft !== undefined ? `${money(allowanceLeft)} more can come out this month without notice.` : ''}
             </p>
           )}
+          {abroad && <p className="xs dim" style={{ margin: '0 0 var(--s2)' }}>{'refused' in abroad ? abroad.refused : quoteWords(sim, abroad)}</p>}
           <Gated feature="bank.transfer" className="btn btn-primary btn-sm" onClick={move} disabled={!amount}>
             Move It
           </Gated>

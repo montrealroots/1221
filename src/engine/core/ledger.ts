@@ -129,6 +129,8 @@ export interface Account {
   dormantFeeAt?: Instant;
   /** Germany: the quarter's fees so far, charged at the quarterly closing. */
   feesDue?: Money;
+  /** The same in the bank's own figure, on an account in another currency (from 2026-10-16). */
+  feesDueHeld?: Money;
   /** Untouched past the bank's months: inactive, then dormant and blocked until used again. */
   inactive?: boolean;
   dormant?: boolean;

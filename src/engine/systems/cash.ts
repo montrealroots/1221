@@ -39,8 +39,10 @@ import { instantFromZoned, zonedParts } from '../core/time';
 import { exchange } from '../content/currency';
 import { bankById } from '../content/banks';
 import { CASH } from '../content/cash';
+import { CITIES, COUNTRIES } from '../content/geography';
 import { cardFor, cardRoom, cardTerms, stateOf } from './credit';
 import { planLeftOf, transferRate } from './cardoffers';
+import { atmAbroad, heldFromAbroad } from './abroad';
 
 export type CashFrom = 'atm' | 'other_atm' | 'counter' | 'post_office' | 'card';
 export type CashTo = 'counter' | 'atm' | 'post_office';
@@ -74,6 +76,12 @@ function inSave(sim: Simulation, amount: Money, currency: string): Money {
   return into === currency ? amount : exchange(amount, currency, into) ?? amount;
 }
 
+/** The country they live in, for the machine they'd use. */
+function isoHere(person: Person): string | undefined {
+  const city = CITIES.get(person.currentLocationId);
+  return city ? COUNTRIES.get(city.countryId)?.iso2?.toUpperCase() : undefined;
+}
+
 function currentOf(sim: Simulation, person: Person): Account | undefined {
   return person.primaryAccountId ? sim.universe.accounts[person.primaryAccountId] : undefined;
 }
@@ -100,7 +108,7 @@ export const OWNER_SURCHARGE: Readonly<Record<string, { fee: Money; currency: st
   AU: { fee: 2_63, currency: 'AUD', source: 'https://www.rba.gov.au/publications/bulletin/2017/dec/6.html (independent ATMs, June 2017, the latest average published)' },
 };
 
-export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom, accountId?: string): { fee: Money; refused?: string; ownerFee?: boolean; ownerCharge?: Money } {
+export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, from: CashFrom, accountId?: string): { fee: Money; refused?: string; ownerFee?: boolean; ownerCharge?: Money; feeNative?: Money } {
   const cur = saveCurrency(sim.universe);
   if (from === 'card') {
     const card = cardFor(sim, person, accountId);
@@ -120,6 +128,16 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   if (current.dormant) return { fee: 0, refused: `${current.name} is dormant; use Reactivate first.` };
   // A machine needs the debit card; the counter doesn't.
   if (from !== 'counter' && current.plastic && (current.plastic.locked || current.plastic.stopped)) return { fee: 0, refused: current.plastic.stopped === 'new' ? 'Your debit card hasn’t arrived yet; the counter can still pay out.' : current.plastic.stopped ? 'Your debit card is stopped; the counter can still pay out.' : 'Your debit card is locked.' };
+  // A card from a bank kept at home (from 2026-10-16): another bank's machine here, for its fee abroad in its own money,
+  // and the machine's owner's fee where it's published for the country the machine is in.
+  const abroad = atmAbroad(sim, current, amount, from);
+  if (abroad && 'refused' in abroad) return { fee: 0, refused: abroad.refused };
+  if (abroad) {
+    const here = OWNER_SURCHARGE[isoHere(person) ?? ''];
+    const owner = here ? inSave(sim, here.fee, here.currency) : 0;
+    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} holds ${formatMoney(Math.max(0, current.balance), cur)}.` };
+    return { fee: abroad.fee, feeNative: abroad.native, ...(owner ? { ownerCharge: owner } : { ownerFee: true }) };
+  }
   if (from === 'post_office' && !rules?.postOffice) return { fee: 0, refused: `${bank.name}’s customers can’t use the Post Office for cash.` };
   const fee = inSave(sim, from === 'atm' ? rules?.own ?? 0 : from === 'other_atm' ? rules?.other ?? 0 : from === 'counter' ? rules?.teller ?? 0 : 0, bank.currency);
   if (from !== 'counter' && rules?.daily !== undefined) {
@@ -206,7 +224,7 @@ export function registerCash(sim: Simulation): void {
     const current = currentOf(s, person)!;
     const where = from === 'atm' ? 'ATM' : from === 'other_atm' ? 'Another bank’s ATM' : from === 'counter' ? 'Counter' : 'Post Office';
     s.post({ memo: `Cash out: ${where}`, category: 'cash', postings: [{ accountId: current.id, amount: -amount }, { accountId: wallet.id, amount }] });
-    if (quote.fee > 0) s.post({ memo: `Cash withdrawal fee: ${where}`, category: 'bank_fee', postings: [{ accountId: current.id, amount: -quote.fee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: quote.fee }] });
+    if (quote.fee > 0) s.post({ memo: `Cash withdrawal fee: ${where}`, category: 'bank_fee', postings: [{ accountId: current.id, amount: -quote.fee, ...(quote.feeNative !== undefined && current.currency ? { native: -quote.feeNative } : {}) }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: quote.fee }] });
     if (quote.ownerCharge) s.post({ memo: 'The machine owner’s fee', category: 'bank_fee', postings: [{ accountId: current.id, amount: -quote.ownerCharge }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: quote.ownerCharge }] });
     return { fee: quote.fee, ...(quote.ownerFee ? { ownerFee: true } : {}), ...(quote.ownerCharge ? { ownerCharge: quote.ownerCharge } : {}) };
   });
@@ -224,6 +242,8 @@ export function registerCash(sim: Simulation): void {
     // debit card, as one paying out does (from 2026-10-13: until then cash went into a dormant account and it stayed
     // dormant, and an ATM took a deposit with the card locked; found by the review of that day).
     if (to.dormant) throw new CommandError(`${to.name} is dormant; use Reactivate first.`);
+    // A bank kept at home takes cash only at its own counters and machines, in its country.(from 2026-10-16).
+    if (heldFromAbroad(s, to)) throw new CommandError(`${bank?.name ?? 'That bank'} takes cash only at its own counters and machines, in its country.`);
     // The card is the one the bank taking the money issued: the current account’s own, or for savings the current
     // account’s beside it at that bank; the primary’s only where none is open there. Until later on 2026-10-13 it was
     // the primary’s wherever the money went, so Citi’s machine took cash with Citi’s card locked and refused it for

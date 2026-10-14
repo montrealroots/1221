@@ -49,6 +49,7 @@ import { homeBankOf, openHomeAccounts, splitOf } from './systems/homeaccount';
 import { bankById } from './content/banks';
 import { countryOfIso } from './content/bankdays';
 import { registerBankMoves } from './systems/bankmoves';
+import { armHomeAccounts, registerAbroad } from './systems/abroad';
 import { registerTaxId } from './systems/taxid';
 import { registerLending } from './systems/lending';
 import { registerStatements } from './systems/statements';
@@ -115,6 +116,7 @@ export function registerAllSystems(sim: Simulation): void {
   registerTutorial(sim);
   registerBanking(sim);
   registerBankMoves(sim);
+  registerAbroad(sim);
   registerStatements(sim);
   registerPayments(sim);
   registerCardLife(sim);
@@ -247,6 +249,8 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   armHealth(sim, player);
   armBirthdays(sim);
   armBanking(sim);
+  // A bank kept at home that closes the account of a customer abroad gives its notice on the first morning (from 2026-10-16).
+  armHomeAccounts(sim);
   // A life that begins at drama school, where it's in the school's town.
   if (config.school === YALE_DRAMA.id && config.startLocationId === YALE_DRAMA.cityId) enroll(sim, player);
 }
@@ -426,6 +430,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   // A save from before the banks banked at "Northbank", which never existed.
   rebank(sim);
   armBanking(sim);
+  // Once: a save that has the closing scheduled already is left alone, so a reload never says it twice.
+  armHomeAccounts(sim);
   return sim;
 }
 

@@ -275,11 +275,24 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
   quarter, Sabadell every two years, MUFG ¥300 and SMBC ¥220 a month); and the
   conditions it's kept on. The account opens, keeps its own figure in its
   money, earns the bank's interest and pays the bank's own monthly fee, all of
-  which bite. The closing, the charge for a customer abroad and the conditions
-  change nothing yet: modules 4 and 5 of the design carry them out (the
-  closing needs a payment between countries to send the balance). A test
-  bank that closes a US citizen's account (`usPersons: 'closes'`) is said the
-  same way, and nothing closes it either.
+  which bite. When this was written the closing, the charge for a customer
+  abroad and the conditions changed nothing. Modules 4 and 5, the same day,
+  carried out the first two (`systems/abroad.ts`): Barclays' notice came on
+  the first morning with its date, and on that date the accounts closed and
+  what they held went to the American account by a payment abroad, less its
+  margin and Chase's fee; each charge for a customer abroad was taken on the
+  bank's schedule in its own money; a test bank that closes a US citizen's
+  account (`usPersons: 'closes'`) closed it the same way, and kept an F-1's.
+  Payments between the countries, the card's and the cash machine's fees
+  abroad, the refusals of anything new at a bank abroad, and the country's tax
+  at source on a non-resident's interest bit from then too
+  (`tests/home-account-abroad.test.ts`, `tests/home-account-transfers.test.ts`).
+  What's still said and not read: the conditions an account is kept on (that
+  the move was reported, a self-certification given, Spain's certificate
+  renewed), which SLATE takes as met and nothing checks; the American side of
+  the interest, which `recordInterest` records as ordinary interest, with no
+  FBAR or Form 8938 for a US person (module 6); and the dollars every screen
+  but Move Money shows for a home account's money (module 7).
 
 - **The connected attributes' words that are said, not read.** Each
   interest's caveat and actor's use were shown on its look and read by nothing,

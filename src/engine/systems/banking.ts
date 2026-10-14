@@ -48,6 +48,7 @@ import { recordInterest } from './earnings';
 import { marksFallOff } from './credit';
 import { checkingAt } from './lending';
 import { sendBetweenBanks } from './bankmoves';
+import { abroadRefusal, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -227,7 +228,12 @@ export function directDeposits(sim: Simulation, account: Account, since: Instant
  */
 export type WaivedBy = 'deposits' | 'balance' | 'age' | 'purchases' | 'new';
 
-export function feeFor(sim: Simulation, account: Account, monthStart: Instant): { fee: Money; waivedBy?: WaivedBy } {
+/**
+ * The fee in the bank's own figure as well (`native`), on an account in another currency (from 2026-10-16): the bank
+ * charges €6.90, and a figure converted back from the save's money can be a unit off where its money is finer than a
+ * cent, the won's and the yen's.
+ */
+export function feeFor(sim: Simulation, account: Account, monthStart: Instant): { fee: Money; waivedBy?: WaivedBy; native?: Money } {
   const product = productOf(account);
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   // A second-chance account is its own product, and its own fee is charged on the first (`systems/lending.ts`); until 2026-09-27 it paid the ordinary account's beside it.
@@ -261,12 +267,12 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
   // Short of a waiver, a lesser condition may lower the fee.
   const cut = product.reduced;
   if (cut) {
-    const lower = (by: WaivedBy) => ({ fee: inSaveMoney(sim, cut.to, bank.currency), waivedBy: by });
+    const lower = (by: WaivedBy) => ({ fee: inSaveMoney(sim, cut.to, bank.currency), waivedBy: by, ...(account.currency ? { native: cut.to } : {}) });
     if (cut.ageBelow !== undefined && age !== undefined && age < cut.ageBelow) return lower('age');
     if (cut.depositsAtLeast !== undefined && directDeposits(sim, account, monthStart, product.deposits) >= inSaveMoney(sim, cut.depositsAtLeast, bank.currency)) return lower('deposits');
     if (cut.averageAtLeast !== undefined && averageBalance(account) >= inSaveMoney(sim, cut.averageAtLeast, bank.currency)) return lower('balance');
   }
-  return { fee: inSaveMoney(sim, product.monthlyFee, bank.currency) };
+  return { fee: inSaveMoney(sim, product.monthlyFee, bank.currency), ...(account.currency ? { native: product.monthlyFee } : {}) };
 }
 
 /** Debit card purchases from an account since a moment. */
@@ -368,6 +374,10 @@ function yearlyPay(sim: Simulation, owner: string): Money {
  * rate goes by income, and the flat rate otherwise.
  */
 export function interestTaxOn(sim: Simulation, account: Account): number {
+  // Kept at a bank in another country than the one its owner lives in (from 2026-10-16), the country's rate for a
+  // customer abroad, not its resident's: Germany's bank takes nothing once it has proof of the move, Japan's 15.315%.
+  const abroad = nonResidentTaxOn(sim, account);
+  if (abroad !== undefined) return productOf(account)?.taxFree ? 0 : abroad;
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   const rule = bank ? bankingIn(bank.iso)?.interestTax : undefined;
   if (!rule || productOf(account)?.taxFree) return 0;
@@ -399,7 +409,8 @@ function inSaveMoneyBack(sim: Simulation, amount: Money, currency: string): Mone
 export function interestAllowanceLeft(sim: Simulation, account: Account): Money | undefined {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   const allowance = bank ? bankingIn(bank.iso)?.interestTax?.allowance : undefined;
-  if (!bank || allowance === undefined) return undefined;
+  // A resident's allowance, which a customer abroad doesn't have (from 2026-10-16).
+  if (!bank || allowance === undefined || nonResidentTaxOn(sim, account) !== undefined) return undefined;
   const p = zonedParts(sim.now, sim.homeZone);
   const before = interestThisYear(sim, account.ownerId, instantFromZoned({ year: p.year, month: 1, day: 1, hour: 0 }, sim.homeZone));
   return Math.max(0, inSaveMoney(sim, allowance, bank.currency) - before);
@@ -475,9 +486,11 @@ export function dropPaymentsFor(sim: Simulation, person: Person, account: Accoun
 export function settleFees(sim: Simulation, account: Account): void {
   if (!closesQuarterly(account)) return;
   const due = closingFeesOf(sim, account);
+  const native = account.currency ? (account.feesDueHeld ?? 0) + (feeFor(sim, account, monthStartOf(sim, sim.now)).native ?? 0) : undefined;
   account.feesDue = 0;
+  if (account.currency) account.feesDueHeld = 0;
   if (due <= 0) return;
-  sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
+  sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due, ...(native !== undefined ? { native: -native } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
 }
 
 /** What `settleFees` would charge now, read before it's charged (a cancellation's refusal, from 2026-10-15). */
@@ -548,25 +561,41 @@ export function registerBanking(sim: Simulation): void {
       // quarter's fees beside it.
       const quarterly = closesQuarterly(account);
       if ((!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
-      const { fee } = feeFor(s, account, monthStart);
+      const { fee, native } = feeFor(s, account, monthStart);
+      // On an account in another currency the bank's own figure goes with it, kept beside the quarter's fees too.
+      const own = (n: Money | undefined) => (n !== undefined ? { native: -n } : {});
       if (quarterly) {
         account.feesDue = (account.feesDue ?? 0) + fee;
+        if (account.currency) account.feesDueHeld = (account.feesDueHeld ?? 0) + (native ?? 0);
         if (month % 3 === 0 && account.feesDue > 0) {
           s.post({
             memo: `Quarterly closing, fees: ${account.name}`, category: 'bank_fee',
             postings: [
-              { accountId: account.id, amount: -account.feesDue },
+              { accountId: account.id, amount: -account.feesDue, ...own(account.currency ? account.feesDueHeld : undefined) },
               { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: account.feesDue },
             ],
           });
           account.feesDue = 0;
+          if (account.currency) account.feesDueHeld = 0;
         }
       } else if (fee > 0) {
         s.post({
           memo: `Monthly fee: ${account.name}`, category: 'bank_fee',
           postings: [
-            { accountId: account.id, amount: -fee },
+            { accountId: account.id, amount: -fee, ...own(native) },
             { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: fee },
+          ],
+        });
+      }
+      // A bank's fee for a customer who lives abroad, on its schedule (from 2026-10-16: until then creation said it and
+      // nothing charged it), in its own figure.
+      const abroadFee = nonResidentFeeDue(s, account, item.at);
+      if (abroadFee) {
+        s.post({
+          memo: `Fee for a customer abroad: ${account.name}`, category: 'bank_fee',
+          postings: [
+            { accountId: account.id, amount: -abroadFee.fee, ...own(abroadFee.native) },
+            { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: abroadFee.fee },
           ],
         });
       }
@@ -583,15 +612,22 @@ export function registerBanking(sim: Simulation): void {
     scheduleMonthEnd(s, item.at);
   });
 
-  sim.onCommand<{ fromId: string; toId: string; amount: Money }, { moved: Money; arrivesAt?: Instant }>('bank.transfer', (p, { sim: s }) => {
+  sim.onCommand<{ fromId: string; toId: string; amount: Money; in?: string }, { moved: Money; arrivesAt?: Instant; sent?: Money; sentIn?: string }>('bank.transfer', (p, { sim: s }) => {
     const person = s.player;
     const mine = bankAccountsOf(s, person);
     const from = mine.find((a) => a.id === p.fromId);
     const to = mine.find((a) => a.id === p.toId);
     if (!from || !to) throw new CommandError('Money moves here between your own current and savings accounts.');
     if (from.id === to.id) throw new CommandError('That’s the same account.');
-    const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much to move.');
+    const typed = Math.round(Number(p.amount));
+    if (!(typed > 0)) throw new CommandError('Say how much to move.');
+    // In the sending account's own money where it's kept in another (from 2026-10-16): pounds typed are the pounds sent,
+    // and the dollars they're worth move in the save's books.
+    const save = saveCurrency(s.universe);
+    if (p.in !== undefined && p.in !== (from.currency ?? save)) throw new CommandError(`${from.name} is kept in ${from.currency ?? save}.`);
+    const own = from.currency !== undefined && p.in === from.currency;
+    if (own && typed > (from.held ?? 0)) throw new CommandError(`${from.name} holds ${formatMoney(Math.max(0, from.held ?? 0), from.currency!, { cents: false })}.`);
+    const amount = own ? (typed === from.held ? from.balance : exchange(typed, from.currency!, save) ?? typed) : typed;
     // Left open by a switch while in debt: blocked to all but repayment (from 2026-10-10).
     if (from.switchDebt) throw new CommandError(`${from.name} is blocked to everything but paying off what it owes, since the switch.`);
     if (amount > from.balance) {
@@ -608,17 +644,19 @@ export function registerBanking(sim: Simulation): void {
     if (from.closingAt !== undefined || to.closingAt !== undefined) throw new CommandError(`${(from.closingAt !== undefined ? from : to).name} is closing.`);
     // Between two banks, it goes out now and arrives in the sending bank's days (`systems/bankmoves.ts`, from
     // 2026-10-10); until then it couldn't, and a bank switch moved everything at once.
+    const sent = own ? { sent: typed, sentIn: from.currency! } : {};
     if (from.bankId !== to.bankId) {
-      const arrivesAt = sendBetweenBanks(s, person, from, to, amount);
+      const arrivesAt = sendBetweenBanks(s, person, from, to, amount, to.bankId, false, own ? typed : undefined);
       if (withdrawalFee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -withdrawalFee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: withdrawalFee }] });
-      return { moved: amount, arrivesAt };
+      return { moved: amount, arrivesAt, ...sent };
     }
+    // At one bank in another currency, the typed figure on both sides, so neither drifts from it.
     s.post({
       memo: `Moved to ${to.name}`, category: 'transfer',
-      postings: [{ accountId: from.id, amount: -amount }, { accountId: to.id, amount }],
+      postings: [{ accountId: from.id, amount: -amount, ...(own ? { native: -typed } : {}) }, { accountId: to.id, amount, ...(own && to.currency === from.currency ? { native: typed } : {}) }],
     });
     if (withdrawalFee > 0) s.post({ memo: `Savings withdrawal fee: ${from.name}`, category: 'bank_fee', postings: [{ accountId: from.id, amount: -withdrawalFee }, { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: withdrawalFee }] });
-    return { moved: amount };
+    return { moved: amount, ...sent };
   });
 
   sim.onCommand<{ bankId?: string }, { accountId: string }>('bank.open_savings', (p, { sim: s }) => {
@@ -627,6 +665,9 @@ export function registerBanking(sim: Simulation): void {
     // at the primary account's bank).
     const bank = p?.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
     if (!bank || !checkingAt(s, person, bank.id)) throw new CommandError('Savings opens beside a current account of yours at that bank.');
+    // Nothing new at a bank in another country (from 2026-10-16), in its words.
+    const abroad = abroadRefusal(person, bank);
+    if (abroad) throw new CommandError(abroad);
     if (bankAccountsOf(s, person).some((a) => a.kind === 'savings' && a.bankId === bank.id)) throw new CommandError(`You already have a savings account at ${bank.name}.`);
     return { accountId: openOne(s, person, bank, 'savings', 0).id };
   });

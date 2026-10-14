@@ -10,7 +10,7 @@
  * London posted over Easter Monday and one in Tokyo over Golden Week.
  */
 
-import { addDays, zonedParts, type Instant } from '../core/time';
+import { addDays, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { holidaysOn } from './holidays';
 import { usBankHoliday } from './usholidays';
 import { CITIES } from './geography';
@@ -74,4 +74,23 @@ export function businessDaysBetween(from: Instant, to: Instant, countryId: strin
   let days = 0;
   for (let at = addDays(from, 1, zone); at <= to && days <= 30; at = addDays(at, 1, zone)) if (businessDay(countryId, keyOf(at, zone), regionId)) days += 1;
   return days;
+}
+
+/**
+ * The moment a payment between two countries arrives (from 2026-10-16): so many days that are business days at both
+ * banks, the sending one's country and the receiving one's, counted from the day after it's sent, at five in the
+ * afternoon. A day either country keeps as a holiday counts for neither, as a payment that clears through both waits on
+ * both: a pound payment sent on the Friday before England's summer bank holiday lands on the Wednesday, and a dollar one
+ * sent the Friday before Labor Day lands on the Wednesday too.
+ */
+export function afterBusinessDaysIn(from: Instant, business: number, places: readonly { countryId: string; regionId?: string }[], zone: string): Instant {
+  let at = from;
+  let left = business;
+  for (let guard = 0; left > 0 && guard < 90; guard += 1) {
+    at = addDays(at, 1, zone);
+    const day = keyOf(at, zone);
+    if (places.every((p) => businessDay(p.countryId, day, p.regionId))) left -= 1;
+  }
+  const p = zonedParts(at, zone);
+  return instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 17 }, zone);
 }

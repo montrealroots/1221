@@ -379,7 +379,9 @@ export function spend(sim: Simulation, person: Person, amount: Money, memo: stri
   // A debit the bank couldn't pay went back unpaid first, where it charges
   // for that; a card purchase it can't pay is only declined.
   if (bank.short > 0 && category !== 'food') chargeReturned(sim, person, bank.short);
-  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) chargeForPurchase(sim, person);
+  // What the debit card took from the account, for a card from a bank abroad's fee on it (from 2026-10-16).
+  const byCard = current ? -bank.postings.filter((q) => q.accountId === current.id).reduce((n, q) => n + q.amount, 0) : 0;
+  if (category === 'food' && bank.postings.length > 0 && creditFirst < amount) chargeForPurchase(sim, person, byCard);
   // On what the debit card paid, which until 2026-10-10 counted the part the credit card took when the account ran short.
   if (category === 'food') countRoundUps(sim, person, amount - creditFirst - bank.short, fromCard, card);
   return true;

@@ -50,6 +50,8 @@ import { residenceIn } from './residence';
 import { hasSsn } from './taxid';
 import { startRefusal } from './life';
 import { last4For, REPLACED_KIND } from './security';
+import { arriveFromAbroad, cardAbroadRefusal, heldFromAbroad, sendAbroad } from './abroad';
+import { exchange } from '../content/currency';
 
 export const APPLICATION_KIND = 'bank.application';
 export const ARRIVES_KIND = 'bank.transfer_arrives';
@@ -218,9 +220,21 @@ function limitRefusal(sim: Simulation, person: Person, bank: Bank | undefined, a
 /**
  * Sends money from one of the holder's accounts to their account at another bank: out now, into the money in transit,
  * and in on the day it arrives (`ARRIVES_KIND`). `toBankId` alone names an account still being opened there.
+ *
+ * Between banks in two countries it's a payment abroad (`systems/abroad.ts`, from 2026-10-16), whatever asked for it: a
+ * transfer, savings closing, a current account closing, an opening deposit, a bank closing a home account. That's decided
+ * first, before the sending country's same-day path: until then a pound payment from Barclays to Chase would have taken
+ * Britain's Faster Payments and landed at once, free. `sent` is the amount in the sending account's own money, where the
+ * caller knows it (a figure typed in pounds); otherwise it's worked from `amount`, the whole of what the account holds
+ * where that's what goes.
  */
-export function sendBetweenBanks(sim: Simulation, person: Person, from: Account, to: Account | undefined, amount: Money, toBankId = to?.bankId, byTheBank = false): Instant {
+export function sendBetweenBanks(sim: Simulation, person: Person, from: Account, to: Account | undefined, amount: Money, toBankId = to?.bankId, byTheBank = false, sent?: Money): Instant {
   const toBank = toBankId ? bankById(toBankId) : undefined;
+  const fromBank = from.bankId ? bankById(from.bankId) : undefined;
+  if (fromBank && toBank && fromBank.iso !== toBank.iso) {
+    const own = sent ?? (from.currency === undefined ? amount : amount === from.balance ? from.held ?? 0 : exchange(amount, saveCurrency(sim.universe), from.currency) ?? amount);
+    return sendAbroad(sim, person, from, to, own, toBankId, byTheBank);
+  }
   // What a closing bank remits is its own payment, not the customer's transfer, and isn't held to its limits (from
   // 2026-10-10: until then a Citi close past $10,000 failed halfway, its interest settled and the account left open).
   const no = byTheBank ? undefined : limitRefusal(sim, person, from.bankId ? bankById(from.bankId) : undefined, amount);
@@ -383,6 +397,11 @@ export function registerBankMoves(sim: Simulation): void {
       s.schedule({ at: review.at + 60_000, kind: ARRIVES_KIND, label: item.label, category: 'home', priority: 37, payload: item.payload });
       return;
     }
+    // A payment abroad lands less the margin and the receiving bank's fee, or comes back less them (from 2026-10-16).
+    if (item.payload.abroad) {
+      arriveFromAbroad(s, item, person, to);
+      return;
+    }
     if (to) {
       s.post({ memo: `From ${s.universe.accounts[String(item.payload.fromId)]?.name ?? 'your other bank'}`, category: 'transfer', postings: [{ accountId: transit.id, amount: -amount }, { accountId: to.id, amount }] });
       checkFunded(to);
@@ -422,6 +441,11 @@ export function registerBankMoves(sim: Simulation): void {
     if (!account) throw new CommandError('Only an open current account of yours can be primary.');
     if (account.id === person.primaryAccountId) throw new CommandError(`${account.name} is primary already.`);
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    // A home account's card pays here only where its bank says it works abroad and the research has its fee (from
+    // 2026-10-16): SMBC's Global Service has the card canceled before leaving.
+    const abroadBank = heldFromAbroad(s, account) ? bankById(account.bankId!) : undefined;
+    const noCard = abroadBank ? cardAbroadRefusal(abroadBank) : undefined;
+    if (noCard) throw new CommandError(noCard);
     // Every instruction that followed the primary account is pinned where it is first, so none of them moves.
     pinInstructions(s, person);
     const before = person.primaryAccountId;
@@ -435,6 +459,8 @@ export function registerBankMoves(sim: Simulation): void {
     const account = bankAccountsOf(s, person).find((a) => a.id === p.accountId);
     if (!account) throw new CommandError('Wages are paid into an open current or savings account of yours.');
     if (account.closingAt !== undefined) throw new CommandError(`${account.name} is closing.`);
+    // From 2026-10-16: an account kept at home, at a bank in another country, takes no wages from here.
+    if (heldFromAbroad(s, account)) throw new CommandError('Yale pays into an account in America.');
     return { at: changeDeposits(s, person, account.id) };
   });
 

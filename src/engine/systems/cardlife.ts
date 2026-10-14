@@ -41,6 +41,7 @@ import { ageOn } from './mortality';
 import { adoptEveryday, cardFor, cardOf, cardsOf, cardTerms, DUE_KIND, ensurePrimary, freshCardState, MIN_CYCLE_DAYS, scheduleStatement, stateOf, statementDayRefusal, STATEMENT_KIND } from './credit';
 import { transferOnArrival, transferRefusal } from './cardoffers';
 import { last4For } from './security';
+import { abroadRefusal } from './abroad';
 import { bankAccountsOf, bankOf } from './banking';
 
 export const ARRIVES_KIND = 'card.arrives';
@@ -106,6 +107,9 @@ export function registerCardLife(sim: Simulation): void {
     const bank = p?.bankId ? bankById(p.bankId) : home;
     if (!bank) throw new CommandError('SLATE doesn’t know that bank.');
     if (bank.iso !== home.iso) throw new CommandError(`A card is applied for in the country you bank in; ${bank.name} is elsewhere.`);
+    // A bank in another country than the one they live in, where their primary account is kept at home (from 2026-10-16).
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     const product = CARDS[bank.id];
     if (product && 'none' in product) throw new CommandError(`${bank.name} doesn’t issue a credit card.`);
     // A balance moving onto the new card, from the card named or the everyday one (C31).

@@ -36,7 +36,7 @@ import { BREAK_NOTICE, END_WORDS, ESCHEAT_NOTICE_DAYS } from '../../systems/acco
 import { roundUpMoney } from '../../systems/roundups';
 import { LOOKAHEAD_DAYS } from '../../systems/obligations';
 import { wealthIn } from '../../world/bootstrap';
-import { ASSUMED_OPENING_AGE, RETENTION_CONFIDENCE, allHomeTerms, homeTerms } from '../homeaccounts';
+import { ASSUMED_DAYS, ASSUMED_MARGIN, ASSUMED_OPENING_AGE, NON_RESIDENT_TAX, RETENTION_CONFIDENCE, US_WIRES, allHomeTerms, homeTerms } from '../homeaccounts';
 import { splitOf } from '../../systems/homeaccount';
 import type { GuideEntry } from './types';
 
@@ -52,6 +52,8 @@ const BORROWING = 'borrowing';
 
 /** Dollars as a US bank writes them: whole where the sum is whole, with its cents where it isn't. */
 const usd = (cents: number): string => formatMoney(cents, 'USD', { cents: cents % 100 !== 0 });
+/** A share as the guide writes it: 2.75%, 15.315%. */
+const percentOf = (rate: number): string => `${Number((rate * 100).toFixed(3))}%`;
 /** A fee, or "free" for none. */
 const fee = (cents: number | undefined): string => (cents ? usd(cents) : 'free');
 /** The same, opening a sentence. */
@@ -1322,22 +1324,32 @@ export const MONEY: readonly GuideEntry[] = [
       'Moved: your American accounts open just as with nothing kept, and the bank there keeps its current account at nothing.',
       'Each account at the bank there keeps its own figure in its money, beside what it’s worth in dollars, and counts as used the morning you arrive.',
     ],
-    later: ['Its savings earns the bank’s interest, and the bank charges its own monthly fee, as it would at home.'],
+    later: [
+      'Its savings earns the bank’s interest, and the bank charges its own monthly fee, as it would at home, and any fee it charges a customer abroad on its own schedule, in its money.',
+      `Its country takes its tax on a customer abroad from the interest: nothing in Britain, Germany or France, ${percentOf(NON_RESIDENT_TAX.JP!.rate)} in Japan.`,
+      `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
+      `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
+      'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
+    ],
     interpret: [
       '“Kept At … : £… In …” is the figure the bank holds, in its money.',
       `What follows from keeping it says how sure the research was: ${RETENTION_CONFIDENCE.H.toLowerCase().replace(/\.$/, '')}; or only partly; or the bank publishes nothing and it’s SLATE’s assumption.`,
-      'A bank that closes an account for a customer abroad, Barclays among them, is offered with the day it closes; SLATE doesn’t carry out the closing, any charge for a customer abroad, or a payment between countries yet.',
+      'Move Money’s line under the amount says what the bank sends, for what fee, at what margin, what arrives after the receiving bank’s fee, and on what day.',
     ],
     unavailable: [
       '“You lived in America before Yale; your account is the one here.”',
       '“SLATE has no research on what … does when a customer moves to America.”',
       '“… opens an account from …; you left at ….” and “You began living there after Yale began.”',
+      'Savings, a term deposit, a loan, an overdraft or a card at the bank there, refused in its words: it opens nothing new for a customer abroad.',
+      '“Yale pays into an account in America.” Wages are paid here.',
+      '“SLATE has no research on what … charges to send a payment abroad.”, and the same for receiving one, where its fee isn’t published.',
     ],
     mistakes: ['Choosing where you were born when you grew up somewhere else: the bank keeps the account of a customer who lived in its country, so say where you lived.'],
     related: ['bank.accounts', 'bank.other-banks'],
     connections: [
       { to: 'bank.accounts', kind: 'immediate', why: 'The accounts kept at home are among your accounts from the first morning, beside the American ones.' },
       { to: 'bank.upkeep', kind: 'scheduled', why: 'The bank there pays its interest and charges its own fee at the month’s end, as any bank does.' },
+      { to: 'bank.transfer', kind: 'optional', why: 'Money moves between it and your American account as a payment abroad, in both countries’ business days.' },
     ],
     example: {
       setup: `A student who grew up in London from a Modest family, banking at ${BARCLAYS.name}, with Chase in New Haven.`,
