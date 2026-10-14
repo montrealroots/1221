@@ -367,7 +367,8 @@ describe('found by the played runs (2026-10-12)', () => {
     const sim = student('brief-one-callback');
     mastered(sim);
     const b = BRIEF_BY_ID['brief-thriller']!;
-    genreState(sim.player, 'thriller').familiarity = 70;
+    // The genre known in full: 70 was past the 0.3 that completed it until 2026-10-16, and short of the 0.9 from then.
+    genreState(sim.player, 'thriller').familiarity = BRIEF.complete.genre * 100;
     go(sim, 'brief.choose', { brief: b.id, reading: b.readings[0]!.id });
     recordOf(sim.player, b.id).prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
     go(sim, 'practice.self_tape', { genre: 'thriller' });

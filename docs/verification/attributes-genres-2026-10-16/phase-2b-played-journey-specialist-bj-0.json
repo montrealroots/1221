@@ -1,0 +1,149 @@
+{
+ "profile": "specialist",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 109.8,
+  "training": 90,
+  "study": 30
+ },
+ "takes": 18,
+ "briefs": 10,
+ "readings": 13,
+ "genres": 10,
+ "purposes": {
+  "first": 10,
+  "callback": 5,
+  "another-reading": 3
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 65.6,
+   "min": 62.7,
+   "max": 68.5
+  },
+  "m2": {
+   "n": 3,
+   "mean": 62.1,
+   "min": 58.8,
+   "max": 67.8
+  },
+  "m3": {
+   "n": 13,
+   "mean": 62.4,
+   "min": 52.5,
+   "max": 68.4
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 10,
+  "mean": 1.2,
+  "max": 2.5,
+  "over1": 6
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 5,
+  "longestSameTarget": 3,
+  "sequence": [
+   "7:focus@50",
+   "14:focus@50",
+   "21:focus@51",
+   "28:vocal@50",
+   "35:vocal@50",
+   "42:physical@51",
+   "49:vocal@51",
+   "56:physical@52",
+   "63:stamina@39",
+   "70:vocal@51",
+   "77:stamina@36",
+   "84:stamina@35",
+   "91:stamina@35",
+   "98:focus@54",
+   "105:stamina@35",
+   "112:listening@53",
+   "119:focus@55"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 55,
+  "imagination": 90,
+  "focus": 55,
+  "memory": 52,
+  "adaptability": 51,
+  "composure": 90,
+  "vocal": 54,
+  "physical": 58,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 111,
+   "brief": "brief-coming_of_age",
+   "genre": "coming_of_age",
+   "reading": "loyal",
+   "sides": "set",
+   "purpose": "callback",
+   "overall": 59.8,
+   "chief": "Listening And Responsiveness held back the connection by 34.6 points"
+  },
+  {
+   "day": 112,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "tradecraft",
+   "sides": "",
+   "purpose": "first",
+   "overall": 68.4,
+   "chief": "Focus held back the execution by 26.6 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "tradecraft",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 62.2,
+   "chief": "Focus held back the execution by 32.3 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "mother",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.1,
+   "chief": "Physical Expression held back the execution by 16.1 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-horror",
+   "genre": "horror",
+   "reading": "trust",
+   "sides": "",
+   "purpose": "first",
+   "overall": 65.2,
+   "chief": "Listening And Responsiveness held back the responsiveness by 29.7 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-concert_film",
+   "genre": "concert_film",
+   "reading": "decided",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 68.3,
+   "chief": "Focus held back the execution by 18.7 points"
+  }
+ ]
+}

@@ -601,13 +601,15 @@ describe('casting (castFit/castScore)', () => {
     expect(rows.length).toBeGreaterThanOrEqual(3);
     for (let i = 1; i < rows.length; i += 1) expect(rows[i]!.score, rows[i]!.name).toBeLessThanOrEqual(rows[i - 1]!.score);
     expect(rows.map((r) => ({ part: r.part, size: r.size }))).toEqual(partsByRule(K));
-    // Where the parts for a title run out before a bigger one for the other, a lower read holds the bigger part: Theo
-    // Walsh's supporting Adolphus Cusins at a read under Hannah Bennett's featured Sarah Undershaft.
-    const theo = row(K, 'Theo Walsh');
+    // Where the parts for a title run out before a bigger one for the other, a lower read holds the bigger part: Noah
+    // Kowalski's supporting Bill Walker at a read under Hannah Bennett's featured Jenny Hill. Until 2026-10-16 it was Theo
+    // Walsh's supporting Adolphus Cusins under Hannah's featured Sarah Undershaft; from then casting's read weighs a
+    // night's abilities as the play demands (`BASE_INPUTS`), and Theo reads over Hannah, level with Aaliyah Osei.
+    const noah = row(K, 'Noah Kowalski');
     const hannah = row(K, 'Hannah Bennett');
-    expect(theo).toMatchObject({ part: 'Adolphus Cusins', size: 'supporting' });
-    expect(hannah).toMatchObject({ part: 'Sarah Undershaft', size: 'featured' });
-    expect(theo.score).toBeLessThan(hannah.score);
+    expect(noah).toMatchObject({ part: 'Bill Walker', size: 'supporting' });
+    expect(hannah).toMatchObject({ part: 'Jenny Hill', size: 'featured' });
+    expect(noah.score).toBeLessThan(hannah.score);
   }, 60_000);
 });
 

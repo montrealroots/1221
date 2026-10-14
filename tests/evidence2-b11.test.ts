@@ -64,6 +64,7 @@ import { returnsOf } from '@/engine/systems/taxreturn';
 import { openDecisions } from '@/engine/world/world';
 import { FEATURE_LABEL } from '@/engine/systems/experience';
 import { BRIEFS } from '@/engine/content/briefs';
+import { BRIEF, genreKnown } from '@/engine/systems/briefs';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -320,7 +321,7 @@ describe('p-abilities', () => {
      * partnered work, which lists no condition for it.
      */
     const TIRED: Record<string, string> = {
-      'Emotional Depth': 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness',
+      'Emotional Depth': 'believability', Imagination: 'believability', Presence: 'connection', 'Listening And Responsiveness': 'connection, responsiveness',
       Focus: 'execution, consistency', Memory: 'execution', Adaptability: 'responsiveness', Composure: 'consistency',
       'Vocal Expression': 'execution, consistency', 'Physical Expression': 'execution', Discipline: 'consistency, execution', Stamina: 'consistency',
     };
@@ -337,10 +338,10 @@ describe('p-abilities', () => {
     expect(said).toEqual([48, 54, 59]);
     twins.forEach(({ rows }, i) => {
       expect(rows.size).toBe(12);
-      // Imagination is read in interpretation alone, which no task's conditions reach.
-      expect(rows.get('Imagination')![4]).toBe('Nothing holds it back');
-      const named = [...rows].filter(([k]) => k !== 'Imagination');
-      expect(named).toHaveLength(11);
+      // Every row: Imagination too from 2026-10-16, read a little in believability (`BASE_INPUTS`), where until then it
+      // was read in interpretation alone, which no task's conditions reach, and held nothing back.
+      const named = [...rows];
+      expect(named).toHaveLength(12);
       for (const [name, row] of named) {
         const m = /^Readiness (\d+), under 60: (.+)$/.exec(row[4]!);
         expect(m, `${name}: ${row[4]}`).not.toBeNull();
@@ -514,11 +515,29 @@ describe('p-journey-history', () => {
     expect(cold.value!.overall).toBeLessThan(65);
     expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[0]!.id } }).ok).toBe(true);
     expect(journeyOf(sim.player).milestones).toEqual([]);
-    for (const step of ['read', 'read', 'read', 'lines', 'lines', 'lines', 'rehearse', 'rehearse', 'rehearse', 'rehearse']) {
+    // From 2026-10-16 a genre never met keeps three quarters of a take's interpretation (`EVALUATION.partFloor`), where it
+    // kept 0.35 and held a master's prepared take under 80 until then; and it's known in full at 90, not 30. So the strong
+    // take is now the one a step of each part leaves, the reading then changed, which keeps half the breakdown; the
+    // distinction-level one the brief prepared with the genre still unknown; and mastery the genre studied once a day until
+    // the brief counts it known. (Until then the strong take was the prepared one, held under 80 by the genre unknown.)
+    const step = (s: string) => { rest(); expect(sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok, s).toBe(true); };
+    for (const s of ['read', 'lines', 'rehearse']) step(s);
+    expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[1]!.id } }).ok).toBe(true);
+    tape();
+    for (const s of ['read', 'read', 'read', 'lines', 'lines', 'rehearse', 'rehearse', 'rehearse']) step(s);
+    for (let k = 0; k < 3; k++) tape();
+    // Once a day, at the first hour the calendar leaves free.
+    let studies = 0;
+    for (let h = 0; h < 24 * 60 && genreKnown(sim.player, b) < BRIEF.complete.genre; h++) {
       rest();
-      expect(sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step } }).ok, step).toBe(true);
+      if (sim.execute({ kind: 'genre.study', payload: { genre } }).ok) { studies += 1; sim.advanceTo(sim.now + 20 * MS_HOUR); } else sim.advanceTo(sim.now + MS_HOUR);
     }
-    for (let k = 0; k < 10; k++) { if (k === 6) sim.advanceTo(sim.now + 20 * MS_HOUR); tape(); }
+    // 100 × 0.08 of what's left, once a day: past 90 on the 28th at the soonest (0.92^28 = 0.097), more where two fell
+    // on one day and the second kept half.
+    expect(studies).toBeGreaterThanOrEqual(28);
+    // The breakdown, two readings in, finished on a day of its own.
+    step('read');
+    for (let k = 0; k < 3; k++) { sim.advanceTo(sim.now + 2 * MS_HOUR); tape(); }
     // Found here in the work kept, by the bands' own lines (`EVALUATION.bands`: strong at 65, exceptional at 80).
     const work = [...sim.player.work!].sort((a, b2) => a.at - b2.at);
     const strong = work.find((w) => w.overall >= 65)!;

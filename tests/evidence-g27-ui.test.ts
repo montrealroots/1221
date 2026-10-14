@@ -224,7 +224,9 @@ describe('c-performerTitle', () => {
     // anyone (`companyPart`), and never one written for the other.
     for (const sim of lives) expect(sim.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
     const shows = (sim: Simulation) => sim.player.school!.summer!.shows!.map((s) => [s.play, s.role, s.size]);
-    expect(shows(her)).toEqual([['A Marriage Proposal', 'Natalya Stepanovna', 'lead'], ['Riders To The Sea', 'Maurya', 'lead'], ['Trifles', 'Mrs Hale', 'lead']]);
+    // Riders To The Sea's Maurya until 2026-10-16; from then a night, and so the company's read of her, weighs each ability
+    // as the play demands (`BASE_INPUTS`), and she reads behind another actress for it: Cathleen, also written for one.
+    expect(shows(her)).toEqual([['A Marriage Proposal', 'Natalya Stepanovna', 'lead'], ['Riders To The Sea', 'Cathleen', 'supporting'], ['Trifles', 'Mrs Hale', 'lead']]);
     expect(shows(him)).toEqual([['A Marriage Proposal', 'Ivan Lomov', 'lead'], ['Riders To The Sea', 'Bartley', 'supporting'], ['Trifles', 'Sheriff Peters', 'supporting']]);
     for (const [play, role] of shows(her)) expect(partOf(SUMMER_PLAYS, play!, role!).for, `${role}`).toBe('actress');
     for (const [play, role] of shows(him)) expect(partOf(SUMMER_PLAYS, play!, role!).for, `${role}`).toBe('actor');
@@ -237,7 +239,7 @@ describe('c-performerTitle', () => {
     expect(shows(kept)).toEqual(shows(her));
   });
 
-  it('PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Bergmann and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title', () => {
+  it('PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title', () => {
     const casts = (['she/her', 'he/him'] as const).map((pronouns) => {
       let sim = working(ada('g27-cast-2', { pronouns }));
       sim.advanceTo(ET(2027, 8, 1, 12));
@@ -247,7 +249,7 @@ describe('c-performerTitle', () => {
       expect(term?.at).toBe(ET(2027, 8, 23, 9));
       sim.advanceTo(ET(2027, 8, 23, 8, 59));
       const bond = (name: string) => sim.player.school!.classmates.find((m) => m.name === name)!.bond ?? 0;
-      const names = ['Aaliyah Kim', 'Daniel Walsh', 'Theo Rivera'];
+      const names = ['Grace Patel', 'Daniel Walsh', 'Theo Rivera'];
       const before = names.map(bond);
       sim.advanceTo(ET(2027, 8, 23, 9, 1));
       return { sim, moved: names.map((n, i) => bond(n) - before[i]!) };
@@ -256,13 +258,15 @@ describe('c-performerTitle', () => {
     const school = (sim: Simulation) => sim.player.school!;
 
     // Directors' Thesis Production I is Spring Awakening for this class; her part is written for an actress, his for an actor.
-    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Frau Bergmann', size: 'supporting' });
-    expect(school(him.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Hänschen Rilow', size: 'featured' });
-    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Frau Bergmann').for).toBe('actress');
-    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Hänschen Rilow').for).toBe('actor');
+    // Frau Bergmann and Hänschen Rilow, and Aaliyah Kim as Wendla, until 2026-10-16, when casting's read of a night came
+    // to weigh each ability as the play demands (`BASE_INPUTS`): the parts are still each written for the title cast.
+    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Frau Gabor', size: 'featured' });
+    expect(school(him.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Ernst Röbel', size: 'featured' });
+    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Frau Gabor').for).toBe('actress');
+    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Ernst Röbel').for).toBe('actor');
     const castOf = (sim: Simulation) => Object.fromEntries((school(sim).casting!.cast ?? []).map((c) => [c.name, c.part]));
-    expect(castOf(her.sim)).toMatchObject({ 'Aaliyah Kim': 'Wendla Bergmann', 'Daniel Walsh': 'Melchior Gabor', 'Theo Rivera': 'Moritz Stiefel' });
-    expect(castOf(him.sim)).toMatchObject({ 'Aaliyah Kim': 'Wendla Bergmann', 'Daniel Walsh': 'Melchior Gabor', 'Theo Rivera': 'Moritz Stiefel' });
+    expect(castOf(her.sim)).toMatchObject({ 'Grace Patel': 'Wendla Bergmann', 'Daniel Walsh': 'Melchior Gabor', 'Theo Rivera': 'Moritz Stiefel' });
+    expect(castOf(him.sim)).toMatchObject({ 'Grace Patel': 'Wendla Bergmann', 'Daniel Walsh': 'Melchior Gabor', 'Theo Rivera': 'Moritz Stiefel' });
     expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Wendla Bergmann')).toMatchObject({ size: 'lead', for: 'actress' });
     expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Melchior Gabor')).toMatchObject({ size: 'lead', for: 'actor' });
     expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Moritz Stiefel')).toMatchObject({ size: 'lead', for: 'actor' });

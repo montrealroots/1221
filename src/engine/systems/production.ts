@@ -606,7 +606,10 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     // next work-through gave the same note again as "Better since the last note".
     if (note.focus.kind === 'blocking') {
       if (proc.blockingMissed > 0) proc.blockingMissed -= 1;
-      proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * (1 - proc.blocking));
+      // By adaptability (`stepSpeed`, from 2026-10-16): a note taken into the staging is a change made without losing the
+      // rest. Until then adaptability's description said a note worked went further with it, and only coursework's
+      // revision read it.
+      proc.blocking = clamp01(proc.blocking + PROCESS.own.blocking * stepSpeed(s, person, 'adaptability') * (1 - proc.blocking));
     }
     return { worked: true };
   });

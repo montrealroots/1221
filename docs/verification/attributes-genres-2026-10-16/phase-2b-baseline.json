@@ -1,0 +1,4055 @@
+{
+ "measured": "tools/ag-baseline.ts",
+ "pieces": {
+  "brief": 298,
+  "scene": 56,
+  "night": 30,
+  "casting": 30,
+  "coursework": 13
+ },
+ "courseworkTemplates": [
+  "voice-sequence (voice)",
+  "speech-drill (voice)",
+  "movement-score (movement)",
+  "alexander-practice (movement)",
+  "play-game (improvisation)",
+  "table-work (written)",
+  "fight-sequence (partnered)",
+  "intimacy-practice (partnered)",
+  "context-presentation (written)",
+  "song (song)",
+  "self-tape (camera)",
+  "clown-turn (clown)",
+  "audition-pair (audition)"
+ ],
+ "abilityEffects": {
+  "emotionalDepth": {
+   "all": {
+    "n": 427,
+    "moved": 421,
+    "movedShare": 0.99,
+    "mean": 0.77,
+    "cvMoved": 0.44
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.83,
+     "max": 1.7,
+     "cvMoved": 0.4
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.62,
+     "max": 1.1,
+     "cvMoved": 0.41
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.63,
+     "max": 1.2,
+     "cvMoved": 0.45
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.65,
+     "max": 1.3,
+     "cvMoved": 0.48
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 7,
+     "mean": 0.49,
+     "max": 1.9,
+     "cvMoved": 0.7
+    }
+   }
+  },
+  "presence": {
+   "all": {
+    "n": 427,
+    "moved": 417,
+    "movedShare": 0.98,
+    "mean": 0.34,
+    "cvMoved": 0.65
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.24,
+     "max": 0.65,
+     "cvMoved": 0.44
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.48,
+     "max": 0.6,
+     "cvMoved": 0.16
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.74,
+     "max": 0.9,
+     "cvMoved": 0.14
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.79,
+     "max": 0.9,
+     "cvMoved": 0.11
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 3,
+     "mean": 0.26,
+     "max": 1.6,
+     "cvMoved": 0.37
+    }
+   }
+  },
+  "listening": {
+   "all": {
+    "n": 427,
+    "moved": 418,
+    "movedShare": 0.98,
+    "mean": 0.66,
+    "cvMoved": 0.36
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.58,
+     "max": 1,
+     "cvMoved": 0.33
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.85,
+     "max": 1.1,
+     "cvMoved": 0.12
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.75,
+     "max": 1,
+     "cvMoved": 0.15
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 1.01,
+     "max": 1.2,
+     "cvMoved": 0.14
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.48,
+     "max": 2.2,
+     "cvMoved": 0.27
+    }
+   }
+  },
+  "imagination": {
+   "all": {
+    "n": 427,
+    "moved": 424,
+    "movedShare": 0.99,
+    "mean": 0.63,
+    "cvMoved": 0.31
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.6,
+     "max": 1.2,
+     "cvMoved": 0.27
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.64,
+     "max": 1.1,
+     "cvMoved": 0.24
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.74,
+     "max": 1.1,
+     "cvMoved": 0.22
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.75,
+     "max": 1,
+     "cvMoved": 0.24
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 10,
+     "mean": 0.87,
+     "max": 1.9,
+     "cvMoved": 0.4
+    }
+   }
+  },
+  "focus": {
+   "all": {
+    "n": 427,
+    "moved": 422,
+    "movedShare": 0.99,
+    "mean": 0.57,
+    "cvMoved": 0.48
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 297,
+     "mean": 0.61,
+     "max": 1.3,
+     "cvMoved": 0.38
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.47,
+     "max": 1,
+     "cvMoved": 0.59
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.45,
+     "max": 1,
+     "cvMoved": 0.55
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.45,
+     "max": 1.1,
+     "cvMoved": 0.58
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 9,
+     "mean": 0.68,
+     "max": 2.4,
+     "cvMoved": 0.83
+    }
+   }
+  },
+  "memory": {
+   "all": {
+    "n": 427,
+    "moved": 404,
+    "movedShare": 0.95,
+    "mean": 0.47,
+    "cvMoved": 0.77
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 286,
+     "mean": 0.51,
+     "max": 1.5,
+     "cvMoved": 0.79
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.24,
+     "max": 0.5,
+     "cvMoved": 0.58
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.52,
+     "max": 0.7,
+     "cvMoved": 0.25
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.54,
+     "max": 0.8,
+     "cvMoved": 0.31
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 2,
+     "mean": 0.08,
+     "max": 0.7,
+     "cvMoved": 0.57
+    }
+   }
+  },
+  "adaptability": {
+   "all": {
+    "n": 427,
+    "moved": 418,
+    "movedShare": 0.98,
+    "mean": 0.63,
+    "cvMoved": 0.35
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.6,
+     "max": 1.5,
+     "cvMoved": 0.38
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.68,
+     "max": 1.1,
+     "cvMoved": 0.24
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.76,
+     "max": 1.3,
+     "cvMoved": 0.27
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.82,
+     "max": 1.3,
+     "cvMoved": 0.24
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.2,
+     "max": 0.8,
+     "cvMoved": 0.27
+    }
+   }
+  },
+  "composure": {
+   "all": {
+    "n": 427,
+    "moved": 417,
+    "movedShare": 0.98,
+    "mean": 0.68,
+    "cvMoved": 0.39
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.75,
+     "max": 1.75,
+     "cvMoved": 0.4
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.56,
+     "max": 0.7,
+     "cvMoved": 0.13
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.52,
+     "max": 0.7,
+     "cvMoved": 0.15
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.55,
+     "max": 0.7,
+     "cvMoved": 0.14
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 3,
+     "mean": 0.15,
+     "max": 0.8,
+     "cvMoved": 0.46
+    }
+   }
+  },
+  "vocal": {
+   "all": {
+    "n": 427,
+    "moved": 294,
+    "movedShare": 0.69,
+    "mean": 0.38,
+    "cvMoved": 0.65
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 178,
+     "mean": 0.36,
+     "max": 1.5,
+     "cvMoved": 0.52
+    },
+    "scene": {
+     "n": 56,
+     "moved": 52,
+     "mean": 0.34,
+     "max": 0.9,
+     "cvMoved": 0.62
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.47,
+     "max": 0.9,
+     "cvMoved": 0.5
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.49,
+     "max": 1,
+     "cvMoved": 0.53
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 4,
+     "mean": 0.58,
+     "max": 3.1,
+     "cvMoved": 0.7
+    }
+   }
+  },
+  "physical": {
+   "all": {
+    "n": 427,
+    "moved": 290,
+    "movedShare": 0.68,
+    "mean": 0.35,
+    "cvMoved": 0.62
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 176,
+     "mean": 0.33,
+     "max": 1.35,
+     "cvMoved": 0.49
+    },
+    "scene": {
+     "n": 56,
+     "moved": 48,
+     "mean": 0.25,
+     "max": 0.7,
+     "cvMoved": 0.62
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.48,
+     "max": 1,
+     "cvMoved": 0.5
+    },
+    "casting": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.51,
+     "max": 1.1,
+     "cvMoved": 0.5
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 6,
+     "mean": 0.61,
+     "max": 3.1,
+     "cvMoved": 0.77
+    }
+   }
+  },
+  "discipline": {
+   "all": {
+    "n": 427,
+    "moved": 394,
+    "movedShare": 0.92,
+    "mean": 0.36,
+    "cvMoved": 0.66
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 298,
+     "mean": 0.41,
+     "max": 1.25,
+     "cvMoved": 0.66
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.2,
+     "max": 0.3,
+     "cvMoved": 0.24
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.38,
+     "max": 0.5,
+     "cvMoved": 0.16
+    },
+    "casting": {
+     "n": 30,
+     "moved": 0,
+     "mean": 0,
+     "max": 0,
+     "cvMoved": null
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 10,
+     "mean": 0.51,
+     "max": 1,
+     "cvMoved": 0.32
+    }
+   }
+  },
+  "stamina": {
+   "all": {
+    "n": 427,
+    "moved": 388,
+    "movedShare": 0.91,
+    "mean": 0.37,
+    "cvMoved": 0.54
+   },
+   "byKind": {
+    "brief": {
+     "n": 298,
+     "moved": 295,
+     "mean": 0.39,
+     "max": 0.83,
+     "cvMoved": 0.54
+    },
+    "scene": {
+     "n": 56,
+     "moved": 56,
+     "mean": 0.33,
+     "max": 0.7,
+     "cvMoved": 0.55
+    },
+    "night": {
+     "n": 30,
+     "moved": 30,
+     "mean": 0.58,
+     "max": 0.7,
+     "cvMoved": 0.16
+    },
+    "casting": {
+     "n": 30,
+     "moved": 0,
+     "mean": 0,
+     "max": 0,
+     "cvMoved": null
+    },
+    "coursework": {
+     "n": 13,
+     "moved": 7,
+     "mean": 0.42,
+     "max": 1.4,
+     "cvMoved": 0.5
+    }
+   }
+  }
+ },
+ "abilityCorrelation": {
+  "top": [
+   {
+    "a": "discipline",
+    "b": "stamina",
+    "r": 0.55
+   },
+   {
+    "a": "physical",
+    "b": "stamina",
+    "r": 0.499
+   },
+   {
+    "a": "presence",
+    "b": "listening",
+    "r": 0.497
+   },
+   {
+    "a": "vocal",
+    "b": "stamina",
+    "r": 0.443
+   },
+   {
+    "a": "memory",
+    "b": "discipline",
+    "r": 0.436
+   },
+   {
+    "a": "listening",
+    "b": "adaptability",
+    "r": 0.381
+   },
+   {
+    "a": "emotionalDepth",
+    "b": "composure",
+    "r": 0.355
+   },
+   {
+    "a": "presence",
+    "b": "adaptability",
+    "r": 0.344
+   },
+   {
+    "a": "memory",
+    "b": "stamina",
+    "r": 0.32
+   },
+   {
+    "a": "presence",
+    "b": "imagination",
+    "r": 0.266
+   }
+  ],
+  "over095": 0,
+  "over090": 0
+ },
+ "techniqueEffects": {
+  "accents": {
+   "moved": 6,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 2,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 3,
+     "mean": 0.02
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.05
+    }
+   }
+  },
+  "audition": {
+   "moved": 1,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "character": {
+   "moved": 7,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 7,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  },
+  "classical": {
+   "moved": 25,
+   "mean": 0.02,
+   "byKind": {
+    "brief": {
+     "moved": 3,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 22,
+     "mean": 0.16
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  },
+  "clown": {
+   "moved": 8,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 7,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.15
+    }
+   }
+  },
+  "coldReading": {
+   "moved": 1,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.05
+    }
+   }
+  },
+  "comedy": {
+   "moved": 38,
+   "mean": 0.04,
+   "byKind": {
+    "brief": {
+     "moved": 30,
+     "mean": 0.04
+    },
+    "scene": {
+     "moved": 7,
+     "mean": 0.06
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "dance": {
+   "moved": 9,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 8,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.14
+    }
+   }
+  },
+  "improv": {
+   "moved": 18,
+   "mean": 0.02,
+   "byKind": {
+    "brief": {
+     "moved": 17,
+     "mean": 0.02
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "intimacy": {
+   "moved": 7,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 4,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 1,
+     "mean": 0.01
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.15
+    }
+   }
+  },
+  "screen": {
+   "moved": 264,
+   "mean": 0.32,
+   "byKind": {
+    "brief": {
+     "moved": 263,
+     "mean": 0.46
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.11
+    }
+   }
+  },
+  "scene": {
+   "moved": 413,
+   "mean": 0.4,
+   "byKind": {
+    "brief": {
+     "moved": 295,
+     "mean": 0.25
+    },
+    "scene": {
+     "moved": 56,
+     "mean": 0.65
+    },
+    "night": {
+     "moved": 30,
+     "mean": 0.94
+    },
+    "casting": {
+     "moved": 30,
+     "mean": 0.97
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.1
+    }
+   }
+  },
+  "script": {
+   "moved": 2,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 0,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 2,
+     "mean": 0.42
+    }
+   }
+  },
+  "singing": {
+   "moved": 12,
+   "mean": 0.01,
+   "byKind": {
+    "brief": {
+     "moved": 9,
+     "mean": 0.01
+    },
+    "scene": {
+     "moved": 2,
+     "mean": 0.01
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.17
+    }
+   }
+  },
+  "speech": {
+   "moved": 2,
+   "mean": 0,
+   "byKind": {
+    "brief": {
+     "moved": 1,
+     "mean": 0
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "combat": {
+   "moved": 32,
+   "mean": 0.03,
+   "byKind": {
+    "brief": {
+     "moved": 30,
+     "mean": 0.04
+    },
+    "scene": {
+     "moved": 1,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 1,
+     "mean": 0.08
+    }
+   }
+  },
+  "voiceover": {
+   "moved": 37,
+   "mean": 0.05,
+   "byKind": {
+    "brief": {
+     "moved": 37,
+     "mean": 0.07
+    },
+    "scene": {
+     "moved": 0,
+     "mean": 0
+    },
+    "night": {
+     "moved": 0,
+     "mean": 0
+    },
+    "casting": {
+     "moved": 0,
+     "mean": 0
+    },
+    "coursework": {
+     "moved": 0,
+     "mean": 0
+    }
+   }
+  }
+ },
+ "techniquePast90": {
+  "pieces": 427,
+  "moved": 0
+ },
+ "specialists": {
+  "emotionalDepth": {
+   "suitable": 216,
+   "aheadOnSuitable": 207,
+   "meanOnSuitable": 1.27,
+   "rest": 211,
+   "aheadOnRest": 6,
+   "meanOnRest": -0.91,
+   "byKind": {
+    "brief": {
+     "ahead": 172,
+     "n": 298,
+     "mean": 0.41
+    },
+    "scene": {
+     "ahead": 21,
+     "n": 56,
+     "mean": -0.18
+    },
+    "night": {
+     "ahead": 8,
+     "n": 30,
+     "mean": -0.58
+    },
+    "casting": {
+     "ahead": 9,
+     "n": 30,
+     "mean": -0.3
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.44
+    }
+   }
+  },
+  "presence": {
+   "suitable": 244,
+   "aheadOnSuitable": 31,
+   "meanOnSuitable": -0.9,
+   "rest": 183,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.08,
+   "byKind": {
+    "brief": {
+     "ahead": 0,
+     "n": 298,
+     "mean": -1.82
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 56,
+     "mean": -0.72
+    },
+    "night": {
+     "ahead": 10,
+     "n": 30,
+     "mean": -0.14
+    },
+    "casting": {
+     "ahead": 18,
+     "n": 30,
+     "mean": 0.14
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -1.36
+    }
+   }
+  },
+  "listening": {
+   "suitable": 216,
+   "aheadOnSuitable": 173,
+   "meanOnSuitable": 0.49,
+   "rest": 211,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.04,
+   "byKind": {
+    "brief": {
+     "ahead": 77,
+     "n": 298,
+     "mean": -0.53
+    },
+    "scene": {
+     "ahead": 53,
+     "n": 56,
+     "mean": 0.69
+    },
+    "night": {
+     "ahead": 15,
+     "n": 30,
+     "mean": -0.08
+    },
+    "casting": {
+     "ahead": 24,
+     "n": 30,
+     "mean": 0.6
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": -0.55
+    }
+   }
+  },
+  "imagination": {
+   "suitable": 255,
+   "aheadOnSuitable": 111,
+   "meanOnSuitable": 0.13,
+   "rest": 172,
+   "aheadOnRest": 0,
+   "meanOnRest": -0.97,
+   "byKind": {
+    "brief": {
+     "ahead": 61,
+     "n": 298,
+     "mean": -0.45
+    },
+    "scene": {
+     "ahead": 13,
+     "n": 56,
+     "mean": -0.15
+    },
+    "night": {
+     "ahead": 14,
+     "n": 30,
+     "mean": -0.11
+    },
+    "casting": {
+     "ahead": 14,
+     "n": 30,
+     "mean": 0
+    },
+    "coursework": {
+     "ahead": 9,
+     "n": 13,
+     "mean": 0.92
+    }
+   }
+  },
+  "focus": {
+   "suitable": 216,
+   "aheadOnSuitable": 99,
+   "meanOnSuitable": 0.22,
+   "rest": 211,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.32,
+   "byKind": {
+    "brief": {
+     "ahead": 76,
+     "n": 298,
+     "mean": -0.41
+    },
+    "scene": {
+     "ahead": 11,
+     "n": 56,
+     "mean": -0.75
+    },
+    "night": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -1.29
+    },
+    "casting": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -1.05
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": 0.17
+    }
+   }
+  },
+  "memory": {
+   "suitable": 202,
+   "aheadOnSuitable": 113,
+   "meanOnSuitable": 0.32,
+   "rest": 225,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.05,
+   "byKind": {
+    "brief": {
+     "ahead": 110,
+     "n": 298,
+     "mean": -0.76
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 56,
+     "mean": -1.66
+    },
+    "night": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -0.98
+    },
+    "casting": {
+     "ahead": 2,
+     "n": 30,
+     "mean": -0.73
+    },
+    "coursework": {
+     "ahead": 1,
+     "n": 13,
+     "mean": -2.02
+    }
+   }
+  },
+  "adaptability": {
+   "suitable": 245,
+   "aheadOnSuitable": 131,
+   "meanOnSuitable": 0.26,
+   "rest": 182,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.1,
+   "byKind": {
+    "brief": {
+     "ahead": 71,
+     "n": 298,
+     "mean": -0.43
+    },
+    "scene": {
+     "ahead": 28,
+     "n": 56,
+     "mean": 0.06
+    },
+    "night": {
+     "ahead": 12,
+     "n": 30,
+     "mean": -0.02
+    },
+    "casting": {
+     "ahead": 18,
+     "n": 30,
+     "mean": 0.27
+    },
+    "coursework": {
+     "ahead": 2,
+     "n": 13,
+     "mean": -1.52
+    }
+   }
+  },
+  "composure": {
+   "suitable": 211,
+   "aheadOnSuitable": 152,
+   "meanOnSuitable": 0.62,
+   "rest": 216,
+   "aheadOnRest": 0,
+   "meanOnRest": -0.9,
+   "byKind": {
+    "brief": {
+     "ahead": 148,
+     "n": 298,
+     "mean": 0.12
+    },
+    "scene": {
+     "ahead": 3,
+     "n": 56,
+     "mean": -0.43
+    },
+    "night": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -0.99
+    },
+    "casting": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -0.74
+    },
+    "coursework": {
+     "ahead": 1,
+     "n": 13,
+     "mean": -1.82
+    }
+   }
+  },
+  "vocal": {
+   "suitable": 199,
+   "aheadOnSuitable": 70,
+   "meanOnSuitable": -0.17,
+   "rest": 228,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.24,
+   "byKind": {
+    "brief": {
+     "ahead": 57,
+     "n": 298,
+     "mean": -1.37
+    },
+    "scene": {
+     "ahead": 3,
+     "n": 56,
+     "mean": -1.26
+    },
+    "night": {
+     "ahead": 3,
+     "n": 30,
+     "mean": -1.19
+    },
+    "casting": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -0.95
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.22
+    }
+   }
+  },
+  "physical": {
+   "suitable": 173,
+   "aheadOnSuitable": 56,
+   "meanOnSuitable": -0.15,
+   "rest": 254,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.18,
+   "byKind": {
+    "brief": {
+     "ahead": 44,
+     "n": 298,
+     "mean": -1.45
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 56,
+     "mean": -1.57
+    },
+    "night": {
+     "ahead": 3,
+     "n": 30,
+     "mean": -1.08
+    },
+    "casting": {
+     "ahead": 4,
+     "n": 30,
+     "mean": -0.84
+    },
+    "coursework": {
+     "ahead": 5,
+     "n": 13,
+     "mean": -0.02
+    }
+   }
+  },
+  "discipline": {
+   "suitable": 212,
+   "aheadOnSuitable": 37,
+   "meanOnSuitable": -0.63,
+   "rest": 215,
+   "aheadOnRest": 0,
+   "meanOnRest": -2.08,
+   "byKind": {
+    "brief": {
+     "ahead": 33,
+     "n": 298,
+     "mean": -1.16
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 56,
+     "mean": -1.78
+    },
+    "night": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -1.52
+    },
+    "casting": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -2.8
+    },
+    "coursework": {
+     "ahead": 4,
+     "n": 13,
+     "mean": -0.55
+    }
+   }
+  },
+  "stamina": {
+   "suitable": 207,
+   "aheadOnSuitable": 10,
+   "meanOnSuitable": -0.71,
+   "rest": 220,
+   "aheadOnRest": 0,
+   "meanOnRest": -1.98,
+   "byKind": {
+    "brief": {
+     "ahead": 7,
+     "n": 298,
+     "mean": -1.32
+    },
+    "scene": {
+     "ahead": 0,
+     "n": 56,
+     "mean": -1.27
+    },
+    "night": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -0.85
+    },
+    "casting": {
+     "ahead": 0,
+     "n": 30,
+     "mean": -2.8
+    },
+    "coursework": {
+     "ahead": 3,
+     "n": 13,
+     "mean": -0.79
+    }
+   }
+  }
+ },
+ "bestAllocation": {
+  "brief": {
+   "emotionalDepth specialist": 106,
+   "focus specialist": 19,
+   "vocal specialist": 21,
+   "adaptability specialist": 22,
+   "listening specialist": 2,
+   "memory specialist": 37,
+   "physical specialist": 20,
+   "imagination specialist": 8,
+   "even": 2,
+   "discipline specialist": 3,
+   "composure specialist": 58
+  },
+  "all": {
+   "emotionalDepth specialist": 136,
+   "focus specialist": 30,
+   "vocal specialist": 27,
+   "adaptability specialist": 42,
+   "listening specialist": 39,
+   "memory specialist": 37,
+   "physical specialist": 26,
+   "imagination specialist": 24,
+   "even": 3,
+   "discipline specialist": 3,
+   "composure specialist": 58,
+   "presence specialist": 2
+  },
+  "scene": {
+   "adaptability specialist": 6,
+   "emotionalDepth specialist": 14,
+   "focus specialist": 5,
+   "listening specialist": 24,
+   "imagination specialist": 5,
+   "vocal specialist": 1,
+   "even": 1
+  },
+  "night": {
+   "emotionalDepth specialist": 7,
+   "focus specialist": 3,
+   "physical specialist": 2,
+   "adaptability specialist": 7,
+   "imagination specialist": 6,
+   "presence specialist": 1,
+   "listening specialist": 3,
+   "vocal specialist": 1
+  },
+  "casting": {
+   "emotionalDepth specialist": 7,
+   "focus specialist": 1,
+   "physical specialist": 2,
+   "adaptability specialist": 7,
+   "imagination specialist": 5,
+   "listening specialist": 7,
+   "vocal specialist": 1
+  },
+  "coursework": {
+   "vocal specialist": 3,
+   "physical specialist": 2,
+   "listening specialist": 3,
+   "focus specialist": 2,
+   "emotionalDepth specialist": 2,
+   "presence specialist": 1
+  }
+ },
+ "generalist": {
+  "brief": {
+   "n": 298,
+   "behindBest": {
+    "n": 298,
+    "mean": 1.61,
+    "sd": 0.74,
+    "min": 0,
+    "max": 3.75
+   },
+   "withinOnePoint": 63,
+   "aheadOfHalfTheSpecialists": 298
+  },
+  "scene": {
+   "n": 56,
+   "behindBest": {
+    "n": 56,
+    "mean": 0.94,
+    "sd": 0.4,
+    "min": 0,
+    "max": 1.6
+   },
+   "withinOnePoint": 31,
+   "aheadOfHalfTheSpecialists": 56
+  },
+  "night": {
+   "n": 30,
+   "behindBest": {
+    "n": 30,
+    "mean": 0.8,
+    "sd": 0.39,
+    "min": 0.2,
+    "max": 1.8
+   },
+   "withinOnePoint": 25,
+   "aheadOfHalfTheSpecialists": 30
+  },
+  "casting": {
+   "n": 30,
+   "behindBest": {
+    "n": 30,
+    "mean": 1.16,
+    "sd": 0.36,
+    "min": 0.6,
+    "max": 2.1
+   },
+   "withinOnePoint": 13,
+   "aheadOfHalfTheSpecialists": 30
+  },
+  "coursework": {
+   "n": 13,
+   "behindBest": {
+    "n": 13,
+    "mean": 5.34,
+    "sd": 2.06,
+    "min": 2.8,
+    "max": 8.6
+   },
+   "withinOnePoint": 0,
+   "aheadOfHalfTheSpecialists": 13
+  },
+  "all": {
+   "n": 427,
+   "behindBest": {
+    "n": 427,
+    "mean": 1.54,
+    "sd": 1.04,
+    "min": 0,
+    "max": 8.6
+   },
+   "withinOnePoint": 132,
+   "aheadOfHalfTheSpecialists": 427
+  }
+ },
+ "genres": {
+  "genres": 149,
+  "briefsPerGenre": {
+   "n": 149,
+   "mean": 2,
+   "sd": 0,
+   "min": 2,
+   "max": 2
+  },
+  "briefsListingGenre": {
+   "n": 149,
+   "mean": 2,
+   "sd": 0,
+   "min": 2,
+   "max": 2
+  },
+  "readingsPerGenre": {
+   "n": 149,
+   "mean": 4.35,
+   "sd": 0.52,
+   "min": 4,
+   "max": 6
+  },
+  "readingsPerBrief": {
+   "n": 298,
+   "mean": 2.17,
+   "sd": 0.38,
+   "min": 2,
+   "max": 3
+  },
+  "beatsPerBrief": {
+   "n": 298,
+   "mean": 3.6,
+   "sd": 0.82,
+   "min": 2,
+   "max": 6
+  },
+  "readerPlays": {
+   "steady": 168,
+   "voice (none)": 35,
+   "pressing": 34,
+   "unpredictable": 32,
+   "withholding": 29
+  },
+  "stakes": {
+   "0": 19,
+   "1": 174,
+   "2": 55,
+   "3": 50
+  },
+  "sizes": {
+   "short": 134,
+   "medium": 125,
+   "long": 39
+  },
+  "mediums": {
+   "camera": 263,
+   "voice": 35
+  },
+  "withTechniques": 115,
+  "distance": {
+   "note": "L1 over 6 dimension shares ×10 and 12 ability effects (+10, even actor), a genre the mean of the briefs written for it",
+   "allPairs": {
+    "n": 11026,
+    "p05": 2.489,
+    "median": 4.918,
+    "p95": 9.648
+   },
+   "withinGenre": {
+    "n": 149,
+    "mean": 6.59,
+    "sd": 2.28,
+    "min": 1.67,
+    "max": 11.94
+   },
+   "nearestClosest": [
+    {
+     "genre": "romance",
+     "nearest": "vampire",
+     "distance": 0.991
+    },
+    {
+     "genre": "vampire",
+     "nearest": "romance",
+     "distance": 0.991
+    },
+    {
+     "genre": "dystopian",
+     "nearest": "heist",
+     "distance": 1.082
+    },
+    {
+     "genre": "heist",
+     "nearest": "dystopian",
+     "distance": 1.082
+    },
+    {
+     "genre": "creature_feature",
+     "nearest": "monster_movie",
+     "distance": 1.093
+    },
+    {
+     "genre": "monster_movie",
+     "nearest": "creature_feature",
+     "distance": 1.093
+    },
+    {
+     "genre": "docudrama",
+     "nearest": "sea_adventure",
+     "distance": 1.175
+    },
+    {
+     "genre": "sea_adventure",
+     "nearest": "docudrama",
+     "distance": 1.175
+    },
+    {
+     "genre": "period_drama",
+     "nearest": "supernatural",
+     "distance": 1.186
+    },
+    {
+     "genre": "supernatural",
+     "nearest": "period_drama",
+     "distance": 1.186
+    },
+    {
+     "genre": "action",
+     "nearest": "martial_arts",
+     "distance": 1.188
+    },
+    {
+     "genre": "martial_arts",
+     "nearest": "action",
+     "distance": 1.188
+    },
+    {
+     "genre": "folk_horror",
+     "nearest": "prison_film",
+     "distance": 1.249
+    },
+    {
+     "genre": "prison_film",
+     "nearest": "folk_horror",
+     "distance": 1.249
+    },
+    {
+     "genre": "biographical",
+     "nearest": "epic",
+     "distance": 1.257
+    }
+   ],
+   "nearestAll": [
+    {
+     "genre": "romance",
+     "nearest": "vampire",
+     "distance": 0.991,
+     "withinOwnBriefs": 6.698
+    },
+    {
+     "genre": "vampire",
+     "nearest": "romance",
+     "distance": 0.991,
+     "withinOwnBriefs": 5.385
+    },
+    {
+     "genre": "dystopian",
+     "nearest": "heist",
+     "distance": 1.082,
+     "withinOwnBriefs": 6.895
+    },
+    {
+     "genre": "heist",
+     "nearest": "dystopian",
+     "distance": 1.082,
+     "withinOwnBriefs": 8.329
+    },
+    {
+     "genre": "creature_feature",
+     "nearest": "monster_movie",
+     "distance": 1.093,
+     "withinOwnBriefs": 8.294
+    },
+    {
+     "genre": "monster_movie",
+     "nearest": "creature_feature",
+     "distance": 1.093,
+     "withinOwnBriefs": 5.852
+    },
+    {
+     "genre": "docudrama",
+     "nearest": "sea_adventure",
+     "distance": 1.175,
+     "withinOwnBriefs": 7.33
+    },
+    {
+     "genre": "sea_adventure",
+     "nearest": "docudrama",
+     "distance": 1.175,
+     "withinOwnBriefs": 8.423
+    },
+    {
+     "genre": "period_drama",
+     "nearest": "supernatural",
+     "distance": 1.186,
+     "withinOwnBriefs": 6.979
+    },
+    {
+     "genre": "supernatural",
+     "nearest": "period_drama",
+     "distance": 1.186,
+     "withinOwnBriefs": 5.542
+    },
+    {
+     "genre": "action",
+     "nearest": "martial_arts",
+     "distance": 1.188,
+     "withinOwnBriefs": 8.984
+    },
+    {
+     "genre": "martial_arts",
+     "nearest": "action",
+     "distance": 1.188,
+     "withinOwnBriefs": 8.755
+    },
+    {
+     "genre": "folk_horror",
+     "nearest": "prison_film",
+     "distance": 1.249,
+     "withinOwnBriefs": 5.421
+    },
+    {
+     "genre": "prison_film",
+     "nearest": "folk_horror",
+     "distance": 1.249,
+     "withinOwnBriefs": 9.015
+    },
+    {
+     "genre": "biographical",
+     "nearest": "epic",
+     "distance": 1.257,
+     "withinOwnBriefs": 6.789
+    },
+    {
+     "genre": "epic",
+     "nearest": "biographical",
+     "distance": 1.257,
+     "withinOwnBriefs": 7.297
+    },
+    {
+     "genre": "war",
+     "nearest": "action",
+     "distance": 1.263,
+     "withinOwnBriefs": 5.833
+    },
+    {
+     "genre": "chanbara",
+     "nearest": "biographical",
+     "distance": 1.292,
+     "withinOwnBriefs": 5.131
+    },
+    {
+     "genre": "concert_film",
+     "nearest": "film_noir",
+     "distance": 1.293,
+     "withinOwnBriefs": 8.156
+    },
+    {
+     "genre": "film_noir",
+     "nearest": "concert_film",
+     "distance": 1.293,
+     "withinOwnBriefs": 3.766
+    },
+    {
+     "genre": "jidaigeki",
+     "nearest": "docudrama",
+     "distance": 1.303,
+     "withinOwnBriefs": 5.144
+    },
+    {
+     "genre": "slasher",
+     "nearest": "monster_movie",
+     "distance": 1.321,
+     "withinOwnBriefs": 6.488
+    },
+    {
+     "genre": "drama",
+     "nearest": "social_realism",
+     "distance": 1.359,
+     "withinOwnBriefs": 4.633
+    },
+    {
+     "genre": "social_realism",
+     "nearest": "drama",
+     "distance": 1.359,
+     "withinOwnBriefs": 5.861
+    },
+    {
+     "genre": "military",
+     "nearest": "prison_film",
+     "distance": 1.398,
+     "withinOwnBriefs": 9.114
+    },
+    {
+     "genre": "courtroom_drama",
+     "nearest": "period_drama",
+     "distance": 1.432,
+     "withinOwnBriefs": 7.688
+    },
+    {
+     "genre": "cyberpunk",
+     "nearest": "teen",
+     "distance": 1.443,
+     "withinOwnBriefs": 4.731
+    },
+    {
+     "genre": "teen",
+     "nearest": "cyberpunk",
+     "distance": 1.443,
+     "withinOwnBriefs": 8.189
+    },
+    {
+     "genre": "neo_noir",
+     "nearest": "courtroom_drama",
+     "distance": 1.449,
+     "withinOwnBriefs": 8.107
+    },
+    {
+     "genre": "eco_horror",
+     "nearest": "cyberpunk",
+     "distance": 1.459,
+     "withinOwnBriefs": 6.016
+    },
+    {
+     "genre": "zombie",
+     "nearest": "supernatural",
+     "distance": 1.497,
+     "withinOwnBriefs": 4.603
+    },
+    {
+     "genre": "hood_film",
+     "nearest": "romantic_drama",
+     "distance": 1.498,
+     "withinOwnBriefs": 4.303
+    },
+    {
+     "genre": "romantic_drama",
+     "nearest": "hood_film",
+     "distance": 1.498,
+     "withinOwnBriefs": 6.179
+    },
+    {
+     "genre": "childrens",
+     "nearest": "splatter",
+     "distance": 1.524,
+     "withinOwnBriefs": 3.376
+    },
+    {
+     "genre": "splatter",
+     "nearest": "childrens",
+     "distance": 1.524,
+     "withinOwnBriefs": 4.378
+    },
+    {
+     "genre": "gangster",
+     "nearest": "drama",
+     "distance": 1.525,
+     "withinOwnBriefs": 5.85
+    },
+    {
+     "genre": "christmas",
+     "nearest": "magical_realism",
+     "distance": 1.54,
+     "withinOwnBriefs": 4.696
+    },
+    {
+     "genre": "magical_realism",
+     "nearest": "christmas",
+     "distance": 1.54,
+     "withinOwnBriefs": 6.965
+    },
+    {
+     "genre": "political_thriller",
+     "nearest": "military",
+     "distance": 1.542,
+     "withinOwnBriefs": 10.199
+    },
+    {
+     "genre": "espionage",
+     "nearest": "gangster",
+     "distance": 1.548,
+     "withinOwnBriefs": 6.763
+    },
+    {
+     "genre": "tragedy",
+     "nearest": "dystopian",
+     "distance": 1.552,
+     "withinOwnBriefs": 8.744
+    },
+    {
+     "genre": "disaster",
+     "nearest": "political_drama",
+     "distance": 1.555,
+     "withinOwnBriefs": 11.717
+    },
+    {
+     "genre": "political_drama",
+     "nearest": "disaster",
+     "distance": 1.555,
+     "withinOwnBriefs": 9.522
+    },
+    {
+     "genre": "satire",
+     "nearest": "time_travel",
+     "distance": 1.556,
+     "withinOwnBriefs": 7.2
+    },
+    {
+     "genre": "time_travel",
+     "nearest": "satire",
+     "distance": 1.556,
+     "withinOwnBriefs": 8.314
+    },
+    {
+     "genre": "psychological_thriller",
+     "nearest": "social_realism",
+     "distance": 1.574,
+     "withinOwnBriefs": 6.485
+    },
+    {
+     "genre": "sword_and_sandal",
+     "nearest": "military",
+     "distance": 1.608,
+     "withinOwnBriefs": 5.134
+    },
+    {
+     "genre": "action_comedy",
+     "nearest": "slapstick",
+     "distance": 1.612,
+     "withinOwnBriefs": 3.048
+    },
+    {
+     "genre": "slapstick",
+     "nearest": "action_comedy",
+     "distance": 1.612,
+     "withinOwnBriefs": 5.232
+    },
+    {
+     "genre": "crime",
+     "nearest": "revenge",
+     "distance": 1.637,
+     "withinOwnBriefs": 6.683
+    },
+    {
+     "genre": "revenge",
+     "nearest": "crime",
+     "distance": 1.637,
+     "withinOwnBriefs": 9.552
+    },
+    {
+     "genre": "costume_drama",
+     "nearest": "monster_movie",
+     "distance": 1.644,
+     "withinOwnBriefs": 5.996
+    },
+    {
+     "genre": "black_comedy",
+     "nearest": "teen",
+     "distance": 1.647,
+     "withinOwnBriefs": 4.23
+    },
+    {
+     "genre": "sword_and_sorcery",
+     "nearest": "werewolf",
+     "distance": 1.659,
+     "withinOwnBriefs": 3.093
+    },
+    {
+     "genre": "werewolf",
+     "nearest": "sword_and_sorcery",
+     "distance": 1.659,
+     "withinOwnBriefs": 4.409
+    },
+    {
+     "genre": "biker",
+     "nearest": "yakuza",
+     "distance": 1.663,
+     "withinOwnBriefs": 2.592
+    },
+    {
+     "genre": "yakuza",
+     "nearest": "biker",
+     "distance": 1.663,
+     "withinOwnBriefs": 2.995
+    },
+    {
+     "genre": "mystery",
+     "nearest": "military",
+     "distance": 1.679,
+     "withinOwnBriefs": 11.309
+    },
+    {
+     "genre": "spy",
+     "nearest": "time_travel",
+     "distance": 1.701,
+     "withinOwnBriefs": 6.202
+    },
+    {
+     "genre": "psychological_horror",
+     "nearest": "concert_film",
+     "distance": 1.706,
+     "withinOwnBriefs": 6.553
+    },
+    {
+     "genre": "western",
+     "nearest": "monster_movie",
+     "distance": 1.711,
+     "withinOwnBriefs": 4.14
+    },
+    {
+     "genre": "steampunk",
+     "nearest": "vampire",
+     "distance": 1.724,
+     "withinOwnBriefs": 4.62
+    },
+    {
+     "genre": "screwball_comedy",
+     "nearest": "slapstick",
+     "distance": 1.731,
+     "withinOwnBriefs": 6.14
+    },
+    {
+     "genre": "gothic_horror",
+     "nearest": "crime",
+     "distance": 1.734,
+     "withinOwnBriefs": 9.638
+    },
+    {
+     "genre": "legal_drama",
+     "nearest": "crime",
+     "distance": 1.744,
+     "withinOwnBriefs": 5.699
+    },
+    {
+     "genre": "road_movie",
+     "nearest": "teen",
+     "distance": 1.744,
+     "withinOwnBriefs": 4.913
+    },
+    {
+     "genre": "farce",
+     "nearest": "action_comedy",
+     "distance": 1.746,
+     "withinOwnBriefs": 3.589
+    },
+    {
+     "genre": "fantasy",
+     "nearest": "revenge",
+     "distance": 1.752,
+     "withinOwnBriefs": 8.363
+    },
+    {
+     "genre": "medical_drama",
+     "nearest": "tragedy",
+     "distance": 1.754,
+     "withinOwnBriefs": 5.43
+    },
+    {
+     "genre": "police_procedural",
+     "nearest": "espionage",
+     "distance": 1.769,
+     "withinOwnBriefs": 5.799
+    },
+    {
+     "genre": "avant_garde",
+     "nearest": "surrealist",
+     "distance": 1.77,
+     "withinOwnBriefs": 10.546
+    },
+    {
+     "genre": "rockumentary",
+     "nearest": "zombie",
+     "distance": 1.77,
+     "withinOwnBriefs": 9.027
+    },
+    {
+     "genre": "surrealist",
+     "nearest": "avant_garde",
+     "distance": 1.77,
+     "withinOwnBriefs": 11.944
+    },
+    {
+     "genre": "survival",
+     "nearest": "creature_feature",
+     "distance": 1.781,
+     "withinOwnBriefs": 6.067
+    },
+    {
+     "genre": "historical_drama",
+     "nearest": "nordic_noir",
+     "distance": 1.785,
+     "withinOwnBriefs": 6.819
+    },
+    {
+     "genre": "nordic_noir",
+     "nearest": "historical_drama",
+     "distance": 1.785,
+     "withinOwnBriefs": 3.761
+    },
+    {
+     "genre": "true_crime",
+     "nearest": "gothic_horror",
+     "distance": 1.789,
+     "withinOwnBriefs": 5.957
+    },
+    {
+     "genre": "cosmic_horror",
+     "nearest": "space_opera",
+     "distance": 1.801,
+     "withinOwnBriefs": 10
+    },
+    {
+     "genre": "space_opera",
+     "nearest": "cosmic_horror",
+     "distance": 1.801,
+     "withinOwnBriefs": 10.699
+    },
+    {
+     "genre": "erotic_thriller",
+     "nearest": "revenge",
+     "distance": 1.804,
+     "withinOwnBriefs": 5.332
+    },
+    {
+     "genre": "alternate_history",
+     "nearest": "tragedy",
+     "distance": 1.806,
+     "withinOwnBriefs": 11.888
+    },
+    {
+     "genre": "occult",
+     "nearest": "slasher",
+     "distance": 1.83,
+     "withinOwnBriefs": 7.252
+    },
+    {
+     "genre": "apocalyptic",
+     "nearest": "christmas",
+     "distance": 1.843,
+     "withinOwnBriefs": 5.327
+    },
+    {
+     "genre": "domestic_drama",
+     "nearest": "crime",
+     "distance": 1.845,
+     "withinOwnBriefs": 7.197
+    },
+    {
+     "genre": "docufiction",
+     "nearest": "new_wave",
+     "distance": 1.853,
+     "withinOwnBriefs": 5.981
+    },
+    {
+     "genre": "new_wave",
+     "nearest": "docufiction",
+     "distance": 1.853,
+     "withinOwnBriefs": 4.318
+    },
+    {
+     "genre": "horror",
+     "nearest": "slasher",
+     "distance": 1.854,
+     "withinOwnBriefs": 6.57
+    },
+    {
+     "genre": "post_apocalyptic",
+     "nearest": "magical_realism",
+     "distance": 1.855,
+     "withinOwnBriefs": 4.922
+    },
+    {
+     "genre": "holiday",
+     "nearest": "childrens",
+     "distance": 1.857,
+     "withinOwnBriefs": 8.018
+    },
+    {
+     "genre": "conspiracy_thriller",
+     "nearest": "social_realism",
+     "distance": 1.869,
+     "withinOwnBriefs": 3.824
+    },
+    {
+     "genre": "fairy_tale",
+     "nearest": "psychological_horror",
+     "distance": 1.905,
+     "withinOwnBriefs": 11.794
+    },
+    {
+     "genre": "samurai",
+     "nearest": "wuxia",
+     "distance": 1.91,
+     "withinOwnBriefs": 5.976
+    },
+    {
+     "genre": "wuxia",
+     "nearest": "samurai",
+     "distance": 1.91,
+     "withinOwnBriefs": 5.001
+    },
+    {
+     "genre": "historical_fiction",
+     "nearest": "psychological_thriller",
+     "distance": 1.932,
+     "withinOwnBriefs": 5.31
+    },
+    {
+     "genre": "science_fiction",
+     "nearest": "hood_film",
+     "distance": 1.937,
+     "withinOwnBriefs": 7.952
+    },
+    {
+     "genre": "adventure",
+     "nearest": "occult",
+     "distance": 1.94,
+     "withinOwnBriefs": 3.726
+    },
+    {
+     "genre": "tragicomedy",
+     "nearest": "creature_feature",
+     "distance": 1.94,
+     "withinOwnBriefs": 5.627
+    },
+    {
+     "genre": "chase",
+     "nearest": "wuxia",
+     "distance": 1.942,
+     "withinOwnBriefs": 6.324
+    },
+    {
+     "genre": "sports",
+     "nearest": "police_procedural",
+     "distance": 1.951,
+     "withinOwnBriefs": 5.917
+    },
+    {
+     "genre": "blaxploitation",
+     "nearest": "zombie",
+     "distance": 1.964,
+     "withinOwnBriefs": 5.448
+    },
+    {
+     "genre": "coming_of_age",
+     "nearest": "cyberpunk",
+     "distance": 1.965,
+     "withinOwnBriefs": 4.382
+    },
+    {
+     "genre": "giallo",
+     "nearest": "medical_drama",
+     "distance": 1.996,
+     "withinOwnBriefs": 10.188
+    },
+    {
+     "genre": "tokusatsu",
+     "nearest": "psychological_horror",
+     "distance": 2.009,
+     "withinOwnBriefs": 8.2
+    },
+    {
+     "genre": "techno_thriller",
+     "nearest": "creature_feature",
+     "distance": 2.028,
+     "withinOwnBriefs": 6.028
+    },
+    {
+     "genre": "grindhouse",
+     "nearest": "horror_comedy",
+     "distance": 2.034,
+     "withinOwnBriefs": 10.197
+    },
+    {
+     "genre": "horror_comedy",
+     "nearest": "grindhouse",
+     "distance": 2.034,
+     "withinOwnBriefs": 10.695
+    },
+    {
+     "genre": "neorealism",
+     "nearest": "apocalyptic",
+     "distance": 2.042,
+     "withinOwnBriefs": 8.333
+    },
+    {
+     "genre": "slice_of_life",
+     "nearest": "holiday",
+     "distance": 2.047,
+     "withinOwnBriefs": 7.715
+    },
+    {
+     "genre": "exploitation",
+     "nearest": "creature_feature",
+     "distance": 2.058,
+     "withinOwnBriefs": 4.445
+    },
+    {
+     "genre": "kaiju",
+     "nearest": "science_fantasy",
+     "distance": 2.058,
+     "withinOwnBriefs": 6.518
+    },
+    {
+     "genre": "science_fantasy",
+     "nearest": "kaiju",
+     "distance": 2.058,
+     "withinOwnBriefs": 5.22
+    },
+    {
+     "genre": "absurdist",
+     "nearest": "black_comedy",
+     "distance": 2.064,
+     "withinOwnBriefs": 5.049
+    },
+    {
+     "genre": "melodrama",
+     "nearest": "sea_adventure",
+     "distance": 2.08,
+     "withinOwnBriefs": 7.038
+    },
+    {
+     "genre": "caper",
+     "nearest": "comedy",
+     "distance": 2.09,
+     "withinOwnBriefs": 4.1
+    },
+    {
+     "genre": "comedy",
+     "nearest": "caper",
+     "distance": 2.09,
+     "withinOwnBriefs": 9.525
+    },
+    {
+     "genre": "detective",
+     "nearest": "black_comedy",
+     "distance": 2.1,
+     "withinOwnBriefs": 4.577
+    },
+    {
+     "genre": "experimental",
+     "nearest": "picaresque",
+     "distance": 2.106,
+     "withinOwnBriefs": 11.538
+    },
+    {
+     "genre": "picaresque",
+     "nearest": "experimental",
+     "distance": 2.106,
+     "withinOwnBriefs": 10.043
+    },
+    {
+     "genre": "kitchen_sink",
+     "nearest": "true_crime",
+     "distance": 2.121,
+     "withinOwnBriefs": 5.313
+    },
+    {
+     "genre": "hangout",
+     "nearest": "new_wave",
+     "distance": 2.127,
+     "withinOwnBriefs": 3.985
+    },
+    {
+     "genre": "buddy_comedy",
+     "nearest": "family",
+     "distance": 2.139,
+     "withinOwnBriefs": 11.828
+    },
+    {
+     "genre": "family",
+     "nearest": "buddy_comedy",
+     "distance": 2.139,
+     "withinOwnBriefs": 9.346
+    },
+    {
+     "genre": "superhero",
+     "nearest": "wuxia",
+     "distance": 2.147,
+     "withinOwnBriefs": 4.514
+    },
+    {
+     "genre": "art_house",
+     "nearest": "christmas",
+     "distance": 2.151,
+     "withinOwnBriefs": 4.701
+    },
+    {
+     "genre": "anime",
+     "nearest": "parody",
+     "distance": 2.152,
+     "withinOwnBriefs": 7.391
+    },
+    {
+     "genre": "parody",
+     "nearest": "anime",
+     "distance": 2.152,
+     "withinOwnBriefs": 3.798
+    },
+    {
+     "genre": "spaghetti_western",
+     "nearest": "mystery",
+     "distance": 2.162,
+     "withinOwnBriefs": 6.54
+    },
+    {
+     "genre": "buddy_cop",
+     "nearest": "comedy",
+     "distance": 2.168,
+     "withinOwnBriefs": 8.597
+    },
+    {
+     "genre": "queer_cinema",
+     "nearest": "romantic_drama",
+     "distance": 2.17,
+     "withinOwnBriefs": 5.555
+    },
+    {
+     "genre": "stoner_comedy",
+     "nearest": "comedy",
+     "distance": 2.192,
+     "withinOwnBriefs": 6.027
+    },
+    {
+     "genre": "dark_fantasy",
+     "nearest": "anime",
+     "distance": 2.201,
+     "withinOwnBriefs": 5.862
+    },
+    {
+     "genre": "dance",
+     "nearest": "epic",
+     "distance": 2.229,
+     "withinOwnBriefs": 3.538
+    },
+    {
+     "genre": "isekai",
+     "nearest": "experimental",
+     "distance": 2.343,
+     "withinOwnBriefs": 7.5
+    },
+    {
+     "genre": "silent_film",
+     "nearest": "wuxia",
+     "distance": 2.444,
+     "withinOwnBriefs": 1.667
+    },
+    {
+     "genre": "whodunit",
+     "nearest": "horror_comedy",
+     "distance": 2.447,
+     "withinOwnBriefs": 8.896
+    },
+    {
+     "genre": "swashbuckler",
+     "nearest": "chase",
+     "distance": 2.471,
+     "withinOwnBriefs": 4.044
+    },
+    {
+     "genre": "anthology",
+     "nearest": "science_fantasy",
+     "distance": 2.472,
+     "withinOwnBriefs": 6.762
+    },
+    {
+     "genre": "mockumentary",
+     "nearest": "stoner_comedy",
+     "distance": 2.478,
+     "withinOwnBriefs": 8.274
+    },
+    {
+     "genre": "found_footage",
+     "nearest": "folk_horror",
+     "distance": 2.531,
+     "withinOwnBriefs": 4.724
+    },
+    {
+     "genre": "body_horror",
+     "nearest": "samurai",
+     "distance": 2.542,
+     "withinOwnBriefs": 10.882
+    },
+    {
+     "genre": "mumblecore",
+     "nearest": "road_movie",
+     "distance": 2.674,
+     "withinOwnBriefs": 3.552
+    },
+    {
+     "genre": "nature_documentary",
+     "nearest": "anime",
+     "distance": 2.771,
+     "withinOwnBriefs": 8.785
+    },
+    {
+     "genre": "thriller",
+     "nearest": "sports",
+     "distance": 2.771,
+     "withinOwnBriefs": 8.894
+    },
+    {
+     "genre": "documentary",
+     "nearest": "experimental",
+     "distance": 2.801,
+     "withinOwnBriefs": 5.127
+    },
+    {
+     "genre": "jukebox_musical",
+     "nearest": "musical",
+     "distance": 2.816,
+     "withinOwnBriefs": 3.516
+    },
+    {
+     "genre": "musical",
+     "nearest": "jukebox_musical",
+     "distance": 2.816,
+     "withinOwnBriefs": 4.481
+    },
+    {
+     "genre": "backstage_musical",
+     "nearest": "jukebox_musical",
+     "distance": 2.944,
+     "withinOwnBriefs": 5.814
+    },
+    {
+     "genre": "animated",
+     "nearest": "parody",
+     "distance": 3.023,
+     "withinOwnBriefs": 3.951
+    },
+    {
+     "genre": "romantic_comedy",
+     "nearest": "absurdist",
+     "distance": 3.707,
+     "withinOwnBriefs": 5.594
+    }
+   ],
+   "nearestStats": {
+    "n": 149,
+    "mean": 1.82,
+    "sd": 0.45,
+    "min": 0.99,
+    "max": 3.71
+   },
+   "genresNearerThanOwnBriefs": 148
+  },
+  "identicalSignature": [],
+  "identicalMaterialIgnoringReadings": {
+   "groups": 7,
+   "briefsInThem": 14,
+   "crossGenreGroups": 7,
+   "largest": [
+    [
+     "brief-biker",
+     "brief-coming_of_age"
+    ],
+    [
+     "brief-childrens",
+     "brief-science_fantasy"
+    ],
+    [
+     "brief-christmas",
+     "brief-holiday"
+    ],
+    [
+     "brief-dystopian",
+     "brief-medical_drama"
+    ],
+    [
+     "brief-espionage",
+     "brief-neorealism"
+    ]
+   ]
+  },
+  "winners": {
+   "focus specialist": 15,
+   "physical specialist": 11,
+   "emotionalDepth specialist": 56,
+   "memory specialist": 21,
+   "vocal specialist": 8,
+   "imagination specialist": 6,
+   "composure specialist": 21,
+   "adaptability specialist": 11
+  },
+  "genreWinner": {
+   "absurdist": {
+    "winner": "focus specialist",
+    "margin": 0.22,
+    "even": 55.97
+   },
+   "action": {
+    "winner": "physical specialist",
+    "margin": 0.65,
+    "even": 52.31
+   },
+   "action_comedy": {
+    "winner": "physical specialist",
+    "margin": 0.3,
+    "even": 54.46
+   },
+   "adventure": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.6,
+    "even": 53.85
+   },
+   "alternate_history": {
+    "winner": "memory specialist",
+    "margin": 0.23,
+    "even": 53.89
+   },
+   "animated": {
+    "winner": "vocal specialist",
+    "margin": 2.33,
+    "even": 56.55
+   },
+   "anime": {
+    "winner": "vocal specialist",
+    "margin": 0.67,
+    "even": 53.48
+   },
+   "anthology": {
+    "winner": "imagination specialist",
+    "margin": 0.75,
+    "even": 56.8
+   },
+   "apocalyptic": {
+    "winner": "composure specialist",
+    "margin": 0.3,
+    "even": 54.75
+   },
+   "art_house": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.42,
+    "even": 56.3
+   },
+   "avant_garde": {
+    "winner": "adaptability specialist",
+    "margin": 0.23,
+    "even": 56.1
+   },
+   "backstage_musical": {
+    "winner": "memory specialist",
+    "margin": 0.34,
+    "even": 52.33
+   },
+   "biker": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.1,
+    "even": 56.7
+   },
+   "biographical": {
+    "winner": "memory specialist",
+    "margin": 0.84,
+    "even": 52.43
+   },
+   "black_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.28,
+    "even": 57
+   },
+   "blaxploitation": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.65,
+    "even": 55
+   },
+   "body_horror": {
+    "winner": "composure specialist",
+    "margin": 0.32,
+    "even": 53.27
+   },
+   "buddy_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.38,
+    "even": 56.55
+   },
+   "buddy_cop": {
+    "winner": "focus specialist",
+    "margin": 0.65,
+    "even": 55.03
+   },
+   "caper": {
+    "winner": "memory specialist",
+    "margin": 1,
+    "even": 56.1
+   },
+   "chanbara": {
+    "winner": "memory specialist",
+    "margin": 0.04,
+    "even": 52.18
+   },
+   "chase": {
+    "winner": "physical specialist",
+    "margin": 0.79,
+    "even": 54.91
+   },
+   "childrens": {
+    "winner": "imagination specialist",
+    "margin": 0.13,
+    "even": 56.73
+   },
+   "christmas": {
+    "winner": "composure specialist",
+    "margin": 0.45,
+    "even": 55.8
+   },
+   "comedy": {
+    "winner": "focus specialist",
+    "margin": 1.28,
+    "even": 55.02
+   },
+   "coming_of_age": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.6,
+    "even": 57.4
+   },
+   "concert_film": {
+    "winner": "composure specialist",
+    "margin": 0.54,
+    "even": 54.19
+   },
+   "conspiracy_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.25,
+    "even": 56.43
+   },
+   "cosmic_horror": {
+    "winner": "memory specialist",
+    "margin": 0.65,
+    "even": 54.57
+   },
+   "costume_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.5,
+    "even": 54.85
+   },
+   "courtroom_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.1,
+    "even": 54.7
+   },
+   "creature_feature": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.02,
+    "even": 53.78
+   },
+   "crime": {
+    "winner": "memory specialist",
+    "margin": 0.6,
+    "even": 55.55
+   },
+   "cyberpunk": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.55,
+    "even": 55.83
+   },
+   "dance": {
+    "winner": "physical specialist",
+    "margin": 0.38,
+    "even": 55.38
+   },
+   "dark_fantasy": {
+    "winner": "vocal specialist",
+    "margin": 1.17,
+    "even": 54.2
+   },
+   "detective": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.67,
+    "even": 56.87
+   },
+   "disaster": {
+    "winner": "composure specialist",
+    "margin": 0.47,
+    "even": 54.1
+   },
+   "docudrama": {
+    "winner": "memory specialist",
+    "margin": 0.65,
+    "even": 52.5
+   },
+   "docufiction": {
+    "winner": "adaptability specialist",
+    "margin": 2.47,
+    "even": 58.15
+   },
+   "documentary": {
+    "winner": "vocal specialist",
+    "margin": 1.58,
+    "even": 55.68
+   },
+   "domestic_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.15,
+    "even": 56.43
+   },
+   "drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.5,
+    "even": 55.5
+   },
+   "dystopian": {
+    "winner": "memory specialist",
+    "margin": 0.58,
+    "even": 53.98
+   },
+   "eco_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.65,
+    "even": 55.53
+   },
+   "epic": {
+    "winner": "memory specialist",
+    "margin": 0.98,
+    "even": 53.55
+   },
+   "erotic_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.03,
+    "even": 53.73
+   },
+   "espionage": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.02,
+    "even": 56.05
+   },
+   "experimental": {
+    "winner": "adaptability specialist",
+    "margin": 0,
+    "even": 56.63
+   },
+   "exploitation": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.52,
+    "even": 54.7
+   },
+   "fairy_tale": {
+    "winner": "imagination specialist",
+    "margin": 0.24,
+    "even": 55.44
+   },
+   "family": {
+    "winner": "adaptability specialist",
+    "margin": 0.55,
+    "even": 56.97
+   },
+   "fantasy": {
+    "winner": "memory specialist",
+    "margin": 0.24,
+    "even": 54.2
+   },
+   "farce": {
+    "winner": "physical specialist",
+    "margin": 0.35,
+    "even": 53.47
+   },
+   "film_noir": {
+    "winner": "composure specialist",
+    "margin": 0.5,
+    "even": 53.92
+   },
+   "folk_horror": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.6,
+    "even": 55.49
+   },
+   "found_footage": {
+    "winner": "adaptability specialist",
+    "margin": 0.42,
+    "even": 56.73
+   },
+   "gangster": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.45,
+    "even": 55.15
+   },
+   "giallo": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.88,
+    "even": 54.58
+   },
+   "gothic_horror": {
+    "winner": "composure specialist",
+    "margin": 0.23,
+    "even": 54.35
+   },
+   "grindhouse": {
+    "winner": "focus specialist",
+    "margin": 0.65,
+    "even": 54.28
+   },
+   "hangout": {
+    "winner": "adaptability specialist",
+    "margin": 1.65,
+    "even": 58.05
+   },
+   "heist": {
+    "winner": "memory specialist",
+    "margin": 0.6,
+    "even": 53.91
+   },
+   "historical_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.73,
+    "even": 54.95
+   },
+   "historical_fiction": {
+    "winner": "emotionalDepth specialist",
+    "margin": 2.05,
+    "even": 56.7
+   },
+   "holiday": {
+    "winner": "imagination specialist",
+    "margin": 0.08,
+    "even": 57.55
+   },
+   "hood_film": {
+    "winner": "adaptability specialist",
+    "margin": 0.26,
+    "even": 55.79
+   },
+   "horror": {
+    "winner": "vocal specialist",
+    "margin": 0.15,
+    "even": 54.22
+   },
+   "horror_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.74,
+    "even": 53.1
+   },
+   "isekai": {
+    "winner": "vocal specialist",
+    "margin": 0.91,
+    "even": 54.19
+   },
+   "jidaigeki": {
+    "winner": "memory specialist",
+    "margin": 0.69,
+    "even": 53.72
+   },
+   "jukebox_musical": {
+    "winner": "vocal specialist",
+    "margin": 1.68,
+    "even": 53.88
+   },
+   "kaiju": {
+    "winner": "imagination specialist",
+    "margin": 0.62,
+    "even": 56.5
+   },
+   "kitchen_sink": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.25,
+    "even": 53.75
+   },
+   "legal_drama": {
+    "winner": "memory specialist",
+    "margin": 0.44,
+    "even": 56.42
+   },
+   "magical_realism": {
+    "winner": "composure specialist",
+    "margin": 0.65,
+    "even": 55.72
+   },
+   "martial_arts": {
+    "winner": "physical specialist",
+    "margin": 0.59,
+    "even": 52.21
+   },
+   "medical_drama": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.3,
+    "even": 55.13
+   },
+   "melodrama": {
+    "winner": "memory specialist",
+    "margin": 0.18,
+    "even": 52.78
+   },
+   "military": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.2,
+    "even": 55.85
+   },
+   "mockumentary": {
+    "winner": "adaptability specialist",
+    "margin": 0.75,
+    "even": 54.38
+   },
+   "monster_movie": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.67,
+    "even": 53.38
+   },
+   "mumblecore": {
+    "winner": "adaptability specialist",
+    "margin": 0.15,
+    "even": 58.3
+   },
+   "musical": {
+    "winner": "memory specialist",
+    "margin": 0.65,
+    "even": 53.73
+   },
+   "mystery": {
+    "winner": "composure specialist",
+    "margin": 0.1,
+    "even": 54.49
+   },
+   "nature_documentary": {
+    "winner": "vocal specialist",
+    "margin": 1.05,
+    "even": 56.28
+   },
+   "neo_noir": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.75,
+    "even": 55.38
+   },
+   "neorealism": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.38,
+    "even": 54.03
+   },
+   "new_wave": {
+    "winner": "adaptability specialist",
+    "margin": 2,
+    "even": 57.98
+   },
+   "nordic_noir": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.67,
+    "even": 56.23
+   },
+   "occult": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.42,
+    "even": 54.6
+   },
+   "parody": {
+    "winner": "focus specialist",
+    "margin": 0.5,
+    "even": 56.4
+   },
+   "period_drama": {
+    "winner": "composure specialist",
+    "margin": 0.13,
+    "even": 54.58
+   },
+   "picaresque": {
+    "winner": "focus specialist",
+    "margin": 0.28,
+    "even": 54.63
+   },
+   "police_procedural": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.5,
+    "even": 55.75
+   },
+   "political_drama": {
+    "winner": "composure specialist",
+    "margin": 0.13,
+    "even": 53.39
+   },
+   "political_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.47,
+    "even": 54.88
+   },
+   "post_apocalyptic": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.8,
+    "even": 56.63
+   },
+   "prison_film": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.07,
+    "even": 55.63
+   },
+   "psychological_horror": {
+    "winner": "composure specialist",
+    "margin": 0.02,
+    "even": 55.17
+   },
+   "psychological_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.05,
+    "even": 56.1
+   },
+   "queer_cinema": {
+    "winner": "composure specialist",
+    "margin": 0.55,
+    "even": 56.45
+   },
+   "revenge": {
+    "winner": "memory specialist",
+    "margin": 0.17,
+    "even": 54.25
+   },
+   "road_movie": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.63,
+    "even": 57.08
+   },
+   "rockumentary": {
+    "winner": "composure specialist",
+    "margin": 0.1,
+    "even": 55.58
+   },
+   "romance": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.35,
+    "even": 56.43
+   },
+   "romantic_comedy": {
+    "winner": "focus specialist",
+    "margin": 1.27,
+    "even": 57.95
+   },
+   "romantic_drama": {
+    "winner": "memory specialist",
+    "margin": 0.4,
+    "even": 55.85
+   },
+   "samurai": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0,
+    "even": 54
+   },
+   "satire": {
+    "winner": "focus specialist",
+    "margin": 0.65,
+    "even": 56.1
+   },
+   "science_fantasy": {
+    "winner": "composure specialist",
+    "margin": 0.25,
+    "even": 54.8
+   },
+   "science_fiction": {
+    "winner": "composure specialist",
+    "margin": 0.56,
+    "even": 54.98
+   },
+   "screwball_comedy": {
+    "winner": "focus specialist",
+    "margin": 1.07,
+    "even": 54.68
+   },
+   "sea_adventure": {
+    "winner": "memory specialist",
+    "margin": 0.55,
+    "even": 52.55
+   },
+   "silent_film": {
+    "winner": "physical specialist",
+    "margin": 1.07,
+    "even": 56.53
+   },
+   "slapstick": {
+    "winner": "physical specialist",
+    "margin": 0.58,
+    "even": 55.7
+   },
+   "slasher": {
+    "winner": "composure specialist",
+    "margin": 0.25,
+    "even": 53.13
+   },
+   "slice_of_life": {
+    "winner": "adaptability specialist",
+    "margin": 0.13,
+    "even": 57.68
+   },
+   "social_realism": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.88,
+    "even": 56.48
+   },
+   "space_opera": {
+    "winner": "memory specialist",
+    "margin": 1.09,
+    "even": 53.56
+   },
+   "spaghetti_western": {
+    "winner": "composure specialist",
+    "margin": 0.52,
+    "even": 54.75
+   },
+   "splatter": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.15,
+    "even": 55.22
+   },
+   "sports": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.15,
+    "even": 55.15
+   },
+   "spy": {
+    "winner": "composure specialist",
+    "margin": 0.05,
+    "even": 55.05
+   },
+   "steampunk": {
+    "winner": "composure specialist",
+    "margin": 1,
+    "even": 54.7
+   },
+   "stoner_comedy": {
+    "winner": "focus specialist",
+    "margin": 0.57,
+    "even": 55.4
+   },
+   "superhero": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.25,
+    "even": 56.05
+   },
+   "supernatural": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.13,
+    "even": 53.97
+   },
+   "surrealist": {
+    "winner": "imagination specialist",
+    "margin": 0.35,
+    "even": 55.86
+   },
+   "survival": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.45,
+    "even": 53.41
+   },
+   "swashbuckler": {
+    "winner": "physical specialist",
+    "margin": 0.61,
+    "even": 53.55
+   },
+   "sword_and_sandal": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.23,
+    "even": 54.76
+   },
+   "sword_and_sorcery": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.3,
+    "even": 54.22
+   },
+   "techno_thriller": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.95,
+    "even": 54.14
+   },
+   "teen": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.82,
+    "even": 56.72
+   },
+   "thriller": {
+    "winner": "composure specialist",
+    "margin": 0.15,
+    "even": 54.4
+   },
+   "time_travel": {
+    "winner": "focus specialist",
+    "margin": 0.35,
+    "even": 55.98
+   },
+   "tokusatsu": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.23,
+    "even": 54.51
+   },
+   "tragedy": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.09,
+    "even": 53.61
+   },
+   "tragicomedy": {
+    "winner": "focus specialist",
+    "margin": 0.02,
+    "even": 55.33
+   },
+   "true_crime": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.72,
+    "even": 54.23
+   },
+   "vampire": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.48,
+    "even": 56.53
+   },
+   "war": {
+    "winner": "physical specialist",
+    "margin": 0.77,
+    "even": 52.37
+   },
+   "werewolf": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.52,
+    "even": 55.95
+   },
+   "western": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.45,
+    "even": 54.2
+   },
+   "whodunit": {
+    "winner": "memory specialist",
+    "margin": 1.65,
+    "even": 55.73
+   },
+   "wuxia": {
+    "winner": "physical specialist",
+    "margin": 1,
+    "even": 54.97
+   },
+   "yakuza": {
+    "winner": "emotionalDepth specialist",
+    "margin": 1.2,
+    "even": 56.4
+   },
+   "zombie": {
+    "winner": "emotionalDepth specialist",
+    "margin": 0.72,
+    "even": 55
+   }
+  },
+  "readingSpread": {
+   "even": {
+    "n": 298,
+    "mean": 0.18,
+    "sd": 0.2,
+    "min": 0,
+    "max": 1.2,
+    "overOnePoint": 1
+   },
+   "emotionalDepth specialist": {
+    "n": 298,
+    "mean": 1.32,
+    "sd": 0.71,
+    "min": 0,
+    "max": 3,
+    "overOnePoint": 204
+   },
+   "listening specialist": {
+    "n": 298,
+    "mean": 0.55,
+    "sd": 0.38,
+    "min": 0,
+    "max": 1.8,
+    "overOnePoint": 44
+   },
+   "physical specialist": {
+    "n": 298,
+    "mean": 0.44,
+    "sd": 0.48,
+    "min": 0,
+    "max": 2.1,
+    "overOnePoint": 46
+   }
+  },
+  "bestReadingDiffersFeelingVsListening": 101
+ },
+ "mastery": {
+  "classSceneMasteredPartnerNeverCameReaderRoute": {
+   "evenings": 7,
+   "readerPart": 0.918,
+   "n": 56,
+   "own": {
+    "n": 56,
+    "mean": 100,
+    "sd": 0,
+    "min": 100,
+    "max": 100
+   },
+   "togetherPartnerAbsent": {
+    "n": 56,
+    "mean": 82.69,
+    "sd": 2.6,
+    "min": 80,
+    "max": 88.9
+   },
+   "togetherPartnerPresent": {
+    "n": 56,
+    "mean": 93.82,
+    "sd": 0.93,
+    "min": 92.9,
+    "max": 96
+   }
+  },
+  "briefs": {
+   "cases": 4495,
+   "at100": 4495,
+   "mastery": 4495,
+   "misses": []
+  },
+  "scene": {
+   "n": 56,
+   "at100": 56
+  },
+  "night": {
+   "n": 30,
+   "at100": 30
+  },
+  "casting": {
+   "n": 30,
+   "at100": 30
+  },
+  "coursework": {
+   "n": 13,
+   "at100": 13
+  },
+  "drawnAtMasteryNot100": 0,
+  "readerAgainstOwn": [
+   {
+    "reader": "A Recording",
+    "own": {
+     "n": 263,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 263,
+     "mean": 93.15,
+     "sd": 1.92,
+     "min": 89.1,
+     "max": 97.6
+    }
+   },
+   {
+    "reader": "Unprepared, Distracted",
+    "own": {
+     "n": 263,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 263,
+     "mean": 86.3,
+     "sd": 3.84,
+     "min": 78.3,
+     "max": 95.2
+    }
+   },
+   {
+    "reader": "Prepared, Attentive",
+    "own": {
+     "n": 263,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    },
+    "together": {
+     "n": 263,
+     "mean": 100,
+     "sd": 0,
+     "min": 100,
+     "max": 100
+    }
+   }
+  ],
+  "classSceneMasteredPartnerNeverCame": {
+   "n": 56,
+   "ownWithPartnerPart0": {
+    "n": 56,
+    "mean": 70.28,
+    "sd": 1.4,
+    "min": 67.5,
+    "max": 73.1
+   },
+   "ownWithPartnerPartHalf": {
+    "n": 56,
+    "mean": 85.15,
+    "sd": 0.7,
+    "min": 83.8,
+    "max": 86.6
+   }
+  }
+ },
+ "preparation": {
+  "developingBriefsByPrep": {
+   "0": {
+    "n": 298,
+    "mean": 18.87,
+    "sd": 0.7,
+    "min": 17.1,
+    "max": 20.4
+   },
+   "1": {
+    "n": 298,
+    "mean": 53.88,
+    "sd": 1.98,
+    "min": 49,
+    "max": 58.2
+   },
+   "0.25": {
+    "n": 298,
+    "mean": 30.63,
+    "sd": 1.15,
+    "min": 27.7,
+    "max": 33.2
+   },
+   "0.5": {
+    "n": 298,
+    "mean": 42.39,
+    "sd": 1.62,
+    "min": 38.3,
+    "max": 46.4
+   },
+   "0.75": {
+    "n": 298,
+    "mean": 52.2,
+    "sd": 1.9,
+    "min": 47.6,
+    "max": 56.4
+   }
+  },
+  "developingBriefsByGenreKnown": {
+   "0": {
+    "n": 298,
+    "mean": 49.72,
+    "sd": 1.58,
+    "min": 45.9,
+    "max": 53.1
+   },
+   "1": {
+    "n": 298,
+    "mean": 53.88,
+    "sd": 1.98,
+    "min": 49,
+    "max": 58.2
+   },
+   "0.1": {
+    "n": 298,
+    "mean": 50.21,
+    "sd": 1.6,
+    "min": 46.4,
+    "max": 53.6
+   },
+   "0.2": {
+    "n": 298,
+    "mean": 50.71,
+    "sd": 1.63,
+    "min": 46.8,
+    "max": 54.2
+   },
+   "0.3": {
+    "n": 298,
+    "mean": 51.22,
+    "sd": 1.67,
+    "min": 47.2,
+    "max": 54.8
+   },
+   "0.6": {
+    "n": 298,
+    "mean": 52.69,
+    "sd": 1.78,
+    "min": 48.3,
+    "max": 56.5
+   }
+  },
+  "masteredBriefsByGenreKnown": {
+   "0": {
+    "n": 298,
+    "mean": 91.77,
+    "sd": 0.55,
+    "min": 89.6,
+    "max": 92.9
+   },
+   "0.15": {
+    "n": 298,
+    "mean": 93.16,
+    "sd": 0.46,
+    "min": 91.4,
+    "max": 94.1
+   },
+   "0.3": {
+    "n": 298,
+    "mean": 94.51,
+    "sd": 0.37,
+    "min": 93.1,
+    "max": 95.3
+   }
+  },
+  "developingOtherByPrep": {
+   "scene": {
+    "0": {
+     "n": 56,
+     "mean": 20.65,
+     "sd": 0.28,
+     "min": 20,
+     "max": 21
+    },
+    "1": {
+     "n": 56,
+     "mean": 59.04,
+     "sd": 0.77,
+     "min": 57.2,
+     "max": 60.1
+    },
+    "0.5": {
+     "n": 56,
+     "mean": 41.85,
+     "sd": 0.51,
+     "min": 40.7,
+     "max": 42.7
+    }
+   },
+   "night": {
+    "0": {
+     "n": 30,
+     "mean": 15.62,
+     "sd": 0.14,
+     "min": 15.4,
+     "max": 16
+    },
+    "1": {
+     "n": 30,
+     "mean": 44.59,
+     "sd": 0.37,
+     "min": 44,
+     "max": 45.6
+    },
+    "0.5": {
+     "n": 30,
+     "mean": 31.69,
+     "sd": 0.25,
+     "min": 31.2,
+     "max": 32.4
+    }
+   },
+   "coursework": {
+    "0": {
+     "n": 13,
+     "mean": 21.05,
+     "sd": 1.38,
+     "min": 19.1,
+     "max": 24.9
+    },
+    "1": {
+     "n": 13,
+     "mean": 58.75,
+     "sd": 3.41,
+     "min": 50.1,
+     "max": 61.6
+    },
+    "0.5": {
+     "n": 13,
+     "mean": 42,
+     "sd": 2.29,
+     "min": 36.9,
+     "max": 44.8
+    }
+   }
+  },
+  "genreComplete": 0.9
+ },
+ "growth": {
+  "constants": {
+   "sessionGain": 0.42,
+   "exponent": 1.5,
+   "deliberate": 1,
+   "floor": 0.25,
+   "repeat": 0.5,
+   "disciplineLift": 0.1,
+   "historyKept": 400
+  },
+  "perHourDeliberate": {
+   "10": 0.378,
+   "30": 0.294,
+   "50": 0.21,
+   "70": 0.126,
+   "80": 0.105,
+   "90": 0.105,
+   "95": 0.105,
+   "99": 0.105
+  },
+  "perHourOrdinaryReach76": {
+   "30": 0.198,
+   "50": 0.084,
+   "60": 0.041,
+   "70": 0.009,
+   "75": 0.001
+  },
+  "hoursDeliberateByBand": {
+   "20-30": 32,
+   "30-40": 37,
+   "40-50": 44,
+   "50-60": 54,
+   "60-70": 69,
+   "70-80": 91,
+   "80-90": 96,
+   "90-95": 48,
+   "95-100": 48
+  },
+  "hoursOrdinaryToReach76": {
+   "30-50": 154,
+   "50-70": 669,
+   "70-75": 1866
+  },
+  "sameExerciseFourHoursAsSessions": 1.875,
+  "fourExercisesAsSessions": 4,
+  "tierBands": [
+   45,
+   75
+  ],
+  "genreStudySessionsTo": {
+   "30": 5,
+   "60": 11,
+   "90": 28
+  },
+  "genreTapesTo30": 4
+ },
+ "draws": {
+  "beginner 30 against 40": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.81,
+    "sd": 0.08,
+    "min": 0.61,
+    "max": 1.12
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 3.77,
+    "sd": 0.51,
+    "min": 2.5,
+    "max": 5
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.82,
+    "sd": 0.11,
+    "min": 9.5,
+    "max": 10
+   },
+   "betterLosesShare": 0
+  },
+  "developing 50 against 60": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.56,
+    "sd": 0.06,
+    "min": 0.42,
+    "max": 0.77
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 2.59,
+    "sd": 0.35,
+    "min": 1.8,
+    "max": 3.4
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.33,
+    "sd": 0.24,
+    "min": 8.8,
+    "max": 9.8
+   },
+   "betterLosesShare": 0
+  },
+  "advanced 70 against 80": {
+   "briefs": 100,
+   "draws": 60,
+   "sdOfTake": {
+    "n": 100,
+    "mean": 0.33,
+    "sd": 0.04,
+    "min": 0.24,
+    "max": 0.47
+   },
+   "rangeOfTake": {
+    "n": 100,
+    "mean": 1.49,
+    "sd": 0.21,
+    "min": 1,
+    "max": 2.1
+   },
+   "expectedGap": {
+    "n": 100,
+    "mean": 9.07,
+    "sd": 0.44,
+    "min": 8.2,
+    "max": 10.1
+   },
+   "betterLosesShare": 0
+  }
+ },
+ "feedback": {
+  "cases": 447,
+  "firstLimitKind": {
+   "ability": 444,
+   "preparation": 3
+  },
+  "namedTrainedPlus20": {
+   "n": 447,
+   "mean": 2.41,
+   "sd": 0.91,
+   "min": 1.1,
+   "max": 6.3
+  },
+  "meanReadAbilityPlus20": {
+   "n": 447,
+   "mean": 1.17,
+   "sd": 0.13,
+   "min": 0.9,
+   "max": 1.61
+  },
+  "unreadPlus20": {
+   "n": 284,
+   "mean": 0,
+   "sd": 0,
+   "min": 0,
+   "max": 0
+  },
+  "namedWasTheLargestGain": 311
+ },
+ "condition": {
+  "masteredBriefs": {
+   "sufficient": {
+    "n": 298,
+    "mean": 100,
+    "sd": 0,
+    "min": 100,
+    "max": 100
+   },
+   "tired30": {
+    "n": 298,
+    "mean": 81.58,
+    "sd": 0.44,
+    "min": 80.6,
+    "max": 83.3
+   },
+   "ill": {
+    "n": 298,
+    "mean": 92.34,
+    "sd": 1.38,
+    "min": 88,
+    "max": 94.6
+   },
+   "injured": {
+    "n": 298,
+    "mean": 92.24,
+    "sd": 12.61,
+    "min": 65.9,
+    "max": 100
+   }
+  }
+ },
+ "staminaPlus10": {
+  "brief": {
+   "n": 298,
+   "mean": 0.39,
+   "sd": 0.21,
+   "min": 0,
+   "max": 0.83
+  },
+  "scene": {
+   "n": 56,
+   "mean": 0.33,
+   "sd": 0.18,
+   "min": 0.1,
+   "max": 0.7
+  },
+  "night": {
+   "n": 30,
+   "mean": 0.58,
+   "sd": 0.09,
+   "min": 0.4,
+   "max": 0.7
+  },
+  "casting": {
+   "n": 30,
+   "mean": 0,
+   "sd": 0,
+   "min": 0,
+   "max": 0
+  },
+  "coursework": {
+   "n": 13,
+   "mean": 0.42,
+   "sd": 0.49,
+   "min": 0,
+   "max": 1.4
+  }
+ }
+}

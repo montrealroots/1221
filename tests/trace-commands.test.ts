@@ -64,12 +64,18 @@ describe('school.choose_playing', () => {
     expect(worked).toBeGreaterThan(0);
     // The showing reads it (from 2026-10-12, after the capability review found this test's title said so and nothing
     // checked it): the forecast the showing is judged by, with the way chosen against with none, moves.
-    const withWay = forecastWork(sim, sim.player, a, a.dueOn).overall;
+    // Read below the tenth the whole is shown to: from 2026-10-16, the scene weighed as it demands (`BASE_INPUTS`), the
+    // two wholes round alike (24.9 and 24.9), where until then they were a tenth or more apart. The way is read all the
+    // same: Driven leans responsiveness, and its rehearsal is a part of the preparation the forecast reads.
+    const forecastOf = () => forecastWork(sim, sim.player, a, a.dueOn);
+    const withWay = forecastOf();
     const playing = a.playing;
     delete a.playing;
-    const without = forecastWork(sim, sim.player, a, a.dueOn).overall;
+    const without = forecastOf();
     a.playing = playing;
-    expect(withWay).not.toBe(without);
+    expect(withWay.inputs.lean!.responsiveness!).toBeGreaterThan(without.inputs.lean!.responsiveness!);
+    expect(withWay.inputs.prep.approach).toBe(worked);
+    expect(without.inputs.prep.approach).toBeUndefined();
     const again = sim.execute<{ prep: number; kept: boolean }>({ kind: 'school.choose_playing', payload: { assignmentId: a.id, pace: 'measured' } });
     expect(again.value!.kept).toBe(false);
     expect(a.playing!.prep).toBeCloseTo(worked * PLAYING.keptOnChange, 9);

@@ -56,6 +56,13 @@ export interface MaterialProfile {
    * tones is one held two ways at once (`blendsOf`), which asks something different from a change.
    */
   beats?: readonly { tones: readonly Tone[] }[];
+  /**
+   * A practice brief's length and what rides on it (from 2026-10-16, `briefMaterial`), which what a piece demands reads
+   * (`DEMAND_EFFECT`, `content/approaches.ts`). A scene's and a play's aren't given: a scene is a class scene's length,
+   * and a play's night is read as a whole evening by its own task.
+   */
+  size?: 'short' | 'medium' | 'long';
+  stakes?: 0 | 1 | 2 | 3;
   techniques?: Partial<Record<Skill, number>>;
   allows?: Partial<Record<Axis, readonly AxisValue[]>>;
   /** Why, feature by feature, from the text. */

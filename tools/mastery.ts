@@ -200,6 +200,11 @@ function plan(genre: string) {
   const r = play(targets, YEARS, ready, () => { tapeDue = true; }, extraHour);
   let { sim } = r;
   const masteredOn = ready(sim) ? dayKey(sim) : null;
+  // Stamina kept at its ceiling through the tapes after it (from 2026-10-16): the qualifying conditions ask it at the
+  // age's ceiling at the take, and it holds three days after a workout and falls after that. Until then the tapes after
+  // mastery had no workout in them, and on this phase's re-run the drama's came three days after the last one, stamina at
+  // 98.1 of 99: each tape 100, and `mastery: false` for the hundredth of a point of drain under the rounding.
+  const keepUp = (s: Simulation) => level(s, 'stamina') < fullOf(s, 'stamina') && train(s, 'stamina', new Map()) === true;
   // At mastery: three tapes on three days through the command, when rested (readiness over the sufficient line).
   const payoff: typeof tapes = [];
   if (masteredOn) {
@@ -207,7 +212,7 @@ function plan(genre: string) {
       const before = tapes.length;
       const day = dayKey(sim);
       for (let h = 0; h < 24 && tapes.length === before; h += 1) {
-        attentiveHour(sim, () => (sim.player.wellbeing.energy > 60 && dayKey(sim) === day && zonedParts(sim.now, sim.zone).hour >= 10 ? tape(sim) : false));
+        attentiveHour(sim, () => keepUp(sim) || (sim.player.wellbeing.energy > 60 && dayKey(sim) === day && zonedParts(sim.now, sim.zone).hour >= 10 ? tape(sim) : false));
       }
       if (tapes.length > before) payoff.push(tapes.at(-1)!);
       while (dayKey(sim) === day) attentiveHour(sim);
@@ -224,7 +229,8 @@ function plan(genre: string) {
       if (what === 'flu') careFor(twin, twin.player, { care: 'visit', what: 'The flu', flu: true }, twin.now);
       else if (what) { const s = INJURY_KIND[what]; const d = Math.round((s.days[0] + s.days[1]) / 2); healthOf(twin.player).injury = { kind: what, at: twin.now, until: twin.now + d * MS_DAY, ...(s.offWork ? { offWorkUntil: twin.now + d * MS_DAY } : {}) }; }
       const until = twin.now + after * MS_DAY;
-      while (twin.now < until) attentiveHour(twin);
+      // The healthy twin, and every other, keeps stamina up as the payoff does: the condition it's measured for is its own.
+      while (twin.now < until) attentiveHour(twin, () => keepUp(twin));
       let got: unknown = 'no tape in ten days';
       for (let h = 0; h < 240; h += 1) {
         const hour = zonedParts(twin.now, twin.zone).hour;
@@ -234,7 +240,7 @@ function plan(genre: string) {
           got = ok.ok ? { overall: w.overall, mastery: w.mastery, dims: w.dims, condition: w.inputs.condition, limits: w.limits.map((l) => `${l.dimension}: ${l.label} (−${l.by})`) } : ok.error;
           break;
         }
-        attentiveHour(twin);
+        attentiveHour(twin, () => keepUp(twin));
       }
       twins[name] = got;
     }

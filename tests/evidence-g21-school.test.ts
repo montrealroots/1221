@@ -519,7 +519,10 @@ describe('school.call', () => {
     // On this seed, three solid nights held back most by the emotional depth the part asked.
     expect(c.note).toBe('Solid, sound nights. The next step is to risk more in them. Work on your emotional depth: it held the nights back most.');
     const runs = journeyOf(sim.player).milestones.filter((m) => m.kind === 'run');
-    expect(runs).toEqual([{ at: last.at, kind: 'run', what: `A Leading Part In A New Play, ${CARLOTTA}`, overall: want.overall, detail: Object.entries(c.nights!).map(([b, n]) => `${n} ${b}`).join(', ') }]);
+    // A supporting part from 2026-10-16, a leading one until then: the spring casting reads each night's abilities as the
+    // play demands since that day (`BASE_INPUTS`).
+    expect(c.role).toBe('A Supporting Part In A New Play');
+    expect(runs).toEqual([{ at: last.at, kind: 'run', what: `A Supporting Part In A New Play, ${CARLOTTA}`, overall: want.overall, detail: Object.entries(c.nights!).map(([b, n]) => `${n} ${b}`).join(', ') }]);
     expect(c.process?.reflection).toBeDefined();
     expect(sim.player.school!.tally.breaches).toBe(0);
     expect(sim.player.school!.standing).toBe('good');

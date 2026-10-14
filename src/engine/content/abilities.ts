@@ -40,7 +40,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Scene study and its classes, performing, and the sense-memory exercise.',
     // Until 2026-10-16 this said believability in a scene, a song, a self-tape, an audition and a night on stage, and left out
     // the improvisation, the clown turn and the partnered physical work that read it too (attributes-matrix.md).
-    affects: 'Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), and connection in a fight or an intimacy scene shown with a partner.',
+    // From 2026-10-16 more where a piece is played grave (`DEMAND_EFFECT`); until then the same share of every piece.
+    affects: 'Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), most where the piece is played grave; and connection in a fight or an intimacy scene shown with a partner.',
     derivedFrom: 'The craft’s Emotional Access, which it is.',
     source: 'Stanislavski, An Actor Prepares (1936), emotion memory and the given circumstances; kept in the craft as Emotional Access until 2026-10-09',
   },
@@ -48,7 +49,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'presence', label: 'Presence',
     definition: 'What a house or a camera sees beyond technique: the pull of somebody fully there.',
     develops: 'Nights in front of a house, a little at a time, and more on a remarkable night; a showing for classmates, and what graded exposure and a clown practice carry over.',
-    affects: 'Connection in performance, an audition and a clown turn.',
+    // Until 2026-10-16 this left out a scene and a taped brief, which read it too; from then more the less a piece has a
+    // partner to play off, and most in front of a house (`DEMAND_EFFECT`, the night's profile).
+    affects: 'Connection in performance, an audition, a clown turn, a scene and a taped brief: more the less of a partner the piece has to play off, and most in front of a house.',
     derivedFrom: 'Drawn once at the start, 55 to 80 for a student the faculty chose.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },
@@ -57,7 +60,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'Taking in a partner and answering what they actually do, not a plan.',
     // Until 2026-10-16 this left out a night in front of a house, which grows it every night (`systems/school.ts`).
     develops: 'Partner rehearsals, scene study and improvisation classes, every night in front of a house, the improvisation game, and the repetition exercise.',
-    affects: 'Responsiveness and connection in partnered work and performance.',
+    // From 2026-10-16 it also speeds an evening with a partner or a reader and a brief rehearsed against its reader
+    // (`stepSpeed`); until then this said partnered work read it, and only the judged work did.
+    affects: 'Responsiveness and connection in partnered work and performance, more the more the piece is built on a partner and on timing; and how far an evening rehearsing with a partner or a reader goes, and a brief rehearsed on its feet against its reader.',
     derivedFrom: 'For a life from before it: the mean of its Scene Study and Improvisation.',
     source: 'Meisner & Longwell, Sanford Meisner on Acting (1987), the repetition exercise',
   },
@@ -68,7 +73,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // made a part's interpretation faster to prepare, which nothing read. From 2026-10-16 it speeds the table work and a
     // brief's breakdown (`STEP_SPEED`).
     develops: 'The table work of coursework, breaking a brief down, character and script analysis classes, reading plays, and the given-circumstances exercise.',
-    affects: 'Interpretation in every task that asks one, and how far a step of table work or a brief’s breakdown goes.',
+    // From 2026-10-16 believability reads a little of it too (the magic if), and interpretation more where the language,
+    // a beat held two ways or a lyric or grotesque tone asks invention (`DEMAND_EFFECT`).
+    affects: 'Interpretation in every task that asks one, more where the language is heightened or verse, a beat is held two ways, or the piece is lyric or grotesque; a little of believability; and how far a step of table work or a brief’s breakdown goes.',
     derivedFrom: 'For a life from before it: the mean of its Character Work and Script Analysis.',
     source: 'Stanislavski, An Actor Prepares (1936), imagination and the magic if; Chekhov, To the Actor (1953)',
   },
@@ -78,7 +85,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Attentive preparation done well-rested, and the concentration exercise.',
     // Until 2026-10-16 this said how far a step of preparation goes, which read the day's focus (readiness at the hour,
     // `focusAt`) and never this ability. From 2026-10-16 it speeds getting to know coursework's material (`STEP_SPEED`).
-    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
+    // From 2026-10-16 execution reads it more in comedy and in heightened or verse language (`DEMAND_EFFECT`).
+    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing, played comic, or in heightened or verse language; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
     derivedFrom: 'For a life from before it: the mean of its Script Analysis and Cold Reading.',
     source: 'Stanislavski, An Actor Prepares (1936), concentration of attention and the circles of attention',
   },
@@ -87,7 +95,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'Learning lines and blocking and keeping them under pressure.',
     develops: 'Learning lines, the recall drill, and learning a part.',
     // From 2026-10-16 it speeds every step that learns lines (`STEP_SPEED`); until then this said so, and nothing read it.
-    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken.',
+    // From 2026-10-16 execution reads it more the more text there is: a longer brief, verse, a night's whole part (`DEMAND_EFFECT`).
+    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken, more the longer the text: a medium or long brief, verse, and a whole part on a night.',
     derivedFrom: 'The craft’s Memorization, which it is.',
     source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
   },
@@ -97,7 +106,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Revising after a note, working a director’s note, and the improvisation game.',
     // Until 2026-10-16 this said how fully a note is taken in a revision, which read no ability. From 2026-10-16 it speeds
     // a step of revision (`STEP_SPEED`), and a revision worked far enough takes the note (`noteTaken`).
-    affects: 'Responsiveness; holding a change of tone; recovering from a slip and covering a partner’s; and how far a step of revision after a note goes, so a note is taken sooner.',
+    // From 2026-10-16 a director's note on the blocking worked into a part reads it too (`stepSpeed`, `school.work_note`).
+    affects: 'Responsiveness; holding a change of tone; recovering from a slip and covering a partner’s; how far a step of revision after a note goes, so a note is taken sooner; and how far a director’s note on the blocking goes when it’s worked into a part.',
     derivedFrom: 'For a life from before it: its Improvisation.',
     source: 'Johnstone, Impro (1979), accepting offers',
   },
@@ -105,7 +115,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'composure', label: 'Composure',
     definition: 'Holding nerves under the pressure of a house, an audition or a camera.',
     develops: 'Every night in front of a house and a solo showing, a little, as performance anxiety falls with exposure; the graded-exposure exercise, and what concentration and a showing for classmates carry over.',
-    affects: 'Consistency under pressure, recovering from a slip, and the stress nerves add before a performance.',
+    // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`).
+    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, and a little of believability where the stakes are high; recovering from a slip; and the stress nerves add before a performance.',
     derivedFrom: 'At the start, by emotional stability: 25 to 60.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },
@@ -132,7 +143,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     // which the audition, the improvisation, the clown turn and written work don't read it for (attributes-matrix.md).
     // From 2026-10-16 every growth reads it, not deliberate practice alone (`grown` in `systems/attributes.ts`).
     develops: 'Practice on days running, and attending every call.',
-    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it but the audition, where nerves are what’s held; and execution in written work.',
+    // From 2026-10-16 consistency reads it more the more beats a piece holds and across a night's run, and execution in
+    // physical work set to a score (`DEMAND_EFFECT`, `FEATURE_EFFECT`).
+    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it but the audition, where nerves are what’s held, more the more beats a piece holds and on a night of a run; execution in physical work set to a score; and execution in written work.',
     derivedFrom: 'For a new life and one from before it: the Conscientiousness slider, of which self-discipline is a facet.',
     source: 'Costa & McCrae, NEO PI-R Professional Manual (1992), self-discipline as a facet of conscientiousness',
   },
@@ -141,8 +154,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     definition: 'Lasting through long days, runs of nights and physical work without the work falling off.',
     develops: 'Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.',
     // Until 2026-10-16 this said consistency in movement, fights, songs and every night on stage; a night reads it as the
-    // drain through the piece, never as consistency (`systems/piece.ts`).
-    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more where the piece is hard on the body and the voice; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
+    // drain through the piece, never as consistency (`systems/piece.ts`). From 2026-10-16 a night's and a long brief's load
+    // rose to their length (`PIECE.load`).
+    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more the longer the piece (a long brief, a whole night most) and the more of the body’s and the voice’s work it asks; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
     derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
     source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Hickson & Rosenkoetter (1981): two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on detraining',
   },

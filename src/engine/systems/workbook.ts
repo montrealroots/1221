@@ -100,6 +100,11 @@ export function problemsOf(p: WorkPiece): Problem[] {
       out.push({ id: `${turn ? 'turn' : 'segment'}:${i}`, kind: turn ? 'turn' : 'segment', segment: i, label: turn ? `The Turn Into ${s.label}` : `${s.label} Isn’t Secure`, why: `${turn ? `The change into ${s.label.toLowerCase()} asks more rehearsal than the rest` : `${s.label} hasn’t been rehearsed enough`}: ${pct(s.part)} of the ${pct(s.required)} it asks. It comes to ${s.overall} against the whole’s ${e.overall}.`, measure: s.overall, gap: (s.required - s.part) * 100 });
     } else if (segs.length > 1 && s.overall < e.overall - WORKBOOK.segmentGap) {
       const c = chiefOf(s);
+      // A segment held back most by tiring is the stamina problem below, said once (from 2026-10-16). At a whole evening’s
+      // load (`PIECE.load.night`, raised that day) a new play’s second half, played at half stamina, fell under the whole
+      // by more than `segmentGap`, and the same drain came as two problems, the segment’s first, whose ways don’t include
+      // breathing (tests/guide-examples-productions.test.ts, the director’s note on tiring).
+      if (c?.kind === 'condition' && c.what === 'stamina') return;
       out.push({ id: `segment:${i}`, kind: 'segment', segment: i, label: `${s.label} Holds It Back`, why: `${s.label} comes to ${s.overall} against the whole’s ${e.overall}${c ? `: ${c.label.toLowerCase()} costs its ${DIMENSION_LABEL[c.dimension].toLowerCase()} most` : ''}.`, measure: s.overall, gap: e.overall - s.overall });
     }
   });
@@ -261,6 +266,12 @@ export function tryAdjustment(sim: Simulation, person: Person, p: WorkPiece, adj
   if (adjustment === 'with-partner' && p.partner?.set) p.partner.set(clamp01(p.partner.get() + W.partnerGain * focus * (1 - p.partner.get())));
   // Working a segment slowly rehearses in a way it's played its own way, as rehearsal does a whole's.
   if (adjustment === 'work-beat' && s !== undefined && book.ways?.[s]) book.ways[s] = { ...book.ways[s]!, prep: clamp01(book.ways[s]!.prep + W.wayGain * focus * (1 - book.ways[s]!.prep)) };
+  // The evidence is the change in the work, measured on the day as it stood when the way began (from 2026-10-16). Until
+  // then the figure after was read once the half hour on the feet had passed and tired the actor, so a way that changed
+  // nothing measured worse by the tiring alone, and a director's note on a limit no way moves (an ability) was answered
+  // only if the limit left the forecast: played in phase 2b of the attributes brief, a student's notes on presence went unanswered
+  // call after call, the notes share fell, and her nights with it.
+  const after = measureOf(p, problem);
   sim.advanceTo(sim.now + def.minutes * 60_000);
   exerts(person, def.feet ? 2.5 : 1.5, def.minutes / 60);
   // What it practises: a limit worked on trains what limits it, a turn run into trains adaptability. Lightly, as a
@@ -268,7 +279,6 @@ export function tryAdjustment(sim: Simulation, person: Person, p: WorkPiece, adj
   const trains = problem.kind === 'limit' ? problem.id.slice('limit:'.length) : s !== undefined && problem.kind === 'segment' ? abilityHolding(p, p.forecast().piece?.segments[s] ?? {}) : undefined;
   if (trains && (adjustment === 'work-beat' || adjustment === 'beat-way')) ordinary(sim, person, trains as Target, focus, 0.25, `workbook:${p.key}`);
   if (adjustment === 'run-into') ordinary(sim, person, 'adaptability', focus, 0.25, `workbook:${p.key}`);
-  const after = measureOf(p, problem);
   const t: Try = { at: sim.now, problem: problem.id, label: problem.label, adjustment, ...(option ? { option } : {}), ...(s !== undefined ? { segment: s } : {}), before: r1(before), after: r1(after), verdict: def.kind === 'choice' ? 'pending' : 'kept' };
   book.tries.push(t);
   if (book.tries.length > W.triesKept) book.tries.splice(0, book.tries.length - W.triesKept);

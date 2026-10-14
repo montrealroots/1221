@@ -511,7 +511,8 @@ describe('p-traits-line', () => {
  * What fatigue reaches of each ability, task by task, as the evaluation applies it (`TASK_PROFILES`, each task’s
  * dimension by its own conditions), worked out here from the tasks: the dimensions in which some task reads the
  * ability and lists fatigue for that dimension. Interpretation, “the choices made”, lists it in no task, so Imagination,
- * read in it alone, has nothing. Emotional Depth’s connection is read only in partnered work, which lists no condition
+ * read in it alone until 2026-10-16, had nothing; from then a scene, a taped brief and a night read a little of it in
+ * believability, the magic if (`BASE_INPUTS`), which fatigue reaches. Emotional Depth’s connection is read only in partnered work, which lists no condition
  * for it. Until 2026-10-13 this was every dimension the ability shapes but interpretation, which held the Profile’s
  * over-report: Emotional Depth tired in connection.
  */
@@ -519,7 +520,7 @@ const TIRED: Readonly<Record<string, readonly string[]>> = {
   'Emotional Depth': ['believability'],
   Presence: ['connection'],
   'Listening And Responsiveness': ['connection', 'responsiveness'],
-  Imagination: [],
+  Imagination: ['believability'],
   Focus: ['execution', 'consistency'],
   Memory: ['execution'],
   Adaptability: ['responsiveness'],
@@ -607,7 +608,7 @@ describe('p-abilities', () => {
     expect(above.words).toContain('You struggled to hold it: the developing tier fits where you are now.');
   });
 
-  it('PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, and nothing for an ability read only in interpretation', () => {
+  it('PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, Imagination’s believability among them', () => {
     const today = TWINS.map((traits) => {
       fresh();
       const sim = life('g31-today', { personalityTraits: [...traits] });
@@ -628,8 +629,8 @@ describe('p-abilities', () => {
         expect(m![2]!.split(', ').sort(), row[0]).toEqual([...reached].sort());
       }
     });
-    // Imagination is read in interpretation alone, which fatigue leaves be.
-    expect(rowOf(abilities(profile(today[1]!.sim)), 'Imagination').slice(4, 6)).toEqual(['Nothing holds it back', 'Interpretation']);
+    // Imagination: believability, which fatigue reaches, where it was read in interpretation alone until 2026-10-16.
+    expect(rowOf(abilities(profile(today[1]!.sim)), 'Imagination').slice(4, 6)).toEqual([`Readiness ${said[1]}, under 60: believability`, 'Believability, Interpretation']);
     // Rested, at 8 AM, nothing holds any of them back.
     fresh();
     const morning = life('g31-today');
@@ -803,14 +804,16 @@ describe('p-genres', () => {
     sim.must({ kind: 'genre.study', payload: { genre: 'comedy' } });
     // A year on, the second fall's casting: Major Barbara, a comedy, a satire and a political drama.
     sim.advanceTo(at(2027, 9, 11, 8));
-    expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft' });
+    // Lady Britomart from 2026-10-16, when casting's read came to weigh a night's abilities as the play demands
+    // (`BASE_INPUTS`); Barbara Undershaft until then. The play, and so the kinds below, are the same.
+    expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Lady Britomart' });
     expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is the kind your next part’s play is, and the one of its kinds you know least.');
     expect(studyRefusal(sim, sim.player, 'satire')).toBeUndefined();
     sim.must({ kind: 'genre.study', payload: { genre: 'satire' } });
     expect(sentence(profile(sim))).toBe('Drama, Comedy. Political Drama is the kind your next part’s play is, and the one of its kinds you know least.');
   });
 
-  it('PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 10.0 in Drama’s row across a reload; refused by the clock before orientation', () => {
+  it('PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation', () => {
     fresh();
     const sim = life('g31-brief', { genres: ['drama'] });
     sim.advanceTo(at(2026, 8, 24, 8));
@@ -850,16 +853,17 @@ describe('p-genres', () => {
     expect(takes(html)).toHaveLength(1);
     expect(takes(html)[0]![0]).toBe('August 24, 2026');
     expect(takes(html)[0]![4]).toBe(take.overall.toFixed(1));
-    // A take is practice in its genre: 100 × 0.1, shared by the brief's one kind.
+    // A take is practice in its genre: 100 × 0.1, shared by the brief's one kind, times the share of it a take this cold
+    // credits (practiceShare, from 2026-10-16: 0.15, nothing prepared), 1.5. It was 10 until then.
     const drama = (page: string) => rowOf(genres(page).slice(genres(page).indexOf('genres-find')), 'Drama').slice(2, 4);
-    expect(drama(html)).toEqual(['0.0', '10.0']);
+    expect(drama(html)).toEqual(['0.0', '1.5']);
     expect(words).toContain('1 loved; 1 of 149 studied or practiced');
     // A save and a reload: the take once, and its practice once, on the same screen.
     const again = reload(sim);
     expect(again.player.work).toHaveLength(kept + 1);
     const reread = profile(again);
     expect(takes(reread)).toEqual(takes(html));
-    expect(drama(reread)).toEqual(['0.0', '10.0']);
+    expect(drama(reread)).toEqual(['0.0', '1.5']);
     // Half an hour before orientation, the pane refuses the take, in its words, under the button.
     sim.advanceTo(at(2026, 8, 24, 9, 30));
     html = profile(sim);

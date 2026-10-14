@@ -798,6 +798,9 @@ describe('school.partner_rehearsal', () => {
     const snap = serialise(sim.universe);
     play(sim, r.at - 60_000);
     rested(sim); // TEST SETUP: rested, focus held at its 1.1 for a partner's step.
+    // TEST SETUP: listening at 50, where an evening goes exactly as far as its step says (`stepSpeed`, from 2026-10-16:
+    // a partner's evening reads listening as it stands coming in).
+    sim.player.attrs!.listening = 50;
     expect(trustOf(mate)).toBe(50);
     expect(mate.bond ?? 0).toBe(0);
     const listening = sim.player.attrs!.listening!;

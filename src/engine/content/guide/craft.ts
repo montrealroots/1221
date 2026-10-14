@@ -443,7 +443,7 @@ export const CRAFT: readonly GuideEntry[] = [
     questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
     where: { route: PROFILE, label: 'Player Profile, Genres' },
     available: `${OPENED}.`,
-    short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it. Study It is ${plural(ENGAGEMENT.genre.minutes, 'minute')} with a play of the kind the game has, or a film of it. The better of the two is how well you know the genre: a taped brief in it reads that as part of its preparation, complete at ${pct(BRIEF.complete.genre)}, and a scene or a part from a play of its kind is prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day, and the work comes out as good as it would have.`,
+    short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it. Study It is ${plural(ENGAGEMENT.genre.minutes, 'minute')} with a play of the kind the game has, or a film of it. The better of the two is how well you know the genre: a taped brief in it reads that as part of its preparation, every point to ${pct(BRIEF.complete.genre)} showing in the take, and a scene or a part from a play of its kind is prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day, and the work comes out as good as it would have.`,
     steps: [
       'On the Player Profile, Genres lists every genre with what It Asks For, your Familiarity and your Practice, and Study It and Open Its Brief.',
       'Find narrows the list by name, and Show picks All, Loved, Studied Or Practiced or With Requirements; the button under the list shows more.',
@@ -458,8 +458,8 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Familiarity', value: `Each study adds ${pct(ENGAGEMENT.genre.study)} of what’s left to 100; the same genre again the same day adds half the one before`, estimate: true },
-      { label: 'Practice', value: `A take in it, or a night of a play of its kind, adds ${pct(ENGAGEMENT.genre.practice)} of what’s left, shared among the work’s genres; a take that’s the same again adds half`, estimate: true },
-      { label: 'Knowing The Genre', value: `The better of familiarity and practice, in the brief’s best-known genre: complete at ${pct(BRIEF.complete.genre)} for a take, and read by its interpretation` },
+      { label: 'Practice', value: `A take in it, or a night of a play of its kind, adds ${pct(ENGAGEMENT.genre.practice)} of what’s left, shared among the work’s genres; a take by how far it was prepared, ${pct(BRIEF.practiceUnprepared)} of that taped cold; a take that’s the same again adds half`, estimate: true },
+      { label: 'Knowing The Genre', value: `The better of familiarity and practice, in the brief’s best-known genre, read by a take’s interpretation: with none, ${pct(EVALUATION.partFloor.genre!)} of it stands, and every point to ${pct(BRIEF.complete.genre)} adds its share, complete there`, estimate: true },
       { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} at 100: a scene for class from a play of the kind, and a part’s lines in one. A brief’s own steps read the material met before instead` },
       // A take of its brief reads it; a play’s night or a class scene reads its own material’s (until 2026-10-13 this said
       // “their work reads it”, which a farce’s night, reading no clown, didn’t).
@@ -488,6 +488,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'Studying one genre for hours in a day: each study the same day adds half the one before. One a day, over a few days, goes further.',
       `Studying on past ${pct(BRIEF.complete.genre)} for a take: past that it adds to a take no more, though it still speeds a scene or a part from a play of the kind.`,
       'Expecting a brief’s steps to go faster in a genre you know: they read the material’s features met before, and the genre is its own part of the take.',
+      `Taping cold to learn a genre: a take taped with nothing prepared is ${pct(BRIEF.practiceUnprepared)} of a prepared take’s practice in it.`,
     ],
     related: ['craft.brief-prepare', 'craft.brief-tape', 'craft.profile', 'coursework.prepare'],
     connections: [
@@ -535,10 +536,10 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'A Step’s Reach', value: `${pct(BRIEF.steps.read.gain)} of what’s left for the breakdown and the lines, ${pct(BRIEF.steps.rehearse.gain)} for rehearsal, at a focus of 1; a repeat the same day goes half as far as the one before`, estimate: true },
       { label: 'Your Focus', value: 'The day’s focus at the hour: a tired step goes less far' },
       { label: 'Your Way Of Working', value: `How you read around a text moves the breakdown, and how you drill lines moves the lines, each from ${pct(KNOB_LIMITS.readsAround[0])} to ${pct(KNOB_LIMITS.readsAround[1])}, by your traits and dispositions` },
-      { label: 'Your Imagination And Memory', value: `${BRIEF.steps.read.label} goes further with imagination and ${BRIEF.steps.lines.label} with memory: ${pct(STEP_SPEED.least)} as far at 0, as far as the step says at 50, ${pct(STEP_SPEED.most)} at 100`, estimate: true },
+      { label: 'Your Imagination, Memory And Listening', value: `${BRIEF.steps.read.label} goes further with imagination, ${BRIEF.steps.lines.label} with memory, and ${BRIEF.steps.rehearse.label} with listening, played off the reader (a voice brief at a microphone has none): ${pct(STEP_SPEED.least)} as far at 0, as far as the step says at 50, ${pct(STEP_SPEED.most)} at 100`, estimate: true },
       { label: 'Material Met Before', value: `The kinds of material the brief is built on, each counted up to ${plural(EXPERIENCE.fullAt, 'time')} met or practiced: every step goes up to ${pct(ENGAGEMENT.genreSpeed)} faster once all of them are, by their mean` },
       { label: 'What Completes It', value: `The breakdown at ${pct(BRIEF.complete.interpretation)}, the lines at ${pct(BRIEF.complete.memorization)}, and rehearsal at ${pct(BRIEF.complete.rehearsal)} in a beat, ${pct(PIECE.brief.perTurn)} more in a beat a change of tone leads into and ${pct(PIECE.brief.perBlend)} more in one held two ways, ${pct(BRIEF.complete.mostRehearsal)} at most` },
-      { label: 'Knowing The Genre', value: `A fourth part, from studying the genre and working in it, complete at ${pct(BRIEF.complete.genre)}` },
+      { label: 'Knowing The Genre', value: `A fourth part, from studying the genre and working in it, complete at ${pct(BRIEF.complete.genre)}; with none, a take keeps ${pct(EVALUATION.partFloor.genre!)} of what it reaches` },
     ],
     now: [
       'The step’s time passes and its part rises; the toast says how far.',
@@ -759,6 +760,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'What It’s Judged As', value: `${TAPE.label}, weighing ${andList(TAPE_WEIGHTS)}; ${ON_ITS_FEET.label} where the scene is built on physical work, and an injury then reaches its execution and consistency` },
       { label: 'How Hard It Is', value: `Pitched at a student, at ${signed(BRIEF.difficulty)}; a callback at ${signed(Math.round((BRIEF.difficulty + BRIEF.callback) * 100) / 100)}, near a professional’s 0${STAKES_VARY ? `; and ${BRIEF.stakes} more for each step more than usual rides on the scene, as much less for each step less` : ''}`, estimate: true },
       { label: 'Each Beat', value: 'Its tones lean it, a comic beat toward execution and responsiveness, a grave one toward believability and consistency; and it reads its own rehearsal against what it asks' },
+      { label: 'What It Asks Of You', value: 'The scene’s own demands: a medium or a long one asks memory, more riding on it composure (in consistency, and a little in believability), little of a reader to play off presence, more than three beats discipline, grave beats emotional depth, comic ones focus, lyric or grotesque ones imagination; and timing, the body, a partner, the voice and improvisation what each always asked. An ability it asks more of takes more of a dimension’s share from the rest', estimate: true },
       { label: 'Stamina', value: `A drain that grows beat by beat, harder the longer, the more physical and the more vocal the scene, and the lower your stamina: at most ${pct(PIECE.drain)} off what tiring reaches, at the end of the hardest piece with none`, estimate: true },
       { label: 'A Slip', value: `A beat ${PIECE.slipAt} points or more under what it was expected to come to carries up to ${pct(PIECE.rattle)} of itself into the next beat’s believability and consistency, less as composure and adaptability recover it`, estimate: true },
       { label: 'The Whole', value: `${pct(EVALUATION.meanShare)} the dimensions’ weighted mean and the rest the weakest of them; the take is its beats’ mean, by their weight` },
@@ -767,7 +769,7 @@ export const CRAFT: readonly GuideEntry[] = [
     now: [
       `The hour passes and energy goes down ${ENGAGEMENT.energy.desk}.`,
       `The take goes on your work record, named for the brief and its reading, and on the brief’s own record, which keeps the last ${BRIEF.takesKept}.`,
-      `It grows ${TECHNIQUE_LABEL.screen}, or ${TECHNIQUE_LABEL.voiceover} at a microphone, and any technique the scene stages, toward where classes level off, and is practice in the brief’s genres.`,
+      `It grows ${TECHNIQUE_LABEL.screen}, or ${TECHNIQUE_LABEL.voiceover} at a microphone, and any technique the scene stages, toward where classes level off, and is practice in the brief’s genres, by how far it was prepared: ${pct(BRIEF.practiceUnprepared)} of a prepared take’s, taped cold.`,
       'A take that’s the same again (the same reading, played the same way, no better prepared) is worth half as practice, and the same brief again the same day halves the genre’s practice again.',
       'The take with its reader is worked out beside your own, and a classmate who read moves with it.',
       `A take with its reader at ${STRONG} or more (your own take, at a microphone) earns a callback, where it wasn’t one itself: one side of one axis the brief leaves open, said before the next take.`,

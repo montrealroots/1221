@@ -77,7 +77,10 @@ describe('at school', () => {
   it('reads a night by presence as well as the craft: the same night, read higher with more of it', () => {
     // The falsifiability test: only presence moves, and the night's band moves with it somewhere in sixty nights.
     const sim = life('attr-night');
-    sim.player.craft = craft(57);
+    // A craft at 54, where its nights sit at the solid line: at 57, where they sat until 2026-10-16, presence moved one
+    // night of sixty across it (59 to 60 ranked), and from that day, a night's other abilities weighed as it demands
+    // (`BASE_INPUTS`), none (60 and 60), all of them solid either way. At 54: 40 against 60.
+    sim.player.craft = craft(54);
     Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0 });
     const nights = (presence: number) => { sim.player.attrs!.presence = presence; return Array.from({ length: 60 }, (_, n) => nightOf(sim, sim.player, `p${n}`, {}, sim.now)); };
     const rank = (x: string): number => ({ off: 0, solid: 1, strong: 2 } as Record<string, number>)[x] ?? 3;

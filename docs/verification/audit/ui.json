@@ -173,7 +173,7 @@
       "changes": "Person.performerTitle (bootstrap.ts:303-305 decided, :345 stored); meta.careerLabel (bootstrap.ts:316; refreshMeta, index.ts:259)",
       "downstream": "systems/school.ts:2586, the casting pool’s title, read by partsFor (:2549-2559); :2632-2641, the lead-taken bond; :2699-2701, the Yale Rep role (Nina or Konstantin in 2027, then a part written for the title); companyPart :2187-2198 (title at :2192), the Summer Cabaret’s parts, from 2026-10-14 never a lead for a student outside the four the play reads best; systems/playreading.ts:77-82 partFor, a read’s part for you; index.ts:259, refreshMeta’s careerLabel; labels at Home.tsx:113, shell/GameShell.tsx:162, shell/LifeEnded.tsx:45 and ProfileWorkspace.tsx:171. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from.",
       "explanation": "UI says 'at school you're cast in the parts a play writes for it' - engine does this.",
-      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall… casts her as Frau Bergmann and him as Hänschen Rilow, and the lead taken costs the bond…', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
+      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
       "status": "verified",
       "issue": "",
       "review": {
@@ -271,7 +271,7 @@
           },
           {
             "file": "evidence-g27-ui.test.ts",
-            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Bergmann and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title",
+            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title",
             "kind": "command",
             "closes": "The School production casting (the pool's title) and the lead-taken bond had no title test. The second fall's Rep is checked too: Elmire and Tartuffe."
           },
@@ -5165,7 +5165,7 @@
           },
           {
             "file": "evidence-g31-ui.test.ts",
-            "title": "PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, and nothing for an ability read only in interpretation",
+            "title": "PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, Imagination’s believability among them",
             "kind": "render",
             "closes": "Today (todayFor) untested: under fatigue every row names its dimensions but interpretation, at readiness × the hour's fit (plain, early riser and night owl), and Imagination reads 'Nothing holds it back'. Rested at 8 AM, every row reads 'Nothing holds it back'"
           },
@@ -5392,7 +5392,7 @@
       "changes": "genre.study; practice.self_tape, from the brief’s pane",
       "downstream": "systems/engagement.ts",
       "explanation": "Values are the engine’s; the genre to study says whether a part asks for it or it’s loved (since 2026-10-10).",
-      "tests": "tests/evidence-g31-ui.test.ts p-genres, in the gate: 'PLAYER JOURNEY: the search, Study It pressed (familiarity 8.0), every Show filter and the paging, sixteen at a time to the 149th' (It Asks For matched to a pattern only), 'PLAYER JOURNEY: the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara, its kind known least, each moved by a study', 'PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 10.0 in Drama’s row across a reload…'; tests/evidence-g23-school.test.ts 'the Player Profile’s Genres say what each asks for…' (It Asks For’s values); tests/whynot-profile.test.ts (Study It’s refusal); tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’; tests/defects-r8-1.test.ts ‘open once the chapter that opens a genre is read, and not before’; tests/engagement.test.ts (engine); tools/acceptance-ui.mjs, the brief scenario, on the built app. Until 2026-10-13 the filters, the paging and the 'part' sentence had no test, and Open Its Brief and Tape It ran only on the built app.",
+      "tests": "tests/evidence-g31-ui.test.ts p-genres, in the gate: 'PLAYER JOURNEY: the search, Study It pressed (familiarity 8.0), every Show filter and the paging, sixteen at a time to the 149th' (It Asks For matched to a pattern only), 'PLAYER JOURNEY: the genre to study is the loved one known least before any part, and once the clock casts her in Major Barbara, its kind known least, each moved by a study', 'PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation'; tests/evidence-g23-school.test.ts 'the Player Profile’s Genres say what each asks for…' (It Asks For’s values); tests/whynot-profile.test.ts (Study It’s refusal); tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’; tests/defects-r8-1.test.ts ‘open once the chapter that opens a genre is read, and not before’; tests/engagement.test.ts (engine); tools/acceptance-ui.mjs, the brief scenario, on the built app. Until 2026-10-13 the filters, the paging and the 'part' sentence had no test, and Open Its Brief and Tape It ran only on the built app.",
       "status": "verified",
       "issue": "None. The sentence (ProfileWorkspace.tsx:417) says both of nextGenre’s answers (:92): 'is the kind your next part’s play is…' for a part, 'is the one you love and know least; no part asks for a kind yet' for the loved fallback. It once said 'is the kind your next work asks for' whichever nextGenre gave.",
       "auditStatus": "partial",
@@ -5490,7 +5490,7 @@
           },
           {
             "file": "evidence-g31-ui.test.ts",
-            "title": "PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 10.0 in Drama’s row across a reload; refused by the clock before orientation",
+            "title": "PLAYER JOURNEY: Open Its Brief pressed, Tape It refused before a reading, Read It This Way and Tape It pressed: the take kept once and practice 1.5 in Drama’s row, a cold take’s share, across a reload; refused by the clock before orientation",
             "kind": "render",
             "closes": "Open Its Brief and Tape It in the gate, tapeRefusal's display both ways, and engagement's practice (100 × 0.1 = 10.0) in the Drama row's cells, held once across a reload"
           }

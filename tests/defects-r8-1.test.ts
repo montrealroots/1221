@@ -264,10 +264,16 @@ describe('a director’s note on the craft', () => {
 
   it('PLAYER JOURNEY: says it on the festival’s notes on that limit, and nothing else about the festival changes', () => {
     const plain = festival('r8-a');
-    // FIXTURE: emotional depth made the weakness the work for life keeps coming back to, ahead of the imagination the
+    // The ability the festival's first note on a limit names. Emotional depth until 2026-10-16; from then a night weighs
+    // each ability as the play demands it (`BASE_INPUTS`, `DEMAND_EFFECT`), and the note names whichever the forecast
+    // holds back most, found here rather than assumed.
+    const first = plain.notes.find((n) => n.focus.kind === 'craft' && n.focus.problem.startsWith('limit:') && ABILITY_DEFS.some((d) => `limit:${d.id}` === (n.focus as { problem: string }).problem))!;
+    const id = (first.focus as { problem: string }).problem.slice('limit:'.length) as AbilityId;
+    const def = ABILITY_DEFS.find((d) => d.id === id)!;
+    // FIXTURE: that ability made the weakness the work for life keeps coming back to, ahead of the imagination the
     // played fall term names, so the festival's note on a limit on it is a note on that weakness.
-    const kept = festival('r8-a', (sim) => { sim.player.journey!.limits!['ability:emotionalDepth'] = { label: 'Emotional Depth', n: 30, whole: 160, last: sim.now }; });
-    const onIt = (n: { focus: NoteFocus }) => n.focus.kind === 'craft' && n.focus.problem === 'limit:emotionalDepth';
+    const kept = festival('r8-a', (sim) => { sim.player.journey!.limits![`ability:${id}`] = { label: def.label, n: 30, whole: 160, last: sim.now }; });
+    const onIt = (n: { focus: NoteFocus }) => n.focus.kind === 'craft' && n.focus.problem === `limit:${id}`;
     expect(kept.notes.filter(onIt).length).toBeGreaterThan(0);
     // The falsifiability test: the same notes on the same problems at the same figures, the same part and the same
     // work, judged the same; only the words of the notes on that limit change.
@@ -279,7 +285,7 @@ describe('a director’s note on the craft', () => {
       const was = plain.notes[i]!.text;
       if (!onIt(n)) { expect(n.text).toBe(was); return; }
       expect(was).not.toContain('held back');
-      const said = /^(.*) It’s your emotional depth again: it’s held back (\d+) of your pieces before this\.$/.exec(n.text);
+      const said = new RegExp(`^(.*) It’s your ${def.label.toLowerCase()} again: it’s held back (\\d+) of your pieces before this\\.$`).exec(n.text);
       expect(said, n.text).not.toBeNull();
       expect(said![1]).toBe(was);
       expect(Number(said![2])).toBeGreaterThanOrEqual(30);

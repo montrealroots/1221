@@ -75,7 +75,8 @@ import { CLASSES_2026_27, COURSES } from '@/engine/content/school';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { CABARET_KIND, CALL_KIND, ESTIMATE, SHIFT_KIND, registered } from '@/engine/systems/school';
 import { ORIENTATION_KIND, courseworkOf, mateRecord, notesOf, trustOf } from '@/engine/systems/coursework';
-import { nightFactor, processOf, type Process } from '@/engine/systems/production';
+import { nightFactor, processOf, solutionsOf, type Process } from '@/engine/systems/production';
+import { workPiece } from '@/engine/systems/workpieces';
 import { developmentOf } from '@/engine/systems/attributes';
 import { journeyOf } from '@/engine/systems/evaluation';
 import { healthOf } from '@/engine/systems/health';
@@ -559,17 +560,26 @@ describe('school.review_blocking', () => {
 // ---------------------------------------------------------------------------
 
 describe('school.work_note', () => {
-  /** The festival with the lines learned each evening and every note worked its first way, kept where it waits. */
+  /**
+   * The festival with the lines learned each evening and every note worked its first way, kept where it waits; but the
+   * first craft note offering a segment played another way is worked that way and put back. From 2026-10-16 a way's
+   * evidence is read on the day as the way began (`tryAdjustment`), and a way that changes nothing no longer measures
+   * worse for the half hour's tiring: every note worked its first way here was taken, and a way put back is how a note
+   * worked comes to stand not taken, said "Still:" when it's given again.
+   */
   const festival = (seed: string) => {
     const sim = carlotta(seed);
     const { calls } = callsOf(sim);
+    let putBack = false;
     for (let k = 0; k < calls.length - 1; k += 1) {
       tended(sim, calls[k]!.at + 6.5 * MS_HOUR);
       if (proc(sim).lines < 0.97) sim.must({ kind: 'school.learn_part', payload: {} });
       const last = proc(sim).notes.at(-1);
       if (last && last.taken === undefined && !last.worked) {
-        const r = sim.must<{ pending?: boolean }>({ kind: 'school.work_note', payload: {} });
-        if (r.pending) sim.must({ kind: 'work.settle', payload: { piece: 'part:school', keep: true } });
+        const other = !putBack && last.focus.kind === 'craft' ? solutionsOf(workPiece(sim, sim.player, 'part:school'), last).find((o) => o.adjustment === 'beat-way') : undefined;
+        const r = sim.must<{ pending?: boolean }>({ kind: 'school.work_note', payload: other ? { solution: other.adjustment, option: other.option } : {} });
+        if (r.pending) sim.must({ kind: 'work.settle', payload: { piece: 'part:school', keep: !other } });
+        if (other) putBack = true;
       }
     }
     tended(sim, calls.at(-1)!.at + 7 * MS_HOUR);

@@ -52,6 +52,11 @@ export const PIECE = {
   /**
    * How hard a piece is on stamina, 0 to 1: a base for its kind and length, and a share for each level of the body's
    * and the voice's work it stages. A night is a whole evening; a brief or a scene a few minutes.
+   *
+   * From 2026-10-16 by length as well as by the body and the voice: a long brief 0.35 where it was 0.3, and a night 0.6
+   * and 0.12 a level where it was 0.4 and 0.1. Measured on the 427 pieces (phase-2b.md §3), a night, two or three hours
+   * on stage, drew less of stamina's effect (+0.43 for +10) than a short brief built on a fight, and a light scene's
+   * stamina came to a tenth of a point or under, which is kept: it's a few minutes, and stamina shouldn't decide it.
    */
-  load: { brief: 0.1, briefMedium: 0.2, scene: 0.15, night: 0.4, perLevel: 1 / 6, nightPerLevel: 0.1 },
+  load: { brief: 0.1, briefMedium: 0.2, briefLong: 0.35, scene: 0.15, night: 0.6, perLevel: 1 / 6, nightPerLevel: 0.12 },
 } as const;

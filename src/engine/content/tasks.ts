@@ -22,9 +22,12 @@ import type { AbilityId } from './abilities';
 /**
  * The version of these rules, kept on every result so an old one is read under its own terms. Three from 2026-10-12:
  * a piece judged in segments, stamina read as a drain through it, a slip carried into the next segment, and the limits
- * ranked by what they cost the whole.
+ * ranked by what they cost the whole. Four from 2026-10-16 (phase 2b of the attributes brief): knowing the genre read
+ * over its whole range with a smaller gate (`partFloor`), the task profiles' weights moved to what a piece demands
+ * (`DEMAND_EFFECT`, `content/approaches.ts`), and stamina's load set by a piece's length. A result kept under three
+ * isn't replayed under four (`replay`), so no kept result changes.
  */
-export const RULESET = 'evaluation-3 (2026-10-12)';
+export const RULESET = 'evaluation-4 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 
@@ -73,16 +76,66 @@ const ALL: readonly ConditionKind[] = ['fatigue'];
 /** Coursework's parts, by their own words (`content/coursework.ts` `PrepDim`). */
 const COURSEWORK_PREP = { familiarity: 'Knowing the material', memorization: 'The lines', interpretation: 'The choices', rehearsal: 'Rehearsal', partner: 'Work with your partner', revision: 'The revision' } as const;
 
+/**
+ * The abilities a scene, a taped brief and a night read of their own, before what the piece demands (from 2026-10-16,
+ * phase 2b of the attributes brief; docs/verification/attributes-genres-2026-10-16/phase-2b.md). Until then each read
+ * one or two abilities a dimension at fixed weights: emotional depth three of believability's four parts on all three,
+ * listening two of connection's three and two of responsiveness's four on a scene, imagination three of interpretation's
+ * four on a scene, and memory, presence, composure, focus and discipline one or two parts each, the same on every piece.
+ * Measured on the 427 pieces, the actor strongest in feeling was best on 90% of the briefs, in listening on every
+ * scene, night and casting, and the specialists in seven of the other ten behind an even actor almost everywhere
+ * (baseline.md §1 and §2). Now each reads a little of every ability its dimensions concern, and a piece's own demands
+ * (`FEATURE_EFFECT`, `LANGUAGE_EFFECT`, `TRANSITION_EFFECT`, `DEMAND_EFFECT`) add the rest where it has them:
+ *
+ * - believability: emotional depth, and a little imagination (Stanislavski's magic if: belief in circumstances imagined);
+ * - interpretation: imagination;
+ * - connection: presence, and a little listening, before the partner's level adds listening and its absence presence;
+ * - execution: memory, and on a scene and a night the voice and the body a little; a taped brief's focus a little;
+ * - consistency: composure and discipline, and on a scene and a night stamina, which a piece reads as its drain;
+ * - responsiveness: listening and adaptability, before timing and a reader add to each.
+ *
+ * A night is a whole evening's part in front of a house: presence (2.5), memory (4, every line of the part), composure
+ * (2) and discipline (3, the score kept through a run) are its own, where a scene's are a quarter to a half of that.
+ * The tasks with no material (the voice, the song, movement, partnered work, the improvisation, the clown, the
+ * self-tape and the audition) kept their profiles. Every weight is SLATE's.
+ */
+const BASE_INPUTS = {
+  scene: {
+    believability: [a('emotionalDepth', 1), a('imagination', 0.5), tech(1)],
+    interpretation: [a('imagination', 1), tech(1)],
+    connection: [a('listening', 0.25), a('presence', 1)],
+    execution: [a('memory', 1), a('vocal', 0.5), a('physical', 0.5), tech(2)],
+    consistency: [a('composure', 1), a('discipline', 1), a('stamina', 1)],
+    responsiveness: [a('listening', 0.25), a('adaptability', 1)],
+  },
+  tape: {
+    believability: [a('emotionalDepth', 1), a('imagination', 0.5), tech(1)],
+    interpretation: [a('imagination', 0.75), tech(1)],
+    connection: [a('listening', 0.5), a('presence', 1)],
+    execution: [a('memory', 0.5), a('focus', 0.5), tech(2)],
+    consistency: [a('composure', 0.5), a('discipline', 0.5)],
+    responsiveness: [a('listening', 0.5), a('adaptability', 0.5)],
+  },
+  night: {
+    believability: [a('emotionalDepth', 1), a('imagination', 0.5), tech(1)],
+    interpretation: [a('imagination', 1), tech(1)],
+    connection: [a('presence', 2.5), a('listening', 0.5)],
+    execution: [a('memory', 4), a('vocal', 1), a('physical', 1), tech(2)],
+    consistency: [a('composure', 2), a('stamina', 1), a('discipline', 3)],
+    responsiveness: [a('listening', 0.5), a('adaptability', 1)],
+  },
+} as const;
+
 export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   scene: {
     id: 'scene', label: 'A Scene Shown', what: 'A scene with a partner, prepared and shown in class.', prepLabel: COURSEWORK_PREP,
     dims: {
-      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
-      interpretation: { weight: 2, inputs: [a('imagination', 3), tech(1)], prep: ['interpretation', 'familiarity'] },
-      connection: { weight: 2, inputs: [a('listening', 2), a('presence', 1)], prep: ['partner'], conditions: ALL },
-      execution: { weight: 2, inputs: [a('memory', 2), a('vocal', 1), a('physical', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
-      consistency: { weight: 1, inputs: [a('composure', 2), a('discipline', 1), a('stamina', 1)], prep: ['rehearsal'], conditions: ALL },
-      responsiveness: { weight: 1, inputs: [a('listening', 2), a('adaptability', 2)], prep: ['partner', 'rehearsal'], conditions: ALL },
+      believability: { weight: 3, inputs: BASE_INPUTS.scene.believability, prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: BASE_INPUTS.scene.interpretation, prep: ['interpretation', 'familiarity'] },
+      connection: { weight: 2, inputs: BASE_INPUTS.scene.connection, prep: ['partner'], conditions: ALL },
+      execution: { weight: 2, inputs: BASE_INPUTS.scene.execution, prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
+      consistency: { weight: 1, inputs: BASE_INPUTS.scene.consistency, prep: ['rehearsal'], conditions: ALL },
+      responsiveness: { weight: 1, inputs: BASE_INPUTS.scene.responsiveness, prep: ['partner', 'rehearsal'], conditions: ALL },
     },
   },
   written: {
@@ -161,16 +214,18 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
   // The connection a take makes is to the reader and to the lens (from 2026-10-12): presence, what a camera sees, read
   // twice as the audition's connection reads it. Until then it read presence once beside listening, and presence was
   // under 3% of a take, the least of any ability on a medium built on being seen (tools/specialists.ts).
+  // From 2026-10-16 it reads presence once and listening half, before the brief's partner level adds listening and its
+  // absence presence (`BASE_INPUTS`, `DEMAND_EFFECT`): a take with nobody much to play off is a take to the lens.
   tape: {
     id: 'tape', label: 'A Taped Brief', what: 'A practice brief prepared, played to a reader off camera or alone at a microphone, and watched back.',
     prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
     dims: {
-      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
-      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
-      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
-      execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
-      consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ALL },
-      responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
+      believability: { weight: 3, inputs: BASE_INPUTS.tape.believability, prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: BASE_INPUTS.tape.interpretation, prep: ['interpretation', 'genre'] },
+      connection: { weight: 1, inputs: BASE_INPUTS.tape.connection, prep: ['rehearsal'], conditions: ALL },
+      execution: { weight: 2, inputs: BASE_INPUTS.tape.execution, prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness'] },
+      consistency: { weight: 1, inputs: BASE_INPUTS.tape.consistency, prep: ['rehearsal'], conditions: ALL },
+      responsiveness: { weight: 1, inputs: BASE_INPUTS.tape.responsiveness, prep: ['rehearsal'], conditions: ALL },
     },
   },
   // A brief whose scene is built on physical work (physical 2 or more: a fight, a dance, a fall), taped: the same as a
@@ -181,12 +236,12 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     id: 'tapeOnFeet', label: 'A Taped Brief, On Its Feet', what: 'A practice brief built on physical work, prepared, played to a reader off camera, and watched back.',
     prepLabel: { ...COURSEWORK_PREP, interpretation: 'The breakdown and your reading', rehearsal: 'Rehearsal on your feet', genre: 'Knowing the genre' },
     dims: {
-      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['interpretation', 'memorization'], conditions: ALL },
-      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['interpretation', 'genre'] },
-      connection: { weight: 1, inputs: [a('listening', 1), a('presence', 2)], prep: ['rehearsal'], conditions: ALL },
-      execution: { weight: 2, inputs: [a('memory', 2), a('focus', 1), tech(2)], prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
-      consistency: { weight: 1, inputs: [a('composure', 1), a('discipline', 1)], prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
-      responsiveness: { weight: 1, inputs: [a('listening', 1), a('adaptability', 1)], prep: ['rehearsal'], conditions: ALL },
+      believability: { weight: 3, inputs: BASE_INPUTS.tape.believability, prep: ['interpretation', 'memorization'], conditions: ALL },
+      interpretation: { weight: 2, inputs: BASE_INPUTS.tape.interpretation, prep: ['interpretation', 'genre'] },
+      connection: { weight: 1, inputs: BASE_INPUTS.tape.connection, prep: ['rehearsal'], conditions: ALL },
+      execution: { weight: 2, inputs: BASE_INPUTS.tape.execution, prep: ['memorization', 'rehearsal'], conditions: ['fatigue', 'illness', 'injury'] },
+      consistency: { weight: 1, inputs: BASE_INPUTS.tape.consistency, prep: ['rehearsal'], conditions: ['fatigue', 'injury'] },
+      responsiveness: { weight: 1, inputs: BASE_INPUTS.tape.responsiveness, prep: ['rehearsal'], conditions: ALL },
     },
   },
   audition: {
@@ -203,12 +258,12 @@ export const TASK_PROFILES: Readonly<Record<string, TaskProfile>> = {
     id: 'performance', label: 'A Night On Stage', what: 'A performance of a production in front of a house.',
     prepLabel: { lines: 'The lines', blocking: 'The blocking', notes: 'The director’s notes taken' },
     dims: {
-      believability: { weight: 3, inputs: [a('emotionalDepth', 3), tech(1)], prep: ['lines', 'notes'], conditions: ALL },
-      interpretation: { weight: 2, inputs: [a('imagination', 2), tech(1)], prep: ['notes'] },
-      connection: { weight: 2, inputs: [a('presence', 2), a('listening', 1)], prep: ['blocking'], conditions: ALL },
-      execution: { weight: 2, inputs: [a('memory', 1), a('vocal', 1), a('physical', 1), tech(2)], prep: ['lines', 'blocking'], conditions: ['fatigue', 'illness', 'injury'] },
-      consistency: { weight: 1, inputs: [a('composure', 2), a('stamina', 1), a('discipline', 1)], prep: ['lines'], conditions: ALL },
-      responsiveness: { weight: 1, inputs: [a('listening', 2), a('adaptability', 1)], prep: ['notes'], conditions: ALL },
+      believability: { weight: 3, inputs: BASE_INPUTS.night.believability, prep: ['lines', 'notes'], conditions: ALL },
+      interpretation: { weight: 2, inputs: BASE_INPUTS.night.interpretation, prep: ['notes'] },
+      connection: { weight: 2, inputs: BASE_INPUTS.night.connection, prep: ['blocking'], conditions: ALL },
+      execution: { weight: 2, inputs: BASE_INPUTS.night.execution, prep: ['lines', 'blocking'], conditions: ['fatigue', 'illness', 'injury'] },
+      consistency: { weight: 1, inputs: BASE_INPUTS.night.consistency, prep: ['lines'], conditions: ALL },
+      responsiveness: { weight: 1, inputs: BASE_INPUTS.night.responsiveness, prep: ['notes'], conditions: ALL },
     },
   },
 };
@@ -232,6 +287,16 @@ export const EVALUATION = {
   sufficientReadiness: 60,
   /** What incomplete preparation leaves at none done: a part not prepared still shows something of the actor. */
   prepFloor: 0.35,
+  /**
+   * A part whose floor isn't `prepFloor` (from 2026-10-16). Knowing the genre: a taped brief's interpretation keeps three
+   * quarters with the genre never met, where it kept `prepFloor` until then, and the part was complete at 0.3. A mastered
+   * actor taping in a genre unknown came to 77 (`docs/verification/attributes-genres-2026-10-16/baseline.md` §5), under
+   * a developing actor who knew it, and from 30 to 100 knowing it more changed nothing. A genre's conventions are a
+   * matter of tone and register, the "what show is this" a casting office asks an actor to know before a read: missing
+   * them costs the choices, not the craft that makes them, so a master in a genre unmet lands about 90, still
+   * Exceptional, and the rest of the range reads to `BRIEF.complete.genre`. SLATE's size of it.
+   */
+  partFloor: { genre: 0.75 } as Readonly<Record<string, number>>,
   /** What fatigue leaves at readiness 0, what being ill leaves the voice and the body's work, and what being hurt leaves what the injury limits (`INJURY_KIND[].limits`). */
   fatigueFloor: 0.6,
   illness: 0.85,

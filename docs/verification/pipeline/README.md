@@ -17,7 +17,11 @@ node ../merge-review.cjs evidence-results.json,evidence2-results.json,evidence3-
 node ../resolve-titles.cjs
 ```
 
-then, from the repository's root, `node tools/coverage.mjs`, `node tools/coverage.mjs --check`, and
+Where `resolve-titles.cjs` says it fixed row text, run `merge-review.cjs` (and `resolve-titles.cjs`) once more: it corrects
+`doc-fields.json`, which the merge reads, after the merge has run (found on 2026-10-16, when a regeneration left two
+renamed titles in the audit until the merge ran again).
+
+Then, from the repository’s root, `node tools/coverage.mjs`, `node tools/coverage.mjs --check`, and
 `node tools/capabilities.mjs --write` and `--check`.
 
 ## What Each Part Is

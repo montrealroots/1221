@@ -1,0 +1,148 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 89.7,
+  "training": 93,
+  "study": 45
+ },
+ "takes": 21,
+ "briefs": 14,
+ "readings": 21,
+ "genres": 12,
+ "purposes": {
+  "first": 14,
+  "another-reading": 7
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 3,
+   "mean": 55,
+   "min": 54.1,
+   "max": 56.5
+  },
+  "m2": {
+   "n": 3,
+   "mean": 56.8,
+   "min": 55.7,
+   "max": 57.4
+  },
+  "m3": {
+   "n": 15,
+   "mean": 56.2,
+   "min": 53,
+   "max": 59.2
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 14,
+  "mean": 0.58,
+  "max": 1.3,
+  "over1": 2
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 6,
+  "longestSameTarget": 4,
+  "sequence": [
+   "7:emotionalDepth@55",
+   "14:emotionalDepth@55",
+   "21:focus@54",
+   "28:imagination@57",
+   "35:vocal@52",
+   "42:physical@55",
+   "49:vocal@53",
+   "56:vocal@53",
+   "63:vocal@54",
+   "70:vocal@54",
+   "77:stamina@36",
+   "84:vocal@55",
+   "91:stamina@35",
+   "98:focus@56",
+   "105:vocal@57",
+   "112:vocal@59",
+   "119:vocal@61"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 59,
+  "presence": 68,
+  "listening": 55,
+  "imagination": 60,
+  "focus": 56,
+  "memory": 57,
+  "adaptability": 55,
+  "composure": 45,
+  "vocal": 61,
+  "physical": 58,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 111,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "medic",
+   "sides": "",
+   "purpose": "first",
+   "overall": 55.3,
+   "chief": "Physical Expression held back the execution by 17 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-anime-2",
+   "genre": "anime",
+   "reading": "strain",
+   "sides": "",
+   "purpose": "first",
+   "overall": 53,
+   "chief": "Vocal Expression held back the execution by 13.9 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 58.1,
+   "chief": "Emotional Depth held back the believability by 18.9 points"
+  },
+  {
+   "day": 116,
+   "brief": "brief-experimental-2",
+   "genre": "experimental",
+   "reading": "her",
+   "sides": "",
+   "purpose": "first",
+   "overall": 58,
+   "chief": "Memory held back the execution by 14.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57.8,
+   "chief": "Emotional Depth held back the believability by 17.4 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "craft",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 53.2,
+   "chief": "Vocal Expression held back the execution by 8.9 points"
+  }
+ ]
+}

@@ -409,7 +409,11 @@ describe('p-journey-history: School Journey, Your Work So Far and Development Hi
     expect(nights).toHaveLength(4);
     const mean = (nights.reduce((a, w) => a + w.overall, 0) / 4).toFixed(1);
     const journey = between(drawn(sim, ProfileWorkspace).text, 'School Journey', 'Your Work So Far');
-    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (2 solid, 2 off)`);
+    // And each night's band by its line (`EVALUATION.bands`: solid from 50), counted here: two and two until 2026-10-16, one
+    // solid and three off from then, the nights weighed as the play demands (`BASE_INPUTS`) at 50.7, 49.0, 49.3 and 49.9.
+    const solid = nights.filter((w) => w.overall >= 50).length;
+    expect(solid).toBe(1);
+    expect(journey).toContain(`${written(casting.closed!)}: A Leading Part In A New Play, Carlotta Festival Of New Plays, the run averaged ${mean} (${solid} solid, ${4 - solid} off)`);
     // DEFECT: the run closed on 12 May, and until the next term's casting files its credit (September) the panel said it
     // was running, under its own milestone.
     expect(journey).not.toContain('is running');

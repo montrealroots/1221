@@ -67,6 +67,10 @@ describe('a note on the same thing, over time', () => {
   it('with nothing holding it back, gives the step beyond, and not the same one twice running', () => {
     const sim = life('fb-advanced');
     sim.player.craft = Object.fromEntries(Object.keys(sim.player.craft!).map((k) => [k, 70])) as never;
+    // And the abilities kept beside the craft at 70 too (TEST SETUP, from 2026-10-16): a scene weighs composure as it
+    // demands since that day (`BASE_INPUTS`, `DEMAND_EFFECT`), and a new life's, left as drawn, came to hold the
+    // showing back ("It didn’t come together today: composure…"), which nothing here is about.
+    Object.assign(sim.player.attrs!, Object.fromEntries(Object.keys(sim.player.attrs!).map((k) => [k, 70])));
     const a1 = prepared(sim, 0.97, 0.97);
     showAt(sim, a1, 1);
     const a2 = prepared(sim, 0.97, 0.97);

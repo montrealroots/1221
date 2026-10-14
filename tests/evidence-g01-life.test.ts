@@ -707,7 +707,13 @@ describe('life.look_after:exercise', () => {
     const [tr, ir] = [replay(t, TASK_PROFILES.scene!)!, replay(i, TASK_PROFILES.scene!)!];
     expect(tr.overall).toBe(t.overall);
     expect(ir.overall).toBe(i.overall);
-    expect(tr.piece!.segments[0]!.dims).toEqual(ir.piece!.segments[0]!.dims);
+    // The first half is stamina's to leave alone: the trained twin's own scene, replayed with the idle twin's stamina,
+    // the same in every dimension. Until 2026-10-16 this held the two twins' first halves equal, which they were to the
+    // tenth; their other abilities differ by hundredths (a morning's run moves the day's growth in class), and from
+    // then responsiveness, weighed as the scene demands (`BASE_INPUTS`), rounds those hundredths apart (22.1 and 22).
+    const swapped = replay({ ...t, inputs: { ...t.inputs, abilities: { ...t.inputs.abilities, stamina: i.inputs.abilities.stamina! } } }, TASK_PROFILES.scene!)!;
+    expect(swapped.piece!.segments[0]!.dims).toEqual(tr.piece!.segments[0]!.dims);
+    expect(swapped.piece!.segments[1]!.drain).toBeLessThan(tr.piece!.segments[1]!.drain);
     const drained = (r: typeof t) => 1 - PIECE.drain * Math.min(1, spec.load) * (1 - Math.min(1, r.inputs.abilities.stamina! / r.inputs.fulls!.stamina!));
     expect(tr.piece!.segments[1]!.drain).toBeCloseTo(drained(t), 3);
     expect(ir.piece!.segments[1]!.drain).toBeCloseTo(drained(i), 3);

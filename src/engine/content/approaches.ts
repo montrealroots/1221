@@ -81,17 +81,24 @@ export const PLAYING = { complete: 0.9, keptOnChange: 0.5, gainShare: 0.9 } as c
  * piece judged in segments takes stamina out of its inputs and reads it as the drain, whose load the same two levels
  * set (`loadOf`, `systems/piece.ts`); and from that day every performed piece with material is judged in segments
  * (`scenePiece`, `systems/coursework.ts`), so nothing read them. They went, and stamina is read once, through the load.
+ *
+ * Moved on 2026-10-16 with the task profiles (`BASE_INPUTS`, `content/tasks.ts`), against the criteria written before
+ * (docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md, H2 and H4): a partner's listening 1 to 0.35
+ * a level and timing's 1 to 0.3, since every class scene is built on a partner at 2 or 3 and listening came out best on
+ * all 56; timing's focus 1 to 1.5, the body's 1.8 to 2.5 with discipline 0.5 (a fight or a dance is a set score, kept
+ * "the same way every time", the stage-combat rule), the voice's 2 to 2.75, and both leans 0.25 to 0.3, since their
+ * specialists had fallen behind the even actor on their own material once the profiles' other weights thinned.
  */
 export const FEATURE_EFFECT: Readonly<Record<Feature, { lean: Partial<Record<Dimension, number>>; inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }>> = {
-  timing: { lean: { responsiveness: 0.2, execution: 0.16 }, inputs: { responsiveness: [{ ability: 'listening', weight: 1 }], execution: [{ ability: 'focus', weight: 1 }] } },
-  physical: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'physical', weight: 1.8 }] } },
-  partner: { lean: { connection: 0.2, responsiveness: 0.1 }, inputs: { connection: [{ ability: 'listening', weight: 1 }] } },
-  vocal: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'vocal', weight: 2 }] } },
+  timing: { lean: { responsiveness: 0.2, execution: 0.16 }, inputs: { responsiveness: [{ ability: 'listening', weight: 0.3 }], execution: [{ ability: 'focus', weight: 1.5 }] } },
+  physical: { lean: { execution: 0.3 }, inputs: { execution: [{ ability: 'physical', weight: 2.5 }, { ability: 'discipline', weight: 0.5 }] } },
+  partner: { lean: { connection: 0.2, responsiveness: 0.1 }, inputs: { connection: [{ ability: 'listening', weight: 0.35 }] } },
+  vocal: { lean: { execution: 0.3 }, inputs: { execution: [{ ability: 'vocal', weight: 2.75 }] } },
   improvisation: { lean: { responsiveness: 0.2 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 1.2 }] } },
 };
 
-/** A tone change or an emotional turn, each: what transitions ask. */
-export const TRANSITION_EFFECT = { lean: { believability: 0.05, consistency: 0.05 }, inputs: { believability: [{ ability: 'adaptability' as AbilityId, weight: 0.3 }], consistency: [{ ability: 'composure' as AbilityId, weight: 0.2 }] } } as const;
+/** A tone change or an emotional turn, each: what transitions ask. Adaptability 0.3 to 0.6 a turn on 2026-10-16: the change itself is its work (Johnstone's accepting what comes). */
+export const TRANSITION_EFFECT = { lean: { believability: 0.05, consistency: 0.05 }, inputs: { believability: [{ ability: 'adaptability' as AbilityId, weight: 0.6 }], consistency: [{ ability: 'composure' as AbilityId, weight: 0.2 }] } } as const;
 
 /**
  * A beat played two ways at once, funny and frightening together, each (from 2026-10-12): holding both asks depth of
@@ -101,11 +108,59 @@ export const TRANSITION_EFFECT = { lean: { believability: 0.05, consistency: 0.0
  */
 export const BLEND_EFFECT = { lean: { believability: 0.05, interpretation: 0.05 }, inputs: { believability: [{ ability: 'emotionalDepth' as AbilityId, weight: 0.3 }], interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.2 }] } } as const;
 
-/** Heightened prose and verse: what the language asks of interpretation and of the voice. */
+/**
+ * Heightened prose and verse: what the language asks of interpretation and of the voice. From 2026-10-16 of execution's
+ * focus too (heightened 1, verse 0.4), and verse of memory (3) and execution's lean: verse is spoken as written, its line
+ * and its word exact (Berry, The Actor and the Text, 1987), where until then it asked nothing of either.
+ */
 export const LANGUAGE_EFFECT = {
-  heightened: { lean: { interpretation: 1.15 }, inputs: { interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.5 }] } },
-  verse: { lean: { interpretation: 1.25 }, inputs: { interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.8 }], execution: [{ ability: 'vocal' as AbilityId, weight: 0.4 }] } },
+  heightened: { lean: { interpretation: 1.15 }, inputs: { interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.5 }], execution: [{ ability: 'focus' as AbilityId, weight: 1 }] } },
+  verse: { lean: { interpretation: 1.25, execution: 1.15 }, inputs: { interpretation: [{ ability: 'imagination' as AbilityId, weight: 0.8 }], execution: [{ ability: 'vocal' as AbilityId, weight: 0.4 }, { ability: 'memory' as AbilityId, weight: 3 }, { ability: 'focus' as AbilityId, weight: 0.4 }] } },
 } as const;
+
+/**
+ * What a piece demands of the abilities a task's own profile reads only a little of (from 2026-10-16, phase 2b of the
+ * attributes brief): each entry leans the dimensions it names by `1 + lean × units` and adds its abilities to their
+ * inputs at `weight × units`, for the units of it the piece has (`demandsOf`, `systems/material.ts`), as a feature's
+ * level does. Until then presence, memory, composure, focus and discipline each read the same small share of every
+ * piece, and emotional depth and listening a large one, so the actor strongest in feeling or in listening came out best
+ * on 90% of the briefs and on every scene, night and casting, and the specialists in seven of the other ten were behind
+ * an even actor almost everywhere (baseline.md §1 and §2). What informs each, and what is SLATE's:
+ *
+ * - **solo**, a unit for each level of partner under 2 (a brief alone at 0 two, a brief with a reader barely there at 1
+ *   one; a scene or a play built on its partners at 2 or 3 none): with little to play off, the connection is to the
+ *   lens or the house, which is presence. Rodenburg ties presence to a voice and a body fully there (research-acting-engine.json,
+ *   voice pedagogy); a monologue or a direct address is where it shows most. The sizes are SLATE's.
+ * - **text**, a medium brief 1 and a long one 2: more lines to hold. Noice and Noice found actors learn a role by
+ *   working out its meaning, not by rote, a skill that holds more text the better it is (Noice & Noice 2006; "How Actors
+ *   Remember Their Lines", MIT Press Reader). The sizes are SLATE's.
+ * - **stakes**, a brief's 0 to 3 (a scene's and a play's 1): more riding on it is more pressure to hold steady through.
+ *   Stage fright was a moderate or severe problem for 46% of senior drama students (Steptoe et al. 1995), predicted by
+ *   low emotional stability (Goodman & Kaufman 2014), and relaxation is what lets an actor recover a line or take a
+ *   change of direction in an audition (Backstage, a psychology professional on audition anxiety): composure, in
+ *   consistency and a little in believability. The sizes are SLATE's.
+ * - **beats**, a unit for each segment past three: a longer score of units, set in rehearsal and kept the same through
+ *   every change, is discipline's (Stanislavski's units and objectives, Sawoski's summary in research-acting-engine.json).
+ * - **grave**, the share of a piece's beats or tones played grave: belief in circumstances that hurt is where emotional
+ *   depth decides most (Stanislavski's emotion memory and given circumstances).
+ * - **invented**, the share played lyric or grotesque: a world or a register the actor has to invent is imagination's
+ *   (Stanislavski on imagination and the magic if; Chekhov, To the Actor, 1953).
+ * - **comic**, the share played comic: a joke lands on an exact moment, which is attention held on the beat, focus
+ *   (Stanislavski's tempo-rhythm and concentration of attention; timing's own focus is `FEATURE_EFFECT`'s).
+ *
+ * The leans and weights are SLATE's, chosen against criteria written before (acceptance-criteria.md: A1, A3, H2, H5).
+ * Leans are normalized, and inputs share a dimension's weight, so no entry adds weight to the whole. At full abilities
+ * every term is 1, so the guarantee is unchanged.
+ */
+export const DEMAND_EFFECT: Readonly<Record<'solo' | 'text' | 'stakes' | 'beats' | 'grave' | 'invented' | 'comic', { lean: Partial<Record<Dimension, number>>; inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }>> = {
+  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 2 }] } },
+  text: { lean: { execution: 0.7 }, inputs: { execution: [{ ability: 'memory', weight: 5 }] } },
+  stakes: { lean: { consistency: 0.6 }, inputs: { consistency: [{ ability: 'composure', weight: 1.5 }], believability: [{ ability: 'composure', weight: 0.4 }] } },
+  beats: { lean: { consistency: 0.7 }, inputs: { consistency: [{ ability: 'discipline', weight: 2.5 }] } },
+  grave: { lean: { believability: 0.3 }, inputs: { believability: [{ ability: 'emotionalDepth', weight: 2.5 }] } },
+  invented: { lean: { interpretation: 0.3 }, inputs: { interpretation: [{ ability: 'imagination', weight: 2.5 }] } },
+  comic: { lean: { execution: 0.3 }, inputs: { execution: [{ ability: 'focus', weight: 3 }] } },
+};
 
 /** The camera: what a close frame weighs most. */
 export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };

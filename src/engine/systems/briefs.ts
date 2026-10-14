@@ -90,8 +90,22 @@ export const BRIEF = {
    * steps' gains (0.6, 0.6, 0.5 from 0.5, 0.5, 0.4): a played month of term (tools/brief-journeys.ts) found a first brief
    * in a new genre took about fourteen hours to have ready, more than a term's free hours give practice material. It's
    * about four now, and more where the scene turns more.
+   *
+   * Knowing the genre was complete at 0.3 until 2026-10-16, and its part's floor `prepFloor` (0.35): a cliff, with a
+   * genre unknown costing a mastered actor 23 points and every point past 30 costing nothing. From then it's complete
+   * at 0.9, as a technique is mastered at 90 (`MASTERED`), and its floor is three quarters (`EVALUATION.partFloor`):
+   * the whole range to 90 reads, each point by the same share, and the gate is a third the size.
    */
-  complete: { interpretation: 0.8, memorization: 0.8, rehearsal: 0.5, mostRehearsal: 0.85, genre: 0.3 },
+  complete: { interpretation: 0.8, memorization: 0.8, rehearsal: 0.5, mostRehearsal: 0.85, genre: 0.9 },
+  /**
+   * What a take credits its genres as practice with none of it prepared, of what a fully prepared take credits (from
+   * 2026-10-16). A genre's conventions are learned in the work on the scene, the breakdown of its circumstances and the
+   * rehearsal of its rhythm, more than by rolling the camera on it cold. Until then a take credited the same however
+   * little was prepared, and taping unprepared every hour credited 2.23 points of genre practice an hour against
+   * preparing's 1.67 (`tools/brief-strategies.ts`, baseline §10): the cold take, repeated, was the faster way to know a
+   * genre. Between none and complete, it rises in step with the take's preparation (`practiceShare`). SLATE's size.
+   */
+  practiceUnprepared: 0.15,
   /** A change of reading keeps this much of the breakdown. */
   readingKept: 0.5,
   /**
@@ -212,7 +226,7 @@ export function briefMaterial(b: Brief): MaterialProfile {
   if (m) return m;
   m = {
     id: b.id, title: b.title, medium: b.medium, language: b.language, timing: b.timing, physical: b.physical, partner: b.partner, vocal: b.vocal, improvisation: b.improvisation,
-    tones: [...new Set(b.beats.flatMap((x) => x.tones))], turns: 0, beats: b.beats.map((x) => ({ tones: x.tones })),
+    tones: [...new Set(b.beats.flatMap((x) => x.tones))], turns: 0, beats: b.beats.map((x) => ({ tones: x.tones })), size: b.size, stakes: b.stakes ?? 1,
     ...(b.techniques ? { techniques: b.techniques } : {}), ...(b.allows ? { allows: b.allows } : {}),
     why: { ...(b.why.timing ? { timing: b.why.timing } : {}), ...(b.why.physical ? { physical: b.why.physical } : {}), ...(b.why.partner ? { partner: b.why.partner } : {}), ...(b.why.vocal ? { vocal: b.why.vocal } : {}), ...(b.why.improvisation ? { improvisation: b.why.improvisation } : {}), ...(b.why.language ? { language: b.why.language } : {}), ...(b.why.techniques ? { techniques: b.why.techniques } : {}), ...(b.why.allows ? { allows: b.why.allows } : {}), turns: b.why.beats ?? '' },
   };
@@ -272,7 +286,7 @@ export function briefPiece(b: Brief, rec: Pick<BriefRecord, 'work' | 'book'> & {
   return withBook({
     segments: beatSegments(b.beats).map((s, i) => (i === heart ? { ...s, weight: BRIEF.readingHeart } : s)), work: rec.work ?? [], part: 'rehearsal',
     perTurn: PIECE.brief.perTurn, perBlend: PIECE.brief.perBlend, most: BRIEF.complete.mostRehearsal,
-    load: Math.min(1, loadOf(b, 'brief', b.size !== 'short') + (b.size === 'long' ? PIECE.load.briefMedium - PIECE.load.brief : 0)),
+    load: Math.min(1, loadOf(b, 'brief', b.size !== 'short') + (b.size === 'long' ? PIECE.load.briefLong - PIECE.load.briefMedium : 0)),
   }, rec.book);
 }
 
@@ -281,8 +295,9 @@ export function briefPiece(b: Brief, rec: Pick<BriefRecord, 'work' | 'book'> & {
  * and its practice (worked in), never their sum. A part of the take's preparation, complete at `BRIEF.complete.genre`.
  * Until a played run of 2026-10-12 it was familiarity alone, complete at 60 as a material-less self-tape's was: a student
  * spent 21 hours of a month studying one genre and taped nothing, since a session gives eight points and half again the
- * same day. At 30, with work in the genre counting, it's four or so sessions for a genre never met, and taping in it
- * builds it.
+ * same day. Complete at 30 from then, with work in the genre counting, it was four or so sessions for a genre never met,
+ * and taping in it built it. From 2026-10-16 it's complete at 90 and read over the whole of the way there, from a floor
+ * of three quarters (`EVALUATION.partFloor`): about 28 sessions, or as many takes, and each one shows in the take.
  */
 export const genreKnown = (person: Person, b: Brief): number => Math.max(0, ...b.kinds.map((g) => Math.max(person.engagement?.byGenre[g]?.familiarity ?? 0, person.engagement?.byGenre[g]?.practice ?? 0) / 100));
 
@@ -404,6 +419,9 @@ export function prepareRefusal(sim: Simulation, person: Person, b: Brief | undef
   return hourRefusal(sim, person, stepMinutes(b, step as BriefStep));
 }
 
+/** The ability rehearsing a brief on its feet goes further with (from 2026-10-16): listening, played off a reader; none for a voice alone at a microphone. */
+export const rehearseSpeed = (b: Brief): AbilityId | undefined => (b.medium === 'voice' || b.partner === 0 ? undefined : 'listening');
+
 /** What rehearsing a brief on its feet practises: the body or the voice, where the brief is built on one (level 2 or more), the stronger demand first. */
 export function rehearseTrains(b: Brief): AbilityId | undefined {
   if (Math.max(b.physical, b.vocal) < 2) return undefined;
@@ -422,8 +440,10 @@ export function prepareBrief(sim: Simulation, person: Person, b: Brief, step: Br
   const before = rec.prep[s.part];
   const gain = s.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n;
   // And by the ability the step is practice in (`stepSpeed`, from 2026-10-16): the breakdown by imagination, the lines
-  // by memory. Rehearsal trains the body or the voice, by the brief (`rehearseTrains`), and reads neither.
-  const able = s.trains ? stepSpeed(sim, person, s.trains) : 1;
+  // by memory. Rehearsal trains the body or the voice, by the brief (`rehearseTrains`), and until later that day read no
+  // ability; from then it's played off the reader, and goes further with listening, where there's a reader to play off
+  // (`rehearseSpeed`). A voice alone at a microphone has none, and reads none.
+  const able = s.trains ? stepSpeed(sim, person, s.trains) : step === 'rehearse' && rehearseSpeed(b) ? stepSpeed(sim, person, rehearseSpeed(b)!) : 1;
   rec.prep[s.part] = r3(clamp(before + gain * prepLean(person, s.part) * prepSpeed(person, b) * able * (1 - before), 0, 1));
   if (step === 'rehearse') {
     rehearseChoice(rec.playing, gain);
@@ -530,6 +550,18 @@ function callbackFor(b: Brief, rec: BriefRecord, key: string, at: Instant): Brie
   return { axis, side, at, why: `The callback asks for it ${APPROACH_EFFECT[side].label.toLowerCase()}: ${APPROACH_EFFECT[side].words.charAt(0).toLowerCase()}${APPROACH_EFFECT[side].words.slice(1)}` };
 }
 
+/**
+ * The share of a fully prepared take's genre practice a take credits (from 2026-10-16): `BRIEF.practiceUnprepared` with
+ * nothing prepared, rising in step with the mean of the breakdown, the lines and the rehearsal against what completes
+ * each, to 1 with all three complete.
+ */
+export function practiceShare(rec: Pick<BriefRecord, 'prep'>, b: Brief): number {
+  const req = requiredOf(b);
+  const parts: BriefPart[] = ['interpretation', 'memorization', 'rehearsal'];
+  const done = parts.reduce((a, p) => a + Math.min(1, (rec.prep[p] ?? 0) / (req[p] ?? 1)), 0) / parts.length;
+  return BRIEF.practiceUnprepared + (1 - BRIEF.practiceUnprepared) * done;
+}
+
 /** A brief taped: judged, kept on the work record and the brief's own, practice in its genres and the medium's technique, and a callback where it earned one. */
 export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: string): { evaluation: Evaluation; take: Take } {
   const rec = recordOf(person, b.id);
@@ -557,8 +589,9 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   ordinary(sim, person, b.medium === 'voice' ? 'voiceover' : 'screen', focus, 0.5 * worth, 'self-tape');
   // And the technique the scene stages, a song sung or a fight played, practised as it's taped (from 2026-10-12).
   for (const k of Object.keys(b.techniques ?? {}) as Skill[]) ordinary(sim, person, k, focus, 0.25 * worth, 'self-tape');
-  // The same brief again the same day is half the practice of the one before; its genres share it.
-  practiceGenres(sim, person, b.kinds, worth * 0.5 ** again);
+  // The same brief again the same day is half the practice of the one before; its genres share it. And from 2026-10-16
+  // a take credits its genres by how far it was prepared (`practiceShare`): a cold take, about a seventh of a prepared one.
+  practiceGenres(sim, person, b.kinds, worth * 0.5 ** again * practiceShare(rec, b));
   noteMaterial(person, { material: briefMaterial(b), at: sim.now, overall: e.overall, approaches: sidesOf(rec.playing), shown: true });
   const chief = chiefLimit(e);
   // The take with its reader, and what it leaves between you and a classmate who read.

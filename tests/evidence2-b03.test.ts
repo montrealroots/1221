@@ -787,11 +787,12 @@ describe('knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround
   const CURTAIN = Date.UTC(2027, 4, 5, 0);
 
   it('PLAYER JOURNEY: a co-lead at 15 (TEST SETUP) becomes a Friend at the cast list’s ten for a plain player and stays 23.545 for a detached twin: the list lifts only the plain one a friend’s half point, her look says Friend, and the first Carlotta night lifts her a point', () => {
-    // The plain life's spring cast: the Carlotta Festival, Ada in a lead beside Julian Chen and Marcus Okafor.
+    // The plain life's spring cast: the Carlotta Festival, Ada in a lead beside Julian Chen and Chloe Park (Marcus Okafor
+    // until 2026-10-16, when casting's read came to weigh a night's abilities as the play demands, `BASE_INPUTS`).
     const probe = student('g09-cast');
     probe.advanceTo(CAST + 60_000);
     const leads = probe.player.school!.around!.list.filter((x) => x.name !== 'You' && x.size === 'lead' && x.production === 'Carlotta Festival Of New Plays').map((x) => x.name);
-    expect(leads).toEqual(['Julian Chen', 'Marcus Okafor']);
+    expect(leads).toEqual(['Julian Chen', 'Chloe Park']);
     const julian = probe.player.school!.classmates.findIndex((m) => m.name === 'Julian Chen');
     const life = (traits: string[], preset: number | undefined) => {
       const sim = student('g09-cast', {}, traits);

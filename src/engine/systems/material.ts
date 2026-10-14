@@ -16,7 +16,7 @@
 import type { AbilityId } from '../content/abilities';
 import type { Dimension, TaskProfile } from '../content/tasks';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
-import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
+import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
 
 /** How the player has chosen to play a piece, and how far the choice is rehearsed in. */
@@ -71,6 +71,28 @@ export function misfitOf(axis: Axis, side: AxisValue, material?: MaterialProfile
   return undefined;
 }
 
+/**
+ * How much a piece has of each thing `DEMAND_EFFECT` reads (from 2026-10-16): the partner levels under 2, the steps of
+ * length past short, its stakes (1 where none is given), the segments past three (a brief's beats, or a scene's or a
+ * play's tones, two at least, as `toneSegments` cuts it), and the shares of its beats or tones played grave, lyric or
+ * grotesque, and comic.
+ */
+export function demandsOf(m: MaterialProfile): Record<keyof typeof DEMAND_EFFECT, number> {
+  const tones = m.beats ? m.beats.flatMap((b) => b.tones.map((t) => ({ t, w: 1 / b.tones.length }))) : m.tones.map((t) => ({ t, w: 1 }));
+  const total = tones.reduce((a, x) => a + x.w, 0);
+  const segments = m.beats?.length ?? Math.max(2, m.tones.length);
+  const share = (t: string) => (total > 0 ? tones.filter((x) => x.t === t).reduce((a, x) => a + x.w, 0) / total : 0);
+  return {
+    solo: Math.max(0, 2 - m.partner),
+    text: m.size === 'long' ? 2 : m.size === 'medium' ? 1 : 0,
+    stakes: m.stakes ?? 1,
+    beats: Math.max(0, segments - 3),
+    grave: share('grave'),
+    invented: share('lyric') + share('grotesque'),
+    comic: share('comic'),
+  };
+}
+
 const add = (to: Record<string, { ability: AbilityId; weight: number }[]>, d: Dimension, xs: readonly { ability: AbilityId; weight: number }[] | undefined, times = 1) => {
   if (!xs || times <= 0) return;
   const list = (to[d] ??= []);
@@ -117,6 +139,13 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
       const e = LANGUAGE_EFFECT[material.language];
       for (const [d, x] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
       for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs);
+    }
+    // What the piece demands of the abilities its task reads little of (from 2026-10-16, `DEMAND_EFFECT`).
+    const units = demandsOf(material);
+    for (const k of Object.keys(DEMAND_EFFECT) as (keyof typeof DEMAND_EFFECT)[]) {
+      const e = DEMAND_EFFECT[k];
+      for (const [d, per] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * units[k]);
+      for (const [d, xs] of Object.entries(e.inputs) as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, units[k]);
     }
     if (material.medium === 'camera') for (const [d, x] of Object.entries(CAMERA_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
     if (material.medium === 'voice') for (const [d, x] of Object.entries(VOICE_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;

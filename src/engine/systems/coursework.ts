@@ -600,7 +600,8 @@ export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 
 /**
  * The ability whose level speeds each kind of step (`stepSpeed`, from 2026-10-16): the one it's practice in, but the
  * partner's evenings, where what moves the part is the partner's coming (`rehearsalOutcome`) and a reader's
- * (`readerRehearsal`), and rehearsal, which trains a technique.
+ * (`readerRehearsal`), and rehearsal, which trains a technique. From later on 2026-10-16 the partner's evenings and a
+ * reader's read listening, each where it moves the part, outside this table.
  */
 export const STEP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'focus', memorization: 'memory', interpretation: 'imagination', revision: 'adaptability' };
 
@@ -665,7 +666,8 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
 function readerRehearsal(sim: Simulation, person: Person, a: Assignment, act: Activity, focus: number, minutes: number): { moved: number; dim: PrepDim; minutes: number } {
   const before = partnerPart(a);
   const gain = act.gain * Math.min(1.1, Math.max(0.5, focus));
-  a.reader = clamp01((a.reader ?? 0) + gain * (1 - (a.reader ?? 0)));
+  // By listening, as an evening with the partner is (`stepSpeed`, from 2026-10-16).
+  a.reader = clamp01((a.reader ?? 0) + gain * stepSpeed(sim, person, 'listening') * (1 - (a.reader ?? 0)));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   a.practicedOn[act.id] = dayKey(sim.now);
   rehearseChoice(a.playing, gain);
@@ -1364,13 +1366,18 @@ function rehearsalOutcome(sim: Simulation, person: Person, a: Assignment, r: Par
   }
   r.status = 'kept';
   m.kept = (m.kept ?? 0) + 1;
+  // How far the evening goes reads listening as it stood coming in (`stepSpeed`, from 2026-10-16), before the evening's
+  // own practice in it, as a step's speed reads the level it starts at.
+  const listened = stepSpeed(sim, person, 'listening');
   // An evening of working off a partner is listening practice (`content/abilities.ts`).
   ordinary(sim, person, 'listening', focusOf(person), 1, 'partner-rehearsal');
   const t = templateById(a.template)!;
   const act = t.activities.find((x) => x.dim === 'partner');
   const before = a.prep.partner;
   const gain = (act?.gain ?? 0.4) * Math.min(1.1, Math.max(0.5, focusOf(person)));
-  a.prep.partner = clamp01(before + gain * (1 - before));
+  // And by listening (`stepSpeed`, from 2026-10-16): an evening of working off a partner goes further the more of them
+  // you take in. Until then listening's description said partner work read it, and only the scene judged did.
+  a.prep.partner = clamp01(before + gain * listened * (1 - before));
   // The evening on its feet with them rehearses in the way it's to be played, where one is chosen, as a step on your
   // feet does in `prepare` (from 2026-10-12). Until then only the steps done alone did: the partner step itself is
   // always refused in `prepareRefusal` (`needRefusal`, 'partner'), so a scene rehearsed only with a partner was shown

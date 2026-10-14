@@ -427,10 +427,12 @@ describe('plays.research', () => {
     // Each research once on the history, under its own play, and script alone.
     expect(library().sources.both).toEqual([...CONTEMPORARY_PLAYS.flatMap((p) => [`script<read:${p.id}`, `imagination<read:${p.id}`]), ...CONTEMPORARY_PLAYS.map((p) => `script<research:${p.id}`)]);
     expect(library().fitThen.both).toBeGreaterThan(library().fitThen.read);
-    // The spring casting reads her script higher: strictly, by a tenth of the fit, until 2026-10-16, when a class began to
-    // read discipline and keep half for a repeat (`grown`), and the fall’s classes closed the gap to about half a point of
-    // script (54.52 against 53.96, measured), under the tenth the fit is shown to. Her script still stands higher.
-    expect(youIn(both).fit).toBeGreaterThanOrEqual(youIn(read).fit);
+    // The spring casting reads her script higher, strictly, by the tenth the fit is shown to. Phase 2a of 2026-10-16 (a
+    // class reading discipline and keeping half for a repeat, `grown`) closed the gap to about half a point of script
+    // (54.52 against 53.96, measured), under that tenth, and this was held at "at least as high" for the rest of phase
+    // 2a; phase 2b the same day weighed a night's abilities as the play demands (`BASE_INPUTS`), and the same half point
+    // reads a tenth again: 58.6 against 58.5, measured. Restored to strictly higher.
+    expect(youIn(both).fit).toBeGreaterThan(youIn(read).fit);
     expect(both.player.craft!.script).toBeGreaterThan(read.player.craft!.script + 0.5);
     // A second research is refused in researchRefusal's words.
     expect(say(both, 'plays.research', { playId: 'sweat' }).error).toBe('Its first production is researched: there’s nothing more on record to find.');
@@ -753,6 +755,9 @@ describe('practice.self_tape', () => {
     dials(ada); // TEST SETUP
     ada.must({ kind: 'brief.choose', payload: { brief: drama.id, reading: drama.readings[0]!.id } });
     dials(ada); // TEST SETUP
+    // TEST SETUP: the brief's three parts complete, as days of its steps would leave them. From 2026-10-16 a take credits
+    // its genres by how far it was prepared (`practiceShare`): this take, cold until then, would credit 1.5 (0.15 of 10).
+    ada.player.briefs![drama.id]!.prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
     expect(say(ada, 'practice.self_tape', { genre: 'drama', brief: drama.id }).ok).toBe(true);
     expect(ada.player.engagement!.byGenre.drama).toMatchObject({ familiarity: 0, practice: 10 });
     expect(twin.player.engagement?.byGenre.drama).toBeUndefined();

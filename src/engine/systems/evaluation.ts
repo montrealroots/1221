@@ -23,7 +23,9 @@
  *               under 0) less, and at full capacity asks nothing more;
  *   prepared  = for each part it reads, prepFloor + (1 − prepFloor) ×
  *               min(1, part / complete), the least of them, and 1 when every
- *               part it reads is complete;
+ *               part it reads is complete; a part with a floor of its own
+ *               (`partFloor`, from 2026-10-16: knowing the genre) reads that
+ *               floor in place of prepFloor;
  *   condition = 1 when the day's condition is sufficient (readiness at
  *               `sufficientReadiness` or over, and no named cause that reaches
  *               the dimension: the flu for the voice, an injury for the body),
@@ -338,7 +340,9 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     // Preparation: each part it reads against what completes it; the least of them counts.
     const parts = (spec.prep ?? []).filter((p) => ctx.prep[p] !== undefined).map((p) => {
       const need = ctx.required[p] ?? 1;
-      return { part: p, f: E.prepFloor + (1 - E.prepFloor) * Math.min(1, need > 0 ? ctx.prep[p]! / need : 1) };
+      // A part with a floor of its own (`partFloor`, from 2026-10-16: knowing the genre), else `prepFloor`.
+      const floor = E.partFloor[p] ?? E.prepFloor;
+      return { part: p, f: floor + (1 - floor) * Math.min(1, need > 0 ? ctx.prep[p]! / need : 1) };
     });
     const prepared = parts.reduce((m, p) => Math.min(m, p.f), 1);
     // Condition: readiness under sufficient, and a named cause where it reaches this dimension.
