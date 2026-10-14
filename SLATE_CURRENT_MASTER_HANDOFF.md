@@ -1,6 +1,6 @@
 # Read First: The Open Items Finished, 2026-10-14
 
-The owner's brief of 2026-10-14, done on `claude/verification-gaps` from `0124c32f`, pushed, **not merged and not
+The owner's brief of 2026-10-14, done on `claude/verification-gaps` from `0124c32f`, pushed, and **merged to `main` by fast-forward at `1a597fd1` on the owner's word (until then this said not merged); not
 deployed**. The account is `docs/verification/OPEN-ITEMS-2026-10-14.md`.
 
 ## What the pass did
@@ -24,7 +24,7 @@ Long runs and scenarios: breaches 0.
 
 - The 11 partial rows (the account names each one's gap); whether the faculty decision's refusals no play reaches stay
   as guards; a second practice in New Haven, without which choosing a doctor decides nothing.
-- Merging to `main` and any Base44 deployment (read §10 below first).
+- Any Base44 deployment (read §10 below first). The merge to `main` was done on 2026-10-14.
 
 # Read First: The Verification Gaps Closed, 2026-10-13
 
@@ -61,7 +61,7 @@ is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verif
   new life's reach: Unresolved or Deferred?
 - The 90-day rule for an undated decision; a skipped shower's cost past the day; `companyPart`'s floored lead; creation's
   units by birthplace against the look's by residence; `receipts`, which multiplies nothing.
-- Merging to `main` and any Base44 deployment (read §10 below first).
+- Any Base44 deployment (read §10 below first). The merge to `main` was done on 2026-10-14.
 
 ## For the next session
 

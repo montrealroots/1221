@@ -84,7 +84,7 @@ by the owner's decision that split `receipts` out of it.
 
 ## Repository
 
-Commits `9088e699`, `5f0cba03`, `77f9fdc3` and this one, on `claude/verification-gaps`, pushed. Not merged, not
+Commits `9088e699`, `5f0cba03`, `77f9fdc3` and `1a597fd1`, on `claude/verification-gaps`, pushed, and merged to `main` by fast-forward on the owner's word. Not
 deployed.
 
 ## Readiness
