@@ -30,7 +30,9 @@ import { SKILLS } from '../content/school';
 
 /** A target's label: an ability's, or a technique's. */
 const labelOf = (id: string): string => (isAbility(id as never) ? abilityDef(id as never).label : SKILLS.find((k) => k.id === id)?.label ?? id);
-import { alreadyApplied, develop, developmentOf, levelOf, markApplied, targetId } from './attributes';
+import { abilityOf, alreadyApplied, develop, developmentOf, levelOf, markApplied, previewGrowth, repeatsSoFar, targetId } from './attributes';
+import { DEVELOPMENT, MASTERED, TECHNIQUES } from '../content/abilities';
+import type { Skill } from '../content/school';
 import { focusAt } from './school';
 import { SPENT, commitmentWithin, occupiedAt } from './life';
 import { exerts } from './body';
@@ -113,6 +115,63 @@ const carriesTo = (e: Exercise, f: PracticeFocus): { target: string; weight: num
   return [];
 };
 
+/** What an hour would grow, said before it (from 2026-10-16): each target's expected gain and the reasons it's that size. */
+export interface PracticePreview {
+  gain: number;
+  target: string;
+  level: number;
+  carried: { target: string; gain: number }[];
+  discipline: number;
+  /** The terms the gain is made of, as factors: the tier, the focus, the day's focus, the repeat, discipline's lift. */
+  terms: { tier: number; focus: number; day: number; repeat: number; lift: number };
+  words: string;
+}
+
+/**
+ * What an hour on an exercise would grow, counting nothing (from 2026-10-16): the same terms `practiceHour` reads (the
+ * tier against the level, the focus, the day's focus at the hour, today's repeats) through the same formula
+ * (`previewGrowth`, the one `develop` uses), at the instant the hour would land. Until then the practice control said
+ * nothing of what an hour would buy until it had been spent (criterion T1).
+ */
+export function practicePreview(sim: Simulation, person: Person, e: Exercise, tierAsked?: 0 | 1 | 2, focusAsked: PracticeFocus = 'steady'): PracticePreview {
+  const focus = focusAt(sim, person, sim.now);
+  const id = targetId(e.trains);
+  const before = levelOf(sim, person, id);
+  const tier = tierAsked ?? matchedTier(before);
+  const tf = tierFactor(tier, before);
+  const ff = focusFactor(focusAsked, focus, daysSince(sim, person, e.id));
+  const end = sim.now + PRACTICE.minutes * 60_000;
+  const gain = previewGrowth(sim, person, e.trains, { weight: tf * ff, focus, deliberate: true, source: `practice:${e.id}` }, 100, end);
+  const carried = carriesTo(e, focusAsked).map((c) => ({ target: c.target, gain: previewGrowth(sim, person, c.target as never, { weight: c.weight * tf, focus, deliberate: true, source: `transfer:${e.id}` }, 100, end) }));
+  const first = developmentOf(person).practice?.day !== today(sim);
+  const discipline = first ? previewGrowth(sim, person, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' }, 100, end) : 0;
+  const n = repeatsSoFar(sim, person, `${id}<practice:${e.id}`, end);
+  const lift = id === 'discipline' ? 1 : 1 + DEVELOPMENT.disciplineLift * (abilityOf(sim, person, 'discipline') - 50) / 50;
+  const terms = { tier: tf, focus: ff, day: Math.round(focus * 100) / 100, repeat: 0.5 ** n, lift: Math.round(lift * 1000) / 1000 };
+  const label = labelOf(id);
+  const why: string[] = [];
+  if (tf < 1) why.push(`the ${TIER.label[tier].toLowerCase()} tier isn’t yours (×${tf})`);
+  if (ff !== 1) why.push(`${FOCUS[focusAsked].label.toLowerCase()} today makes it ×${ff}`);
+  if (focus < 1) why.push(`you come at ${Math.round(focus * 100)}% of an ordinary day’s focus`);
+  if (n > 0) why.push(`hour ${n + 1} on it today keeps ${Math.round(0.5 ** n * 100)}%`);
+  if (Math.abs(lift - 1) >= 0.005) why.push(`discipline makes it ×${terms.lift}`);
+  const moved = carried.filter((c) => c.gain > 0);
+  const words = gain <= 0
+    ? `${label} is full: an hour adds nothing to it.`
+    : `About +${gain.toFixed(2)} to ${label.toLowerCase()} (now ${before.toFixed(1)})${moved.length ? `, and ${moved.map((c) => `+${c.gain.toFixed(2)} to ${labelOf(c.target).toLowerCase()}`).join(' and ')}` : ''}${discipline > 0 ? `, and +${discipline.toFixed(2)} to discipline for the day kept` : ''}.${why.length ? ` Less or more because ${why.join('; ')}.` : ''} The higher it is, the less an hour adds.${pastMastery(id, before)}`;
+  return { gain, target: id, level: before, carried, discipline, terms, words };
+}
+
+/**
+ * What a technique past mastery is worth to the work, said (from 2026-10-16): every piece reads a technique against
+ * `MASTERED`, so from there to 100 it moves no result (baseline.md §1: 0 of 427 pieces), and the hour is for the
+ * record alone. Empty for an ability, or a technique under it.
+ */
+export function pastMastery(id: string, level: number): string {
+  if (!TECHNIQUES.includes(id as Skill) || level < MASTERED) return '';
+  return ` Past ${MASTERED}, no piece of work asks more of a technique: what it adds from here moves no result.`;
+}
+
 /** An hour's practice: the time, the energy, and what it grew, with what it found. */
 export function practiceHour(sim: Simulation, person: Person, e: Exercise, tierAsked?: 0 | 1 | 2, focusAsked: PracticeFocus = 'steady'): { gained: number; level: number; discipline: number; tier: 0 | 1 | 2; focus: PracticeFocus; carried: { target: string; gained: number }[]; feedback: string } {
   const focus = focusAt(sim, person, sim.now);
@@ -175,6 +234,9 @@ export function practiceFeedback(e: Exercise, level: number, tier: 0 | 1 | 2, f:
   const feats = design?.practises.map((x) => FEATURE_LABEL[x]?.toLowerCase()).filter(Boolean) ?? [];
   if (feats.length) out.push(`Practice in ${feats.join(' and ')}: material that asks it prepares faster.`);
   if (level >= 100) out.push(`${FOCUS[f].label} or not, it’s full: the work now is in new material.`);
+  // Past mastery, said (from 2026-10-16): until then an hour on a technique at 95 said what it rose by and not that no
+  // work reads it past `MASTERED`.
+  else if (hour) out.push(pastMastery(targetId(e.trains), hour.level).trim());
   // What changed, from the record (from the integration pass of 2026-10-10): the hour's gain and where the level now
   // stands against the next tier and full, the move up a tier since last time, and a long run whose gains are falling.
   if (hour && hour.level < hour.full) {

@@ -40,7 +40,7 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { clamp } from '../core/rng';
 import { personalityOf } from './personality';
-import { ABILITY_DEFS, ABILITY_KIN, DEVELOPMENT, type AbilityId } from '../content/abilities';
+import { ABILITY_DEFS, ABILITY_KIN, DEVELOPMENT, STEP_SPEED, type AbilityId } from '../content/abilities';
 import type { Skill } from '../content/school';
 import { zonedParts, type Instant } from '../core/time';
 import { takeTheHouse } from './enjoyment';
@@ -162,13 +162,14 @@ export function abilitiesOf(sim: Simulation, person: Person): Record<AbilityId, 
   return Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, abilityOf(sim, person, d.id)])) as Record<AbilityId, number>;
 }
 
-/** Moves an attribute: a gain as a share of what's left to 100 when `share` is set, or plain points otherwise; always 0 to 100. */
-export function nudge(sim: Simulation, person: Person, key: AttributeKey, amount: number, share = false, source?: string): void {
-  const a = attributesOf(sim, person);
-  const before = a[key];
-  a[key] = clamp(share ? a[key] + (100 - a[key]) * amount : a[key] + amount, 0, 100);
-  // Kept in the history where it's named (from 2026-10-10: a house's nerves grew composure and presence unrecorded).
-  if (source && isAbility(key as Target)) recordDevelopment(sim, person, key, a[key] - before, source);
+/**
+ * Grows an attribute by a share of what's left to full when `share` is set, or plain points otherwise, through `grown`
+ * (from 2026-10-16): discipline's lift, half again for the same source the same day, and the history. Until then it
+ * set the level directly and only recorded it (from 2026-10-10: a house's nerves grew composure and presence unrecorded
+ * before that), so two houses in a day grew composure twice in full, and discipline never reached it.
+ */
+export function nudge(sim: Simulation, person: Person, key: AttributeKey, amount: number, share: boolean, source: string): number {
+  return grown(sim, person, key, (level, full) => (share ? (full - level) * amount : amount), source);
 }
 
 /** Where development is counted against farming (`DEVELOPMENT.repeat`), the day it's for, and what moved lately. */
@@ -273,22 +274,56 @@ export function levelOf(sim: Simulation, person: Person, t: Target): number {
  * deliberate practice goes on past it. Returns what it moved.
  */
 export function develop(sim: Simulation, person: Person, target: Target, terms: GrowthTerms, reach = 100): number {
+  return grown(sim, person, target, (level, full) => abilityGain(level, Math.min(reach, full), terms), terms.source);
+}
+
+/**
+ * What a session's raw gain comes to, once: the discipline lift (not on discipline itself), half again for each earlier
+ * session of the same source on the same target today (`n`), and never past full. One formula for the growth itself
+ * (`grown`) and for what a preview says it will be (`previewGrowth`, from 2026-10-16), so the two can't drift apart.
+ */
+export function gainAfter(sim: Simulation, person: Person, target: Target, raw: (level: number, full: number) => number, n: number): number {
   const id = targetId(target);
-  const n = repeatsToday(sim, person, `${id}<${terms.source}`);
   const level = levelOf(sim, person, id);
   const full = isAbility(id) ? abilityFull(sim, person, id) : 100;
+  if (level >= full) return 0;
   const disciplined = id === 'discipline' ? 1 : 1 + DEVELOPMENT.disciplineLift * (abilityOf(sim, person, 'discipline') - 50) / 50;
-  const raw = abilityGain(level, Math.min(reach, full), terms) * disciplined * DEVELOPMENT.repeat ** n;
-  if (raw <= 0 || level >= full) return 0;
+  const g = raw(level, full) * disciplined * DEVELOPMENT.repeat ** n;
+  if (g <= 0) return 0;
   // Arriving at full sets it exactly, so floating point never leaves it a hair under (from 2026-10-10).
-  const next = raw >= full - level ? full : level + raw;
-  const gain = next - level;
+  return g >= full - level ? full - level : g;
+}
+
+/**
+ * The one way anything grows (from 2026-10-16): today's count of the source on the target advanced (`repeatsToday`),
+ * the gain worked out by `gainAfter`, set in the one place the target is kept, and recorded. `develop` grows by the
+ * practice curve; a house's nerves grow composure and presence by a share of what's left (`nudge`). Until 2026-10-16
+ * a class's, a night's, a call's and a lab's craft grew through `grow` in `systems/school.ts`, and the nerves through
+ * `nudge` alone: neither halved a repeat the same day, and neither read discipline.
+ */
+export function grown(sim: Simulation, person: Person, target: Target, raw: (level: number, full: number) => number, source: string): number {
+  const id = targetId(target);
+  const n = repeatsToday(sim, person, `${id}<${source}`);
+  const gain = gainAfter(sim, person, id, raw, n);
+  if (gain <= 0) return 0;
+  const level = levelOf(sim, person, id);
+  const full = isAbility(id) ? abilityFull(sim, person, id) : 100;
+  const next = gain >= full - level ? full : level + gain;
   const skill = isAbility(id) ? CRAFT_ABILITY[id] : (id as Skill);
   if (skill) person.craft![skill] = next;
   else if (id === 'stamina') person.wellbeing.fitness = next;
   else (attributesOf(sim, person) as unknown as Record<string, number>)[id] = next;
-  recordDevelopment(sim, person, id, gain, terms.source);
-  return gain;
+  recordDevelopment(sim, person, id, next - level, source);
+  return next - level;
+}
+
+/**
+ * What `develop` would give now, counting nothing (from 2026-10-16): the same formula, with today's sessions of the source
+ * so far (`repeatsSoFar`, at `at`, the instant the session would land). What a practice control shows before the hour.
+ */
+export function previewGrowth(sim: Simulation, person: Person, target: Target, terms: GrowthTerms, reach = 100, at: Instant = sim.now): number {
+  const id = targetId(target);
+  return gainAfter(sim, person, id, (level, full) => abilityGain(level, Math.min(reach, full), terms), repeatsSoFar(sim, person, `${id}<${terms.source}`, at));
 }
 
 /** An ability grown (`develop`), by its id. */
@@ -313,3 +348,13 @@ export function nerves(sim: Simulation, person: Person, event: Event): void {
 
 /** An ability's definition, for its look and the profile. */
 export const abilityDef = (id: AbilityId) => ABILITY_DEFS.find((d) => d.id === id)!;
+
+/**
+ * How far a step of preparation goes by the ability it's practice in (`STEP_SPEED`, from 2026-10-16): `least` at 0,
+ * 1 at 50, `most` at full. A multiplier on the step's move, beside the day's focus, the trait and familiarity, each of
+ * which says something else.
+ */
+export function stepSpeed(sim: Simulation, person: Person, id: AbilityId): number {
+  const n = clamp(abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)), 0, 1);
+  return STEP_SPEED.least + (STEP_SPEED.most - STEP_SPEED.least) * n;
+}

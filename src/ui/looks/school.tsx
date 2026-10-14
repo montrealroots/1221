@@ -21,6 +21,7 @@ import {
   schoolEnded, type SchoolRecord,
 } from '@/engine/systems/school';
 import type { Person } from '@/engine/domain/model';
+import { MASTERED, TECHNIQUES } from '@/engine/content/abilities';
 import { templateById, type PrepDim } from '@/engine/content/coursework';
 import { BAND_LABEL, assignmentById, courseworkOf, preparedParts, weightsOf, type Assignment } from '@/engine/systems/coursework';
 import type { Simulation } from '@/engine';
@@ -312,6 +313,8 @@ defineLook<TheSkill>('skill', {
         <>
           <p className="small">
             {taught} Rehearsals, performances and later the work grow it too, more when you come rested and less the nearer you are to what you can reach.
+            {/* Where the work stops reading it, said (from 2026-10-16): a technique counts mastered at MASTERED, and no piece asks more. */}
+            {TECHNIQUES.includes(skill) ? ` Work reads it against ${MASTERED}: past that no piece asks more, so ${mine >= MASTERED ? 'what it adds from here moves no result' : `the last ${100 - MASTERED} points move no result`}.` : ''}
           </p>
           <div className="grid grid-3">
             <Stat label="You" value={mine.toFixed(1)} note={`Can reach ${reach.toFixed(1)}`} />

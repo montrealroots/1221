@@ -68,7 +68,7 @@ import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES } from '@/engine/content/tas
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied, genreTags } from '@/engine/content/demands';
 import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attributes';
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
-import { practicedToday, practiceRefusal } from '@/engine/systems/practice';
+import { practicedToday, practicePreview, practiceRefusal } from '@/engine/systems/practice';
 import { studyRefusal } from '@/engine/systems/engagement';
 import { BRIEF } from '@/engine/systems/briefs';
 import { DEVELOPMENT } from '@/engine/content/abilities';
@@ -220,7 +220,8 @@ function PracticeButton({ id }: { id: AbilityId | (typeof TECHNIQUES)[number] })
  * An exercise as practice on a challenge (from 2026-10-10): its challenge, its material at the tier chosen (the one
  * matching the level preselected), the focus for the hour with what each does, and what the hour found, said from the
  * numbers that moved it. Each refusal is said under what it refuses: the hour's under the button, and from 2026-10-12 a
- * focus's under the focus. Until then a focus refused was only grayed out in its list, with its reason nowhere.
+ * focus's under the focus. Until then a focus refused was only grayed out in its list, with its reason nowhere. From
+ * 2026-10-16 what the hour would grow is said before it, from the formula the hour itself uses (`practicePreview`).
  */
 function PracticeControl({ exercise }: { exercise: string }) {
   const { sim, run, toast } = useGame();
@@ -244,6 +245,7 @@ function PracticeControl({ exercise }: { exercise: string }) {
       {design && <span className="xs dim">{design.tiers[tier]}</span>}
       <label className="xs">Focus <select value={focus} onChange={(x) => setFocus(x.target.value as PracticeFocus)}>{(Object.keys(FOCUS) as PracticeFocus[]).map((f) => <option key={f} value={f}>{FOCUS[f].label}</option>)}</select></label>
       <span className="xs dim">{FOCUS[focus].words}</span>
+      {!no && <span className="xs">{practicePreview(sim, person, e, tier, focus).words}</span>}
       <Gated feature="practice.exercise" className="btn btn-sm" disabled={Boolean(no)} title={no ?? e.how} onClick={() => { const r = run<{ gained: number; feedback: string }>('practice.exercise', { exercise, tier, focus }); if (r.ok) { setFound(r.value!.feedback); toast(`${e.label}: +${r.value!.gained.toFixed(2)}.`, 'positive'); } }}>Practice An Hour</Gated>
       {no && <span className="xs dim">{no}</span>}
       {found && <span className="xs">{found}</span>}

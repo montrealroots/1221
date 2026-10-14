@@ -38,14 +38,16 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'emotionalDepth', label: 'Emotional Depth',
     definition: 'Reaching real feeling under imaginary circumstances, and letting it show truthfully.',
     develops: 'Scene study and its classes, performing, and the sense-memory exercise.',
-    affects: 'Believability in a scene, a song, a self-tape, an audition and a night on stage.',
+    // Until 2026-10-16 this said believability in a scene, a song, a self-tape, an audition and a night on stage, and left out
+    // the improvisation, the clown turn and the partnered physical work that read it too (attributes-matrix.md).
+    affects: 'Believability in every piece of performed work (a scene, a song, an improvisation, a clown turn, a self-tape, a taped brief, an audition, a night on stage), and connection in a fight or an intimacy scene shown with a partner.',
     derivedFrom: 'The craft’s Emotional Access, which it is.',
     source: 'Stanislavski, An Actor Prepares (1936), emotion memory and the given circumstances; kept in the craft as Emotional Access until 2026-10-09',
   },
   {
     id: 'presence', label: 'Presence',
     definition: 'What a house or a camera sees beyond technique: the pull of somebody fully there.',
-    develops: 'Nights in front of a house, a little at a time, and more on a remarkable night.',
+    develops: 'Nights in front of a house, a little at a time, and more on a remarkable night; a showing for classmates, and what graded exposure and a clown practice carry over.',
     affects: 'Connection in performance, an audition and a clown turn.',
     derivedFrom: 'Drawn once at the start, 55 to 80 for a student the faculty chose.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
@@ -53,7 +55,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
   {
     id: 'listening', label: 'Listening And Responsiveness',
     definition: 'Taking in a partner and answering what they actually do, not a plan.',
-    develops: 'Partner rehearsals, scene study with a partner, the improvisation game, and the repetition exercise.',
+    // Until 2026-10-16 this left out a night in front of a house, which grows it every night (`systems/school.ts`).
+    develops: 'Partner rehearsals, scene study and improvisation classes, every night in front of a house, the improvisation game, and the repetition exercise.',
     affects: 'Responsiveness and connection in partnered work and performance.',
     derivedFrom: 'For a life from before it: the mean of its Scene Study and Improvisation.',
     source: 'Meisner & Longwell, Sanford Meisner on Acting (1987), the repetition exercise',
@@ -61,8 +64,11 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
   {
     id: 'imagination', label: 'Imagination',
     definition: 'Inventing a character’s world and the specific choices that make the text live.',
-    develops: 'Interpretation and revision of coursework, table work, reading plays, and the given-circumstances exercise.',
-    affects: 'Interpretation in every task, and how fast a part’s interpretation is prepared.',
+    // Until 2026-10-16 this said a revision of coursework grew it, which grows adaptability (`PREP_ABILITY`), and that it
+    // made a part's interpretation faster to prepare, which nothing read. From 2026-10-16 it speeds the table work and a
+    // brief's breakdown (`STEP_SPEED`).
+    develops: 'The table work of coursework, breaking a brief down, character and script analysis classes, reading plays, and the given-circumstances exercise.',
+    affects: 'Interpretation in every task that asks one, and how far a step of table work or a brief’s breakdown goes.',
     derivedFrom: 'For a life from before it: the mean of its Character Work and Script Analysis.',
     source: 'Stanislavski, An Actor Prepares (1936), imagination and the magic if; Chekhov, To the Actor (1953)',
   },
@@ -70,7 +76,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'focus', label: 'Focus',
     definition: 'Holding attention where the work needs it, against distraction.',
     develops: 'Attentive preparation done well-rested, and the concentration exercise.',
-    affects: 'How far a step of preparation goes, and execution in text work.',
+    // Until 2026-10-16 this said how far a step of preparation goes, which read the day's focus (readiness at the hour,
+    // `focusAt`) and never this ability. From 2026-10-16 it speeds getting to know coursework's material (`STEP_SPEED`).
+    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
     derivedFrom: 'For a life from before it: the mean of its Script Analysis and Cold Reading.',
     source: 'Stanislavski, An Actor Prepares (1936), concentration of attention and the circles of attention',
   },
@@ -78,7 +86,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'memory', label: 'Memory',
     definition: 'Learning lines and blocking and keeping them under pressure.',
     develops: 'Learning lines, the recall drill, and learning a part.',
-    affects: 'How fast lines are learned, and execution wherever lines are spoken.',
+    // From 2026-10-16 it speeds every step that learns lines (`STEP_SPEED`); until then this said so, and nothing read it.
+    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken.',
     derivedFrom: 'The craft’s Memorization, which it is.',
     source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
   },
@@ -86,15 +95,17 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'adaptability', label: 'Adaptability',
     definition: 'Taking direction and changing a choice quickly without losing the work.',
     develops: 'Revising after a note, working a director’s note, and the improvisation game.',
-    affects: 'Responsiveness, and how fully a note is taken in a revision.',
+    // Until 2026-10-16 this said how fully a note is taken in a revision, which read no ability. From 2026-10-16 it speeds
+    // a step of revision (`STEP_SPEED`), and a revision worked far enough takes the note (`noteTaken`).
+    affects: 'Responsiveness; holding a change of tone; recovering from a slip and covering a partner’s; and how far a step of revision after a note goes, so a note is taken sooner.',
     derivedFrom: 'For a life from before it: its Improvisation.',
     source: 'Johnstone, Impro (1979), accepting offers',
   },
   {
     id: 'composure', label: 'Composure',
     definition: 'Holding nerves under the pressure of a house, an audition or a camera.',
-    develops: 'Every performance, a little, as performance anxiety falls with exposure.',
-    affects: 'Consistency under pressure, and the stress nerves add before a performance.',
+    develops: 'Every night in front of a house and a solo showing, a little, as performance anxiety falls with exposure; the graded-exposure exercise, and what concentration and a showing for classmates carry over.',
+    affects: 'Consistency under pressure, recovering from a slip, and the stress nerves add before a performance.',
     derivedFrom: 'At the start, by emotional stability: 25 to 60.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },
@@ -117,8 +128,11 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
   {
     id: 'discipline', label: 'Discipline', general: true,
     definition: 'Keeping up the daily work: practice done when it’s due, not when it’s easy.',
-    develops: 'Practice on days running, attending every call, and work prepared before it’s due.',
-    affects: 'How much practice counts for, and consistency in every task.',
+    // Until 2026-10-16 this said work prepared before it's due grew it, which grew nothing, and consistency in every task,
+    // which the audition, the improvisation, the clown turn and written work don't read it for (attributes-matrix.md).
+    // From 2026-10-16 every growth reads it, not deliberate practice alone (`grown` in `systems/attributes.ts`).
+    develops: 'Practice on days running, and attending every call.',
+    affects: 'How much what classes, nights, steps and practice grow counts for, a tenth more at 100 and a tenth less at 0 (a workout’s fitness aside); consistency in every task that asks it but the audition, where nerves are what’s held; and execution in written work.',
     derivedFrom: 'For a new life and one from before it: the Conscientiousness slider, of which self-discipline is a facet.',
     source: 'Costa & McCrae, NEO PI-R Professional Manual (1992), self-discipline as a facet of conscientiousness',
   },
@@ -126,7 +140,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'stamina', label: 'Stamina', general: true,
     definition: 'Lasting through long days, runs of nights and physical work without the work falling off.',
     develops: 'Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.',
-    affects: 'Consistency in movement, fights, songs and every night on stage.',
+    // Until 2026-10-16 this said consistency in movement, fights, songs and every night on stage; a night reads it as the
+    // drain through the piece, never as consistency (`systems/piece.ts`).
+    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more where the piece is hard on the body and the voice; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
     derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
     source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Hickson & Rosenkoetter (1981): two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on detraining',
   },
@@ -194,3 +210,15 @@ export const DEVELOPMENT = {
   /** How many changes the history keeps. */
   historyKept: 400,
 } as const;
+
+/**
+ * How far a step of preparation goes by the ability it's practice in (from 2026-10-16): learning lines by memory,
+ * table work and a brief's breakdown by imagination, getting to know coursework's material by focus, a revision after a
+ * note by adaptability (`stepSpeed` in `systems/attributes.ts`). At 0 the step goes `least` as far, at full `most`, and
+ * at 50 exactly as far as before, so an even actor prepares as fast as every actor did until then. Until 2026-10-16 the
+ * descriptions of memory, imagination, focus and adaptability each said this of their step, and no step read any of
+ * them (docs/verification/attributes-genres-2026-10-16/attributes-matrix.md). Noice & Noice (2006) found actors'
+ * learning of a role is elaborative, deeper processing, not rote, which is a skill that grows; how much faster, here,
+ * is SLATE's estimate.
+ */
+export const STEP_SPEED = { least: 0.85, most: 1.15 } as const;

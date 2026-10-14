@@ -55,7 +55,7 @@ import { TIER, exerciseFor } from '@/engine/content/practice';
 import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { APPROACH_EFFECT, AXES } from '@/engine/content/approaches';
 import { EVALUATION, TASK_PROFILES } from '@/engine/content/tasks';
-import { abilityFull, levelOf } from '@/engine/systems/attributes';
+import { abilityFull, attributesOf, levelOf } from '@/engine/systems/attributes';
 import { focusAt, mateAbilities } from '@/engine/systems/school';
 import { readiness } from '@/engine/systems/life';
 import { BAND_LABEL, reliabilityOf } from '@/engine/systems/coursework';
@@ -258,6 +258,10 @@ const PLAYS = {
   },
   prepare() {
     const sim = life('guide-craft-prepare');
+    // TEST SETUP (from 2026-10-16): imagination and memory at 50, the example's, where each speeds its step by exactly 1
+    // (`stepSpeed`); the steps grow them a few hundredths over two days, which moves no figure said.
+    attributesOf(sim, sim.player).imagination = 50;
+    sim.player.craft!.memorization = 50;
     const traits = sim.player.personalityTraits ?? [];
     const speed0 = prepSpeed(sim.player, DRAMA);
     press(sim, 'brief.choose', { brief: DRAMA.id, reading: READING_ONE.id });

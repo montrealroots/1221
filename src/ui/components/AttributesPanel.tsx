@@ -9,7 +9,9 @@
  * (`docs/UNBITTEN.md`). Until the connected attributes of 2026-10-09 this
  * said nerves took up to 18% off a performance; composure is read in a
  * night’s consistency by the evaluation since (`systems/evaluation.ts`), and
- * every ability is on the Player Profile.
+ * every ability is on the Player Profile. Until 2026-10-16 the panel said composure "holds a performance’s consistency,
+ * and it grows with every performance": it holds consistency in a scene, a song, a tape and an audition as well as a
+ * night, and recovery from a slip, and it's practised too (attributes-matrix.md).
  */
 
 import { useWorld } from '@/app/game-context';
@@ -28,7 +30,7 @@ export function AttributesPanel() {
     <Panel title="Your Composure" subtitle="What nerves do to a performance">
       <div className="col gap-3">
         <Stat label="Composure" value={whole(attrs.composure)} note={stress > 0 ? `Nerves add ${stress} stress before a performance` : 'Nerves add no stress'} />
-        <p className="small" style={{ margin: 0 }}>Composure holds a performance’s consistency, and it grows with every performance.</p>
+        <p className="small" style={{ margin: 0 }}>Composure holds consistency under pressure, in a scene, a song, a tape, an audition and a night, and steadies you after a slip. A little comes with every night in front of a house, and graded exposure practises it.</p>
         <Fine>Performance anxiety falls with exposure (Reeves et al., 2022); how fast it moves here is SLATE’s estimate.</Fine>
       </div>
     </Panel>

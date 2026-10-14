@@ -645,7 +645,10 @@ describe('school.evaluation', () => {
     expect(held.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('The Summer Cabaret’s company takes a student in good standing.');
     expect(reach.execute({ kind: 'school.summer_cabaret', payload: {} }).ok).toBe(true);
     // The Evaluations table on the Standing tab.
-    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% 0.0 ${spring(held).classGrowth.toFixed(1)} ${spring(held).reason}`);
+    // The held twin's growth as the table rounds it: 0.0 until 2026-10-16, when the last afternoon's rehearsal call, after
+    // its last reset, read discipline as every growth does (`grown`) and came to 0.05 of the mean craft, which rounds up.
+    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% ${spring(held).growth.toFixed(1)} ${spring(held).classGrowth.toFixed(1)} ${spring(held).reason}`);
+    expect(spring(held).growth).toBeLessThan(0.1);
     expect(drawn(reach, 'standing')).toContain(`Spring Term 2027 Good Standing 100% 0.0 ${spring(reach).classGrowth.toFixed(1)} ${spring(reach).reason}`);
   }, 60_000);
 

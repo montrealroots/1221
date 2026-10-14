@@ -72,7 +72,8 @@ import { MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '@/engine/content/tasks';
 import { CALL_KIND, SUMMER_KIND } from '@/engine/systems/school';
-import { PARTNER_KIND, courseworkOf, mateRecord, notesOf, questionsFor, trustOf, type Assignment } from '@/engine/systems/coursework';
+import { attributesOf } from '@/engine/systems/attributes';
+import { BAND_LABEL, PARTNER_KIND, courseworkOf, mateRecord, notesOf, questionsFor, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { momentsOf, personOf } from '@/engine/systems/classmates';
 
 const h = vi.hoisted(() => ({
@@ -586,6 +587,15 @@ describe('standing/term evaluation', () => {
 // notes and feedback
 // ---------------------------------------------------------------------------
 
+/**
+ * TEST SETUP: Character Work at 5, what holds a scene back most, with the craft behind what Scene Study asks of the year
+ * (Scene Study 50, Emotional Access 80: a craft score under 0.45), and the abilities kept in the craft that a scene's
+ * execution reads at 90 (from 2026-10-16, `skillHeld`).
+ */
+function characterHolds(sim: Simulation): void {
+  Object.assign(sim.player.craft!, { character: 5, scene: 50, emotion: 80, memorization: 90, voice: 90, movement: 90 });
+}
+
 describe('notes and feedback', () => {
   /** g18-probe to the evening before Acting I's fourth scene is due, Sunday 18 October. */
   const fourthEve = () => kept('g18-probe:oct18', () => { const s = probeAug28(); s.advanceTo(at(2026, 10, 18, 18)); return s; });
@@ -595,8 +605,10 @@ describe('notes and feedback', () => {
     const a = actingI(sim);
     expect(a).toMatchObject({ dueOn: '2026-10-19', template: 'scene-study' });
     // TEST SETUP: Character Work low, so the scene asks more of it than there is; every part prepared, Work On The Note
-    // left at nothing for the desk to do.
-    sim.player.craft!.character = 5;
+    // left at nothing for the desk to do. From 2026-10-16 the note names the skill the judged result's limits say cost it
+    // most (`skillHeld`), where until then it named the weakest skill the work is shown for, whatever it cost; so the
+    // craft's other skills this scene reads stand where Character Work is what holds it (`characterHolds`).
+    characterHolds(sim);
     Object.assign(a.prep, { familiarity: 0.95, memorization: 0.95, rehearsal: 0.95, partner: 0.95, revision: 0 });
     answerAsTheTextSupports(sim, a);
     toMeeting(sim, '2026-10-19');
@@ -625,6 +637,9 @@ describe('notes and feedback', () => {
     expect(desk.player.craft!.character / 100).toBeLessThan(level + 0.02);
     // TEST SETUP: Scene Study alike in both, and the same dials, so the meeting's growth differs by its weight alone.
     desk.player.craft!.scene = practiced.player.craft!.scene;
+    // And discipline alike (from 2026-10-16): a class's growth reads it (`grown`), and the practiced twin's seven days of
+    // practice grew it; until then a class's growth didn't read it.
+    attributesOf(desk, desk.player).discipline = attributesOf(practiced, practiced.player).discipline;
     for (const s of [practiced, desk]) dials(s);
     const before = practiced.player.craft!.scene;
     for (const s of [practiced, desk]) s.advanceTo(at(2026, 10, 26, 9));
@@ -751,13 +766,14 @@ describe('notes and feedback', () => {
   it('draws the note on the Coursework tab: the skill note new, then taken, shown again and marked taken in the ledger; and the objective a note put first, with why', () => {
     const sim = fourthEve();
     const a = actingI(sim);
-    sim.player.craft!.character = 5; // TEST SETUP, as above
+    characterHolds(sim); // TEST SETUP, as above
     Object.assign(a.prep, { familiarity: 0.95, memorization: 0.95, rehearsal: 0.95, partner: 0.95, revision: 0 });
     answerAsTheTextSupports(sim, a);
     toMeeting(sim, '2026-10-19');
     const shown = work(sim, a.id).shown!;
     let { text } = drawn(sim, CourseworkPane);
-    expect(text).toContain(`Feedback: Working, ${Math.round(shown.score * 100)} Of 100 · A New Note`);
+    // Working until 2026-10-16; the craft set so Character Work holds it (`characterHolds`) shows it Strong.
+    expect(text).toContain(`Feedback: ${BAND_LABEL[shown.band]}, ${Math.round(shown.score * 100)} Of 100 · A New Note`);
     expect(text).toContain('It asked more character work than you have yet: that’s the work for the next weeks.');
     expect(text).toContain('Character Work · Given 1 time');
     for (let day = 19; day <= 25; day += 1) { sim.advanceTo(at(2026, 10, day, 19)); dials(sim); go(sim, 'practice.exercise', { exercise: 'character-work' }); }

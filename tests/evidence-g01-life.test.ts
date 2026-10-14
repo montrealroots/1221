@@ -45,6 +45,9 @@
  * and the Calendar form's fields, set through the component's own useState in its render order.
  */
 import { describe, expect, it, vi } from 'vitest';
+import { replay } from '@/engine/systems/evaluation';
+import { TASK_PROFILES } from '@/engine/content/tasks';
+import { PIECE } from '@/engine/content/piece';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave, quickSave } from '@/engine';
@@ -658,7 +661,7 @@ describe('life.look_after:exercise', () => {
     expect(lookAfter(sim, 'unwind').ok).toBe(true);
   });
 
-  it('PLAYER JOURNEY: sixteen mornings’ workouts are read by the first scene shown in class, its consistency higher through Stamina by Stamina’s own share', () => {
+  it('PLAYER JOURNEY: sixteen mornings’ workouts are read by the first scene shown in class, its second half drained less by Stamina, by the drain’s own rule', () => {
     // Twins of one new life, played by the clock alone; one works out every morning at seven (the first at 7:30, the
     // life's first minute) before the nine o'clock classes, through the command, sixteen days to Tuesday 8 September.
     const trained = student('g01-stamina');
@@ -687,37 +690,32 @@ describe('life.look_after:exercise', () => {
     expect(t.inputs.abilities.stamina).toBe(trained.player.wellbeing.fitness);
     expect(i.inputs.abilities.stamina).toBeCloseTo(fitAtStart - 15 * 0.18, 9);
     expect(t.inputs.abilities.stamina! - i.inputs.abilities.stamina!).toBeGreaterThan(10);
-    // Everything else the consistency reads is the same in both: composure, discipline, the material's lean, no fit
-    // asked, the same difficulty, and a sufficient day (readiness 60 or more) for each, so its condition is whole.
-    expect(t.inputs.abilities.composure).toBe(i.inputs.abilities.composure);
-    expect(t.inputs.abilities.discipline).toBe(i.inputs.abilities.discipline);
-    expect(t.inputs.inputs?.consistency).toEqual([{ ability: 'composure', weight: 0.2 }]);
-    expect(i.inputs.inputs?.consistency).toEqual([{ ability: 'composure', weight: 0.2 }]);
-    expect(t.inputs.fit).toBeUndefined();
-    expect(t.inputs.difficulty).toBe(i.inputs.difficulty);
+    // Until 2026-10-16 this scene, of one tone, was judged whole, stamina an input of its consistency beside composure
+    // and discipline, and this held the other four dimensions equal and consistency higher by stamina's share of its
+    // inputs. From then every scene is judged in its tones or, with one, in two halves (`scenePiece`), stamina read
+    // only as the drain through it, as a scene of two tones always was (phase 2a, step 4). So: the first half the same in
+    // both, every dimension; the second half drained by each one's own stamina, by the rule; the whole higher trained.
+    const spec = t.inputs.piece!;
+    expect(spec.segments).toHaveLength(2);
+    expect(i.inputs.piece).toEqual(spec);
     expect(t.inputs.prep).toEqual(i.inputs.prep);
+    expect(t.inputs.difficulty).toBe(i.inputs.difficulty);
     for (const r of [t, i]) {
       expect(r.inputs.condition.readiness).toBeGreaterThanOrEqual(60);
       expect(r.inputs.condition.ill || r.inputs.condition.injured || r.inputs.condition.concussed).toBeFalsy();
     }
-
-    // The dimensions that don't read stamina came out the same; consistency, which does, higher.
-    for (const d of ['believability', 'connection', 'execution', 'responsiveness'] as const) expect(t.dims[d], d).toBe(i.dims[d]);
-    expect(t.dims.consistency!).toBeGreaterThan(i.dims.consistency!);
-    // By how much, from the rule (`systems/evaluation.ts`): capacity the weighted mean of level over full, composure at
-    // 2 + 0.2, discipline 1 and stamina 1 (`content/tasks.ts`); shaped = capacity^(1 + difficulty); quality 100 × shaped
-    // plus a draw of ±10 × (1 − shaped), both times the same preparation; the draw keyed by the save, the piece and the
-    // dimension, so the same in both. The ratio lies between the draw's two ends, each figure a tenth either way.
-    const shaped = (r: typeof t) => {
-      const a = r.inputs.abilities;
-      const capacity = (2.2 * a.composure! / 100 + a.discipline! / 100 + a.stamina! / r.inputs.fulls!.stamina!) / 4.2;
-      return capacity ** (1 + r.inputs.difficulty);
-    };
-    const at = (draw: number) => (100 * shaped(t) + 10 * draw * (1 - shaped(t))) / (100 * shaped(i) + 10 * draw * (1 - shaped(i)));
-    const ratio = t.dims.consistency! / i.dims.consistency!;
-    const slack = 0.05 / t.dims.consistency! + 0.05 / i.dims.consistency!;
-    expect(ratio).toBeGreaterThanOrEqual(at(1) - slack);
-    expect(ratio).toBeLessThanOrEqual(at(-1) + slack);
+    const [tr, ir] = [replay(t, TASK_PROFILES.scene!)!, replay(i, TASK_PROFILES.scene!)!];
+    expect(tr.overall).toBe(t.overall);
+    expect(ir.overall).toBe(i.overall);
+    expect(tr.piece!.segments[0]!.dims).toEqual(ir.piece!.segments[0]!.dims);
+    const drained = (r: typeof t) => 1 - PIECE.drain * Math.min(1, spec.load) * (1 - Math.min(1, r.inputs.abilities.stamina! / r.inputs.fulls!.stamina!));
+    expect(tr.piece!.segments[1]!.drain).toBeCloseTo(drained(t), 3);
+    expect(ir.piece!.segments[1]!.drain).toBeCloseTo(drained(i), 3);
+    expect(tr.piece!.segments[1]!.drain).toBeGreaterThan(ir.piece!.segments[1]!.drain);
+    // On a scene this light on the body (its load under a fifth), sixteen mornings’ stamina is a few thousandths of the
+    // second half: the whole, to a tenth, no lower, where until 2026-10-16 consistency read stamina as a fourth of its inputs.
+    expect(t.overall).toBeGreaterThanOrEqual(i.overall);
+    expect(spec.load).toBeLessThan(0.2);
   });
 });
 

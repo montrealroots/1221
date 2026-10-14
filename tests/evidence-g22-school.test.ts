@@ -84,7 +84,8 @@ import {
 import { NEW_PLAYS_READ } from '@/engine/content/plays';
 import { ORIENTATION_KIND, courseworkOf, mateRecord, notesOf, preparedParts, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { momentsOf, personOf } from '@/engine/systems/classmates';
-import { developmentOf } from '@/engine/systems/attributes';
+import { attributesOf, developmentOf } from '@/engine/systems/attributes';
+import { DEVELOPMENT } from '@/engine/content/abilities';
 import { journeyOf } from '@/engine/systems/evaluation';
 import { hasProcess } from '@/engine/systems/production';
 import { healthOf } from '@/engine/systems/health';
@@ -276,6 +277,9 @@ describe('school.company', () => {
 
 // ---------------------------------------------------------------------------------------------------------------------
 
+/** Discipline's lift on a growth (`grown`, from 2026-10-16): a tenth more at 100, a tenth less at 0. */
+const lift = (sim: Simulation) => 1 + DEVELOPMENT.disciplineLift * (attributesOf(sim, sim.player).discipline - 50) / 50;
+
 describe('school.lab', () => {
   it('PLAYER JOURNEY: a Drama 50 afternoon grows its four skills one session each at the day’s focus, kept in the development history under lab, its call and DRAM 50a’s meeting counted', () => {
     const sim = life('g22-drama50');
@@ -293,8 +297,9 @@ describe('school.lab', () => {
     const kept = developmentOf(p).history.filter((x) => x.source === 'lab');
     for (const [skill, id] of [['scene', 'scene'], ['character', 'character'], ['script', 'script'], ['memorization', 'memory']] as const) {
       const rise = p.craft![skill] - craft[skill];
-      // One session at the cap of focus, 1.2 (readiness past 96, at three o'clock nobody's hour): 0.42 × 1.2 × room^1.5.
-      expect(rise, skill).toBeCloseTo(0.42 * 1.2 * (1 - craft[skill] / reach[skill]) ** 1.5, 9);
+      // One session at the cap of focus, 1.2 (readiness past 96, at three o'clock nobody's hour): 0.42 × 1.2 × room^1.5,
+      // and from 2026-10-16 discipline's lift, 1 + 0.1 × (discipline − 50) / 50, as every growth reads it (`grown`).
+      expect(rise, skill).toBeCloseTo(0.42 * 1.2 * (1 - craft[skill] / reach[skill]) ** 1.5 * lift(sim), 9);
       expect(kept.filter((x) => x.id === id), skill).toEqual([{ at: lab!.at, id, delta: round3(rise), source: 'lab' }]);
     }
     expect(kept).toHaveLength(4);
@@ -337,9 +342,10 @@ describe('school.lab', () => {
       const word = { remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'An Off Night' }[bandOf(r.overall)];
       expect(titled(twin, `Your Solo Showing: ${word}`).map((n) => n.body)).toEqual([`You Are The Creator, shown to the class: ${Math.round(r.overall)} of 100.`]);
       expect(p.wellbeing.morale).toBe(50 + ({ remarkable: 3, strong: 3, solid: 0, off: -3 }[bandOf(r.overall)]));
-      // Three sessions' worth of scene at focus's cap: 0.42 × 3 × 1.2 × room^1.5, nothing past the reach.
+      // Three sessions' worth of scene at focus's cap: 0.42 × 3 × 1.2 × room^1.5, nothing past the reach; and from
+      // 2026-10-16 discipline's lift (`grown`).
       const rise = p.craft!.scene - scene;
-      expect(rise).toBeCloseTo(0.42 * 3 * 1.2 * Math.max(0, 1 - level / p.craftCeiling!.scene) ** 1.5, 9);
+      expect(rise).toBeCloseTo(0.42 * 3 * 1.2 * Math.max(0, 1 - level / p.craftCeiling!.scene) ** 1.5 * lift(twin), 9);
       expect(developmentOf(p).history.filter((x) => x.source === 'lab:showing')).toEqual(rise > 0 ? [{ at: item.at, id: 'scene', delta: round3(rise), source: 'lab:showing' }] : []);
       expect(p.school!.tally.calls).toBe(tally.calls + 1);
       expect(p.school!.tally.answered).toBe(tally.answered + 1);

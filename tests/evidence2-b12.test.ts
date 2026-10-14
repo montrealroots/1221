@@ -307,6 +307,10 @@ describe('h-school', () => {
 
   it('PLAYER JOURNEY: a fall kept up ends in good standing, “In Good Standing” at the evaluation, and the day after, with nothing booked over the winter, Next is the spring’s first class day: “Next: Classes, January 11, 2027 at 9:00 AM.”', () => {
     const sim = keptUpFall();
+    // From 2026-10-16 the fall played this way ends with a classmate's lines run booked for that evening, the twelfth (the
+    // growth that reads discipline changed which moments came, `grown`); played on by the same policy to the next noon,
+    // past it, nothing is booked over the winter.
+    while (sim.now < at(2026, 12, 13, 12)) attentiveHour(sim);
     expect(sim.player.school!.standing).toBe('good');
     expect(titled(sim, 'In Good Standing')).toHaveLength(1);
     expect(bookedFor(sim)).toEqual([]);

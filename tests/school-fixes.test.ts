@@ -10,7 +10,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { LABS } from '@/engine/content/school';
 import { developmentOf } from '@/engine/systems/attributes';
 import { courseworkOf, type Assignment, type Band } from '@/engine/systems/coursework';
-import { ESTIMATE, LAB_KIND, evaluate, grewFrom, rehearse, type Casting } from '@/engine/systems/school';
+import { ESTIMATE, LAB_KIND, evaluate, grewFrom, REHEARSAL_WEIGHTS, type Casting } from '@/engine/systems/school';
 
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 /** TEST SETUP: pieces shown in term 0 at these bands, a second showing's band where given. */
@@ -77,7 +77,8 @@ describe('the term’s Cabaret show', () => {
 describe('the craft a call grows', () => {
   it('is kept in the development history under its source', () => {
     const sim = life('grew');
-    grewFrom(sim, sim.player, 'rehearsal:test', (c) => rehearse(c, 1));
+    // A function growing the craft stood here until 2026-10-16, when `grewFrom` took the weights it grows by (`REHEARSAL_WEIGHTS`).
+    grewFrom(sim, sim.player, 'rehearsal:test', 1, REHEARSAL_WEIGHTS);
     const kept = developmentOf(sim.player).history.filter((h) => h.source === 'rehearsal:test');
     expect(kept.length).toBeGreaterThanOrEqual(4);
     expect(kept.every((h) => h.delta > 0)).toBe(true);

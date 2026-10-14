@@ -207,6 +207,9 @@ const PLAY: Record<string, () => void> = {
     readyAt(sim, ready);
     expect(zonedParts(sim.now, zone).hour).toBeLessThan(17);
     expect(focusAt(sim, sim.player, sim.now)).toBeCloseTo(1, 6);
+    // TEST SETUP (from 2026-10-16): memory at the example's 50, where it speeds learning lines by exactly 1 (`stepSpeed`).
+    expect(ex.steps[2]).toContain('your memory at 50');
+    sim.player.craft!.memorization = 50;
     expect(sim.execute({ kind: 'school.learn_part', payload: {} }).ok).toBe(true);
     expect(proc().blockingMissed).toBe(0);
     expect(ex.result).toContain(`The blocking goes to ${pct(proc().blocking)} and the gap is closed; the lines go to ${pct(proc().lines)}`);

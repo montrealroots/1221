@@ -52,13 +52,13 @@ import { formatMoney, saveCurrency } from '../core/money';
 import { CITIES } from '../content/geography';
 import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course, type SchoolDate, type Skill } from '../content/school';
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
-import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, grow, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
+import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, chiefLimit, countTogether, evaluate, leanedWeights, performerOf, recordWork, type Evaluation } from './evaluation';
 import { evaluatePiece, judgePiece, loadOf, pieceWeights, rehearseWays, toneSegments, withBook, type PieceSpec, type Workbook } from './piece';
 import { ENSEMBLE, sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
 import { PIECE } from '../content/piece';
 import { UNPERFORMED } from './material';
-import { abilityFull, abilityOf } from './attributes';
+import { abilityFull, abilityOf, CRAFT_ABILITY, stepSpeed } from './attributes';
 import { EVALUATION, TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
 import { genreSpeed } from './engagement';
@@ -87,8 +87,10 @@ export const WORK = {
   /**
    * A showing is judged by the evaluation from 2026-10-09 (`show`, `systems/evaluation.ts`): until then it was half
    * preparation, three tenths the craft against the work's par at a fortieth a point, a fifth readiness, and luck of
-   * 0.08 either side, cut at 0.4, 0.58 and 0.74. The craft against the par at a fortieth a point is kept for the note
-   * on a skill (`craftScore`); the par is the work's difficulty now (`difficultyOf`).
+   * 0.08 either side, cut at 0.4, 0.58 and 0.74. The craft against the par at a fortieth a point is kept for the line
+   * that the skills carried it and for whether a note on the craft is given (`craftScore`); until 2026-10-16 it chose
+   * which skill too, which the judged result's limits choose since (`skillHeld`). The par is the work's difficulty now
+   * (`difficultyOf`).
    */
   showing: { perPoint: 40 },
   /** What each band makes of the meeting's growth against an ordinary meeting. */
@@ -229,6 +231,13 @@ export interface Assignment {
   tryBoth?: boolean;
   /** The partner worked the weakness with you once, where that's the way chosen (`approach`). */
   partnerWorked?: boolean;
+  /**
+   * The partner part rehearsed with a reader in the partner's place (`READER`, from 2026-10-16), 0 to 1: your own side of
+   * the scene worked off somebody feeding the other part. Your own partner part is it and your rehearsals with the
+   * partner, compounded (`partnerPart`); the partner's own preparation reads only the rehearsals they came to
+   * (`partnerPrepOf`). A save from before has none, and its partner part is what it was.
+   */
+  reader?: number;
   /**
    * The table-work question your partner reads another way, where you kept your reading (from 2026-10-12): the scene
    * together reads your readings as apart (`ENSEMBLE.apart`) until you try theirs or try both at a rehearsal.
@@ -513,12 +522,38 @@ export function approachRefusal(sim: Simulation, person: Person, a: Assignment |
   return undefined;
 }
 
-/** The steps of an assignment: its template's, and a targeted drill where that's the way chosen at a weakness (`approach`). */
+/**
+ * Rehearsing the partner part with a reader in the partner's place (from 2026-10-16): a classmate who isn't in the
+ * scene, a friend or a recording feeding the other lines, as a self-tape's reader does (the Casting Directors' Guild's
+ * self-tape guidance: a reader "does not need to be an actor", and can be "virtual, via a pre-recorded app";
+ * docs/research/attributes/research-self-tape-briefs.json) and as a stand-in runs lines when an actor isn't there
+ * (standincentral.com, "Predicting When You Might Need To Read Lines", 2018; Backstage, "The New Online Tool For
+ * Last-Minute Audition Rehearsals", on actors hiring a scene reader). Until then the partner part moved only at a
+ * rehearsal the partner came to, so a partner who never came, or wouldn't, held a mastered player's own scene at 68
+ * (baseline.md §4, criterion M3). It works your own side of the scene: what you take in and answer. It goes less far an
+ * evening than the partner's own (`gain`, against their 0.4 to 0.45), once a day, and brings the partner up not at all,
+ * so the scene together still reads what they did (`partnerPrepOf`). Its sizes are SLATE's.
+ */
+export const READER = { id: 'reader', label: 'Run It With A Reader', minutes: 60, gain: 0.3 } as const;
+
+/** Your own partner part: the rehearsals your partner came to and a reader's, compounded, each a share of what's left. */
+export const partnerPart = (a: Assignment): number => 1 - (1 - clamp01(a.prep.partner)) * (1 - clamp01(a.reader ?? 0));
+
+/** A part as a step's `requires` reads it: your own partner part, the table work as the showing reads it, the rest as they are. */
+const partOf = (a: Assignment, dim: PrepDim): number => (dim === 'partner' ? partnerPart(a) : dim === 'interpretation' ? interpretationOf(a) : a.prep[dim]);
+
+/**
+ * The steps of an assignment: its template's; a reader in the partner's place, on paired work (`READER`, from
+ * 2026-10-16), asking what the partner's step asks but the partner; and a targeted drill where that's the way chosen at a
+ * weakness (`approach`).
+ */
 export function activitiesOf(a: Assignment): readonly Activity[] {
   const t = templateById(a.template)!;
-  if (a.approach?.kind !== 'drill') return t.activities;
+  const withPartner = t.paired ? t.activities.find((x) => x.dim === 'partner') : undefined;
+  const reader: Activity[] = withPartner ? [{ id: READER.id, label: READER.label, minutes: READER.minutes, dim: 'partner', gain: READER.gain, daily: true, needs: (withPartner.needs ?? []).filter((n) => n !== 'partner'), ...(withPartner.requires ? { requires: withPartner.requires } : {}) }] : [];
+  if (a.approach?.kind !== 'drill') return [...t.activities, ...reader];
   const label = `${APPROACHES.drill.label}: ${t.dims[a.approach.dim]?.label ?? a.approach.dim}`;
-  return [...t.activities, { id: 'drill', label, minutes: APPROACH.drill.minutes, dim: a.approach.dim, gain: APPROACH.drill.gain, daily: true }];
+  return [...t.activities, ...reader, { id: 'drill', label, minutes: APPROACH.drill.minutes, dim: a.approach.dim, gain: APPROACH.drill.gain, daily: true }];
 }
 
 /** Why a step can't be done now, or nothing. */
@@ -536,13 +571,14 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
   // A step that builds on the table work reads it as the showing does (`interpretationOf`, from 2026-10-12): until then
   // it read `prep.interpretation`, which nothing in Table Work moves, so Write It Up never opened from the answers. A
   // template with no material reads that figure either way.
-  if (act.requires && (act.requires.dim === 'interpretation' ? interpretationOf(a) : a.prep[act.requires.dim]) < act.requires.at) return act.requires.why;
+  // A step that builds on the partner part reads your own (`partnerPart`, from 2026-10-16): worked with a reader, it's there.
+  if (act.requires && partOf(a, act.requires.dim) < act.requires.at) return act.requires.why;
   // Work on its feet still rehearses in a way of playing chosen after the part was complete (from 2026-10-12: until then
   // it was refused here, and a choice made late could never be rehearsed in; a played run of the practice briefs found it).
   // A step of the partner part here is a targeted drill on it (`activitiesOf`): the partner step itself is refused above
   // (`needRefusal`), and a rehearsal kept with the partner rehearses the choice in on its own (`rehearsalOutcome`).
   const choiceToRehearse = (act.dim === 'rehearsal' || act.dim === 'partner') && sidesOf(a.playing).length > 0 && a.playing!.prep < PLAYING.complete;
-  if (a.prep[act.dim] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
+  if ((act.id === READER.id ? partnerPart(a) : a.prep[act.dim]) >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
   if (act.daily && a.practicedOn[act.id] === dayKey(sim.now)) return 'Done today already: it takes days, not one long session.';
   // On your feet, the line training reads (`SPENT` in `systems/life.ts`, from 2026-10-08): desk work can be done tired, a studio can't.
   const onFeet = (act.needs ?? []).some((n) => n === 'studio' || n === 'feet');
@@ -560,6 +596,13 @@ export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | 
  * note is taking direction. Rehearsal trains the work's own technique (`Activity.trains`).
  */
 export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'focus', memorization: 'memory', interpretation: 'imagination', partner: 'listening', revision: 'adaptability' };
+
+/**
+ * The ability whose level speeds each kind of step (`stepSpeed`, from 2026-10-16): the one it's practice in, but the
+ * partner's evenings, where what moves the part is the partner's coming (`rehearsalOutcome`) and a reader's
+ * (`readerRehearsal`), and rehearsal, which trains a technique.
+ */
+export const STEP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'focus', memorization: 'memory', interpretation: 'imagination', revision: 'adaptability' };
 
 /** The trait knob each kind of preparation reads: interpretation is read around, lines drilled, a scene skimmed, a note revised. */
 export const PREP_KNOB: Partial<Record<PrepDim, PersonalityKnob>> = { interpretation: 'readsAround', memorization: 'drills', familiarity: 'skims', revision: 'revises' };
@@ -583,6 +626,8 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   sim.advanceTo(sim.now + minutes * 60_000);
   exerts(person, (act.needs ?? []).some((n) => n === 'studio' || n === 'feet') ? WORK.met.feet : WORK.met.desk, minutes / 60);
   // Work in a craft they loved was a better hour (`Template.crafts`) from 2026-10-09 until the interests went on 2026-10-10.
+  // A reader's evening moves your own side of the partner part, kept apart from the partner's (`READER`, from 2026-10-16).
+  if (act.id === READER.id) return readerRehearsal(sim, person, a, act, focus, minutes);
   const before = a.prep[act.dim];
   // What this kind of work gives this person (from 2026-10-09): reading around a scene, drilling lines, getting
   // around it fast, revising from a note (`PREP_KNOB`), each a trait's.
@@ -590,7 +635,9 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   // And from 2026-10-10 the material's features met before (`featureSpeed`), the better of the two: familiarity with a
   // kind of work counted once, never twice.
   const speed = Math.max(genreSpeed(person, a.sceneId ? genresOfPlay(sceneById(a.sceneId)?.play) : undefined), featureSpeed(person, materialOf(a.sceneId)));
-  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * (1 - before));
+  // And by the ability the step is practice in (`STEP_ABILITY`, from 2026-10-16): memory learns lines faster, and so on.
+  const able = STEP_ABILITY[act.dim] ? stepSpeed(sim, person, STEP_ABILITY[act.dim]!) : 1;
+  a.prep[act.dim] = clamp01(before + act.gain * Math.min(1.1, Math.max(0.5, focus)) * prepLean(person, act.dim) * speed * able * (1 - before));
   a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
   if (act.daily) a.practicedOn[act.id] = dayKey(sim.now);
   // Work on its feet rehearses the way it's to be played, where one is chosen (from 2026-10-10). The partner part's step
@@ -600,7 +647,7 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
     rehearseWays(a.book, act.gain * Math.min(1.1, Math.max(0.5, focus)));
   }
   if (act.trains && a.trained < WORK.trainingSteps && person.craft) {
-    grewFrom(sim, person, `coursework:${act.id}`, (c) => grow(c, act.trains!, focus, WORK.trainingWeight));
+    grewFrom(sim, person, `coursework:${act.id}`, focus, [[act.trains, WORK.trainingWeight]]);
     a.trained += 1;
   }
   // The ability this kind of step is practice in (`PREP_ABILITY`, from 2026-10-09), a step's training weight, while
@@ -608,6 +655,23 @@ export function prepare(sim: Simulation, person: Person, a: Assignment, activity
   const ability = PREP_ABILITY[act.dim];
   if (ability && a.prep[act.dim] > before) ordinary(sim, person, ability, focus, WORK.trainingWeight, `prepare:${act.dim}`);
   return { moved: a.prep[act.dim] - before, dim: act.dim, minutes };
+}
+
+/**
+ * An evening with a reader (`READER`): your own partner part moves by its share of what's left of it, at the day's focus;
+ * the way you're playing it is rehearsed in as any work on your feet rehearses it; listening grows a step's training
+ * weight, as from any step of the partner part. Nothing moves the partner's preparation, their trust or the bond.
+ */
+function readerRehearsal(sim: Simulation, person: Person, a: Assignment, act: Activity, focus: number, minutes: number): { moved: number; dim: PrepDim; minutes: number } {
+  const before = partnerPart(a);
+  const gain = act.gain * Math.min(1.1, Math.max(0.5, focus));
+  a.reader = clamp01((a.reader ?? 0) + gain * (1 - (a.reader ?? 0)));
+  a.steps[act.id] = (a.steps[act.id] ?? 0) + 1;
+  a.practicedOn[act.id] = dayKey(sim.now);
+  rehearseChoice(a.playing, gain);
+  rehearseWays(a.book, gain);
+  if (partnerPart(a) > before) ordinary(sim, person, 'listening', focus, WORK.trainingWeight, 'prepare:reader');
+  return { moved: partnerPart(a) - before, dim: 'partner', minutes };
 }
 
 /** A scene coming back, said: when it was studied, in which part, with whom, and what's new this time. */
@@ -692,15 +756,20 @@ export function partnerReadOf(sim: Simulation, person: Person, a: Assignment, on
 }
 
 /**
- * A scene as a piece in its tones, in order (from 2026-10-12, `systems/piece.ts`): performed work with a scene whose
- * tones change, its rehearsal refined segment by segment, and its load. A scene of one tone is judged whole.
+ * A scene as a piece in its tones, in order (from 2026-10-12, `systems/piece.ts`): performed work with a scene, its
+ * rehearsal refined segment by segment, and its load. From 2026-10-16 a scene of one tone is its two halves, as a play
+ * is (`toneSegments`, at least 2), so every scene reads stamina the one way, as the drain through it. Until then a scene of
+ * one tone was judged whole, stamina an input of its consistency, and a scene of two tones in segments, stamina only the
+ * drain: the same stamina counted for one scene by how many tones it listed (attributes-matrix.md, "inconsistent
+ * reading"). Work with no scene (a voice sequence, a song, a movement score, a fight) is still judged whole, stamina an
+ * input of its consistency, as its profile says.
  */
 export function scenePiece(a: Assignment): PieceSpec | undefined {
   const task = TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!;
   const material = materialOf(a.sceneId);
-  if (!material || UNPERFORMED.has(task.id) || material.tones.length < 2) return undefined;
+  if (!material || UNPERFORMED.has(task.id)) return undefined;
   return withBook({
-    segments: toneSegments(material.tones), work: a.work ?? [], part: 'rehearsal',
+    segments: toneSegments(material.tones, 2), work: a.work ?? [], part: 'rehearsal',
     perTurn: PIECE.scene.perTurn, perBlend: PIECE.scene.perBlend, most: PIECE.scene.most, load: loadOf(material, 'scene'),
   }, a.book);
 }
@@ -722,7 +791,9 @@ export function preparedParts(_person: Person, a: Assignment, _onDay: string): P
   for (const dim of Object.keys(t.dims) as PrepDim[]) {
     if (dim === 'interpretation') out[dim] = interpretationOf(a);
     // Your own partner part is what you've rehearsed together (from 2026-10-12): what the partner has done alone is
-    // theirs, read by the scene together (`partnerReadOf`).
+    // theirs, read by the scene together (`partnerReadOf`). From 2026-10-16 a reader's evenings count in it too
+    // (`partnerPart`), so a partner who doesn't come can't hold your own result under what you've done.
+    else if (dim === 'partner') out[dim] = partnerPart(a);
     else out[dim] = a.prep[dim];
   }
   // A smaller piece of a part asked for (`approach`): six tenths of it reads as the whole of what was asked.
@@ -758,9 +829,15 @@ export function weightsOf(a: Assignment): Partial<Record<PrepDim, number>> {
  * its weight (the objective's first, where it's short at all), a choice the
  * text cuts against, the craft it asks. A note on something put right and
  * holding isn't given (`mayGive`). Each with what it measures now.
+ *
+ * A note on the craft is given where the skills the work is shown for stand behind what it asks of the year (`craft`,
+ * under 0.45 on the par's scale), as before; from 2026-10-16 the skill it names is the one the judged result's own
+ * limits say cost it most (`skillHeld`, from `judged`). Until then it was the weakest raw skill the template reads, so a
+ * note could name a skill the work barely leaned on while the one that cost it most went unsaid
+ * (docs/verification/attributes-genres-2026-10-16/baseline.md, F1). With no result to read, or none of its limits a
+ * craft skill, no note on the craft is given.
  */
-export function noteCandidates(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[]): { focus: Focus; level?: number }[] {
-  const t = templateById(a.template)!;
+export function noteCandidates(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[], judged?: Pick<Evaluation, 'limits'>): { focus: Focus; level?: number }[] {
   const w = weightsOf(a);
   const out: { focus: Focus; level?: number; short: number }[] = [];
   for (const [dim, v] of Object.entries(parts) as [PrepDim, number][]) {
@@ -772,16 +849,30 @@ export function noteCandidates(person: Person, a: Assignment, parts: Partial<Rec
     // then it carried no level, and `mayGive` never gave a resolved one again however the choice was made later).
     if (a.answers[q.id] && !options.find((o) => o.id === a.answers[q.id])?.supported) out.push({ focus: { kind: 'choice', question: q.id }, level: 0, short: 0.1 });
   }
-  if (craft < 0.45) {
-    const weakest = (Object.keys(t.reads) as Skill[]).sort((x, y) => person.craft![x] - person.craft![y])[0]!;
-    out.push({ focus: { kind: 'skill', skill: weakest }, level: person.craft![weakest] / 100, short: 0.06 });
-  }
+  const held = craft < 0.45 && judged ? skillHeld(judged) : undefined;
+  if (held) out.push({ focus: { kind: 'skill', skill: held.skill }, level: (person.craft?.[held.skill] ?? 0) / 100, short: 0.06 });
   return out.filter((c) => mayGive(notes, noteKey(c.focus), c.level)).sort((x, y) => y.short - x.short).map(({ focus, level }) => (level === undefined ? { focus } : { focus, level }));
 }
 
+/**
+ * The craft skill that held a judged piece back most, by the evaluation's own limits (from 2026-10-16): each technique,
+ * and each ability kept in the craft (`CRAFT_ABILITY`), summed over the dimensions it cost, by what it cost the whole.
+ * Abilities kept outside the craft (listening, imagination and the rest) are left to what to work on next
+ * (`recommendations`), since a course's note names a skill its classes train.
+ */
+export function skillHeld(judged: Pick<Evaluation, 'limits'>): { skill: Skill; whole: number } | undefined {
+  const cost = new Map<Skill, number>();
+  for (const l of judged.limits) {
+    const skill = l.kind === 'technique' ? (l.what as Skill) : l.kind === 'ability' ? CRAFT_ABILITY[l.what as AbilityId] : undefined;
+    if (skill) cost.set(skill, (cost.get(skill) ?? 0) + (l.whole ?? 0));
+  }
+  const top = [...cost.entries()].sort((x, y) => y[1] - x[1])[0];
+  return top ? { skill: top[0], whole: Math.round(top[1] * 10) / 10 } : undefined;
+}
+
 /** The one thing that most held a showing back, as the ledger allows, or nothing. */
-export function mainNote(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[] = []): Focus | undefined {
-  return noteCandidates(person, a, parts, craft, notes)[0]?.focus;
+export function mainNote(person: Person, a: Assignment, parts: Partial<Record<PrepDim, number>>, craft: number, notes: readonly NoteRecord[] = [], judged?: Pick<Evaluation, 'limits'>): Focus | undefined {
+  return noteCandidates(person, a, parts, craft, notes, judged)[0]?.focus;
 }
 
 /** The note's substance: the course's own words for a part, with what the work measured and the material's specifics; the text's reason for a choice; the skill; or the step beyond. */
@@ -791,7 +882,10 @@ export function noteText(a: Assignment, focus: Focus, level?: number, partnerNam
   const as = scene && a.role !== undefined ? ` As ${scene.roles[a.role].name} in ${scene.play}.` : '';
   if (focus.kind === 'dim') {
     const base = t.notes[focus.dim] ?? `${t.dims[focus.dim]?.label ?? focus.dim} needed more work.`;
-    const with_ = focus.dim === 'partner' && partnerName ? ` You and ${partnerName.split(' ')[0]} had rehearsed together ${a.rehearsals.filter((r) => r.status === 'kept').length} times.` : '';
+    // With a reader's evenings, or the way to one, from 2026-10-16 (`READER`): a partner who doesn't come isn't the end of it.
+    const read = a.steps[READER.id] ?? 0;
+    const withReader = read ? ` You ran it with a reader ${read === 1 ? 'once' : `${read} times`}.` : ` ${READER.label} works your side of it without them.`;
+    const with_ = focus.dim === 'partner' && partnerName ? ` You and ${partnerName.split(' ')[0]} had rehearsed together ${a.rehearsals.filter((r) => r.status === 'kept').length} times.${withReader}` : '';
     const measured = level !== undefined ? ` (${t.dims[focus.dim]?.label ?? focus.dim}: ${Math.round(level * 100)}%.)` : '';
     return `${base}${with_}${measured}${as}`;
   }
@@ -975,7 +1069,7 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
     countTogether(person, together);
   }
   // The note: what held it back most, as the ledger allows; nothing did, the step beyond.
-  const pick = noteCandidates(person, a, parts, craft, notes)[0];
+  const pick = noteCandidates(person, a, parts, craft, notes, judged)[0];
   // The course's last step beyond, not given again running.
   const lastHere = cw.assignments.filter((x) => x.course === a.course && x.id !== a.id && x.feedback?.focus.kind === 'advanced').at(-1)?.feedback?.focus;
   const focus: Focus = pick?.focus ?? { kind: 'advanced', challenge: nextChallenge(notes, sim.rng('school.coursework', person.id, `challenge-${a.id}-${onDay}`).next(), challengesFor(t), lastHere?.kind === 'advanced' ? lastHere.challenge : undefined) };

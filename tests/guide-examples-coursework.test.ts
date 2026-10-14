@@ -75,6 +75,10 @@ const life = (seed: string): Simulation => createSave(1, seed, { ...newLifeConfi
 function student(seed: string): Simulation {
   const sim = life(seed);
   for (const item of sim.universe.scheduled) if (item.status === 'pending' && (item.requiresPlayer || item.kind.startsWith('school.'))) sim.timeline.cancel(item.id, sim.now);
+  // TEST SETUP (from 2026-10-16): the abilities a step reads at 50, where each speeds it by exactly 1 (`stepSpeed`), the
+  // examples' "your focus and memory at 50". The steps grow them a few hundredths over an example, which moves no figure said.
+  Object.assign(attributesOf(sim, sim.player), { focus: 50, imagination: 50, adaptability: 50 });
+  sim.player.craft!.memorization = 50;
   return sim;
 }
 

@@ -41,6 +41,7 @@
  */
 
 import { formatMoney } from '../../core/money';
+import { STEP_SPEED } from '../abilities';
 import { CHAPTER_BY_ID } from '../tutorial';
 import { SUMMER_CABARET, TERM_STARTS_2026_27, YALE_CABARET, YALE_DRAMA, type SchoolDate } from '../school';
 import { CONTEMPORARY_PLAYS } from '../contemporary';
@@ -101,7 +102,7 @@ const drawsOn = (side: AxisValue): string => andList([...new Set(Object.values(A
 const drawsStamina = (side: AxisValue): boolean => Object.values(APPROACH_EFFECT[side].inputs).flat().some((x) => x!.ability === 'stamina');
 const axisFact = (a: AxisValue, b: AxisValue): string => {
   const aside = [a, b].filter(drawsStamina).map((s) => APPROACH_EFFECT[s].label);
-  return `${APPROACH_EFFECT[a].label} leans on ${leansOn(a)} and draws on ${drawsOn(a)}; ${APPROACH_EFFECT[b].label} leans on ${leansOn(b)} and draws on ${drawsOn(b)}${aside.length ? `. Stamina, which ${andList(aside)} ${aside.length > 1 ? 'draw' : 'draws'} on in a scene judged whole, isn’t listed for a part: a night reads it only through its drain, however you play it` : ''}`;
+  return `${APPROACH_EFFECT[a].label} leans on ${leansOn(a)} and draws on ${drawsOn(a)}; ${APPROACH_EFFECT[b].label} leans on ${leansOn(b)} and draws on ${drawsOn(b)}${aside.length ? `. Stamina, which ${andList(aside)} ${aside.length > 1 ? 'draw' : 'draws'} on in work shown whole with no scene, isn’t listed for a part: a night reads it only through its drain, however you play it` : ''}`;
 };
 /** What each tone leans, in words (`TONE_LEAN`). */
 const TONES = Object.entries(TONE_LEAN).map(([tone, lean]) => `${tone}, ${andList(Object.keys(lean).map((d) => lower(DIMENSION_LABEL[d as Dimension])))}`).join('; ');
@@ -327,7 +328,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'A Call Kept', value: `Learns ${pct(PROCESS.call.lines)} of the lines still to learn. A blocking or technical call, and every understudy rehearsal, sets ${pct(PROCESS.call.blocking)} of the blocking still to set`, estimate: true },
-      { label: 'Learn The Part', value: `${pct(PROCESS.own.lines)} of the lines still to learn, more at a sharp hour and less at a tired one, and faster in a kind of play you know. It trains memory the first ${word(PROCESS.own.trainsAtMost)} times for each part`, estimate: true },
+      { label: 'Learn The Part', value: `${pct(PROCESS.own.lines)} of the lines still to learn, more at a sharp hour and less at a tired one, faster in a kind of play you know, and ${pct(STEP_SPEED.least)} as far at memory 0 to ${pct(STEP_SPEED.most)} at 100. It trains memory the first ${word(PROCESS.own.trainsAtMost)} times for each part`, estimate: true },
       { label: 'Catch Up The Blocking', value: `Closes one missed call’s gap and sets ${pct(PROCESS.own.blocking)} of the blocking still to set. It trains memory each time`, estimate: true },
       { label: 'Off Book', value: `Asked ${pct(PROCESS.blockingShare)} of the way through the calls: from then, lines under ${pct(PROCESS.offBook)} are the director’s note at a work-through, after any blocking call still to catch up`, estimate: true },
       { label: 'Complete For A Night', value: `What coming to every call makes of the lines and the blocking, and never under ${pct(NIGHT_LEAST.lines)} of either` },
@@ -377,7 +378,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       steps: [
         `You come to the read-through and the first two blocking calls: the lines stand at ${pct(LINES_3)}, the blocking at ${pct(BLOCK_2)}.`,
         'You miss the third blocking call, unexcused. Blocking shows 1 Missed To Catch Up.',
-        'Later that afternoon, before five and at a readiness of 80, press Catch Up The Blocking, then Learn The Part.',
+        'Later that afternoon, before five, at a readiness of 80 and your memory at 50, press Catch Up The Blocking, then Learn The Part.',
       ],
       result: `The blocking goes to ${pct(CAUGHT)} and the gap is closed; the lines go to ${pct(LEARNED)}, a new play having no kind of play you could know already. Coming to every call and no more would have the lines at ${pct(PAR.lines)} and the blocking at ${pct(PAR.blocking)} by the opening, what a night of it counts as complete.`,
     },

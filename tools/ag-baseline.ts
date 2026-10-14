@@ -35,7 +35,7 @@ import { judge, type EvalContext, type Evaluation, type Performer } from '../src
 import { judgePiece, loadOf, pieceWeights, toneSegments, type PieceSpec } from '../src/engine/systems/piece';
 import { materialContext, misfitOf, type Playing } from '../src/engine/systems/material';
 import { castingPerformer, NIGHT_DIFFICULTY } from '../src/engine/systems/school';
-import { difficultyOf } from '../src/engine/systems/coursework';
+import { difficultyOf, partnerPart as ownPartnerPart, READER, type Assignment } from '../src/engine/systems/coursework';
 import { abilityGain } from '../src/engine/systems/attributes';
 import { sharedOf } from '../src/engine/systems/ensemble';
 
@@ -86,15 +86,14 @@ function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Pie
   const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const difficulty = kind === 'scene' ? difficultyOf(templateById('scene-study')!) : kind === 'night' ? NIGHT_DIFFICULTY.school.supporting : 0;
-  const spec: PieceSpec = { segments: toneSegments(m.tones, kind === 'scene' ? 1 : 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
   return {
     kind, id: m.id, material: m,
     judge: (p, o = {}) => {
       const pr = o.prep ?? 1;
       const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(Object.keys(prep).map((k) => [k, pr])), required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: o.key ?? `ag:${kind}:${m.id}`, ...(o.key ? {} : { expected: true }) };
-      // A class scene of fewer than two tones isn't judged in segments (`scenePiece`, systems/coursework.ts): it's one
-      // evaluation, where stamina is an input of consistency and not a drain.
-      if (kind === 'scene' && m.tones.length < 2) return judge(SEED, p, ctx);
+      // Until 2026-10-16 a class scene of fewer than two tones was judged whole here, as `scenePiece` judged it; from then
+      // every scene is its tones, or two halves, as a play is.
       return judgePiece(SEED, kind === 'casting' ? castingPerformer(p) : p, ctx, spec);
     },
   };
@@ -277,8 +276,25 @@ const readers = [{ name: 'A Recording', prep: 1, timing: BRIEF.reader.recording,
 const partnered = BRIEFS.filter((b) => b.medium !== 'voice' && b.partner > 0);
 const togetherRows = readers.map((rd) => { const own: number[] = []; const tog: number[] = []; for (const b of partnered) { const e = briefScore(b, MASTER); const ctx = briefContext(nobody, b, rec(1), { reading: b.readings[0]!.id }); const s = sharedOf(e, { ...rd, level: b.partner }, SEED, `ag:${b.id}`, 1, pieceWeights(ctx.task, ctx.lean, briefPiece(b, { ...rec(1), reading: b.readings[0]!.id }))); own.push(e.overall); tog.push(s.overall); } return { reader: rd.name, own: stats(own), together: stats(tog) }; });
 // A class scene whose partner never came to rehearse: your own result with the partner part of preparation at 0.
-const partnerPart = SCENE_MATERIAL.map((m) => { const task = TASK_PROFILES.scene!; const read = materialContext(task, m); const spec: PieceSpec = { segments: toneSegments(m.tones, 1), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }; const ctx = (partner: number): EvalContext => ({ task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true }); const j = (c: EvalContext) => (m.tones.length < 2 ? judge(SEED, MASTER, c) : judgePiece(SEED, MASTER, c, spec)).overall; return { none: j(ctx(0)), half: j(ctx(0.45)) }; });
+// Every scene in its tones or two halves from 2026-10-16 (`scenePiece`); until then one of a single tone was judged whole here.
+const partnerPart = SCENE_MATERIAL.map((m) => { const task = TASK_PROFILES.scene!; const read = materialContext(task, m); const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }; const ctx = (partner: number): EvalContext => ({ task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true }); const j = (c: EvalContext) => judgePiece(SEED, MASTER, c, spec).overall; return { none: j(ctx(0)), half: j(ctx(0.45)) }; });
+// From 2026-10-16 (phase 2a): the same partner never coming, with your own side worked with a reader (`READER`,
+// `partnerPart`): the evenings a reader takes to complete the part at a day's focus of 1, your own result then, and the
+// scene together with that partner absent from every rehearsal (their preparation only what they did alone, here 0)
+// against one who came to all of them (1), at an ordinary classmate's timing and reliability.
+const readerEvenings = (() => { let r = 0, n = 0; while (r < 0.9 && n < 50) { r += READER.gain * (1 - r); n += 1; } return { n, reader: r }; })();
+const readerRoute = SCENE_MATERIAL.map((m) => {
+  const task = TASK_PROFILES.scene!; const read = materialContext(task, m);
+  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') };
+  const own = ownPartnerPart({ prep: { partner: 0 }, reader: readerEvenings.reader } as unknown as Assignment);
+  const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: own }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true };
+  const e = judgePiece(SEED, MASTER, ctx, spec);
+  const weights = pieceWeights(task, read.lean, spec);
+  const together = (prep: number) => sharedOf(e, { name: 'A Classmate', prep, timing: 0.75, agree: 1, reliability: 0.85, level: m.partner }, SEED, `ag:${m.id}`, 1, weights).overall;
+  return { own: e.overall, absent: together(0), present: together(1) };
+});
 out.mastery = {
+  classSceneMasteredPartnerNeverCameReaderRoute: { evenings: readerEvenings.n, readerPart: r3(readerEvenings.reader), n: readerRoute.length, own: stats(readerRoute.map((x) => x.own)), togetherPartnerAbsent: stats(readerRoute.map((x) => x.absent)), togetherPartnerPresent: stats(readerRoute.map((x) => x.present)) },
   briefs: { cases, at100: hundred, mastery: mastered, misses },
   ...otherMastery,
   drawnAtMasteryNot100: drawnAtMastery,

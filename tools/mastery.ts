@@ -28,7 +28,8 @@ import { practiceRefusal, practicedToday } from '../src/engine/systems/practice'
 import { lookAfterRefusal } from '../src/engine/systems/life';
 import { genreState, studyRefusal } from '../src/engine/systems/engagement';
 import { briefsOf } from '../src/engine/content/briefs';
-import { briefContext, genreKnown, prepareRefusal, recordOf, requiredOf, tapeReadsOf, tapeRefusal } from '../src/engine/systems/briefs';
+import { briefContext, briefPiece, genreKnown, prepareRefusal, recordOf, requiredOf, tapeReadsOf, tapeRefusal } from '../src/engine/systems/briefs';
+import { segmentPart, segmentRequired } from '../src/engine/systems/piece';
 import type { Person } from '../src/engine/domain/model';
 import { careFor, healthOf } from '../src/engine/systems/health';
 import { journeyOf } from '../src/engine/systems/evaluation';
@@ -146,12 +147,26 @@ function plan(genre: string) {
   const b = briefsOf(genre)[0]!;
   const reading = b.readings[0]!.id;
   const ctx = briefContext({ engagement: { byGenre: {} } } as unknown as Person, b, { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] }, { reading });
-  const abilities = [...new Set([...Object.values(ctx.task.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))), ...Object.values(ctx.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability))])];
+  // And stamina, which every taped brief reads as the drain through its beats (`judgePiece`), whatever its inputs say
+  // (from 2026-10-16). Until then it was a target only where the material listed it as an input, the body's and the
+  // voice's, which a piece took out of its inputs all the same; that day those inputs went (`FEATURE_EFFECT`), and the
+  // plans, re-run, came to 97.9 and 91.1, held by stamina's drain in the last beat, never trained.
+  const abilities = [...new Set([...Object.values(ctx.task.dims).flatMap((d) => d!.inputs.flatMap((i) => ('ability' in i ? [i.ability] : []))), ...Object.values(ctx.inputs).flatMap((xs) => (xs ?? []).map((x) => x.ability)), 'stamina' as AbilityId])];
   const techniques = (Object.keys(tapeReadsOf(b)) as Skill[]).filter((s) => TECHNIQUES.includes(s));
   const targets: Target[] = [...abilities, ...techniques];
   const tapes: { date: string; overall: number; mastery: boolean; readiness: number }[] = [];
   const req = requiredOf(b);
-  const prepared = (sim: Simulation) => { const p = recordOf(sim.player, b.id).prep; return p.interpretation >= req.interpretation! && p.memorization >= req.memorization! && p.rehearsal >= req.rehearsal!; };
+  // Each beat's rehearsal at what that beat asks (from 2026-10-16), the qualifying condition "every segment's own": a beat a
+  // turn leads into, or one held two ways, asks more than the brief's plain figure (`segmentRequired`). Until then the
+  // plan counted the brief prepared at the plain figure, and the re-run of 2026-10-16, ready sooner than the one of
+  // 2026-10-12, taped with a turning beat's rehearsal 0.71 against its 0.73, at 99.6.
+  const prepared = (sim: Simulation) => {
+    const rec = recordOf(sim.player, b.id);
+    const p = rec.prep;
+    const spec = briefPiece(b, rec, reading);
+    const beats = spec.segments.every((_, i) => segmentPart(p.rehearsal, spec.work[i] ?? 0) >= segmentRequired(spec, req.rehearsal!, i));
+    return p.interpretation >= req.interpretation! && p.memorization >= req.memorization! && p.rehearsal >= req.rehearsal! && beats;
+  };
   const known = (sim: Simulation) => genreKnown(sim.player, b) >= req.genre!;
   const tape = (sim: Simulation) => {
     if (!recordOf(sim.player, b.id).reading) sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading } });
@@ -173,7 +188,10 @@ function plan(genre: string) {
     }
     if (!prepared(sim)) {
       const rec = recordOf(sim.player, b.id);
-      const short = (s: 'read' | 'lines' | 'rehearse') => { const part = s === 'read' ? 'interpretation' : s === 'lines' ? 'memorization' : 'rehearsal'; return 1 - rec.prep[part] / (req[part] ?? 1); };
+      // Rehearsal against what its most asking beat asks (from 2026-10-16), as `prepared` reads it.
+      const spec = briefPiece(b, rec, reading);
+      const asks: Record<string, number> = { ...req, rehearsal: Math.max(...spec.segments.map((_, i) => segmentRequired(spec, req.rehearsal!, i))) };
+      const short = (s: 'read' | 'lines' | 'rehearse') => { const part = s === 'read' ? 'interpretation' : s === 'lines' ? 'memorization' : 'rehearsal'; return 1 - rec.prep[part] / (asks[part] ?? 1); };
       const s = (['read', 'lines', 'rehearse'] as const).filter((x) => short(x) > 0 && !prepareRefusal(sim, sim.player, b, x)).sort((x, y) => short(y) - short(x))[0];
       if (s) return sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok;
     }

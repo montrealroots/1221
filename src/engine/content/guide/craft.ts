@@ -60,7 +60,7 @@
  */
 
 import { CHAPTER_BY_ID } from '../tutorial';
-import { ABILITY_DEFS, DEVELOPMENT, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '../abilities';
+import { ABILITY_DEFS, DEVELOPMENT, MASTERED, STEP_SPEED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '../abilities';
 import { EXERCISES, EXERCISE_BY_ID, FOCUS, FOCUS_RATE, PRACTICE, TIER } from '../practice';
 import { ENGAGEMENT } from '../engagement';
 import { FILM_GENRES } from '../film-genres';
@@ -355,6 +355,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'On the Player Profile, in Attributes And Craft or Techniques, press the exercise named in a row’s Practice column.',
       `Choose a Tier. The one for your level is marked Your Level: ${TIER.label[0]} under ${TIER.bands[0]}, ${TIER.label[1]} under ${TIER.bands[1]}, ${TIER.label[2]} from there.`,
       'Choose a Focus; the line under it says what it does.',
+      'Read the line above the button: about how much the hour will add, to what, and why it’s that much (the tier, the focus, a tired day, a repeat, discipline), worked out as the hour itself will be.',
       'Press Practice An Hour. What the hour found shows under the button, and the toast gives the gain.',
       'Press an ability’s name for its look: what it is, what develops it, where it began, what it does, how to practice it and its latest changes.',
     ],
@@ -393,6 +394,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'What the hour found names the tier against your level (“Pitched where you are”, or that it went easily, or was a struggle), what the focus made of it, what carried over, and how far the level rose and where it stands.',
       '“Hour 2 on it today” means a repeat: another exercise would give more.',
       'Six or more sessions in a row on one exercise is said, with whether its gains are slowing as it nears full.',
+      `A technique at ${MASTERED} or more is said to be past what any work asks: from there to 100 it moves no result, before the hour and after it, and on the technique’s look.`,
       `Attributes And Craft’s subtitle counts today’s practice against ${plural(PRACTICE.dailyHours, 'hour')}.`,
       'An ability’s look gives Now, Classes Reach and Last Change, what develops it, where it began, which work reads it, and its exercise, said to be a named exercise, a composite of real practice, or SLATE’s design.',
     ],
@@ -407,6 +409,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     mistakes: [
       'The same exercise hour after hour: each repeat keeps half. Spread a day’s hours across exercises.',
+      `Practicing a technique past ${MASTERED}: no piece of work reads it further, so the hour moves no result.`,
       `${FOCUS.precision.label} on a tired day gives less than ${FOCUS.steady.label} would have. Keep it for a rested hour.`,
       `${FOCUS.spaced.label} the first time, the same day as the last, or more than a week after it gives ${pct(FOCUS_RATE.spaced.outside)}, less than ${FOCUS.steady.label}.`,
       `A tier two away from your level counts ${pct(TIER.far)}; the one marked Your Level counts in full.`,
@@ -532,6 +535,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'A Step’s Reach', value: `${pct(BRIEF.steps.read.gain)} of what’s left for the breakdown and the lines, ${pct(BRIEF.steps.rehearse.gain)} for rehearsal, at a focus of 1; a repeat the same day goes half as far as the one before`, estimate: true },
       { label: 'Your Focus', value: 'The day’s focus at the hour: a tired step goes less far' },
       { label: 'Your Way Of Working', value: `How you read around a text moves the breakdown, and how you drill lines moves the lines, each from ${pct(KNOB_LIMITS.readsAround[0])} to ${pct(KNOB_LIMITS.readsAround[1])}, by your traits and dispositions` },
+      { label: 'Your Imagination And Memory', value: `${BRIEF.steps.read.label} goes further with imagination and ${BRIEF.steps.lines.label} with memory: ${pct(STEP_SPEED.least)} as far at 0, as far as the step says at 50, ${pct(STEP_SPEED.most)} at 100`, estimate: true },
       { label: 'Material Met Before', value: `The kinds of material the brief is built on, each counted up to ${plural(EXPERIENCE.fullAt, 'time')} met or practiced: every step goes up to ${pct(ENGAGEMENT.genreSpeed)} faster once all of them are, by their mean` },
       { label: 'What Completes It', value: `The breakdown at ${pct(BRIEF.complete.interpretation)}, the lines at ${pct(BRIEF.complete.memorization)}, and rehearsal at ${pct(BRIEF.complete.rehearsal)} in a beat, ${pct(PIECE.brief.perTurn)} more in a beat a change of tone leads into and ${pct(PIECE.brief.perBlend)} more in one held two ways, ${pct(BRIEF.complete.mostRehearsal)} at most` },
       { label: 'Knowing The Genre', value: `A fourth part, from studying the genre and working in it, complete at ${pct(BRIEF.complete.genre)}` },
@@ -572,7 +576,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'coursework.workbook', kind: 'optional', why: 'Work It Through works one beat at a time: Work It Slowly raises that beat’s own rehearsal.' },
     ],
     example: {
-      setup: `${DRAMA.title}, the drama’s brief: ${plural(DRAMA.beats.length, 'beat')}, ${plural(TURNS.transitions, 'change')} of tone and ${TURNS.blends} held two ways, with lines of medium length. A rested day at a focus of 1, no trait moving a step, and none of its material met before.`,
+      setup: `${DRAMA.title}, the drama’s brief: ${plural(DRAMA.beats.length, 'beat')}, ${plural(TURNS.transitions, 'change')} of tone and ${TURNS.blends} held two ways, with lines of medium length. A rested day at a focus of 1, no trait moving a step, imagination and memory at 50, and none of its material met before.`,
       steps: [
         `Day one: ${BRIEF.steps.read.label}, ${BRIEF.steps.lines.label} and ${BRIEF.steps.rehearse.label}, once each.`,
         'Day two: the same again.',

@@ -78,7 +78,7 @@ import {
 } from '@/engine/systems/coursework';
 import { momentsOf, personOf, type Moment } from '@/engine/systems/classmates';
 import { recordNote } from '@/engine/systems/learning';
-import { abilityOf, developmentOf } from '@/engine/systems/attributes';
+import { abilityOf, developmentOf, stepSpeed } from '@/engine/systems/attributes';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -588,8 +588,12 @@ describe('school.choose', () => {
     // TEST SETUP: worn out, readiness under 40, as a night without sleep leaves one, so a step reads at the floor of its
     // focus, a half. Read The Scene's 0.55 at half: 0.275, under the 0.3 the table asks.
     Object.assign(sim.player.wellbeing, { energy: 15, stress: 85, sleepDebt: 12, nourishment: 25, morale: 25, hygiene: 40, condition: 100 });
+    const speed = stepSpeed(sim, sim.player, 'focus'); // as the step reads it, before it grows focus
     go(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' });
-    expect(a.prep.familiarity).toBeCloseTo(0.275, 12);
+    // 0.275 until 2026-10-16, when a step began to read the ability it's practice in (`stepSpeed`): Read The Scene goes
+    // further by focus, 85% at 0 to 115% at 100, this student's about 101%. Still under the 0.3 the table asks.
+    expect(a.prep.familiarity).toBeCloseTo(0.55 * 0.5 * speed, 12);
+    expect(a.prep.familiarity).toBeLessThan(0.3);
     expect(no(sim, 'school.choose', { assignmentId: a.id, question: first!.q.id, option: supported.id })).toBe('Read it first: table work is done on a text you know.');
     step(sim, a.id, 'read');
     expect(a.prep.familiarity).toBeGreaterThanOrEqual(0.3);

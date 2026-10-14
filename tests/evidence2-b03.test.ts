@@ -55,6 +55,7 @@
  * holiday files read from disk, as the app fetches them when a save opens.
  */
 import { describe, expect, it, vi } from 'vitest';
+import { attributesOf } from '@/engine/systems/attributes';
 import { readFileSync } from 'node:fs';
 import { createElement, type FunctionComponent } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -697,6 +698,9 @@ describe('knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround
     Object.assign(sim.player.wellbeing, { energy: 80, stress: 20, sleepDebt: 0, nourishment: 70, morale: 60, hygiene: 90, condition: 100 });
     sim.player.awakeSince = sim.now;
     sim.player.wokeWithDebt = 0;
+    // And the four abilities a step reads at 50, where each speeds it by exactly 1 (`stepSpeed`, from 2026-10-16): until
+    // then no step read an ability, and a twin's grew apart a hair by the day the step is taken.
+    Object.assign(attributesOf(sim, sim.player), { focus: 50, imagination: 50, adaptability: 50 }); sim.player.craft!.memorization = 50;
   };
   const TWINS = { plain: [], early: ['early_riser'], owl: ['night_owl'] } as const;
 

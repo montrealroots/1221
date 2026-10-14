@@ -51,6 +51,7 @@
  * the step and the config, which a static render can't click to.
  */
 import { describe, expect, it, vi } from 'vitest';
+import { attributesOf } from '@/engine/systems/attributes';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createSave, loadSave } from '@/engine';
@@ -405,7 +406,12 @@ describe('knob:appetite', () => {
 
 describe('knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises', () => {
   /** TEST SETUP: the same seven dials in every twin before a step, so readiness is alike and only the trait differs. */
-  const dials = (sim: Simulation) => Object.assign(sim.player.wellbeing, { energy: 80, stress: 20, sleepDebt: 0, nourishment: 70, morale: 60, hygiene: 90, condition: 100 });
+  const dials = (sim: Simulation) => {
+    Object.assign(sim.player.wellbeing, { energy: 80, stress: 20, sleepDebt: 0, nourishment: 70, morale: 60, hygiene: 90, condition: 100 });
+    // And the four abilities a step reads at 50, where each speeds it by exactly 1 (`stepSpeed`, from 2026-10-16): until
+    // then no step read an ability, and a twin's grew apart a hair by the day the step is taken.
+    Object.assign(attributesOf(sim, sim.player), { focus: 50, imagination: 50, adaptability: 50 }); sim.player.craft!.memorization = 50;
+  };
 
   /** A first step on the first scene, Read The Scene, at an hour of Saturday 5 September, its readiness set alike. */
   const readAt = (traits: string[], hour: number, minute = 0) => {

@@ -53,7 +53,7 @@ import { exerts } from './body';
 import { CABARET_KIND, CALL_KIND, SUMMER_KIND, type Craft } from './school';
 import { courseworkOf, notesOf } from './coursework';
 import { recordNote, type NoteFocus as LedgerFocus } from './learning';
-import { develop, type Target } from './attributes';
+import { develop, stepSpeed, type Target } from './attributes';
 import { genreSpeed } from './engagement';
 import { genresOfPlay } from '../content/plays';
 import { AXES, APPROACH_EFFECT } from '../content/approaches';
@@ -524,7 +524,8 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     take(s, person);
     // A play of a kind known is learned faster (`genreSpeed`, from 2026-10-09).
     const holder = holderFor(s, person, which) as { play?: string };
-    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay(holder.play)) * (1 - proc.lines));
+    // And by memory (`stepSpeed`, from 2026-10-16), as every step learning lines is.
+    proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay(holder.play)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
     // Memory, recorded on the development history from 2026-10-09 (it was grown unrecorded before, the same amount).
     if (proc.trained < PROCESS.own.trainsAtMost && person.craft) { ordinary(s, person, 'memory', focus, PROCESS.own.trainingWeight, 'learn-part'); proc.trained += 1; }
     return { lines: proc.lines };
@@ -599,7 +600,7 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
     // Working a lines or blocking note is the work itself.
     // As an hour on the part moves the lines (`school.learn_part`), by the hour's focus and the play's kind known (from
     // 2026-10-12; until then the same hour on the lines moved them by a different amount from this button).
-    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay((holderFor(s, person, which) as { play?: string } | undefined)?.play)) * (1 - proc.lines));
+    if (note.focus.kind === 'lines') proc.lines = clamp01(proc.lines + PROCESS.own.lines * Math.min(1.1, Math.max(0.5, focus)) * genreSpeed(person, genresOfPlay((holderFor(s, person, which) as { play?: string } | undefined)?.play)) * stepSpeed(s, person, 'memory') * (1 - proc.lines));
     // A blocking note given for a missed call asks the book gone back through, as Catch Up The Blocking does: worked, it
     // closes one gap (from 2026-10-12). Until then the gap stayed open, the next call counted the note taken, and the
     // next work-through gave the same note again as "Better since the last note".

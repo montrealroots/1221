@@ -76,12 +76,17 @@ export const PLAYING = { complete: 0.9, keptOnChange: 0.5, gainShare: 0.9 } as c
  * feeling actor's lead on most briefs stands: every take is built on feeling, and that's the material, not a bias.
  * The sentence above, "that actor is ahead on the briefs built on feeling and behind on those built on timing, a
  * partner or the body", was never what the catalog measured: ahead on 145 of 149 then.
+ *
+ * Until 2026-10-16 the body and the voice also asked stamina of consistency (physical 0.8 a level, vocal 0.6). Every
+ * piece judged in segments takes stamina out of its inputs and reads it as the drain, whose load the same two levels
+ * set (`loadOf`, `systems/piece.ts`); and from that day every performed piece with material is judged in segments
+ * (`scenePiece`, `systems/coursework.ts`), so nothing read them. They went, and stamina is read once, through the load.
  */
 export const FEATURE_EFFECT: Readonly<Record<Feature, { lean: Partial<Record<Dimension, number>>; inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }>> = {
   timing: { lean: { responsiveness: 0.2, execution: 0.16 }, inputs: { responsiveness: [{ ability: 'listening', weight: 1 }], execution: [{ ability: 'focus', weight: 1 }] } },
-  physical: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'physical', weight: 1.8 }], consistency: [{ ability: 'stamina', weight: 0.8 }] } },
+  physical: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'physical', weight: 1.8 }] } },
   partner: { lean: { connection: 0.2, responsiveness: 0.1 }, inputs: { connection: [{ ability: 'listening', weight: 1 }] } },
-  vocal: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'vocal', weight: 2 }], consistency: [{ ability: 'stamina', weight: 0.6 }] } },
+  vocal: { lean: { execution: 0.25 }, inputs: { execution: [{ ability: 'vocal', weight: 2 }] } },
   improvisation: { lean: { responsiveness: 0.2 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 1.2 }] } },
 };
 

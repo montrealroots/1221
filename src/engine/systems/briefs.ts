@@ -53,12 +53,12 @@ import { GENRE_DEFS } from '../content/genres';
 import { GENRE_BY_ID } from '../content/film-genres';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Skill } from '../content/school';
-import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '../content/tasks';
+import { DIMENSION_LABEL, TASK_PROFILES, type Dimension } from '../content/tasks';
 import { alreadyApplied, isAbility, markApplied, repeatsToday } from './attributes';
 import { exerts } from './body';
 import { WORK, afterTogether, prepLean, reliabilityOf, trustOf } from './coursework';
 import { sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
-import { abilityFull, abilityOf } from './attributes';
+import { abilityFull, abilityOf, stepSpeed } from './attributes';
 import { bandOfQuality, chiefLimit, countDirection, countTogether, performerOf, recordWork, type Evaluation } from './evaluation';
 import { SELF_TAPE, genreState, practiceGenres } from './engagement';
 import { FEATURE_LABEL, featureSpeed, featuresOf, noteMaterial } from './experience';
@@ -421,7 +421,10 @@ export function prepareBrief(sim: Simulation, person: Person, b: Brief, step: Br
   exerts(person, s.feet ? BRIEF.met.feet : BRIEF.met.desk, minutes / 60);
   const before = rec.prep[s.part];
   const gain = s.gain * clamp(focus, 0.5, 1.1) * 0.5 ** n;
-  rec.prep[s.part] = r3(clamp(before + gain * prepLean(person, s.part) * prepSpeed(person, b) * (1 - before), 0, 1));
+  // And by the ability the step is practice in (`stepSpeed`, from 2026-10-16): the breakdown by imagination, the lines
+  // by memory. Rehearsal trains the body or the voice, by the brief (`rehearseTrains`), and reads neither.
+  const able = s.trains ? stepSpeed(sim, person, s.trains) : 1;
+  rec.prep[s.part] = r3(clamp(before + gain * prepLean(person, s.part) * prepSpeed(person, b) * able * (1 - before), 0, 1));
   if (step === 'rehearse') {
     rehearseChoice(rec.playing, gain);
     rehearseWays(rec.book, gain);
@@ -761,5 +764,4 @@ export function registerBriefs(sim: Simulation): void {
 export const familiarityOf = (person: Person, genre: string): number => person.engagement?.byGenre[genre]?.familiarity ?? 0;
 export { genreState };
 
-/** Its sum of reads' weight, for a check: `EVALUATION` unused otherwise. */
-export const SUFFICIENT = EVALUATION.sufficientReadiness;
+// `SUFFICIENT`, readiness's sufficient figure kept here "for a check", went on 2026-10-16: nothing read it.

@@ -20,7 +20,7 @@ import { PREP_DIMS, sceneById, templateById, type PrepDim } from '@/engine/conte
 import {
   BAND_LABEL, ORIENTATION, WORK, answerRefusal, askRefusal, courseworkOf, minutesOf, orientationRefusal, prepareRefusal, preparedParts, questionsFor, readsLabel, trustOf, mateRecord,
   type Assignment,
-  activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
+  READER, activitiesOf, approachRefusal, notesOf, persistentFor, readingDiffers, revisitWords, weightsOf,
 } from '@/engine/systems/coursework';
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
@@ -122,7 +122,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
           {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}`} />)}
         </div>
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
-          {activitiesOf(a).filter((x) => x.dim !== 'partner').map((act) => {
+          {activitiesOf(a).filter((x) => x.dim !== 'partner' || x.id === READER.id).map((act) => {
             const no = prepareRefusal(sim, person, a, act.id);
             return (
               <Gated key={act.id} feature="school.prepare" className="btn btn-sm btn-ghost" disabled={Boolean(no)} title={no ?? `${minutesOf(a, act)} minutes`}
@@ -132,7 +132,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
             );
           })}
         </div>
-        <WhyNot reasons={activitiesOf(a).filter((x) => x.dim !== 'partner').map((act) => [act.label, prepareRefusal(sim, person, a, act.id)] as const)} />
+        <WhyNot reasons={activitiesOf(a).filter((x) => x.dim !== 'partner' || x.id === READER.id).map((act) => [act.label, prepareRefusal(sim, person, a, act.id)] as const)} />
         {materialOf(a.sceneId) && <MaterialDemands material={materialOf(a.sceneId)!} />}
         {!playingRefusal(a) && (
           <PlayingChooser material={materialOf(a.sceneId)} current={a.playing} feature="school.choose_playing" help="school.choose_playing"

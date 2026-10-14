@@ -65,6 +65,7 @@
  */
 
 import { CHAPTER_FOR } from '../tutorial';
+import { STEP_SPEED } from '../abilities';
 import { COURSES, SKILLS } from '../school';
 import { ENGAGEMENT } from '../engagement';
 import { QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, type PrepDim, type Template } from '../coursework';
@@ -73,7 +74,7 @@ import { titleCaseLabel } from '../../core/text';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '../approaches';
 import { PIECE } from '../piece';
 import { ADJUSTMENTS, WORKBOOK } from '../workbook';
-import { CHOOSE_MINUTES, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
+import { CHOOSE_MINUTES, READER, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
 import { APPROACH, APPROACHES, LEARNING } from '../../systems/learning';
 import { CHOICES, CLASS, PRIORITY_WORDS } from '../../systems/classmates';
 import { ENSEMBLE } from '../../systems/ensemble';
@@ -193,6 +194,8 @@ const DRILLED = [1, 2, 3].map((n) => after(APPROACH.drill.gain, n, LINES_AT));
 // A partner two weeks on: an ordinary drive, 85% reliable, two evenings kept.
 const RELIABLE = 0.85;
 const PARTNER_PART = [after(WITH_PARTNER.gain, 1), after(WITH_PARTNER.gain, 2)];
+/** Evenings with a reader to complete the partner part at a focus of 1 (`READER`, from 2026-10-16): each a share of what's left. */
+const READER_EVENINGS = ((): number => { let r = 0, n = 0; while (r < EVALUATION.complete.coursework) { r += READER.gain * (1 - r); n += 1; } return n; })();
 const TRUST_AFTER = WORK.trust.start + 2 * WORK.trust.kept;
 const PARTNER_OWN = Math.min(WORK.partnerOwnMost, WORK.partnerOwnPerWeek * 2 * RELIABLE * (0.8 + 0.4 * (TRUST_AFTER / 100)));
 const PARTNER_PREP = 1 - (1 - PARTNER_OWN) * (1 - ENSEMBLE.together * PARTNER_PART[1]!);
@@ -260,8 +263,9 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'Your Focus', value: 'Readiness against 80, at how the hour suits you, held between half and 110% for a step: the more rested you are, the further a step moves its part', estimate: true },
       { label: 'Your Nature', value: 'How far each kind of step goes for you: reading around for the table work, drilling for lines, skimming for knowing the scene, revising for a note' },
       { label: 'Kinds You Know', value: 'A play in a genre you know, or material whose features you’ve met, prepares faster, by the better of the two' },
+      { label: 'The Ability It Practices', value: `Learning lines goes further with memory, the table work with imagination, knowing the scene with focus, and a revision with adaptability: ${pct(STEP_SPEED.least)} as far at 0, as far as the step says at 50, ${pct(STEP_SPEED.most)} at 100`, estimate: true },
       { label: 'What’s Left', value: `Each step moves its part by its share of what’s left: ${READ.label} ${pct(READ.gain)}, ${LEARN.label} ${pct(LEARN.gain)}, ${ALONE.label} ${pct(ALONE.gain)}, ${REVISE.label} ${pct(REVISE.gain)}, at an ordinary focus`, estimate: true },
-      { label: 'The Showing', value: `Each part against ${pct(EVALUATION.complete.coursework)} as complete, read by each dimension it bears on, a dimension held back by the least prepared of its parts and never by Weighs; the skills it’s shown for against what the work asks of your year; your condition at the meeting; the scene’s material and the way you chose to play it. A scene whose tone changes is judged part by part, its stamina read as a drain that grows toward the end` },
+      { label: 'The Showing', value: `Each part against ${pct(EVALUATION.complete.coursework)} as complete, read by each dimension it bears on, a dimension held back by the least prepared of its parts and never by Weighs; the skills it’s shown for against what the work asks of your year; your condition at the meeting; the scene’s material and the way you chose to play it. A scene is judged part by part, in its tones or, with one, in two halves, its stamina read as a drain that grows toward the end` },
       { label: 'The Band', value: `Working from ${EVALUATION.bands.working}, Strong from ${EVALUATION.bands.strong}, Exceptional from ${EVALUATION.bands.exceptional}; under ${EVALUATION.bands.working}, Unready` },
     ],
     now: [
@@ -312,7 +316,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { to: 'craft.identity', kind: 'history', why: 'Each showing is kept on your record, where Your Work So Far reads your strengths and what keeps holding you back.' },
     ],
     example: {
-      setup: `${ACTING_III.name} sets ${SCENE_STUDY.title} on ${SEAGULL.play}, ${SEAGULL.where}: you play ${NINA}, a long scene, with ${partOf(SCENE_STUDY, 'memorization')} put first. You work at readiness 80, with an even nature, in a kind of play and material new to you.`,
+      setup: `${ACTING_III.name} sets ${SCENE_STUDY.title} on ${SEAGULL.play}, ${SEAGULL.where}: you play ${NINA}, a long scene, with ${partOf(SCENE_STUDY, 'memorization')} put first. You work at readiness 80, with an even nature, your focus and memory at 50, in a kind of play and material new to you.`,
       steps: [`${READ.label} twice, ${READ.minutes} minutes each.`, `${LEARN.label} three times, ${LONG_LINES} minutes each.`, `${ALONE.label} twice, ${ALONE.minutes} minutes each.`],
       result: `${span(PREP_MINUTES)} in all. ${partOf(SCENE_STUDY, 'familiarity')} reads ${pct(PREP_READ)}, ${partOf(SCENE_STUDY, 'memorization')} ${pct(PREP_LINES)} and ${partOf(SCENE_STUDY, 'rehearsal')} ${pct(PREP_ALONE)}. Put first, the Weighs under ${partOf(SCENE_STUDY, 'memorization')} reads ${pct(LINES_FIRST.memorization ?? 0)} in place of its own ${pct(SCENE_STUDY.dims.memorization?.weight ?? 0)}, and the dimensions of the result that read the lines lean ${LEARNING.objectiveWeight} times as far before the weights are evened out. The three of ${LEARN.label} were the piece’s ${word(WORK.trainingSteps)} steps that train a skill, so a fourth moves the lines and practices your ${MEMORY}, the skill they train, with none of the training on top: it grows by the practice alone.`,
     },
@@ -418,7 +422,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Rehearsed In', value: `Read as a part of the preparation by each dimension the choice leans on by a tenth or more, complete at ${pct(PLAYING.complete)}`, estimate: true },
-      { label: 'What Each Side Draws On', value: `${(Object.keys(APPROACH_EFFECT) as (keyof typeof APPROACH_EFFECT)[]).map((s) => `${APPROACH_EFFECT[s].label}, ${drawsOn(s)}`).join('; ')}${STAMINA_SIDES.length ? `. ${andList(STAMINA_SIDES)} ${STAMINA_SIDES.length > 1 ? 'draw' : 'draws'} on stamina too, in a scene judged whole; a scene whose tone changes is judged part by part, reads stamina only as tiring toward the end however it’s played, and its table leaves stamina out` : ''}` },
+      { label: 'What Each Side Draws On', value: `${(Object.keys(APPROACH_EFFECT) as (keyof typeof APPROACH_EFFECT)[]).map((s) => `${APPROACH_EFFECT[s].label}, ${drawsOn(s)}`).join('; ')}${STAMINA_SIDES.length ? `. ${andList(STAMINA_SIDES)} ${STAMINA_SIDES.length > 1 ? 'draw' : 'draws'} on stamina too, in work shown whole, with no scene; a scene is judged part by part, reads stamina only as tiring toward the end however it’s played, and its table leaves stamina out` : ''}` },
       { label: 'Lean', value: 'Each side moves weight between the showing’s dimensions and never adds any: a choice changes what counts most, never the total', estimate: true },
       { label: 'Fit', value: `A side the scene doesn’t take holds the dimensions it leans on to ${pct(MISFIT)} of themselves, and says so before you choose`, estimate: true },
     ],
@@ -596,7 +600,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { to: 'school.standing', kind: 'evaluation', why: `${APPROACHES.smaller.label} caps the band at Working, and the term’s evaluation counts a Working piece as neither unready nor strong.` },
     ],
     example: {
-      setup: `${partOf(SCENE_STUDY, 'memorization')} named ${word(LEARNING.persistent)} times and still open, on a piece of ${SCENE_STUDY.title} with the lines at ${pct(LINES_AT)}, at readiness 80 and an even nature, in material new to you.`,
+      setup: `${partOf(SCENE_STUDY, 'memorization')} named ${word(LEARNING.persistent)} times and still open, on a piece of ${SCENE_STUDY.title} with the lines at ${pct(LINES_AT)}, at readiness 80, an even nature and memory at 50, in material new to you.`,
       steps: [`Choose ${APPROACHES.drill.label}.`, 'Do it once a day for three days.'],
       result: `The lines go to ${DRILLED.map(pct).join(', then ')}: past ${pct(LEARNING.enough)}, so a showing then takes the note. With ${APPROACHES.smaller.label} instead, the ${pct(LINES_AT)} would read as ${pct(Math.min(1, LINES_AT / APPROACH.smaller))}, and the band could be no better than Working.`,
     },
@@ -606,8 +610,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     title: 'Rehearsing With A Partner',
     goal: 'coursework',
     covers: ['school.ask_partner', 'school.answer_partner', 'school.cancel_rehearsal', 'look.classmate'],
-    synonyms: ['scene partner', 'ask to rehearse', 'book a rehearsal', 'call it off', 'partner asks to rehearse', 'partner’s trust', 'partner reliability', 'stood up', 'the scene together', 'partner didn’t come'],
-    questions: ['How do I rehearse with my partner?', 'Why did my partner say no?', 'What happens if I miss a rehearsal?', 'What happens if my partner doesn’t come?', 'Does my partner’s work lower my band?', 'How do I call a rehearsal off?'],
+    synonyms: ['scene partner', 'ask to rehearse', 'book a rehearsal', 'call it off', 'partner asks to rehearse', 'partner’s trust', 'partner reliability', 'stood up', 'the scene together', 'partner didn’t come', 'run it with a reader', 'a reader', 'rehearse without my partner'],
+    questions: ['How do I rehearse with my partner?', 'Why did my partner say no?', 'What happens if I miss a rehearsal?', 'What happens if my partner doesn’t come?', 'Does my partner’s work lower my band?', 'How do I call a rehearsal off?', 'What if my partner won’t rehearse with me?'],
     where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, Rehearsing With Your Partner' },
     available: `${OPENED}, on paired work, once you’ve met your partner at orientation or in class.`,
     short: `Paired work comes with a partner from the class, and the part of it you do together is a rehearsal agreed with them: ${WORK.rehearsal.minutes} minutes between ${clock(WORK.rehearsal.from)} and ${clock(WORK.rehearsal.until)}, asked at least ${WORK.rehearsal.aheadHours} hours ahead and before it’s due. They answer by their own day and how far they trust you, come or don’t by their reliability, and may ask you too. Your band reads your own work alone. Beside it, the scene together blends in what your partner brings: their preparation, their timing, whether your readings agree, and any slip on the day.`,
@@ -617,6 +621,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `When they ask (a notice, “… Asks To Rehearse”), press Say Yes or Say No by the time it gives, ${WORK.rehearsal.aheadHours} hours ahead.`,
       'Be in New Haven and awake when it comes: it’s a commitment, and the clock stops at it.',
       'To call one off, press Call It Off beside it. Under a day ahead is short notice.',
+      `Without them, press ${READER.label} among the piece’s steps: an evening with a reader feeding your partner’s lines, once a day.`,
     ],
     needs: [
       'Paired work, open, and the partner met: at orientation’s Meeting Your Class, or your first class.',
@@ -634,6 +639,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'Their Reliability', value: `Drawn once, ${pct(WORK.reliability.from)} to ${pct(WORK.reliability.to)}, higher for the more driven: how often they come when they’ve said yes`, estimate: true },
       { label: 'Their Preparation', value: `What they do alone, about ${pct(WORK.partnerOwnPerWeek)} a week since the work was set, by their drive, their reliability and their trust in you, up to ${pct(WORK.partnerOwnMost)}; and each rehearsal together brings them up with you`, estimate: true },
       { label: 'The Scene Together', value: `Your result with their contribution blended into the dimensions a partner shares, by how much the scene is played off them: connection and responsiveness up to ${pct(ENSEMBLE.share.connection ?? 0)}, belief ${pct(ENSEMBLE.share.believability ?? 0)}, holding it together ${pct(ENSEMBLE.share.consistency ?? 0)}`, estimate: true },
+      { label: 'A Reader', value: `${READER.label}, ${READER.minutes} minutes once a day, raises your own partner part ${pct(READER.gain)} of what’s left at an ordinary focus, against ${pct(WITH_PARTNER.gain)} with your partner, and complete after ${word(READER_EVENINGS)} evenings at a focus of 1. It practices listening, and rehearses in the way you chose to play the scene, but brings your partner up not at all, and moves neither their trust nor the bond`, estimate: true },
       { label: 'A Slip', value: `A chance on the day of ${pct(ENSEMBLE.slipRate)} of their unreliability (about one scene in ${word(Math.round(1 / ((1 - WORK.reliability.from) * ENSEMBLE.slipRate)))} for the least reliable), in one part of the scene; your listening and adaptability cover some of it`, estimate: true },
     ],
     now: [
@@ -644,7 +650,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     later: [
       `Kept: your partner part rises ${pct(WITH_PARTNER.gain)} of what’s left at an ordinary focus, the way you chose to play the scene, where you chose one, is rehearsed in by ${pct(PLAYING.gainShare)} of that share, the evening is practice in listening, trust rises ${WORK.trust.kept} and the bond ${WORK.bond.kept}, and they say what held the scene back most.`,
       `Not there yourself, away or asleep: they waited for you; their trust falls ${-WORK.trust.missed}, the bond ${-WORK.bond.missed}, and it waits to be made right.`,
-      'They don’t come: you lose the evening, and they may apologize in class.',
+      `They don’t come: you lose the evening, and they may apologize in class. ${READER.label} works your side of it without them.`,
       'In hospital, laid up or on a day you’ve called in sick, it’s excused; for partner work in a studio, an injury that stops you training excuses it too. They know you’re ill, and don’t hold it against you.',
       `In class, on a day with nothing booked between you, they may ask (${pct(WORK.ask.chance)} of such days) for ${clock(WORK.ask.hour)} on one of the next ${word(WORK.ask.withinDays)} evenings they’re free. Left unanswered, it lapses, and their trust falls ${-WORK.ask.unanswered}.`,
       `At the showing, a scene together at Strong or better brings you ${TOGETHER_BOND} closer, and a slip of theirs you covered earns ${TOGETHER_COVERED} of their trust.`,
@@ -669,7 +675,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     mistakes: [
       'Booking an evening and sleeping through it: it costs as much trust as missing the showing itself, more than anything else here. Set it for a time you’ll be up, or call it off a day ahead.',
       'Leaving their ask unanswered: it lapses and costs a little trust, where a no costs none.',
-      'Expecting your partner to cost you your band: it reads your own work. What they bring shows in the scene together.',
+      `Expecting your partner to cost you your band: it reads your own work, and your own partner part is yours to finish, with them or with ${READER.label}. What they bring shows in the scene together.`,
+      `Rehearsing only with a reader when your partner would come: the part rises less an evening, and the scene together still reads a partner who prepared alone.`,
       `A partner whose trust has fallen under ${WORK.trust.wary} turns every ask down: make amends, and keep what you do agree.`,
     ],
     related: ['coursework.class', 'coursework.prepare', 'coursework.feedback', 'school.orientation', 'craft.identity'],

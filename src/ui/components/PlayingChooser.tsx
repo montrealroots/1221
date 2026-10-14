@@ -62,7 +62,8 @@ export function PlayingChooser({ material, current, direction, preview, feature,
   const open = whole.overall;
   // A piece judged in its movements, a brief's beats or a scene's parts reads stamina only as tiring late in it
   // (`judgePiece`), so it isn't listed as what a side draws on there (from 2026-10-12: until then Driven listed Stamina
-  // for a part, which a night never read through the side). A scene judged whole still lists and reads it.
+  // for a part, which a night never read through the side). Work judged whole, with no scene, still lists and reads it; a
+  // scene of one tone was judged whole too until 2026-10-16 (`scenePiece`).
   const movements = whole.piece !== undefined;
   const now = preview(draft);
   const changed = current ? !same(draft, current) : sidesOf({ ...draft, chosenAt: 0, prep: 0 }).length > 0;

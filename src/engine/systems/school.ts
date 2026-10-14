@@ -88,7 +88,7 @@ import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAY
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, owe, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
-import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
+import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
 import { EXTENDED_STUDY, YALE_COST_GROWTH, needFor } from '../content/school';
 import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
@@ -988,6 +988,12 @@ export function growMateAbility(sim: Simulation, person: Person, i: number, id: 
 /** What a class gives an ability it reaches through its skills, as a share of a session's weight: SLATE's estimate. */
 export const CLASS_ABILITY_SHARE = 0.5;
 
+/**
+ * A classmate's craft grown by a session (from 2026-10-16, a classmate's only): toward the ceiling, never past it. The
+ * player's grows through `ordinary` and `develop` (`grewFrom`), which halve the same growth again the same day and read
+ * discipline; until 2026-10-16 a class, a night, a call, a lab and coursework's training grew the player through this,
+ * which did neither (attributes-matrix.md, "duplicate mechanic").
+ */
 export function grow(craft: Craft, skill: Skill, focus: number, weight = 1): void {
   // The gain falls to nothing at the ceiling, so a session never passes it.
   craft[skill] += sessionGain(craft[skill], focus, weight, ceilingOf(craft, skill));
@@ -998,12 +1004,13 @@ export function grow(craft: Craft, skill: Skill, focus: number, weight = 1): voi
  * development history under its source (from 2026-10-10): until then only a class meeting was kept, and an ability
  * grown by a run of rehearsals said on its look that nothing had moved it.
  */
-export function grewFrom(sim: Simulation, person: Person, source: string, growth: (craft: Craft) => void): void {
-  const craft = person.craft;
-  if (!craft) return;
-  const before = { ...craft };
-  growth(craft);
-  for (const k of SKILL_IDS) recordDevelopment(sim, person, targetId(k), craft[k] - before[k], source);
+export function grewFrom(sim: Simulation, person: Person, source: string, focus: number, weights: readonly (readonly [Skill, number])[]): void {
+  if (!person.craft) return;
+  // Each skill once, its weights summed (from 2026-10-16): a night that asks the scene twice, as every night and a play
+  // that reads it do, grows it once by both, not once and then again at the repeat's half (`grown`).
+  const by = new Map<Skill, number>();
+  for (const [k, w] of weights) by.set(k, (by.get(k) ?? 0) + w);
+  for (const [k, w] of by) ordinary(sim, person, k, focus, w, source);
 }
 
 /** Names classmates are given: common American given names and surnames, not real students'. An actress's from the first list, an actor's from the second. */
@@ -2152,20 +2159,20 @@ export function playReads(play: { title?: string; reads: Partial<Craft>; kinds?:
  * the same three.
  */
 export function playNight(craft: Craft, reads: Partial<Craft>, focus: number, scale = 1): void {
-  grow(craft, 'scene', focus, 2 * scale);
-  grow(craft, 'emotion', focus, scale);
-  grow(craft, 'voice', focus, scale);
+  for (const [k, w] of nightWeights(reads, scale)) grow(craft, k, focus, w);
+}
+
+/** What a night grows and by how much (`playNight` for a classmate, `grewFrom` for the player), in order. */
+export function nightWeights(reads: Partial<Craft>, scale = 1): (readonly [Skill, number])[] {
   const r = Object.entries(reads) as [Skill, number][];
   const total = r.reduce((sum, [, w]) => sum + w, 0);
-  for (const [k, w] of r) grow(craft, k, focus, (4 * scale * w) / total);
+  return [['scene', 2 * scale], ['emotion', scale], ['voice', scale], ...r.map(([k, w]) => [k, (4 * scale * w) / total] as const)];
 }
 
 /** A rehearsal's growth: the scene, the character, the script and the lines. */
+export const REHEARSAL_WEIGHTS: readonly (readonly [Skill, number])[] = [['scene', 1.5], ['character', 1.5], ['script', 1], ['memorization', 1]];
 export function rehearse(craft: Craft, focus: number): void {
-  grow(craft, 'scene', focus, 1.5);
-  grow(craft, 'character', focus, 1.5);
-  grow(craft, 'script', focus);
-  grow(craft, 'memorization', focus);
+  for (const [k, w] of REHEARSAL_WEIGHTS) grow(craft, k, focus, w);
 }
 
 /**
@@ -3105,12 +3112,9 @@ export function registerSchool(sim: Simulation): void {
       const focus = focusAt(s, person, item.at);
       const weights = meet(true, false);
       courses.forEach((course, i) => {
-        for (const skill of course.skills) {
-          const before = person.craft![skill];
-          grow(person.craft!, skill, focus, weights[i]);
-          // Kept on the development history, by the class (from 2026-10-09).
-          recordDevelopment(s, person, targetId(skill), person.craft![skill] - before, `class:${course.code}`);
-        }
+        // Kept on the development history, by the class (from 2026-10-09); through `ordinary` from 2026-10-16, so a class
+        // reads discipline and halves the same growth again the same day as every other growth does.
+        for (const skill of course.skills) ordinary(s, person, skill, focus, weights[i]!, `class:${course.code}`);
         for (const ability of classAbilities(course.skills)) ordinary(s, person, ability, focus, weights[i]! * CLASS_ABILITY_SHARE, `class:${course.code}`);
       });
       // The class, met in the room if not before.
@@ -3395,7 +3399,7 @@ export function registerSchool(sim: Simulation): void {
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10: until then the night was judged after its
       // own growth).
       const night = reckonNight(s, person, casting, item, true);
-      grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at) * nightFactor(casting), 0.75));
+      grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting), 0.75));
       tire(person, ESTIMATE.energy.performance);
       // A play of a kind they love is a better night, as a rehearsal of it is (from 2026-10-13: until then a School or
       // Rep night, its run-through and a night on call read no genre, while the creation screen and the guide said a
@@ -3413,7 +3417,7 @@ export function registerSchool(sim: Simulation): void {
         casting.performed += 1;
         // Sent on: nerves (`attributes.ts`).
         nerves(s, person, 'performance');
-        grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at), 0.75));
+        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at), nightWeights(castingReads(casting), 0.75));
         tire(person, ESTIMATE.energy.performance);
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
@@ -3438,14 +3442,14 @@ export function registerSchool(sim: Simulation): void {
         // The rehearsal process behind it: lines, blocking and notes taken (`nightFactor`, 1 for an actor who came to every call).
         // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
         reckonNight(s, person, casting, item, item.payload.which === 'rep');
-        grewFrom(s, person, `night:${casting.production}`, (c) => playNight(c, castingReads(casting), focusAt(s, person, item.at) * nightFactor(casting)));
+        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));
         tire(person, ESTIMATE.energy.performance);
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
         const stage = (item.payload.stage as Stage | undefined) ?? 'work';
         const weight = callAnswered(s, person, casting, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(casting), item.payload.which === 'rep' ? 'rep' : 'school');
-        grewFrom(s, person, `rehearsal:${casting.production}`, (c) => rehearse(c, focusAt(s, person, item.at) * weight));
+        grewFrom(s, person, `rehearsal:${casting.production}`, focusAt(s, person, item.at) * weight, REHEARSAL_WEIGHTS);
         // The dress, played through as a night would be, with no house: its reading kept, nothing counted as a performance.
         if (stage === 'dress') {
           const dress = nightOf(s, person, `${casting.production}-dress-${item.at}`, casting, item.at, casting.size ?? 'lead', item.payload.which === 'rep' ? 'rep' : 'school');
@@ -3586,12 +3590,12 @@ export function registerSchool(sim: Simulation): void {
       nerves(sim, person, 'performance');
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
       reckonNight(sim, person, run, item, false);
-      grewFrom(sim, person, 'night:cabaret', (c) => playNight(c, castingReads(run), focusAt(sim, person, item.at) * nightFactor(cab)));
+      grewFrom(sim, person, 'night:cabaret', focusAt(sim, person, item.at) * nightFactor(cab), nightWeights(castingReads(run)));
       tire(person, ESTIMATE.energy.performance);
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
       const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run), 'cabaret') : 1;
-      grewFrom(sim, person, 'rehearsal:cabaret', (c) => rehearse(c, focusAt(sim, person, item.at) * weight));
+      grewFrom(sim, person, 'rehearsal:cabaret', focusAt(sim, person, item.at) * weight, REHEARSAL_WEIGHTS);
       if (stage === 'techdress') processOf(cab).dress = nightOf(sim, person, `${cabaretSeason(cab.term)}-dress-${item.at}`, run, item.at, run.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { novel: true, rehearsal: true });
@@ -3706,13 +3710,13 @@ export function registerSchool(sim: Simulation): void {
       nerves(s, person, 'performance');
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
       reckonNight(s, person, show, item, false);
-      grewFrom(s, person, 'night:summer', (c) => playNight(c, castingReads(show), focusAt(s, person, item.at) * nightFactor(show)));
+      grewFrom(s, person, 'night:summer', focusAt(s, person, item.at) * nightFactor(show), nightWeights(castingReads(show)));
       tire(person, ESTIMATE.energy.performance);
       enjoyWork(person, { genres: genresOfPlay(show.play) });
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
       const weight = stage ? callAnswered(s, person, show, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(show), 'summer') : 1;
-      grewFrom(s, person, 'rehearsal:summer', (c) => rehearse(c, focusAt(s, person, item.at) * weight));
+      grewFrom(s, person, 'rehearsal:summer', focusAt(s, person, item.at) * weight, REHEARSAL_WEIGHTS);
       if (stage === 'dress') processOf(show).dress = nightOf(s, person, `${show.production}-dress-${item.at}`, show, item.at, show.size ?? 'supporting', 'school');
       tire(person, ESTIMATE.energy.rehearsal);
       enjoyWork(person, { rehearsal: true, genres: genresOfPlay(show.play) });
@@ -3749,17 +3753,12 @@ export function registerSchool(sim: Simulation): void {
       if (band === 'off') w.morale = Math.max(0, w.morale - ESTIMATE.nights.sting);
       else if (band !== 'solid') w.morale = Math.min(100, w.morale + ESTIMATE.nights.lift);
       if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Your Solo Showing: ${NIGHT_WORD_TITLE[band]}`, body: `${LABS.creator.name}, shown to the class: ${Math.round(solo.overall)} of 100.`, importance: 60, route: '/workspace/school' });
-      grewFrom(sim, person, 'lab:showing', (c) => grow(c, 'scene', focusAt(sim, person, item.at), 3));
+      grewFrom(sim, person, 'lab:showing', focusAt(sim, person, item.at), [['scene', 3]]);
       tire(person, ESTIMATE.energy.performance);
       // A showing lifted somebody who loved theater (`enjoyWork`'s medium) until the interests went on 2026-10-10.
       return;
     }
-    grewFrom(sim, person, 'lab', (c) => {
-      grow(c, 'scene', focusAt(sim, person, item.at));
-      grow(c, 'character', focusAt(sim, person, item.at));
-      grow(c, 'script', focusAt(sim, person, item.at));
-      grow(c, 'memorization', focusAt(sim, person, item.at));
-    });
+    grewFrom(sim, person, 'lab', focusAt(sim, person, item.at), [['scene', 1], ['character', 1], ['script', 1], ['memorization', 1]]);
     tire(person, ESTIMATE.energy.rehearsal);
     enjoyWork(person, { rehearsal: true });
   });
