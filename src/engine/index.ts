@@ -45,6 +45,9 @@ import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
 import { nextChapter, registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
+import { homeBankOf, openHomeAccounts, splitOf } from './systems/homeaccount';
+import { bankById } from './content/banks';
+import { countryOfIso } from './content/bankdays';
 import { registerBankMoves } from './systems/bankmoves';
 import { registerTaxId } from './systems/taxid';
 import { registerLending } from './systems/lending';
@@ -180,8 +183,12 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // At a real bank where they live (`systems/banking.ts`). A country the
   // tables have no bank for keeps a plain current account and savings.
   const bank = startingBank(config.startLocationId, config.bankId, player.citizenshipId === 'us');
+  // An account kept from where they lived before (from 2026-10-16, `systems/homeaccount.ts`), where the rule offers it,
+  // and the money split as the screen said: savings kept there, or moved here as every life's opened before.
+  const home = bank ? homeBankOf(config) : undefined;
+  const split = splitOf(wealth, saveCurrency(sim.universe), home, config.savingsAtHome);
   if (bank) {
-    openAt(sim, player, bank, { checking: wealth.checking, savings: wealth.savings });
+    openAt(sim, player, bank, { checking: split.checking, savings: split.savings });
   } else {
     const checking = sim.openAccount({
       id: sim.nextId('account'), kind: 'checking', name: 'Current Account', ownerId: player.id,
@@ -225,6 +232,9 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
       });
     }
   }
+
+  // After the American bank's accounts and its card, so their ids and numbers are those of a life with none kept.
+  if (home) openHomeAccounts(sim, player, config, home, split);
 
   armWorldClock(sim);
   // A home was moved into here, its deposit held and its rent due on the first, until the home went on 2026-10-09.
@@ -1085,17 +1095,27 @@ export interface ValidationReport {
  * outside the bundled set (Pittsburgh, Annapolis) was refused as being in
  * an unknown location. Since 2026-09-28 it brings the same countries'
  * holidays, which a bank there keeps as business days (`content/bankdays.ts`).
+ * Since 2026-10-16 it brings the place a person lived before too, and the
+ * holidays of every country an account's bank is in: an account kept at home
+ * keeps its bank's days, not New Haven's.
  */
 export async function loadPlacesFor(universe: SaveUniverse, load: (countryId: string) => Promise<number> = loadCountryCities, holidays: (countryId: string) => Promise<number> = loadCountryHolidays): Promise<void> {
   const ids = new Set<string>();
   const countries = new Set<string>();
   for (const person of Object.values(universe.people ?? {})) {
-    for (const cityId of [person.currentLocationId, person.homeRegionId]) {
+    // And where they lived before (from 2026-10-16): a bank kept there keeps that region's holidays.
+    for (const cityId of [person.currentLocationId, person.homeRegionId, person.priorResidence?.cityId]) {
       const countryId = cityId?.split('-')[0];
       if (countryId && !isHolidaysLoaded(countryId)) countries.add(countryId);
       if (!cityId || CITIES.get(cityId)) continue;
       if (countryId && !isCountryLoaded(countryId)) ids.add(countryId);
     }
+  }
+  // Every bank an account is held at keeps its own country's days, wherever its holder lives (from 2026-10-16).
+  for (const account of Object.values(universe.accounts ?? {})) {
+    const bank = account.bankId ? bankById(account.bankId) : undefined;
+    const countryId = bank ? countryOfIso(bank.iso) : undefined;
+    if (countryId && !isHolidaysLoaded(countryId)) countries.add(countryId);
   }
   await Promise.all([...[...ids].map((id) => load(id).catch(() => 0)), ...[...countries].map((id) => holidays(id).catch(() => 0))]);
 }

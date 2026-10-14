@@ -16,11 +16,18 @@ import { usBankHoliday } from './usholidays';
 import { CITIES } from './geography';
 import { bankById } from './banks';
 
-/** Whose days an account keeps: its bank's country, and the region its holder lives in. */
-export function daysOfAccount(account: { bankId?: string }, holder?: { home?: { cityId: string }; homeRegionId?: string; currentLocationId?: string }): { countryId: string; regionId?: string } {
+/**
+ * Whose days an account keeps: its bank's country, and the region its holder lives in; or, for an account kept at a
+ * bank in the country they lived in before (from 2026-10-16), the region they lived in there, since a bank in England
+ * keeps England's summer bank holiday and not Connecticut's region.
+ */
+export function daysOfAccount(account: { bankId?: string }, holder?: { home?: { cityId: string }; homeRegionId?: string; currentLocationId?: string; priorResidence?: { cityId: string } }): { countryId: string; regionId?: string } {
   const bank = account.bankId ? bankById(account.bankId) : undefined;
-  const city = holder ? CITIES.get(holder.currentLocationId ?? holder.homeRegionId ?? '') : undefined;
-  return { countryId: bank ? countryOfIso(bank.iso) : '', ...(city ? { regionId: city.parentId } : {}) };
+  const countryId = bank ? countryOfIso(bank.iso) : '';
+  const here = holder ? CITIES.get(holder.currentLocationId ?? holder.homeRegionId ?? '') : undefined;
+  const before = holder?.priorResidence ? CITIES.get(holder.priorResidence.cityId) : undefined;
+  const city = before && before.countryId === countryId && here?.countryId !== countryId ? before : here;
+  return { countryId, ...(city ? { regionId: city.parentId } : {}) };
 }
 
 /** A bank's ISO country as SLATE's country id: Britain is `uk`, the rest their code. */

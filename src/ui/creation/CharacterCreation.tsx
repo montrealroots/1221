@@ -25,6 +25,8 @@ import { foodAt } from '@/engine/systems/spending';
 import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
+import { banksIn } from '@/engine/content/banks';
+import { homeAccountRefusal, homeBankOf, isoOfPlace, splitOf, whatFollows, type Split } from '@/engine/systems/homeaccount';
 import { OPENING } from '@/engine/content/bankopening';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -883,7 +885,7 @@ function FamilyChoice({ config, setConfig }: { config: NewSaveConfig; setConfig:
  * Starting Point — where you are standing on day one, and what is in your
  * name.
  */
-function StartingPointStep({ config, set, setConfig }: {
+export function StartingPointStep({ config, set, setConfig }: {
   config: NewSaveConfig;
   set: Setter;
   setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>;
@@ -895,6 +897,10 @@ function StartingPointStep({ config, set, setConfig }: {
   const country = city ? COUNTRIES.get(city.countryId) : undefined;
   const currencyOfCountry = country?.currency.toUpperCase() ?? cur;
   const countryCurrencyName = country ? `the ${country.currencyName.toLowerCase()}` : "the local money";
+  // The money as it opens: with savings kept at a bank at home, split as `populateWorld` splits it (from 2026-10-16).
+  const home = homeBankOf(config);
+  const split = splitOf(wealth, cur, home, config.savingsAtHome);
+  const money = (cents: number) => formatMoney(cents, cur, { cents: cents % 100 !== 0 });
 
   return (
     <div className="col gap-5">
@@ -1002,12 +1008,19 @@ function StartingPointStep({ config, set, setConfig }: {
         <div className="grid grid-3" style={{ marginTop: 'var(--s4)' }}>
           <div className="stat">
             <span className="stat-label">Checking</span>
-            <span className="stat-value mono">{formatMoney(wealth.checking, cur, { cents: false })}</span>
+            <span className="stat-value mono">{money(split.checking)}</span>
           </div>
           <div className="stat">
             <span className="stat-label">Savings</span>
-            <span className="stat-value mono">{formatMoney(wealth.savings, cur, { cents: false })}</span>
+            <span className="stat-value mono">{money(split.savings)}</span>
           </div>
+          {home && split.homeSavings > 0 && (
+            <div className="stat">
+              <span className="stat-label">Savings At {home.name}</span>
+              <span className="stat-value mono">{formatMoney(split.homeSavingsHeld, home.currency)}</span>
+              <span className="stat-note">{money(split.homeSavings)} at SLATE’s rate</span>
+            </div>
+          )}
           <div className="stat">
             <span className="stat-label">Credit Record</span>
             <span className="stat-value mono">{scoreIsANumberIn(config.startLocationId) ? wealth.creditScore : scoreWord(wealth.creditScore)}</span>
@@ -1031,6 +1044,124 @@ function StartingPointStep({ config, set, setConfig }: {
           </div>
         )}
       </div>
+      {config.school && <BeforeYale config={config} setConfig={setConfig} split={split} />}
+    </div>
+  );
+}
+
+/**
+ * Before Yale (from 2026-10-16): where they lived just before, and an account they kept there. The place of birth is
+ * Identity's and grants nothing here; "I Lived Where I Was Born" is the player saying so, never SLATE inferring it. Each
+ * bank there is offered or refused by the rule `populateWorld` opens by (`homeAccountRefusal`), with what follows.
+ */
+export function BeforeYale({ config, setConfig, split }: { config: NewSaveConfig; setConfig: React.Dispatch<React.SetStateAction<NewSaveConfig>>; split: Split }) {
+  const prior = config.priorResidence;
+  const place = prior ? CITIES.get(prior.cityId) : undefined;
+  const iso = prior ? isoOfPlace(prior.cityId) : undefined;
+  // Living in America before: the rule's second step, said before any bank is.
+  const inAmerica = prior !== undefined && iso !== undefined && iso === isoOfPlace(config.startLocationId);
+  const here = homeAccountRefusal(config, undefined);
+  const banks = iso ? banksIn(iso) : [];
+  const offered = banks.filter((b) => homeAccountRefusal(config, b.id) === undefined);
+  const refused = banks.filter((b) => !offered.includes(b));
+  const home = homeBankOf(config);
+  const usBank = startingBank(config.startLocationId, config.bankId, CITIES.get(config.homeRegionId ?? '')?.countryId === 'us');
+  const live = (cityId: string, fromYear: number, fromMonth: number) => setConfig((c) => ({ ...c, priorResidence: { cityId, fromYear, fromMonth }, homeBankId: undefined }));
+
+  return (
+    <div className="card">
+      <div className="panel-head">
+        <div>
+          <h2>Before Yale</h2>
+          <p className="muted small">
+            Where you lived just before Yale, if it was outside America, and an account you kept there. A bank keeps the account of a customer who lived and banked in its country; where you were born grants nothing here.
+          </p>
+        </div>
+      </div>
+      <label className="check" htmlFor="lived-born">
+        <input
+          id="lived-born"
+          type="checkbox"
+          checked={prior !== undefined && prior.cityId === config.homeRegionId}
+          onChange={(e) => (e.target.checked
+            ? live(config.homeRegionId, config.birthYear, config.birthMonth)
+            : setConfig((c) => ({ ...c, priorResidence: undefined, homeBankId: undefined })))}
+        />
+        <span>I Lived Where I Was Born</span>
+      </label>
+      <fieldset className="field" style={{ marginTop: 'var(--s3)' }}>
+        <legend>Where You Lived</legend>
+        <LocationPicker idPrefix="before" cityId={prior?.cityId ?? ''} map={false} onPick={(picked) => live(picked.id, prior?.fromYear ?? config.birthYear, prior?.fromMonth ?? config.birthMonth)} />
+      </fieldset>
+      {prior && (
+        <>
+          <div className="row gap-3" style={{ marginTop: 'var(--s3)', alignItems: 'flex-end' }}>
+            <div className="field">
+              <label htmlFor="before-month">Since</label>
+              <select id="before-month" value={prior.fromMonth} onChange={(e) => live(prior.cityId, prior.fromYear, Number(e.target.value))}>
+                {MONTHS.map((m, i) => <option key={m} value={i + 1}>{m}</option>)}
+              </select>
+            </div>
+            <div className="field">
+              <label htmlFor="before-year">Year</label>
+              <input id="before-year" type="number" value={prior.fromYear} min={config.birthYear} max={config.startYear} onChange={(e) => live(prior.cityId, Number(e.target.value), prior.fromMonth)} />
+            </div>
+            <button className="btn btn-ghost btn-sm" onClick={() => setConfig((c) => ({ ...c, priorResidence: undefined, homeBankId: undefined }))}>Clear</button>
+          </div>
+          <p className="small muted" style={{ margin: 'var(--s2) 0 0' }}>{place ? placeLine(place) : prior.cityId}, from {MONTHS[prior.fromMonth - 1]} {prior.fromYear} to the day you arrive.</p>
+        </>
+      )}
+      {inAmerica && <p className="small muted">{here}</p>}
+      {prior && !inAmerica && (
+        <>
+          <label className="check" htmlFor="kept-account" style={{ marginTop: 'var(--s3)' }}>
+            <input
+              id="kept-account"
+              type="checkbox"
+              checked={config.homeBankId !== undefined}
+              disabled={offered.length === 0}
+              onChange={(e) => setConfig((c) => ({ ...c, homeBankId: e.target.checked ? offered[0]?.id : undefined }))}
+            />
+            <span>I Kept An Account There</span>
+          </label>
+          {config.homeBankId !== undefined && (
+            <div className="field">
+              <label htmlFor="home-bank">Your Bank There</label>
+              <select id="home-bank" value={config.homeBankId} onChange={(e) => setConfig((c) => ({ ...c, homeBankId: e.target.value }))}>
+                {banks.map((b) => <option key={b.id} value={b.id} disabled={!offered.includes(b)}>{b.name}</option>)}
+              </select>
+            </div>
+          )}
+          {refused.length > 0 && (
+            <ul className="small muted" style={{ margin: 'var(--s2) 0 0', paddingLeft: 'var(--s4)' }}>
+              {refused.map((b) => <li key={b.id}>{b.name}: {homeAccountRefusal(config, b.id)}</li>)}
+            </ul>
+          )}
+          {home && (
+            <>
+              <div className="callout" style={{ marginTop: 'var(--s3)' }}>
+                {whatFollows(config, home.id).join(' ')} You told {home.name} you live in America, on its tax self-certification.
+              </div>
+              {usBank && (
+                <fieldset className="field" style={{ marginTop: 'var(--s3)' }}>
+                  <legend>Your Savings</legend>
+                  <label className="row gap-2 small">
+                    <input type="radio" name="home-savings" checked={config.savingsAtHome !== false} onChange={() => setConfig((c) => ({ ...c, savingsAtHome: true }))} />
+                    <span>Kept At {home.name}{split.homeSavings > 0 ? `: ${formatMoney(split.homeSavingsHeld, home.currency)} In ${home.savings.name}` : ''}</span>
+                  </label>
+                  <label className="row gap-2 small">
+                    <input type="radio" name="home-savings" checked={config.savingsAtHome === false} onChange={() => setConfig((c) => ({ ...c, savingsAtHome: false }))} />
+                    <span>Moved To {usBank.name}</span>
+                  </label>
+                  <p className="small muted" style={{ margin: 'var(--s2) 0 0' }}>
+                    What you’d saved stays where you saved it; your everyday money is in your account here, and the card stays with {usBank.name}. Your {home.current.name} opens with nothing in it.
+                  </p>
+                </fieldset>
+              )}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 }
@@ -1090,13 +1221,16 @@ function monthOf(config: NewSaveConfig, cur: string) {
   return { at, costs, spending, food, out: food };
 }
 
-function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
+export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (f: (c: NewSaveConfig) => NewSaveConfig) => void }) {
   const city = CITIES.get(config.startLocationId);
   const birthplace = CITIES.get(config.homeRegionId);
   const age = ageAtStart(config);
   const cur = currencyFor(config.startLocationId);
   const wealth = wealthIn(config.wealth, cur);
   const month = monthOf(config, cur);
+  const home = homeBankOf(config);
+  const split = splitOf(wealth, cur, home, config.savingsAtHome);
+  const money = (cents: number) => formatMoney(cents, cur, { cents: cents % 100 !== 0 });
 
   return (
     <div className="col gap-5">
@@ -1140,8 +1274,15 @@ function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setConfig: (
           {config.school && <Line label="School" value={`${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${config.startYear + 3}`} />}
           <Line label="Where You Live" value={city ? shortPlace(city) : '—'} />
           <Line label="Bank" value={startingBank(config.startLocationId, config.bankId, CITIES.get(config.homeRegionId ?? '')?.countryId === 'us')?.name ?? 'None On Record'} />
-          <Line label="Checking" value={formatMoney(wealth.checking, cur, { cents: false })} />
-          <Line label="Savings" value={formatMoney(wealth.savings, cur, { cents: false })} />
+          <Line label="Checking" value={money(split.checking)} />
+          <Line label="Savings" value={money(split.savings)} />
+          {/* What was said on Before Yale, and the bank kept there (from 2026-10-16). */}
+          {config.school && config.priorResidence && (
+            <Line label="Before Yale" value={`${CITIES.get(config.priorResidence.cityId) ? shortPlace(CITIES.get(config.priorResidence.cityId)!) : config.priorResidence.cityId}, Since ${config.priorResidence.fromYear}`} />
+          )}
+          {home && (
+            <Line label="Home Bank" value={split.homeSavings > 0 ? `${home.name}, ${formatMoney(split.homeSavingsHeld, home.currency)} In ${home.savings.name}` : `${home.name}, ${home.current.name}`} />
+          )}
           <Line label="Credit Record" value={scoreIsANumberIn(config.startLocationId) ? String(wealth.creditScore) : scoreWord(wealth.creditScore)} />
           {wealth.cardLimit > 0 && (
             <Line label="Card" value={`${formatMoney(-wealth.cardBalance, cur, { cents: false })} owed of ${formatMoney(wealth.cardLimit, cur, { cents: false })}`} />
@@ -1279,6 +1420,18 @@ export function validate(config: NewSaveConfig, step: StepIndex): string[] {
     if (!CITIES.get(config.startLocationId)) issues.push('Choose the town or city you live in.');
     // Nothing on the page sets the start date; this guards a draft that came in wrong.
     if (config.startDay < 1 || config.startDay > 28) issues.push('This draft’s start date isn’t one SLATE can start on. Start the character again.');
+    // Before Yale (from 2026-10-16): a time that can have been, and a bank the rule offers, or none.
+    const prior = config.priorResidence;
+    if (prior) {
+      const since = prior.fromYear * 12 + prior.fromMonth;
+      if (!Number.isInteger(prior.fromYear) || prior.fromMonth < 1 || prior.fromMonth > 12) issues.push('Choose the month and year you began living where you lived before.');
+      else if (since < config.birthYear * 12 + config.birthMonth) issues.push('You can’t have lived there from before you were born.');
+      else if (since > config.startYear * 12 + config.startMonth) issues.push('You began living there after you arrive here. Choose a month before.');
+    }
+    if (config.homeBankId !== undefined) {
+      const refused = homeAccountRefusal(config, config.homeBankId);
+      if (refused) issues.push(refused);
+    }
   }
   return issues;
 }

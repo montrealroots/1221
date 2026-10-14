@@ -125,6 +125,12 @@ export interface Person {
    * `domain/citizenship.ts`.
    */
   citizenshipId: string;
+  /**
+   * Where they lived immediately before the life began, as creation's Before Yale took it (from 2026-10-16): the town,
+   * and from when to when. Read where a bank kept there keeps its region's holidays (`content/bankdays.ts`) and where its
+   * country's places are brought in (`loadPlacesFor`). Absent where nothing was said, and on every older save.
+   */
+  priorResidence?: { cityId: string; since: Instant; until: Instant };
 
   /** Reference city id where they currently are. */
   currentLocationId: string;

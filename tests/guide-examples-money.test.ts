@@ -16,6 +16,8 @@
  * Home is drawn to markup (react-dom/server) over the save, as tests/defects-g8-4.test.ts draws it: `useGame` stands in
  * for the provider.
  *
+ * From 2026-10-16, A Bank At Home's too, its life made at Yale as the game makes one rather than pressed into.
+ *
  * Played: all twelve entries, every clause. Until a later pass of 2026-10-12 `bank.other-banks`'s “its debit card comes
  * in 6 business days” was listed here as not run, for want of anything on the sixth business day to see: it was played
  * then, and it was false, so it was corrected (below). And `bank.upkeep`'s Reactivate, which its steps and result name,
@@ -38,7 +40,9 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createElement, type ReactElement } from 'react';
-import { quickSave } from '@/engine';
+import { createSave, quickSave } from '@/engine';
+import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
+import { whatFollows } from '@/engine/systems/homeaccount';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
@@ -798,6 +802,19 @@ const PLAYS: Record<string, () => void> = {
     sim.advanceTo(closed.arrivesAt! + HOUR);
     expect(postings(sim, boa, /^From /, closing).map((p) => p.amount)).toEqual([held]);
     expect(boa.balance).toBeGreaterThan(boaBefore);
+  },
+  // From 2026-10-16: made, not pressed. The life is made as the game makes one, at Yale, which no other example here is.
+  'bank.home-account': () => {
+    const result = GUIDE_BY_ID['bank.home-account']!.example.result;
+    const config = { ...withFamily(newLifeConfig(), 'modest'), homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-barclays' };
+    const sim = createSave(1, 'guide-home-account', config);
+    const mine = Object.values(sim.universe.accounts).filter((a) => !a.nominal && a.ownerId === sim.player.id);
+    const saver = mine.find((a) => a.bankId === 'gb-barclays' && a.kind === 'savings')!;
+    const chase = mine.find((a) => a.bankId === 'us-chase' && a.kind === 'checking')!;
+    expect(result).toContain(`${saver.name} opens with ${formatMoney(saver.held!, 'GBP')}, worth ${formatMoney(saver.balance, 'USD')}`);
+    expect(result).toContain(`${chase.name} with ${formatMoney(chase.balance, 'USD')}`);
+    expect(result).toContain(`together ${formatMoney(saver.balance + chase.balance, 'USD', { cents: false })}`);
+    expect(whatFollows(config, 'gb-barclays')[0]).toContain(`it gives ${count(result, 'with ', ' days’ notice')} days’ notice`);
   },
 };
 

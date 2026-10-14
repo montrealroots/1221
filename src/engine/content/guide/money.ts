@@ -36,6 +36,8 @@ import { BREAK_NOTICE, END_WORDS, ESCHEAT_NOTICE_DAYS } from '../../systems/acco
 import { roundUpMoney } from '../../systems/roundups';
 import { LOOKAHEAD_DAYS } from '../../systems/obligations';
 import { wealthIn } from '../../world/bootstrap';
+import { ASSUMED_OPENING_AGE, RETENTION_CONFIDENCE, allHomeTerms, homeTerms } from '../homeaccounts';
+import { splitOf } from '../../systems/homeaccount';
 import type { GuideEntry } from './types';
 
 // --- the screen -------------------------------------------------------------------------------------------------------
@@ -123,6 +125,11 @@ const PLAN_FREE_AT = [...PLAN_FREE_IN_INTRO].map((id) => bankById(id)?.name ?? i
 const MODEST = wealthIn('modest', 'USD');
 const RECORD = MODEST.creditScore;
 const OWED = -MODEST.cardBalance;
+// A bank kept at home (from 2026-10-16): the research's banks and countries, and a Modest family's money kept at Barclays.
+const HOME_BANKS = allHomeTerms().filter((t) => !t.unusable).length;
+const HOME_COUNTRIES = new Set(allHomeTerms().map((t) => bankById(t.bankId)?.iso)).size;
+const BARCLAYS = bankById('gb-barclays')!;
+const LONDON_SPLIT = splitOf(MODEST, 'USD', BARCLAYS, true);
 const WORTH = MODEST.checking + MODEST.savings - OWED;
 const CHASE_RATE = priceWithin(CHASE_CARD.aprFrom ?? 0, CHASE_CARD.aprTo ?? 0, RECORD);
 const AFTER_APPLYING = RECORD - INQUIRY;
@@ -1277,6 +1284,65 @@ export const MONEY: readonly GuideEntry[] = [
       setup: `A student at Chase with ${usd(2_000_00)} in ${CHECKING.name} opens an account at Bank of America, which asks for ${usd(BOA_OPEN.minimumDeposit ?? 0)}.`,
       steps: [`Choose Bank of America, Opening Deposit From ${CHECKING.name}, Amount ${(BOA_OPEN.minimumDeposit ?? 0) / 100}, and press Apply.`, `When it opens, press Have Wages Paid Here and Make Primary on its ${BOA.current.name}.`],
       result: `The ${usd(BOA_OPEN.minimumDeposit ?? 0)} leaves Chase now and lands in Chase’s ${CHASE_OPEN.sendDays} business days. Bank of America decides in ${BOA_OPEN.reviewDays}, opens the account at nothing, and its digital debit card works from the day it opens. Yale’s payroll pays there from ${PAYER_LEAD['yale-payroll']} days on, and ${CHECKING.name} can close once nothing pays from it or into it and no savings sits beside it at Chase, its money sent across in ${CHASE_OPEN.sendDays} business days.`,
+    },
+  },
+  // From 2026-10-16: what creation's Before Yale asks, and why (`systems/homeaccount.ts`, `content/homeaccounts.ts`).
+  {
+    id: 'bank.home-account',
+    title: 'A Bank At Home',
+    goal: 'money',
+    covers: [],
+    synonyms: ['home bank', 'bank account abroad', 'foreign account', 'before yale', 'where you lived', 'account kept at home', 'pounds', 'non-resident'],
+    questions: ['Can I keep my bank account from home?', 'Why does creation ask where I lived before Yale?', 'Why can’t I choose my bank there?', 'Why are my savings in pounds?'],
+    where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, The Accounts Tab; made on creation’s Starting Point, Before Yale' },
+    available: 'Made with the life: Starting Point’s Before Yale, for a life that begins at Yale.',
+    short: `Before Yale on Starting Point asks where you lived just before Yale, since when, and whether you kept an account there. A bank keeps the account of a customer who lived and banked in its country, so where you lived decides it; where you were born never does. SLATE has research on what ${HOME_BANKS} banks in ${HOME_COUNTRIES} countries do when a customer moves to America, and offers only those: a bank anywhere else is refused, never guessed. Kept, its current account opens at nothing and your savings stay there in its money, and your everyday money is in your American account.`,
+    steps: [
+      'On Starting Point, under Before Yale, tick I Lived Where I Was Born, or choose the town in Where You Lived, then the month and year Since.',
+      'Tick I Kept An Account There and choose Your Bank There. A bank SLATE can’t offer is grayed out, its reason under the list.',
+      'Read what follows from keeping it, then choose Your Savings: Kept At the bank there, or Moved To your American bank.',
+      'Review says Before Yale and Home Bank. Begin opens both.',
+    ],
+    needs: [
+      'A life that begins at Yale, and a place you lived outside America before it.',
+      'A bank there SLATE has research on, whose own words leave something to keep the account on.',
+      `The account open before Yale: from the later of the month you began living there and the bank’s opening age, ${ASSUMED_OPENING_AGE} where the research read none.`,
+    ],
+    costs: [
+      { label: 'Time', value: 'None: it’s made with the life' },
+      { label: 'Money', value: 'None moves: the family’s money is split, not added to' },
+    ],
+    reads: [
+      { label: 'Where You Lived', value: 'Its country, and the region whose holidays the bank keeps for you' },
+      { label: 'The Bank’s Terms', value: 'Whether it keeps an account abroad, on what, how sure the research was, any charge for a customer abroad, and its notice where it closes one' },
+      { label: 'Your Citizenship', value: 'Read only where a bank never opens a US citizen’s account; it never grants one' },
+    ],
+    now: [
+      `Kept: the bank’s current account opens at nothing and its savings with the whole units of its money your savings buy at SLATE’s rate; what that leaves over joins your American checking. The two add to your family’s money to the cent.`,
+      'Moved: your American accounts open just as with nothing kept, and the bank there keeps its current account at nothing.',
+      'Each account at the bank there keeps its own figure in its money, beside what it’s worth in dollars, and counts as used the morning you arrive.',
+    ],
+    later: ['Its savings earns the bank’s interest, and the bank charges its own monthly fee, as it would at home.'],
+    interpret: [
+      '“Kept At … : £… In …” is the figure the bank holds, in its money.',
+      `What follows from keeping it says how sure the research was: ${RETENTION_CONFIDENCE.H.toLowerCase().replace(/\.$/, '')}; or only partly; or the bank publishes nothing and it’s SLATE’s assumption.`,
+      'A bank that closes an account for a customer abroad, Barclays among them, is offered with the day it closes; SLATE doesn’t carry out the closing, any charge for a customer abroad, or a payment between countries yet.',
+    ],
+    unavailable: [
+      '“You lived in America before Yale; your account is the one here.”',
+      '“SLATE has no research on what … does when a customer moves to America.”',
+      '“… opens an account from …; you left at ….” and “You began living there after Yale began.”',
+    ],
+    mistakes: ['Choosing where you were born when you grew up somewhere else: the bank keeps the account of a customer who lived in its country, so say where you lived.'],
+    related: ['bank.accounts', 'bank.other-banks'],
+    connections: [
+      { to: 'bank.accounts', kind: 'immediate', why: 'The accounts kept at home are among your accounts from the first morning, beside the American ones.' },
+      { to: 'bank.upkeep', kind: 'scheduled', why: 'The bank there pays its interest and charges its own fee at the month’s end, as any bank does.' },
+    ],
+    example: {
+      setup: `A student who grew up in London from a Modest family, banking at ${BARCLAYS.name}, with Chase in New Haven.`,
+      steps: ['Under Before Yale, choose London and Since, tick I Kept An Account There and choose Barclays.', 'Leave Your Savings at Kept At Barclays and Begin.'],
+      result: `${BARCLAYS.savings.name} opens with ${formatMoney(LONDON_SPLIT.homeSavingsHeld, 'GBP')}, worth ${usd(LONDON_SPLIT.homeSavings)}, and Chase’s ${CHECKING.name} with ${usd(LONDON_SPLIT.checking)}: together ${usd(MODEST.checking + MODEST.savings)}, the family’s money to the cent. Barclays closes the account of a customer who lives outside Britain, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice, and the screen says when.`,
     },
   },
 ];

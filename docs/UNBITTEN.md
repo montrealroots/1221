@@ -267,6 +267,20 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
 
 ## Dead: declared, and nothing reads it
 
+- **What creation says follows from keeping an account at home (2026-10-16).**
+  Before Yale on Starting Point says, from the research, what the bank there
+  does once its customer lives in America (`whatFollows`,
+  `systems/homeaccount.ts`): that Barclays closes the account, with the date;
+  a charge for a customer abroad (BNP Paribas €15 a month, SG and LCL by the
+  quarter, Sabadell every two years, MUFG ¥300 and SMBC ¥220 a month); and the
+  conditions it's kept on. The account opens, keeps its own figure in its
+  money, earns the bank's interest and pays the bank's own monthly fee, all of
+  which bite. The closing, the charge for a customer abroad and the conditions
+  change nothing yet: modules 4 and 5 of the design carry them out (the
+  closing needs a payment between countries to send the balance). A test
+  bank that closes a US citizen's account (`usPersons: 'closes'`) is said the
+  same way, and nothing closes it either.
+
 - **The connected attributes' words that are said, not read.** Each
   interest's caveat and actor's use were shown on its look and read by nothing,
   until the owner removed the interests on 2026-10-10. A genre's demands were

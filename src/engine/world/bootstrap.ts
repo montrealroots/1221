@@ -9,7 +9,7 @@
 
 import type { Person, Personality, SaveMeta, SaveUniverse } from '../domain/model';
 import { SAVE_SCHEMA_VERSION } from '../domain/model';
-import { CITIES, COUNTRIES } from '../content/geography';
+import { CITIES, COUNTRIES, countryOfPlace } from '../content/geography';
 import { exchange, hasRate } from '../content/currency';
 import { DEFAULT_LEDGER_CURRENCY } from '../core/money';
 import { instantFromZoned, MS_DAY } from '../core/time';
@@ -112,6 +112,16 @@ export interface NewSaveConfig {
   wealth: StartingWealth;
   /** The bank they keep their money with, by id (`content/banks.ts`). Absent: the country's first. */
   bankId?: string;
+  /**
+   * Where they lived immediately before Yale, from a month and year to the day the life starts (from 2026-10-16,
+   * Starting Point's Before Yale). Apart from the place of birth, which grants no account and is never read as a
+   * residence. Absent: none said.
+   */
+  priorResidence?: { cityId: string; fromYear: number; fromMonth: number };
+  /** The bank they kept an account at there, by id, where `homeAccountRefusal` (`systems/homeaccount.ts`) offers it. */
+  homeBankId?: string;
+  /** Their savings kept at the home bank (absent, or true) or moved to the American one (false). */
+  savingsAtHome?: boolean;
   /** World start date, local to the starting city. */
   startYear: number;
   startMonth: number;
@@ -373,6 +383,14 @@ export function createUniverse(slot: 1 | 2 | 3, seed: string, config: NewSaveCon
     ...(config.raceEthnicityOwn?.trim() ? { raceEthnicityOwn: config.raceEthnicityOwn.trim() } : {}),
     homeRegionId: config.homeRegionId,
     citizenshipId,
+    // Where they lived before, as they said it, from the first of the month they gave to this morning (from 2026-10-16).
+    ...(config.priorResidence && countryOfPlace(config.priorResidence.cityId) ? {
+      priorResidence: {
+        cityId: config.priorResidence.cityId,
+        since: instantFromZoned({ year: config.priorResidence.fromYear, month: config.priorResidence.fromMonth, day: 1, hour: 12 }, zone),
+        until: now,
+      },
+    } : {}),
     ...(config.family ? { family: config.family } : {}),
     currentLocationId: config.startLocationId,
     // Inside the slider's range, and only traits that can be held together:
