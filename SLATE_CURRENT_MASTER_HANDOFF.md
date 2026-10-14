@@ -1,3 +1,22 @@
+# Read First: Three Briefs In Progress, 2026-10-16
+
+**This section is the current status.** The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
+read its Resume Here first. Every section below is history.
+
+- **Banking:** an eligible student keeps a pre-existing account at a real bank in their home country beside the US one
+  (the owner's decision of 2026-10-16; birthplace alone grants nothing; no travel or relocation). Modules 1 to 5 are
+  committed: the ledger's own figure for another currency, 60 banks' researched terms, the eligibility rule and the
+  creation card, operating from abroad (Barclays' real closure), payments between countries. Modules 6 and 7 (tax and
+  screens) were mid-work at the switch, uncommitted.
+- **Attributes and genres:** phase 1 (matrices, criteria, baseline: 12 met, 17 failed) and phase 2a (the partner gate
+  closed by Run It With A Reader, descriptions made true, one growth path, one stamina rule, mastery at 100) are
+  committed. Phase 2b (rebalancing) was mid-work at the switch, uncommitted. 2c and the close-out are to come.
+- **The remaining acceptance gaps:** not started; the six areas' instructions are in
+  `docs/verification/prompts-2026-10-16/`.
+- **Merged:** `main` was brought to this branch's last committed revision on the owner's word of 2026-10-16, before a
+  session switch. The full gate hasn't been run on the 2026-10-16 revisions (the work plan says what has). Not deployed.
+- The stash, the three other worktrees and the untracked root files are untouched.
+
 # Read First: The Current Scope Pass, 2026-10-15, And The Work It Left Open
 
 This heading said “The Current Scope Completed” until 2026-10-15, which its own list of work found and not fixed
@@ -13,7 +32,7 @@ pull request was opened: the GitHub CLI wasn’t signed in on this machine. The 
 row's checklist and result are in `docs/verification/scope/`; the pipeline that generates the audit is in
 `docs/verification/pipeline/`.
 
-**This section is the current status.** Every section below it is history, marked **Superseded** in place where it
+**This section was the current status until 2026-10-16** (**Superseded:** the first section above is). Every section below it is history, marked **Superseded** in place where it
 stopped being true.
 
 ## What the pass did

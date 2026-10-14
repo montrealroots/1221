@@ -1,0 +1,15 @@
+# Skeptic, second round: the current scope's rows after the fixes (2026-10-15)
+
+Follow C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad/scope-skeptic.md
+in full (read-only; the same standard), with these differences:
+
+- The first round's check of your group is `final-checks/zzzz-scope-<key>.json` (scratchpad). A fix agent has since
+  worked every problem it named; each row it touched has a `recheck` list in `scope/<key>-result.json` saying what was
+  done. Check each claimed closure for real: read the code and the test, run the test file alone, and where a fix is
+  claimed, reason (or confirm by the result's mutation record) that the test fails without it.
+- Read every row of the group again against the code as it stands now, not only the rechecked ones: other agents have
+  changed shared engine files since the first round (school.ts/courserecord.ts `tellFails`, statetax.ts `stateDueOf`
+  and monthly rounding, health.ts program renewal and Yale Health's rule, banking.ts/accountlife.ts Cancel It).
+- Also check the guide and tutorial lines the fixes changed (src/engine/content/guide/*, src/engine/content/tutorial.ts:
+  `git diff` them) are true of the code.
+- Write `final-checks/zzzzz-scope-<key>.json` (five z's), same shape. Final message: one line per row.

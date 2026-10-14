@@ -1,0 +1,59 @@
+# Closing the remaining acceptance gaps (2026-10-16): your area
+
+SLATE: C:/Users/sande/Downloads/1221-GIT, branch `claude/remaining-acceptance` (from `6808cfc7`; `main` is `e021eb5f`).
+Its CLAUDE.md applies in full: THE ONE RULE, the falsifiability test, prose load-bearing (past tense with the date
+2026-10-16 for what changed), curly apostrophes, American spelling, Title Case for labels. Don't touch git. Five other
+agents work beside you on other areas: edit only what your area needs; before each edit of a shared file (health.ts,
+guide/*.ts, tutorial.ts, a shared test) re-read it and change only your lines. Don't restore removed personal-life,
+industry, travel or relocation systems, add parental leave, or reopen deferred work. Don't inflate completion: never
+delete a requirement, weaken an assertion, hide a control, or move work to Deferred or Informational to close an item.
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+Read first: docs/verification/CURRENT-SCOPE-2026-10-15.md (its "Still Open" list), the master handoff's top section,
+docs/verification/scope/*-result.json for your rows, the audit rows (docs/verification/audit/*.json, find by id), and
+the code. Don't assume the earlier interpretation is right; verify it.
+
+## First: the checklist (before any code change)
+
+Write `docs/verification/remaining/<key>-checklist.json`: per item `{ id, item (as the brief names it), requirement
+(what must be true, with its authority: statute, regulation, guidance, the bank's terms, or the project's own rule),
+currentBehavior (read in the code, with file:line, and reproduced where it's a defect: how), affectedSystems,
+plan, acceptance (the named tests and what they assert: command, clock, render, fixture, guard, static), classification
+(for a control or refusal no current journey reaches: required reachable behavior | necessary defensive guard |
+older-save compatibility | misleading player-facing control | truly redundant code) }`.
+
+## Then: implement and prove
+
+- Research: authoritative, date-specific sources (WebSearch/WebFetch). Record separately: the enacted rule, its effective
+  date, implementation guidance, and SLATE's simulation assumption. If an authoritative answer isn't available, record the
+  exact uncertainty and implement only defensible behavior, marked as an assumption in a code comment; never call an
+  approximation exact.
+- Every defect: reproduce it; add an assertion that fails before the fix (break the fix, run, restore, and say which);
+  fix; verify the downstream outcome; boundaries, refusals, repeated actions, save/load and time advancement.
+- Tests reach the action as a player does where play can (sim.execute/must, advanceTo, a rendered screen as
+  tests/scope-*.test.ts do); where play can't (a scenario current gameplay never produces), test the engine on a
+  fixture labelled FIXTURE or TEST SETUP and say precisely why play can't reach it. Never invent jobs, wages or income
+  to manufacture a player journey. Defensive guards: keep, test directly, name the test "GUARD:". Expected figures worked
+  by hand from the rule, never from the engine's helper; never vacuous.
+- Redundant code: remove only after confirming no caller and no compatibility purpose; dated comment where it was.
+- Every changed action: Player Input → Validation → Engine Command → State Change → Downstream Readers → Visible
+  Consequence → Saved History. No duplicate notices, bills, aid, credits or settlements on repeat or reload.
+- Update the guide entries (src/engine/content/guide/*) and the tutorial chapter (src/engine/content/tutorial.ts: only
+  your sentences, re-read before editing, with a dated comment above the chapter) for every changed mechanic:
+  requirements, actions, time and money costs, refusals, outcomes, connected systems, next steps.
+- New tests in `tests/remaining-<key>.test.ts` (header in the house voice). Memory is short: run one test file at a
+  time (VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run <file>), never the whole suite; then npx tsc -b --noEmit,
+  npx eslint <your files>, node tools/title-case.mjs --check, node tools/spelling.mjs, node tools/typos.mjs,
+  node tools/tics.mjs --check, node tools/voice-check.mjs --check, node tools/wired.mjs --check.
+- Mutations for the critical assertions (financial, eligibility, persistence): 1–3 per item, applied in the tree one at
+  a time, the test run, the file restored byte for byte (check with git diff that only your intended changes remain).
+
+## Finally: the result
+
+Write `docs/verification/remaining/<key>-result.json`: per item `{ id, before, disposition (fixed | implemented |
+guard kept and tested | older-save compatibility kept and tested | control corrected | removed as redundant | verified
+as it stands | uncertainty recorded | owner decision), evidence [{file, title, kind, proves}], fixes [{summary, where,
+failingTest}], sources [{rule, citation, effective, read}], assumptions [strings], mutations [{file, find, replace,
+killed}], rowText {auditRowId: {field: corrected text}} (where an audit row's words change), tutorial, guide,
+ownerDecision (only if genuinely needed: options and consequences) }`. Final message: one line per item, then anything
+outside your files.

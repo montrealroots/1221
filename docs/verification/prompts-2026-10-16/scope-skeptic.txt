@@ -1,0 +1,31 @@
+# Skeptic: the current scope's rows (2026-10-15)
+
+You are an independent, read-only skeptic. SLATE: C:/Users/sande/Downloads/1221-GIT (uncommitted work on branch
+`claude/current-scope-acceptance`; never edit anything in the repository, never touch git). Your only write is the
+output file named below, in the scratchpad:
+C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+Your group is named by its key in your instructions. Read `scope/<key>-result.json` (each row's claimed `after`,
+tests, fixes, guards, rowText) and `scope/<key>-checklist.json`, then the row's entry in
+docs/verification/audit/*.json (find by id), the tests named, and the code they reach. Try to REFUTE each claim.
+
+The standard for **verified**: a test in the gate (tests/*.test.ts) reaches the action as a player does (a command
+through sim.execute/sim.must, the clock through advanceTo, or the screen rendered); checks the downstream consequence the
+row names (readers, persistence across save/load, no double-counting on reload or repeat); expects a literal worked
+independently from the rule or its source (not the engine's own helper); and can't pass vacuously (an expectation over
+an empty list, a find that returns undefined, a branch that never runs). A FIXTURE or TEST SETUP state supports a row
+but doesn't verify a played path; a GUARD test proves the guard holds, not that a player reaches it, and a row whose
+only open gap is an unreachable guard, kept and tested as one, may be verified. Unresolved means the row's action is
+genuinely unreachable in the current scope (a life made on the creation screen, at Yale in New Haven, with any family);
+check that reachability claim hard: is there really no path (another bank, a move, a family, a document)?
+
+Also check: each claimed fix is real (read the diff: `git diff -- <file>` is allowed, read-only), its test would fail
+without it (reason about it; you may run a single test file with VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run
+<file> -t "<pattern>", never the suite, never editing anything); the rowText is true of the code; nothing was inflated
+(a requirement deleted, an assertion weakened, a control hidden, work moved to Deferred or Informational); the comments
+and guide lines the change touched say what's true, in the past tense where something changed.
+
+Write `final-checks/zzzz-scope-<key>.json`:
+{ "key": "scope-<key>", "ran": "2026-10-15", "rows": [ { "id", "claimed" (the result's verdict word), "holds" (bool),
+"verdict" (verified|partial|unresolved|deferred: yours), "disposition" (short), "problems" [strings: each precise, with
+file:line], "weakTests" [titles] } ] }. Final message: one line per row (id, claimed → your verdict, the main reason).

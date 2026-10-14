@@ -1,0 +1,83 @@
+# SLATE: A Bank Account Kept At Home (design, 2026-10-16; not implemented)
+
+## 0. Code facts checked
+- Bank decisions follow where the person is: `homeOf = person.currentLocationId` (earnings.ts:284); `banksFor(cityId)` → `isoOf` → `banksIn` (banking.ts:73-83); `openRefusal` (bankmoves.ts:93) and `bank.switch` (lending.ts:1425) refuse "That isn't a bank where you live."; charge-off rebanking `banksFor(homeOf)` (lending.ts:975).
+- Money is one currency per save: the ledger posts in save currency, every transaction sums to zero (ledger.ts `post`, `audit`; invariants.ts `breaches`; guard.js:87-107). A bank's own figures are converted with `inSaveMoney(sim, x, bank.currency)`. Rates are fixed (`content/currency.ts` RATES, GBP 0.79/$). Every Yale save is USD (`currencyFor(startLocationId)`, bootstrap.ts:344).
+- Storing a GBP account in USD alone isn't exact: £10,000 → 1,265,823¢; after moving out £1,000 (126,582¢) it reads £8,999.99. Foreign accounts need their own exact figure.
+- Spending reaches only the primary account and savings at the same bank (`drawFromBank`, spending.ts:144).
+- Card purchase fees: `chargeForPurchase` (lending.ts:606), from `spend` (spending.ts:382).
+- `daysOfAccount` takes the bank's country but the holder's current region (bankdays.ts:20-24); `loadPlacesFor` loads holidays only for currentLocationId and homeRegionId countries (index.ts:1089).
+- `TRANSFERS.GB.instant` (Faster Payments) would post a Barclays→Chase transfer at once via `arrivalOf`: an international payment must not go that path.
+- `coolingOffEnds` counts from `openedAt` (a backdated account is past it). Dormancy `lastUsed` (lending.ts:616) falls back to `openedAt` when nothing posted: a backdated zero-balance account would go inactive day one unless a last use is seeded.
+- Tax: `nonresidentFor` (taxreturn.ts:853) leaves out all interest for an F-1 nonresident; `recordInterest` adds to `y.interest` and `byResidence`; the UK withholds nothing on interest (`interestTax.rate: 0`).
+- Status: citizenship from birthplace only (`citizenshipFor`); nobody holds a green card at creation; at creation a "US person" is a US citizen, everyone else at Yale is F-1.
+- Schema precedent: optional fields written when first used, number stays (model.ts:470-481, SAVE_SCHEMA_VERSION 94; guard.js SUPPORTED_SCHEMA_VERSION 94).
+
+## 1. Eligibility: what creation asks, and the rule
+Declared on Starting Point, new card "Before Yale" (school lives only):
+- Where You Lived: a place picker for the city lived in immediately before Yale; separate from Place Of Birth, empty by default; optional "I Lived Where I Was Born" checkbox as the player's own statement, not inferred.
+- Since: month and year they began living there (runs to the Yale start).
+- I Kept An Account There → Your Bank There: `banksIn(iso)` of that country; a refused bank shown disabled with its reason.
+- Your Savings: "Kept At <home bank>" (default) or "Moved To <US bank>".
+Config: `NewSaveConfig.priorResidence?: { cityId; fromYear; fromMonth }`, `homeBankId?`, `savingsAtHome?`. Person: `priorResidence?: { cityId; since: Instant; until: Instant }`.
+One rule for screen and `populateWorld` (like findsNeed/needFor): `homeAccountRefusal(config, bankId)` in `systems/homeaccount.ts`, in order:
+1. No prior residence → none.
+2. Prior residence in the US / the start country → none: "You lived in America before Yale; your account is the one here."
+3. No researched terms (`HOME_TERMS[bankId]` missing) → refused: "SLATE has no research on what <bank> does when a customer moves to America."
+4. Opening window: opening day = later of move-in and birth + `openFromAge` (or `withGuardianFrom`), must be before the Yale start; else "<bank> opens an account from 16, or from 11 with a parent; you left at 10."
+5. US citizens: bank `usPersons === 'refuses'` and holder US citizen → refused (never opened).
+6. Otherwise offered; the screen states what follows (non-resident fee, closure with notice for non-residents or US persons, interest tax).
+Birthplace is never read except as citizenship in step 5. Born London raised NY → step 2. US-born never abroad → 1/2. US citizen raised London → 5 and retention.
+
+## 2. Data model
+Content `src/engine/content/homeaccounts.ts`, typed over `home-accounts.json` (as `genre-demands.ts` wraps JSON), `addHomeTerms` registry for tests.
+- `HOME_TERMS[bankId]`: `openFromAge`, `withGuardianFrom?`; `nonResident: 'keeps'|'closes'`, `closeNoticeDays?`, `usPersons: 'keeps'|'closes'|'refuses'`, `usPersonNoticeDays?`; `nonResidentFee?` (monthly, bank currency); `newProductsAbroad: boolean`; `international: { outFee, fxMargin, days, from: 'current'|'any', limitDay? }`; `incomingFee?`; `cardAbroad: { fxFee, perPurchase?, atmFee?, atmShare? }`; `kyc: { selfCertification: true, idInForce }`; `source`, `asOf`, `confidence`.
+- `HOME_COUNTRY[iso]`: `nonResidentInterestTax: { rate, withDeclaration?, note, source }`.
+- `US_WIRES[bankId]`: incoming/outgoing international fee and FX margin.
+Ledger (least invasive, exact): save stays one currency, transactions sum to zero in save cents (existing saves and guard sums unchanged). `Account.currency?` only when the bank's currency differs from the save's; `Account.held?: Money` the bank's own figure in minor units = sum of `native`, never typed; `Posting.native?` only on postings to such accounts. `Ledger.post` fills a missing native with `exchange(amount, save→account.currency)`, except when `amount === -balance` it uses `-held` (closing empties both exactly). Callers that know the exact native amount pass it (typed amounts, bank fees, opening split). `balance` keeps every existing comparison, netWorth and audit; `held` is what the bank shows. `recompute`/`audit`/`breaches` gain one law: held = sum of native on currency accounts, native nowhere else. No FX gain/loss (rates don't move; prose says so).
+Other: `Account.lastUsedBefore?: Instant` = save start; both `lastUsed` read max(found, lastUsedBefore ?? openedAt). `Account.peak?: { year; max }` updated daily for US reporting thresholds.
+Schema: no bump; all optional; older saves behave as before.
+
+## 3. Where you live vs a bank you hold
+Unchanged on homeOf: openRefusal, bank.switch, BankMoves/BankLending lists, startingBank (a non-resident can't open there).
+New gate `abroadRefusal(sim, person, bank, what)`: refuses when bank.iso ≠ isoOf(homeOf) and !newProductsAbroad. Callers: bank.open_savings (banking.ts:624), bank.open_term, bank.arrange_overdraft, bank.borrow, bank.debit_overdraft, card.apply if reachable.
+bank.redirect_deposits (bankmoves.ts:433) refuses an account abroad: "Yale pays into an account in America."
+Charge-off (lending.ts:975): elsewhere must be at a bank where they live; home account left alone.
+Operating from abroad keyed on the account's bank (mostly already true): fees, waivers, interest, quarterly closing, card fees, round-ups, dormancy/unclaimed (UNCLAIMED[iso]), statements; cooling-off none (backdated openedAt; prose why); non-resident fee in `feeFor` from data.
+Interest tax: `interestTaxOn` uses HOME_COUNTRY[iso].nonResidentInterestTax when the holder lives outside the bank's country; self-certification given at creation; Review says "you told <bank> you live in America".
+Retention: `armHomeAccounts`: if nonResident 'closes', or US citizen and usPersons 'closes': day one notice "<bank> Is Closing Your Account" with the date (start + notice days); then `bank.home_closes` pays interest, settles fees, sends the balance to the US primary through the international path (byTheBank), sets closedAt, notifies.
+Business days: daysOfAccount uses the prior residence's region when the bank is in that country, no region otherwise; loadPlacesFor also loads priorResidence's country and every held account's bank country.
+Primary: bank.set_primary to a home account allowed; its debit card pays daily spending with the card's foreign fees; guide says wages can't follow. withdrawalQuote: atm/counter/post_office refused abroad; other_atm uses cardAbroad.atmFee/atmShare. Payments by hand from such a primary count as card payments with the fee (stated simplification).
+
+## 4. Moving money between countries
+`sendBetweenBanks` (bankmoves.ts:218) routes to `sendAbroad` when the banks' iso differ, before the instant/Faster Payments shortcut (so bank.transfer, closeSavings, bank.close_current, opening deposits, home closure all get it).
+`abroadQuote(sim, person, from, to, native)`: shared by UI and command: fee, margin, receiving fee, amount received, arrival, or refusal (from savings when from:'current' — "Barclays sends abroad from a current account"; not enough for amount+fee; dormant; closing; day limit).
+Timing: international.days business days that are business days in both countries, from the day after sending; arrival 17:00.
+Postings (£A Barclays→Chase; F_out GBP, margin m, F_in USD): T1 now (transfer): Barclays {−usd(A), native −A}; Money In Transit +usd(A). T2 now (bank_fee "International payment fee"): Barclays {−usd(F_out), native −F_out}; Bank Fees +usd(F_out). T3 on arrival (transfer): transit −usd(A); Chase +(usd(A) − round(usd(A)·m) − F_in); expense "Exchange Margin" +round(usd(A)·m); Bank Fees +F_in. Arrival payload carries margin and incoming fee; if the destination closed, money comes back less fees. US→home mirrors with US_WIRES, native auto-filled.
+UI (Accounts tab, Move Money, BankWorkspace.tsx:165): "Amount (GBP)" in the sending account's currency, payload gains `in: currency`; quote line from abroadQuote ("Barclays sends £1,000.00 for a £15.00 fee. At its rate, 3.00% under SLATE's, Chase receives $1,212.85 after its $15.00 incoming fee, on Wednesday, September 2."); button "Move It"; toast says arrival; refusals in engine words.
+Card spending: in chargeForPurchase (and payFromBank/payFromCurrent card case), when the account's bank is outside where they live: native fee round(native × fxFee) + perPurchase, "Foreign transaction fee", bank_fee.
+
+## 5. Starting money and tax
+Split (stated on screen): "What you'd saved stays where you saved it; your everyday money is in your US account." With Kept At: home savings native = floor(exchange(wealth.savings, USD→cur)) to the whole unit; its save amount = exchange(native→USD); US current gets wealth.checking + (wealth.savings − that); home current opens at zero with lastUsedBefore. Total = checking + savings to the cent; card stays with the US bank. "Moved To" reproduces today's opening exactly.
+Tax: recordInterest takes { iso, withheld }, keeps y.foreignInterest, y.foreignTaxOnInterest. F-1 NRA: foreign-source interest not US income (IRC 862(a)(1), 872(a)), already excluded, cite. US citizen: in y.interest; foreign withholding credited up to US tax via existing foreignTax credit. FBAR/8938 US persons only: Account.peak at SLATE's rate; >$10,000 aggregate → one notice on the return (FBAR due 15 April, auto-extended 15 October); 8938 >$50,000 year end or $75,000 any time (unmarried, living in US). Not modeled (stated): filing either form, penalties, Treasury's year-end rate, UK self-assessment. CT unchanged; flagged.
+
+## 6. Screens
+Creation: "Before Yale" card on Starting Point after What Is Yours; validate() refuses a ticked-but-refused account; Review "Before Yale: London, England, Since 2010" and "Home Bank: Barclays, £5,581 In Everyday Saver". Title Case.
+Bank workspace: each account panel uses its own bank (now the primary's bank.currency at line 122); balance shows held in bank currency with an "In Dollars" note from balance; interest and fee wording via formatMoney(..., bank.currency); subtitle ", Held From Abroad"; closure notice shows its date.
+Statements (BankStatements.tsx, statementReady): native per line, held at close.
+Home money line (Home.tsx:457): "…, and £5,581.00 At Barclays."; netWorth already counts dollars.
+Guide: new entry bank.home-account "A Bank At Home" in guide/money.ts, figures from HOME_TERMS, covering bank.transfer and bank.set_primary. Tutorial: one sentence in the bank chapter. No new commands (opens, capabilities, wired unchanged).
+
+## 7. Modules and tests
+1 Ledger: core/ledger.ts (Posting.native, Account.currency/held/lastUsedBefore/peak, post auto-fill via injected converter, recompute, audit); core/simulation.ts; core/invariants.ts (new law). Tests: auto-fill, closing to exact zero, audit and breaches; mutation: drop the closing exception → 1p residue.
+2 Data: content/homeaccounts.ts. Test: every entry names a real bank, has a source, uses its bank's currency.
+3 Eligibility and creation: systems/homeaccount.ts (homeAccountRefusal, openAbroad, armHomeAccounts); bootstrap.ts config and createUniverse sets priorResidence; index.ts populateWorld (split, opened after the US bank) and loadPlacesFor; bankdays.ts daysOfAccount.
+4 Operating from abroad: banking.ts (feeFor non-resident fee, interestTaxOn, payInterest → recordInterest abroad, open_savings gate, daily peak); lending.ts (lastUsed, chargeForPurchase foreign fee, product gates, charge-off elsewhere); accountlife.ts (lastUsed hint, cooling-off prose); bankmoves.ts (redirect_deposits, closure event); cash.ts withdrawalQuote; spending.ts card fee.
+5 Transfers: bankmoves.ts (sendAbroad, abroadQuote, afterBusinessDaysBoth in bankdays.ts, arrival payload); banking.ts bank.transfer `in` currency.
+6 Tax: earnings.ts recordInterest; taxreturn.ts figuresFor (credit, FBAR/8938 notice).
+7 Screens and guide: CharacterCreation.tsx (StartingPointStep, HomeBankChoice, ReviewStep, validate); BankWorkspace.tsx; BankStatements.tsx; Home.tsx; guide/money.ts; tutorial.ts.
+Played test tests/home-account-played.test.ts: London-raised F-1 (born and living in London since 2008), modest family, Barclays, savings kept at home, US bank Chase; loadPlacesFor first. Opening: Barclays Everyday Saver £5,581.00 (held 558,100; balance 706,456); Chase $5,217.44; total = 521,700 + 706,500. Interest (rate 0.01, no transfers): 31 Aug 135¢ (£1.07); 30 Sep 581¢ (£4.59); not on the 2026 1040-NR. Transfer (F_out £15, m 3%, F_in $15): £1,100 saver → Barclays current (instant); £1,000 to Chase Fri 28 Aug 2026 10:00 arrives Wed 2 Sep (UK bank holiday 31 Aug), Chase +121,285¢; same send Fri 4 Sep arrives Wed 9 Sep (Labor Day): together they fail a sender-only or receiver-only rule; Barclays current then £85.00 (held 8,500; balance 10,760). Card: Barclays primary, a day's food $X costs a foreign fee round(exchange(X)·fxFee) pence. Reload keeps held and native postings; breaches and audit empty after a played term. (Figures depend on the research's real fees; pin them from the data and work them by hand.)
+Negatives: born London no prior residence → none; born London prior residence New York → none (step 2 words); US-born never abroad → none; a usPersons 'closes' bank (injected via addHomeTerms if research finds none): US citizen raised in London gets the day-one notice, on the date money arrives at Chase less fees, closedAt set; an F-1 at the same bank keeps it; US citizen raised in London at a keeping bank: interest on the 1040; comfortable family triggers FBAR notice, modest doesn't, wealthy triggers 8938; open_savings/borrow/redirect_deposits refused at Barclays; a home current account at zero isn't inactive after 30 days; a save without a home account matches today's opening figures and every existing journey to the cent.
+
+## 8. Risks
+Money lines formatting account.balance in save currency would show dollars for a GBP account: grep every formatMoney(account.balance / a.balance in ui/bank/*, looks, alerts; route foreign accounts through heldText(account). Reconciliation: balance vs exchange(held) drifts ≤ half a cent per posting; not a law; assert equality only at closing. Tax returns: CT resident share includes interest via byResidence, leave and record as open; foreign tax credit reuses wages' foreignTax, check Canada/UK cases unchanged. tools/lives.ts: inTheBank excludes home accounts; add a home-account profile; breach and unbalanced stay 0, new invariant runs there too. Acceptance UI: default walk-through declares nothing; add a step later. Month-ends run on the save's zone (stated simplification). Both lastUsed copies must read the hint. Primary at a foreign account: Yale and the IRS debiting a UK card is a stated simplification. Missing research → refused, never guessed; low confidence shown as such (CONFIDENCE pattern). Mutation-test: auto-fill, the closing exception, both-countries days, step 2, the non-resident tax branch.
