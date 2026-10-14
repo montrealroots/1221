@@ -87,7 +87,7 @@ import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
 import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
 import { savingsLeftThisMonth } from './cash';
-import { homeOf } from './earnings';
+import { homeOf, recordInterest } from './earnings';
 import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
 import { markRecord } from './credit';
 import { openingOf, usPerson } from './bankmoves';
@@ -1114,6 +1114,8 @@ export function registerLending(sim: Simulation): void {
         ];
         if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
         post(s, `${term.name} paid out`, 'interest', postings);
+        // Income for the year’s return and the month’s (from 2026-10-14: until then posted and not recorded).
+        if (earned > 0) recordInterest(person, s.now, s.homeZone, earned);
         term.accrued = 0;
         term.closedAt = s.now;
         if (person.id === s.universe.playerId) {

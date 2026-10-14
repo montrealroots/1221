@@ -519,7 +519,11 @@ function PapersLine({ cur }: { cur: string }) {
   const { sim, navigate } = useGame();
   const person = useWorld((s) => s.player);
   const cover = coverOn(person, sim.now);
-  const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined);
+  // The open return with something to pay, the newest first, or the newest open. Until 2026-10-14 it was the first
+  // open one by year, so a 2026 return owing nothing, Connecticut’s $3.35 taken by levy, was named on 1 February 2028
+  // as “due April 15, 2027”, and the 2027 return’s $2,286 to pay wasn’t (found by that day’s third round of evidence).
+  const opens = Object.values(person.returns ?? {}).filter((r) => r.filedAt === undefined).sort((a, b) => b.year - a.year);
+  const open = opens.find((r) => unassessedBalance(person, r) > 0) ?? opens[0];
   // Past its day, the penalty filing now would add; filed and unpaid, what's owed and growing. Until 2026-09-27 neither showed.
   const penalty = open && open.figures.balance > 0 && sim.now > open.due ? latePenaltyAll(person, open, sim.now, cur) : 0;
   // What's owed today, its interest and late-payment penalty since it was last brought up to date (`owedOn`), as Papers
@@ -535,10 +539,11 @@ function PapersLine({ cur }: { cur: string }) {
   // evidence pass).
   const growing = Object.values(person.returns ?? {}).some((r) => sim.now > r.due
     && ((r.owed ?? 0) > 0 || Object.values(r.stateDue ?? {}).some((d) => (d.owed ?? 0) > 0)));
-  // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line.
+  // Only what needs doing is an alert: no cover, a return open or late, tax owed. The rest is the line. Past its due
+  // date, as the penalty counts it, an open return “was due” on it: until 2026-10-14 it still “is due” a day gone.
   const alerts = [
     !cover ? 'You have no health cover.' : '',
-    open ? `The ${open.year} return is due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${toPay > 0 ? `, ${formatMoney(toPay + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
+    open ? `The ${open.year} return ${sim.now > open.due ? 'was' : 'is'} due ${formatDateTime(open.due, 'America/New_York').split(' at ')[0]}${toPay > 0 ? `, ${formatMoney(toPay + penalty, cur, { cents: false })} to pay${penalty > 0 ? ', a late penalty in it' : ''}` : ''}.` : '',
     owedTax > 0 ? `${formatMoney(owedTax, cur, { cents: false })} of tax owed${growing ? ', with its interest and a late penalty growing each month' : ''}.` : '',
   ].filter(Boolean);
   return (

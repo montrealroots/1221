@@ -219,6 +219,8 @@ function breakTerm(s: Simulation, person: Person, term: Account): { paid: Money;
   const moved = postings.filter((q) => q.amount !== 0);
   if (moved.length >= 2) s.post({ memo: `${term.name} broken early`, category: kept > 0 ? 'interest' : 'transfer', postings: moved });
   if (!sameBank && paid > 0) sendBetweenBanks(s, person, term, into, paid);
+  // What it kept of its interest is income, as at its end (`creditInterest`; from 2026-10-14, until then not recorded).
+  if (kept > 0) recordInterest(person, s.now, s.homeZone, kept);
   term.accrued = 0;
   term.closedAt = s.now;
   delete term.breakAt;
@@ -436,7 +438,13 @@ function noticeLead(rules: BankAccountLife): number {
   return Math.max(30, (rules.endNoticeDays ?? 0) + 14);
 }
 
-/** The interest a term deposit built, credited to it after tax, at its end. */
+/**
+ * The interest a term deposit built, credited to it after tax, at its end, and recorded as its holder’s income
+ * (`recordInterest`). Until 2026-10-14 it was posted and not recorded, here, at a term paid out (lending.ts) and at one
+ * broken (`breakTerm`), so the year’s return and the month’s income test missed it: an Inherited student’s Chase CD
+ * credited $57,928.16 on 24 March 2027 left March’s income at $276, and Enroll on 1 April gave HUSKY D where the
+ * marketplace was due. Found by that day’s third round of evidence.
+ */
 function creditInterest(sim: Simulation, term: Account, memo: string): void {
   const earned = Math.floor(term.accrued ?? 0);
   const tax = interestTaxFor(sim, term, earned);
@@ -444,6 +452,8 @@ function creditInterest(sim: Simulation, term: Account, memo: string): void {
     const postings = [{ accountId: term.id, amount: earned - tax }, { accountId: sim.nominalAccount('income', 'Interest').id, amount: -earned }];
     if (tax > 0) postings.push({ accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
     sim.post({ memo, category: 'interest', postings });
+    const owner = sim.universe.people[term.ownerId];
+    if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);
   }
   term.accrued = 0;
 }

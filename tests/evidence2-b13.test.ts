@@ -495,10 +495,12 @@ describe('i-stale-claims', () => {
   it('keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside', () => {
     // The audit trail (docs/verification/, docs/GAMEPLAY-COVERAGE.md) quotes the leftovers it found; the research
     // records (docs/research/, docs/drill-down-research.json) are findings and readings of the code as of their own
-    // dates; and this file quotes, as data, the sentences it lets stand.
+    // dates; and this file quotes, as data, the sentences it lets stand. From 2026-10-14 tests/evidence3-person.test.ts is
+    // aside too: it quotes the interests as data, a save as schema 93 wrote it among them, and holds the same tree to its
+    // own walk, which leaves this file and itself aside.
     const files = [...walk('src'), ...walk('tests'), ...walk('docs')].map(posix)
       .filter((f) => /\.(ts|tsx|mjs|js|json|md)$/.test(f))
-      .filter((f) => !f.startsWith('docs/verification/') && f !== 'docs/GAMEPLAY-COVERAGE.md' && !f.startsWith('docs/research/') && f !== 'docs/drill-down-research.json' && f !== 'tests/evidence2-b13.test.ts');
+      .filter((f) => !f.startsWith('docs/verification/') && f !== 'docs/GAMEPLAY-COVERAGE.md' && !f.startsWith('docs/research/') && f !== 'docs/drill-down-research.json' && f !== 'tests/evidence2-b13.test.ts' && f !== 'tests/evidence3-person.test.ts');
     expect(files.length).toBeGreaterThan(600);
     const found = namingIn(files);
     expect(found.length).toBeGreaterThan(60);

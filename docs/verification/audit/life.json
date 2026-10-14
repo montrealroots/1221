@@ -9281,7 +9281,7 @@
       }
     },
     {
-      "id": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+      "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
       "kind": "knob",
       "entry": "",
       "reads": "",
@@ -9420,31 +9420,31 @@
           },
           {
             "file": "evidence2-b03.test.ts",
-            "title": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the hour’s fit turns at its edges: an early riser’s read at 11:59 AM is 1.0914 of her plain twin’s and at noon the same; a night owl’s at 4:59 PM the same and at five 1.0914",
+            "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the hour’s fit turns at its edges: an early riser’s read at 11:59 AM is 1.0914 of her plain twin’s and at noon the same; a night owl’s at 4:59 PM the same and at five 1.0914",
             "kind": "command",
             "closes": "The skeptic's weak test, whose plain-twin half was true by construction. hourFit's two edges are shown through school.prepare on Sunday 6 September, each trait against the plain twin at the same minute: before noon, sharp or flat; at noon and at 4:59, equal; at five, reversed. All to 9 places."
           },
           {
             "file": "evidence2-b03.test.ts",
-            "title": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the first class at nine on Monday 31 August grows each skill 1.0914 times as much for an early riser as for her plain twin, and 0.8909 for a night owl",
+            "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the first class at nine on Monday 31 August grows each skill 1.0914 times as much for an early riser as for her plain twin, and 0.8909 for a night owl",
             "kind": "command",
             "closes": "morning read by classes (focusAt at school.ts:3019). The same craft comes in, and every skill the class grew moved 1.0914 or 0.8909 times the plain twin's, to 9 places."
           },
           {
             "file": "evidence2-b03.test.ts",
-            "title": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the work judged at nine on 8 September meets an early riser at 1.0914 of her plain twin’s readiness, and the first Cabaret night at eight meets a night owl at 1.0914",
+            "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: the work judged at nine on 8 September meets an early riser at 1.0914 of her plain twin’s readiness, and the first Cabaret night at eight meets a night owl at 1.0914",
             "kind": "command",
             "closes": "morning and evening read by judged work (conditionAt). The scene and the written work at 9 AM on 8 September meet the early riser at 1.0914 and the night owl at 0.8909. The first Cabaret performance at 8 PM on 15 October meets them the other way round. Dials were set alike a minute before."
           },
           {
             "file": "evidence2-b03.test.ts",
-            "title": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a co-lead at 15 (TEST SETUP) becomes a Friend at the cast list’s ten for a plain player and stays 23.545 for a detached twin: the list lifts only the plain one a friend’s half point, her look says Friend, and the first Carlotta night lifts her a point",
+            "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a co-lead at 15 (TEST SETUP) becomes a Friend at the cast list’s ten for a plain player and stays 23.545 for a detached twin: the list lifts only the plain one a friend’s half point, her look says Friend, and the first Carlotta night lifts her a point",
             "kind": "command",
             "closes": "bondWarmth's readers. At the spring cast list, bondWord's Friend line is crossed by the engine's own move (25 against 23.545). castListRead lifts the plain twin 0.5 against her own control and the detached twin 0. The classmate look's summary ends ' Friend.' for one only. On the first Carlotta night, castCompany's friend count lifts the plain twin 1 and the detached twin 0, against reloads with the bond at nothing. This answers the skeptic's hand-set friend at 30."
           },
           {
             "file": "evidence2-b03.test.ts",
-            "title": "knob:receipts|bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a classmate at −17.9 (TEST SETUP) whose lead she took is cut 2 by the cast list to −19.9 for a plain player and 2.196 to −20.096 for one who keeps accounts, a Rival on her look",
+            "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a classmate at −17.9 (TEST SETUP) whose lead she took is cut 2 by the cast list to −19.9 for a plain player and 2.196 to −20.096 for one who keeps accounts, a Rival on her look",
             "kind": "command",
             "closes": "bondWound's reader. The cast list's −2 (10 − 12) crosses bondWord's Rival line for the twin who keeps accounts and not for the plain one, and the classmate look says ' Rival.' for her alone."
           }

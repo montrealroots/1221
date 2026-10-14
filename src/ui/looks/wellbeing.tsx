@@ -118,12 +118,14 @@ defineLook<Person>('person', {
     // traits were a sentence here and the conditions a row on Papers, and neither said what it moved).
     for (const id of person.personalityTraits ?? []) {
       const t = PERSONALITY_TRAIT_BY_ID[id];
-      if (t) ways.push({ to: at('trait', id), label: t.name, detail: t.description });
+      // Another person’s trait names them in its id, as a dial’s does; the player’s stays the trait’s own.
+      if (t) ways.push({ to: at('trait', isYou ? id : `${person.id}/${id}`), label: t.name, detail: t.description });
     }
+    // A condition another person carries names them in its id, as their trait does (from 2026-10-14).
     for (const c of Object.keys(person.health?.chronic ?? {}) as Condition[]) {
-      ways.push({ to: at('condition', c), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? 'Kept up, at what the plan leaves' : 'Left alone, and what that does' });
+      ways.push({ to: at('condition', isYou ? c : `${person.id}/${c}`), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? 'Kept up, at what the plan leaves' : 'Left alone, and what that does' });
     }
-    if (injuryOf(person, sim.now)) ways.push({ to: at('condition', 'injury'), label: 'An Injury', detail: 'What it is, till when, and what it keeps you from' });
+    if (injuryOf(person, sim.now)) ways.push({ to: at('condition', isYou ? 'injury' : `${person.id}/injury`), label: 'An Injury', detail: 'What it is, till when, and what it keeps you from' });
     if (isYou) {
       ways.push({
         to: at('plans'),
@@ -364,16 +366,25 @@ interface HeldTrait { person: Person; id: string }
 
 defineLook<HeldTrait>('trait', {
   gone: 'There’s no such trait.',
-  resolve: (sim, id) => (PERSONALITY_TRAIT_BY_ID[id] ? { person: sim.player, id } : undefined),
+  // The person the look is of: named in the id (`person/trait`, as a dial’s is), or the player. Until 2026-10-14 every
+  // trait resolved against the player, so the Curious way on another person’s look opened a look about the player,
+  // judged held by the player’s traits, parented to the player’s look (found by that day’s third round of evidence).
+  resolve: (sim, id) => {
+    const split = splitDialId(id);
+    const person = split ? personIn(sim, split.personId) : sim.player;
+    const trait = split ? split.key : id;
+    return person && PERSONALITY_TRAIT_BY_ID[trait] ? { person, id: trait } : undefined;
+  },
   seeds: (sim) => [...(sim.player.personalityTraits ?? [])],
-  look: ({ person, id }) => {
+  look: ({ person, id }, { sim }) => {
     const t = PERSONALITY_TRAIT_BY_ID[id]!;
+    const isYou = person.id === sim.universe.playerId;
     const held = (person.personalityTraits ?? []).includes(id);
     const mods = Object.entries(t.systemMods ?? {}) as [PersonalityKnob, number][];
     const times = (x: number) => `${x >= 1 ? '+' : '−'}${Math.round(Math.abs(x - 1) * 100)}%`;
     return {
       name: t.name,
-      kind: held ? 'A Trait You Hold' : 'A Trait',
+      kind: held ? (isYou ? 'A Trait You Hold' : 'A Trait They Hold') : 'A Trait',
       summary: t.description,
       parent: at('person', person.id),
       body: (
@@ -385,19 +396,19 @@ defineLook<HeldTrait>('trait', {
                   <tr key={knob}>
                     <td className="small">{KNOB_READS[knob]}</td>
                     <td className="num mono">{times(x)}</td>
-                    {held && <td className="num mono dim">{times(personalityOf(person, knob))} with all you are</td>}
+                    {held && <td className="num mono dim">{times(personalityOf(person, knob))} with all {isYou ? 'you' : 'they'} are</td>}
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <p className="small">It moves nothing SLATE draws: it says who you are.</p>
+            <p className="small">It moves nothing SLATE draws: it says who {isYou ? 'you' : 'they'} are.</p>
           )}
           <p className="small"><span className="dim">Its cost. </span>{t.cost}</p>
         </div>
       ),
       ways: [{ to: at('readiness', person.id), label: 'Readiness', detail: 'What the dials it moves come to' }],
-      provenance: 'Each figure is the trait’s own; “with all you are” is every trait and disposition you hold together, held inside its limits (`KNOB_LIMITS`).',
+      provenance: `Each figure is the trait’s own; “with all ${isYou ? 'you' : 'they'} are” is every trait and disposition ${isYou ? 'you' : 'they'} hold together, held inside its limits (\`KNOB_LIMITS\`).`,
     };
   },
 });
@@ -416,19 +427,27 @@ function leftAlone(c: Condition): string {
 
 defineLook<Carried>('condition', {
   gone: 'You don’t carry that now.',
-  resolve: (sim, id) => {
-    const person = sim.player;
+  // The person the look is of, named in the id (`person/condition`) as a trait’s is, or the player. Until 2026-10-14
+  // every condition resolved against the player, as the trait look did until earlier that day, so another person’s
+  // Depression opened a look of the player’s, or none when the player carried none (found by that day’s third round of
+  // evidence).
+  resolve: (sim, raw) => {
+    const split = splitDialId(raw);
+    const person = split ? personIn(sim, split.personId) : sim.player;
+    const id = split ? split.key : raw;
+    if (!person) return undefined;
     if (id === 'injury') return injuryOf(person, sim.now) ? { person, key: 'injury' } : undefined;
     return person.health?.chronic?.[id as Condition] ? { person, key: id as Condition } : undefined;
   },
   seeds: (sim) => [...Object.keys(sim.player.health?.chronic ?? {}), ...(injuryOf(sim.player, sim.now) ? ['injury'] : [])],
   look: ({ person, key }, { sim }) => {
+    const isYou = person.id === sim.universe.playerId;
     if (key === 'injury') {
       const hurt = injuryOf(person, sim.now)!;
       return {
         name: INJURY_KIND[hurt.kind].label,
         kind: 'An Injury',
-        summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? ', and keeps you off work and training till then' : ''}.`,
+        summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? `, and keeps ${isYou ? 'you' : 'them'} off work and training till then` : ''}.`,
         parent: at('person', person.id),
         ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: 'What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits' }],
         provenance: 'How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).',
@@ -438,12 +457,14 @@ defineLook<Carried>('condition', {
     const dial = key === 'depression' ? 'morale' : key === 'diabetes' ? 'condition' : key === 'arthritis' ? 'energy' : undefined;
     return {
       name: CONDITION_LABEL[key] + (key === 'diabetes' ? (state.typeOne ? ', Type 1' : ', Type 2') : ''),
-      kind: 'A Condition You Carry',
+      kind: isYou ? 'A Condition You Carry' : 'A Condition They Carry',
       summary: state.treated
-        ? (state.lapsed ? 'You keep it up, but this month’s care went unpaid, so it’s been left alone till next month.' : 'You keep it up: its care is paid each month at what your plan leaves.')
-        : 'You leave it alone, which costs nothing and does what’s below.',
+        ? (state.lapsed
+          ? `${isYou ? 'You keep' : 'They keep'} it up, but this month’s care went unpaid, so it’s been left alone till next month.`
+          : `${isYou ? 'You keep' : 'They keep'} it up: its care is paid each month at what ${isYou ? 'your' : 'their'} plan leaves.`)
+        : `${isYou ? 'You leave' : 'They leave'} it alone, which costs nothing and does what’s below.`,
       parent: at('person', person.id),
-      body: <p className="small">{leftAlone(key)} Kept up, it does none of that. Papers keeps it up or lets it go.</p>,
+      body: <p className="small">{leftAlone(key)} Kept up, it does none of that.{isYou ? ' Papers keeps it up or lets it go.' : ''}</p>,
       ways: dial ? [{ to: at('dial', `${person.id}/${dial}`), label: dial[0]!.toUpperCase() + dial.slice(1), detail: 'The dial it takes from, left alone' }] : [],
       provenance: `Drawn once at the start of a life, at a young adult’s rates. Source: ${CHRONIC.source}.`,
     };

@@ -589,6 +589,18 @@ describe('school.call', () => {
     expect(titled(sim, `The Director’s Note: ${CARLOTTA}`).map((n) => n.body)).toEqual([RUN_GONE]);
   });
 
+  // From 2026-10-14, when an understudy’s run first closed at its last night on call: until then it never closed.
+  it('closes the Rep run of an understudy never sent on at its last night on call, 27 March: no milestone from the run-through, and the note says she covered it', () => {
+    const sim = fromText(carlotta().beforeRun);
+    const rep = sim.player.school!.rep! as Closed;
+    expect([rep.production, rep.role, rep.kind, rep.performed]).toEqual(['The Seagull', 'Nina', 'understudy', 0]);
+    expect(rep.closed).toBe(at(2027, 3, 27, 20));
+    const covered = 'You covered Nina on call through the run and didn’t go on. The work you did in the room isn’t lost.';
+    expect(rep.note).toBe(covered);
+    expect(journeyOf(sim.player).milestones.filter((m) => m.kind === 'run')).toEqual([]);
+    expect(titled(sim, 'The Director’s Note: The Seagull').map((n) => n.body)).toEqual([covered]);
+  });
+
   it('shows the director’s note of a run played without them on the Casting tab, as it shows one with nights', () => {
     const sim = fromText(carlotta().beforeRun);
     // TEST SETUP: in hospital over each curtain, as above.

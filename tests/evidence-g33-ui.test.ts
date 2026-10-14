@@ -380,7 +380,9 @@ describe('h-papers', () => {
   it('three days past its day unfiled: “$174 to pay, a late penalty in it”, $165.60 and 5% for a month or part, $8.28', () => {
     const sim = feb1();
     sim.advanceTo(DUE + 3 * MS_DAY);
-    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. The 2026 return is due April 15, 2027, $174 to pay, a late penalty in it. Papers How This Works');
+    // Three days gone, it “was due”: until 2026-10-14 this held the alert to “is due April 15, 2027”, a date past
+    // (tests/evidence3-home.test.ts, h-papers).
+    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. The 2026 return was due April 15, 2027, $174 to pay, a late penalty in it. Papers How This Works');
     // What Needs You says what weighs once nothing is waiting there: the notices marked read with its own button.
     const mark = h.buttons.filter((b) => /^Mark \d+ Read$/.test(b.text));
     expect(mark).toHaveLength(1);

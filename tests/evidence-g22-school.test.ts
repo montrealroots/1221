@@ -484,7 +484,9 @@ describe('school.summer', () => {
     // The spring's Carlotta run, closed on 12 May, is on stage beside it (from 2026-10-13: until then a closed run wasn't,
     // until the fall's casting filed its credit).
     expect(drawn(ward, ProfileWorkspace).shown).toContain(`On stage: ${wshow.role} in ${wshow.play}, Yale Summer Cabaret 2027, 2027; `);
-    expect(drawn(ward, ProfileWorkspace).shown).toMatch(/ in Carlotta Festival Of New Plays, 2027\./);
+    // And the Rep’s Seagull, closed on 27 March, where she went on once as Nina, is after it (from 2026-10-14: until then
+    // an understudy’s run was never closed, and this test asserted the Carlotta run as the last on stage).
+    expect(drawn(ward, ProfileWorkspace).shown).toMatch(/ in Carlotta Festival Of New Plays, 2027; Nina in The Seagull, 2027\./);
 
     // Kept through a save; credited once.
     const back = reload(ward);

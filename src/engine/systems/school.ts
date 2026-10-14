@@ -2722,8 +2722,6 @@ function cast(sim: Simulation, person: Person, term: number): void {
       if (wd === 1) continue;
       reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: 180, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
     }
-    const final = reps.filter((r) => r.call === 'performance').at(-1);
-    if (final) final.last = true;
     repStaged = { name: rep.name, understudy: !inRole };
     // An understudy's run-through: the understudies play the show once for the
     // director and stage management, on the dark Monday of the run's second
@@ -2755,6 +2753,12 @@ function cast(sim: Simulation, person: Person, term: number): void {
     return minutes >= 120 ? [{ ...c, minutes }] : [];
   });
   const keptReps = reps.filter((r) => !(r.call === 'oncall' && keptOurs.some((c) => c.call === 'performance' && overlaps(c, r))));
+  // The run’s last night, played or on call, closes it (`closeRun`). Until 2026-10-14 only a performance was marked, so
+  // an understudy’s run, all on call, was never closed: sent on once as Nina in The Seagull, which ran to 27 March 2027,
+  // she read “No production yet.” on School Journey until the next casting filed the credit in August (found by that
+  // day’s third round of evidence). Marked among the nights kept, so a night on call a School performance took isn’t it.
+  const final = keptReps.filter((r) => r.call === 'performance' || r.call === 'oncall').at(-1);
+  if (final) final.last = true;
   // Each production's rehearsals numbered and staged on the calls it keeps (from 2026-10-12). Until then they were
   // staged before the overlap filter dropped any, so a call numbered 4 of 20 could be the student's second of eight, the
   // par counted calls never given, and the technical and the dress could be among the dropped: measured on seed 'of-a',
@@ -2764,7 +2768,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   for (const c of [...keptOurs, ...keptReps]) {
     // A night on call is a call at five (`ESTIMATE.onCallAt`), in New Haven and reachable, and needs nobody at the theater unless they're sent on. Until 2026-09-28 it held the evening at the theater and stopped the clock every performance night.
     if (c.call === 'oncall') {
-      schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, which: 'rep' } });
+      schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, which: 'rep', ...(c.last ? { last: true } : {}) } });
       continue;
     }
     schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}), ...(c.last ? { last: true } : {}), ...(c.stage ? { stage: c.stage, n: c.n, of: c.of } : {}) } });
@@ -3283,14 +3287,20 @@ export function registerSchool(sim: Simulation): void {
     const done = casting as Run & { closed?: Instant };
     if (done.closed !== undefined) return;
     done.closed = at;
-    const runNights = (person.work ?? []).filter((w) => w.task === 'performance' && w.what === (casting.play ?? casting.production) && w.at > at - 120 * MS_DAY);
+    // An understudy never sent on played no night of the run: the run-through for the director, judged as a night, isn’t
+    // one, and makes no milestone or director’s note of its own (from 2026-10-14, when an understudy’s run first closed).
+    const wentOn = casting.kind !== 'understudy' || ((casting as Partial<Casting>).performed ?? 0) > 0;
+    const runNights = wentOn ? (person.work ?? []).filter((w) => w.task === 'performance' && w.what === (casting.play ?? casting.production) && w.at > at - 120 * MS_DAY) : [];
     if (runNights.length) milestone(person, { at, kind: 'run', what: `${casting.role}, ${casting.play ?? casting.production}`, overall: Math.round(runNights.reduce((a, w) => a + w.overall, 0) / runNights.length * 10) / 10, detail: Object.entries(casting.nights ?? {}).map(([b, n]) => `${n} ${b}`).join(', ') });
     // What held the nights back most, ability or technique, by what it cost the whole.
     const held = new Map<string, { label: string; whole: number }>();
     for (const w of runNights) for (const l of w.limits) if (l.kind === 'ability' || l.kind === 'technique') { const h = held.get(l.what) ?? { label: l.label, whole: 0 }; h.whole += l.whole ?? l.by / 4; held.set(l.what, h); }
     const top = [...held.values()].sort((a, b) => b.whole - a.whole)[0];
     const workOn = top && top.whole / Math.max(1, runNights.length) >= 0.5 ? ` Work on your ${top.label.toLowerCase()}: it held the nights back most.` : '';
-    casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}))}${workOn}` : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
+    // An understudy who never went on missed no night, and the note says so.
+    casting.note = runNights.length ? `${directorsNote(nightsMean(casting.nights ?? {}))}${workOn}`
+      : !wentOn ?`You covered ${casting.role} on call through the run and didn’t go on. The work you did in the room isn’t lost.`
+        : `The run went on without you: the nights you missed are in the record, and the work you did in the room isn’t lost.`;
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `The Director’s Note: ${casting.play ?? casting.production}`, body: casting.note, importance: 70, route: '/workspace/school' });
     // And the process looked back on, its open notes carried into class (`reflect`, from 2026-10-08).
     reflect(s, person, casting, casting.play ?? casting.production);
@@ -3330,19 +3340,24 @@ export function registerSchool(sim: Simulation): void {
       // call left none, and `school.review_blocking` refused, where an unexcused one could be caught up).
       if (call === 'rehearsal') callMissed(casting, (item.payload.stage as Stage | undefined) ?? 'work', Number(item.payload.of ?? 0));
       if (call === 'performance' && item.payload.last === true) closeRun(s, person, casting, item.at);
+      // An understudy’s last night on call closes the run at its curtain, as a last performance does (from 2026-10-14).
+      if (call === 'oncall' && item.payload.last === true) closeRun(s, person, casting, Number(item.payload.perfAt));
       return;
     }
     if (call === 'oncall' && item.payload.check === true) {
       // At five: most nights they aren't needed, and the evening is theirs.
       const curtain = Number(item.payload.perfAt);
-      if (!goesOn(s, person, curtain)) { item.status = 'cancelled'; return; }
+      const last = item.payload.last === true;
+      if (!goesOn(s, person, curtain)) { item.status = 'cancelled'; if (last) closeRun(s, person, casting, curtain); return; }
       if (person.currentLocationId !== YALE_DRAMA.cityId) {
         school.tally.calls += 1;
         breach(s, person, `weren’t in New Haven when called to go on as ${casting.role}`);
+        if (last) closeRun(s, person, casting, curtain);
         return;
       }
-      // Sent on: the night's performance is theirs, on the calendar from now, with three hours' notice.
-      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: 180, payload: { call: 'performance', which: 'rep', wentOn: true } });
+      // Sent on: the night’s performance is theirs, on the calendar from now, with three hours’ notice, and on the last
+      // night it closes the run when played or missed.
+      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: 180, payload: { call: 'performance', which: 'rep', wentOn: true, ...(last ? { last: true } : {}) } });
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You’re On Tonight As ${casting.role}`, body: `The role’s actor is out: you go on in Yale Rep’s ${casting.production} tonight at ${formatTime(curtain, zone())}.`, importance: 95, route: '/workspace/school' });
       return;
     }

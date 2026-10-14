@@ -517,11 +517,16 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
   const home = homeOf(person);
   // The union plans read the quarter's and the twelve months' acting work here, and COBRA kept one lost, until
   // 2026-10-09: nothing earns them since the career went.
-  // Out of status, a marketplace plan ends with the month (`lawfullyPresent`, from 2026-10-09).
+  // Out of status, a marketplace plan ends with the month (`lawfullyPresent`, from 2026-10-09), and one bought ahead
+  // never begins. Until 2026-10-14 that one was told “Your Marketplace Plan Has Ended” and had cover counted lost
+  // (`lostAt`), for a plan that never covered her: an F-1 who enrolled in her grace on 2 October for 1 December, out of
+  // status on 17 October, was told so on 1 November (found by that day’s third round of evidence). Covered
+  // Connecticut’s and the Essential Plan’s notice has said it won’t begin since 2026-10-13 (below).
   if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {
+    const begun = h.marketplace.from <= at;
     h.marketplace.until = at;
-    h.lostAt = at;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Marketplace Plan Has Ended', body: 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.', importance: 80, route: '/workspace/papers' });
+    if (begun) h.lostAt = at;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: begun ? 'Your Marketplace Plan Has Ended' : 'Your Marketplace Plan Won’t Begin', body: 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.', importance: 80, route: '/workspace/papers' });
   }
   const prog = h.program;
   // And so do the Essential Plan and Covered Connecticut, which are the lawfully present’s as the marketplace is
@@ -608,7 +613,17 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const way = chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back`
       : !lawfullyPresent(person) && state ? `Out of status, neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
         : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(at, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
+    // Uncovered from when the last cover in force ended, which can be after last month’s look and before this one’s:
+    // Yale Health ends at the hour its days run out. Until 2026-10-14 the notice gave this look’s day, so an F-1 who
+    // withdrew on 2 October, Yale Health ended at eight on 1 November, was told on 1 December that she was uncovered
+    // from December 1 (found by that day’s third round of evidence). A plan that never began isn’t cover that ended, and
+    // Yale Health canceled back to its term’s start by a withdrawal in the first fifteen days ended there.
+    const lapse = (person.school?.uncovered ?? []).find((g) => at >= g.from && (g.until === undefined || at < g.until));
+    const yaleEnd = lapse ? lapse.from : yale;
+    const ends = [yaleEnd !== undefined && Number.isFinite(yaleEnd) ? yaleEnd : undefined, ...[h.program, h.marketplace].map((r) => (r?.until !== undefined && r.from < r.until ? r.until : undefined))];
+    const uncoveredFrom = Math.max(...ends.filter((e): e is Instant => e !== undefined && e <= at), Number.NEGATIVE_INFINITY);
+    const from = Number.isFinite(uncoveredFrom) ? uncoveredFrom : at;
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(from, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
   }
   h.covered = cover !== undefined;
   // A medical debt a year past due, $500 or more, goes on the record, outside the states that bar it. The notice reads
