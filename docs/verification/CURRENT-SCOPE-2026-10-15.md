@@ -123,4 +123,4 @@ every playthrough was tested: what passed is listed above, and what wasn't is li
 
 ## Repository
 
-Branch `claude/current-scope-acceptance`, from `bef4bde5`. Committed and pushed, with a pull request opened for review; **not merged to `main` and not deployed**, neither authorized by the brief.
+Branch `claude/current-scope-acceptance`, from `bef4bde5`. Committed and pushed. The pull request was prepared and not opened: the GitHub CLI wasn’t signed in on this machine, so it is opened from the branch on GitHub. **Not merged to `main` and not deployed**, neither authorized by the brief.

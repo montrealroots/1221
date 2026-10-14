@@ -1,7 +1,7 @@
 # Read First: The Current Scope Completed, 2026-10-15
 
 The owner's brief of 2026-10-15 ("SLATE: Complete The Remaining Current-Scope Work And Prove Acceptance"), done on
-`claude/current-scope-acceptance` from `main` at `bef4bde5`. Committed and pushed, with a pull request opened for review; **not merged to `main` and not deployed**, neither authorized by the brief. The account is
+`claude/current-scope-acceptance` from `main` at `bef4bde5`. Committed and pushed. The pull request was prepared and not opened: the GitHub CLI wasn’t signed in on this machine, so it is opened from the branch on GitHub. **Not merged to `main` and not deployed**, neither authorized by the brief. The account is
 `docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open row's checklist and result are in `docs/verification/scope/`.
 
 **This section is the current status.** Every section below it is history, marked **Superseded** in place where it
