@@ -4,6 +4,13 @@
 read its Resume Here first. Every section below is history. Until later on 2026-10-16 this section said banking modules
 6 and 7 and attributes phase 2b were mid-work and uncommitted, and that the gate hadn't run; all three changed that day.
 
+- **Banking, closed (2026-10-16, later):** the open defects and the skeptics' review are done
+  (`docs/verification/banking-2026-10-16/open-defects.md`, `skeptics.md`), on `claude/zen-mccarthy-i88ujw` at
+  `2553644`, pushed, not merged. The home current account opens with its own fees until graduation; until then 21 of 54
+  banks overdrew and closed it in an idle life. The full gate passed on `2553644`: 340 files and 4,133 tests, typecheck,
+  lint, and all seventeen checks exit 0, read from a file, run in a cloud container (Linux), not the owner's PowerShell
+  machine. That container had no stash, worktrees or untracked root files. The built app hasn't run since modules 6 and
+  7. Next: attributes phase 2c.
 - **Banking, done (modules 1 to 7):** an eligible student keeps a pre-existing account at a real bank in their home
   country beside the US one (the owner's decision of 2026-10-16; birthplace alone grants nothing; no travel or
   relocation): 60 banks' researched terms, the ledger's own figure for another currency, the eligibility rule and the

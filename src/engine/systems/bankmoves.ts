@@ -284,6 +284,8 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   if (checkingsOf(sim, person).length < 2) return 'It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.';
   if (account.id === person.primaryAccountId) return 'It’s your primary account. Make another primary first.';
   if (account.balance < 0) return `It’s overdrawn by ${formatMoney(-account.balance, saveCurrency(sim.universe))}. The bank closes it only once that’s paid.`;
+  // A fee for a customer abroad owed where the account can't go below zero is the same debt (from 2026-10-16).
+  if (account.feeOwedHeld) return `Its fee for a customer abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}, is owed. The bank closes it only once that’s paid.`;
   if (transfersOf(sim, person).some((t) => t.fromId === account.id || t.toId === account.id)) return 'Money is on its way into or out of it. Wait until it arrives.';
   const links = linkedTo(sim, person, account.id);
   if (links.length > 0) return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;

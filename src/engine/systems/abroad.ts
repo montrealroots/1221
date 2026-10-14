@@ -30,7 +30,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
 import { addDays, dateKey, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { exchange } from '../content/currency';
+import { exchange, exchangeHeld } from '../content/currency';
 import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDaysIn, daysOfAccount } from '../content/bankdays';
 import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, US_REPORTS, type AbroadTerms, type Charge } from '../content/homeaccounts';
@@ -108,6 +108,10 @@ export function homeAccountLines(sim: Simulation, account: Account): string[] {
     const every = fee.months === 1 ? 'a month' : fee.months === 3 ? 'a quarter' : fee.months === 24 ? 'every two years' : `every ${fee.months} months`;
     const spared = fee.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < fee.ageBelow ? `, not yet: it doesn’t charge one under ${fee.ageBelow}` : '';
     lines.push(`For a customer abroad ${bank.name} charges ${formatMoney(fee.amount, bank.currency)} ${every}${spared}.`);
+    // The savings named only where there are some (from 2026-10-16: until then said to a life that kept none there).
+    const saved = Object.values(sim.universe.accounts).some((a) => a.ownerId === account.ownerId && !a.closedAt && a.bankId === bank.id && a.kind === 'savings');
+    if (fee.unpaid) lines.push(saved ? `It takes it from this account, or from your savings at ${bank.name} when this one doesn’t hold it.` : 'It takes it from this account.');
+    if (account.feeOwedHeld) lines.push(`${formatMoney(account.feeOwedHeld, bank.currency)} of it is owed, taken the first night either account holds it. ${fee.unpaid}`);
   }
   const abroad = terms?.abroad;
   if (account.kind === 'checking') {
@@ -139,7 +143,7 @@ function toSave(sim: Simulation, amount: Money, currency: string): Money {
 }
 function fromSave(sim: Simulation, amount: Money, currency: string): Money {
   const save = saveCurrency(sim.universe);
-  return currency === save ? amount : swap(amount, save, currency) ?? amount;
+  return currency === save ? amount : exchangeHeld(amount, save, currency) ?? amount;
 }
 
 /**
@@ -186,6 +190,37 @@ export function nonResidentFeeDue(sim: Simulation, account: Account, at: Instant
   }
   const currency = bankById(account.bankId!)!.currency;
   return { native: fee.amount, fee: toSave(sim, fee.amount, currency) };
+}
+
+/**
+ * Takes a fee for a customer abroad, with whatever of it is owed (from 2026-10-16: until then the month's end posted it
+ * on the current account whatever it held). At a bank whose account can't go below zero (`NonResidentFee.unpaid`), from
+ * the current account where it holds the whole, else from the holder's other account at the bank that does: in SLATE
+ * both are the same ordinary deposit, where the bank's own books debit one representative account, SLATE's reading. Where
+ * neither holds it, nothing is charged and the whole is owed on the current account (`feeOwedHeld`). The month's end
+ * calls it with the month's fee, and each night with none, which takes what's owed once it's held.
+ */
+export function chargeAbroadFee(sim: Simulation, account: Account, native: Money): void {
+  const due = native + (account.feeOwedHeld ?? 0);
+  if (due <= 0) return;
+  let from: Account | undefined = account;
+  if (homeTerms(account.bankId!)?.nonResidentFee?.unpaid && heldOf(account) < due) {
+    from = Object.values(sim.universe.accounts).find((a) => a.id !== account.id && !a.closedAt && a.ownerId === account.ownerId && a.bankId === account.bankId && a.kind === 'savings' && heldOf(a) >= due);
+    if (!from) {
+      account.feeOwedHeld = due;
+      return;
+    }
+  }
+  // Where the fee is the last of what it held, the last of its balance too, so it's empty in both figures.
+  const save = from.currency && from.held === due ? from.balance : toSave(sim, due, bankById(from.bankId!)!.currency);
+  sim.post({
+    memo: `Fee for a customer abroad: ${from.name}`, category: 'bank_fee',
+    postings: [
+      { accountId: from.id, amount: -save, ...(from.currency ? { native: -due } : {}) },
+      { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: save },
+    ],
+  });
+  delete account.feeOwedHeld;
 }
 
 /** Why a bank's card can't be the one used here, or nothing. */
@@ -300,6 +335,9 @@ export function abroadQuote(sim: Simulation, person: Person, from: Account, to: 
   const out = abroadTermsOf(fromBank.id);
   const into = abroadTermsOf(toBank.id);
   if (out?.outRefused) return { refused: out.outRefused };
+  // Its fee for a customer abroad unpaid, at a bank that then stops its payments abroad.
+  const owing = checkingsOf(sim, person).find((a) => a.bankId === fromBank.id && (a.feeOwedHeld ?? 0) > 0);
+  if (owing) return { refused: `${homeTerms(fromBank.id)!.nonResidentFee!.unpaid!} ${formatMoney(owing.feeOwedHeld!, fromBank.currency)} of it is owed, taken the first night an account there holds it.` };
   if (!out?.out) return { refused: `SLATE has no research on what ${fromBank.name} charges to send a payment abroad.` };
   if (!into?.incoming) return { refused: `SLATE has no research on what ${toBank.name} charges for a payment received from abroad.` };
   if (!(sent > 0)) return { refused: 'Say how much to send.' };
@@ -474,7 +512,10 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   }
   const mineNow = person.id === sim.universe.playerId;
   if (current.balance < 0) {
-    if (mineNow) sim.notify({ category: 'bank', title: `${bank.name} Didn’t Close Your Account`, body: `It’s overdrawn by ${heldText(sim, current, -heldOf(current))}, and the bank closes it only once that’s paid.`, importance: 60, route: '/workspace/bank' });
+    // Tried again each day until it's paid, said once (from 2026-10-16: until then never again, so a Barclays account
+    // paid off stayed open for good, and once the done closing was pruned a reload announced its passed date again).
+    if (mineNow && !item.payload.retrying) sim.notify({ category: 'bank', title: `${bank.name} Didn’t Close Your Account`, body: `It’s overdrawn by ${heldText(sim, current, -heldOf(current))}, and the bank closes it once that’s paid.`, importance: 60, route: '/workspace/bank' });
+    sim.schedule({ at: addDays(sim.now, 1, sim.homeZone), kind: HOME_CLOSES_KIND, label: item.label, category: 'home', priority: 36, payload: { ...item.payload, retrying: true } });
     return;
   }
   const into = checkingsOf(sim, person).find((a) => !heldFromAbroad(sim, a));

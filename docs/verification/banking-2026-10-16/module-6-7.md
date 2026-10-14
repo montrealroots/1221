@@ -71,7 +71,13 @@ neither, which reads as nothing to report.
 `tests/home-account-tax.test.ts`, 6 tests, and `tests/home-account-screens.test.ts`, 3 tests, all passing. Each life was
 made with `createSave` on `newLifeConfig` with Before Yale's fields and played on the clock, to the 2026 return on
 1 February 2027 for the tax; each screen was drawn with react-dom/server. Every figure was worked by hand, as each
-file's header shows:
+file's header shows. The SMBC figures below were what the tests asserted when this was written; later on 2026-10-16
+two of them turned out to rest on defects (`open-defects.md`). SMBC's fee overdrew the empty current account, and the
+overdraft's set-off settled the savings' interest early on 31 October and 31 December: the 472¢ and 589¢, and the
+wealthy citizen's 27,613¢ and 34,423¢, were those settlements. The tests now assert August's interest alone, 53¢ and 8¢
+for the F-1, and 3,168¢ and 485¢ for the wealthy citizen, with a credit of 162¢ at $30,000 of wages and the whole 485¢
+at $250,000; Form 8938's figures are $413,070 at most and $413,063 on 31 December. The mutations below were killed
+against the figures then:
 
 - An F-1 student raised in Tokyo, at SMBC: 54¢, 472¢ and 589¢ of interest, Japan's 8¢, 72¢ and 90¢ taken (15.315%,
   each rounded), recorded as `{ JP: { gross: 1,115, withheld: 170 } }`. The 1040-NR's income was the work-study and the
@@ -153,9 +159,11 @@ Yale card and Move Money had nothing past the right edge at 390. The two skips w
   Schedule B's foreign-account question isn't asked. A US person living abroad (8938's higher lines) or married isn't a
   Yale life.
 - A peak is the day's end: money in and out within a day isn't seen.
-- SMBC's ¥220 for a customer abroad is charged on the current account, which opens at nothing, so it goes overdrawn by
-  ¥220 a month (module 4's). The notice reads an overdrawn account as nothing, but the account itself is a defect.
-- The home savings' statements list every month back to its backdated opening (2018), each empty.
-- After a reload, Your Banks says "Your everyday card’s autopay pays from it." for Chase where it didn't before; seen in
-  the screens' test, not caused by a home account, and not looked into.
+- SMBC's ¥220 for a customer abroad was charged on the current account, which opens at nothing, so it went overdrawn
+  by ¥220 a month (module 4's). Fixed later on 2026-10-16 (`open-defects.md`): it comes from the savings at the bank, or
+  it's owed and payments abroad stop, as SMBC's terms say.
+- The home savings' statements listed every month back to its backdated opening (2018), each empty. Fixed the same
+  day: they start at the month the life began.
+- After a reload, Your Banks said "Your everyday card’s autopay pays from it." for Chase where it hadn't before. It was
+  looked into the same day: the line was missing before anything pinned the autopay, and is there now from the start.
 - The conditions an account is kept on are taken as met (`docs/UNBITTEN.md`).

@@ -93,7 +93,7 @@ import { markRecord } from './credit';
 import { openingOf, usPerson } from './bankmoves';
 import { hasSsn } from './taxid';
 import { pendingOn } from './pending';
-import { abroadRefusal, cardFeeAbroad } from './abroad';
+import { abroadRefusal, balanceText, cardFeeAbroad, heldOf } from './abroad';
 
 export const LOAN_DUE_KIND = 'bank.loan_due';
 export const SWITCH_KIND = 'bank.switch_complete';
@@ -255,20 +255,29 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   const days = (sim.now - current.negativeSince) / MS_DAY;
   const past = Math.max(0, -current.balance - (current.overdraftLimit ?? 0));
   const cur = saveCurrency(sim.universe);
+  // An account kept in another currency is written in it, the dollars beside (from 2026-10-16: until then a Parisian's
+  // account at BNP Paribas, kept from home, was written to in dollars alone). With no limit, which no account abroad
+  // can arrange, what's past it is the bank's own figure exactly.
+  const money = (m: Money) => {
+    if (!current.currency) return formatMoney(m, cur);
+    const own = m === -current.balance ? -heldOf(current) : exchange(m, cur, current.currency);
+    return balanceText(sim, current, m, own);
+  };
   const player = person.id === sim.universe.playerId;
   if (days >= FRANCE.informAfterDays && !current.overrunInformed) {
     current.overrunInformed = true;
     const terms = lendingOf(bank).overdraft;
     const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` at ${(terms.rate * 100).toFixed(2)}% a year` : '';
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${formatMoney(past, cur)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${money(past)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
   }
   const loan = lendingOf(bank).loan;
   // Not where a loan is held at this bank (from 2026-10-12: until then a loan at any bank stopped the offer, though a
   // person may hold one at each bank since 2026-10-10).
-  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id)) {
+  // Not offered by a bank abroad, which opens nothing new for a customer abroad (`abroadRefusal`, from 2026-10-16).
+  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id) && !abroadRefusal(person, bank)) {
     const apr = loan.to ?? loan.from;
     current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${formatMoney(past, cur)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${formatMoney(monthlyPayment(past, apr, FRANCE.offerMonths), cur)} a month. Take it from Your Bank.`, importance: 75 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${money(past)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${money(monthlyPayment(past, apr, FRANCE.offerMonths))} a month. Take it from Your Bank.`, importance: 75 });
   }
   if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
     current.closingNoticed = true;
@@ -810,7 +819,14 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
       && (dormant.belowBalance === undefined || account.balance < inSaveMoney(sim, dormant.belowBalance, bank.currency))
       && (account.dormantFeeAt === undefined || sim.now - account.dormantFeeAt >= 365 * MS_DAY)) {
       account.dormantFeeAt = sim.now;
-      charge(sim, account, inSaveMoney(sim, dormant.yearly, bank.currency), 'Dormant account fee', 'bank_fee', 'Bank Fees');
+      // A Japanese ordinary deposit has no overdraft (SMBC's rule in the research, `NonResidentFee.unpaid`): the fee takes
+      // no more than the account holds, SLATE's reading (from 2026-10-16: until then it took an empty account below zero,
+      // and the overdraft's set-off closed it).
+      // In the bank's own figure where the account is kept in its money, from 2026-10-16.
+      const yearly = inSaveMoney(sim, dormant.yearly, bank.currency);
+      const capped = bank.iso === 'JP' && yearly > account.balance;
+      const fee = capped ? Math.max(0, account.balance) : yearly;
+      if (fee > 0) charge(sim, account, fee, 'Dormant account fee', 'bank_fee', 'Bank Fees', capped ? undefined : dormant.yearly);
     }
   }
   if (current.secondChance) charge(sim, current, inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), 'Second chance account fee', 'bank_fee', 'Bank Fees');
@@ -818,7 +834,9 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
   if (quiet && current.openedAt < monthStart) {
     const month = transactionsBetween(sim, current, monthStart, sim.now);
     if (month.count < quiet.minTransactions && !(quiet.unlessWages && month.wages)) {
-      charge(sim, current, inSaveMoney(sim, quiet.fee, bank.currency), 'Quiet month fee', 'bank_fee', 'Bank Fees');
+      // In the bank's own figure where the account is kept in its money (from 2026-10-16: until then worked back from the
+      // dollars, and thirty-four of Santander México's drifted 68 centavos past what they come to).
+      charge(sim, current, inSaveMoney(sim, quiet.fee, bank.currency), 'Quiet month fee', 'bank_fee', 'Bank Fees', quiet.fee);
     }
   }
 }
@@ -940,27 +958,54 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   // The current account at the bank closing it (from 2026-10-10: until then the primary one, wherever it was).
   const current = checkingAt(sim, person, bank.id);
   if (!current) return;
-  for (const account of mine) settleInterest(sim, account, `Interest: ${account.name}, on closing`);
+  // Where what they hold there covers it and they bank elsewhere in the country they live in too, the current account
+  // closes, as the charged-off branch below closes it (from 2026-10-16: until then it stayed open, though France's notice
+  // had said it closes). Not for one kept at home abroad, which can't take their wages.
+  const elsewhereAtAll = checkingsOf(sim, person).find((a) => a.bankId !== bank.id && bankById(a.bankId ?? '')?.iso === isoOf(homeOf(person)));
+  const closes = (account: Account) => account.negativeSince !== undefined && (account.id !== current.id || elsewhereAtAll !== undefined);
+  // The interest is settled before the set-off, so it's set off too; on an account staying open it says so.
+  for (const account of mine) settleInterest(sim, account, `Interest: ${account.name}, ${closes(account) ? 'on closing' : 'before the set-off'}`);
   // Set-off: what's owed on any account there is gathered on the current
   // account, and what's held there goes against it, as much as it takes.
-  const setOff = (from: Account, amount: Money) => {
-    if (amount !== 0) post(sim, 'Set off against the overdraft', 'transfer', [{ accountId: from.id, amount: -amount }, { accountId: current.id, amount }]);
+  // Between two accounts in the bank's own money where it isn't the save's, that figure goes on both sides, so each
+  // clears exactly in both (from 2026-10-16: until then each side worked out its own, and ¥441 left SMBC's savings to
+  // cover ¥440).
+  const setOff = (from: Account, amount: Money, held?: Money) => {
+    const own = (n: Money) => (held !== undefined ? { native: n } : {});
+    if (amount !== 0) post(sim, 'Set off against the overdraft', 'transfer', [{ accountId: from.id, amount: -amount, ...own(-held!) }, { accountId: current.id, amount, ...own(held!) }]);
   };
-  for (const account of mine) if (account.id !== current.id && account.balance < 0) setOff(account, account.balance);
+  const shared = (account: Account) => account.currency !== undefined && account.currency === current.currency;
+  for (const account of mine) if (account.id !== current.id && account.balance < 0) setOff(account, account.balance, shared(account) ? account.held ?? 0 : undefined);
   for (const account of mine) {
-    if (account.id !== current.id && account.balance > 0 && current.balance < 0) setOff(account, Math.min(account.balance, -current.balance));
+    if (account.id === current.id || account.balance <= 0 || current.balance >= 0) continue;
+    if (!shared(account)) { setOff(account, Math.min(account.balance, -current.balance)); continue; }
+    // The whole debt where the account holds it, else the whole account.
+    const covers = (account.held ?? 0) >= -(current.held ?? 0);
+    setOff(account, covers ? -current.balance : account.balance, covers ? -(current.held ?? 0) : account.held ?? 0);
   }
   const owed = Math.max(0, -current.balance);
   const cur = saveCurrency(sim.universe);
   if (owed === 0) {
     // What the person holds there covered it: the bank takes it, closes
-    // the account that ran below zero, and nothing is charged off.
+    // the accounts that ran below zero, and nothing is charged off. The
+    // current account closes only where they keep one at another bank, and
+    // its payments go there. Until 2026-10-16 the current account never
+    // closed here, and the notice said the bank had closed it either way.
+    const closed: Account[] = [];
     for (const account of mine) {
-      if (account.id !== current.id && account.negativeSince !== undefined) account.closedAt = sim.now;
+      if (closes(account)) { account.closedAt = sim.now; account.overdraftLimit = undefined; closed.push(account); }
       account.negativeSince = undefined;
     }
+    // Only where the current account closed: one that never ran below zero, beside a savings account that did, stays
+    // open, a guard no played life reaches since a savings account can't be taken below zero (2026-09-27).
+    if (current.closedAt !== undefined && elsewhereAtAll) {
+      if (person.primaryAccountId === current.id) person.primaryAccountId = elsewhereAtAll.id;
+      redirectAway(sim, person, current.id, elsewhereAtAll.id);
+    }
     if (person.id === sim.universe.playerId) {
-      sim.notify({ category: 'bank', title: `${bank.name} Closed An Account`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there and closed it.`, importance: 60 });
+      const kept = mine.filter((a) => a.closedAt === undefined);
+      const which = `${closed.length > 0 ? ` It closed ${closed.map((a) => a.name).join(' and ')}.` : ''}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}`;
+      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.${which}`, importance: 60 });
     }
     return;
   }
@@ -972,7 +1017,10 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   });
   post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
   for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
-  if (person.credit) {
+  // On the record only for a bank in the country they live in, whose bureaus keep it (from 2026-10-16: until then a
+  // bank kept at home abroad marked the American record for 13¢ it charged off).
+  const onRecord = bank.iso === isoOf(homeOf(person));
+  if (person.credit && onRecord) {
     markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.currentLocationId, (saveCurrency(sim.universe) === 'MXN' ? owed : exchange(owed, saveCurrency(sim.universe), 'MXN') ?? owed) / 100);
     person.credit.late = [...person.credit.late, sim.now];
   }
@@ -999,7 +1047,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
-      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your record' : ''}; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
       importance: 90,
     });
   }
@@ -1353,6 +1401,10 @@ export function registerLending(sim: Simulation): void {
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const offer = current?.creditOffered;
     if (!bank || !current || !offer) throw new CommandError('Your bank has offered no loan for an overrun.');
+    // Not at a bank abroad, which opens nothing new for a customer abroad (from 2026-10-16: until then BNP Paribas lent
+    // a student living in America euros kept as dollars, and a short payment went on the American record).
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     // A loan at that bank (from 2026-10-12: until then at any bank).
     if (loanOf(s, person, bank.id)) throw new CommandError('You already have a loan with the bank.');
     const payment = monthlyPayment(offer.amount, offer.apr, offer.months);

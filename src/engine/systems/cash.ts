@@ -42,7 +42,7 @@ import { CASH } from '../content/cash';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { cardFor, cardRoom, cardTerms, stateOf } from './credit';
 import { planLeftOf, transferRate } from './cardoffers';
-import { atmAbroad, heldFromAbroad } from './abroad';
+import { atmAbroad, balanceText, heldFromAbroad } from './abroad';
 
 export type CashFrom = 'atm' | 'other_atm' | 'counter' | 'post_office' | 'card';
 export type CashTo = 'counter' | 'atm' | 'post_office';
@@ -135,7 +135,8 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   if (abroad) {
     const here = OWNER_SURCHARGE[isoHere(person) ?? ''];
     const owner = here ? inSave(sim, here.fee, here.currency) : 0;
-    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} holds ${formatMoney(Math.max(0, current.balance), cur)}.` };
+    // In its own money, the dollars beside (from 2026-10-16: until then in dollars alone).
+    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} holds ${balanceText(sim, current, Math.max(0, current.balance), Math.max(0, current.held ?? 0))}.` };
     return { fee: abroad.fee, feeNative: abroad.native, ...(owner ? { ownerCharge: owner } : { ownerFee: true }) };
   }
   if (from === 'post_office' && !rules?.postOffice) return { fee: 0, refused: `${bank.name}’s customers can’t use the Post Office for cash.` };

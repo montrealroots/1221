@@ -14,6 +14,13 @@
  * 706,500 × 0.79 = 558,135p, whole pounds £5,581 (558,100p); bought back, 558,100 / 0.79 = 706,455.70, so 706,456¢; the
  * 44¢ over joins the checking, $5,217.44. Kept at Deutsche Bank, 706,500 × 0.92 = 649,980 euro cents, whole euros €6,499
  * (649,900); back, 649,900 / 0.92 = 706,413.04, so 706,413¢, and $5,217.87 in checking. Each adds to 1,228,200¢.
+ *
+ * From 2026-10-16 the current account at home opens with what its fees come to until the class graduates in May 2029,
+ * thirty-four month-ends from August 2026 (`feesToGraduation`), from the savings kept there; until then it opened at
+ * nothing, and at 21 of the 54 banks its own fees overdrew it and the set-off closed it. Deutsche Bank's AktivKonto,
+ * €6.90 a month: 690 × 34 = 23,460, €235 in whole euros, 23,500 / 0.92 = 25,543.48, so 25,543¢; the Flexgeld €6,264
+ * (626,400), worth 706,413 - 25,543 = 680,870¢. MUFG's ¥300 a month for Global Direct, ¥10,200, so ¥1,049,550 saved.
+ * Barclays and HSBC UK charge nothing, so theirs still opens at nothing.
  */
 import { afterEach, describe, expect, it } from 'vitest';
 import { createElement } from 'react';
@@ -158,7 +165,7 @@ describe('a life made with an account kept at home', () => {
   it('keeps a Berlin student’s savings at Deutsche Bank in euros, worked the same way', () => {
     const sim = createSave(1, 'home-db', life({ homeRegionId: 'de-be-berlin', priorResidence: { cityId: 'de-be-berlin', fromYear: 2002, fromMonth: 6 }, homeBankId: 'de-deutsche-bank' }));
     const db = accounts(sim).filter((a) => a.bankId === 'de-deutsche-bank');
-    expect(db.map((a) => [a.name, a.currency, a.held ?? 0, a.balance])).toEqual([['AktivKonto', 'EUR', 0, 0], ['Flexgeld', 'EUR', 649_900, 706_413]]);
+    expect(db.map((a) => [a.name, a.currency, a.held ?? 0, a.balance])).toEqual([['AktivKonto', 'EUR', 23_500, 25_543], ['Flexgeld', 'EUR', 626_400, 680_870]]);
     expect(accounts(sim).find((a) => a.bankId === 'us-chase' && a.kind === 'checking')!.balance).toBe(521_787);
     expect(money(sim)).toBe(1_228_200);
   });
@@ -170,7 +177,9 @@ describe('a life made with an account kept at home', () => {
     expect(american(moved)).toEqual(american(none));
     expect(money(moved)).toBe(money(none));
     expect(accounts(moved).filter((a) => a.bankId === 'gb-hsbc').map((a) => [a.kind, a.balance, a.held ?? 0])).toEqual([['checking', 0, 0]]);
-    expect(splitOf({ checking: 521_700, savings: 706_500 }, 'USD', bankById('gb-hsbc'), false)).toEqual({ checking: 521_700, savings: 706_500, homeSavings: 0, homeSavingsHeld: 0 });
+    expect(splitOf({ checking: 521_700, savings: 706_500 }, 'USD', bankById('gb-hsbc'), false)).toEqual({ checking: 521_700, savings: 706_500, homeSavings: 0, homeSavingsHeld: 0, homeCurrent: 0, homeCurrentHeld: 0 });
+    // Moved, at a bank that charges: Deutsche Bank's €235 comes from the checking, 25,543¢, and the four add up.
+    expect(splitOf({ checking: 521_700, savings: 706_500 }, 'USD', bankById('de-deutsche-bank'), false, 23_500)).toEqual({ checking: 521_700 - 25_543, savings: 706_500, homeSavings: 0, homeSavingsHeld: 0, homeCurrent: 25_543, homeCurrentHeld: 23_500 });
   });
 
   it('opens nothing at home for a birthplace alone, nor for a refused bank', () => {
@@ -210,8 +219,9 @@ describe('the creation screen', () => {
     expect(words).toContain('Japan Post Bank: Japan Post Bank asks a customer going abroad to close the account');
     expect(words).toContain('MUFG keeps it through Global Direct');
     expect(words).toContain('It charges ¥300 a month for a customer abroad.');
-    // ¥: 706,500 × 150 = 105,975,000, ¥1,059,750 exactly, so all of it.
-    expect(words).toContain('Kept At MUFG Bank: ¥1,059,750 In 普通預金 (Ordinary Deposit)');
+    // ¥: 706,500 × 150 = 105,975,000, ¥1,059,750 exactly, less the ¥10,200 its current account opens with.
+    expect(words).toContain('Kept At MUFG Bank: ¥1,049,550 In 普通預金 (Ordinary Deposit)');
+    expect(words).toContain('Its 普通預金 (Ordinary Deposit) opens with what its fees come to until you graduate in May 2029, ¥10,200, from your savings, as far as that goes: move more in before it runs low.');
   });
 
   it('says America before Yale, and offers no bank, for one raised in New York', () => {

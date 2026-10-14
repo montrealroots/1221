@@ -226,10 +226,11 @@ describe('refusals, in words', () => {
     const dublin = await make(life({ homeRegionId: 'ie-lei-dublin', priorResidence: { cityId: 'ie-lei-dublin', fromYear: 2002, fromMonth: 6 }, homeBankId: 'ie-ptsb' }));
     expect(refused(dublin, 'bank.transfer', { fromId: at(dublin, 'us-chase', 'checking').id, toId: at(dublin, 'ie-ptsb', 'checking').id, amount: 10_000 }))
       .toBe('SLATE has no research on what PTSB charges for a payment received from abroad.');
-    // The whole of SMBC's savings, and its fee beside it, is more than they hold.
+    // The whole of SMBC's savings, and its fee beside it, is more than they hold: ¥1,059,750 less the ¥7,480 its
+    // current account opens with (from 2026-10-16), and ¥3,500 more.
     const tokyo = await make(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-smbc' }));
-    expect(refused(tokyo, 'bank.transfer', { fromId: at(tokyo, 'jp-smbc', 'savings').id, toId: at(tokyo, 'us-chase', 'checking').id, amount: 105_975_000, in: 'JPY' }))
-      .toBe('普通預金 (Ordinary Deposit) holds ¥1,059,750, and this takes ¥1,063,250 with the bank’s fee.');
+    expect(refused(tokyo, 'bank.transfer', { fromId: at(tokyo, 'jp-smbc', 'savings').id, toId: at(tokyo, 'us-chase', 'checking').id, amount: 105_227_000, in: 'JPY' }))
+      .toBe('普通預金 (Ordinary Deposit) holds ¥1,052,270, and this takes ¥1,055,770 with the bank’s fee.');
   });
 });
 

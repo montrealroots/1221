@@ -188,6 +188,12 @@ export interface Account {
    * reports on accounts abroad read it, FinCEN's FBAR the most and Form 8938 both (`foreignAccountsNotice`).
    */
   peak?: Record<string, { max: Money; last: Money }>;
+  /**
+   * On the current account: a fee for a customer abroad that no account at the bank held when it fell due, at a bank
+   * whose account can't go below zero (`NonResidentFee.unpaid`), in the bank's own money: owed, and taken the first night
+   * one holds it (from 2026-10-16).
+   */
+  feeOwedHeld?: Money;
 }
 
 export interface Posting {
@@ -232,8 +238,11 @@ export class LedgerError extends Error {
 }
 
 export class Ledger {
-  /** `toCurrency` converts the save's cents into an account's currency, for a posting that doesn't say its `native`. */
-  constructor(private host: LedgerHost, private toCurrency?: ToCurrency) {}
+  /**
+   * `toCurrency` converts the save's cents into an account's currency, for a posting that doesn't say its `native`;
+   * `toSave` back, for an account whose two figures would disagree in sign (`nativesOf`).
+   */
+  constructor(private host: LedgerHost, private toCurrency?: ToCurrency, private toSave?: ToCurrency) {}
 
   account(id: string): Account {
     const acct = this.host.accounts[id];
@@ -325,6 +334,24 @@ export class Ledger {
       }
       if (!Number.isInteger(native)) {
         throw new LedgerError(`Non-integer native amount ${native} in ${txn.id} ('${txn.memo}'). Money is always minor units.`);
+      }
+      // The two figures agree in sign (from 2026-10-16): where a posting would leave the account empty in its own money
+      // and not in the save's, or below zero in one and above it in the other, the save's figure becomes what its own is
+      // worth (a cent at least, either way), the cents moved between this posting and the transaction's nominal side, a
+      // fee's expense or a purchase's, which stays balanced. Until then a fee in pounds that took the last of what the bank
+      // showed left 2¢, and the next day bought 2¢ of food from an account at £0.00; and thirty-four of Santander
+      // México's fees left it 68 centavos to the good and 4¢ below zero. A transfer between two of the holder's own
+      // accounts has no nominal side, and is left as it is.
+      const heldAfter = wasHeld + native;
+      const after = was + p.amount;
+      if (Math.sign(heldAfter) !== Math.sign(after)) {
+        const worth = heldAfter === 0 ? 0 : this.toSave?.(heldAfter, acct.currency);
+        const target = worth === undefined ? after : worth === 0 && heldAfter !== 0 ? Math.sign(heldAfter) : worth;
+        const nominal = txn.postings.findIndex((_q, j) => j !== i && accounts[j]!.nominal && accounts[j]!.currency === undefined);
+        if (nominal >= 0 && target !== after) {
+          p.amount += target - after;
+          txn.postings[nominal]!.amount -= target - after;
+        }
       }
       balance.set(acct.id, was + p.amount);
       held.set(acct.id, wasHeld + native);
