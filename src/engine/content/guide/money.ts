@@ -1320,8 +1320,9 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Your Citizenship', value: 'Read only where a bank never opens a US citizen’s account; it never grants one' },
     ],
     now: [
-      `Kept: the bank’s current account opens at nothing and its savings with the whole units of its money your savings buy at SLATE’s rate; what that leaves over joins your American checking. The two add to your family’s money to the cent.`,
-      'Moved: your American accounts open just as with nothing kept, and the bank there keeps its current account at nothing.',
+      // From 2026-10-16: until then the current account opened at nothing, and at 21 of the 54 banks its fees overdrew it.
+      `Kept: the bank’s current account opens with what its own fees come to until you graduate, and its savings with the rest of the whole units of its money your savings buy at SLATE’s rate; what that leaves over joins your American checking. They add to your family’s money to the cent.`,
+      'Moved: your American accounts open as with nothing kept, less what the bank’s current account there opens with, its fees until you graduate; a bank that charges nothing keeps it at nothing.',
       'Each account at the bank there keeps its own figure in its money, beside what it’s worth in dollars, and counts as used the morning you arrive.',
     ],
     later: [

@@ -6,10 +6,11 @@
  *
  * Worked by hand from the research (`content/homeaccounts.ts`) and `content/currency.ts` (0.79 pounds, 150 yen):
  *
- * - An F-1 student raised in Tokyo, at SMBC: its interest in 2026 was August's 54¢, paid with SMBC's February and
- *   August, and Japan took 15.315%, round(8.27) = 8¢. The 1040-NR's income is the work-study and the scholarship,
- *   165,600 + 1,401,400 = 1,567,000¢, without the 54¢ (IRC 862(a)(1), 872(a)); Connecticut's tax is on the same
- *   1,567,000¢. Until 2026-10-16 this was 54¢, 472¢ and 589¢: SMBC's fee overdrew the empty current account, and the
+ * - An F-1 student raised in Tokyo, at SMBC: its interest in 2026 was August's 53¢, paid with SMBC's February and
+ *   August (the savings less the ¥7,480 the current account opens with, 701,513¢, 7.69¢ a night for seven), and Japan
+ *   took 15.315%, round(8.12) = 8¢. The 1040-NR's income is the work-study and the scholarship, 165,600 + 1,401,400 =
+ *   1,567,000¢, without the 53¢ (IRC 862(a)(1), 872(a)); Connecticut's tax is on the same 1,567,000¢. Until the current
+ *   account opened with its fees, 54¢. Until 2026-10-16 this was 54¢, 472¢ and 589¢: SMBC's fee overdrew the empty current account, and the
  *   overdraft's set-off settled the savings' interest on 31 October and 31 December as if closing it.
  * - A US citizen raised in London, at HSBC UK: its interest, 142 + 610 + 630 + 611 + 632 = 2,625¢, is on the 1040,
  *   1,567,000 + 2,625 = 1,569,625¢; Britain took nothing, so nothing is credited.
@@ -22,9 +23,13 @@
  * - FBAR: the comfortable citizen's Flexible Saver at most £36,199.03 in 2026, 3,619,903 / 0.79 = 4,582,155.7, so
  *   $45,821.56, over $10,000: told once, through a reload. The modest one's £5,601.74 ($7,090.81) isn't. The modest one
  *   who sent $4,000 to HSBC UK and £3,000 back passed $10,000 for some days only, and is told.
- * - Form 8938: the wealthy citizen's ¥61,960,254.50 at most is $413,068 (61,960,254.50 / 150 = 413,068.36), and the
- *   ¥61,959,374.50 on 31 December, four of SMBC's ¥220 later, 41,306,249.67¢ held to the cent as 41,306,250, so
- *   $413,063: over $50,000 at the year's end and $75,000 at any time;
+ * - Form 8938: the wealthy citizen's savings open ¥7,480 lower, 6,194,897,000 sen, the current account holding it, and
+ *   earn the same 3,168¢ (41,299,313¢ at 0.40% for seven nights, 3,168.17), 2,683¢ after Japan's tax, which is ¥4,024.50,
+ *   held as the whole ¥4,025 (from 2026-10-16: a yen account holds whole yen); with SMBC's fee taken from the current
+ *   account, the savings' most is 6,195,299,500 and the current account's its opening 748,000, each converted to the
+ *   cent and added, 41,301,997 + 4,987 = 41,306,984¢, so $413,070 (until the current account opened with its fees,
+ *   $413,068). On 31 December, the current account five fees down at 638,000: 41,301,997 + 4,253 = 41,306,250¢,
+ *   $413,062.50, so $413,063: over $50,000 at the year's end and $75,000 at any time;
  *   with no return to file, the form isn't due, and with one it is. An F-1 student over all of these is never told.
  */
 import { readFileSync } from 'node:fs';
@@ -76,9 +81,9 @@ describe('the interest of an account kept at home, on the return', () => {
   it('leaves an F-1 student’s interest from SMBC off the 1040-NR, and out of Connecticut’s tax, with Japan’s tax recorded', async () => {
     const sim = await make(life('modest', { homeRegionId: 'jp-13-tokyo', ...tokyo }));
     sim.advanceTo(SEASON);
-    expect(interestAt(sim, 'jp-smbc')).toEqual([[54, 8]]);
+    expect(interestAt(sim, 'jp-smbc')).toEqual([[53, 8]]);
     const y = yearOf(sim.player, 2026);
-    expect(y.foreignInterest).toEqual({ JP: { gross: 54, withheld: 8 } });
+    expect(y.foreignInterest).toEqual({ JP: { gross: 53, withheld: 8 } });
     const r = returnsOf(sim.player)[2026]!;
     expect(r.figures.form).toBe('1040-NR');
     expect([y.workStudy, y.scholarship, y.acting, y.unemployment]).toEqual([165_600, 1_401_400, 0, 0]);
@@ -163,7 +168,7 @@ describe('FBAR and Form 8938, said once at the return, to a US person', () => {
     const none = await make(life('wealthy', { ...american, ...tokyo }));
     none.advanceTo(SEASON);
     expect(returnsOf(none.player)[2026]).toBeUndefined();
-    expect(told(none)).toEqual([`Your accounts at banks outside America held $413,068 together at most in 2026 (the highest each held at a day’s end, at SLATE’s rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. They held $413,063 on December 31, over Form 8938’s $50,000 at the year’s end, and $413,068 at most, over Form 8938’s $75,000 at any time, but the form goes only with an income tax return, and you have none to file for 2026. ${FOOTER}`]);
+    expect(told(none)).toEqual([`Your accounts at banks outside America held $413,070 together at most in 2026 (the highest each held at a day’s end, at SLATE’s rate), over $10,000. So FinCEN Form 114, the FBAR, is due April 15, 2027, extended automatically to October 15, 2027, and is filed online with FinCEN, not with your return. They held $413,063 on December 31, over Form 8938’s $50,000 at the year’s end, and $413,070 at most, over Form 8938’s $75,000 at any time, but the form goes only with an income tax return, and you have none to file for 2026. ${FOOTER}`]);
 
     const filing = await make(life('wealthy', { ...american, ...tokyo }));
     filing.advanceTo(SEASON - 3 * 86_400_000);

@@ -62,6 +62,12 @@ open card's autopay as it pays: pinned, or the primary account.
 
 ## How It Was Proved
 
+These were the figures at `d1f8e23`. The skeptics' review the same day (`skeptics.md`) changed several of them. The
+current account at home now opens with what its fees come to until graduation, so SMBC's ¥220 comes from its current
+account. Its savings hold ¥7,480 less, so August's interest is 53¢, not 54¢. Each account abroad holds whole yen. Form
+8938's figures became $413,070 and $413,063, and BNP Paribas no longer offers a loan for the overrun. The tests say what's
+true now, and their headers show the working.
+
 Each life was made with `createSave` on `newLifeConfig` with Before Yale's fields, and played on the clock:
 
 - `tests/home-account-abroad.test.ts`: SMBC's ¥220 taken from the savings on 31 August, and the current account left at

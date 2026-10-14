@@ -30,7 +30,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import type { ScheduledItem } from '../core/scheduler';
 import { addDays, dateKey, formatDate, formatWeekdayDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
-import { exchange } from '../content/currency';
+import { exchange, exchangeHeld } from '../content/currency';
 import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDaysIn, daysOfAccount } from '../content/bankdays';
 import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, US_REPORTS, type AbroadTerms, type Charge } from '../content/homeaccounts';
@@ -108,7 +108,9 @@ export function homeAccountLines(sim: Simulation, account: Account): string[] {
     const every = fee.months === 1 ? 'a month' : fee.months === 3 ? 'a quarter' : fee.months === 24 ? 'every two years' : `every ${fee.months} months`;
     const spared = fee.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < fee.ageBelow ? `, not yet: it doesn’t charge one under ${fee.ageBelow}` : '';
     lines.push(`For a customer abroad ${bank.name} charges ${formatMoney(fee.amount, bank.currency)} ${every}${spared}.`);
-    if (fee.unpaid) lines.push(`It takes it from this account, or from your savings at ${bank.name} when this one doesn’t hold it.`);
+    // The savings named only where there are some (from 2026-10-16: until then said to a life that kept none there).
+    const saved = Object.values(sim.universe.accounts).some((a) => a.ownerId === account.ownerId && !a.closedAt && a.bankId === bank.id && a.kind === 'savings');
+    if (fee.unpaid) lines.push(saved ? `It takes it from this account, or from your savings at ${bank.name} when this one doesn’t hold it.` : 'It takes it from this account.');
     if (account.feeOwedHeld) lines.push(`${formatMoney(account.feeOwedHeld, bank.currency)} of it is owed, taken the first night either account holds it. ${fee.unpaid}`);
   }
   const abroad = terms?.abroad;
@@ -141,7 +143,7 @@ function toSave(sim: Simulation, amount: Money, currency: string): Money {
 }
 function fromSave(sim: Simulation, amount: Money, currency: string): Money {
   const save = saveCurrency(sim.universe);
-  return currency === save ? amount : swap(amount, save, currency) ?? amount;
+  return currency === save ? amount : exchangeHeld(amount, save, currency) ?? amount;
 }
 
 /**
@@ -510,7 +512,10 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   }
   const mineNow = person.id === sim.universe.playerId;
   if (current.balance < 0) {
-    if (mineNow) sim.notify({ category: 'bank', title: `${bank.name} Didn’t Close Your Account`, body: `It’s overdrawn by ${heldText(sim, current, -heldOf(current))}, and the bank closes it only once that’s paid.`, importance: 60, route: '/workspace/bank' });
+    // Tried again each day until it's paid, said once (from 2026-10-16: until then never again, so a Barclays account
+    // paid off stayed open for good, and once the done closing was pruned a reload announced its passed date again).
+    if (mineNow && !item.payload.retrying) sim.notify({ category: 'bank', title: `${bank.name} Didn’t Close Your Account`, body: `It’s overdrawn by ${heldText(sim, current, -heldOf(current))}, and the bank closes it once that’s paid.`, importance: 60, route: '/workspace/bank' });
+    sim.schedule({ at: addDays(sim.now, 1, sim.homeZone), kind: HOME_CLOSES_KIND, label: item.label, category: 'home', priority: 36, payload: { ...item.payload, retrying: true } });
     return;
   }
   const into = checkingsOf(sim, person).find((a) => !heldFromAbroad(sim, a));

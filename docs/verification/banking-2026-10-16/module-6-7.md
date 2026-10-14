@@ -71,7 +71,13 @@ neither, which reads as nothing to report.
 `tests/home-account-tax.test.ts`, 6 tests, and `tests/home-account-screens.test.ts`, 3 tests, all passing. Each life was
 made with `createSave` on `newLifeConfig` with Before Yale's fields and played on the clock, to the 2026 return on
 1 February 2027 for the tax; each screen was drawn with react-dom/server. Every figure was worked by hand, as each
-file's header shows:
+file's header shows. The SMBC figures below were what the tests asserted when this was written; later on 2026-10-16
+two of them turned out to rest on defects (`open-defects.md`). SMBC's fee overdrew the empty current account, and the
+overdraft's set-off settled the savings' interest early on 31 October and 31 December: the 472¢ and 589¢, and the
+wealthy citizen's 27,613¢ and 34,423¢, were those settlements. The tests now assert August's interest alone, 53¢ and 8¢
+for the F-1, and 3,168¢ and 485¢ for the wealthy citizen, with a credit of 162¢ at $30,000 of wages and the whole 485¢
+at $250,000; Form 8938's figures are $413,070 at most and $413,063 on 31 December. The mutations below were killed
+against the figures then:
 
 - An F-1 student raised in Tokyo, at SMBC: 54¢, 472¢ and 589¢ of interest, Japan's 8¢, 72¢ and 90¢ taken (15.315%,
   each rounded), recorded as `{ JP: { gross: 1,115, withheld: 170 } }`. The 1040-NR's income was the work-study and the

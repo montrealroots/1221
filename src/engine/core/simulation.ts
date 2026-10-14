@@ -21,7 +21,7 @@ import { EventBus, type WorldEvent, worldEvent } from './events';
 import { createIdFactory, type IdNamespace } from './ids';
 import { rngFor, type Rng } from './rng';
 import { saveCurrency, type Money } from './money';
-import { exchange } from '../content/currency';
+import { exchange, exchangeHeld } from '../content/currency';
 
 /** Handlers for scheduled items, keyed by `ScheduledItem.kind`. */
 export type ScheduleHandler = (item: ScheduledItem, sim: Simulation) => void;
@@ -105,7 +105,7 @@ export class Simulation {
   constructor(public universe: SaveUniverse) {
     // A posting to an account in another currency is converted at SLATE's rates where its caller doesn't say what it is
     // in that currency (from 2026-10-16).
-    this.ledger = new Ledger(universe, (amount, currency) => exchange(amount, saveCurrency(this.universe), currency));
+    this.ledger = new Ledger(universe, (amount, currency) => exchangeHeld(amount, saveCurrency(this.universe), currency), (amount, currency) => exchange(amount, currency, saveCurrency(this.universe)));
     this.timeline = new Timeline(universe);
     this.bus = new EventBus();
     this.nextId = createIdFactory(universe as unknown as { __idCounter: number });

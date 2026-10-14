@@ -273,7 +273,8 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   const loan = lendingOf(bank).loan;
   // Not where a loan is held at this bank (from 2026-10-12: until then a loan at any bank stopped the offer, though a
   // person may hold one at each bank since 2026-10-10).
-  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id)) {
+  // Not offered by a bank abroad, which opens nothing new for a customer abroad (`abroadRefusal`, from 2026-10-16).
+  if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id) && !abroadRefusal(person, bank)) {
     const apr = loan.to ?? loan.from;
     current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
     if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${money(past)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${money(monthlyPayment(past, apr, FRANCE.offerMonths))} a month. Take it from Your Bank.`, importance: 75 });
@@ -818,7 +819,14 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
       && (dormant.belowBalance === undefined || account.balance < inSaveMoney(sim, dormant.belowBalance, bank.currency))
       && (account.dormantFeeAt === undefined || sim.now - account.dormantFeeAt >= 365 * MS_DAY)) {
       account.dormantFeeAt = sim.now;
-      charge(sim, account, inSaveMoney(sim, dormant.yearly, bank.currency), 'Dormant account fee', 'bank_fee', 'Bank Fees');
+      // A Japanese ordinary deposit has no overdraft (SMBC's rule in the research, `NonResidentFee.unpaid`): the fee takes
+      // no more than the account holds, SLATE's reading (from 2026-10-16: until then it took an empty account below zero,
+      // and the overdraft's set-off closed it).
+      // In the bank's own figure where the account is kept in its money, from 2026-10-16.
+      const yearly = inSaveMoney(sim, dormant.yearly, bank.currency);
+      const capped = bank.iso === 'JP' && yearly > account.balance;
+      const fee = capped ? Math.max(0, account.balance) : yearly;
+      if (fee > 0) charge(sim, account, fee, 'Dormant account fee', 'bank_fee', 'Bank Fees', capped ? undefined : dormant.yearly);
     }
   }
   if (current.secondChance) charge(sim, current, inSaveMoney(sim, CHEX.secondChanceFee, 'USD'), 'Second chance account fee', 'bank_fee', 'Bank Fees');
@@ -826,7 +834,9 @@ function monthlyCharges(sim: Simulation, person: Person, current: Account, bank:
   if (quiet && current.openedAt < monthStart) {
     const month = transactionsBetween(sim, current, monthStart, sim.now);
     if (month.count < quiet.minTransactions && !(quiet.unlessWages && month.wages)) {
-      charge(sim, current, inSaveMoney(sim, quiet.fee, bank.currency), 'Quiet month fee', 'bank_fee', 'Bank Fees');
+      // In the bank's own figure where the account is kept in its money (from 2026-10-16: until then worked back from the
+      // dollars, and thirty-four of Santander México's drifted 68 centavos past what they come to).
+      charge(sim, current, inSaveMoney(sim, quiet.fee, bank.currency), 'Quiet month fee', 'bank_fee', 'Bank Fees', quiet.fee);
     }
   }
 }
@@ -1007,7 +1017,10 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   });
   post(sim, `Charged off by ${bank.name}`, 'transfer', [{ accountId: current.id, amount: owed }, { accountId: debt.id, amount: -owed }]);
   for (const account of mine) { account.negativeSince = undefined; account.pendingItems = undefined; }
-  if (person.credit) {
+  // On the record only for a bank in the country they live in, whose bureaus keep it (from 2026-10-16: until then a
+  // bank kept at home abroad marked the American record for 13¢ it charged off).
+  const onRecord = bank.iso === isoOf(homeOf(person));
+  if (person.credit && onRecord) {
     markRecord(person, ESTIMATE.chargeOffHit, sim.now, person.currentLocationId, (saveCurrency(sim.universe) === 'MXN' ? owed : exchange(owed, saveCurrency(sim.universe), 'MXN') ?? owed) / 100);
     person.credit.late = [...person.credit.late, sim.now];
   }
@@ -1034,7 +1047,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
-      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your record' : ''}; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
       importance: 90,
     });
   }
@@ -1388,6 +1401,10 @@ export function registerLending(sim: Simulation): void {
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const offer = current?.creditOffered;
     if (!bank || !current || !offer) throw new CommandError('Your bank has offered no loan for an overrun.');
+    // Not at a bank abroad, which opens nothing new for a customer abroad (from 2026-10-16: until then BNP Paribas lent
+    // a student living in America euros kept as dollars, and a short payment went on the American record).
+    const away = abroadRefusal(person, bank);
+    if (away) throw new CommandError(away);
     // A loan at that bank (from 2026-10-12: until then at any bank).
     if (loanOf(s, person, bank.id)) throw new CommandError('You already have a loan with the bank.');
     const payment = monthlyPayment(offer.amount, offer.apr, offer.months);

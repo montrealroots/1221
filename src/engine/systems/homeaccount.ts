@@ -143,6 +143,9 @@ export function whatFollows(config: NewSaveConfig, bankId: string): string[] {
     const spared = fee.ageBelow !== undefined && age < fee.ageBelow ? `, which it doesn’t charge under ${fee.ageBelow}, as you are` : '';
     out.push(`It charges ${formatMoney(fee.amount, bank.currency)} ${every} for a customer abroad${spared}.`);
   }
+  // From 2026-10-16: until then the current account opened at nothing, and the bank's own fees overdrew it.
+  const float = feesToGraduation(config, bank);
+  if (float > 0) out.push(`Its ${bank.current.name} opens with what its fees come to until you graduate in May ${config.startYear + GRADUATES.years}, ${formatMoney(float, bank.currency)}, ${config.savingsAtHome === false ? 'from your money here' : 'from your savings'}, as far as that goes: move more in before it runs low.`);
   if (terms.ageAssumed) out.push(`SLATE takes it ${bank.name} opened accounts from ${terms.openFromAge}: the research read no age.`);
   return out;
 }
@@ -155,23 +158,71 @@ export interface Split {
   /** Into the home bank's savings: in the save's money, and the bank's own figure. */
   homeSavings: Money;
   homeSavingsHeld: Money;
+  /** Into the home bank's current account, what its fees come to (`feesToGraduation`): the save's money and the bank's. */
+  homeCurrent: Money;
+  homeCurrentHeld: Money;
+}
+
+/** The month the class graduates: May, three years after the fall it begins (`systems/school.ts`, `classOf`). */
+const GRADUATES = { years: 3, month: 5 } as const;
+
+/**
+ * What the bank's current account costs, in its money, from the month the life begins to the class's graduation: its
+ * monthly fee and a quiet month's each month, its fee for a customer abroad on its schedule, and its card's yearly fee
+ * each year, each as charged with no waiver, so the most they come to, in whole units (from 2026-10-16). A dormant
+ * account's fee isn't counted: it follows two years unused, and a Japanese bank's takes no more than the account holds.
+ */
+export function feesToGraduation(config: NewSaveConfig, bank: Bank): Money {
+  const months = GRADUATES.years * 12 + (GRADUATES.month - config.startMonth) + 1;
+  const born = { year: config.birthYear, month: config.birthMonth, day: config.birthDay };
+  const monthEnd = (i: number) => {
+    const n = config.startMonth - 1 + i;
+    const year = config.startYear + Math.floor(n / 12);
+    const month = (n % 12) + 1;
+    return { year, month, day: new Date(Date.UTC(year, month, 0)).getUTCDate() };
+  };
+  // A quiet month's fee each month too: an account kept from abroad and not used is quiet every month.
+  let total = ((bank.current.monthlyFee ?? 0) + (bank.quietMonth?.fee ?? 0)) * months;
+  const fee = homeTerms(bank.id)?.nonResidentFee;
+  for (let i = 0; fee && i < months; i += 1) {
+    const at = monthEnd(i);
+    if (fee.ageBelow !== undefined && ageOnDate(born, at) < fee.ageBelow) continue;
+    if (fee.months === 3 ? at.month % 3 === 0 : i % fee.months === 0) total += fee.amount;
+  }
+  for (let i = 0; bank.card?.yearly && i < months; i += 12) {
+    if (bank.card.freeUnder === undefined || ageOnDate(born, monthEnd(i)) >= bank.card.freeUnder) total += bank.card.yearly;
+  }
+  return Math.ceil(total / 100) * 100;
 }
 
 /**
- * The split: with the savings kept at home, the home savings are the whole units of the bank's money the savings buy at
- * SLATE's rate, rounded down; their worth in the save's money is that bought back; and the rest of the savings join the
- * everyday money in the American current account. With them moved, or no bank kept, the money opens as it did before
- * 2026-10-16. Either way checking, savings and home savings add to the family's checking and savings to the cent.
+ * The split. The bank's current account opens holding what its fees come to until graduation (`float`, in its money,
+ * `feesToGraduation`), so an account the screen says is kept isn't taken below zero and closed by its own fees: until
+ * 2026-10-16 it opened at nothing, and at 21 of the 54 banks offered an idle life's was overdrawn from its first month's
+ * end and closed at sixty days. With the savings kept at home, the bank's whole units the savings buy at SLATE's rate,
+ * rounded down, go to the current account to that figure and the rest to the savings, each worth what it buys back; the
+ * rest of the savings join the everyday money in the American current account. With them moved, or none, the current
+ * account's figure comes from the American checking instead. With no bank kept, the money opens as it did before
+ * 2026-10-16. Either way the four add to the family's checking and savings to the cent.
  */
-export function splitOf(wealth: { checking: Money; savings: Money }, currency: string, home: Bank | undefined, savingsAtHome: boolean | undefined): Split {
-  const moved = { checking: wealth.checking, savings: wealth.savings, homeSavings: 0, homeSavingsHeld: 0 };
-  if (!home || savingsAtHome === false || wealth.savings <= 0) return moved;
-  const bought = exchange(wealth.savings, currency, home.currency);
-  if (bought === undefined) return moved;
-  const held = Math.floor(bought / 100) * 100;
-  if (held <= 0) return moved;
-  const worth = exchange(held, home.currency, currency)!;
-  return { checking: wealth.checking + (wealth.savings - worth), savings: 0, homeSavings: worth, homeSavingsHeld: held };
+export function splitOf(wealth: { checking: Money; savings: Money }, currency: string, home: Bank | undefined, savingsAtHome: boolean | undefined, float: Money = 0): Split {
+  const none = { checking: wealth.checking, savings: wealth.savings, homeSavings: 0, homeSavingsHeld: 0, homeCurrent: 0, homeCurrentHeld: 0 };
+  if (!home) return none;
+  const units = (x: Money) => Math.floor(x / 100) * 100;
+  const back = (x: Money) => exchange(x, home.currency, currency)!;
+  const bought = savingsAtHome !== false && wealth.savings > 0 ? exchange(wealth.savings, currency, home.currency) : undefined;
+  const held = bought !== undefined ? units(bought) : 0;
+  if (held > 0) {
+    const current = Math.min(float, held);
+    const worth = back(held);
+    const currentWorth = back(current);
+    return { checking: wealth.checking + (wealth.savings - worth), savings: 0, homeSavings: worth - currentWorth, homeSavingsHeld: held - current, homeCurrent: currentWorth, homeCurrentHeld: current };
+  }
+  const affordable = float > 0 && wealth.checking > 0 ? exchange(wealth.checking, currency, home.currency) : undefined;
+  const current = affordable !== undefined ? Math.min(float, units(affordable)) : 0;
+  if (current <= 0) return none;
+  const currentWorth = back(current);
+  return { ...none, checking: wealth.checking - currentWorth, homeCurrent: currentWorth, homeCurrentHeld: current };
 }
 
 /** Opens one account at the bank kept at home, backdated to when it was opened, last used the morning the life starts. */
@@ -211,14 +262,14 @@ function openHomeAccount(sim: Simulation, person: Person, bank: Bank, kind: 'che
 }
 
 /**
- * Opens what is kept at home, after the American bank's accounts: the current account, at nothing, and the savings where
- * the split put them there. Both opened on the day the rule found (`openingDayOf`), at noon where the life starts.
+ * Opens what is kept at home, after the American bank's accounts: the current account, with what its fees come to until
+ * graduation (at nothing until 2026-10-16), and the savings where the split put them there. Both opened on the day the rule found (`openingDayOf`), at noon where the life starts.
  */
 export function openHomeAccounts(sim: Simulation, person: Person, config: NewSaveConfig, bank: Bank, split: Split): Account[] {
   const terms = homeTerms(bank.id)!;
   const [y, m, d] = openingDayOf(config, terms).split('-').map(Number) as [number, number, number];
   const openedAt = instantFromZoned({ year: y, month: m, day: d, hour: 12 }, sim.homeZone);
-  const out = [openHomeAccount(sim, person, bank, 'checking', 0, 0, openedAt)];
+  const out = [openHomeAccount(sim, person, bank, 'checking', split.homeCurrent, split.homeCurrentHeld, openedAt)];
   if (split.homeSavings > 0) out.push(openHomeAccount(sim, person, bank, 'savings', split.homeSavings, split.homeSavingsHeld, openedAt));
   return out;
 }

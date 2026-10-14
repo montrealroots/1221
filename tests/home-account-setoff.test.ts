@@ -6,14 +6,16 @@
  *
  * - Between two accounts in a currency not the save's, each side of the set-off worked out its own figure from the
  *   dollars: ¥441 left SMBC's savings to cover ¥440. A Parisian at BNP Paribas, whose €15 a month for a customer abroad
- *   overdraws the Compte de dépôt, which opens empty: on 30 December the Livret A pays in exactly the euros the
+ *   overdraws the Compte de dépôt, emptied to Chase first (it opens with its fees to graduation since the same day): on 30 December the Livret A pays in exactly the euros the
  *   current account owes, and the current account ends at nothing in both figures.
  * - BNP Paribas' notice of 31 October said the account closes on December 29 unless it's back within it; it closed
  *   nothing, and the notice that followed said "closed it" all the same. It closes now, its payments go to Chase, and
  *   the notice names what closed and what stays open. The Livret A's interest, settled first so it's set off too, was
  *   called "on closing"; it stays open, and says "before the set-off".
  * - France's letters on the overrun quoted a euro account in dollars alone ("$32.86 beyond it"); they're in euros, the
- *   dollars beside: €15 twice and 24 cents of interest is €30.24 ($32.86) on 1 October.
+ *   dollars beside: €15 twice and 24 cents of interest is €30.24 ($32.86) on 1 October. Its offer of a loan for the
+ *   overrun, made and taken until the same day, isn't made by a bank abroad, which opens nothing new for a customer
+ *   abroad.
  * - A Livret A drained to €20 by a payment to Chase gives its whole, in euros, and the rest of the debt is charged off.
  * - A New Haven student with Chase savings that cover it and a Bank of America current account beside: Chase's closes,
  *   the primary and the work-study's wages move to Bank of America.
@@ -28,6 +30,7 @@ import { newLifeConfig, withFamily, type NewSaveConfig } from '@/engine/world/bo
 import { addCountryHolidays } from '@/engine/content/holidays';
 import { breaches } from '@/engine/core/invariants';
 import type { Simulation } from '@/engine/core/simulation';
+import type { Account } from '@/engine/core/ledger';
 
 for (const country of ['uk', 'fr']) addCountryHolidays(country, readFileSync(`public/holidays/${country}.tsv`, 'utf8'));
 
@@ -38,6 +41,16 @@ const life = (extra: Partial<NewSaveConfig>): NewSaveConfig => ({
 const make = async (config: NewSaveConfig) => { const sim = createSave(1, 'abroad', config); await loadPlacesFor(sim.universe); return sim; };
 const mine = (sim: Simulation) => Object.values(sim.universe.accounts).filter((a) => !a.nominal && a.ownerId === sim.player.id);
 const at = (sim: Simulation, bankId: string, kind: 'checking' | 'savings') => mine(sim).find((a) => a.bankId === bankId && a.kind === kind)!;
+/**
+ * The Compte de dépôt's €599 sent to Chase (BNP Paribas charges nothing to send it), so its fees overdraw it as they
+ * did before 2026-10-16, when it opened at nothing: it opens with what they come to until graduation now, (€2.60 + €15)
+ * × 34 = €598.40, in whole euros.
+ */
+const emptied = (sim: Simulation, current: Account) => {
+  expect(current.held).toBe(59_900);
+  expect(sim.execute({ kind: 'bank.transfer', payload: { fromId: current.id, toId: at(sim, 'us-chase', 'checking').id, amount: 59_900, in: 'EUR' } }).ok).toBe(true);
+  expect([current.held, current.balance]).toEqual([0, 0]);
+};
 const titled = (sim: Simulation, title: string) => sim.universe.notifications.filter((n) => n.title === title).map((n) => n.body);
 
 describe('the set-off against an overdraft', () => {
@@ -45,11 +58,19 @@ describe('the set-off against an overdraft', () => {
     const sim = await make(life({ homeRegionId: 'fr-idf-paris', priorResidence: { cityId: 'fr-idf-paris', fromYear: 2002, fromMonth: 6 }, homeBankId: 'fr-bnp-paribas' }));
     const current = at(sim, 'fr-bnp-paribas', 'checking');
     const livret = at(sim, 'fr-bnp-paribas', 'savings');
+    emptied(sim, current);
     sim.advanceTo(Date.UTC(2026, 11, 29, 12));
-    // France's letters in euros, the dollars beside: €15 twice and 24 cents of interest by 1 October, €45.72 by 30
-    // November, whose twelve payments at 6.07% are $4.2774, so $4.28, €3.94.
+    // France's letters in euros, the dollars beside: €15 twice and 24 cents of interest by 1 October.
     expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['A month past your overdraft: €30.24 ($32.86) beyond it at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.']);
-    expect(titled(sim, 'BNP Paribas Offered A Loan For The Overrun')).toEqual(['Three months past your overdraft, the law has it offer another credit: €45.72 ($49.68) over 12 months at 6.07%, €3.94 ($4.28) a month. Take it from Your Bank.']);
+    // No loan for the overrun from a bank abroad, which opens nothing new for a customer abroad: until 2026-10-16 it
+    // offered one, and lent it.
+    expect(titled(sim, 'BNP Paribas Offered A Loan For The Overrun')).toEqual([]);
+    expect(current.creditOffered).toBeUndefined();
+    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('Your bank has offered no loan for an overrun.');
+    // TEST SETUP: an offer made before 2026-10-16, kept in an older save, is refused in the bank's words.
+    current.creditOffered = { amount: 4_970, apr: 0.0607, months: 12 };
+    expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('The research found no way to open anything new at BNP Paribas from America, so SLATE takes it there’s none.');
+    delete current.creditOffered;
     expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it\'s back within it.']);
     const owedHeld = -current.held!;
     expect(owedHeld).toBeGreaterThan(0);
@@ -71,6 +92,7 @@ describe('the set-off against an overdraft', () => {
     const current = at(sim, 'fr-bnp-paribas', 'checking');
     const livret = at(sim, 'fr-bnp-paribas', 'savings');
     // All but €20 sent to Chase (BNP Paribas charges nothing to send it); its fee overdraws the current account by more.
+    emptied(sim, current);
     sim.execute({ kind: 'bank.transfer', payload: { fromId: livret.id, toId: at(sim, 'us-chase', 'checking').id, amount: livret.held! - 2_000, in: 'EUR' } });
     expect(livret.held).toBe(2_000);
     sim.advanceTo(Date.UTC(2027, 0, 2, 12));

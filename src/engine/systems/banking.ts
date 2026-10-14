@@ -450,9 +450,15 @@ function closeSavings(sim: Simulation, person: Person, account: Account, primary
     const at = sendBetweenBanks(sim, person, account, current, account.balance);
     if (at > sim.now) arrives = at;
   } else if (account.balance !== 0) {
+    // At one bank in its own money, its figure on both sides (from 2026-10-16: until then the receiving side was
+    // worked from the dollars, and after four of SMBC's fees ¥2 went missing in the move).
+    const own = account.currency !== undefined && account.currency === current.currency ? account.held ?? 0 : undefined;
     sim.post({
       memo: `Closed ${account.name}`, category: 'transfer',
-      postings: [{ accountId: account.id, amount: -account.balance }, { accountId: current.id, amount: account.balance }],
+      postings: [
+        { accountId: account.id, amount: -account.balance, ...(own !== undefined ? { native: -own } : {}) },
+        { accountId: current.id, amount: account.balance, ...(own !== undefined ? { native: own } : {}) },
+      ],
     });
   }
   account.accrued = 0;

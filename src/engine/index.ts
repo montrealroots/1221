@@ -45,7 +45,7 @@ import { armBirthdays, registerBirthdays } from './systems/birthdays';
 import { registerMortality } from './systems/mortality';
 import { nextChapter, registerTutorial } from './world/tutorial';
 import { armBanking, openAt, registerBanking, rebank, startingBank } from './systems/banking';
-import { homeBankOf, openHomeAccounts, splitOf } from './systems/homeaccount';
+import { feesToGraduation, homeBankOf, openHomeAccounts, splitOf } from './systems/homeaccount';
 import { bankById } from './content/banks';
 import { countryOfIso } from './content/bankdays';
 import { registerBankMoves } from './systems/bankmoves';
@@ -188,7 +188,7 @@ function populateWorld(sim: Simulation, config: NewSaveConfig): void {
   // An account kept from where they lived before (from 2026-10-16, `systems/homeaccount.ts`), where the rule offers it,
   // and the money split as the screen said: savings kept there, or moved here as every life's opened before.
   const home = bank ? homeBankOf(config) : undefined;
-  const split = splitOf(wealth, saveCurrency(sim.universe), home, config.savingsAtHome);
+  const split = splitOf(wealth, saveCurrency(sim.universe), home, config.savingsAtHome, home ? feesToGraduation(config, home) : 0);
   if (bank) {
     openAt(sim, player, bank, { checking: split.checking, savings: split.savings });
   } else {

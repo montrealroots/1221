@@ -26,7 +26,7 @@ import { scoreIsANumberIn, scoreWord } from '@/engine/systems/credit';
 import { formatMoney } from '@/engine/core/money';
 import { banksFor, startingBank } from '@/engine/systems/banking';
 import { banksIn } from '@/engine/content/banks';
-import { homeAccountRefusal, homeBankOf, isoOfPlace, splitOf, whatFollows, type Split } from '@/engine/systems/homeaccount';
+import { feesToGraduation, homeAccountRefusal, homeBankOf, isoOfPlace, splitOf, whatFollows, type Split } from '@/engine/systems/homeaccount';
 import { OPENING } from '@/engine/content/bankopening';
 import { SAVE_SCHEMA_VERSION } from '@/engine/domain/model';
 import { formatPeople } from '@/engine/world/place';
@@ -899,7 +899,7 @@ export function StartingPointStep({ config, set, setConfig }: {
   const countryCurrencyName = country ? `the ${country.currencyName.toLowerCase()}` : "the local money";
   // The money as it opens: with savings kept at a bank at home, split as `populateWorld` splits it (from 2026-10-16).
   const home = homeBankOf(config);
-  const split = splitOf(wealth, cur, home, config.savingsAtHome);
+  const split = splitOf(wealth, cur, home, config.savingsAtHome, home ? feesToGraduation(config, home) : 0);
   const money = (cents: number) => formatMoney(cents, cur, { cents: cents % 100 !== 0 });
 
   return (
@@ -1014,6 +1014,13 @@ export function StartingPointStep({ config, set, setConfig }: {
             <span className="stat-label">Savings</span>
             <span className="stat-value mono">{money(split.savings)}</span>
           </div>
+          {home && split.homeCurrent > 0 && (
+            <div className="stat">
+              <span className="stat-label">{home.current.name} At {home.name}</span>
+              <span className="stat-value mono">{formatMoney(split.homeCurrentHeld, home.currency)}</span>
+              <span className="stat-note">{money(split.homeCurrent)} at SLATE’s rate</span>
+            </div>
+          )}
           {home && split.homeSavings > 0 && (
             <div className="stat">
               <span className="stat-label">Savings At {home.name}</span>
@@ -1229,7 +1236,7 @@ export function ReviewStep({ config, setConfig }: { config: NewSaveConfig; setCo
   const wealth = wealthIn(config.wealth, cur);
   const month = monthOf(config, cur);
   const home = homeBankOf(config);
-  const split = splitOf(wealth, cur, home, config.savingsAtHome);
+  const split = splitOf(wealth, cur, home, config.savingsAtHome, home ? feesToGraduation(config, home) : 0);
   const money = (cents: number) => formatMoney(cents, cur, { cents: cents % 100 !== 0 });
 
   return (
