@@ -1,20 +1,26 @@
-# Read First: Three Briefs In Progress, 2026-10-16
+# Read First: Three Briefs, Two Well Along, 2026-10-16
 
 **This section is the current status.** The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
-read its Resume Here first. Every section below is history.
+read its Resume Here first. Every section below is history. Until later on 2026-10-16 this section said banking modules
+6 and 7 and attributes phase 2b were mid-work and uncommitted, and that the gate hadn't run; all three changed that day.
 
-- **Banking:** an eligible student keeps a pre-existing account at a real bank in their home country beside the US one
-  (the owner's decision of 2026-10-16; birthplace alone grants nothing; no travel or relocation). Modules 1 to 5 are
-  committed: the ledger's own figure for another currency, 60 banks' researched terms, the eligibility rule and the
-  creation card, operating from abroad (Barclays' real closure), payments between countries. Modules 6 and 7 (tax and
-  screens) were mid-work at the switch, uncommitted.
-- **Attributes and genres:** phase 1 (matrices, criteria, baseline: 12 met, 17 failed) and phase 2a (the partner gate
-  closed by Run It With A Reader, descriptions made true, one growth path, one stamina rule, mastery at 100) are
-  committed. Phase 2b (rebalancing) was mid-work at the switch, uncommitted. 2c and the close-out are to come.
+- **Banking, done (modules 1 to 7):** an eligible student keeps a pre-existing account at a real bank in their home
+  country beside the US one (the owner's decision of 2026-10-16; birthplace alone grants nothing; no travel or
+  relocation): 60 banks' researched terms, the ledger's own figure for another currency, the eligibility rule and the
+  creation card, operating from abroad (Barclays' real closure), payments between countries, US tax and the FBAR and
+  Form 8938 notices, every screen in the account's own money. Open: a skeptic review, and three defects in the work
+  plan (SMBC's fee overdrawing an empty account, among them).
+- **Attributes and genres, phases 1, 2a and 2b done:** the matrices, criteria and baseline; the partner gate closed by
+  Run It With A Reader; descriptions made true; each ability decides the work that asks for it (no ability best on more
+  than 43% of any kind of work); genres learned across their range; mastery at 100. Open: phase 2c (genre identity,
+  the late-term decline, F2/H1, the workbook rule to review, long and UI journeys) and the close-out.
 - **The remaining acceptance gaps:** not started; the six areas' instructions are in
   `docs/verification/prompts-2026-10-16/`.
-- **Merged:** `main` was brought to this branch's last committed revision on the owner's word of 2026-10-16, before a
-  session switch. The full gate hasn't been run on the 2026-10-16 revisions (the work plan says what has). Not deployed.
+- **The gate on `56bca1a0`:** the suite in three shards (338 files, 4,119 tests, all passed), typecheck, lint and all
+  seventeen checks exit 0, each read from a file. The built app last ran on banking modules 6 and 7's code (61 passed,
+  0 failed, 2 skipped at 1440 and 390), before phase 2b.
+- **Merged, on the owner's word of 2026-10-16:** `main` and `claude/remaining-acceptance` are at `f0a1daa3`. Not
+  deployed.
 - The stash, the three other worktrees and the untracked root files are untouched.
 
 # Read First: The Current Scope Pass, 2026-10-15, And The Work It Left Open
