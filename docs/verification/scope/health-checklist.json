@@ -1,0 +1,60 @@
+{
+  "key": "health",
+  "on": "2026-10-15",
+  "against": "bef4bde5",
+  "rows": [
+    {
+      "id": "health.choose_clinic",
+      "player": "Papers, Health Cover tab, Your Doctor panel: the Your Doctor select, drawn only where the town keeps two practices or more. A New Haven student never sees it: SLATE keeps one doctor's practice there, Fair Haven Community Health Care.",
+      "path": "PapersWorkspace.tsx YourDoctor select onChange -> run('health.choose_clinic', { clinicId }) -> health.ts onCommand -> clinicRefusal -> healthOf(player).clinicId. The interface does not reach it for any life the game makes (New Haven, one practice).",
+      "preconditions": "The practice exists, is in the town they live in, and is a doctor's kind (clinicRefusal).",
+      "costs": "None to choose.",
+      "timing": "At once.",
+      "refusals": "'No such practice.', 'Your doctor is in the town you live in.', 'That isn’t a doctor’s practice.'",
+      "outcomes": "clinicId set; clinicFor gives it for a visit.",
+      "readers": "clinics.ts clinicFor -> appointments.ts bookIn (practice, calendar label, notice); health.ts careFor (bill and notice name); shareOf (a private practice's self-pay price); Papers' Your Doctor line and quote.",
+      "persistence": "person.health.clinicId in the save.",
+      "gap": "Implementation missing for New Haven: one doctor's practice, so the choice decides nothing for any played life (stale claim that it does). Where it decides something (London, Mexico City) only quickSave fixtures reach it. Needs a researched second New Haven practice whose differences move access, appointment availability, accepted cover, cost or continuity.",
+      "acceptance": [
+        "render+command+clock: a family-made New Haven student sees Your Doctor on Papers offering Fair Haven and Yale Health's Student Health; the one who picks Yale Health is booked the next weekday at Yale Health, her twin who didn't 24 days on at Fair Haven; both kept, the care log names each place; across a reload.",
+        "command: a life Yale Health doesn't cover (withdrawn in the first fifteen days) is refused Yale Health in its words, and Papers offers no Your Doctor box, only Fair Haven.",
+        "clock: a Yale Health appointment falling after Yale Health's cover ended (a withdrawal) isn't kept there: not seen, owed, said, and Book An Appointment books Fair Haven.",
+        "GUARD: clinicFor given no moment gives no members-only practice."
+      ]
+    },
+    {
+      "id": "health.enroll",
+      "player": "Papers, Health Cover tab, The Marketplace panel: Enroll.",
+      "path": "Gated Enroll onClick -> run('health.enroll') -> mayEnroll -> program or marketplace from next month (or Yale Health's end). Reached in play (tests/need-paths.test.ts, evidence3-lifepapers).",
+      "preconditions": "A state SLATE keeps cover in; not enrolled or enrolled ahead; not under Yale Health unless within 60 days of its set end; program by last month's income, or marketplace in a window, lawfully present.",
+      "costs": "Program: none. Marketplace: the benchmark premium each month (healthMonth), then the plan's copays on care.",
+      "timing": "Cover from the first of next month, or the first of the month on or after Yale Health's end.",
+      "refusals": "mayEnroll's words (tested through execute).",
+      "outcomes": "h.program or h.marketplace; coverOn/planOf read for every share.",
+      "readers": "coverOn/planOf -> shareOf -> careFor's bill on the clock; healthMonth premium; Papers cover and quotes.",
+      "persistence": "health.marketplace/program in the save; premiums by year.",
+      "gap": "Evidence missing: no test has the clock raise a bill under an approved plan and read its share (the marketplace's $45 appears only as a denied claim's share or Papers' quote). No insurer's share is recorded anywhere, so 'what the plan paid' can't be asserted (implementation missing for the insurer's share). Program renewal through work still only on wages posted by hand (not in this brief).",
+      "acceptance": [
+        "clock+render: the Inherited student enrolled on Papers, a visit the week draws booked and kept at Fair Haven in November 2026 under Access Health CT Standard Silver: bill $45.00 (the copay, no deductible), plan paid $60.13 of the $105.13 price ($100 in 2024 grown by BLS physicians' CPI 439.389/417.93), deductible untouched, spent +$45; paid on its due day from checking to Medical Care, once across a reload; Papers row shows Your Share and Plan Paid."
+      ]
+    },
+    {
+      "id": "health.appointment",
+      "player": "Booked by the health week (no control); Papers shows it with Call It Off and Book An Appointment when owed.",
+      "path": "HEALTH_WEEK_KIND handler -> book -> bookIn -> APPOINTMENT_KIND scheduled; handler: presentForCare -> careFor, renewPrescriptions, reviewed, mayRefer; else missed + owedVisit.",
+      "preconditions": "Awake and out of hospital at its hour.",
+      "costs": "What the cover leaves of a visit.",
+      "timing": "The place's wait, a weekday morning not a public holiday.",
+      "refusals": "Missed: 'Missed The Doctor'.",
+      "outcomes": "Visit billed; prescriptions renewed; review recorded; referral may follow.",
+      "readers": "careFor's bill; renewPrescriptions -> fillMedicine only where RX.validYears gives an end (British Columbia); reviewed -> next review; mayRefer.",
+      "persistence": "bills, careLog, prescribedAt, owedVisit.",
+      "gap": "Stale claim / research missing: in New Haven a kept visit's renewal is read by nothing, and Connecticut's rule was unresearched. Needs Connecticut's own statute and regulations read: if they set an expiry for a non-controlled prescription, implement it; if not, correct the claim with the source. Evidence missing: an insured appointment's bill on the clock (shared with health.enroll).",
+      "acceptance": [
+        "Research: CGS 20-616 and the DCP Drug Control Division's lawbook read for a validity period; result recorded in research-health-visits.json and RX's comment.",
+        "clock: the insured appointment bill (above), the plan's share, the payment and the ledger.",
+        "clock: an appointment at the practice chosen is billed under that practice's name, not whatever practice is chosen at the visit."
+      ]
+    }
+  ]
+}

@@ -96,11 +96,13 @@ describe('bank.cancel_new', () => {
     const since = sim.now;
     // Friday 9 January: canceled at 10 AM (the ,000 left in RBC chequing in at TD an hour before), the ,000 out of RBC at once and
     // into TD at the same hour on Monday 12 January, the next business day.
-    expect(must<{ refunded: number }>(sim, 'bank.cancel_new', { accountId: term.id })).toEqual({ refunded: 4_000_00 });
+    // With its one day-end's interest at RBC's 2.45%, which Canada leaves the holder (from 2026-10-15: until then a term
+    // canceled came back without it, $4,000.00): 4,000 × 0.0245 / 365 = $0.2685, in whole cents $0.26.
+    expect(must<{ refunded: number }>(sim, 'bank.cancel_new', { accountId: term.id })).toEqual({ refunded: 4_000_26 });
     expect(term.balance).toBe(0);
     sim.advanceTo(est(1, 13, 9));
     // Break: the old straight posting: the $4,000 is at TD the same minute, 10 AM on the 9th.
-    expect(into(sim, td, since)).toEqual([{ at: est(1, 12, 10), amount: 4_000_00 }]);
+    expect(into(sim, td, since)).toEqual([{ at: est(1, 12, 10), amount: 4_000_26 }]);
   });
 });
 

@@ -34,27 +34,31 @@
  *   nothing where the bank says so.
  * - **Unclaimed money** (A21): after the country's years untouched, the
  *   balance goes to the state or its scheme, and can be claimed back.
- * - **Changing one's mind** (A12, C6): a savings account, a term deposit or
- *   a card opened in the last 14 days (the country's cooling-off period)
- *   canceled, the deposit's money back in full; Britain's fixed-rate
- *   deposits excepted, as its rules except them.
+ * - **Changing one's mind** (A12, C6): a savings account, a term deposit, a
+ *   current account or a card opened in the last 14 days (the country's
+ *   cooling-off period) canceled, the money back with its interest or
+ *   without it and its fees refunded or charged, as the country's rule has
+ *   it (`KEEPS_INTEREST`, `REFUNDS_CHARGES`); Britain's fixed-rate deposits
+ *   excepted, as its rules except them, and Korea's deposits, which its rule
+ *   doesn't reach. Until 2026-10-15 a deposit's money came back “in full”,
+ *   its interest dropped and its charges kept, in every country.
  */
 
 import type { Simulation } from '../core/simulation';
-import { linkedTo } from './routing';
 import { CommandError } from '../core/simulation';
 import type { Person, RoundUpChoice } from '../domain/model';
 import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addMonths, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addDays, addMonths, endOfDay, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
+import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
 import { moveRoundUps, setRoundUps } from './roundups';
-import { dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn } from './banking';
+import { closingFeesOf, dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn, settleFees, settleInterest } from './banking';
 import { savingsLeftThisMonth } from './cash';
 import { checkingAt, checkingsOf, lendingOf } from './lending';
 import { ensurePrimary, stateOf } from './credit';
-import { sendBetweenBanks } from './bankmoves';
+import { closeRefusal, sendBetweenBanks } from './bankmoves';
 import { recordInterest } from './earnings';
 
 /**
@@ -124,14 +128,200 @@ export function breakQuote(sim: Simulation, term: Account): { penalty: Money; es
   return { penalty: earned, estimate: true, ...(rules?.penaltyWords ? { words: rules.penaltyWords } : {}) };
 }
 
+/**
+ * Where an account canceled in its cooling-off period keeps the interest it earned there (from 2026-10-15: until then a
+ * savings account or term deposit canceled anywhere came back without it, and a current account canceled anywhere was
+ * paid it). Each rule was read that day:
+ *
+ * - Britain: the bank may charge only for the service actually provided, and nothing “construed as a penalty” (FCA
+ *   BCOBS 6.3.2R, https://www.handbook.fca.org.uk/handbook/BCOBS/6/3.html); Nationwide's terms say that within the 14
+ *   days it “will not deduct any interest you have earned to date” (Savings Account Terms and Conditions P2797, January
+ *   2026, condition 76, https://www.nationwide.co.uk/-/assets/nationwidecouk/documents/savings/terms-and-conditions/p2797-savings-accounts.pdf).
+ * - Canada: the bank closes the account “without charge” and refunds its charges (SOR/2021-181 s.5(2),
+ *   https://lois-laws.justice.gc.ca/eng/regulations/SOR-2021-181/FullText.html); nothing there takes back interest
+ *   earned, so it's paid as any close pays it.
+ * - The European Union's rule, which Germany, France, Spain, Ireland and Iceland (through the EEA) carry, is the other
+ *   way: the bank returns what it received and the consumer “shall return to the supplier any sums … he has received
+ *   from the supplier” (Directive 2002/65/EC art. 7(4)-(5), https://www.legislation.gov.uk/eudr/2002/65/article/7).
+ *   Germany's words are the same, “die empfangenen Leistungen” returned (BGB § 355(3),
+ *   https://www.gesetze-im-internet.de/bgb/__355.html), and Deutsche Bank's notice says “die beiderseits empfangenen
+ *   Leistungen” (its pre-contract information for ZinsMarkt-Festgeld, February 2025,
+ *   https://www.deutsche-bank.de/dam/deutschebank/de/shared/pdf/ser_vvi_fernabsatz_vertraege_finanzdienstleistungen_zinsmarkt_ag.pdf).
+ *   Iceland's own act (lög 33/2005) wasn't read: althingi.is refused SLATE's fetch.
+ * - Mexico returns things “al estado en el que se encontraban antes de su firma” (Ley para la Transparencia y
+ *   Ordenamiento de los Servicios Financieros, art. 11 Bis 1, as amended to 24 January 2024,
+ *   https://www.cnbv.gob.mx/Normatividad/Ley%20para%20la%20transparencia%20y%20ordenamiento%20de%20los%20servicios%20financieros.pdf).
+ *
+ * Where it isn't kept, interest already paid in the window goes back (`interestPaidSince`) and what was building is
+ * dropped.
+ */
+const KEEPS_INTEREST: ReadonlySet<string> = new Set(['GB', 'CA']);
+
+/**
+ * Where canceling refunds the bank's charges while the account was open, other than a machine owner's: Canada's,
+ * “any charges related to the operation of the retail deposit account, other than interest charges” (SOR/2021-181
+ * s.5(2)(b)), for any deposit account, savings among them; and Mexico's, where the bank “no podrán cobrar Comisión
+ * alguna” (art. 11 Bis 1). Until 2026-10-15 only a Canadian current account's came back, and a Canadian savings
+ * account's withdrawal fee, or anything Mexico's banks charged, was kept.
+ */
+const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA', 'MX']);
+
+/**
+ * The interest an account was paid since it opened, each payment's transaction: into it, or a term's taken out of it,
+ * which carries the term itself, a posting of nothing (`bank.take_term_interest`). Until 2026-10-15's second recheck a
+ * term's taken interest was matched by its memo alone, and every term at a bank has the same name, so canceling a new
+ * Deutsche Bank FestzinsSparen took back the €6.93 an older one had paid, out of the primary and off the year's income
+ * (found by that day's skeptic). Interest taken before then carries no such posting, and isn't found.
+ */
+function interestPaidSince(sim: Simulation, account: Account) {
+  return sim.universe.transactions.filter((t) => t.category === 'interest' && t.at >= account.openedAt
+    && t.postings.some((q) => q.accountId === account.id && (q.amount > 0 || (account.category === 'term' && q.amount === 0))));
+}
+
+/**
+ * What canceling would take back of the interest it paid, net of the tax kept on it, where it isn't kept: by the holder's
+ * account each payment went into. A term's interest taken during the term (`bank.take_term_interest`) went into the
+ * primary current account, and the reversal takes it back out of there. Until 2026-10-15's recheck only what was paid
+ * into the account itself was counted, so nothing refused a cancellation that took it from a primary account holding
+ * less, and a Commerzbank primary was left at −€6.30 by a Deutsche Bank term (found by that day's skeptic). It's taken
+ * from where it went, not from the deposit: Deutsche Bank's own terms say only that each side returns what it received,
+ * within 30 days (“Verpflichtungen zur Erstattung von Zahlungen müssen innerhalb von 30 Tagen erfüllt werden”, the
+ * Widerrufsfolgen of its ZinsMarkt pre-contract information, cited at `KEEPS_INTEREST`, read 2026-10-15), and nothing of
+ * keeping it back from the deposit.
+ */
+function interestBackOf(sim: Simulation, account: Account): Map<string, Money> {
+  const back = new Map<string, Money>();
+  if (account.kind === 'credit_card' || KEEPS_INTEREST.has(isoOfAccount(account) ?? '')) return back;
+  for (const q of interestPaidSince(sim, account).flatMap((t) => t.postings)) {
+    if (q.amount > 0 && sim.universe.accounts[q.accountId]?.ownerId === account.ownerId) back.set(q.accountId, (back.get(q.accountId) ?? 0) + q.amount);
+  }
+  return back;
+}
+
+/**
+ * The charges canceling would refund, where the country refunds them, by the expense line each was charged to. Not
+ * overdraft interest, which is posted as a bank fee (`systems/lending.ts`, against Overdraft Interest): Canada refunds
+ * charges “other than interest charges” (SOR/2021-181 s.5(2)(b), read 2026-10-15), and Mexico's “Comisión” is a fee, not
+ * interest (art. 11 Bis 1). Until 2026-10-15's recheck every bank fee came back, overdraft interest with it, and all of
+ * it against Bank Fees (found by that day's skeptic: C$23.76 refunded in Toronto, C$1.81 of it interest).
+ */
+function chargesBackOf(sim: Simulation, account: Account): Map<string, Money> {
+  const back = new Map<string, Money>();
+  if (account.kind === 'credit_card' || !REFUNDS_CHARGES.has(isoOfAccount(account) ?? '')) return back;
+  for (const t of sim.universe.transactions) {
+    if (t.category !== 'bank_fee' || t.at < account.openedAt || t.memo === 'The machine owner’s fee' || !t.postings.some((q) => q.accountId === account.id)) continue;
+    const lines = t.postings.filter((q) => sim.universe.accounts[q.accountId]?.nominal);
+    if (lines.some((q) => sim.universe.accounts[q.accountId]?.name === 'Overdraft Interest')) continue;
+    for (const q of lines) back.set(q.accountId, (back.get(q.accountId) ?? 0) + q.amount);
+  }
+  return back;
+}
+
+const total = (m: Map<string, Money>) => [...m.values()].reduce((n, v) => n + v, 0);
+
+/** What canceling an account gives back, in the panel's words: with or without its interest, and its fees. */
+export function cancelWords(account: Account): string {
+  if (account.kind === 'credit_card') return 'with anything spent still to repay';
+  const iso = isoOfAccount(account) ?? '';
+  const interest = KEEPS_INTEREST.has(iso) ? 'its money back with its interest' : 'its money back without the interest it earned';
+  return `${interest}${REFUNDS_CHARGES.has(iso) ? ', and its fees refunded' : account.kind === 'checking' ? ', less the fees it owes' : ''}`;
+}
+
+/**
+ * Why an account can't be canceled in its cooling-off period now, or nothing: a current account's Close It refusals
+ * (`closeRefusal`), and for any account what settling it takes past what it holds, fees owed and interest going back,
+ * which would leave it overdrawn, and the bank closes an overdrawn account only once that's paid (from 2026-10-15, when
+ * canceling began to charge fees; the interest going back from the same day). Where the fees are refunded, none are
+ * owed; where interest is kept, what it's paid counts toward them. The panel and the command both read it.
+ */
+export function cancelRefusal(sim: Simulation, person: Person, account: Account): string | undefined {
+  if (account.kind === 'checking') {
+    const no = closeRefusal(sim, person, account);
+    if (no) return no;
+  }
+  const iso = isoOfAccount(account) ?? '';
+  const owed = REFUNDS_CHARGES.has(iso) ? 0 : closingFeesOf(sim, account);
+  const earned = KEEPS_INTEREST.has(iso) ? Math.floor(account.accrued ?? 0) : 0;
+  const backs = interestBackOf(sim, account);
+  const back = backs.get(account.id) ?? 0;
+  const short = owed + back - account.balance - total(chargesBackOf(sim, account)) - (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0);
+  const m = (n: Money) => formatMoney(n, saveCurrency(sim.universe));
+  if (short > 0) {
+    const what = owed > 0 && back > 0 ? `Its fees, ${m(owed)}, and the interest it was paid, ${m(back)}, are` : owed > 0 ? `Its fees, ${m(owed)}, are` : `The interest it was paid, ${m(back)}, goes back, and is`;
+    return `${what} more than it holds. Pay in ${m(short)} first.`;
+  }
+  // Interest it paid into another account, a term's taken during the term, goes back out of that one (from 2026-10-15's
+  // recheck, `interestBackOf`).
+  for (const [id, amount] of backs) {
+    const into = sim.universe.accounts[id];
+    if (id === account.id || !into || amount <= into.balance) continue;
+    return `The interest it paid into ${into.name}, ${m(amount)}, goes back out of it, and is more than it holds. Pay in ${m(amount - into.balance)} first.`;
+  }
+  return undefined;
+}
+
+/**
+ * Where the cooling-off period is counted in business days at the bank's country: Canada's “within 14 business days
+ * after the day on which the retail deposit account is opened” (SOR/2021-181 s.5(1), read 2026-10-15) and Mexico's
+ * “diez días hábiles posteriores a la firma” (Ley para la Transparencia y Ordenamiento de los Servicios Financieros art.
+ * 11 Bis 1, text in force at its last reform of 14 November 2025, https://www.diputados.gob.mx/LeyesBiblio/pdf/LTOSF.pdf,
+ * read 2026-10-15). Until 2026-10-15's recheck both were counted in calendar days, which ended Canada's four or more
+ * days early and Mexico's from four.
+ */
+const BUSINESS_DAY_COOLING: ReadonlySet<string> = new Set(['CA', 'MX']);
+
+/** When an account's cooling-off period ends, on its country's count, or nothing where there's none. */
+export function coolingOffEnds(sim: Simulation, account: Account): Instant | undefined {
+  const iso = isoOfAccount(account);
+  const days = iso ? UNCLAIMED[iso]?.coolingOffDays : undefined;
+  if (days === undefined) return undefined;
+  // To the end of its last day, in the save's zone, which is the bank's country's: each rule counts days, not hours, the
+  // fourteen “calendar days” of Directive 2002/65/EC art. 6(1), Canada's “within 14 business days after the day on
+  // which [it] is opened” and Mexico's “diez días hábiles posteriores”. Until 2026-10-15's second recheck it ended at
+  // the hour the account opened, so an RBC account opened at 7:30 AM on 5 January, “until January 23” on the panel, was
+  // refused at 11:30 AM on the 23rd (found by that day's skeptic).
+  if (!BUSINESS_DAY_COOLING.has(iso!)) return endOfDay(addDays(account.openedAt, days, sim.homeZone), sim.homeZone);
+  const holder = account.ownerId ? sim.universe.people[account.ownerId] : undefined;
+  const kept = daysOfAccount(account, holder);
+  return endOfDay(afterBusinessDays(account.openedAt, days, kept.countryId, sim.homeZone, kept.regionId), sim.homeZone);
+}
+
+/**
+ * Whether it's been used since it opened, as Mexico's right asks: a payment out of it by its holder, a card's purchase
+ * among them, and not the bank's own fees, its interest or its tax on it. Money paid in isn't counted, an account being
+ * funded to be opened. Mexico's period holds only “siempre y cuando el Cliente no haya utilizado u operado los productos
+ * o servicios financieros contratados” (art. 11 Bis 1); until 2026-10-15's recheck a Mexican account could be canceled
+ * however it had been used.
+ */
+function usedSince(sim: Simulation, account: Account): boolean {
+  const list = sim.universe.transactions;
+  for (let i = list.length - 1; i >= 0 && list[i]!.at >= account.openedAt; i -= 1) {
+    const t = list[i]!;
+    if (t.category !== 'interest' && t.category !== 'bank_fee' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) return true;
+  }
+  return false;
+}
+
 /** Whether an account or card is still within its country's cooling-off period. */
 export function inCoolingOff(sim: Simulation, account: Account): boolean {
   const iso = isoOfAccount(account);
-  const days = iso ? UNCLAIMED[iso]?.coolingOffDays : undefined;
-  if (days === undefined) return false;
+  const ends = coolingOffEnds(sim, account);
+  if (ends === undefined) return false;
   // Britain's rules except fixed-rate deposits.
   if (iso === 'GB' && account.category === 'term') return false;
-  return sim.now - account.openedAt <= days * MS_DAY;
+  // Canada's regulation prescribes a cancellation period for a retail deposit account (s.5) and a deposit-type
+  // instrument (s.6), and none for a credit card: section 627.11 of the Bank Act lets one be canceled “in accordance
+  // with any prescribed requirements”, and SOR/2021-181 prescribes none (s.4's list has no card; read 2026-10-15,
+  // https://laws-lois.justice.gc.ca/eng/regulations/SOR-2021-181/FullText.html). Until 2026-10-15's recheck a Canadian
+  // card could be canceled in 14 days, which no Canadian rule gives.
+  if (iso === 'CA' && account.kind === 'credit_card') return false;
+  // Korea's withdrawal of a subscription (청약철회) is for insurance, investment and lending products only, not deposits
+  // (금융소비자 보호에 관한 법률 제46조 1항, as easylaw.go.kr's guide to it sets out, read 2026-10-15:
+  // https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=1771&ccfNo=1&cciNo=2&cnpClsNo=1). Until 2026-10-15 a
+  // Korean savings account, term deposit or current account could be canceled in 14 days, which no Korean rule gives.
+  // A card, a lending product, keeps them; that its 14 days hold for a card wasn't confirmed that day.
+  if (iso === 'KR' && account.kind !== 'credit_card') return false;
+  return sim.now <= ends && !(iso === 'MX' && usedSince(sim, account));
 }
 
 /**
@@ -300,7 +490,9 @@ export function registerAccountLife(sim: Simulation): void {
     const into = currentOf(s, person);
     if (earned <= 0 || !into) throw new CommandError('It hasn’t earned anything to take yet.');
     const tax = interestTaxFor(s, term, earned);
-    const postings = [{ accountId: into.id, amount: earned - tax }, { accountId: s.nominalAccount('income', 'Interest').id, amount: -earned }];
+    // The term itself is carried, a posting of nothing, so canceling it finds what it paid by the account, never by the
+    // name every term at the bank shares (`interestPaidSince`, from 2026-10-15's second recheck).
+    const postings = [{ accountId: into.id, amount: earned - tax }, { accountId: s.nominalAccount('income', 'Interest').id, amount: -earned }, { accountId: term.id, amount: 0 }];
     if (tax > 0) postings.push({ accountId: s.nominalAccount('expense', 'Tax On Interest').id, amount: tax });
     s.post({ memo: `Interest: ${term.name}`, category: 'interest', postings });
     term.accrued = (term.accrued ?? 0) - earned;
@@ -336,13 +528,44 @@ export function registerAccountLife(sim: Simulation): void {
       return { refunded: 0 };
     }
     if (!into || into.id === account.id) throw new CommandError('Your primary current account can’t be canceled. Make another primary first.');
-    // A current account canceled like any close: nothing may still use it (from 2026-10-10, `linkedTo`). A savings
-    // account's orders into it go with it, as they always have (`dropPaymentsFor`).
-    const links = account.kind === 'checking' ? linkedTo(s, person, account.id) : [];
-    if (links.length > 0) throw new CommandError(`${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`);
-    // The deposit’s money back whole: no interest, no penalty. Into a current account at its own bank; with none there,
-    // sent to the primary one in the bank’s days, as a term broken and a savings account closed are (from 2026-10-13:
-    // until then into the primary account at once, whatever bank it was at; found by that day’s final defect pass).
+    // A current account canceled like any close, on Close It's own refusals (`closeRefusal`, from 2026-10-15): until then
+    // only what still used it was asked (`linkedTo`, from 2026-10-10), so one overdrawn closed with its debt, and one
+    // with money on its way, card payments pending or savings beside it closed too; found by that day's scope pass. A
+    // savings account's orders into it go with it, as they always have (`dropPaymentsFor`). From 2026-10-15 too, fees owed
+    // past what it holds (`cancelRefusal`), and for savings and a term deposit too, which until then were asked nothing.
+    const refused = cancelRefusal(s, person, account);
+    if (refused) throw new CommandError(refused);
+    // Canceled, it settles as Close It settles (`closeNow`, systems/bankmoves.ts), as the country's rule has it: its fees
+    // charged and its overdraft gone with it, and its interest paid where the rule leaves the holder what it earned
+    // (`KEEPS_INTEREST`, from 2026-10-15). A current account closed with neither until then, its interest lost and a
+    // German account's quarter's fees unpaid, where the guide said it closed the same way (found by that day's skeptic);
+    // and from that day until the same day's later pass it was paid its interest in every country, Germany and Iceland
+    // among them, whose rule returns it. The fees are the service actually provided, which Britain lets the bank charge on
+    // a cancellation (FCA BCOBS 6.3.2R, https://www.handbook.fca.org.uk/handbook/BCOBS/6/3.html, read 2026-10-15) and
+    // Germany too, as Wertersatz (BGB § 357b(2), https://www.gesetze-im-internet.de/bgb/__357b.html, read 2026-10-15).
+    // Canada and Mexico are the other way: their charges come back (`REFUNDS_CHARGES`), a machine owner's fee, a third
+    // party's, aside.
+    if (KEEPS_INTEREST.has(isoOfAccount(account) ?? '')) settleInterest(s, account, `Interest: ${account.name}, on canceling`);
+    else {
+      // What it was paid goes back as it came, its tax with it, and off the year's income (`recordInterest`).
+      const owner = account.ownerId ? s.universe.people[account.ownerId] : undefined;
+      for (const t of interestPaidSince(s, account)) {
+        s.post({ memo: `Interest returned: ${account.name}, canceled`, category: 'interest', postings: t.postings.filter((q) => q.amount !== 0).map((q) => ({ accountId: q.accountId, amount: -q.amount })) });
+        const gross = -t.postings.filter((q) => q.accountId === s.nominalAccount('income', 'Interest').id).reduce((n, q) => n + q.amount, 0);
+        if (owner && gross > 0) recordInterest(owner, t.at, s.homeZone, -gross);
+      }
+    }
+    settleFees(s, account);
+    // Each charge back against the line it was charged to (from 2026-10-15's recheck: until then all of it against Bank
+    // Fees, overdraft interest included).
+    const charges = chargesBackOf(s, account);
+    const refund = total(charges);
+    if (refund > 0) s.post({ memo: `Fees refunded: ${account.name}, canceled`, category: 'bank_fee', postings: [{ accountId: account.id, amount: refund }, ...[...charges].filter(([, n]) => n !== 0).map(([id, n]) => ({ accountId: id, amount: -n }))] });
+    account.overdraftLimit = undefined;
+    // Into a current account at its own bank; with none there, sent to the primary one in the bank’s days, as a
+    // term broken and a savings account closed are (from 2026-10-13: until then into the primary account at once,
+    // whatever bank it was at; found by that day’s final defect pass). Until 2026-10-15 a savings account or a term
+    // deposit came back “whole”, without its interest or its charges, wherever it was.
     const back = Math.max(0, account.balance);
     const to = checkingsOf(s, person).find((a) => a.bankId === account.bankId && a.id !== account.id) ?? into;
     if (back > 0 && to.bankId !== account.bankId) sendBetweenBanks(s, person, account, to, back);

@@ -1,0 +1,474 @@
+{
+ "key": "school",
+ "on": "2026-10-15",
+ "against": "bef4bde5",
+ "rows": [
+  {
+   "id": "school.respond",
+   "before": "partial (gapsOpen: ‘That evening has passed.’ reached only from a fixture standing for a save made before 2026-10-12)",
+   "after": "verified: the old-save path is checked on the four real pre-2026-10-12 saves through openSlot → migrate → loadSave. The fixture's premise was false: no build wrote a moment that waited past its evening. The older-save state that does reach the line (a moment stranded open by a leave, withdrawal or dismissal before 2026-10-13) is now lapsed on opening, so ‘That evening has passed.’ is a guard, tested as one. The other gaps were closed in rounds one to three.",
+   "disposition": "stale claim corrected; load-path defect fixed; guard kept",
+   "testsAdded": [
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.respond > PLAYER JOURNEY: the four real saves from before 2026-10-12, opened as the game opens a slot, hold no moment that waits past its evening: each lapses 22 hours after its nine o’clock class, every invitation’s evening twelve hours or more after that",
+     "kind": "command",
+     "proves": "Old-save compatibility on real saves (ff837dfa of 2026-10-10, 086d00ca of 2026-10-11) opened through openSlot (LocalSaveAdapter over a memory store) and loadSave. There are 169 moments, 53 of them invitations. Every until is the 9 AM class + 22 h, and every evening is at 19:00, at least 12 h after it. This falsifies the claim that saves before 2026-10-12 waited until 10 PM."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.respond > PLAYER JOURNEY: the one moment open in them, a request for help in the save of 22 February 2028, is answered before its hour and lapses at seven the next morning, its answers refused then, through a save",
+     "kind": "clock",
+     "proves": "On a real old save, an open moment can be answered (Say No taken, its lapse cancelled, survives a reload). Left alone, it is still open at 6:59 and lapsed at 7:01 with no trust cost for help. Both answers are then refused ‘It’s too late to answer: the moment passed.’"
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.respond > DEFECT: a save from before 2026-10-13 with an invitation stranded open by a leave (FIXTURE), opened as the game opens a slot, has its lapse back on the clock once, and it lapses at seven as the same save this build made does",
+     "kind": "clock",
+     "proves": "FIXTURE: e3-r1's leave save at 10:01 on 20 January 2027, with the lapse called off as ff837dfa's leave did. Opened, its lapse is back on the clock at 7 AM on the 21st, and a second open adds none. It lapses at 7:01 with trust − 1, the same as the save this build wrote. At 19:30 on the 23rd (its evening) Say Yes and Say No are refused ‘the moment passed’, not ‘That evening has passed.’. Failed before the fix: no lapse item."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.respond > DEFECT: the same older save played on past the evening and saved on leave, opened, has the invitation lapsed at once, the trust charged once through a save, and back from the leave the class brings moments again",
+     "kind": "clock",
+     "proves": "FIXTURE: the older save played on to 1 February 2027 by this build's systems with no load steps. Opened, the moment is lapsed at once, trust − 1 once through a second open, with no lapse item. Back from the leave (notice given, re-registered, four weeks), the class draws moments again. The un-repaired copy draws none and its invitation is still open. Failed before the fix: the moment was still open."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.respond > GUARD: “That evening has passed.”, reached by no save this build opens: an invitation held open past its evening in memory, its lapse called off by hand, refuses Say Yes in those words and takes Say No",
+     "kind": "command",
+     "proves": "The guard still answers in its words, and nothing is booked."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Opening a save made before 2026-10-13 left a classmate's moment stranded open for good, its lapse called off by a leave, a withdrawal or a dismissal. Its answers stayed live past their hour, a late Say Yes was refused ‘That evening has passed.’, and classMoment drew no moment after it, so a student back from such a leave was never brought another. loadSave now runs strandedMoments: a moment past its hour is lapsed with its cost, and one before its hour has its lapse put back on the clock.",
+     "where": "src/engine/systems/classmates.ts (strandedMoments, and lapse() factored from the MOMENT_KIND handler); src/engine/index.ts loadSave (one call)",
+     "test": "tests/scope-school.test.ts > school.respond > DEFECT: a save from before 2026-10-13 … and DEFECT: the same older save played on … (both failed with the call removed, and pass with it)"
+    },
+    {
+     "summary": "Stale claim: classmates.ts (respondRefusal), guide coursework.class and the row said a save made before 2026-10-12 held moments until 10 PM. answerHours has been 22 since 2026-10-07; what changed on 2026-10-12 was its comment. The comment now says so in the past tense, the line is marked a guard, and the guide no longer lists it among refusals a player meets.",
+     "where": "src/engine/systems/classmates.ts:73-76 and respondRefusal; src/engine/content/guide/coursework.ts (unavailable)",
+     "test": "tests/scope-school.test.ts > school.respond > PLAYER JOURNEY: the four real saves …"
+    }
+   ],
+   "guards": [
+    {
+     "where": "src/engine/systems/classmates.ts respondRefusal: `if (when <= sim.now) return 'That evening has passed.';`",
+     "test": "tests/scope-school.test.ts > school.respond > GUARD: “That evening has passed.” …"
+    }
+   ],
+   "rowText": {
+    "reads": "respondRefusal (classmates.ts): lapsed or answered, an answer of the kind’s, a disagreement’s work open or revising (‘That work is finished.’), help occupied (startRefusal), a study evening clashing (‘say no instead’). ‘That evening has passed.’ is a guard no save this build opens reaches (from 2026-10-15). ‘They’re in New Haven.’ went on 2026-10-13, reached by no play. Also the moment kind/choice.",
+    "persistent": "moments, which lapse at their hour after a withdrawal, a dismissal or a leave (school.ts setStanding, leave.ts kept(); until 2026-10-13 those called a moment off and it stayed open, its answers live), and on opening a save from before then that holds one stranded so (strandedMoments, loadSave, from 2026-10-15); classmate record; the assignment’s answers, readsApart and tryBoth",
+    "issue": "Until 2026-10-15 this said ‘That evening has passed.’ is reached from a save made before 2026-10-12, whose moments waited until ten the next evening. No build wrote one: answerHours has been 22 since 2026-10-07, and the four real saves of 2026-10-10 and 2026-10-11 under tests/fixtures lapse every moment 22 hours after its 9 AM class, at least 12 before its evening (scope-school). What did reach the line was an older save's moment stranded open by a leave, a withdrawal or a dismissal before 2026-10-13. Opening such a save left it open, its answers live, and stopped every moment after it, until 2026-10-15, when loadSave began lapsing it (strandedMoments). The line is now a guard, tested as one."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/index.ts",
+     "find": "  strandedMoments(sim);\n",
+     "replace": "",
+     "protects": "both DEFECT tests (the lapse back on the clock once; lapsed at once and moments drawn again)"
+    },
+    {
+     "file": "src/engine/systems/classmates.ts",
+     "find": "      if (m.until <= sim.now) lapse(sim, person, m);",
+     "replace": "      if (m.until < 0) lapse(sim, person, m);",
+     "protects": "DEFECT: the same older save played on … (lapsed at once on opening, trust − 1)"
+    },
+    {
+     "file": "src/engine/systems/classmates.ts",
+     "find": "      if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === MOMENT_KIND && i.payload.momentId === m.id)) continue;",
+     "replace": "",
+     "protects": "the help moment of the real 2028 save (one lapse item) and DEFECT: … (a second open adds none). Run on 2026-10-15: both failed"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "docs/verification/audit/school.json (school.respond) still cites ‘a study evening passed’ and has no strandedMoments.",
+     "done": "Outside my files; listed under outsideMyFiles. The skeptic’s other two points were confirmations, with nothing to do."
+    }
+   ]
+  },
+  {
+   "id": "school.request_repeat",
+   "before": "partial (gapsOpen: REPEAT_DECIDE_KIND’s refusals reached only from a fixture)",
+   "after": "verified: request → decision → acted on, played. A last year’s repeat is granted and the repeated year played to the degree at Commencement 2030. A first year’s repeat has its course failed again: the notice offers no second repeat, and the student, dismissed at that evaluation, has nothing to ask. From 2026-10-15 a Fail at an evaluation that dismisses offers no repeat either, played both ways the School dismisses (the faculty’s review, and the warning unmet), each beside earlier Fails still offered it, and the Fail is told after the dismissal; a Permanent Incomplete in a played repeated year offers none; and, after the second round’s recheck, a Fail in a later year after a repeat, at an evaluation that ends nothing (the second fall’s Clown, good to concern), offers none, and at that year’s end the Standing tab has no Ask To Repeat The Year… and the command is refused “Repeating would make 10 semesters…”. The notices count the semesters as the year’s end will (`repeatRoom`). The decision’s own refusals are kept as guards and tested as guards (GUARD:), not claimed reachable. After the third round’s recheck (2026-10-15), a first fall’s Fail before a two-term medical leave begun at the spring is played back to the year’s end, where the repeat its notice offered is asked and granted for that course; until then the year’s courses were picked by calendar term and the repeat was refused “Every course this year was passed”. The last year’s repeat bills each term past six at $24,784.65, worked from the Bulletin’s tuition and Yale Health plan.",
+   "disposition": "evidence added; notice defects fixed (the second round’s included); a redundant clause removed; guards named; a leave-split year’s repeat fixed (third round)",
+   "testsAdded": [
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a last year’s repeat asked, granted, and the year played again: the third year’s courses meet in Fall Term 2029 and Spring Term 2030, Movement Invention III passed on the retake beside its Fail, both terms billed past six and paid, and the degree conferred at Commencement 2030, once, through a save",
+     "kind": "clock",
+     "proves": "g26-l3, with Movement Invention III failed in Fall 2028. The repeat is asked on 27 April 2029 and granted at 6 PM on 4 May (offset 2, class of 2030, repeatedYears [3]). Fall 2029 and Spring 2030 hold the same 10 and 10 course codes as Fall 2028 and Spring 2029, against program terms 4 and 5, all passed. Both terms are billed past six, $24,784.65 each, and paid (7 then 8 enrolled): from 2026-10-15 the figure is a literal worked from the Bulletin’s 2026–2027 tuition, $40,750, and Yale Health plan, $3,764, three years on at 3.22% and 8.10% a year, halved for a term ($22,407.28 + $2,377.37); until then it was asserted only as more than nothing. 4:DRAM 373a fail stands beside 6:DRAM 373a pass. Graduated at Commencement on 20 May 2030, one conferral notice through a reload, then ‘You’re not at school.’"
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a first year repeated and Text Analysis I slept through again in the repeated spring: its Fail’s notice offers no second repeat, both attempts are kept, and the student, dismissed at that evaluation, has nothing left to ask",
+     "kind": "clock",
+     "proves": "Both Fails are kept (1: and 3:DRAM 163b, academic 1). The first notice offers the year's end and the second doesn't; until 2026-10-15 both did. Dismissed (‘The warning wasn’t met’), and request_repeat is refused ‘You’re not at school.’"
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > GUARD: the decision’s refusal of a first year, which no valid state reaches (a second Fail put on the record between the asking and the deciding): ‘Your Repeat Is Refused’ in its words, the class of 2029 kept",
+     "kind": "command",
+     "proves": "‘Your Repeat Is Refused’ with the disqualification's words. Offset 0, class of 2029, no decision left (fixture: a second Fail put on the record)."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > GUARD: the decision’s refusal of a last year, which no valid state reaches (the same fixture): the degree withheld in its words",
+     "kind": "command",
+     "proves": "Withheld at 6 PM on 4 May 2029 with ‘The chair and the dean refused your request to repeat the year. … your terms at the School are over.’, and no term on the calendar."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a first fall with three courses slept through, kept on warning by the faculty’s review, its Fails offered the year’s end; the first spring’s Fail, at which the review dismisses, offered nothing, told after the dismissal",
+     "kind": "command",
+     "proves": "sc-dq: four Thursdays and four Fridays of Fall 2026 slept through: DRAM 113a/b at 18 of 26, DRAM 153a and DRAM 403a/b at 9 of 13, all Fails; the review keeps her on warning and the three notices offer the year’s end. Spring 2027’s Text Analysis I at 9 of 13: the review dismisses (already on warning); the notices at 17:00 on 23 April are [Dismissed From The School, Not Passed: …] in that order, and the Fail’s body ends “The degree needs every course passed.”. Fails without tellFails’ !ended and with the review branch passing false."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: the warning unmet:a first spring’s Fail to concern and a second fall’s to warning, each offered the year’s end; the second spring’s Fail, at which the evaluation dismisses, offered nothing, told after the dismissal",
+     "kind": "command",
+     "proves": "sc-x3 (the firstSpring save): Text Analysis I failed in Spring 2027 (concern, offered); DRAM 263a/b, Mondays, failed in Fall 2027 (warning, no review, offered); DRAM 233a/b, Mondays, failed in Spring 2028: dismissed, “The warning wasn’t met”, no review, the Fail told after the dismissal at the same instant with nothing offered. Fails without !ended and with the evaluation’s call site passing false."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a first year repeated, and in the repeated fall Acting I’s meetings called in sick: its Incomplete, not made up, becomes Permanent and offers no repeat at the year’s end, the year being repeated once already",
+     "kind": "command",
+     "proves": "Played to a Permanent Incomplete in a repeated year, where the FIXTURE in evidence-g26 set repeatedYears by hand. sc-x3 repeats its first year (offset 2, repeatedYears [1]); in Fall 2027 eleven of Acting I’s meetings are called in sick (TEST SETUP: the flu), and an emergency room visit of the draw on 15 November excuses a twelfth: 41 meetings, 29 attended, Incomplete, one session owed, due Sunday 9 January 2028 at five (thirty days from the evaluation of Friday 10 December). On that day it is Permanent, her standing warning and not ended, and the notice offers nothing. On 9 January 2028 the repeated spring (from 3 January) is the fourth term enrolled: with the year’s two again and the program’s four after, ten. Fails with repeatRoom returning true (run 2026-10-15). Until the second round it was said to fail without the `repeated` check; that check was redundant there (the count was ten already) and was removed."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a first year repeated and passed, then the second fall’s Clown slept through: its Fail, at an evaluation that steps good to concern, offers no repeat, and at the second spring’s end the Standing tab has no Ask To Repeat The Year…, the command refused past the nine semesters",
+     "kind": "clock",
+     "proves": "sc-x3 (the firstSpring save): year 1 repeated (offset 2, repeatedYears [1]), the repeated Fall 2027 and Spring 2028 passed (good, enrolled [0,1,2,3]); Clown (DRAM 263a/b, Mondays) slept through four times in Fall 2028: fail, academic 2, 7 of 11. At the evaluation of Friday 8 December 2028 at five: concern, not ended, and “Clown wasn’t passed: you were at 7 of its 11 meetings you weren’t excused from. The degree needs every course passed.” (worked: 5 enrolled + the spring to come + 2 again + 2 after = 10 > 9). Spring 2029 played to its evaluation of 27 April: enrolled [0..5], not ended; RepeatPanel rendered (Finishing The Degree shown) with no Ask To Repeat The Year… and no school.request_repeat button; the command refused “Repeating would make 10 semesters, past the nine the Bulletin allows for the degree.” (6 + 2 + 2). Fails with repeatRoom returning true, and with the terms still to come left out of the count (both run 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_repeat > PLAYER JOURNEY: a first fall’s Fail, then a two-term medical leave begun at the spring: back in Spring Term 2028, the year’s end offers the repeat the Fail’s notice told of, asked and granted for that course, which until 2026-10-15 was refused as every course passed",
+     "kind": "clock",
+     "proves": "sc-lv: Play (DRAM 153a, Thursdays) slept through four times in Fall 2026, failed at 9 of 13 at the evaluation of Friday 11 December at five, its notice offering the year’s end; standing concern. On Monday 14 December a personal leave is refused “A personal leave asks you to be current with your requirements, and Play isn’t passed.”; with the flu (TEST SETUP) a medical leave of one term or three is refused for the second halves of year-long courses, and two terms asked: firstTerm 1, not now; on by 15 January 2027 (firstTerm 1, returnTerm 3, offset 2). Notice given, reloaded, back for Spring Term 2028 (leaves [returned]), reregistered, played to the evaluation of Friday 28 April 2028: enrolled [0, 3], term 3’s records all academic 1 and passed. The Standing tab’s RepeatPanel shows Ask To Repeat The Year…; asked, decided Friday 5 May at six (five working days); the request reads year 1, terms [0, 3], courses [Play]; reloaded, granted at six, offset 4, class of 2031, repeatedYears [1], one ‘You’ll Repeat The Year’. Fails with the old calendar filter restored (the panel draws nothing: run 2026-10-15), with `end` read as the calendar spring (run: failed), and with the year’s terms as [spring − 1, spring] (run: failed on terms [0, 3])."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A Fail’s notice told every student ‘at the year’s end you can ask to repeat the year’, even in a year already repeated, where repeatRefusal refuses a second time. It now offers that only where the year can still be repeated. (Until the second round that meant a year not in repeatedYears; since then, a year with room in the nine semesters as the year’s end counts them, which takes in a year repeated.)",
+     "where": "src/engine/systems/courserecord.ts tellFails (repeatable); in settleCourses until the recheck",
+     "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated and Text Analysis I slept through again … (failed with repeatable forced true, passes with it)"
+    },
+    {
+     "summary": "A Fail at an evaluation that dismissed the student (the faculty’s review, or the warning unmet) or withheld the degree was still told to ask to repeat the year at its end, which “You’re not at school.” then refused: the notice was said in settleCourses, before the evaluation read the Fails. It is said by tellFails after the evaluation settles the standing, with the School’s ending read, and so after the standing’s own notice at the same instant.",
+     "where": "src/engine/systems/courserecord.ts tellFails; src/engine/systems/school.ts EVALUATION_KIND (both call sites)",
+     "test": "tests/scope-school.test.ts > the two dismissal journeys above (each fails with !ended removed, and each with its own call site passing false)"
+    },
+    {
+     "summary": "A Permanent Incomplete in a year repeated once already was told to ask to repeat the year. It isn’t now: until the second round by a `repeated` check, since then by the count of semesters (`repeatOpen`, as `tellFails`).",
+     "where": "src/engine/systems/courserecord.ts INCOMPLETE_DUE_KIND",
+     "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated, and in the repeated fall Acting I’s meetings called in sick … (played; fails with repeatRoom returning true). The FIXTURE test in tests/evidence-g26-school.test.ts that set repeatedYears by hand on a save with no repeat was removed: an impossible state, protecting only the removed clause."
+    },
+    {
+     "summary": "After any repeat granted, a Fail or a Permanent Incomplete in any later year, at an evaluation that ended nothing, was still told to ask to repeat the year at its end, which “Repeating would make 10 semesters…” refused: the notices excluded only the year itself being repeated. They now read repeatRoom, the count as the year’s end will make it: those enrolled, the program’s terms still to be taken through that spring (the spring at a fall’s evaluation, the year’s two again after a repeat is granted), the year’s two again and the terms after (withRepeat). The caller’s first version counted those enrolled so far, which at a second fall’s evaluation after a first year’s repeat made nine and still offered; the terms to come were added on 2026-10-15. The `repeatedYears` clause in repeatOpen was then redundant (enrolled is the program terms taken plus two per repeat granted, so the count is 8 plus 2 per repeat) and was removed.",
+     "where": "src/engine/systems/school.ts repeatRoom; src/engine/systems/courserecord.ts repeatOpen, tellFails, INCOMPLETE_DUE_KIND",
+     "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated and passed, then the second fall’s Clown slept through … (fails with repeatRoom true, and without the terms to come)"
+    },
+    {
+     "summary": "A year split by a leave lost its fall’s Fail: repeatCourses picked the year’s courses by calendar term (the spring and the calendar term before it). A two-term leave begun at a spring, the only length leaveLengths grants from one, puts the year’s fall three calendar terms before its spring, so a fall Fail or Permanent Incomplete was dropped and the year’s end refused “Every course this year was passed: there’s nothing to repeat it for.”, after the notice (and the faculty’s review, “the year is to be repeated”) had offered it. It now picks by program term (`academic`, the record’s term less the offset before it). The request’s calendar terms (Repeat.terms) are the spring and the last term enrolled before it, not the calendar term before (yearTerms); nothing reads them yet. The other calendar-adjacency readers were checked: none in courserecord.ts or school.ts reads a course’s year by calendar; yearKeyOf (school.ts) groups work-study hours by the calendar’s academic year, the aid year they’re counted in, and was left.",
+     "where": "src/engine/systems/leave.ts repeatCourses, yearTerms, requestRepeat",
+     "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first fall’s Fail, then a two-term medical leave begun at the spring … (fails with the old filter restored, run 2026-10-15; passes with the fix)"
+    }
+   ],
+   "guards": [
+    {
+     "where": "src/engine/systems/leave.ts REPEAT_DECIDE_KIND: `const why = would > EXTENDED_STUDY.maxSemesters ? … : keptThrough(school) ? undefined : disqualified(school);` and its refused branch",
+     "test": "tests/scope-school.test.ts > school.request_repeat > GUARD: the decision’s refusal of a first year … / of a last year …"
+    }
+   ],
+   "rowText": {
+    "downstream": "granted: offset and classOf (academicTerm, the curriculum), the attempts kept and the degree reading the best (degreeShortfall), the next term put on the calendar for a last year’s, and the repeated year played to the degree at its Commencement (scope-school); the I-20 extended. A Fail is told after the evaluation settles the standing (tellFails, from 2026-10-15) and offered the year’s end only where a repeat can still be asked: not where that evaluation dismissed or withheld, not in an additional term, and not where the repeat would pass nine semesters counted as the year’s end will count them (repeatRoom), which after any repeat granted is every year, the repeated one included; a Permanent Incomplete likewise, and not where the degree waits on it (scope-school, played: the repeated year’s Permanent Incomplete, and a second fall’s Fail after a first year’s repeat, its year’s end refused “Repeating would make 10 semesters…”). The decision’s refusals (past nine, or a disqualification the faculty didn’t keep them through) are guards no request the asking takes reaches, tested as guards (scope-school GUARD:). The year repeated is the program’s year, whatever the calendar between its terms: a fall Fail before a leave begun at the spring is repeated for at the year’s end (repeatCourses by program term, from 2026-10-15; scope-school, played).",
+    "issue": "Open until 2026-10-15: the decision’s own refusals were reached only from a fixture. They are guards: the decision recounts as the asking did, and no evaluation falls between (evidence2-b09). They are kept and tested as GUARD: in scope-school. Until 2026-10-15, too, a Fail in a year already repeated, or at an evaluation that dismissed or withheld, was told to ask to repeat the year at its end, which was then refused; and a Permanent Incomplete in a repeated year was too. Until the second round’s recheck (2026-10-15), a Fail or Permanent Incomplete in any later year after a repeat, at an evaluation that ended nothing, was told to ask too, which “Repeating would make 10 semesters…” refused. Until the third round’s recheck (2026-10-15), a year split by a leave begun at its spring lost its fall’s Fail: the year’s end refused the repeat as every course passed, which the Fail’s notice and the guide had offered."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "return room(academic % 2 === 0 ? academic + 1 : academic);",
+     "replace": "return true;",
+     "protects": "the two journeys where only the count refuses: the repeated year’s Permanent Incomplete and the second fall’s Clown (the `repeatedYears` clause this mutation named before was removed on 2026-10-15; the repeated-spring Text Analysis I journey is dismissed at that evaluation)"
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "      notify(s, person, 'Your Repeat Is Refused', `The chair and the dean refused it. ${why}`, 85);",
+     "replace": "",
+     "protects": "GUARD: the decision’s refusal of a first year (its notice in its words)"
+    },
+    {
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "const repeatable = (r: CourseRecord) => !ended && school.extra",
+     "replace": "const repeatable = (r: CourseRecord) => school.extra",
+     "protects": "both dismissal journeys (run 2026-10-15: both failed)"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "      tellFails(s, person, term, schoolEnded(person.school.standing), (a) => repeatRoom(person, a));",
+     "replace": "      tellFails(s, person, term, false, (a) => repeatRoom(person, a));",
+     "protects": "the warning-unmet journey (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "        tellFails(s, person, term, true, (a) => repeatRoom(person, a));",
+     "replace": "        tellFails(s, person, term, false, (a) => repeatRoom(person, a));",
+     "protects": "the review’s-dismissal journey (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "const ask = person.school!.awaitingDegree || !repeatOpen(r, (a) => room(person, a)) ?",
+     "replace": "const ask = person.school!.awaitingDegree ?",
+     "protects": "the repeated year’s Permanent Incomplete journey (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "  if (!school) return false;\n  // The program term taken next",
+     "replace": "  if (!school) return false;\n  if (school) return true;\n  // The program term taken next",
+     "protects": "the second fall’s Clown journey and the repeated year’s Permanent Incomplete journey (run 2026-10-15: both failed)"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "withRepeat(school, spring) + Math.max(0, spring + 1 - next) <=",
+     "replace": "withRepeat(school, spring) <=",
+     "protects": "the second fall’s Clown journey (run 2026-10-15: failed; the count read nine)"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "Math.max(0, spring + 1 - next)",
+     "replace": "Math.max(0, spring - next)",
+     "protects": "the second fall’s Clown journey (not run: the count at the fall would read nine)"
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "[end - 1, end].includes(r.academic ?? r.term)",
+     "replace": "(r.term === spring || r.term === spring - 1)",
+     "protects": "the leave-split year journey (run 2026-10-15: failed, the Standing tab drew no Ask To Repeat The Year…)"
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "  const end = academicTerm(school, spring);",
+     "replace": "  const end = spring;",
+     "protects": "the leave-split year journey (run 2026-10-15: failed the same way)"
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "[enrolledTerms(school).filter((x) => x < spring).at(-1) ?? spring - 1, spring]",
+     "replace": "[spring - 1, spring]",
+     "protects": "the leave-split year journey’s terms [0, 3] (run 2026-10-15: failed)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "courserecord.ts’s comment and tellFails’ offer: a Fail at an evaluation that dismissed (the warning unmet or the faculty’s review) or withheld the degree was still offered the year’s end.",
+     "done": "The caller moved the Fail notices into tellFails, called after the evaluation settles the standing with the School’s ending read. Played both dismissals in scope-school (the review’s, sc-dq; the warning unmet, sc-x3), each beside earlier Fails still offered the repeat; broke !ended (both failed), each call site’s argument (each failed its own journey), restored. The comment now names both journeys."
+    },
+    {
+     "problem": "guide/school.ts:594 said the notice offers the repeat “only where that can still be asked: not in an additional term, nor in a year already repeated”, wrong for a dismissal or a withholding.",
+     "done": "Corrected: the notice comes after the evaluation’s word on the standing and offers the repeat only where it can still be asked, not where the same evaluation dismissed or withheld, not in an additional term, nor in a year already repeated; a Permanent Incomplete’s on the same terms. No other text says what the notice offers (searched src and tests)."
+    },
+    {
+     "problem": "The notice order changed (Fails now after the standing’s notice): does anything assert the order, and does it read well?",
+     "done": "No test asserted the order. tests/defects-g9-1.test.ts called settleCourses alone and said “so both notices are said”, which the move made false (only the Incomplete was said, and the Fail’s apostrophe check went with it): it calls tellFails after it now, as the evaluation does, and asserts both titles. The two dismissal journeys assert the order at the evaluation’s instant: [Dismissed From The School, Not Passed: …]. It reads as the cause, then the detail."
+    },
+    {
+     "problem": "The Permanent Incomplete’s `repeated` check was tested only on a FIXTURE (repeatedYears set by hand).",
+     "done": "Played: a first year repeated through the asking and the decision, its repeated fall’s Acting I called in sick, Incomplete, Permanent on 9 January 2028 with nothing offered, in a gate test of seconds (the firstSpring save shared). Fails without the check."
+    },
+    {
+     "problem": "Billing past six in the last year’s repeat checked only as accountOwed > 0.",
+     "done": "Not among the problems this pass was given; left as it was."
+    },
+    {
+     "problem": "docs/verification/audit/school.json (school.request_repeat) still describes the refusals as downstream.",
+     "done": "Outside my files; listed under outsideMyFiles."
+    },
+    {
+     "problem": "Second round: tellFails and the Permanent Incomplete notice excluded only the year itself being repeated; after any granted repeat, a Fail in a later year at an evaluation that ends nothing was offered the year’s end, which the nine semesters refuse.",
+     "done": "The caller made both read repeatOpen with repeatRoom (withRepeat ≤ 9). Played (scope-school, the second fall’s Clown after a first year’s repeat, at concern): with that fix alone the notice still offered, as the count read nine at a fall’s evaluation (5 enrolled + 2 + 2) and the year’s end makes ten. repeatRoom now counts the program terms still to be taken through that spring. The test asserts the bare notice, and at the year’s end RepeatPanel without Ask To Repeat The Year… and the command refused “Repeating would make 10 semesters, past the nine the Bulletin allows for the degree.” repeatRoom forced true: two journeys failed; the terms to come left out: the Clown journey failed; restored."
+    },
+    {
+     "problem": "Second round: the Permanent Incomplete’s same narrow test.",
+     "done": "Same fix (repeatOpen). Played by the repeated year’s Acting I journey (fails with repeatRoom true). A Permanent Incomplete in a later year after a repeat isn’t played on its own; it reads the same repeatOpen as the Clown Fail."
+    },
+    {
+     "problem": "Second round: the repeatedYears clause in repeatOpen had lost its test (the repeated-spring journey ends in dismissal, so !ended covers it).",
+     "done": "Worked whether any valid state has the year repeated and room allowing. With the caller’s count (enrolled so far) there were two: the repeated year’s fall evaluation (3 + 2 + 4 = 9) and a Permanent Incomplete of the year just repeated before its terms begin (2Y + 2 + 6 − 2Y = 8). With the terms to come counted, none: enrolled is the program terms taken plus two per repeat granted, so the count is 8 plus 2 per repeat, ten after any. The clause was removed (courserecord.ts repeatOpen, with a dated past-tense comment), and with it the evidence-g26-school FIXTURE test, which set repeatedYears by hand on a save with no repeat (an impossible state) and protected only the clause; a comment stands in its place."
+    },
+    {
+     "problem": "Second round: the tellFails comment, guide/school.ts:594 and rowText.downstream claimed more than the code.",
+     "done": "All three say what the code does now: not where that evaluation ended the School, not in an additional term, and not past nine semesters counted as the year’s end will, which after any repeat is every year; the Permanent Incomplete likewise, and not where the degree waits on it. The Acting I test’s comment, which said only the year’s having been repeated kept the offer away, says the count does."
+    },
+    {
+     "problem": "Unplayed: repeatRoom’s reading on a leave (the term the leave began in taken again, as yearOfStudy reads it).",
+     "done": "Not played: a notice told during a leave needs an Incomplete extended past a leave’s start and run out in it. Without that branch a leave’s terms would count as still to come, and a two- or three-term leave would refuse what the year’s end allows. Said here, not claimed; no mutation protects it."
+    },
+    {
+     "problem": "Third round: leave.ts repeatCourses kept a Fail only at the calendar spring or the calendar term before it; a two-term leave begun at a spring splits the year, so the fall’s Fail or Permanent Incomplete was dropped and the year’s end refused “Every course this year was passed”, while the notice, the faculty’s review and the guide offered the repeat.",
+     "done": "Fixed in leave.ts: the year’s courses by program term (`academic`), and the request’s calendar terms the spring and the last term enrolled before it. Played in scope-school (sc-lv): a first fall’s Fail, a two-term medical leave from the spring (one term and three refused, as leaveLengths has it), the return, the year’s end: the Standing tab offers the repeat, and it is asked and granted for Play, year 1, terms [0, 3]. Broke the filter back to the calendar one: failed (the panel drew nothing); restored, passes. Grepped `spring - 1`, `term === spring`, `t - 1` and `term - 1` across leave.ts, school.ts and courserecord.ts: no other reader picks a course’s year by calendar adjacency (tellFails, repeatOpen, extraCourses and the review read `academic`); yearKeyOf groups work-study hours by the calendar’s aid year, which is right for them."
+    },
+    {
+     "problem": "Third round: the guide’s “a course failed that year” (guide/school.ts:558) and “only where that can still be asked” (:594) were false on that path.",
+     "done": "Both hold with the fix. :558 now says “a course failed in that year’s fall or spring, a leave between them or not”; each line carries a past-tense comment saying what was false until 2026-10-15. No tutorial chapter needs a change."
+    },
+    {
+     "problem": "Third round: the last year’s repeat test checked billing past six only as accountOwed > 0.",
+     "done": "Both terms now assert accountOwed = 24_784_65, worked in the test’s comment from content/school.ts: $40,750 × 1.0322³ = $44,814.56, $22,407.28 a term; $3,764 × 1.081³ = $4,754.74, $2,377.37 a term (no need found for her, so the health fee is billed with the tuition). Passes."
+    },
+    {
+     "problem": "Third round: docs/verification/audit/school.json (school.request_repeat) has still not been updated.",
+     "done": "Outside my files; still listed under outsideMyFiles."
+    }
+   ]
+  },
+  {
+   "id": "school.request_extra_term",
+   "before": "partial (gapsOpen: the refusals past nine and for a disqualification reached only from fixtures)",
+   "after": "verified: request → decision → acted on, played both ways. Passed and conferred in December (evidence-g26). Retake failed again: the degree withheld at that evaluation, nothing more to ask, with a notice no longer promising a repeat (scope-school). The refusals past nine and for a disqualification are kept as guards and tested as guards.",
+   "disposition": "evidence added; notice defect fixed; guards named",
+   "testsAdded": [
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_extra_term > PLAYER JOURNEY: an additional term granted and attended, Movement Invention III slept through again in it: failed at its evaluation, and what the degree then does, once, through a save",
+     "kind": "clock",
+     "proves": "Asked on 27 April 2029, term 6 granted on 4 May, billed and paid, through a reload. Slept through on 4 of the retake's Wednesdays, then 6:DRAM 373a failed (academic 4, 10 of 14). Withheld at 5 PM on 14 December 2029 with the faculty's words, no conferral. Both requests are refused ‘You’re not at school.’, and nothing more comes to 31 January 2030 through a reload. The second Not Passed notice ends ‘The degree needs every course passed.’; until 2026-10-15 it said to ask to repeat the year. Failed before the fix."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_extra_term > GUARD: past the Bulletin’s nine, which no valid state reaches: refused at the asking in its words, nothing asked; and at the decision, the degree withheld in its words",
+     "kind": "command",
+     "proves": "With nine enrolled put on the record: refused at the asking ‘It would make 10 semesters, past the nine the Bulletin allows.’ with nothing booked. At the decision: withheld in its words, no extra, no term."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_extra_term > GUARD: a disqualification the faculty never judged, which no valid state reaches (a second Fail put on the record after the evaluation): refused at the asking in its words; and at the decision, the degree withheld in its words",
+     "kind": "command",
+     "proves": "At the asking ‘The faculty’s disqualification stands against it.’; at the decision, withheld in its words."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A retake failed in an additional term was told ‘at the year’s end you can ask to repeat the year’, while the same evaluation withheld the degree and every request was then refused ‘You’re not at school.’. The notice now ends at what is so.",
+     "where": "src/engine/systems/courserecord.ts tellFails (repeatable: school.extra?.term !== term); in settleCourses until the recheck",
+     "test": "tests/scope-school.test.ts > school.request_extra_term > PLAYER JOURNEY: an additional term granted and attended … (failed before, passes after)"
+    }
+   ],
+   "guards": [
+    {
+     "where": "src/engine/systems/leave.ts extraRefusal: `if (would > EXTENDED_STUDY.maxSemesters) return …` and `if (!keptThrough(school) && disqualified(school)) return …`; EXTRA_DECIDE_KIND's refused branch",
+     "test": "tests/scope-school.test.ts > school.request_extra_term > GUARD: past the Bulletin’s nine … / GUARD: a disqualification …"
+    }
+   ],
+   "rowText": {
+    "downstream": "granted: school.extra, the term on the calendar, its weeks planned once, coursesFor meeting only the courses retaken, the I-20 extended (extendF1). The retake passed confers the degree at the December conferral (evidence-g26). Failed, the degree is withheld at that evaluation with nothing left to ask, the Fail's notice no longer offering a repeat (from 2026-10-15, scope-school). The refusals past nine semesters and on a disqualification the faculty never judged are guards no valid state reaches, tested as guards (scope-school GUARD:).",
+    "issue": "Open until 2026-10-15: the refusals past nine semesters and for a disqualification were reached only from fixtures. They are guards (one repeat at most makes eight, a leave's term isn't enrolled, no term begins between asking and deciding), kept and tested as GUARD: in scope-school. Until 2026-10-15 a retake failed in the additional term was told to ask to repeat the year, which the withholding at that evaluation refused."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "school.extra?.term !== term && ",
+     "replace": "",
+     "protects": "nothing: redundant with tellFails’ `ended` (removed on 2026-10-15; the nine school test files pass without it)",
+     "run": true,
+     "removed": true
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "  if (!keptThrough(school) && disqualified(school)) return { why: 'The faculty’s disqualification stands against it.' };",
+     "replace": "",
+     "protects": "GUARD: a disqualification the faculty never judged (at the asking)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "Shares the courserecord.ts:122 comment overclaim.",
+     "done": "Closed with school.request_repeat’s: the dismissal and withholding cases are excluded by tellFails’ `ended`, and the comment says so; this row’s retake journey still passes with its notice literal."
+    },
+    {
+     "problem": "docs/verification/audit/school.json (school.request_extra_term) still ‘partial’.",
+     "done": "Outside my files; listed under outsideMyFiles."
+    },
+    {
+     "problem": "Mutation survived (scratchpad/mutations4.json, 2026-10-15): removing `school.extra?.term !== term && ` from tellFails’ repeatable in src/engine/systems/courserecord.ts failed no test.",
+     "done": "Redundant, and removed with a dated comment. Not by the count alone, as asked to confirm: read in play (a probe in tellFails, run and removed), the played retake, Movement Invention III at academic term 4, counts withRepeat 7 + 2 + 0 = 9 semesters with nothing still to take, which the nine allow, so `room` was open; a first year’s course counts 13 and a second’s 11, each with seven enrolled. What settles it in every additional term, fall or spring, is `ended`: an additional term’s evaluation is a last one (`last`, evaluate in systems/school.ts), so a retake failed in it makes the degree withheld (the year’s end offered by `offerRepeat`, which refuses beside `school.extra`) or, stepped to dismissal or by the faculty’s review, dismissed; the probe read ended true, standing withheld. tellFails’ doc comment and the guide’s interpret line (content/guide/school.ts, school.repeat’s “A failed course says why …”) now say the withholding is what refuses it, not a rule of its own. The nine school test files pass without it: scope-school 20, evidence-g26-school 24, evidence-g25-school 20, evidence2-b09 15, defects-g9-1 3, guide-examples-school 8, evidence3-school 11, evidence-g21-school 24, evidence2-b07 10."
+    }
+   ]
+  },
+  {
+   "id": "school.request_conversion",
+   "before": "partial (gapsOpen: ‘No Hours To Convert’ reached only from a fixture)",
+   "after": "verified: the no-eligible-hours refusal moves nothing (clock, ledger, calendar, bank) through a reload. Across a repeated year, each year’s excused hours are paid once ($138.00 at January 2027’s and January 2028’s processing), kept apart by year ({0: 6, 2: 6}); the bank across each processing, from a minute before to the processing, moves by $138.00 with nothing posted but the grant. Asking takes no time and posts nothing; asking again is refused, and reloads pay nothing twice. ‘No Hours To Convert’ is kept as a guard and tested as one.",
+   "disposition": "evidence added; guard named",
+   "testsAdded": [
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_conversion > PLAYER JOURNEY: in the first fall with no hours excused, the drawn button is grayed and the command refused in January’s words, and neither moves the clock, the ledger, the calendar or the bank, through a save",
+     "kind": "render",
+     "proves": "On 14 September 2026 the stat reads ‘0 hours’ / ‘$0.00 at the rate; 0 converted’, and the button is disabled with ‘No hours to convert at January’s processing: …’. The command is refused in those words, with now, transactions, scheduled and checking unchanged and nothing booked. The same after a reload."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_conversion > PLAYER JOURNEY: across a repeated year, a Saturday called in sick in each first fall is converted once each, at January 2027’s and January 2028’s processing, kept apart by the year; asking again is refused, the asking costs no time and posts nothing, and saves between pay nothing twice",
+     "kind": "clock",
+     "proves": "Fall 2026's 5 September Saturday is called in sick, and the button pressed (toast ‘Asked: processed January 15, 2027.’) adds one calendar item, with the clock, ledger and bank untouched. Asking again is refused before and after a reload. Paid at noon on 15 January 2027: +$138.00/−$138.00, {0: 6}, then ‘No hours to convert yet: …’. The spring is failed and the year repeated. The repeated fall's 4 September 2027 Saturday is called in sick ({0: 6, 2: 6}), asked ({at: 15 January 2028, hours: 6}), and paid once through two reloads: two grants in all, {0: 6, 2: 6}."
+    },
+    {
+     "file": "tests/scope-school.test.ts",
+     "title": "school.request_conversion > GUARD: a processing that finds no hours, which no valid state reaches (the hours converted put on the record by hand between the asking and the processing): ‘No Hours To Convert’ in its words, nothing paid",
+     "kind": "command",
+     "proves": "With convertedHours put on the record between asking and processing: the notice in its words, no grant, nothing left booked."
+    }
+   ],
+   "fixes": [],
+   "guards": [
+    {
+     "where": "src/engine/systems/school.ts CONVERT_KIND handler: `if (hours <= 0) { … 'No Hours To Convert' … }`",
+     "test": "tests/scope-school.test.ts > school.request_conversion > GUARD: a processing that finds no hours …"
+    }
+   ],
+   "rowText": {
+    "downstream": "At processing (CONVERT_KIND), the hours are paid at the work-study rate into the payee account, with 14% withheld for a nonresident. They are recorded as the year's scholarship, which the return reads, and added to convertedHours by the year's fall term, so a repeated year is converted apart from the first time's (scope-school). ‘No Hours To Convert’ is a guard no valid state reaches, tested as one (scope-school GUARD:)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "  const done = school.convertedHours?.[yearKey] ?? 0;",
+     "replace": "  const done = 0;",
+     "protects": "across a repeated year (asking again after a processing refused). Run on 2026-10-15: failed"
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "export const yearKeyOf = (term: number): string => String(term - (termStart(term).fall ? 0 : 1));",
+     "replace": "export const yearKeyOf = (term: number): string => String(0 * term);",
+     "protects": "across a repeated year (excusedHours and convertedHours kept apart by year)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The acceptance asked the account to move by the grants and nothing else; the test checked the grant transactions, not the bank balance across the processing.",
+     "done": "The repeated-year journey reads the primary account a minute before each processing and at it (acrossProcessing): moved by exactly 138_00, and the only posting between is “Grant-in-aid: 6 work-study hours converted…”, in January 2027 and January 2028."
+    },
+    {
+     "problem": "docs/verification/audit/school.json (school.request_conversion) has the older wording.",
+     "done": "Outside my files; listed under outsideMyFiles."
+    }
+   ]
+  }
+ ],
+ "outsideMyFiles": [
+  "src/engine/index.ts loadSave: one call, strandedMoments(sim), with its comment, and the import. Re-read before editing; only those lines changed.",
+  "tests/evidence3-school.test.ts:12 and :279 still describe ‘That evening has passed.’ as reached from a save made before 2026-10-12 whose invitation waited until ten the next evening; no build wrote such a save. The test still passes, because its edited lapse stays pending and strandedMoments leaves that alone, but its title and header premise are stale. Its owner should retitle it as a GUARD or drop it (scope-school carries the guard).",
+  "docs/verification/audit/school.json and docs/GAMEPLAY-COVERAGE.md carry the old wording for these rows; rowText above holds the corrections.",
+  "tests/defects-g9-1.test.ts (the Incomplete notice): it called settleCourses alone, which since the Fail notices moved to tellFails says only the Incomplete; it calls tellFails after it now, as the evaluation does, and asserts both notices. Only those lines changed.",
+  "tools/tics.mjs --check exits 1 on “somebody” (26 of 25), none of it in files this pass touched.",
+  "The Permanent Incomplete journey’s twelfth excused meeting is an emergency room visit the health draw brings on 15 November 2027; the agent changing health files may move it, and the test’s 41/12/29 would then need re-reading."
+ ]
+}

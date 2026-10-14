@@ -18,7 +18,7 @@ import { ROUND_UPS } from '@/engine/content/roundups';
 import { RoundUps } from '@/ui/bank/RoundUps';
 import { bankById } from '@/engine/content/banks';
 import { inSaveMoney } from '@/engine/systems/banking';
-import { BREAK_NOTICE, breakQuote, END_WORDS, inCoolingOff, termEndOf, unclaimedLaw } from '@/engine/systems/accountlife';
+import { BREAK_NOTICE, breakQuote, cancelRefusal, cancelWords, coolingOffEnds, END_WORDS, inCoolingOff, termEndOf, unclaimedLaw } from '@/engine/systems/accountlife';
 import type { TermEnd } from '@/engine/content/accountlife';
 
 const END_BUTTON: Record<TermEnd, string> = {
@@ -37,7 +37,9 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
   const terms = accounts.filter((a) => a.category === 'term');
   const dormant = accounts.filter((a) => a.dormant);
   const inactive = accounts.filter((a) => a.inactive && !a.dormant);
-  const cancelable = accounts.filter((a) => (a.kind === 'savings' || a.kind === 'credit_card') && inCoolingOff(sim, a) && a.id !== person.primaryAccountId);
+  // A current account other than the primary too, from 2026-10-15: until then savings and cards alone were offered, and
+  // the command's current-account branch was reached from no screen.
+  const cancelable = accounts.filter((a) => (a.kind === 'savings' || a.kind === 'credit_card' || a.kind === 'checking') && inCoolingOff(sim, a) && a.id !== person.primaryAccountId);
   const unclaimed = person.unclaimed ?? [];
   const bank = bankById(bankId);
   const country = bank ? unclaimedLaw(bank.iso) : undefined;
@@ -99,12 +101,27 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
             <Gated feature="bank.reactivate" className="btn btn-sm" onClick={() => run('bank.reactivate', { accountId: a.id })}>Reactivate</Gated>
           </div>
         ))}
-        {cancelable.map((a) => (
-          <div key={a.id} className="row-between small">
-            <span><Open subject={at('account', a.id)}>{a.name}</Open> is new enough to cancel{country?.coolingOffDays !== undefined ? `, until ${formatDate(a.openedAt + country.coolingOffDays * DAY, sim.zone)}` : ''}, {a.kind === 'credit_card' ? 'with anything spent still to repay' : 'its money back whole'}.</span>
-            <Gated feature="bank.cancel_new" className="btn btn-sm btn-ghost" onClick={() => run('bank.cancel_new', { accountId: a.id })}>Cancel It</Gated>
-          </div>
-        ))}
+        {cancelable.map((a) => {
+          // A current account is canceled on Close It's refusals, said under it as Your Banks says them, and any account on
+          // what settling it takes past what it holds (`cancelRefusal`); it's settled as Close It settles, with or without its
+          // interest and its fees as the country has it (`cancelWords`). Until 2026-10-15 a current account was said to come
+          // back whole, as savings were, and closed with no interest or fees settled; and savings and a term deposit were said
+          // to come back whole everywhere, though Britain and Canada leave the holder the interest earned.
+          const why = a.kind === 'credit_card' ? undefined : cancelRefusal(sim, person, a);
+          const back = cancelWords(a);
+          // The account's own country's count, Canada's and Mexico's in business days (`coolingOffEnds`, from 2026-10-15's
+          // recheck): until then the panel's bank's country's days, added as calendar days. Its last day is named in the
+          // zone it ends in, the save's home (from that day's second recheck, when it began to end at that day's last
+          // moment; until then it was named in the zone the player stood in, where a life away east would have read the
+          // day after).
+          const ends = coolingOffEnds(sim, a);
+          return (
+            <div key={a.id} className="row-between small">
+              <span><Open subject={at('account', a.id)}>{a.name}</Open> is new enough to cancel{ends !== undefined ? `, until ${formatDate(ends, sim.homeZone)}` : ''}, {back}.{why && <span className="xs muted" style={{ display: 'block' }}>{why}</span>}</span>
+              <Gated feature="bank.cancel_new" className="btn btn-sm btn-ghost" disabled={!!why} title={why} onClick={() => run('bank.cancel_new', { accountId: a.id })}>Cancel It</Gated>
+            </div>
+          );
+        })}
         {unclaimed.length > 0 && (
           <div className="row-between small">
             <span>{money(unclaimed.reduce((sum, one) => sum + one.amount, 0))} went to {unclaimed[0]!.to} after years untouched.{country?.claimBack ? ` ${country.claimBack}` : ''}</span>

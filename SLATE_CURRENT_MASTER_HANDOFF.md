@@ -1,7 +1,51 @@
+# Read First: The Current Scope Completed, 2026-10-15
+
+The owner's brief of 2026-10-15 ("SLATE: Complete The Remaining Current-Scope Work And Prove Acceptance"), done on
+`claude/current-scope-acceptance` from `main` at `bef4bde5`. Committed and pushed, with a pull request opened for review; **not merged to `main` and not deployed**, neither authorized by the brief. The account is
+`docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open row's checklist and result are in `docs/verification/scope/`.
+
+**This section is the current status.** Every section below it is history, marked **Superseded** in place where it
+stopped being true.
+
+## What the pass did
+
+- Every one of the 30 open rows (11 partial, 19 unresolved) investigated against a checklist written first: **285 of 328
+  rows verified** (271 before), **2 partial** (health.enroll; i-stale-claims, on the standard), **14 unresolved** (five
+  tax rows and nine bank rows no New Haven student can reach, each saying why), 16 deferred, 3 legacy, 8 informational.
+- New Haven has a second practice, Yale Health Center's Student Health, and Yale Health's own rule is kept: a member's
+  care at its Health Center, $0, the next weekday; Fair Haven billed as uninsured to a member who picks it.
+- Public cover follows the law as read on 2026-10-15: renewal moves between HUSKY D and Covered Connecticut; HUSKY D asks
+  the 2027 work (or school half-time, over last month) of applicants; Covered Connecticut follows the premium tax credit
+  from 2027 and ends beside Yale Health.
+- About forty defects found and fixed, each with a test that failed before it, among them: the Fail notice promising
+  repeats the rules refuse; a leave splitting a year and losing its fall's Fail; stranded classmate moments in older
+  saves; Connecticut's interest rounding and its April due date on a June 1040-NR; a reload moving where a visit was had
+  (`SaveUniverse.opened`, a one-time opening step, no schema bump); opening a save writing to it; Cancel It's settlement
+  by country.
+- Independent skeptics, two to four rounds per group; mutations in copies of the tree: 109 applied, 109 killed, one
+  redundant guard removed.
+
+## Verification on the final tree
+
+Typecheck, lint, the suite in three foreground shards (330 files, 4,040 tests, all passed; each shard exit 0), and all seventeen checks: exit 0, each read from a file. Built app: 60 passed, 0 failed, 2 skipped at 1440 and 390. Long runs and scenarios: breaches 0, unbalanced 0.
+
+## Still the owner's
+
+- i-stale-claims: whether a gate test that reads the repository may verify a row about its text (else it stays partial).
+- The nine bank rows: Unresolved or Deferred.
+- Carried: an IRS letter before the due date on an early filing; Connecticut's “filed in error” control and the controls
+  no play reaches, as guards.
+- Merging this branch to `main`, and any Base44 deployment (read §10 below first).
+
 # Read First: The Open Items Finished, 2026-10-14
 
 The owner's brief of 2026-10-14, done on `claude/verification-gaps` from `0124c32f`, pushed, and **merged to `main` by fast-forward at `1a597fd1` on the owner's word (until then this said not merged); not
 deployed**. The account is `docs/verification/OPEN-ITEMS-2026-10-14.md`.
+
+**This section was the current status until 2026-10-15** (**Superseded:** the current status is the first section above). Every section below it is history. Where an older section's claim stopped
+being true (a pass "not merged", the federal table "2024's", a count of rows), it is marked **Superseded** in place,
+with the date and where the current status is. The history itself was not deleted. On 2026-10-15
+`git merge-base --is-ancestor <branch> main` held for every branch these sections name as "not merged", and `main` stood at `bef4bde5`.
 
 ## What the pass did
 
@@ -23,13 +67,16 @@ Long runs and scenarios: breaches 0.
 ## Still the owner's
 
 - The 11 partial rows (the account names each one's gap); whether the faculty decision's refusals no play reaches stay
-  as guards; a second practice in New Haven, without which choosing a doctor decides nothing.
+  as guards; a second practice in New Haven, without which choosing a doctor decides nothing. (**Superseded
+  2026-10-15:** 2 rows stay partial; the decision’s refusals are tested as guards; Yale Health’s practice was added.)
 - Any Base44 deployment (read §10 below first). The merge to `main` was done on 2026-10-14.
 
 # Read First: The Verification Gaps Closed, 2026-10-13
 
 The owner's brief of 2026-10-13, "Close The Verification Gaps And Complete The Current Build's Acceptance Evidence",
-done on `claude/verification-gaps` from `main` at `fca00d8f`, pushed, **not merged and not deployed**. The full account
+done on `claude/verification-gaps` from `main` at `fca00d8f`, pushed, **not merged and not deployed** (**Superseded
+2026-10-14:** merged to `main` by fast-forward at `1a597fd1`, still not deployed; the current status is the first
+section above). The full account
 is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verification/audit/*.json`, drawn as
 `docs/GAMEPLAY-COVERAGE.md`.
 
@@ -43,6 +90,7 @@ is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verif
   every survivor explained.
 - **Rows: 258 of 328 verified** (from 54 the review found at `fca00d8f`), 23 partial, 19 unresolved, 17 deferred, 3
   legacy, 8 informational. The 134 rows that claimed verified unread: 123 verified now. The 100 partial: 86 verified.
+  **Superseded 2026-10-14:** 271 of 328 verified, 11 partial (the first section above).
 - About 140 defects fixed, each with a test that failed before it; 52 guide and tutorial findings fixed, two of them
   built-app defects (a reload opened Home; a top-bar menu lost its focus to help).
 - Round-ups for 20 banks as their own sources say (`docs/research/roundups/`); the director's craft-note journey in the
@@ -58,14 +106,16 @@ is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verif
 
 - The federal tax table was 2024's for every year until 2026-10-14, when 2025's and 2026's went in (see the section above).
 - The forced wealthy family puts need-based paths (conversion of hours, leave aid, `school.request_conversion`) out of a
-  new life's reach: Unresolved or Deferred?
+  new life's reach: Unresolved or Deferred? **Superseded 2026-10-14:** creation offers the family, so a life with need
+  is the player's choice (the first section above).
 - The 90-day rule for an undated decision; a skipped shower's cost past the day; `companyPart`'s floored lead; creation's
-  units by birthplace against the look's by residence; `receipts`, which multiplies nothing.
+  units by birthplace against the look's by residence; `receipts`, which multiplies nothing. **Superseded 2026-10-14:**
+  the owner decided each, and each went in (the first section above).
 - Any Base44 deployment (read §10 below first). The merge to `main` was done on 2026-10-14.
 
 ## For the next session
 
-The 23 partial rows each name what they lack (`after.gapsOpen` and the final check's problems): most need a played
+(**Superseded 2026-10-14:** 11 partial rows, not 23; the first section above.) The 23 partial rows each name what they lack (`after.gapsOpen` and the final check's problems): most need a played
 path a gate test can't reach in 60 seconds, or a second person in the world. The session's working files (the merge
 script, checks, mutation runner) were in its scratchpad and are not in the repository; the audit JSON holds their
 results.
@@ -138,7 +188,8 @@ at `0dbe5960`.
   `tools/lives.ts` run from 2026-10-09) were holding about 2.5 GB. Stopping them is the owner's call.
 - **Open, and the owner's:**
   - which banks belong in `ROUND_UP_AMOUNT`;
-  - 134 verified rows of `GAMEPLAY-COVERAGE.md` not yet read against the standard by eye;
+  - 134 verified rows of `GAMEPLAY-COVERAGE.md` not yet read against the standard by eye (**Superseded 2026-10-13:**
+    the review of that day read all 134, and 123 were verified; the section above);
   - the specialist trade-off on scenes, which stands as design.
 
 ---
@@ -384,6 +435,7 @@ commit the brief reviewed. Nothing newer had landed.
 
 - **Branch:** `claude/acceptance-pass`, pushed.
 - **Not merged.** That's the owner's word to give: each "Merge it." so far was for its own pass.
+  **Superseded:** merged since; on 2026-10-15 `claude/acceptance-pass` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged.
   - A credit already written keeps the year it was given. Only credits written from now take their production's year.
@@ -465,6 +517,7 @@ The owner's brief was "Complete SLATE's Next Integration And Verification Pass".
 
 - **Branch:** `claude/integration-pass`, pushed.
 - **Not merged.** That's the owner's word to give: the "Merge it." of 2026-10-10 was for the pass before.
+  **Superseded:** merged since; on 2026-10-15 `claude/integration-pass` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged. Every new field is optional:
   - `TaxReturn.stateDue`, `split`, `refundedAt`;
@@ -561,6 +614,7 @@ started from `main` at `2f376a08`.
 
 - **Branch:** `claude/remaining-and-engines`, pushed.
 - **Not merged:** that's the owner's word to give.
+  **Superseded:** merged since; on 2026-10-15 `claude/remaining-and-engines` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged. Every new field is optional:
   - on `SchoolRecord`: `welfare`, `welfares`, `formerClasses` (with `offset`), `joinsCohort`, `extra`,
@@ -647,6 +701,7 @@ The owner's brief was "Finish SLATE's School, Banking And Papers Features End To
 
 - **Branch:** `claude/school-bank-papers-complete`, pushed.
 - **Not merged:** that's the owner's word to give.
+  **Superseded:** merged since; on 2026-10-15 `claude/school-bank-papers-complete` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged. Every new field is optional, with a fallback for saves from before:
   - on `SchoolRecord`: `offset`, `enrolled`, `leave`, `leaves`, `repeat`, `repeats`, `repeatBy`, `mustRegister`,
@@ -754,6 +809,7 @@ The owner's brief was "Complete SLATE's Yale Student, Banking And Papers Experie
 
 - **Branch:** `claude/student-experience`, pushed.
 - **Not merged:** that's the owner's word to give.
+  **Superseded:** merged since; on 2026-10-15 `claude/student-experience` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Saves:** schema 94 is unchanged. Every new field is optional, with a fallback for saves from before:
   - `courses`, `registeredAt`, `awaitingDegree`, `withdrewEarly`;
@@ -860,6 +916,7 @@ The owner's brief was "Audit And Correct SLATE's Banking Realism And Complete Th
 
 - **Branch:** `claude/bank-school`, pushed.
 - **Not merged:** that's the owner's word to give.
+  **Superseded:** merged since; on 2026-10-15 `claude/bank-school` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.** Schema 94 is unchanged.
 
 Read `docs/verification/BANK-SCHOOL.md` first. It holds the matrix, the stage-by-stage school assessment, the sources and the remaining limitations. Then `docs/verification/BANKING-SWITCH.md`: the reproduced defect, and what each step does now.
@@ -908,6 +965,7 @@ The owner's brief, "Close SLATE's Remaining Gameplay Coverage Gaps", worked from
 
 - **Branch:** `claude/coverage-gaps`, pushed.
 - **Not merged:** that's the owner's word to give.
+  **Superseded:** merged since; on 2026-10-15 `claude/coverage-gaps` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Not deployed.**
 - **Final candidate:** `bf8918e3`. Gate exit 0 (136 files, 1,510 tests, the fifteen checks); build passes.
 
@@ -970,6 +1028,7 @@ The owner's brief, "Complete And Verify SLATE's Current Gameplay Loop", worked f
 
 - **Branch:** `claude/loop-verification`, pushed, 14 commits on `43d10f8b`. **Not merged** (that's the owner's
   word to give). **Not deployed.**
+  **Superseded:** merged since; on 2026-10-15 `claude/loop-verification` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Final code:** `e7a4b3b4`. Its `src` and `tests` are those of `e31dbffc`; after that, only `tools/verify.mjs` (it
   quotes arguments now) and `tools/lives.ts` (it refuses an unknown profile) changed, then the docs.
 - **The gate on `e31dbffc`:** exit 0, read from a file. 129 files, 1,476 tests, and all fifteen checks. `npm run build`
@@ -1153,6 +1212,7 @@ The owner's brief: "Finish SLATE's Remaining Gameplay Verification And Balance",
   - `5d64d860` Classes Reach and the pressure lives.
 - **Not merged, not deployed. No schema change** (still 93). The new fields (`development.workout`,
   `belongsTo`, `basis`) are optional and read safely when absent.
+  **Superseded:** merged since; on 2026-10-15 `claude/gameplay-balance` was in `main`’s history (`git branch --merged main`). The current status is the first section of this file.
 - **Still owed:** the final 18 lives on `5d64d860`. The system's memory reaper stopped the run at 3 of 18. All 3
   graduated, with 0 breaches, 0 unbalanced ledgers and a consistent journey. Per the standing instruction, it waits
   for the owner's word. Run it in the worktree `C:/Users/sande/Downloads/slate-balance-5d64d860`, which is pinned
@@ -1664,7 +1724,8 @@ here is superseded by the owner's reset. Its open-work lists are history, not a 
   - `1ffa7daa`, increment nine: everyday life audited; work on one's feet refused when spent; the work-study protective equipment ($150, the school's figure) bought through the bank, or at the first crew shift, or sent home; footage (class self-tapes on the actor's phone, the school's film monologue, screen credits) and a reel cut from what's chosen, read only in a paid submission's reach; a close friend from school passes a part along now and then.
   - `546b4dd9`: a recurring note counted from its third time; `tools/freshness.mjs` (measures any save); the records.
   - Measured. A played first year (`tests/journey-school-year.test.ts`, a student preparing unevenly): 18 pieces of material work on 18 scenes, 0 avoidable or unacknowledged repeats, 0 partner repeats in a course, 5–8% of notes word for word the course's last, 30 classmates' moments of five kinds, none twice running. The replay's scripted New York life at 25 (it never prepares coursework): 28 on 26 scenes, 0 avoidable or unacknowledged, 132 of 136 notes recurring, one subject 115 times (the count above is the answer to that), 32 moments of three kinds. 56 mutations across increments two to nine, each failing a test. Gate at `546b4dd9`: 392 files, 3,514 tests, every check.
-  - **Not merged: the replay at `1ffa7daa` was stopped by Claude Code for low memory** (the session idle, its background-shell reaper) at the New York life's age-49 checkpoint (2051-08-29), no error reported to then; London hadn't started. Claude Code's own instruction is not to restart it without being asked, so it waits for the owner. To finish: in `C:/Users/sande/Downloads/slate-lives` (detached at `1ffa7daa`; move it to the branch head first), run `probe/chunk.sh` chunk by chunk as before, then `tools/breaches.mjs` on the snaps, compare with New York 74 / London 50, and merge `main` from the replayed commit (`git commit-tree <c>^{tree} -p origin/main -p <c>`). `main` is `a960638d`; everything from `73d6f7cc` on is on the branch only.
+  - (**Superseded 2026-10-08:** the replay was finished and `main` merged from it as `397c6b11`, two lines down; the
+    current status is the first section of this file.) **Not merged: the replay at `1ffa7daa` was stopped by Claude Code for low memory** (the session idle, its background-shell reaper) at the New York life's age-49 checkpoint (2051-08-29), no error reported to then; London hadn't started. Claude Code's own instruction is not to restart it without being asked, so it waits for the owner. To finish: in `C:/Users/sande/Downloads/slate-lives` (detached at `1ffa7daa`; move it to the branch head first), run `probe/chunk.sh` chunk by chunk as before, then `tools/breaches.mjs` on the snaps, compare with New York 74 / London 50, and merge `main` from the replayed commit (`git commit-tree <c>^{tree} -p origin/main -p <c>`). `main` is `a960638d`; everything from `73d6f7cc` on is on the branch only.
   - Open, by the brief: every situation is authored (34 scenes, 18 templates, six moment kinds, five steps beyond), so a long life comes back to them, acknowledged, with something new asked; scenes stop at 1930, so Acting I's twenty-first-century plays aren't represented; graduation and the showcase are played through only in the lives replay; the Cabaret's rehearsal length and the Summer Cabaret's casting aren't published.
 - **The owner's third brief of 2026-10-08: finish the interrupted replay and merge, then life beyond class.** `docs/REQUIREMENTS.md` "The acting life beyond class" (T1 to T8) is the per-part record.
   - Verified first: a fresh replay at `967169dc` (the `1ffa7daa` run kept apart) was clean, and `main` merged from it as `397c6b11`.
@@ -2968,7 +3029,8 @@ Expect exit 0 and 617 tests in 29 files (§1). Any other result is a difference 
   4. Mutating the fix fails a test. §9 has the mutants, and the few that survive change nothing a save can reach.
   5. `npm run gate` exits 0, read from a file: 581 tests in 28 files at `7aa9a99`.
   6. The §10 entry is moved to fixed, in the past tense.
-  7. Reaching `main` by PR waits on the owner. The commit is pushed and not merged.
+  7. Reaching `main` by PR waits on the owner. The commit is pushed and not merged. **Superseded:** on 2026-10-15
+     `7aa9a99` was in `main`’s history; the current status is the first section of this file.
 
 **Done on 2026-09-24: the day's bounds on screen, and the jump day's own night** (§10 has the whole of it). The review of the spring-forward fix had found these; none was caused by it, and all predated this branch. The owner said to fix them.
 - **What was wrong:** the night into the day of the jump, in the five zones that skip midnight, started at that day's first instant, which reads 01:00, and took the late-bedtime penalty, as did any bedtime in that day's first hour. The screens cut a day by adding a day, or 24 hours, to its start: the Day look and the entry look, `monthGrid`, the plan form, the hours of the weather, and the week ahead and the weather looks built on it. On 23- and 25-hour days, in every zone with daylight saving, they put plans in two cells or none, offered slots on the wrong date, labeled hours an hour off, and skipped or repeated a day of the week ahead.

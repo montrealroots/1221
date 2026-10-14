@@ -1,0 +1,1026 @@
+{
+ "key": "money",
+ "on": "2026-10-15",
+ "against": "bef4bde5",
+ "testFile": "tests/scope-money.test.ts",
+ "reachability": "Every new life is made at the school in New Haven at one of five American banks, and since the scope reset of 2026-10-09 nothing moves a life from where it lives; creation's family choice (2026-10-14) changes means, not country. The nine bank rows below need a bank outside the United States for their action, so no played life reaches it. What a New Haven student meets of each is played; the rest is played on quickSave lives abroad, labeled FIXTURE. No row was moved to Deferred or Informational.",
+ "rows": [
+  {
+   "id": "bank.arrange_overdraft",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so the command is only ever refused to a student. Its New Haven half is now proved (refused at all five banks with nothing set or posted, across a reload, and no Arrange It drawn), and abroad every gap the review named is closed. It stays unresolved only for want of a reachable life, as the row has said since 2026-10-12.",
+   "disposition": "stale-claim (unreachable by design); implementation fixed; evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.arrange_overdraft > PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words, a close of nothing is refused, and nothing is set or posted, across a reload; Chase’s Overdraft panel draws no Arrange It",
+     "kind": "command+render",
+     "proves": "Each of the five banks' refusal word for word; limit 0 refused; transactions count, overdraftLimit and overdraftSince unchanged before and after a reload; Chase's per-item text drawn with no Arrange It, Close The Overdraft or Overdraft Limit field."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.arrange_overdraft > FIXTURE, London: twins £500 overdrawn at Barclays for 61 days, one with £2,000 arranged: the other’s account is charged off and closed at 60, the arranged one stays open with no day counted against it",
+     "kind": "command+clock",
+     "proves": "leftOverdrawn reads the arranged limit: the unarranged twin is closed ('Barclays Closed Your Account', a collections debt); the arranged one is open, negativeSince unset, no collections. Mutating the limit out of leftOverdrawn fails it (run)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.arrange_overdraft > FIXTURE, London: Arrange It pressed with £1,000 typed on Barclays’ panel; lowered to £100 while £300 under, refused; Close The Overdraft refused until it’s paid back, then closed, across a reload",
+     "kind": "render+command",
+     "proves": "The panel's offer ('up to £2,000 at 35%'), Arrange It through its typed field, the limit and rate kept across a reload, 'You’re overdrawn by more than that already.', Close The Overdraft refused 'Pay the overdraft back before closing it.' then closing it, 'None arranged.' after a reload."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A limit of 0 on an account with nothing arranged answered { limit: 0 } and changed nothing, at every bank including all five in New Haven; it's refused 'No overdraft is arranged on it.'",
+     "where": "src/engine/systems/lending.ts bank.arrange_overdraft",
+     "test": "PLAYER JOURNEY: at each New Haven bank … (failed before: 'bank.arrange_overdraft went through'; run with the line removed)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-money.test.ts ‘bank.arrange_overdraft’: at each of the five New Haven banks, refused in the bank’s words with nothing set or posted across a reload, a close of nothing refused, and Chase’s panel drawing no Arrange It; in London (FIXTURE), twins £500 under at Barclays for 61 days, the one with £2,000 arranged kept open and the other charged off (leftOverdrawn reading the limit), and Arrange It and Close The Overdraft pressed on the panel with their refusals. Also lending.test.ts, bank-fees.test.ts and bank-lifecycle.test.ts on lives abroad.",
+    "changes": "current.overdraftLimit/Rate/PerUse/Since; set-up or facility fee on the first arrangement; limit 0 closes it unless overdrawn, and is refused where nothing is arranged (from 2026-10-15: until then it answered as closed). bank.arrange_overdraft in systems/lending.ts.",
+    "corrected.now": "Reached only by a fixture, as before: no New Haven bank arranges one. What a student meets, the refusal, is played at all five banks with nothing changed (tests/scope-money.test.ts); abroad, leftOverdrawn reading the arranged limit, the limit-0 close and both its refusals, and the panel are now tested. Unresolved, as health.prepay was, until the owner says otherwise."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "      if ((current.overdraftLimit ?? 0) <= 0) throw new CommandError('No overdraft is arranged on it.');",
+     "replace": "",
+     "protects": "the limit-0 refusal (PLAYER JOURNEY at each New Haven bank)"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (account.balance >= -(account.overdraftLimit ?? 0)) { account.negativeSince = undefined; continue; }",
+     "replace": "    if (account.balance >= 0) { account.negativeSince = undefined; continue; }",
+     "protects": "leftOverdrawn reading the arranged limit (the London twins)"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (current.balance < -limit) throw new CommandError('You’re overdrawn by more than that already.');",
+     "replace": "",
+     "protects": "the panel test's lowered-limit refusal"
+    }
+   ],
+   "ownerDecision": "The same as health.prepay's: whether a row whose action no played life can reach (needing a bank outside the US) stays Unresolved or is Deferred. Deferring it would hide nothing that works: the engine and its tests abroad stay; Unresolved keeps it counted against completion.",
+   "tutorial": [
+    "bank (Your Bank): no change needed for this row"
+   ]
+  },
+  {
+   "id": "bank.cancel_new",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (the US has no cooling-off period in content/accountlife.ts, so inCoolingOff is false for every New Haven account). The New Haven half (no Cancel It, the refusal, the account kept) is proved; abroad the card branch (London), the current-account branch and its refusals are proved, the panel drawn while a refusal holds (the reason under it, Cancel It grayed with the same words), and three defects are fixed: a current account is settled on canceling as Close It settles one (its interest paid, its fees charged, in Canada its fees refunded), each part played abroad. From the later pass of 2026-10-15: canceling follows each country’s rule on interest (kept in Britain and Canada, returned in the EU/EEA countries and Mexico) and on charges (refunded for any deposit account in Canada and Mexico); Korea’s deposits have no cooling-off; and Close It refuses a German account its closing fees would overdraw, as Cancel It does. From that day’s recheck, five more defects fixed abroad: a term’s interest taken during the term is refused back out of a primary that doesn’t hold it (Berlin); Canada’s refund leaves out overdraft interest (Toronto); Canada’s 14 and Mexico’s 10 days are counted as business days, on the panel’s “until” date too (Toronto, Mexico City); Canada’s cards have no cooling-off (Toronto); a Mexican account once used has none (Mexico City). Mexico’s half of both rules and the German interest tax’s reversal are tested. From that day’s second recheck, two more defects fixed abroad: a term’s taken interest is found by the term itself, not by the name every term at the bank shares, so canceling a new Deutsche Bank term no longer takes back an older one’s (Berlin); and the period runs to the end of its last day, as each rule counts it, not to the hour the account opened (Toronto, Berlin). The refusal’s one-cent threshold is tested. Each FIXTURE, as no played life banks outside the US.",
+   "disposition": "stale-claim (unreachable by design); implementation fixed (engine and missing control); evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new: the US gives no cooling-off period, the panel draws no Cancel It, and the command is refused with the account left open",
+     "kind": "command+render",
+     "proves": "No Cancel It on Your Accounts Over Time; 'Its cooling-off period has passed, or there isn’t one here for it.'; closedAt unset after a reload."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, London: a Barclays card applied for and canceled the day it comes, owing nothing, closes; its twin with £120 spent on it is closing, with no room, the £120 still owed; in Toronto an RBC card has no Cancel It, Canada giving a card no cooling-off",
+     "kind": "render+command",
+     "proves": "The card branch through the panel’s Cancel It, in London (Consumer Credit Act 1974 s.66A): closed at once owing nothing; owing, closing set, closedAt unset, the £120 still owed, cardRoom 0. From 2026-10-15’s recheck, played in London rather than Toronto: an RBC card in Toronto is not offered Cancel It and the command answers “Its cooling-off period has passed, or there isn’t one here for it.”, the card left open. Fails with the Canadian card exclusion taken out (run 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Toronto: an RBC chequing account opened beside TD shows Cancel It; refused while a payment set for a date uses it and while it’s overdrawn, then canceled, its C$50 sent to TD in RBC’s days, across a reload",
+     "kind": "render+command+clock",
+     "proves": "Cancel It drawn for a new current account; 'A payment set for a date uses it. Move it first.'; 'It’s overdrawn by C$20.00. The bank closes it only once that’s paid.' with the account kept open; pressed, closed with nothing left, TD unchanged until RBC's transfer lands, then C$50 once, nothing left in transit. From the recheck of 2026-10-15: the panel drawn while each refusal holds, the reason said under the account (“A payment set for a date uses it. Move it first.”, “It’s overdrawn by C$20.00. …”) and Cancel It disabled with that title; its words “its money back with its interest, and its fees refunded.”."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Toronto: an RBC chequing account opened on 26 January with C$50, charged RBC’s C$16.95 at January’s end under its C$4,000 waiver, canceled on 2 February: the C$16.95 refunded, as Canada has it, and C$50 sent to TD",
+     "kind": "command+render",
+     "proves": "The Monthly fee −16_95 posted at January’s end, the balance 33_05; Cancel It pressed on the panel; “Fees refunded: …, canceled” +16_95; closed at 0; 50_00 landed at TD. Fails without the Canadian refund."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with €3 in it is refused for its €4.90 month on the panel; with €100, Cancel It charges the €4.90, as Germany lets the bank, and sends €95.10 on",
+     "kind": "command+render",
+     "proves": "The panel drawn while the fee refusal holds: “Its fees, €4.90, are more than it holds. Pay in €1.90 first.” under it and as the grayed Cancel It’s title, the command refused in the same words, nothing moved; then “Closing fees: GiroKonto” −4_90 and 95_10 landed at Deutsche Bank. Fails without settleFees, and with the refusal’s threshold raised."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Reykjavík: a Landsbankinn Einkareikningur at 0.50% holding 1,000,000 kr for ten days’ ends, 136.98 kr built, canceled: the interest goes back unpaid, as Iceland’s rule returns it, and 1,000,000 kr is sent to Arion",
+     "kind": "command+render",
+     "proves": "Worked by hand: 10 × 1,000,000 × 0.005 / 365 = 136.986 kr, 136.98 paid, 30.14 kr taken at 22%: “Interest: Einkareikningur, on canceling” +106_84, and 1_000_106_84 landed at Arion. Fails without settleInterest."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, London: a NatWest Flexible Saver at 1.25% holding £10,000 for ten days’ ends, canceled: its interest kept, as Britain’s rule leaves it, £3.42, and £10,003.42 into the NatWest current account",
+     "kind": "command+render",
+     "proves": "Britain keeps the interest earned: £3.42 paid on canceling, £10,003.42 into the current account; the panel says “its money back with its interest.”"
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Berlin: a Deutsche Bank Flexgeld opened on 20 March with €10,000, the year’s €1,000 allowance already used, and canceled on 2 April: the €1.50 paid at March’s end, €0.40 of it kept as tax, goes back with its tax, off the year’s income, as Germany returns what each side received, and €10,000.00 comes back",
+     "kind": "command+render",
+     "proves": "Worked by hand: 10,000 × 0.005 × 11 / 365 = €1.5068, €1.50; with the allowance used (a TEST SETUP posting of €1,000 interest in January), 26.375% of it, €0.3956, €0.40 kept: “Interest: Flexgeld” +1_10 on the account and +40 on Tax On Interest. Canceled on the panel: “Interest returned” −1_10 on the account, −40 on Tax On Interest, +1_50 on Interest; €10,000.00 to the current account; the year’s interest record back where it was. Until 2026-10-15’s recheck no tax was in play though the title said it went back with its tax."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Toronto: an RBC savings account opened beside RBC chequing, C$500 in and C$100 out twice, the second charged RBC’s C$2.00, canceled that day: the C$2.00 refunded, as Canada refunds a deposit account’s charges, and C$300.00 into the chequing account",
+     "kind": "command+render",
+     "proves": "SOR/2021-181 s.5(2)(b) for savings: the withdrawal fee refunded."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Seoul: a Shinhan current account and savings account opened that morning beside KB can’t be canceled new: Korea’s rule gives deposits no withdrawal, the panel draws no Cancel It, and the command is refused with both left open",
+     "kind": "command+render",
+     "proves": "No Korean deposit cooling-off."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+     "kind": "command+render",
+     "proves": "Close It refuses what Cancel It refuses: fees past what the account holds."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened beside a Commerzbank primary, its €6.30 taken after ten days and the primary emptied: Cancel It refused on the panel for the €6.30 going back out of the primary, then with €6.30 paid in, canceled, the primary left at €0.00",
+     "kind": "command+render",
+     "proves": "Worked by hand: 10,000 × 0.023 × 10 / 365 = €6.3014, €6.30, under the allowance; Take Interest pays it into the Commerzbank GiroKonto. Primary at 0: the panel’s Cancel It grayed with “The interest it paid into GiroKonto, €6.30, goes back out of it, and is more than it holds. Pay in €6.30 first.” and the command refused in the same words, nothing moved; with €6.30 paid in, pressed: “Interest returned” −6_30 from the primary, the primary at 0, the €10,000.00 into the Deutsche Bank account beside it. Fails with interestBackOf counting only the term’s own postings (run 2026-10-15: it went through and left the primary at −€6.30). From 2026-10-15’s second recheck: with €6.29 in the primary it’s refused too, “… Pay in €0.01 first.”"
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Toronto: an RBC chequing account opened on 26 January beside TD with C$1,000 arranged, C$500 under until February, canceled on 2 February: RBC’s C$16.95 month and C$5.00 overdraft fee refunded against Bank Fees, C$21.95, and the overdraft interest kept",
+     "kind": "command+render+clock",
+     "proves": "Worked by hand: (5 × 500 + 516.95) × 0.22 / 365 = C$1.8184, C$1.81 overdraft interest; the C$16.95 month and C$5.00 overdraft fee. Canceled on the panel: “Fees refunded” +21_95 on the account, −21_95 on Bank Fees, nothing on Overdraft Interest. Fails with the interest exclusion taken out (run 2026-10-15: C$23.76)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Mexico City: a Banorte Inversión Enlace at 0.31% opened on 26 January beside Banorte’s current account with MXN 1,000,000, paid January’s interest, and canceled on 10 February, the tenth día hábil with the 2 February holiday: the interest goes back, as Mexico returns things to how they were, and MXN 1,000,000.00 into the current account",
+     "kind": "command+render+clock",
+     "proves": "Worked by hand: 1,000,000 × 0.0031 × 5 / 365 = MXN 42.4658, 42.46 paid at January’s end; the period counted 27–30 January and 3–10 February, Mexico’s holidays read from public/holidays/mx.tsv. The panel says “until February 10, 2026, its money back without the interest it earned, and its fees refunded.”; pressed on 10 February at 9 AM: “Interest returned” −42_46, MXN 1,000,000.00 into the Banorte current account. Fails with MX added to KEEPS_INTEREST, with MX taken from REFUNDS_CHARGES (the panel’s words), and with the period counted in calendar days (run 2026-10-15: each failed)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Mexico City: a Santander Débito LikeU opened beside BBVA, charged MXN 11.48 and canceled unused: the charge refunded, as Mexico lets no Comisión be charged; its twin that sent MXN 100 out has been used, so the panel draws no Cancel It and the command is refused",
+     "kind": "command+render",
+     "proves": "Unused: the panel says “its fees refunded.”; pressed, “Fees refunded” +11_48, closed at 0, MXN 500 landed at BBVA. The charge is a TEST SETUP posting: SLATE charges Santander’s quiet-month fee only for a whole month open, which no account in its ten business days has been. Used (a transfer out): no Cancel It on the panel, the command refused, the account open. Fails with MX taken from REFUNDS_CHARGES and with usedSince taken out (run 2026-10-15)."
+    },
+    {
+     "file": "tests/accountlife.test.ts",
+     "title": "changing one’s mind > cancels a new savings account whole in Canada’s fourteen business days, not after, and never a British fixed deposit",
+     "kind": "command+clock",
+     "proves": "Re-dated 2026-10-15: from Monday 5 January the fourteen business days run to Friday the 23rd, so inCoolingOff is true eighteen days on and the command refused nineteen days on; until then it was refused fifteen days on, inside the regulation’s period. Fails with Canada counted in calendar days (run 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Berlin: two Deutsche Bank FestzinsSparen of €10,000, the second opened fifteen days after the first, the first’s €10.08 taken the day after: the second canceled on the panel gives back its €10,000 and takes none of the first’s interest back, the year’s interest left €10.08 up and the first still open",
+     "kind": "command+render",
+     "proves": "Worked by hand: 10,000 × 0.023 × 16 / 365 = €10.0822, €10.08 taken from the older term into the AktivKonto. The newer term, the only Cancel It on the panel, pressed: no “Interest returned” posting, the primary up exactly €10,000.00, the year’s interest still €10.08 up, the older term open. Failed with the memo match restored (run 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Toronto and Berlin: a savings account opened on Monday 5 January can be canceled at 11:30 PM on the last day the panel names, Friday 23 January in Toronto (fourteen business days) and Monday 19 January in Berlin (fourteen days), and is refused at 12:01 AM the day after",
+     "kind": "command+render+clock",
+     "proves": "Twins in each city: the panel says “until January 23, 2026” (Toronto) and “until January 19, 2026” (Berlin), and Cancel It pressed at 11:30 PM that day closes the saver; a minute past the midnight after, no Cancel It is drawn and the command answers “Its cooling-off period has passed, or there isn’t one here for it.”, the saver left open. Failed with the old boundary, the opening hour, restored (run 2026-10-15)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A current account canceled in its cooling-off was asked only whether anything used it (linkedTo), so one overdrawn closed with its debt, and one with money on its way, card payments pending or savings beside it closed too. It's asked Close It's own refusals (closeRefusal) now.",
+     "where": "src/engine/systems/accountlife.ts bank.cancel_new",
+     "test": "FIXTURE, Toronto: an RBC chequing account … (failed before: 'bank.cancel_new went through' on the overdrawn account; run with linkedTo restored)"
+    },
+    {
+     "summary": "Your Accounts Over Time offered Cancel It for savings and cards only, so the command's current-account branch had no control. A new current account other than the primary is offered, its Close It refusal said under it with the button grayed out.",
+     "where": "src/ui/bank/BankAccountLife.tsx",
+     "test": "FIXTURE, Toronto: an RBC chequing account … (failed before: the panel didn't name the RBC account; run with the filter restored)"
+    },
+    {
+     "summary": "A current account canceled in its cooling-off closed with no interest paid and no fees charged, and its overdraft limit left on it, where Close It (closeNow) settles both and the guide said it “closes the same way”. It is settled as Close It settles one now: settleInterest, settleFees, the limit cleared; in Canada the charges for its operation while it was open come back (SOR/2021-181 s.5(2)), where Britain (BCOBS 6.3.2R) and Germany (BGB § 357b(2)) let the bank charge for the service provided. Fees past what it holds with its interest are refused (cancelRefusal), which the panel reads too. Its words on the panel say what comes back.",
+     "where": "src/engine/systems/accountlife.ts bank.cancel_new and cancelRefusal; src/engine/systems/banking.ts closingFeesOf; src/ui/bank/BankAccountLife.tsx",
+     "test": "the Toronto fees, Berlin and Reykjavík FIXTUREs above (each failed with its part removed, 2026-10-15)"
+    },
+    {
+     "summary": "Canceling kept a savings account’s or term deposit’s interest from it everywhere, and paid a current account’s everywhere. It follows the country’s rule now: kept in Britain and Canada; returned, any already paid posted back with its tax and off the year’s income, in the EU/EEA countries and Mexico.",
+     "where": "src/engine/systems/accountlife.ts KEEPS_INTEREST, interestPaidSince, bank.cancel_new",
+     "test": "London NatWest; Berlin Flexgeld; Reykjavík"
+    },
+    {
+     "summary": "Canada’s refund of charges covered only a current account; it covers any deposit account now, and Mexico’s with it.",
+     "where": "src/engine/systems/accountlife.ts REFUNDS_CHARGES, chargesBackOf",
+     "test": "Toronto RBC savings"
+    },
+    {
+     "summary": "Korea’s deposits had a 14-day cooling-off its rule (금융소비자보호법 제46조) doesn’t give; removed, cards kept.",
+     "where": "src/engine/systems/accountlife.ts inCoolingOff; guide/money.ts",
+     "test": "Seoul"
+    },
+    {
+     "summary": "Close It closed a German account overdrawn by its closing fees; refused now, as Cancel It refuses it.",
+     "where": "src/engine/systems/bankmoves.ts closeRefusal",
+     "test": "Berlin Close It"
+    },
+    {
+     "summary": "A term’s interest taken during the term (bank.take_term_interest) went into the primary account, and Cancel It took it back out of there, but cancelRefusal counted only interest paid into the term itself, so nothing refused it and a Commerzbank primary was left at −€6.30 (Postbank −€6.08). interestBackOf now counts each payment by the holder’s account it went into, and cancelRefusal refuses while any of those holds less than goes back out of it. Deutsche Bank’s own terms say only that each side repays what it received within 30 days (its ZinsMarkt Widerrufsfolgen), nothing of keeping it back from the deposit, so it’s refused rather than taken from the term.",
+     "where": "src/engine/systems/accountlife.ts interestBackOf, cancelRefusal",
+     "test": "FIXTURE, Berlin: a Deutsche Bank FestzinsSparen … (failed before: the command went through)"
+    },
+    {
+     "summary": "Canada’s refund took every bank fee since opening, overdraft interest among them (it’s posted as a bank fee against Overdraft Interest), where SOR/2021-181 s.5(2)(b) refunds charges “other than interest charges”; and it was all credited against Bank Fees. chargesBackOf now leaves out a charge against Overdraft Interest and returns each charge by the expense line it was charged to, which the refund credits.",
+     "where": "src/engine/systems/accountlife.ts chargesBackOf, bank.cancel_new",
+     "test": "FIXTURE, Toronto: … C$500 under until February … (failed before: C$23.76 refunded)"
+    },
+    {
+     "summary": "Canada’s 14 and Mexico’s 10 days were counted as calendar days; their rules count business days (SOR/2021-181 s.5(1); LTOSF art. 11 Bis 1, “diez días hábiles”). coolingOffEnds counts them with afterBusinessDays in the bank’s country and the holder’s region; inCoolingOff and the panel’s “until” date read it (the panel had used the panel bank’s country’s days).",
+     "where": "src/engine/systems/accountlife.ts coolingOffEnds, inCoolingOff; src/ui/bank/BankAccountLife.tsx",
+     "test": "FIXTURE, Mexico City: a Banorte Inversión Enlace … ; tests/accountlife.test.ts changing one’s mind (each failed with calendar days)"
+    },
+    {
+     "summary": "A Canadian card had a 14-day cooling-off. Bank Act s.627.11 lets a credit card agreement be canceled “in accordance with any prescribed requirements”, and SOR/2021-181 prescribes them for a retail deposit account (s.5), a deposit-type instrument (s.6) and the products s.4 lists, no card among them (read 2026-10-15). inCoolingOff is false for a Canadian card.",
+     "where": "src/engine/systems/accountlife.ts inCoolingOff",
+     "test": "FIXTURE, London: a Barclays card … in Toronto an RBC card has no Cancel It (failed before)"
+    },
+    {
+     "summary": "Mexico’s right holds only “siempre y cuando el Cliente no haya utilizado u operado los productos o servicios financieros contratados” (art. 11 Bis 1, read 2026-10-15 at diputados.gob.mx, last reform 14 November 2025); SLATE didn’t ask. SLATE can tell: usedSince counts a payment out of the account by its holder, a card’s purchase among them, and not the bank’s fees, its interest or its tax; money paid in isn’t counted, an account being funded to be opened (SLATE’s reading). A used Mexican account is out of its cooling-off.",
+     "where": "src/engine/systems/accountlife.ts usedSince, inCoolingOff",
+     "test": "FIXTURE, Mexico City: a Santander Débito LikeU … its twin that sent MXN 100 out (failed before: it was canceled)"
+    },
+    {
+     "summary": "A term’s interest taken during the term was found on canceling by its memo alone, “Interest: FestzinsSparen”, which every term at the bank shares, so canceling a new term took back what an older one had paid: out of the primary, off the year’s income, and counted in the refusal (€6.93 in the skeptic’s probe). bank.take_term_interest now carries the term itself in a posting of nothing, interestPaidSince finds a term’s payments by that posting, and the reversal leaves the zero posting out. Interest taken before the fix carries no such posting and isn’t found on canceling (in a save from before it, that interest gets no refusal and no reversal).",
+     "where": "src/engine/systems/accountlife.ts interestPaidSince, bank.take_term_interest, bank.cancel_new",
+     "test": "FIXTURE, Berlin: two Deutsche Bank FestzinsSparen … (failed with the memo match restored)"
+    },
+    {
+     "summary": "The cooling-off period ended at the hour the account opened on its last day (openedAt + days, or afterBusinessDays at the same hour), though Directive 2002/65/EC art. 6(1) gives 14 calendar days, SOR/2021-181 s.5(1) “within 14 business days after the day on which [it] is opened”, and LTOSF art. 11 Bis 1 “diez días hábiles posteriores”, and the panel named the day: an RBC account “until January 23” was refused at 11:30 AM on the 23rd. coolingOffEnds returns the last moment of that day in the save’s zone (endOfDay), and the panel names the date in that zone.",
+     "where": "src/engine/systems/accountlife.ts coolingOffEnds; src/ui/bank/BankAccountLife.tsx",
+     "test": "FIXTURE, Toronto and Berlin: … 11:30 PM … 12:01 AM (failed with the old boundary restored)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "entry": "BankAccountLife.tsx Cancel It, beside a savings account, term deposit, card or (from 2026-10-15) current account other than the primary, in its cooling-off (until the date its country’s count ends, Canada’s and Mexico’s in business days, from 2026-10-15); a current account’s refusal (Close It’s, or its fees past what it holds) said under it and the button grayed out with the same words",
+    "changes": "savings/term: balance back whole into a current account at its own bank, or with none there sent to the primary in the bank’s days, closedAt, its standing orders and scheduled payments dropped; card: closing, closed if nothing owed; current account: on Close It’s refusals and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, fees charged, the limit cleared; in Canada fees refunded, from 2026-10-15: until then neither), its money on as savings’ goes; primary refused (accountlife.ts bank.cancel_new) From 2026-10-15’s recheck: Canada’s refund leaves out overdraft interest and credits each charge to its own line; a term’s interest taken into another account is refused back out of it while that holds less; Canada’s and Mexico’s periods are business days, the panel’s “until” date too; no Canadian card is offered it; a Mexican account once used isn’t. From 2026-10-15’s second recheck: a term’s taken interest is found on canceling by the term itself, not its name; the period runs to the end of its last day in the save’s zone, the panel’s “until” date named there.",
+    "tests": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s €4.90 refused on the panel and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    const refused = account.kind === 'checking' ? closeRefusal(s, person, account) : undefined;",
+     "replace": "    const refused = undefined as string | undefined; void closeRefusal;",
+     "protects": "the current account's refusals (Toronto chequing test)"
+    },
+    {
+     "file": "src/ui/bank/BankAccountLife.tsx",
+     "find": "(a.kind === 'savings' || a.kind === 'credit_card' || a.kind === 'checking') && inCoolingOff",
+     "replace": "(a.kind === 'savings' || a.kind === 'credit_card') && inCoolingOff",
+     "protects": "Cancel It drawn for a new current account"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }",
+     "replace": "      { account.closedAt = s.now; ensurePrimary(s, person); }",
+     "protects": "a card owing money is closing, not closed (Toronto card twins)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      settleInterest(s, account, `Interest: ${account.name}, on canceling`);",
+     "replace": "",
+     "protects": "Reykjavík (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      settleFees(s, account);",
+     "replace": "",
+     "protects": "Berlin (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      if (isoOfAccount(account) === 'CA') {",
+     "replace": "      if (isoOfAccount(account) === 'XX') {",
+     "protects": "Toronto fees (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  return short > 0 ?",
+     "replace": "  return short > 1_000_00 ?",
+     "protects": "Berlin’s refusal on the panel and the command (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "new Set(['GB', 'CA'])",
+     "replace": "new Set<string>([])",
+     "protects": "interest kept in Britain and Canada (London, Toronto, defects5 RBC term)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      for (const t of interestPaidSince(s, account)) {",
+     "replace": "      for (const t of [] as typeof s.universe.transactions) {",
+     "protects": "interest paid in the window posted back (Berlin Flexgeld)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  if (account.kind === 'credit_card' || !REFUNDS_CHARGES.has",
+     "replace": "  if (account.kind !== 'checking' || !REFUNDS_CHARGES.has",
+     "protects": "a Canadian savings account’s charges refunded (Toronto savings)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  if (iso === 'KR' && account.kind !== 'credit_card') return false;",
+     "replace": "",
+     "protects": "no Korean deposit cooling-off (Seoul)"
+    },
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "  if (owed > 0 && short > 0) return",
+     "replace": "  if (owed > 0 && short > 0 && false) return",
+     "protects": "Close It refused for fees past the balance (Berlin Close It)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    if (q.amount > 0 && sim.universe.accounts[q.accountId]?.ownerId === account.ownerId) back.set",
+     "replace": "    if (q.amount > 0 && q.accountId === account.id) back.set",
+     "protects": "Berlin term: the €6.30 refused back out of the primary (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    if (id === account.id || !into || amount <= into.balance) continue;",
+     "replace": "    if (id === account.id || !into || amount <= into.balance + 1) continue;",
+     "protects": "Berlin term: the threshold is exactly what the primary holds; €6.29 refused, “Pay in €0.01 first.” (run 2026-10-15: failed; until then not run, and it survived the skeptic’s run, only 0 and €6.30 tried)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    if (lines.some((q) => sim.universe.accounts[q.accountId]?.name === 'Overdraft Interest')) continue;",
+     "replace": "",
+     "protects": "Toronto: overdraft interest not refunded (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA', 'MX']);",
+     "replace": "const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA']);",
+     "protects": "Mexico City: both tests (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "const KEEPS_INTEREST: ReadonlySet<string> = new Set(['GB', 'CA']);",
+     "replace": "const KEEPS_INTEREST: ReadonlySet<string> = new Set(['GB', 'CA', 'MX']);",
+     "protects": "Mexico City: Banorte’s interest going back (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "const BUSINESS_DAY_COOLING: ReadonlySet<string> = new Set(['CA', 'MX']);",
+     "replace": "const BUSINESS_DAY_COOLING: ReadonlySet<string> = new Set([]);",
+     "protects": "Mexico City Banorte on 10 February; tests/accountlife.test.ts eighteen days on (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  if (iso === 'CA' && account.kind === 'credit_card') return false;",
+     "replace": "",
+     "protects": "Toronto’s RBC card refused (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  return sim.now <= ends && !(iso === 'MX' && usedSince(sim, account));",
+     "replace": "  return sim.now <= ends;",
+     "protects": "Mexico City: the used twin refused (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    if (t.category !== 'interest' && t.category !== 'bank_fee' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) return true;",
+     "replace": "    if (t.category !== 'interest' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) return true;",
+     "protects": "Mexico City: a bank charge doesn’t count as use, so the unused LikeU with its MXN 11.48 is still offered Cancel It (not run)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    && t.postings.some((q) => q.accountId === account.id && (q.amount > 0 || (account.category === 'term' && q.amount === 0))));",
+     "replace": "    && (t.postings.some((q) => q.accountId === account.id && q.amount > 0) || (account.category === 'term' && t.memo === `Interest: ${account.name}`)));",
+     "protects": "Berlin, two terms: the older’s interest not taken back (run 2026-10-15: failed)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": ", { accountId: term.id, amount: 0 }];",
+     "replace": "];",
+     "protects": "a term’s taken interest goes back on canceling: the Berlin €6.30 term test (not run)"
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  if (!BUSINESS_DAY_COOLING.has(iso!)) return endOfDay(addDays(account.openedAt, days, sim.homeZone), sim.homeZone);",
+     "replace": "  if (!BUSINESS_DAY_COOLING.has(iso!)) return account.openedAt + days * MS_DAY;",
+     "protects": "Berlin’s saver canceled at 11:30 PM on 19 January (run together with the business-day line’s old return, 2026-10-15: failed; alone, not run)"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft: Unresolved or Deferred for a row only a life abroad reaches.",
+   "tutorial": [
+    "bank (Your Bank): its account-life sentence was changed on 2026-10-15’s recheck, that sentence alone, to “Where the country has a cooling-off period, a new account or card other than your primary can be canceled within it: in Korea a card alone, in Canada no card, in Britain no fixed-rate deposit, and in Mexico only one not yet used.” It had said any new savings account, term deposit, card or current account, untrue of Korea since the Korea fix."
+   ],
+   "recheck": [
+    {
+     "problem": "No test drew the panel while a current account’s refusal held (the reason under it, Cancel It grayed out), as the row text and guide/money.ts:527 said.",
+     "done": "The Toronto chequing test draws the panel while a payment set for a date uses the account and again while it’s C$20 overdrawn: the reason said under it, Cancel It disabled with the same words as its title. Berlin draws it while the new fee refusal holds."
+    },
+    {
+     "problem": "The checking branch skipped Close It’s interest and fee settlement while guide/money.ts:506 said a current account “closes the same way”.",
+     "done": "Chose the code, after reading the rules: Britain’s FCA BCOBS 6.3.2R (the customer pays for the service actually provided, proportionate), Germany’s BGB § 357b(2) (Wertersatz for the service provided), and Canada’s SOR/2021-181 s.5(2) (closed without charge, the operation’s charges refunded, interest charges aside). The account’s earned interest is the holder’s, so paying it charges nothing anywhere. bank.cancel_new now settles interest and fees as closeNow does and clears the limit; in Canada it refunds the fees charged while it was open; fees past what it holds are refused (cancelRefusal, read by the panel too). Tested in Toronto, Berlin and Reykjavík with hand-worked literals; each part’s mutation fails its test. Guide :506 and :527 and the panel’s words now say what happens."
+    },
+    {
+     "problem": "Cancel It’s savings and term-deposit branch paid no interest earned in the window.",
+     "done": "Each country’s rule read (BCOBS 6.3.2R and Nationwide’s terms, SOR/2021-181 s.5, Directive 2002/65/EC art. 7, BGB § 355(3), LTOSF art. 11 Bis 1): kept in Britain and Canada, returned in the EU/EEA countries and Mexico, for every account canceled. London, Berlin Flexgeld and Reykjavík test it; defects5’s RBC term literal moved to $4,000.26 by hand."
+    },
+    {
+     "problem": "A Canadian savings withdrawal fee charged in the window wasn’t refunded.",
+     "done": "Refunded for any deposit account in Canada (and Mexico, whose rule forbids any commission); Toronto RBC savings test."
+    },
+    {
+     "problem": "Korea’s deposit cooling-off.",
+     "done": "Removed: 제46조 gives 청약철회 to insurance, investment and lending products only. Guide names Korea for cards alone; past-tense comments in accountlife.ts and guide/money.ts. Seoul test."
+    },
+    {
+     "problem": "Close It could close a German account its fees overdrew.",
+     "done": "closeRefusal refuses it, the panel graying Close It with the words; Berlin Close It test."
+    },
+    {
+     "problem": "Abroad fix 1: a term deposit’s interest taken during the term (Take Interest) went back out of the primary on Cancel It, but interestBackOf counted only postings on the term, so no refusal fired; a Commerzbank primary was left at −€6.30 (Postbank −€6.08).",
+     "done": "Fixed in accountlife.ts: interestBackOf counts each payment by the holder’s account it went into; cancelRefusal refuses while any of them holds less, “The interest it paid into GiroKonto, €6.30, goes back out of it, and is more than it holds. Pay in €6.30 first.”. Checked the bank’s terms first: Deutsche Bank’s ZinsMarkt pre-contract information (Widerrufsfolgen) says each side returns what it received within 30 days, nothing of keeping it back from the deposit, so it’s refused, not taken from the term. Tested: FIXTURE, Berlin, Commerzbank primary and a Deutsche Bank FestzinsSparen, €6.30 worked by hand (10,000 × 0.023 × 10 / 365), the panel and the command refused, then canceled with the primary at €0.00; failed before (went through). Guide unavailable line added."
+    },
+    {
+     "problem": "Abroad fix 2: Canada’s refund took every bank_fee transaction, overdraft interest among them, against SOR/2021-181 s.5(2)(b) “other than interest charges”, and credited all of it against Bank Fees.",
+     "done": "Fixed in accountlife.ts: chargesBackOf leaves out a charge against the Overdraft Interest line and returns each charge by its expense line, which the refund credits. Tested: FIXTURE, Toronto: C$16.95 + C$5.00 = C$21.95 refunded against Bank Fees, the C$1.81 of interest ((5 × 500 + 516.95) × 0.22 / 365) kept; failed before (C$23.76). Every refundable charge the game makes is on Bank Fees, so the line-by-line credit changes no outcome today and no test can tell it from one Bank Fees posting; it’s a guard for a charge on another line. Guide outcome line says overdraft interest isn’t refunded."
+    },
+    {
+     "problem": "Mexico’s entries in REFUNDS_CHARGES and KEEPS_INTEREST were reached by no test.",
+     "done": "Two FIXTURE tests in Mexico City: a Banorte saver’s MXN 42.46 (1,000,000 × 0.0031 × 5 / 365) posted back on canceling, and a Santander LikeU’s MXN 11.48 refunded, with the panel’s words “its money back without the interest it earned, and its fees refunded.”. Removing MX from REFUNDS_CHARGES or adding it to KEEPS_INTEREST fails them (run). The Santander charge is posted by hand: SLATE charges its quiet-month fee only for a whole month open, and no Mexican bank here charges an unused account inside its ten business days, so no charge the game makes reaches the refund; the test says so."
+    },
+    {
+     "problem": "Canada’s 14 business days and Mexico’s 10 días hábiles were counted as calendar days; Mexico’s right needs the product unused; SOR/2021-181 gives Canada’s cards no cooling-off right.",
+     "done": "All three fixed. coolingOffEnds counts Canada’s and Mexico’s with afterBusinessDays (inCoolingOff and the panel’s “until” date read it); tests/accountlife.test.ts re-dated with a dated comment (in the period eighteen days on, refused nineteen), and the Mexico City Banorte test cancels on 10 February, past ten calendar days. Read SOR/2021-181 in full on 2026-10-15: s.627.11 of the Bank Act covers a card “in accordance with any prescribed requirements”, and the regulation prescribes none for a card; inCoolingOff is false for a Canadian card, and the card test moved to London (Consumer Credit Act s.66A) with Toronto’s RBC card refused. Mexico: SLATE can tell use, as a payment out by the holder (fees, interest and tax aside; money in not counted, SLATE’s reading); a used Mexican account is out of its period, tested with a twin that sent MXN 100 out."
+    },
+    {
+     "problem": "tutorial.ts:352 and guide money.ts:477 said any new account could be canceled where the country has a cooling-off period, untrue of Korea (cards only).",
+     "done": "Both now say “a new account or card other than your primary can be canceled within it: in Korea a card alone, in Canada no card, in Britain no fixed-rate deposit, and in Mexico only one not yet used.”, which also names Britain’s fixed-rate exception. In tutorial.ts only that sentence was changed. The guide’s needs line names business days for Canada and Mexico, Canada’s cards out, and Mexico’s unused condition."
+    },
+    {
+     "problem": "The Berlin Flexgeld test’s title said the interest went back “with its tax”, but no tax was withheld in it.",
+     "done": "Made the test show it: a TEST SETUP posting of €1,000 interest in January uses the year’s Sparer-Pauschbetrag, so the €1.50 is taxed at 26.375%, €0.40 (Math.round(150 × 0.26375)); the test asserts +1.10 and +0.40 paid, then −1.10 on the account, −0.40 on Tax On Interest and +1.50 on Interest posted back. Title now names the allowance used and the €0.40."
+    },
+    {
+     "problem": "interestPaidSince matched a term’s taken interest by its memo alone, which every term at a bank shares, so canceling a new Deutsche Bank FestzinsSparen took back an older term’s €6.93, out of the primary and off the year’s income.",
+     "done": "Fixed: bank.take_term_interest carries the term in a posting of nothing, and interestPaidSince finds a term’s payments by it, not by memo; the reversal leaves the zero posting out. FIXTURE, Berlin, two terms, the newer opened past the older’s fourteen days so its Cancel It is the only one: no “Interest returned”, the primary up exactly €10,000.00, the year’s interest still €10.08 up (10,000 × 0.023 × 16 / 365, by hand). Broken (memo match restored), run, failed; restored. Interest taken before the fix carries no posting and isn’t found."
+    },
+    {
+     "problem": "The cooling-off period ended at the opening hour on its last day, though the rules cover the whole last day and the panel names the day (Toronto refused at 11:30 AM on January 23; Mexico City and the calendar-day countries alike).",
+     "done": "Fixed: coolingOffEnds returns endOfDay of the last day in the save’s zone, for calendar and business days; the panel names the date in that zone. FIXTURE, Toronto (14 business days, January 23) and Berlin (14 days, January 19): canceled on the panel at 11:30 PM that day, refused at 12:01 AM the next with no Cancel It drawn. Broken (old boundary), run, failed; restored. tests/accountlife.test.ts still holds (in the period at the 23rd’s opening hour, refused on the 24th); its comment re-dated. The Banorte test, at 9 AM on its last day, is unchanged. The guide’s needs line says “to the end of the last day”."
+    },
+    {
+     "problem": "The mutation amount <= into.balance + 1 (cancelRefusal’s other-account threshold) survived.",
+     "done": "Not redundant: it’s the only check of what a term’s taken interest leaves the primary owing. Tested: the Berlin €6.30 term test now tries €6.29 in the primary, refused “… Pay in €0.01 first.”. The mutation now fails it (run 2026-10-15)."
+    },
+    {
+     "problem": "The guide’s refund line left out the machine owner’s fee, which chargesBackOf also leaves out.",
+     "done": "guide/money.ts now says “the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee”, with a past-tense comment."
+    }
+   ],
+   "observed": "Resolved in the later pass of 2026-10-15 (see the top-level “abroad”): the savings and term branch’s interest, Canada’s savings charges, Korea’s deposits, and Close It’s German fees. Resolved in that day’s recheck: Canada’s and Mexico’s business days, Mexico’s unused condition, and Canada’s cards, which have no cooling-off now. Still open: Britain’s cooling-off is calendar days and isn’t checked here for a card’s s.66A details (what’s repaid and when)."
+  },
+  {
+   "id": "bank.switch",
+   "before": "unresolved",
+   "after": "unresolved: the service switch is genuinely unreachable in a played life (no US switching service). What a New Haven student meets is now proved through the interface: the refusal (for a photo ID first where she holds none, as a new bank asks, then the steps), nothing scheduled across a reload, Your Banks drawing the steps, and no Switch Bank panel.",
+   "disposition": "stale-claim (unreachable by design); evidence complete for the New Haven half",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch > PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID, as Citi’s opening asks one, and with a passport applied for and come, with the steps to take; nothing is set, across a reload; Your Banks draws those steps, and the Switch Bank panel isn’t drawn at all",
+     "kind": "command+clock+render",
+     "proves": "Both refusals word for word, a passport played (documents.apply_passport to its readyAt), scheduled items unchanged and no SWITCH_KIND or review after a reload, BankMoves' steps rendered, BankLending's switch part drawing no panel or Switch button."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch_complete > FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026, across a reload: the savings moved to the penny with its closing interest, the current account less the £20 of groceries still pending, held back until they post and then closed with the rest sent across, the standing order into savings re-pointed and paid there on the 15th",
+     "kind": "command+clock",
+     "proves": "The service switch's dates: 14 January 2026 at nine from Monday 5 January, seven working days."
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "entry": "US: none; Accounts, Open An Account At Another Bank (BankMoves.tsx) says there's no switching service and gives the steps. Abroad: BankLending.tsx Switch, in the Switch Bank panel drawn only where SWITCHING lists the home's country",
+    "tests": "tests/scope-money.test.ts ‘bank.switch’ (New Haven: refused for a photo ID, then with a passport for want of a service, nothing scheduled across a reload, BankMoves’ steps rendered, no Switch Bank panel); bank-moves.test.ts; lending.test.ts, payments.test.ts and tests/scope-money.test.ts’s London switches (FIXTURE).",
+    "corrected.now": "A New Haven student is refused it through the command only (no panel is drawn) and meets the steps on Your Banks, both now rendered and played (tests/scope-money.test.ts). The service switch is reached only by a fixture abroad. Unresolved, as health.prepay was, until the owner says otherwise."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (!rule) {",
+     "replace": "    if (!rule && iso === 'XX') {",
+     "protects": "the US refusal with the steps (PLAYER JOURNEY)"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft; or split the row into the US steps (verifiable now) and the service switch (abroad), which the review proposed.",
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The refusal goes through sim.execute only, no US control sending it, which the row says. Nothing to do.",
+     "done": "The refusal goes through sim.execute only, no US control sending it, which the row says. Nothing to do."
+    }
+   ]
+  },
+  {
+   "id": "bank.take_overrun_loan",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (only a French bank offers it). Abroad the review’s gaps are closed (the offer reached by the clock, the panel pressed, the payment worked by hand, LOAN_DUE, the closing count reset) and a defect fixed, its outcome shown: the life spends on into the account the day it takes the loan, the next midnight counts from itself, and the account stays open where, without the fix, it was closed on 7 May 2026.",
+   "disposition": "deferred-removed per the review (owner-held); implementation fixed; evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.take_overrun_loan > FIXTURE, Paris: €2,000 overdrawn at BNP Paribas, the loan offered by the clock three months on; Take The Loan pressed on its panel pays the overrun into the account, its €179.78 a month due a month on, and the days counted toward closing start again: a month later the account is open, where its twin that left the offer is closed and charged off",
+     "kind": "clock+render+command",
+     "proves": "The offer equal to the overrun at 6.07% over 12 months; the panel drawn and pressed; the loan at -€2,087.96 with €179.78 a month (worked by hand); LOAN_DUE a calendar month on; the offer gone; negativeSince cleared; 125 days on the taker's account is open and the twin's closed ('BNP Paribas Closed Your Account')."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Taking the loan left negativeSince (and the letter's and closing notice's flags) from the overrun's first day unless a midnight found the account within its limit, so a life spending on into it was closed two months after the notice though the overrun was a loan. Back within the limit when taken, the count ends.",
+     "where": "src/engine/systems/lending.ts bank.take_overrun_loan",
+     "test": "FIXTURE, Paris … (failed before: negativeSince expected undefined, was the overrun’s first day; with that assertion removed the twin that took the loan was closed at midnight on 7 May 2026, run 2026-10-15)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "downstream": "current back within the limit -> negativeSince, the letter and the closing notice cleared at once (from 2026-10-15: until then only a midnight within the limit cleared them); LOAN_DUE payments a month on",
+    "tests": "tests/scope-money.test.ts ‘bank.take_overrun_loan’ (Paris FIXTURE: offered by the clock, taken on its panel on 7 April, €179.78 a month, LOAN_DUE a month on, the count reset, spent below zero that day and counted from the 8 April midnight, open at 125 days against a twin closed at 120); tests/commands-kept.test.ts."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (current.balance >= -(current.overdraftLimit ?? 0)) {",
+     "replace": "    if (current.balance >= 1e15) {",
+     "protects": "the closing count reset on taking the loan"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    delete current.creditOffered;",
+     "replace": "",
+     "protects": "the offer cleared and the panel gone"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft.",
+   "tutorial": [
+    "bank (Your Bank): 'Take The Loan takes it' could add that the sixty days toward closing start again"
+   ],
+   "recheck": [
+    {
+     "problem": "The 125-day twin comparison wasn’t shown to depend on the fix: leftOverdrawn clears the count at a midnight within the limit anyway, and the test was said never to spend past the limit before that midnight.",
+     "done": "Measured (falsifiability test): with the fix removed and the field assertion taken out, the twin that took the loan was closed at midnight on 7 May 2026 and the comparison failed; so the comparison does depend on it. The life’s own spending takes the account below zero the day of the take (Tuesday 7 April), which is the case the fix changes. The test now says so and asserts it: at the 8 April midnight the balance is below zero and negativeSince is that midnight; at 125 days still overdrawn, counted from it."
+    }
+   ]
+  },
+  {
+   "id": "card.money_transfer",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (no American card offers one). The New Haven half (no Move It, the refusal, nothing posted) and the London command, panel, refusals and payment split are proved.",
+   "disposition": "deferred-removed per the review (owner-held); evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "card.money_transfer > PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer: The Card’s Offers draws no Move It, and the command is refused in its words with nothing moved",
+     "kind": "render+command",
+     "proves": "No Move It; 'The <card> doesn’t offer money transfers.'; no transaction."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "card.money_transfer > FIXTURE, London: Move It (3% Fee) pressed with £500 typed on NatWest’s card: £500 into the current account, £515 on the card as a money transfer at 12.9%; refused for nothing and past the card’s room; across a reload, a £300 payment goes to the dearer purchases first and £100 to the transfer",
+     "kind": "render+command",
+     "proves": "£500 in, £515 on the card, the £15 fee posting; 'Say how much.'; the room refusal in its words; the transfer bucket kept across a reload; a £300 payment to the dearer purchases (£200) first and £100 to the transfer, which owes £415 across a reload (allocatePayment through finance.pay_card)."
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-money.test.ts ‘card.money_transfer’ (New Haven: no Move It, refused; London FIXTURE: Move It pressed, the fee, two refusals, and a payment split by the rates across a reload); tests/cardoffers.test.ts (London)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/cash.ts",
+     "find": "  pay([...buckets].sort((a, b) => b.apr - a.apr), left);",
+     "replace": "  pay([...buckets].sort((a, b) => a.apr - b.apr), left);",
+     "protects": "the payment to the dearest balance first outside the US"
+    },
+    {
+     "file": "src/engine/systems/cardoffers.ts",
+     "find": "    const fee = Math.round(amount * terms.moneyTransferFee);",
+     "replace": "    const fee = 0;",
+     "protects": "the 3% fee (not run here: cardoffers.ts is outside this pass's files)"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft.",
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The cardoffers.ts fee mutation was not run",
+     "done": "The cardoffers.ts fee mutation was not run; not among the problems given."
+    }
+   ]
+  },
+  {
+   "id": "bank.savings_notice",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (only German banks set the monthly allowance). Abroad its notice and the orders dropped are proved, on a savings at a second bank and on one a switch left on notice, and a defect in the notice is fixed.",
+   "disposition": "stale-claim (unreachable by design); implementation fixed; evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.savings_notice > FIXTURE, Berlin: €3,000 in Postbank savings beside a Postbank current account, past Postbank’s €2,000 a month, closes on three months’ notice across a reload: the money in the Postbank account, the notice naming it, the standing order into it gone",
+     "kind": "command+clock",
+     "proves": "Three months' notice to the day, across a reload; closed with its interest into the Postbank current account; 'The notice ran out, and what it held is in your Giro plus at Postbank.'; the standing order into it gone with its scheduled item."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.savings_notice > FIXTURE, Berlin: a switch from Deutsche Bank to Commerzbank leaves the €42,000 Flexgeld, past the €2,000 a month, on notice; three months on it closes, its money and interest sent to the Commerzbank account at once, as Deutsche Bank sends, the notice naming it",
+     "kind": "command+clock",
+     "proves": "The German switch's notice (completeSwitch), the savings closed three months on and sent to the Commerzbank account at once with its interest, the notice naming it."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "'… Closed' named the primary account wherever the money went: for savings paid into the current account beside it at a second bank it named Deutsche Bank's AktivKonto. It names the account and bank it went to, and where it's sent in the bank's days, the day it arrives.",
+     "where": "src/engine/systems/banking.ts closeSavings and SAVINGS_NOTICE_KIND",
+     "test": "FIXTURE, Berlin: €3,000 in Postbank savings … (failed before: 'is in your AktivKonto.')"
+    }
+   ],
+   "guards": [
+    {
+     "where": "src/engine/systems/banking.ts SAVINGS_NOTICE_KIND, the 'on its way … arriving' words",
+     "test": "none: no German bank here sends in days (Deutsche Bank's went at once), so the words are said only where a bank would; not claimed reached"
+    }
+   ],
+   "rowText": {
+    "explanation": "'X Closed', naming the account the money went to and its bank (from 2026-10-15: until then the primary account, wherever it went)",
+    "tests": "tests/scope-money.test.ts ‘bank.savings_notice’ (Berlin FIXTURES: Postbank savings on notice into the Postbank account beside it, the notice and the order checked; Deutsche Bank’s savings left on notice by a switch to Commerzbank); accountlife.test.ts:261 (Berlin)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "    const where = `your ${went.to.name} at ${went.to.institution ?? 'your bank'}`;",
+     "replace": "    const where = `your ${current.name}`;",
+     "protects": "the notice naming the account the money went to"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const current = checkingAt(sim, person, account.bankId) ?? primary;",
+     "replace": "  const current = primary;",
+     "protects": "the money into the current account at the savings' own bank"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft.",
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The ‘on its way … arriving’ branch has no test",
+     "done": "The ‘on its way … arriving’ branch has no test; the row stays unresolved and says so. Not among the problems given."
+    }
+   ]
+  },
+  {
+   "id": "bank.switch_complete",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (no US service). Abroad its completion is proved to the penny, and the review's stale description corrected; the played London switch met the held-back branch (groceries pending), which this proves too.",
+   "disposition": "stale-claim (unreachable by design); evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch_complete > FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026, across a reload: the savings moved to the penny with its closing interest, the current account less the £20 of groceries still pending, held back until they post and then closed with the rest sent across, the standing order into savings re-pointed and paid there on the 15th",
+     "kind": "command+clock",
+     "proves": "The date; the savings moved to the penny with its closing interest; the current account less the £20 of the 13th's and 14th's groceries still pending (each £10, posting the 15th and 16th); the held notice word for word; closingAt the 17th and closed then with nothing left; the history 'held'; the standing order re-pointed and paid into HSBC savings on the 15th."
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "changes": "completeSwitch (systems/lending.ts), from the SWITCH_KIND handler",
+    "tests": "tests/scope-money.test.ts ‘bank.switch_complete’ (London FIXTURE, held back for pending groceries, to the penny); lending.test.ts, bank-lifecycle.test.ts, payments.test.ts, finance-paths.test.ts (Iceland, Britain)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  const held = pending > 0 && old.balance >= 0 && !quietly ? pending : 0;",
+     "replace": "  const held = 0 * pending;",
+     "protects": "pending card payments held back"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    order.toId = moved.get(order.toId) ?? order.toId;",
+     "replace": "",
+     "protects": "standing orders re-pointed to the new savings"
+    }
+   ],
+   "ownerDecision": "As bank.arrange_overdraft.",
+   "tutorial": []
+  },
+  {
+   "id": "bank.cancel_switch",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life (no switch can be under way in the US). Abroad every gap the review named is closed: the controls pressed, the review canceled, the history, nothing moving on the date, the 'no right' refusal.",
+   "disposition": "deferred-removed per the review (owner-held); evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_switch > FIXTURE, London: Call Off The Switch…, then Call It Off, pressed on the panel: the switch and its review canceled, its history “called off”, and on its date nothing moves; a partial switch is refused, having no right to call off",
+     "kind": "render+command+clock",
+     "proves": "The stage words with the dates; both presses; SWITCH_KIND and its review gone; the history 'canceled' and the panel's 'HSBC UK, called off.' after a reload; on the date no HSBC account, the primary and savings at Barclays, the order still into Barclays savings and paid; a partial switch's refusal word for word."
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-money.test.ts ‘bank.cancel_switch’ (London FIXTURE: pressed on the panel, the review canceled, history, nothing moved on the date, the partial switch’s refusal); bank-lifecycle.test.ts, finance-paths.test.ts."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    for (const one of s.universe.scheduled) if (one.kind === SWITCH_REVIEW_KIND && one.status === 'pending' && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);",
+     "replace": "",
+     "protects": "the review canceled with the switch"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    noteSwitch(person, { at: s.now, toBank: to?.name ?? String(item.payload.bankId), outcome: 'canceled' });",
+     "replace": "",
+     "protects": "the history entry and the panel's 'called off'"
+    }
+   ],
+   "ownerDecision": "As bank.switch.",
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "‘The order still pays into Barclays’ asserted as at least £25.",
+     "done": "Exact: every posting into the Barclays savings from the reload to the day after the switch date is [[15, 25_00]] (Thursday 15 January, £25.00), and the balance moved by exactly 25_00; no month’s end falls between."
+    }
+   ]
+  },
+  {
+   "id": "bank.stop_balance_transfer",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in a played life. Abroad the three untested refusals, the payments moving beyond the primary, and the controls are proved.",
+   "disposition": "deferred-removed per the review (owner-held); evidence complete abroad",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.stop_balance_transfer > FIXTURE, London: past its window, Stop The Balance Transfer…, then Keep The Balance There, pressed: on 14 January the payment set for a date moves to HSBC and Barclays keeps its money, open; again refused as stopped; a partial switch has no such step; past close of business on the 13th it’s refused",
+     "kind": "render+command+clock",
+     "proves": "Both presses; the panel's stopped words; 'Its balance transfer is stopped already.'; across a reload, on 14 January the payment set for the 20th re-pointed to HSBC, Barclays open with its balance to the penny, HSBC at nothing, history 'balance-kept'; a partial switch's 'publishes no such step.'; at 17:01 on the 13th 'The transfer could be stopped until close of business January 13, 2026.' with keepBalance unset."
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-money.test.ts ‘bank.stop_balance_transfer’ (London FIXTURE: pressed on the panel; its three refusals; a payment set for a date moved to HSBC and Barclays keeping its money); finance-paths.test.ts."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (item.payload.keepBalance === true) throw new CommandError('Its balance transfer is stopped already.');",
+     "replace": "",
+     "protects": "the already-stopped refusal"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (s.now > by) throw new CommandError(`The transfer could be stopped until close of business ${formatDate(by, s.zone)}.`);",
+     "replace": "",
+     "protects": "the close-of-business deadline"
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (one.payload.fromId === old.id) one.payload = { ...one.payload, fromId: fresh.id };",
+     "replace": "",
+     "protects": "a payment set for a date moving to the new bank"
+    }
+   ],
+   "ownerDecision": "As bank.switch.",
+   "tutorial": []
+  },
+  {
+   "id": "h-money",
+   "before": "partial",
+   "after": "verified: the one open gap, the ‘No account’ and ‘Your Bank’ fallback, is a guard no valid state reaches (tests/evidence3-home.test.ts plays why), kept, commented in Home.tsx, and tested as a guard; and a played student’s line, deposits, interest, income records and worth agree with the ledger and with a twin played straight across reloads at each month’s end, counted once, the interest (8¢ and 38¢) and September’s work-study pay ($414.00) worked by hand.",
+   "disposition": "working; evidence complete; the fallback a guard",
+   "testsAdded": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "h-money > GUARD: a save whose primary account is gone, which no played life reaches, draws “No account: $0.00.” and a “Your Bank” button that still opens the bank",
+     "kind": "render (guard)",
+     "proves": "The fallback's words and its button's navigation, over a FIXTURE no command makes."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "h-money > PLAYER JOURNEY: a Comfortable student played to 2 October 2026, reloaded a minute either side of each month’s end, keeps the same postings as her twin played straight: the savings’ interest posted once a month, the year’s interest income their sum, the month’s income that and her work-study pay, and the Money line and the worth the ledger’s own",
+     "kind": "clock+render",
+     "proves": "Identical postings to a twin played straight; interest posted at 23:00 on 31 August and 30 September only; the year's interest and each month's unearned income equal to those postings; September's income their sum with her work-study pay; the worth and the Money line equal to the accounts added up."
+    }
+   ],
+   "fixes": [],
+   "guards": [
+    {
+     "where": "src/ui/screens/Home.tsx, `primary?.name ?? 'No account'` and `primary?.institution ?? 'Your Bank'`",
+     "test": "h-money > GUARD: a save whose primary account is gone …"
+    }
+   ],
+   "rowText": {
+    "tests": "tests/evidence-g33-ui.test.ts and tests/evidence2-b12.test.ts ‘h-money’ (the line, the alert by play, the button, guided locks); tests/evidence3-home.test.ts (why “No account” is reached by no life); tests/scope-money.test.ts ‘h-money’ (the fallback as a guard, and a student’s month ends across reloads against a twin: interest, income records, worth and line agree, counted once); tests/guide-examples-money.test.ts.",
+    "after.gapsOpen": "[] (the fallback is a guard, kept and tested as one from 2026-10-15)"
+   },
+   "mutations": [
+    {
+     "file": "src/ui/screens/Home.tsx",
+     "find": "${primary?.name ?? 'No account'}",
+     "replace": "${primary?.name ?? 'No acct'}",
+     "protects": "the guard's words"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);",
+     "replace": "  if (owner) { recordInterest(owner, sim.now, sim.homeZone, earned); recordInterest(owner, sim.now, sim.homeZone, earned); }",
+     "protects": "interest income counted once"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The month-end journey compared the engine with its twin, not with hand-worked figures.",
+     "done": "Added literals worked by hand: Chase Savings’ 0.01% on the $45,652.00 it opened with, built each day’s end and paid in whole cents: August 7 day-ends, 8.755¢, 8¢ paid; September 30 day-ends on 4,565,208¢ plus the 0.755¢ carried, 38.277¢, 38¢ paid: paid toEqual [8, 38]. September’s work-study pay: three Fridays, the 11th, 18th and 25th, six hours each at $23.00, 414_00, nothing withheld."
+    },
+    {
+     "problem": "The GUARD test adds little over evidence2-b12’s fixture of the same fallback.",
+     "done": "Not among the problems given; it stays, labeled a guard."
+    }
+   ]
+  }
+ ],
+ "mutationsRun": {
+  "run": 21,
+  "killed": 21,
+  "survived": [],
+  "notRun": [
+   "src/engine/systems/cardoffers.ts fee (outside this pass's files)"
+  ],
+  "how": "each applied alone to the tree, tests/scope-money.test.ts run, the file restored",
+  "recheck": {
+   "run": 5,
+   "killed": 5,
+   "survived": [],
+   "how": "on 2026-10-15, each applied alone, the row’s tests run, the file restored and compared byte for byte: settleInterest, settleFees, the Canadian refund and the fee refusal’s threshold in bank.cancel_new; the take_overrun_loan reset (also run with the field assertion removed, to see the twin closed on 7 May)"
+  },
+  "abroad": {
+   "run": 7,
+   "killed": 7,
+   "survived": [],
+   "how": "on 2026-10-15, each applied alone to the tree, tests/scope-money.test.ts and tests/defects5.test.ts run, the file restored and compared byte for byte"
+  }
+ },
+ "abroad": [
+  {
+   "finding": "Cancel It’s savings and term-deposit branch paid no interest earned in the window, in every country; and its current-account branch paid the interest in every country.",
+   "source": "Britain: FCA BCOBS 6.3.2R (handbook.fca.org.uk/handbook/BCOBS/6/3.html, read 2026-10-15), only the service actually provided, never a penalty; Nationwide Savings Account Terms P2797 (January 2026) condition 76, “will not deduct any interest you have earned to date” (read 2026-10-15). Canada: SOR/2021-181 s.5 (lois-laws.justice.gc.ca, read 2026-10-15), closed “without charge”, silent on interest earned. EU/EEA: Directive 2002/65/EC art. 7(4)-(5) (legislation.gov.uk/eudr/2002/65/article/7, read 2026-10-15), the consumer returns any sums received from the supplier; Germany BGB § 355(3) (gesetze-im-internet.de, read 2026-10-15) and Deutsche Bank’s ZinsMarkt-Festgeld pre-contract information (February 2025), “die beiderseits empfangenen Leistungen zurückzugewähren”. Mexico: LTOSF art. 11 Bis 1 (cnbv.gob.mx, as amended to 24 January 2024, read 2026-10-15), things returned “al estado en el que se encontraban antes de su firma”. Iceland’s lög 33/2005: althingi.is refused the fetch; taken as the directive it transposes.",
+   "verdict": "defect",
+   "fix": "src/engine/systems/accountlife.ts: KEEPS_INTEREST (GB, CA) settles the interest on canceling for any account; elsewhere (the EU/EEA countries, Mexico) the interest building is dropped and any paid since opening is posted back with its tax, and taken off the year’s income record (interestPaidSince, recordInterest negative). cancelRefusal counts the interest going back toward what the account must hold. The panel’s words come from cancelWords (BankAccountLife.tsx); guide/money.ts’s Cancel It line rewritten, with a past-tense comment.",
+   "testsAdded": [
+    "tests/scope-money.test.ts: FIXTURE, London: a NatWest Flexible Saver at 1.25% holding £10,000 for ten days’ ends, canceled: its interest kept, £3.42, and £10,003.42 into the NatWest current account",
+    "tests/scope-money.test.ts: FIXTURE, Berlin: a Deutsche Bank Flexgeld opened on 20 March with €10,000 and canceled on 2 April: the €1.50 paid at March’s end goes back, off the year’s income, and €10,000.00 comes back",
+    "tests/scope-money.test.ts: FIXTURE, Reykjavík: … 136.98 kr built, canceled: the interest goes back unpaid, and 1,000,000 kr is sent to Arion (rewritten: until this pass it asserted 106.84 kr paid and 1,000,106.84 kr sent)",
+    "tests/defects5.test.ts: the canceled RBC term deposit now comes back with its one day-end’s interest at 2.45%, $4,000.26 (the literal was $4,000.00; worked by hand: 4,000 × 0.0245 / 365 = $0.2685)"
+   ],
+   "mutations": [
+    {
+     "mutation": "KEEPS_INTEREST emptied: no country keeps interest",
+     "killedBy": "London NatWest, Toronto RBC savings, Toronto RBC chequing, defects5 RBC term",
+     "result": "killed"
+    },
+    {
+     "mutation": "KEEPS_INTEREST given DE and IS",
+     "killedBy": "Berlin Flexgeld, Reykjavík, Berlin GiroKonto words",
+     "result": "killed"
+    },
+    {
+     "mutation": "interest paid since opening not posted back",
+     "killedBy": "Berlin Flexgeld",
+     "result": "killed"
+    }
+   ]
+  },
+  {
+   "finding": "Canada refunds the charges on any retail deposit account canceled, savings among them, and a savings withdrawal fee charged in the window wasn’t refunded.",
+   "source": "SOR/2021-181 s.5(2)(b): “refund any charges related to the operation of the retail deposit account, other than interest charges, that are incurred while the account was open” (lois-laws.justice.gc.ca/eng/regulations/SOR-2021-181/FullText.html, read 2026-10-15). Mexico’s LTOSF art. 11 Bis 1, “no podrán cobrar Comisión alguna”, read the same day, makes the same so there.",
+   "verdict": "defect",
+   "fix": "src/engine/systems/accountlife.ts: REFUNDS_CHARGES (CA, MX) refunds every bank charge since opening, a machine owner’s fee aside, for any deposit account canceled (chargesBackOf), where only a Canadian current account’s were refunded; cancelRefusal counts none owed there. Mexico’s was added with it.",
+   "testsAdded": [
+    "tests/scope-money.test.ts: FIXTURE, Toronto: an RBC savings account opened beside RBC chequing, C$500 in and C$100 out twice, the second charged RBC’s C$2.00, canceled that day: the C$2.00 refunded and C$300.00 into the chequing account"
+   ],
+   "mutations": [
+    {
+     "mutation": "charges refunded only for a current account",
+     "killedBy": "Toronto RBC savings",
+     "result": "killed"
+    }
+   ]
+  },
+  {
+   "finding": "SLATE gave Korea a 14-day cooling-off for deposits.",
+   "source": "금융소비자 보호에 관한 법률 제46조 1항: 청약철회 for 보장성, 투자성, 대출성 상품 and 금융상품자문 only, 예금성 상품 not among them (easylaw.go.kr guide to it, updated 2026-09-15, read 2026-10-15; law.go.kr’s text and the decree’s 제37조 on lbox.kr couldn’t be fetched).",
+   "verdict": "defect",
+   "fix": "src/engine/systems/accountlife.ts inCoolingOff: a Korean account other than a card is never in a cooling-off, with a dated past-tense comment saying what it allowed before. guide/money.ts’s needs line names Korea for a card alone, with a past-tense comment. A Korean card keeps its 14 days as a lending product; whether the decree’s exclusions take cards out wasn’t confirmed (sources disagreed), and is said so in the comment.",
+   "testsAdded": [
+    "tests/scope-money.test.ts: FIXTURE, Seoul: a Shinhan current account and savings account opened that morning beside KB can’t be canceled new: no Cancel It drawn, the command refused, both left open"
+   ],
+   "mutations": [
+    {
+     "mutation": "the Korean deposit exception removed",
+     "killedBy": "Seoul",
+     "result": "killed"
+    }
+   ]
+  },
+  {
+   "finding": "Close It could close a German account whose closing fees exceeded its balance, leaving it overdrawn, where Cancel It refused the same account.",
+   "source": "SLATE’s own rule in closeRefusal, that the bank closes an overdrawn account only once that’s paid; Germany’s fees are settled at closing (settleFees, the quarter so far). No bank term was read for this: the decision is the consistency with the refusal already there.",
+   "verdict": "defect",
+   "fix": "src/engine/systems/bankmoves.ts closeRefusal: refused when the fees closing charges exceed what it holds with its interest, net of tax: “Its fees, …, are more than it holds. Pay in … first.” Your Banks grays Close It with the words as its title, and the command refuses. guide/money.ts’s Close It conditions and refusals list it, with a past-tense comment.",
+   "testsAdded": [
+    "tests/scope-money.test.ts: FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on"
+   ],
+   "mutations": [
+    {
+     "mutation": "the fee refusal never returned",
+     "killedBy": "Berlin Close It",
+     "result": "killed"
+    },
+    {
+     "mutation": "the shortfall computed €10 lower",
+     "killedBy": "Berlin Close It",
+     "result": "killed"
+    }
+   ]
+  },
+  {
+   "finding": "Found while reading the sources, not fixed: Canada’s period is 14 business days after the day the account is opened (SOR/2021-181 s.5(1)) and Mexico’s ten días hábiles (LTOSF art. 11 Bis 1), where SLATE counts 14 and 10 calendar days; and Mexico’s right holds only while the product hasn’t been used or operated, which SLATE doesn’t ask. SOR/2021-181 has no 14-day right for a credit card, which SLATE gives Canada’s cards.",
+   "source": "As above, read 2026-10-15.",
+   "verdict": "defect",
+   "fix": "Not fixed in this pass: business days would change inCoolingOff, the panel’s “until” date and tests/accountlife.test.ts’s fifteen-day refusal, outside the four findings; content/bankdays.ts’s afterBusinessDays already counts a country’s business days.",
+   "testsAdded": [],
+   "mutations": []
+  },
+  {
+   "finding": "From the recheck of 2026-10-15: a term deposit’s interest taken during the term into the primary account was taken back out of it on Cancel It with no refusal, leaving the primary overdrawn (Berlin, −€6.30).",
+   "source": "Deutsche Bank ZinsMarkt-Festgeld pre-contract information, February 2025, Widerrufsfolgen (read 2026-10-15): “die beiderseits empfangenen Leistungen zurückzugewähren … Verpflichtungen zur Erstattung von Zahlungen müssen innerhalb von 30 Tagen erfüllt werden”; nothing of keeping it back from the deposit.",
+   "verdict": "defect",
+   "fix": "accountlife.ts interestBackOf counts by the account paid into; cancelRefusal refuses while that account holds less.",
+   "testsAdded": [
+    "FIXTURE, Berlin: a Deutsche Bank FestzinsSparen …"
+   ],
+   "mutations": [
+    "interestBackOf counting only the term’s own postings (run: failed)"
+   ]
+  },
+  {
+   "finding": "From the recheck of 2026-10-15: Canada’s refund on canceling included overdraft interest.",
+   "source": "SOR/2021-181 s.5(2)(b), “other than interest charges” (laws-lois.justice.gc.ca, read 2026-10-15).",
+   "verdict": "defect",
+   "fix": "accountlife.ts chargesBackOf leaves out charges against Overdraft Interest and credits each charge to its own line.",
+   "testsAdded": [
+    "FIXTURE, Toronto: an RBC chequing account … C$500 under until February …"
+   ],
+   "mutations": [
+    "the Overdraft Interest exclusion removed (run: failed, C$23.76)"
+   ]
+  },
+  {
+   "finding": "From the recheck of 2026-10-15, closing the fifth entry above: Canada’s and Mexico’s periods are now counted in business days, a Canadian card has no cooling-off, and a Mexican account once used has none.",
+   "source": "SOR/2021-181 ss.4-7 and Bank Act s.627.11 (read 2026-10-15); LTOSF art. 11 Bis 1, text at its last reform of 14 November 2025 (diputados.gob.mx/LeyesBiblio/pdf/LTOSF.pdf, read 2026-10-15): “diez días hábiles … siempre y cuando el Cliente no haya utilizado u operado los productos o servicios financieros contratados”.",
+   "verdict": "defect",
+   "fix": "accountlife.ts coolingOffEnds (afterBusinessDays), inCoolingOff (Canadian card out, usedSince for Mexico); BankAccountLife.tsx’s “until” date reads coolingOffEnds.",
+   "testsAdded": [
+    "FIXTURE, Mexico City: a Banorte Inversión Enlace …",
+    "FIXTURE, Mexico City: a Santander Débito LikeU …",
+    "FIXTURE, London: a Barclays card … in Toronto an RBC card has no Cancel It",
+    "tests/accountlife.test.ts changing one’s mind (re-dated)"
+   ],
+   "mutations": [
+    "BUSINESS_DAY_COOLING emptied (run: failed)",
+    "the Canadian card line removed (run: failed)",
+    "usedSince ignored (run: failed)"
+   ]
+  },
+  {
+   "finding": "From the second recheck of 2026-10-15: a term’s taken interest was matched on canceling by the name every term at the bank shares, and the cooling-off period ended at the opening hour on its last day.",
+   "source": "Directive 2002/65/EC art. 6(1), 14 calendar days; SOR/2021-181 s.5(1), “within 14 business days after the day on which the retail deposit account is opened”; LTOSF art. 11 Bis 1, “diez días hábiles posteriores a la firma” (each as cited in accountlife.ts, read 2026-10-15). The term fix is a ledger defect, no rule needed.",
+   "verdict": "defect",
+   "fix": "accountlife.ts: interestPaidSince by the term’s own posting (bank.take_term_interest carries it); coolingOffEnds to endOfDay of the last day in the save’s zone; BankAccountLife.tsx names the “until” date in that zone; guide/money.ts’s refund and needs lines.",
+   "testsAdded": [
+    "FIXTURE, Berlin: two Deutsche Bank FestzinsSparen …",
+    "FIXTURE, Toronto and Berlin: a savings account opened on Monday 5 January can be canceled at 11:30 PM on the last day …",
+    "the Berlin €6.30 term test: €6.29 refused"
+   ],
+   "mutations": [
+    "memo match restored (run: failed)",
+    "the old boundary restored (run: failed)",
+    "amount <= into.balance + 1 (run: failed)"
+   ]
+  }
+ ]
+}

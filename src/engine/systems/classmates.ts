@@ -71,7 +71,7 @@ export const CLASS = {
   chance: 0.3, sameKindDays: 21,
   /**
    * An answer is due this many hours after the class that brought it (`momentInClass`): seven the next morning, for a
-   * class at nine. Until 2026-10-12 this said ten the next evening.
+   * class at nine. Until 2026-10-12 this comment said ten the next evening; the figure was 22 throughout.
    */
   answerHours: 22,
   /** What each answer does: to their trust in you, and to the bond (before your own warmth or wound, `bondMove`). */
@@ -361,14 +361,51 @@ export function respondRefusal(sim: Simulation, person: Person, m: Moment | unde
   }
   if (m.kind === 'study' && choice === 'yes') {
     const when = m.when!;
-    // Reached only from a save made before 2026-10-12, whose moments waited until ten the next evening, past the seven
-    // o’clock they asked for (`CLASS.answerHours`); one made since lapses at seven that morning. Kept for those saves,
-    // as the final defect pass of 2026-10-13 found.
+    // A guard, reached by no save this build opens (from 2026-10-15). A moment lapses 22 hours after its nine o’clock
+    // class (`CLASS.answerHours`, 22 since 2026-10-07), at least twelve before the evening it asks for. Until 2026-10-15
+    // this said a save made before 2026-10-12 waited until ten the next evening: no build wrote one (what changed that
+    // day was `answerHours`' comment), and the four saves of 2026-10-10 and 2026-10-11 under tests/fixtures lapse each
+    // at 22 hours. What reached it was an older save's moment a leave, a withdrawal or a dismissal left open with no
+    // lapse, which opening a save now lapses (`strandedMoments`).
     if (when <= sim.now) return 'That evening has passed.';
     const clash = sim.universe.scheduled.find((x) => x.status === 'pending' && x.requiresPlayer && x.durationMinutes && x.at < when + CLASS.study.minutes * 60_000 && x.at + x.durationMinutes * 60_000 > when);
     if (clash) return `You have ${clash.label} then: say no instead.`;
   }
   return undefined;
+}
+
+/** A moment unanswered at its hour: lapsed, and only an invitation left hanging costs anything. */
+function lapse(sim: Simulation, person: Person, m: Moment): void {
+  m.status = 'lapsed';
+  const mate = person.school!.classmates[m.mate]!;
+  if (m.kind === 'study') move(person, mate, CLASS.study.unanswered, 0);
+  remember(sim, mate, 'Brought something to you, and heard nothing back');
+}
+
+/**
+ * A moment a save holds open with nothing on the clock to lapse it, put right on opening (from 2026-10-15): lapsed now
+ * if its hour is past, its lapse put back at its hour if not. Before 2026-10-13 a leave, a withdrawal or a dismissal
+ * called a moment's lapse off with the rest of the school's calendar, and the moment stayed open for good: its answers
+ * live past their hour, a Say Yes after its evening refused “That evening has passed.”, and, open, it stopped every
+ * moment after it (`classMoment`), so a student back from such a leave was never brought another. Until 2026-10-15
+ * opening such a save left it so (found by the current scope's acceptance). Returns how many it put right.
+ */
+export function strandedMoments(sim: Simulation): number {
+  let n = 0;
+  for (const person of Object.values(sim.universe.people)) {
+    if (!person.school) continue;
+    const cw = courseworkOf(sim, person);
+    // Read without `momentsOf`, which writes an empty list where none was: opening a save changed it, and a reload
+    // was no longer the save it read (until 2026-10-15, found by tests/determinism-played.test.ts).
+    for (const m of (cw as (Coursework & { moments?: Moment[] }) | undefined)?.moments ?? []) {
+      if (m.status !== 'open') continue;
+      if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === MOMENT_KIND && i.payload.momentId === m.id)) continue;
+      n += 1;
+      if (m.until <= sim.now) lapse(sim, person, m);
+      else sim.schedule({ at: m.until, kind: MOMENT_KIND, label: `Answer ${first(person.school.classmates[m.mate]!)}`, category: 'school', priority: 33, requiresPlayer: false, payload: { personId: person.id, momentId: m.id } });
+    }
+  }
+  return n;
 }
 
 /** Why making amends with a classmate can't be done now, or nothing. */
@@ -484,11 +521,7 @@ export function registerClassmates(sim: Simulation): void {
     const cw = person ? courseworkOf(s, person) : undefined;
     const m = cw ? momentsOf(cw).find((x) => x.id === item.payload.momentId) : undefined;
     if (!person || !m || m.status !== 'open') return;
-    m.status = 'lapsed';
-    const mate = person.school!.classmates[m.mate]!;
-    // Unanswered: only an invitation left hanging costs anything.
-    if (m.kind === 'study') move(person, mate, CLASS.study.unanswered, 0);
-    remember(s, mate, 'Brought something to you, and heard nothing back');
+    lapse(s, person, m);
   });
 
   sim.onSchedule(STUDY_KIND, (item, s) => {

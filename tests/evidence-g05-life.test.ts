@@ -402,6 +402,12 @@ describe('health.appeal_decided', () => {
 const VISIT = 'A doctor’s visit';
 const appointmentItem = (sim: Simulation, id: string) => sim.universe.scheduled.find((i) => i.kind === APPOINTMENT_KIND && i.payload.appointmentId === id)!;
 const visitsLogged = (sim: Simulation) => (healthOf(sim.player).careLog ?? []).filter((c) => c.care === 'visit');
+/**
+ * Where a Yale Health member with no practice picked is booked, from 2026-10-15, when Yale Health's rule that a member's
+ * care is had at its Health Center was kept: its own "same-day or next-day", the next weekday, at ten. Until then she
+ * was booked at Fair Haven, New Haven's 24 days on, and these journeys held those dates.
+ */
+const YALE_CLINIC = 'Yale Health Center, Student Health';
 
 describe('health.appointment', () => {
   it('PLAYER JOURNEY: kept while a broken bone keeps them off work and out of class', () => {
@@ -420,13 +426,16 @@ describe('health.appointment', () => {
     const tally = { ...sim.player.school!.tally };
     sim.advanceTo(at(2026, 9, 2, 10));
     expect([sim.player.school!.tally.excused - tally.excused, sim.player.school!.tally.attended - tally.attended]).toEqual([1, 0]);
-    // The next Monday draws a visit (TEST SETUP: forced), booked 24 days on.
+    // The next Monday, 7 September, draws a visit (TEST SETUP: forced), booked at Yale Health the next weekday, Tuesday
+    // 8 September at ten. Until 2026-10-15 this held Thursday 1 October, 24 days on at Fair Haven; that day a member with
+    // nothing picked was booked where Yale Health's rule has her care. Either way she's still laid up on the day.
     const week = nextPending(sim, HEALTH_WEEK_KIND);
+    expect(week.at).toBe(at(2026, 9, 7, 9));
     expect(appointmentsOf(sim.player)).toEqual([]);
     forceWeek(sim, force, week.at, WEEK.visit); // TEST SETUP
     sim.advanceTo(week.at + MS_HOUR);
     const visit = appointmentsOf(sim.player)[0]!;
-    expect(visit.at).toBe(at(2026, 10, 1, 10));
+    expect(visit.at).toBe(at(2026, 9, 8, 10));
     expect(laidUp(sim.player, visit.at)).toBe(true);
     sim.advanceTo(visit.at + MS_HOUR);
     // Kept, though still laid up: the care's presence asks only that they be awake and out of hospital.
@@ -434,7 +443,8 @@ describe('health.appointment', () => {
     expect(appointmentItem(sim, visit.id).status).toBe('done');
     expect(visitsLogged(sim).map((c) => [c.at, c.share])).toEqual([[visit.at, 0]]);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
-    expect(titled(sim, 'A Doctor’s Visit', visit.at).map((n) => n.body)).toEqual([`${VISIT}, ${CLINIC}. Nothing to pay.`]);
+    // Until 2026-10-15 the notice named Fair Haven, where she was booked; from that day, Yale Health's practice, at $0.
+    expect(titled(sim, 'A Doctor’s Visit', visit.at).map((n) => n.body)).toEqual([`${VISIT}, ${YALE_CLINIC}. Nothing to pay.`]);
     expect(titled(sim, 'Missed The Doctor')).toEqual([]);
   });
 
@@ -445,40 +455,48 @@ describe('health.appointment', () => {
     const week = nextPending(sim, HEALTH_WEEK_KIND);
     expect(week.at).toBe(at(2026, 9, 7, 9));
     forceWeek(sim, force, week.at, WEEK.visit); // TEST SETUP: the week's draw forced to a visit
-    sim.advanceTo(at(2026, 9, 11, 12));
+    // Until 2026-10-15 the week booked Thursday 1 October, 24 days on at Fair Haven, and the journey called it off on
+    // Friday 11 September. That day a member with nothing picked was booked at Yale Health's practice the next weekday,
+    // Tuesday 8 September at ten, so it's called off the Monday it's booked, at noon, before it comes.
+    sim.advanceTo(at(2026, 9, 7, 12));
     const first = appointmentsOf(sim.player)[0]!;
-    expect(first.at).toBe(at(2026, 10, 1, 10));
-    expect(drawn(sim).text).toContain(`${VISIT}: an appointment October 1, 2026, ${CLINIC} Call It Off`);
+    expect(first.at).toBe(at(2026, 9, 8, 10));
+    expect(drawn(sim).text).toContain(`${VISIT}: an appointment September 8, 2026, ${YALE_CLINIC} Call It Off`);
     expect(sim.execute({ kind: 'health.book', payload: {} }).error).toBe('There’s nothing to see a doctor about.');
-    // Called off on Friday 11 September, and booked again: 24 days on is Monday 5 October.
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: first.id } });
     expect(appointmentItem(sim, first.id).status).toBe('cancelled');
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
+    // Owed until Friday 11 September, and booked again then: the next weekday past Saturday and Sunday is Monday 14
+    // September at ten. Until 2026-10-15 it was booked on 11 September 24 days on, Monday 5 October.
+    sim.advanceTo(at(2026, 9, 11, 12));
+    expect(healthOf(sim.player).owedVisit).toBe(VISIT);
     const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
-    expect(again.at).toBe(at(2026, 10, 5, 10));
+    expect(again.at).toBe(at(2026, 9, 14, 10));
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     // That Monday's week, at nine, draws a stay (TEST SETUP: forced): three days in hospital, over the visit at ten.
-    forceWeek(sim, force, at(2026, 10, 5, 9), WEEK.stay); // TEST SETUP
+    // Until 2026-10-15 that Monday was 5 October, and the stay ran to Thursday 8 October.
+    forceWeek(sim, force, at(2026, 9, 14, 9), WEEK.stay); // TEST SETUP
     sim.advanceTo(again.at + MS_HOUR);
-    expect(healthOf(sim.player).inHospitalUntil).toBe(at(2026, 10, 8, 9));
+    expect(healthOf(sim.player).inHospitalUntil).toBe(at(2026, 9, 17, 9));
     const second = sim.universe.scheduled.find((i) => i.kind === APPOINTMENT_KIND && i.at === again.at)!;
     expect(second.status).toBe('missed');
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
     expect(titled(sim, 'Missed The Doctor').map((n) => n.body)).toEqual([`${VISIT}: you weren’t there, so you weren’t seen. Book again when you can.`]);
     expect(visitsLogged(sim)).toEqual([]);
 
-    // Reloaded, and out of hospital on Thursday: Papers says it's owed, and Book An Appointment books it 24 days on,
-    // Sunday 1 November, so Monday the 2nd.
+    // Reloaded, and out of hospital on Thursday 17 September: Papers says it's owed, and Book An Appointment books it at
+    // Yale Health the next weekday, Friday 18 September at ten. Until 2026-10-15 this was Thursday 8 October, booked 24
+    // days on at Fair Haven, Sunday 1 November, so Monday the 2nd.
     const back = reload(sim);
-    back.advanceTo(at(2026, 10, 8, 12));
+    back.advanceTo(at(2026, 9, 17, 12));
     const { html, text } = drawn(back);
     expect(text).toContain(`${VISIT}: not yet seen Book An Appointment`);
     expect(html).not.toMatch(/disabled=""[^>]*>Book An Appointment</);
-    expect(back.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(at(2026, 11, 2, 10));
-    back.advanceTo(at(2026, 11, 2, 11));
-    expect(visitsLogged(back).map((c) => c.at)).toEqual([at(2026, 11, 2, 10)]);
+    expect(back.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(at(2026, 9, 18, 10));
+    back.advanceTo(at(2026, 9, 18, 11));
+    expect(visitsLogged(back).map((c) => c.at)).toEqual([at(2026, 9, 18, 10)]);
     expect(healthOf(back.player).owedVisit).toBeUndefined();
-    expect(titled(back, 'A Doctor’s Visit', at(2026, 11, 2, 10))).toHaveLength(1);
+    expect(titled(back, 'A Doctor’s Visit', at(2026, 9, 18, 10))).toHaveLength(1);
     expect(titled(back, 'Missed The Doctor')).toHaveLength(1);
   });
 });
@@ -661,7 +679,7 @@ describe('health.month', () => {
     const idle = twin(false);
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
     expect(healthOf(idle.player).program!.until).toBe(at(2027, 9, 1, 0, 30));
-    expect(titled(idle, 'Your Public Cover Ended At Renewal').map((n) => n.body)).toEqual(['Medicaid now asks for 80 hours’ work or $580.00 of earnings a month, and last month had neither.']);
+    expect(titled(idle, 'Your Public Cover Ended At Renewal').map((n) => n.body)).toEqual(['Medicaid now asks for 80 hours’ work, $580.00 of earnings or school at least half-time a month, and last month had none of them.']);
     expect(titled(idle, 'Your Health Cover Ended', at(2027, 9, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from September 1, 2027. You have 60 days to enroll in the marketplace.']);
     expect(healthOf(idle.player).covered).toBe(false);
     const idleScreen = drawn(idle).text;

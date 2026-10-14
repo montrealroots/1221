@@ -25,11 +25,13 @@
  * - papers.overview: the chapter read through I've Read It, then Papers drawn: on Tax Returns at first, Health Cover's
  *   Your Cover reading what covers them this month, then Home and Papers again; the clock unmoved by drawing them, and
  *   the save changed by nothing but the empty records the screens' readers make where none was kept;
- * - papers.health-cover: the degree, the cover's end on 1 August, Enroll into HUSKY D from 1 September, care priced on
- *   either side of it, and enrolling ahead from 2 June;
- * - papers.doctor: a Monday's visit booked the days on the step says, slept through, booked again, kept at $0, a
+ * - papers.health-cover: the degree, the cover's end on 1 August, HUSKY D refused for its work test and Enroll into the
+ *   marketplace from 1 September (from 2026-10-15: until then into HUSKY D), care priced on either side of it, and
+ *   enrolling ahead from 2 June;
+ * - papers.doctor: a Monday's visit booked at the practice and for the wait the step says (from 2026-10-15, Yale
+ *   Health's practice the next weekday: until then Fair Haven, 24 days on), slept through, booked again, kept at $0, a
  *   referral's wait, and the referral's share on the engine's decider; and, for its “as every booking is”, a booking
- *   from 2 November 2026 whose wait ends on Thanksgiving, put on the Friday;
+ *   at Fair Haven, picked, from 2 November 2026 whose wait ends on Thanksgiving, put on the Friday;
  * - papers.conditions: a life drawn with depression, Yale's course of eight sessions at $0, how it ends, and the share
  *   that lifts on the engine's decider;
  * - papers.benefits: a claim filed on a summer's stipend, its toast, and the first Sunday's payment with no waiting week;
@@ -98,7 +100,7 @@ import { ID_CARDS } from '@/engine/content/identity';
 import { WORK_RULES } from '@/engine/content/workrules';
 import { exchange } from '@/engine/content/currency';
 import { addCountryHolidays, holidaysOn } from '@/engine/content/holidays';
-import { PROGRAM_NAMES, careQuote, coverLabel, coverOn, healthOf, keptUp, mayEnroll, rxShareOf, uninsuredPrice, yaleUntil } from '@/engine/systems/health';
+import { careQuote, coverLabel, coverOn, healthOf, keptUp, mayEnroll, uninsuredPrice, yaleUntil } from '@/engine/systems/health';
 import { appointmentsOf, mayRefer } from '@/engine/systems/appointments';
 import { THERAPISTS, THERAPY, SESSION_HOUR, sessionPrice, therapyLifts } from '@/engine/systems/therapy';
 import { basePeriodFor, unemploymentOf } from '@/engine/systems/unemployment';
@@ -331,7 +333,7 @@ function graduateOfTheSpring(seed: string): Simulation {
 
 PLAYS['papers.health-cover'] = () => {
   const ex = example('papers.health-cover');
-  expect(ex.setup).toContain('graduated in the spring, with no pay in July');
+  expect(ex.setup).toContain('graduated in the spring of 2027, with no pay in July');
   const sim = graduateOfTheSpring('guide-papers-cover');
   const ends = yaleUntil(sim.player)!;
   expect(zonedParts(ends, NY)).toMatchObject({ month: 8, day: 1 });
@@ -344,9 +346,13 @@ PLAYS['papers.health-cover'] = () => {
   const ended = titled(sim, 'Your Health Cover Ended', at(2027, 8, 1, 0));
   expect(ended).toHaveLength(1);
   expect(ended[0]!.body).toContain(`You’re uncovered from ${day(ends)}.`);
-  // Under The Marketplace, the line the example quotes.
-  const may = mayEnroll(sim.player, sim.now);
-  expect(may).toMatchObject({ ok: true, program: 'medicaid' });
+  // Under The Marketplace, the line the example quotes: July's income is under HUSKY D's line, but from 2027 HUSKY D asks
+  // an applicant for the month before's work (from 2026-10-15; until then this said HUSKY D took her), and July had
+  // none, so the marketplace is what's open, in the 60 days from 1 August.
+  const may = mayEnroll(sim.player, sim.now, 'USD', sim);
+  expect(may.ok).toBe(true);
+  expect(may.program).toBeUndefined();
+  expect(may.why).toBe('From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of earnings or school at least half-time in the month before, and last month had none of them. The marketplace is open to you: within 60 days of losing cover.');
   expect(ex.steps[1]).toContain(`Under The Marketplace: “${may.why}”`);
   // Care in August, uncovered: the uninsured price for a visit, the hospital's charity off an emergency.
   expect(coverOn(sim.player, sim.now)).toBeUndefined();
@@ -354,18 +360,18 @@ PLAYS['papers.health-cover'] = () => {
   expect(careQuote(sim, sim.player, 'emergency')).toBeLessThan(uninsuredPrice(sim, 'emergency', sim.now));
   expect(ex.result).toContain('Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay.');
   // Enroll, and the toast as the screen words it.
-  const enrolled = sim.must<{ from: number; kind: 'medicaid' | 'essential' }>({ kind: 'health.enroll', payload: {} });
-  const toast = `Enrolled in ${PROGRAM_NAMES.ct[enrolled.kind]}, from ${formatDate(enrolled.from, sim.zone)}.`;
+  const enrolled = sim.must<{ from: number; kind: string }>({ kind: 'health.enroll', payload: {} });
+  expect(enrolled.kind).toBe('marketplace');
+  const toast = `Enrolled in the marketplace, from ${formatDate(enrolled.from, sim.zone)}.`;
   const quoted = grab(ex.result, /The toast says “([^”…]+)…”/);
   expect(toast.startsWith(quoted)).toBe(true);
   expect(zonedParts(enrolled.from, NY)).toMatchObject({ month: 9, day: 1 });
-  // From 1 September: $0 for a visit, urgent care, an emergency and a prescription.
+  // From 1 September: the premium taken on the first, and Access Health CT Standard Silver's $45 a visit.
   tended(sim, at(2027, 9, 2, 12));
-  expect(coverLabel(sim.player, sim.now)).toBe('HUSKY D');
-  for (const care of ['visit', 'urgent', 'emergency'] as const) expect(careQuote(sim, sim.player, care), care).toBe(0);
-  expect(rxShareOf(sim.player, false, sim.now)).toBe(0);
-  expect(rxShareOf(sim.player, true, sim.now)).toBe(0);
-  expect(ex.result).toContain(`From 1 September a visit, urgent care, an emergency and a prescription cost ${usd(0)}.`);
+  expect(coverLabel(sim.player, sim.now)).toBe('Marketplace Plan');
+  expect(healthOf(sim.player).premiums['2027']).toHaveLength(1);
+  expect(careQuote(sim, sim.player, 'visit')).toBe(45_00);
+  expect(ex.result).toContain(`From 1 September its premium is taken on each month’s first, and a visit costs ${usd(45_00)}.`);
 
   // Enrolled ahead: Enroll shows from the day the example names, and cover then begins 1 August.
   const ahead = graduateOfTheSpring('guide-papers-cover');
@@ -382,9 +388,11 @@ PLAYS['papers.health-cover'] = () => {
 
 PLAYS['papers.doctor'] = () => {
   const ex = example('papers.doctor');
-  // A life whose Monday brings a doctor's visit in its first weeks.
+  // A life whose Monday brings a doctor's visit in its first weeks. Played half a day at a time, the thirty weeks it
+  // was: from 2026-10-15 the visit is booked at Yale Health for the next weekday, kept 25 hours after the Monday's
+  // booking, and a week at a time, as until then, ran past it (the 24 days at Fair Haven outlasted a week).
   const sim = student('guide-papers-doctor-2');
-  for (let week = 0; week < 30 && !appointmentsOf(sim.player).length; week += 1) tended(sim, sim.now + 7 * MS_DAY);
+  for (let half = 0; half < 30 * 14 && !appointmentsOf(sim.player).length; half += 1) tended(sim, sim.now + 12 * MS_HOUR);
   const booked = appointmentsOf(sim.player)[0]!;
   expect(booked.what).toBe('A doctor’s visit');
   const notice = titled(sim, 'A Doctor’s Appointment').at(-1)!;
@@ -393,7 +401,10 @@ PLAYS['papers.doctor'] = () => {
   expect(notice.body.replace(day(booked.at), '…')).toBe(grab(ex.steps[0]!, /A notice: “([^”]+)”/));
   expect(ex.setup).toContain('whose Monday brought a doctor’s visit');
   expect(zonedParts(notice.at, NY).weekday).toBe(1);
-  expect(daysBetween(notice.at, booked.at)).toBe(Number(grab(ex.steps[0]!, /, (\d+) days on\.$/)));
+  // Until 2026-10-15 the step said ", 24 days on." and this read the figure from it; from then it says the next weekday,
+  // one day on from the Monday.
+  expect(grab(ex.steps[0]!, /, ([^,]+)\.$/)).toBe('the next weekday');
+  expect(daysBetween(notice.at, booked.at)).toBe(1);
   // The day of it: asleep from half past midnight to half past noon.
   const p = zonedParts(booked.at, NY);
   tended(sim, at(p.year, p.month, p.day, 0, 30));
@@ -405,20 +416,31 @@ PLAYS['papers.doctor'] = () => {
   expect(ex.steps[2]).toContain(`beside “${owed}: not yet seen”`);
   // Book An Appointment: the wait again, moved to the next working day where it ends on a weekend or a public holiday.
   const again = sim.must<{ at: number }>({ kind: 'health.book', payload: {} });
-  const wait = Number(grab(ex.result, /^It’s booked again for (\d+) days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is\./));
-  expect(daysBetween(sim.now, again.at)).toBe(bookedAfter(sim.now, wait));
+  // Until 2026-10-15 the result said "booked again for 24 days on" and this read the figure from it; from then it says
+  // the next weekday at Yale Health's practice, one day on, moved as every booking is.
+  const [, soon, practice] = /^It’s booked again for (the next weekday) at ([^,]+, [^,]+), moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is\./.exec(ex.result) ?? [];
+  expect(soon).toBe('the next weekday');
+  expect(daysBetween(sim.now, again.at)).toBe(bookedAfter(sim.now, 1));
   // Kept: Yale Health leaves nothing to pay, and no bill is made.
   tended(sim, again.at + 2 * MS_HOUR);
   const kept = titled(sim, 'A Doctor’s Visit', again.at);
   expect(kept).toHaveLength(1);
   expect(kept[0]!.body).toMatch(/Nothing to pay\.$/);
+  // Had at the practice the result names (from 2026-10-15).
+  expect(practice).toBe('Yale Health Center, Student Health');
+  expect(kept[0]!.body.startsWith(`A doctor’s visit, ${practice}.`)).toBe(true);
   expect(healthOf(sim.player).bills.filter((b) => b.at === again.at)).toEqual([]);
   expect(ex.result).toContain(`Kept, it costs ${usd(0)} on Yale Health`);
   // A referral: TEST SETUP, the draw forced as the deciders' sweep forces it, and the specialist booked as many days
   // after the visit as the example says.
   const [, oneIn, later] = /about one time in (\d+) ends in a referral to a specialist (\d+) days later/.exec(ex.result) ?? [];
   const referred = mayRefer(sim, sim.player, { id: 'guide', at: sim.now, what: 'A doctor’s visit' }, 1)!;
-  expect(daysBetween(sim.now, referred.at)).toBe(Number(later));
+  // Until 2026-10-15 the 31 days fell on a working day and were the days between, exactly. From then the visit booked
+  // again is kept at Yale Health on Wednesday 30 September, and 31 days on is Saturday 31 October, so the specialist is
+  // booked, as every booking is, for Monday 2 November: 33 days.
+  expect(Number(later)).toBe(31);
+  expect(daysBetween(sim.now, referred.at)).toBe(bookedAfter(sim.now, Number(later)));
+  expect(daysBetween(sim.now, referred.at)).toBe(33);
   // About one kept visit in that many referred, on the engine's decider (`health.referral`): its share rounds to the
   // text's figure, between one in that many and a half more and one in that many and a half less.
   const visit = (k: number) => ({ id: `guide-rate-${k}`, at: sim.now, what: 'A doctor’s visit' });
@@ -430,12 +452,18 @@ PLAYS['papers.doctor'] = () => {
  * The doctor’s “as every booking is”, on a booking whose wait ends on a public holiday: Book An Appointment on Monday 2
  * November 2026, whose wait ends on Thursday 26 November, Thanksgiving Day. By the rule the example gives it goes to the
  * next working day, Friday 27 November, 25 days on, at 10:00 AM (from 2026-10-13: until then the example said a weekend
- * alone was moved, and no booking here reached a holiday).
+ * alone was moved, and no booking here reached a holiday). From 2026-10-15 the 24 days are Fair Haven's, which the
+ * student picks on Your Doctor, read from the entry's own words for it: until then they were where a student's visit
+ * went with nothing picked, and the example's result gave them; from then it gives Yale Health's next weekday.
  */
 function bookedPastAHoliday(): void {
   const ex = example('papers.doctor');
-  const wait = Number(grab(ex.result, /^It’s booked again for (\d+) days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is\./));
+  expect(ex.result).toContain('moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is.');
+  const [, practice, days] = /unless you pick ([^,]+), (\d+) days on at the uninsured price/.exec(GUIDE_BY_ID['papers.doctor']!.short) ?? [];
+  expect(practice).toBe('Fair Haven Community Health Care');
+  const wait = Number(days);
   const sim = student('guide-papers-doctor-holiday');
+  sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
   tended(sim, at(2026, 11, 2, 8));
   // From that Monday the example’s wait ends on Thanksgiving, a public holiday in Connecticut.
   expect(daysBetween(sim.now, at(2026, 11, 26))).toBe(wait);
@@ -736,8 +764,10 @@ PLAYS['taxes.lien'] = () => {
     return { sim, r, sd: r.stateDue!['us-ct']! };
   };
   const { sim, r, sd } = filed('guide-papers-lien');
-  // Its bill, on its day.
-  tended(sim, filedOn + rules.notices[0]!.days * MS_DAY + MS_HOUR);
+  // Its bill, on its day: counted from the due date, the return filed before it (from 2026-10-15, `stateNextNotice`;
+  // until then from filing).
+  expect(filedOn).toBeLessThan(r.due);
+  tended(sim, r.due + rules.notices[0]!.days * MS_DAY + MS_HOUR);
   const bill = titled(sim, rules.notices[0]!.title, filedOn);
   expect(bill).toHaveLength(1);
   expect(ex.steps[0]).toBe(`${day(bill[0]!.at)}: “${rules.notices[0]!.title}”.`);
@@ -887,7 +917,7 @@ const liveBefore = serialise(live.universe);
 
 describe('the guide’s worked examples for Papers, played on throwaway saves', () => {
   it('papers.overview: the chapter read opens Papers, and reading Your Cover changes nothing', () => play('papers.overview'));
-  it('papers.health-cover: a spring graduate’s cover ends on 1 August, and HUSKY D begins 1 September', () => play('papers.health-cover'));
+  it('papers.health-cover: a spring graduate’s cover ends on 1 August, HUSKY D asks the work July didn’t have, and the marketplace begins 1 September', () => play('papers.health-cover'));
   it('papers.doctor: a visit slept through is booked again, kept at $0, and a referral waits its days', () => play('papers.doctor'));
   it('papers.doctor: as every booking is, a wait ending on Thanksgiving is booked for the Friday, 25 days on', bookedPastAHoliday);
   it('papers.conditions: Yale’s course of eight costs nothing, and ends lifted or done', () => play('papers.conditions'));

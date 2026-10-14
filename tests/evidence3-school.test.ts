@@ -9,9 +9,10 @@
  *   The withdrawal and the dismissal paths were shown since (tests/evidence2-b07.test.ts, tests/evidence-g21-school
  *   .test.ts); the leave's own path (`kept()` in systems/leave.ts) wasn't. Here an invitation brought at nine on
  *   20 January 2027 is open when a personal leave asked eight days before begins at ten, keeps its lapse at seven the
- *   next morning, and lapses then. “That evening has passed.” is reached only from a save made before 2026-10-12, whose
- *   moments waited until ten the next evening; one is made here from a played save by moving the answer's hour back to
- *   that rule (TEST SETUP), and said so.
+ *   next morning, and lapses then. “That evening has passed.” is a guard: this file said until 2026-10-15 that a save
+ *   made before 2026-10-12 reached it, its moments waiting until ten the next evening, which was wrong (`answerHours` has
+ *   been 22 since 2026-10-07; the saves under tests/fixtures lapse at seven, tests/scope-school.test.ts). The answer's
+ *   hour is moved by hand here (TEST SETUP) to reach it, and said so.
  * - `school.take_shift`: Yale's cap of 19 hours a week in term at booking was evidenced only by shifts scheduled by hand
  *   and a message (tests/work-limits.test.ts). Here the button is pressed until the fourteen days hold no evening under
  *   the cap: a week with an assigned Saturday takes three evenings (6 + 12 = 18), one without takes four (16), the
@@ -45,7 +46,7 @@
  *   tests/need-paths.test.ts plays one;
  * - the flu on the day a Saturday is called in sick, and for four days before a medical leave, as illness comes by the draw;
  * - a student begun at a share of each skill's reach, the term's starting craft with it, and a class driven at 4;
- * - an invitation's answer due at ten the next evening, as a save from before 2026-10-12 holds it.
+ * - an invitation's answer due at ten the next evening, which no save holds (a guard, reached by TEST SETUP).
  */
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type FunctionComponent } from 'react';
@@ -276,13 +277,13 @@ describe('school.respond', () => {
     expect(pendingOf(sim, STUDY_KIND)).toHaveLength(0);
   }, 60_000);
 
-  it('“That evening has passed.”, reached only from a save as made before 2026-10-12, whose invitation waited until ten the next evening: Say Yes after seven is refused so, Say No taken; the same save as made since lapsed at seven that morning', () => {
+  it('GUARD: “That evening has passed.”, reached only by moving an invitation’s answer to ten the next evening by hand, which no save holds: Say Yes after seven is refused so, Say No taken; the same save untouched lapsed at seven that morning', () => {
     // e3-r1 on Monday 31 August 2026 at ten: the class at nine brought an invitation for Tuesday at seven.
     const made = (() => { const sim = life('e3-r1', chosen('scraping')); tend(sim, at(2026, 8, 31, 10)); return freeze(sim); })();
     const now = thaw(made);
     const [m] = momentsOf(courseworkOf(now, now.player)!).filter((x) => x.status === 'open');
     expect([m!.kind, m!.at, m!.until, m!.when]).toEqual(['study', at(2026, 8, 31, 9), at(2026, 9, 1, 7), at(2026, 9, 1, 19)]);
-    // TEST SETUP: the save as one made before 2026-10-12 holds it, the answer due at ten the next evening, its lapse with it.
+    // TEST SETUP: the answer moved by hand to ten the next evening, its lapse with it (no save of any build holds it so).
     const old = JSON.parse(made) as { playerId: string; people: Record<string, { school: { coursework: { moments: { id: string; until: number }[] } } }>; scheduled: { kind: string; at: number; payload: Record<string, unknown> }[] };
     old.people[old.playerId]!.school.coursework.moments.find((x) => x.id === m!.id)!.until = at(2026, 9, 1, 22);
     old.scheduled.find((i) => i.kind === MOMENT_KIND && i.payload.momentId === m!.id)!.at = at(2026, 9, 1, 22);

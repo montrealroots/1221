@@ -23,7 +23,8 @@
  *   said the flu held back only the voice.
  * - holidays: a debit payment the day before Thanksgiving posts on the Monday after it; the Calendar shows the day;
  *   England's repeat prescription waits out Good Friday and Easter Monday (LIFE FIXTURE, London); a doctor's visit
- *   whose wait ends on a Saturday goes to the Monday. One defect, failing when written until it was fixed on
+ *   whose wait ends on a Saturday goes to the Monday, Fair Haven's 24 days, which she picks (from 2026-10-15, when a Yale
+ *   Health member with nothing picked was booked at its own practice the next weekday instead). One defect, failing when written until it was fixed on
  *   2026-10-13: a visit whose wait ended on Thanksgiving was booked for Thanksgiving Day.
  * - injuries: a workout that pulls a muscle adds 6 stress and takes 4 morale against the same workout unhurt, and each
  *   midnight 1 more; the next workout is refused in its words, across a reload, until it mends. An everyday injury
@@ -584,6 +585,10 @@ describe('holidays', () => {
     sim.advanceTo(Date.UTC(2026, 10, 4, 13)); // 8:00 AM EST
     for (const a of [...(healthOf(sim.player).appointments ?? [])]) sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     healthOf(sim.player).owedVisit ??= 'A doctor’s visit'; // TEST SETUP
+    // Fair Haven picked, as Your Doctor's command sends it: until 2026-10-15 she was booked there with nothing picked.
+    // That day Yale Health's rule that a member's care is had at its Health Center was kept, and with nothing picked she
+    // is booked at Yale Health the next weekday; this test's point is the wait at Fair Haven, which publishes none, so New Haven's stands there; she picks it.
+    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     // AMN Healthcare's 23.5 days for a town it doesn't survey, rounded: 28 November, a Saturday; 10:00 AM on Monday 30 November.
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2026, 10, 30, 15));
   });
@@ -593,6 +598,8 @@ describe('holidays', () => {
     sim.advanceTo(Date.UTC(2026, 10, 2, 13)); // 8:00 AM EST
     for (const a of [...(healthOf(sim.player).appointments ?? [])]) sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     healthOf(sim.player).owedVisit ??= 'A doctor’s visit'; // TEST SETUP
+    // Fair Haven picked, for its 24 days (until 2026-10-15 it was where she was booked with nothing picked; see above).
+    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2026, 10, 27, 15));
   });
 
@@ -822,14 +829,17 @@ describe('chronic', () => {
     sim.advanceTo(week + 1000);
     const booked = healthOf(sim.player).appointments ?? [];
     expect(booked).toHaveLength(1);
-    // NICE's yearly review; AMN's 23.5 days for New Haven, rounded to 24: Thursday 24 September at 10:00 AM.
-    expect(booked[0]).toMatchObject({ what: 'A review of your high blood pressure', at: Date.UTC(2026, 8, 24, 14) });
-    expect(booked[0]!.clinicId).toBeDefined();
+    // NICE's yearly review, booked at Yale Health's practice the next weekday: Tuesday 1 September at 10:00 AM. Until
+    // 2026-10-15 this held AMN's 23.5 days for New Haven, rounded to 24, Thursday 24 September, at Fair Haven, the town's
+    // first practice; that day a Yale Health member with nothing picked was booked where its rule has her care.
+    expect(booked[0]).toMatchObject({ what: 'A review of your high blood pressure', at: Date.UTC(2026, 8, 1, 14) });
+    expect(booked[0]!.clinicId).toBe('us-ct-yalehealth-studenthealth');
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     expect(notices(sim, 'A Doctor’s Appointment')[0]!.body.startsWith('A review of your high blood pressure: booked at ')).toBe(true);
     const again = reload(sim);
-    again.advanceTo(Date.UTC(2026, 8, 24, 14) + 1000);
-    expect(healthOf(again.player).chronic!.hypertension!.reviewedAt).toBe(Date.UTC(2026, 8, 24, 14));
+    // Kept on Tuesday 1 September (until 2026-10-15, Thursday 24 September).
+    again.advanceTo(Date.UTC(2026, 8, 1, 14) + 1000);
+    expect(healthOf(again.player).chronic!.hypertension!.reviewedAt).toBe(Date.UTC(2026, 8, 1, 14));
     expect(healthOf(again.player).appointments ?? []).toHaveLength(0);
   });
 });

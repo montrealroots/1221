@@ -1,0 +1,79 @@
+{
+  "key": "school",
+  "on": "2026-10-15",
+  "against": "bef4bde5",
+  "rows": [
+    {
+      "id": "school.respond",
+      "player": "Answers a classmate's moment (A Different Reading, Run Lines Together?, Asks For Help, An Apology, A Boundary) on School, Coursework, Your Class (ClassMoments.tsx); the notice routes there.",
+      "path": "An answer button (ClassMoments.tsx) → game.run('school.respond', { momentId, choice, assignmentId? }) → classmates.ts registerClassmates 'school.respond'. Reached by the interface (render-pressed in evidence-g18-school).",
+      "preconditions": "The moment open (not lapsed or answered), the answer one of its kind's; a disagreement's work open or revising; help: 45 minutes free now (startRefusal); study yes: the evening ahead (‘That evening has passed.’) and clear (‘You have … then: say no instead.’).",
+      "costs": "Help Now takes 45 minutes then and there; running lines takes 60 minutes at 19:00 on the evening agreed (STUDY_KIND); every other answer takes no time. No money.",
+      "timing": "A moment is drawn at a class at 9 AM (CLASSES_KIND, school.ts:1685) and lapses 22 hours later (CLASS.answerHours), 7 AM the next day, by MOMENT_KIND. An invitation's evening is 7 PM one to three days after the class (studyEvening), so at least 12 hours after the lapse.",
+      "refusals": "‘There’s no such conversation.’, ‘It’s too late to answer: the moment passed.’, ‘You’ve answered it.’, ‘That isn’t an answer to it.’, ‘That work is finished.’, startRefusal's words, ‘That evening has passed.’, ‘You have … then: say no instead.’",
+      "outcomes": "trust/bond moves; answers, readsApart, tryBoth on the assignment; STUDY_KIND booked; boundary set; the classmate's log; the moment answered, its lapse item called off.",
+      "readers": "classMoment's candidates (stoppedAsking, owesYouLines, an open moment stops every draw), keptWith/boundaryRefusal, interpretationOf, partnerReadOf, STUDY_KIND's handler, the Partners panel, ClassMoments.",
+      "persistence": "coursework.moments and the classmate's record in the save; the MOMENT_KIND lapse item on the calendar. Opening a save: openSlot → migrate → loadSave (SaveSlots.tsx, SlateApp.tsx).",
+      "gap": "Stale claim, and a load-path defect behind it. (1) classmates.ts:364-366, the guide (coursework.ts:750) and the row said ‘That evening has passed.’ is reached from a save made before 2026-10-12, whose moments waited until ten the next evening. No build wrote such a save: answerHours has been 22 since 2026-10-07 (8167460a), what changed on 2026-10-12 was the comment's words, and the four real saves under tests/fixtures (ff837dfa of 2026-10-10, 086d00ca of 2026-10-11) hold 190 moments, every one lapsing 22 hours after a 9 AM class, every invitation's evening 12 hours or more after its lapse. evidence3-school's fixture reproduced a save shape no build made. (2) What an older save can really hold: before 2026-10-13 a leave, a withdrawal or a dismissal called the moment's lapse off (leave.ts kept() without MOMENT_KIND at ff837dfa) and the moment stayed open for good. Opened today, nothing repairs it (loadSave has no step for it): its answers stay live past its hour, a Say Yes after its evening is refused ‘That evening has passed.’ (the one way any real save reaches that line), and an open moment stops every moment after it (classMoment), so a student back from such a leave never has another. Implementation missing on the load path.",
+      "acceptance": [
+        "command/clock (real saves, actual load path): each of the four tests/fixtures saves opened through openSlot (LocalSaveAdapter over a memory store) → migrate → loadSave, as SaveSlots/SlateApp open a slot: every moment's until is its 9 AM class + 22 h and every invitation's evening is 12 h or more after it; the one open moment (old-state-plan, a help request) keeps its lapse at 7 AM, is answerable before it and refused ‘It’s too late to answer: the moment passed.’ after it; reloading changes nothing.",
+        "command/clock (FIXTURE, a save written by the engine and reshaped as builds before 2026-10-13 wrote it: the lapse called off at a leave's start): opened through openSlot, the lapse is back on the clock once (a second open adds none), the moment lapses at 7 AM with the trust 1 an invitation left hanging costs, exactly as the same save the current build made, and a Say Yes at 7:30 PM is refused ‘It’s too late to answer: the moment passed.’, not ‘That evening has passed.’. Fails before the fix (the moment open at 7:01 and at 7:30 PM, the yes refused ‘That evening has passed.’).",
+        "command/clock (FIXTURE, the same older build played on to after the evening, saved on leave): opened, the moment is lapsed at once, the trust charged once through a reload; back from the leave and registered, the class draws moments again. Fails before the fix (still open, none drawn).",
+        "GUARD: ‘That evening has passed.’: a moment held open past its evening in memory, with its lapse called off by hand (no load between, which would lapse it), refuses Say Yes in those words and takes Say No."
+      ]
+    },
+    {
+      "id": "school.request_repeat",
+      "player": "Ask To Repeat The Year…, then Ask, on School, Standing And Craft, Finishing The Degree (RepeatPanel, StudyPlanPanels.tsx).",
+      "path": "Ask → game.run('school.request_repeat') → leave.ts command → REPEAT_DECIDE_KIND in five of Yale's working days. Reached by the interface (render-pressed in evidence-g26-school).",
+      "preconditions": "repeatRefusal: at school, not beside an additional term asked or granted, no leave under way, the spring's evaluation past and the next year not begun (after a last year within 30 days), a course failed that year, the year not repeated before, nine semesters at most with the repeat's two and the terms still to come.",
+      "costs": "Asking: none; a first year's repeat bills two terms past six (pay_balance).",
+      "timing": "Decided at 6 PM five of Yale's working days on, capped before the next term's 8 AM.",
+      "refusals": "At asking: the words listed in guide school.repeat. At the decision: ‘Your Repeat Is Refused’ (a first year) or the degree withheld (a last year) for past nine or a disqualification not kept through: reached by no valid state (the decision recounts as the asking did, no evaluation falls between).",
+      "outcomes": "granted: offset +2, classOf +1, repeatedYears, the year's courses meet again, the attempts kept and the degree reading the best, a last year's next term on the calendar, the I-20 a year longer.",
+      "readers": "academicTerm/coursesFor, degreeShortfall, conferIfReady at Commencement, the billing past six, f1Of, RepeatPanel.",
+      "persistence": "school.repeat, repeatedYears, offset, classOf, the decision item; through a reload in evidence-g26.",
+      "gap": "Evidence missing for a last year's repeat acted on: granted is shown (the next term on the calendar, the I-20), but the repeated last year is never played to its end: the third year's courses meeting again against program terms 4 and 5, the failed one retaken and passed, the terms past six billed, and the degree conferred at Commencement 2030. The decision's refusals are tested only from fixtures not named as guards; they are genuinely unreachable (the 2026-10-14 recheck holds) and stay as guards.",
+      "acceptance": [
+        "command/clock PLAYER JOURNEY: a last year's repeat asked, granted, and the repeated year played: Fall 2029's courses are the third year's fall against program term 4, Movement Invention III retaken and passed, both terms billed past six and paid, the first attempt's Fail kept beside the pass, and the degree conferred at Commencement 2030, once, through a reload.",
+        "GUARD: the decision's refusal of a first year (a second Fail put on the record between asking and deciding): ‘Your Repeat Is Refused’, nothing moved.",
+        "GUARD: the decision's refusal of a last year: the degree withheld in its words."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "player": "Ask For An Additional Term on Finishing The Degree (RepeatPanel).",
+      "path": "Ask For An Additional Term → game.run('school.request_extra_term') → leave.ts → EXTRA_DECIDE_KIND. Reached by the interface (render-pressed in evidence-g26-school).",
+      "preconditions": "extraRefusal: after the last year's evaluation, within its 30 days, a course unpassed, no repeat being decided, nine semesters at most with it, no disqualification standing.",
+      "costs": "Asking: none; a term past six is billed to the Yale account.",
+      "timing": "Decided in five working days at 6 PM; the term begins at the next term's start.",
+      "refusals": "At asking: as the guide lists. Past nine (at asking and decision) and a disqualification not kept through: reached by no valid state.",
+      "outcomes": "granted: school.extra, the term on the calendar, only the retakes meet, the I-20 a year longer; passed in a fall, the degree at the December conferral; failed again, the degree withheld at that evaluation.",
+      "readers": "coursesFor, noteMeeting's retake mapping, the evaluation, conferIfReady/CONFERRAL_KIND, f1Of, RepeatPanel.",
+      "persistence": "school.extraRequest, school.extra; through a reload in evidence-g26.",
+      "gap": "Evidence missing for the other way it ends: the additional term attended and its retake failed again, and what the degree then does (withheld, or still open). The refusals past nine and for a disqualification are fixture-only and not named as guards; genuinely unreachable.",
+      "acceptance": [
+        "command/clock PLAYER JOURNEY: an additional term granted and attended, Movement Invention III slept through again in it: failed at its evaluation, the degree withheld in the School's words, nothing more to ask, once through a reload.",
+        "GUARD: past nine semesters at the asking and at the decision (a ninth enrolled term put on the record).",
+        "GUARD: a disqualification the faculty never judged, at the asking and at the decision."
+      ]
+    },
+    {
+      "id": "school.request_conversion",
+      "player": "Ask For Conversion To Grant Aid on School, Shifts And Pay (WorkLimitsBlock), when Convertible To Grant Aid shows hours.",
+      "path": "The button → game.run('school.request_conversion') → school.ts → CONVERT_KIND on the 15th of January or May at noon. Reached by the interface (render-pressed in evidence-g26 and evidence3).",
+      "preconditions": "conversionRefusal: at school, need found, not on leave, no request pending, hours the processing it books will pay.",
+      "costs": "No time and no money to ask; the grant is $23.00 an hour, up to 150 a year, 14% withheld for a nonresident.",
+      "timing": "Booked for the next 15 January or 15 May at noon; hours never assigned only at May's.",
+      "refusals": "‘You’re not at school.’, the no-need words, ‘Not while on leave: …’, ‘Your request is in, for the next processing.’, the three no-hours lines.",
+      "outcomes": "At processing: grant less withheld into the payee account, the scholarship on the year's earnings, convertedHours by its year.",
+      "readers": "earnings/taxreturn, the ledger, WorkLimitsBlock's stat, conversionRefusal (converted hours taken off).",
+      "persistence": "excusedHours and convertedHours by the year's fall term, the CONVERT_KIND item.",
+      "gap": "Evidence missing: the no-eligible-hours refusal in the fall (the first one a new student meets) is not asserted to move nothing (no time, no booking, no balance); and no test carries conversion across a repeated year: whether the repeated year's hours are kept apart from the first attempt's, each paid once, nothing paid twice through reloads and asking again.",
+      "acceptance": [
+        "command/render: in the first fall with nothing excused, the drawn button grayed and the command refused ‘No hours to convert at January’s processing: …’; the clock, the ledger and the calendar unmoved; the same after a reload.",
+        "command/clock PLAYER JOURNEY across a repeat: a Saturday called in sick in the first fall, converted at January 2027's processing; the first spring failed, the year repeated; a Saturday called in sick in the repeated fall converted at January 2028's: each paid $138.00 once, keyed to its own year ({0: 6, 2: 6}); asking again after each processing refused; the command takes no time and posts nothing; reloads between pay nothing twice; the account moved by the grants and nothing else of the conversion's."
+      ]
+    }
+  ]
+}

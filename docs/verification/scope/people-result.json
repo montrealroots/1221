@@ -1,0 +1,300 @@
+{
+ "key": "people",
+ "on": "2026-10-15",
+ "against": "bef4bde5",
+ "rows": [
+  {
+   "id": "l-person",
+   "before": "partial: working, evidence missing. The 'they' branch and 'Your Own Plans only for the player' were drawn only over a hand-inserted second Person.",
+   "after": "verified, with the reach stated. Another person's look reads their traits, condition, injury and pronouns, and from the recheck of 2026-10-15 so do the dial and Readiness looks its ways open: her Energy says 'she has a full day in her', her Readiness is 'How Well She Would Do Today'. The units' why takes the person's own words (bodyUnits' `lives`), which replaced a flag no caller set. It is proven over a seeded second Person labelled FIXTURE, which the owner's direction of 2026-10-15 accepts for isolated rendering. It remains true that no played journey reaches another Person: no command adds one, and bootstrap is the only place one is made.",
+   "disposition": "implementation fixed, and evidence added",
+   "testsAdded": [
+    {
+     "file": "tests/scope-people.test.ts",
+     "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: a she/her second person reads “Who she is.”, “Her body.”, “where she lives”, “On her papers.”, her traits, and dials said of her, none of it the player’s",
+     "kind": "render",
+     "proves": "A seeded she/her person (createUniverse, London, 160 cm and 55 kg, Curious and Frugal, Asian, a background, Comedy and Horror) in a played world. Her look's body, word for word, is in her pronouns, with the units worked by hand. Her ways are her eight dials, Readiness and her two traits, with no Your Own Plans. Every dial and Readiness detail is said of her ('what the day has left in her', 'how long since she ate properly', 'meets her in'), and no non-trait way says 'you'. The ways point at her ids. The player's own look in the same world keeps 'you', 5 ft 7 in and 143 lb, Spender and Your Own Plans."
+    },
+    {
+     "file": "tests/scope-people.test.ts",
+     "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: the same person under he/him and they/them reads “His body.” and “Their body.”: changing only the pronouns changes the words said of them and nothing else",
+     "kind": "render",
+     "proves": "The falsifiability test. The same seeded person under she/her, he/him and they/them has the same name, kind, ways and figures. The words differ, and only in the pronouns and their verbs: each version, mapped back to she/her, is exactly hers."
+    },
+    {
+     "file": "tests/scope-people.test.ts",
+     "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: her trait opens as A Trait She Holds, “with all she is”; his condition as A Condition He Carries, “He leaves it alone” and “He keeps it up … his plan”; her injury “keeps her off work”",
+     "kind": "render",
+     "proves": "The downstream looks read the person named in the id, in their pronouns. Cleo's Curious and Frugal are 'A Trait She Holds' with 'with all she is'. Dev's Depression (left alone) and Asthma (kept up) have their way details, 'A Condition He Carries', 'He leaves it alone …', 'He keeps it up: … his plan leaves.', the morale dial of his own, and no 'Papers keeps it up'. Cleo's broken bone shows 'Mending. A Broken Bone, till September 5, 2026, and off work till then.', the way 'what it keeps her from' and the injury look's 'keeps her off work and training till then'. All of it survives a save and a load, and the clock past the mend date takes the injury off."
+    },
+    {
+     "file": "tests/scope-people.test.ts",
+     "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: her dials and her Readiness, opened from her look, say “she” and “her”, his say “he”, theirs “they”; the player’s still say “you”",
+     "kind": "render",
+     "proves": "Her dials, each opened by the way on her look, with the dials written on by hand (FIXTURE): Energy at 90 '90, and she has a full day in her.', at 30 '30. She’s running down, and it shows in everything else.'; Sleep Debt at 1 'None to speak of. She’s square with the nights she’s had.'; Hygiene at 44 and 86 in 'her mood' and 'wearing on her'; Condition 'her fitness lets rest …' and 'to be her last'; Fitness 'Rest can mend her to'. Dev's are 'he has a full day in him' and 'He’s square with the nights he’s had', Kit's 'they have a full day in them' and 'They’re … they’ve had'. None of the eight, for any of the three, says 'you'. Her Readiness, opened from her look, is 'How Well She Would Do Today', parented to her look, naming energy in 'what’s costing her.'; his and theirs 'How Well He/They Would Do Today'. The player's own Energy, Sleep Debt, Hygiene and Readiness, in the same world, are word for word as before."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The person, trait and condition looks said 'they' of every person but the player, whatever their pronouns: a she/her person read 'Their body.' above 'On their papers. she/her'. Each is now said in the person's own pronouns (spokenOf): she/her and he/him singular, they/them and unknown pronouns 'they', and the player 'you'. The person look's dial, Readiness and injury way details said 'you' of another person, and are now said of them too.",
+     "where": "src/ui/looks/wellbeing.tsx (spokenOf, DIALS.behind, the person look, the trait look, the condition look)",
+     "test": "tests/scope-people.test.ts, all three tests: each failed with the file as it stood at HEAD (checked out over the change, run, restored)"
+    },
+    {
+     "summary": "evidence2-b12's hand-made she/her copy had held the defect as correct ('Their body.', 'On their papers. she/her'). It now expects 'Her body.' and 'On her papers.'. Its title and header say 'third person, in her pronouns' rather than “they”.",
+     "where": "tests/evidence2-b12.test.ts:31-33, :607, :623-626",
+     "test": "tests/evidence2-b12.test.ts > only the player is a Person: … draws the look’s third person, in her pronouns, without Your Own Plans"
+    },
+    {
+     "summary": "The dial look (sentenceFor) and the Readiness look said 'you' of whoever they belonged to, one press from another person's look that said her dials of her: 'you’ve a full day in you', 'the likelier a year is to be your last', 'How Well You Would Do Today', 'what’s costing you'. Each is now said in the person's pronouns (spokenOf), and the player's words are unchanged.",
+     "where": "src/ui/looks/wellbeing.tsx (sentenceFor, the dial look, the Readiness look)",
+     "test": "tests/scope-people.test.ts > 'FIXTURE: her dials and her Readiness …': failed with the energy sentence put back to '… a full day in you.' and the kind to 'How Well You Would Do Today' ('expected 90, and she has a full day in you.'), passed restored."
+    },
+    {
+     "summary": "bodyUnits(livesIn, you = true): the change of the first pass left its 'where they live' branch with no caller, and the person look rewrote 'where you live' in the finished sentence. The parameter is now `lives`, the words for where the person lives, 'where you live' by default (creation's two calls, the player's), and the person look passes 'where she lives'.",
+     "where": "src/engine/systems/body.ts (bodyUnits); src/ui/looks/wellbeing.tsx:190",
+     "test": "tests/scope-people.test.ts tests 1 and 2 ('… the United Kingdom, where she lives.', 'where he lives', 'where they live'): two failed with bodyUnits made to ignore `lives`, and passed restored."
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "explanation": "Reads Person directly. The body is said in the units of where the person lives (bodyUnits(currentLocationId)), the rule creation's Your Body reads by the town the life begins in. Each line says which units and why. Until 2026-10-14 creation asked in the units of the birthplace. From 2026-10-15 another person is spoken of in their own pronouns (spokenOf, wellbeing.tsx): 'Her body.', 'Who he is.', 'where she lives' (bodyUnits takes the words), 'A Trait She Holds', 'He leaves it alone'. Their dial, Readiness and injury ways, and the dial and Readiness looks those ways open ('she has a full day in her', 'How Well She Would Do Today'), are said of them. Until then everybody but the player was 'they', and the ways and those looks said 'you'. Only the player is a Person in play: no command adds one, so the other branch is held over a seeded second Person (FIXTURE).",
+    "tests": "tests/evidence-g33-ui.test.ts > l-person; tests/evidence2-b12.test.ts > l-person ('… draws the look’s third person, in her pronouns, without Your Own Plans'); tests/need-paths.test.ts > 'a body’s units, by where the person lives'; tests/evidence3-person.test.ts > 'l-person: the look reads the person it is of'; tests/scope-people.test.ts > 'l-person: another person’s look reads their traits, their condition and their pronouns' (four FIXTURE renders: she/her, he/him and they/them, traits, conditions, injury, the dial and Readiness looks, save and load); tests/looks.test.ts; tests/evidence-g06-life.test.ts (the player's dial sentences, unchanged)",
+    "status": "verified",
+    "issue": "Another person's look is reached only over a seeded second Person (FIXTURE), because play holds one Person. The owner accepted that on 2026-10-15 for isolated rendering tests."
+   },
+   "mutations": [
+    {
+     "file": "src/ui/looks/wellbeing.tsx",
+     "find": "  if (/^\\s*she\\b/i.test(person.pronouns ?? '')) return { they: 'she', them: 'her', their: 'her', are: 'is', s: third };",
+     "replace": "",
+     "protects": "she/her read as she/her ('Her body.', 'Who she is.', 'A Trait She Holds'): scope-people tests 1 to 3, and evidence2-b12's copy"
+    },
+    {
+     "file": "src/ui/looks/wellbeing.tsx",
+     "find": "  { key: 'energy', name: 'Energy', unit: 'level', behind: (p: Spoken) => `what the day has left in ${p.them}` },",
+     "replace": "  { key: 'energy', name: 'Energy', unit: 'level', behind: () => 'what the day has left in you' },",
+     "protects": "a dial way said of the person it belongs to: scope-people test 1 ('what the day has left in her', yous(her) empty)"
+    },
+    {
+     "file": "src/ui/looks/wellbeing.tsx",
+     "find": "kind: `A Condition ${upper(p.they)} ${upper(p.s('carry'))}`,",
+     "replace": "kind: isYou ? 'A Condition You Carry' : 'A Condition They Carry',",
+     "protects": "the condition look in the carrier's pronouns, with the y-to-ies agreement: scope-people test 3 ('A Condition He Carries')"
+    },
+    {
+     "file": "src/ui/looks/wellbeing.tsx",
+     "find": "      kind: `How Well ${upper(p.they)} Would Do Today`,",
+     "replace": "      kind: 'How Well You Would Do Today',",
+     "protects": "Readiness of another person in her pronouns: scope-people test 4 ('How Well She Would Do Today')"
+    },
+    {
+     "file": "src/ui/looks/wellbeing.tsx",
+     "find": "  const theyHold = p.they === 'you' ? 'you’ve' : `${p.they} ${one ? 'has' : 'have'}`;",
+     "replace": "  const theyHold = 'you’ve';",
+     "protects": "the Energy sentence's agreement: scope-people test 4 ('she has', 'he has', 'they have')"
+    },
+    {
+     "file": "src/engine/systems/body.ts",
+     "find": "  const where = country ? `${theCountry(country)}, ${lives}` : lives;",
+     "replace": "  const where = country ? `${theCountry(country)}, where you live` : lives;",
+     "protects": "the units' why in the person's words: scope-people tests 1 and 2 ('where she lives', 'where he lives')"
+    }
+   ],
+   "ownerDecision": null,
+   "tutorial": [],
+   "guide": "No guide entry changed. body.how covers look.person as the player's own page ('your own page'), and nothing a player reaches changed: the player's look is word for word as before. Another person's page has no guide entry because play has no other person, and writing one would declare a page no player opens.",
+   "recheck": [
+    {
+     "problem": "bodyUnits' `you` parameter had no caller, and wellbeing.tsx:190 string-replaced 'where you live'.",
+     "done": "Replaced the flag with `lives`, the words for where the person lives, defaulting to 'where you live' (creation's calls); the person look passes `where ${p.they} ${p.s('live')}`. The replace is gone. Mutation run: bodyUnits ignoring `lives` fails scope-people tests 1 and 2."
+    },
+    {
+     "problem": "The dial (sentenceFor) and Readiness looks still said 'you' of another person.",
+     "done": "sentenceFor takes the person's Spoken; every 'you' in it (energy, sleep debt, condition, fitness, hygiene) is said of the person, and the Readiness kind and summary too. The player's words are unchanged (evidence-g06-life, evidence-g32-ui, looks.test green). New FIXTURE test over she/her, he/him and they/them seeded persons, opened from her look's ways; fails with the old wording put back."
+    },
+    {
+     "problem": "tests/scope-people.test.ts `yous` excludes trait ways; trait descriptions say 'you' of another person.",
+     "done": "Not in this recheck's list (content, outside the row); still named in outsideMyFiles."
+    }
+   ]
+  },
+  {
+   "id": "i-stale-claims",
+   "before": "partial: working, evidence missing. evidence3's REMOVAL took 'removed', 'dropped', 'deleted' and 'went' anywhere in a sentence, so present passives and 'went into' passed. NAMES missed possessive and adjective singulars. evidence2-b13's older, looser rule was still in the gate.",
+   "after": "partial: the prose holds and its rule holds, by every skeptic’s check (2026-10-15): every must-catch example is caught, every must-accept passes, and both tree walks are green in the gate. But the row is about the repository’s own text, not a player’s action, and the page’s standard verifies a row only on a test that issues a command, runs the clock or renders a screen; a test that reads the tree is recorded as a fixture, as it was at bef4bde5. Recording it as a command to make the row verified was considered on 2026-10-15 and not done: it would stretch the word. Whether a gate test that reads the repository may verify a row whose claim is that repository’s text is the owner’s decision.",
+   "disposition": "the guard tightened (evidence)",
+   "testsAdded": [
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds the present passives, “went into”, the possessive and adjective singulars and a present clause beside a past one, which the check of 2026-10-14 passed; passes their dated twins and the dated notes in the tree",
+     "kind": "fixture",
+     "proves": "These are flagged: 'An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.', 'Interests went into every meal.', 'Your interest lifts a meal.', 'A favorite interest lifts a meal.', 'Her interest in cooking lifts a meal.', 'Their favorite interest opens on the Profile.', 'My interest grows each week.', 'The interests are removed when a save opens.', 'Each interest will be dropped at the term’s end.', 'Interests are being removed from the sheet.', 'An interest gets quietly deleted once it is dropped.', 'Interests lift a meal, and the owner removed the crafts.', 'The interests still lift a meal until 2026-10-10.', and, from the mutation check of 2026-10-15, 'Interests lifted a meal until they are removed.' and 'An interest grew an ability, until it is dropped from the sheet.', which only REMOVAL's lookbehind on an auxiliary finds. Their dated twins pass. So do six dated notes quoted verbatim from model.ts, enjoyment.ts, actor.tsx, attributes-matrix.test.ts and UNBITTEN.md. 'Your interest rate goes up…', 'The interest is charged once.' and 'Its interest is paid…' aren't taken for the interests."
+    },
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "title": "i-stale-claims > tells a present-tense claim from its past-tense twin, where the first round’s check passed both",
+     "kind": "fixture",
+     "proves": "Extended: the check's five examples, plus a present claim carrying 'gone' and 'drops', are flagged under b13's rule (now the strict one), and three dated twins pass."
+    },
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside",
+     "kind": "fixture",
+     "proves": "Retitled on 2026-10-15: it said 'in the past, by a word only history uses', of the HISTORY rule it no longer has. The walk uses the same NAMES, REMOVAL, PRESENT and READ_TRUE as evidence3. It is green on the tree, and fails on a present-tense comment put into src."
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds a present verb outside any list, “went on” and “went in”, a verb past a clause set off by commas, the future and two adjectives, which the first pass of 2026-10-15 passed; passes the present perfect, which it flagged",
+     "kind": "fixture",
+     "proves": "Flagged: 'Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour, as removed crafts did.', 'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value into every meal.', 'The interests, removed by the owner, lift a meal.', 'Interests, which the owner removed, still lift a meal.', 'Interests will lift a meal until migration 94.', 'Each interest will have been removed by the term’s end.', the British 'Her own favo(u)rite interest lifts a meal.' (written with an escape, for tools/spelling.mjs) and its American twin. Passed: 'Interests have been removed since 2026-10-10.', 'An interest has been removed since 2026-10-10.', and four dated twins. b13's example test carries the same ten and two."
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside",
+     "kind": "fixture",
+     "proves": "The claim itself, held where it lives: every sentence in src/, tests/ and docs/ that names the interests is dated by the removal with no present clause (NAMES, REMOVAL, PRESENT), or is one of the 32 read and listed true; green on the tree, and failed with a present-tense comment put into src/ui/looks/wellbeing.tsx."
+    },
+    {
+     "file": "tests/evidence-g34-ui.test.ts",
+     "title": "i-stale-claims > names READ_CRAFTS nowhere in the code, the tests or the docs, but in the audit trail that records its correction",
+     "kind": "fixture",
+     "proves": "READ_CRAFTS is named in no file of src/, tests/ or docs/ (over 300 read) but the audit trail and this test."
+    },
+    {
+     "file": "tests/evidence-g34-ui.test.ts",
+     "title": "i-stale-claims > has the capability documents pair no interest with love or enjoyment, and name no interests",
+     "kind": "fixture",
+     "proves": "docs/capabilities.json and docs/CAPABILITIES.md, as they stand, name no interests and pair no interest with love or enjoyment."
+    },
+    {
+     "file": "tests/evidence-g34-ui.test.ts",
+     "title": "i-stale-claims > keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected",
+     "kind": "fixture",
+     "proves": "src/ui/looks/actor.tsx, src/engine/systems/life.ts and the other three files the removal corrected: every comment or string naming the interests is in the past, and each of the five names them, so a walk that found nothing fails."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
+     "where": "tests/evidence3-person.test.ts (ONE, NAMES, AUX, REMOVAL, PRESENT, dated, unread, READ_TRUE, header); tests/evidence2-b13.test.ts (the same, READ_AND_TRUE, presentTense, namingIn, header)",
+     "test": "The new examples test failed with the rule of 2026-10-14 put back (first failure: 'An interest is dropped from the sheet when the term ends.'). Both tree walks failed with '// An interest is dropped from the sheet when the term ends.' or '// Interests lift a meal until they are removed.' appended to src/ui/looks/wellbeing.tsx, and passed once it was removed."
+    },
+    {
+     "summary": "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
+     "where": "tests/evidence3-person.test.ts (MOD, A_MOD, ONE, REMOVAL, PAST, NOT_PRESENT, ADV, ASIDE, PERFECT, PRESENT); tests/evidence2-b13.test.ts (the same)",
+     "test": "The new examples test fails under the first pass's rule (every one of the ten must-catch examples passed it, and the present perfect was flagged, as the check found by running the regexes in node). The tree walks: with the open plural and MOD after 'a|the', ten sentences in the tree were newly flagged (three money 'the last interest day' in src/engine/content/pending.ts, five dated notes with 'interests too', one with 'the interests is', one with 'the interests beside them'); each was true, and the rule was corrected (A_MOD; 'too', 'is', 'beside' and the other prepositions in NOT_PRESENT) rather than the list lengthened. Nothing in the tree is newly flagged now."
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "explanation": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Until 2026-10-13 four more said the interests in the present tense: migration 92's comment in src/engine/index.ts, tests/attributes-matrix.test.ts:4, tests/looks.test.ts:491-492 and docs/UNBITTEN.md:112. Each is in the past tense since. From 2026-10-15 the tree is held to a stricter rule, a heuristic over the words rather than a parser, which catches the shapes its tests name: a present passive ('is dropped'), 'went into', 'went on' and 'went in', a possessive or adjective singular of up to two adjectives ('her own favorite interest'), any present or future verb with the interests as subject, past a clause set off by commas, beside a past clause; and which reads the present perfect ('have been removed') as the past.",
+    "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims (from 2026-10-15 on the same rule as evidence3, with the checks’ examples added); tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (the examples of 2026-10-13, 2026-10-14 and both passes of 2026-10-15, and the tree-wide walk, 32 sentences read and listed true)",
+    "status": "verified",
+    "issue": "None of the leftovers remain. Both tree-wide walks fail on a new sentence in any of the shapes the tests name; the rule is a heuristic, and a present claim in a shape it doesn't name can still pass it."
+   },
+   "mutations": [
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "const dated = (sentence: string) => REMOVAL.test(sentence) && !PRESENT.test(sentence.replace(MONEYS, ''));",
+     "replace": "const dated = (sentence: string) => REMOVAL.test(sentence);",
+     "protects": "a present clause beside a past one ('Interests lift a meal, and the owner removed the crafts.') and a dated present ('…until 2026-10-10.')"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "(?<!\\b${AUX}\\s+(?:\\w+\\s+)?)\\b(?:removed|deleted|dropped)\\b",
+     "replace": "\\b(?:removed|deleted|dropped)\\b",
+     "protects": "a present passive in a clause after the interests’ own past verb (‘Interests lifted a meal until they are removed.’, ‘An interest grew an ability, until it is dropped from the sheet.’), which only the lookbehind finds (killed on 2026-10-15: survived the run of that day, then failed once these were must-catch)",
+     "run": true,
+     "killed": true
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "another|your|my|our|her|his|their)",
+     "replace": "another)",
+     "protects": "possessive singulars ('Your interest lifts a meal.', 'My interest grows each week.')"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "(?!${NOT_PRESENT}\\b)[a-z]+\\b|",
+     "replace": "(?:are|have|do|lift|grow|open)\\b|",
+     "protects": "a plural present verb outside any list ('Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour …')"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "\\bwent(?=\\s+(?:on\\s+\\d|with\\b|that\\s+(?:day|week|month|year)\\b|when\\b)",
+     "replace": "\\bwent(?=\\s+(?:on|with|that|in the|when|at)\\b",
+     "protects": "'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value …'"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "find": "\\binterests${ASIDE}(?:\\s+${ADV})?\\s+(?!${PERFECT})",
+     "replace": "\\binterests(?:\\s+${ADV})?\\s+",
+     "protects": "the present perfect read as the past ('Interests have been removed since 2026-10-10.') and a clause between subject and verb ('The interests, removed by the owner, lift a meal.')"
+    }
+   ],
+   "ownerDecision": "Whether a row whose claim is about the repository’s own text (i-stale-claims) can be verified by a gate test that reads that text (a tree walk), which the standard (command, clock or render) doesn’t allow now. Yes: the standard gains a kind for it, and this row is verified. No: it stays partial, with nothing left to do.",
+   "tutorial": [],
+   "renamedTitles": [
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "old": "i-stale-claims > keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
+     "new": "i-stale-claims > keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true"
+    },
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "old": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+     "new": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside"
+    }
+   ],
+   "recheck": [
+    {
+     "problem": "PRESENT's plural branch was a closed list of 46 verbs ('Interests shape a meal, and the owner removed the crafts.' passed).",
+     "done": "Opened: any word after 'interests' counts but the past and NOT_PRESENT. Both examples added as must-catch."
+    },
+    {
+     "problem": "REMOVAL's 'went' took 'went on', 'in the', 'at'.",
+     "done": "'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end. 'went on lifting', 'went in the pot', 'went at full value' added as must-catch; 'Interests went on 2026-10-10, …' as must-accept."
+    },
+    {
+     "problem": "An appositive or relative clause, the future and the future perfect passed.",
+     "done": "ASIDE between subject and verb; the modals in the singular's verbs and the plural's open list. All four added as must-catch."
+    },
+    {
+     "problem": "ONE allowed one modifier ('Her own favo(u)rite interest lifts a meal.').",
+     "done": "Two after a possessive; added as must-catch, British and American."
+    },
+    {
+     "problem": "'Interests have been removed since 2026-10-10.' was flagged.",
+     "done": "PERFECT: have/has before a past participle isn't the present. Added as must-accept, with the singular's twin."
+    },
+    {
+     "problem": "rowText.explanation and issue overclaimed.",
+     "done": "Both now say it is a heuristic catching the shapes its tests name."
+    },
+    {
+     "problem": "rowText.tests said 31 sentences; the lists hold 32.",
+     "done": "Counted (32 in READ_TRUE and in READ_AND_TRUE, unchanged by this pass) and corrected."
+    },
+    {
+     "problem": "b13's tree-walk titles described the removed HISTORY rule.",
+     "done": "Retitled (renamedTitles), with a comment above each saying what the title said until 2026-10-15. docs/verification/audit/ui.json and docs/GAMEPLAY-COVERAGE.md still cite the old titles: tools/coverage.mjs --check names both, for the caller."
+    },
+    {
+     "problem": "The handoff said the merges were checked with `git branch --merged main`.",
+     "done": "Line 9 now says `git merge-base --is-ancestor <branch> main`, re-run on the nine branches (all ancestors of bef4bde5). The nine Superseded bullets' parentheses still say `git branch --merged main`, left as instructed (one line only); both checks hold."
+    },
+    {
+     "problem": "Mutation survived (scratchpad/mutations4.json, 2026-10-15): dropping REMOVAL’s auxiliary lookbehind before removed/deleted/dropped failed none of the file’s must-catch or must-accept examples.",
+     "done": "Not redundant: each present passive among the examples had the interests for its subject (“An interest is dropped …”, “The interests are removed …”), which PRESENT finds by itself, so the lookbehind was never the only thing catching them. Where the interests’ own verb is past and the present passive is in a later clause, PRESENT reads the past and only the lookbehind keeps “are removed” from dating the sentence. Two must-catch examples added to tests/evidence3-person.test.ts’s ‘finds the present passives …’ test: ‘Interests lifted a meal until they are removed.’ and ‘An interest grew an ability, until it is dropped from the sheet.’, worked by hand through NAMES, REMOVAL and PRESENT. Mutation applied: that test failed on the first; restored, the file’s four i-stale-claims tests pass, its tree walk with them. tests/evidence2-b13.test.ts’s copy is unchanged, as the regex is kept."
+    }
+   ]
+  }
+ ],
+ "handoff": "SLATE_CURRENT_MASTER_HANDOFF.md was reconciled. The newest Read First (2026-10-14) now says it is the current status, and that older claims are marked Superseded in place. Marked, with dates and pointers: the 2026-10-13 section's 'not merged' (merged at 1a597fd1 on 2026-10-14), its 258 rows (271 on 2026-10-14), its 23 partial rows (11), its forced wealthy family and the owner's pending decisions (each settled 2026-10-14), and the 2026-10-12 '134 rows not yet read' (read 2026-10-13). Nine 'Not merged' bullets got an inserted line, each checked with git merge-base --is-ancestor against main on 2026-10-15: acceptance-pass, integration-pass, remaining-and-engines, school-bank-papers-complete, student-experience, bank-school, coverage-gaps, loop-verification and gameplay-balance. So did the 1ffa7daa replay (merged as 397c6b11) and 7aa9a99's 'pushed and not merged'. The federal table's '2024's' was already dated in place (line 59). Nothing was deleted. From the recheck of 2026-10-15, the Read First's line 9 names the check that was run, `git merge-base --is-ancestor`, where it had said `git branch --merged main`.",
+ "outsideMyFiles": [
+  "tests/evidence2-b12.test.ts (l-person's own test, lines 31-33, 607, 623-626 only): it had held the defect as correct.",
+  "A trait's description (src/engine/content/personality-traits.ts, the way detail on another person's look) and KNOB_READS ('What the day’s food costs you') are written to the player in the second person. Another person's trait look says them as they stand. The person look's summary (wellbeingSummary, src/engine/systems/life.ts: 'You need sleep before anything else.') is second person too. None of it is reachable in play, since only the player is a Person. Left as they are, and named here. (The dial and Readiness looks were named here too until the recheck of 2026-10-15, which put them in the person's pronouns.)",
+  "tests/evidence3-person.test.ts and tests/evidence2-b13.test.ts READ_TRUE now quote three sentences from tests/evidence-g13-money.test.ts and tests/evidence3-lifepapers.test.ts, and two from src/engine/content/briefs/briefs-c.ts and briefs-e.ts. An agent who rewords one of those sentences must update both lists, and the walk will say which."
+ ]
+}

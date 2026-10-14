@@ -8,7 +8,8 @@
  *
  * - holidays: Connecticut's own Good Friday (26 March 2027, which New York, where she was born, doesn't keep) is on
  *   New Haven's Calendar and no other state's day is; a doctor's visit whose 24-day wait ends on it goes to Monday 29
- *   March, and a meal paid by debit card the day before it posts on that Monday, since a US bank keeps the Federal
+ *   March (Fair Haven's wait, which she picks: from 2026-10-15 a Yale Health member with nothing picked is booked at its
+ *   own practice the next weekday, and her visit at Fair Haven is billed as the uninsured's, $187.20 in 2027), and a meal paid by debit card the day before it posts on that Monday, since a US bank keeps the Federal
  *   Reserve's days and not the state's. Thanksgiving crossed through each reader the first round's correction named and
  *   left untested: a lost debit card replaced in Chase's seven business days (Monday 7 December, not Friday 4), its rush
  *   in two (Monday 30 November); Bank of America's two days of review (Monday 30 November) and Chase's three to send
@@ -224,6 +225,10 @@ describe('holidays', () => {
     sim.advanceTo(Date.UTC(2027, 2, 2, 13)); // 8:00 AM EST on Tuesday 2 March 2027
     for (const a of [...(healthOf(sim.player).appointments ?? [])]) sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: a.id } });
     healthOf(sim.player).owedVisit ??= 'A doctor’s visit'; // TEST SETUP
+    // Fair Haven picked, as Your Doctor's command sends it. Until 2026-10-15 she was booked there with nothing picked;
+    // that day Yale Health's rule that a member's care is had at its Health Center was kept, and with nothing picked a
+    // member is booked at Yale Health the next weekday. This journey's point is Fair Haven's 24-day wait, so she picks it.
+    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     // AMN Healthcare's 23.5 days, to 24: Friday 26 March, Good Friday in Connecticut, then the weekend: 10:00 AM EDT
     // on Monday 29 March (clocks went forward on 14 March).
     expect(sim.must<{ at: number }>({ kind: 'health.book', payload: {} }).at).toBe(Date.UTC(2027, 2, 29, 14));
@@ -244,7 +249,12 @@ describe('holidays', () => {
     const again = reload(sim);
     again.advanceTo(Date.UTC(2027, 2, 29, 14) + 60_000);
     expect(again.universe.scheduled.filter((i) => i.kind === 'health.appointment' && i.at === Date.UTC(2027, 2, 29, 14)).map((i) => i.status)).toEqual(['done']);
-    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Nothing to pay.']);
+    // Until 2026-10-15 it was Yale Health's $0, "Nothing to pay."; from that day Yale Health pays none of a member's
+    // visit outside its Health Center, and Fair Haven, publishing no fee, bills SLATE's uninsured price: $100 of 2024
+    // grown by the physicians' services index to 2027, the last print (439.389, 2026) carried on at 1.75% a year:
+    // 10,000 × 439.389 × 1.0175 ÷ 417.93 = 10,697.44, 10,697 cents, times 1.75 = 18,719.75, $187.20, due in 30 days.
+    expect(notices(again, 'A Doctor’s Visit').filter((x) => x.at === Date.UTC(2027, 2, 29, 14)).map((x) => x.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is $187.20, due in 30 days.']);
+    expect(healthOf(again.player).bills.filter((b) => b.at === Date.UTC(2027, 2, 29, 14)).map((b) => [b.amount, b.covered])).toEqual([[187_20, undefined]]);
     expect((healthOf(again.player).appointments ?? []).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     again.advanceTo(Date.UTC(2027, 2, 29, 23) + 1000);
     expect(line(again).pending).toBeUndefined();

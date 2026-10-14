@@ -1,0 +1,175 @@
+{
+  "key": "money",
+  "on": "2026-10-15",
+  "against": "bef4bde5",
+  "reachability": "Every new life is made at the school (newLifeConfig -> atSchool), in New Haven, at one of five American banks, and since the scope reset of 2026-10-09 nothing moves a life from where it lives (bankmoves.ts openRefusal's comment; homeOf is where they are). Creation's family choice (2026-10-14) changes means, not country. So a row whose action needs a bank outside the United States is genuinely unreachable in a played life, whatever family is chosen; its engine is reached only by quickSave lives abroad, labeled FIXTURE.",
+  "rows": [
+    {
+      "id": "bank.arrange_overdraft",
+      "player": "Your Bank, Borrowing tab, Overdraft panel: types Overdraft Limit and presses Arrange It, or presses Close The Overdraft.",
+      "path": "BankLending.tsx Arrange It / Close The Overdraft -> run('bank.arrange_overdraft', {limit, perUse, accountId}) -> lending.ts command. The panel draws the form only for od.kind 'arranged'; no US bank's terms are of that kind (LENDING: Chase, Bank of America, Wells Fargo per_item; Citi, Capital One none), so a New Haven life sees the per-item text and no form.",
+      "preconditions": "An open current account (named or the primary); the bank's terms arranged; a record of ESTIMATE.scoreFloor or more; wages paid in the last 30 days; limit within the bank's min and max, less what other banks arranged; not overdrawn past the limit asked.",
+      "costs": "Set-up fee or facility fee on the first arrangement; monthly fee on the 1st while arranged; interest past the buffer; yearly fee a year on.",
+      "timing": "At once; fees and interest on the day rollover and the 1st.",
+      "refusals": "That isn’t an open current account of yours. / There’s no current account to arrange one on. / doesn’t offer an overdraft SLATE has terms for. / doesn’t arrange one: it runs overdrafts its own way... / The bank turns down a credit record this poor. / not enough has been paid in this month. / The bank arranges between X and Y. / You’re overdrawn by more than that already. / Pay the overdraft back before closing it.",
+      "outcomes": "overdraftLimit/Rate/PerUse/Since set; limit 0 clears the limit. Until 2026-10-15 a limit of 0 on an account with nothing arranged answered ok and changed nothing, at any bank, a New Haven one included.",
+      "readers": "overdraftRoom/overdraftHeadroom (spending), lending_day interest and fees, leftOverdrawn (the 60 days counted past the limit) -> closeForOverdraft, overdraftOffer at other banks.",
+      "persistence": "Account fields and fee postings, in the save.",
+      "gap": "Genuinely unreachable in a played life (no US bank arranges one). Evidence missing abroad: leftOverdrawn reading the limit, the limit-0 close and its refusal, 'overdrawn by more than that', render. New Haven: the refusal checked by words only. Implementation: the limit-0 no-op (fixed).",
+      "acceptance": [
+        "command+render: PLAYER JOURNEY at each of the five New Haven banks, arrange refused in its words, nothing posted, nothing set, across a reload; the Overdraft panel draws no Arrange It; limit 0 refused 'No overdraft is arranged on it.' (failed before: answered ok)",
+        "command+clock FIXTURE London Barclays: twins overdrawn £500, one with £1,000 arranged: at 61 days the unarranged twin's account is charged off to collections and the arranged twin's is open, negativeSince unset",
+        "command+render FIXTURE London Barclays: Arrange It pressed with £1,000 typed, the limit and rate read; lowering to £100 while £300 overdrawn refused; Close The Overdraft pressed while overdrawn refused; back at zero, closed"
+      ]
+    },
+    {
+      "id": "bank.cancel_new",
+      "player": "Your Bank, Accounts, Your Accounts Over Time: Cancel It beside an account new enough.",
+      "path": "BankAccountLife.tsx Cancel It -> run('bank.cancel_new', {accountId}) -> accountlife.ts. Until 2026-10-15 the panel listed savings and cards only, so the command's current-account branch was reached from no screen.",
+      "preconditions": "The account the player's, open, within the country's cooling-off days (UNCLAIMED[iso].coolingOffDays; none for the US); not the primary; a current account only where it could be closed (closeRefusal).",
+      "costs": "None: the money back whole, no interest, no penalty.",
+      "timing": "At once at the same bank; sent in the bank's days to another.",
+      "refusals": "That isn’t one of your accounts. / Its cooling-off period has passed, or there isn’t one here for it. / You don’t have a card. / Your primary current account can’t be canceled. / closeRefusal's (overdrawn, money on its way, what uses it, savings beside it, card payments pending).",
+      "outcomes": "Savings/term: balance into a current account at its bank or sent to the primary, closedAt, payments into it dropped. Card: closing, closed if nothing owed. Current: closed, money to the primary. Until 2026-10-15 an overdrawn current account closed with its debt, and one with savings beside it or money on its way closed too.",
+      "readers": "cardRoom (closing -> 0), bankAccountsOf, the ledger, payments.",
+      "persistence": "closedAt and the postings.",
+      "gap": "Genuinely unreachable in a played life (the US has no cooling-off). Abroad: card branch and current-account branch untested; implementation broken for an overdrawn current account (fixed); the current-account branch had no control (added). New Haven: no evidence the panel draws nothing and the command refuses.",
+      "acceptance": [
+        "command+render: PLAYER JOURNEY New Haven savings opened that day: no Cancel It drawn, the command refused in its words, the account open",
+        "command FIXTURE Toronto: a card applied for and canceled owing nothing closes; owing, it's closing with no room",
+        "command+render FIXTURE Toronto: an RBC chequing opened beside TD: Cancel It drawn and pressed (failed before: not drawn); with a standing order from it, refused naming it; overdrawn, refused (failed before: closed with its debt)"
+      ]
+    },
+    {
+      "id": "bank.switch",
+      "player": "US: Accounts, Open An Account At Another Bank, which says there's no switching service and gives the steps. Abroad: Switch Bank panel, Switch To, On, Switch.",
+      "path": "BankLending.tsx Switch (drawn only where SWITCHING has the home's country) -> bank.switch. A New Haven life never sees the panel; BankMoves.tsx draws the steps.",
+      "preconditions": "A bank where you live, not yours already, none kept there, no charged-off debt, no ChexSystems decline, no switch under way, a photo ID, not overdrawn, the new bank's opening rules, a service in the country.",
+      "costs": "None.",
+      "timing": "The service's working days, or a later working day chosen.",
+      "refusals": "That isn’t a bank where you live. / You already bank with X. / You keep an account at X already... / charged-off debt / ChexSystems / A switch is already under way. / photo ID / Clear the overdraft... / the new bank's rules / A partial switch is ... Britain only. / There’s no switching service here: ... / The earliest date it can be is ... / A switch date is a working day.",
+      "outcomes": "SWITCH_KIND and SWITCH_REVIEW_KIND scheduled; elsewhere nothing.",
+      "readers": "completeSwitch on the day; the review the next working day; BankLending's stage text.",
+      "persistence": "Scheduled items in the save.",
+      "gap": "The service switch is genuinely unreachable in a played life (no US service). New Haven's half (the steps instead) had no render evidence and the refusal was read for its words only.",
+      "acceptance": [
+        "command+clock+render: PLAYER JOURNEY New Haven: bank.switch to Citi refused first for a photo ID (this student holds none, and a new bank asks), a passport played to its day, then refused with the steps; nothing scheduled across a reload; BankMoves draws the steps, BankLending's switch part no panel",
+        "command+clock FIXTURE London: Barclays to HSBC across a reload: every balance moved whole, worked from the balances the minute before and the closing interest posted"
+      ]
+    },
+    {
+      "id": "bank.take_overrun_loan",
+      "player": "Borrowing: A Loan For The Overrun, Take The Loan (France only).",
+      "path": "BankLending.tsx (drawn only with current.creditOffered) -> bank.take_overrun_loan.",
+      "preconditions": "A French bank's offer three months past the arranged limit; no loan held at that bank.",
+      "costs": "The loan's APR over FRANCE.offerMonths.",
+      "timing": "At once; LOAN_DUE a month on.",
+      "refusals": "That isn’t an open current account of yours. / Your bank has offered no loan for an overrun. / You already have a loan with the bank.",
+      "outcomes": "A personal loan at that bank, its proceeds into the current account, LOAN_DUE scheduled, the offer cleared.",
+      "readers": "leftOverdrawn (back within the limit resets negativeSince), the loan's monthly payment, frenchOverrun.",
+      "persistence": "The loan account and its schedule.",
+      "gap": "Genuinely unreachable in a played life (only French banks). Abroad: LOAN_DUE and the negativeSince reset unasserted; no render.",
+      "acceptance": [
+        "command+clock+render FIXTURE Paris BNP: the offer reached by the clock, the panel drawn and Take The Loan pressed; €179.78 a month worked by hand; LOAN_DUE a month on; negativeSince cleared (failed before); 125 days on open, where a twin that left the offer is closed"
+      ]
+    },
+    {
+      "id": "card.money_transfer",
+      "player": "Cards tab, The Card's Offers: A Money Transfer To Your Account, Move It (N% Fee).",
+      "path": "BankCardOffers.tsx Move It (drawn only where terms.moneyTransferFee) -> card.money_transfer (cardoffers.ts).",
+      "preconditions": "A card whose terms offer it; a primary current account; an amount; room for it and its fee.",
+      "costs": "The card's fee share of the amount, then interest at the transfer rate.",
+      "timing": "At once; interest daily, charged on the statement.",
+      "refusals": "You don’t have a card. / doesn’t offer money transfers. / You need a current account for the money. / Say how much. / The card has X free, and this takes Y with its fee.",
+      "outcomes": "Card -> current posting, a fee posting, a transfers[] bucket.",
+      "readers": "credit.ts daily accrual, statementOffers, allocatePayment on a payment.",
+      "persistence": "Card state and the ledger.",
+      "gap": "Genuinely unreachable in a played life (no American card offers one; a review probe of all five refused). Abroad: allocatePayment through a payment untested; no render; refusals untested.",
+      "acceptance": [
+        "command+render FIXTURE London NatWest: Move It drawn with its 3% and pressed with £500 typed; refused past the room and with nothing; a payment by finance.pay_card across a reload going to the dearer balance first, worked from the card's own rates; New Haven: no Move It on Chase's card"
+      ]
+    },
+    {
+      "id": "bank.savings_notice",
+      "player": "None to press: Close Savings in Germany past the €2,000 month gives three months' notice, and the clock closes it.",
+      "path": "bank.close_savings -> SAVINGS_NOTICE_KIND three months on -> closeSavings, notice 'X Closed'.",
+      "preconditions": "A German savings account (savingsMonthly allowance) past the allowance.",
+      "costs": "None; interest paid on closing, fees settled.",
+      "timing": "Three months on.",
+      "refusals": "Notice is given: X closes on ... (close_savings again).",
+      "outcomes": "Balance into the current account at its bank, or sent to the primary; orders into it dropped; the notice.",
+      "readers": "The ledger, payments, the bank screen.",
+      "persistence": "The scheduled item; closedAt.",
+      "gap": "Genuinely unreachable in a played life (only German banks set the allowance). Abroad: the notice and orders dropped untested; the notice's body named the primary account wherever the money went (fixed).",
+      "acceptance": [
+        "command+clock FIXTURE Berlin: savings at Commerzbank beside a Commerzbank current account, closed on notice across a reload: the money in the Commerzbank account, the notice naming it (failed before: named Deutsche Bank's), the standing order into it gone",
+        "command+clock FIXTURE Berlin: a switch to Commerzbank leaves Deutsche Bank savings on notice; closed three months on, sent at once, the notice naming the Commerzbank account"
+      ]
+    },
+    {
+      "id": "bank.switch_complete",
+      "player": "None to press: a switch's date.",
+      "path": "SWITCH_KIND -> completeSwitch.",
+      "preconditions": "A switch scheduled by a service.",
+      "costs": "Interest and fees settled on closing.",
+      "timing": "The switch date at nine.",
+      "refusals": "n/a (scheduled)",
+      "outcomes": "New accounts, balances, orders, wages, autopay and loan repayments moved; old ones closed, unless partial, kept, held or in debt; 'Switched To X'.",
+      "readers": "The ledger, payments, deposits, cards' autopay.",
+      "persistence": "Accounts, the switch history.",
+      "gap": "Genuinely unreachable in a played life. Abroad: the Iceland test tolerated a 10% loss; stale line references.",
+      "acceptance": [
+        "command+clock FIXTURE London: on 14 January the savings moved to the penny with its closing interest; the current account less the £20 of groceries still pending, held back and closed on the 17th; the held notice; the standing order re-pointed and paid into HSBC savings on the 15th; across a reload"
+      ]
+    },
+    {
+      "id": "bank.cancel_switch",
+      "player": "Switch Bank, a switch under way: Call Off The Switch…, then Call It Off.",
+      "path": "BankLending.tsx (askCancel state) -> bank.cancel_switch {confirm: true}.",
+      "preconditions": "A switch pending, a service with a cancel window, before it closes, confirmed.",
+      "costs": "None.",
+      "timing": "At once.",
+      "refusals": "No switch is under way. / publishes no right to call a switch off / It could be called off until ... / Confirm to go ahead.",
+      "outcomes": "Switch and its review canceled; history 'canceled'.",
+      "readers": "completeSwitch never runs; BankLending's history.",
+      "persistence": "Scheduled items and history.",
+      "gap": "Genuinely unreachable in a played life. Abroad: review cancellation, history, savings and orders unchecked; the 'no right' refusal untested; no render of Call It Off.",
+      "acceptance": [
+        "command+render FIXTURE London: Call It Off drawn and pressed; review canceled; history 'canceled'; on the date nothing moves (balances, the standing order); a partial switch refused 'publishes no right'"
+      ]
+    },
+    {
+      "id": "bank.stop_balance_transfer",
+      "player": "Switch Bank past its call-off window: Stop The Balance Transfer…, then Keep The Balance There.",
+      "path": "BankLending.tsx (askStop state) -> bank.stop_balance_transfer {confirm: true}.",
+      "preconditions": "A switch pending with a cancel window (not partial), not already stopped, before close of business the working day before.",
+      "costs": "None.",
+      "timing": "At once; the switch reads keepBalance on its day.",
+      "refusals": "No switch is under way. / publishes no such step. / Its balance transfer is stopped already. / The transfer could be stopped until close of business ... / Confirm.",
+      "outcomes": "keepBalance on the switch item.",
+      "readers": "completeSwitch: payments move, the old account stays open with its money.",
+      "persistence": "The switch item's payload.",
+      "gap": "Genuinely unreachable in a played life. Abroad: three refusals untested; payments moving asserted only through the primary; no render.",
+      "acceptance": [
+        "command+render FIXTURE London: Keep The Balance There drawn and pressed; again refused 'stopped already'; a partial switch refused 'no such step'; a twin past the deadline refused; on the day the standing order moves to HSBC and Barclays keeps its money"
+      ]
+    },
+    {
+      "id": "h-money",
+      "player": "Home, Your Affairs, Money: the line and its bank button.",
+      "path": "Home.tsx AffairLine -> Gated ui.bank -> navigate('/workspace/bank').",
+      "preconditions": "ui.money's chapter read (guided); a primary account.",
+      "costs": "None.",
+      "timing": "Each render.",
+      "refusals": "LockedPanel before ui.money; Locked before ui.bank.",
+      "outcomes": "The primary's name and balance, worth, owed, the overdrawn alert.",
+      "readers": "ledger accounts, primaryAccountId, netWorth.",
+      "persistence": "Read from the save each render.",
+      "gap": "'No account' and 'Your Bank' are a guard no valid state reaches (evidence3-home); a guard test is owed. Evidence missing that the line, the deposits, the savings' interest, the year's interest income and the worth agree and don't double-count across reloads.",
+      "acceptance": [
+        "render GUARD: a save whose primary is gone draws 'No account: $0.00.' and 'Your Bank', which opens the bank",
+        "clock+render PLAYER JOURNEY: a Comfortable student played to 2 October with a reload at each month's end, against her twin played straight: the same postings, interest posted once a month, the year's interest income the sum of those postings, the Money line and worth equal to the ledger's own sums"
+      ]
+    }
+  ]
+}

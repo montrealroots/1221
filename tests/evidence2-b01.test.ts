@@ -534,23 +534,39 @@ describe('world.set_preferences', () => {
 const HEALTH_TAB = { [tabKey('/workspace/papers')]: 'health' };
 
 describe('health.choose_clinic', () => {
-  it('for the New Haven student there’s no choice to make: Papers names Fair Haven, the one practice SLATE keeps there, with no Your Doctor box, and the week books her there at $0', () => {
+  it('for the New Haven student Papers offers Fair Haven and Yale Health’s Student Health on Your Doctor, each with what a visit costs her and how soon, and with nothing picked the week books her at Yale Health the next weekday at $0', () => {
     // Until 2026-10-13 this held that Your Doctor offered Fair Haven beside The Town’s First Practice, the same place, and
     // that a twin who chose it was booked where one who didn’t was, at the same $0: a choice that decided nothing. From
-    // that day the box is drawn only where a town keeps two practices or more.
+    // that day the box was drawn only where a town keeps two practices or more, and until 2026-10-15 this held that New
+    // Haven drew none. From that day a Yale student has two: what picking Yale Health decides is in
+    // tests/scope-health.test.ts.
+    // Until later on 2026-10-15 this held the options as 'The Town’s First Practice' and the two practices' names alone,
+    // and that with nothing picked the week booked her 24 days on at Fair Haven at $0. That day Yale Health's own rule
+    // was kept, "All care must be obtained at the Yale Health Center at 55 Lock Street unless it is an emergency
+    // situation…": with nothing picked a member's visit goes to Yale Health's practice, and one at Fair Haven isn't Yale
+    // Health's to pay. Each option now says what a visit there costs her and how soon it's booked. Worked by hand: the
+    // uninsured visit is SLATE's $100 of 2024 grown by the BLS physicians' services index from 417.93 to 439.389 (2026),
+    // 10,513 cents, at 1.75, $183.98; Fair Haven publishes no wait, so New Haven's 23.5 days stand, 24; Yale Health
+    // offers "same-day or next-day", the next.
     const sim = student('g03-37');
     const papers = drawn(sim, PapersWorkspace, [], HEALTH_TAB);
-    expect(papers.html).not.toContain('id="own-doctor"');
-    expect(papers.text).not.toContain('The Town’s First Practice');
+    expect(Math.round(Math.round(100_00 * 439.389 / 417.93) * 1.75)).toBe(183_98);
+    expect(papers.select('own-doctor').options).toEqual([
+      { value: '', text: 'As Your Cover Has It' },
+      { value: 'us-ct-fhchc-grand', text: 'Fair Haven Community Health Care, A Visit $183.98, A 24-Day Wait' },
+      { value: 'us-ct-yalehealth-studenthealth', text: 'Yale Health Center, Student Health, A Visit $0.00, The Next Weekday' },
+    ]);
     // Your Pharmacy, America’s, is still drawn.
     expect(papers.select('own-pharmacy').options[0]).toEqual({ value: '', text: 'Any Pharmacy, At The Median' });
-    expect(papers.text).toContain('A doctor’s visit: Fair Haven Community Health Care');
+    // Until later on 2026-10-15 the line named Fair Haven, where her visit went with nothing picked.
+    expect(papers.text).toContain('A doctor’s visit: Yale Health Center, Student Health');
     expect(/What it would cost you here now: a doctor’s visit (\$\d[\d,]*\.\d\d)/.exec(papers.text)?.[1]).toBe('$0.00');
-    // The first health week, Monday 31 August, books her a doctor's visit 24 days on, at Fair Haven.
+    // The first health week, Monday 31 August, books her a doctor's visit the next weekday, Tuesday 1 September at ten, at
+    // Yale Health. Until later on 2026-10-15 it was 24 days on, Thursday 24 September, at Fair Haven.
     tended(sim, at(2026, 8, 31, 12));
     expect(healthOf(sim.player).clinicId).toBeUndefined();
-    expect(appointmentsOf(sim.player).map((a) => [a.at, a.what, a.clinicId])).toEqual([[at(2026, 9, 24, 10), 'A doctor’s visit', 'us-ct-fhchc-grand']]);
-    expect(sim.universe.scheduled.filter((i) => i.kind === APPOINTMENT_KIND && i.status === 'pending').map((i) => i.label)).toEqual(['The Doctor, Fair Haven Community Health Care']);
+    expect(appointmentsOf(sim.player).map((a) => [a.at, a.what, a.clinicId])).toEqual([[at(2026, 9, 1, 10), 'A doctor’s visit', 'us-ct-yalehealth-studenthealth']]);
+    expect(sim.universe.scheduled.filter((i) => i.kind === APPOINTMENT_KIND && i.status === 'pending').map((i) => i.label)).toEqual(['The Doctor, Yale Health Center, Student Health']);
   });
 
   it('LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60, the uninsured price worked out from the rule’s own numbers, where the one who chose Similares is billed its MX$60', () => {

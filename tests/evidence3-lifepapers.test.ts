@@ -202,6 +202,8 @@ const SHARE = 45_00;
 const UNINSURED = 183_98;
 /** New Haven’s wait for a doctor: AMN Healthcare’s 2025 average over its fifteen metros, 23.5 days, to the day. */
 const VISIT_WAIT = 24;
+/** Yale Health's "same-day or next-day" appointment, the next weekday, where a member's visit goes with nothing picked (from 2026-10-15). */
+const YALE_WAIT = 1;
 /** Chase's CD of everything but $20,000: $2,849,566. */
 const IN_CD = 2_849_566_00;
 
@@ -554,11 +556,13 @@ describe('documents.apply_ssn, from a hospital bed the week drew (round three)',
 // ---------------------------------------------------------------------------
 
 describe('health.choose_clinic, for a family-made life (round three)', () => {
-  it('PLAYER JOURNEY: the Scraping family’s student has no Your Doctor on Papers; the command, sent with New Haven’s one practice, books her twin’s same visit at the same place and price', () => {
+  it('PLAYER JOURNEY: the Scraping family’s student who picks Fair Haven on Your Doctor is booked 24 days on there and billed the uninsured’s $183.98; her twin who picks nothing is booked the next weekday at Yale Health, at $0', () => {
+    // Until 2026-10-15 this held that Papers drew no Your Doctor for her, New Haven keeping one practice. From that day a
+    // Yale student has Yale Health’s Student Health beside it, and what picking it decides is in tests/scope-health.test.ts.
     const make = () => createSave(1, 'lp-dr', answers('scraping'));
     const chooser = make();
     const plain = make();
-    expect(papers(chooser).html).not.toContain('id="own-doctor"');
+    expect(papers(chooser).html).toContain('id="own-doctor"');
     chooser.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     expect(healthOf(chooser.player).clinicId).toBe('us-ct-fhchc-grand');
     const seen = [chooser, plain].map((sim) => {
@@ -569,10 +573,18 @@ describe('health.choose_clinic, for a family-made life (round three)', () => {
       const kept = (healthOf(sim.player).careLog ?? []).filter((c) => c.at === visit.at);
       return [visit.at, visit.clinicId, kept.map((c) => [c.what, c.share])];
     });
-    expect(seen[0]).toEqual(seen[1]);
-    // Yale Health pays a visit whole, at the town's one practice.
-    expect(seen[0]![1]).toBe('us-ct-fhchc-grand');
-    expect(seen[0]![2]).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 0]]);
+    // Until later on 2026-10-15 this held that the two were the same, Thursday 24 September at Fair Haven at $0: Fair
+    // Haven was where a visit went with nothing picked, and Yale Health paid a visit there whole. That day Yale Health's
+    // own rule was kept ("All care must be obtained at the Yale Health Center at 55 Lock Street unless it is an emergency
+    // situation…"): with nothing picked, a member's visit goes to Yale Health the next weekday, and one at Fair Haven isn't
+    // Yale Health's to pay. The week of Monday 31 August books the chooser 24 days on, Thursday 24 September at ten, at
+    // Fair Haven, billed the uninsured's $183.98 (SLATE's $100 of 2024 grown by the physicians' services index to 2026's
+    // $105.13, at 1.75; Fair Haven publishes no fee and SLATE keeps no sliding fee for it); her twin Tuesday 1 September
+    // at ten at Yale Health, at $0.
+    expect(seen[0]).toEqual([at(2026, 9, 24, 10), 'us-ct-fhchc-grand', [['A doctor’s visit, Fair Haven Community Health Care', UNINSURED]]]);
+    expect(seen[1]).toEqual([at(2026, 9, 1, 10), 'us-ct-yalehealth-studenthealth', [['A doctor’s visit, Yale Health Center, Student Health', 0]]]);
+    expect(at(2026, 9, 24) - at(2026, 8, 31)).toBe(VISIT_WAIT * MS_DAY);
+    expect(at(2026, 9, 1) - at(2026, 8, 31)).toBe(YALE_WAIT * MS_DAY);
   }, 60_000);
 });
 
@@ -595,11 +607,14 @@ describe('health.appointment, a visit called off on a family-made life (round th
     force('health.referral', [sim.player.id, next.id, next.at], [0]);
     sim.advanceTo(next.at + MS_HOUR);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
-    expect((healthOf(sim.player).careLog ?? []).filter((c) => c.at === next.at).map((c) => c.what)).toEqual([`${first.what}, Fair Haven Community Health Care`]);
+    // Until later on 2026-10-15 it was had at Fair Haven, where a visit went with nothing picked; from then a Yale Health
+    // member's goes to Yale Health.
+    expect((healthOf(sim.player).careLog ?? []).filter((c) => c.at === next.at).map((c) => c.what)).toEqual([`${first.what}, Yale Health Center, Student Health`]);
     expect(titled(sim, 'A Doctor’s Visit').map((n) => n.at)).toEqual([next.at]);
     // A doctor’s visit owed and one the week draws are the same words at the same wait, so the specialist is what tells
     // them apart: owed, it’s booked as itself at America’s 31 days (`REFERRAL_DAYS`), where the week’s own visit would be
-    // “A doctor’s visit” at New Haven’s wait, the days the first was booked on.
+    // “A doctor’s visit” at the wait the first was booked on: Yale Health’s next weekday (until 2026-10-15, New Haven’s
+    // 24 days at Fair Haven).
     const specialist = appointmentsOf(sim.player)[0]!;
     expect(specialist.what).toBe(SPECIALIST);
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: specialist.id } });
@@ -610,7 +625,8 @@ describe('health.appointment, a visit called off on a family-made life (round th
     expect(booked.map((a) => a.what)).toEqual([SPECIALIST]);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     const daysOn = (a: { at: Instant }, from: Instant) => Math.round((a.at - from) / MS_DAY);
-    expect([daysOn(booked[0]!, third), daysOn(next, week)]).toEqual([31, VISIT_WAIT]);
+    // Until later on 2026-10-15 the week's own visit stood VISIT_WAIT, 24 days, on.
+    expect([daysOn(booked[0]!, third), daysOn(next, week)]).toEqual([31, YALE_WAIT]);
   }, 60_000);
 });
 

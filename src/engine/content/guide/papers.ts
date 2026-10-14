@@ -43,6 +43,12 @@
  * debt it clears gives back what was paid past it and settles every bill that went to it. And the overview said the Tax
  * Returns tab held a return each February, where from that day a year with nothing owed or due back and income under
  * the standard deduction has none, unless it’s a student’s on an F-1 (`registerTaxReturn` in `systems/taxreturn.ts`).
+ *
+ * Read again on 2026-10-15, when New Haven gained Yale Health’s Student Health beside Fair Haven (`content/clinics.ts`).
+ * Until then the doctor’s entry said New Haven kept one practice and drew no Your Doctor box; it says now that a Yale
+ * student has two, what each takes, how soon each sees you and when Yale Health stops, and that Care And Its Bills says
+ * what a plan paid. It said a prescription doesn’t run out in America without having read Connecticut’s rule; it gives
+ * the rule now.
  */
 
 import { formatMoney } from '../../core/money';
@@ -55,7 +61,7 @@ import {
   BENCHMARK, CARE, CHARITY, CHRONIC, CONNECTICUT_ENROLLMENT, CONNECTICUT_UI, DENTAL_PLANS, ENROLLMENT, INSULIN, MEDICAL_CPI,
   MEDICAL_DEBT, NHS, PHARMACY, PLANS, POVERTY_LINE, PREMIUM_CREDIT, PUBLIC_COVER, byYear,
 } from '../safetynet';
-import { DENIALS, FILL, REVIEW_MONTHS } from '../../systems/health';
+import { DENIALS, FILL, REVIEW_MONTHS, grown } from '../../systems/health';
 import { REFERRAL_DAYS, REFERRAL_SHARE } from '../../systems/appointments';
 import { DOCTOR_KINDS, clinicsIn } from '../../systems/clinics';
 import { SESSION_HOUR, THERAPISTS, THERAPY } from '../../systems/therapy';
@@ -122,9 +128,16 @@ const MARKUP = CARE.uninsuredMarkup;
 
 const HERE = clinicsIn(NEW_HAVEN);
 const PRACTICES = HERE.filter((c) => DOCTOR_KINDS.includes(c.kind)).map((c) => c.name);
-const PRACTICE = PRACTICES[0] ?? 'the town’s first practice';
+// The first practice that sees anybody is where a visit goes with nothing picked; Yale Health’s sees Yale students it covers.
+const PRACTICE = HERE.find((c) => DOCTOR_KINDS.includes(c.kind) && c.members === null)?.name ?? 'the town’s first practice';
+const YALE_PRACTICE = HERE.find((c) => c.members === 'yale')?.name ?? 'Yale Health';
 const EMERGENCY_ROOM = HERE.find((c) => c.kind === 'emergency-department')?.name ?? 'the town’s hospital';
 const WAIT = Math.round(US_DAYS[NEW_HAVEN] ?? US_METRO_AVERAGE_DAYS);
+const YALE_WAIT = HERE.find((c) => c.members === 'yale')?.waitDays ?? WAIT;
+const YALE_SOON = YALE_WAIT === 1 ? 'the next weekday' : `${YALE_WAIT} days on`;
+// What the uninsured are billed for a visit in 2026 (`shareOf`): SLATE's price grown to the year, times the markup. It's
+// what a Yale Health member's visit at Fair Haven costs from 2026-10-15, Fair Haven publishing no fee of its own.
+const UNINSURED_VISIT = Math.round(grown(CARE.price.visit, 'visit', Date.UTC(2026, 6, 1)) * MARKUP);
 const CHAINS = US_PHARMACIES.map((c) => `${c.name.replace(' Pharmacy', '')} ${usd(Math.round(c.generic * 100))}`).join(', ');
 const WALMART = US_PHARMACIES.find((c) => c.id === 'walmart');
 const LONGEST = FILL.holiday.us!;
@@ -229,8 +242,8 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     needs: [
       `Enroll: no plan of your own already, and Yale Health ended, in its last ${SPECIAL} days once its end is set, or lapsed on a personal leave without Affiliate cover.`,
-      `HUSKY D: last month’s income at or under ${pct(PUBLIC_COVER.medicaidShare)} of the poverty line, ${usd(HUSKY_TO)} a month in ${LINE_YEAR}, and from 1 October 2026 US citizenship or a green card held five years.`,
-      `Covered Connecticut: last month’s income at or under ${pct(PUBLIC_COVER.coveredCtShare)} of the year before’s poverty line, ${usd(COVERED_CT_TO)} a month in ${LINE_YEAR}, for anyone lawfully present.`,
+      `HUSKY D: last month’s income at or under ${pct(PUBLIC_COVER.medicaidShare)} of the poverty line, ${usd(HUSKY_TO)} a month in ${LINE_YEAR}, and from 1 October 2026 US citizenship or a green card held five years. From ${fullDay(PUBLIC_COVER.workFrom)}, ${PUBLIC_COVER.workHours} hours’ work, ${usd(PUBLIC_COVER.workEarnings)} of pay or school at least half-time in the month before you enroll.`,
+      `Covered Connecticut: last month’s income at or under ${pct(PUBLIC_COVER.coveredCtShare)} of the year before’s poverty line, ${usd(COVERED_CT_TO)} a month in ${LINE_YEAR}, and at least 100% of it, since it comes with the premium tax credit; for a citizen or anyone lawfully present, and from 1 January 2027 for a citizen or a green card holder, not a student in F-1 status or a graduate on OPT.`,
       `The marketplace: Connecticut’s open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}; the ${SPECIAL} days before Yale Health’s cover ends, once its end is set by the degree, a withdrawal or a dismissal; or within ${SPECIAL} days of losing cover, which a plan you dropped or left unpaid isn’t. And not having stayed past your US status.`,
       `Appeal It: a denied claim, within ${DENIALS.appealDays} days of the care. Apply For Assistance: a Connecticut hospital’s bill for an emergency or a stay, before it’s due.`,
     ],
@@ -245,8 +258,10 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Last Month’s Income', value: 'All the income your record holds for the calendar month before, against the poverty line: wages and work-study’s pay, and the unemployment benefit, interest and pensions paid that month too' },
-      { label: 'Last Month’s Work', value: `For HUSKY D’s work test at renewal: the hours and the pay of the work paid in the calendar month before, work-study’s and the Summer Cabaret’s. ${PUBLIC_COVER.workHours} hours or ${usd(PUBLIC_COVER.workEarnings)} of pay passes; a benefit, interest or a pension doesn’t count` },
-      { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from 1 October 2026; lawful presence for Covered Connecticut and the marketplace', estimate: false },
+      // Until later on 2026-10-15 this said being at the School, enrolled and not on leave, passed: the School was read at
+      // the moment asked, not over the month (`enrolledIn`).
+      { label: 'Last Month’s Work', value: `For HUSKY D’s work test when you enroll and at renewal: the hours and the pay of the work paid in the calendar month before, work-study’s and the Summer Cabaret’s. ${PUBLIC_COVER.workHours} hours or ${usd(PUBLIC_COVER.workEarnings)} of pay passes, and so does any of that month spent at the School: the month you leave it, on a leave, by withdrawing or with the degree, counts whole, and so does the month you come back from a leave; a benefit, interest or a pension doesn’t count` },
+      { label: 'Your Status', value: 'US citizenship or five years with a green card for HUSKY D from 1 October 2026; lawful presence for the marketplace, and for Covered Connecticut until 2027, when it’s a citizen’s or a green card holder’s', estimate: false },
       { label: 'A Denied Claim', value: `${pct(DENIALS.rate)} of a marketplace plan’s claims, billed as if you were uninsured; insurers uphold ${pct(DENIALS.upheld)} of appeals`, estimate: true },
       { label: 'The Hospital’s Charity', value: `Your last twelve months’ income against the poverty line: free to ${pct(CT_CHARITY.freeTo)}, ${pct(CT_CHARITY.discount)} off to ${pct(CT_CHARITY.discountTo)}` },
       { label: 'Medical Debt On Your Record', value: `${usd(MEDICAL_DEBT.reportAt)} or more, unpaid ${MEDICAL_DEBT.reportAfterDays} days, and you living outside New York and California` },
@@ -261,7 +276,13 @@ export const PAPERS: readonly GuideEntry[] = [
     ],
     later: [
       `On the first of each month the marketplace premium is taken from ${FROM_CURRENT}. If it can’t be paid, the plan ends that day, and a plan left unpaid opens no special enrollment.`,
-      `A program comes up for renewal: in Connecticut every ${RENEW_CT[0]![1]} months, and from ${fullDay(RENEW_CT[RENEW_CT.length - 1]![0])} every ${RENEW_CT[RENEW_CT.length - 1]![1]}. It’s checked on last month’s income again and, for HUSKY D from ${fullDay(PUBLIC_COVER.workFrom)}, on ${PUBLIC_COVER.workHours} hours’ work or ${usd(PUBLIC_COVER.workEarnings)} of pay from work that month; fail either and it ends, with a notice.`,
+      `A program comes up for renewal: in Connecticut every ${RENEW_CT[0]![1]} months, and from ${fullDay(RENEW_CT[RENEW_CT.length - 1]![0])} every ${RENEW_CT[RENEW_CT.length - 1]![1]}. It’s checked on last month’s income again and, for HUSKY D from ${fullDay(PUBLIC_COVER.workFrom)}, on ${PUBLIC_COVER.workHours} hours’ work or ${usd(PUBLIC_COVER.workEarnings)} of pay from work that month, or being at the School. Where last month’s income now places you in the other program, under HUSKY D’s line from Covered Connecticut or over it and within Covered Connecticut’s from HUSKY D, you’re renewed into that one from the same day, with no gap and no premium, and the notice “Your Public Cover Changed At Renewal” says so; into HUSKY D the work is asked first. Over every line, or short of HUSKY D’s work, it ends, with the notice “Your Public Cover Ended At Renewal”.`,
+      // Until 2026-10-15 a renewal that found her income in the other program ended her cover, and this said only that
+      // failing either test ended it.
+      // Until 2026-10-15 Covered Connecticut ran on into 2027 for a student in F-1 status, and beside Yale Health once a
+      // student was back from a leave (`healthMonth`).
+      'Covered Connecticut held by a student in F-1 status or a graduate on OPT ends on 1 January 2027, with the notice “Your Public Cover Has Ended”: from then the premium tax credit it comes with is a citizen’s or a green card holder’s. The marketplace still sells to you, with no credit.',
+      'Back at the School from a leave, with Yale Health’s student cover again, Covered Connecticut ends at the next month’s start, with the notice “Your Public Cover Has Ended”: it’s for a person with no other cover that counts. HUSKY D stays beside Yale Health, which pays first.',
       // Until 2026-10-13 Covered Connecticut ran to its renewal out of status, and this said it ended there with a notice
       // naming the status; from that day it ends with the month, as a marketplace plan does (`healthMonth`). Until
       // 2026-10-14 a marketplace plan enrolled ahead was said to have ended too.
@@ -278,7 +299,7 @@ export const PAPERS: readonly GuideEntry[] = [
       'The subtitle of Care And Its Bills shows what you’ve paid toward the year’s most; past it, your plan leaves you nothing more for care.',
       `In the bills table, Due shows a date, Settled, or Owed As Debt. In Assistance, Charity Taken Off means the hospital screened an uninsured bill when it was billed and took something off it; over ${pct(CT_CHARITY.discountTo)} of the poverty line it took off nothing, and the bill reads Over The Limit.`,
       'The toast after Enroll, Your Cover and the subtitle of Care And Its Bills each name a program by its own name, HUSKY D or Covered Connecticut. The marketplace’s plan reads Marketplace Plan in Your Cover, and Access Health CT Standard Silver over the bills.',
-      `The Marketplace says Medicaid, HUSKY D here, asks ${PUBLIC_COVER.workHours} hours’ work or ${usd(PUBLIC_COVER.workEarnings)} earned a month at renewal. SLATE counts last month’s hours and pay of work, work-study’s and the Summer Cabaret’s; an unemployment benefit, interest or a pension isn’t work, and counts toward neither.`,
+      `The Marketplace says Medicaid, HUSKY D here, asks from 2027 ${PUBLIC_COVER.workHours} hours’ work, ${usd(PUBLIC_COVER.workEarnings)} earned or school at least half-time in the month before you apply and at renewal. SLATE counts last month’s hours and pay of work, work-study’s and the Summer Cabaret’s; an unemployment benefit, interest or a pension isn’t work, and counts toward neither.`,
       `A marketplace premium is paid in full. The return gives back what’s over your share of income, for an income over ${pct(PUBLIC_COVER.medicaidShare)} and up to ${pct(PREMIUM_CREDIT.cutoff)} of the poverty line.`,
     ],
     unavailable: [
@@ -287,6 +308,8 @@ export const PAPERS: readonly GuideEntry[] = [
       `“Yale Health covers you until …; you can enroll from …, ${SPECIAL} days before that cover ends.”`,
       `“Outside open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}, and not within ${SPECIAL} days of losing cover.”`,
       'Stayed past your US status: the marketplace sells only to a citizen or a person lawfully present.',
+      // From 2026-10-15: until then Enroll asked no work of somebody applying for HUSKY D.
+      `“From January 1, 2027, HUSKY D asks an applicant for ${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of earnings or school at least half-time in the month before, and last month had none of them.”: HUSKY D refused for its work test. The line goes on to say whether the marketplace is open to you, and Enroll shows only where it is, and buys its plan.`,
       '“You have no plan of your own to drop.”',
       `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal is filed within ${DENIALS.appealDays} days of the denial.”: Appeal It doesn’t show.`,
       '“Only a Connecticut hospital’s bill.”, “It’s settled or past due.”, “The hospital’s charity is off it already.” or “It’s been put to the hospital’s charity.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
@@ -312,14 +335,16 @@ export const PAPERS: readonly GuideEntry[] = [
       { to: 'money.affairs', kind: 'scheduled', why: `A bill unpaid at its due date goes to Owed For Medical Care, a debt your net worth counts; at ${usd(MEDICAL_DEBT.reportAt)} or more, ${MEDICAL_DEBT.reportAfterDays} days on, it marks your credit record.` },
       { to: 'school.sick', kind: 'optional', why: 'A stay in hospital excuses you from school of itself; down with the flu, Call In Sick excuses the day.' },
     ],
+    // Until 2026-10-15 this example's graduate was given HUSKY D from 1 September: Enroll asked no work of somebody
+    // applying, which from 2027 Medicaid does (`mayEnroll`).
     example: {
-      setup: 'A US citizen in New Haven who graduated in the spring, with no pay in July.',
+      setup: 'A US citizen in New Haven who graduated in the spring of 2027, with no pay in July.',
       steps: [
         'On 1 August a notice says “Your Health Cover Ended”.',
-        'Open Papers, Health Cover. Under The Marketplace: “Last month’s income qualifies you for HUSKY D, at any time and with no premium.”',
+        `Open Papers, Health Cover. Under The Marketplace: “From January 1, 2027, HUSKY D asks an applicant for ${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(PUBLIC_COVER.workEarnings, 'USD')} of earnings or school at least half-time in the month before, and last month had none of them. The marketplace is open to you: within ${SPECIAL} days of losing cover.”`,
         'Press Enroll.',
       ],
-      result: `The toast says “Enrolled in HUSKY D, from September 1, …”. From 1 September a visit, urgent care, an emergency and a prescription cost $0. Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,
+      result: `The toast says “Enrolled in the marketplace, from September 1, …”. From 1 September its premium is taken on each month’s first, and a visit costs ${usd(SILVER.visit)}. Care in August, uncovered, is billed at the uninsured price, less the hospital’s charity on an emergency or a stay. Enrolled ahead, from ${ENROLL_OPENS_ON} while Yale Health still covered them, their cover would have begun 1 August.`,
     },
   },
   {
@@ -331,33 +356,34 @@ export const PAPERS: readonly GuideEntry[] = [
     questions: ['How do I see a doctor?', 'How long is the wait for a doctor?', 'Why did I miss my appointment?', 'How do I book again after missing the doctor?', 'Which pharmacy is cheapest?', 'What does a referral do?'],
     where: { route: ROUTE, tab: HEALTH, label: 'Papers, Health Cover, Your Doctor' },
     available: `From the guide’s chapter “${CHAPTER}”. Your Pharmacy is America’s; Fill A Longer Supply shows while you keep a condition up.`,
-    short: `A doctor’s visit comes when a week brings one, about ${CARE.perYear.visit} a year, and SLATE books it for you at your doctor’s practice for the wait published where you live: ${WAIT} days in New Haven, at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday there. Keep it and you’re seen and billed at what your plan leaves; miss it and you aren’t, and Book An Appointment books again. Your Pharmacy sets the cash price a generic is filled at, Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
+    short: `A doctor’s visit comes when a week brings one, about ${CARE.perYear.visit} a year, and SLATE books it for you at your doctor’s practice for its wait: in New Haven, while Yale Health covers you, ${YALE_SOON} at ${YALE_PRACTICE} for $0, unless you pick ${PRACTICE}, ${WAIT} days on at the uninsured price; once it doesn’t, ${WAIT} days on at ${PRACTICE}; at ${clock(CONSULT_HOUR)} on a weekday that isn’t a public holiday there. Keep it and you’re seen and billed at what your plan leaves; miss it and you aren’t, and Book An Appointment books again. Your Pharmacy sets the cash price a generic is filled at, Walmart’s ${usd(Math.round((WALMART?.generic ?? 0) * 100))} against the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown since, and your plan’s copay is never more than that price.`,
     steps: [
       'Open Papers, Health Cover. Your Doctor names where a doctor’s visit, urgent care and an emergency are had where you live, and what each would cost you now.',
       // Your Doctor's box shows only where the town keeps two practices or more (from 2026-10-13: until then New Haven's
       // one was offered beside The Town's First Practice, the same place, and this step told a New Haven life to pick).
-      PRACTICES.length === 1
-        ? `In New Haven there’s no Your Doctor box: SLATE keeps one practice, ${PRACTICE}, and the line names it. Where a town keeps more, the box picks the practice a visit is booked at, and The Town’s First Practice is where it goes until you pick.`
-        : 'The Your Doctor box picks the practice a visit is booked at. The Town’s First Practice is where it goes until you pick.',
+      // From 2026-10-15 New Haven keeps two: until then this said it kept one and drew no box. Later that day a visit with
+      // nothing picked went where Yale Health sends its members: until then this said it went to Fair Haven.
+      `The Your Doctor box picks the practice a visit is booked at; it shows where two practices or more would see you, each with what a visit there costs you and how soon it’s booked. A Yale student Yale Health covers picks between ${YALE_PRACTICE}, $0 and ${YALE_SOON}, and ${PRACTICE}, ${usd(UNINSURED_VISIT)} in 2026 and ${WAIT} days on. Until you pick, As Your Cover Has It, a visit goes to ${YALE_PRACTICE}. Once Yale Health no longer covers you there’s one practice for you, ${PRACTICE}, and the line names it.`,
       'The Your Pharmacy box, in America, picks the chain whose cash price fills a generic.',
       'A booked appointment shows below with its date. When the clock reaches it, it stops and asks; be awake and out of hospital at the hour.',
       'Call It Off cancels an appointment. The visit stays owed, and Book An Appointment books it again.',
       `Fill A Longer Supply, ${LONGEST} Days, under Your Conditions, fills the medicine of every condition you keep up for that long at once, paid ahead. Where the bank can’t cover every condition’s fill, none is filled.`,
     ],
     needs: [
-      `Your Doctor: a practice in the town you live in, which keeps two or more. In New Haven SLATE keeps ${PRACTICES.length === 1 ? `one, ${PRACTICE}, so there’s none to pick` : PRACTICES.join(', ')}.`,
+      `Your Doctor: a practice in the town you live in that would see you, two or more of them. In New Haven SLATE keeps ${PRACTICES.join(' and ')}; ${YALE_PRACTICE} sees only Yale students Yale Health covers: while you’re at the School, thirty days after a withdrawal past the fifteenth day of classes, not after one by it, and to 31 July after the degree.`,
       'Book An Appointment: a visit owed, missed or called off, and no appointment booked.',
       'Your Pharmacy: living in America.',
       'Fill A Longer Supply: a condition you keep up, its row showing Let It Go, and the bank able to pay every condition’s fill.',
     ],
     costs: [
-      { label: 'A Visit', value: `Your plan’s copay: $0 on Yale Health, HUSKY D and Covered Connecticut, ${usd(SILVER.visit)} on Access Health CT’s silver plan; uninsured, the commercial price times ${MARKUP}` },
+      { label: 'A Visit', value: `Your plan’s copay: $0 on Yale Health at ${YALE_PRACTICE}, HUSKY D and Covered Connecticut, ${usd(SILVER.visit)} on Access Health CT’s silver plan; uninsured, the commercial price times ${MARKUP}, ${usd(UNINSURED_VISIT)} in 2026. On Yale Health a visit at ${PRACTICE} is billed at that uninsured price: Yale Health pays for a member’s care at its own Health Center, except in an emergency` },
       { label: 'Time On The Calendar', value: `${CONSULT_MINUTES} minutes, at ${clock(CONSULT_HOUR)} local time on a weekday that isn’t a public holiday where you live`, estimate: true },
       { label: 'A Generic, Uninsured', value: `${CHAINS}; at any pharmacy, the ${usd(PHARMACY.price.generic)} median of ${MEDICAL_CPI.base.rx[0]}, grown by the drug price index`, estimate: true },
       { label: 'A Longer Supply', value: `Up to ${LONGEST} days at once in America, at ${FILLS} fills’ share, paid then`, estimate: true },
     ],
     reads: [
       { label: 'The Wait Where You Live', value: `${US_DAYS['us-ny-newyork']} days in New York, ${US_DAYS['us-ca-losangeles']} in Los Angeles, ${WAIT} in New Haven: the average of fifteen metros, for a town the survey left out`, estimate: true },
+      { label: 'A Practice’s Own Wait', value: `${YALE_PRACTICE} offers a same-day or next-day appointment, and SLATE books the next weekday; ${PRACTICE} publishes none, and New Haven’s ${WAIT} days stand there` },
       { label: 'Being There', value: 'Awake and out of hospital at its hour. An injury that keeps you from class doesn’t keep you from the doctor.' },
       { label: 'A Referral', value: `${pct(US_REFERRAL)} of the visits kept in America end in one, and the specialist is seen ${REFERRAL_DAYS.us} days on`, estimate: true },
       { label: 'An Emergency', value: `Keeps you in the department its median time: ${ED_MINUTES['us-ct']} minutes in Connecticut, at ${EMERGENCY_ROOM}`, estimate: true },
@@ -369,7 +395,8 @@ export const PAPERS: readonly GuideEntry[] = [
       `Fill A Longer Supply pays at once from ${FROM_CURRENT}, moves each Medicine until date on by the days filled, and the toast says “${LONGEST} days of medicine filled.” Where the bank can’t cover every condition’s fill, it’s refused whole, “It comes to more than the bank can cover.”, and nothing is filled or paid.`,
     ],
     later: [
-      `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days; on Yale Health, HUSKY D or Covered Connecticut that’s $0, and no bill is made. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
+      `At the hour, kept: “A Doctor’s Visit” comes as a notice, and what your cover leaves you is billed, due in ${MEDICAL_DEBT.dueDays} days, under the practice it was booked at; on Yale Health at ${YALE_PRACTICE}, HUSKY D or Covered Connecticut that’s $0, and no bill is made. On Yale Health at ${PRACTICE} it’s ${usd(UNINSURED_VISIT)} in 2026, and the notice says Yale Health pays for a visit at its own Health Center. On Access Health CT’s silver plan it’s the ${usd(SILVER.visit)} copay, with no deductible, and Care And Its Bills gives what the plan paid of the visit’s price under Plan Paid. Your prescriptions are renewed, a review visit marks its condition reviewed, and the visit may end in a referral, booked for the specialist’s wait.`,
+      `At the hour, booked at ${YALE_PRACTICE} after Yale Health’s cover has ended: “Not Seen At Your Practice” comes as a notice, the visit goes unbilled and stays owed, and Book An Appointment books it at ${PRACTICE}, for its wait.`,
       'At the hour, missed: “Missed The Doctor” comes as a notice, the visit goes unbilled, and it stays owed until you book, or until a Monday brings another visit, which books the one owed.',
       `Each Monday, a condition’s medicine with ${FILL.refillDays} days or fewer left is refilled for ${FILL.us} days: a generic at your pharmacy’s price, a brand at the median.`,
       // From 2026-10-13: until then a visit owed dropped every visit a Monday drew, as an appointment booked does.
@@ -379,22 +406,27 @@ export const PAPERS: readonly GuideEntry[] = [
       '“What it would cost you here now” is your share under today’s cover, for a visit, urgent care and an emergency.',
       // From 2026-10-13 (`shareOf`): until then the NHS paid a visit at Bupa's pay-as-you-go GP, picked as one's doctor.
       'Elsewhere, a practice picked that publishes its own price, as Bupa’s pay-as-you-go GP in London does, bills a visit at that price: a public system pays its own practices, not a private GP. A life in New Haven never meets one.',
-      'A visit kept changes no dial by itself. It renews prescriptions, records a review and may bring a referral; in America a prescription doesn’t run out, so the visit is mostly its bill.',
-      PRACTICES.length === 1
-        ? `In New Haven, ${PRACTICE} is the only practice SLATE keeps, so every visit is booked there, with nothing to pick.`
-        : `In New Haven SLATE keeps ${PRACTICES.length} practices, and The Town’s First Practice is ${PRACTICE}.`,
+      'A visit kept changes no dial by itself. It renews prescriptions, records a review and may bring a referral. Connecticut sets no date after which a prescription for a medicine that isn’t controlled can no longer be filled (its pharmacy statutes, read for SLATE on 15 October 2026), so in New Haven a renewal changes no fill, and the visit is mostly its bill.',
+      // From 2026-10-15, when Yale Health's rule that a member's care is had at its Health Center was kept: until then this
+      // said picking Yale Health changed how soon a student was seen, not what a visit cost, both being $0 on Yale Health.
+      `In New Haven SLATE keeps ${PRACTICES.length} practices. On Yale Health, picking ${PRACTICE} changes both how soon you’re seen and what a visit costs: ${WAIT} days on and ${usd(UNINSURED_VISIT)} in 2026, against ${YALE_SOON} and $0 at ${YALE_PRACTICE}, since Yale Health pays for a member’s care at its own Health Center. Fair Haven keeps a sliding fee for the uninsured, but publishes none of its amounts, so SLATE bills the uninsured price there. An emergency is paid wherever it’s had.`,
+      // From 2026-10-15, the recheck: until then such a booking stayed at Fair Haven played straight through and moved to
+      // Yale Health on a reload (`followTheCover`).
+      `An appointment is had where it was booked. One booked at ${PRACTICE} while Yale Health didn’t cover you, on a leave, is kept there and billed the uninsured price even if Yale Health covers you again before the day; Call It Off and Book An Appointment, and it’s at ${YALE_PRACTICE}.`,
     ],
     unavailable: [
       '“There’s nothing to see a doctor about.”: no visit is owed.',
       '“You have an appointment already.”',
       '“No wait is published where you live; you’re seen when it comes up.”: Ireland’s way, where a visit comes unbooked.',
       '“Your doctor is in the town you live in.” or “That isn’t a doctor’s practice.”',
+      '“Yale Health sees Yale students it covers, and it doesn’t cover you now.”: Yale Health’s practice sent once its cover has ended; the box doesn’t offer it then.',
       '“A pharmacy’s own cash price is kept only in America.”',
       'Pressed, Fill A Longer Supply says “It comes to more than the bank can cover.” when the bank can’t pay every condition’s fill.',
       'Before the chapter is read, the boxes, Call It Off and Book An Appointment are grayed, their tooltip naming the chapter.',
     ],
     mistakes: [
-      'Looking to go back to The Town’s First Practice or Any Pharmacy, At The Median: each shows only until you pick, so a choice can be changed to another practice or chain, never undone.',
+      'Looking to go back to As Your Cover Has It, The Town’s First Practice or Any Pharmacy, At The Median: each shows only until you pick, so a choice can be changed to another practice or chain, never undone.',
+      `Picking ${PRACTICE} while Yale Health covers you: each visit there is billed ${usd(UNINSURED_VISIT)} in 2026, where ${YALE_PRACTICE} costs $0. Picking ${YALE_PRACTICE} again puts it right for the next visit booked.`,
       `Sleeping through ${clock(CONSULT_HOUR)} on the day: the appointment is missed. Book An Appointment books again, for the full wait.`,
       'Calling an appointment off and leaving it: the visit stays owed, and no condition review is booked, until you book it or a Monday brings another visit.',
       `Filling a longer supply to save: it charges ${FILLS} fills’ share at once, the same as ${FILLS} ordinary fills. What it buys is medicine paid ahead, which lasts through a month the bank runs too low for Monday’s refill.`,
@@ -409,11 +441,13 @@ export const PAPERS: readonly GuideEntry[] = [
     example: {
       setup: 'A student on Yale Health in New Haven, whose Monday brought a doctor’s visit.',
       steps: [
-        `A notice: “A doctor’s visit: booked at ${PRACTICE} for …, the wait where you live.”, ${WAIT} days on.`,
+        // From 2026-10-15: until then the visit was booked at Fair Haven, 24 days on, a student on Yale Health being given
+        // the town's first practice with nothing picked.
+        `A notice: “A doctor’s visit: booked at ${YALE_PRACTICE} for …, the wait where you live.”, ${YALE_SOON}.`,
         `On the day you sleep past ${clock(CONSULT_HOUR)}, and “Missed The Doctor” follows.`,
         'Open Papers, Health Cover, and press Book An Appointment beside “A doctor’s visit: not yet seen”.',
       ],
-      result: `It’s booked again for ${WAIT} days on, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is. Kept, it costs $0 on Yale Health, renews your prescriptions, and about one time in ${Math.round(1 / US_REFERRAL)} ends in a referral to a specialist ${REFERRAL_DAYS.us} days later.`,
+      result: `It’s booked again for ${YALE_SOON} at ${YALE_PRACTICE}, moved to the next working day when that’s a Saturday, a Sunday or a public holiday where you live, as every booking is. Kept, it costs $0 on Yale Health, renews your prescriptions, and about one time in ${Math.round(1 / US_REFERRAL)} ends in a referral to a specialist ${REFERRAL_DAYS.us} days later.`,
     },
   },
   {

@@ -745,9 +745,9 @@ export const COURSEWORK: readonly GuideEntry[] = [
       '“You’ve answered it.”',
       '“That work is finished.”: another reading of a piece already shown.',
       '“You have … then: say no instead.”',
-      // Reached only from a save made before 2026-10-12, whose invitations waited past the evening they asked for
-      // (`respondRefusal`); one made since lapses first. Until 2026-10-14 it was listed as if any save could reach it.
-      '“That evening has passed.”, only on a save made before 2026-10-12, where an invitation could wait past its evening.',
+      // “That evening has passed.” went from this list on 2026-10-15: every moment lapses before the evening it asks for,
+      // in every save this build opens (`respondRefusal`, `strandedMoments`), so no player meets it. Until then it said a
+      // save made before 2026-10-12 could, which no build wrote.
       '“There’s nothing between you to make right.”',
       LOCKED,
     ],

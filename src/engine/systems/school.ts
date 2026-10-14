@@ -90,7 +90,7 @@ import { expenseFor, owe, payFromCurrent, spend } from './spending';
 import { inSaveMoney } from './banking';
 import { ATTRIBUTES, CRAFT_ABILITY, abilityFull, abilityGain, abilityOf, classmatePresence, presenceFor, develop, isAbility, nerves, nudge, recordDevelopment, targetId, type Target } from './attributes';
 import { ABILITY_KIN, ABILITY_DEFS, type AbilityId } from '../content/abilities';
-import { YALE_COST_GROWTH, needFor } from '../content/school';
+import { EXTENDED_STUDY, YALE_COST_GROWTH, needFor } from '../content/school';
 import { addWithheld, recordScholarship, recordWages, stateOf, yearOf } from './earnings';
 import { computeAnnualTax, federalStandardDeduction } from '../content/tax';
 import { armTaxes } from './taxreturn';
@@ -114,8 +114,8 @@ import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
 import { endCoursework } from './coursework';
-import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, type CourseRecord } from './courserecord';
-import { considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
+import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, tellFails, type CourseRecord } from './courserecord';
+import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -2932,6 +2932,25 @@ export function conferIfReady(sim: Simulation, person: Person, why: string): voi
   setStanding(sim, person, 'graduated', `${why}, the faculty confer the ${YALE_DRAMA.degree} in ${YALE_DRAMA.program}, class of ${school.classOf}, without the ceremony.`);
 }
 
+/**
+ * Room in the nine semesters the Bulletin allows for a repeat of the year ending with this spring (`withRepeat`), read
+ * by the Fail and Permanent Incomplete notices so they offer only what `repeatRefusal` would grant (from 2026-10-15:
+ * until then a Fail in any year after a repeat was told to ask, and “Repeating would make 10 semesters” refused it).
+ * Counted as the year's end will count it, with the program's terms still to be taken through that spring: at a fall's
+ * evaluation the spring, and after a year's repeat is granted the year's two again (from 2026-10-15: earlier that day it
+ * counted the terms enrolled so far, so a second year's fall Fail after a first year's repeat, at nine, was told to ask,
+ * and the spring's end made ten; found by tests/scope-school.test.ts). After any repeat granted, none more fits: the
+ * terms enrolled are the program's taken plus two for each repeat, so the count is eight and two more for each.
+ */
+const repeatRoom = (person: Person, spring: number): boolean => {
+  const school = person.school;
+  if (!school) return false;
+  // The program term taken next: on a leave, the one it began in, taken again on return (as `yearOfStudy` reads it).
+  const away = school.leave?.status === 'on' ? school.leave : undefined;
+  const next = away ? away.firstTerm - ((school.offset ?? 0) - (away.returnTerm - away.firstTerm)) : academicTerm(school, Math.max(0, school.termsBegun - 1)) + 1;
+  return withRepeat(school, spring) + Math.max(0, spring + 1 - next) <= EXTENDED_STUDY.maxSemesters;
+};
+
 export function registerSchool(sim: Simulation): void {
   // An Incomplete made up, or run out: a degree waiting past Commencement is conferred, or withheld (from 2026-10-10).
   registerCourseRecord(sim, (s, person) => conferIfReady(s, person, 'Your last Incomplete made up'), (s, person, r) => {
@@ -2940,7 +2959,7 @@ export function registerSchool(sim: Simulation): void {
       delete school.awaitingDegree;
       setStanding(s, person, 'withheld', `${r.name} wasn’t made up in its month, and the degree needs every course passed.`);
     }
-  });
+  }, repeatRoom);
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
 
   sim.onSchedule(TERM_KIND, (item, s) => {
@@ -3465,8 +3484,13 @@ export function registerSchool(sim: Simulation): void {
       if (review?.outcome === 'dismissed') {
         person.school.history.push({ term, standing: 'dismissed', attendance: 0, growth: 0, classGrowth: 0, reason: review.why });
         setStanding(s, person, 'dismissed', review.why);
+        tellFails(s, person, term, true, (a) => repeatRoom(person, a));
         return;
       }
+      evaluate(s, person, term);
+      // The Fails told after the standing they led to (`tellFails`, from 2026-10-15).
+      tellFails(s, person, term, schoolEnded(person.school.standing), (a) => repeatRoom(person, a));
+      return;
     }
     evaluate(s, person, term);
   });

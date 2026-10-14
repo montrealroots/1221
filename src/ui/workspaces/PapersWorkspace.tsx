@@ -15,7 +15,9 @@ import { useGame, useWorld } from '@/app/game-context';
 import { Panel, Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
-import { DOCTOR_KINDS, clinicById, clinicFor, clinicsIn } from '@/engine/systems/clinics';
+import { DOCTOR_KINDS, clinicById, clinicFor, clinicRefusal, clinicsIn } from '@/engine/systems/clinics';
+import { practiceWait } from '@/engine/systems/appointments';
+import type { Clinic } from '@/engine/content/clinics';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
 import { LookRegion, Open, at } from '@/ui/looks';
@@ -23,7 +25,7 @@ import { CITIES } from '@/engine/content/geography';
 import { ABROAD, BENCHMARK_SOURCE, BENEFIT_STATE, CALIFORNIA_MANDATE, CALIFORNIA_UI, CONNECTICUT_UI, CARE, CHARITY, CHRONIC, DENTAL_PLANS, DENTAL_VISION, INSULIN, PHARMACY, MEDICAL_DEBT, NEW_YORK_UI, PLANS_SOURCE, PREMIUM_CREDIT, PUBLIC_COVER, RETURN } from '@/engine/content/safetynet';
 import { PLAN, SUBSTITUTE, type Filed, amendRefusal, deadline, leastMonthly, nonresidentDeadline, nonresidentFor, owedAll, owedOn, owedToOf, partsOn, planFee, planRefusal, returnsOf, ukTaxOn } from '@/engine/systems/taxreturn';
 import { SSN } from '@/engine/systems/taxid';
-import { agencyOf, financialStatement, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
+import { agencyOf, financialStatement, interestWords, orderWords, owedToState, payLateWords, statePlanFee, rulesOf, statePartsOn, stateDueOf, stateOwedOn, statePlanRefusal } from '@/engine/systems/statetax';
 import { FederalLien, StateLienAndPenalty } from '@/ui/components/LienPanels';
 import { STATE_UNRESEARCHED } from '@/engine/content/statetax';
 import { CONDITION_LABEL, DENIALS, PROGRAM_NAMES, type MedicalBill, benchmarkFor, coverLabel, coverOn, dentalPlanFor, grown, healthOf, mayEnroll, medicalDebtOf, aidRefusal, appealRefusal, planOf, prepayRefusal, type Condition, extraSupplyRefusal, fillsCharged, longestFillOf, type Chronic, careQuote, dentalYearOf } from '@/engine/systems/health';
@@ -87,7 +89,7 @@ function WhoIsOwed({ year }: { year: number }) {
       {to.derived && <p className="xs dim" style={{ margin: 0 }}>The year’s withholding was kept as one total: SLATE divided it by the paychecks’ own tax table.</p>}
       {sides.map(([state, sd]) => {
         const rules = rulesOf(state);
-        const p = sd.owed ? statePartsOn(sd, r.due, sim.now) : undefined;
+        const p = sd.owed ? statePartsOn(sd, stateDueOf(r), sim.now) : undefined;
         const value = Math.round(Number(amounts[state] ?? '') * 100);
         return (
           <div key={state} className="col gap-2">
@@ -104,7 +106,7 @@ function WhoIsOwed({ year }: { year: number }) {
                 </div>
                 {rules && (sd.collection ?? 0) > 0 && <p className="xs dim" style={{ margin: 0 }}>{(sd.collection ?? 0) <= rules.notices.length ? `${rules.notices[(sd.collection ?? 1) - 1]!.code} sent.` : 'Its levy has been made.'}{rules.timingAssumed ? ' The days between its notices are SLATE’s.' : ''}</p>}
                 <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end' }}>
-                  <div className="field"><label htmlFor={`tax-pay-${state}-${year}`}>{`Pay ${stateName(state)} (Blank Pays It All)`}</label><input id={`tax-pay-${state}-${year}`} inputMode="decimal" value={amounts[state] ?? ''} onChange={(e) => setAmounts({ ...amounts, [state]: e.target.value })} placeholder={(stateOwedOn(sd, r.due, sim.now) / 100).toFixed(2)} /></div>
+                  <div className="field"><label htmlFor={`tax-pay-${state}-${year}`}>{`Pay ${stateName(state)} (Blank Pays It All)`}</label><input id={`tax-pay-${state}-${year}`} inputMode="decimal" value={amounts[state] ?? ''} onChange={(e) => setAmounts({ ...amounts, [state]: e.target.value })} placeholder={(stateOwedOn(sd, stateDueOf(r), sim.now) / 100).toFixed(2)} /></div>
                   <Gated feature="tax.pay_state" className="btn btn-sm" onClick={() => { const a = run<{ owed: number; tax: number; penalty: number; interest: number }>('tax.pay_state', amounts[state] ? { state, year, amount: value } : { state, year }); if (a.ok) { toast(a.value!.owed > 0 ? `Paid ${agencyOf(state)}: ${money(a.value!.tax)} to the tax, ${money(a.value!.penalty)} to penalties, ${money(a.value!.interest)} to interest. ${money(a.value!.owed)} still owed.` : `Paid ${agencyOf(state)} in full.`, 'positive'); setAmounts({ ...amounts, [state]: '' }); } }}>Pay</Gated>
                   <HowItWorks help="tax.pay_state" />
                 </div>
@@ -456,11 +458,13 @@ function ReturnsPane() {
           // Shown, not owed: the employer withholds and remits it, and nobody files it (from 2026-10-11).
           ['Denver Occupational Privilege Tax, Withheld And Remitted By The Employer', f.denverOpt ?? 0],
         ];
+        // A 1040-NR with no wages is the IRS’s in June, its state part still April’s (`stateDueOf`): said beside it from
+        // 2026-10-15, when until then only “Due June 15” was, and Connecticut’s bill came 30 days after April 15.
         return (
           <Panel
             key={r.year}
             title={`${r.year} Return`}
-            subtitle={r.filedAt !== undefined ? `${r.substitute ? 'Filed by the IRS' : 'Filed'} ${formatDate(r.filedAt, sim.zone)}` : `Due ${formatDate(r.due, sim.zone)}`}
+            subtitle={r.filedAt !== undefined ? `${r.substitute ? 'Filed by the IRS' : 'Filed'} ${formatDate(r.filedAt, sim.zone)}` : `Due ${formatDate(r.due, sim.zone)}${stateDueOf(r) !== r.due && (r.figures?.states ?? []).length ? `; ${(r.figures!.states ?? []).map((l) => stateName(l.state)).join(' and ')}’s ${formatDate(stateDueOf(r), sim.zone)}` : ''}`}
             actions={r.filedAt === undefined || r.substitute
               ? <Gated feature="tax.file" onClick={() => { const a = run<Filed>('tax.file', { year: r.year }); if (a.ok) toast(filedWords(a.value!, money, sim.zone), 'positive'); }}>{r.substitute ? 'File Your Own In Its Place' : 'File It'}</Gated>
               : undefined}
@@ -474,7 +478,7 @@ function ReturnsPane() {
                     <tr className="strong"><td>{f.balance > 0 ? 'You Owe' : 'Comes Back To You'}</td><td className="num mono">{money(Math.abs(f.balance))}</td></tr>
                     {r.penalty ? <tr><td>Late Penalties</td><td className="num mono">{money(r.penalty)}</td></tr> : null}
                     {r.owed ? <tr><td>Still Owed To The IRS, With Interest And Penalty To Date</td><td className="num mono">{money(owedOn(r, sim.now))}</td></tr> : null}
-                    {Object.entries(r.stateDue ?? {}).filter(([, sd]) => sd.owed).map(([state, sd]) => <tr key={state}><td>{`Still Owed To ${agencyOf(state)}, With Interest And Penalty To Date`}</td><td className="num mono">{money(stateOwedOn(sd, r.due, sim.now))}</td></tr>)}
+                    {Object.entries(r.stateDue ?? {}).filter(([, sd]) => sd.owed).map(([state, sd]) => <tr key={state}><td>{`Still Owed To ${agencyOf(state)}, With Interest And Penalty To Date`}</td><td className="num mono">{money(stateOwedOn(sd, stateDueOf(r), sim.now))}</td></tr>)}
                     {r.refundAt !== undefined ? <tr><td>Refund Arrives</td><td className="num mono"><Open subject={at('day', dateKey(r.refundAt, sim.homeZone))}>{formatDate(r.refundAt, sim.zone)}</Open></td></tr> : null}
                   </tbody>
                 </table>
@@ -528,7 +532,7 @@ function HealthPane() {
   const named = coverLabel(person, sim.now);
   const state = BENEFIT_STATE[homeOf(person)];
   const year = zonedParts(sim.now, sim.zone).year;
-  const may = mayEnroll(person, sim.now, cur);
+  const may = mayEnroll(person, sim.now, cur, sim);
   const ownPlan = [h.marketplace, h.program].find((r) => r && (r.until === undefined || r.until > sim.now));
   const enrolled = ownPlan !== undefined;
   const plan = planOf(person, sim.now);
@@ -553,7 +557,7 @@ function HealthPane() {
         <div className="col gap-3">
           <p className="small" style={{ margin: 0 }}>
             {enrolled ? `Enrolled from ${formatDate(ownPlan!.from, sim.zone)}. ` : `${may.why} `}
-            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; from 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work or {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} earned a month at renewal, and SLATE counts last month’s hours and pay of work, work-study’s and the Summer Cabaret’s; a benefit, interest or a pension isn’t work.{' '}
+            On a low month’s income, Medicaid (Medi-Cal in California, HUSKY D in Connecticut) takes you at 138% of the poverty line, in New York the Essential Plan to 200%, and in Connecticut Covered Connecticut to 175% of the year before’s, at any time and with no premium; Covered Connecticut comes with the premium tax credit, from 100% of the poverty line, and from 2027 a student in F-1 status or a graduate on OPT has none. From 2027 Medicaid asks for {PUBLIC_COVER.workHours} hours’ work, {formatMoney(inSaveMoney(sim, PUBLIC_COVER.workEarnings, 'USD'), cur)} earned or school at least half-time in the month before you apply and at renewal, and SLATE counts last month’s hours and pay of work, work-study’s and the Summer Cabaret’s; a benefit, interest or a pension isn’t work.{' '}
             You pay the whole premium each month, and the return gives back what’s over your share of income: none over {PREMIUM_CREDIT.cutoff * 100}% of the poverty line, since the enhanced credits ended with 2025.
             {CITIES.get(person.currentLocationId)?.parentId === 'us-ca' ? ` In California a month without cover costs its penalty on the return: the greater of ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.flat, 'USD'), cur)} a year and ${CALIFORNIA_MANDATE.share * 100}% of income, a twelfth a month, to ${formatMoney(inSaveMoney(sim, CALIFORNIA_MANDATE.bronzeMonth, 'USD'), cur)}; ${h.uncoveredInCalifornia[year] ?? 0} this year so far.` : ''}
           </p>
@@ -577,8 +581,8 @@ function HealthPane() {
           {bills.length > 0 && (
             <div className="table-scroll">
               <table>
-                <thead><tr><th scope="col">Care</th><th scope="col">When</th><th scope="col" className="num">Your Share</th><th scope="col">Due</th><th scope="col">Assistance</th></tr></thead>
-                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.amount, cur)}</td><td>{b.paid ? 'Settled' : b.inDebt ? 'Owed As Debt' : formatDate(b.dueAt, sim.zone)}</td><td>{b.denied && (b.denied.outcome ? <span className="xs dim">{b.denied.outcome === 'upheld' ? 'Denial Upheld' : 'Denial Overturned'}</span> : appealRefusal(b, sim.now) ? <span className="xs dim">{b.denied.appealedAt ? 'Appealed' : 'Denied'}</span> : <Gated feature="health.appeal" className="btn btn-sm btn-ghost" title={`It’s decided in ${DENIALS.decideDays} days, and insurers uphold ${pct(DENIALS.upheld)} of appeals.`} onClick={() => { if (run('health.appeal', { billId: b.id }).ok) toast(`Appealed: decided in ${DENIALS.decideDays} days.`, 'positive'); }}>Appeal It</Gated>)}{b.aid ? aidWord(b.aid) : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? `Your income is over the policy’s ${pct(CHARITY.connecticut.discountTo)}.` : 'The hospital took the charity off it.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td></tr>)}</tbody>
+                <thead><tr><th scope="col">Care</th><th scope="col">When</th><th scope="col" className="num">Your Share</th><th scope="col">Due</th><th scope="col">Assistance</th><th scope="col" className="num">Plan Paid</th></tr></thead>
+                <tbody>{bills.map((b) => <tr key={b.id}><td>{titleCaseLabel(b.what)}</td><td>{formatDate(b.at, sim.zone)}</td><td className="num mono">{formatMoney(b.amount, cur)}</td><td>{b.paid ? 'Settled' : b.inDebt ? 'Owed As Debt' : formatDate(b.dueAt, sim.zone)}</td><td>{b.denied && (b.denied.outcome ? <span className="xs dim">{b.denied.outcome === 'upheld' ? 'Denial Upheld' : 'Denial Overturned'}</span> : appealRefusal(b, sim.now) ? <span className="xs dim">{b.denied.appealedAt ? 'Appealed' : 'Denied'}</span> : <Gated feature="health.appeal" className="btn btn-sm btn-ghost" title={`It’s decided in ${DENIALS.decideDays} days, and insurers uphold ${pct(DENIALS.upheld)} of appeals.`} onClick={() => { if (run('health.appeal', { billId: b.id }).ok) toast(`Appealed: decided in ${DENIALS.decideDays} days.`, 'positive'); }}>Appeal It</Gated>)}{b.aid ? aidWord(b.aid) : aidRefusal(b, sim.now) ? '' : <Gated feature="health.apply_aid" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ aid: string }>('health.apply_aid', { billId: b.id }); if (r.ok) toast(r.value!.aid === 'refused' ? `Your income is over the policy’s ${pct(CHARITY.connecticut.discountTo)}.` : 'The hospital took the charity off it.', r.value!.aid === 'refused' ? 'neutral' : 'positive'); }}>Apply For Assistance</Gated>}</td><td className="num mono">{b.covered ? formatMoney(b.covered.planPaid, cur) : ''}</td></tr>)}</tbody>
               </table>
             </div>
           )}
@@ -877,19 +881,29 @@ function YourDoctor() {
   const prepay = useFeature('health.prepay');
   const cancelAppt = useFeature('health.cancel_appointment');
   const american = person.currentLocationId.startsWith('us-');
-  const practices = clinicsIn(person.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind));
+  // The practices that would see them now: a practice for its members only while they're one (`clinicRefusal`, from
+  // 2026-10-15, when New Haven gained Yale Health's Student Health beside Fair Haven).
+  const practices = clinicsIn(person.currentLocationId).filter((c) => DOCTOR_KINDS.includes(c.kind) && clinicRefusal(person, c.id, sim.now) === undefined);
   if (practices.length === 0) return null;
-  // Your Doctor is a choice only where the town keeps two practices or more (from 2026-10-13: until then New Haven's
+  // Your Doctor is a choice only where two practices or more would see them (from 2026-10-13: until then New Haven's
   // one, Fair Haven, was offered beside The Town's First Practice, the same place, and choosing it changed no booking,
-  // bill or price; found by the second round of that day). With one, the line below names it.
+  // bill or price; found by the second round of that day). With one, the line below names it. From 2026-10-15 a Yale
+  // student has two there, and somebody Yale Health doesn't cover one.
   const choosing = practices.length > 1;
   // The empty choice is shown only while nothing here is chosen, as what's had then (from 2026-10-12: until then it
   // was offered after a choice too, and picking it did nothing, since the engine refuses an empty one).
   const ownPractice = practices.find((c) => c.id === person.health?.clinicId);
   const ownChain = US_PHARMACIES.find((c) => c.id === person.health?.pharmacy);
-  const doctor = clinicFor(person, 'visit');
-  const urgent = clinicFor(person, 'urgent');
-  const emergency = clinicFor(person, 'emergency');
+  const doctor = clinicFor(person, 'visit', sim.now);
+  // What each practice would cost a visit and how soon it books one, where the wait is one number (from 2026-10-15, when
+  // a Yale Health member's visit at Fair Haven stopped being Yale Health's to pay: until then each read its name alone).
+  const practiceWords = (c: Clinic) => {
+    const days = practiceWait(person, c);
+    const wait = days === undefined ? '' : days === 1 ? ', The Next Weekday' : `, A ${days}-Day Wait`;
+    return `${c.name}, A Visit ${formatMoney(careQuote(sim, person, 'visit', sim.now, c.id), cur)}${wait}`;
+  };
+  const urgent = clinicFor(person, 'urgent', sim.now);
+  const emergency = clinicFor(person, 'emergency', sim.now);
   // What shuts both prepayments: the engine's refusal, or the guide's while its chapter is unread, as their title says.
   const noPrepay = prepayRefusal(sim, person) ?? prepay.reason;
   return (
@@ -901,8 +915,8 @@ function YourDoctor() {
               <div className="field">
                 <label htmlFor="own-doctor">Your Doctor</label>
                 <select id="own-doctor" value={ownPractice?.id ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (e.target.value && run('health.choose_clinic', { clinicId: e.target.value }).ok) toast('Your doctor, chosen.', 'positive'); }}>
-                  {!ownPractice && <option value="">The Town’s First Practice</option>}
-                  {practices.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                  {!ownPractice && <option value="">{doctor && doctor.members !== null ? 'As Your Cover Has It' : 'The Town’s First Practice'}</option>}
+                  {practices.map((c) => <option key={c.id} value={c.id}>{practiceWords(c)}</option>)}
                 </select>
               </div>
             )}
@@ -948,7 +962,7 @@ function YourDoctor() {
             <WhyNot reasons={[['Book An Appointment', bookAgain.reason]]} />
           </div>
         )}
-        <Fine>The practices, clinics and hospitals are real. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
+        <Fine>The practices, clinics and hospitals are real. A practice that publishes how soon it sees people books for that: Yale Health’s Student Health, for Yale students it covers, offers the same day or the next, and SLATE books the next; elsewhere the town’s published wait stands. Uninsured, an urgent visit at one that publishes its self-pay price is that price: CityMD’s, which two sources put at $225 and $250, taken at the middle, and Exer’s $215. An emergency keeps you the department’s median time, missing what that time held. In America, a generic is filled at your pharmacy’s own cash price, a plan’s copay never more.</Fine>
       </div>
     </Panel>
   );

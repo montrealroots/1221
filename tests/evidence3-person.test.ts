@@ -26,6 +26,11 @@
  *   interests, in the plural or the singular ("an interest", "each interest", "the interest look"), passes only with a
  *   word of the removal (removed, deleted, went, dropped, 2026-10-10, migration 93 or 94), or read here and listed true.
  *   "until", "gone", "no longer", "drops" and "lets go", which a present-tense sentence has, no longer pass alone.
+ *   From 2026-10-15 it is stricter still. A removal word after a present or future auxiliary isn't the past ("is
+ *   dropped", "are removed"), and "went" counts only where the removal ends a clause or says when ("went on
+ *   2026-10-10", not "went into every meal"). A clause that has the interests do something in the present fails a
+ *   sentence whatever else it says. A possessive's or an adjective's singular ("your interest", "a favorite interest")
+ *   names them. The check of 2026-10-14 found each of those passed the rule of that day.
  *
  * The figures are the rules' own numbers worked here by hand and written as literals: a knob's lean bent inside its
  * limits, exp(L·tanh(ln v / L)) with L the log of the limit it leans toward (`KNOB_LIMITS`); the families' money the
@@ -596,15 +601,68 @@ function proseOf(file: string, text: string): string[] {
 /** Money's interest in a phrase of its own: a penalty, a rate, a charge, a transaction, interest-free. Read as money's. */
 const MONEYS = /\binterest(?:[- ](?:penalty|penalties|reduction|free|transactions?|rates?|charges?|payments?|bearing|frequency|income)|DuringTerm)\b/gi;
 /**
- * A sentence naming the interests the owner removed: the plural, or one of them in the singular ("an interest", "each
- * interest", "a loved interest", "the interest look", "an interest's hour"), or a name the code gave them. Money's
- * interest is a mass noun ("the interest", "its interest", "no interest") and isn't counted.
+ * The adjectives a singular of theirs took after a possessive ("her own favorite interest"), and the fewer after "a" or
+ * "the" ("a favorite interest"), where "the last interest day" is money's.
  */
-const NAMES = /\binterests\b|\ban interest\b|\b(?:each|every|one|loved|that|this)\s+interest\b|\binterest(?:'s|’s)\b|\binterest (?:looks?|hours?|lists?|sheets?|records?|kinds?|lines?)\b|byInterest|interest\.pursue|interestsRead|INTEREST_BY_ID|content\/interests|\binterest:[a-z_${]/i;
+const MOD = String.raw`(?:own|favou?rite|loved|chosen|new|first|second|last|single)`;
+const A_MOD = String.raw`(?:favou?rite|loved|chosen|new|single)`;
+/**
+ * One of the removed interests in the singular: "an interest", "each interest", "that interest", and from 2026-10-15
+ * a possessive's or an adjective's too ("your interest", "her own interest", "a favorite interest", "the loved
+ * interest"), which the rule of 2026-10-14 passed. Up to two adjectives ("her own favorite interest"): until the second
+ * pass of 2026-10-15 it took one, and the check of that day found "Her own favorite interest lifts a meal." passed
+ * (in the British spelling, which the tests write with an escape, since tools/spelling.mjs corrects the word).
+ * Money's interest is a mass noun ("the interest", "its interest", "no interest") and isn't counted; a possessive's
+ * money ("their interest and their reports") is read and listed below.
+ */
+const ONE = String.raw`\b(?:(?:an|each|every|one|that|this|another|your|my|our|her|his|their)(?:\s+${MOD}){0,2}|(?:a|the)(?:\s+${A_MOD}){1,2})\s+interest\b`;
+/**
+ * A sentence naming the interests the owner removed: the plural, one of them in the singular (`ONE`), "the interest
+ * look", "an interest's hour", or a name the code gave them.
+ */
+const NAMES = new RegExp(String.raw`\binterests\b|${ONE}|\binterest(?:'s|’s)\b|\binterest (?:looks?|hours?|lists?|sheets?|records?|kinds?|lines?)\b|byInterest|interest\.pursue|interestsRead|INTEREST_BY_ID|content\/interests|\binterest:[a-z_$\{]`, 'i');
 /** The law's interests, and the contacts' three (`interestsOf`), which went on 2026-10-09 in a removal of their own. */
 const OTHER = /best interests|three interests|interestsOf|beyond a job and interests/i;
-/** The removal's own words: what went, and when. "until", "gone", "no longer", "drops" and "lets go" aren't among them. */
-const REMOVAL = /\b(?:removed|deleted|went|dropped)\b|2026-10-10|migration 9[34]\b/i;
+/** A present or future auxiliary, which makes "removed" or "dropped" a present passive: "is dropped", "are removed". */
+const AUX = String.raw`(?:is|are|am|be|being|get|gets|getting|will|would|can|could|may|might|must|shall|should|’s|'s|’re|'re)`;
+/**
+ * The removal's own words: its date, migration 93 or 94, or "removed", "deleted", "dropped" or "went" in the past.
+ * From 2026-10-15 a verb after a present or future auxiliary, a word between them or not, isn't the past ("An interest
+ * is dropped from the sheet", "until they are removed"). "went" is the removal's only where it ends a clause or goes on
+ * to a date, a "that day" or a "when", or to what went with it ("went on 2026-10-10", "went that day", "went with
+ * them", "With them went"). Until the second pass of 2026-10-15 "went" before "on", "in the" or "at" was the removal's
+ * too, so "Interests went on lifting a meal." and "Interests went in the pot." passed. "until", "gone", "no longer",
+ * "drops" and "lets go" aren't among them.
+ */
+const REMOVAL = new RegExp(String.raw`2026-10-10|migration 9[34]\b|(?<!\b${AUX}\s+(?:\w+\s+)?)\b(?:removed|deleted|dropped)\b|\bwith (?:them|it) went\b|(?<!\b${AUX}\s+(?:\w+\s+)?)\bwent(?=\s+(?:on\s+\d|with\b|that\s+(?:day|week|month|year)\b|when\b)|\s*[.,;:)]|\s*$)`, 'i');
+/** A verb in the past, or a past participle: "-ed", and the irregular ones the tree's prose uses. */
+const PAST = String.raw`(?:[a-z]+ed|went|were|was|had|did|grew|gave|kept|made|said|stood|came|took|brought|ran|fed|sat|held|paid|won|lost|read|left|got|became|began|felt|found|knew|led|meant|met|put|saw|set|sent|spent|told|thought|wrote|gone|been|done|given|taken|known|shown|grown)`;
+/**
+ * What follows "interests" and isn't a verb in the present: the past, a function word, a noun they compound with,
+ * "too" ("it named the interests too until 2026-10-10") and "is", which a plural subject never takes ("every sentence
+ * naming the interests is in the past"). Each was found in the tree's dated notes when the list of 46 went.
+ */
+const NOT_PRESENT = String.raw`(?:${PAST}|is|too|and|or|nor|but|of|in|on|at|to|for|with|from|by|into|onto|than|as|like|beside|besides|behind|around|within|without|across|against|toward|towards|during|except|above|below|off|out|that|which|who|whose|where|when|while|if|so|the|a|an|its|their|his|her|no|not|anywhere|again|aside|among|between|before|after|until|since|because|about|over|under|through|per|via|section|list|sheet|record|step|field|question|screen|look|hour|lists|sheets|records|steps|fields)`;
+const ADV = String.raw`(?:still|also|now|only|never|always|all|then|just|both)`;
+/** A clause set off by commas between the subject and its verb: "The interests, removed by the owner, lift a meal." */
+const ASIDE = String.raw`(?:\s*,[^,.;:]{1,60},)?`;
+/** The present perfect, which is the past's: "Interests have been removed since 2026-10-10." */
+const PERFECT = String.raw`(?:have|has)\s+(?:${ADV}\s+)?${PAST}\b`;
+/**
+ * The removed interests as the subject of a verb in the present or the future, from 2026-10-15: "Interests lift a meal",
+ * "An interest grows", "Your interest lifts", "Interests will lift". A sentence with one isn't dated by a removal word in
+ * another clause ("Interests lift a meal, and the owner removed the crafts."). It's a heuristic over the words, not a
+ * parser: it catches the shapes its tests name.
+ *
+ * Until the second pass of 2026-10-15 the plural's verb was one of a closed list of 46, and the check of that day found
+ * "Interests shape a meal, and the owner removed the crafts." passed; any word after "interests" now counts but the past
+ * and the words in `NOT_PRESENT`. Until then too a clause between subject and verb ("The interests, removed by the
+ * owner, lift a meal.") and the future ("Interests will lift a meal until migration 94.") passed, and the present
+ * perfect "Interests have been removed since 2026-10-10." was taken for the present.
+ */
+const PRESENT = new RegExp(String.raw`\binterests${ASIDE}(?:\s+${ADV})?\s+(?!${PERFECT})(?!${NOT_PRESENT}\b)[a-z]+\b|(?:${ONE}|\binterest (?:look|hour))${ASIDE}(?:\s+${ADV})?\s+(?!${PERFECT})(?:is|has|does|will|shall|can|may|must|would|could|might|should|(?!(?:was|has)\b)[a-z]+[^s'’]s)\b`, 'i');
+/** Dated by the removal: one of its words, and no clause that names the interests in the present. */
+const dated = (sentence: string) => REMOVAL.test(sentence) && !PRESENT.test(sentence.replace(MONEYS, ''));
 
 /** Every sentence naming them without the removal's words, each read here on 2026-10-14 and found true, with why. */
 const READ_TRUE: readonly (readonly [file: string, sentence: string, why: string])[] = [
@@ -638,6 +696,12 @@ const READ_TRUE: readonly (readonly [file: string, sentence: string, why: string
   // the boats it describes: a dated record of what was built, not a claim about the game.
   ['docs/WORLD.md', 'It does for the mood what sitting out does, SLATE\'s estimate, and an interest in nature or sport lifts it more.', 'a retired document’s stage log, dated 2026-09-30'],
   ['docs/UNBITTEN.md', 'The rest were marked · at creation as said back only (`interestsRead`).', 'past: “were marked”'],
+  // Found by the possessive singulars of 2026-10-15 (`ONE`), and read that day: a scene’s brief, and money’s.
+  ['src/engine/content/briefs/briefs-c.ts', 'Every beat holds the joke and the fear together, and the last turns the joke against her own interest.', 'a scene’s brief: a character acting against her own interest'],
+  ['src/engine/content/briefs/briefs-e.ts', 'She’s working the inspector the whole scene, and his interest in the end is what she plays for.', 'a scene’s brief: what a character wants'],
+  ['tests/evidence-g13-money.test.ts', 'asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it', 'money’s interest: a card statement’s'],
+  ['tests/evidence-g13-money.test.ts', "- `credit score`: a statement day asked to move every morning moves once a cycle, so the statements, their due dates, their interest and their reports still come, and the score moves as a twin's who never moved it; a mark seven years old leaves at the month's end on the clock and gives 25 back, which a card application then reads, and the card's screen reprices; 80% of the limit used at a due date costs ten of the month's three points, 20% none; with no card open the record ages back 2 a month on the 1st to 680, and not with a payment late in the year; a Citi loan is priced by the record, 12.10% at 735 and 12.30% at 730.", 'money’s interest: a card statement’s'],
+  ['tests/evidence3-lifepapers.test.ts', "These two failed before: the CD paid out, and the CD broken, posted their interest and left the year's record at nothing.", 'money’s interest: a CD’s'],
 ];
 
 /** Each sentence that names them, in each file given. */
@@ -655,7 +719,7 @@ function namingIn(files: readonly string[]): { file: string; sentence: string }[
   }
   return found;
 }
-const unread = ({ file, sentence }: { file: string; sentence: string }) => !REMOVAL.test(sentence) && !READ_TRUE.some(([f, s]) => f === file && s === sentence);
+const unread = ({ file, sentence }: { file: string; sentence: string }) => !dated(sentence) && !READ_TRUE.some(([f, s]) => f === file && s === sentence);
 
 describe('i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular', () => {
   it('finds every present-tense claim the check of 2026-10-13 passed, and passes each one’s twin dated by the removal; money’s interest isn’t taken for them', () => {
@@ -682,6 +746,85 @@ describe('i-stale-claims: a rule a present-tense claim can’t pass by “until�
       'Only interest is paid from the books\' income in an interest transaction.',
       'Payments are applied in the best interests of the State.',
     ]) expect(at(money), money).toBe(false);
+  });
+
+  // From 2026-10-15. The check of 2026-10-14 ran this file's NAMES and REMOVAL and found each sentence below passed: a
+  // removal word took a present passive for the past, "went" counted wherever it stood, and NAMES had no possessive or
+  // adjective singular.
+  it('finds the present passives, “went into”, the possessive and adjective singulars and a present clause beside a past one, which the check of 2026-10-14 passed; passes their dated twins and the dated notes in the tree', () => {
+    const at = (sentence: string) => NAMES.test(sentence.replace(MONEYS, '')) && !OTHER.test(sentence) && unread({ file: 'src/x.ts', sentence });
+    for (const present of [
+      // The check's own examples.
+      'An interest is dropped from the sheet when the term ends.',
+      'Interests lift a meal until they are removed.',
+      'Interests went into every meal.',
+      'Your interest lifts a meal.',
+      'A favorite interest lifts a meal.',
+      // And their kin.
+      'Her interest in cooking lifts a meal.',
+      'Their favorite interest opens on the Profile.',
+      'My interest grows each week.',
+      'The interests are removed when a save opens.',
+      'Each interest will be dropped at the term’s end.',
+      'Interests are being removed from the sheet.',
+      'An interest gets quietly deleted once it is dropped.',
+      'Interests lift a meal, and the owner removed the crafts.',
+      'The interests still lift a meal until 2026-10-10.',
+      // A present passive in a clause after the interests' own verb in the past, which only REMOVAL's lookbehind on an
+      // auxiliary finds: `PRESENT` reads "lifted" and "grew" as the past, so without it "are removed" and "is dropped"
+      // dated these. Added on 2026-10-15, when a mutation dropping the lookbehind survived the examples above, each of
+      // whose present passives has the interests for its subject and is found by `PRESENT` too.
+      'Interests lifted a meal until they are removed.',
+      'An interest grew an ability, until it is dropped from the sheet.',
+    ]) expect(at(present), present).toBe(true);
+    for (const past of [
+      'An interest was dropped from the sheet when the term ended, until migration 94.',
+      'Interests lifted a meal until the owner removed them.',
+      'Interests went into every meal until 2026-10-10.',
+      'Your interest lifted a meal until the owner removed the interests on 2026-10-10.',
+      'A favorite interest was one more lift to a meal until migration 94 dropped it.',
+      // The dated notes in the tree, as they stand there on 2026-10-15: src/engine/domain/model.ts,
+      // src/engine/systems/enjoyment.ts, src/ui/looks/actor.tsx, tests/attributes-matrix.test.ts and docs/UNBITTEN.md.
+      'Beside them until 2026-10-10 were their interests, which the owner removed with the question at creation; migration 94 dropped them from every save.',
+      'With them went every list that existed only to be matched against them: the look-after menu\'s loves, the crafts at a stage, a rehearsal and a genre (`CRAFTS_AT`, `GENRE_CRAFTS`), a play read\'s, a template\'s (`Template.crafts`), and what creation said they moved (`interestsRead`).',
+      'An interest was one too, until the interests went on 2026-10-10.',
+      'The interests\' section went with them (2026-10-10).',
+      '- **Thirty-seven interests read nothing until they went on 2026-10-10, and most genres still read nothing.** Connected where a student\'s life has the thing: the plays are filed by kind (`genresOfPlay`), and until 2026-10-10 coursework was filed by the craft it was done in (`Template.crafts`), a play read by Reading, and Reading and Politics joined an evening unwinding.',
+      'On 2026-10-10 the owner removed the interests, with the crafts\' readers; the genres no play is of are still marked · (`genresRead`).',
+    ]) expect(at(past), past).toBe(false);
+    for (const money of [
+      'Your interest rate goes up to the purchase rate.',
+      'The interest is charged once.',
+      'Its interest is paid on the first of the month.',
+    ]) expect(at(money), money).toBe(false);
+  });
+
+  // From the second pass of 2026-10-15. The check of that day ran this file's own regular expressions in node and found
+  // each sentence below handled wrong: a plural verb outside the closed list of 46, "went" before "on", "in the" or
+  // "at", a clause between subject and verb, the future, two adjectives on a singular, and the present perfect.
+  it('finds a present verb outside any list, “went on” and “went in”, a verb past a clause set off by commas, the future and two adjectives, which the first pass of 2026-10-15 passed; passes the present perfect, which it flagged', () => {
+    const at = (sentence: string) => NAMES.test(sentence.replace(MONEYS, '')) && !OTHER.test(sentence) && unread({ file: 'src/x.ts', sentence });
+    for (const present of [
+      'Interests shape a meal, and the owner removed the crafts.',
+      'Interests reward an hour, as removed crafts did.',
+      'Interests went on lifting a meal.',
+      'Interests went in the pot.',
+      'Interests went at full value into every meal.',
+      'The interests, removed by the owner, lift a meal.',
+      'Interests, which the owner removed, still lift a meal.',
+      'Interests will lift a meal until migration 94.',
+      'Each interest will have been removed by the term’s end.',
+      'Her own favo\u0075rite interest lifts a meal.',
+      'Her own favorite interest lifts a meal.',
+    ]) expect(at(present), present).toBe(true);
+    for (const past of [
+      'Interests have been removed since 2026-10-10.',
+      'An interest has been removed since 2026-10-10.',
+      'Interests shaped a meal until the owner removed the crafts.',
+      'The interests, removed by the owner on 2026-10-10, lifted a meal before then.',
+      'Interests went on 2026-10-10, and with them the crafts.',
+      'Her own favorite interest lifted a meal until migration 94 dropped it.',
+    ]) expect(at(past), past).toBe(false);
   });
 
   it('keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside', () => {

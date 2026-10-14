@@ -15,7 +15,7 @@ import { newLifeConfig } from '@/engine/world/bootstrap';
 import { instantFromZoned } from '@/engine/core/time';
 import { YALE_DRAMA } from '@/engine/content/school';
 import { LAB_KIND } from '@/engine/systems/school';
-import { LAB_CODES, coursesOf, settleCourses } from '@/engine/systems/courserecord';
+import { LAB_CODES, coursesOf, settleCourses, tellFails } from '@/engine/systems/courserecord';
 
 const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour, minute: 0 }, 'America/New_York');
@@ -72,7 +72,11 @@ describe('the Incomplete notice', () => {
     const before = sim.universe.notifications.length;
     const settled = settleCourses(sim, sim.player, 0, () => ({ due: 0, notShown: 0 }));
     expect(settled.map((r) => r.result).sort()).toEqual(['fail', 'incomplete']);
+    // The Fail is told once the evaluation has settled the standing (`tellFails`, from 2026-10-15; until then
+    // `settleCourses` told it), so it's told here as the evaluation tells it, the School not ended.
+    tellFails(sim, sim.player, 0, false);
     const said = sim.universe.notifications.slice(before).filter((n) => n.category === 'school');
+    expect(said.map((n) => n.title).sort()).toEqual(['Incomplete: Acting I', 'Not Passed: Voice I']);
     const incomplete = said.find((n) => n.title === 'Incomplete: Acting I')!;
     expect(incomplete.body).toContain('a week’s each');
     for (const n of said) expect(`${n.title} ${n.body}`, n.title).not.toContain("'");

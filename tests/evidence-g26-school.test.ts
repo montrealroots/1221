@@ -440,6 +440,11 @@ describe('school.extend_incomplete', () => {
     expect(sim.execute({ kind: 'school.extend_incomplete', payload: { key: ACTING_I } }).error).toBe('There’s no Incomplete in that course.');
   }, 120_000);
 
+  // A test stood here on 2026-10-15 that marked this save's first year repeated by hand, a repeat with none of its terms,
+  // which no play makes, to protect the `repeatedYears` clause in `repeatOpen` (systems/courserecord.ts). The clause was
+  // removed later that day, when the count of semesters came to settle every repeated year itself, and the test with it.
+  // A Permanent Incomplete in a repeated year, offered nothing, is played in tests/scope-school.test.ts.
+
   it('is refused in its own words for a course passed and one never taken, and changes nothing', () => {
     const sim = thaw(incomplete());
     const passed = recordsOf(sim, 0).find(([, r]) => r.result === 'pass')!;

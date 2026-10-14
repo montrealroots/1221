@@ -92,7 +92,8 @@ export function noteMeeting(school: SchoolRecord, term: number, code: string, na
 
 /**
  * A term's courses settled at its evaluation: passed, incomplete or failed, each once. `shownShare` gives the share of
- * a course's work due in the term that was shown, or nothing where none was due.
+ * a course's work due in the term that was shown, or nothing where none was due. An Incomplete is told here; a Fail
+ * after the standing (`tellFails`).
  */
 export function settleCourses(sim: Simulation, person: Person, term: number, shownShare: (code: string) => { due: number; notShown: number }, perWeek: (code: string) => number = () => 1): CourseRecord[] {
   const school = person.school!;
@@ -119,9 +120,45 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
   }
   if (person.id === sim.universe.playerId) {
     for (const r of settled.filter((x) => x.result === 'incomplete')) sim.notify({ category: 'school', title: `Incomplete: ${r.name}`, body: `You were ill for ${r.excused} of its ${r.meetings} meetings. Make up ${r.owed} session${r.owed === 1 ? '' : 's'} of work with its teachers, a week’s each, by ${formatDate(r.dueBy!, sim.zone)}, on the Standing tab (it can be extended once by a month), or it becomes a Permanent Incomplete, with no credit, and the degree can’t be completed without it.`, importance: 80, route: '/workspace/school' });
-    for (const r of settled.filter((x) => x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed: at the year’s end you can ask to repeat the year, on the Standing tab.`, importance: 85, route: '/workspace/school' });
   }
   return settled;
+}
+
+/**
+ * The term's Fails, told once the evaluation has settled the standing (from 2026-10-15), so that the year's end is
+ * offered only where a repeat can still be asked for it: not where this evaluation ended the School (a dismissal, by
+ * the faculty's review or the warning unmet, or a degree withheld, as it always is for a retake failed in an additional
+ * term), nor where a repeat would take the degree past the nine semesters the Bulletin allows (`room`, the caller's
+ * count as the year's end makes it: after any repeat granted, that is every year, the year repeated with the rest), as
+ * `repeatRefusal` refuses them. Until 2026-10-15 `settleCourses`
+ * told them before the evaluation read them, and every Fail was told to ask at the year's end, which, after an
+ * additional term or a dismissal, “You’re not at school.” refused (found by the current scope's acceptance). Told after
+ * the standing's own notice, at the same instant, so a dismissal or a withholding reads before the Fails it came with.
+ * tests/scope-school.test.ts plays both dismissals, the review's and the warning unmet, against Fails that are offered,
+ * and a second year's fall Fail after the first year's repeat, at concern, offered nothing.
+ */
+export function tellFails(sim: Simulation, person: Person, term: number, ended: boolean, room: (academic: number) => boolean = () => true): void {
+  if (person.id !== sim.universe.playerId) return;
+  const school = person.school!;
+  // Until 2026-10-15 this also refused a Fail in an additional term (`school.extra?.term !== term`), which `ended`
+  // already settled: an additional term's evaluation is a last one (`evaluate`, systems/school.ts), so a retake failed
+  // in it ends the School, withheld (the year's end offered and refused beside the additional term, `offerRepeat`) or
+  // dismissed. `room` doesn't settle it alone: a retake of a first year's course counts thirteen semesters, a second's
+  // eleven, but a third's nine, which the nine allow (tests/scope-school.test.ts's played Movement Invention III, read
+  // in play that day). A mutation removing the clause survived that day, and it was removed.
+  const repeatable = (r: CourseRecord) => !ended && repeatOpen(r, room);
+  for (const r of Object.values(coursesOf(school)).filter((x) => x.term === term && x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed${repeatable(r) ? ': at the year’s end you can ask to repeat the year, on the Standing tab' : ''}.`, importance: 85, route: '/workspace/school' });
+}
+
+/**
+ * Whether the year a course was taken in could still be repeated for it: with room in the nine semesters for the spring
+ * that ends it. Earlier on 2026-10-15 it also refused a year in `repeatedYears`; that clause was removed the same day,
+ * when `room` came to count the terms still to be taken, as no state was left where it decided anything: a year
+ * repeated means a repeat granted, and the count is then ten or more (`repeatRoom`, systems/school.ts).
+ */
+function repeatOpen(r: CourseRecord, room: (academic: number) => boolean): boolean {
+  const academic = r.academic ?? r.term;
+  return room(academic % 2 === 0 ? academic + 1 : academic);
 }
 
 /** An Incomplete's reminder a week before its deadline, and the deadline. */
@@ -188,7 +225,7 @@ export function makeUpRefusal(sim: Simulation, person: Person, key: string): str
 }
 
 /** `onComplete` runs when an Incomplete becomes a pass, for the degree waiting on it. */
-export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation, person: Person, r: CourseRecord) => void, onPermanent: (s: Simulation, person: Person, r: CourseRecord) => void): void {
+export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation, person: Person, r: CourseRecord) => void, onPermanent: (s: Simulation, person: Person, r: CourseRecord) => void, room: (person: Person, academic: number) => boolean = () => true): void {
   sim.onCommand<{ key: string }, { madeUp: number; owed: number; passed: boolean }>('school.make_up', (p, { sim: s }) => {
     const person = s.player;
     const key = String(p?.key);
@@ -233,7 +270,10 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     // year’s end is offered only where none waits; read before `onPermanent` takes the wait away (from 2026-10-13: until
     // then a student whose degree it withheld was told to ask to repeat the year, which nothing then let them ask; found
     // by that day’s evidence pass).
-    const ask = person.school!.awaitingDegree ? '.' : ': at the year’s end you can ask to repeat the year, on the Standing tab.';
+    // Nor where a repeat would pass the nine semesters, which after any repeat granted it always would, the year repeated
+    // with the rest (`repeatOpen`, as `tellFails`; from 2026-10-15: until then a Permanent Incomplete in a repeated
+    // year, or in any year after a repeat, was told to ask, as the Fail notice was).
+    const ask = person.school!.awaitingDegree || !repeatOpen(r, (a) => room(person, a)) ? '.' : ': at the year’s end you can ask to repeat the year, on the Standing tab.';
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it${ask}`, importance: 85, route: '/workspace/school' });
     onPermanent(s, person, r);
   });

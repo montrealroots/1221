@@ -164,12 +164,16 @@ export function bmiWord(bmi: number): string {
  * look and creation's Your Body read (creation once a birthplace is chosen, by the town the life begins in). Until then
  * creation asked in the units of where they were born, and a London-born student at Yale typed centimeters on the
  * screen that made her and read feet on her own page the first morning.
+ *
+ * `lives` is how the why says where the person lives: "where you live" for the player, and the caller's own words for
+ * anybody else ("where she lives", from the person look's `spokenOf`). Until 2026-10-15 it was a flag, `you`, whose
+ * "where they live" no caller asked for once the person look spoke of people in their own pronouns; that look rewrote
+ * the player's words in the finished sentence instead.
  */
-export function bodyUnits(livesIn: string, you = true): { imperial: boolean; why: string } {
+export function bodyUnits(livesIn: string, lives = 'where you live'): { imperial: boolean; why: string } {
   const countryId = countryOfPlace(livesIn);
   const imperial = countryId === 'us';
   const country = countryId ? COUNTRIES.get(countryId)?.name : undefined;
-  const lives = you ? 'where you live' : 'where they live';
   const where = country ? `${theCountry(country)}, ${lives}` : lives;
   return { imperial, why: imperial ? `In feet, inches and pounds, the units of ${where}.` : `In centimeters and kilograms, the units of ${where}.` };
 }

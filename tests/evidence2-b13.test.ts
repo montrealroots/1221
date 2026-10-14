@@ -15,9 +15,12 @@
  *   search for "interests" and for "interest". So are the tutorial's chapters, in the guide's own dialog. The first
  *   round read the guide and the tutorial as data only.
  * - i-stale-claims: the first round's past-tense check took "was", "had", "kept" and "named" for the past, so "The
- *   interests are kept on the sheet and named on the Profile." passed it, and it read five files. Here a sentence
- *   that names the removed interests passes if it carries a word that only history uses (until, went, removed,
- *   dropped, deleted, gone, no longer, let go, from before, 2026-10-10, migration 94). Otherwise it must be one of
+ *   interests are kept on the sheet and named on the Profile." passed it, and it read five files. Here, until
+ *   2026-10-15, a sentence that named the removed interests passed if it carried a word taken for history (until,
+ *   went, removed, dropped, deleted, gone, no longer, let go, from before, 2026-10-10, migration 94). "Interests lift
+ *   a meal until they are removed." passed that too. From 2026-10-15 it is held to tests/evidence3-person.test.ts's
+ *   stricter rule: dated by the removal in the past, with no clause that has the interests do something in the
+ *   present, and the possessive and adjective singulars named. Otherwise it must be one of
  *   the sentences listed below, read here and found true in the present tense: a statement of absence, a test's
  *   title, a message a test fails with, a fixture's description, or a sentence already in the past. The rule
  *   is held twice: over the places the row corrected, and over all of src/, tests/ and docs/. The first passed when
@@ -355,43 +358,122 @@ describe('i-ui-text', () => {
 // i-stale-claims
 // ---------------------------------------------------------------------------------------------------------------------
 
-/** A sentence that names the interests the owner removed, in a comment, a string or a doc. */
-const NAMES = /\binterests\b|byInterest|interest\.pursue|interestsRead|INTEREST_BY_ID|content\/interests|\binterest:[a-z_${]|^An interest(?:,| was| is)|\ban interest(?:'s|’s) hour\b|\binterests? (?:and|or|&) genres?\b|\bgenres? (?:and|or|&) interests?\b|\b(?:each|every) interest\b/i;
+// Until 2026-10-15 this file held its own rule: NAMES took the plural and a few singulars, and HISTORY took "until",
+// "went", "removed", "dropped", "drops", "deleted", "gone", "no longer", "let go", "lets go" and "from before" for the past,
+// so "Interests lift a meal until they are removed." passed it. From that day it holds the tree to the same rule as
+// tests/evidence3-person.test.ts, written out again here, since a test file can't import another's without running it.
+/** Money's interest in a phrase of its own: a penalty, a rate, a charge, a transaction, interest-free. Read as money's. */
+const MONEYS = /\binterest(?:[- ](?:penalty|penalties|reduction|free|transactions?|rates?|charges?|payments?|bearing|frequency|income)|DuringTerm)\b/gi;
 /**
- * Interests of another kind: the law's "best interests"; and the contacts' three interests (`interestsOf`), which went
- * in the owner's scope reset of 2026-10-09, a removal of their own, outside this row.
+ * The adjectives a singular of theirs took after a possessive ("her own favorite interest"), and the fewer after "a" or
+ * "the" ("a favorite interest"), where "the last interest day" is money's.
  */
+const MOD = String.raw`(?:own|favou?rite|loved|chosen|new|first|second|last|single)`;
+const A_MOD = String.raw`(?:favou?rite|loved|chosen|new|single)`;
+/**
+ * One of the removed interests in the singular: "an interest", "each interest", "that interest", and from 2026-10-15
+ * a possessive's or an adjective's too ("your interest", "her own interest", "a favorite interest", "the loved
+ * interest"), which the rule of 2026-10-14 passed. Up to two adjectives ("her own favorite interest"): until the second
+ * pass of 2026-10-15 it took one, and the check of that day found "Her own favorite interest lifts a meal." passed
+ * (in the British spelling, which the tests write with an escape, since tools/spelling.mjs corrects the word).
+ * Money's interest is a mass noun ("the interest", "its interest", "no interest") and isn't counted; a possessive's
+ * money ("their interest and their reports") is read and listed below.
+ */
+const ONE = String.raw`\b(?:(?:an|each|every|one|that|this|another|your|my|our|her|his|their)(?:\s+${MOD}){0,2}|(?:a|the)(?:\s+${A_MOD}){1,2})\s+interest\b`;
+/**
+ * A sentence naming the interests the owner removed: the plural, one of them in the singular (`ONE`), "the interest
+ * look", "an interest's hour", or a name the code gave them.
+ */
+const NAMES = new RegExp(String.raw`\binterests\b|${ONE}|\binterest(?:'s|’s)\b|\binterest (?:looks?|hours?|lists?|sheets?|records?|kinds?|lines?)\b|byInterest|interest\.pursue|interestsRead|INTEREST_BY_ID|content\/interests|\binterest:[a-z_$\{]`, 'i');
+/** The law's interests, and the contacts' three (`interestsOf`), which went on 2026-10-09 in a removal of their own. */
 const OTHER = /best interests|three interests|interestsOf|beyond a job and interests/i;
-/** Words only history uses. The first round also took "was", "had", "kept", "named", "carried" and "stood", which a present-tense sentence has too. */
-const HISTORY = /\b(?:until|went|removed|dropped|drops|deleted|gone|no longer|let go|lets go|from before)\b|2026-10-10|migration 94/i;
+/** A present or future auxiliary, which makes "removed" or "dropped" a present passive: "is dropped", "are removed". */
+const AUX = String.raw`(?:is|are|am|be|being|get|gets|getting|will|would|can|could|may|might|must|shall|should|’s|'s|’re|'re)`;
+/**
+ * The removal's own words: its date, migration 93 or 94, or "removed", "deleted", "dropped" or "went" in the past.
+ * From 2026-10-15 a verb after a present or future auxiliary, a word between them or not, isn't the past ("An interest
+ * is dropped from the sheet", "until they are removed"). "went" is the removal's only where it ends a clause or goes on
+ * to a date, a "that day" or a "when", or to what went with it ("went on 2026-10-10", "went that day", "went with
+ * them", "With them went"). Until the second pass of 2026-10-15 "went" before "on", "in the" or "at" was the removal's
+ * too, so "Interests went on lifting a meal." and "Interests went in the pot." passed. "until", "gone", "no longer",
+ * "drops" and "lets go" aren't among them.
+ */
+const REMOVAL = new RegExp(String.raw`2026-10-10|migration 9[34]\b|(?<!\b${AUX}\s+(?:\w+\s+)?)\b(?:removed|deleted|dropped)\b|\bwith (?:them|it) went\b|(?<!\b${AUX}\s+(?:\w+\s+)?)\bwent(?=\s+(?:on\s+\d|with\b|that\s+(?:day|week|month|year)\b|when\b)|\s*[.,;:)]|\s*$)`, 'i');
+/** A verb in the past, or a past participle: "-ed", and the irregular ones the tree's prose uses. */
+const PAST = String.raw`(?:[a-z]+ed|went|were|was|had|did|grew|gave|kept|made|said|stood|came|took|brought|ran|fed|sat|held|paid|won|lost|read|left|got|became|began|felt|found|knew|led|meant|met|put|saw|set|sent|spent|told|thought|wrote|gone|been|done|given|taken|known|shown|grown)`;
+/**
+ * What follows "interests" and isn't a verb in the present: the past, a function word, a noun they compound with,
+ * "too" ("it named the interests too until 2026-10-10") and "is", which a plural subject never takes ("every sentence
+ * naming the interests is in the past"). Each was found in the tree's dated notes when the list of 46 went.
+ */
+const NOT_PRESENT = String.raw`(?:${PAST}|is|too|and|or|nor|but|of|in|on|at|to|for|with|from|by|into|onto|than|as|like|beside|besides|behind|around|within|without|across|against|toward|towards|during|except|above|below|off|out|that|which|who|whose|where|when|while|if|so|the|a|an|its|their|his|her|no|not|anywhere|again|aside|among|between|before|after|until|since|because|about|over|under|through|per|via|section|list|sheet|record|step|field|question|screen|look|hour|lists|sheets|records|steps|fields)`;
+const ADV = String.raw`(?:still|also|now|only|never|always|all|then|just|both)`;
+/** A clause set off by commas between the subject and its verb: "The interests, removed by the owner, lift a meal." */
+const ASIDE = String.raw`(?:\s*,[^,.;:]{1,60},)?`;
+/** The present perfect, which is the past's: "Interests have been removed since 2026-10-10." */
+const PERFECT = String.raw`(?:have|has)\s+(?:${ADV}\s+)?${PAST}\b`;
+/**
+ * The removed interests as the subject of a verb in the present or the future, from 2026-10-15: "Interests lift a meal",
+ * "An interest grows", "Your interest lifts", "Interests will lift". A sentence with one isn't dated by a removal word in
+ * another clause ("Interests lift a meal, and the owner removed the crafts."). It's a heuristic over the words, not a
+ * parser: it catches the shapes its tests name.
+ *
+ * Until the second pass of 2026-10-15 the plural's verb was one of a closed list of 46, and the check of that day found
+ * "Interests shape a meal, and the owner removed the crafts." passed; any word after "interests" now counts but the past
+ * and the words in `NOT_PRESENT`. Until then too a clause between subject and verb ("The interests, removed by the
+ * owner, lift a meal.") and the future ("Interests will lift a meal until migration 94.") passed, and the present
+ * perfect "Interests have been removed since 2026-10-10." was taken for the present.
+ */
+const PRESENT = new RegExp(String.raw`\binterests${ASIDE}(?:\s+${ADV})?\s+(?!${PERFECT})(?!${NOT_PRESENT}\b)[a-z]+\b|(?:${ONE}|\binterest (?:look|hour))${ASIDE}(?:\s+${ADV})?\s+(?!${PERFECT})(?:is|has|does|will|shall|can|may|must|would|could|might|should|(?!(?:was|has)\b)[a-z]+[^s'’]s)\b`, 'i');
+/** Dated by the removal: one of its words, and no clause that names the interests in the present. */
+const dated = (sentence: string) => REMOVAL.test(sentence) && !PRESENT.test(sentence.replace(MONEYS, ''));
 
 /**
- * The sentences that name the interests with no word of history, each read here on 2026-10-13 and found true as it
- * stands, with why. Every one must still be where it's listed: one that's gone comes off this list.
+ * The sentences that name the interests and aren't dated by the removal, each read and found true as it stands, with
+ * why: here on 2026-10-13, and from 2026-10-15 the same list as tests/evidence3-person.test.ts's READ_TRUE, which the
+ * stricter rule needs. Every one must still be where it's listed: one that's gone comes off this list.
  */
 const READ_AND_TRUE: readonly (readonly [file: string, sentence: string, why: string])[] = [
-  ['src/engine/systems/enjoyment.ts', 'The interests (cooking, theater, a stage\'s crafts, travel and some sixty more) lifted an hour of looking after yourself, a rehearsal among crafts they loved, a play read, a piece of coursework in a craft; and from 2026-10-09 each was also an hour of its own (`interest.pursue`).', 'past: "lifted", "was", after "Until 2026-10-10 what somebody loved was two lists"'],
+  ['src/engine/index.ts', 'Let go of person’s interests / people’s interests: the game no longer keeps them.', 'migration 94’s message to an older save: what it did, and that the game keeps none now'],
+  ['src/engine/systems/enjoyment.ts', 'The interests (cooking, theater, a stage\'s crafts, travel and some sixty more) lifted an hour of looking after yourself, a rehearsal among crafts they loved, a play read, a piece of coursework in a craft; and from 2026-10-09 each was also an hour of its own (`interest.pursue`).', 'past: “lifted”, “was”'],
+  ['src/engine/systems/taxreturn.ts', 'Rounded so the parts add to the whole rounded once: the cent left over is the interest\'s.', 'money’s interest'],
   ['tests/attributes-matrix.test.ts', '## Interests', 'the heading the test holds gone'],
-  ['tests/cohesion.test.ts', 'these read somebody’s interests out of a save', 'a failing test’s message, over the list it expects: the migration alone'],
+  ['tests/cohesion.test.ts', 'puts them on the player; only enjoyment reads them, and nothing reads interests but the migration that drops them', 'a title: absence'],
+  ['tests/cohesion.test.ts', 'these read somebody’s interests out of a save', 'a failing test’s message'],
   ['tests/creation.test.ts', 'asks for genres and a background, no interests, and nothing with a number on it', 'a title: absence'],
   ['tests/creation.test.ts', 'the interests are back', 'a failing test’s message'],
   ['tests/creation.test.ts', 'carries the genres and the background, and no interests', 'a title: absence'],
   ['tests/creation.test.ts', 'Review shows interests again', 'a failing test’s message'],
   ['tests/evidence-g34-ui.test.ts', 'PLAYER JOURNEY: creation’s five steps name no interests; Genres & Background is headed Genres and Background, and none of its controls or Review’s says interest', 'a title: absence'],
-  ['tests/evidence-g34-ui.test.ts', 'PLAYER JOURNEY: the Profile, on the first morning and after a week lived, has no Interests section and no interest in its words or its controls; it says the genres back', 'a title: absence'],
   ['tests/evidence-g34-ui.test.ts', 'has no interest look: the registry has no such kind, an older save’s pointer to one opens nothing, and the person’s look says the films and no interests', 'a title: absence'],
   ['tests/evidence-g34-ui.test.ts', 'has no interests in the guide or the tutorial: no entry’s or chapter’s words name them, and every “interest” there is money’s', 'a title: absence'],
+  ['tests/evidence-g34-ui.test.ts', 'PLAYER JOURNEY: the Profile, on the first morning and after a week lived, has no Interests section and no interest in its words or its controls; it says the genres back', 'a title: absence'],
   ['tests/evidence-g34-ui.test.ts', 'has the capability documents pair no interest with love or enjoyment, and name no interests', 'a title: absence'],
   ['tests/evidence-g34-ui.test.ts', 'keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected', 'a title: what it holds'],
+  ['tests/evidence-g34-ui.test.ts', 'PLAYER JOURNEY: a 93 save opened through openSlot keeps the personality, the trait and the genres to the figure, drops the interests, writes the save back with the 93 as its backup, and a second open changes nothing', 'a title: what a migration does to an older save'],
+  ['tests/evidence-g34-ui.test.ts', 'Let go of 1 person’s interests: the game no longer keeps them.', 'migration 94’s message, expected'],
+  ['tests/evidence-g34-ui.test.ts', '- i-genres-dispositions-intact: a save written under schema 93 by a life made with a disposition on every axis away from creation\'s start, a trait and a loved genre, opened through `openSlot`: its personality, traits and genres are the 93 save\'s to the figure, the interests gone, the migrated save written back over the slot and the 93 kept as its backup, and a second open changes nothing.', 'what a migration does to an older save'],
+  ['tests/evidence-g34-ui.test.ts', 'TEST SETUP, said again where it\'s done: a row raised with `requireDecision` where nothing a student\'s life reaches raises one of that shape (dated 300 days on; every raiser in this build dates its row, none more than a return\'s four and a half months ahead); a save rewritten as schema 93 wrote it (the interests and their record put back, the version set to 93), as tests/migration-94.test.ts writes one; the day\'s dials each six hours (`tended`) and the coursework each midnight (`working`), so what the clock does at a call is what\'s measured and a student stays in good standing to the second year; and on creation\'s screens, the step and the config, which a static render can\'t click its way to.', 'a fixture, as 93 wrote it'],
+  ['tests/evidence-g34-ui.test.ts', 'TEST SETUP: the save as 93 wrote it, as tests/migration-94.test.ts writes one: interests on the sheet and an hour of one on record, the version 93; written to the device\'s store as the game writes a slot.', 'a fixture, as 93 wrote it'],
+  ['tests/migration-94.test.ts', 'drops the interests and their record, keeps the genres and the ledger, and says so', 'a title: what a migration does to an older save'],
+  ['tests/migration-94.test.ts', 'gives a new life no interests to drop', 'a title: absence'],
+  ['tests/migration-94.test.ts', 'A save as 93 wrote it: interests on the sheet, an hour of one on record, a genre studied, and a ticket paid.', 'a fixture, as 93 wrote it'],
+  ['tests/migration-94.test.ts', 'The genre studied before is still known, and an hour of an interest is no command at all.', 'absence: the command is unknown'],
+  // Found by this rule and not by the one before it, which took "an interest" only at a sentence's start. It stands
+  // in Stage 7d, "done 2026-09-30", of a document whose head says it was retired in the scope reset of 2026-10-09, with
+  // the boats it describes: a dated record of what was built, not a claim about the game.
+  ['docs/WORLD.md', 'It does for the mood what sitting out does, SLATE\'s estimate, and an interest in nature or sport lifts it more.', 'a retired document’s stage log, dated 2026-09-30'],
+  ['docs/UNBITTEN.md', 'The rest were marked · at creation as said back only (`interestsRead`).', 'past: “were marked”'],
+  // Found by the possessive singulars of 2026-10-15 (`ONE`), and read that day: a scene’s brief, and money’s.
+  ['src/engine/content/briefs/briefs-c.ts', 'Every beat holds the joke and the fear together, and the last turns the joke against her own interest.', 'a scene’s brief: a character acting against her own interest'],
+  ['src/engine/content/briefs/briefs-e.ts', 'She’s working the inspector the whole scene, and his interest in the end is what she plays for.', 'a scene’s brief: what a character wants'],
+  ['tests/evidence-g13-money.test.ts', 'asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it', 'money’s interest: a card statement’s'],
+  ['tests/evidence-g13-money.test.ts', "- `credit score`: a statement day asked to move every morning moves once a cycle, so the statements, their due dates, their interest and their reports still come, and the score moves as a twin's who never moved it; a mark seven years old leaves at the month's end on the clock and gives 25 back, which a card application then reads, and the card's screen reprices; 80% of the limit used at a due date costs ten of the month's three points, 20% none; with no card open the record ages back 2 a month on the 1st to 680, and not with a payment late in the year; a Citi loan is priced by the record, 12.10% at 735 and 12.30% at 730.", 'money’s interest: a card statement’s'],
+  ['tests/evidence3-lifepapers.test.ts', "These two failed before: the CD paid out, and the CD broken, posted their interest and left the year's record at nothing.", 'money’s interest: a CD’s'],
   // The first round’s i-ui-text line, “… no interests anywhere, and every “interest” left is money’s.”, stood here
   // until 2026-10-13: the older save this file opens falsified it, and it was corrected to say new lives.
   // Its i-stale-claims line stood here too until 2026-10-13, quoting the constant it says is named nowhere, so that file’s
   // own test of it found it here; the line now dates the removal, which needs no vouching.
-  ['tests/evidence-g34-ui.test.ts', 'TEST SETUP, said again where it\'s done: a row raised with `requireDecision` where nothing a student\'s life reaches raises one of that shape (dated 300 days on; every raiser in this build dates its row, none more than a return\'s four and a half months ahead); a save rewritten as schema 93 wrote it (the interests and their record put back, the version set to 93), as tests/migration-94.test.ts writes one; the day\'s dials each six hours (`tended`) and the coursework each midnight (`working`), so what the clock does at a call is what\'s measured and a student stays in good standing to the second year; and on creation\'s screens, the step and the config, which a static render can\'t click its way to.', 'a fixture, as 93 wrote it'],
-  ['tests/evidence-g34-ui.test.ts', 'TEST SETUP: the save as 93 wrote it, as tests/migration-94.test.ts writes one: interests on the sheet and an hour of one on record, the version 93; written to the device\'s store as the game writes a slot.', 'a fixture, as 93 wrote it'],
-  ['tests/migration-94.test.ts', 'gives a new life no interests to drop', 'a title: absence'],
-  ['tests/migration-94.test.ts', 'A save as 93 wrote it: interests on the sheet, an hour of one on record, a genre studied, and a ticket paid.', 'a fixture, as 93 wrote it'],
-  ['docs/UNBITTEN.md', 'The rest were marked · at creation as said back only (`interestsRead`).', 'past: "were marked"'],
 ];
 
 /** The places the row corrected on 2026-10-10 and the first round held. */
@@ -457,14 +539,14 @@ function namingIn(files: readonly string[]): { file: string; sentence: string }[
     for (const passage of proseOf(file, text)) {
       for (const s of passage.split(/(?<=[.!?])\s+/)) {
         const sentence = s.trim();
-        if (NAMES.test(sentence) && !OTHER.test(sentence)) found.push({ file, sentence });
+        if (NAMES.test(sentence.replace(MONEYS, '')) && !OTHER.test(sentence)) found.push({ file, sentence });
       }
     }
   }
   return found;
 }
-/** A sentence that names them in the present, unread: no word of history, and not one read here and found true. */
-const presentTense = ({ file, sentence }: { file: string; sentence: string }) => !HISTORY.test(sentence) && !READ_AND_TRUE.some(([f, s]) => f === file && s === sentence);
+/** A sentence that names them in the present, unread: not dated by the removal, and not one read here and found true. */
+const presentTense = ({ file, sentence }: { file: string; sentence: string }) => !dated(sentence) && !READ_AND_TRUE.some(([f, s]) => f === file && s === sentence);
 
 describe('i-stale-claims', () => {
   it('tells a present-tense claim from its past-tense twin, where the first round’s check passed both', () => {
@@ -476,12 +558,31 @@ describe('i-stale-claims', () => {
     // The leftover in tests/attributes-matrix.test.ts names one interest beside the genres, and is found by it.
     expect(at('every interest and genre has its definition, every ability its saved place and reader.')).toBe(true);
     expect(at('every genre has its definition, and every interest had one until the interests went on 2026-10-10.')).toBe(false);
+    // From 2026-10-15, what this file's own rule of 2026-10-13 passed: a present passive with a removal word, "went"
+    // that isn't the removal, a word of history ("until", "gone", "drops") on a present claim, and a possessive's or an
+    // adjective's singular. Each is found now, and its twin dated by the removal isn't.
+    for (const present of ['An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.', 'Interests went into every meal.', 'Your interest lifts a meal.', 'A favorite interest lifts a meal.', 'The interests are gone from the sheet once the player drops them.']) {
+      expect(at(present), present).toBe(true);
+    }
+    for (const past of ['An interest was dropped from the sheet when the term ended, until migration 94.', 'Interests lifted a meal until the owner removed them on 2026-10-10.', 'Your interest lifted a meal until the interests went on 2026-10-10.']) {
+      expect(at(past), past).toBe(false);
+    }
+    // From the second pass of 2026-10-15, what the first pass of that day handled wrong: a plural verb outside its list
+    // of 46, "went on" and "went in", a verb past a clause set off by commas, the future and two adjectives, all passed;
+    // and the present perfect, flagged.
+    for (const present of ['Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour, as removed crafts did.', 'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value into every meal.', 'The interests, removed by the owner, lift a meal.', 'Interests, which the owner removed, still lift a meal.', 'Interests will lift a meal until migration 94.', 'Each interest will have been removed by the term’s end.', 'Her own favo\u0075rite interest lifts a meal.']) {
+      expect(at(present), present).toBe(true);
+    }
+    for (const past of ['Interests have been removed since 2026-10-10.', 'An interest has been removed since 2026-10-10.']) {
+      expect(at(past), past).toBe(false);
+    }
     // Money's interest, and the law's, aren't the interests.
     expect(NAMES.test('A statement paid in full draws no interest.')).toBe(false);
     expect(NAMES.test('Payments are applied in the best interests of the State.') && !OTHER.test('Payments are applied in the best interests of the State.')).toBe(false);
   });
 
-  it('keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true', () => {
+  // Its title said "in the past, by a word only history uses" until 2026-10-15, of the HISTORY rule that went that day.
+  it('keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true', () => {
     const found = namingIn(CORRECTED);
     // Each of the five source files names them somewhere, so a walk that found nothing can't pass; the two capability
     // documents name none (the first round's test holds that they pair no interest with love or enjoyment).
@@ -492,7 +593,8 @@ describe('i-stale-claims', () => {
     expect(found.filter((f) => READ_AND_TRUE.some(([file, s]) => file === f.file && s === f.sentence)).map((f) => f.file)).toEqual(['src/engine/systems/enjoyment.ts']);
   });
 
-  it('keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside', () => {
+  // Its title said "in the past, by a word only history uses" until 2026-10-15, of the HISTORY rule that went that day.
+  it('keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside', () => {
     // The audit trail (docs/verification/, docs/GAMEPLAY-COVERAGE.md) quotes the leftovers it found; the research
     // records (docs/research/, docs/drill-down-research.json) are findings and readings of the code as of their own
     // dates; and this file quotes, as data, the sentences it lets stand. From 2026-10-14 tests/evidence3-person.test.ts is

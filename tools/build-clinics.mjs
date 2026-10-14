@@ -11,6 +11,8 @@ const j = JSON.parse(readFileSync('docs/research/world/research-health-visits.js
 const clinics = j.providers.map((p) => ({
   id: p.id, name: p.name, cityId: p.cityId, kind: p.kind, address: p.address ?? null, neighborhood: p.neighborhood ?? null,
   url: p.url ?? null, confirmed: p.confirmed === true,
+  // From 2026-10-15: whose members alone it sees, and the days to an appointment where its own pages publish them.
+  members: p.members ?? null, waitDays: typeof p.waitDays === 'number' ? p.waitDays : null,
 }));
 const selfPay = {};
 for (const v of j.visitPrices) {
@@ -33,7 +35,12 @@ const body = `/**
 
 export type ClinicKind = 'primary-care' | 'urgent-care' | 'walk-in' | 'emergency-department' | 'pharmacy' | 'pharmacy-clinic' | 'public-clinic';
 
-export interface Clinic { id: string; name: string; cityId: string; kind: ClinicKind; address: string | null; neighborhood: string | null; url: string | null; confirmed: boolean }
+/**
+ * \`members\`: the cover whose members alone it sees (\`'yale'\`, Yale Health’s), or nothing where it sees anybody;
+ * \`waitDays\`: the days to an appointment its own pages publish, or nothing where the town’s wait stands (both from
+ * 2026-10-15).
+ */
+export interface Clinic { id: string; name: string; cityId: string; kind: ClinicKind; address: string | null; neighborhood: string | null; url: string | null; confirmed: boolean; members: 'yale' | null; waitDays: number | null }
 
 export const CLINICS: readonly Clinic[] = ${JSON.stringify(clinics, null, 0).replace(/\},\{/g, '},\n  {')};
 

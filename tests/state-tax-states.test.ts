@@ -213,7 +213,9 @@ describe('collection by each state’s steps', () => {
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     const r = () => returnsOf(sim.player)['2026']!;
     expect(r().stateDue!['us-ga']!.owed).toBeGreaterThan(0);
-    play(sim, at(2027, 7, 1));
+    // Its notices 30, 45 and 45 days apart from the due date, 15 April 2027, the return filed before it: the execution
+    // on 13 August (from 2026-10-15, `stateNextNotice`; until then from filing, and played to 1 July).
+    play(sim, at(2027, 9, 1));
     const ga = r().stateDue!['us-ga']!;
     expect(titled(sim, /Georgia Issued A State Tax Execution/)).toHaveLength(1);
     expect(titled(sim, /Georgia Issued A State Tax Execution/)[0]!.body).toMatch(/The Collection Fee With The Execution, 20%, \$[\d,.]+, is added/);

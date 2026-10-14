@@ -1,0 +1,589 @@
+{
+ "key": "taxpapers",
+ "on": "2026-10-15",
+ "against": "bef4bde5",
+ "testFile": "tests/scope-taxpapers.test.ts",
+ "rows": [
+  {
+   "id": "tax.pay_state",
+   "before": "unresolved",
+   "after": "verified: reached by play on a student’s life (the Scraping family’s 2027 return owes Connecticut $585.33), through Papers’ Pay and the command, with the clock, the ledger and a reload; the bank-short refusal tested; every downstream played, a state plan ended paid by Pay among them (from the recheck of 2026-10-15). Two more defects fixed that day: Connecticut’s interest rounding (the bill $649.71, not $649.72) and its due date on a 1040-NR due in June, the one reached through TEST SETUP since no played life files such a return with Connecticut owed",
+   "disposition": "stale claim, then evidence added; three defects fixed on the way (collection before the due date; the interest’s rounding; a 1040-NR’s state due date)",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.pay_state and tax.lien_release > PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June, three months begun, $661.41 owed: $100 goes to the $58.53 penalty, the $17.55 interest and $23.92 of tax; more than is owed refused; the rest paid on Papers; the levy pending for 17 July taken off the calendar; the lien’s release asked once and given on 25 July, and no levy, across a reload",
+     "kind": "command, render, clock",
+     "proves": "Connecticut’s order (penalty, interest, tax) by hand-worked literals; refusals past what’s owed, for nothing, and past the bank; the levy shown pending for 17 July before the payment; the rest paid by pressing Pay; the ledger’s two postings from checking; the levy off the calendar once paid; no levy after, the clock past 17 July; persistence across a reload"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.pay_state and tax.lien_release > PLAYER JOURNEY: filed on 1 February unpaid, Connecticut’s bill waits for the 18 April due date and comes 30 days after it, $649.71, and its lien and notice of intent 30 days later, $655.56: until 2026-10-15 they came on 2 March and 1 April, and the bill said $649.72",
+     "kind": "clock",
+     "proves": "the notices that a payment stops, on the statute’s days, with amounts worked by hand, each month’s 1% to the cent read at once and charged month by month (failed before both fixes)"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.pay_state and tax.lien_release > PLAYER JOURNEY: her Connecticut plan in force, its first $48.78 taken on 2 March, the rest paid by Pay on Papers on 15 March: the plan ends paid, and takes nothing more",
+     "kind": "render, clock, command",
+     "proves": "a state plan ended paid by Pay on Papers, the plan’s later payments never taken, across a reload (killed with the plan-ending condition mutated)"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "Connecticut’s due date on a 1040-NR > a 1040-NR’s 15 June is the IRS’s alone: Connecticut’s bill comes 30 days after its own 15 April, $3.72, as on any return; until 2026-10-15 it waited for 15 July (TEST SETUP: her return’s due date put at a 1040-NR’s without wages)",
+     "kind": "clock, render; TEST SETUP of the return’s due date",
+     "proves": "Connecticut’s bill counted from its own 15 April on a 1040-NR due 15 June, $3.72 by hand (failed before the fix)"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Connecticut's (every state's) collection on a balance counted from the due date where that is still to come: a return filed early and unpaid had DRS's bill, its notice of intent and its lien before the tax was due. Conn. Gen. Stat. 12-734 ('due and unpaid') and 12-35(a) ('within thirty days from its due date'), read at codes.findlaw.com on 2026-10-15.",
+     "where": "src/engine/systems/statetax.ts stateNextNotice",
+     "test": "tests/scope-taxpapers.test.ts 'filed on 1 February unpaid, Connecticut’s bill waits …' and 'its first payment missed …' (both failed with the line reverted)"
+    },
+    {
+     "summary": "Connecticut’s interest ran in fractions of a cent and the whole owed was rounded, so the interest took a cent of the penalty’s rounding: the bill on $585.33 was $649.72, its interest $5.86, where 1% of $585.33 is $5.85 (Conn. Gen. Stat. 12-735). Each month’s interest is to the cent now (SLATE’s reading of “per month”), so it no longer hangs on how often the balance was brought up to date. What moved: the bill $649.72 → $649.71; the lien $655.57 → $655.56; on 25 June $661.42 → $661.41, the $100 splitting $17.56/$23.91 → $17.55/$23.92; the plan’s 1 May interest $4.87 → $4.88; three months read at once from the bill $17.57 → $17.55. Applies to every monthly-simple authority in STATE_TAX: Connecticut, Georgia, Hawaii, Oklahoma, and the Philadelphia, Columbus and Portland city taxes. No other test moved.",
+     "where": "src/engine/systems/statetax.ts stateAccrual (monthly-simple)",
+     "test": "tests/scope-taxpapers.test.ts ‘filed on 1 February unpaid …’, ‘a part refused in March …’, ‘asked for on Papers over 12 months …’ (all three failed with the line reverted)"
+    },
+    {
+     "summary": "A state’s penalty, interest and collection ran from the federal return’s due date, which for a 1040-NR without wages is 15 June. Connecticut’s return is due “on or before the fifteenth day of the fourth month” (Conn. Gen. Stat. 12-719(a), codes.findlaw.com, read 2026-10-15), and DRS’s Nonresident and Part-Year Resident Tax Information page (portal.ct.gov, read 2026-10-15) gives 15 April with no other date for a nonresident alien; DRS moves it past Emancipation Day as the IRS does (Form CT-1040NR/PY instructions for 2017: due 17 April 2018). stateDueOf takes the resident’s date for a 1040-NR; every state-side reader goes through it (statetax.ts, taxreturn.ts’s state lines, Papers’ state rows). The other states and cities in STATE_TAX take the same date as SLATE’s reading, unread state by state; no played life files in them.",
+     "where": "src/engine/systems/statetax.ts stateDueOf; its callers in statetax.ts, taxreturn.ts (latePenaltyAll, the three-year item, amendState, the federal offset split) and PapersWorkspace.tsx",
+     "test": "tests/scope-taxpapers.test.ts ‘a 1040-NR’s 15 June is the IRS’s alone …’ (failed with stateDueOf returning r.due)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June …’, ‘filed on 1 February unpaid, Connecticut’s bill waits for the 18 April due date …’ and ‘her Connecticut plan in force … the rest paid by Pay on Papers’ (a Scraping family’s student, played); ‘a 1040-NR’s 15 June is the IRS’s alone …’ (a London-born student, played, her return’s due date put by TEST SETUP); also tests/state-tax.test.ts and tests/liens-and-arrangements.test.ts on other states’ lives",
+    "issue": "Through Papers’ Pay and the command, a played student’s 2027 Connecticut balance is paid in part to the penalty, the interest and then the tax, refused past what’s owed and past the bank, and paid off, its pending levy canceled and its lien Paid; paid off while her plan is in force, the plan ends paid. Until 2026-10-15 Connecticut billed, liened and gave notice of levy before the tax was due on a return filed early, its interest took a cent of the penalty’s rounding, and on a 1040-NR due in June it waited for June.",
+    "downstream": "the state’s notices and levy, from its due date (from 2026-10-15), which stop once it’s paid (STATE_NOTICE_KIND); a state lien paid; a state plan ended paid"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  for (const part of order) {",
+     "replace": "  for (const part of (['tax', 'penalty', 'interest'] as const)) {",
+     "protects": "Connecticut's order: the $100's split"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "    if (amount > total) throw new CommandError(",
+     "replace": "    if (false) throw new CommandError(",
+     "protects": "the refusal past what's owed"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  const from = Math.max(sim.now, stateDueOf(r));",
+     "replace": "  const from = sim.now;",
+     "protects": "collection from the due date"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "interest += Math.max(0, months) * Math.round((i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0)));",
+     "replace": "interest += Math.max(0, months) * (i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0));",
+     "protects": "each month’s 1% to the cent: $649.71, $655.56, $17.55 read at once from the bill, $661.41, $4.88 (killed on 2026-10-15: three tests failed)"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "export const stateDueOf = (r: TaxReturn): Instant => (r.figures?.form === '1040-NR' ? Math.min(r.due, deadline(r.year)) : r.due);",
+     "replace": "export const stateDueOf = (r: TaxReturn): Instant => r.due;",
+     "protects": "Connecticut’s own due date on a 1040-NR due in June (killed on 2026-10-15: the bill pending 15 July, not 15 May)"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "&& owedToState(person, state, sim.now) <= 0) endStatePlan(sim, person, plan, 'paid', 'Paid off');",
+     "replace": "&& owedToState(person, state, sim.now) < 0) endStatePlan(sim, person, plan, 'paid', 'Paid off');",
+     "protects": "a state plan ended paid by Pay (killed on 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "one.payload.state === state) sim.timeline.cancel(one.id, sim.now);\n  // Everything owed",
+     "replace": "one.payload.state === state) void 0;\n  // Everything owed",
+     "protects": "the pending levy taken off the calendar once paid (killed on 2026-10-15)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "tax.pay_state: “a state plan ended paid” by Pay was reached by no test on the student’s life.",
+     "done": "Played: tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: her Connecticut plan in force, its first $48.78 taken on 2 March, the rest paid by Pay on Papers on 15 March: the plan ends paid, and takes nothing more’. Her plan applied for, its first payment taken, the rest paid by pressing Pay on Papers: status paid, why ‘Paid off’, no later plan payment, no notice, across a reload. The mutation of the plan-ending condition (<= 0 to < 0) fails it."
+    },
+    {
+     "problem": "The bill’s $649.72 against its parts ($585.33 + $58.53 + $5.85 = $649.71); the 1 May interest $4.87 against 1% of $487.77 = $4.88.",
+     "done": "A defect, fixed. The engine ran monthly interest in fractions of a cent and rounded the whole, giving the interest what was left. Each month’s 1% is to the cent now (stateAccrual). What moved: $649.72 → $649.71, $655.57 → $655.56, $661.42 → $661.41 (the $100 to $17.55 interest, $23.92 tax), $4.87 → $4.88, and a new assertion that three months read at once from the bill are $17.55, the same as charged month by month (it was $17.57). Rounding each part separately while keeping the unrounded monthly increments was tried first. For Connecticut it was equivalent once each month is to the cent, and it survived every tax test, so it was reverted rather than kept untested. The whole-rounding still applies to the daily-interest states, which no played life reaches."
+    },
+    {
+     "problem": "The “levy off the calendar” and “no levy after” checks never showed a levy pending first.",
+     "done": "tests/scope-taxpapers.test.ts ‘a part refused in March …’ now asserts the lien filed on 17 June and the levy pending for due+90 days (17 July) before the payment, then none pending after it, and that the reload’s clock is past 17 July with no levy notice. Mutating away the cancellation in applyStatePayment fails it. The title’s and the levied test’s ‘18 July’ were wrong. The levy is due + 90 days, 17 July at 11:59 pm, and both now say so."
+    },
+    {
+     "problem": "stateNextNotice’s fix counted from the federal due date for every state, citing only Connecticut; a 1040-NR with no wages is due 15 June.",
+     "done": "A defect, fixed. Conn. Gen. Stat. 12-719(a) and DRS’s nonresident page both give 15 April, with no nonresident-alien exception. stateDueOf gives a 1040-NR’s state side the resident’s date, and every state reader uses it. Tested by ‘a 1040-NR’s 15 June is the IRS’s alone …’, which fails with stateDueOf reverted. It needs TEST SETUP, the due date put at 15 June, because no played life files a wage-free 1040-NR with Connecticut owed: work-study is paid on the clock to every student with need from her first fall, the probe’s six London-born families all had $1,656.00 of it, and a student who withdraws on the first day is off her F-1 and has no return (probed 2026-10-15). The other states are scoped in stateDueOf’s comment as SLATE’s reading, not read state by state."
+    }
+   ]
+  },
+  {
+   "id": "tax.amend",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in play. Every writer to a year's record writes at the moment it pays into that moment's year, and a year's return is raised on 1 February of the next, so a filed year's figures never change; shown on the played life, whose 2028 CD interest lands after filing while 2026 and 2027 stay matched",
+   "disposition": "genuinely unreachable; stale claim corrected",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "what her life never reaches > tax.amend: her filed 2026 and 2027 match the record, and a year more on the clock leaves them so",
+     "kind": "command, clock",
+     "proves": "the refusal 'there’s nothing to amend' before and after a year; 2027's figures unchanged while 2028's interest is recorded"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "issue": "Unreachable in play: nothing a life does changes a filed year’s record (every income is recorded to the year it’s paid, and a year’s return is raised the February after), so a played student is told ‘there’s nothing to amend’ (tests/scope-taxpapers.test.ts). Its processing is tested on lives with a corrected W-2 set by hand (tests/tax-lifecycle.test.ts, tests/finance-paths.test.ts) and Connecticut’s part amended on a render (tests/defects-g8-8.test.ts:201); its Connecticut refund posting, its interest literals and newLiability’s join branch remain untested."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    if (change === 0 && now.irs === was.irs && !byState.length) throw",
+     "replace": "    if (false) throw",
+     "protects": "the played refusal: nothing to amend"
+    }
+   ],
+   "ownerDecision": "Whether tax.amend stays a live control that no current play can use (Amend The Return… is drawn shut with its reason on every filed year), or is classed with the other controls past a student's reach until a source of late-changing income (a corrected form, a late-reported payment) exists. Keeping it costs nothing in play; its processing stays evidenced only on hand-set lives.",
+   "tutorial": []
+  },
+  {
+   "id": "tax.revise_plan",
+   "before": "unresolved",
+   "after": "verified: played on the student's IRS plan in default, through the command and Papers' Revise The Plan; the fee seen leaving checking; the plan kept past the date it would have ended and its next payment taken at the revised amount, across a reload; three refusals",
+   "disposition": "missing evidence, now added",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.catch_up_plan and tax.revise_plan > PLAYER JOURNEY: revised on Papers for the IRS’s $6 once the CD is broken: in force again with the missed $23.62 still owed, past 1 April, and its next payment taken on 9 April at the amount it was revised to; below the least, or with no $6 in the bank, refused",
+     "kind": "command, render, clock",
+     "proves": "monthly read by the next payment ($100 taken, owed $1,600.39), the default lifted and its end canceled, the $6 posted from checking, the missed payment left owed, refusals for $23.61 and for no $6"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.catch_up_plan and tax.revise_plan > PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+     "kind": "clock, render, command",
+     "proves": "'Only a monthly plan in force is revised.' once ended, and no control drawn"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-taxpapers.test.ts ‘revised on Papers for the IRS’s $6 …’ and ‘left behind, it ends on 1 April …’ (a Scraping family’s student, played); tests/finance-paths.test.ts:183 on a New York life",
+    "issue": "Through Papers and the command, a played student’s IRS plan in default is revised for $6 from her checking, in force again with the missed payment still owed, kept past the date it would have ended, and its next payment taken at the revised amount, across a reload. Refused below the least a month, without the $6, and once ended.",
+    "entry": "Tax Returns: the plan’s Revise The Plan (PapersWorkspace.tsx:334)"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    plan.monthly = monthly;",
+     "replace": "",
+     "protects": "the next payment at the revised amount"
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    if (plan.status === 'default') { plan.status = 'active'; delete plan.defaultBy;",
+     "replace": "    if (false) { plan.status = 'active'; delete plan.defaultBy;",
+     "protects": "the default lifted"
+    }
+   ],
+   "tutorial": []
+  },
+  {
+   "id": "tax.catch_up_plan",
+   "before": "unresolved",
+   "after": "verified: played on the student's IRS plan, its first payment missed with her money in a CD; refused while the bank can't cover it, caught up on Papers once the CD is broken, the amount paid, owed falling, the next payment scheduled and taken, and the plan kept past the date it would have ended, across a reload",
+   "disposition": "missing evidence, now added; a defect fixed on the way",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.catch_up_plan and tax.revise_plan > PLAYER JOURNEY: caught up on Papers once the CD is broken: $23.62 paid, the plan in force past 1 April, when it would have ended, and its next payment taken on 9 April, across a reload",
+     "kind": "render, command, clock",
+     "proves": "the payment, owed to $1,676.77 then $1,653.15, the checking debit, the next TAX_PLAN_KIND, the end canceled, both refusals"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.catch_up_plan and tax.revise_plan > PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+     "kind": "clock, render",
+     "proves": "the twin without the catch-up ends and collection resumes once (failed before the fix)"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Opening a save while an IRS plan was pending, in force or behind put an IRS letter on the calendar (armCollection), and the plan's end put a second beside it: two letters for one year. A live plan now holds it.",
+     "where": "src/engine/systems/taxreturn.ts armCollection",
+     "test": "tests/scope-taxpapers.test.ts 'left behind, it ends on 1 April …' (failed with the line removed: two pending TAX_NOTICE_KIND)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-taxpapers.test.ts ‘caught up on Papers once the CD is broken …’ and ‘left behind, it ends on 1 April …’ (a Scraping family’s student, played); tests/finance-paths.test.ts:138 on a New York life",
+    "issue": "Through Papers and the command, a played student’s missed IRS plan payment is refused while her money is in a CD, then caught up: $23.62 paid, owed falling, the plan in force past the date it would have ended and its next payment taken, across a reload. Its twin left behind ends and collection resumes, one letter coming (until 2026-10-15 a reload while behind put two).",
+    "entry": "Tax Returns: the plan’s Catch Up (PapersWorkspace.tsx:328)"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    payPlan(s, person, due);",
+     "replace": "",
+     "protects": "owed falling by the payment"
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) continue;",
+     "replace": "",
+     "protects": "one IRS letter after a reload"
+    }
+   ],
+   "tutorial": [],
+   "survivingMutation": {
+    "file": "src/engine/systems/taxreturn.ts",
+    "find": "    for (const one of s.universe.scheduled) if (one.status === 'pending' && one.kind === TAX_PLAN_DEFAULT_KIND && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);",
+    "note": "Run on 2026-10-15: survives. The cancel in tax.catch_up_plan is redundant: TAX_PLAN_DEFAULT_KIND’s handler returns unless the plan is still in default, which a catch-up has already undone. Left in place (it keeps the calendar clean); not claimed as protected."
+   }
+  },
+  {
+   "id": "tax.apply_state_plan",
+   "before": "unresolved",
+   "after": "verified: Connecticut's plan asked for on Papers by a played student, decided at once, paid every 30 days to its end with the penalty taken first after the due date, no letter or lien; missed and ended at once; refused outside 2 to 12 months, twice, and while a levied year is still owed",
+   "disposition": "missing evidence, now added; a defect fixed on the way",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: asked for on Papers over 12 months, $48.78 a month, decided at once, its bill off the calendar; paid each 30 days, the third after the due date to its 10% penalty first, and paid off with no letter or lien, across a reload",
+     "kind": "render, clock",
+     "proves": "the toast, the approval words, notices held, payments and owed by hand, paid off, the ledger matching the plan's payments; the 1 May parts by hand, the interest 1% of $487.77 to the cent, $4.88 (it was $4.87 before the rounding fix of 2026-10-15)"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once, with no Catch Up offered or taken; collection resumes at the notice of intent, 30 days after the due date",
+     "kind": "clock, render, command",
+     "proves": "the missed payment's rule and collection resumed"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > refuses months outside 2 to 12 and a second plan, in Connecticut’s words, charging nothing",
+     "kind": "command",
+     "proves": "the refusals"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: a year Connecticut levied and was paid by the levy doesn’t refuse her a plan on the next: until 2026-10-15 it did, “won’t set up a plan on an account it has levied”",
+     "kind": "command",
+     "proves": "the fix (failed before)"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: a year levied and still owed does refuse it: her 2027 balance’s levy on 17 July finds nothing to take",
+     "kind": "clock, command",
+     "proves": "the notInCollection refusal reached by play"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Connecticut refused a plan to anyone it had ever levied, though the levy had paid the year off: only a levied year still owed refuses it now.",
+     "where": "src/engine/systems/statetax.ts statePlanRefusal",
+     "test": "tests/scope-taxpapers.test.ts 'a year Connecticut levied and was paid by the levy doesn’t refuse …' (failed with the condition reverted)"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-taxpapers.test.ts ‘asked for on Papers over 12 months …’, ‘its first payment missed …’, ‘refuses months outside 2 to 12 …’, ‘a year Connecticut levied and was paid by the levy …’, ‘a year levied and still owed …’ (a Scraping family’s student, played); tests/state-tax.test.ts and tests/liens-and-arrangements.test.ts for other states",
+    "issue": "Through Papers and the command, a played student’s Connecticut plan is decided at once, paid to its end, ended at once on a missed payment, and refused outside its months, twice, and while a levied year is still owed. Its fee, decision time and missed-payment rule are SLATE’s, said. Until 2026-10-15 a year paid off by levy refused every later plan.",
+    "entry": "Tax Returns: a state’s plan (StatePlanPanel’s Ask For The Plan, PapersWorkspace.tsx:210)"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": " > rules.notices.length && r.stateDue?.[state]?.owed)) return",
+     "replace": " > rules.notices.length)) return",
+     "protects": "a paid levied year not refusing a plan"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  } else if (!(months >= rules.plan.minMonths && months <= most)) {",
+     "replace": "  } else if (!(months >= 1 && months <= most)) {",
+     "protects": "the 2-month least"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "interest += Math.max(0, months) * Math.round((i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0)));",
+     "replace": "interest += Math.max(0, months) * (i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0));",
+     "protects": "each month’s 1% to the cent: $649.71, $655.56, $17.55 read at once from the bill, $661.41, $4.88 (killed on 2026-10-15: three tests failed)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "On 1 May the interest was asserted as $4.87 where 1% of $487.77 is $4.88; the literal followed the engine’s whole-rounding.",
+     "done": "Fixed with tax.pay_state’s rounding defect: each month’s interest is to the cent, the assertion now $4.88, and its comment works it from 12-735. The plan’s other assertions (paid off, the ledger matching, the tax summing to $585.33) hold unchanged."
+    }
+   ]
+  },
+  {
+   "id": "tax.catch_up_state_plan",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable in play. Connecticut is the only state a life files in, and its plan's cure is 'none', so a missed payment ends the plan at once and 'missed' never arises; shown by play: the plan ended, no Catch Up drawn, the command refused",
+   "disposition": "genuinely unreachable; stale claim corrected",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once, with no Catch Up offered or taken; collection resumes at the notice of intent, 30 days after the due date",
+     "kind": "clock, render, command",
+     "proves": "that the control is never offered for Connecticut and its command refuses"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "issue": "Unreachable in play: Connecticut, the only state a life files in, ends its plan at the first missed payment (cure ‘none’, SLATE’s reading), so no Connecticut plan is ever behind and Catch Up is never drawn; a played student’s missed plan ends and the command says ‘That plan isn’t behind.’ (tests/scope-taxpapers.test.ts). New York’s catch-up is tested on a New York life (tests/state-tax.test.ts:109), its consequences thinly."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/content/statetax.ts",
+     "find": "plan: { name: 'Installment Agreement', max: 50_000_00, minMonths: 2, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }",
+     "replace": "plan: { name: 'Installment Agreement', max: 50_000_00, minMonths: 2, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'next-due' }",
+     "protects": "Connecticut's plan ending at once (and so no catch-up)"
+    }
+   ],
+   "ownerDecision": "Whether to keep the state catch-up for states no life files in. It is unreachable while every life lives in New Haven; removing it would delete New York's and California's cure rules, keeping it leaves a command no play reaches.",
+   "tutorial": []
+  },
+  {
+   "id": "tax.lien_release",
+   "before": "unresolved",
+   "after": "verified: a played student’s Connecticut lien, filed by the clock at the notice of intent 60 days after the due date, shut with its reason until paid, asked once on Papers after payment, refused a second time, released 30 days on across a reload, with no levy after on a life shown to have one pending before it paid",
+   "disposition": "stale claim (fixture-only) now reached by play",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.pay_state and tax.lien_release > PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June, three months begun, $661.41 owed: $100 goes to the $58.53 penalty, the $17.55 interest and $23.92 of tax; more than is owed refused; the rest paid on Papers; the levy pending for 17 July taken off the calendar; the lien’s release asked once and given on 25 July, and no levy, across a reload",
+     "kind": "render, command, clock",
+     "proves": "the refusal before payment (rendered), the levy pending for 17 July shown before the payment and gone after it, the request and its date, the duplicate refused, the release and its notice, no levy notice with the clock past 17 July, ‘It’s been released.’ after"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "tests": "tests/scope-taxpapers.test.ts ‘a part refused in March …’ (a Scraping family’s student, played); tests/liens-and-arrangements.test.ts:75 and :93 on other lives; tests/guide-examples-papers.test.ts PLAYS['taxes.lien']",
+    "issue": "Through Papers and the clock, a played student’s Connecticut lien, filed at the notice of intent, is shut until paid, asked for once, and released 30 days on (SLATE’s days), across a reload. Hawaii’s $25 is tested on a Honolulu life."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "    releaseLater(s, person, r!, state);",
+     "replace": "",
+     "protects": "the release date and the release"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  if (l.releaseDue !== undefined) return",
+     "replace": "  if (false) return",
+     "protects": "a second request refused"
+    },
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "one.payload.state === state) sim.timeline.cancel(one.id, sim.now);\n  // Everything owed",
+     "replace": "one.payload.state === state) void 0;\n  // Everything owed",
+     "protects": "no levy after payment (killed on 2026-10-15)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The “no levy after” expectation would also pass if no levy had been due.",
+     "done": "Non-vacuous now: the same life shows the levy pending for 17 July before the payment, and the reload is past that date when no levy is found."
+    }
+   ]
+  },
+  {
+   "id": "tax.lien_dispute",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable for Connecticut, the only state a life files in. Its lien always secures tax still owed (a payment goes to the penalty and interest first, the lien is filed only while something is owed, and DRS assesses from the return's own figures); shown by play on both of her Connecticut liens, the 2027 one at the notice of intent and the 2026 one on DRS's assessment, replaced by her own return",
+   "disposition": "genuinely unreachable",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.pay_state and tax.lien_release > PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June, three months begun, $661.41 owed: $100 goes to the $58.53 penalty, the $17.55 interest and $23.92 of tax; more than is owed refused; the rest paid on Papers; the levy pending for 17 July taken off the calendar; the lien’s release asked once and given on 25 July, and no levy, across a reload",
+     "kind": "render, command",
+     "proves": "the control can't act on a played Connecticut lien"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: a year Connecticut levied and was paid by the levy doesn’t refuse her a plan on the next: until 2026-10-15 it did, “won’t set up a plan on an account it has levied”",
+     "kind": "command",
+     "proves": "the nearest case, an assessed lien replaced by her return, refused"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "issue": "Unreachable for Connecticut, the only state a life files in: its lien secures tax still owed whenever it’s filed, so on a played student’s liens, one at the notice of intent and one on DRS’s assessment replaced by her return, the button is shut and the command refused (tests/scope-taxpapers.test.ts). California’s withdrawal is tested by calling the engine’s functions (tests/liens-and-arrangements.test.ts:109)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  return Math.max(0, sd.balance) <= paidBefore;",
+     "replace": "  return true;",
+     "protects": "the refusal on a lien that secured tax owed"
+    }
+   ],
+   "ownerDecision": "Whether Ask For Its Withdrawal As Filed In Error stays drawn on a Connecticut lien. Under THE ONE RULE it is a control that never acts for Connecticut; it is drawn shut with its reason. Hiding it for Connecticut (src/ui/components/LienPanels.tsx, not this row's file) would say so on screen; keeping it keeps the lien panel the same for every state.",
+   "tutorial": []
+  },
+  {
+   "id": "tax.federal_lien_withdraw",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable. The IRS files its notice only on $10,000 or more at the LT11; a played student's year owes it under two thousand dollars ($1,746.41 at her LT11 on 20 June 2028), so no lien and no panel",
+   "disposition": "genuinely unreachable",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "what her life never reaches > tax.federal_lien_withdraw: her LT11 on 20 June is for $1,746.41, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn",
+     "kind": "clock, command, render",
+     "proves": "no lien filed at a played LT11, the command refused, no control drawn"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "issue": "Unreachable: a student’s year owes the IRS under two thousand dollars (her 2027 LT11 is for $1,746.41), against the notice’s $10,000 (tests/scope-taxpapers.test.ts). Tested on a New York life given $150,000 of wages by hand (tests/liens-and-arrangements.test.ts:141); the erroneous path is untested. SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate; her years together stay far under it either way."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "threshold: 10_000_00",
+     "replace": "threshold: 1_000_00",
+     "protects": "no lien at her LT11"
+    }
+   ],
+   "tutorial": []
+  },
+  {
+   "id": "tax.request_waiver",
+   "before": "unresolved",
+   "after": "unresolved: genuinely unreachable. Only Oregon charges the three-year penalty and every life files in Connecticut; shown on the played life (the refusal, no row drawn)",
+   "disposition": "genuinely unreachable",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "what her life never reaches > tax.request_waiver: only Oregon charges the three-year penalty, and she files in Connecticut alone",
+     "kind": "command, render",
+     "proves": "the refusal and no control drawn"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "issue": "Unreachable: only Oregon has the three-year penalty and every life files in Connecticut (tests/scope-taxpapers.test.ts). Tested on Oregon assessments set by calling the engine’s functions (tests/liens-and-arrangements.test.ts:259), at 25% only; a waiver larger than the penalty still owed drops the excess (statetax.ts, by reading, unconfirmed)."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/statetax.ts",
+     "find": "  if (!ty || !sd?.threeYear?.amount) return",
+     "replace": "  if (false) return",
+     "protects": "the refusal on a Connecticut year"
+    }
+   ],
+   "tutorial": []
+  },
+  {
+   "id": "documents.apply_ssn",
+   "before": "partial",
+   "after": "verified: application, the hour, the card’s 21 days, issuance and persistence are tested by play (tests/evidence-g17-papers.test.ts, tests/defects-r7-1.test.ts:65, tests/evidence3-lifepapers.test.ts). The readers that change an outcome are also played: the bank’s channel, the Connecticut ID card, the panel, and from the recheck of 2026-10-15 the 1040-NR’s W-7 weeks and the IRS plan online or by mail. Those two run on London-born lives with no setup (tests/scope-taxpapers.test.ts): a Scraping family student’s $329.56 refund from the 14% withheld on her scholarship comes in 21 days with the card and 70 without, and a Wealthy family student’s $165.60, with her money in a CD, is applied for online or by Form 9465. The older tests of the same two readers in evidence-g17-papers still put on income or empty the bank by TEST SETUP, said there. Discover also reads the number, ahead of a $25,000-a-year wage test no played life passes, so in play it changes only Discover’s words.",
+   "disposition": "stale claim corrected; two readers’ evidence moved from TEST SETUP to play on the recheck",
+   "testsAdded": [
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: her 1040-NR’s $329.56 back, from the 14% withheld on her scholarship, comes in the IRS’s 21 days with the card in hand; without it the W-7 holds it seven weeks more, 70 days",
+     "kind": "render, clock",
+     "proves": "the W-7 reader on a played needy international life: the refund worked by hand ($15,670.00 of income, $1,632.40 of tax, $1,961.96 withheld), 21 days with the card applied for on Papers’ Documents pane on 30 August, 70 without, none on day 69, the refund posted at each (killed with the hasSsn condition dropped from the ITIN wait)"
+    },
+    {
+     "file": "tests/scope-taxpapers.test.ts",
+     "title": "documents.apply_ssn on a London-born student > PLAYER JOURNEY: the IRS’s plan on the Wealthy family’s 1040-NR, $165.60 owed with her money in a CD: with the card come, applied for online on Papers and answered in a minute; without it, Form 9465 and 30 days",
+     "kind": "render, command, clock",
+     "proves": "the IRS plan reader on a played life whose money is in a CD: online and active in a minute with the card, Form 9465 and a 30-day decision without (killed with online forced true)"
+    }
+   ],
+   "fixes": [],
+   "guards": [],
+   "rowText": {
+    "downstream": "hasSsn: the bank’s channel (bankmoves.ts channelFor), the Connecticut ID card (identity.ts), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts), each tested by play: the last two on London-born lives with no setup (tests/scope-taxpapers.test.ts, from 2026-10-15), and in tests/evidence-g17-papers.test.ts with income or an empty bank put on by TEST SETUP. Discover (lending.ts:458) reads it too, before its $25,000-a-year wage test, which no played life passes, so in play the number changes only which refusal Discover gives; with wages set by hand it decides the loan (tests/evidence2-b06.test.ts, TEST SETUP).",
+    "tests": "tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: her 1040-NR’s $329.56 back, from the 14% withheld on her scholarship, comes in the IRS’s 21 days with the card in hand; without it the W-7 holds it seven weeks more, 70 days’ and ‘PLAYER JOURNEY: the IRS’s plan on the Wealthy family’s 1040-NR, $165.60 owed with her money in a CD: with the card come, applied for online on Papers and answered in a minute; without it, Form 9465 and 30 days’ (played); tests/evidence-g17-papers.test.ts (the application, the panel, the bank’s channel, played; the W-7 and plan readers with TEST SETUP); tests/defects-r7-1.test.ts:65; tests/evidence3-lifepapers.test.ts"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxid.ts",
+     "find": "  return citizenOf(person, 'US') || person.ssn?.status === 'issued';",
+     "replace": "  return citizenOf(person, 'US');",
+     "protects": "every reader's change once the card comes (evidence-g17-papers)"
+    },
+    {
+     "file": "src/engine/systems/taxid.ts",
+     "find": "    s.advanceTo(s.now + SSN.visitMinutes * 60_000);",
+     "replace": "",
+     "protects": "the office’s hour: the W-7 journey’s clock after the Documents pane’s press, 1 p.m. on 30 August from noon (killed on 2026-10-15: survived the run of that day, then failed once the clock was asserted)",
+     "run": true,
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "const itin = r.figures.form === '1040-NR' && !hasSsn(person) ? SSN.itinWeeks * 7 : 0;",
+     "replace": "const itin = r.figures.form === '1040-NR' ? SSN.itinWeeks * 7 : 0;",
+     "protects": "the card saving the W-7’s seven weeks on a played refund (killed on 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "    const online = hasSsn(person);",
+     "replace": "    const online = true;",
+     "protects": "Form 9465’s 30 days without the card on a played balance (killed on 2026-10-15)"
+    }
+   ],
+   "tutorial": [],
+   "recheck": [
+    {
+     "problem": "The W-7 reader’s test used $3,000 of work-study with $600 withheld as TEST SETUP, though a London-born needy student has a $329.56 refund from her scholarship’s withholding.",
+     "done": "Played: tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: her 1040-NR’s $329.56 back, from the 14% withheld on her scholarship, comes in the IRS’s 21 days with the card in hand; without it the W-7 holds it seven weeks more, 70 days’, a Scraping family life born in London with no setup, the card applied for by pressing Papers’ button on 30 August or never. 21 days against 70, the figures worked by hand."
+    },
+    {
+     "problem": "The IRS plan reader’s test used an emptied bank as TEST SETUP.",
+     "done": "Played: tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: the IRS’s plan on the Wealthy family’s 1040-NR, $165.60 owed with her money in a CD: with the card come, applied for online on Papers and answered in a minute; without it, Form 9465 and 30 days’, a Wealthy family life born in London (no scholarship, so $165.60 owed on her work-study), her savings and checking moved into a CD by the Bank screen’s commands before filing. Online in a minute against Form 9465’s 30 days."
+    },
+    {
+     "problem": "The row’s text (“every reader … tested by play”, “No income was invented”) overstated it.",
+     "done": "The `after` and rowText now say which readers are played where. The two evidence-g17 tests still use TEST SETUP, said so, and the played versions are in scope-taxpapers. The sentence “No income was invented and no eligibility loosened” is gone."
+    },
+    {
+     "problem": "Mutation survived (scratchpad/mutations4.json, 2026-10-15): removing `s.advanceTo(s.now + SSN.visitMinutes * 60_000)` in src/engine/systems/taxid.ts failed no test; no test read that applying took the office’s hour.",
+     "done": "Protecting something real: the hour the guide publishes (“60 minutes at the Social Security office, which the clock moves through”, content/guide/documents.ts, from `SSN.visitMinutes`, systems/taxid.ts). tests/scope-taxpapers.test.ts’s W-7 journey (‘PLAYER JOURNEY: her 1040-NR’s $329.56 back …’, its `filed(true)`) now asserts, after the Documents pane’s Apply press at noon on 30 August, the clock and `ssn.appliedAt` at 1 p.m. that day, worked by hand from the 60 minutes. The card’s “September 20” didn’t show it: 21 days on from noon or 1 p.m. Mutation applied: the journey failed; restored, it passes."
+    }
+   ]
+  }
+ ],
+ "outsideMyFiles": [
+  "tests/state-tax.test.ts (3 lines), tests/state-tax-states.test.ts (1), tests/tax-places.test.ts (1), tests/guide-examples-papers.test.ts (1): each re-read before the edit; their notices now counted from the due date, as stateNextNotice counts them from 2026-10-15. All pass.",
+  "tsc -b reports tests/scope-money.test.ts(11,27) 'formatDate' unused: another agent's file, untouched.",
+  "Owner decision, not taken: the IRS's letters still start five weeks after filing, before the due date on a return filed early (taxreturn.ts nextNotice). Counting them from the due date (IRC 6151(a), 6501(b)(1)) failed three gate tests that count from an early filing (tests/evidence-g17-papers.test.ts tax.notice ×2, tests/liens-and-arrangements.test.ts federal lien), so it was reverted and said in nextNotice's comment.",
+  "Recheck of 2026-10-15: src/engine/systems/taxreturn.ts (stateDueOf at five state-side reads: latePenaltyAll, the three-year item, amendState, the federal offset’s split) and src/ui/workspaces/PapersWorkspace.tsx (three state rows read through stateDueOf), each re-read before the edit; src/engine/content/guide/taxes.ts (Connecticut’s penalty and interest values, CT_LEVY_DAYS’s comment); scope/taxpapers-checklist.json’s tax.pay_state acceptance literals. Seventeen tax test files run: 235 passed."
+ ],
+ "mutationsRun": {
+  "on": "2026-10-15",
+  "run": 14,
+  "killed": 13,
+  "survived": 1,
+  "against": "tests/scope-taxpapers.test.ts"
+ },
+ "recheckMutationsRun": {
+  "on": "2026-10-15",
+  "against": "tests/scope-taxpapers.test.ts",
+  "run": 8,
+  "killed": 7,
+  "survived": 1,
+  "survivedWhat": "each part rounded alone in stateAccrual (in place of the whole), tried before the monthly fix and reverted: equivalent for Connecticut once each month is to the cent, and no tax test reached another state where it differs"
+ }
+}

@@ -1,0 +1,494 @@
+{
+ "key": "health",
+ "on": "2026-10-15",
+ "against": "bef4bde5",
+ "research": {
+  "file": "docs/research/world/research-health-visits.json",
+  "added": [
+   "providers: us-ct-yalehealth-studenthealth (Yale Health Center, Student Health, 55 Lock Street): Yale students only, free to an eligible student (Basic Student Health Services), 'a same-day or next-day appointment'; each quoted from yalehealth.yale.edu (department/student-health, how-make-appointment, health-coverage-overview-students-yale-health) and the School of Public Health Bulletin 2026–2027 (catalog.yale.edu), read 2026-10-15, verification fetched",
+   "providers: us-ct-fhchc-grand gained accepts (most private plans, Medicaid/HUSKY, Medicare, the uninsured on a sliding fee to 200% of the poverty line, anybody in its ten towns), quoted from fhchc.org/how-to-pay and /faq, read 2026-10-15; priceNote and waitNote: neither page publishes a fee, the sliding scale's amounts or a wait",
+   "prescriptionValidity.us-ct: Connecticut sets no period after which a prescription for a medicine that isn't controlled can't be filled; refills only on the prescriber's order (CGS 20-616(b)), except a pharmacist's one refill of at most a 72-hour supply when the prescriber can't be reached (20-616(c)) and a pharmacist's own prescription of up to a 30-day supply of insulin, glucagon, a diabetic ketoacidosis device and the devices to give them, for a patient with less than a week's supply (20-616(d), FindLaw's text read 2026-10-15; until the recheck of that day this named the 72 hours alone); the one one-year validity in the DCP Drug Control Division's compilation is CGS 21a-65(b), syringes. Read 2026-10-15 from cga.ct.gov chapter 400j and portal.ct.gov's lawbook.pdf",
+   "meta.amended for 2026-10-15"
+  ],
+  "builder": "tools/build-clinics.mjs carries each provider's members and waitDays into src/engine/content/clinics.ts (rebuilt)"
+ },
+ "rows": [
+  {
+   "id": "health.choose_clinic",
+   "before": "partial: for every played life (New Haven) the choice decided nothing; SLATE kept one doctor's practice there and Papers drew no Your Doctor. Where it decided something (London, Mexico City) only quickSave fixtures reached it.",
+   "after": "verified: a Yale student in New Haven picks between Fair Haven Community Health Care and Yale Health Center's Student Health on the rendered Your Doctor select. The pick decides the practice, how soon she's booked (the next weekday against 24 days), where the visit is had and named, and, Yale Health seeing only those it covers, what happens when that cover ends (refused, not offered, an appointment there not kept and owed again, booked at Fair Haven). Played through the select, the command and the clock, across reloads, against a twin.  On 2026-10-15 Yale Health’s own rule (“All care must be obtained at the Yale Health Center at 55 Lock Street unless it is an emergency…”, read that day) was kept: a member with nothing picked is seen at Yale Health Center, $0, the next weekday; a member who picks Fair Haven is billed SLATE’s uninsured price ($183.98 in 2026), paid once; a non-member keeps Fair Haven; an older save's default moves with the cover once, on its first opening, and a recorded pick stays (scope/yale-result.json). From the recheck of 2026-10-15 that move tells an older save from a current one (SaveUniverse.opened): until then it ran on every opening, and a booking made at Fair Haven while she was uncovered was had there and billed $187.20 played straight through, and at Yale Health for $0 after a reload. A booking is had where it was booked, whatever the cover does before its day, reloaded or not, as a pick's already was.",
+   "disposition": "implemented (a researched second New Haven practice whose access, appointment availability and continuity differ) and evidenced",
+   "testsAdded": [
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: the student who picks Yale Health on Your Doctor is booked the next weekday there, at $0; her twin who picks Fair Haven 24 days on there, billed the uninsured’s $183.98; each is seen where booked, across a reload",
+     "kind": "render+command+clock",
+     "proves": "Papers offers 'As Your Cover Has It', Fair Haven ('A Visit $183.98, A 24-Day Wait') and Yale Health ('A Visit $0.00, The Next Weekday'), and names Yale Health with nothing picked; the select's own onChange chooses Yale Health ('Your doctor, chosen.'), and the twin's chooses Fair Haven; the 31 August week books her Tuesday 1 September at ten at Yale Health (label, notice), the twin Thursday 24 September at Fair Haven; after a reload each is kept where booked: hers logged at $0, no bill, 'Nothing to pay.'; the twin's logged and billed $183.98, the plan paying none, its notice naming Yale Health's rule. (Until the recheck of 2026-10-15 this entry kept the title and proof the test had before Yale Health's rule was kept, both visits at $0.)"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health no longer covers her, so it refuses her in its words and Papers offers no Your Doctor, only Fair Haven; her twin still at the School picks it",
+     "kind": "render+command",
+     "proves": "the refusal through execute, nothing set; no select drawn, the line names Fair Haven; Fair Haven still choosable; the twin covered by Yale Health may choose it"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday, she isn’t seen there on Tuesday: “Not Seen At Your Practice”, owed, unbilled; Papers names Fair Haven, and Book An Appointment books it there 24 days on, across a reload",
+     "kind": "render+clock",
+     "proves": "continuity: the appointment item missed, owedVisit set, the notice's full words, no care logged; Papers' Book An Appointment pressed books Friday 25 September at Fair Haven and clears what's owed"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: a visit booked at Yale Health is had there though Fair Haven is picked before the day; until 2026-10-15 it was had wherever was picked on the day",
+     "kind": "command+clock",
+     "proves": "careFor names the practice the appointment was booked at"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > GUARD: a practice for its members isn’t given or chosen with no moment to read the cover at; every engine caller gives one",
+     "kind": "command",
+     "proves": "the undefined-moment guard in seesThem, clinicFor and clinicRefusal; not claimed reachable by a player"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a Yale Health member who picks nothing is booked at Yale Health the next weekday and seen there at $0, across a reload",
+     "kind": "render+clock+reload",
+     "proves": "The default follows the cover. Papers names Yale Health with nothing picked. The 31 August week books Tuesday 1 September at ten at Yale Health (label too). After a reload it is kept there: logged at $0, no bill, “Nothing to pay.” Failed before the change (the 'before' mutation set, run 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a member who picks Fair Haven on Your Doctor is billed the uninsured’s $183.98 for the visit the clock keeps there, paid once on its due day across reloads; her twin who picks nothing is seen at Yale Health at $0",
+     "kind": "render+command+clock+reload+twin",
+     "proves": "Picked on the rendered select's own onChange. Papers quotes $183.98 against the twin's $0.00. She is booked Thursday 24 September at Fair Haven, the twin Tuesday 1 September at Yale Health. Kept after a reload: a bill of 18,398 cents, due in 30 days, with no plan part, the notice's full words, and nothing toward Yale Health's out-of-pocket most. Reloaded again, it is paid once on 24 October from checking to Medical Care, and not again by 30 November. The twin logs $0 and pays nothing. $183.98 is worked by hand: round(round(10,000 × 439.389 ÷ 417.93) × 1.75). Failed before the change."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: somebody Yale Health doesn’t cover, withdrawn by the fifteenth day, is given Fair Haven with nothing picked, 24 days on, as before",
+     "kind": "command+clock",
+     "proves": "A non-member's default is unchanged: Fair Haven, Thursday 24 September, and the uninsured's $183.98 with nothing said of Yale Health. It passed before the change too, as a no-change guard should; it fails if the default ignores the cover (for example, if clinicFor drops seesThem for the members' practice)."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a save an older build wrote, its member booked at Fair Haven by default and her twin by a pick, is opened: the default’s appointment is had at Yale Health on its date at $0, once, the pick’s at Fair Haven at $183.98; the same appointment in a save this build wrote stays at Fair Haven",
+     "kind": "loadSave (TEST SETUP: a played save rewritten to what a build before 2026-10-15 wrote, its SaveUniverse.opened taken off)+clock",
+     "proves": "followTheCover, once: the same rewritten JSON with SaveUniverse.opened naming the step, as this build writes it, keeps the appointment at Fair Haven; with it taken off, as an older build wrote it, opening moves the default's appointment to Yale Health, keeps its date, renames its calendar entry and names the step, and it's kept there at $0. The recorded pick of Fair Haven stays and is billed $183.98. Fails with the step run on every opening (recheck, 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; the visit is had at Fair Haven and billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0",
+     "kind": "command+clock+reload",
+     "proves": "An Inherited citizen on a personal leave from 20 January 2027, uncovered; the 25 January week books Thursday 18 February at ten at Fair Haven; school.buy_affiliate makes the cover Yale Health's; played straight through, and reloaded twice before the day, the appointment and its calendar entry stay at Fair Haven, and the visit is logged and billed 18,720 cents (10,000 × 447.0783 ÷ 417.93 = 10,697 cents, × 1.75), its notice naming Yale Health's rule, the same both ways. Canceled and booked again on the command, she's booked at Yale Health and seen at $0. Fails with followTheCover run on every opening (recheck, 2026-10-15)."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 20 December 2027 week; back at the School on 3 January 2028, Yale Health covers her again, and the visit is had at Fair Haven and billed alike, played straight through and reloaded",
+     "kind": "command+clock+reload",
+     "proves": "The return from a leave: notice given, back on 3 January 2028 at nine, Yale Health covering her on the 13th; the booking made on Monday 20 December for Thursday 13 January at Fair Haven is kept there, played straight through and reloaded twice, logged and billed 19,049 cents (10,000 × 454.9022 ÷ 417.93 = 10,885 cents, × 1.75) both ways. Fails with followTheCover run on every opening (recheck, 2026-10-15)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "New Haven gained Yale Health Center's Student Health, a members-only practice (Yale Health covering them at the moment), with its own published wait (next weekday); clinicFor never gives a members-only practice with nothing chosen and gives the chosen one only while it sees them; clinicRefusal refuses it in Yale Health's words; Papers offers only practices that would see them",
+     "where": "docs/research/world/research-health-visits.json; tools/build-clinics.mjs; src/engine/content/clinics.ts (rebuilt); src/engine/systems/clinics.ts seesThem :44, clinicFor :54, clinicRefusal :77; src/ui/workspaces/PapersWorkspace.tsx :880-888",
+     "test": "the four PLAYER JOURNEYs above"
+    },
+    {
+     "summary": "A practice's own published wait books the appointment (book uses Clinic.waitDays before the town's)",
+     "where": "src/engine/systems/appointments.ts book :122-123",
+     "test": "…booked the next weekday there, her twin … 24 days on at Fair Haven…"
+    },
+    {
+     "summary": "An appointment at a members-only practice that no longer sees them isn't kept: missed, owed, 'Not Seen At Your Practice'",
+     "where": "src/engine/systems/appointments.ts APPOINTMENT_KIND handler :158-165",
+     "test": "…booked at Yale Health, then withdrawn the same Monday…"
+    },
+    {
+     "summary": "An appointment's visit is had and named at the practice it was booked at, not whichever is chosen on the day",
+     "where": "src/engine/systems/health.ts careFor :1270-1271 (event.clinicId); appointments.ts handler passes a.clinicId",
+     "test": "…a visit booked at Yale Health is had there though Fair Haven is picked before the day…"
+    },
+    {
+     "summary": "followTheCover (src/engine/systems/appointments.ts) ran on every loadSave, not only on saves from before 2026-10-15, and couldn't tell an older save's booking from a current one. Played: a personal leave from 20 January 2027 without cover; the 25 January health week booked a visit at Fair Haven for ",
+     "where": "Decided the rule: an appointment is had at the practice it was booked at, whatever the cover does before its day, as a pick's already was (the 'booked at Yale Health, Fair Haven picked before the day' journey) and as one at Yale Health after the cover ends already was (not kept, owed). Yale Health's",
+     "test": "tests/scope-health.test.ts health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; … billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0"
+    },
+    {
+     "summary": "The tutorial (src/engine/content/tutorial.ts:277) said Fair Haven books 'after its own wait'; Fair Haven publishes none, and its 24 days are New Haven's town figure (AMN's fifteen-metro average).",
+     "where": "The sentence now says Fair Haven 'sees anyone, and publishes no wait, so it books after New Haven’s, fifteen American cities’ average of twenty-four days'. tests/evidence-g07-life.test.ts's comment calling it 'Fair Haven's own wait' was corrected the same way. scope/health-result.json's choose_clini",
+     "test": ""
+    },
+    {
+     "summary": "scope/health-result.json was stale (the first choose_clinic test's old title, its 'both $0' proof), and docs/UNBITTEN.md:307-330 still called Connecticut's prescription rule unresearched.",
+     "where": "health-result: the first test's title and proof are the current test's (Yale Health $0, the twin at Fair Haven billed $183.98), the older-save journey's title and proof are the new ones, and the two new journeys and the scope-cover journey are listed, with mutations. UNBITTEN's entry now says in the",
+     "test": ""
+    }
+   ],
+   "guards": [
+    {
+     "where": "src/engine/systems/clinics.ts seesThem :44 (no moment given -> a members-only practice doesn't see them)",
+     "test": "GUARD: a practice for its members isn’t given or chosen with no moment to read the cover at; every engine caller gives one"
+    }
+   ],
+   "rowText": {
+    "entry": "PapersWorkspace.tsx, the Your Doctor select: options 'As Your Cover Has It' (with nothing picked, where the default is a members' practice), then each practice with ', A Visit $X' and its wait ('The Next Weekday' or 'A 24-Day Wait'), from careQuote at that practice and practiceWait.",
+    "reads": "clinicRefusal (unchanged); clinicFor (the default follows the cover: Yale Health's practice for a member with nothing picked, from 2026-10-15); outsideItsPractice.",
+    "downstream": "appointments.ts book/bookIn (Yale Health's waitDays 1 for a member by default); careFor (where it's had first; outside the practice: the uninsured's price, no plan part, nothing toward the out-of-pocket most, the notice's Yale Health sentence; careLog keeps clinicId); shareOf/careQuote (priced at the practice); repriceCare (prices a logged visit at its practice); loadSave → followTheCover, once, on a save that doesn’t name it in SaveUniverse.opened (from the recheck of 2026-10-15; until then on every opening). Until 2026-10-15 a member's visit at Fair Haven was $0 and the default was Fair Haven.",
+    "explanation": "Papers' option words and the 'What it would cost you here now' line; the notice 'A Doctor’s Visit' ('Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.'); the guide's papers.doctor (short, steps, costs, later, interpret, mistakes, example). Until the recheck of 2026-10-15 the guide's papers chapter said Fair Haven sees anyone 'after its own wait'; it publishes none, and the sentence now says it books after New Haven's, fifteen American cities' average of twenty-four days.",
+    "tests": "tests/scope-health.test.ts describe 'health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center' (four PLAYER JOURNEYs) and 'health.choose_clinic, New Haven’s two practices' (the renamed journey); tests/evidence2-b01.test.ts (the priced options, the default at Yale Health); tests/evidence3-lifepapers.test.ts (picks Fair Haven against a twin); tests/evidence-g03-life.test.ts and tests/evidence2-b03.test.ts (Fair Haven picked, billed $183.98 and $187.20). From the recheck of 2026-10-15, tests/scope-health.test.ts describe 'health.choose_clinic: a booking with nothing picked is had where it was booked…' (two PLAYER JOURNEYs: Affiliate cover bought, and a return from a leave, each before the day, with and without a reload).",
+    "status": "verified",
+    "after": "A Yale student in New Haven picks between Yale Health Center's Student Health and Fair Haven Community Health Care on the rendered Your Doctor select. Each option says a visit's price and wait. From 2026-10-15 Yale Health's own rule is kept (“All care must be obtained at the Yale Health Center at 55 Lock Street unless it is an emergency situation or you have a referral with prior authorization…”, read again 2026-10-15). With nothing picked a member goes to Yale Health, the next weekday, at $0. A member who picks Fair Haven waits 24 days and is billed the uninsured's $183.98 (2026), SLATE's price, since Fair Haven publishes no fee. Yale Health pays none of it and none counts toward its out-of-pocket most. SLATE keeps no referral, so none is honored, and an emergency is unaffected. Somebody Yale Health doesn't cover is given Fair Haven, as before. An older save's default appointment moves to Yale Health on its first opening, once, and a recorded pick stays. A booking made with nothing picked is had where it was booked, whatever the cover does before its day: one made at Fair Haven while she was uncovered and kept once Yale Health covers her again is billed as the uninsured's, since Yale Health pays only at its own Health Center; canceled and booked again, it's at Yale Health. A reload changes none of it. The choice now moves the practice, the wait, the price and continuity."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/appointments.ts",
+     "find": "const days = what === SPECIALIST ? referralDays(person) : own ?? waitDays(",
+     "replace": "const days = what === SPECIALIST ? referralDays(person) : waitDays(",
+     "protects": "Yale Health's next-weekday booking (three journeys fail; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/clinics.ts",
+     "find": "if (care === 'visit' && own && seesThem(person, own, at)) return own;",
+     "replace": "if (care === 'visit' && own) return own;",
+     "protects": "a chosen members-only practice stops being their doctor when its cover ends (the continuity journey and the GUARD fail; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/appointments.ts",
+     "find": "if (at && at.members !== null && !seesThem(person, at, item.at)) {",
+     "replace": "if (false) {",
+     "protects": "an appointment at Yale Health after its cover ended isn't kept (the continuity journey fails; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/clinics.ts",
+     "find": "    if (theirs) return theirs;\n",
+     "replace": "",
+     "protects": "The default follows the cover. Run 2026-10-15, three fail in tests/scope-health.test.ts: the renamed two-practices journey, the member-picks-nothing journey and the member-picks-Fair-Haven journey (its twin)."
+    },
+    {
+     "file": "src/engine/systems/clinics.ts",
+     "find": "  return clinicsIn(clinic.cityId).some((c) => c.members === 'yale' && DOCTOR_KINDS.includes(c.kind));",
+     "replace": "  return false;",
+     "protects": "A member's visit at Fair Haven isn't Yale Health's to pay. Run 2026-10-15, three fail: the two-practices journey, the picks-Fair-Haven journey and the older-save journey (the pick's bill)."
+    },
+    {
+     "file": "src/engine/systems/appointments.ts",
+     "find": "      a.clinicId = theirs.id;\n",
+     "replace": "",
+     "protects": "An older save's default appointment is moved to Yale Health on opening. Run 2026-10-15, the older-save journey fails."
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "  const paying = planOf(person, at) && !(restrictedScope(person, at) && !hospital) && !outside;",
+     "replace": "  const paying = planOf(person, at) && !(restrictedScope(person, at) && !hospital);",
+     "protects": "The bill for a visit outside Yale Health's practice carries no plan-paid part. Run 2026-10-15, two fail: the two-practices journey and the picks-Fair-Haven journey. (Also checked: dropping '&& !outside' from the out-of-pocket line fails the picks-Fair-Haven journey.)"
+    },
+    {
+     "file": "src/engine/index.ts",
+     "find": "  if (!opened.includes('followTheCover')) {",
+     "replace": "  if (true) {",
+     "protects": "The older-save step is taken once, on a save that doesn't name it. Run 2026-10-15 (recheck): three fail in tests/scope-health.test.ts, the older-save journey (its current save) and both cover-change journeys (the reload)."
+    },
+    {
+     "file": "src/engine/index.ts",
+     "find": "  universe.opened = [...ONCE_ON_OPENING];",
+     "replace": "",
+     "protects": "A new life is begun with every step named, so its first reload takes none (the cover-change journeys and the older-save journey; not run)"
+    },
+    {
+     "file": "src/engine/index.ts",
+     "find": "    opened.push('followTheCover');",
+     "replace": "",
+     "protects": "An older save's step is named once taken, so the next opening doesn't take it again (the older-save journey's opened check; not run)"
+    }
+   ],
+   "tutorial": [
+    "papers (‘Cover, Benefits And Returns’): its paragraph ‘A doctor’s visit is an appointment where the place publishes how long one is waited for…’ names only countries' waits; it could say a practice's own wait is read too, Yale Health’s next weekday for a Yale student who picks it, against New Haven’s 24 days at Fair Haven",
+    "papers (‘Cover, Benefits And Returns’), recheck of 2026-10-15: the sentence 'Fair Haven Community Health Care sees anyone, after its own wait' was corrected, Fair Haven publishing no wait; it now says Fair Haven books after New Haven's, fifteen American cities' average of twenty-four days. The chapter's comment wasn't given a past-tense line: the recheck was let edit the two sentences alone."
+   ],
+   "appliedDecision": "Yale Health’s in-network rule, a researched fact, applied 2026-10-15 (scope/yale-result.json): it re-dated the visits in 16 tests, each with its before and after."
+  },
+  {
+   "id": "health.enroll",
+   "before": "partial: no test had the clock raise a bill under an approved plan and read its share; the plan's own part of a bill was recorded nowhere; the program renewal through work was reached only on wages posted by hand.",
+   "after": "partial: The plan's part of a bill is real and played. A played life with need reaches a program renewal by the clock alone (tests/need-paths.test.ts): she is withdrawn, enrolled in HUSKY D on Papers, and her renewal on 1 November 2027 passes the income test on interest alone, then fails Connecticut's 2027 work test, so HUSKY D ends and she's told. A renewal that keeps a program is reached too: an Inherited family's student enrolls in Covered Connecticut on a personal leave, on January's interest, and it renews on 1 September 2027 on August's interest, by play alone (tests/scope-cover.test.ts); need-paths plays HUSKY D moved to Covered Connecticut at renewal. Until the recheck of 2026-10-15 this said no renewal that keeps a program was reached and Covered Connecticut's couldn't be: that reckoning assumed a family with need and work-study income, and overlooked the interest an Inherited life earns. What stays open is HUSKY D kept at renewal through work: SLATE pays wages only for work-study and the Summer Cabaret, both a student's, so a life off Yale Health has none, and the tests give it as TEST SETUP wages. From the recheck, HUSKY D's work test reads the School over last month, as 42 CFR 435.552(c) has it, at an application and at a renewal; until then it read the School at the instant asked, and a student at the School all of January 2027, withdrawn on 1 February, was refused on 2 February. HUSKY D kept by her being at the School is played (tests/scope-cover.test.ts, back from a leave). No income was invented and no eligibility loosened.",
+   "disposition": "implementation added (a bill's plan part) and evidence added; one claimed branch still fixture-only",
+   "testsAdded": [
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: a visit the 2 November week draws is booked for Thanksgiving’s Friday at Fair Haven and kept; the bill is the $45 copay, the plan pays $60.13 of $105.13, no deductible is touched; it’s paid once on its due day from checking to Medical Care, across two reloads, and Papers shows both",
+     "kind": "render+clock",
+     "proves": "patient share $45 (plan copay), insurer share $60.13 from $100 (2024) × 439.389/417.93 = $105.13, deductible +$0, spent +$45, careLog share, notice 'Your share is $45.00, due in 30 days.', Thanksgiving skipped to Friday 27 November, payment on 27 December: checking −$45, Medical Care +$45, balanced, once, after two reloads; Papers rows '$45.00 December 27, 2026 $60.13' and '$45.00 Settled $60.13', subtitle Access Health CT Standard Silver"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: the same visit denied (TEST SETUP) is billed $183.98 with nothing paid by the plan; appealed on Papers and overturned, it’s the $45 share and the plan’s $60.13, and what was paid over the share comes back once",
+     "kind": "render+clock",
+     "proves": "a denied claim's plan part $0 and the uninsured $183.98 (10,513 × 1.75), Appeal It pressed on Papers, overturned 60 days on: $45 owed, plan $60.13, $138.98 back once, Papers 'Denial Overturned $60.13'"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August",
+     "kind": "command+clock",
+     "proves": "the plan part follows a cover canceled back (repriceCare): $2,450 (2019) × 459.659/338.814 = $3,323.84, Yale Health's $50 share, then $0 paid by the plan"
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, on HUSKY D from 1 November 2026, comes to its renewal on 1 November 2027: October’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload",
+     "kind": "render+clock+reload",
+     "proves": "A played life with need reaches a program renewal with no wage posted by hand. She is withdrawn on 25 August and enrolled on Papers' Enroll on 1 October 2026. renewAt is 1 November 2027 (twelve months, enrolled in 2026). October 2027's income is the savings' interest alone, under 15,960 × 1.38 ÷ 12 = $1,835.40, so the income test passes. The work test fails, so the program ends at the 00:30 health month with “Medicaid now asks for 80 hours’ work or $580.00 of earnings a month, and last month had neither.” It fails under mutation r1 (work test always met)."
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February, she’s given HUSKY D on 2 February for January enrolled; on 1 April, March after the School, she’s refused",
+     "kind": "render+command+clock",
+     "proves": "The skeptic's played case: a Comfortable citizen in good standing, withdrawn on 1 February 2027, January's income under $1,835.40 and its work short of 80 hours and $580. On 2 February Papers says last month's income qualifies her for HUSKY D, not the refusal, and Enroll gives it from 1 April (Yale Health's thirty days run to 3 March, then the first of a month on or after). On 1 April, March after the School and no work, the refusal is said. Fails with the School read at the instant (recheck, 2026-10-15)."
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in February she’s given HUSKY D; past the 60 days Enroll isn’t drawn",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn’t given back, the line says why, and Enroll buys the marketplace in open enrollment",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/guide-examples-papers.test.ts",
+     "title": "the guide’s worked examples for Papers, played on throwaway saves > papers.health-cover: a spring graduate’s cover ends on 1 August, HUSKY D asks the work July didn’t have, and the marketplace begins 1 September",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/defects3-50-70.test.ts",
+     "title": "documents.us_status > PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes the marketplace from 1 February, Covered Connecticut not being hers in 2027; out of status on the 4th, it ends at the month’s look, and the notice when her cover ends offers her no marketplace",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > PLAYER JOURNEY: an F-1 student with need, withdrawn on 21 September 2026 and in her grace on 1 October, on September’s income under the credit’s $1,304.17, is given the marketplace, not Covered Connecticut",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > TEST SETUP: an F-1 student on a month’s $2,052.00 (set by hand) is given Covered Connecticut from 1 November 2026, and the marketplace from 1 January 2027; a citizen who earns it, Covered Connecticut from 1 January",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "Covered Connecticut is had with the premium tax credit: none under the poverty line, and from 2027 none for an F-1 student > TEST SETUP: Covered Connecticut held from 1 November 2026 by an F-1 student kept in status past her grace ends on 1 January 2027, said, and the marketplace is open to her; a citizen’s runs on",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: an Inherited family’s student enrolls in Covered Connecticut on her leave, on January’s interest; back at the School on 3 January 2028, Yale Health covers her and Covered Connecticut ends at the 1 February look, said",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-cover.test.ts",
+     "title": "a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 March 2028 is met by her being at the School",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; the visit is had at Fair Haven and billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0",
+     "kind": "command",
+     "proves": ""
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 20 December 2027 week; back at the School on 3 January 2028, Yale Health covers her again, and the visit is had at Fair Haven and billed alike, played straight through and reloaded",
+     "kind": "command",
+     "proves": ""
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A bill records the plan's part (covered: price to the plan, planPaid), set at billing (none while denied), on an appeal overturned, and on a cover change billed back (repriceCare); Papers' Care And Its Bills shows it as Plan Paid. Until then what the plan paid was written nowhere.",
+     "where": "src/engine/systems/health.ts MedicalBill.covered, planPrice :1219, careFor :1290-1293, repriceCare :1343, APPEAL_KIND :1527; src/ui/workspaces/PapersWorkspace.tsx :580-581",
+     "test": "the three journeys above (each fails with its line removed; run 2026-10-15)"
+    },
+    {
+     "summary": "Found 2026-10-15: at a program’s renewal (src/engine/systems/health.ts, healthMonth), a Covered Connecticut member whose last month’s income fell under HUSKY D’s 138% line got programFor() = medicaid, which wasn’t her program’s kind, so her cover ended with “Your Public Cover Ended At Renewal: Last ",
+     "where": "From 2026-10-15, a renewal that finds her income in her state’s other program renews her into it from the renewal’s own instant: the old record ends at that instant and a new one, set up as health.enroll sets one (kind, state, band, scope, and renewAt so many months on: six in Connecticut from 2027)",
+     "test": "tests/need-paths.test.ts › health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock › PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line … (twins: with October’s work posted as TEST SETUP, renewed into HUSKY D from 12:30 AM on 1 November 2027, renewAt 1 May 2028, no “Ended” notice, still covered, across a reload; without it, ended with the work test named, not “over what it allows”)"
+    },
+    {
+     "summary": "1. health.enroll asked no work test of a HUSKY D applicant from 2027: a member ended at renewal for having no work pressed Enroll the next day and had HUSKY D back.",
+     "where": "From 2026-10-15 mayEnroll (src/engine/systems/health.ts) asks Medicaid’s community engagement of an applicant from 2027, on the month before the month she applies (Connecticut’s one month): `engaged` reads last month’s wages (80 hours or $580) or her being at the School, enrolled and not on leave. R",
+     "test": "tests/scope-cover.test.ts › health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 › PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is refused HUSKY D on 1 February for January’s 6 hours, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in January she’s given HUSKY D; past the 60 days Enroll isn’t drawn (the work twin TEST SETUP: January’s wages posted)"
+    },
+    {
+     "summary": "2. Covered Connecticut was offered to anybody lawfully present on any income under 175%, though it’s had with the premium tax credit, which from 2027 a noncitizen has only with a green card (or as a Cuban or Haitian entrant or COFA migrant), and from 2026 nobody has under 100% of the poverty line.",
+     "where": "From 2026-10-15 `programFor` gives Covered Connecticut only where `creditAllowed`: last month’s income at least 100% of the year before’s poverty line, and for cover beginning in 2027 or later a citizen or green card holder (`creditStatus`). It reads the instant cover would begin (`enrollStart`, nex",
+     "test": "tests/scope-cover.test.ts › Covered Connecticut is had with the premium tax credit … › PLAYER JOURNEY: an F-1 student with need, withdrawn on 21 September 2026 and in her grace on 1 October, on September’s income under the credit’s $1,304.17, is given the marketplace, not Covered Connecticut"
+    },
+    {
+     "summary": "3. Unverified: a student who enrolls in Covered Connecticut (or HUSKY D) on a personal leave without Affiliate cover keeps it beside Yale Health when she returns.",
+     "where": "Confirmed by play: before 2026-10-15 Covered Connecticut taken on the leave ran on beside Yale Health after the return (the yaleAgain mutation shows it). From 2026-10-15 an Essential Plan or Covered Connecticut held while Yale Health covers her again ends at the month’s look, with “Your Public Cover",
+     "test": "tests/scope-cover.test.ts › a program taken on a personal leave without Affiliate cover, and Yale Health back on the return › PLAYER JOURNEY: an Inherited family’s student enrolls in Covered Connecticut on her leave, on January’s interest; back at the School on 3 January 2028, Yale Health covers her and Covered Connecticut ends at the 1 February look, said"
+    },
+    {
+     "summary": "engaged() (src/engine/systems/health.ts) read school attendance at the instant of applying, not over last month as Pub. L. 119-21 §71119 and Papers' own words do. Played: at the School all of January 2027, withdrawn on 1 February, refused HUSKY D on 2 February with 'last month had none of them'. And",
+     "where": "Read CMS's interim final rule of 3 June 2026 (CMS-2454-IFC, 42 CFR 435.552(c), public-inspection.federalregister.gov/2026-11094.pdf, read 2026-10-15): enrollment status is the school's, 'begins on the first day of the school term', 'will continue through normal periods of attendance, vacation, and r",
+     "test": "tests/scope-cover.test.ts health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February, she’s given HUSKY D on 2 February for January enrolled; on 1 April, March after the School, she’s refused"
+    },
+    {
+     "summary": "health.enroll's stated gap was partly false: tests/scope-cover.test.ts plays Covered Connecticut renewed on 1 September 2027 on interest alone; what's open is HUSKY D kept at renewal through work.",
+     "where": "scope/health-result.json health.enroll's after and rowText.gap rewritten to what the tree holds, with the earlier claim said in the past tense; enroll.correctedInRecheck added here beside enroll.why, which is kept as written.",
+     "test": ""
+    },
+    {
+     "summary": "CGS 20-616 lets a pharmacist give more than the 72 hours the RX comment and the research file cited: up to a 30-day supply of some diabetes drugs.",
+     "where": "Read FindLaw's text of 20-616 (current to 1 January 2025; cga.ct.gov refused the connection) on 2026-10-15: the 30-day supply is subsection (d), not (c) as the skeptic had it: 'A pharmacist may immediately prescribe and dispense to a patient not more than a thirty-day supply of a diabetic ketoacidos",
+     "test": ""
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "downstream": "coverOn/planOf -> every share, on the clock's bill (careFor), with the plan's own part on the bill (covered.planPaid, Papers' Plan Paid, from 2026-10-15); healthMonth premium",
+    "tests": "tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test passed on interest, the work test failed, ended and said, across a reload). tests/scope-cover.test.ts 'health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027' (the leave journey, re-figured in the recheck of 2026-10-15: given on 1 February for January at the School, refused on 1 March for February on the leave; and the January-then-withdrawn journey), and its Covered Connecticut renewal on a leave.",
+    "status": "partial",
+    "gap": "HUSKY D kept at a renewal through work isn't reached by a played life: SLATE pays wages only for a student's work-study and the Summer Cabaret, so the work is TEST SETUP wages wherever a test needs it. Renewals that keep a program are played: Covered Connecticut renewed on 1 September 2027 on August's interest (tests/scope-cover.test.ts), HUSKY D moved to Covered Connecticut (tests/need-paths.test.ts), and HUSKY D kept by her being at the School the month before (tests/scope-cover.test.ts). Until the recheck of 2026-10-15 this said a renewal that keeps a program wasn't reached and Covered Connecticut's wasn't reachable, which the tree contradicted."
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "planPaid: denied ? 0 : Math.max(0, price - amount)",
+     "replace": "planPaid: Math.max(0, price - amount)",
+     "protects": "a denied claim's plan part is nothing (the denial journey fails)"
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "      if (bill.covered) bill.covered.planPaid = Math.max(0, bill.covered.price - bill.denied.share);",
+     "replace": "",
+     "protects": "an overturned appeal's plan part (the denial journey fails; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "planOf(person, e.at) ? Math.max(0, was.covered.price - now) : 0",
+     "replace": "Math.max(0, was.covered.price - now)",
+     "protects": "a cover canceled back leaves the plan paying nothing, the charity having made her uninsured share $0 (the emergency journey fails; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "  const school = enrolledIn(person, firstOf(p.year, p.month - 1), firstOf(p.year, p.month));",
+     "replace": "  const school = person.school !== undefined && !schoolEnded(person.school.standing) && person.school.leave?.status !== 'on';",
+     "protects": "HUSKY D reads the School over last month, not at the instant asked. Run 2026-10-15 (recheck): two fail in tests/scope-cover.test.ts, the leave journey and the January-then-withdrawn journey."
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "  if (schoolEnded(school.standing) && (school.endedAt ?? Number.NEGATIVE_INFINITY) < from) return false;",
+     "replace": "",
+     "protects": "A month after the School ended doesn't count (the January-then-withdrawn journey's 1 April refusal; not run)"
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "l.startedAt < from && (l.returnedAt === undefined",
+     "replace": "l.startedAt < until && (l.returnedAt === undefined",
+     "protects": "The month a leave begins counts whole (the leave journey’s 1 February HUSKY D; not run)"
+    }
+   ],
+   "tutorial": [],
+   "testsChanged": [
+    {
+     "file": "tests/scope-cover.test.ts",
+     "was": "PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is refused HUSKY D on 1 February for January’s 6 hours, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in January she’s given HUSKY D; past the 60 days Enroll isn’t drawn",
+     "now": "PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in February she’s given HUSKY D; past the 60 days Enroll isn’t drawn",
+     "why": "Re-figured from the rule, with a dated comment: her enrollment 'will end at the end of the month that the student ... withdraws' (42 CFR 435.552(c)(3), CMS-2454-IFC), so 1 to 19 January at the School is January enrolled. The refusal moved to 1 March, February wholly on the leave, and the work's counter-case to February's 80 hours. Nothing was weakened: the refusal, the marketplace, the program's dates and the late case are all still asserted, a month on."
+    }
+   ]
+  },
+  {
+   "id": "health.appointment",
+   "before": "partial: in New Haven a kept visit's prescription renewal was read by nothing and Connecticut's rule was unresearched (stale downstream 'renewPrescriptions -> fillMedicine'); no insured appointment bill on the clock.",
+   "after": "verified: Connecticut's rule read from its statutes and the Drug Control Division's compilation: no period after which a non-controlled prescription can't be filled (CGS 20-616(b): refills on the prescriber's order, but for a pharmacist's 72-hour refill under (c) and up to 30 days of insulin, glucagon and their devices under (d), neither an expiry; (d) named from the recheck of 2026-10-15). So a renewal rightly changes no New Haven fill, and a played prescription filled on 27 September 2027, a year and twenty days after it was taken, with nothing renewing it, holds that (a one-year rule mutated in fails it). The appointment's insured bill is played on the clock with its shares, payment and ledger. The appointment is had at the practice booked, and one at a practice that no longer sees them isn't kept.",
+   "disposition": "research done, claim corrected, evidence added; no implementation was due for the prescription (the rule sets none)",
+   "testsAdded": [
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.appointment: a New Haven prescription past its first year > PLAYER JOURNEY: high blood pressure diagnosed on 1 September 2026, its prescription taken at the first fill and renewed by nothing until the review of 30 September 2027, is filled past 7 September 2027 all the same, as Connecticut sets no date it runs out; no “A Prescription Ran Out”, and the review renews it",
+     "kind": "clock",
+     "proves": "14 fills, 7 September 2026 to 27 September 2027, prescribedAt unrenewed until the review kept at Fair Haven on 30 September 2027, which renews it; no 'A Prescription Ran Out'"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: a visit the 2 November week draws is booked for Thanksgiving’s Friday at Fair Haven and kept; the bill is the $45 copay, the plan pays $60.13 of $105.13, no deductible is touched; it’s paid once on its due day from checking to Medical Care, across two reloads, and Papers shows both",
+     "kind": "render+clock",
+     "proves": "the appointment’s bill on an approved plan: the $45 copay, the plan’s $60.13 of $105.13, paid once on its due day across two reloads"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills > PLAYER JOURNEY: the same visit denied (TEST SETUP) is billed $183.98 with nothing paid by the plan; appealed on Papers and overturned, it’s the $45 share and the plan’s $60.13, and what was paid over the share comes back once",
+     "kind": "render+clock",
+     "proves": "the same appointment denied is billed $183.98; overturned on appeal it is the $45 share, and what was paid over it comes back once"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: a visit booked at Yale Health is had there though Fair Haven is picked before the day; until 2026-10-15 it was had wherever was picked on the day",
+     "kind": "command+clock",
+     "proves": "the practice booked is where the appointment is had"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday, she isn’t seen there on Tuesday: “Not Seen At Your Practice”, owed, unbilled; Papers names Fair Haven, and Book An Appointment books it there 24 days on, across a reload",
+     "kind": "render+clock",
+     "proves": "a members-only practice’s appointment is not kept once she is no member: “Not Seen At Your Practice”, owed, unbilled"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "RX's comment gives Connecticut's rule and its sources; the guide's doctor entry says a New Haven renewal changes no fill and why",
+     "where": "src/engine/systems/health.ts RX comment above :722; src/engine/content/guide/papers.ts papers.doctor interpret",
+     "test": "…a New Haven prescription past its first year…"
+    }
+   ],
+   "guards": [],
+   "rowText": {
+    "downstream": "careFor’s bill at the practice booked (with the plan's part, from 2026-10-15); renewPrescriptions -> fillMedicine, read where a place's rule ends a prescription (British Columbia's two years, RX.validYears); Connecticut sets none (CGS 20-616(b), read 2026-10-15), so in New Haven a renewal changes no fill, rightly; reviewed -> the next review's due date; mayRefer -> a specialist the referral’s wait away. A missed visit sets owedVisit, which the health week books with the next visit it draws. An appointment at a practice for its members that no longer sees them (Yale Health after its cover ends) isn't kept and is owed. Until 2026-10-15 this said in New Haven the renewal is read by nothing without the rule read.",
+    "issue": "Settled 2026-10-15: Connecticut's rule was read (research-health-visits.json prescriptionValidity): no expiry for a prescription that isn't controlled. docs/UNBITTEN.md's entry 'A doctor’s visit and a condition’s review' said until the recheck of that day that the rule was unresearched and offered RX.validYears['us-ct'] as a candidate; it says now, in the past tense, that the rule was read and the candidate fell.",
+    "tests": "tests/scope-health.test.ts (the prescription past its first year; the insured visit's bill, payment and ledger; the practice booked; not kept at Yale Health after its cover); tests/evidence2-b02.test.ts (referral through the week; a year of fills; the owed visit); tests/evidence-g05-life.test.ts (kept laid up, missed in hospital); tests/evidence3-lifepapers.test.ts (owed and booked on a family-made life)",
+    "status": "verified"
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "validYears: { 'ca-bc': 2 }",
+     "replace": "validYears: { 'ca-bc': 2, 'us-ct': 1 }",
+     "protects": "Connecticut's prescription doesn't run out (the prescription journey fails; evidence2-b02 doesn't, stopping short of the year; run 2026-10-15)"
+    },
+    {
+     "file": "src/engine/systems/health.ts",
+     "find": "const clinic = MEDICAL.includes(event.care) ? booked ?? clinicFor(",
+     "replace": "const clinic = MEDICAL.includes(event.care) ? clinicFor(",
+     "protects": "the visit is had at the practice booked (run 2026-10-15)"
+    }
+   ],
+   "tutorial": []
+  }
+ ],
+ "outsideMyFiles": [
+  "tests/evidence2-b01.test.ts and tests/evidence3-lifepapers.test.ts: their health.choose_clinic tests held that New Haven drew no Your Doctor; changed to the two practices (only those lines and their comments)",
+  "docs/UNBITTEN.md 'A doctor’s visit and a condition’s review (2026-10-12)': said Connecticut's rule (CGS 20-614) was unresearched and offered RX.validYears['us-ct'] as a candidate; corrected in the recheck of 2026-10-15 (the rule read, the candidate fallen)",
+  "tests/guide-examples-papers.test.ts 'taxes.lien' failed in my run (expected [] to have length 1, :742); it's the tax lien, not health, with src/engine/systems/statetax.ts modified by another agent"
+ ]
+}

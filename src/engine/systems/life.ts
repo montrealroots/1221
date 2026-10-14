@@ -311,9 +311,10 @@ export function readinessParts(person: Person): { key: ReadinessDial; factor: nu
   ];
 }
 
-export function wellbeingSummary(person: Person): string {
+// `own` is false on another person's look, which until 2026-10-15 told the player “You need sleep” of them.
+export function wellbeingSummary(person: Person, own = true): string {
   const w = person.wellbeing;
-  if (w.energy < 15) return 'Running on empty. You need sleep before anything else.';
+  if (w.energy < 15) return own ? 'Running on empty. You need sleep before anything else.' : 'Running on empty. Sleep comes before anything else.';
   if (w.sleepDebt > 20) return 'Badly short on sleep. Everything is harder than it should be.';
   if (w.stress > 78) return 'Stretched very thin. Something is going to give.';
   if (w.nourishment < 25) return 'Hungry, and it’s starting to show.';

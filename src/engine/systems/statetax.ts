@@ -12,7 +12,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { exchange } from '../content/currency';
 import { STATE_TAX, STATE_UNRESEARCHED, type Part, type StateCode, type StateRules } from '../content/statetax';
-import type { OwedParts, TaxReturn } from './taxreturn';
+import { deadline, type OwedParts, type TaxReturn } from './taxreturn';
 import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
 import { payeeAccount } from './cash';
 
@@ -112,6 +112,20 @@ export interface StatePlan {
 
 export const rulesOf = (state: string): StateRules | undefined => STATE_TAX[state as StateCode];
 export const stateDuesOf = (r: TaxReturn): Record<string, StateDue> => (r.stateDue ??= {});
+/**
+ * A state return's due date, from which its penalty, interest and collection run: the federal return's, except that a
+ * 1040-NR's 15 June (`nonresidentDeadline`, for a year without wages) is the resident's date for the state, 15 April or
+ * the next business day in Washington (`deadline`). Connecticut's return, resident or nonresident, is due “on or before the
+ * fifteenth day of the fourth month following the close of the taxpayer's taxable year” (Conn. Gen. Stat. 12-719(a),
+ * read at codes.findlaw.com on 2026-10-15), and DRS moves it past Emancipation Day as the IRS does (Form CT-1040NR/PY
+ * instructions for 2017, filed by 17 April 2018; DRS's Nonresident and Part-Year Resident Tax Information page, read at
+ * portal.ct.gov on 2026-10-15, gives 15 April and no other date for a nonresident alien). Until 2026-10-15 the states
+ * read the federal return's own due date, which for a 1040-NR with no wages is 15 June (`nonresidentDeadline`), so such
+ * a year's Connecticut penalty, interest and bill waited two months past Connecticut's date
+ * (tests/scope-taxpapers.test.ts). The other states in `STATE_TAX` take the same date as SLATE's reading: their own
+ * due dates weren't read on 2026-10-15, and every played life files in Connecticut alone.
+ */
+export const stateDueOf = (r: TaxReturn): Instant => (r.figures?.form === '1040-NR' ? Math.min(r.due, deadline(r.year)) : r.due);
 export const agencyOf = (state: string): string => rulesOf(state)?.short ?? `${stateName(state)}’s revenue department`;
 export const stateName = (state: string): string => ({ 'us-ct': 'Connecticut', 'us-ny': 'New York', 'us-ca': 'California', 'us-il': 'Illinois', 'us-ma': 'Massachusetts', 'us-ga': 'Georgia', 'us-co': 'Colorado', 'us-or': 'Oregon', 'us-az': 'Arizona', 'us-nc': 'North Carolina', 'us-la': 'Louisiana', 'us-nm': 'New Mexico', 'us-hi': 'Hawaii', 'us-nj': 'New Jersey', 'us-pa': 'Pennsylvania', 'us-mi': 'Michigan', 'us-oh': 'Ohio', 'us-ut': 'Utah', 'us-in': 'Indiana', 'us-dc': 'District of Columbia', 'us-ok': 'Oklahoma', 'us-pa-philadelphia': 'Philadelphia', 'us-oh-columbus': 'Columbus', 'us-or-portland': 'Portland' } as Record<string, string>)[state] ?? state;
 
@@ -205,9 +219,13 @@ function stateAccrual(sd: StateDue, due: Instant, at: Instant): { parts: OwedPar
     }
   } else {
     // A month or part from the due date, simple, on the tax (and the penalties, Hawaii's): the months begun since those
-    // already charged.
+    // already charged. Each month's to the cent (SLATE's reading of “per month”, from 2026-10-15), so what's charged
+    // doesn't hang on how often it was brought up to date, and the whole's rounding below leaves it whole. Until then it
+    // ran in fractions of a cent and the whole was rounded, so the interest took a cent of the penalty's rounding:
+    // Connecticut's bill on $585.33 was $649.72, its interest $5.86, where 1% of the tax is $5.85 and the bill $649.71
+    // (Conn. Gen. Stat. 12-735), and three months read at once from the bill were $17.57 (tests/scope-taxpapers.test.ts).
     const months = monthsBegun(due, at) - (sd.interestMonths ?? 0);
-    interest += Math.max(0, months) * (i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0));
+    interest += Math.max(0, months) * Math.round((i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0)));
   }
   const whole = Math.round(p.tax + penalty + interest);
   return { parts: { tax: p.tax, penalty: Math.round(penalty), interest: whole - p.tax - Math.round(penalty) }, compounded: Math.round(Math.min(compounded, interest)) };
@@ -281,11 +299,11 @@ function setFromDue(sim: Simulation, sd: StateDue, rules: StateRules | undefined
   sd.penalty = penalty;
   if (rules?.fileLate.combine === 'combined-cap' && tax > 0) sd.fileLateRate = fileLate / tax;
   if (rules?.payLate.minimum) sd.minPenalty = usd(rules.payLate.minimum, cur);
-  setStateOwed(sd, { tax, penalty, interest: 0 }, Math.min(r.due, sim.now));
+  setStateOwed(sd, { tax, penalty, interest: 0 }, Math.min(stateDueOf(r), sim.now));
   sd.payLateRate = 0;
   sd.interestMonths = 0;
   delete sd.compounded;
-  accrueState(sd, r.due, sim.now);
+  accrueState(sd, stateDueOf(r), sim.now);
 }
 
 /**
@@ -306,7 +324,7 @@ export function fileState(sim: Simulation, person: Person, r: TaxReturn, state: 
     return { total: balance, paid: true };
   }
   if (balance === 0) return { total: 0, paid: true };
-  const fileLate = rules ? stateFileLate(rules, balance, r.due, sim.now, cur) : 0;
+  const fileLate = rules ? stateFileLate(rules, balance, stateDueOf(r), sim.now, cur) : 0;
   setFromDue(sim, sd, rules, r, balance, fileLate, fileLate);
   chargeThreeYear(sim, r, state, balance);
   const total = sd.owed ?? 0;
@@ -341,7 +359,7 @@ function chargeOf(c: NonNullable<StateRules['charges']>[number], sd: StateDue, c
 export function applyStatePayment(sim: Simulation, person: Person, r: TaxReturn, state: string, amount: Money, how: 'payment' | 'levy' | 'refund offset' | 'plan'): OwedParts {
   const sd = stateDuesOf(r)[state];
   if (!sd?.owed) return { tax: 0, penalty: 0, interest: 0 };
-  accrueState(sd, r.due, sim.now);
+  accrueState(sd, stateDueOf(r), sim.now);
   const p = { ...sd.parts! };
   const rules = rulesOf(state);
   const order: readonly Part[] = rules?.order ?? ['tax', 'penalty', 'interest'];
@@ -363,7 +381,14 @@ export function applyStatePayment(sim: Simulation, person: Person, r: TaxReturn,
   return took;
 }
 
-/** A state's next notice, or levy, on the calendar. */
+/**
+ * A state's next notice, or levy, on the calendar, counted from the state's due date (`stateDueOf`) where that's still to
+ * come (a return filed before it, or a plan ended before it): Connecticut collects a tax “due and unpaid” (Conn. Gen. Stat. 12-734) on its failure to be paid “within
+ * thirty days from its due date” (12-35(a)), both read at codes.findlaw.com on 2026-10-15. Until 2026-10-15 it was
+ * counted from filing, so a student who filed her 2027 return unpaid on 1 February 2028 had DRS’s bill on 2 March, and
+ * its notice of intent to levy and its lien on 1 April, seventeen days before the tax was due
+ * (tests/scope-taxpapers.test.ts).
+ */
 export function stateNextNotice(sim: Simulation, person: Person, r: TaxReturn, state: string): void {
   const rules = rulesOf(state);
   const sd = stateDuesOf(r)[state];
@@ -371,17 +396,18 @@ export function stateNextNotice(sim: Simulation, person: Person, r: TaxReturn, s
   if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === STATE_NOTICE_KIND && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) return;
   const step = sd.collection ?? 0;
   const days = step < rules.notices.length ? rules.notices[step]!.days : step === rules.notices.length ? rules.levy.afterDays : rules.levy.againDays;
-  sim.schedule({ at: sim.now + days * MS_DAY, kind: STATE_NOTICE_KIND, label: rules.short, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
+  const from = Math.max(sim.now, stateDueOf(r));
+  sim.schedule({ at: from + days * MS_DAY, kind: STATE_NOTICE_KIND, label: rules.short, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
 }
 
 /** Everything owed to a state, every year, now. */
 export function owedToState(person: Person, state: string, at: Instant): Money {
-  return Object.values(person.returns ?? {}).reduce((s, r) => { const sd = r.stateDue?.[state]; return s + (sd ? stateOwedOn(sd, r.due, at) : 0); }, 0);
+  return Object.values(person.returns ?? {}).reduce((s, r) => { const sd = r.stateDue?.[state]; return s + (sd ? stateOwedOn(sd, stateDueOf(r), at) : 0); }, 0);
 }
 
 /** Everything owed to any state, now. */
 export function owedToStates(person: Person, at: Instant): Money {
-  return Object.values(person.returns ?? {}).reduce((s, r) => s + Object.values(r.stateDue ?? {}).reduce((t, sd) => t + stateOwedOn(sd, r.due, at), 0), 0);
+  return Object.values(person.returns ?? {}).reduce((s, r) => s + Object.values(r.stateDue ?? {}).reduce((t, sd) => t + stateOwedOn(sd, stateDueOf(r), at), 0), 0);
 }
 
 /** A part of what's owed to a state, paid now, the oldest year first. Returns what was applied. */
@@ -390,7 +416,7 @@ function payStateOldest(sim: Simulation, person: Person, state: string, amount: 
   for (const r of Object.values(person.returns ?? {}).sort((a, b) => a.year - b.year)) {
     const sd = r.stateDue?.[state];
     if (left <= 0 || !sd?.owed) continue;
-    const take = Math.min(left, stateOwedOn(sd, r.due, sim.now));
+    const take = Math.min(left, stateOwedOn(sd, stateDueOf(r), sim.now));
     applyStatePayment(sim, person, r, state, take, how);
     left -= take;
   }
@@ -416,14 +442,17 @@ export function statePlanRefusal(sim: Simulation, person: Person, state: string,
   const owed = owedToState(person, state, sim.now);
   if (owed <= 0) return `You owe ${rules.short} nothing.`;
   const cur = saveCurrency(sim.universe);
-  const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && r.due < sim.now);
+  const unfiled = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined && stateDueOf(r) < sim.now);
   if (unfiled) return `${rules.short} asks every return filed first: ${unfiled.year}’s isn’t.`;
   const money = (x: Money) => formatMoney(x, cur, { cents: false });
   const max = rules.plan.max;
   const overMax = max !== undefined && owed + (rules.plan.feeAdded ? statePlanFee(person, rules, cur) : 0) > usd(max, cur);
   if (overMax && !opts.long) return `${rules.short}’s ${rules.plan.name.toLowerCase()} is for ${money(usd(max!, cur))} or less; ${formatMoney(owed, cur)} is owed.${long ? ` Ask for its ${long.name.toLowerCase()}.` : rules.plan.beyond ? ` ${rules.plan.beyond}` : ''}`;
   if (rules.plan.min !== undefined && owed <= usd(rules.plan.min, cur)) return `${rules.short} sets a plan on more than ${money(usd(rules.plan.min, cur))}: pay it.`;
-  if (rules.plan.notInCollection && Object.values(person.returns ?? {}).some((r) => (r.stateDue?.[state]?.collection ?? 0) > rules.notices.length)) return `${rules.short} won’t set up a plan on an account it has levied: pay it, or ask by phone, which SLATE doesn’t model.`;
+  // A year levied and still owed: from 2026-10-15. Until then a year the levy had paid off kept every later plan from
+  // the state, so a student whose 2026 Connecticut $3.35 was taken by levy in 2027 was refused a plan on her 2027
+  // return's $585.33 in 2028 (tests/scope-taxpapers.test.ts).
+  if (rules.plan.notInCollection && Object.values(person.returns ?? {}).some((r) => (r.stateDue?.[state]?.collection ?? 0) > rules.notices.length && r.stateDue?.[state]?.owed)) return `${rules.short} won’t set up a plan on an account it has levied: pay it, or ask by phone, which SLATE doesn’t model.`;
   const after = rules.plan.afterStep;
   if (after && !Object.values(person.returns ?? {}).some((r) => (r.stateDue?.[state]?.collection ?? 0) >= after.step && r.stateDue?.[state]?.owed)) return `${rules.short} offers no plan of its own: ${after.who} does, once the debt is sent there.`;
   // The longest by what's owed (Indiana's tiers, from 2026-10-11).
@@ -497,7 +526,7 @@ function startStatePlan(sim: Simulation, person: Person, p: StatePlan): void {
   if (p.fee > 0 && rules.plan.feeAdded) {
     const r = Object.values(person.returns ?? {}).filter((x) => x.stateDue?.[p.state]?.owed).sort((a, b) => b.year - a.year)[0];
     const sd = r?.stateDue?.[p.state];
-    if (r && sd) { accrueState(sd, r.due, sim.now); setStateOwed(sd, { ...sd.parts!, penalty: sd.parts!.penalty + p.fee }, sim.now); note(p, sim.now, 'The setup fee, added to the balance', p.fee); }
+    if (r && sd) { accrueState(sd, stateDueOf(r), sim.now); setStateOwed(sd, { ...sd.parts!, penalty: sd.parts!.penalty + p.fee }, sim.now); note(p, sim.now, 'The setup fee, added to the balance', p.fee); }
   }
   p.nextDue = sim.now + 30 * MS_DAY;
   sim.schedule({ at: p.nextDue, kind: STATE_PLAN_KIND, label: `${rules.short}: A Plan Payment`, category: 'personal', priority: 25, payload: { personId: person.id, state: p.state } });
@@ -625,7 +654,7 @@ export function fileStateLien(sim: Simulation, person: Person, r: TaxReturn, sta
   const cur = saveCurrency(sim.universe);
   if (sd.lien && sd.lien.status !== 'intent' && sd.lien.status !== 'dropped') return;
   const fee = lr.fee ? usd(lr.fee, cur) : 0;
-  if (fee && sd.parts) { accrueState(sd, r.due, sim.now); setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty + fee }, sim.now); }
+  if (fee && sd.parts) { accrueState(sd, stateDueOf(r), sim.now); setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty + fee }, sim.now); }
   const l: Lien = sd.lien?.status === 'intent' ? sd.lien : { name: lr.name, status: 'filed', trigger, amount: 0, recordedAt: lr.recordedAt, fee: 0, history: [] };
   Object.assign(l, { status: 'filed', trigger, amount: sd.owed ?? 0, recordedAt: lr.recordedAt, filedAt: sim.now, fee });
   sd.lien = l;
@@ -733,7 +762,7 @@ export function chargeThreeYear(sim: Simulation, r: TaxReturn, state: string, ta
   const ty = rulesOf(state)?.threeYear;
   const sd = r.stateDue?.[state];
   if (!ty || !r.threeYearFor?.[state] || !sd || sd.threeYear || !sd.parts) return;
-  accrueState(sd, r.due, sim.now);
+  accrueState(sd, stateDueOf(r), sim.now);
   // Every penalty the year has had, paid or not, against its tax.
   const had = sd.parts.penalty + (sd.payments ?? []).reduce((s, p) => s + p.penalty, 0);
   const amount = Math.min(Math.round(ty.share * tax), Math.max(0, tax - had));
@@ -768,7 +797,7 @@ export function scheduleStateNonFiler(sim: Simulation, person: Person, r: TaxRet
     const rules = rulesOf(state);
     if (!rules || tax <= 0 || r.stateDue?.[state]?.filedAt !== undefined) continue;
     if (sim.universe.scheduled.some((i) => i.kind === STATE_NONFILER_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) continue;
-    sim.schedule({ at: Math.max(sim.now + MS_DAY, r.due + rules.nonFiler.firstDays * MS_DAY), kind: STATE_NONFILER_KIND, label: `${rules.short} On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, step: 0 } });
+    sim.schedule({ at: Math.max(sim.now + MS_DAY, stateDueOf(r) + rules.nonFiler.firstDays * MS_DAY), kind: STATE_NONFILER_KIND, label: `${rules.short} On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state, step: 0 } });
   }
 }
 
@@ -800,7 +829,7 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
   sd.balance = tax;
   sd.filedAt = sim.now;
   sd.assessedBy = { at: sim.now };
-  const fileLate = stateFileLate(rules, tax, r.due, sim.now, cur);
+  const fileLate = stateFileLate(rules, tax, stateDueOf(r), sim.now, cur);
   const adds = (rules.nonFiler.adds ?? []).reduce((sum, a) => {
     let x = a.share !== undefined ? a.share * tax : 0;
     if (a.atLeast !== undefined) x = Math.max(x, usd(a.atLeast, cur));
@@ -827,7 +856,7 @@ export function assessStateNonFiler(sim: Simulation, person: Person, r: TaxRetur
 export function reconsiderState(sim: Simulation, person: Person, r: TaxReturn, state: string, own: Money): void {
   const sd = r.stateDue?.[state];
   if (!sd?.assessedBy || sd.replacedAt !== undefined) return;
-  accrueState(sd, r.due, sim.now);
+  accrueState(sd, stateDueOf(r), sim.now);
   const paidTax = (sd.payments ?? []).reduce((s, x) => s + x.tax, 0);
   const ratio = sd.balance > 0 ? Math.max(0, own) / sd.balance : 1;
   const p = sd.parts ?? { tax: 0, penalty: 0, interest: 0 };
@@ -876,7 +905,7 @@ export function registerStateTax(sim: Simulation): void {
     // A plan pending or in force stops collection.
     const plan = person.statePlans?.[state];
     if (plan && ['pending', 'active', 'missed'].includes(plan.status)) return;
-    accrueState(sd, r.due, s.now);
+    accrueState(sd, stateDueOf(r), s.now);
     const cur = saveCurrency(s.universe);
     const step = sd.collection ?? 0;
     if (step === 0) sd.noticedAt ??= s.now;
@@ -915,7 +944,7 @@ export function registerStateTax(sim: Simulation): void {
     const sd = r?.stateDue?.[state];
     if (!r || !sd?.owed) throw new CommandError(`You owe ${agencyOf(state)} nothing on that year.`);
     const cur = saveCurrency(s.universe);
-    const total = stateOwedOn(sd, r.due, s.now);
+    const total = stateOwedOn(sd, stateDueOf(r), s.now);
     const amount = p.amount === undefined ? total : Math.round(Number(p.amount));
     if (!(amount > 0)) throw new CommandError('Pay something.');
     if (amount > total) throw new CommandError(`${formatMoney(total, cur)} is owed to ${agencyOf(state)}; pay that or less.`);
@@ -1003,7 +1032,7 @@ export function registerStateTax(sim: Simulation): void {
     const waived = Math.round(sd.threeYear!.amount * share);
     sd.threeYear!.waived = waived;
     sd.threeYear!.waivedAt = s.now;
-    if (sd.owed && sd.parts) { accrueState(sd, r!.due, s.now); setStateOwed(sd, { ...sd.parts, penalty: Math.max(0, sd.parts.penalty - waived) }, s.now); }
+    if (sd.owed && sd.parts) { accrueState(sd, stateDueOf(r!), s.now); setStateOwed(sd, { ...sd.parts, penalty: Math.max(0, sd.parts.penalty - waived) }, s.now); }
     else if (waived) s.post({ memo: `${agencyOf(state)}: a penalty waived and refunded`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: waived }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -waived }] });
     notifyPlayer(s, person, `${rulesOf(state)!.short} Waived Part Of Your Penalty`, `${Math.round(share * 100)}% of the three-year penalty on your ${r!.year} return, ${formatMoney(waived, saveCurrency(s.universe))}, by its schedule.`);
     return { waived };

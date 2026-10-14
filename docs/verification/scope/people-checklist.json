@@ -1,0 +1,43 @@
+{
+  "key": "people",
+  "on": "2026-10-15",
+  "against": "bef4bde5",
+  "rows": [
+    {
+      "id": "l-person",
+      "player": "Reads a person's look: on Home, pressing the player's name opens the person look (src/ui/looks/wellbeing.tsx, defineLook('person')). Another person's look opens from at('person', id). Only the player is a Person in play. bootstrap.ts is the only place a Person is added, and no command adds one, so a second person's look is reached only over a seeded second Person (TEST SETUP).",
+      "path": "Home's name → at('person', playerId) → resolveLook → the person look. A second Person: at('person', id) → personIn(sim, id). Its ways open at('trait', `${id}/${trait}`), at('condition', `${id}/${condition}`), at('dial', `${id}/${dial}`) and at('readiness', id). The interface reaches the player's look. No screen lists another Person, because play holds none.",
+      "preconditions": "A Person in universe.people. For another person's branch, a Person whose id isn't universe.playerId.",
+      "costs": "None: a look changes nothing.",
+      "timing": "Read at render, against sim.now (the injury's mend date).",
+      "refusals": "An id that isn't in universe.people resolves to gone ('They aren’t part of this story any more.'). A trait or condition the person doesn't hold or carry doesn't resolve.",
+      "outcomes": "The person's name and kind ('Yourself' or 'Somebody'), the eight dials, Readiness, each held trait and carried condition, an injury, and Your Own Plans for the player only. The body lines: traits, the body in the units of where they live, the injury, pronouns and citizenship, race/ethnicity, background and films.",
+      "readers": "The trait, condition, dial and readiness looks, each opened from the person look's ways and resolved against the person named in the id.",
+      "persistence": "Reads the saved Person. A save and a load keep the second Person and their look. Moving currentLocationId moves the units.",
+      "gap": "Implementation missing, and evidence missing. (1) Implementation: the look didn't read another person's pronouns for its words. Every other person was 'they' ('Their body.', 'Who they are.', 'A Trait They Hold', 'They leave it alone'), whatever their pronouns. A she/her person read 'On their papers. she/her' (evidence2-b12:623-624). Change the pronouns and only the papers line changed: it failed the falsifiability test. The dial ways' details ('what the day has left in you') and the injury way ('what it keeps you from') said 'you' to another person. (2) Evidence: the 'they' branch and 'Your Own Plans only for the player' are reached only over a seeded second Person. That is genuinely unreachable in play, because no command adds a Person (bootstrap.ts is the only place). The owner's direction of 2026-10-15 is that a seeded second person, labelled as such, is acceptable for isolated rendering tests, and that no character-creation feature should be added for it.",
+      "acceptance": [
+        "tests/scope-people.test.ts (render, over a seeded second Person built by createUniverse and labelled TEST SETUP): she/her, he/him and they/them seconds each read in their own pronouns on the person look ('Her body.', 'His body.', 'Their body.', 'where she lives', 'Who he is.', 'The films she loves.'), with their own traits, condition and pronouns, and none of the player's. Their trait look and condition look use their pronouns ('A Trait She Holds', 'with all she is', 'A Condition He Carries', 'He leaves it alone', 'She keeps it up'). The dial ways and the injury way say no 'you' to another person. The player's own look is unchanged.",
+        "The falsifiability test: the same seeded person with only the pronouns changed changes the words, and nothing else.",
+        "tests/evidence3-person.test.ts l-person (they/them Bea) stays green. tests/evidence2-b12.test.ts:623-624 (a she/her copy) now reads 'Her body.' and 'On her papers.'."
+      ]
+    },
+    {
+      "id": "i-stale-claims",
+      "player": "Not a screen row. It covers the project's prose (comments, strings, docs) about the interests removed on 2026-10-10 (migration 94).",
+      "path": "None: prose. Held by the tree-wide walks in tests/evidence3-person.test.ts and tests/evidence2-b13.test.ts.",
+      "preconditions": "None.",
+      "costs": "None.",
+      "timing": "Whenever the suite runs.",
+      "refusals": "The walk fails on a sentence that names the removed interests in the present tense.",
+      "outcomes": "Every sentence that names the removed interests is dated by the removal, or has been read and listed as true.",
+      "readers": "The gate (vitest).",
+      "persistence": "Not applicable.",
+      "gap": "Evidence missing (a weak guard), in both files. evidence3's REMOVAL accepted 'removed', 'dropped', 'deleted' or 'went' anywhere in a sentence, including a present-tense passive ('An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.') and 'Interests went into every meal.'. Its NAMES missed possessive and adjective singulars ('Your interest lifts a meal.', 'A favourite interest lifts a meal.'). evidence2-b13's older rule still took 'until', 'gone', 'no longer', 'drops' and 'lets go' for the past, and is still in the gate.",
+      "acceptance": [
+        "tests/evidence3-person.test.ts i-stale-claims: the examples test flags the check's present passives, 'went into', possessive and adjective singulars, and a sentence with a present clause beside a past one. It passes their twins dated by the removal and the dated past-tense notes already in the tree (quoted verbatim). It doesn't take money's interest, or 'your interest rate', for the removed interests.",
+        "tests/evidence3-person.test.ts and tests/evidence2-b13.test.ts tree-wide walks: the same stricter rule over src/, tests/ and docs/, green on the tree. Any new sentence it finds is read and listed with why.",
+        "Break, run, restore: putting a present-tense sentence such as 'An interest is dropped from the sheet when the term ends.' into a source comment fails both walks."
+      ]
+    }
+  ]
+}

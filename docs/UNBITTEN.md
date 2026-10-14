@@ -307,7 +307,8 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
 - **A doctor’s visit and a condition’s review (2026-10-12).** In Connecticut
   they change nothing in the body or the medicine. A kept visit takes nothing
   from the body (`careFor` gives 'visit' no toll) and costs its share, which on
-  Yale Health is nothing; it may end in a referral (`mayRefer`), a specialist’s
+  Yale Health is nothing at its own Health Center and, from 2026-10-15, the whole
+  uninsured price at Fair Haven, where Yale Health pays for nothing; it may end in a referral (`mayRefer`), a specialist’s
   visit that changes no more. It renews every prescription
   (`renewPrescriptions`), and only British Columbia’s runs out
   (`RX.validYears`), so in Connecticut the renewal is read by nothing. A review
@@ -320,22 +321,31 @@ amount (`TAX_PLAN_KIND`). One reader was believed in and wasn’t there, and the
   week books the visit owed with the next one it draws, and the review follows
   it (`tests/defects-g23-1.test.ts`, turned round that day: the student with one
   called off is seen on 12 March 2026 and reviewed on 9 April, and ends with the
-  control’s body and the medicine still filled). Wiring the rest wants a
-  researched consequence, not a chosen one. Connecticut’s rule for a prescription of a medicine that isn’t
-  controlled, Conn. Gen. Stat. §20-614 (ch. 400j), was seen only through a
-  search summary (`docs/research/world/research-alterations-refills.json`,
-  `us-ct-controlled-refills`), which found no expiry and lists the question
-  under `notFound`; it does say such a prescription states its number of
-  refills. So there are two candidates: an expiry, if the statute, read, sets
-  one, which goes in `RX.validYears['us-ct']`, where `fillMedicine` fills no
-  prescription past it (`rxValidUntil`), so the medicine runs out when a visit
-  is skipped; and the refill count, which nothing in
-  SLATE keeps yet. Either bites only where a condition’s medicine running out is
-  read (`keptUp`): asthma’s and type 1 diabetes’s emergencies, depression’s
-  morale, diabetes’s condition and arthritis’s energy. High blood pressure left
-  untreated costs nothing, so the case measured would change nothing even then.
-  If the statute sets neither, the visit stays here until another consequence
-  is read. No code changes until then.
+  control’s body and the medicine still filled). Wiring the rest wanted a
+  researched consequence, not a chosen one. Until 2026-10-15 Connecticut’s
+  rule for a prescription of a medicine that isn’t controlled had been seen
+  only through a search summary (`docs/research/world/research-alterations-refills.json`,
+  `us-ct-controlled-refills`, which lists it under `notFound`), and this
+  entry named two candidates: an expiry in `RX.validYears['us-ct']`, or the
+  refill count. On 2026-10-15 the statutes and the Drug Control Division’s
+  compilation of them were read (`docs/research/world/research-health-visits.json`,
+  `prescriptionValidity`): Connecticut sets no period after which such a
+  prescription can’t be filled. A refill is given on the prescriber’s order,
+  as many as the prescription authorizes (CGS 20-616(b)); a pharmacist may
+  give one of at most seventy-two hours when the prescriber can’t be reached
+  (20-616(c)), or prescribe up to thirty days of insulin, glucagon and the
+  devices to give them to a patient down to under a week’s supply (20-616(d));
+  the one year in the compilation is a syringe prescription’s (21a-65(b)). So
+  the expiry fell as a candidate, and `RX.validYears` was given none for
+  Connecticut. The refill count is the prescriber’s choice, which no source
+  read publishes, so it isn’t kept either. A prescription played there was
+  filled on 27 September 2027, a year and twenty days after it was taken, with
+  nothing renewing it (`tests/scope-health.test.ts`). Either candidate would
+  have bitten only where a condition’s medicine running out is read
+  (`keptUp`): asthma’s and type 1 diabetes’s emergencies, depression’s morale,
+  diabetes’s condition and arthritis’s energy; high blood pressure left
+  untreated costs nothing. So the visit stays here, its
+  renewal read by nothing in Connecticut, until another consequence is read.
 
 - **Bank of America’s card days (2026-10-12).** `OPENING` in
   `src/engine/content/bankopening.ts` keeps the bank’s “You will receive your

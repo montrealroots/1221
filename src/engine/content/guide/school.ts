@@ -555,7 +555,9 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     needs: [
       `A make-up session: an Incomplete whose deadline is ${MAKE_UP} or more away, still at the School, out of hospital, and ${MAKE_UP} free.`,
-      `A repeat: the spring’s evaluation past and the next year not yet begun (after the last year, within ${EXTENDED_STUDY.requestDays} days of it), a course failed that year, no leave under way and no additional term asked for, that year not repeated before, and ${EXTENDED_STUDY.maxSemesters} semesters at most with the repeat’s two and the terms still to come, a leave’s terms not among them.`,
+      // “A course failed that year” was false until 2026-10-15 after a leave begun at the year’s spring: its fall’s Fail,
+      // three calendar terms back, wasn’t counted, and the repeat was refused (`repeatCourses`, systems/leave.ts).
+      `A repeat: the spring’s evaluation past and the next year not yet begun (after the last year, within ${EXTENDED_STUDY.requestDays} days of it), a course failed in that year’s fall or spring, a leave between them or not, no leave under way and no additional term asked for, that year not repeated before, and ${EXTENDED_STUDY.maxSemesters} semesters at most with the repeat’s two and the terms still to come, a leave’s terms not among them.`,
       `An additional term: after the last year’s evaluation and within its ${EXTENDED_STUDY.requestDays} days, a course unpassed, no repeat being decided, ${EXTENDED_STUDY.maxSemesters} semesters enrolled at most with it, and no disqualification standing.`,
     ],
     costs: [
@@ -579,17 +581,24 @@ export const SCHOOL: readonly GuideEntry[] = [
     later: [
       `A reminder comes ${COURSE_RULES.remindDays} days before an Incomplete is due; at the deadline it becomes a Permanent Incomplete, with no credit.`,
       'A repeat granted: from the next term you take that year’s courses again with the class a year below. What you did the first time stays on the record, and the degree reads the pass. On an F-1, the I-20 runs a year longer.',
-      `A repeat refused, past ${EXTENDED_STUDY.maxSemesters} semesters or under a disqualification: after the last year, the degree is withheld.`,
-      `An additional term granted: in it you take only the retakes, with the class then in that year. Passed in a fall, the degree comes at Yale’s December conferral on ${MONTHS[DEGREE_DATES.december[0] - 1]} ${DEGREE_DATES.december[1]}; in a spring, at Commencement.`,
+      // Until 2026-10-15 this said a repeat refused past the semesters or under a disqualification withholds the degree
+      // after the last year: the decision's own refusals, which no request the asking takes reaches (`repeatRefusal`,
+      // REPEAT_DECIDE_KIND), kept as guards.
+      'A request taken is granted at its decision while you’re still at the School and haven’t called it off: the chair and the dean decide on what let you ask.',
+      'Repeated, the last year’s courses meet again in the next fall and spring; the terms past six are billed to your Yale account, and with every course passed the degree comes at that year’s Commencement.',
+      `An additional term granted: in it you take only the retakes, with the class then in that year. Passed in a fall, the degree comes at Yale’s December conferral on ${MONTHS[DEGREE_DATES.december[0] - 1]} ${DEGREE_DATES.december[1]}; in a spring, at Commencement. A retake not passed in it withholds the degree at that evaluation, and nothing more can be asked.`,
       `After the last year’s evaluation with a course unpassed, you have ${EXTENDED_STUDY.requestDays} days to ask for either, or the degree is withheld. With neither open to you, it’s withheld at the evaluation.`,
       'At an evaluation where the Bulletin’s count of Fails is reached, with a Fail the faculty haven’t judged before, they review it. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning, the year to be repeated, and the Fails they kept you through don’t stand against the repeat or an additional term.',
       'An Incomplete still open at Commencement keeps you from the ceremony, and the degree comes once it’s made up in time.',
     ],
     interpret: [
       'Each Incomplete reads how many of its make-up sessions are left, and by when.',
-      'A failed course says why: the meetings you were at, or the work not shown.',
+      // Until 2026-10-15 “only where that can still be asked” was false after a leave begun at the year’s spring: a fall
+      // Fail or an Incomplete run out in the leave was offered the year’s end, which then refused it (`repeatCourses`).
+      `A failed course says why: the meetings you were at, or the work not shown. Its notice comes after the evaluation’s word on your standing, and offers the year’s end to ask to repeat the year only where that can still be asked: not where the same evaluation dismissed you or withheld the degree, as a retake not passed in an additional term does, and not where the repeat would take the degree past ${EXTENDED_STUDY.maxSemesters} semesters, counted as the year’s end will count them, which after any repeat granted is every year, the repeated one with the rest. A Permanent Incomplete’s notice offers it on the same terms, and not where the degree waits on it.`,
       'Every Course marks each attempt Passed, Incomplete, Not Passed, Permanent Incomplete, Left On Leave or In Progress.',
-      'Finishing The Degree says where a request stands: with the chair and the dean, granted, refused and why, or called off.',
+      // Until 2026-10-15 this listed “refused and why” among them, which only the decision's guards draw.
+      'Finishing The Degree says where a request stands: with the chair and the dean, granted, or called off.',
     ],
     unavailable: [
       '“There’s no Incomplete in that course to make up.” or “Its month runs out at …: there isn’t the time for a session before it.”',
@@ -656,13 +665,14 @@ export const SCHOOL: readonly GuideEntry[] = [
       { label: 'Late Fee', value: `${usd(EXTENDED_STUDY.lateFee)} a month while it’s owed, to ${usd(EXTENDED_STUDY.lateFeeTermCap)} a term` },
       { label: 'Paying', value: 'From your bank, at once, with no time taken' },
       { label: 'Grant Aid', value: `${usd(WORK_STUDY.hourly)} for each hour converted, up to ${WORK_LIMITS.convertibleHours} hours a year, taxed as a scholarship` },
+      { label: 'Asking For Conversion', value: 'No time and no money: the grant comes at the processing it’s booked for' },
     ],
     reads: [
       { label: 'The Balance', value: 'The sum of the account’s postings: what was charged, less what was paid or credited' },
       { label: 'Need', value: `Yale’s assessment of your family’s means, the family you chose at creation beside your background. ${or(NEEDY.map(FAMILY_WORD))}: need is found, and the living-expense scholarship, ${usd(AIDED.livingScholarship)} a term in 2026–27, meets the term’s Yale Health plan, ${usd(AIDED.healthPlan)}, and pays the rest, ${usd(AIDED.refund)}, into your bank each fall and spring; hours missed ill can be converted, and a leave begun mid-term returns part of the scholarship. ${or(MEANS.map(FAMILY_WORD))}: the means rule need out, so there’s no living aid, no hours to convert, and the plan comes from your bank` },
       { label: 'Your Family’s Money', value: `What each family puts in your name on the first morning: ${FAMILY_MONEY}` },
       { label: 'The Aid Office', value: `An exception to ${SIX} terms of tuition support only where you’ve had a medical leave; living aid, which meets the term’s Yale Health fee, kept only where need was found`, estimate: true },
-      { label: 'Hours To Convert', value: `Assigned hours excused ill or hurt this year; and the hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; to ${WORK_LIMITS.convertibleHours} less any converted` },
+      { label: 'Hours To Convert', value: `Assigned hours excused ill or hurt this year; and the hours never assigned, counted in May until its processing, once the spring’s shifts are done, and paid only at May’s processing, never January’s; to ${WORK_LIMITS.convertibleHours} less any converted. A year repeated is a year of its own: its hours are counted and converted apart from the first time’s` },
     ],
     now: [
       'A payment moves from your bank onto the account at once; paid in full, a hold lifts, and a degree waiting on it is conferred.',

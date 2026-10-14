@@ -28,8 +28,9 @@
  * - `l-person`: the creation side of the unit split, played through Who Are You Going To Be?: born in London, the
  *   Starting Point asks centimeters and kilograms, and 170 and 65 read back in New Haven as 5 ft 7 in and 143 lb; born
  *   in New York it asks feet, inches and pounds. The injury's "till October 6" held to the clock that mends it,
- *   between 8 and 9 AM that day, inside a broken bone's 42 to 84 days. And why no "they" is reached: a played world
- *   holds one Person; only a second put there by hand is "they", with no Your Own Plans.
+ *   between 8 and 9 AM that day, inside a broken bone's 42 to 84 days. And why no third person is reached: a played
+ *   world holds one Person; only a second put there by hand is spoken of in the third person ("they" until 2026-10-15,
+ *   their own pronouns since), with no Your Own Plans.
  * - `n-decision-us-status`: the OPT-offering decision at the F-1's own program end, nothing moved by hand but the
  *   degree: issued for the class of 2029 to 30 July 2029 (31 May and sixty days), the clock raises it on 31 May, due
  *   30 July; pressed on Home on 1 June it pays $470 and leaves a permit pending ninety days, which holds her status
@@ -604,7 +605,7 @@ describe('l-person', () => {
     expect(mended.ways.map(([label]) => label)).not.toContain('An Injury');
   });
 
-  it('only the player is a Person: after a fall played the world holds her alone, and a person look for anyone else is gone; only a second Person put there by hand draws the look’s “they”, without Your Own Plans', () => {
+  it('only the player is a Person: after a fall played the world holds her alone, and a person look for anyone else is gone; only a second Person put there by hand draws the look’s third person, in her pronouns, without Your Own Plans', () => {
     const sim = feb1();
     expect(Object.keys(sim.universe.people)).toEqual([sim.player.id]);
     // Her classmates are records on the School, with a look of their own kind.
@@ -620,8 +621,10 @@ describe('l-person', () => {
     expect([them.name, them.kind]).toEqual(['Bea Lane', 'Somebody']);
     expect(them.ways!.map((w) => w.label)).not.toContain('Your Own Plans');
     const said = words(renderToStaticMarkup(them.body as never));
-    expect(said).toContain('Their body. ');
-    expect(said).toContain('On their papers. she/her, a citizen of United Kingdom.');
+    // A copy of her, she/her, is spoken of as “her” (from 2026-10-15: until then as “they”, whatever the pronouns, so
+    // this read “Their body.” above “On their papers. she/her”; tests/scope-people.test.ts holds all three pronouns).
+    expect(said).toContain('Her body. ');
+    expect(said).toContain('On her papers. she/her, a citizen of United Kingdom.');
     expect(said).not.toMatch(/Your body|On your papers/);
   });
 });

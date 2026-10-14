@@ -30,6 +30,12 @@
  * referral to the first specialist, at England's share referred, another
  * system where the family doctor refers (`research-health-travel-gaps.json`).
  * What the specialist finds isn't kept: SLATE's conditions don't name one.
+ *
+ * **A practice's own wait** (from 2026-10-15): where a practice publishes how soon it sees people (`Clinic.waitDays`),
+ * a visit there is booked for that, not the town's: Yale Health's Student Health, the next weekday, against New Haven's
+ * 23.5 days at Fair Haven. An appointment is had at the practice it was booked at, and a practice for its members that
+ * no longer sees them when it comes (Yale Health, its cover ended by a withdrawal) doesn't: the visit is owed, and
+ * booked again where they're seen. Until then a visit was billed under whichever practice was their doctor on the day.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -37,10 +43,11 @@ import { CommandError } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { MS_DAY, formatDate, instantFromZoned, zonedParts, type Instant } from '../core/time';
 import { CITIES } from '../content/geography';
+import type { Clinic } from '../content/clinics';
 import { holidaysOn } from '../content/holidays';
 import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, ENGLAND_BANDS, IMSS_DAYS, US_DAYS, US_METRO_AVERAGE_DAYS } from '../content/appointments';
 import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
-import { clinicFor } from './clinics';
+import { DOCTOR_KINDS, MEMBERS_ONLY, clinicById, clinicFor, clinicsIn, seesThem } from './clinics';
 import { citizenOf } from './documents';
 import { presentForCare } from './health';
 
@@ -98,6 +105,17 @@ export function waitDays(sim: Simulation, person: Person, key: string): number |
   return undefined;
 }
 
+/**
+ * The days a practice books a visit for where that's one number, for Papers to say before it's chosen (from
+ * 2026-10-15): its own published wait, or America's town wait; nothing where the wait is a draw (England, Canada) or
+ * none is published. `book` reads the same figures.
+ */
+export function practiceWait(person: Person, clinic: Clinic): number | undefined {
+  if (clinic.waitDays !== null) return clinic.waitDays;
+  if (CITIES.get(homeCity(person))?.countryId !== 'us') return undefined;
+  return Math.round(US_DAYS[homeCity(person)] ?? US_METRO_AVERAGE_DAYS);
+}
+
 /** A weekday morning so many days on, in their town. */
 function slot(sim: Simulation, person: Person, days: number): Instant {
   const zone = CITIES.require(homeCity(person)).timeZone;
@@ -112,9 +130,10 @@ function slot(sim: Simulation, person: Person, days: number): Instant {
   return at;
 }
 
-/** Books the next appointment for a need, at their doctor or the town's first practice; nothing where no wait is published. */
+/** Books the next appointment for a need, at their doctor or the town's first practice, for its own wait where it publishes one; nothing where no wait is published. */
 export function book(sim: Simulation, person: Person, what: string): Appointment | undefined {
-  const days = what === SPECIALIST ? referralDays(person) : waitDays(sim, person, `${what}-${sim.now}`);
+  const own = clinicFor(person, 'visit', sim.now)?.waitDays ?? undefined;
+  const days = what === SPECIALIST ? referralDays(person) : own ?? waitDays(sim, person, `${what}-${sim.now}`);
   if (days === undefined) return undefined;
   return bookIn(sim, person, what, days);
 }
@@ -126,7 +145,7 @@ export function book(sim: Simulation, person: Person, what: string): Appointment
  * for a copy of them put in their own town, which was the town they were in.
  */
 function bookIn(sim: Simulation, person: Person, what: string, days: number, why?: string): Appointment {
-  const clinic = clinicFor(person, 'visit');
+  const clinic = clinicFor(person, 'visit', sim.now);
   const h = healthOf(person);
   h.seq = (h.seq ?? 0) + 1;
   const a: Appointment = { id: `a${h.seq}`, at: slot(sim, person, days), what, ...(clinic ? { clinicId: clinic.id } : {}) };
@@ -134,6 +153,41 @@ function bookIn(sim: Simulation, person: Person, what: string, days: number, why
   sim.schedule({ at: a.at, kind: APPOINTMENT_KIND, label: what === SPECIALIST ? 'A Specialist' : `The Doctor${clinic ? `, ${clinic.name}` : ''}`, category: 'personal', priority: 35, requiresPlayer: true, durationMinutes: CONSULT_MINUTES, locationId: homeCity(person), payload: { personId: person.id, appointmentId: a.id } });
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: what === SPECIALIST ? 'A Referral' : 'A Doctor’s Appointment', body: `${why ? `${why}: a` : `${what}: booked`}${what === SPECIALIST ? (why ? ' specialist, booked' : '') : clinic ? ` at ${clinic.name}` : ''} for ${formatDate(a.at, CITIES.require(homeCity(person)).timeZone)}, the wait where you live.`, importance: 50, route: '/workspace/papers' });
   return a;
+}
+
+/**
+ * A save from before 2026-10-15 opened (`loadSave`): an appointment it booked at Fair Haven for somebody who never
+ * chose a practice, and whom Yale Health covers on its day, is had at Yale Health's practice instead, its date kept, its
+ * calendar entry renamed. That day Yale Health's rule that a member's care is had at its Health Center was kept, and with
+ * nothing chosen a member's visit went there (`clinicFor`); an appointment the older build booked by its default would
+ * otherwise be billed as the uninsured's, a choice the player never made. Nothing chosen is told from a choice by
+ * `health.clinicId`, which only Your Doctor's command sets: before that day New Haven kept one practice and drew no Your
+ * Doctor, so no New Haven life had one. One chosen stays where it was booked. Returns how many were moved.
+ *
+ * It's taken once, on the first opening of a save that doesn't name it in `SaveUniverse.opened`, and never on a save
+ * this build began (from 2026-10-15). Until later that day it ran on every opening, and what it moved couldn't be told
+ * from a current booking: a member uncovered on a personal leave, given Fair Haven by default, who bought Affiliate cover
+ * before the day was seen at Fair Haven and billed $187.20 played straight through, and at Yale Health for $0 after a
+ * reload (found by play). The rule for a current save is the one a pick has had since that day: an appointment is had
+ * at the practice it was booked at, which is what keeping it means. Fair Haven still sees her, and Yale Health's plan
+ * pays for a visit only at its own Health Center, so it's billed there as the uninsured's, as the bill says; cancel it
+ * and Book An Appointment books her at Yale Health. The same holds for a return from a leave before the day.
+ */
+export function followTheCover(sim: Simulation): number {
+  let moved = 0;
+  for (const person of Object.values(sim.universe.people)) {
+    if (!person.health || person.health.clinicId) continue;
+    for (const a of person.health.appointments ?? []) {
+      const was = a.clinicId ? clinicById(a.clinicId) : undefined;
+      if (!was || was.members !== null) continue;
+      const theirs = clinicsIn(was.cityId).find((c) => c.members !== null && DOCTOR_KINDS.includes(c.kind) && seesThem(person, c, a.at));
+      if (!theirs) continue;
+      a.clinicId = theirs.id;
+      for (const one of sim.universe.scheduled) if (one.status === 'pending' && one.kind === APPOINTMENT_KIND && one.payload.appointmentId === a.id && one.payload.personId === person.id) one.label = one.label.replace(was.name, theirs.name);
+      moved += 1;
+    }
+  }
+  return moved;
 }
 
 export function registerAppointments(sim: Simulation): void {
@@ -148,7 +202,15 @@ export function registerAppointments(sim: Simulation): void {
       if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Missed The Doctor', body: `${a.what}: you weren’t there, so you weren’t seen. Book again when you can.`, importance: 60, route: '/workspace/papers' });
       return;
     }
-    careFor(s, person, { care: 'visit', what: a.what }, item.at);
+    // A practice for its members that doesn't see them now (from 2026-10-15): not seen, and owed, as a visit missed is.
+    const at = a.clinicId ? clinicById(a.clinicId) : undefined;
+    if (at && at.members !== null && !seesThem(person, at, item.at)) {
+      item.status = 'missed';
+      healthOf(person).owedVisit = a.what;
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Not Seen At Your Practice', body: `${a.what}: ${MEMBERS_ONLY[at.members]} You weren’t seen at ${at.name}. Book again, and it’s at ${clinicFor(person, 'visit', item.at)?.name ?? 'the town’s first practice'}.`, importance: 60, route: '/workspace/papers' });
+      return;
+    }
+    careFor(s, person, { care: 'visit', what: a.what, ...(a.clinicId ? { clinicId: a.clinicId } : {}) }, item.at);
     // A visit kept renews the prescriptions (`RX`, from 2026-10-03).
     renewPrescriptions(person, item.at);
     reviewed(person, a.what, item.at);

@@ -881,11 +881,25 @@ export function cancelRepeatWarning(sim: Simulation, school: SchoolRecord): stri
     : 'Calling it off carries you on to the next year with the course not passed, and the degree can’t be completed without it.';
 }
 
-/** The courses failed in the year ending with a spring term, by their latest attempts. */
+/**
+ * The courses failed in the year of the program ending with a spring term, by their latest attempts: its fall and its
+ * spring by program term (`academic`). Until 2026-10-15 it kept the calendar spring and the calendar term before it,
+ * which a two-term leave begun at a spring (the only length `leaveLengths` grants from one) splits: the year's fall stood
+ * three calendar terms back, its Fail or Permanent Incomplete was dropped, and the year's end refused the repeat its
+ * notice had offered, “Every course this year was passed” (found by that day's third skeptic pass on the school rows).
+ */
 export function repeatCourses(school: SchoolRecord, spring: number): string[] {
+  const end = academicTerm(school, spring);
   // A course left on a leave is taken again on return, not repeated for.
-  return degreeShortfall(school).failed.filter((r) => r.result !== 'withdrawn' && (r.term === spring || r.term === spring - 1)).map((r) => r.name);
+  return degreeShortfall(school).failed.filter((r) => r.result !== 'withdrawn' && [end - 1, end].includes(r.academic ?? r.term)).map((r) => r.name);
 }
+
+/**
+ * The calendar terms of the year ending with a spring term: its fall the last term enrolled before it, a leave between
+ * them or not (from 2026-10-15: until then the spring and the calendar term before it, which after a leave begun at the
+ * year's spring was a term of the leave). Nothing reads `Repeat.terms` yet; it's kept on the save as the record of it.
+ */
+const yearTerms = (school: SchoolRecord, spring: number): [number, number] => [enrolledTerms(school).filter((x) => x < spring).at(-1) ?? spring - 1, spring];
 
 export function requestRepeat(sim: Simulation, person: Person): Repeat {
   const no = repeatRefusal(sim, person);
@@ -894,7 +908,7 @@ export function requestRepeat(sim: Simulation, person: Person): Repeat {
   const t = termNow(school);
   const next = school.repeatBy === undefined ? at(termStart(t + 1).date, 8) : Number.POSITIVE_INFINITY;
   const decideAt = Math.max(sim.now + 3_600_000, Math.min(businessDaysOn(sim.now, EXTENDED_STUDY.decideWorkingDays, 'yale'), next));
-  const repeat: Repeat = { requestedAt: sim.now, status: 'pending', decideAt, year: yearOfTerm(academicTerm(school, t)), terms: [t - 1, t], courses: repeatCourses(school, t) };
+  const repeat: Repeat = { requestedAt: sim.now, status: 'pending', decideAt, year: yearOfTerm(academicTerm(school, t)), terms: yearTerms(school, t), courses: repeatCourses(school, t) };
   school.repeat = repeat;
   sim.schedule({ at: decideAt, kind: REPEAT_DECIDE_KIND, label: 'Repeating The Year: The Decision', category: 'school', priority: 33, payload: { personId: person.id } });
   return repeat;

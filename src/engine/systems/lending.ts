@@ -1251,6 +1251,9 @@ export function registerLending(sim: Simulation): void {
     if (!current) throw new CommandError('There’s no current account to arrange one on.');
     const limit = Math.round(Number(p.limit));
     if (limit === 0) {
+      // Nothing arranged, nothing to close (from 2026-10-15: until then it answered as closed and changed nothing, at a
+      // bank that arranges none too, every New Haven bank among them; found by that day's scope pass).
+      if ((current.overdraftLimit ?? 0) <= 0) throw new CommandError('No overdraft is arranged on it.');
       if (current.balance < 0) throw new CommandError('Pay the overdraft back before closing it.');
       current.overdraftLimit = undefined;
       delete current.overdraftPerUse;
@@ -1338,6 +1341,15 @@ export function registerLending(sim: Simulation): void {
     post(s, `Loan for the overrun, from ${bank.name}`, 'loan', [{ accountId: loan.id, amount: -offer.amount }, { accountId: current.id, amount: offer.amount }]);
     scheduleLoan(s, loan, s.now);
     delete current.creditOffered;
+    // Back within its limit, the account's days past it end, and with them the letter's and the closing notice's (from
+    // 2026-10-15: until then they ran on from the overrun's first day unless a midnight found it within the limit, so a
+    // life spending on into it was closed two months after the notice though its overrun was a loan; found by that
+    // day's scope pass).
+    if (current.balance >= -(current.overdraftLimit ?? 0)) {
+      current.negativeSince = undefined;
+      current.overrunInformed = undefined;
+      current.closingNoticed = undefined;
+    }
     return { apr: offer.apr, payment };
   });
 

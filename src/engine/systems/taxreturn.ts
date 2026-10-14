@@ -45,7 +45,7 @@ import { earningsOf, stateOf, yearOf } from './earnings';
 import { drawFromBank, expenseFor, inTheBank, payFromBank } from './spending';
 import { citizenOf } from './documents';
 import { payeeAccount } from './cash';
-import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
+import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateDueOf, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
 
 export const TAX_SEASON_KIND = 'tax.season';
@@ -379,7 +379,12 @@ export function registerFederalLien(sim: Simulation): void {
   });
 }
 
-/** The next step of the IRS's collection on a return, on the calendar. */
+/**
+ * The next step of the IRS's collection on a return, on the calendar, counted from now: a return filed early and unpaid
+ * has its CP501 five weeks after filing, before the tax is due. Connecticut's collection waits for its due date from
+ * 2026-10-15 (`stateNextNotice`); whether the IRS's should was left to the owner that day, since the gate's IRS notice
+ * tests (tests/evidence-g17-papers.test.ts, tests/liens-and-arrangements.test.ts) count from a filing before it.
+ */
 function nextNotice(sim: Simulation, person: Person, r: TaxReturn): void {
   const step = r.collection ?? 0;
   const wait = step < COLLECTION.notices.length ? COLLECTION.noticeWeeks * 7 : step === COLLECTION.notices.length ? COLLECTION.finalDays : COLLECTION.againDays;
@@ -1121,7 +1126,7 @@ export function latePenaltyAll(person: Person, r: TaxReturn, at: Instant, into =
     const rules = rulesOf(state);
     // A state that has assessed it already charges its own, in what it says is owed (from 2026-10-11).
     if (!rules || tax <= 0 || r.stateDue?.[state]?.filedAt !== undefined) continue;
-    total += stateLateAt(rules, tax, r.due, at, into);
+    total += stateLateAt(rules, tax, stateDueOf(r), at, into);
   }
   return total;
 }
@@ -1147,6 +1152,11 @@ export function armCollection(sim: Simulation, person: Person): void {
     if (r.filedAt === undefined && r.due < sim.now) scheduleStateNonFiler(sim, person, r, owedToOf(person, r).states);
     for (const [state, sd] of Object.entries(r.stateDue ?? {})) if (sd.owed && !person.statePlans?.[state] && !sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) stateNextNotice(sim, person, r, state);
     if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
+    // A plan being decided, in force or behind holds collection, and puts it back itself when it ends (`endPlan`,
+    // `refusePlan`). From 2026-10-15: until then a save opened while a plan was behind had a letter put on the calendar
+    // here, and the plan's end put a second beside it, so a student whose plan ended on 1 April 2028 had two IRS letters
+    // coming for one year, five weeks after the reload and five weeks after the end (tests/scope-taxpapers.test.ts).
+    if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) continue;
     r.accruedAt ??= sim.now;
     nextNotice(sim, person, r);
   }
@@ -1252,7 +1262,7 @@ export function registerTaxReturn(sim: Simulation): void {
     // Oregon's three-year rule, read at the year's extended due date.
     for (const [state, v] of Object.entries(owedToOf(person, r).states)) {
       const ty = rulesOf(state)?.threeYear;
-      if (ty && v > 0) s.schedule({ at: r.due + Math.round(ty.extensionMonths * 30.4375) * MS_DAY, kind: THREE_YEAR_KIND, label: `${stateName(state)}: Three Years`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
+      if (ty && v > 0) s.schedule({ at: stateDueOf(r) + Math.round(ty.extensionMonths * 30.4375) * MS_DAY, kind: THREE_YEAR_KIND, label: `${stateName(state)}: Three Years`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, state } });
     }
     if (person.id !== s.universe.playerId) return;
     // The IRS's penalties on its own part, past 60 days at least the lesser of the minimum and that part, as
@@ -1687,16 +1697,16 @@ function amendState(sim: Simulation, person: Person, r: TaxReturn, state: string
   sd.balance += change;
   if (change > 0) {
     // As if it had been on the return: its tax from the due date, with what the state charges since.
-    const added: StateDue = { state, balance: change, parts: { tax: change, penalty: 0, interest: 0 }, owed: change, accruedAt: r.due, payLateRate: 0, interestMonths: 0 };
-    accrueState(added, r.due, sim.now);
-    if (sd.owed) { accrueState(sd, r.due, sim.now); sd.parts = { tax: sd.parts!.tax + added.parts!.tax, penalty: sd.parts!.penalty + added.parts!.penalty, interest: sd.parts!.interest + added.parts!.interest }; sd.owed = sd.parts.tax + sd.parts.penalty + sd.parts.interest; }
+    const added: StateDue = { state, balance: change, parts: { tax: change, penalty: 0, interest: 0 }, owed: change, accruedAt: stateDueOf(r), payLateRate: 0, interestMonths: 0 };
+    accrueState(added, stateDueOf(r), sim.now);
+    if (sd.owed) { accrueState(sd, stateDueOf(r), sim.now); sd.parts = { tax: sd.parts!.tax + added.parts!.tax, penalty: sd.parts!.penalty + added.parts!.penalty, interest: sd.parts!.interest + added.parts!.interest }; sd.owed = sd.parts.tax + sd.parts.penalty + sd.parts.interest; }
     else { Object.assign(sd, { parts: added.parts, owed: added.owed, accruedAt: sim.now, payLateRate: added.payLateRate, interestMonths: added.interestMonths }); sd.collection = 0; stateNextNotice(sim, person, r, state); }
     statePlanNewBalance(sim, person, state, added.owed!);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(change, cur)} more ${stateName(state)} tax, with what it charges from the due date: ${formatMoney(added.owed!, cur)} in all.`, importance: 80, route: '/workspace/papers' });
     return;
   }
   let back = -change;
-  const offset = Math.min(back, sd.owed ? stateOwedOn(sd, r.due, sim.now) : 0);
+  const offset = Math.min(back, sd.owed ? stateOwedOn(sd, stateDueOf(r), sim.now) : 0);
   if (offset > 0) { applyStatePayment(sim, person, r, state, offset, 'refund offset'); back -= offset; }
   if (back > 0) sim.post({ memo: `${stateName(state)} tax refund, amended ${r.year} return`, category: 'tax', postings: [{ accountId: payeeAccount(sim, person).id, amount: back }, { accountId: sim.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
   if (person.id === sim.universe.playerId) sim.notify({ category: 'tax', title: `${stateName(state)} Processed Your Amended ${r.year} Return`, body: `${formatMoney(-change, cur)} less ${stateName(state)} tax.${offset > 0 ? ` ${formatMoney(offset, cur)} went to what was owed to it.` : ''}${back > 0 ? ` ${formatMoney(back, cur)} is refunded.` : ''}`, importance: 80, route: '/workspace/papers' });
@@ -1744,8 +1754,8 @@ export function splitReturns(sim: Simulation, person: Person): void {
         // What the state charges runs from here on, not again on what was charged.
         sd.accruedAt = sim.now;
         const rules = rulesOf(state);
-        sd.payLateRate = rules ? Math.min(rules.payLate.cap, rules.payLate.once + rules.payLate.monthly * Math.min(rules.payLate.months ?? Infinity, Math.ceil(Math.max(0, sim.now - r.due) / (30.4375 * MS_DAY)))) : 0;
-        sd.interestMonths = Math.ceil(Math.max(0, sim.now - r.due) / (30.4375 * MS_DAY));
+        sd.payLateRate = rules ? Math.min(rules.payLate.cap, rules.payLate.once + rules.payLate.monthly * Math.min(rules.payLate.months ?? Infinity, Math.ceil(Math.max(0, sim.now - stateDueOf(r)) / (30.4375 * MS_DAY)))) : 0;
+        sd.interestMonths = Math.ceil(Math.max(0, sim.now - stateDueOf(r)) / (30.4375 * MS_DAY));
         sd.collection = 0;
         stateNextNotice(sim, person, r, state);
         moved += sd.owed;

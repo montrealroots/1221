@@ -449,7 +449,8 @@ export function Home() {
           {/* "No account" and "Your Bank" are a guard, reached by no played life as of 2026-10-14: every life has a
               current account from creation, the bank refuses to close a life's only one, and a card charged off to
               collections leaves the checking named (tests/evidence3-home.test.ts measured both). Kept for a save that
-              comes to have no primary account by some way play doesn't reach. */}
+              comes to have no primary account by some way play doesn't reach, and tested as that guard from 2026-10-15
+              (tests/scope-money.test.ts). */}
           {!shows.money ? <LockedPanel feature="ui.money" title="Money" /> : (
             <AffairLine
               title="Money"

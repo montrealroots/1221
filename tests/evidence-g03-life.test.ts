@@ -11,7 +11,9 @@
  *
  * - `health.book`: refused in each of its three sentences (nothing owed, an appointment already, no wait published);
  *   a visit the week booked, called off and booked again on Papers, 24 days on and moved off a Sunday, owedVisit
- *   cleared and a second press refused, kept on the clock once across two reloads at Yale Health's $0. Its
+ *   cleared and a second press refused, kept on the clock once across two reloads. Until 2026-10-15 she was booked there
+ *   with nothing picked and the visit was Yale Health's $0; from that day Yale Health pays only for a member's care at its
+ *   Health Center, so she picks Fair Haven, and the visit is billed the uninsured's $183.98. Its
  *   `renewPrescriptions` is unread in New Haven (`RX.validYears` holds British Columbia alone), so it's followed in
  *   Vancouver, where a renewal booked again is the next fill, and one left owed is booked again by the next week’s fill
  *   (until 2026-10-13 it ran the medicine out for good, and this file held that).
@@ -202,8 +204,16 @@ describe('health.book', () => {
     expect(shown(sim).buttons.map((b) => b.text)).not.toContain('Book An Appointment');
   });
 
-  it('PLAYER JOURNEY: a visit the week booked, called off and booked again on Papers 24 days on and off the Sunday, owedVisit cleared, a second booking refused, kept once at $0 across two reloads', () => {
+  it('PLAYER JOURNEY: picking Fair Haven, a visit the week booked, called off and booked again on Papers 24 days on and off the Sunday, owedVisit cleared, a second booking refused, kept once and billed the uninsured’s $183.98 across two reloads', () => {
     let sim = student('g03-37');
+    // Until 2026-10-15 she picked nothing and the week booked her at Fair Haven, the town's first practice. That day Yale
+    // Health's rule that a member's care is had at its Health Center was kept, and with nothing picked a member is booked
+    // at Yale Health's practice the next weekday. This journey's point is Fair Haven's 24-day wait run off a Sunday, so
+    // she picks Fair Haven on Papers' Your Doctor, as the player does, before the week books.
+    h.toasts = [];
+    pick(shown(sim), 'own-doctor', 'us-ct-fhchc-grand');
+    expect(h.toasts).toEqual(['Your doctor, chosen.']);
+    expect(healthOf(sim.player).clinicId).toBe('us-ct-fhchc-grand');
     // The first health week, Monday 31 August, books a doctor's visit: AMN's 23.5 days for a metro it doesn't survey,
     // rounded, is 24 days on, Thursday 24 September, at the practice's 10 o'clock.
     tended(sim, at(2026, 8, 31, 12));
@@ -232,18 +242,23 @@ describe('health.book', () => {
     sim = reload(sim);
     expect(appointmentsOf(sim.player)).toEqual(booked);
     expect(sim.universe.scheduled.filter((i) => i.kind === APPOINTMENT_KIND && i.status === 'pending').map((i) => [i.at, i.label])).toEqual([[at(2026, 9, 28, 10), 'The Doctor, Fair Haven Community Health Care']]);
-    // Kept on the clock: the visit at the practice, Yale Health's $0, no bill; and the prescriptions renewed, which
-    // nothing in New Haven reads.
+    // Kept on the clock: the visit at the practice, and the prescriptions renewed, which nothing in New Haven reads.
+    // Until 2026-10-15 it was Yale Health's $0, with no bill and "Nothing to pay."; from that day Yale Health pays none of
+    // a member's visit outside its Health Center, and Fair Haven, publishing no fee, bills it as SLATE bills anybody
+    // uninsured: $100 of 2024 grown by the physicians' services index to 2026, 10,000 × 439.389 ÷ 417.93 = 10,513.47,
+    // 10,513 cents, times 1.75 = 18,397.75, $183.98, due in 30 days, the plan paying none (no `covered`).
     tended(sim, at(2026, 9, 28, 12));
     const kept = titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10));
-    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Nothing to pay.']]);
-    expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10))).toEqual([]);
+    expect(kept.map((n) => [n.at, n.body])).toEqual([[at(2026, 9, 28, 10), 'A doctor’s visit, Fair Haven Community Health Care. Yale Health pays for a visit at its own Health Center, not here. Your share is $183.98, due in 30 days.']]);
+    expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 9, 28, 10)).map((b) => [b.what, b.amount, b.dueAt, b.covered])).toEqual([['A doctor’s visit, Fair Haven Community Health Care', 18_398, at(2026, 10, 28, 10), undefined]]);
     expect(appointmentsOf(sim.player).filter((a) => a.what === 'A doctor’s visit')).toEqual([]);
     expect(healthOf(sim.player).chronic!.hypertension!.prescribedAt).toBe(at(2026, 9, 28, 10));
     // Opened again and played a week: the visit had once.
     sim = reload(sim);
     tended(sim, at(2026, 10, 5, 12));
     expect(titled(sim, 'A Doctor’s Visit', at(2026, 9, 28, 10))).toHaveLength(1);
+    // And billed once: one bill for it, not a second after the reload.
+    expect(healthOf(sim.player).bills.filter((b) => b.what === 'A doctor’s visit, Fair Haven Community Health Care')).toHaveLength(1);
   });
 
   it('with an appointment booked, refuses another, “You have an appointment already.”, and books nothing twice', () => {

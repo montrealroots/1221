@@ -139,8 +139,9 @@ describe('collection by the new authorities', () => {
     // The wages' $1,938.30, and what the bank's interest adds to Indiana's base.
     expect(sd().owed).toBe(returnsOf(sim.player)['2026']!.figures.owedTo!.states['us-in']);
     expect(sd().owed! - 193830).toBeLessThan(500);
-    // Notices at 30, 60 and 20 days: the warrant 110 days after filing.
-    play(sim, at(2027, 5, 25));
+    // Notices at 30, 60 and 20 days: the warrant 110 days after the due date, 15 April 2027, the return filed before it
+    // (from 2026-10-15, `stateNextNotice`; until then 110 days after filing, played to 25 May).
+    play(sim, at(2027, 8, 10));
     expect(sd().collection).toBe(3);
     expect(sd().lien).toMatchObject({ name: 'Tax Warrant', status: 'filed', trigger: 'collection', recordedAt: 'the circuit court clerk' });
     const notes = sim.universe.notifications.filter((n) => n.title === 'Indiana Issued A Tax Warrant');

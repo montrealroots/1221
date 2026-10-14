@@ -75,8 +75,9 @@ describe('who is owed', () => {
     expect(sim.player.taxPlan!.covers).toBe(owedOn(r, sim.player.taxPlan!.appliedAt));
     expect(sim.player.taxPlan!.covers).toBe(owedAll(sim.player, sim.player.taxPlan!.appliedAt));
     expect(sim.player.taxPlan!.covers).toBeLessThan(owedEverywhere(sim.player, sim.player.taxPlan!.appliedAt));
-    // Connecticut's bill comes on its own calendar, the IRS plan notwithstanding.
-    play(sim, sim.now + 32 * MS_DAY);
+    // Connecticut's bill comes on its own calendar, the IRS plan notwithstanding: 30 days from the due date, the return
+    // filed before it (from 2026-10-15, `stateNextNotice`; until then 30 days from filing).
+    play(sim, r.due + 32 * MS_DAY);
     expect(titled(sim, 'A Bill From Connecticut DRS')).toHaveLength(1);
     expect(sim.ledger.audit()).toEqual([]);
   }, 60_000);
@@ -158,7 +159,9 @@ describe('each state by its own rules', () => {
 
   it('California levies after its three notices, its collection fee with it', () => {
     const sim = owing('us-ca-losangeles', 'st-ca-levy');
-    const filed = sim.now;
+    // Its notices from the due date, the return filed before it (from 2026-10-15, `stateNextNotice`; until then from
+    // filing).
+    const filed = Math.max(sim.now, returnsOf(sim.player)['2026']!.due);
     for (let d = 0; d < 3 * 35 + 2; d += 1) { empty(sim); play(sim, filed + (d + 1) * MS_DAY); }
     expect(titled(sim, 'California’s Final Notice Before Levy')).toHaveLength(1);
     fund(sim, 1_000_000_00);
@@ -221,8 +224,8 @@ describe('a federal refund and a state’s debt', () => {
     const before = owedToState(sim.player, 'us-ct', sim.now);
     expect(federalOffsetToState(sim, sim.player, 'us-ct', 500_00, 2027)).toBe(0);
     expect(owedToState(sim.player, 'us-ct', sim.now)).toBe(before);
-    // Billed, it is.
-    play(sim, sim.now + 32 * MS_DAY);
+    // Billed, 30 days from the due date (from 2026-10-15; until then from filing), it is.
+    play(sim, r26.due + 32 * MS_DAY);
     expect(r26.stateDue!['us-ct']!.collection).toBe(1);
     expect(federalOffsetToState(sim, sim.player, 'us-ct', 500_00, 2027)).toBe(500_00);
     expect(sim.ledger.audit()).toEqual([]);

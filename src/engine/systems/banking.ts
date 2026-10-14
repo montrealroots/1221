@@ -427,15 +427,18 @@ export function savingsNotice(sim: Simulation, account: Account): ScheduledItem 
  * and payments ahead that touch it called off. Until 2026-09-27 the orders
  * stayed pointed at it and said every month that the money wasn't there.
  */
-function closeSavings(sim: Simulation, person: Person, account: Account, primary: Account): void {
+function closeSavings(sim: Simulation, person: Person, account: Account, primary: Account): { to: Account; arrives?: Instant } {
   // What it has earned this month is paid before it closes, as a bank does.
   payInterest(sim, account, `Interest: ${account.name}, on closing`);
   settleFees(sim, account);
   // Into the current account at its own bank; with none there, sent to the primary one in the bank's days (from
   // 2026-10-10: until then into the primary account at once, wherever it was).
   const current = checkingAt(sim, person, account.bankId) ?? primary;
-  if (account.balance > 0 && current.bankId !== account.bankId) sendBetweenBanks(sim, person, account, current, account.balance);
-  else if (account.balance !== 0) {
+  let arrives: Instant | undefined;
+  if (account.balance > 0 && current.bankId !== account.bankId) {
+    const at = sendBetweenBanks(sim, person, account, current, account.balance);
+    if (at > sim.now) arrives = at;
+  } else if (account.balance !== 0) {
     sim.post({
       memo: `Closed ${account.name}`, category: 'transfer',
       postings: [{ accountId: account.id, amount: -account.balance }, { accountId: current.id, amount: account.balance }],
@@ -444,6 +447,7 @@ function closeSavings(sim: Simulation, person: Person, account: Account, primary
   account.accrued = 0;
   account.closedAt = sim.now;
   dropPaymentsFor(sim, person, account);
+  return { to: current, ...(arrives !== undefined ? { arrives } : {}) };
 }
 
 /**
@@ -470,10 +474,15 @@ export function dropPaymentsFor(sim: Simulation, person: Person, account: Accoun
  */
 export function settleFees(sim: Simulation, account: Account): void {
   if (!closesQuarterly(account)) return;
-  const due = (account.feesDue ?? 0) + feeFor(sim, account, monthStartOf(sim, sim.now)).fee;
+  const due = closingFeesOf(sim, account);
   account.feesDue = 0;
   if (due <= 0) return;
   sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
+}
+
+/** What `settleFees` would charge now, read before it's charged (a cancellation's refusal, from 2026-10-15). */
+export function closingFeesOf(sim: Simulation, account: Account): Money {
+  return closesQuarterly(account) ? (account.feesDue ?? 0) + feeFor(sim, account, monthStartOf(sim, sim.now)).fee : 0;
 }
 
 /** Pays what an account has built up, now, as a bank does when it closes one. */
@@ -646,8 +655,12 @@ export function registerBanking(sim: Simulation): void {
     const account = s.universe.accounts[String(item.payload.accountId)];
     const current = person?.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined;
     if (!person || !account || account.closedAt || !current || current.closedAt) return;
-    closeSavings(s, person, account, current);
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: `The notice ran out, and what it held is in your ${current.name}.`, importance: 50, route: '/workspace/bank' });
+    // The account it went to, at its bank, and when it lands where it's sent to another bank (from 2026-10-15: until
+    // then the primary account was named wherever the money went, since 2026-10-10 the current account at the savings'
+    // own bank where there is one; found by that day's scope pass).
+    const went = closeSavings(s, person, account, current);
+    const where = `your ${went.to.name} at ${went.to.institution ?? 'your bank'}`;
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${account.name} Closed`, body: went.arrives !== undefined ? `The notice ran out, and what it held is on its way to ${where}, arriving ${formatDate(went.arrives, s.zone)}.` : `The notice ran out, and what it held is in ${where}.`, importance: 50, route: '/workspace/bank' });
   });
 }
 

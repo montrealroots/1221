@@ -510,15 +510,19 @@ describe('documents.us_status', () => {
   // Until 2026-10-13 this held Covered Connecticut to its renewal out of status: covering her from 1 April, six weeks after
   // her status ended, to 1 October, when it ended saying she had stayed past her status. Out of status it ends with the
   // month, as a marketplace plan does, and one enrolled in ahead never begins (found by that day’s third round).
-  it('DEFECT: Covered Connecticut, taken in her fifteen days, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and nothing is left for its renewal', () => {
+  // From 2026-10-15 Covered Connecticut isn't hers in 2027 at all: the premium tax credit it comes with is a citizen's or
+  // a green card holder's from then (`creditAllowed`), so she takes the marketplace in her fifteen days, and it's the
+  // plan enrolled in ahead that never begins. Covered Connecticut enrolled in ahead and ended out of status is reached
+  // only in 2026, by an F-1 student with a month's income over the poverty line (tests/scope-cover.test.ts).
+  it('DEFECT: the marketplace, taken in her fifteen days with Covered Connecticut not hers in 2027, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and no premium is ever taken', () => {
     const sim = student('b06-cct', 'uk-eng-london');
     sim.advanceTo(Date.UTC(2027, 1, 1, 16));
     expect(run(sim, 'school.withdraw', { confirm: true }).ok).toBe(true);
     sim.advanceTo(Date.UTC(2027, 1, 15, 16));
-    // In status: Covered Connecticut, from 1 April, the first of the month after Yale Health's thirty days; its renewal
-    // six months on, 1 October.
-    expect(run(sim, 'health.enroll')).toMatchObject({ ok: true, value: { kind: 'essential', from: on(2027, 4, 1, 0) } });
-    expect(healthOf(sim.player).program).toMatchObject({ kind: 'essential', state: 'ct', renewAt: on(2027, 10, 1, 0) });
+    // In status: the marketplace, from 1 April, the first of the month after Yale Health's thirty days.
+    expect(run(sim, 'health.enroll')).toMatchObject({ ok: true, value: { kind: 'marketplace', from: on(2027, 4, 1, 0) } });
+    expect(healthOf(sim.player).marketplace).toEqual({ from: on(2027, 4, 1, 0), state: 'ct' });
+    expect(healthOf(sim.player).program).toBeUndefined();
     // Unemployment refuses her the same in status as out of it: it's the permit she lacks (no played life holds OPT out of status).
     const refusal = 'Unemployment pays a noncitizen only with permission to work in the US, such as OPT (FUTA 3304(a)(14)).';
     expect(run(sim, 'benefits.claim')).toMatchObject({ ok: false, error: refusal });
@@ -529,19 +533,19 @@ describe('documents.us_status', () => {
     // The month’s look, half past midnight on 1 March: out of status, the cover enrolled for 1 April ends before it begins.
     sim.advanceTo(on(2027, 3, 2));
     const looked = on(2027, 3, 1, 0, 30);
-    expect(titled(sim, 'Your Public Cover Won’t Begin').map((n) => [n.at, n.body])).toEqual([[looked, 'Covered Connecticut is for a citizen or a noncitizen lawfully present, and you stayed past your status.']]);
-    expect(healthOf(sim.player).program).toMatchObject({ kind: 'essential', from: on(2027, 4, 1, 0), until: looked });
+    expect(titled(sim, 'Your Marketplace Plan Won’t Begin').map((n) => [n.at, n.body])).toEqual([[looked, 'The marketplace covers a citizen or somebody lawfully present, and you stayed past your status.']]);
+    expect(healthOf(sim.player).marketplace).toMatchObject({ from: on(2027, 4, 1, 0), until: looked });
     // Yale Health’s thirty days ran to 3 March; the 1 April look finds nothing covers her, says she’s been uncovered from
     // 3 March, and doesn’t offer the marketplace. Until 2026-10-14 the notice said “from April 1, 2027”, the look’s day,
     // and this test asserted it (found by that day’s third round of evidence).
     sim.advanceTo(on(2027, 4, 2));
     expect(titled(sim, 'Your Health Cover Ended').map((n) => [n.at, n.body])).toEqual([[on(2027, 4, 1, 0, 30), 'You’re uncovered from March 3, 2027. Out of status, neither the marketplace nor Covered Connecticut will take you.']]);
     expect(run(sim, 'health.enroll')).toMatchObject({ ok: false, error: 'The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.' });
-    // Nothing comes up for renewal on 1 October: no notice, and the end stays the March look’s.
+    // Nothing is taken for it on 1 April or after: no premium, no notice that it ended, and the end stays the March look’s.
     sim.advanceTo(on(2027, 10, 2));
-    expect(titled(sim, 'Your Public Cover Ended At Renewal')).toEqual([]);
-    expect(titled(sim, 'Your Public Cover Has Ended')).toEqual([]);
-    expect(healthOf(sim.player).program!.until).toBe(looked);
+    expect(healthOf(sim.player).premiums['2027'] ?? []).toEqual([]);
+    expect(titled(sim, 'Your Marketplace Plan Has Ended')).toEqual([]);
+    expect(healthOf(sim.player).marketplace!.until).toBe(looked);
   }, 60_000);
 });
 

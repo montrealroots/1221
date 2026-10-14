@@ -138,7 +138,7 @@ describe('HUSKY D’s work test reads last month’s work: its hours and its pay
     recordInterest(sim.player, at(2027, 6, 30), NY, 20_00);
     healthMonth(sim, sim.player, renewal);
     expect(healthOf(sim.player).program!.until).toBe(renewal);
-    expect(titled(sim, 'Your Public Cover Ended At Renewal')[0]!.body).toMatch(/80 hours’ work or \$580\.00 of earnings a month, and last month had neither/);
+    expect(titled(sim, 'Your Public Cover Ended At Renewal')[0]!.body).toMatch(/80 hours’ work, \$580\.00 of earnings or school at least half-time a month, and last month had none of them/);
   });
 
   it('renews on $580 of pay, worked in June, whatever the hours', () => {

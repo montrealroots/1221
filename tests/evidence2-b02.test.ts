@@ -366,6 +366,8 @@ const VISIT = 'A doctor’s visit';
 const SPECIALIST = 'A specialist, referred';
 const REVIEW = 'A review of your high blood pressure';
 const visitsLogged = (sim: Simulation) => (healthOf(sim.player).careLog ?? []).filter((c) => c.care === 'visit');
+/** Where a Yale Health member's visit goes with nothing picked, from 2026-10-15 (Yale Health's rule that its members' care is had there). */
+const YALE_CLINIC = 'Yale Health Center, Student Health';
 
 describe('health.appointment', () => {
   it('PLAYER JOURNEY: a visit the week books, kept, ends in a referral, a specialist booked 31 days on, seen, and referring no further', () => {
@@ -378,17 +380,23 @@ describe('health.appointment', () => {
     force('health.referral', null, [0]); // TEST SETUP: every visit's referral draw forced to refer
     sim.advanceTo(week.at + MS_HOUR);
     const visit = appointmentsOf(sim.player)[0]!;
-    expect(visit).toMatchObject({ what: VISIT, at: at(2026, 10, 1, 10) });
+    // Until later on 2026-10-15 the visit was booked at Fair Haven 24 days on, Thursday 1 October, and the specialist 31
+    // days after that, Sunday 1 November, so Monday the 2nd. That day Yale Health's rule that a member's care is had at its
+    // Health Center was kept: with nothing picked, the student's visit is booked the next weekday there, Tuesday
+    // 8 September at ten, the day after the health week of Monday 7 September, Labor Day.
+    expect(visit).toMatchObject({ what: VISIT, at: at(2026, 9, 8, 10) });
     sim.advanceTo(visit.at + MS_HOUR);
-    // Kept: the visit, and NAMCS's referral, the specialist seen after AMN's 31 days: Sunday 1 November, so Monday the 2nd.
+    // Kept: the visit, and NAMCS's referral, the specialist seen after AMN's 31 days from ten on Tuesday 8 September:
+    // Friday 9 October, a working day (until 2026-10-15, Monday 2 November).
     expect(visitsLogged(sim).map((c) => c.at)).toEqual([visit.at]);
     const specialist = appointmentsOf(sim.player);
-    expect(specialist.map((a) => [a.what, a.at])).toEqual([[SPECIALIST, at(2026, 11, 2, 10)]]);
-    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for November 2, 2026, the wait where you live.']);
-    expect(drawn(sim).text).toContain(`${SPECIALIST}: an appointment November 2, 2026, ${CLINIC} Call It Off`);
-    // Seen, and a specialist refers no further, though the draw is still forced to.
-    sim.advanceTo(at(2026, 11, 2, 11));
-    expect(visitsLogged(sim).map((c) => [c.at, c.what])).toEqual([[visit.at, `${VISIT}, ${CLINIC}`], [at(2026, 11, 2, 10), `${SPECIALIST}, ${CLINIC}`]]);
+    expect(specialist.map((a) => [a.what, a.at])).toEqual([[SPECIALIST, at(2026, 10, 9, 10)]]);
+    expect(titled(sim, 'A Referral').map((n) => n.body)).toEqual(['Referred after a doctor’s visit: a specialist, booked for October 9, 2026, the wait where you live.']);
+    expect(drawn(sim).text).toContain(`${SPECIALIST}: an appointment October 9, 2026, ${YALE_CLINIC} Call It Off`);
+    // Seen, and a specialist refers no further, though the draw is still forced to. Both at Yale Health (until
+    // 2026-10-15, both at Fair Haven).
+    sim.advanceTo(at(2026, 10, 9, 11));
+    expect(visitsLogged(sim).map((c) => [c.at, c.what])).toEqual([[visit.at, `${VISIT}, ${YALE_CLINIC}`], [at(2026, 10, 9, 10), `${SPECIALIST}, ${YALE_CLINIC}`]]);
     expect(appointmentsOf(sim.player)).toEqual([]);
     expect(titled(sim, 'A Referral')).toHaveLength(1);
     expect(sim.universe.scheduled.filter((i) => i.kind === APPOINTMENT_KIND).map((i) => i.status)).toEqual(['done', 'done']);
@@ -399,6 +407,13 @@ describe('health.appointment', () => {
     const force = forcing(sim);
     sim.advanceTo(at(2026, 8, 26, 12));
     sim.must({ kind: 'health.choose_pharmacy', payload: { chain: 'walmart' } });
+    // She picks Fair Haven (from 2026-10-15). The point here is a prescription past its year, which needs no visit kept
+    // in that year: until that day her visits went to Fair Haven with nothing picked, 24 days on, and the seed's visit
+    // drawn the week of 9 August 2027 was kept on 2 September, after the year. That day a Yale Health member's visit with
+    // nothing picked went to Yale Health the next weekday, which kept it on Tuesday 10 August 2027 and renewed the
+    // prescription inside its year. Picked, Fair Haven books for its 24 days as before; each visit there is billed as the
+    // uninsured's, which nothing below reads.
+    sim.must({ kind: 'health.choose_clinic', payload: { clinicId: 'us-ct-fhchc-grand' } });
     const month = nextPending(sim, HEALTH_MONTH_KIND);
     expect(month.at).toBe(at(2026, 9, 1, 0, 30));
     force('health.onset', [sim.player.id, String(month.at)], [0.999, 0]); // TEST SETUP: high blood pressure diagnosed
@@ -443,18 +458,22 @@ describe('health.appointment', () => {
     const force = forcing(sim);
     sim.advanceTo(at(2026, 9, 6, 12));
     forceWeek(sim, force, at(2026, 9, 7, 9), WEEK.visit); // TEST SETUP: the week's draw forced to a visit
-    sim.advanceTo(at(2026, 9, 11, 12));
+    // Until later on 2026-10-15 the clock ran to Friday 11 September and the visit stood 24 days on, Thursday 1 October,
+    // at Fair Haven. That day a Yale Health member's visit with nothing picked went to Yale Health the next weekday,
+    // Tuesday 8 September at ten, so the clock stops at noon on Monday the 7th, before it, to call it off.
+    sim.advanceTo(at(2026, 9, 7, 12));
     const first = appointmentsOf(sim.player)[0]!;
-    expect(first.at).toBe(at(2026, 10, 1, 10));
+    expect(first.at).toBe(at(2026, 9, 8, 10));
     // Called off on Papers, and not booked again.
     sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: first.id } });
     expect(healthOf(sim.player).owedVisit).toBe(VISIT);
-    // The next Monday draws another (TEST SETUP: forced): a doctor is booked for it, 24 days on, Thursday 8 October.
+    // The next Monday draws another (TEST SETUP: forced): a doctor is booked for it, the next weekday at Yale Health,
+    // Tuesday 15 September (until 2026-10-15, 24 days on at Fair Haven, Thursday 8 October).
     forceWeek(sim, force, at(2026, 9, 14, 9), WEEK.visit); // TEST SETUP
     sim.advanceTo(at(2026, 9, 14, 10));
-    expect(appointmentsOf(sim.player).map((a) => a.at)).toEqual([at(2026, 10, 8, 10)]);
-    sim.advanceTo(at(2026, 10, 8, 11));
-    expect(visitsLogged(sim).map((c) => c.at)).toEqual([at(2026, 10, 8, 10)]);
+    expect(appointmentsOf(sim.player).map((a) => a.at)).toEqual([at(2026, 9, 15, 10)]);
+    sim.advanceTo(at(2026, 9, 15, 11));
+    expect(visitsLogged(sim).map((c) => c.at)).toEqual([at(2026, 9, 15, 10)]);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
   });
 });

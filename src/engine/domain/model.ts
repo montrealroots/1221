@@ -560,6 +560,15 @@ export interface SaveUniverse {
    */
   tutorial?: { read: string[]; finished?: true };
 
+  /**
+   * The one-time steps opening a save takes to bring an older build's save to a rule of a later day, by name, each kept
+   * once taken (`loadSave`, from 2026-10-15). A new life is begun with every one named, since it was made under the
+   * rule; a save with a step unnamed was written before it, and has it taken on its next opening and never again. Until
+   * 2026-10-15 such a step that couldn't tell an older save from a current one by what it held ran on every opening, and
+   * a reload changed an outcome (`followTheCover`).
+   */
+  opened?: string[];
+
   /** Counters used by systems that need per-save monotonic sequences. */
   counters: Record<string, number>;
 

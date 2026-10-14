@@ -629,8 +629,9 @@ describe('documents.us_status', () => {
     sim.advanceTo(Date.UTC(2027, 1, 15, 16));
     expect(sim.player.usOutOfStatus).toBeUndefined();
     expect(f1Of(sim.player)!.status).toBe('valid');
-    // In status, lawfully present: Covered Connecticut takes her (a twin, so the life itself stays unenrolled).
-    expect(run(reload(sim), 'health.enroll')).toMatchObject({ ok: true, value: { kind: 'essential' } });
+    // In status, lawfully present: the marketplace takes her (a twin, so the life itself stays unenrolled). Until
+    // 2026-10-15 Covered Connecticut did, which from 2027 is a citizen's or a green card holder's (`creditAllowed`).
+    expect(run(reload(sim), 'health.enroll')).toMatchObject({ ok: true, value: { kind: 'marketplace' } });
 
     const again = reload(sim);
     expect(pendingOf(again, 'documents.us_status').map((i) => i.at)).toEqual([ends]);

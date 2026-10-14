@@ -23,6 +23,12 @@
       "Vhi SwiftCare clinics were rebranded Vhi 360 Health Centres and have been restricted to Vhi members since September 2017 (Irish Examiner / Irish Times); the old EUR 125 walk-in price no longer applies to non-members.",
       "LA County+USC Medical Center is now named Los Angeles General Medical Center (LA General); the main hospital address is 2051 Marengo St, the Department of Emergency Medicine is listed at 1200 N State St.",
       "Two different CMS-derived state ED figures exist for different periods; both are recorded under waits with their periods."
+    ],
+    "amended": [
+      {
+        "on": "2026-10-15",
+        "what": "Added Yale Health Center’s Student Health, New Haven’s second doctor’s practice, from its own pages: for Yale students only, free to them, same-day or next-day. Read what Fair Haven Community Health Care accepts, and that it publishes no fee or wait. Added members and waitDays to a provider where its own pages give them (absent elsewhere: open to anybody, the town’s wait). Read Connecticut’s rule on how long a prescription for a medicine that isn’t controlled may be filled (prescriptionValidity). Read Yale Health’s coverage overview again for its rule that a member’s care is had at the Yale Health Center, and kept it (the provider’s continuity)."
+      }
     ]
   },
 
@@ -153,7 +159,90 @@
       "url": "https://www.fhchc.org/374-grand-ave",
       "notes": "Federally qualified community health center (primary care, sliding-fee). Also at 50 Grand Ave.",
       "confirmed": true,
-      "verification": "search-summary"
+      "verification": "search-summary",
+      "accepts": "Most private health insurance and managed care plans; Medicaid/HUSKY and Medicare; and the uninsured, on a sliding fee by family size and income to 200% of the poverty line (250% for family planning). Care regardless of ability to pay. Any person living in its ten-town service area, New Haven among them, may enroll as a patient.",
+      "acceptsSources": [
+        {
+          "url": "https://www.fhchc.org/how-to-pay",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "Most private health insurance and managed care plans",
+            "Public health insurance (Medicaid/HUSKY, Medicare)",
+            "Sliding fee scale, based on family size and income",
+            "Fair Haven provides care regardless of ability to pay."
+          ]
+        },
+        {
+          "url": "https://www.fhchc.org/faq",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "Any person residing in Fair Haven Community Health Care’s service area is eligible to enroll as a patient in any of our departments",
+            "Fair Haven accepts many private insurances, Medicaid/HUSKY, and Medicare.",
+            "If you do not qualify for insurance, your services will be provided on a sliding scale fee based on your family size and income."
+          ]
+        }
+      ],
+      "priceNote": "Neither page publishes a fee, the sliding scale’s amounts or a full self-pay price, so SLATE keeps none for it: an uninsured visit there is SLATE’s American average at the uninsured markup (CARE.price, CARE.uninsuredMarkup), as before.",
+      "waitNote": "No wait is published (the FAQ says only to call 203-777-7411); New Haven’s wait stands, AMN Healthcare’s fifteen-metro average, 23.5 days."
+    },
+    {
+      "id": "us-ct-yalehealth-studenthealth",
+      "name": "Yale Health Center, Student Health",
+      "cityId": "us-ct-newhaven",
+      "kind": "primary-care",
+      "address": "55 Lock Street, New Haven, CT (mail: P.O. Box 208237, New Haven, CT 06520-8237)",
+      "neighborhood": null,
+      "hours": "Student Health Mon-Fri 8:30 am - 5:00 pm",
+      "url": "https://yalehealth.yale.edu/department/student-health",
+      "members": "yale",
+      "waitDays": 1,
+      "accepts": "Yale students only: Student Health is available to all Yale undergraduate and graduate students, and Basic Student Health Services, primary care among them, are free to an eligible degree candidate enrolled at least half-time. No other cover is taken there. A student who withdraws after the fifteenth day of classes keeps access thirty days; by the fifteenth day, membership ends back to the insurance term’s start. SLATE reads membership as Yale Health covering them at the moment (coverOn is yale), which follows those dates (yaleUntil, yaleLapsed).",
+      "cost": "Nothing for an eligible student: SLATE’s Yale Health plan already leaves a visit at $0 (PLANS.yale).",
+      "wait": "Same-day or next-day. SLATE books the next weekday morning, the later of the two (waitDays 1).",
+      "continuity": "Yale Health’s rule is that all of a member’s care is had at the Yale Health Center at 55 Lock Street unless it’s an emergency or referred with prior authorization, so a member’s visit elsewhere isn’t Yale Health’s to pay. From 2026-10-15 SLATE keeps it: with nothing chosen a member’s visit is at the Yale Health Center, and one at Fair Haven is billed as the uninsured’s, SLATE’s price (Fair Haven publishing no fee), Yale Health paying none of it. SLATE keeps no referral with prior authorization, so none is honored; an emergency is unaffected. Until then a member’s visit at Fair Haven was left at Yale Health’s $0. The page was read again on 2026-10-15 and its sentence ends “to see an outside clinician for services.”, which the quote before that read gave without “for services”.",
+      "sources": [
+        {
+          "url": "https://yalehealth.yale.edu/department/student-health",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "Access to Student Health is available to all Yale undergraduate and graduate students who are all automatically eligible for care.",
+            "Mon-Fri: 8:30 am - 5:00 pm"
+          ]
+        },
+        {
+          "url": "https://yalehealth.yale.edu/how-make-appointment",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "If you need to come in, we can offer you a same-day or next-day appointment with your primary care provider or a member of their team that is convenient for you."
+          ]
+        },
+        {
+          "url": "https://yalehealth.yale.edu/more/health-coverage-overview-students-yale-health",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "All care must be obtained at the Yale Health Center at 55 Lock Street unless it is an emergency situation or you have a referral with prior authorization to see an outside clinician for services."
+          ]
+        },
+        {
+          "url": "https://catalog.yale.edu/ysph/yale-university-resources-services/health-services/",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "bulletin": "School of Public Health 2026–2027",
+          "quoted": [
+            "The university provides eligible degree-candidate students enrolled at least half-time with primary care services at the Yale Health Center through Yale Health Basic Student Health Services.",
+            "These services are free and automatically provided; no enrollment or forms are required.",
+            "They will still have access to Yale Health services for thirty days after their withdrawal date.",
+            "Their Yale Health membership will end retroactively to the start of the insurance term (fall or spring) in which they have withdrawn."
+          ]
+        }
+      ],
+      "confirmed": true,
+      "verification": "fetched"
     },
     {
       "id": "us-ct-physicianone-newhaven",
@@ -1152,5 +1241,39 @@
       "source": "https://www.saludiario.com/farmacias-similares-precio-de-sus-servicios/",
       "verification": "search-summary"
     }
-  ]
+  ],
+  "prescriptionValidity": {
+    "us-ct": {
+      "read": "2026-10-15",
+      "rule": "Connecticut sets no period after which a prescription for a medicine that isn’t a controlled drug can no longer be filled. A refill is given only on the prescribing practitioner’s order (CGS 20-616(b)), as many as the prescription authorizes, a number or PRN (CGS 20-614 and the regulations ask the prescription and the pharmacy’s record to carry the number of refills authorized, PRN or ad lib allowed); two exceptions let a pharmacist go without that order: one refill of a medicine that isn’t controlled, at most a 72-hour supply, when the prescriber can’t be reached (CGS 20-616(c)), and, for a patient with less than a seven-day supply, a pharmacist’s own prescription of not more than a thirty-day supply of insulin, glucagon, a diabetic ketoacidosis device and the diabetes devices to give them (CGS 20-616(d)). Neither is an expiry. Until later on 2026-10-15 this named the 72 hours alone, though (b) names (d) beside (c). The one one-year validity in the Drug Control Division’s compilation is for hypodermic needles and syringes (CGS 21a-65(b)).",
+      "slate": "No expiry is kept for Connecticut (RX.validYears has none), so a kept visit’s renewal changes no fill there. The refills a prescriber authorizes are the prescriber’s choice, published by no source read, and aren’t kept.",
+      "sources": [
+        {
+          "url": "https://www.cga.ct.gov/2025/pub/chap_400j.htm",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "quoted": [
+            "(b) Except as provided in subsection (c) or (d) of this section, a prescription may be refilled only upon the written, oral or electronically-transmitted order of a prescribing practitioner.",
+            "Prescriptions may be refilled once pursuant to this subsection for a quantity of drug not to exceed a seventy-two hour supply."
+          ]
+        },
+        {
+          "url": "https://codes.findlaw.com/ct/title-20-professional-and-occupational-licensing-certification-title-protection-and-registration-examining-boards/ct-gen-st-sect-20-616/",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "note": "FindLaw's text, current as of 1 January 2025; cga.ct.gov refused the connection that day. Subsection (d) as a search of the statute's text quoted it.",
+          "quoted": [
+            "Except as provided in subsection (c) or (d) of this section, a prescription may be refilled only upon the written, oral or electronically-transmitted order of a prescribing practitioner.",
+            "A pharmacist may immediately prescribe and dispense to a patient not more than a thirty-day supply of a diabetic ketoacidosis device, insulin drug or glucagon drug, and any diabetes devices that are necessary to administer such supply, if the patient informs the pharmacist that the patient has less than a seven-day supply of such insulin drug, glucagon drug, diabetes devices or diabetic ketoacidosis device."
+          ]
+        },
+        {
+          "url": "https://portal.ct.gov/-/media/dcp/pdf/drug_control_pdf/lawbook.pdf",
+          "read": "2026-10-15",
+          "verification": "fetched",
+          "note": "The Department of Consumer Protection, Drug Control Division’s compilation of the pharmacy statutes and regulations, searched whole for a validity period: none for a prescription that isn’t controlled. ‘Such a prescription shall be valid for one year from the date thereof’ is CGS 21a-65(b), for hypodermic needles and syringes."
+        }
+      ]
+    }
+  }
 }

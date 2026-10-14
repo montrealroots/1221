@@ -64,7 +64,7 @@ import { bodyOf } from './systems/body';
 import { drawMateAbilities } from './systems/school';
 import { bindCeiling, ceilingBefore, focusAt, ordinary, redateCredits, upgradeCraft } from './systems/school';
 import { registerCoursework } from './systems/coursework';
-import { registerClassmates } from './systems/classmates';
+import { registerClassmates, strandedMoments } from './systems/classmates';
 import { WHICH, hasProcess, holderFor, registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
@@ -73,7 +73,7 @@ import { registerWorkbook } from './systems/workbook';
 import { workPiece } from './systems/workpieces';
 import { genresOfPlay } from './content/plays';
 import { registerPlayReading } from './systems/playreading';
-import { registerAppointments } from './systems/appointments';
+import { followTheCover, registerAppointments } from './systems/appointments';
 import { registerTherapy } from './systems/therapy';
 import { registerAssistance } from './systems/assistance';
 import { registerEiSelfEmployed } from './systems/eiself';
@@ -262,9 +262,14 @@ export function refreshMeta(sim: Simulation): void {
   sim.universe.meta.netWorthLabel = formatMoneyCompact(worth.total, saveCurrency(sim.universe));
 }
 
+/** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
+const ONCE_ON_OPENING = ['followTheCover'] as const;
+
 /** Creates a brand new save universe with every system wired up. */
 export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): Simulation {
   const { universe } = createUniverse(slot, seed, config);
+  // Made under every rule an opening brings an older save to (`ONCE_ON_OPENING`).
+  universe.opened = [...ONCE_ON_OPENING];
   const sim = new Simulation(universe);
   registerAllSystems(sim);
   populateWorld(sim, config);
@@ -300,6 +305,18 @@ export function loadSave(universe: SaveUniverse): Simulation {
     if (account.breakAt === undefined || account.closedAt !== undefined || !account.ownerId) continue;
     if (universe.scheduled.some((i) => i.status === 'pending' && i.kind === TERM_NOTICE_KIND && i.payload.accountId === account.id)) continue;
     sim.schedule({ at: Math.max(account.breakAt, sim.now), kind: TERM_NOTICE_KIND, label: `${account.name} Closes`, category: 'home', priority: 36, payload: { personId: account.ownerId, accountId: account.id } });
+  }
+  // A classmate's moment a save from before 2026-10-13 left open with no lapse on the clock, which a leave, a withdrawal
+  // or a dismissal called off then: lapsed at its hour (`strandedMoments`, from 2026-10-15).
+  strandedMoments(sim);
+  // An appointment a save from before 2026-10-15 booked at Fair Haven by default for a Yale Health member: had at Yale
+  // Health's practice, as that day's rule has a member's care (`followTheCover`). Once, on the first opening of a save
+  // that doesn't name it (`SaveUniverse.opened`): until later that day it ran on every opening, and moved a current
+  // save's appointment too, so a reload changed where a visit was had and what it cost.
+  const opened = (universe.opened ??= []);
+  if (!opened.includes('followTheCover')) {
+    followTheCover(sim);
+    opened.push('followTheCover');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

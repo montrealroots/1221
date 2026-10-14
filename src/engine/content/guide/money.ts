@@ -266,7 +266,8 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     later: [
       'At 11 PM on the month’s last day: interest paid, the fee charged or waived, and the current account’s statement written. Germany’s banks settle at each quarter’s end.',
-      `In Germany, savings holding more than the ${GERMAN_MONTH} a month lets out takes three months’ notice to close, and closes then.`,
+      // “… Closed” named the primary account wherever the money went until 2026-10-15 (`systems/banking.ts`).
+      `In Germany, savings holding more than the ${GERMAN_MONTH} a month lets out takes three months’ notice to close, and closes then, its money to the current account at its bank, or with none there to your primary account; “… Closed” names the account it went to, and where it was sent in the bank’s days, the day it arrives.`,
     ],
     interpret: [
       '“This month is waived so far” means a waiver is met up to now. One met by the balance can still be lost if the balance falls before the month ends.',
@@ -456,7 +457,7 @@ export const MONEY: readonly GuideEntry[] = [
       { to: 'bank.accounts', kind: 'prerequisite', why: 'A term deposit is funded from your current account at the same bank.' },
       { to: 'money.affairs', kind: 'immediate', why: 'What it holds counts in your worth from the day it opens, though it can’t be spent.' },
       { to: 'day.needs', kind: 'scheduled', why: 'The bank’s letter before the end, and the renewal or payout on the day, come to What Needs You.' },
-      { to: 'bank.upkeep', kind: 'optional', why: 'Where the country gives a cooling-off period, a new term deposit can be canceled in it with its money back whole.' },
+      { to: 'bank.upkeep', kind: 'optional', why: 'Where the country gives a cooling-off period, a new term deposit can be canceled in it without penalty.' },
     ],
     example: {
       setup: `A student at Chase puts ${usd(CD)} into the ${CHASE_TERM.called}, ${CD_MONTHS} months at ${pct(CHASE_TERM.rate)}.`,
@@ -473,7 +474,7 @@ export const MONEY: readonly GuideEntry[] = [
     questions: ['Why is my account blocked?', 'Where did my untouched savings go?', 'Can I cancel an account I just opened?', 'How do I get told when my balance is low?'],
     where: { route: BANK, tab: ACCOUNTS, label: 'Your Bank, Accounts, Your Accounts Over Time; Statements, Alerts' },
     available: `From the guide’s chapter “${chapter('bank.set_alerts')}”.`,
-    short: `Accounts change over time, and the bank tells you things. An account left untouched goes inactive, then dormant and blocked, and after the country’s years its money goes to the state, to be claimed back. Where the country gives a cooling-off period, a new savings account, term deposit or card can be canceled in it. Alerts tell you when an account runs low, a large payment goes out, a statement is ready, or an account is short for a payment due.`,
+    short: `Accounts change over time, and the bank tells you things. An account left untouched goes inactive, then dormant and blocked, and after the country’s years its money goes to the state, to be claimed back. Where the country gives a cooling-off period, a new account or card other than your primary can be canceled in it: in Korea a card alone, in Canada no card, in Britain no fixed-rate deposit, and in Mexico only one not yet used. Alerts tell you when an account runs low, a large payment goes out, a statement is ready, or an account is short for a payment due.`,
     steps: [
       'On Accounts, find Your Accounts Over Time. It shows only when it has something to show: a term deposit, round-ups your bank offers, an idle account, something new enough to cancel, money to claim back, or savings withdrawal fees.',
       'A dormant account shows Reactivate, something new enough shows Cancel It, and money handed to the state shows Claim It Back.',
@@ -481,7 +482,11 @@ export const MONEY: readonly GuideEntry[] = [
       'On Statements, under Alerts, type Any Current Account Under and A Payment Over (blank turns one off) and press Save Alerts. Statement Ready and Short For A Payment turn On or Off with a press.',
     ],
     needs: [
-      `Cancel It: a country with a cooling-off period, ${UNCLAIMED.CA?.coolingOffDays} days in Canada, Britain, Ireland, Iceland, Korea, France, Germany and Spain and ${UNCLAIMED.MX?.coolingOffDays} in Mexico. The US, Japan, Australia and New Zealand have none, and Britain leaves out fixed-rate deposits.`,
+      // Until 2026-10-15 this named Korea among the fourteen days for every account. Korea's rule (청약철회) gives none for a
+      // deposit (`inCoolingOff`), so it's named for cards alone. Until that day's recheck it counted Canada's and Mexico's
+      // in calendar days and gave a Canadian card them (`coolingOffEnds`, `inCoolingOff`). Until that day's second
+      // recheck the period ended at the hour the account opened on its last day; it runs to that day's end now.
+      `Cancel It: a country with a cooling-off period, ${UNCLAIMED.GB?.coolingOffDays} days in Britain, Ireland, Iceland, France, Germany and Spain, ${UNCLAIMED.CA?.coolingOffDays} business days in Canada for anything but a card, ${UNCLAIMED.MX?.coolingOffDays} in Mexico for what hasn’t yet been used, any payment out of it counting, and in Korea ${UNCLAIMED.KR?.coolingOffDays} days for a card alone, to the end of the last day. The US, Japan, Australia and New Zealand have none, and Britain leaves out fixed-rate deposits.`,
       'Claim It Back: money of yours handed over as unclaimed, and a current account to take it.',
     ],
     costs: [
@@ -500,7 +505,15 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     now: [
       'Reactivate: the account is unblocked at once, and its idle months count again from today.',
-      'Cancel It: a savings account or term deposit closes with its money back whole into your primary account, without interest or penalty; a card closes to anything new, with what was spent on it still to repay.',
+      // Until 2026-10-15 this said a savings account's money went back into the primary account, which it hadn't since
+      // 2026-10-13, and said nothing of a current account, which the panel didn't offer until then.
+      // Until 2026-10-15 this said a current account closed the same way as savings, which it did only in where its money
+      // went: it closed with no interest paid and no fees charged, where Close It settles both.
+      // Until 2026-10-15 this said a savings account or term deposit came back whole, without interest, in every country,
+      // and a current account was paid its interest in every country. Until that day's recheck Canada's refund took
+      // overdraft interest with the charges, which its rule leaves out, and this said nothing of it. Until that day's
+      // second recheck it left out the machine owner's fee, which isn't the bank's and isn't refunded (`chargesBackOf`).
+      'Cancel It: a savings account, term deposit or current account closes without penalty, into the current account at its bank, or with none there sent to your primary account in the bank’s days. In Britain and Canada its interest is paid, as the rule leaves you what it earned; elsewhere, Europe and Mexico, the interest goes back, any already paid into it with the rest, as their rules return what each side received. In Canada and Mexico the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee; elsewhere a current account is charged the fees it owes, as Close It charges them. A card closes to anything new, with what was spent on it still to repay.',
       'Claim It Back: all of it comes back into your primary current account.',
       'Save Alerts: the lines are kept, and checked from the day’s end on.',
     ],
@@ -521,6 +534,10 @@ export const MONEY: readonly GuideEntry[] = [
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
       '“Your primary current account can’t be canceled. Make another primary first.”',
+      'A current account, on Close It’s own refusals, said under it with Cancel It grayed out: “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, or “Its fees, …, are more than it holds. Pay in … first.”',
+      'Any account, where the interest it was paid goes back and it holds less: “The interest it was paid, …, goes back, and is more than it holds. Pay in … first.”, or with its fees, “Its fees, …, and the interest it was paid, …, are more than it holds. Pay in … first.”',
+      // From 2026-10-15's recheck: a term's interest taken during the term went back out of the primary account unasked.
+      'A term deposit whose interest was taken into another account that now holds less: “The interest it paid into …, …, goes back out of it, and is more than it holds. Pay in … first.”',
       '“No money of yours is held as unclaimed.”',
       '“Set the low balance as an amount, or turn it off.”',
     ],
@@ -1113,7 +1130,8 @@ export const MONEY: readonly GuideEntry[] = [
       'Pay It Off: what’s owed and the month’s interest so far leave the repayment account (with easy-access savings at its bank where savings is linked, and its overdraft), and the loan closes.',
       'Repay From There: the next payment comes from that account.',
       'Pay It: that much leaves your primary account toward the debt, and paid in full, the debt closes.',
-      `Take The Loan: the overrun becomes a loan over ${FRANCE.offerMonths} months, paid into the account.`,
+      // The days toward closing start again from 2026-10-15: until then they ran on from the overrun's first day.
+      `Take The Loan: the overrun becomes a loan over ${FRANCE.offerMonths} months, paid into the account, its first payment a month away; back within its limit, the days counted toward closing it start again.`,
     ],
     later: [
       'Overdrawn: interest builds each day where the bank charges it, and is charged on the 1st. Chase holds an item’s fee to the end of the next business day and lets it go if the account is back by then.',
@@ -1132,13 +1150,14 @@ export const MONEY: readonly GuideEntry[] = [
       '“… doesn’t offer an overdraft SLATE has terms for.” and “… doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.”',
       '“The bank turns down a credit record this poor.”',
       '“The bank arranges one against wages paid in, and not enough has been paid in this month.” and “The bank arranges between … and ….”',
-      '“You’re overdrawn by more than that already.” and “Pay the overdraft back before closing it.”',
+      '“You’re overdrawn by more than that already.”, “No overdraft is arranged on it.” and “Pay the overdraft back before closing it.”',
       '“… lends to its customers: open a current account there first.” and “… lends to customers of … months or more; …”',
       '“… publishes only its lowest rate, and SLATE lends at it only to a good record.”',
       '“The bank lends over … to … months.”, “The bank lends … or more.” and “The bank lends up to ….”',
       '“The bank lends against wages paid in, and none has been paid in this month.” and “A payment of … a month is more than the bank lets a loan take of … of wages.”',
       '“You already have a loan with ….”, “… doesn’t lend for a post-secondary education expense.” and “… asks for a Social Security number.”',
       '“Paying it off takes …, and the bank can’t cover it all.”, “You don’t owe anything in collections.” and “There’s nothing in the account to pay it with.”',
+      '“Your bank has offered no loan for an overrun.”',
     ],
     mistakes: [
       'Opting in to debit card overdrafts to keep buying groceries: each purchase that overdraws the account costs the item fee.',
@@ -1183,7 +1202,8 @@ export const MONEY: readonly GuideEntry[] = [
       `The bank’s age, ${CHASE_OPEN.minimumAge} at Chase, Bank of America, Wells Fargo and Citi; and for Capital One and Citi, US citizenship or a green card.`,
       'Without a Social Security number, Chase, Bank of America and Wells Fargo open an account only in a branch where you live.',
       'No charged-off debt owed to that bank, and no ChexSystems report it turns you away on.',
-      'To close a current account: another current account, and this one not primary, not overdrawn, with no money on its way, nothing paying from or into it, no savings beside it, and no card payments pending.',
+      // Until 2026-10-15 a German account's fees closing would charge weren't among these, and Close It closed it overdrawn.
+      'To close a current account: another current account, and this one not primary, not overdrawn, with no money on its way, nothing paying from or into it, no savings beside it, no card payments pending, and in Germany enough in it for the fees closing charges.',
       'Keep The Balance There: a British switch under way, past its last day to be called off and not a partial one, up to close of business on the working day before its date.',
     ],
     costs: [
@@ -1232,7 +1252,7 @@ export const MONEY: readonly GuideEntry[] = [
       // scope reset of 2026-10-09, and it went from `openRefusal` (`systems/bankmoves.ts`) that day.
       'Without a Social Security number, in a branch: “Not from a hospital bed.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
       '“… asks for an opening deposit of …, sent from another of your accounts.” and “That account is at … already.”',
-      'Closing: “It’s your only current account.”, “It’s your primary account. Make another primary first.”, “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, or “Card payments are still pending on it.”',
+      'Closing: “It’s your only current account.”, “It’s your primary account. Make another primary first.”, “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, or “Its fees, …, are more than it holds. Pay in … first.”',
       'Switching, in the US: “There’s no switching service here: …” Elsewhere: “A switch is already under way.”, “Clear the overdraft before switching; the new bank won’t take it on.” or “A partial switch is a Current Account Switch Service step, in Britain only.”',
       'Calling it off: “This country’s switching service publishes no right to call a switch off: it runs to its date.” or “It could be called off until …”',
       'Keep The Balance There: “No switch is under way.”, “This country’s switching service publishes no such step.”, “Its balance transfer is stopped already.” or “The transfer could be stopped until close of business ….”',

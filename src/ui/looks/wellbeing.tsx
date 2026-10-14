@@ -51,6 +51,24 @@ function bodyWords(body: Body, imperial: boolean): string {
   return `${Math.round(body.heightCm)} cm and ${body.weightKg.toFixed(1)} kg, a body mass index of ${bmi.toFixed(1)}: ${bmiWord(bmi).toLowerCase()}`;
 }
 
+/** The words somebody is spoken of in: "you" for the player, and anybody else in their own pronouns. */
+interface Spoken { they: string; them: string; their: string; are: string; s: (verb: string) => string }
+
+/**
+ * The player is "you". Anybody else is spoken of in the pronouns on their papers: she/her and he/him in the singular,
+ * and they/them, or pronouns SLATE doesn’t know, as "they" (from 2026-10-15). Until then the person look, the trait
+ * look and the condition look said "they" of everybody but the player, so a she/her person read "Their body." above
+ * "On their papers. she/her": changing her pronouns changed only that line.
+ */
+function spokenOf(person: Person, isYou: boolean): Spoken {
+  const third = (v: string) => (/[^aeiou]y$/.test(v) ? `${v.slice(0, -1)}ies` : `${v}s`);
+  if (isYou) return { they: 'you', them: 'you', their: 'your', are: 'are', s: (v) => v };
+  if (/^\s*she\b/i.test(person.pronouns ?? '')) return { they: 'she', them: 'her', their: 'her', are: 'is', s: third };
+  if (/^\s*he\b/i.test(person.pronouns ?? '')) return { they: 'he', them: 'him', their: 'his', are: 'is', s: third };
+  return { they: 'they', them: 'them', their: 'their', are: 'are', s: (v) => v };
+}
+const upper = (w: string) => w.charAt(0).toUpperCase() + w.slice(1);
+
 /**
  * The eight, in the order a person would notice them.
  *
@@ -60,16 +78,18 @@ function bodyWords(body: Body, imperial: boolean): string {
  * decides, and the engine does what it names: morale said "whether the work
  * feels worth doing", condition "what a long day would find" and fitness
  * "what a physical day would cost" while nothing read any of the three.
+ * It is said of whoever the dials belong to (from 2026-10-15: until then
+ * another person’s look said "what the day has left in you" of them).
  */
 const DIALS = [
-  { key: 'energy', name: 'Energy', unit: 'level', behind: 'what the day has left in you' },
-  { key: 'stress', name: 'Stress', unit: 'level', behind: 'what it is doing to your sleep' },
-  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: 'what sleep pays back' },
-  { key: 'morale', name: 'Morale', unit: 'level', behind: 'how much of the day’s stress a night clears' },
-  { key: 'condition', name: 'Condition', unit: 'level', behind: 'how much a night puts back, your mood, a sick day, and how likely a year is to be your last' },
-  { key: 'fitness', name: 'Fitness', unit: 'level', behind: 'how far rest can mend you, and what a workout costs' },
-  { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: 'how long since you ate properly' },
-  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: 'your mood once it’s low, and readiness a little' },
+  { key: 'energy', name: 'Energy', unit: 'level', behind: (p: Spoken) => `what the day has left in ${p.them}` },
+  { key: 'stress', name: 'Stress', unit: 'level', behind: (p: Spoken) => `what it is doing to ${p.their} sleep` },
+  { key: 'sleepDebt', name: 'Sleep Debt', unit: 'hours', behind: () => 'what sleep pays back' },
+  { key: 'morale', name: 'Morale', unit: 'level', behind: () => 'how much of the day’s stress a night clears' },
+  { key: 'condition', name: 'Condition', unit: 'level', behind: (p: Spoken) => `how much a night puts back, ${p.their} mood, a sick day, and how likely a year is to be ${p.their} last` },
+  { key: 'fitness', name: 'Fitness', unit: 'level', behind: (p: Spoken) => `how far rest can mend ${p.them}, and what a workout costs` },
+  { key: 'nourishment', name: 'Nourishment', unit: 'level', behind: (p: Spoken) => `how long since ${p.they} ate properly` },
+  { key: 'hygiene', name: 'Hygiene', unit: 'level', behind: (p: Spoken) => `${p.their} mood once it’s low, and readiness a little` },
 ] as const;
 
 type DialKey = typeof DIALS[number]['key'];
@@ -98,21 +118,22 @@ defineLook<Person>('person', {
   look: (person, { sim }) => {
     const isYou = person.id === sim.universe.playerId;
     const w = person.wellbeing;
+    const p = spokenOf(person, isYou);
     const ways: Way[] = DIALS
       .filter((d) => valueOf(w, d.key) !== undefined)
       .map((d) => ({
         to: at('dial', `${person.id}/${d.key}`),
         label: d.name,
         detail: d.unit === 'hours'
-          ? `${Math.round(valueOf(w, d.key))} hours on the books, and ${d.behind}`
-          : `${outOf(valueOf(w, d.key))}, and ${d.behind}`,
+          ? `${Math.round(valueOf(w, d.key))} hours on the books, and ${(d.behind as (who: Spoken) => string)(p)}`
+          : `${outOf(valueOf(w, d.key))}, and ${(d.behind as (who: Spoken) => string)(p)}`,
       }));
     ways.push({
       to: at('readiness', person.id),
       label: 'Readiness',
       // What reads it now (from 2026-10-12): until then this named an audition and a day’s work, which went with the
       // career on 2026-10-09.
-      detail: 'What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets you in',
+      detail: `What seven of the eight come to: what a class, a lab, a rehearsal, an hour of practice or a workout builds, and the condition judged work meets ${p.them} in`,
     });
     // The traits held and the conditions carried, each opening into what it does (from 2026-10-09: until then the
     // traits were a sentence here and the conditions a row on Papers, and neither said what it moved).
@@ -125,7 +146,7 @@ defineLook<Person>('person', {
     for (const c of Object.keys(person.health?.chronic ?? {}) as Condition[]) {
       ways.push({ to: at('condition', isYou ? c : `${person.id}/${c}`), label: CONDITION_LABEL[c], detail: person.health!.chronic![c]!.treated ? 'Kept up, at what the plan leaves' : 'Left alone, and what that does' });
     }
-    if (injuryOf(person, sim.now)) ways.push({ to: at('condition', isYou ? 'injury' : `${person.id}/injury`), label: 'An Injury', detail: 'What it is, till when, and what it keeps you from' });
+    if (injuryOf(person, sim.now)) ways.push({ to: at('condition', isYou ? 'injury' : `${person.id}/injury`), label: 'An Injury', detail: `What it is, till when, and what it keeps ${p.them} from` });
     if (isYou) {
       ways.push({
         to: at('plans'),
@@ -155,17 +176,18 @@ defineLook<Person>('person', {
     const said = [
       traits.length > 0 && (
         <p key="traits" className="small">
-          <span className="dim">{isYou ? 'Who you are. ' : 'Who they are. '}</span>
+          <span className="dim">{`Who ${p.they} ${p.are}. `}</span>
           {spokenList(traits)}.
         </p>
       ),
       // Their pronouns and their citizenship, as creation took them: the citizenship is the country of birth’s.
       // Their height and weight, in the units of where they live, and what the weight comes to; and which units, and why
-      // (`bodyUnits`, the rule creation’s Your Body reads too, from 2026-10-14: until then the units went unsaid).
+      // (`bodyUnits`, the rule creation’s Your Body reads too, from 2026-10-14: until then the units went unsaid). Each line is
+      // said in their own pronouns (`spokenOf`, from 2026-10-15).
       person.body && (
         <p key="body" className="small">
-          <span className="dim">{isYou ? 'Your body. ' : 'Their body. '}</span>
-          {`${bodyWords(person.body, bodyUnits(person.currentLocationId, isYou).imperial)}. ${bodyUnits(person.currentLocationId, isYou).why}`}
+          <span className="dim">{`${upper(p.their)} body. `}</span>
+          {`${bodyWords(person.body, bodyUnits(person.currentLocationId).imperial)}. ${bodyUnits(person.currentLocationId, `where ${p.they} ${p.s('live')}`).why}`}
         </p>
       ),
       // An injury mending, and whether it keeps them off work (`systems/injury.ts`).
@@ -179,25 +201,25 @@ defineLook<Person>('person', {
         ) : null;
       })(),
       <p key="papers" className="small">
-        <span className="dim">{isYou ? 'On your papers. ' : 'On their papers. '}</span>
+        <span className="dim">{`On ${p.their} papers. `}</span>
         {person.pronouns}, a citizen of {COUNTRIES.get(person.citizenshipId)?.name ?? person.citizenshipId}.
       </p>,
       // Who they are in their own terms, as creation took it, and nothing more: it moves nothing.
       (person.raceEthnicity?.length ?? 0) > 0 && (
         <p key="identity" className="small">
-          <span className="dim">{isYou ? 'In your own terms. ' : 'In their own terms. '}</span>
+          <span className="dim">{`In ${p.their} own terms. `}</span>
           {describeEthnicity(person.raceEthnicity!, person.raceEthnicityOwn)}.
         </p>
       ),
       before.length > 0 && (
         <p key="before" className="small">
-          <span className="dim">{isYou ? 'Where you come from. ' : 'Where they come from. '}</span>
+          <span className="dim">{`Where ${p.they} ${p.s('come')} from. `}</span>
           {before}
         </p>
       ),
       loves.length > 0 && (
         <p key="loves" className="small">
-          <span className="dim">{isYou ? 'The films you love. ' : 'The films they love. '}</span>
+          <span className="dim">{`The films ${p.they} ${p.s('love')}. `}</span>
           {spokenList(loves)}.
         </p>
       ),
@@ -206,7 +228,7 @@ defineLook<Person>('person', {
     return {
       name: isYou ? (person.displayName || person.firstName) : person.displayName,
       kind: isYou ? 'Yourself' : 'Somebody',
-      summary: wellbeingSummary(person),
+      summary: wellbeingSummary(person, isYou),
       body: said.length > 0 ? <>{said}</> : undefined,
       ways,
       provenance: isYou
@@ -237,7 +259,7 @@ defineLook<Dial>('dial', {
     name: dial.name,
     kind: 'One Of Eight',
     parent: at('person', dial.person.id),
-    summary: sentenceFor(dial, sim.now),
+    summary: sentenceFor(dial, sim.now, spokenOf(dial.person, dial.person.id === sim.universe.playerId)),
     provenance: dial.unit === 'hours'
       ? 'Counted in hours: a waking hour adds a third of one, and a night pays it back, a long one faster. A night under six hours adds some too, and the shortest add more than they pay back.'
       : 'Nought to a hundred, moved every hour the clock runs.',
@@ -245,7 +267,9 @@ defineLook<Dial>('dial', {
 });
 
 /**
- * What the number actually means, in the second person, right now.
+ * What the number actually means, right now, said of whoever the dial belongs to: "you" of the player, and anybody else
+ * in their own pronouns (`spokenOf`). Until 2026-10-15 it was said in the second person of everybody, so another
+ * person’s Energy, one press from her look’s "what the day has left in her", read "you’ve a full day in you".
  *
  * Where a dial decides something, the sentence says what, with the engine’s
  * own figure: condition, fitness, morale and hygiene read what the night, a
@@ -253,14 +277,19 @@ defineLook<Dial>('dial', {
  * it", "A stunt day would cost you a week" and "Rooms notice" when nothing
  * did any of it.
  */
-function sentenceFor(dial: Dial, now: number): string {
+function sentenceFor(dial: Dial, now: number, p: Spoken): string {
   const n = Math.round(dial.value);
   const w = dial.person.wellbeing;
+  const one = p.are === 'is';
+  // "You’re", "she’s", "they’re"; "you’ve had", "she’s had"; and "you’ve" or "she has" a day in her.
+  const theyAre = `${p.they}’${one ? 's' : 're'}`;
+  const theyHave = `${p.they}’${one ? 's' : 've'}`;
+  const theyHold = p.they === 'you' ? 'you’ve' : `${p.they} ${one ? 'has' : 'have'}`;
   switch (dial.key) {
     case 'energy':
-      return n > 75 ? `${n}, and you’ve a full day in you.`
+      return n > 75 ? `${n}, and ${theyHold} a full day in ${p.them}.`
         : n > 40 ? `${n}. Enough for what today asks, not much more.`
-          : `${n}. You’re running down, and it shows in everything else.`;
+          : `${n}. ${upper(theyAre)} running down, and it shows in everything else.`;
     case 'stress':
       return n < 25 ? `${n}, and not much is adding to it. Running on empty adds to it, and so do money trouble and nights gone badly.`
         : n < 60 ? `${n}. Present, manageable, and slower to clear than it was.`
@@ -272,7 +301,7 @@ function sentenceFor(dial: Dial, now: number): string {
       // Sleep dialog offered the same evening a normal eight hours. It is the
       // day’s only when they woke owing next to nothing: in the morning after
       // a short night, the same five hours are what the night left.
-      return n < 2 ? 'None to speak of. You’re square with the nights you’ve had.'
+      return n < 2 ? `None to speak of. ${upper(theyAre)} square with the nights ${theyHave} had.`
         : (dial.person.wokeWithDebt ?? dial.value) < 2 && dial.value < A_NORMAL_DAYS_DEBT + 2
           ? `${n} hours, about what a day awake puts on the books. A night pays it back.`
           : n < 12 ? `${n} hours owed. One long night would clear it.`
@@ -291,16 +320,16 @@ function sentenceFor(dial: Dial, now: number): string {
       // What the dial decides, and the midnight pull toward the same mark.
       // On the figure the school reads, not the one shown rounded (from 2026-10-13: until then 54.8, shown as 55, left the
       // line out where the school would excuse the day; found by the review of that day).
-      const also = `${dial.person.school && dial.value < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be your last.`;
-      return n >= mends ? `${n}, as sound as your fitness lets rest make you. Each midnight settles it back toward ${mends} if it’s over.${also}`
-        : `${n}, under the ${mends} your fitness lets rest mend you to. A night puts back ${share}% of the energy it would, and each midnight settles it a little toward ${mends}.${also}`;
+      const also = `${dial.person.school && dial.value < SCHOOL_ESTIMATE.sickBelow ? ` Under ${SCHOOL_ESTIMATE.sickBelow}, a day off classes called in sick is excused.` : ''} The lower it is, the likelier a year is to be ${p.their} last.`;
+      return n >= mends ? `${n}, as sound as ${p.their} fitness lets rest make ${p.them}. Each midnight settles it back toward ${mends} if it’s over.${also}`
+        : `${n}, under the ${mends} ${p.their} fitness lets rest mend ${p.them} to. A night puts back ${share}% of the energy it would, and each midnight settles it a little toward ${mends}.${also}`;
     }
     case 'fitness': {
       const mends = Math.round(mendsTo(dial.person, now));
       const costs = Math.round(workoutCosts(dial.person));
       // The age’s ceiling, which training can’t pass, and what the years are like now.
       const age = (now - dial.person.birthInstant) / (365.2425 * 86_400_000);
-      return `${n}. Rest can mend you to ${mends}, and a workout costs ${costs} energy.`
+      return `${n}. Rest can mend ${p.them} to ${mends}, and a workout costs ${costs} energy.`
         + (dial.value <= EVERYDAY_FITNESS ? ' This is what an everyday life keeps without training.' : '')
         + ` At ${Math.floor(age)}, the most a body can be trained to is ${Math.round(ceilingAt(age).fitness)}. ${ageWords(age)}`;
     }
@@ -311,8 +340,8 @@ function sentenceFor(dial: Dial, now: number): string {
           : `${n}. Hungry, and it’s costing condition and mood by the hour.`)
         + ' Each morning the day’s meals take it to 76 at least, or to 40 on a day the food can’t be paid for.';
     case 'hygiene':
-      return (n >= 50 ? `${n}. Clean enough that it isn’t wearing on you.`
-        : `${n}. Under fifty it wears on your mood by the hour. A shower puts it back.`)
+      return (n >= 50 ? `${n}. Clean enough that it isn’t wearing on ${p.them}.`
+        : `${n}. Under fifty it wears on ${p.their} mood by the hour. A shower puts it back.`)
         + ' The morning’s shower takes it to 82 at least.';
     default:
       return `${n}.`;
@@ -342,20 +371,25 @@ defineLook<Ready>('readiness', {
     return { person, value: readiness(person), drags: dragsOn(person) };
   },
   seeds: (sim) => [sim.universe.playerId],
-  look: (ready) => ({
-    name: 'Readiness',
-    kind: 'How Well You Would Do Today',
-    parent: at('person', ready.person.id),
-    summary: ready.drags.length === 0
-      ? `${Math.round(ready.value)}, and nothing is holding you back much.${ready.value >= 99.5 ? ' This is as good as a day gets.' : ''}`
-      : `${Math.round(ready.value)}, and ${spokenList(ready.drags.map((d) => d.name.toLowerCase()))} ${isAre(ready.drags.length)} what’s costing you.`,
-    ways: ready.drags.map((d) => ({
-      to: at('dial', `${ready.person.id}/${d.key}`),
-      label: d.name,
-      detail: `At ${Math.round(d.value)}, and pulling on the rest`,
-    })),
-    provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.',
-  }),
+  // Said of whoever it belongs to (`spokenOf`, from 2026-10-15: until then another person’s readiness was "How Well You
+  // Would Do Today" and "what’s costing you", one press from her look, which said her dials of her).
+  look: (ready, { sim }) => {
+    const p = spokenOf(ready.person, ready.person.id === sim.universe.playerId);
+    return {
+      name: 'Readiness',
+      kind: `How Well ${upper(p.they)} Would Do Today`,
+      parent: at('person', ready.person.id),
+      summary: ready.drags.length === 0
+        ? `${Math.round(ready.value)}, and nothing is holding ${p.them} back much.${ready.value >= 99.5 ? ' This is as good as a day gets.' : ''}`
+        : `${Math.round(ready.value)}, and ${spokenList(ready.drags.map((d) => d.name.toLowerCase()))} ${isAre(ready.drags.length)} what’s costing ${p.them}.`,
+      ways: ready.drags.map((d) => ({
+        to: at('dial', `${ready.person.id}/${d.key}`),
+        label: d.name,
+        detail: `At ${Math.round(d.value)}, and pulling on the rest`,
+      })),
+      provenance: 'Seven of the eight multiplied, fitness through condition, and stored nowhere. It sets what a class, a lab, a rehearsal or a workout builds, and the work judged that day reads it as its condition.',
+    };
+  },
 });
 
 // ---------------------------------------------------------------------------
@@ -380,11 +414,12 @@ defineLook<HeldTrait>('trait', {
     const t = PERSONALITY_TRAIT_BY_ID[id]!;
     const isYou = person.id === sim.universe.playerId;
     const held = (person.personalityTraits ?? []).includes(id);
+    const p = spokenOf(person, isYou);
     const mods = Object.entries(t.systemMods ?? {}) as [PersonalityKnob, number][];
     const times = (x: number) => `${x >= 1 ? '+' : '−'}${Math.round(Math.abs(x - 1) * 100)}%`;
     return {
       name: t.name,
-      kind: held ? (isYou ? 'A Trait You Hold' : 'A Trait They Hold') : 'A Trait',
+      kind: held ? `A Trait ${upper(p.they)} ${upper(p.s('hold'))}` : 'A Trait',
       summary: t.description,
       parent: at('person', person.id),
       body: (
@@ -396,19 +431,19 @@ defineLook<HeldTrait>('trait', {
                   <tr key={knob}>
                     <td className="small">{KNOB_READS[knob]}</td>
                     <td className="num mono">{times(x)}</td>
-                    {held && <td className="num mono dim">{times(personalityOf(person, knob))} with all {isYou ? 'you' : 'they'} are</td>}
+                    {held && <td className="num mono dim">{times(personalityOf(person, knob))} with all {p.they} {p.are}</td>}
                   </tr>
                 ))}
               </tbody>
             </table>
           ) : (
-            <p className="small">It moves nothing SLATE draws: it says who {isYou ? 'you' : 'they'} are.</p>
+            <p className="small">It moves nothing SLATE draws: it says who {p.they} {p.are}.</p>
           )}
           <p className="small"><span className="dim">Its cost. </span>{t.cost}</p>
         </div>
       ),
       ways: [{ to: at('readiness', person.id), label: 'Readiness', detail: 'What the dials it moves come to' }],
-      provenance: `Each figure is the trait’s own; “with all ${isYou ? 'you' : 'they'} are” is every trait and disposition ${isYou ? 'you' : 'they'} hold together, held inside its limits (\`KNOB_LIMITS\`).`,
+      provenance: `Each figure is the trait’s own; “with all ${p.they} ${p.are}” is every trait and disposition ${p.they} ${p.s('hold')} together, held inside its limits (\`KNOB_LIMITS\`).`,
     };
   },
 });
@@ -426,7 +461,8 @@ function leftAlone(c: Condition): string {
 }
 
 defineLook<Carried>('condition', {
-  gone: 'You don’t carry that now.',
+  // Said of whoever the look was of, the player or not (until 2026-10-15 “You don’t carry that now.”, of anyone).
+  gone: 'That isn’t carried now.',
   // The person the look is of, named in the id (`person/condition`) as a trait’s is, or the player. Until 2026-10-14
   // every condition resolved against the player, as the trait look did until earlier that day, so another person’s
   // Depression opened a look of the player’s, or none when the player carried none (found by that day’s third round of
@@ -442,12 +478,13 @@ defineLook<Carried>('condition', {
   seeds: (sim) => [...Object.keys(sim.player.health?.chronic ?? {}), ...(injuryOf(sim.player, sim.now) ? ['injury'] : [])],
   look: ({ person, key }, { sim }) => {
     const isYou = person.id === sim.universe.playerId;
+    const p = spokenOf(person, isYou);
     if (key === 'injury') {
       const hurt = injuryOf(person, sim.now)!;
       return {
         name: INJURY_KIND[hurt.kind].label,
         kind: 'An Injury',
-        summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? `, and keeps ${isYou ? 'you' : 'them'} off work and training till then` : ''}.`,
+        summary: `It mends by ${formatDate(hurt.until, sim.zone)}${hurt.offWorkUntil ? `, and keeps ${p.them} off work and training till then` : ''}.`,
         parent: at('person', person.id),
         ways: [{ to: at('dial', `${person.id}/condition`), label: 'Condition', detail: 'What a body is fit for; an injury weighs on the mood and the stress each day, and holds back the work it limits' }],
         provenance: 'How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).',
@@ -457,12 +494,12 @@ defineLook<Carried>('condition', {
     const dial = key === 'depression' ? 'morale' : key === 'diabetes' ? 'condition' : key === 'arthritis' ? 'energy' : undefined;
     return {
       name: CONDITION_LABEL[key] + (key === 'diabetes' ? (state.typeOne ? ', Type 1' : ', Type 2') : ''),
-      kind: isYou ? 'A Condition You Carry' : 'A Condition They Carry',
+      kind: `A Condition ${upper(p.they)} ${upper(p.s('carry'))}`,
       summary: state.treated
         ? (state.lapsed
-          ? `${isYou ? 'You keep' : 'They keep'} it up, but this month’s care went unpaid, so it’s been left alone till next month.`
-          : `${isYou ? 'You keep' : 'They keep'} it up: its care is paid each month at what ${isYou ? 'your' : 'their'} plan leaves.`)
-        : `${isYou ? 'You leave' : 'They leave'} it alone, which costs nothing and does what’s below.`,
+          ? `${upper(p.they)} ${p.s('keep')} it up, but this month’s care went unpaid, so it’s been left alone till next month.`
+          : `${upper(p.they)} ${p.s('keep')} it up: its care is paid each month at what ${p.their} plan leaves.`)
+        : `${upper(p.they)} ${p.s('leave')} it alone, which costs nothing and does what’s below.`,
       parent: at('person', person.id),
       body: <p className="small">{leftAlone(key)} Kept up, it does none of that.{isYou ? ' Papers keeps it up or lets it go.' : ''}</p>,
       ways: dial ? [{ to: at('dial', `${person.id}/${dial}`), label: dial[0]!.toUpperCase() + dial.slice(1), detail: 'The dial it takes from, left alone' }] : [],

@@ -451,7 +451,7 @@ describe('an idle account', () => {
 });
 
 describe('changing one’s mind', () => {
-  it('cancels a new savings account whole in Canada’s fourteen days, not after, and never a British fixed deposit', () => {
+  it('cancels a new savings account whole in Canada’s fourteen business days, not after, and never a British fixed deposit', () => {
     const sim = lifeIn('ca-on-toronto', 'ca-td', 'life-cool');
     for (const a of bankAccountsOf(sim, sim.player)) if (a.kind === 'savings') sim.must({ kind: 'bank.close_savings', payload: { accountId: a.id } });
     const opened = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
@@ -461,7 +461,13 @@ describe('changing one’s mind', () => {
     expect(opened.closedAt).toBeDefined();
     expect(current(sim).balance - before).toBe(300_00);
     const late = sim.universe.accounts[sim.must<{ accountId: string }>({ kind: 'bank.open_savings', payload: {} }).accountId]!;
-    sim.advanceBy(15 * MS_DAY);
+    // Fourteen business days after Monday 5 January, Ontario keeping no holiday between: 6 to 9, 12 to 16 and 19 to 23
+    // January, so it runs to the end of Friday the 23rd (until 2026-10-15's second recheck, to the hour it opened that
+    // day). Until 2026-10-15's recheck the fourteen days were calendar days, and this was refused fifteen days on, on the
+    // 20th, still inside the regulation's period. A day past the 23rd's opening hour is the 24th, refused either way.
+    sim.advanceBy(18 * MS_DAY);
+    expect(inCoolingOff(sim, late)).toBe(true);
+    sim.advanceBy(MS_DAY);
     expect(run(sim, 'bank.cancel_new', { accountId: late.id }).ok).toBe(false);
 
     const gb = lifeIn('uk-eng-london', 'gb-natwest', 'life-cool-gb');
