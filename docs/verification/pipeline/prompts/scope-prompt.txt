@@ -1,0 +1,52 @@
+# Completing the current scope (2026-10-15): your rows
+
+SLATE: C:/Users/sande/Downloads/1221-GIT, branch `claude/current-scope-acceptance` (from main at bef4bde5). Its
+CLAUDE.md applies in full: THE ONE RULE, the falsifiability test, prose load-bearing (past tense with the date
+2026-10-15 for what changed), curly apostrophes, American spelling, Title Case for labels. Don't touch git. Four other
+agents work beside you on other files: edit only the files your instructions name; if you must touch another (a shared
+test, a guide file), re-read it right before each edit and change only your lines. Don't restore removed personal-life
+or industry systems, add parental leave, or reopen deferred work. Don't inflate completion: never delete a requirement,
+weaken an assertion, hide a control, or move unfinished work to Deferred or Informational to close a row.
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+## First: the checklist (before any code change)
+
+For each of your rows, read its entry in docs/verification/audit/<area>.json (fields, `review`, `after`: gapsOpen,
+disposition, check problems) and the code and tests it names. Write `scope/<key>-checklist.json` (create the folder):
+per row `{ id, player (what the player does, on which screen), path (control → command; does the interface reach it?),
+preconditions, costs, timing, refusals, outcomes, readers (what consumes the state), persistence (save, load, advancing
+time), gap (precise: implementation missing / evidence missing / stale claim / genuinely unreachable and why),
+acceptance (the test(s) that will prove it: named, what they assert, which kind: command, clock, render, built-app) }`.
+Why a row is unresolved matters: it may be reachable now (creation offers the family since 2026-10-14, so a life with
+need owes Connecticut tax; read tests/need-paths.test.ts and tests/evidence3-*.test.ts).
+
+## Then: implement and prove
+
+Implement missing behavior and fix broken behavior; add tests where behavior works but lacks evidence; correct stale
+claims (but rewriting a description never completes missing functionality). Every behavior change: a test that fails
+before and passes after (break it, run, restore; say which). Tests reach the action as a player does (a command through
+sim.execute, the clock through advanceTo, the screen rendered with react-dom/server as tests/evidence3-*.test.ts do),
+check the downstream readers and persistence (save, load, advance; no double-counting on reload or repeat), expect
+literals worked by hand from the rule or its source (never the engine's own helper), never vacuous. Negative, boundary
+and repeated-action cases where they matter. A real-world rule: read the official source (WebSearch/WebFetch allowed),
+cite it with its date in a comment; never present an estimate or a held figure as exact. A defensive guard no valid
+state reaches: keep it, test it as a guard (named so: "GUARD:"), and don't claim a player reaches it. A seeded second
+person or an older save written by hand: label it (TEST SETUP / FIXTURE) and don't call it a played journey.
+
+Update the guide entries for every feature you touch (src/engine/content/guide/*: what it does, where, eligibility,
+the sequence, time and money costs, outcomes and refusals, what it affects, what next); list any tutorial chapter
+(src/engine/content/tutorial.ts) that needs a change in your report, don't edit tutorial.ts yourself.
+
+New tests go in `tests/scope-<key>.test.ts` (one file; header in the house voice). Run only the tests you touch
+(VITEST_MAX_FORKS=2 VITEST_MIN_FORKS=1 npx vitest run <files>); then npx tsc -b --noEmit, npx eslint <your files>,
+node tools/title-case.mjs --check, node tools/spelling.mjs, node tools/typos.mjs, node tools/tics.mjs --check,
+node tools/voice-check.mjs --check, node tools/wired.mjs --check. Never run the whole suite (memory is short).
+
+## Finally: the result
+
+Write `scope/<key>-result.json`: per row `{ id, before (its status at bef4bde5), after (verified | partial | unresolved
+| deferred | legacy | informational, with why), disposition, testsAdded [{file, title, kind, proves}], fixes [{summary,
+where, test}], guards [{where, test}], rowText {field: corrected text}, mutations [{file, find (exactly once), replace,
+protects}] (1-3 per row; don't apply), ownerDecision (only if one is genuinely needed: the exact decision and its
+consequences), tutorial (chapters needing change) }`. Final message: one line per row, then fixes, then anything
+outside your files.

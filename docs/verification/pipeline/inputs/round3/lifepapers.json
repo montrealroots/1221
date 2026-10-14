@@ -1,0 +1,207 @@
+{
+  "testFile": "tests/evidence3-lifepapers.test.ts",
+  "run": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-lifepapers.test.ts: 13 tests, 11 pass, 2 fail, and both failures are DEFECT tests. Run time 3.6 s. eslint and tsc are clean on the file.",
+  "rows": [
+    {
+      "id": "health.enroll",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins", "closes": "The marketplace premium charged by healthMonth after an enrollment made through the command, on income the clock paid (Capital One’s $6,436.10 of September interest for an Inherited family). Until now the premium was shown only on September wages set by hand, and tests/need-paths.test.ts checks only coverOn. This test also shows the 2027 benchmark taking over on 1 January.", "evidenceKind": "command" },
+        { "title": "PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November", "closes": "The later-of rule (Yale Health’s end against the first of next month), which the second round couldn’t tell apart because both gave 1 November there", "evidenceKind": "clock" },
+        { "title": "DEFECT: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D", "closes": "Nothing open. It is a new defect found on the income Enroll reads. It FAILS on the tree.", "evidenceKind": "clock" }
+      ],
+      "gapsClosed": [
+        "The second round’s check said the marketplace path needed September’s wages set by hand (recordWages, TEST SETUP). That gap is closed: tests/need-paths.test.ts reaches the marketplace through Enroll pressed on Papers, on interest the clock paid an Inherited family made on the creation screen, and this file follows that plan to the $706, $706 and $786 the clock charges.",
+        "The later-of rule is now distinguished: Enroll gives 1 December after a late withdrawal, where Yale Health ends on 8 November, against 1 November after an early one."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] The claim’s ‘healthMonth renews a program’ is still tested only on a program put in by hand (safetynet.test.ts). It was never a named gap. A played life with need is renewed only at Covered Connecticut’s or HUSKY D’s renewal months later, and this round didn’t play it."
+      ],
+      "disposition": "verified",
+      "defects": [
+        {
+          "summary": "A term deposit’s interest at maturity is not recorded as income. endTerm’s creditInterest (renewed or moved to savings) and the paid-out branch post the interest but never call recordInterest. So it is missing from the year’s earnings, which the return taxes, and from the month’s income, which programFor and mayEnroll read. An Inherited student with $2,849,566 in Chase’s CD is credited $57,928.16 on 24 March 2027, but March’s income reads $276. Enroll on 1 April gives HUSKY D (measured: kind 'medicaid', from 1 June 2027) where the marketplace is due. By contrast, a savings account’s monthly interest (banking.ts payInterest) and a CD’s interest taken by hand (bank.take_term_interest) are both recorded.",
+          "where": "src/engine/systems/accountlife.ts creditInterest (:440-449, used by endTerm’s 'renews' and 'savings'); src/engine/systems/lending.ts the term deposit’s paid-out branch (~:1106-1117)",
+          "proposedFix": "Call recordInterest(owner, sim.now, sim.homeZone, earned) wherever a term’s interest is credited: in creditInterest, with the term’s owner, and in the paid-out branch, with the person, as payInterest and take_term_interest already do.",
+          "failingTest": "health.enroll, on income the clock paid (round three) > DEFECT: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D"
+        }
+      ],
+      "rowText": {},
+      "mutations": [
+        { "file": "src/engine/systems/health.ts", "find": "const from = Math.max(firstOf(p.year, p.month + 1), onOrAfterEnd);", "replace": "const from = firstOf(p.year, p.month + 1);", "protects": "the later-of start: the late-withdrawal test expects December 1 and gets November 1" },
+        { "file": "src/engine/systems/health.ts", "find": "const premium = benchmarkFor(m.state, p.year, cur);", "replace": "const premium = benchmarkFor(m.state, 2026, cur);", "protects": "the year’s benchmark: 1 January 2027 charges $786, not $706" },
+        { "file": "src/engine/systems/health.ts", "find": "else if (at >= m.from) {", "replace": "else {", "protects": "no premium before the plan begins: the late-withdrawal test expects nothing on 1 November" }
+      ],
+      "verdict": "verified",
+      "note": "The marketplace gap is closed by tests/need-paths.test.ts together with this file’s premium and later-of tests. The CD defect sits in the income Enroll reads, not in Enroll itself. It belongs with the money rows (term deposits and recordInterest) and shows through Enroll and the return."
+    },
+    {
+      "id": "health.appeal_decided",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: paid when due and upheld, the bill stays $183.98, nothing comes back, the notice says the plan kept its denial, and Papers says Denial Upheld", "closes": "The upheld path on a played marketplace, the Inherited life’s interest, where before the plan was bought on $3,000 of wages set by hand: the amount is unchanged, nothing is posted, the 'Appeal Upheld' notice appears, and Papers reads 'Denial Upheld'", "evidenceKind": "render" },
+        { "title": "PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it", "closes": "The went-to-debt-then-overturned path on a played marketplace, reached by the player’s own bank commands (bank.set_payments, bank.transfer). $138.98 comes off the debt and nothing goes to the bank. Papers moves from Owed As Debt to Denial Overturned, Pay It Off pays $45.00, and the bill reads Settled.", "evidenceKind": "command" }
+      ],
+      "gapsClosed": [
+        "The remaining open problem, that the marketplace plan every denial needs was reached only through a TEST SETUP recordWages of $3,000, is closed. tests/need-paths.test.ts plays the overturned-after-paid path on an Inherited family’s Capital One interest, and this file plays the upheld path and the debt-then-overturned path on the same played plan. Only the draws (visit, denial, outcome) are forced, as evidence-g05-life forces them."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {},
+      "mutations": [
+        { "file": "src/engine/systems/health.ts", "find": "const upheld = s.rng('health.appeal', person.id, bill.id).next() < DENIALS.upheld;", "replace": "const upheld = false;", "protects": "the upheld outcome: the forced upheld draw must leave $183.98 and 'Denial Upheld'" },
+        { "file": "src/engine/systems/health.ts", "find": "const off = Math.min(over, Math.max(0, -debt.balance));", "replace": "const off = 0;", "protects": "the debt coming down to the $45 share when overturned" },
+        { "file": "src/engine/systems/health.ts", "find": "if (bill.paid && over > 0 && person.primaryAccountId)", "replace": "if (over > 0 && person.primaryAccountId)", "protects": "no refund to the bank for a bill that went to debt unpaid (expects [[138_98, 0]])" }
+      ],
+      "verdict": "verified",
+      "note": "The partly-paid-debt branch (the debt is part paid, then the appeal is overturned) is covered by evidence-g05-life. It isn’t replayed on the played marketplace here; the branch is the same code, and only the income route was in question."
+    },
+    {
+      "id": "documents.us_status",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December", "closes": "The marketplace plan an F-1 holds out of status, bought on income she played: an Inherited family’s money in Chase’s CD, its interest taken on 30 September through bank.take_term_interest. The withdrawal’s 15 days, the decision, Out Of Status, the plan ended by the look, the marketplace refusal afterwards, and a citizen twin who keeps hers.", "evidenceKind": "command" },
+        { "title": "DEFECT: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended", "closes": "Nothing open. It is a new defect: the notice’s words for a plan that never began. It FAILS on the tree.", "evidenceKind": "clock" }
+      ],
+      "gapsClosed": [
+        "[only a fixture reaches it] The marketplace plan the clock ends was bought on $6,000 of May wages set by hand. It is now bought on played income: the F-1 takes her CD’s interest, $10,110.10, and enrolls in her fifteen days’ grace. Capital One, which carries the citizen over the line, won’t open an F-1’s account; creation gave her Chase when Capital One was asked for. With her savings left at Chase, Wells Fargo or Bank of America, September came to $435.44.",
+        "[stale claim] The papers-fixes ‘fifteen days’ title and header were fixed on 2026-10-13 (its header now says so in the past tense).",
+        "[only a fixture reaches it] usWorkAuthorized’s out-of-status line went on 2026-10-13 (permission.ts:109-112 records it).",
+        "[deferred or removed] authorizationFor: the row’s downstream already says, in the past tense, that it was named until 2026-10-13."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] A marketplace plan that had begun, ended out of status: in every played path a plan bought in status starts after status ends. Yale Health outlasts the grace after a withdrawal (30 days against 15) and after the degree (31 July against 60 days from Commencement), so the plan ended out of status has never begun. A begun plan ends out of status only after OPT, which needs the degree three years on, and OPT has had no work since 2026-10-09. The 1 December notice, ‘Your Health Cover Ended: You’re uncovered from December 1, 2026’, also comes a month after her Yale Health ended on 1 November. It was measured here, not asserted, and isn’t this row’s claim."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [
+        {
+          "summary": "Out of status, the marketplace plan an F-1 bought in her grace is ended by the next month’s look before its start (here enrolled 2 October for 1 December, ended 1 November). The notice says ‘Your Marketplace Plan Has Ended’ for a plan that never covered her. The Essential Plan and Covered Connecticut ended the same way have said ‘Your Public Cover Won’t Begin’ since 2026-10-13. lostAt is also set, as if cover had been lost.",
+          "where": "src/engine/systems/health.ts healthMonth, the first out-of-status branch: `if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {` with title 'Your Marketplace Plan Has Ended'",
+          "proposedFix": "Read `const begun = h.marketplace.from <= at` as the program branch does. Title it 'Your Marketplace Plan Won’t Begin' when it hasn’t begun, and set h.lostAt only when it had.",
+          "failingTest": "documents.us_status, a marketplace plan bought in the grace (round three) > DEFECT: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended"
+        }
+      ],
+      "rowText": {
+        "downstream": "health.ts lawfullyPresent -> mayEnroll refuses the marketplace, and a marketplace plan ends at the next month’s look. In every played life that plan hasn’t begun: Yale Health outlasts the grace, so the plan bought in it starts after status ends. From 2026-10-13 Covered Connecticut and the Essential Plan end the same way, and one enrolled ahead never begins. The DMV refuses an ID card in SAVE’s words (identity.ts). Unemployment refuses without permission to work (usWorkAuthorized), in the same words in status and out. Until 2026-10-13 this named authorizationFor, which reads no document any play makes since travel went."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/health.ts", "find": "if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {", "replace": "if (false) {", "protects": "the plan ended out of status: the F-1 would be charged $706 on 1 December and covered" },
+        { "file": "src/engine/systems/permission.ts", "find": "withdrawn: 15,", "replace": "withdrawn: 16,", "protects": "the withdrawal’s fifteen days: the decision’s date and Out Of Status on 17 October" }
+      ],
+      "verdict": "partial",
+      "note": "What was open on fixture income is now played. Left: one wording defect, which fails, and a begun plan ended out of status, which only OPT reaches, three years in."
+    },
+    {
+      "id": "world.tick",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload", "closes": "A real raiser’s dated row through the clock on the tree of 2026-10-14: closed within two days of its date (resolvedAt, not dismissed), gone from openDecisions, kept 180 days, then pruned", "evidenceKind": "clock" },
+        { "title": "a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go", "closes": "The rule that replaced the undated branch: migrate dates an open undated row createdAt + 90 days, with its step’s words, and lets a closed one go. The tick then closes the dated row.", "evidenceKind": "fixture" }
+      ],
+      "gapsClosed": [
+        "[deferred or removed] The undated row’s dismissal after ninety days: the owner had it go on 2026-10-14. expireDecisions now closes only dated rows, requireDecision requires dueAt, and migrate dates an older save’s undated rows.",
+        "[deferred or removed] Keeping a closed row past 180 days to a date still ahead: went on 2026-10-14 (world.ts prune).",
+        "[needs engine change] prune’s comment naming a reader that doesn’t exist: rewritten in the past tense on 2026-10-13 and again on 2026-10-14."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "changes": "Closes a dated decision on the tick after its date (resolvedAt), and prunes: closed rows 180 days on, and the timeline’s done items after 400 days. Until 2026-10-14 it also dismissed an undated row after ninety days untouched and kept a closed row to a date still ahead, rules no played life reached. The owner had both go, and a save’s undated rows are dated on load (migrate).",
+        "explanation": "Home; the decision look (ui/looks/attention.tsx), whose ninety-day words went on 2026-10-14"
+      },
+      "mutations": [
+        { "file": "src/engine/world/world.ts", "find": "if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;", "replace": "if (decision.dueAt + 7 * 86_400_000 < sim.now) decision.resolvedAt = sim.now;", "protects": "closing on the first tick after the date (within two days)" },
+        { "file": "src/engine/world/world.ts", "find": "if (sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {", "replace": "if (sim.now - closedAt > 2 * DECISION_RETENTION_DAYS * MS_DAY) {", "protects": "the 180-day retention: gone by day 183" },
+        { "file": "src/engine/index.ts", "find": "decision.dueAt = decision.createdAt + 90 * MS_DAY;", "replace": "decision.dueAt = decision.createdAt + 60 * MS_DAY;", "protects": "an older save’s undated row dated ninety days from its raising" }
+      ],
+      "verdict": "verified",
+      "note": "Both fixture-only gaps are now removed rules. Their removal is checked through the replacement: the migration, and expireDecisions reading dueAt only."
+    },
+    {
+      "id": "documents.apply_ssn",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies", "closes": "The hospital refusal reached through the week’s own illness draw, a stay at Yale New Haven, instead of careFor called directly. Her twin applies at the same hour, and she applies the evening after discharge.", "evidenceKind": "command" }
+      ],
+      "gapsClosed": [
+        "The hospital refusal’s state, which the second round saw begun by calling careFor directly, is now reached by the health week’s draw (forced, as every denial and visit in these rounds is)."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] The number deciding a loan: Discover reads wagesLastMonth (lending.ts:397), which counts only 'salary' postings, against $25,000 a year. The family chosen at creation adds savings and interest, never wages, so no played life still reaches it: the Summer Cabaret’s best thirty days is $1,875. In play the number changes which refusal is given, not the outcome."
+      ],
+      "disposition": "stale or wrongly grouped claim",
+      "defects": [],
+      "rowText": {
+        "downstream": "hasSsn: the bank’s channel (channelFor, bankmoves.ts:131), the ID card (identity.ts:103-108), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts). A lender’s terms (lending.ts:458) read it too: Discover asks for the number before its $25,000 a year of wages, which it reads from salary alone. No played life earns that, so in play the number changes only which refusal is given.",
+        "issue": "Checked by the first round: a bank’s branch hour once the number comes, a lender refusing for want of one, the W-7’s seven weeks more, and the plan by mail."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/taxid.ts", "find": "return startRefusal(sim, person, SSN.visitMinutes, true);", "replace": "return undefined;", "protects": "the hospital bed’s refusal (and the busy hour’s)" }
+      ],
+      "verdict": "partial",
+      "note": "Everything the row does in play is verified. The lender clause is a consumer no played income reaches, so the row needs the corrected downstream rather than a test."
+    },
+    {
+      "id": "health.choose_clinic",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: the Scraping family’s student has no Your Doctor on Papers; the command, sent with New Haven’s one practice, books her twin’s same visit at the same place and price", "closes": "Re-measured on the tree of 2026-10-14 with a life made with need: Papers draws no select, and choosing changes no booking, practice or share (Fair Haven, $0 under Yale Health, for both)", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [],
+      "gapsOpen": [
+        "[needs engine change] For every life the game makes (New Haven only), the choice decides nothing. content/clinics.ts lists one doctor’s practice there, Fair Haven Community Health Care, which clinicFor gives with nothing chosen, and Papers draws no Your Doctor. This file shows a family-made life booked at the same place, hour and share with the choice and without it. Closing it needs a second New Haven practice in content (Yale Health’s own, where its members are seen) or the row recorded as not applying to New Haven.",
+        "[only a fixture reaches it] Where the choice does decide something (London’s Bupa £79, Mexico City’s MX$60), only quickSave lives reach it. Every new life lives in New Haven."
+      ],
+      "disposition": "stale or wrongly grouped claim",
+      "defects": [],
+      "rowText": {
+        "explanation": "Papers select, drawn only where a town keeps two practices or more, and so never for a played life"
+      },
+      "mutations": [
+        { "file": "src/ui/workspaces/PapersWorkspace.tsx", "find": "const choosing = practices.length > 1;", "replace": "const choosing = practices.length > 0;", "protects": "no Your Doctor drawn in a town of one practice" }
+      ],
+      "verdict": "deferred",
+      "note": "The family change doesn’t reach this row: need changes the money, not the town or its practices."
+    },
+    {
+      "id": "health.appointment",
+      "testsAdded": [
+        { "title": "PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more", "closes": "The fix of 2026-10-13 (an owed visit no longer swallows the next) re-shown on a family-made life: Papers’ ‘A doctor’s visit: not yet seen’, the next drawn visit booked with the owed one, kept at Fair Haven, owedVisit cleared", "evidenceKind": "command" }
+      ],
+      "gapsClosed": [
+        "[needs engine change] An owed visit swallowing every later visit and review: fixed on 2026-10-13 and shown here through the command and the clock."
+      ],
+      "gapsOpen": [
+        "[stale claim] ‘renewPrescriptions -> fillMedicine’ is read by nothing in New Haven, where every played life lives. fillMedicine reads prescribedAt only through rxValidUntil, where RX.validYears gives an end, and only ca-bc has one. Connecticut’s rule (CGS 20-614) is unresearched (docs/UNBITTEN.md). The row’s downstream already says this as of 2026-10-13. It needs research or the owner, not a test.",
+        "[only a fixture reaches it] British Columbia, the one place a renewal is read, is reached only by quickSave’s Vancouver."
+      ],
+      "disposition": "stale or wrongly grouped claim",
+      "defects": [],
+      "rowText": {},
+      "mutations": [
+        { "file": "src/engine/systems/health.ts", "find": "if (book(s, person, owed ?? event.what)) { delete healthOf(person).owedVisit; continue; }", "replace": "if (book(s, person, owed ?? event.what)) { continue; }", "protects": "the owed visit cleared when the next drawn visit books it" }
+      ],
+      "verdict": "partial",
+      "note": "No test can close what is left: a consumer read only in a place no played life reaches."
+    },
+    {
+      "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+      "testsAdded": [
+        { "title": "Keeps Accounts and Chaotic, held by a life made with them, say on their looks only the knobs they still move; no trait, limit or look carries receipts", "closes": "receipts’ removal on 2026-10-14. The two traits that carried it (Chaotic 0.9, Keeps Accounts 1.3) now show only bondWound +10%, hygieneDrift +30% and stressGain −8% on their rendered looks. KNOB_LIMITS and KNOB_READS name the same knobs, and none is receipts.", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "[deferred or removed] receipts: the knob went on 2026-10-14 (personality-traits.ts KNOB_READS and the two traits’ systemMods, personality.ts KNOB_LIMITS, taxreturn.ts figuresFor, earnings.ts jobCosts), so the row is the nine live knobs, each verified through play in earlier rounds (evidence-g09-life, the second round’s morning/evening, bondWarmth and bondWound journeys)."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+        "claim": "Nine knobs. bondWarmth and bondWound scale a classmate bond’s moves up and down. company scales what friends in a performance’s cast are worth to the mood, and the weight of none. morning and evening scale focus before noon and from 5 PM. readsAround, drills, skims and revises scale how far a preparation step moves interpretation, memorization, familiarity and revision. Until 2026-10-14 the row was ten: receipts scaled the share of the work’s costs a return deducted, which nothing recorded, and the owner had it go.",
+        "downstream": "school.ts castCompany (read on a performance night), bondMove (read by the cast list, coursework.ts and classmates.ts; the bonds it moves are read by bondWord), hourFit (read by focusAt and conditionAt); coursework.ts prepLean (read by prepare and briefs.ts). Until 2026-10-14 it also named taxreturn.ts figuresFor’s receipts, which went with its knob."
+      },
+      "mutations": [
+        { "file": "src/engine/content/personality-traits.ts", "find": "systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },", "replace": "systemMods: { hygieneDrift: 1.2, stressGain: 0.92 },", "protects": "the trait look reads the trait’s own figure (+30%)" },
+        { "file": "src/engine/content/personality-traits.ts", "find": "bondWound: 'How hard a slight from a classmate cuts',", "replace": "bondWound: 'How hard a slight cuts, and the receipts you keep',", "protects": "the look’s words for the live knob, with no receipts" }
+      ],
+      "verdict": "verified",
+      "note": "Line references in the row drift every round, so the corrected downstream names functions, not lines."
+    }
+  ]
+}

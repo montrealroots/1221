@@ -1,0 +1,115 @@
+{
+  "rows": [
+    {
+      "id": "c-disp-ambition",
+      "claimed": "partial (working, evidence missing): only the stale personality.ts:11 header open",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the personality.ts header now says ambition leans how fast every stress arrives (stressGain: on empty, nerves, a turn, a hurt, a rival's lead, money's worry), with the old wording kept in the past tense. The header test in tests/evidence2-b10.test.ts passes. The file ran 18 of 18 on the current tree.",
+        "Checked: the money-worry journey sets the slider on the page, runs to midnight with advanceTo, and expects 4 x the hand-bent knob (0.8212305835 / 1.1152400722, independent of personalityOf). The control twins reach midnight with equal stress. Morale -2 is alike at both ends. Removing the +0.15 ambition term would make both ends equal and fail the test.",
+        "Checked: an injury through life.look_after (exercise) on g09-run-1668 gives 18 - 8.35 x recovery + 6 x knob. The b10-run-sound control draws no hurt and gives equal stress, so the test is not vacuous.",
+        "With the first round's nerves and on-empty journeys (tests/evidence-g27-ui.test.ts) and trait-stressGain in tests/evidence-g29-ui.test.ts (a turn, a rival's lead), all six stressGain readers are reached. The last two are reached through the same knob, by a trait rather than the slider.",
+        "The latest skeptic's other points: the labels are moot now. The failing header test no longer breaks the gate. The stale ui.json fields are row text (listed below)."
+      ],
+      "weakTests": [
+        { "title": "tests/personality.test.ts > what it does > lets the three dispositions the page names move what it says they move", "why": "Still cited by the row's 'tests' field. It checks the multiplier on a hand-built person, and no stress arrives." }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json c-disp-ambition 'downstream' still says 'systems/personality.ts:73-76 stressGain (+0.15 lean)'. stressGain is at personality.ts:78 and has six readers: life.ts:212, attributes.ts:308, enjoyment.ts:112, injury.ts:98, school.ts:2489 and spending.ts:501 (the line numbers may have moved again).",
+        "'tests' cites only the personality.test.ts fixture. It should cite tests/evidence-g27-ui.test.ts > c-disp-ambition and tests/evidence2-b10.test.ts > c-disp-ambition."
+      ]
+    },
+    {
+      "id": "c-disp-openness",
+      "claimed": "partial (implementation missing): WorkDay.away never set; the Cabaret curtain reads openness against the page",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (defect fixed): WorkDay no longer declares away (enjoyment.ts WorkDay has genres, novel and rehearsal). enjoyWork reads 'if (day.novel)' only, and the docs say in the past tense that away went on 2026-10-13. The test 'declares no WorkDay field that no call of enjoyWork sets' passes.",
+        "Closed (defect fixed): the Cabaret performance branch (school.ts, around line 3540) no longer calls enjoyWork, and only the rehearsal branch passes { novel: true, rehearsal: true }. The clock test expects the read-through 3.6 apart (a literal, 2 x 90/50) with stress equal, and the first curtain 0 apart. It passes.",
+        "Closed: tests/arrears.test.ts no longer asserts enjoyWork({ away: true }). It now asserts { novel: true }, with a past-tense note. The first round's clock tests (Cabaret and Carlotta read-throughs, the festival curtain unread) and the slider render still stand.",
+        "Minor, not blocking: the DISPOSED weight is still keyed 'away' though it now weighs only new work. The doc comment explains the name, in the past tense. The WorkDay test is a regex over literal enjoyWork(x, {...}) calls, and a call passing a variable would escape it. Every call today is literal."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence2-b10.test.ts > c-disp-openness > declares no WorkDay field that no call of enjoyWork sets", "why": "A source regex scan. It would miss a day passed as a variable or as a shorthand property. It is adequate only as a ratchet." }
+      ],
+      "staleText": [
+        "ui.json c-disp-openness 'downstream' still says 'enjoyWork novel/away; callers school.ts:2100,2175,2183'. There is no away now. The callers are a festival rehearsal (around school.ts:3415) and a Cabaret rehearsal (around 3552). A Cabaret performance no longer reads openness.",
+        "'explanation' says 'Matches UI (festival new play, Cabaret)'. It matches now, but only because the 2026-10-13 fix removed the curtain read. Say so in the past tense.",
+        "'tests' cites arrears.test.ts 'takes the room by extraversion, the road by openness...', which was renamed to '...new work by openness...'. It should cite tests/evidence-g28-ui.test.ts > c-disp-openness and tests/evidence2-b10.test.ts > c-disp-openness."
+      ]
+    },
+    {
+      "id": "c-traits",
+      "claimed": "partial (working, evidence missing): receipts, the Keeps Accounts copy and personality.test.ts's typed list open",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "implementation missing",
+      "problems": [
+        "Closed (defect fixed): CharacterCreation.tsx now says Keeps Accounts' deduction 'decides nothing for a student, who pays no cost of the work', with a past-tense comment. The render test against the trait's own look passes.",
+        "Checked: 19 knobs (stressGain, stressRecovery, hygieneDrift, moraleSwing, mealMood, spending, sleepQuality, energyRecovery, appetite, illnessToll, morning, evening, readsAround, drills, skims, revises, bondWarmth, bondWound, company) are each held to a reader through a command or the clock. Each life is made with the trait pressed on the rendered page, against a plain twin, with hand-bent literals. The first round held the button journey, Begin, Review, Profile and looks.",
+        "Open, and the review's gap 2 in substance: receipts, declared by Chaotic (0.9) and Keeps Accounts (1.3), still reaches nothing in play. Its only reader is taxreturn.ts:894 (RECEIPTS.kept x receipts) on job costs, and recordJobCost (earnings.ts:276) has no caller in src. docs/UNBITTEN.md ledgers it as 'Unreachable ... kept rather than deleted' since the career went in the 2026-10-09 scope reset. So 'the held traits drive the personalityOf knobs' is not true of every declared knob. Closing it needs an engine decision: delete the knob and the traits' receipts mods, or wire a cost of the work.",
+        "Open (latest skeptic): only one reader per knob is reached. For example, illnessToll's health.ts reader and most of moraleSwing's readers have no journey here. Those may be covered by the trait-* rows, which I did not re-check.",
+        "Open (latest skeptic): the coverage test's HELD set is filled by hand-typed HELD.add calls. It depends on the order the tests run in and shows only coverage of knob names. tests/personality.test.ts 'reads every knob a trait can declare' still compares the declared set to the typed KNOBS list (around line 312) and still runs in the gate."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence2-b10.test.ts > c-traits > holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches", "why": "HELD is a hand-typed list spread across the file. It depends on order (it fails when run alone with -t), and a HELD.add survives deleting the assertions before it." },
+        { "title": "tests/personality.test.ts > what it does > reads every knob a trait can declare, where the life system bites", "why": "It still compares the declared knobs to a typed list, it is still in the gate, and the row still cites it." },
+        { "title": "tests/evidence-g28-ui.test.ts > c-traits > moves every knob a trait declares, for a life made with it, to the side the trait leans, against a plain twin made alike", "why": "It calls personalityOf directly and takes its sides from the traits' own systemMods. It was called superseded, but it is still in the gate." }
+      ],
+      "staleText": [
+        "ui.json c-traits 'entry' cites CharacterCreation.tsx:663-694. PersonalityStep is around 604-714, with the pairs and buttons from about 686.",
+        "'changes' cites bootstrap.ts:345. cleanPersonalityTraits is now around 359.",
+        "'downstream' cites looks/wellbeing.tsx:117-120,358. It is now about 117-122 and 363, and it should say that receipts reaches no reader in play.",
+        "'tests' cites personality.test.ts 'reads every knob a trait can declare' (the typed list). It should cite tests/evidence-g28-ui.test.ts > c-traits and tests/evidence2-b10.test.ts > c-traits."
+      ]
+    },
+    {
+      "id": "c-wealth",
+      "claimed": "partial (stale or wrongly grouped claim): school.test.ts title overclaims, row fields stale, plus the dropped Yale Health plan defect",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "Closed (defect fixed): school.ts, around lines 2997-2998, now owes the plan when payFromCurrent returns false. The notice says the bank couldn't cover it and that it is owed. Two journeys pass through bank.transfer and the clock. In the first, the plan totals 1,882.00 whether moved or not. In the second, the notice wording differs, Bills Owed is 1,882.00 and is paid back at the next midnight, and a withdrawal refunds it either way.",
+        "Checked: the first journey renders Identity (asks for a birthplace and holds Continue) and Starting Point's tiles through SlateApp. It presses Begin, then checks Chase $92,391 and $413,043, and $1,882 out of checking at 9 AM (half of the published $3,764), all with independent literals. The first round (tests/evidence-g29-ui.test.ts) pins the card's $65,217 limit and the credit score of 795, and ties the tiles to the opened accounts.",
+        "Open, a review gap that no test can close: tests/school.test.ts:188 'comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it' still asserts no account. Its overclaiming title is unchanged, and the row cites it. The claim is now checked under the same title in tests/evidence2-b10.test.ts, so closing it needs only a rename of the school.test.ts title, or a citation change. It is a test's words, not the engine."
+      ],
+      "weakTests": [
+        { "title": "tests/school.test.ts > comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it", "why": "Its title claims money in the bank, and it asserts no account. The same title now has a real test in evidence2-b10." },
+        { "title": "tests/creation.test.ts > opens the accounts the money answer promises, and balances them", "why": "Still cited by the row. It never compares against the promised amounts, and it is a non-school life." }
+      ],
+      "staleText": [
+        "ui.json c-wealth 'entry' cites CharacterCreation.tsx:925-935. What Is Yours is around 929-984, and its select is drawn only where choosesWealth.",
+        "'reads' cites bootstrap.ts:183-186. newLifeFrom's forcing is around 199-202.",
+        "'changes' cites index.ts:163-213 and 218. populateWorld is around 175-232, with openCredit around 232.",
+        "'tests' cites the overclaiming school.test.ts test and creation.test.ts. It should cite tests/evidence-g29-ui.test.ts > c-wealth and tests/evidence2-b10.test.ts > c-wealth.",
+        "'downstream' should add that the term's Yale Health plan is paid from the opened checking, or owed when it can't be (from 2026-10-13)."
+      ]
+    },
+    {
+      "id": "c-tutorial",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Checked: the I Know SLATE path is a rendered screen, which the standard accepts. The Review radio's own onChange sets tutorial false, and Begin goes through SlateApp's own handler, giving config {tutorial:false, paused:true}. The playing phase renders the real GameShell and WorkspaceRouter over the real save: 0 locks, the rail ['Home', 'Player Profile', 'School', 'Money', 'Papers'], and all 5 routes open. Play's onClick runs the real world.set_preferences command through sim.execute, and timeSpeed goes 'live'. The guided twin is the contrast: 4 controls and 8 panels locked, the rail Home alone, each screen held shut, and Play opening the guide at 'clock' with the clock paused.",
+        "The latest skeptic called it 'heavily mocked'. useState is seeded and recorded, useKept is stubbed, and game-context is a Proxy whose unlisted members are no-ops. But the sim, its commands and the components are real, and the mutations listed (SlateApp's tutorial mapping, the GameShell rail filter, bootstrap's paused) each fail these assertions. tools/acceptance-ui.mjs still never picks I Know SLATE. The standard's 'screen rendered' covers it, so I don't count it as open.",
+        "Closed (defect 62 fixed): Play/Pause no longer carries aria-pressed (TimeControls.tsx, with a past-tense comment). The test now asserts it is absent on Play and on Pause.",
+        "The other review gaps were closed in the first round (tests/evidence-g29-ui.test.ts > c-tutorial): I Know SLATE made through SlateApp's mapping and kept across a reload, the guided life refusing Sleep, and a decision's File It held by the guide's own guard (Simulation.guardedBecause) on a game-config life."
+      ],
+      "weakTests": [
+        { "title": "tests/tutorial.test.ts > leaves a life without the guide wholly open", "why": "Still cited by the row. It runs on quickSave({}) with timeSpeed 'live', not the game's {tutorial:false, paused:true} life." },
+        { "title": "tests/life-fixes.test.ts > runs its command past the same guards as the command given directly", "why": "Still cited by the row. Its guard is installed by hand, not the guide's." }
+      ],
+      "staleText": [
+        "ui.json c-tutorial 'issue' still says 'Guard covers top-level commands only (see finding on decision buttons)'. A decision's command has passed the guide's own guard since 2026-10-10 (shown by tests/evidence-g29-ui.test.ts > c-tutorial > 'holds a decision’s File It shut ...').",
+        "'tests' cites the quickSave tutorial test and the hand-installed guard test. It should cite tests/evidence-g29-ui.test.ts > c-tutorial and tests/evidence2-b10.test.ts > c-tutorial."
+      ]
+    }
+  ]
+}

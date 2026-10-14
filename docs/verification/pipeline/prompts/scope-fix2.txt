@@ -1,0 +1,29 @@
+# The skeptics' problems, fixed (2026-10-15)
+
+SLATE: C:/Users/sande/Downloads/1221-GIT, branch `claude/current-scope-acceptance`, uncommitted work from several
+agents (don't touch git, don't revert anyone's work). CLAUDE.md applies in full: THE ONE RULE, prose load-bearing,
+past tense with the date 2026-10-15 for what changed, curly apostrophes, American spelling, Title Case for labels.
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+An independent skeptic read your group's rows and found problems: `final-checks/zzzz-scope-<key>.json` (scratchpad),
+beside `scope/<key>-result.json` and `scope/<key>-checklist.json` in the repo. Your keys and the problems to close are
+named in your instructions. For each: fix what's wrong in the engine where it's a defect (a test that fails before and
+passes after: break it, run, restore, say which), or close the evidence gap with a test that reaches it as a player does
+(sim.execute/must, advanceTo, a rendered screen; literals worked by hand from the rule, never the engine's helper; never
+vacuous), or correct the text where the words overclaim. A real-world rule: read the official source (WebSearch/WebFetch
+allowed), cite it with its date in a comment. Never weaken an assertion, delete a requirement, hide a control, or move
+work to Deferred to close a problem. Where a problem can't be closed, say precisely why.
+
+Another agent is changing health files now (systems/clinics.ts, appointments.ts, health.ts, content/clinics.ts,
+guide/papers.ts's doctor entries, tests/scope-health.test.ts, and tests asserting doctor's visits): don't touch them.
+Edit only the files your problems need; re-read a shared file right before each edit and change only your lines.
+Update the guide entries (src/engine/content/guide/*) a change touches; list tutorial chapters needing a change, don't
+edit src/engine/content/tutorial.ts. Run only the test files you touch (VITEST_MAX_FORKS=2 VITEST_MIN_FORKS=1 npx vitest
+run <files>), then npx tsc -b --noEmit, npx eslint <your files>, node tools/title-case.mjs --check, node
+tools/spelling.mjs, node tools/typos.mjs, node tools/tics.mjs --check, node tools/voice-check.mjs --check, node
+tools/wired.mjs --check.
+
+Then update `scope/<key>-result.json` in place for each row you changed: its `after` (verdict word first, then why),
+testsAdded, fixes, guards, rowText, mutations (1-3 new for each fix; don't apply), and add `"recheck": [{problem,
+done}]` listing every skeptic problem and what you did. Final message: per problem, what you did; tests added; anything
+outside your files.

@@ -1,8 +1,12 @@
 # Read First: The Current Scope Completed, 2026-10-15
 
 The owner's brief of 2026-10-15 ("SLATE: Complete The Remaining Current-Scope Work And Prove Acceptance"), done on
-`claude/current-scope-acceptance` from `main` at `bef4bde5`. Committed and pushed. The pull request was prepared and not opened: the GitHub CLI wasn’t signed in on this machine, so it is opened from the branch on GitHub. **Not merged to `main` and not deployed**, neither authorized by the brief. The account is
-`docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open row's checklist and result are in `docs/verification/scope/`.
+`claude/current-scope-acceptance` from `main` at `bef4bde5`, committed and pushed. **Not merged to `main` and not
+deployed.** The owner said to merge it on 2026-10-15; the fast-forward push to `main` was refused to Claude by the
+session's permission check (a merge without review), so it waits on the owner (below). No pull request was opened: the
+GitHub CLI wasn’t signed in on this machine. The account is `docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open
+row's checklist and result are in `docs/verification/scope/`; the pipeline that generates the audit is in
+`docs/verification/pipeline/`.
 
 **This section is the current status.** Every section below it is history, marked **Superseded** in place where it
 stopped being true.
@@ -35,7 +39,40 @@ Typecheck, lint, the suite in three foreground shards (330 files, 4,040 tests, a
 - The nine bank rows: Unresolved or Deferred.
 - Carried: an IRS letter before the due date on an early filing; Connecticut's “filed in error” control and the controls
   no play reaches, as guards.
-- Merging this branch to `main`, and any Base44 deployment (read §10 below first).
+- Merging this branch to `main`: a fast-forward, `main` still at `bef4bde5` and an ancestor of the branch. The owner
+  runs `git push origin claude/current-scope-acceptance:main` (or allows it to Claude); then this section says merged,
+  and `git fetch origin main:main` brings the local `main` along.
+- Any Base44 deployment (read §10 below first). The save schema didn't move: `SaveUniverse.opened` is optional.
+
+## For the next session
+
+- **Look first** (rule 2): `git status -sb`, `git log --oneline -5`, `git stash list` (one entry, a Teleport
+  auto-stash: never apply, pop or drop it), `git worktree list` (three besides this one: never merge them). The root's
+  untracked `SLATE-CURRENT-CLEANUP-FULL-CONTEXT.txt`, `out/`, `out2/`, `out25/` and `page.html` aren't this work's:
+  leave them.
+- **Where the work is**: the account above; `docs/verification/scope/<key>-checklist.json` (written before any code
+  changed) and `<key>-result.json` per group (people, taxpapers, health, money, school) and `yale-result.json` (Yale
+  Health's rule, renewal, public cover, and their recheck); the tests in `tests/scope-*.test.ts`; the audit in
+  `docs/verification/audit/*.json`, drawn as `docs/GAMEPLAY-COVERAGE.md`.
+- **Regenerating the audit**: `docs/verification/pipeline/README.md`. Never edit the audit or the coverage page by hand.
+- **The gate on this machine**: memory is short, and a single `npm run gate` or full `vitest run` is stopped by it. Run
+  the suite in three foreground shards (`VITEST_MAX_FORKS=2 VITEST_MIN_FORKS=1 npx vitest run --shard=1/3`, then 2/3,
+  3/3) and each check alone, each exit written to a file. `node tools/devmap.mjs --write` and
+  `node tools/traceability.mjs --write` after adding tests.
+- **The built app**: `npm run build`, a `vite preview` of it on port 4181 (`npx vite preview --port 4181`), then
+  `SLATE_BASE=http://localhost:4181 node tools/acceptance-ui.mjs <out> <1440|390> <saves>`, the saves being the
+  scenario saves `tools/scenarios.ts` writes. 60 passed, 0 failed, 2 skipped at both widths on 2026-10-15.
+- **Long runs**: `npx vite-node tools/lives.ts -- --seeds 2 --years 1`; `npx vite-node tools/scenarios.ts -- --scenario
+  nonfiler --years 0.47` and `-- --scenario roundups --years 0.1`. Breaches 0, unbalanced 0 on 2026-10-15.
+- **Open, not fixed** (each in the account): health.enroll's HUSKY D kept through work; Covered Connecticut for a
+  noncitizen at 100–138% barred from HUSKY D by status; the work test's exemptions, notice and six-month look-back;
+  the 2026 advance credit for a nonresident F-1; `repriceCare`'s plan part against its comment; `repeatRoom`'s leave
+  branch, unreached; a bank's own close of an idle German account at zero; a term's interest taken before 2026-10-15
+  not found on canceling it.
+- **Traps met on 2026-10-15**: a shell heredoc can strip backslashes and expand `$` (write scripts with a file, not
+  inline); straight and curly apostrophes differ across these files (match exactly); a mutation copy's `node_modules`
+  is a junction (remove it alone before deleting the copy); a reload must never change an outcome (a migration that
+  moves state runs once, named in `SaveUniverse.opened`).
 
 # Read First: The Open Items Finished, 2026-10-14
 

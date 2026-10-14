@@ -1,0 +1,178 @@
+{
+  "testFile": "tests/evidence3-school.test.ts",
+  "run": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-school.test.ts: 11 of 11 passed (about 6 s of tests); eslint clean; tsc -p tsconfig.app.json clean. tests/need-paths.test.ts also run once to confirm school.pay_balance: 14 of 14 passed.",
+  "rows": [
+    {
+      "id": "school.respond",
+      "testsAdded": [
+        { "title": "school.respond > PLAYER JOURNEY: an invitation open when a personal leave begins keeps its lapse at seven the next morning, and lapses then, costing the trust 1 an invitation left hanging costs, its answers refused, where everything else of the school’s is called off", "closes": "The leave path (leave.ts:160, kept() with MOMENT_KIND): a moment open when a leave begins keeps its lapse at its hour and lapses then", "evidenceKind": "clock" },
+        { "title": "school.respond > “That evening has passed.”, reached only from a save as made before 2026-10-12, whose invitation waited until ten the next evening: Say Yes after seven is refused so, Say No taken; the same save as made since lapsed at seven that morning", "closes": "‘That evening has passed.’ (classmates.ts:367) now has a test, from a fixture that says what it stands for", "evidenceKind": "fixture" }
+      ],
+      "gapsClosed": [
+        "The leave path, played: e3-r1 (a Scraping family’s student) asks a personal leave on Tuesday 12 January 2027 at ten; it is decided on Wednesday the 20th at ten (five of Yale’s working days, Martin Luther King Day closed) and begins at once. The class at nine that day brought an invitation (study, due 7 AM on the 21st), as it did to a twin who asked nothing. With the leave on, the assigned Saturdays are called off and the moment’s MOMENT_KIND item is still pending at 7 AM on the 21st; at 7:01 the moment is lapsed, the classmate’s trust is 1 lower (CLASS.study.unanswered), and Say Yes and Say No are both refused ‘It’s too late to answer: the moment passed.’, nothing booked. The withdrawal (evidence2-b07) and dismissal (evidence-g21) paths were already shown, so all three paths that call the school’s calendar off are now played."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] ‘That evening has passed.’ (classmates.ts:367). A moment made since 2026-10-12 lapses at 7 AM the day after its 9 AM class (CLASS.answerHours 22), and an invitation’s evening is 7 PM a day or more after the class, so the moment always lapses before its evening and the refusal ‘It’s too late to answer: the moment passed.’ comes first. Only a save made before 2026-10-12 (answers due at ten the next evening) reaches it. The new test makes such a save from a played one (the moment’s until and its lapse moved to 10 PM, TEST SETUP) and shows the refusal works for it: Say Yes at 7:30 PM refused in its words, Say No taken; the same save as made today says ‘the moment passed’. Whether the line stays for old saves is the owner’s call under THE ONE RULE; content/guide/coursework.ts:747 still lists it beside live refusals."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [],
+      "rowText": {
+        "tests": "Add: tests/evidence3-school.test.ts ‘school.respond’: ‘PLAYER JOURNEY: an invitation open when a personal leave begins keeps its lapse at seven the next morning, and lapses then, …’, and, from a fixture only, ‘“That evening has passed.”, reached only from a save as made before 2026-10-12, …’. Drop ‘tests/coverage-gaps-classmates.test.ts (keptWith called by hand)’ as evidence: evidence-g18 carries its claim through the clock.",
+        "issue": "Until 2026-10-13 this said no test checked the choices and that moment.choice on the classmate was read by nothing: stoppedAsking and owesYouLines (classmates.ts:216, :223) read it, and the choices are tested through the command (evidence-g18). A moment open when the School is left lapses at its hour on all three paths, each played: a withdrawal (evidence2-b07), a dismissal (evidence-g21) and, from 2026-10-14, a leave (evidence3-school). Still open: ‘That evening has passed.’ (classmates.ts:367) is reached by no life played since 2026-10-12, a moment lapsing at 7 AM the day after its class, but only by a save from before then, whose moments waited until ten the next evening; it stays for those, and says so (classmates.ts:364-366), and a fixture standing for such a save reaches it (evidence3-school).",
+        "corrected.now": "Through the command, every answer is asserted with what reads it (evidence-g18): hold, theirs and both with readsApart, the table work’s answer and partnerReadOf; help, the apology and the boundary with their literals; an accepted boundary lifted by two rehearsals kept through the clock and a pushed-back one by four. Until 2026-10-13 this said a boundary’s lifting was checked only by calling keptWith by hand.",
+        "review.claim": "‘help away’ went on 2026-10-13 with ‘They’re in New Haven.’ (classmates.ts:357)."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/leave.ts", "find": "AID_DECIDE_KIND, MOMENT_KIND]);", "replace": "AID_DECIDE_KIND]);", "protects": "A leave keeps a moment’s lapse at its hour (kept()); without it the item is cancelled and the moment stays open past 7 AM. Killed by the leave PLAYER JOURNEY (MOMENT_KIND pending, then lapsed)." },
+        { "file": "src/engine/systems/classmates.ts", "find": "if (m.kind === 'study') move(person, mate, CLASS.study.unanswered, 0);", "replace": "if (m.kind === 'help') move(person, mate, CLASS.study.unanswered, 0);", "protects": "An invitation left unanswered costs the trust 1. Killed by the leave PLAYER JOURNEY (trust - 1)." },
+        { "file": "src/engine/systems/classmates.ts", "find": "if (when <= sim.now) return 'That evening has passed.';", "replace": "if (when < sim.now - 86_400_000) return 'That evening has passed.';", "protects": "Say Yes to an evening already past is refused. Killed by the fixture test (the refusal at 7:30 PM)." }
+      ],
+      "verdict": "partial",
+      "note": "The one open point left is a declared refusal kept for old saves, which no play made today reaches. Everything a player can reach is played."
+    },
+    {
+      "id": "school.take_shift",
+      "testsAdded": [
+        { "title": "school.take_shift > PLAYER JOURNEY: Take An Elective Shift pressed nine times on the Work-Study tab books eight evenings, skips the free evenings a week’s 19 hours leave no room for, and the ninth is refused for the cap with nothing booked; all eight worked, none over it", "closes": "Yale’s weekly cap at booking (school.ts:3859, the refusal’s words), through the drawn button and the clock, with what was and wasn’t booked and electiveHours", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "The weekly cap at booking, played: e3-s1 on Monday 14 September 2026 at eight presses Take An Elective Shift on the rendered Work-Study tab eight times. The toasts name Tuesday 15, Wednesday 16 and Thursday 17 September, then Monday 21 to Thursday 24, then Monday 28, each at 7 PM. Summed here from the calendar: the week of the 14th is the assigned Saturday (19 September at ten, six hours) and three evenings, 6 + 3 × 4 = 18, so a fourth (22) would pass 19; the week of the 21st has no assigned Saturday, four evenings, 16, so a fifth (20) would pass 19. Friday to Sunday of both weeks had nothing on the calendar that wants the player from seven to eleven, so the cap alone passed them by. Elective Hours Asked For reads 32. The ninth press toasts nothing; the command is refused ‘No free evening in the next two weeks within Yale’s cap of 19 hours a week in term, across all your Yale jobs.’, with eight electives still booked and electiveHours still 32. Played on to 29 September, all eight are done and no ‘A Shift Over The Weekly Cap’ notice came. This replaces tests/work-limits.test.ts:41-47 (shifts by hand, the message alone) as the cap’s evidence."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "issue": "Since 2026-10-14 the weekly cap at booking (school.ts:3859) is played through the drawn button (evidence3-school): three evenings beside an assigned Saturday and four without, the free evenings past them passed by, and the refusal booking nothing. Until then only work-limits.test.ts held it, on shifts scheduled by hand, checking the message. Until 2026-10-13 an evening booked and then called off by a leave or by leaving the School kept its 4 hours in electiveHours; since then callOff (school.ts:500) gives them back. Until 2026-10-13 a day off within the term, a holiday or a recess, was booked as any evening: evidence-g25 booked Labor Day, and holds Tuesday 8 September since.",
+        "tests": "Add: tests/evidence3-school.test.ts ‘school.take_shift’: ‘PLAYER JOURNEY: Take An Elective Shift pressed nine times on the Work-Study tab books eight evenings, …’. Move work-limits.test.ts ‘refuses an elective shift past it at booking’ to supporting (shifts scheduled by hand; the message alone).",
+        "corrected.now": "An elective evening is booked through the button and the clock, worked, and paid on the Friday’s payday into the bank and onto the year’s return (yearOf, figuresFor; evidence-g19). Until 2026-10-13 this said no test played the payday after an elective evening; guide-examples-school.test.ts:416-430 and :701-730 already did, and evidence-g19 reads the return.",
+        "reads": "As it says, plus: it skips the term’s days off, holidays and recesses (inPeriod), from 2026-10-13."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/school.ts", "find": "if (weekHours(s, person, when) + hours > weekCap(when)) { capped = true; continue; }", "replace": "if (weekHours(s, person, when) + hours > weekCap(when) + 2) { capped = true; continue; }", "protects": "The cap of 19 at booking: Friday 25 September (16 + 4 = 20) would be booked. Killed by the toasts and the bookings." },
+        { "file": "src/engine/systems/school.ts", "find": "return keyOf(day) >= keyOf(period.from) && keyOf(day) <= keyOf(period.to) ? WORK_LIMITS.weekHours : WORK_LIMITS.recessWeekHours;", "replace": "return WORK_LIMITS.recessWeekHours;", "protects": "The term’s cap is 19, not the recess’s 40. Killed by the bookings (Friday 18 September would be booked)." },
+        { "file": "src/engine/systems/school.ts", "find": "throw new CommandError(capped ? `No free evening", "replace": "throw new CommandError(false ? `No free evening", "protects": "The refusal says the cap is why. Killed by the ninth press’s error." }
+      ],
+      "verdict": "verified",
+      "note": "No open gap left."
+    },
+    {
+      "id": "standing/term evaluation",
+      "testsAdded": [
+        { "title": "standing/term evaluation > PLAYER JOURNEY: a student who began the fall at nine tenths of their reach grows a fifth of the class’s raw points, under the half a raw rule would ask, and is weighed ahead of the class for the room they had, in good standing, on the Standing tab", "closes": "The room-relative pace worked from the rule, where raw points would say behind", "evidenceKind": "clock" },
+        { "title": "standing/term evaluation > PLAYER JOURNEY: a student who began at four tenths of their reach, in a class driven at 4, grows past half the class’s raw points, where a raw rule asks no more, and is weighed behind it for the room each had: a concern for the pace alone, in its words, on the Standing tab", "closes": "‘Behind’ worked from termGrowth’s pace against growthFloor × the class’s median, where raw points would say in line", "evidenceKind": "clock" }
+      ],
+      "gapsClosed": [
+        "The ‘behind’ verdict worked from the rule. The test computes, from the record the evaluation read (the term’s starting craft, the class’s starting means, the reaches, the craft at the evaluation), each pace as growth ⁄ max(0.02, (1 − start ⁄ reach)^1.5), and the class’s median of them, with its own code, and checks the record’s growth and classGrowth match it. Three falls from one life, e3-t1, played to 11 December 2026: as played (start two thirds of the reach), good. Begun at 0.9 of the reach (TEST SETUP): raw growth 0.25 against the class’s 1.28, under half, which a raw rule would warn; paced 8.02 against the class’s 6.23, past 1.1 times, so ‘ahead of the class’, good standing, drawn on the Standing tab. Begun at 0.4 of the reach in a class driven at 4 (TEST SETUP): raw growth 3.41 against 4.07, past half, which a raw rule would pass; paced 7.34 against 18.79, under half, so ‘behind the class’ and Academic Concern, with every class attended, under half the pieces unready, no course failed, no run, so the pace alone; drawn on the Standing tab in its words. A revert to raw points fails both; growthFloor moved to 0.35 fails the second."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "issue": "Until 2026-10-13 this said coursework quality was absent and the Carlotta excluded; evaluate reads both (school.ts:2851-2860, :2842), through the clock in evidence-g24. Until 2026-10-14 no test worked the ‘behind’ verdict from termGrowth’s room-relative pace (school.ts:2812-2827); evidence2-b08 supported it with raw class growth over twice the player’s, which the rule doesn’t read. evidence3-school works it from the rule on two played falls where raw points and the pace disagree, each way.",
+        "tests": "tests/evidence3-school.test.ts ‘standing/term evaluation’ (the two PLAYER JOURNEYs above); tests/evidence2-b08.test.ts ‘standing/term evaluation’; tests/evidence-g24-school.test.ts (the six cited); tools/acceptance-ui.mjs:707 (outside the gate). Until 2026-10-13 this cited school.test.ts standing, casting.test.ts’s run off, school-fixes.test.ts and term-growth.test.ts, which set bands, runs and growth by hand.",
+        "entry": "evaluate() (school.ts:2838), fired by EVALUATION_KIND; termGrowth at school.ts:2812."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/school.ts", "find": "const grewTooLittle = !atReach && paced < ESTIMATE.growthFloor * classPace;", "replace": "const grewTooLittle = !atReach && growth < ESTIMATE.growthFloor * classGrowth;", "protects": "Growth is weighed for the room each had, not in raw points. Killed by both: the near fall would be behind, the far one in line." },
+        { "file": "src/engine/systems/school.ts", "find": "growthFloor: 0.5,", "replace": "growthFloor: 0.35,", "protects": "Half the class’s pace is the floor. Killed by the far fall (0.39 of the class’s pace would pass)." },
+        { "file": "src/engine/systems/school.ts", "find": "const room = (start: number, ceiling: number) => Math.max(ROOM_LEAST, roomLeft(start, ceiling));", "replace": "const room = (_start: number, _ceiling: number) => 1;", "protects": "The room is (1 − start ⁄ reach)^1.5. Killed by the near fall (ahead becomes behind)." }
+      ],
+      "verdict": "verified",
+      "note": "Both falls set the student’s starting craft by hand (TEST SETUP), as no new life starts at nine or four tenths of its reach; everything after is played by the clock. The built-app step (tools/acceptance-ui.mjs:707) still runs outside the gate, and the gate’s render covers the tab."
+    },
+    {
+      "id": "school.request_repeat",
+      "testsAdded": [],
+      "gapsClosed": [],
+      "gapsOpen": [
+        "[only a fixture reaches it] REPEAT_DECIDE_KIND’s own refusals (leave.ts:1194-1201: ‘Your Repeat Is Refused’ for a first year, the degree withheld for a last year). Rechecked on 2026-10-14 against the code: the decision recounts withRepeat as repeatRefusal did when asked (leave.ts:1194, :866), and no term begins between (decideAt is capped at the next term’s 8 AM, leave.ts:896, and a last year has no next term), so enrolledTerms can’t change; disqualified() counts only ‘fail’ results (failsOf, courserecord.ts:172), which only an evaluation makes, and its faculty review dismisses or keeps the student through each (keptThrough, leave.ts:817). An Incomplete running out in between becomes ‘permanent’, not ‘fail’, so it doesn’t count either; a leave can’t be under way beside a repeat (repeatRefusal); and a rescinded mandatory leave (rescind, leave.ts:675) needs a leave, which a pending repeat refuses. So no played life trips the branch, and the two fixture tests (secondFail(), evidence2-b09) are its only evidence. Under THE ONE RULE the owner may delete it or keep it as a guard."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [],
+      "rowText": {
+        "issue": "Until 2026-10-13 a student kept on academic warning, the year to be repeated, was dismissed at the next evaluation on the same Fails and refused the repeat on them; since then a Fail is judged once (facultyReview, keptThrough leave.ts:817). Until then too a second year’s repeat that made ten semesters was granted, and a repeat was granted beside an additional term. Until 2026-10-13 calling a repeat off after its thirty days left the student in good standing with every request refused ‘Its thirty days have run out.’; since then it withholds the degree (school.cancel_repeat), and the refusal went (leave.ts:860-861). Open: the decision’s own refusals (leave.ts:1194-1201) are reached only from a fixture (secondFail); no played life trips them, as round three rechecked on 2026-10-14, and whether they stay is the owner’s call under THE ONE RULE.",
+        "tests": "As it says, with ‘(the course failed set by hand)’ dropped wherever it stands: the failure is played, by sleeping through meetings, in evidence-g26 and evidence2-b09."
+      },
+      "mutations": [],
+      "verdict": "partial",
+      "note": "No test added: the only open point is a branch no play reaches, and another fixture test would add nothing evidence-b09 doesn’t have. No mutation is offered, as no test of this file reaches the row."
+    },
+    {
+      "id": "school.request_extra_term",
+      "testsAdded": [],
+      "gapsClosed": [],
+      "gapsOpen": [
+        "[only a fixture reaches it] The refusals past nine semesters, at the request (extraRefusal, leave.ts:614) and at the decision (EXTRA_DECIDE_KIND, leave.ts:1038-1045). Rechecked on 2026-10-14: one repeat is the most withRepeat allows (leave.ts:842), so eight terms are enrolled at a last evaluation and the additional term is the ninth; a leave’s term leaves enrolled (startLeave, leave.ts:353); a second additional term is refused ‘Your additional term is …’ (leave.ts:598); and no term begins between the asking and the deciding, so the nine can’t be passed then. ninthTerm() in evidence2-b09 is its only evidence.",
+        "[only a fixture reaches it] The disqualification refusals (extraRefusal leave.ts:615, the decision’s at :1039): the faculty review judges each Fail at the evaluation that makes it and dismisses or keeps the student through it (keptThrough), and an Incomplete run out is ‘permanent’, which failsOf doesn’t count. secondFail() is their only evidence. Under THE ONE RULE the owner may delete these branches."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [],
+      "rowText": {
+        "downstream": "granted: school.extra, the term on the calendar, its weeks planned once (school.ts:3010; until 2026-10-13 a second weekly planning held each class day twice), coursesFor meeting only the courses retaken, the I-20 extended (extendF1); the refusals past nine semesters and on a disqualification the faculty never judged, the degree withheld for a last year (leave.ts:1038-1045), are reached by no played life and only from a fixture (evidence2-b09)",
+        "tests": "As it says, with ‘(the sixth term’s record set by hand)’ dropped: the additional term is played in evidence-g26."
+      },
+      "mutations": [],
+      "verdict": "partial",
+      "note": "No test added, for the reason under school.request_repeat. No mutation is offered, as no test of this file reaches the row."
+    },
+    {
+      "id": "school.request_conversion",
+      "testsAdded": [
+        { "title": "a need set by hand is the Scraping family chosen on the screen > the config the family select gives for Scraping is the one the earlier evidence set by hand, and each of their seeds opens the same save from either, to the byte", "closes": "Every ON_AID test of evidence-g26 and evidence2-b09 now plays a life the screen makes", "evidenceKind": "render" },
+        { "title": "school.request_conversion, for a nonresident the screen made with need > PLAYER JOURNEY: January’s processing pays the Saturday called in sick, $138.00 with 14% withheld: $118.68 to the bank and $19.32 to the tax withheld, in the notice’s words", "closes": "Nonresident withholding on a screen-made life", "evidenceKind": "clock" },
+        { "title": "school.request_conversion, for a nonresident the screen made with need > PLAYER JOURNEY: in May the six hours never assigned, asked on the drawn button, are paid at May’s processing with 14% withheld again; the year’s scholarship is the spring’s $14,014.00 and both grants, $14,290.00, and its withholding $2,000.60", "closes": "May’s hours never assigned, on a screen-made life, beside January’s", "evidenceKind": "render" },
+        { "title": "school.request_conversion, for a nonresident the screen made with need > PLAYER JOURNEY: the 2027 return, filed in February 2028 on the 1040-NR, carries the two grants: $276.00 more scholarship and income and $38.64 more withheld than the twin who never asked", "closes": "The return, on a screen-made life", "evidenceKind": "command" },
+        { "title": "school.request_conversion, for a nonresident the screen made with need > PLAYER JOURNEY: a medical leave begun with the request in calls it off: refused on leave in its words, and nothing paid on 15 January", "closes": "The on-leave refusal and the leave calling a request off, on a screen-made life", "evidenceKind": "command" }
+      ],
+      "gapsClosed": [
+        "‘Every accepted path is reached only by a life with need, which no player can have’ no longer holds from 2026-10-14. The family select’s own change for Scraping gives { …newLifeConfig(), family: undefined, wealth: 'scraping' }, equal to evidence-g26’s and evidence2-b09’s ON_AID config, and createSave from each of their seeds (g26-paid, g26-c0, g26-c1, g26-c2 born in London, g26-c3, b09-c0) gives the same universe to the byte from either. So the January excused path, the May never-assigned path, the 2027 return, the nonresident’s withholding, the refusals and the leave calling a request off in those files are lives the screen makes.",
+        "Played here besides, on e3-c1, born in London, Scraping chosen on the screen: the first assigned Saturday (5 September 2026) called in sick, ‘6 hours’ and ‘$138.00 at the rate; 0 converted’ on the drawn panel, Ask pressed (‘Asked: processed January 15, 2027.’); on 15 January at noon $138.00 with 14%, $19.32, withheld: $118.68 to Chase Total Checking, the year’s withholding up $19.32, the notice ‘…, $19.32 withheld for tax. …’. On 3 May, 144 of 150 assigned hours booked, the stat ‘6 hours’ and ‘6 converted’; Ask pressed (‘Asked: processed May 15, 2027.’), through a save paid the same, convertedHours {0: 12}, the notice brought up to 15 May once; the year’s scholarship $14,290.00 (the spring’s taxable $14,014.00 and two grants) and withholding $2,000.60 ($1,961.96, 14% of $14,014.00, and $19.32 twice). The 2027 1040-NR filed in February 2028 carries $276.00 more scholarship and income and $38.64 more withheld than a twin who never asked. A twin who asked and then began a medical leave (TEST SETUP flu) had the request called off, was refused ‘Not while on leave: a student on leave has no aid.’, and was paid nothing on 15 January."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] The ‘No Hours To Convert’ notice (the CONVERT_KIND handler finding nothing, school.ts:3187 on). A request is refused unless the processing it books counts hours (conversionRefusal, convertibleHours with May’s unassigned only at May’s), one request is in at a time, excused hours only grow, assignedBooked doesn’t fall within a year, and a leave or the School’s end calls the request off; so nothing lowers the hours between asking and processing. The fixture (convertedHours written by hand, evidence2-b09) is its only evidence. Under THE ONE RULE the owner may keep it as a guard or delete it."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [],
+      "rowText": {
+        "reads": "conversionRefusal (school.ts:1768): at school; need-based aid (hasNeed, school.ts:1398: the family chosen on creation’s Genres & Background, need found for Nothing, Scraping, Modest and Comfortable, from 2026-10-14; until then newLifeConfig and newLifeFrom set every new life’s family ‘wealthy’, and none had need); not on leave; one request at a time; hours the processing it books will pay (convertibleHours, :1757: assigned hours excused ill or hurt, and hours never assigned only at May’s, from 2026-10-13)",
+        "downstream": "at processing (school.ts:3187) the hours paid at the work-study rate into the payee account, 14% withheld for a nonresident, recorded as the year’s scholarship the return reads, and added to convertedHours; ‘No Hours To Convert’ said where it finds none (from 2026-10-13: until then it passed in silence), which no played life reaches since that day’s fixes. Until 2026-10-14 every accepted path was reached only by a life with need set by hand.",
+        "changes": "a conversion request (CONVERT_KIND) to the next January or May 15 processing (the command at school.ts:3176). Until 2026-10-13 this cited school.ts:3011, which is school.buy_ppe.",
+        "persistent": "school.excusedHours and school.convertedHours, the school.convert item on the calendar, the ledger, earnings",
+        "issue": "Until 2026-10-14 every accepted path was reached only by a fixture: hasNeed reads person.family, and every life the creation screen made was ‘wealthy’. Since then the screen offers the family, and a Scraping family’s student is the life evidence-g26 and evidence2-b09 built by hand, to the byte (evidence3-school), played there and here: January’s excused hours, May’s never assigned, 14% withheld for a nonresident, the return, the refusals, a leave calling a request off. Still open: ‘No Hours To Convert’ is reached only from a fixture. Until 2026-10-13 a request could book a processing that paid nothing, in silence, and the stat counted the spring’s unbooked Saturdays as never assigned; both were fixed that day.",
+        "tests": "Add: tests/need-paths.test.ts ‘school.request_conversion, for a life the screen made with need’; tests/evidence3-school.test.ts (the five above). evidence-g25-school.test.ts’s header still calls need ‘the family of no means a player can pick’: since 2026-10-14 the screen does pick it."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/school.ts", "find": "const withheld = nonresidentFor(person, year) ? Math.round(NONRESIDENT_SCHOLARSHIP_RATE * grant) : 0;", "replace": "const withheld = 0;", "protects": "14% withheld from a nonresident’s grant. Killed by the January test ($118.68 / $19.32)." },
+        { "file": "src/engine/systems/school.ts", "find": "recordScholarship(person, item.at, zone(), grant);", "replace": "", "protects": "The grant on the year’s scholarship and the return. Killed by the May test ($14,290.00) and the return ($276.00)." },
+        { "file": "src/engine/world/bootstrap.ts", "find": "(wealth === 'wealthy' || wealth === 'inherited' ? 'wealthy' : undefined)", "replace": "'wealthy'", "protects": "A Scraping family chosen on the screen finds need. Killed by the equivalence test and hasNeed in the London life." }
+      ],
+      "verdict": "partial",
+      "note": "The disposition moves from ‘stale or wrongly grouped claim’: the row now describes what a player meets. The one open point is a notice no play reaches."
+    },
+    {
+      "id": "school.pay_balance",
+      "testsAdded": [
+        { "title": "a need set by hand is the Scraping family chosen on the screen > the config the family select gives for Scraping is the one the earlier evidence set by hand, and each of their seeds opens the same save from either, to the byte", "closes": "evidence-g26’s pay_balance journey on a scholarship returned (seed g26-paid, ON_AID) is a life the screen makes", "evidenceKind": "render" },
+        { "title": "school.pay_balance, for a balance a family chosen on the screen leaves > PLAYER JOURNEY: the leave of 20 January returns the whole spring’s scholarship, $15,200.50; refused for nothing and for more, $100.00 paid by command, the rest left to its due date brings the hold and $125.00, and Pay From Your Bank, drawn and pressed, settles it and lifts the hold", "closes": "The returned-scholarship balance, its refusals, a part payment, the hold and late fee, and the drawn panel, on a screen-made life", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "Confirmed with tests/need-paths.test.ts (14 of 14 passed): a Scraping family’s student made on the screen takes a personal leave begun 21 January 2027, $7,600.25 returned to the Yale account, paid from the drawn Pay From Your Bank to the cent.",
+        "The final check’s caveat (‘the balance from a scholarship returned on a leave arises only for a life with need … no life made on the creation screen has need’) no longer holds: the equivalence test shows evidence-g26’s g26-paid life is the screen’s Scraping life, so its refusals, hold, reregistration and payment are a player’s. Played here too: e3-r1’s leave begun at ten on 20 January returns the whole $15,200.50 (the spring’s classes run 11 January to 23 April, and a tenth of them passes only on the 21st); ‘Pay something.’ for $0, ‘$15,200.50 is owed; pay that or less.’ for a cent more; $100.00 paid by command ({owed $15,100.50, held false}, the bank $100.00 lower); at the due date the hold and $125.00, owed $15,225.50, shown on the drawn panel; Pay From Your Bank pressed, ‘Paid in full.’, the bank $15,225.50 lower, the hold gone with one ‘The Financial Hold Is Lifted’, and then ‘Your Yale account owes no balance.’."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "issue": "Through the command and the drawn panel, a term billed past six is paid in parts, the hold lifting on the last, and a diploma held for the account is conferred once it’s paid. A scholarship returned on a leave (leave.ts:369-376) puts a balance on the account too, and late fees add to it (accountDue, leave.ts:783-791). Until 2026-10-13 this said a balance comes only from a term past the sixth. Until 2026-10-14 the returned scholarship reached only a life with need set by hand, as every new life’s family was ‘wealthy’; since then the family is chosen on creation’s Genres & Background, and a Scraping family’s student meets it (need-paths, evidence3-school).",
+        "tests": "Add: tests/need-paths.test.ts ‘a leave taken with need: the aid returned, the balance, and paying it’; tests/evidence3-school.test.ts ‘school.pay_balance, for a balance a family chosen on the screen leaves’."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/leave.ts", "find": "if (!(amount > 0)) return 'Pay something.';", "replace": "if (amount < 0) return 'Pay something.';", "protects": "Nothing paid is refused. Killed by the {amount: 0} refusal." },
+        { "file": "src/engine/systems/leave.ts", "find": "if (owed <= 0 && school.hold !== undefined) {", "replace": "if (owed < 0 && school.hold !== undefined) {", "protects": "Paying the whole lifts the hold. Killed by hold undefined and the one ‘The Financial Hold Is Lifted’." },
+        { "file": "src/engine/content/school.ts", "find": "rebate: [[0.1, 1], [0.25, 0.5], [0.5, 0.25]],", "replace": "rebate: [[0.05, 1], [0.25, 0.5], [0.5, 0.25]],", "protects": "The rebate schedule’s whole share to a tenth of the classes. Killed by aidReturned $15,200.50 (it would be half)." }
+      ],
+      "verdict": "verified",
+      "note": "In this file, as in evidence-g26, a hold at a term start setting mustRegister (school.ts:2963) is not reached: a leave’s balance always meets its return term, where returnFromLeave sets it anyway, and a hold at a term start with no leave needs a term past six. evidence-g25 still protects it, on a hand-posted balance."
+    }
+  ]
+}

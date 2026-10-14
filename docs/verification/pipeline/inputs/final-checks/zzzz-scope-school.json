@@ -1,0 +1,64 @@
+{
+  "key": "scope-school",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "school.respond",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The stale claim is really stale, the load-path defect is real, and its fix is real and tested. 'That evening has passed.' is a guard, tested as one.",
+      "problems": [
+        "Confirmed, not a problem: git log -G'answerHours: ' shows one commit, 8167460a (2026-10-07), with 22. ff837dfa's leave.ts:157 kept() leaves out 'school.moment', and cancelPending (:290) called it off, so the FIXTURE's premise matches a real older build. The four fixtures hold 190 moments, 21 of them 'said', so 169, as the test says. None of the four holds a stranded moment: old-leave-ff837dfa's leave was already over, with 0 open. So strandedMoments is shown on FIXTURES only, which the result says.",
+        "In the current build, leave.ts:160 kept() and school.ts:1848 setStanding both keep MOMENT_KIND, and no other code calls a 'school.*' item off. Nothing in play reaches the guard.",
+        "docs/verification/audit/school.json (school.respond) still cites 'a study evening passed' among reads and has no strandedMoments. It is not updated (the result lists this under outsideMyFiles)."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Both journeys are played and checked, and the guards are named. The notice fix is real for a repeated year, but its comment and guide line claim more than the code does.",
+      "problems": [
+        "src/engine/systems/courserecord.ts:122-127: the comment says 'A year's end is offered only where a repeat can still be asked for it', but `repeatable` excludes only an additional term and a year in repeatedYears. settleCourses notifies before the evaluation decides the standing (school.ts:3455-3471). A Fail at an evaluation that dismisses the student is still told 'at the year's end you can ask to repeat the year': there evaluate steps warning to dismissed (school.ts:2885-2904, for example concern after a first-year fall Fail, then warning after a spring Fail, then dismissed at a year-two fall Fail), or facultyReview dismisses (leave.ts:577). The same goes for a last-year Fail withheld at that evaluation (stepped 'warning', or `repeatable && !offered`, school.ts:2893-2900). This is the same over-promise the fix closed for the additional term. It is found by reading the code, not played. Either fix those cases or narrow the comment.",
+        "src/engine/content/guide/school.ts:594 says the same and is wrong in the same cases ('only where that can still be asked: not in an additional term, nor in a year already repeated').",
+        "Permanent Incomplete fix (courserecord.ts:241-244, the `repeated` check): the code is right, and the year index matches yearOfTerm and leave.ts:1205's r.year. An additional term is covered by awaitingDegree, which CONFERRAL and COMMENCEMENT set before an Incomplete's month runs out, or by setStanding calling INCOMPLETE_DUE off. The dismissal and withholding gap above does not touch it, because setStanding calls the due item off. Its only test is a FIXTURE (see weakTests).",
+        "docs/verification/audit/school.json (school.request_repeat) still describes the refusals as a downstream path, not as guards. It is not updated (outsideMyFiles)."
+      ],
+      "weakTests": [
+        "tests/evidence-g26-school.test.ts > school.extend_incomplete > in a year already repeated, the Permanent Incomplete offers no repeat at the year’s end… This is a FIXTURE: repeatedYears=[1] is set by hand on a save whose first year was never repeated (offset 0), a state no play makes. It would fail without the fix (the same save's control at :411 offers the repeat), but no played repeated year is shown.",
+        "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a last year’s repeat… Billing past six is checked only as accountOwed > 0 (:444, :450), not as a worked literal."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The failed-retake journey is played through a reload and the notice fix is real (the old notice is a literal in the test). The past-nine and disqualification refusals are tested as guards with the TEST SETUP named.",
+      "problems": [
+        "This shares the courserecord.ts:122 comment overclaim listed under school.request_repeat. For this row the `school.extra?.term !== term` clause is correct and covers both the fall and the spring additional term.",
+        "docs/verification/audit/school.json (school.request_extra_term) is still 'partial', with 'reached … only from a fixture (evidence2-b09)'. It is not updated (outsideMyFiles)."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The disabled button and the refusal are checked to move nothing. The conversion across a repeated year is played with {0:6, 2:6}, $138.00 each, and nothing is paid twice through reloads. 'No Hours To Convert' is tested as a guard.",
+      "problems": [
+        "The acceptance asked that the account move 'by the grants and nothing else of the conversion's'. The test checks the grant transactions and their postings (grantsOf), not the bank balance across the processing. That is minor.",
+        "docs/verification/audit/school.json (school.request_conversion) still has the older wording. It is not updated (outsideMyFiles)."
+      ],
+      "weakTests": []
+    }
+  ],
+  "alsoChecked": {
+    "tests/evidence3-school.test.ts GUARD retitle": "Accurate. The title (:280), the header (:12-15, :49) and the TEST SETUP comment now say the answer's hour is moved by hand and that no save holds it. The test still passes: the edited lapse stays pending at 22:00, so strandedMoments skips it. Ran it: 1 passed.",
+    "runs": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1: tests/scope-school.test.ts 15/15 passed; tests/evidence-g26-school.test.ts -t 'already repeated' 1 passed; tests/evidence3-school.test.ts -t GUARD 1 passed."
+  }
+}

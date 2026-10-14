@@ -1,0 +1,133 @@
+{
+  "key": "scope-taxpapers",
+  "ran": "2026-10-15",
+  "method": "Read scope/taxpapers-result.json and -checklist.json, docs/verification/audit/papers.json's rows, tests/scope-taxpapers.test.ts in full, git diff of src/engine/systems/statetax.ts, taxreturn.ts, lending.ts, guide/taxes.ts, guide/papers.ts and the four outside tests. Ran tests/scope-taxpapers.test.ts alone (13 passed). Probed one claim outside the repo (scratchpad/probe/nr.probe.ts, a vitest config rooted in the scratchpad): an international (born in London) life for each family, figuresFor 2026 and 2027. Nothing in the repository was edited.",
+  "rows": [
+    {
+      "id": "tax.pay_state",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "Mostly played and sound; one downstream the row names (a state plan ended paid by Pay) is evidenced only on a fixture, though a student reaches it",
+      "problems": [
+        "The row's downstream names 'a state plan ended paid' (audit downstream, kept by the result's rowText.downstream). applyStatePayment ends a plan paid when Pay clears what's owed outside it (src/engine/systems/statetax.ts:358-362). No test on the student's life does it: the Connecticut plan in tests/scope-taxpapers.test.ts:352 is paid off by its own payments (how 'plan'), not by tax.pay_state. The only evidence is tests/liens-and-arrangements.test.ts:221-224, a Pennsylvania life whose balance is put on by hand (owing()). It is reachable by play: a student's Connecticut plan in force, then Pay on Papers. One assertion closes it.",
+        "tests/scope-taxpapers.test.ts:296-297: the comment works the bill as $585.33 + $58.53 + $5.85, which is $649.71, but asserts $649.72. The engine rounds the whole and gives interest the remainder ($5.86) (statetax.ts:212-213). So the literal is the engine's rounding, not worked independently from 12-735. Under 12-735, 1% of $585.33 is $5.85 and the bill would be $649.71. It's a one-cent rounding defect, and the comment contradicts its own assertion.",
+        "tests/scope-taxpapers.test.ts:328 and :341 ('the levy … off the calendar', 'no levy after') don't first show a levy pending on this life before the payment. The scheduled levy is shown only on another life (the levied() twin at :428-432). The expectations are non-vacuous only by inference.",
+        "The fix (statetax.ts:381, `Math.max(sim.now, r.due)`) applies to every state, though it cites only Connecticut's statutes. tests/state-tax.test.ts, state-tax-states.test.ts and tax-places.test.ts were moved for California, Georgia and Indiana with no source of their own. r.due is the federal return's due date, which for a 1040-NR with no wages is 15 June (taxreturn.ts:880, :1241). Connecticut's own due date is 15 April. For such a year, Connecticut's notices now wait for the IRS's date. This is an edge case, and accrual already read r.due before the change."
+      ],
+      "weakTests": [
+        "PLAYER JOURNEY: filed on 1 February unpaid, Connecticut’s bill waits for the 18 April due date … $649.72 … (the bill literal is the engine's whole-rounding; its comment's parts sum to $649.71)"
+      ]
+    },
+    {
+      "id": "tax.amend",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Genuinely unreachable: confirmed by reading every writer figuresFor reads",
+      "problems": [
+        "Confirmed. These all write to the year of the moment they pay: recordWages, recordBenefit, recordInterest, recordPension and recordScholarship (src/engine/systems/earnings.ts:131-271), school.ts's withholding (:2997, :3209), the IRS's refund interest (taxreturn.ts:1627) and health premiums (health.ts:592). figuresFor's other inputs are fixed once the year ends: residence, nonresidentFor, the year's tables and the poverty line (taxreturn.ts:883-1036). Only wages carry a `where`, and only the two school.ts wage writers exist (:3226, :3797), neither with one. The test shows it on one life, and the code holds it for all."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.revise_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played on the student's defaulted IRS plan through Papers and the command, its readers checked across a reload",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.catch_up_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played. The armCollection fix is real and its test fails without it (thaw → loadSave arms collection while the plan is in default, and the end adds a second TAX_NOTICE). The surviving redundant cancel is disclosed.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.apply_state_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played: asked on Papers, paid to the end, missed and ended, refused (months, second plan, a levied year still owed). The statePlanRefusal fix is real and tested by play.",
+      "problems": [
+        "tests/scope-taxpapers.test.ts:366-370: on 1 May the parts are asserted as interest $4.87, where 1% of $487.77 is $4.88. The comment says this is the engine's whole-rounding, so the literal follows the engine's convention, not 12-735 cent by cent. This is the same one-cent artifact as tax.pay_state's $649.72, and it doesn't change the verdict."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.catch_up_state_plan",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Genuinely unreachable: every life files in Connecticut only, and its cure is 'none'",
+      "problems": [
+        "Reachability checked. homeOf is person.currentLocationId (earnings.ts:284), and nothing writes it after creation (guide/day.ts:16; grep finds no assignment). Neither wage writer passes `where`, so y.elsewhere stays empty, and the state lines come from byResidence alone (taxreturn.ts:927-930). The probe agrees: an international life of every family files in us-ct only."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.lien_release",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played on the student's Connecticut lien: shut until paid (rendered), asked once on Papers, refused twice, released 30 days on across a reload, with no levy after",
+      "problems": [
+        "The 'no levy after' expectation (tests/scope-taxpapers.test.ts:341) would also pass if no levy had been due. It is supported by the levied twin at :428-432, not by this life."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.lien_dispute",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Genuinely unreachable for Connecticut: confirmed by reading lienInError and the assessment",
+      "problems": [
+        "Confirmed. assessStateNonFiler takes the return's own state figure (statetax.ts:807-831). reconsiderState replaces it with the same figure. Connecticut's order (penalty, interest, tax) leaves the tax unpaid while anything is owed, so tax paid before a lien is filed is always less than the balance (lienInError, statetax.ts:700-706)."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.federal_lien_withdraw",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Genuinely unreachable: a student's IRS year owes under $2,000 against the $10,000 threshold",
+      "problems": [
+        "Checked across families by the probe. The largest IRS balance on a played year is the Scraping family's $1,700.39 (2027). An international life owes $345.00 at most (wealthy/inherited 2027), and the needy ones get a refund."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.request_waiver",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Genuinely unreachable: only Oregon charges it, and no life files there (see tax.catch_up_state_plan's reachability check)",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "documents.apply_ssn",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "Overstated: the W-7 reader is reachable by play but is evidenced only on TEST SETUP income",
+      "problems": [
+        "The result says every reader that changes an outcome is 'tested by play' and that 'No income was invented'. The W-7 reader is the 1040-NR refund held seven weeks more without a number (taxreturn.ts:1522-1527, refunds only). Its test, tests/evidence-g17-papers.test.ts:722-746, invents income: 'TEST SETUP: $3,000 more of work-study with $600 withheld' (:726), withholding that Yale's work-study payroll never takes in play (school.ts:3222-3224).",
+        "That refund is reachable by play. Probe (scratchpad/probe/nr.probe.ts): a London-born student of the nothing, scraping, modest or comfortable family has 2026 1040-NR owedTo.irs = -$329.56 and 2027 -$411.73, from the 14% withheld on her taxable scholarship. A played needy international life would show the 21 days against the 70 with no setup. The reader is reachable and not played, so the row is partial.",
+        "The IRS plan reader (online vs Form 9465) is tested with emptyBank TEST SETUP (tests/evidence-g17-papers.test.ts:753). That state is reachable by play, through a CD as scope-taxpapers does, but the test doesn't play it. This is weaker than claimed, though the flip itself (card vs no card) is played.",
+        "Discover's wage test holds as claimed. wagesLastMonth counts 'salary' postings in 30 days (lending.ts:397-409). Work-study (200 hours a year at $23, paid weekly) and the Summer Cabaret's $375 a week, net, can't reach $2,083.33 in 30 days."
+      ],
+      "weakTests": [
+        "a 1040-NR filed with the card in hand is processed in the IRS’s 21 days; without it the W-7 holds it seven weeks more, 70 (TEST SETUP income where a played needy international life has the refund)",
+        "the IRS’s payment plan on her 1040-NR’s $165.60: with the card come, applied for online … (TEST SETUP empty bank)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,300 @@
+{
+  "note": "Recheck of eleven rows after the small-fixes pass and the final defect pass (2026-10-13), against the code and tests as they stand in the working tree. Each row's earlier final check is in b04, b05, b07, b08, b09, b10 or b11. 'claimed' is the second agent's verdict as those checks recorded it. Ran, one fork: evidence2-b04, defects5, evidence2-b05, evidence2-b07, evidence-g20-school, whynot-profile, evidence-g19-school, evidence-g25-school, evidence-g26-school, evidence2-b09, evidence-g32-ui, evidence2-b10, evidence2-b08, evidence-g21-school, student-experience, work-limits and evidence-g15-papers: 17 files, 291 tests, all passed (exit 0; scratchpad/recheck-run.txt).",
+  "rows": [
+    {
+      "id": "bank.break_term",
+      "claimed": "partial (working, evidence missing)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (the earlier final check's one open point): the close no longer waits for the next day_rollover. bank.break_term now schedules TERM_NOTICE_KIND at breakAt (accountlife.ts:275), and its handler runs breakTerm the moment the notice runs out (accountlife.ts:282-290). The day handler's breakAt branch is gone, and a past-tense note replaces it. tests/evidence2-b04.test.ts presses Give 35 Days' Notice on the rendered BankAccountLife, reads 'Closing on February 10, 2026, on the notice given.', and has the clock show it open at 07:29 and closed at gmt(2,10,7,30) on 10 February, the named day. The £10,000.00 arrives whole after the independently worked £39.41 (10,000 × 4.11% × 35/365). In the Barclays-primary journey the meal is refused at 07:29 and bought at 07:31, with one move to Barclays at 07:30 and nothing via NatWest. Under the old midnight close, both closedAt assertions would fail.",
+        "Closed: a save from before the change. loadSave (engine/index.ts:297-303) puts a pending notice on the clock. The b04 test 'closes a notice given in a save from before the close went on the clock, at its own day, once' strips the item from a serialised save, reloads, checks one pending item at the notice's moment and the close at 07:30, and checks that a further reload adds nothing.",
+        "Closed earlier and still so: the unreachable 'You need a current account for the money.' refusal is deleted; the notice reads '…after £39.41 taken for closing early.'; the term pays into the current account at its own bank, or is sent to the primary (g10 Citi CD).",
+        "The earlier weak test's title is fixed: it now says '£10,000.00 whole after the £39.41 charge'."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json still cites BankAccountLife.tsx:72 (the notice line is about :66), breakQuote accountlife.ts:69 (now about :73-115), breakTerm accountlife.ts:180 (now about :199-226), and the downstream 'account_life rollover accountlife.ts:219'. The close is no longer on the rollover: it is TERM_NOTICE_KIND's handler (accountlife.ts:282), from 2026-10-13.",
+        "money.json tests should add tests/evidence-g10-money.test.ts and tests/evidence2-b04.test.ts > bank.break_term.",
+        "The review gap about 'You need a current account for the money' is moot: the refusal was deleted."
+      ]
+    },
+    {
+      "id": "statements",
+      "claimed": "partial (working, evidence missing)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (the earlier check's open point): cardPeriods now reads sim.homeZone, as periodsOf does (statements.ts:175), and so does yearSummary (:389). Both carry past-tense notes. As the earlier check said, no played life can tell sim.zone from homeZone since travel went, so no test can tell the old from the new. The code now reads one zone in all three places. That leaves nothing to evidence.",
+        "Closed (the earlier 'noted' oddity, now a fixed defect): a card opened in the life whose statement day was moved before its first statement is drawn as one first statement from its opening, not two with a rebuilt one that never came (statements.ts:192-206, firstFromOpening). tests/defects5.test.ts > statements applies for a Citi card through card.apply, lets the clock open it at 07:30 on 31 August, and moves the day with card.set_statement_day. It then has the clock reach 20 October and expects exactly two periods with literal dates and labels: 31 Aug 07:30 to 19 Oct 'Statement Of October 19, 2026', and the open November one. It reads periodsOf, the function the Statements screen draws, not the screen itself. The b04 running-balance render test already closes the screen side.",
+        "Closed earlier and still so: running balances rendered with hand-worked figures (b04); the first kept statement isn't marked Rebuilt; the December and year-wrap minute errors were settled by normalDate.",
+        "tests/statements.test.ts's alerts test was tightened: it now counts the quiet 'Statement Ready' notices before and after alerts are turned off (quiet(notices) = 0), replacing a count that could not fall."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json reads 'ledger postings (activity statements.ts:60)': activity is now at about statements.ts:63-85. Add the kept cuts (cardPeriods) and CardState.issued.",
+        "money.json tests cites only tests/coverage-gaps-statements.test.ts. Add tests/evidence-g13-money.test.ts, tests/evidence2-b04.test.ts > statements and tests/defects5.test.ts > statements.",
+        "money.json issue 'periodsOf cuts every past card period on the current statement day (statements.ts:99)' is outdated.",
+        "The settled line 'a legacy card's are marked Rebuilt' should say: periods before the first kept cut are marked Rebuilt, but not the first kept statement, nor, for a card opened in the life, a first statement put up to two months on by a moved day."
+      ]
+    },
+    {
+      "id": "benefits.claim",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (the earlier check's open point, laid up by play): a new b05 PLAYER JOURNEY goes through school.summer_cabaret, school.withdraw and benefits.claim ($93 a week, $2,418). Then Work Out (life.look_after, exercise) at 18:26 on Monday 18 October 2027 draws a fracture at 19:26, with offWorkUntil past Sunday the 24th and the 'A Broken Bone' notice. The clock certifies 10 and 17 October at $93 each and 24 October at nothing, where a twin reloaded before the workout is paid $93 for all three and has no injury. No state is written by hand on the injured path beyond the declared good standing.",
+        "Closed: the wrong test comments. The base period now reads 'July 2026 to June 2027', and the header now says a concussion is an everyday injury the clock draws, and that Work Out brings a broken bone, with a past-tense note on what it used to say.",
+        "Changed since (the earlier 'noted, for the owner' point about the week): Connecticut now judges availability across the week. benefits.days records each day as it begins (unemployment.ts:205-210), and ableOnMost needs more than half of them able (Regs. Conn. State Agencies §31-235-12). A b05 journey pins both sides with literals: two days in hospital over the certifying Sunday are paid $93, and laid up Monday to Sunday noon pays nothing. Its hospital stay and concussion are declared TEST SETUP: hospital has no command, and the concussion is drawn by the clock or an elective shift. The guide's two lines were changed with it, and say so in the past tense. Only a fixture distinguishes the new rule from the old: the fracture journey would pay nothing under either. That is fair evidence of a rule the review didn't name.",
+        "Preconditions still set by hand, both declared TEST SETUP and neither the row's action: good standing before the Summer Cabaret, and the 2028 wages in g15 that make a return exist.",
+        "Not changed, and not a review gap: student availability is still judged on the certifying day (studentUnavailable), so journey 2 still pays $1 for a week enrolled until Saturday at five. ableOnMost covers hospital and injury only.",
+        "Older weak tests are still in the suite and are superseded: papers-complete's FUTA regex, coverage-gaps' .ok only, and guide-examples' basePeriodFor comparison."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b05.test.ts > PLAYER JOURNEY: a Connecticut week is judged on most of its days …",
+          "why": "The hospital stay and the concussion are written by hand. It is the only test that tells ableOnMost from the old certification-moment rule."
+        },
+        {
+          "title": "tests/papers-complete.test.ts > pays a noncitizen nothing without permission to work in the US",
+          "why": "/permission to work|base period/ passes with the FUTA check deleted. It is superseded by g15's exact sentence."
+        }
+      ],
+      "staleText": [
+        "entry cites PapersWorkspace.tsx:472 and HomeClaimsPanel 357. They are now about :827 and :701.",
+        "reads cites unemployment.ts:64-126,165-187. It should add benefits.days and ableOnMost (about :186-210), and say that in Connecticut hospital and laid-up are judged on most of the week's days from 2026-10-13.",
+        "downstream cites taxreturn.ts:323. figuresFor is at about :882.",
+        "tests field: 'no test earns the base period or leaves school through a command before claiming' is false (g15, b05).",
+        "docs/GAMEPLAY-COVERAGE.md and docs/UNBITTEN.md still say weeks read wages paid (workedBetween). They read work done (workDoneIn)."
+      ]
+    },
+    {
+      "id": "practice.exercise",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (both open points from the earlier check, under THE ONE RULE): 'It takes a classmate, and you have no class to ask.' and 'This exercise has nothing it carries over to.' are deleted from practiceRefusal and focusRefusal (practice.ts:67-69, :101-106), with past-tense notes. The guide's two lines are gone (craft.ts:404). The Profile no longer grays a focus or draws WhyNot for one (ProfileWorkspace.tsx:232-242). grep finds neither sentence in src outside past-tense comments.",
+        "Shown: tests/whynot-profile.test.ts renders the Profile with the class taken away by hand and finds every focus offered for every opened exercise, with no disabled option and 'no class to ask' nowhere. focusRefusal('shouting') still gives 'There’s no such way to practice.'. evidence-g20's hand-emptied class step was removed with a past-tense note. The 27-exercise test shows every variation carries over through the command.",
+        "Closed earlier and still so: the bad-focus refusal through the command with nothing changed; castFit and a taped brief against a twin; discipline's 1.08/0.92 lift; every focus and tier; a duplicate actionId across a reload."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b07.test.ts > practice.exercise > takes every one of the 27 exercises as a variation through the command, each carrying over to something it doesn’t train: “nothing it carries over to” is never said",
+          "why": "`carried.some((c) => c.target === e.trains)` can never be true; the non-empty check does the work. Its title and the file header (lines 33-34) still speak in the present of a sentence deleted on 2026-10-13."
+        }
+      ],
+      "staleText": [
+        "tests field: 'no test practices through the command and checks a judged piece or castFit reading what grew' is false (evidence-g20).",
+        "corrected.now: 'Not checked: a judged piece or castFit … no test passes either to the command' is false.",
+        "entry 'practice.ts:75' is stale.",
+        "Row text and tests/evidence2-b07.test.ts's header still name the two deleted refusals as present. They should say, in the past tense, that both went on 2026-10-13."
+      ]
+    },
+    {
+      "id": "h-needs",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed (one of the earlier check's two open points): Home no longer says 'N payments behind' for two or more (Home.tsx:65-68). An unsuspended card is 'a payment behind', with a past-tense note. g32's 'the card behind' test dropped the hand-set missed: 2 case and says why. One behind and suspended are reached by play in evidence2-b11.",
+        "Still open: the weighing sentences for 'You owe $120 that went unpaid', 'nearly at its limit' and '… is with collections' rest only on TEST SETUP debt accounts in evidence-g32-ui.test.ts. Collections is reachable by play (CHARGE_OFF_AFTER 6), and no test plays it to Home. Medical debt is nearer play: evidence-g03-life.test.ts > health.pay_bill has the clock turn an unpaid bill into medical debt, and reads 'You owe $900 for medical care.' on Home and its absence once Pay It Off is pressed. The bill itself is raised by billCare by hand.",
+        "Closed earlier and still so: the six unread notices with titles, bodies and ages; Go There; the card's one-behind and suspended states by play, with $510/$850 worked and across a reload; income tax by File It ($166 vs All Clear); the acceptance step (outside the gate).",
+        "Minor: the six notices' selection order is a literal snapshot."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > medical care owed, and a debt with collections",
+          "why": "Both debts are opened by TEST SETUP. Collections is reachable by play and no played path reaches its Home sentence."
+        },
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > something gone unpaid: You owe $120 that went unpaid.",
+          "why": "The arrears account is opened by TEST SETUP, not reached by a bill gone unpaid."
+        },
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > the card behind: a payment, and suspended",
+          "why": "missed and suspended are still set by hand here. The played route is in evidence2-b11."
+        }
+      ],
+      "staleText": [
+        "ui.json h-needs.downstream cites world.ts:33-97. It should cite world.dismiss_decision, take_decision_action, mark_read, expireDecisions and troubles() in systems/spending.ts.",
+        "ui.json h-needs.tests says the acceptance step checks nothing and no test renders the panel. Both are false since 2026-10-13.",
+        "The weighing list should say that 'N payments behind' for two or more went on 2026-10-13: an unsuspended card is at most a payment behind."
+      ]
+    },
+    {
+      "id": "school.take_shift",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open (unchanged since the earlier check): the weekly cap at booking (school.ts:3853, weekHours + hours > weekCap, the 'cap of 19' refusal) is evidenced only by tests/work-limits.test.ts:41-47. That test schedules shifts by hand and asserts the message alone. It checks neither that nothing was booked nor electiveHours, and never shows an evening skipped to a later week under the cap. Play reaches it: an assigned Saturday plus repeated presses of Take An Elective Shift. work-limits.test.ts did not change.",
+        "Closed (a defect found by the final defect pass): an elective evening is no longer booked on a day the term's classes are off (school.ts:3854-3857, inPeriod). evidence-g25 presses Take An Elective Shift on the rendered Work tab and gets Tuesday 8 September, not Labor Day. evidence-g19 works the first free evening independently, skipping CLASSES_2026_27.off and the spring recess, and gets Monday 15 March 2027 at 19:00.",
+        "Closed earlier and still so: withdrawal gives back a booked evening's hours, with electiveHours 8 to 4, the tab, the refusal and the payday's $92 against a twin; the leave path, recordWages, the on-call skip and the button press (g19)."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/work-limits.test.ts > refuses an elective shift past it at booking, and says the cap is why",
+          "why": "The shifts are scheduled by hand and only the message is asserted. It is still the only evidence for the weekly cap at booking."
+        }
+      ],
+      "staleText": [
+        "corrected.now: 'No test plays the payday after an elective evening …' is false.",
+        "entry 'school.ts:2337': the handler is at about :3835.",
+        "tests field cites only school.test.ts.",
+        "The row should say that elective evenings skip the term's days off (holidays and recesses), from 2026-10-13."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open (unchanged): the refusal past nine semesters, at the request (extraRefusal) and at the decision (EXTRA_DECIDE_KIND, leave.ts:1033-1045), is reached only after ninthTerm() writes an enrolled term by hand (evidence2-b09.test.ts:594, :608, :646). The disqualification refusals are reached only through secondFail(). As the earlier check argued from the code, no played life trips either. The row's downstream still claims 'refused past nine semesters'. Under THE ONE RULE the owner decides whether these branches go.",
+        "Closed (the earlier check's noted point): 'Its thirty days have run out.' is deleted from extraRefusal (leave.ts:602-604), with a past-tense note, and from the guide (guide/school.ts:593). The one path that reached it is now a defect fixed: a repeat called off after its thirty days. school.cancel_repeat now withholds the degree (leave.ts:1176-1183). tests/evidence-g26-school.test.ts reaches it by play: asked on 24 May 2029, decided on 1 June with Memorial Day closed, thirty days ending on the 27th. The warning reads 'Calling it off withholds the degree now: its thirty days ended on May 27, 2029.', and the result is withheld, ended 28 May 10:00, with both requests then refused 'You’re not at school.'.",
+        "Closed earlier and still so: the I-20 a year longer, the additional term's classes played, '6:DRAM 373a' counted and conferred on 22 December, the button, the request's refusals, the ninth semester allowed, and REPEAT_DUE_KIND's withholding words reached by play."
+      ],
+      "weakTests": [
+        {
+          "title": "school.request_extra_term > past the Bulletin’s nine, reached only from a fixture: …",
+          "why": "It reaches the refusal only through ninthTerm(), an enrolled term written by hand. It is not player evidence."
+        }
+      ],
+      "staleText": [
+        "entry: 'StudyPlanPanels.tsx:199'. The button is at about :209.",
+        "changes: 'EXTRA_DECIDE_KIND (leave.ts:988)'. The command is at about :1022 and the decision at :1033.",
+        "downstream: 'refused past nine semesters' is reached by no played life, only a fixture.",
+        "tests: '(the sixth term’s record set by hand)'. The term is played in evidence-g26."
+      ]
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open (unchanged): REPEAT_DECIDE_KIND's own refusals (leave.ts:1187-1200: 'Your Repeat Is Refused' for a first year; for a last year, the degree withheld with 'The chair and the dean refused your request to repeat the year. …') are reached only after secondFail() writes a Fail by hand (evidence2-b09.test.ts:548, :571). As the earlier check argued, no played life trips the branch. The owner decides under THE ONE RULE.",
+        "Closed (a defect found by the final defect pass): a repeat called off past its thirty days, pending at their end, used to leave the student in good standing with every request refused 'Its thirty days have run out.'. It now withholds the degree, and the warning says so. The line is gone from repeatRefusal (leave.ts:860-861). Shown by play in evidence-g26 > school.cancel_repeat with literal dates and words (see request_extra_term). Its decideAt now counts Yale's working days, with Memorial Day closed, as 1 June.",
+        "Closed earlier and still so: kept-on-warning and then granted; the request's refusals through the command; the degree reading the best attempt; the year's courses meeting again; Ask drawn and pressed; the decision through a save."
+      ],
+      "weakTests": [
+        {
+          "title": "school.request_repeat > PLAYER JOURNEY: beside an additional term it’s refused in each of its words, …",
+          "why": "`expect(panel.text).not.toContain('Ask To Repeat The Year…')` can't fail with useState forced to 'request'. The drew(...) length-0 check carries it."
+        },
+        {
+          "title": "school.request_repeat > the decision’s refusal of a first year, reached only from a fixture: …",
+          "why": "It reaches the branch only through secondFail(), a Fail written by hand that no play makes."
+        }
+      ],
+      "staleText": [
+        "entry: 'StudyPlanPanels.tsx:188'. Ask is at about :198.",
+        "changes: 'REPEAT_DECIDE_KIND (leave.ts:1134)'. The command is at about :1163, the decision scheduled at about :899, and handled at about :1187.",
+        "tests: '(the course failed set by hand)'. The failure is played in evidence-g26 and evidence2-b09.",
+        "The row should say that calling a repeat off after its thirty days withholds the degree, from 2026-10-13."
+      ]
+    },
+    {
+      "id": "school.respond",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed (one of the earlier check's open points): the dismissal path. tests/evidence-g21-school.test.ts plays a dismissal at the fall evaluation of 11 December 2026. It finds a classmate's moment still pending with the former class, open with its own until, and lapsed by 11 January. tests/student-experience.test.ts shows the same on the withdrawal path, through a reload.",
+        "Still open: the leave path. leave.ts:160's kept() includes MOMENT_KIND, but no test begins a leave with a moment open and watches it lapse. No test in tests/ that schedules MOMENT_KIND, or answers school.respond, also goes through school.request_leave to a leave begun mid-term.",
+        "Settled differently from the earlier check: 'That evening has passed.' (classmates.ts:367) was kept, with a note that says it is reached only from a save made before 2026-10-12, whose moments waited past the seven o'clock they asked for. That is a stated reason, but no test loads such a save and reaches it, and the guide (coursework.ts:747) still lists it beside live refusals. So it is a declared word reached by no test.",
+        "Closed earlier and still so: the moment lapse on withdrawal (evidence2-b07: 'It’s too late to answer: the moment passed.', 'Not Answered'); 'That work is finished.' reached by play; 'They’re in New Haven.' deleted; hold/theirs/both, tryBoth, help, apology and argue with literals (evidence-g18)."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/coverage-gaps-classmates.test.ts > accepted lifts after two rehearsals kept; pushed back on, after four",
+          "why": "It calls keptWith by hand. evidence-g18 carries its claim through the clock."
+        },
+        {
+          "title": "tests/journey-school-year.test.ts > keeps the work fresh",
+          "why": "It answers every moment and asserts nothing the answers set."
+        }
+      ],
+      "staleText": [
+        "issue: 'moment.choice on classmate (classmates.ts:323) read by nothing' is false. stoppedAsking and owesYouLines read it.",
+        "tests field cites only tests/coverage-gaps-classmates.test.ts.",
+        "corrected.now: 'A boundary’s lifting is checked by calling keptWith by hand …' is false now.",
+        "entry 'classmates.ts:370': respondRefusal is at about :349.",
+        "review.claim 'help away': the New Haven refusal is gone.",
+        "content/guide/coursework.ts:747 lists 'That evening has passed.' as an ordinary refusal. It is reached only from a save before 2026-10-12."
+      ]
+    },
+    {
+      "id": "c-traits",
+      "claimed": "partial (working, evidence missing): receipts, the Keeps Accounts copy and personality.test.ts's typed list open",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "implementation missing",
+      "problems": [
+        "Changed since: the receipts trait wording. Chaotic's cost is now 'It shows on you sooner.', and Keeps Accounts' description no longer mentions 'every receipt'. The file header says, in the past tense, that both used to claim receipts as an effect. tests/defects5.test.ts > the receipts knob's traits pins both strings and KNOB_READS.receipts ending 'decides nothing now'. The words no longer claim what play doesn't do.",
+        "Still open, the review's gap 2 in substance: the receipts knob is still declared (chaotic: receipts 0.9, keeps_accounts: receipts 1.3; personality-traits.ts:184, :274; range personality.ts:110), and its only reader, taxreturn.ts:894, is fed by recordJobCost, which has no caller in src. Under THE ONE RULE a declared knob with nothing that reads it in play is the defect. Removing the words left the knob. Closing it needs the engine decision: delete the receipts mods and knob, or wire a cost of the work.",
+        "Still open (the latest skeptic's points, unchanged): only one reader per knob is reached in these journeys. evidence2-b10's HELD set is hand-typed and depends on test order. personality.test.ts 'reads every knob a trait can declare' still compares the declared set to a typed list. evidence-g28-ui's c-traits test still calls personalityOf directly with sides taken from the traits' own systemMods.",
+        "Closed earlier and still so: 19 knobs held to a reader through a command or the clock, each against a plain twin with the trait pressed on the rendered page; the Keeps Accounts copy on CharacterCreation."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b10.test.ts > c-traits > holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches",
+          "why": "HELD is hand-typed and depends on order, and a HELD.add survives deleting the assertions before it."
+        },
+        {
+          "title": "tests/personality.test.ts > what it does > reads every knob a trait can declare, where the life system bites",
+          "why": "It compares the declared knobs to a typed list."
+        },
+        {
+          "title": "tests/evidence-g28-ui.test.ts > c-traits > moves every knob a trait declares, for a life made with it, to the side the trait leans, against a plain twin made alike",
+          "why": "It calls personalityOf directly and takes its sides from the traits' own systemMods."
+        },
+        {
+          "title": "tests/defects5.test.ts > the receipts knob’s traits > say no effect of receipts, …",
+          "why": "It pins copy strings only. It shows the wording fix, not any behaviour."
+        }
+      ],
+      "staleText": [
+        "ui.json c-traits entry cites CharacterCreation.tsx:663-694. PersonalityStep is at about 604-714.",
+        "changes cites bootstrap.ts:345. cleanPersonalityTraits is at about 359.",
+        "downstream cites looks/wellbeing.tsx:117-120,358. It is now about 117-122 and 363, and should say that receipts reaches no reader in play and that the two traits no longer claim it.",
+        "tests cites personality.test.ts's typed-list test. It should cite evidence-g28-ui > c-traits, evidence2-b10 > c-traits and defects5 > the receipts knob's traits."
+      ]
+    },
+    {
+      "id": "genre demands",
+      "claimed": "partial (stale or wrongly grouped claim)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (the earlier check's one evidence point): the b08 look test is no longer vacuous. It renders the genre look for a farce after a played night of A Marriage Proposal, normalises the markup's spacing, and asserts the exact 'A self-tape in it reads Comedy (you: …), Clown And Mask (you: …):' with the player's levels, which it works itself. It also asserts the play-night sentence, 'A night of a play of its kind, or a class scene from one, reads its own material’s techniques instead.', and not.toContain('Work in it reads'). actor.tsx:194 says exactly that.",
+        "Closed earlier and still so: withDemands, demandReads and DEMAND_WEIGHT are gone from src. b08's played farce night reads {comedy 2, scene 1, speech 1} and is identical against a clown-mastered twin. evidence-g23 pins every brief's tapeReadsOf. briefs-content.test.ts holds the content rule that every brief stages its genres' applied demands.",
+        "What remains is the audit row's own words: its entry, downstream and tests still describe withDemands acting at run time and cite engagement.test.ts. Under the standard that alone doesn't keep the row partial. It is listed below for correction."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/engagement.test.ts > makes every applied demand a requirement of the work: raising its technique raises the work, and it counts once",
+          "why": "The rise comes from the brief's own staged singing, so it can't fail if demands stop being read. The row still cites it as evidence."
+        }
+      ],
+      "staleText": [
+        "entry 'content/demands.ts withDemands' names a function that no longer exists. A demand acts through content: every brief stages its genres' applied demands (tests/briefs-content.test.ts).",
+        "downstream should say: nothing at run time beyond the briefs that stage them. A play's night and a class scene read their material's techniques. The demand shows on the Profile's It Asks For column and on the genre look as what a self-tape reads. Add, in the past tense, that tapeReadsOf, playReads and workContext called withDemands until 2026-10-13.",
+        "tests should drop engagement.test.ts 'makes every applied demand…' and cite evidence-g23-school > genre demands, evidence2-b08 > genre demands and briefs-content.test.ts.",
+        "reads 'play kinds' and explanation 'castRead reads shown' are stale."
+      ]
+    }
+  ]
+}

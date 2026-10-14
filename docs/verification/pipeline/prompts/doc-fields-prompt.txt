@@ -1,0 +1,26 @@
+# Correcting the audit rows' own words against the code as it finally stands (2026-10-13)
+
+SLATE: C:/Users/sande/Downloads/1221-GIT (its CLAUDE.md applies: prose is load-bearing; past tense with the date for
+what changed; curly apostrophes). Do not edit any repository file and do not touch git. Write only your one output file.
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+Your area is named in your instructions (life, money, papers, school or ui). The rows are in
+`docs/verification/audit/<area>.json` (`items`): each row's own fields are `entry`, `reads`, `changes`, `downstream`,
+`persistent`, `explanation`, `tests`, `issue`. Many are stale: line references the day's changes moved, claims the day's
+fixes falsified, `tests` fields citing weak tests since superseded, `issue` fields naming defects since fixed. Sources
+that name what's stale (read them for your area's rows): `checks.json` (problems, weakTests), `final-checks/*.json`
+(staleText, problems), `evidence-results.json` and `evidence2-results.json` (claimCorrection, testsAdded), and
+`fixed-defects.md`, `defects2.json`, `defects3.json`, `leftovers3.md`, `leftovers4.md` (what was fixed). Test titles may
+have been renamed: `renames.json` (old to new).
+
+For every row in your area, read its fields, then the code they name as it stands now, and give corrected text for
+each field that is wrong: line references re-anchored to the right lines now (open the file and find the function or
+line the reference means), claims made true (in the past tense where a behavior changed: "until 2026-10-13 …"), the
+`tests` field naming the tests that now hold the row (file and a short title, the strongest first, from the evidence
+passes' testsAdded and any defect tests), and `issue` cleared or rewritten where its defect is fixed (say so in the past
+tense). Don't change a field that is right. Keep each field's style (terse, `file.ts:line` references). Every line
+reference you write must be one you opened and checked.
+
+Write `doc-fields-<area>.json`: `{ "<row id>": { "<field>": "<new text>", … }, … }`, only rows and fields you changed.
+Your final message: how many rows and fields you corrected, and any row whose claim you found false in a way that isn't
+just stale text (a behavior the code doesn't have), one line each.

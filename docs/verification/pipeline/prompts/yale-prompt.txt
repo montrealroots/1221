@@ -1,0 +1,62 @@
+# Yale Health's in-network rule (2026-10-15)
+
+SLATE: C:/Users/sande/Downloads/1221-GIT, branch `claude/current-scope-acceptance`, with uncommitted work from five
+agents (read `git status`; don't touch git, don't revert anyone's work). CLAUDE.md applies in full (prose load-bearing,
+past tense with the date 2026-10-15 for what changed, curly apostrophes, American spelling, Title Case for labels).
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+## The task
+
+The health agent added Yale Health Center's Student Health beside Fair Haven Community Health Care in New Haven
+(`src/engine/systems/clinics.ts` `seesThem`/`clinicFor`/`clinicRefusal`, `content/clinics.ts` built by
+`tools/build-clinics.mjs`, `docs/research/world/research-health-visits.json`, `tests/scope-health.test.ts`; read
+`scope/health-result.json` and `scope/health-checklist.json` first). It left one researched rule unkept, its
+`ownerDecision` on health.choose_clinic: Yale Health's own page says "All care must be obtained at the Yale Health
+Center at 55 Lock Street unless it is an emergency situation or you have a referral with prior authorization". SLATE
+still has Yale Health pay a student's visit at Fair Haven at $0, and Fair Haven is the default with nothing picked.
+
+This is a researched fact, not a design choice: keep it. First re-read the source (WebFetch the Yale Health page the
+research file cites; record the date read; if the wording differs, follow the page and say so). Then:
+
+1. A person covered by Yale Health with no practice picked is seen at Yale Health Center (the default follows the
+   cover). Someone not covered by it keeps the practice they had (Fair Haven), as now.
+2. A Yale Health member who picks Fair Haven is billed there as their cover leaves them: Yale Health doesn't pay a
+   non-emergency visit outside its Health Center (no referral exists in SLATE; say so, don't invent one). Use the price
+   SLATE already holds for an uninsured Fair Haven visit and say it is SLATE's, not a published fee. Fair Haven's own
+   sliding fee, if the engine models one, applies as it would to anyone uninsured; don't invent one.
+3. Emergencies (if the engine has a hospital or emergency path) are not affected; check and say.
+4. The Your Doctor select and its help (the guide's papers.doctor entry, src/engine/content/guide/papers.ts) say what
+   the choice now costs: at Yale Health, $0 to a member and the next weekday; at Fair Haven, the uninsured price and 24
+   days' wait. Help text in the house voice; no audit language on screen.
+5. Every test this re-dates: the visits now fall at Yale Health on the next weekday instead of Fair Haven at 24 days.
+   Known: tests/evidence-g03-life, evidence-g05-life, evidence2-b01, evidence2-b02, evidence3-lifepapers,
+   defects-g23-1, guide-examples-papers, and the guide's worked example; find the rest by running
+   `grep -l "Fair Haven\|24 days\|clinicId" tests/*.ts` and running those files. For each changed assertion: work the
+   new literal by hand from the rule (never the engine's helper), keep the assertion as strong as it was, and in a
+   comment say what it held before and why it moved (past tense, dated). Never weaken, skip or delete an assertion to
+   make it pass. A test whose point was Fair Haven's own behavior keeps it by having its student pick Fair Haven, or not
+   be a Yale Health member, as fits.
+6. New tests in tests/scope-health.test.ts (add a describe for this rule): the default for a member is Yale Health,
+   played through the clock to a kept visit billed $0; a member who picks Fair Haven on the rendered select is billed
+   the uninsured price on the clock's bill, paid once, across a reload, against a twin at Yale Health; a non-member's
+   default unchanged. Each fails before your change (break it, run, restore; say which).
+7. Old saves: a save from before today whose member sat at Fair Haven by default (no pick recorded) — decide what
+   loading it does (it should follow the rule: the default moves with the cover, a recorded pick stays), and test it
+   through loadSave on a played save as an older build wrote it (TEST SETUP, labelled). If clinic choice is recorded
+   in a way that can't tell a default from a pick, say how you told them apart.
+
+Second, if there's time after the above is fully done and checked: health.enroll's open gap — "healthMonth renews a
+program through its work test is reached only on wages posted by hand; a played life with need renewed by Covered
+Connecticut's income test wasn't played". Read tests/need-paths.test.ts. If a played life with need (made with
+`withFamily`) reaches a program renewal through play in a gate test's time (slices across reloads allowed), add the
+test; if not, say precisely why. Don't invent income or loosen eligibility.
+
+Run only the files you touch (VITEST_MAX_FORKS=2 VITEST_MIN_FORKS=1 npx vitest run <files>; never the whole suite),
+then npx tsc -b --noEmit, npx eslint <your files>, node tools/title-case.mjs --check, node tools/spelling.mjs,
+node tools/typos.mjs, node tools/tics.mjs --check, node tools/voice-check.mjs --check, node tools/wired.mjs --check.
+
+Write `scope/yale-result.json`: { rule (quoted, source, date read), changes [{where, what}], testsAdded [{file, title,
+kind, proves}], testsChanged [{file, title, before, after, why}], renamedTitles {old: new}, mutations [{file, find
+(exactly once), replace, protects}] (2-4; don't apply), enroll {after: verified|partial, why, testsAdded},
+tutorial (chapters in src/engine/content/tutorial.ts needing change; don't edit it), rowText {healthRowId: {field:
+text}} }. Final message: what changed, tests changed with before/after, anything outside your files.

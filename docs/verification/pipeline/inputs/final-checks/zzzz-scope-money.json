@@ -1,0 +1,117 @@
+{
+  "key": "scope-money",
+  "ran": "2026-10-15",
+  "notes": [
+    "tests/scope-money.test.ts run alone (VITEST_MAX_FORKS=1): 17 passed, exit 0.",
+    "Reachability checked: nothing in src/engine assigns currentLocationId after creation (only comparisons); homeOf = currentLocationId (earnings.ts:284); openRefusal and bank.switch read banksFor(homeOf), so only the five US banks are reachable. LENDING gives Chase/BofA/Wells per_item and Citi/Capital One no overdraft (banks-lending.ts:136-157); UNCLAIMED.US has no coolingOffDays (content/accountlife.ts:73); SWITCHING has no US key; no US card has moneyTransfer (cards.ts); frenchOverrun is French only; savingsMonthly German only. Citi's closeWithPendingDays (the one closeRefusal pass-through cancel_new would not honour) is US-only, so cancel_new never meets it.",
+    "Tutorial bank chapter, both changed lines hold against the code. (1) 'a new savings account, term deposit, card or current account other than your primary can be canceled within it': BankAccountLife.tsx now offers checking (non-primary), and bank.cancel_new closes it on closeRefusal. The sentence omits Britain's fixed-rate exclusion (inCoolingOff, accountlife.ts:132), as it did before; guide/money.ts:485 says it. (2) 'Take The Loan takes it, and once the account is back within its limit the sixty days start again': lending.ts:1348-1352 clears negativeSince/overrunInformed/closingNoticed when within the limit at the take, and leftOverdrawn (lending.ts:912) clears it at any midnight within the limit. True, and 'sixty days' reads correctly beside the sentence's own '(in France, two months after the bank gives notice)'."
+  ],
+  "rows": [
+    {
+      "id": "bank.arrange_overdraft",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable by design (no US bank arranges one); limit-0 fix real (lending.ts:1254) and the PLAYER JOURNEY fails without it; evidence abroad complete",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.cancel_new",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (US has no cooling-off); closeRefusal fix (accountlife.ts:338-343) and the checking control (BankAccountLife.tsx:43) are real, each killed by the Toronto test",
+      "problems": [
+        "rowText.entry and guide/money.ts:527 claim a current account's Close It refusal is 'said under it with Cancel It grayed out' (BankAccountLife.tsx:106-111). No test renders the panel while a refusal holds: the Toronto test checks the refusals only through sim.execute (tests/scope-money.test.ts:454,458) and draws the panel only when nothing refuses (:450, :462). The disabled-and-explained branch is unproved.",
+        "cancel_new's checking branch closes without settleInterest/settleFees or clearing overdraftLimit, unlike Close It's closeNow (bankmoves.ts:286-301), yet guide/money.ts:506 says 'a current account closes the same way'. It is the same only in its refusals and where the money goes. Harmless while no reachable life has a cooling-off."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.switch",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "the service switch is unreachable (no US key in SWITCHING); the US refusal, the steps rendered and the absent panel are proved; the owner's split proposal stands",
+      "problems": [
+        "The PLAYER JOURNEY refusal goes through sim.execute only, because no US control sends bank.switch (the Switch Bank panel isn't drawn). The row says so ('through the command only'), so nothing is inflated."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.take_overrun_loan",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (French banks only); fix real (lending.ts:1344-1352); evidence abroad complete",
+      "problems": [
+        "What kills the fix's mutation is the immediate field assertion expect(account.negativeSince).toBeUndefined() (tests/scope-money.test.ts:719). The 125-day twin comparison (:726-730) is not shown to depend on the fix. Without it, leftOverdrawn (lending.ts:912) still clears negativeSince at the next midnight the account is within its limit, and the test never spends past the limit between the take and that midnight. So the defect's stated consequence ('closed two months after the notice') is asserted through the state field and never reproduced as a closure."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "card.money_transfer",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (no US card has moneyTransfer); the New Haven half and the London fixture are proved",
+      "problems": [
+        "The cardoffers.ts fee mutation was not run (the result's mutationsRun.notRun). Reading the test, the £15 fee literal (scope-money.test.ts:763) would catch it."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.savings_notice",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (German allowance only); the notice-naming fix is real (banking.ts:653-658), and its test fails on 'is in your AktivKonto.'",
+      "problems": [
+        "The 'on its way … arriving' branch (banking.ts:658) is declared a guard and has no test. Acceptable: the row stays unresolved and says so."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.switch_complete",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (no US service); the London fixture is exact to the penny and the held-back branch is proved",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.cancel_switch",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable (no switch can be under way in the US); the London fixture runs through the panel",
+      "problems": [
+        "'The order still pays into Barclays' is asserted as toBeGreaterThanOrEqual(25_00) (tests/scope-money.test.ts:579), not an exact amount. The re-pointing of the order is asserted exactly (:577)."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.stop_balance_transfer",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "unreachable; the London fixture, its three refusals and the re-pointed payment are proved",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "h-money",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "working. The overdrawn alert, the button and the LockedPanel were already played in evidence-g33-ui and evidence2-b12. The 'No account' fallback is a genuine guard: closeForOverdraft always re-banks, through elsewhere or completeSwitch (lending.ts:972-982), and a life's only current account can't be closed (bankmoves.ts:270). It is tested as a guard.",
+      "problems": [
+        "The new GUARD test (scope-money.test.ts:242) adds little over tests/evidence2-b12.test.ts's existing fixture test of the same fallback and button. It relabels the fallback as a guard rather than closing a gap.",
+        "The month-end journey's amounts are equalities the engine derives (interest postings against yearOf/earningsOf/netWorth, the kept twin against the straight one), not literals worked independently. That is adequate for the row's 'agree, counted once' claim, and the month-end instants (23:00 on 31 Aug and 30 Sep) are independent literals."
+      ],
+      "weakTests": []
+    }
+  ]
+}

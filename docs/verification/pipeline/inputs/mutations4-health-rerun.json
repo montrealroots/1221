@@ -1,0 +1,44 @@
+[
+ {
+  "id": "health.enroll",
+  "key": "scope",
+  "file": "src/engine/systems/health.ts",
+  "find": "  const school = enrolledIn(person, firstOf(p.year, p.month - 1), firstOf(p.year, p.month));",
+  "replace": "  const school = person.school !== undefined && !schoolEnded(person.school.standing) && person.school.leave?.status !== 'on';",
+  "protects": "HUSKY D reads the School over last month, not at the instant asked. Run 2026-10-15 (recheck): two fail in tests/scope-cover.test.ts, the leave journey and the January-then-withdrawn journey.",
+  "test": "tests/scope-cover.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "baseline passed; mutated failed: KILLED"
+ },
+ {
+  "id": "health.enroll",
+  "key": "scope",
+  "file": "src/engine/systems/health.ts",
+  "find": "  if (schoolEnded(school.standing) && (school.endedAt ?? Number.NEGATIVE_INFINITY) < from) return false;",
+  "replace": "",
+  "protects": "A month after the School ended doesn't count (the January-then-withdrawn journey's 1 April refusal; not run)",
+  "test": "tests/scope-cover.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "baseline passed; mutated failed: KILLED"
+ },
+ {
+  "id": "health.enroll",
+  "key": "scope",
+  "file": "src/engine/systems/health.ts",
+  "find": "l.startedAt < from && (l.returnedAt === undefined",
+  "replace": "l.startedAt < until && (l.returnedAt === undefined",
+  "protects": "The month a leave begins counts whole (the leave journey’s 1 February HUSKY D; not run)",
+  "test": "tests/scope-cover.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "baseline passed; mutated failed: KILLED"
+ }
+]

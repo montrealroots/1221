@@ -1,0 +1,32 @@
+# Round three: closing the partial rows (2026-10-14)
+
+SLATE: C:/Users/sande/Downloads/1221-GIT (its CLAUDE.md applies: prose load-bearing, past tense with the date for what
+changed, curly apostrophes, American spelling). Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+Your rows are named in your instructions, with a key. For each row read, in docs/verification/audit/<area>.json, its
+fields, `review` (the gaps) and `after` (`gapsOpen`, `disposition`, `check.problems`, `check.weakTests`), and its final
+check in `final-checks/*.json` (find the id). Since then (2026-10-14): character creation offers a family, so a life
+with need can be made on the creation screen (`withFamily`, `FAMILIES` in src/engine/world/bootstrap.ts; see
+tests/need-paths.test.ts); the federal table is kept by year; the 90-day undated-decision rule and the receipts knob
+went; companyPart casts no unearned lead; units read where a person lives.
+
+Close every open gap you can with tests that meet this standard: reach the action as a player does (a command through
+sim.execute/sim.must, the clock through advanceTo, the screen rendered with react-dom/server as the evidence files do);
+check the consequence the row says reads the change; expect a literal worked from the rule (never the engine's helper);
+never pass vacuously. Where a row needs a second person in the world, add one in the test (the engine's own way to add
+a person if there is one; else build one the way bootstrap builds the player, marked TEST SETUP) and keep everything
+else played. Where a path takes longer than a gate test can play in 60 seconds, play it in slices across reloads if
+that's feasible; if not, say why precisely. A gap that is only stale row text: give the corrected text instead.
+
+Rules: write ONE new test file, tests/evidence3-<key>.test.ts (header in the house voice: what it covers, round three of
+2026-10-14). Do NOT edit src/ or any other test or doc; another three agents work beside you. Don't touch git. Run only
+your file (VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-<key>.test.ts). Every test passes except
+one showing a defect: keep it asserting the right behavior and report it. For each row give 1 to 3 mutations (file, an
+exact `find` occurring once, `replace`, what it protects) that a test of yours should kill; don't apply them.
+
+Write `round3/<key>.json` (create the folder): `{ "testFile": "tests/evidence3-<key>.test.ts", "rows": [ { "id", "testsAdded":
+[{"title","closes","evidenceKind":"command|clock|render|fixture"}], "gapsClosed": [], "gapsOpen": [strings, each starting
+with one of "[only a fixture reaches it]", "[needs engine change]", "[deferred or removed]", "[stale claim]"], "disposition":
+"verified|working, evidence missing|implementation missing|stale or wrongly grouped claim|deferred or removed",
+"defects": [{"summary","where","proposedFix","failingTest"}], "rowText": {"field": "corrected text"}, "mutations": [...],
+"verdict": "verified|partial|deferred", "note" } ] }`. Final message: one line per row.

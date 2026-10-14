@@ -1,0 +1,63 @@
+{
+ "health.therapy_session": {
+  "verdict": "verified",
+  "note": "The gap the check named, a lifted course ending the month's care, was closed on 2026-10-13 by tests/evidence-g05-life.test.ts ‘PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t’; its mutation (the lift left the depression) was killed.",
+  "test": {
+   "file": "evidence-g05-life.test.ts",
+   "title": "PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t",
+   "kind": "command",
+   "closes": "keepUp's month of care stopping after a course that lifts the depression"
+  },
+  "at": 1791902206759
+ },
+ "world.set_preferences": {
+  "verdict": "verified",
+  "recheck": true,
+  "note": "Checked again on 2026-10-13: the Pause test renders the running provider again, its callbacks and memos kept across renders by their dependencies as React keeps them, so only the tick, whose speed changed, is let go; with the speed dropped from the tick’s dependencies (game-context.tsx) the page keeps ticking after Pause and the test fails (a mutation run in a copy of the tree, killed). What a node test can’t do is React’s own re-render after the provider’s refresh: the test renders again where React would. Pause on a running page is also played in the built app (tools/acceptance-ui.mjs).",
+  "at": 1791902206759
+ },
+ "card.set_over_limit": {
+  "verdict": "verified",
+  "note": "Checked again on 2026-10-13 after the over-limit fee, read only by a test’s card, was taken out of the engine with its count of fees in a row (a save from before sheds it on opening): the opt-out is shown by the room falling from $50 to nothing and the meal refused again, and no charge reaches the card across a statement.",
+  "fields": {
+   "entry": "BankCard.tsx:288 (US only)",
+   "changes": "overLimitOptIn (cardlife.ts:211)",
+   "downstream": "cardRoom +10% (credit.ts:554). Until 2026-10-13 also an over-limit fee at the statement, three cycles at most, for a card with one; no card SLATE has publishes one, so it went",
+   "explanation": "opt-in line, no fee (BankCard.tsx:193); until 2026-10-13 the line named a fee where a card had one",
+   "tests": "cardlife.test.ts:207; evidence-g12-money.test.ts (card.set_over_limit)"
+  },
+  "test": {
+   "file": "cardlife.test.ts",
+   "title": "opens without the count of fees charged in a row, on the everyday card and another, and keeps the opt-in",
+   "kind": "fixture",
+   "closes": "a save from before the fee went sheds its count"
+  },
+  "at": 1791902206759
+ },
+ "credit score": {
+  "verdict": "verified",
+  "note": "Checked again on 2026-10-13: the title that claimed the score moves as a twin’s was renamed to what it shows, no gain at day 125; the once-a-cycle statement day was kept as SLATE’s reading, with issuers’ practice recorded (credit.ts statementDayRefusal).",
+  "at": 1791902206759
+ },
+ "bank.open_term": {
+  "verdict": "verified",
+  "note": "Checked again on 2026-10-13: a panel for each bank kept with a current account (TermDeposits), Citi’s pressed with Chase primary and funded from Citi; MUFG’s 90% ceiling by a meal refused a yen past it; ING’s floor in its words.",
+  "test": {
+   "file": "evidence-g10-money.test.ts",
+   "title": "draws Citi’s CD panel beside Chase’s with Chase still primary, and Put It Away on it funds the CD from the Citi account, Chase untouched",
+   "kind": "render",
+   "closes": "the term funded from its own bank’s account, not the primary"
+  },
+  "at": 1791902206759
+ },
+ "bank.take_term_interest": {
+  "verdict": "verified",
+  "note": "Checked again on 2026-10-13: a term ends at the midnight that opens its maturity day and doesn’t earn it; 212 day-ends for a 212-day term, the renewal reinvesting the 30 after the take, $28.76.",
+  "at": 1791902206759
+ },
+ "i-stale-claims": {
+  "verdict": "partial",
+  "at": 1791958719848,
+  "note": "2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision."
+ }
+}

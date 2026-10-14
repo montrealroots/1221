@@ -1,0 +1,168 @@
+{
+  "batch": "b06",
+  "run": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b06.test.ts on the tree of 2026-10-13: 15 of 15 passed, exit 0 (the four DEFECT tests the second round left failing now pass, renamed where the fix turned them round).",
+  "rows": [
+    {
+      "id": "tax.pay",
+      "claimed": "partial (implementation missing): IRC 6601(e)(2)(B) interest on the filing addition missing from the assessment",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The engine defect the claim rested on (defects2 #19) is fixed, and so are the two the second skeptic and the third round added: a leap year's days at a 366th (defects3 #55, irsGrowth) and the 21 days before interest on the paying-late addition (L13). The DEFECT test now passes on $376.69, and Still Owed on the rendered Returns tab equals it, worked from the statute in the test ((1+0.07/365)^260 x (1+0.07/366)^225).",
+        "The g17 conflict the skeptic raised is gone: tests/evidence-g17-papers.test.ts:379 now holds 376_69, not 360_59.",
+        "The skeptic's point that the journey takes Still Owed from the screen is closed by 'charges no interest on the paying-late addition paid within 21 days…', which works Still Owed and Pay in full independently at 10 and 30 days after the assessment ($378.21, $379.69) and presses Pay on the rendered screen. The journey's pay day, 3.5 days after the assessment, falls in the same within-21-days case.",
+        "Review gaps, each checked closed: the bank debit and its memos ('Income tax owed, 2026, in part' x2, then 'Income tax owed, 2026'), three exact debits summing to the screen's Still Owed; 'That year is paid.' and 'Pay something.' asserted; the bank-short message asserted in words at tests/evidence-g16-papers.test.ts:386; the IRS Pay pressed on the rendered Returns tab with typed amounts through the input's own onChange; the natural student path (an unfiled 1040-NR assessed by the clock, no setup); the order tax, then penalty, then interest across the second and third payments; no levy over 200 days across a reload against a levied unpaid twin.",
+        "Not closed, and not required by the standard: the built app (tools/acceptance-ui.mjs) still presses only Connecticut's pay field. A rendered screen meets the bar.",
+        "Minor, unchanged: a year with no return is refused 'That year is paid.' (taxreturn.ts:1542, `if (!r?.owed)`). The screen never offers Pay there, so no player can reach it."
+      ],
+      "weakTests": [
+        {
+          "title": "tax.pay > PLAYER JOURNEY: $200.00 typed into Pay goes to the tax, then the penalty; $100.00 more all to the penalty; blank pays the penalty’s $45.28 before any interest; the notices stop, Pay goes, and no levy follows where an unpaid twin is levied",
+          "why": "The interest on the pay day is derived from the screen (shown − $300 − $45.28), not worked. The 21-day test covers it independently at 10 and 30 days, so this does not leave the row open."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json tax.pay reads 'owedOn (taxreturn.ts:92-101)'. owedOn is near taxreturn.ts:187.",
+        "Its changes field reads 'pays; deletes owed; cancels pending notices (taxreturn.ts:633-643)'. tax.pay is at taxreturn.ts:1539-1551 and applyPayment near :221; the claimCorrection is not applied.",
+        "Its tests field cites only the older tests. It should name tests/evidence2-b06.test.ts's journey, the DEFECT test and the 21-day test, plus evidence-g16's bank-short refusal."
+      ]
+    },
+    {
+      "id": "documents.permission",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The skeptic's main objection was the UI showing expiry + 60 (2 August 2030), a date no played OPT reaches. defects3 #50 fixed it: WorkPane now shows the 91st idle day, 2 September 2029, and the journey asserts that, with 'August 2, 2030' absent, then plays to that day: OPT cancelled at idleDays 91 and out of status at the instant Papers gave.",
+        "The review's gap 'status holds after approval (expiry + 60)' is closed as far as play reaches. After approval she is still in status on 1 August 2029, past the degree's own sixty days, and the look moved to the OPT's expiry. Expiry + 60 itself is reached by no life since the owner's scope reset of 2026-10-09 removed work after the degree, so it is a deferred part, not missing evidence.",
+        "Other review gaps checked closed: the twelve-month term is held as the literal Date.UTC(2030, 5, 3, 15); the 'OPT Approved' notice is asserted in full; Apply For OPT is pressed on the rendered WorkPane ($470 debited); the degree comes from the clock's Commencement; the refusals (already applied, left without a degree, citizen, 'It opens …') are asserted through the command at tests/evidence-g16-papers.test.ts:531-593.",
+        "The skeptic's remaining objection stands as a weakness rather than a gap. The degree's coursework is prepared by a midnight hook writing a.prep, and wellbeing is written every six hours (TEST SETUP). The actions this row covers, apply_opt on the screen and PERMISSION_KIND by the clock, are reached as a player reaches them.",
+        "The reschedule at Commencement lands on the same instant as the createSave look, so only the item id shows it ran. The reschedule after approval does change an outcome: the look moves to 3 June 2030 and is asserted."
+      ],
+      "weakTests": [
+        {
+          "title": "documents.permission > PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work",
+          "why": "Three years of coursework prep and wellbeing are written by hand, not done through school.prepare. The Commencement reschedule is told apart from the original only by its id."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json documents.permission changes still cites 'scheduleUsStatus (permission.ts:361-382)'. The handler is near permission.ts:208-229; the claimCorrection is not applied.",
+        "The review claim's '(status held to expiry + 60 days)' describes a bound no played life reaches since 2026-10-09: every OPT ends on its 91st idle day. The row should say so, past tense for the expiry + 60.",
+        "Its tests field cites only tests/permission.test.ts and should name the b06 journey and g16's OPT tests.",
+        "src/engine/content/guide/documents.ts:237 still says '(on OPT, the date counts its grace after)', which defect #50 made false (leftovers4)."
+      ]
+    },
+    {
+      "id": "documents.us_status",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "Both Covered Connecticut defects are fixed and shown by the renamed DEFECT test, which passes. The wording (defects2 #20) and the cover running seven and a half months out of status (defects3 #51) are both covered: Covered Connecticut enrolled in the grace now ends at the 1 March look, before its 1 April start, with 'Your Public Cover Won’t Begin'. Nothing is left for the 1 October renewal.",
+        "Review gaps closed through the clock. The degree + 60 is played from setStanding's reschedule. Withdrawal + 15 is played by school.withdraw, out of status 16 February at 11 AM (b06 and g16:615-650). Dismissal + 0 is played at tests/evidence-g16-papers.test.ts:658. The decision is armed by the game. The F-1 cancellation and 'Out Of Status' are asserted. The downstream read through commands: the marketplace refusal, the DMV/SAVE refusal and unemployment's refusal (g16:644-647); the marketplace plan ended at the month's look against a twin who keeps hers.",
+        "Open: tests/papers-fixes.test.ts's title ('keeps their status fifteen days from the dismissal…', :53) and header (:4) still say fifteen days while the rule is no grace. The review named this gap, and it is test text, not audit-row text, so it is not exempt.",
+        "Open: usWorkAuthorized's out-of-status line (permission.ts:106) is a redundant guard. Status outlives every permit, so removing it survives every test. The house standard says remove it; it was neither removed nor ledgered.",
+        "Open: authorizationFor('US') (documents.ts:265) is named as a downstream, but nothing in src makes an 'authorization' document since travel went in the owner's scope reset of 2026-10-09. It returns nothing in status or out. That part is deferred or removed, and the row should stop naming it.",
+        "Open: the marketplace plan the clock ends was bought on $6,000 of May wages set by hand (TEST SETUP), because no played F-1 month is over Covered Connecticut's line. The end itself is played; the purchase is not."
+      ],
+      "weakTests": [
+        {
+          "title": "documents.us_status > PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers",
+          "why": "The marketplace plan exists only because a month's $6,000 of wages is posted by hand. The degree comes from prep and wellbeing written by hand."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json documents.us_status entry still reads 'load (index.ts:262,275), OPT events, missed visits'. The claimCorrection (createSave and load, setStanding, leave.ts, papervisits, OPT decided and ended, the look itself) is not applied.",
+        "Its downstream cites 'health.ts:308' and 'health.ts:425' and names authorizationFor (documents.ts:251). Lines have moved, Covered Connecticut's monthly end out of status (defects3 #51) is missing, and authorizationFor reads no document any play makes.",
+        "Its tests field quotes papers-fixes' 'fifteen days' title, which is itself stale.",
+        "tests/papers-fixes.test.ts:4 and :53 say fifteen days for a dismissal, where the rule is STATUS_GRACE_DAYS.dismissed = 0."
+      ]
+    },
+    {
+      "id": "benefits.assistance_month",
+      "claimed": "partial (implementation missing): the UTC month key and no SNAP minimum benefit",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Both defects the claim rested on are fixed and their tests pass. The month key is zoned (assistance.ts:121, :128 take a zone, and the handler passes s.homeZone). The 9 PM claim of 24 January now reads December, $306. The minimum is in: July's and August's Cabaret months pay $25 each.",
+        "The skeptic's two unlisted defects are fixed and shown. defects3 #52: an unemployment claimant is exempt from the time limit (assistance.ts:276-281); the journey pays a fourth month ($230), and a twin with no claim is cut off on 8 May 2028. defects3 #53: the 30% is rounded up to the dollar, giving $258, $258, $258 and $230 in literal figures, worked in the test.",
+        "The skeptic's point that earned income is never checked against a literal where the deduction matters is closed elsewhere. tests/evidence-g16-papers.test.ts 'a month with a week’s pay in it takes a fifth of the pay off…' pays March on February's wages and asserts that reading them as unearned would differ by $23. Work-study's exclusion is asserted at g16:722-745, where counting it would cut the $306.",
+        "Review gaps checked closed: the month's amount worked independently in literal figures (b06, and g16's snapFy2027 helper, which is written from the rule and not from snapMonth); the summer closure by the clock with 'Your SNAP Case Closed' and closedAt (g16:761); the groceries drawn at midnight by the clock with the card's balance equal to the sum of its postings; claim.months and 'SNAP Paid'; the provincial branch run by the clock (BC in b06, Ontario Works in g16).",
+        "Deferred, by the owner's scope reset of 2026-10-09: the USD conversion is the identity in every SNAP claim, since no played save can hold a SNAP claim in another currency with travel gone.",
+        "Still in the tree but no longer load-bearing: tests/assistance.test.ts:13 drain() writes balances with no posting (used at :65). The row's evidence no longer rests on it, but its tests field still cites only that test."
+      ],
+      "weakTests": [
+        {
+          "title": "benefits.assistance_month > DEFECT: the months the Cabaret’s wages are read pay a one-person household at least SNAP’s least, $25 in FY2027 (7 U.S.C. 2017(a); USDA’s cost-of-living adjustment of 21 August 2026), not nothing on July’s $1,875 or $11-odd on August’s $1,500",
+          "why": "Both months fall under the minimum, so this test cannot tell a correct earned-income deduction from a missing one. g16's earned-month test covers that."
+        },
+        {
+          "title": "tests/assistance.test.ts > puts a New Yorker’s SNAP on an EBT card the groceries draw on first…",
+          "why": "drain() sets balances to 0 without a posting, and the amount is asserted only as > 0. The audit row still cites it as its only test."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json benefits.assistance_month changes cites 'assistance.ts:361-401', lines the file doesn't have; the handler is near :228-290. The claimCorrection is not applied.",
+        "Its issue field says 'The provincial branch can't be reached. The ABAWD hours are always 0.' BC and Ontario are run by the clock, and the hours come from workedBetween (assistance.ts:269).",
+        "Its tests field cites only tests/assistance.test.ts ('its balances emptied by hand'). It should name the b06 and g16 journeys.",
+        "Its reads field ('ABAWD counted months') should say an enrolled student and an unemployment claimant are exempt (7 CFR 273.24(c), 273.7(b)(1)(v))."
+      ]
+    },
+    {
+      "id": "tax.due",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Checked: RETURN.lateMinimum is 535_00 (src/engine/content/safetynet.ts:174). The notices are asserted in their full words: two states charging their own, the IRS owed nothing, $535 at least, and the refund waiting. The $550 penalty on $1,000 filed 70 days late is worked from IRC 6651(a) and (c) in the test.",
+        "The refund return's check is not vacuous. It looks for every TAX_SFR and STATE_NONFILER item ever set for 2026, done or pending, a year and a day on, and done items are kept 400 days.",
+        "The review's two wording defects (the refund branch, and the $525 least for any balance) are fixed and asserted. 'Your <year> Return Is Late' is now asserted in each branch.",
+        "The $0-overall branch is reached only through graduate() TEST SETUP (g16). That was accepted by the first skeptic and is not a gap the review named.",
+        "Outside this row's claim, still open: defects3 #77 is not fixed. src/engine/content/tax.ts:122-137 still taxes every year on 2024's federal table ($14,600 deduction), recorded only as a code comment, not in docs/UNBITTEN.md. It moves which returns exist and their figures, not what tax.due does with an unfiled one. These tests take the IRS's part from the engine's own return as an input and assert the notice and the scheduling, which the table doesn't change."
+      ],
+      "weakTests": [
+        {
+          "title": "tax.due > gives the least past 60 days on the IRS’s part alone where New York’s takes the whole over $535, as latePenalty charges it; a New York quickSave life",
+          "why": "Its last assertion compares latePenaltyAll with latePenalty + stateLateAt, the engine's helpers against each other. The notice's words carry the independent check."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json tax.due changes reads 'schedules TAX_SFR if owing (taxreturn.ts:532-540)'. The handler is near taxreturn.ts:1161-1190 and also schedules each owed state's non-filer letters and Oregon's three-year check. The claimCorrection is not applied.",
+        "Its tests field cites only tests/retirement.test.ts. It should name the three b06 tax.due tests and g16's notice tests.",
+        "The review claim's 'at least $525 past 60 days' should read the lesser of $535 (returns required in 2027, Rev. Proc. 2025-32) and the IRS's part."
+      ]
+    },
+    {
+      "id": "documents.apply_ssn",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "The office's New Haven refusal is gone: defects3 #71 removed it, and taxid.ts:56-58 records that in the past tense. One of the two gaps the claim left open is closed by removal.",
+        "Open: Discover reads the number (lending.ts:458), and with wages past $25,000 a year the number decides the loan. The b06 test shows it by the falsifiability test. But no played life earns that much: the Cabaret's best thirty days is $1,875, or $22,500 a year. In play the number changes only which refusal is given. The row's downstream still lists 'a lender’s terms' among the consumers whose outcome it changes. This is the claim's wording, but by THE ONE RULE it is also a consumer that only changes a sentence, so the row should say so or the lender should leave its downstream.",
+        "Open, carried from the first skeptic: the hospital refusal ('Not from a hospital bed.') is reached by calling careFor directly to start a stay (tests/evidence-g17-papers.test.ts:124-125, TEST SETUP). The command is run through sim.execute, but the state is not played.",
+        "Checked closed by the first round (tests/evidence-g17-papers.test.ts:659-820): the panel from Not yet to Held, pressed on the screen; the hour at the office and the 21 days; Wells Fargo's branch before the card and online after; the 1040-NR's 21 days with the card against 70 without; the IRS plan online with the card against Form 9465 by mail without; and the refusals for a Call within the hour, a passport reported lost, and a citizen."
+      ],
+      "weakTests": [
+        {
+          "title": "documents.apply_ssn > Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line",
+          "why": "$2,100 of wages is posted by hand. The 7.99% APR and $78.33 rest on SLATE crediting a three-week-old F-1 arrival with a 780+ record, so the terms are SLATE's, not Discover's. Only the refusal-versus-approval contrast is independent."
+        },
+        {
+          "title": "tests/evidence-g17-papers.test.ts > refuses in its words a Call within the hour, a hospital bed and a passport reported lost…",
+          "why": "The hospital stay is begun by calling careFor directly, not reached by play."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json documents.apply_ssn reads still lists 'in New Haven', a refusal removed on 2026-10-13 (defects3 #71).",
+        "Its issue field says 'Not checked: a bank’s branch hour once one comes, a lender refusing for want of one, the W-7’s seven weeks more, and the plan by mail'. The first round checks all four.",
+        "Its downstream should say Discover reads the number only before its $25,000-a-year income test, so in play the number changes which refusal is given and not the outcome. The claimCorrection is not applied."      ]
+    }
+  ]
+}

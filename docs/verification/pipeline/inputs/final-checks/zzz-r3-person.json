@@ -1,0 +1,124 @@
+{
+  "rows": [
+    {
+      "id": "c-traits",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the receipts knob is gone from src. Only comments dating it remain: personality-traits.ts:20-27,84-86, personality.ts:110, taxreturn.ts:890-891, earnings.ts:51-52,275, safetynet.ts:419-420. Keeps Accounts declares { bondWound: 1.1 } and Chaotic { hygieneDrift: 1.3, stressGain: 0.92 }. The journey presses both on the rendered page through onClick, Begin makes the life holding both, and the looks show 1 and 2 rows with hand-bent figures (+10%, +24%, −8%) and no receipt or deduction.",
+        "Closed: the hand-typed, order-dependent HELD test was replaced by an order-independent check. I ran the regex myself: all 19 declared knobs equal KNOB_READS' keys, and each is asked for by name in src outside content/, personality.ts and wellbeing.tsx (stressGain and moraleSwing at 7 sites each, the rest at 1 to 3). No match is in a comment.",
+        "Review gap 1 (buttons: the fifth trait and a conflicting trait disabled, putting a trait down) was closed in round one by evidence-g28-ui, per b10. The latest skeptic's 'only one reader per knob reached' belongs to the trait-* rows, all verified in audit/ui.json except trait-receipts.",
+        "The file passes: 17 of 17 tests, run alone on 5f0cba03."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-person.test.ts > c-traits and trait-receipts > declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src…", "why": "The check is lexical: it doesn't strip comments before collecting 'asked', and it shows a reader exists, not that play reaches it. No knob is currently matched only in a comment, and evidence2-b10's journeys hold each reader in play." },
+        { "title": "tests/personality.test.ts > reads every knob a trait can declare, where the life system bites", "why": "Still compares the declared set to a typed list, and still runs in the gate. The row no longer cites it." },
+        { "title": "tests/evidence-g28-ui.test.ts > c-traits > moves every knob a trait declares…", "why": "Still calls personalityOf directly, with sides taken from the traits' own systemMods. Still in the gate." }
+      ],
+      "staleText": [
+        "The row's 'downstream' cites looks/wellbeing.tsx:118-122 and 365-403. In the tree the trait ways are at about :118-124 and the trait look at :366-412."
+      ]
+    },
+    {
+      "id": "c-wealth",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: for each of the six families, the family is chosen through the select's own onChange (withFamily). Starting Point is rendered with no 'wealth' picker. The checking, savings, Credit Record and card tiles are read off the page, and Begin opens the same checking, savings, score, card limit and owed balance. I checked the literals against WEALTH_PROFILE (bootstrap.ts:233-239) at 0.92 euros to the dollar: 40/0.92 gives 43, 1,240/0.92 gives 1,348, 85,000/0.92 gives 92,391 and 240,000/0.92 gives 260,870. The credit scores are the profile's own literals.",
+        "Closed: tests/school.test.ts:188 is now titled 'comes from a wealthy family, and has no birthplace chosen for it'. The overclaim is gone from the tree.",
+        "Closed earlier (b10): the Yale Health plan is owed when checking can't cover it."
+      ],
+      "weakTests": [
+        { "title": "tests/creation.test.ts > opens the accounts the money answer promises, and balances them", "why": "Still in the gate: a non-school life, with the amounts never compared. The row no longer cites it." }
+      ],
+      "staleText": []
+    },
+    {
+      "id": "c-family",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: findsNeed (bootstrap.ts:231) and hasNeed (systems/school.ts:1398) now both return needFor(family) (content/school.ts:85). They are no longer parallel definitions.",
+        "Closed: Inherited is chosen and then Nothing on the same select. Review says 'Inherited, No Need Found', then 'Nothing, Need Found', and the config's family goes back to undefined. Played to noon on 24 Aug, Nothing's checking is $13,361.50 ($43 plus $13,318.50) and Inherited's is $258,988 ($260,870 less $1,882). The term notices name the $1,882.00 plan, the same figure as the callout c-wealth's test reads. All are literals worked by hand."
+      ],
+      "weakTests": [],
+      "staleText": []
+    },
+    {
+      "id": "l-person",
+      "claimed": "partial / working, evidence missing",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Open, unchanged in kind: the 'they' wording and 'Your Own Plans' only for the player are drawn only over a hand-inserted second Person. Bea is now built by createUniverse, but she is still put into universe.people by the test, and bootstrap.ts:414 is the only place a Person is added in play. No player journey reaches the branch.",
+        "Closed: the unit split. Both creation (CharacterCreation.tsx:260) and the look (wellbeing.tsx:168) now use bodyUnits of where the person lives, and moving Bea's currentLocationId moves her units (160 cm gives 5 ft 3 in, 55 kg gives 121 lb).",
+        "Closed since the agent's note (5f0cba03): the trait look and the condition look now resolve the person named in the id (wellbeing.tsx:374, :436). Tests show Bea's Curious opens 'A Trait They Hold' under her look, and Bea's Depression opens 'A Condition They Carry'. Both are also fixture-only."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-person.test.ts > l-person > a second Person in a played world opens as Somebody…", "why": "The second Person is TEST SETUP, inserted by hand. Play can't reach it." }
+      ],
+      "staleText": [
+        "round3/person.json's l-person and l-trait notes say the trait look resolves every trait against sim.player (wellbeing.tsx:367). That stopped being true in 5f0cba03: it reads the person named in the id.",
+        "rowText.tests doesn't cite the file's trait-look and condition-look tests for a second Person."
+      ]
+    },
+    {
+      "id": "i-stale-claims",
+      "claimed": "verified / verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed: the eight present-tense examples from the earlier check are flagged now, and 'until', 'gone', 'no longer', 'drops' and 'lets go' no longer pass a sentence alone. The tree-wide walk passes and isn't vacuous: it covers more than 600 files and more than 60 sentences, and every READ_TRUE entry must still be found.",
+        "Still open, the review's gap 'nothing fails if a new present-tense claim appears' and the same weakness the earlier check named, now through REMOVAL. REMOVAL accepts 'removed', 'deleted', 'dropped' and 'went' anywhere in a sentence, and present-tense passive sentences use those words. I ran the file's own NAMES and REMOVAL. 'An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.' and 'Interests went into every meal.' all pass unflagged.",
+        "Still open, as the agent acknowledges: NAMES doesn't match 'your interest', 'her interest in cooking' or 'a favourite interest' ('favourite' isn't in its list of determiners). 'Your interest lifts a meal.' and 'A favourite interest lifts a meal.' pass.",
+        "The prose in the tree is correct, as the walk shows. What is missing is a guard that holds it, so the disposition is 'working, evidence missing', not 'verified'."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-person.test.ts > i-stale-claims > finds every present-tense claim the check of 2026-10-13 passed…", "why": "It tests only hand-picked sentences. Present passives with 'removed' or 'dropped', and unlisted singulars, still pass the rule." },
+        { "title": "tests/evidence3-person.test.ts > i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal…", "why": "It shares REMOVAL's permissiveness. A new present-tense claim that says 'is removed', 'are dropped' or 'went', or names one interest by possessive or an unlisted determiner, wouldn't fail it." },
+        { "title": "tests/evidence2-b13.test.ts > i-stale-claims (the earlier, permissive rule)", "why": "Still in the gate, and superseded." }
+      ],
+      "staleText": []
+    },
+    {
+      "id": "l-trait",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: receipts, the reason for the deferral, is gone. Spender and Generous are pressed on the page. The looks render +25%, +10%, +28% with all she is, and +15%, +14%. Played through life.look_after, the meal costs 641 cents against the plain twin's 500, and lifts the mood by 2×1.1364255057 against 2. I bent the figures by hand and they agree (Spender alone: 1.25 in [0.7, 1.4] is 1.2157, +22%).",
+        "Closed: a trait not held opens as 'A Trait' with no combined column, and one held opens as 'A Trait You Hold'."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-person.test.ts > l-trait > both tests", "why": "The trait look is opened through resolveLook(lookAt('trait', id)), not by pressing the way on the Profile. The Profile way is checked only by label (Spender is among the person look's ways). This is a minor gap." }
+      ],
+      "staleText": [
+        "rowText.entry cites looks/wellbeing.tsx:365-403. The trait look now spans about :366-412.",
+        "The agent's note on the trait look resolving against sim.player is stale, fixed in 5f0cba03."
+      ]
+    },
+    {
+      "id": "trait-receipts",
+      "claimed": "verified / deferred or removed",
+      "holds": true,
+      "verdict": "deferred",
+      "disposition": "deferred or removed",
+      "problems": [
+        "The owner removed the knob on 2026-10-14, so by the standard the verdict is 'deferred' (removed), not 'verified'. The removal itself holds. No code in src reads or writes receipts, recordJobCost, jobCosts or RECEIPTS; only past-tense comments remain. KNOB_READS has no receipts, and no trait declares it. London-born twins played to 1 Feb 2027 across a reload get identical 2026 1040-NR figures (workStudy 1,656.00, federal 165.60, both worked by hand)."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-person.test.ts > trait-receipts > London-born twins … the same 2026 return", "why": "Equality of the twins' returns would also hold for any trait that never reached the return. It shows absence, which is what a removal needs, and the agent's mutation gives it its teeth." }
+      ],
+      "staleText": []
+    }
+  ]
+}

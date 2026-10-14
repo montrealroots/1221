@@ -1,0 +1,918 @@
+[
+ {
+  "id": "school.respond",
+  "key": "r3-school",
+  "file": "src/engine/systems/leave.ts",
+  "find": "AID_DECIDE_KIND, MOMENT_KIND]);",
+  "replace": "AID_DECIDE_KIND]);",
+  "protects": "A leave keeps a moment’s lapse at its hour (kept()); without it the item is cancelled and the moment stays open past 7 AM. Killed by the leave PLAYER JOURNEY (MOMENT_KIND pending, then lapsed).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.respond PLAYER JOURNEY: an invitation open when a personal leave begins keeps its lapse at seven the next morning, and lapses then, costing the trust 1 an invitation left hanging costs, its answers refused, where everything else of the school’s is called off"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.respond",
+  "key": "r3-school",
+  "file": "src/engine/systems/classmates.ts",
+  "find": "if (m.kind === 'study') move(person, mate, CLASS.study.unanswered, 0);",
+  "replace": "if (m.kind === 'help') move(person, mate, CLASS.study.unanswered, 0);",
+  "protects": "An invitation left unanswered costs the trust 1. Killed by the leave PLAYER JOURNEY (trust - 1).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.respond PLAYER JOURNEY: an invitation open when a personal leave begins keeps its lapse at seven the next morning, and lapses then, costing the trust 1 an invitation left hanging costs, its answers refused, where everything else of the school’s is called off"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.respond",
+  "key": "r3-school",
+  "file": "src/engine/systems/classmates.ts",
+  "find": "if (when <= sim.now) return 'That evening has passed.';",
+  "replace": "if (when < sim.now - 86_400_000) return 'That evening has passed.';",
+  "protects": "Say Yes to an evening already past is refused. Killed by the fixture test (the refusal at 7:30 PM).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.respond “That evening has passed.”, reached only from a save as made before 2026-10-12, whose invitation waited until ten the next evening: Say Yes after seven is refused so, Say No taken; the same save as made since lapsed at seven that morning"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.take_shift",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (weekHours(s, person, when) + hours > weekCap(when)) { capped = true; continue; }",
+  "replace": "if (weekHours(s, person, when) + hours > weekCap(when) + 2) { capped = true; continue; }",
+  "protects": "The cap of 19 at booking: Friday 25 September (16 + 4 = 20) would be booked. Killed by the toasts and the bookings.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.take_shift PLAYER JOURNEY: Take An Elective Shift pressed nine times on the Work-Study tab books eight evenings, skips the free evenings a week’s 19 hours leave no room for, and the ninth is refused for the cap with nothing booked; all eight worked, none over it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.take_shift",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "return keyOf(day) >= keyOf(period.from) && keyOf(day) <= keyOf(period.to) ? WORK_LIMITS.weekHours : WORK_LIMITS.recessWeekHours;",
+  "replace": "return WORK_LIMITS.recessWeekHours;",
+  "protects": "The term’s cap is 19, not the recess’s 40. Killed by the bookings (Friday 18 September would be booked).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.take_shift PLAYER JOURNEY: Take An Elective Shift pressed nine times on the Work-Study tab books eight evenings, skips the free evenings a week’s 19 hours leave no room for, and the ninth is refused for the cap with nothing booked; all eight worked, none over it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.take_shift",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "throw new CommandError(capped ? `No free evening",
+  "replace": "throw new CommandError(false ? `No free evening",
+  "protects": "The refusal says the cap is why. Killed by the ninth press’s error.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.take_shift PLAYER JOURNEY: Take An Elective Shift pressed nine times on the Work-Study tab books eight evenings, skips the free evenings a week’s 19 hours leave no room for, and the ninth is refused for the cap with nothing booked; all eight worked, none over it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "const grewTooLittle = !atReach && paced < ESTIMATE.growthFloor * classPace;",
+  "replace": "const grewTooLittle = !atReach && growth < ESTIMATE.growthFloor * classGrowth;",
+  "protects": "Growth is weighed for the room each had, not in raw points. Killed by both: the near fall would be behind, the far one in line.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: a student who began the fall at nine tenths of their reach grows a fifth of the class’s raw points, under the half a raw rule would ask, and is weighed ahead of the class for the room they had, in good standing, on the Standing tab",
+   "standing/term evaluation PLAYER JOURNEY: a student who began at four tenths of their reach, in a class driven at 4, grows past half the class’s raw points, where a raw rule asks no more, and is weighed behind it for the room each had: a concern for the pace alone, in its words, on the Standing tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "growthFloor: 0.5,",
+  "replace": "growthFloor: 0.35,",
+  "protects": "Half the class’s pace is the floor. Killed by the far fall (0.39 of the class’s pace would pass).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: a student who began at four tenths of their reach, in a class driven at 4, grows past half the class’s raw points, where a raw rule asks no more, and is weighed behind it for the room each had: a concern for the pace alone, in its words, on the Standing tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "const room = (start: number, ceiling: number) => Math.max(ROOM_LEAST, roomLeft(start, ceiling));",
+  "replace": "const room = (_start: number, _ceiling: number) => 1;",
+  "protects": "The room is (1 − start ⁄ reach)^1.5. Killed by the near fall (ahead becomes behind).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: a student who began the fall at nine tenths of their reach grows a fifth of the class’s raw points, under the half a raw rule would ask, and is weighed ahead of the class for the room they had, in good standing, on the Standing tab",
+   "standing/term evaluation PLAYER JOURNEY: a student who began at four tenths of their reach, in a class driven at 4, grows past half the class’s raw points, where a raw rule asks no more, and is weighed behind it for the room each had: a concern for the pace alone, in its words, on the Standing tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "const withheld = nonresidentFor(person, year) ? Math.round(NONRESIDENT_SCHOLARSHIP_RATE * grant) : 0;",
+  "replace": "const withheld = 0;",
+  "protects": "14% withheld from a nonresident’s grant. Killed by the January test ($118.68 / $19.32).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: January’s processing pays the Saturday called in sick, $138.00 with 14% withheld: $118.68 to the bank and $19.32 to the tax withheld, in the notice’s words",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: in May the six hours never assigned, asked on the drawn button, are paid at May’s processing with 14% withheld again; the year’s scholarship is the spring’s $14,014.00 and both grants, $14,290.00, and its withholding $2,000.60",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: the 2027 return, filed in February 2028 on the 1040-NR, carries the two grants: $276.00 more scholarship and income and $38.64 more withheld than the twin who never asked"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "r3-school",
+  "file": "src/engine/systems/school.ts",
+  "find": "recordScholarship(person, item.at, zone(), grant);",
+  "replace": "",
+  "protects": "The grant on the year’s scholarship and the return. Killed by the May test ($14,290.00) and the return ($276.00).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: in May the six hours never assigned, asked on the drawn button, are paid at May’s processing with 14% withheld again; the year’s scholarship is the spring’s $14,014.00 and both grants, $14,290.00, and its withholding $2,000.60",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: the 2027 return, filed in February 2028 on the 1040-NR, carries the two grants: $276.00 more scholarship and income and $38.64 more withheld than the twin who never asked"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "r3-school",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "(wealth === 'wealthy' || wealth === 'inherited' ? 'wealthy' : undefined)",
+  "replace": "'wealthy'",
+  "protects": "A Scraping family chosen on the screen finds need. Killed by the equivalence test and hasNeed in the London life.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "a need set by hand is the Scraping family chosen on the screen (school.request_conversion, school.pay_balance) the config the family select gives for Scraping is the one the earlier evidence set by hand, and each of their seeds opens the same save from either, to the byte",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: January’s processing pays the Saturday called in sick, $138.00 with 14% withheld: $118.68 to the bank and $19.32 to the tax withheld, in the notice’s words",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: in May the six hours never assigned, asked on the drawn button, are paid at May’s processing with 14% withheld again; the year’s scholarship is the spring’s $14,014.00 and both grants, $14,290.00, and its withholding $2,000.60",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: the 2027 return, filed in February 2028 on the 1040-NR, carries the two grants: $276.00 more scholarship and income and $38.64 more withheld than the twin who never asked",
+   "school.request_conversion, for a nonresident the screen made with need PLAYER JOURNEY: a medical leave begun with the request in calls it off: refused on leave in its words, and nothing paid on 15 January"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.pay_balance",
+  "key": "r3-school",
+  "file": "src/engine/systems/leave.ts",
+  "find": "if (!(amount > 0)) return 'Pay something.';",
+  "replace": "if (amount < 0) return 'Pay something.';",
+  "protects": "Nothing paid is refused. Killed by the {amount: 0} refusal.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.pay_balance, for a balance a family chosen on the screen leaves PLAYER JOURNEY: the leave of 20 January returns the whole spring’s scholarship, $15,200.50; refused for nothing and for more, $100.00 paid by command, the rest left to its due date brings the hold and $125.00, and Pay From Your Bank, drawn and pressed, settles it and lifts the hold"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.pay_balance",
+  "key": "r3-school",
+  "file": "src/engine/systems/leave.ts",
+  "find": "if (owed <= 0 && school.hold !== undefined) {",
+  "replace": "if (owed < 0 && school.hold !== undefined) {",
+  "protects": "Paying the whole lifts the hold. Killed by hold undefined and the one ‘The Financial Hold Is Lifted’.",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.pay_balance, for a balance a family chosen on the screen leaves PLAYER JOURNEY: the leave of 20 January returns the whole spring’s scholarship, $15,200.50; refused for nothing and for more, $100.00 paid by command, the rest left to its due date brings the hold and $125.00, and Pay From Your Bank, drawn and pressed, settles it and lifts the hold"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.pay_balance",
+  "key": "r3-school",
+  "file": "src/engine/content/school.ts",
+  "find": "rebate: [[0.1, 1], [0.25, 0.5], [0.5, 0.25]],",
+  "replace": "rebate: [[0.05, 1], [0.25, 0.5], [0.5, 0.25]],",
+  "protects": "The rebate schedule’s whole share to a tenth of the classes. Killed by aidReturned $15,200.50 (it would be half).",
+  "test": "tests/evidence3-school.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.pay_balance, for a balance a family chosen on the screen leaves PLAYER JOURNEY: the leave of 20 January returns the whole spring’s scholarship, $15,200.50; refused for nothing and for more, $100.00 paid by command, the rest left to its due date brings the hold and $125.00, and Pay From Your Bank, drawn and pressed, settles it and lifts the hold"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "r3-home",
+  "file": "src/engine/systems/spending.ts",
+  "find": "const CARD_FULL = 0.9;",
+  "replace": "const CARD_FULL = 0.85;",
+  "protects": "the near-limit line at nine-tenths: $1,423 of $1,630 (87%) must not weigh (the collections test's first step reads its whole text)",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "r3-home",
+  "file": "src/engine/systems/spending.ts",
+  "find": "for (const kind of ['medical', 'collections'] as const)",
+  "replace": "for (const kind of ['collections'] as const)",
+  "protects": "a played medical debt weighs: 'You owe $50 for medical care.'",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run, Yale Health’s $50 for the emergency room billed due in thirty days, the checking moved to savings the hour before: “You owe $50 for medical care.”, across a reload; her twin who kept it is All Clear, and at Chase, which pays an item past zero, she’s $50 overdrawn instead"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "r3-home",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "is with collections.",
+  "replace": "is in collections.",
+  "protects": "the collections sentence's words, read whole after the played charge-off",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-money",
+  "key": "r3-home",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "line={`${primary?.name ?? 'No account'}:",
+  "replace": "line={`${primary?.institution ?? 'No account'}:",
+  "protects": "the line names the account, 'Chase Total Checking', for the poorest family and after a charge-off",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent",
+   "h-money PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: the line names it, and “No account” is reached by no life"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-school",
+  "key": "r3-home",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const standing = school.standing === 'graduated' ? '' :",
+  "replace": "const standing = school.standing === 'never' ? '' :",
+  "protects": "a played graduate's line says Graduated once, not 'Graduated, graduated'",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played h-school: PLAYER JOURNEY: the degree played, Home says “Graduated, N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-school",
+  "key": "r3-home",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const where = school.standing === 'graduated' ? 'Graduated'",
+  "replace": "const where = school.standing === 'graduated' ? 'Graduate'",
+  "protects": "the Graduated branch's word on a played degree",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played h-school: PLAYER JOURNEY: the degree played, Home says “Graduated, N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-papers",
+  "key": "r3-home",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "owedAll(person, at) + owedToStates(person, at);",
+  "replace": "owedAll(person, at);",
+  "protects": "Connecticut's part in Home's tax owed: $2,286 and $2,359, not $1,700 and $1,709",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-papers PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027; her money put in a Chase CD and File It pressed on Home, it files unpaid: “$2,286 of tax owed”, both parts, and the day past the due date “$2,359”, each with its own interest and penalty, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-papers",
+  "key": "r3-home",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const toPay = open ? unassessedBalance(person, open) : 0;",
+  "replace": "const toPay = open ? open.figures.owedTo.irs : 0;",
+  "protects": "what filing would pay counts both authorities: $2,286, not $1,700",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-papers DEFECT (h-papers): on 1 February 2028, her 2026 return unfiled, owing nobody since Connecticut’s levy, and her 2027 return owing $2,286, Home’s alert names the 2027 return and what it would pay; it names only the 2026 one, “due April 15, 2027”, ten months gone, and nothing of the $2,286",
+   "h-papers PLAYER JOURNEY: her 2027 return left open, it “is due April 18, 2028” on 1 February and on the day before, and the day past it “was due April 18, 2028”, a late penalty in it, across a reload: until 2026-10-14 it still “is due” a date gone",
+   "h-papers PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027; her money put in a Chase CD and File It pressed on Home, it files unpaid: “$2,286 of tax owed”, both parts, and the day past the due date “$2,359”, each with its own interest and penalty, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "n-decision-us-status",
+  "key": "r3-home",
+  "file": "src/engine/systems/permission.ts",
+  "find": "s.now + r.standardDays * MS_DAY",
+  "replace": "s.now + (r.standardDays + 1) * MS_DAY",
+  "protects": "a standard filing's ninety days: pending to 30 August 2029 at noon",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "n-decision-us-status",
+  "key": "r3-home",
+  "file": "src/engine/systems/permission.ts",
+  "find": "const fee = inSave(s, r.fee + (premium ? r.premiumFee : 0), r.currency);",
+  "replace": "const fee = inSave(s, r.fee + r.premiumFee, r.currency);",
+  "protects": "Apply For OPT, standard, pays $470 alone",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-journey-history",
+  "key": "r3-home",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": ".filter((c) => !filed.some((f) => f.production === c.production && f.role === c.role))",
+  "replace": ".filter(() => true)",
+  "protects": "a run closed and filed is said once: the graduate's closed Portia, also her casting, appears once",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-journey-history",
+  "key": "r3-home",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": "const credits = [...filed, ...closed];",
+  "replace": "const credits = [...closed];",
+  "protects": "the filed credits on School Journey, The Seagull's Nina among them",
+  "test": "tests/evidence3-home.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the graduate, played p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them",
+   "the graduate, played DEFECT (p-journey-history): the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13; it says “Graduated, graduated”"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-traits",
+  "key": "r3-person",
+  "file": "src/engine/content/personality-traits.ts",
+  "find": "systemMods: { bondWound: 1.1 },",
+  "replace": "systemMods: { bondWound: 1.1, receipts: 1.3 } as never,",
+  "protects": "receipts stays gone: the declared set no longer equals KNOB_READS, and the Keeps Accounts look grows a second row ('declares no knob…', and the journey's one-row count)",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits and trait-receipts: the receipts knob gone PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+   "c-traits and trait-receipts: the receipts knob gone declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-traits",
+  "key": "r3-person",
+  "file": "src/engine/systems/school.ts",
+  "find": "personalityOf(person, 'bondWound')",
+  "replace": "1",
+  "protects": "every declared knob is asked for by name at a reader: bondWound loses its only reader ('declares no knob…')",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits and trait-receipts: the receipts knob gone declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "r3-person",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "cardBalance: -840_00, creditScore: 610,",
+  "replace": "cardBalance: -840_00, creditScore: 600,",
+  "protects": "the scraping family's Credit Record tile and opened score, 610",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: scraping chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "r3-person",
+  "file": "src/ui/creation/CharacterCreation.tsx",
+  "find": "{choosesWealth(config) && (",
+  "replace": "{true && (",
+  "protects": "no What You Are Starting With picker in a life at the school",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: nothing chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: scraping chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: modest chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: comfortable chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: wealthy chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "r3-person",
+  "file": "src/engine/index.ts",
+  "find": "openCredit(sim, player, wealth.creditScore);",
+  "replace": "openCredit(sim, player, 795);",
+  "protects": "the score Begin opens is the family's, not the wealthy one's, for the five other families",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: nothing chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: scraping chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: modest chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: comfortable chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: inherited chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-family",
+  "key": "r3-person",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "(wealth === 'wealthy' || wealth === 'inherited' ? 'wealthy' : undefined)",
+  "replace": "(wealth === 'wealthy' ? 'wealthy' : undefined)",
+  "protects": "Inherited's means rule need out: Review's 'Inherited, No Need Found' and the save's family 'wealthy'",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: inherited chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-family: the means go with the family the select last chose PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-family",
+  "key": "r3-person",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "({ ...config, wealth, family: familyOf(wealth) })",
+  "replace": "({ ...config, wealth, family: config.family ?? familyOf(wealth) })",
+  "protects": "choosing Nothing after Inherited clears the family: 'Nothing, Need Found', and the scholarship paid",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: nothing chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: scraping chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: modest chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-wealth: Starting Point’s tiles are what Begin opens, for every family PLAYER JOURNEY: comfortable chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+   "c-family: the means go with the family the select last chose PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-person",
+  "key": "r3-person",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "bodyUnits(person.currentLocationId, isYou).imperial",
+  "replace": "bodyUnits(sim.player.currentLocationId, isYou).imperial",
+  "protects": "the units are the looked-at person's, where they live (Bea in London reads centimeters while the player is in New Haven)",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "l-person: the look reads the person it is of a second Person in a played world opens as Somebody, in their words and the units of where they live, their own dials and trait, and no Your Own Plans; moved to New Haven, the units move"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-person",
+  "key": "r3-person",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "const isYou = person.id === sim.universe.playerId;",
+  "replace": "const isYou = true;",
+  "protects": "another person's look says 'they', 'Somebody', and offers no Your Own Plans",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": false,
+  "why": "3 matches"
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "r3-person",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "// The films they love, said back for the same reason;",
+  "replace": "// An interest lifts a meal, until the player drops it. The films they love, said back for the same reason;",
+  "protects": "a new present-tense claim in the singular, carrying 'until' and 'drops', fails the walk. evidence2-b13's rule passes it.",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "r3-person",
+  "file": "src/engine/index.ts",
+  "find": "the game no longer keeps them.",
+  "replace": "the game keeps them on the sheet.",
+  "protects": "a sentence read and listed true that changes is no longer found, and the listed one must still be there",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-trait",
+  "key": "r3-person",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "{times(personalityOf(person, knob))} with all you are",
+  "replace": "{times(x)} with all you are",
+  "protects": "'with all you are' is the combined knob: Spender's +28% (not its own +25%) with Generous held",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "l-trait",
+  "key": "r3-person",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "const held = (person.personalityTraits ?? []).includes(id);",
+  "replace": "const held = true;",
+  "protects": "a trait not held opens as 'A Trait' with no combined column",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "l-trait: the look’s figures are what play charges a trait not held opens as A Trait, its own figures and no “with all you are”; one held opens as A Trait You Hold, under her own look",
+   "l-person: the look reads the person it is of the Curious way on Bea’s look opens Bea’s trait, held by them, with their figures, parented to their look; the player’s own look of it is unchanged"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-trait",
+  "key": "r3-person",
+  "file": "src/engine/systems/personality.ts",
+  "find": "return bend(value, KNOB_LIMITS[knob]);",
+  "replace": "return value;",
+  "protects": "the look's combined figure and the price both bend inside the knob's limits: +28% and $6.41, not +38% and $6.88",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits and trait-receipts: the receipts knob gone PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+   "l-trait: the look’s figures are what play charges PLAYER JOURNEY: Spender and Generous held; their looks say +25% and +10% of the food’s price on their own and +28% with all she is, and the meal through life.look_after costs $6.41 for the plain twin’s $5.00, and lifts the mood 2.273 for 2",
+   "l-trait: the look’s figures are what play charges a trait not held opens as A Trait, its own figures and no “with all you are”; one held opens as A Trait You Hold, under her own look"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "trait-receipts",
+  "key": "r3-person",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "const taxed = Math.max(0, income - deduction);",
+  "replace": "const taxed = Math.max(0, income - deduction - ((person.personalityTraits ?? []).includes('keeps_accounts') ? 10000 : 0));",
+  "protects": "a trait moving the return: the twins' 2026 figures differ, and the held twin's federal tax leaves $165.60",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "trait-receipts: changing the two traits changes no return PLAYER JOURNEY: London-born twins, one holding Keeps Accounts and Chaotic, played to the tax season of 2027 with the same work each midnight, are given the same 2026 return to the cent, on income earned"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "trait-receipts",
+  "key": "r3-person",
+  "file": "src/engine/content/personality-traits.ts",
+  "find": "systemMods: { bondWound: 1.1 },",
+  "replace": "systemMods: { bondWound: 1.1, receipts: 1.3 } as never,",
+  "protects": "the knob stays gone from the traits and the look",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits and trait-receipts: the receipts knob gone PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+   "c-traits and trait-receipts: the receipts knob gone declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.enroll",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "const from = Math.max(firstOf(p.year, p.month + 1), onOrAfterEnd);",
+  "replace": "const from = firstOf(p.year, p.month + 1);",
+  "protects": "the later-of start: the late-withdrawal test expects December 1 and gets November 1",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.enroll, on income the clock paid (round three) PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November",
+   "health.enroll, on income the clock paid (round three) DEFECT: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D",
+   "documents.us_status, a marketplace plan bought in the grace (round three) PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December",
+   "documents.us_status, a marketplace plan bought in the grace (round three) DEFECT: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.enroll",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "const premium = benchmarkFor(m.state, p.year, cur);",
+  "replace": "const premium = benchmarkFor(m.state, 2026, cur);",
+  "protects": "the year’s benchmark: 1 January 2027 charges $786, not $706",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.enroll, on income the clock paid (round three) PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.enroll",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "else if (at >= m.from) {",
+  "replace": "else {",
+  "protects": "no premium before the plan begins: the late-withdrawal test expects nothing on 1 November",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.enroll, on income the clock paid (round three) PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November",
+   "documents.us_status, a marketplace plan bought in the grace (round three) PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "const upheld = s.rng('health.appeal', person.id, bill.id).next() < DENIALS.upheld;",
+  "replace": "const upheld = false;",
+  "protects": "the upheld outcome: the forced upheld draw must leave $183.98 and 'Denial Upheld'",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided, on the marketplace a family’s savings reach (round three) PLAYER JOURNEY: paid when due and upheld, the bill stays $183.98, nothing comes back, the notice says the plan kept its denial, and Papers says Denial Upheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "const off = Math.min(over, Math.max(0, -debt.balance));",
+  "replace": "const off = 0;",
+  "protects": "the debt coming down to the $45 share when overturned",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided, on the marketplace a family’s savings reach (round three) PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "if (bill.paid && over > 0 && person.primaryAccountId)",
+  "replace": "if (over > 0 && person.primaryAccountId)",
+  "protects": "no refund to the bank for a bill that went to debt unpaid (expects [[138_98, 0]])",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided, on the marketplace a family’s savings reach (round three) PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.us_status",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {",
+  "replace": "if (false) {",
+  "protects": "the plan ended out of status: the F-1 would be charged $706 on 1 December and covered",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.us_status, a marketplace plan bought in the grace (round three) PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December",
+   "documents.us_status, a marketplace plan bought in the grace (round three) DEFECT: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended",
+   "documents.us_status, a marketplace plan bought in the grace (round three) PLAYER JOURNEY: the F-1’s 1 December notice says she’s uncovered from November 1, the day Yale Health ended, not from the look that found it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.us_status",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/permission.ts",
+  "find": "withdrawn: 15,",
+  "replace": "withdrawn: 16,",
+  "protects": "the withdrawal’s fifteen days: the decision’s date and Out Of Status on 17 October",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.us_status, a marketplace plan bought in the grace (round three) PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December",
+   "world.tick, with the undated rule gone (round three) PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "r3-lifepapers",
+  "file": "src/engine/world/world.ts",
+  "find": "if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;",
+  "replace": "if (decision.dueAt + 7 * 86_400_000 < sim.now) decision.resolvedAt = sim.now;",
+  "protects": "closing on the first tick after the date (within two days)",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick, with the undated rule gone (round three) PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload",
+   "world.tick, with the undated rule gone (round three) a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "r3-lifepapers",
+  "file": "src/engine/world/world.ts",
+  "find": "if (sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {",
+  "replace": "if (sim.now - closedAt > 2 * DECISION_RETENTION_DAYS * MS_DAY) {",
+  "protects": "the 180-day retention: gone by day 183",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick, with the undated rule gone (round three) PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "r3-lifepapers",
+  "file": "src/engine/index.ts",
+  "find": "decision.dueAt = decision.createdAt + 90 * MS_DAY;",
+  "replace": "decision.dueAt = decision.createdAt + 60 * MS_DAY;",
+  "protects": "an older save’s undated row dated ninety days from its raising",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick, with the undated rule gone (round three) a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.apply_ssn",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/taxid.ts",
+  "find": "return startRefusal(sim, person, SSN.visitMinutes, true);",
+  "replace": "return undefined;",
+  "protects": "the hospital bed’s refusal (and the busy hour’s)",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.apply_ssn, from a hospital bed the week drew (round three) PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.choose_clinic",
+  "key": "r3-lifepapers",
+  "file": "src/ui/workspaces/PapersWorkspace.tsx",
+  "find": "const choosing = practices.length > 1;",
+  "replace": "const choosing = practices.length > 0;",
+  "protects": "no Your Doctor drawn in a town of one practice",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.choose_clinic, for a family-made life (round three) PLAYER JOURNEY: the Scraping family’s student has no Your Doctor on Papers; the command, sent with New Haven’s one practice, books her twin’s same visit at the same place and price"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appointment",
+  "key": "r3-lifepapers",
+  "file": "src/engine/systems/health.ts",
+  "find": "if (book(s, person, owed ?? event.what)) { delete healthOf(person).owedVisit; continue; }",
+  "replace": "if (book(s, person, owed ?? event.what)) { continue; }",
+  "protects": "the owed visit cleared when the next drawn visit books it",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appointment, a visit called off on a family-made life (round three) PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+  "key": "r3-lifepapers",
+  "file": "src/engine/content/personality-traits.ts",
+  "find": "systemMods: { hygieneDrift: 1.3, stressGain: 0.92 },",
+  "replace": "systemMods: { hygieneDrift: 1.2, stressGain: 0.92 },",
+  "protects": "the trait look reads the trait’s own figure (+30%)",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the trait knobs, nine of the row’s ten live (round three) Keeps Accounts and Chaotic, held by a life made with them, say on their looks only the knobs they still move; no trait, limit or look carries receipts"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+  "key": "r3-lifepapers",
+  "file": "src/engine/content/personality-traits.ts",
+  "find": "bondWound: 'How hard a slight from a classmate cuts',",
+  "replace": "bondWound: 'How hard a slight cuts, and the receipts you keep',",
+  "protects": "the look’s words for the live knob, with no receipts",
+  "test": "tests/evidence3-lifepapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "the trait knobs, nine of the row’s ten live (round three) Keeps Accounts and Chaotic, held by a life made with them, say on their looks only the knobs they still move; no trait, limit or look carries receipts"
+  ],
+  "compiledFailed": false
+ }
+]

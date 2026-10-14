@@ -1,0 +1,50 @@
+{
+  "key": "scope-health",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "health.choose_clinic",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The first round's main problem is closed. In src/engine/index.ts:316-320, loadSave now runs followTheCover only when the save's SaveUniverse.opened doesn't name it, and then names it. createSave puts ONCE_ON_OPENING into every new life (index.ts:272). opened is an optional field (model.ts:570), so no schema version had to move. The rule chosen for a current save, that an appointment is had where it was booked, is consistent and defensible: a pick already works that way, and the guide (papers.ts:415) and the notice say it. Both cover-change journeys (Affiliate cover bought, and a return from a leave) check the practice, the care log at $187.20 and $190.49, and the notice, both played straight through and after reloads before the day. Those figures are worked by hand. The rebook twin reaches Yale Health at $0. Under the step-every-opening mutation both journeys would fail, because the reload moves the booking to Yale Health. The older-save journey now checks both inputs: with opened kept, the booking stays at Fair Haven; with opened removed, it moves once and the step is named. The tutorial no longer says Fair Haven has 'its own wait'. scope-health, evidence2-b01, evidence3-lifepapers, evidence-g03, evidence2-b03, evidence-g07 and guide-examples-papers each pass when run alone.",
+      "problems": [
+        "Minor, prose: docs/UNBITTEN.md:309-311 still says in the present tense that a kept visit 'costs its share, which on Yale Health is nothing'. Since 2026-10-15 a Yale Health member's visit at Fair Haven costs the uninsured's $183.98 (2026). This is the house standard's 'a comment your change falsifies'.",
+        "Minor, prose: the papers chapter's comment block in src/engine/content/tutorial.ts (:260-267) has no 2026-10-15 line for the chapter's changed doctor paragraph (:277, New Haven's two practices, Yale Health paying only at its Health Center). scope/health-result.json's tutorial entry admits this was left out.",
+        "Outside the result's files: the audit row docs/verification/audit/life.json:2406 still says New Haven keeps one practice and Papers draws no Your Doctor, with status partial. It needs the result's rowText when it's integrated.",
+        "Result hygiene: in scope/health-result.json, the recheck entries copied into choose_clinic.fixes have 'summary' and 'where' cut short, and 'where' holds the 'done' text rather than a location."
+      ],
+      "weakTests": [
+        "health.choose_clinic: Yale Health’s rule … > PLAYER JOURNEY: a save an older build wrote … (TEST SETUP save rewrite; acceptable for a one-time migration, which no played life reaches; it now tells an older save from a current one)"
+      ]
+    },
+    {
+      "id": "health.enroll",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "The first round's defect is closed. engaged() (src/engine/systems/health.ts:373-378) now reads enrolledIn over last month, at an application and at a renewal alike. enrolledIn (:390-396) counts the month she leaves, the month she returns and any month partly at the School. A month wholly on a leave, or wholly after the School ended, doesn't count. That follows the cited 42 CFR 435.552(c) wording, and endedAt is set on every ended standing (school.ts:1816). Two journeys pin it: the skeptic's played case (at the School all of January, withdrawn 1 February: HUSKY D given on 2 February, refused on 1 April), and the leave journey re-figured (given on 1 February, refused on 1 March, with 80 hours of TEST SETUP work given from 1 April). Both would fail under the instant reading: withdrawn or on leave at the moment means not at school, so she'd be refused. The old assertion was moved a month, not dropped. rowText.gap now says what the tree holds: renewals that keep a program are played, and HUSKY D kept at renewal through work is the one remaining TEST-SETUP-only branch. That keeps the row honestly partial. The tutorial's 'school at least half-time in the month before' now matches the code. scope-cover, need-paths and scope-health each pass when run alone.",
+      "problems": [
+        "Still open, as the result states: HUSKY D kept at a renewal through work is reached only with TEST SETUP wages. SLATE pays wages only for work-study and the Summer Cabaret, and both belong to a student.",
+        "Minor, wording: the renewal's end notice (src/engine/systems/health.ts:745) says 'Medicaid now asks for 80 hours’ work or $580.00 of earnings a month, and last month had neither'. It leaves out school at least half-time, which engaged() accepts and the application refusal (:495) names. 'Had neither' is still true of the two things it names.",
+        "Minor, unchanged since round one: repriceCare (health.ts:1530) sets planPaid from planOf alone, not from restrictedScope or outsideItsPractice. That doesn't match its comment 'nothing where the cover now reads none'. It's harmless today, because such bills carry no 'covered'.",
+        "Minor, prose: tutorial.ts's papers chapter comment (:260-267) has no 2026-10-15 past-tense line for the cover paragraph. That paragraph changed from 'Medicaid from 2027 on 80 hours’ work or $580 earned, and ends if you fail either' to the school-or-work test and the move between programs at renewal.",
+        "Result staleness: scope/health-result.json health.enroll still lists the scope-cover leave journey under its old title ('is refused HUSKY D on 1 February for January’s 6 hours … with 80 hours’ work in January'). fixes[2].where still says engaged reads 'her being at the School, enrolled and not on leave'. Both were superseded in the recheck. The test is now titled '… given HUSKY D on 1 February for January at the School, refused it on 1 March …'."
+      ],
+      "weakTests": [
+        "need-paths / scope-cover HUSKY D renewal-into-HUSKY D twin (TEST SETUP: October’s work posted). It is the only evidence that HUSKY D is kept at renewal through work."
+      ]
+    },
+    {
+      "id": "health.appointment",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Holds. The CGS 20-616 correction is real. The RX comment (health.ts:884-890) and research-health-visits.json prescriptionValidity.us-ct now name (b), (c) and (d), with FindLaw's quotes and the conclusion of no expiry. UNBITTEN's entry now says in the past tense that the rule was read and that the RX.validYears['us-ct'] candidate fell. The prescription filled a year and twenty days on, the insured bill with its shares and payment, the practice booked, and the members-only appointment not kept are all played on the clock, with worked literals. scope-health and evidence2-b02 pass when run alone. With the reload divergence closed under choose_clinic, a reload no longer changes where this row's appointment is had.",
+      "problems": [
+        "Minor, prose (shared with choose_clinic): docs/UNBITTEN.md:309-311 'costs its share, which on Yale Health is nothing' has been false since 2026-10-15 for a member's visit at Fair Haven."
+      ],
+      "weakTests": []
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "key": "scope-school",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "school.respond",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Nothing changed since the first round. strandedMoments (classmates.ts:393-407) and its one call in loadSave (index.ts:306) are as checked then, and the two DEFECT journeys and the GUARD pass. The evidence3-school GUARD retitle is accurate.",
+      "problems": [
+        "docs/verification/audit/school.json:1138 (school.respond) still has the old wording ('a study evening passed', no strandedMoments). git status shows the audit unmodified. This is outside the fix agent's files, and the result lists it."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "The action is played end to end and the dismissal and withholding fix is real. tellFails runs after evaluate/setStanding at both call sites (school.ts:3468, :3473), and both dismissal journeys assert the order and the bare notice. But the notice, the guide line and the rowText still promise the year's end after any earlier repeat, where the nine-semester rule refuses it. The repeatedYears clause in tellFails also has no test that isolates it any more.",
+      "problems": [
+        "src/engine/systems/courserecord.ts:140 tellFails `repeatable` excludes only the year itself being in repeatedYears. repeatRefusal (leave.ts:867) also refuses past nine semesters. After any granted repeat that is every later year: withRepeat (leave.ts:841) gives 6 enrolled + 2 + 2 = 10 for a year-2 spring after a year-1 repeat, and 8 + 2 + 0 = 10 for year 3. scope-school.test.ts:676 says this itself: 'one repeat is the most the nine allow, which makes eight'. So a Fail in year 2 or 3 after a repeat, at an evaluation that doesn't end the School (for example good to concern, or concern to warning), is still told 'at the year's end you can ask to repeat the year', which 'Repeating would make 10 semesters…' then refuses. In the last year, offerRepeat keeps the student on because the additional term is open (school.ts:2900), so the Fail's notice offers a repeat while 'Your Degree Isn't Complete', at the same instant, offers only the additional term. This is the same over-promise the fix closed for dismissals. It is found by reading the code, not played. The fix is to test for any granted repeat ((repeatedYears ?? []).length > 0) or for withRepeat > maxSemesters, not for this year's.",
+        "src/engine/systems/courserecord.ts:255 (Permanent Incomplete `repeated`) has the same narrow test. A Permanent Incomplete in year 2 or 3 after a year-1 repeat, not awaiting the degree, is still told to ask to repeat the year.",
+        "src/engine/systems/courserecord.ts:128-136 (the tellFails comment: 'offered only where a repeat can still be asked'), src/engine/content/guide/school.ts:594 ('only where that can still be asked: ... nor in a year already repeated'; 'A Permanent Incomplete's notice offers it on the same terms') and the row's rowText.downstream all claim more than the code does, for the reason above. The house standard counts a false guide line as part of the change.",
+        "docs/verification/audit/school.json (school.request_repeat) is not updated. This is outside the fix agent's files, and the result lists it."
+      ],
+      "weakTests": [
+        "tests/scope-school.test.ts:479 'PLAYER JOURNEY: a first year repeated and Text Analysis I slept through again… its Fail's notice offers no second repeat…'. The student is dismissed at that same evaluation (:500), so `!ended` already takes the offer away. Removing the repeatedYears clause from tellFails (courserecord.ts:140) leaves this test passing. The result's mutation record ('failed with repeatable forced true') does not isolate the clause. No played test now protects tellFails' repeatedYears check, for example a repeated-year Fail at an evaluation that doesn't end the School.",
+        "tests/scope-school.test.ts:429 last year's repeat: billing past six is still checked only as accountOwed > 0 (:446, :452), not as a worked literal. The fix agent left this, saying it was not among its problems."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The retake failed in the additional term is played through a reload. The literal notice (no offer) is right by two exclusions: `school.extra?.term !== term` and `ended` (withheld at that evaluation, school.ts:2895-2901). Both refusals are tested as guards, with the TEST SETUP named. The new guide line 'A retake not passed in it withholds the degree at that evaluation, and nothing more can be asked' is true: offerRepeat finds both refused because school.extra is set, and returns false.",
+      "problems": [
+        "The over-promise found under school.request_repeat touches this row's path. A last-year Fail after an earlier repeat leaves only the additional term open, yet tellFails' notice offers a repeat (courserecord.ts:140), which contradicts 'Your Degree Isn't Complete' (leave.ts:915). This row's own rowText claim, the Fail in the additional term, holds.",
+        "docs/verification/audit/school.json:9456 (school.request_extra_term) is still 'partial', with 'only from a fixture (evidence2-b09)'. This is outside the fix agent's files, and the result lists it."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The recheck is real. acrossProcessing (scope-school.test.ts) reads the primary account a minute before each processing and at it. The balance moves by exactly 138_00, and the only posting between is the grant, in January 2027 and January 2028. The new guide rows ('Asking For Conversion: No time and no money…', 'A year repeated is a year of its own…') are what the journey shows.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_conversion) has the older wording. This is outside the fix agent's files."
+      ],
+      "weakTests": []
+    }
+  ],
+  "alsoChecked": {
+    "tellFails call sites": "settleCourses is called only at school.ts:3458. Both of its branches end in tellFails, with true after a review's dismissal and with schoolEnded(standing) after evaluate. No Fail notice is lost: student-experience.test.ts calls settleCourses directly but asserts no Fail notice.",
+    "defects-g9-1": "The test now calls tellFails(..., false) after settleCourses and asserts both titles. That is accurate, and the apostrophe check covers the Fail's notice again.",
+    "guide/tutorial": "guide/school.ts lines 582-585, 'Finishing The Degree … granted, or called off', 'Asking For Conversion' and 'Hours To Convert' are true of the code, except :594 (see school.request_repeat). guide/coursework.ts removes 'That evening has passed.' with a past-tense comment, which is true. tutorial.ts's changes are outside this group (health, taxes, banking) and were not judged here.",
+    "runs": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-school.test.ts: 18/18 passed, exit 0."
+  }
+}

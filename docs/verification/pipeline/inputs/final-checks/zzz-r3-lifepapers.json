@@ -1,0 +1,161 @@
+{
+  "rows": [
+    {
+      "id": "health.enroll",
+      "claimed": "verified / verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Ran tests/evidence3-lifepapers.test.ts on the tree (5f0cba03): 16 of 16 pass, including the CD-income DEFECT test and the two paid-out and broken-CD tests added with the fix. accountlife.ts:456 (creditInterest) and lending.ts:1118 (paid out) now call recordInterest, as accountlife.ts:223 (broken) does.",
+        "Closed: the marketplace on played income. need-paths.test.ts:497 enrolls through Papers on Capital One interest the clock paid, and this file follows it to $706, $706 and $786 (KFF 2026 and 2027 literals), once each across a reload, and to 'You’re enrolled from …' and 'You’re enrolled.' through execute. The later-of rule is now told apart: a late withdrawal gives 1 December against Yale Health's 8 November end, with no premium on 1 November.",
+        "Still open, raised by the latest earlier check and not addressed: HUSKY D's shares and the marketplace's $45/$75/$450 are read only through Papers' quote (careQuote; evidence-g03-life:572-600, evidence-g05-life:680). No test has the clock raise a bill under an approved marketplace or HUSKY D plan and read its share. The $45 appears only as a denied claim's denied.share and as the amount an appeal overturns to. The row's downstream is 'coverOn/planOf -> every share', so the share on a clock-raised bill is the consequence the row names.",
+        "Partly open: 'healthMonth renews a program'. The round-three agent says only safetynet.test.ts reaches it, but that is out of date. evidence-g05-life.test.ts:647 enrolls in HUSKY D on Papers and plays it ending at its 1 September 2027 renewal for no work. The renewing branch (80 hours, six months more) is reached only on wages posted by hand (wagesPosted, TEST SETUP), and a withdrawn student has no played work.",
+        "The DEFECT test is titled 'March’s income test read' but asserts only years[2027].interest, not months['2027-03']. The consequence (the marketplace from June 1, not HUSKY D) does read March's income, so the month is covered indirectly. The paid-out and broken tests check the month directly."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-lifepapers.test.ts > health.enroll > PLAYER JOURNEY: the same CD broken on 10 March 2027 … records what it kept …", "why": "The figure it expects, `kept`, is read from the engine's own 'CD broken early' posting, and only checked to be > 0. No literal is worked from Chase's 180-day penalty, so a wrong penalty passes. It tests that the posting and the record agree, not the amount." },
+        { "title": "tests/safetynet.test.ts (the program renewal put in by hand)", "why": "Still the only test of the renewal that keeps cover through work, except g05's, which needs wages posted by hand." }
+      ],
+      "staleText": [
+        "docs/verification/audit/life.json health.enroll downstream 'coverOn/planOf -> every share; healthMonth premium' doesn't say that the 2027 benchmark ($786) takes over on 1 January, or that the start is the later of next month's first and the first on or after Yale Health's end.",
+        "round3 gapsOpen says the renewal was never played. evidence-g05-life:647 plays its ending at renewal on a Papers enrollment."
+      ]
+    },
+    {
+      "id": "health.appeal_decided",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the one problem the latest check left open. The denial's marketplace is now reached on income the clock paid (an Inherited family's interest). need-paths.test.ts:512 plays the case paid, then overturned ($138.98 back to the payee account). This file plays the upheld case: $183.98 kept, no 'Appeal won' posting, the 'Appeal Upheld' notice in its words, and Papers 'Denial Upheld'. It also plays debt-then-overturned through the player's own bank.set_payments and bank.transfer: debt -$183.98, then -$45, [[138_98, 0]] split between debt and bank, Pay It Off pressed paying $45.00, and Papers moving from Owed As Debt to Denial Overturned to Settled.",
+        "Review gaps: the refund's amount and account, the upheld consequence and both notices, the Papers render, and the played route are closed. The partly-paid-debt branch is held by evidence-g05-life on a marketplace put in by hand, not on the played plan. It is the same code, and the review's route gap is met by the three played outcomes, so this doesn't keep the row partial. I note it.",
+        "The draws (illness, denial, outcome) are forced, as in every round. The figures ($183.98, $45, $138.98) are literals worked from content constants, as the earlier check accepted."
+      ],
+      "weakTests": [
+        { "title": "tests/claims.test.ts > a marketplace claim > appealed within 180 days … upheld, or overturned to the plan’s share", "why": "Still in the gate. Either outcome passes, and the amount check sits behind `if (outcome === 'overturned')`." },
+        { "title": "tests/life-fixes.test.ts > … denied, gone to debt, and overturned on appeal …", "why": "Still in the gate. It checks the debt only as lower than before, on a New York marketplace put in by hand." },
+        { "title": "tests/evidence3-lifepapers.test.ts > health.appeal_decided > PLAYER JOURNEY: paid when due and upheld …", "why": "The 'no posting at the decision's hour' check filters on memos containing bill.what. If the refund memo ever stopped naming the bill, this line would pass vacuously. The /^Appeal won: / check beside it holds the claim." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:680's tests column says the evidence reaches the marketplace 'on wages put in by hand'. It cites neither need-paths.test.ts nor tests/evidence3-lifepapers.test.ts, which reach it on played income.",
+        "docs/GAMEPLAY-COVERAGE.md:474 still cites only tests/life-fixes.test.ts for health.appeal_decided."
+      ]
+    },
+    {
+      "id": "documents.us_status",
+      "claimed": "partial / working, evidence missing",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Every problem the latest check (b06) left open is closed on the tree. (1) papers-fixes.test.ts's header (:4-6) and title (:55) now say 'with no grace' and record the fifteen days in the past tense. (2) usWorkAuthorized's out-of-status line went (permission.ts:109-112 says so in the past tense). (3) The row's downstream names authorizationFor only in the past tense. (4) The marketplace plan the clock ends is now bought on income the player took: bank.take_term_interest on Chase's CD, $10,110.10, a literal at 3.50%/365 over 37 days. It is enrolled on Papers in the grace, the decision is dated 17 October, Out Of Status comes that day, the plan ends on the 1 November look with no premium, and the marketplace is refused afterwards. A citizen twin keeps hers and pays $706.",
+        "Both defects round three found are fixed and pass: the notice is 'Your Marketplace Plan Won’t Begin' with lostAt unset (health.ts:521-529), and the uncovered-from date is November 1.",
+        "The round-three agent kept the row partial for a plan that had begun and then ended out of status. No review gap or earlier check named it, and it is reachable only through OPT years in. The `begun ? 'Has Ended'` branch is still reached by no played life. It is worth ledgering, but it isn't a gap this row was held to, so I give verified, not partial."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence2-b06.test.ts > documents.us_status > PLAYER JOURNEY: the degree the clock confers moves the look; … her marketplace plan ends with the month …", "why": "Still in the gate on $6,000 of May wages posted by hand. It is now superseded by the played withdrawal path in tests/evidence3-lifepapers.test.ts." }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json documents.us_status downstream: 'a marketplace plan ends with the month (health.ts:520-525)'. In every played life the plan ends at the next month's look before it begins, with 'Won’t Begin'. The line references (health.ts:365, :387, :526-540, identity.ts:90) have drifted.",
+        "Its tests field doesn't cite tests/evidence3-lifepapers.test.ts.",
+        "The 'Your Marketplace Plan Has Ended' title (the begun branch, health.ts:529) is a word no played life reaches. Only OPT, three years in, could."
+      ]
+    },
+    {
+      "id": "world.tick",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The owner's decision is confirmed in commit 9088e699: 'the 90-day rule for an undated decision went … the type now requires a date; an old save's undated row is dated'. expireDecisions (world.ts:125-129) closes only on dueAt. Prune (world.ts:133-150) keeps 180 days from closing, with no keeping to a date still ahead. attention.tsx's ninety-day words survive only in past-tense comments (:36, :268). CAPABILITIES.md says it in the past tense.",
+        "Review gaps: the undated expiry was removed by the owner, and its replacement (migrate dates an open undated row createdAt+90 and drops a closed one) is tested on an older save's JSON. Timeline pruning is in evidence-g04-life. A real raiser runs through the tick: the F-1's played 'Your US Status Is Ending' is closed within two days of 17 October with resolvedAt (not dismissedAt), leaves openDecisions, is kept at +179 days and gone by +183, across a reload. The stale prune comment was rewritten in the past tense (world.ts:143-144).",
+        "The latest check's open items (the undated branch and keeping to a later date) are both removed by the owner, so nothing it raised stays open."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-lifepapers.test.ts > world.tick > a save an older build left with undated rows (TEST SETUP) …", "why": "A fixture by necessity: no current build writes an undated row. It is acceptable as migration evidence, but it is not a played path." }
+      ],
+      "staleText": [
+        "docs/verification/audit/life.json world.tick changes still says, in the present tense, that the dismissal of an undated row after ninety days (world.ts:136) and the keeping past 180 days are rules. Both went on 2026-10-14. Its line references (world.ts:128, :153) have drifted. The round3 rowText correction isn't applied.",
+        "docs/CAPABILITIES.md:32's evidence column still says the decisions in its tests are raised by calling requireDecision, as setup, and cites smoke.test.ts. A played raiser is now in evidence2-b01 and tests/evidence3-lifepapers.test.ts."
+      ]
+    },
+    {
+      "id": "documents.apply_ssn",
+      "claimed": "partial / stale or wrongly grouped claim",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "Closed: the hospital refusal is now reached by the health week's own draw (forced to a stay, as every draw in these rounds is), not by careFor called directly. The twin is sent at the same hour (+21 days, a literal), and she applies the evening after discharge.",
+        "Still open: the lender consumer. Discover reads hasSsn only before its $25,000-a-year wage test, and wagesLastMonth counts 'salary' alone. No played life reaches that line: the Cabaret's best is $1,875 in thirty days, and family money is interest, not wages. In play the number changes which refusal is given, not the outcome. That fails the falsifiability test for that consumer. The audit row's downstream now admits it, but it still lists 'a lender’s terms' among hasSsn's readers. The row either drops the lender from its downstream or stays partial.",
+        "Everything else the review named was closed by the first round: the channel, the W-7's seven weeks, the IRS plan online against by mail, the hour, the panel, and the refusals. The New Haven-office refusal was removed (defects3 #71)."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence2-b06.test.ts > documents.apply_ssn > Discover reads the number: … a month’s wages past $25,000 a year …", "why": "$2,100 of wages is posted by hand. The terms ($78.33 at 7.99%) are SLATE's own, not an independent figure. Only the refused-against-approved contrast holds." },
+        { "title": "tests/evidence-g17-papers.test.ts > refuses in its words a Call within the hour, a hospital bed and a passport reported lost…", "why": "Still in the gate with the stay begun by calling careFor directly. It is now superseded for the hospital refusal by tests/evidence3-lifepapers.test.ts." }
+      ],
+      "staleText": [
+        "docs/verification/audit/papers.json documents.apply_ssn issue field still says 'Not checked: a bank’s branch hour once one comes, a lender refusing for want of one, the W-7’s seven weeks more, and the plan by mail'. The first round checked all four. The round3 rowText correction isn't applied.",
+        "Its downstream cites lending.ts:458 and identity.ts:103-108. Line references drift, so it should name functions."
+      ]
+    },
+    {
+      "id": "health.choose_clinic",
+      "claimed": "deferred / stale or wrongly grouped claim",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "The round-three agent gave 'deferred', but nothing shows the owner deferred or removed this row. There is no entry in the handoff, UNBITTEN or the owner's decisions in 9088e699. Deferred is for the owner's removals only. Its own disposition, 'stale or wrongly grouped claim', disagrees with the verdict.",
+        "The new test only re-measures the open gap: for a family-made New Haven life, Papers draws no Your Doctor, and choosing the town's one practice books the same visit, place and $0 share as the twin who didn't choose. That is evidence that the command decides nothing in play. It closes nothing.",
+        "Still open, as the latest check said: no played life can take this action on a screen, and the choice changes no outcome in New Haven. The outcomes it does change (London's Bupa at £79, Mexico City's MX$60) are reached only by quickSave fixtures. It needs a second New Haven practice, the row recorded as not applying to New Haven, or the owner's deferral."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-lifepapers.test.ts > health.choose_clinic > PLAYER JOURNEY: the Scraping family’s student has no Your Doctor …", "why": "It shows a no-op, sent by command with no control drawn. It is evidence of the gap, not of the row's claim." },
+        { "title": "tests/evidence2-b01.test.ts > health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s … is billed …", "why": "Carried from b01: it asserts only bill > 0. The £79 literal is in evidence-g03-life." }
+      ],
+      "staleText": [
+        "The round3 'deferred' verdict has no owner decision behind it."
+      ]
+    },
+    {
+      "id": "health.appointment",
+      "claimed": "partial / stale or wrongly grouped claim",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "Closed: the owed-visit fix is re-shown on a family-made life. After Call It Off, Papers shows 'not yet seen', the next drawn week books, the visit is kept at Fair Haven, owedVisit is cleared, and one 'A Doctor’s Visit' notice is sent. The laid-up and in-hospital gaps were closed by evidence-g05-life.",
+        "Still open, as the latest check said: in New Haven, where every played life lives, 'renewPrescriptions -> fillMedicine' is read by nothing. rxValidUntil reads RX.validYears, which only ca-bc has, and British Columbia is reached only by quickSave. Closing it needs Connecticut's rule researched (CGS 20-614) or the owner. No test can close it."
+      ],
+      "weakTests": [
+        { "title": "tests/evidence3-lifepapers.test.ts > health.appointment > PLAYER JOURNEY: a visit called off is owed on Papers …", "why": "The owed visit's 'what' and the newly drawn visit's 'what' are the same words, so the careLog line can't tell 'the owed visit was booked' from 'the drawn visit was booked'. Only owedVisit being cleared holds the fix. Lines 581-582 are the same assertion twice." },
+        { "title": "tests/referrals.test.ts > a referral > comes of a visit kept …", "why": "Carried: it still enters through book() called directly." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:475 still says, in the present tense, 'while one is owed the health week drops every doctor’s visit it draws and books no review' and 'No test checks a visit kept while laid up'. Both stopped being true (fixed 2026-10-13, and evidence-g05-life).",
+        "docs/GAMEPLAY-COVERAGE.md:681's correction column says owedVisit 'drops the health week's later visits and reviews until health.book', in the present tense, and still lists the owed-visit defect as [needs engine change]."
+      ]
+    },
+    {
+      "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+      "claimed": "verified / verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The owner's decision is confirmed in 9088e699 ('the receipts knob went'). In src, receipts, jobCosts and recordJobCost remain only in past-tense comments (personality-traits.ts:20-27, :84; earnings.ts:51, :275; taxreturn.ts:890). The new test renders Keeps Accounts' and Chaotic's looks on a life made with them. Each shows only its live figures (+10%, +30%, −8%, matching the systemMods), and neither carries 'receipt'. KNOB_LIMITS and KNOB_READS agree, and no trait has receipts.",
+        "The nine live knobs were verified through play by the latest check (b03): morning and evening through prepare, the 9 AM class, judged work and the 8 PM Cabaret; bondWarmth and bondWound through the cast list and classmates; company and the four prep knobs in evidence-g09-life. The only problem it left open was receipts, which is now removed."
+      ],
+      "weakTests": [
+        { "title": "tests/traits-connected.test.ts and tests/arrears.test.ts (the old knob tests)", "why": "Carried from b03: still in the gate and weaker than the evidence-g09 and evidence2 journeys beside them." }
+      ],
+      "staleText": [
+        "docs/verification/audit/life.json knob row downstream still leads with 'taxreturn.ts:894-895 (receipts, in figuresFor …)' and carries line references (school.ts:307-308, :314-315, :922-925; coursework.ts:568-573) that have drifted. The round3 rowText (functions, not lines, with receipts in the past tense) isn't applied."
+      ]
+    }
+  ]
+}

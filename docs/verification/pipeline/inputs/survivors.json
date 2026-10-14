@@ -1,0 +1,8 @@
+{
+  "bank.take_term_interest|src/engine/systems/lending.ts|if (maturity === undefined || dateKey(s.now - 1, s.homeZone) < maturity) term.accrued": "A redundant guard: the day just ended is never the maturity day's, since the deposit ends at the midnight that opens it. Taken out on 2026-10-13.",
+  "life.sleep|src/engine/systems/life.ts|const busy = occupiedAt(s, start);": "A redundant guard: the bedtime is asked again at the bedtime, in the same words, and the command's rollback puts the clock back. Taken out on 2026-10-13.",
+  "world.set_preferences|src/app/game-context.tsx|  }, [sim, timeSpeed, halt]);": "Survived the first run, where the test rendered the page again with its callbacks made anew, which ran every effect again; with them kept by their dependencies, as React keeps them, it was run again in a copy of the tree on 2026-10-13 and killed.",
+  "bank.close_current|src/engine/systems/statements.ts|  const end = account.closedAt ?? sim.now;": "A gap: the test reads the closed account’s statement at the moment of closing, where its closing and now are the same instant.",
+  "card.report|src/engine/systems/security.ts|const days = rush ? rules?.rushDays ?? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;": "Equivalent once Wells Fargo’s and Shinhan’s rush days went (2026-10-13): the only bank listing rush days, Capital One, lists 3, the estimate’s own figure.",
+  "h-where-weather|src/engine/world/place.ts|  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);": "A gap: no test renders the place look for a student born away from New Haven, where the city it calls home would differ."
+}

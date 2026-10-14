@@ -1,0 +1,134 @@
+{
+  "rows": [
+    {
+      "id": "h-money",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Open: the 'No account' fallback (Home.tsx:450, `primary?.name ?? 'No account'`) and its 'Your Bank' label (Home.tsx:452, `primary?.institution ?? 'Your Bank'`) are drawn only after TEST SETUP closes the checking by hand (`checking.closedAt = sim.now`, evidence2-b12.test.ts:280). Play cannot reach either. bank.close_current refuses a life's only current account, and the bank and lending paths that close a current account always leave one open, as the second skeptic found when it read them. The fixture render shows the fallback's words and that 'Your Bank' navigates to ('/workspace/bank','Money'). It is not a played path, so the review's gap ('No account' fallback untested) is met only by a fixture. gapsClosed wrongly lists the 'Your Bank' label as closed. It belongs with this open gap.",
+        "Checked and closed by play: the overdrawn alert. bank.debit_overdraft on, a bank.transfer of the whole $92,391.00 to savings, and the clock's midnight groceries take the checking to -$10.00. The test reads 'Chase Total Checking: -$10.00. Worth $503,542. Your account is overdrawn.' across a reload, and the Chase press navigates to ('/workspace/bank','Money'). The twin that never opted in reads '$0.00. Worth $503,542, $10 of it owed.' with no alert. The worth moved from the claimed $505,424 to $503,542 after the c-wealth fix (Yale Health's $1,882 plan, now owed and paid from savings). The test's comment explains the change in the past tense.",
+        "Closed in round one and still in the gate: the line against the profile's figures, a played Move Money clearing the alert across a reload, the card's 'of it owed', and the LockedPanel and Locked Gated button before ui.money and ui.bank, reached through tutorial.read.",
+        "Ran tests/evidence2-b12.test.ts and tests/evidence-g33-ui.test.ts on 2026-10-13: 56 of 56 pass."
+      ],
+      "weakTests": [
+        {
+          "title": "“No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and the line names it; every account closed by hand, the line reads “No account: $0.00. Worth $0.” and “Your Bank” opens the bank screen",
+          "why": "The fallback is drawn only over a hand-closed account. It proves the words, but not that a player can see them."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json h-money.tests still says 'none renders it ... no test renders Home'. tests/evidence-g33-ui.test.ts, tests/evidence2-b12.test.ts and tests/guide-examples-money.test.ts all render the Money line.",
+        "h-money.entry cites Home.tsx:445-453. The Money panel is now Home.tsx:447-455."
+      ]
+    },
+    {
+      "id": "h-school",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Open: the Graduated branch is drawn only over setStanding('graduated'), set by hand on day one (evidence-g33-ui.test.ts:342-348). That test does show the 'Graduated, graduated' defect fixed, so the defect counts as closed. But no test in the gate renders a degree reached by play. student-experience.test.ts and school-journey-gaps.test.ts also set the graduation by hand. The branch is reachable by play (six terms kept up), just slower than a gate test allows, so this is missing evidence, not an unreachable branch.",
+        "Checked and closed: Next from nextClasses. At noon on 26 Nov 2026 (the fall recess) and on 12 Dec after a kept-up fall, bookedFor(sim) is asserted empty with the same predicate Home uses, and the line reads 'Next: Classes, November 30, 2026 at 9:00 AM.' and 'January 11, 2027 at 9:00 AM.'. Both dates are anchored in the Bulletin's content. The mutation `next = enrolled ? booked : undefined` fails both.",
+        "Checked and closed: On Leave is pinned as 'On Leave, academic concern' with the concern's alert and no Next. 'Year 2, academic warning' and 'Left the school, dismissed', each with its alert, are reached by the clock, the dismissal across a reload.",
+        "Checked and closed: the rank as a worked literal. The craft means are set by TEST SETUP so the rule's own words give 6 of 16, then 7 of 16 when the tie is raised. That pins a strict 'above' and a mean over all 21 skills, and it is independent of rankIn.",
+        "Ran on 2026-10-13: all pass."
+      ],
+      "weakTests": [
+        {
+          "title": "a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next",
+          "why": "The degree is conferred by setStanding on day one rather than reached by play. It also reads the rank back through rankOf, a copy of rankIn."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json h-school.tests still says 'none: no test renders Home'.",
+        "h-school.entry cites Home.tsx:480-505. SchoolLine now starts at Home.tsx:482 (to about :513), mounted at :456."
+      ]
+    },
+    {
+      "id": "h-papers",
+      "claimed": "partial (implementation missing)",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "The claim's 'implementation missing' no longer holds. Defect 42 ('growing each month' said before the due date) is fixed: Home.tsx:534-540 adds `growing`, true only once a return with something owed is past its due date. The test still titled 'DEFECT: filed early and left unpaid ...' now passes. On the day of filing it reads '$166 of tax owed' without 'growing'. The day before the due date it reads the same, with troubles() at $165.60. The day after, it reads 'growing each month'. defects3-50-70.test.ts:260 holds the guide's matching words. The verdict stays partial for the reason below.",
+        "Open: Connecticut's half of owedEverywhere on Home ($3.72 of $111) is shown only on a life no player can start (`family: undefined, wealth: 'scraping'`, TEST SETUP). bootstrap's newLifeFrom makes every new life the wealthy family's, so a played student never owes Connecticut within reach. The IRS half is shown by play: $176 against the stored $172 at 180 days past due, worked from IRC 6651(a)(2) and 7% compounded daily, with the bank emptied by TEST SETUP and the filing played.",
+        "Checked and closed by play: the Unemployment clause. A kept-up fall, the Summer Cabaret joined by command, thirteen $375 Fridays, a withdrawal, a refusal on 2 Sep in the engine's words, and a claim on 1 Oct give 'Unemployment, $93 a week.'. That figure is worked as floor((3375+1500)/2/26). The test holds across a reload, and the Papers press navigates.",
+        "Checked and closed in round one: the return alert's date and '$166 to pay', 'a late penalty in it' at $174, and 'Cover: none.' with 'You have no health cover.' after a played withdrawal.",
+        "Ran on 2026-10-13: all pass."
+      ],
+      "weakTests": [
+        {
+          "title": "DEFECT: filed early and left unpaid, Home says the tax is “growing each month” on the day it’s filed, though nothing accrues before the due date; it should say so only once the date has passed",
+          "why": "The test is sound, but its title is now false in the present tense: Home no longer says this. Under the house standard it should be retitled, with 'DEFECT:' dropped and the past tense used. renames.json does not cover it."
+        },
+        {
+          "title": "Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110",
+          "why": "It starts from a family that creation cannot offer, so the states' half is shown only on a fixture start."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json h-papers.tests still says 'none: no test renders Home'.",
+        "h-papers.entry cites Home.tsx:511-540. PapersLine is now Home.tsx:516-550.",
+        "h-papers.explanation says tax owed is 'owedOn’s'. Home reads owedEverywhere (owedAll plus owedToStates) at Home.tsx:525. The explanation should also record, in the past tense, that until later on 2026-10-13 the alert said 'growing each month' before the due date."
+      ]
+    },
+    {
+      "id": "l-person",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Open: 'Your Own Plans' shown only for the player, and every 'they' wording ('Their body.', 'On their papers.'). Both are drawn only over a second Person put into universe.people by hand. Play holds one Person: bootstrap.ts is the only place a Person is added, and after a played fall universe.people is her alone, which the test asserts. Any other id resolves to 'They aren’t part of this story any more.'. The branch can't be reached in play, so the review's gap is met only by a fixture.",
+        "Checked and closed: the creation side of the unit split, played through CharacterCreation's own handlers. Born in London, the screen asks Centimeters and Kilograms, 170 and 65 give a BMI of 22.5, and the look in New Haven reads '5 ft 7 in and 143 lb'. Born in New York, it asks feet, inches and pounds: 5, 7 and 143 give 170.2 cm and 64.9 kg, a BMI of 22.4. The conversions are worked by hand.",
+        "Checked and closed: the injury date is tied to the clock. The line is present at 8 AM on 6 Oct and gone by 9 AM. The '43 days' assertion is a calendar identity that doesn't read the injury record, but the 8 to 9 AM bracket carries the tie.",
+        "Closed in round one: every body line word for word, the ways in order, Depression's Kept up and Left alone through health.treat across a reload, and the trait, condition and plans looks opened by pressing their ways.",
+        "Ran on 2026-10-13: all pass."
+      ],
+      "weakTests": [
+        {
+          "title": "only the player is a Person: after a fall played the world holds her alone, and a person look for anyone else is gone; only a second Person put there by hand draws the look’s “they”, without Your Own Plans",
+          "why": "The 'they' branch and the player-only Your Own Plans are shown only over a hand-inserted Person."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json l-person.explanation cites wellbeing.tsx:161 and CharacterCreation.tsx:255. The lines are now wellbeing.tsx:164 and CharacterCreation.tsx:256.",
+        "l-person.tests cites only tests/looks.test.ts. tests/evidence-g33-ui.test.ts and tests/evidence2-b12.test.ts hold the row's evidence."
+      ]
+    },
+    {
+      "id": "n-decision-us-status",
+      "claimed": "partial (implementation missing)",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "The claim's 'implementation missing' no longer holds. Defect 43 (premium processing counting federal holidays) is fixed. permission.ts:56-61's businessDaysOn takes `federal` and skips federalHoliday, and documents.apply_opt passes `true` (permission.ts:229). The test still titled 'DEFECT: Apply For OPT, Premium Processing ...' now passes, with readyAt on 17 July 2029 counted by hand under 8 CFR 106.4 and the $2,250 memo. The verdict stays partial for the reason below.",
+        "Open: the OPT-offering decision, the row's main path, is still reached only after TEST SETUP confers the degree with setStanding('graduated') on day one. Everything after that is played: the clock raises the decision at the F-1's own program end of 31 May 2029, due 30 July. The F-1 is untouched, and STARTING.graceDays and STATUS_GRACE_DAYS.f1 are independently pinned. The Home press pays $470, a permit is pending to 30 Aug, status is held past 30 July, and the clock approves it for twelve months across a reload. A degree is reachable by play, just not inside a gate test, so this is missing evidence.",
+        "Checked and closed by play: the refusal form. A withdrawal on 1 Sep 2026 raises the decision a minute later with actions [], due 16 Sep. Home shows it with no Apply button, and it lapses with her status across a reload.",
+        "Checked and closed: 'answered from Papers too'. In round one, documents.apply_opt run directly resolves the decision at that moment, so it can fail on permission.ts's resolve.",
+        "Checked and closed: defect 76's stale prose in tests/evidence-g33-ui.test.ts. The header at :46-47 is now in the past tense, and :820 notes the old 'DEFECT:' title.",
+        "Ran on 2026-10-13: all pass."
+      ],
+      "weakTests": [
+        {
+          "title": "DEFECT: Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July; SLATE counts both, and decides it Friday 13 July",
+          "why": "The test is sound, but its title says in the present tense that 'SLATE counts both, and decides it Friday 13 July', which the fix falsified. It should be retitled, with 'DEFECT:' dropped and the past tense used. renames.json does not cover it. The same pattern was fixed in g33 as defect 76."
+        },
+        {
+          "title": "PLAYER JOURNEY: a graduate’s F-1, issued for the class of 2029 to 30 July 2029, is looked at by the clock on 31 May, the program’s end, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending to 30 August, which holds her status past 30 July and is approved for twelve months",
+          "why": "The degree is conferred by setStanding on day one. Everything after it is played."
+        }
+      ],
+      "staleText": [
+        "docs/verification/audit/ui.json n-decision-us-status.downstream cites OPT approval at permission.ts:165-183. The PERMISSION_KIND handler is now permission.ts:238-259, and documents.apply_opt is :221-236.",
+        "n-decision-us-status.tests cites only tests/papers-fixes.test.ts, whose resolvedAt assertion take_decision_action satisfies by itself. The row's evidence is in tests/evidence-g33-ui.test.ts and tests/evidence2-b12.test.ts.",
+        "n-decision-us-status.changes should say premium is decided in thirty federal business days, with weekends and federal holidays skipped since 2026-10-13."
+      ]
+    }
+  ]
+}

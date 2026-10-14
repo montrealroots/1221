@@ -1,0 +1,2665 @@
+[
+ {
+  "id": "bank.open_current",
+  "key": "b05",
+  "file": "src/engine/systems/lending.ts",
+  "find": "declines: { unpaid: 0.85, paid: 0.5 },",
+  "replace": "declines: { unpaid: 0.85, paid: 0.85 },",
+  "protects": "paid, the report turns her away in 40% to 60% of 320 draws… (run: killed, the draws came above 192)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.open_current paid, the report turns her away in 40% to 60% of 320 draws at the four banks (SLATE’s 50%), Chase among them now the $30 is paid, opening nothing"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.open_current",
+  "key": "b05",
+  "file": "src/engine/systems/bankmoves.ts",
+  "find": "if (!bank) return 'That isn’t a bank where you live.';",
+  "replace": "if (!bank) return undefined;",
+  "protects": "refuses a bank in London as no bank where she lives… (run: killed, Barclays went through)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.open_current refuses a bank in London as no bank where she lives, and a deposit from the books’ own Wages account as no account of hers; a life holds no other person’s account to try"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.open_current",
+  "key": "b05",
+  "file": "src/engine/systems/bankmoves.ts",
+  "find": "    const no = openRefusal(s, person, bank.id);",
+  "replace": "    const no = undefined as string | undefined;",
+  "protects": "PLAYER JOURNEY: Bank of America’s two business days of review turn the application down… (run: killed, Bank of America opened)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.open_current PLAYER JOURNEY: Bank of America’s two business days of review turn the application down on Wednesday 26 August, her photo ID reported lost meanwhile, and the $100 comes back to Chase on Thursday 27 August; her twin, who lost nothing, is opened"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.set_order_source",
+  "key": "b05",
+  "file": "src/engine/systems/bankmoves.ts",
+  "find": "    order.fromId = account.id;",
+  "replace": "    void account;",
+  "protects": "PLAYER JOURNEY: moved to Capital One before a penny is in it… (run: killed, Chase paid the $50)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.set_order_source PLAYER JOURNEY: moved to Capital One before a penny is in it, the $50 order doesn’t go on Friday 28 August, from there or from Chase, and says so once; funded, it goes on 28 September from Capital One and lands on 1 October"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.set_order_source",
+  "key": "b05",
+  "file": "src/engine/systems/payments.ts",
+  "find": "    const source = orderSource(s, person, order);",
+  "replace": "    const source = s.universe.accounts[person.primaryAccountId!];",
+  "protects": "PLAYER JOURNEY: moved to Capital One before a penny is in it… (run: killed, Chase fell $50)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.set_order_source PLAYER JOURNEY: moved to Capital One before a penny is in it, the $50 order doesn’t go on Friday 28 August, from there or from Chase, and says so once; funded, it goes on 28 September from Capital One and lands on 1 October"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.set_order_source",
+  "key": "b05",
+  "file": "src/engine/systems/payments.ts",
+  "find": "to.kind !== 'savings') throw new CommandError('A standing order of your own goes into one of your savings accounts.');",
+  "replace": "to.kind === 'loan') throw new CommandError('A standing order of your own goes into one of your savings accounts.');",
+  "protects": "can’t make a current account a standing order’s target… (run: killed)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.set_order_source can’t make a current account a standing order’s target, so none is ever the account it pays into: the order takes every open current account of hers to pay from"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.close_current",
+  "key": "b05",
+  "file": "src/engine/systems/bankmoves.ts",
+  "find": "t.fromId === account.id || t.toId === account.id)) return 'Money is on its way",
+  "replace": "t.toId === account.id)) return 'Money is on its way",
+  "protects": "PLAYER JOURNEY: refuses Chase for the groceries pending on it… (run: killed, the pending refusal came instead)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.close_current PLAYER JOURNEY: refuses Chase for the groceries pending on it, then for $100 on its way, then for a payment set for a date into it; then it closes, what it holds arriving at Capital One on Wednesday 16 September, once, across a reload, and its statements end at the closing"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.close_current",
+  "key": "b05",
+  "file": "src/engine/systems/routing.ts",
+  "find": "if (i.payload.fromId === accountId || i.payload.toId === accountId) out.push('A payment set for a date uses it');",
+  "replace": "if (i.payload.fromId === accountId) out.push('A payment set for a date uses it');",
+  "protects": "PLAYER JOURNEY: refuses Chase for the groceries pending on it… (run: killed, Chase closed with a payment set into it)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.close_current PLAYER JOURNEY: refuses Chase for the groceries pending on it, then for $100 on its way, then for a payment set for a date into it; then it closes, what it holds arriving at Capital One on Wednesday 16 September, once, across a reload, and its statements end at the closing"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.report_lost",
+  "key": "b05",
+  "file": "src/engine/systems/documents.ts",
+  "find": "    if (p.stolen) doc.stolen = true;",
+  "replace": "    doc.stolen = true;",
+  "protects": "PLAYER JOURNEY: Report Stolen… pressed on the passport’s row… (run: killed, the lost license read stolen)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.report_lost PLAYER JOURNEY: Report Stolen… pressed on the passport’s row opens the confirm step on that row alone; Keep It closes it, nothing reported; Report Lost… on the license’s row, then Cancel It, reports it lost, not stolen"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.report_lost",
+  "key": "b05",
+  "file": "src/engine/systems/documents.ts",
+  "find": "documentsOf(person).find((d) => inForce(d, at) && (d.kind === 'passport'",
+  "replace": "documentsOf(person).find((d) => d.status === 'valid' && (d.kind === 'passport'",
+  "protects": "PLAYER JOURNEY: the New York license issued 14 June 2020 has run out… (run: killed, Citi opened on the run-out license)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.report_lost PLAYER JOURNEY: the New York license issued 14 June 2020 has run out by 15 June 2028: its row reads Run Out with no Report Lost…, and with the passport reported lost Citi turns her away, where a day before the run-out it opened her twin’s account"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.report_lost",
+  "key": "b05",
+  "file": "src/ui/papers/Documents.tsx",
+  "find": "{d.status === 'valid' && !expired && LOSABLE.has(d.kind) && (",
+  "replace": "{d.status === 'valid' && LOSABLE.has(d.kind) && (",
+  "protects": "PLAYER JOURNEY: the New York license issued 14 June 2020 has run out… (run: killed, the Run Out row drew Report Lost…)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.report_lost PLAYER JOURNEY: the New York license issued 14 June 2020 has run out by 15 June 2028: its row reads Run Out with no Report Lost…, and with the passport reported lost Citi turns her away, where a day before the run-out it opened her twin’s account"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "benefits.claim",
+  "key": "b05",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "    const worked = workedBetween(s, person, item.at - 7 * MS_DAY, item.at);",
+  "replace": "    const worked = { hours: 0, pay: 0 };",
+  "protects": "PLAYER JOURNEY: withdrawn on Wednesday 6 October 2027… (run: killed, the first week paid $93)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "benefits.claim",
+  "key": "b05",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "(dollarsOf * CONNECTICUT_UI.partialShare)",
+  "replace": "(dollarsOf * 0.5)",
+  "protects": "PLAYER JOURNEY: withdrawn on Wednesday 6 October 2027… (run: killed, the first week paid $24)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "benefits.claim PLAYER JOURNEY: withdrawn on Saturday 2 October 2027 at five, after the six hours worked at ten, the claim’s first Sunday, the next evening, holds that work: $93 less two-thirds of $138, $1; the next Sunday $93"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "benefits.claim",
+  "key": "b05",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "  const alternate = quartersBefore(y, q, 4);",
+  "replace": "  const alternate = basic;",
+  "protects": "PLAYER JOURNEY: withdrawn on Wednesday 6 October 2027… (run: killed, the claim was refused on the basic base period's $1,500)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "benefits.claim PLAYER JOURNEY: withdrawn on Wednesday 6 October 2027 with Saturday’s six hours owed, the $138 is paid a minute on; the claim filed then pays $93 its first Sunday, nothing worked in that week, then $93; in hospital and laid up nothing, then $93",
+   "benefits.claim PLAYER JOURNEY: withdrawn on Saturday 2 October 2027 at five, after the six hours worked at ten, the claim’s first Sunday, the next evening, holds that work: $93 less two-thirds of $138, $1; the next Sunday $93"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "life.look_after:order",
+  "key": "b01",
+  "file": "src/engine/systems/mortality.ts",
+  "find": "* (person.body ? bmiHazard(bmiOf(person.body)) : 1));",
+  "replace": "* 1);",
+  "protects": "the 1940 journey: with the weight's hazard gone, the draw 0.161 is over both twins' year and the orderer has no end drawn (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "life.look_after:order PLAYER JOURNEY: born 26 August 1940 at 5′8″ and 263 lb, a BMI of 39.9996, she orders in on her first morning; her birthday draws the year at 2.76 for 40 and over, not the twin’s 1.94, and the year ends her life on 1 September; the twin lives on"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "life.look_after:order",
+  "key": "b01",
+  "file": "src/engine/systems/health.ts",
+  "find": "const bmi = person.body ? bmiOf(person.body) : 22.5;",
+  "replace": "const bmi = 22.5;",
+  "protects": "the onset journey: read at 22.5 the orderer isn't diagnosed (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "life.look_after:order PLAYER JOURNEY: Order In pressed at 6′7″ and 222 lb, a BMI of 24.9997, carries her past 25 at midnight; on 1 September the month’s onset finds high blood pressure, at the overweight’s 1.465 of the risk, where her twin who ate a meal isn’t found with it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "life.look_after:order",
+  "key": "b01",
+  "file": "src/engine/systems/body.ts",
+  "find": "if (person.body) person.body.intake += BODY.eatenOut;",
+  "replace": "if (person.body) person.body.intake += 0;",
+  "protects": "both journeys: intake 134, the 11 grams and both readers' outcomes (both killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "life.look_after:order PLAYER JOURNEY: Order In pressed at 6′7″ and 222 lb, a BMI of 24.9997, carries her past 25 at midnight; on 1 September the month’s onset finds high blood pressure, at the overweight’s 1.465 of the risk, where her twin who ate a meal isn’t found with it",
+   "life.look_after:order PLAYER JOURNEY: born 26 August 1940 at 5′8″ and 263 lb, a BMI of 39.9996, she orders in on her first morning; her birthday draws the year at 2.76 for 40 and over, not the twin’s 1.94, and the year ends her life on 1 September; the twin lives on"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.dismiss_decision",
+  "key": "b01",
+  "file": "src/engine/world/world.ts",
+  "find": ".filter((d) => !d.resolvedAt && !d.dismissedAt)",
+  "replace": ".filter((d) => !d.resolvedAt)",
+  "protects": "the rail's count falls to none after Dismiss (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.dismiss_decision PLAYER JOURNEY: the rail’s count on GameShell is the status notice alone once the notices are read, and Dismiss on Home takes it to none; the row is refused after, and the status still ends on its date"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.dismiss_decision",
+  "key": "b01",
+  "file": "src/engine/world/world.ts",
+  "find": "decision.dismissedAt = s.now;",
+  "replace": "void s;",
+  "protects": "dismissedAt set by the press, the count, Home, and the refusals after (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.dismiss_decision PLAYER JOURNEY: the rail’s count on GameShell is the status notice alone once the notices are read, and Dismiss on Home takes it to none; the row is refused after, and the status still ends on its date"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.set_preferences",
+  "key": "b01",
+  "file": "src/app/game-context.tsx",
+  "find": "}, [sim, timeSpeed, halt]);",
+  "replace": "}, [sim, halt]);",
+  "protects": "all three page tests: after Pause or the halt the old interval keeps ticking, and after Play on a paused save nothing starts (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.set_preferences PLAYER JOURNEY: on a page holding the real provider, Pause pressed on the top bar stops the live clock, five seconds and nothing moves; Play starts it again, a second a second; the provider is mounted once throughout",
+   "world.set_preferences a paused save opens paused: the provider over it, reloaded, moves nothing in a minute; Play pressed, it runs",
+   "world.set_preferences the live clock’s own stop at a plan of your own pauses the save itself: standing at Call at 7:31, the top bar offers Play, and a minute on the plan is still waiting"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.set_preferences",
+  "key": "b01",
+  "file": "src/app/game-context.tsx",
+  "find": "    sim.execute({ kind: 'world.set_preferences', payload: { timeSpeed: 'paused' } });",
+  "replace": "    void 0;",
+  "protects": "the halt test: without the pause the next tick runs the plan and the clock past 7:31 (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.set_preferences the live clock’s own stop at a plan of your own pauses the save itself: standing at Call at 7:31, the top bar offers Play, and a minute on the plan is still waiting"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.set_preferences",
+  "key": "b01",
+  "file": "src/app/game-context.tsx",
+  "find": "  paused: 0,",
+  "replace": "  paused: 1,",
+  "protects": "the Pause and paused-save tests: paused runs a second a second (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.set_preferences PLAYER JOURNEY: on a page holding the real provider, Pause pressed on the top bar stops the live clock, five seconds and nothing moves; Play starts it again, a second a second; the provider is mounted once throughout",
+   "world.set_preferences a paused save opens paused: the provider over it, reloaded, moves nothing in a minute; Play pressed, it runs",
+   "world.set_preferences the live clock’s own stop at a plan of your own pauses the save itself: standing at Call at 7:31, the top bar offers Play, and a minute on the plan is still waiting"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.choose_clinic",
+  "key": "b01",
+  "file": "src/engine/systems/health.ts",
+  "find": "const own = hospital ? undefined : selfPayAt(clinicFor(person, care as 'visit' | 'urgent'), into);",
+  "replace": "const own = undefined;",
+  "protects": "Mexico City: the chooser billed Similares' MX$60 (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.choose_clinic LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60, the uninsured price worked out from the rule’s own numbers, where the one who chose Similares is billed its MX$60"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.choose_clinic",
+  "key": "b01",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "uninsuredMarkup: 1.75,",
+  "replace": "uninsuredMarkup: 2,",
+  "protects": "Mexico City: the twin's MX$3,311.60 (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.choose_clinic LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60, the uninsured price worked out from the rule’s own numbers, where the one who chose Similares is billed its MX$60"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.choose_clinic",
+  "key": "b01",
+  "file": "src/engine/systems/clinics.ts",
+  "find": "if (care === 'visit' && own) return own;",
+  "replace": "if (care === 'visit' && own && false) return own;",
+  "protects": "Mexico City: the chooser's visit at Similares and its price (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.choose_clinic LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60, the uninsured price worked out from the rule’s own numbers, where the one who chose Similares is billed its MX$60",
+   "health.choose_clinic LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP, chosen as her doctor, is billed, since the NHS doesn’t pay a private GP; her twin at Soho Square’s NHS practice pays nothing"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "b01",
+  "file": "src/engine/world/world.ts",
+  "find": "if (decision.dueAt < sim.now) decision.resolvedAt = sim.now;",
+  "replace": "if (decision.dueAt < 0) decision.resolvedAt = sim.now;",
+  "protects": "the row closed by the tick after its date and dropped from Home (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "b01",
+  "file": "src/engine/world/world.ts",
+  "find": "if (sim.now - closedAt > DECISION_RETENTION_DAYS * MS_DAY) {",
+  "replace": "if (sim.now - closedAt > 10 * DECISION_RETENTION_DAYS * MS_DAY) {",
+  "protects": "deleted by +183 days after closing (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "world.tick",
+  "key": "b01",
+  "file": "src/engine/world/world.ts",
+  "find": "at: addDays(sim.now, 2, sim.homeZone),",
+  "replace": "at: addDays(sim.now, 20, sim.homeZone),",
+  "protects": "closed within two days of its date, the tick's two-day beat (killed in a scratch run)",
+  "test": "tests/evidence2-b01.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "world.tick PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-ui-text",
+  "key": "b13",
+  "file": "src/ui/looks/actor.tsx",
+  "find": "if (kind === 'interest') return 'An interest, from before they were removed';",
+  "replace": "if (kind === 'interest') return 'Your interests';",
+  "protects": "The one remaining line stays in the past tense and names no interests: the opened-save test fails on the Listening row and on the 'no other interest word' check.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-ui-text PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+   "i-stale-claims keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
+   "i-stale-claims keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-ui-text",
+  "key": "b13",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": "+{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>",
+  "replace": "+{h.delta.toFixed(3)}, {h.source}</li>",
+  "protects": "Development History draws the record in words, not its raw key 'interest:sound_design': the opened-save test fails on the history line and on the count of 2.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-ui-text PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-ui-text",
+  "key": "b13",
+  "file": "src/engine/index.ts",
+  "find": "if (p.engagement && p.engagement.byInterest !== undefined) delete p.engagement.byInterest;",
+  "replace": "if (p.engagement && p.engagement.byInterest !== undefined) delete p.engagement.byInterest;\n      if (person.development) person.development.history = person.development.history.filter((x) => !x.source.startsWith('interest:'));",
+  "protects": "Migration 94 keeps the development history whole, which is why an older save still draws the line: the opened-save test fails on the history toEqual.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-ui-text PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "b13",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": "and the genres until 2026-10-10, when the owner removed the interests.",
+  "replace": "and the genres, and the interests are kept on the sheet and named on the Profile.",
+  "protects": "The row's corrected places stay in the past. This is the check's own example sentence, which the first round's test passed. Checked by running the classifier on the mutated text: 'keeps every sentence naming the interests in the places the row corrected …' fails, and so does the tree-wide test.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-stale-claims keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
+   "i-stale-claims keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "b13",
+  "file": "src/ui/looks/actor.tsx",
+  "find": "An interest was one too, until the interests went on 2026-10-10.",
+  "replace": "An interest is one too, and the interests are kept on the sheet.",
+  "protects": "actor.tsx's header stays in the past. The corrected-places test fails, checked by running the classifier on the mutated text.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-stale-claims keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
+   "i-stale-claims keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "b13",
+  "file": "src/engine/domain/model.ts",
+  "find": "94 removed the interests, at the owner's word,",
+  "replace": "94 keeps the interests, at the owner's word,",
+  "protects": "A new present-tense claim outside the row's places fails the tree-wide test (checked with the classifier). That test already fails on the four leftovers, so this mutation shows on its own only once they're fixed.",
+  "test": "tests/evidence2-b13.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "i-stale-claims keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "tax.pay",
+  "key": "b06",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "  const penalty = Math.min(left, p.penalty); left -= penalty; p.penalty -= penalty;",
+  "replace": "  const penalty = 0;",
+  "protects": "A part payment goes to the penalty before the interest: the $200.00 payment's $34.40 and the $100.00's all to the penalty",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "tax.pay PLAYER JOURNEY: $200.00 typed into Pay goes to the tax, then the penalty; $100.00 more all to the penalty; blank pays the penalty’s $45.28 before any interest; the notices stop, Pay goes, and no levy follows where an unpaid twin is levied",
+   "tax.pay charges no interest on the paying-late addition paid within 21 days of the assessment, and from the assessment on one paid after (IRC 6601(e)(2)(A))"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "tax.pay",
+  "key": "b06",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "if (!payFromBank(s, person, amount, `Income tax owed",
+  "replace": "if (!payFromBank(s, person, Math.min(amount, 100_00), `Income tax owed",
+  "protects": "The bank is charged exactly what is paid: $200.00, then $100.00, then the rest, summing to the Still Owed the screen showed",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "tax.pay PLAYER JOURNEY: $200.00 typed into Pay goes to the tax, then the penalty; $100.00 more all to the penalty; blank pays the penalty’s $45.28 before any interest; the notices stop, Pay goes, and no levy follows where an unpaid twin is levied"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.permission",
+  "key": "b06",
+  "file": "src/engine/systems/permission.ts",
+  "find": "doc.expiresAt = addYears(start, WORK_RULES.opt.months / 12);",
+  "replace": "doc.expiresAt = addYears(start, WORK_RULES.opt.months / 6);",
+  "protects": "The twelve calendar months' term: expiresAt 3 June 2030 and the 'OPT Approved' dates",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.permission PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.permission",
+  "key": "b06",
+  "file": "src/engine/systems/school.ts",
+  "find": "    scheduleUsStatus(sim, person);",
+  "replace": "    void scheduleUsStatus;",
+  "protects": "The degree reschedules the look at her status: the createSave look cancelled at Commencement and a new one set",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.permission PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work",
+   "documents.us_status PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers",
+   "documents.us_status DEFECT: Covered Connecticut, taken in her fifteen days, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and nothing is left for its renewal"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.us_status",
+  "key": "b06",
+  "file": "src/engine/systems/health.ts",
+  "find": "if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {",
+  "replace": "if (false && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {",
+  "protects": "Out of status, the marketplace plan ends with the month, told in its words",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.us_status PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.us_status",
+  "key": "b06",
+  "file": "src/engine/systems/permission.ts",
+  "find": "if (f1 && f1.status === 'valid') f1.status = 'cancelled';",
+  "replace": "if (f1 && f1.status === 'valid') void f1;",
+  "protects": "The F-1 canceled when she stays past her status",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.us_status PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.us_status",
+  "key": "b06",
+  "file": "src/engine/systems/school.ts",
+  "find": "    scheduleUsStatus(sim, person);",
+  "replace": "    void scheduleUsStatus;",
+  "protects": "The degree's own reschedule of the look (the createSave look replaced at Commencement)",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.permission PLAYER JOURNEY: a student the clock graduates applies for OPT on Papers before Commencement; the degree moves the look at her status; decided 3 June, valid twelve calendar months, said with both dates; ended by ninety days without work",
+   "documents.us_status PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers",
+   "documents.us_status DEFECT: Covered Connecticut, taken in her fifteen days, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and nothing is left for its renewal"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "benefits.assistance_month",
+  "key": "b06",
+  "file": "src/engine/systems/assistance.ts",
+  "find": "const before = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction) - fy.standard * 100);",
+  "replace": "const before = Math.max(0, grossUsd - Math.round(earnedUsd * SNAP.earnedDeduction));",
+  "protects": "The $217 standard deduction in the month's amount: $258.45, $258.52, $258.45",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "benefits.assistance_month PLAYER JOURNEY: a graduate on unemployment is paid $306 less 30% of four Sundays’ $372 and the month’s interest over $217, rounded up to the dollar, in literal figures; her claim exempts her from the time limit, so the fourth month is paid where a twin with no claim is cut off; the card holds what was paid less what the groceries took",
+   "benefits.assistance_month DEFECT: a claim made at nine on the evening of 24 January is paid at nine on the 31st, still January in New Haven: it reads December, $306, not January’s weeks, which are the month before only in UTC"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "benefits.assistance_month",
+  "key": "b06",
+  "file": "src/engine/systems/assistance.ts",
+  "find": "if (limited && within.length >= SNAP.abawd.months) {",
+  "replace": "if (limited && within.length > SNAP.abawd.months) {",
+  "protects": "Three months in three years without 80 hours, then 'SNAP Time Limit Reached' with nothing paid on 8 May 2028",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "benefits.assistance_month PLAYER JOURNEY: a graduate on unemployment is paid $306 less 30% of four Sundays’ $372 and the month’s interest over $217, rounded up to the dollar, in literal figures; her claim exempts her from the time limit, so the fourth month is paid where a twin with no claim is cut off; the card holds what was paid less what the groceries took"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "benefits.assistance_month",
+  "key": "b06",
+  "file": "src/engine/systems/assistance.ts",
+  "find": "if (workedBetween(sim, person, at - 30 * MS_DAY, at).hours >= SNAP.studentHours) return undefined;",
+  "replace": "if (false) return undefined;",
+  "protects": "The Cabaret's played hours keep a student's summer claim open (accepted on 26 June where the twin is refused)",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "benefits.assistance_month PLAYER JOURNEY: in the Summer Cabaret’s company her Friday stipends are the work that keeps a student’s claim open in the summer; a twin without the company is refused, and her claim isn’t closed through August",
+   "benefits.assistance_month DEFECT: the months the Cabaret’s wages are read pay a one-person household at least SNAP’s least, $25 in FY2027 (7 U.S.C. 2017(a); USDA’s cost-of-living adjustment of 21 August 2026), not nothing on July’s $1,875 or $11-odd on August’s $1,500"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "tax.due",
+  "key": "b06",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "'The IRS is owed nothing on it.'",
+  "replace": "'The IRS’s refund waits for the return, with no penalty on it.'",
+  "protects": "A return with the IRS owed exactly nothing is told so",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "tax.due the IRS owed exactly nothing is told so, with New York’s own; owed $1,000, told the $535 least and charged $550 filed seventy days late (New York quickSave lives)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "tax.due",
+  "key": "b06",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "${states.join(' and ')} each charge their own on what they’re owed.",
+  "replace": "${states.join(', ')} each charge their own on what they’re owed.",
+  "protects": "The several-states sentence naming New York and Connecticut",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "tax.due a return owed to New York and Connecticut, with the IRS’s part over $535, is told the $535 least and that both states charge their own, and each state’s letters and the IRS’s substitute are set (a New York quickSave life with work in New Haven)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "tax.due",
+  "key": "b06",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "lateMinimum: 535_00,",
+  "replace": "lateMinimum: 525_00,",
+  "protects": "The least past 60 days for a return required in 2027, $535, in the notice and in the $550 charged filing 70 days late",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "tax.due a return owed to New York and Connecticut, with the IRS’s part over $535, is told the $535 least and that both states charge their own, and each state’s letters and the IRS’s substitute are set (a New York quickSave life with work in New Haven)",
+   "tax.due the IRS owed exactly nothing is told so, with New York’s own; owed $1,000, told the $535 least and charged $550 filed seventy days late (New York quickSave lives)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.apply_ssn",
+  "key": "b06",
+  "file": "src/engine/systems/lending.ts",
+  "find": "if (terms.ssn && !hasSsn(person)) return",
+  "replace": "if (false && terms.ssn && !hasSsn(person)) return",
+  "protects": "Discover refuses the twin without a number; with the check gone she would be lent to",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "documents.apply_ssn Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "documents.apply_ssn",
+  "key": "b06",
+  "file": "src/engine/systems/taxid.ts",
+  "find": "if (person.currentLocationId !== YALE_DRAMA.cityId) return",
+  "replace": "if (false) return",
+  "protects": "The office's New Haven refusal, its words and nothing spent",
+  "test": "tests/evidence2-b06.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "school.make_up",
+  "key": "b09",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "      onComplete(s, person, r);",
+  "replace": "      void onComplete;",
+  "protects": "A degree waiting on the Incomplete is conferred when the make-up passes it. Killed: the journey stays short of graduated, with no MFA notice.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_up PLAYER JOURNEY: an Incomplete in the last spring keeps them from Commencement; Make Up A Session, pressed on the Standing tab the day after, passes it and confers the degree, once, through a save; a twin left alone has the degree withheld at the month’s end",
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.make_up",
+  "key": "b09",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "const passed = r.madeUp >= (r.owed ?? 0);",
+  "replace": "const passed = r.madeUp > (r.owed ?? 0);",
+  "protects": "The course is passed on the last owed session. Killed in the journey.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_up PLAYER JOURNEY: an Incomplete in the last spring keeps them from Commencement; Make Up A Session, pressed on the Standing tab the day after, passes it and confers the degree, once, through a save; a twin left alone has the degree withheld at the month’s end",
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.make_up",
+  "key": "b09",
+  "file": "src/engine/systems/school.ts",
+  "find": "      setStanding(s, person, 'withheld', `${r.name} wasn’t made up in its month, and the degree needs every course passed.`);",
+  "replace": "      void r;",
+  "protects": "onPermanent withholds a waiting degree at the month's end. Killed in the twin.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_up PLAYER JOURNEY: an Incomplete in the last spring keeps them from Commencement; Make Up A Session, pressed on the Standing tab the day after, passes it and confers the degree, once, through a save; a twin left alone has the degree withheld at the month’s end",
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld",
+   "school.extend_incomplete DEFECT: a Permanent Incomplete that withholds a waiting degree doesn’t tell the student to ask to repeat the year, which the withholding leaves them no way to ask"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.extend_incomplete",
+  "key": "b09",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "    scheduleDue(s, person, r);",
+  "replace": "    void scheduleDue;",
+  "protects": "The extension moves the reminder and the deadline. Killed: the old items stay, and the course lapses on 27 May.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.extend_incomplete",
+  "key": "b09",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "r.dueBy = (r.dueBy ?? s.now) + COURSE_RULES.incompleteDays * MS_DAY;",
+  "replace": "r.dueBy = (r.dueBy ?? s.now) + COURSE_RULES.remindDays * MS_DAY;",
+  "protects": "Thirty days more, to 26 June. Killed on the toast and the record.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.extend_incomplete",
+  "key": "b09",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "title: `A Week Left: ${r.name}`",
+  "replace": "title: `A Week To Go: ${r.name}`",
+  "protects": "The moved reminder's notice, on 20 May and on 19 June. Killed in the twin.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.extend_incomplete PLAYER JOURNEY: after Commencement, Ask For A Month More moves the last spring’s Incomplete to 26 June: the old date passes with the degree still waiting, a session made up in the month more confers it, and a twin left alone lapses at the new date and has the degree withheld"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_repeat",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  if (school.extra) return `Your additional term is ${termLabel(school.extra.term)}.`;",
+  "replace": "",
+  "protects": "A repeat is refused beside a granted additional term, in its words. Killed: the refusal becomes 'Your last year’s evaluation is past.'.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_repeat PLAYER JOURNEY: beside an additional term it’s refused in each of its words, asked for and then granted, and the panel offers no repeat; a twin with neither is let ask"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_repeat",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "      notify(s, person, 'Your Repeat Is Refused', `The chair and the dean refused it. ${why}`, 85);",
+  "replace": "      void why;",
+  "protects": "A first year's refusal at the decision is said. Killed in the first-year fixture test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_repeat the decision’s refusal of a first year, reached only from a fixture: a disqualification the faculty never judged, refused in its words, the class of 2029 kept and the fall on as before; a twin without it granted"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_repeat",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "      if (school.repeatBy !== undefined) { setStanding(s, person, 'withheld', `The chair and the dean refused your request to repeat the year. ${why}`); return; }",
+  "replace": "",
+  "protects": "A last year refused at the decision has the degree withheld. Killed in the last-year fixture test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_repeat the decision’s refusal of a last year, reached only from a fixture: the degree withheld in its words, the I-20 as it was; a twin without it granted"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_extra_term",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  if (would > EXTENDED_STUDY.maxSemesters) return { why: `It would make ${would} semesters, past the nine the Bulletin allows.` };",
+  "replace": "",
+  "protects": "The request is refused past nine semesters. Killed in the request fixture test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_extra_term past the Bulletin’s nine, reached only from a fixture: refused at the asking in its words, the panel offering none, and the degree withheld at the thirty days’ end; a twin without it is let ask, as the ninth"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_extra_term",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "    const would = enrolledTerms(school).length + 1;",
+  "replace": "    const would = enrolledTerms(school).length;",
+  "protects": "The decision counts the additional term itself toward the nine. Killed in the decision fixture test, which is then granted.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_extra_term past the Bulletin’s nine at the decision, reached only from a fixture: refused in its words and the degree withheld, no term on the calendar; a twin without it granted"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_extra_term",
+  "key": "b09",
+  "file": "src/engine/systems/leave.ts",
+  "find": "  if (!keptThrough(school) && disqualified(school)) return { why: 'The faculty’s disqualification stands against it.' };",
+  "replace": "",
+  "protects": "The request is refused on a disqualification the faculty never judged. Killed in the disqualification test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_extra_term a disqualification the faculty never judged, reached only from a fixture: refused at the asking in its words, and at the decision the degree withheld; a twin without it granted"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "b09",
+  "file": "src/engine/systems/school.ts",
+  "find": "  if (!hasNeed(person)) return 'Conversion to grant aid is for students on financial aid, and no need was found for you.';",
+  "replace": "",
+  "protects": "The command is refused for a life with no need, which is every creation-screen life. Killed in the journey.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_conversion PLAYER JOURNEY: a life made as the creation screen makes one, whatever its draft said of the family, has no need found: an assigned Saturday called in sick, the drawn button grayed and the command refused in its words, and nothing paid in January, where its twin with need is paid for the same six hours"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "b09",
+  "file": "src/engine/systems/school.ts",
+  "find": "    return { at: when, hours: convertibleHours(person, yearKeyOf(term), unassignedKnown(s.now)) };",
+  "replace": "    return { at: when, hours: convertibleHours(person, yearKeyOf(term), false) };",
+  "protects": "The command returns the hours May's processing pays. Killed in the returned-hours test and the fixture test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_conversion the hours the command returns in May are the hours May’s processing pays: six never assigned, 150 less the 144 booked, $138.00 into the account and onto the year’s scholarship",
+   "school.request_conversion a processing that finds nothing says so, reached only from a fixture: no grant, no scholarship, and the request done; the twin without it is paid"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.request_conversion",
+  "key": "b09",
+  "file": "src/engine/systems/school.ts",
+  "find": "title: 'No Hours To Convert'",
+  "replace": "title: 'Nothing To Convert'",
+  "protects": "A processing that finds nothing says so. Killed in the fixture test.",
+  "test": "tests/evidence2-b09.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.request_conversion a processing that finds nothing says so, reached only from a fixture: no grant, no scholarship, and the request done; the twin without it is paid"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-ambition",
+  "key": "b10",
+  "file": "src/engine/systems/personality.ts",
+  "find": "case 'stressGain': return 1 - steady * 0.3 + driven * 0.15;",
+  "replace": "case 'stressGain': return 1 - steady * 0.3;",
+  "protects": "Ambition leans stressGain. With the mutation, the worry and bone tests fail because Ambition 5 and 95 take the same stress.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-ambition PLAYER JOURNEY: money’s worry, a midnight overdrawn, adds 3.285 stress at Ambition 5 and 4.461 at 95 (4 × the knob), and its 2 of morale alike",
+   "c-disp-ambition PLAYER JOURNEY: the bone a first morning’s run breaks adds 6 × the knob, stress 14.300 at Ambition 5 and 16.064 at 95; a run that hurts nothing leaves both at 9.372",
+   "c-traits PLAYER JOURNEY: the hours, for a trait pressed on the page: Detached on empty 42.005 for the plain twin’s 42.477, Resilient awake 39.148 for 39.277, Chaotic soiled to 92.096 for 93.6",
+   "c-traits holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-ambition",
+  "key": "b10",
+  "file": "src/engine/systems/spending.ts",
+  "find": "w.stress = clamp(w.stress + WORRY_STRESS * personalityOf(person, 'stressGain'), 0, 100);",
+  "replace": "w.stress = clamp(w.stress + WORRY_STRESS, 0, 100);",
+  "protects": "Money's worry reads the knob. With the mutation, the worry test fails with 4 against 3.285 and 4.461.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-ambition PLAYER JOURNEY: money’s worry, a midnight overdrawn, adds 3.285 stress at Ambition 5 and 4.461 at 95 (4 × the knob), and its 2 of morale alike"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-ambition",
+  "key": "b10",
+  "file": "src/engine/systems/injury.ts",
+  "find": "w.stress = clamp(w.stress + 6 * personalityOf(person, 'stressGain'), 0, 100);",
+  "replace": "w.stress = clamp(w.stress + 6, 0, 100);",
+  "protects": "An injury reads the knob. With the mutation, the bone test fails because both lives end at 15.372.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-ambition PLAYER JOURNEY: the bone a first morning’s run breaks adds 6 × the knob, stress 14.300 at Ambition 5 and 16.064 at 95; a run that hurts nothing leaves both at 9.372"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-openness",
+  "key": "b10",
+  "file": "src/engine/systems/school.ts",
+  "find": "enjoyWork(person, { novel: true, rehearsal: true });",
+  "replace": "enjoyWork(person, { rehearsal: true });",
+  "protects": "The Cabaret rehearsal reads openness. With the mutation, the curtain test fails at the read-through assertion (0 against 3.6). This holds before and after the curtain fix.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-openness PLAYER JOURNEY: the Cabaret’s read-through takes openness, 3.6 between 5 and 95; its first curtain, not a rehearsal, moves the two alike, as the page’s “rehearsing new work” and the festival’s curtain have it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-openness",
+  "key": "b10",
+  "file": "src/engine/systems/enjoyment.ts",
+  "find": "DISPOSED.away * lean(person.personality?.openness)",
+  "replace": "DISPOSED.away * lean(person.personality?.agreeableness)",
+  "protects": "enjoyWork reads openness on new work. With the mutation, the read-through difference is 0, and the find string survives the away fix.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-openness PLAYER JOURNEY: the Cabaret’s read-through takes openness, 3.6 between 5 and 95; its first curtain, not a rehearsal, moves the two alike, as the page’s “rehearsing new work” and the festival’s curtain have it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-disp-openness",
+  "key": "b10",
+  "file": "src/engine/systems/enjoyment.ts",
+  "find": "  novel?: boolean;",
+  "replace": "  novel?: boolean;\n  road?: boolean;",
+  "protects": "No WorkDay field may be declared without a call that sets it. With the mutation, the WorkDay test fails on ['road'], which would also happen after the away fix.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-disp-openness declares no WorkDay field that no call of enjoyWork sets"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-traits",
+  "key": "b10",
+  "file": "src/engine/systems/life.ts",
+  "find": "const soils = 1.6 * personalityOf(person, 'hygieneDrift');",
+  "replace": "const soils = 1.6;",
+  "protects": "hygieneDrift's reader. With the mutation, the hours test fails because Chaotic ends at 93.6 instead of 92.096.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits PLAYER JOURNEY: the hours, for a trait pressed on the page: Detached on empty 42.005 for the plain twin’s 42.477, Resilient awake 39.148 for 39.277, Chaotic soiled to 92.096 for 93.6",
+   "c-traits holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-traits",
+  "key": "b10",
+  "file": "src/engine/systems/school.ts",
+  "find": "return move >= 0 ? move * personalityOf(person, 'bondWarmth') : move * personalityOf(person, 'bondWound');",
+  "replace": "return move;",
+  "protects": "bondWarmth and bondWound's reader (bondMove). With the mutation, the classmates test fails with 3 instead of 2.563 and −3 instead of −3.294.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits PLAYER JOURNEY: the classmates: Detached warmed 2.563 for helping Maya where the plain twin warms 3, Keeps Accounts cut 3.294 for Imani’s evening slept through where the plain twin is cut 3, and Restless lifted 1.580 more by a friend in the Carlotta cast than by none, the plain twin 1",
+   "c-traits holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-traits",
+  "key": "b10",
+  "file": "src/engine/systems/body.ts",
+  "find": "const eaten = body.habitKcal * personalityOf(person, 'appetite')",
+  "replace": "const eaten = body.habitKcal",
+  "protects": "appetite's reader. With the mutation, the midnight test fails because Indulgent stays at 101.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-traits PLAYER JOURNEY: the first midnight weighs an Indulgent student 101.010 kg where the plain twin stays at 101, and a bone broken on the first morning’s run mends in 28 days for a Resilient one where the plain twin’s takes 43",
+   "c-traits holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "b10",
+  "file": "src/engine/index.ts",
+  "find": "openAt(sim, player, bank, { checking: wealth.checking, savings: wealth.savings });",
+  "replace": "openAt(sim, player, bank, { checking: wealth.savings, savings: wealth.checking });",
+  "protects": "The opened accounts match the profile. With the mutation, the c-wealth journey fails because checking is no longer $92,391.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth PLAYER JOURNEY: comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it: Identity asks for one, Begin opens $92,391 and $413,043 at Chase, and the term’s Yale Health plan, $1,882, comes out of that checking at 9 AM",
+   "c-wealth PLAYER JOURNEY: charges the term’s Yale Health plan when the money has been moved to savings before 9 AM: owed, not dropped"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "b10",
+  "file": "src/ui/creation/CharacterCreation.tsx",
+  "find": "if (!CITIES.get(config.homeRegionId)) issues.push('Choose the town or city you were born in.');",
+  "replace": "",
+  "protects": "No birthplace is chosen for a new life, and Identity asks for one. With the mutation, the c-wealth journey fails because the issue and the held Continue are gone.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth PLAYER JOURNEY: comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it: Identity asks for one, Begin opens $92,391 and $413,043 at Chase, and the term’s Yale Health plan, $1,882, comes out of that checking at 9 AM"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-wealth",
+  "key": "b10",
+  "file": "src/engine/systems/school.ts",
+  "find": "payFromCurrent(s, person, account.healthPlan, `Yale Health plan, ${termWords(term)}`, 'school');",
+  "replace": "payFromCurrent(s, person, 0, `Yale Health plan, ${termWords(term)}`, 'school');",
+  "protects": "The term's plan comes out of the opened checking. With the mutation, the journey fails because no plan is bought and checking stays at $92,391.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-wealth PLAYER JOURNEY: comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it: Identity asks for one, Begin opens $92,391 and $413,043 at Chase, and the term’s Yale Health plan, $1,882, comes out of that checking at 9 AM",
+   "c-wealth PLAYER JOURNEY: charges the term’s Yale Health plan when the money has been moved to savings before 9 AM: owed, not dropped",
+   "c-wealth PLAYER JOURNEY: the plan the bank couldn’t take is said to be owed, comes out of savings at the next midnight, and on a withdrawal in the first fifteen days of classes comes back, as a plan paid does"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-tutorial",
+  "key": "b10",
+  "file": "src/app/SlateApp.tsx",
+  "find": "tutorial: config.tutorial !== false, paused: true",
+  "replace": "tutorial: true, paused: true",
+  "protects": "I Know SLATE maps to a life with no guide. With the mutation, the I Know SLATE journey fails because the config carries tutorial true and the shell shows locks.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-tutorial PLAYER JOURNEY: “I Know SLATE.” chosen and Begin pressed opens the game with no control locked, every destination on the rail and Play shown with the clock paused, no pressed state on it; Play pressed sends it live, and Pause shows, with none either"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-tutorial",
+  "key": "b10",
+  "file": "src/ui/shell/GameShell.tsx",
+  "find": "items: g.items.filter((i) => isOpen(s, i.feature))",
+  "replace": "items: g.items",
+  "protects": "The rail carries a destination only once its chapter is read. With the mutation, the guided journey fails because the rail is no longer ['Home'].",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-tutorial PLAYER JOURNEY: Begin on the default, Guide Me Through It, opens the game with Play locked and the rail holding only Home; Play pressed asks the guide and the clock stays paused"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "c-tutorial",
+  "key": "b10",
+  "file": "src/engine/world/bootstrap.ts",
+  "find": "if (config.tutorial || config.paused) universe.preferences.timeSpeed = 'paused';",
+  "replace": "if (config.tutorial) universe.preferences.timeSpeed = 'paused';",
+  "protects": "An unguided life also begins paused. With the mutation, the I Know SLATE journey fails because Play is not shown and the clock is not paused.",
+  "test": "tests/evidence2-b10.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "c-tutorial PLAYER JOURNEY: “I Know SLATE.” chosen and Begin pressed opens the game with no control locked, every destination on the rail and Play shown with the clock paused, no pressed state on it; Play pressed sends it live, and Pause shows, with none either"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.stipend",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const ct = connecticutTax(before + pay, cur) - connecticutTax(before, cur);",
+  "replace": "const ct = 0;",
+  "protects": "Connecticut's withholding on each stipend, kept as Connecticut's: the resident's return test fails (withheld, withheldBy, owedTo).",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.stipend PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February’s return reads the summer the clock paid whole: $3,819.96 federal, Connecticut’s $1,733.84, $3,432.94 of payroll tax, $1,357.88 withheld, a $7,628.86 balance split $6,294.96 to the IRS and $1,333.90 to Connecticut"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.stipend",
+  "key": "b08",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "for (const [s, v] of Object.entries(w.by)) if (s !== 'us') add(s, -v);",
+  "replace": "for (const [s, v] of Object.entries(w.by)) if (s === 'none') add(s, -v);",
+  "protects": "The return's split crediting Connecticut's own withholding against Connecticut's tax ($1,333.90 owed to CT): the resident's return test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.stipend PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February’s return reads the summer the clock paid whole: $3,819.96 federal, Connecticut’s $1,733.84, $3,432.94 of payroll tax, $1,357.88 withheld, a $7,628.86 balance split $6,294.96 to the IRS and $1,333.90 to Connecticut"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.stipend",
+  "key": "b08",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "const payroll = nra ? 0 : computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;",
+  "replace": "const payroll = nra ? 0 : computeAnnualTax(y.acting + y.workStudy, cityId, at, { currency: into }).payroll;",
+  "protects": "Payroll tax on the acting wages alone ($3,432.94 on $44,875): the resident's return test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.stipend PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February’s return reads the summer the clock paid whole: $3,819.96 federal, Connecticut’s $1,733.84, $3,432.94 of payroll tax, $1,357.88 withheld, a $7,628.86 balance split $6,294.96 to the IRS and $1,333.90 to Connecticut"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "abilities+techniques",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "return kin ? kin.reduce((s, k) => s + ceilingOf(person.craft!, k), 0) / kin.length : 100;",
+  "replace": "return kin ? Math.max(...kin.map((k) => ceilingOf(person.craft!, k))) : 100;",
+  "protects": "The reach as the mean of the kin's ceilings: the play-read test fails (ratio, growth at R, the Profile's reach).",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "abilities+techniques PLAYER JOURNEY: a play read by command grows imagination toward its reach, the mean of character’s and script’s ceilings: twins as played and five under it rise in the rule’s ratio, one at it not at all, and the Profile prints that reach"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "abilities+techniques",
+  "key": "b08",
+  "file": "src/engine/systems/evaluation.ts",
+  "find": "n: clamp(level(input.ability) / full(input.ability), 0, 1)",
+  "replace": "n: clamp(50 / full(input.ability), 0, 1)",
+  "protects": "judge reading the ability's level: the practice test fails, because the dims and the overall come out equal.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "abilities+techniques PLAYER JOURNEY: four abilities practised by command an hour a day for eleven days lift the next showing’s whole: every dimension that reads them higher, the two that read none of them the same, the techniques and the preparation alike",
+   "abilities+techniques PLAYER JOURNEY: counts voice and movement once, as abilities, on a night that reads them: The Seagull’s understudy run-through, by the clock, judged on the Rep company’s techniques without them",
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it",
+   "casting (castFit/castScore) gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first",
+   "standing/term evaluation PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: the player’s growth, attendance and coursework the same, standing a concern for the pace alone, in its words, on the Standing tab, and the Rep and the Summer Cabaret held to it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "abilities+techniques",
+  "key": "b08",
+  "file": "src/engine/systems/evaluation.ts",
+  "find": "filter(([k, w]) => TECHNIQUES.includes(k as Skill) && (w ?? 0) > 0)",
+  "replace": "filter(([, w]) => (w ?? 0) > 0)",
+  "protects": "A skill kept as an ability counted once: the Seagull night test fails, because voice and movement get into techniques and levels.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "abilities+techniques PLAYER JOURNEY: four abilities practised by command an hour a day for eleven days lift the next showing’s whole: every dimension that reads them higher, the two that read none of them the same, the techniques and the preparation alike",
+   "abilities+techniques PLAYER JOURNEY: counts voice and movement once, as abilities, on a night that reads them: The Seagull’s understudy run-through, by the clock, judged on the Rep company’s techniques without them"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "genre demands",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (!m) return withDemands(play.reads, play.kinds ?? []);",
+  "replace": "if (m) return withDemands(play.reads, play.kinds ?? []);",
+  "protects": "A profiled play reading its own techniques and not its kinds' demands: the farce-night test fails, because clown gets into its reads and the mastered twin differs.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "genre demands",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const out = { ...play.reads } as Partial<Craft>;",
+  "replace": "const out = withDemands({ ...play.reads }, play.kinds ?? []) as Partial<Craft>;",
+  "protects": "Same claim, through the material branch: the farce-night test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "genre demands PLAYER JOURNEY: a Summer Cabaret night of A Marriage Proposal, a farce, reads the play’s own techniques and not the clown its farce demands, and comes out the same with clown mastered",
+   "genre demands the farce’s look says what a farce’s work reads: not Clown, which a farce’s night by the clock doesn’t read",
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it",
+   "casting (castFit/castScore) gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "casting (castFit/castScore)",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const tonight = evaluation.dimensions.reduce((a, x) => a + x.prepared * x.day, 0)",
+  "replace": "const tonight = evaluation.dimensions.reduce((a, x) => a + x.prepared * 1, 0)",
+  "protects": "A night's delivery reading the day's condition: the delivery test fails (each run sum against the rule).",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "casting (castFit/castScore)",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "return fit * (1 - c.delivery + c.delivery * (s.last?.delivery ?? 1))",
+  "replace": "return fit * (1 - c.delivery + c.delivery * 1)",
+  "protects": "A fifth of the fit by the delivery: both casting tests fail (read gap, order, parts).",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it",
+   "casting (castFit/castScore) gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "casting (castFit/castScore)",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const k = open.findIndex((p) => p.for === 'either' || p.for === s.title);",
+  "replace": "const k = open.findIndex(() => true);",
+  "protects": "Parts given by title in read order: both casting tests fail.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it",
+   "casting (castFit/castScore) gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const shortOtherwise = attendance < ESTIMATE.attendanceFloor || grewTooLittle || workedPoorly || unreadyWork || failedNow.length > 0;",
+  "replace": "const shortOtherwise = attendance < ESTIMATE.attendanceFloor || workedPoorly || unreadyWork || failedNow.length > 0;",
+  "protects": "Growing too little stepping standing down: the test fails, because the driven twin stays good.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: the player’s growth, attendance and coursework the same, standing a concern for the pace alone, in its words, on the Standing tab, and the Rep and the Summer Cabaret held to it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (!school || school.standing !== 'good') return 'The Summer Cabaret’s company takes a student in good standing.';",
+  "replace": "if (!school) return 'The Summer Cabaret’s company takes a student in good standing.';",
+  "protects": "The Summer Cabaret held to good standing: the test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: the player’s growth, attendance and coursework the same, standing a concern for the pace alone, in its words, on the Standing tab, and the Rep and the Summer Cabaret held to it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "standing/term evaluation",
+  "key": "b08",
+  "file": "src/engine/systems/school.ts",
+  "find": "const pace = classPace <= 0 || atReach ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : grewTooLittle ? 'behind' : 'in line with';",
+  "replace": "const pace = classPace <= 0 || atReach ? 'in line with' : paced >= 1.1 * classPace ? 'ahead of' : 'in line with';",
+  "protects": "The reason's 'behind the class' wording, asserted as the whole reason: the test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "standing/term evaluation PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: the player’s growth, attendance and coursework the same, standing a concern for the pace alone, in its words, on the Standing tab, and the Rep and the Summer Cabaret held to it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "preparation dims",
+  "key": "b08",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean)",
+  "replace": "return { task, techniques, prep: {}, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean)",
+  "protects": "workContext passing the parts to the judge: the test fails, because the twins come out the same.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "preparation dims PLAYER JOURNEY: Read The Scene twice more, which grows no technique and focus by a hair, is read into the showing the clock gives: interpretation by the prepared factor the rule gives the familiarity, the dimensions that don’t read it the same, the whole higher, and the figure on the Coursework tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "preparation dims",
+  "key": "b08",
+  "file": "src/engine/systems/evaluation.ts",
+  "find": "f: E.prepFloor + (1 - E.prepFloor) * Math.min(1, need > 0 ? ctx.prep[p]! / need : 1)",
+  "replace": "f: E.prepFloor + (1 - E.prepFloor) * Math.min(1, ctx.prep[p]!)",
+  "protects": "A part read against what completes it: the test fails, because the interpretation ratio is off the rule's factor.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "casting (castFit/castScore) PLAYER JOURNEY: works each Carlotta night’s delivery from its record by the rule, the slept-through closing at nothing; with the twins’ craft made alike the chair reads one fit for both, and a fifth of it moved by the delivery between them, and the part with it",
+   "casting (castFit/castScore) gives a real term’s parts by partsFor’s rule, by title in the order read, so a lower read can hold a bigger part, and lists the reads highest first",
+   "standing/term evaluation PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: the player’s growth, attendance and coursework the same, standing a concern for the pace alone, in its words, on the Standing tab, and the Rep and the Summer Cabaret held to it",
+   "preparation dims PLAYER JOURNEY: Read The Scene twice more, which grows no technique and focus by a hair, is read into the showing the clock gives: interpretation by the prepared factor the rule gives the familiarity, the dimensions that don’t read it the same, the whole higher, and the figure on the Coursework tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "preparation dims",
+  "key": "b08",
+  "file": "src/engine/systems/coursework.ts",
+  "find": "export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'focus',",
+  "replace": "export const PREP_ABILITY: Partial<Record<PrepDim, AbilityId>> = { familiarity: 'imagination',",
+  "protects": "What Read The Scene is practice in, and the craft held alike: the test fails.",
+  "test": "tests/evidence2-b08.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "preparation dims PLAYER JOURNEY: Read The Scene twice more, which grows no technique and focus by a hair, is read into the showing the clock gives: interpretation by the prepared factor the rule gives the familiarity, the dimensions that don’t read it the same, the whole higher, and the figure on the Coursework tab"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.make_amends",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (bond === 'Rival') w.stress",
+  "replace": "if (bond === 'Close Friend') w.stress",
+  "protects": "castListRead's rival sting: the owed twin's stress 1.5 over the amended twin's at the 4 January cast list",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_amends PLAYER JOURNEY: made right on the eve of the spring term, a partner let down four times is back over a rival’s line when the cast list goes up: the twin who didn’t make amends is stung by her lead, 1.5 of stress, and the Casting tab calls her Rival; the twin who did isn’t, and it doesn’t"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.make_amends",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (friends) return Math.min(BONDS.most, friends * BONDS.perFriend) * company;",
+  "replace": "if (friends) return 0;",
+  "protects": "castCompany's friend: the amended twin's morale 1 higher on the Carlotta's first night",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_amends PLAYER JOURNEY: made right over the winter break, a partner kept faith with nine evenings and stood up once is a friend in the Carlotta Festival’s cast: on its first night castCompany lifts the mood a point for the twin who made amends, and none for the twin who didn’t"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.make_amends",
+  "key": "b07",
+  "file": "src/engine/systems/classmates.ts",
+  "find": "open.reduce((n, x) => n + CLASS.amends[x.kind].bond, 0)",
+  "replace": "0",
+  "protects": "the bond amends give back: −12 (then −14 at the cast) and 15 (then 25) in the amended twins; both cast-list and first-night tests fail",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.make_amends PLAYER JOURNEY: made right on the eve of the spring term, a partner let down four times is back over a rival’s line when the cast list goes up: the twin who didn’t make amends is stung by her lead, 1.5 of stress, and the Casting tab calls her Rival; the twin who did isn’t, and it doesn’t",
+   "school.make_amends PLAYER JOURNEY: made right over the winter break, a partner kept faith with nine evenings and stood up once is a friend in the Carlotta Festival’s cast: on its first night castCompany lifts the mood a point for the twin who made amends, and none for the twin who didn’t",
+   "school.make_amends PLAYER JOURNEY: for an evening running lines slept through, gives back the 6 trust it took and 2 of the bond’s 3, in twenty minutes: the figures the CLASS.amends comment gives a rehearsal missed, which takes 12 and 5"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.respond",
+  "key": "b07",
+  "file": "src/engine/systems/classmates.ts",
+  "find": "if (m.kind === 'disagreement' && (!a ||",
+  "replace": "if (false && (!a ||",
+  "protects": "'That work is finished.' after a withdrawal: hold would be accepted and readsApart set",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.respond PLAYER JOURNEY: a different reading brought the afternoon she withdraws is refused every answer as work that’s finished, and moves nothing, through a reload; a twin still at the School keeps hers, and the scene together is read apart"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.respond",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "endCoursework(sim, person);",
+  "replace": "void 0;",
+  "protects": "the withdrawal closing the work that the refusal reads: the assignment stays open, and hold is accepted",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.respond PLAYER JOURNEY: a different reading brought the afternoon she withdraws is refused every answer as work that’s finished, and moves nothing, through a reload; a twin still at the School keeps hers, and the scene together is read apart"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.take_shift",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "item.payload.personId === person.id) callOff(sim, person, item);",
+  "replace": "item.payload.personId === person.id) sim.timeline.cancel(item.id, sim.now);",
+  "protects": "a withdrawal giving the called-off evening's hours back (electiveHours 4, not 8, and the tab's 'Elective Hours Asked For 4'). The first round's leave test still passes under this mutation.",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.take_shift PLAYER JOURNEY: an evening booked on the Work-Study tab and called off by her withdrawal gives its four hours back, the tab says why it offers no more, and the payday pays only the evening worked, $92, onto the year’s return, where a twin who stayed is paid both"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.take_shift",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (item.kind === SHIFT_KIND && item.payload.elective === true && person.school) person.school.workStudy.electiveHours -= Number(item.payload.hours ?? 0);",
+  "replace": "",
+  "protects": "callOff giving back an elective evening's hours, by withdrawal here and by a leave in tests/evidence-g19-school.test.ts",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.take_shift PLAYER JOURNEY: an evening booked on the Work-Study tab and called off by her withdrawal gives its four hours back, the tab says why it offers no more, and the payday pays only the evening worked, $92, onto the year’s return, where a twin who stayed is paid both"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "practice.exercise",
+  "key": "b07",
+  "file": "src/engine/systems/practice.ts",
+  "find": "if (!(f in FOCUS)) return 'There’s no such way to practice.';",
+  "replace": "",
+  "protects": "the bad focus refused, with nothing moved (the hour would be taken at a factor of 1)",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "practice.exercise refuses a way of practicing there isn’t in its own words, and moves nothing: not the clock, the record, the experience or the energy"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "practice.exercise",
+  "key": "b07",
+  "file": "src/engine/systems/practice.ts",
+  "find": ".filter((t) => t !== e.trains).map((t) => ({ target: t, weight: FOCUS_RATE.variation.transfer }))",
+  "replace": ".filter((t) => t === e.trains).map((t) => ({ target: t, weight: FOCUS_RATE.variation.transfer }))",
+  "protects": "each exercise's variation carrying over to its kin under transfer:<id> (27 of 27)",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "practice.exercise takes every one of the 27 exercises as a variation through the command, each carrying over to something it doesn’t train: “nothing it carries over to” is never said"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "practice.exercise",
+  "key": "b07",
+  "file": "src/engine/systems/practice.ts",
+  "find": "if (e.partnered && !person.school?.classmates.length)",
+  "replace": "if (e.partnered && person.school?.classmates.length)",
+  "protects": "partnered work taken while the class is there, including after a withdrawal",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "practice.exercise takes every one of the 27 exercises as a variation through the command, each carrying over to something it doesn’t train: “nothing it carries over to” is never said",
+   "practice.exercise PLAYER JOURNEY: withdrawn from the School, she keeps her fifteen classmates, so live and partnered work is still taken: “It takes a classmate, and you have no class to ask.” is never said"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.term",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (production) staged(keptOurs, production.name);",
+  "replace": "if (production) staged(ours, production.name);",
+  "protects": "numbering on the calls kept, 1..13 of 13 with tech and dress last. Staged before the filter, the kept calls would carry n of 20, and the shortened copies none.",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.term PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "school.term",
+  "key": "b07",
+  "file": "src/engine/systems/school.ts",
+  "find": "r.call !== 'oncall' && overlaps(c, r)",
+  "replace": "false && overlaps(c, r)",
+  "protects": "the School rehearsals giving way to the Rep understudy's Wednesday and Friday calls: 13 kept, not 20",
+  "test": "tests/evidence2-b07.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "school.term PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.break_term",
+  "key": "b04",
+  "file": "src/engine/systems/accountlife.ts",
+  "find": "const into = checkingAt(s, person, term.bankId) ?? currentOf(s, person)!;",
+  "replace": "const into = currentOf(s, person)!;",
+  "protects": "A notice close pays into the current account at the term's own bank. With the mutation the £10,000 goes to Barclays and the Select Account gets nothing, so the first test fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.break_term closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, less the £39.41 it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.break_term",
+  "key": "b04",
+  "file": "src/engine/systems/accountlife.ts",
+  "find": "if (rules.penaltyCapped) penalty = Math.min(penalty, earned);",
+  "replace": "",
+  "protects": "NatWest's charge is the lower of the interest earned and 90 days' interest. Uncapped, it becomes £101.34: £61.93 comes out of the deposit, £9,938.07 is paid, and the notice says 'less £101.34'. Both tests fail.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.break_term closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, less the £39.41 it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice)",
+   "bank.break_term closes it into the Barclays primary at once, with the NatWest account closed, and the money buys the day: a meal refused on the emptied Barclays account is bought once it lands"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.break_term",
+  "key": "b04",
+  "file": "src/engine/systems/accountlife.ts",
+  "find": "if (!sameBank && paid > 0) sendBetweenBanks(s, person, term, into, paid);",
+  "replace": "",
+  "protects": "With no current account at the term's bank, the money goes to the primary. With the mutation Barclays receives nothing, so the second test's move and its meal both fail.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "bank.break_term closes it into the Barclays primary at once, with the NatWest account closed, and the money buys the day: a meal refused on the emptied Barclays account is bought once it lands"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "card.lock",
+  "key": "b04",
+  "file": "src/engine/systems/security.ts",
+  "find": "credit && cardWorks(credit) && rng.next() < 0.5 ? 'credit'",
+  "replace": "credit && rng.next() < 0.5 ? 'credit'",
+  "protects": "A locked credit card is spared the draw. With the mutation the credit-locked twin has credit-card uses, so its all-debit sequence fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "card.lock",
+  "key": "b04",
+  "file": "src/engine/systems/security.ts",
+  "find": ": cardWorks(currentOf(sim, person)) ? 'debit' : undefined;",
+  "replace": ": currentOf(sim, person) ? 'debit' : undefined;",
+  "protects": "A locked debit card is spared the draw. With the mutation the debit-locked twin has debit uses, so its equality with the unlocked twin's credit nights fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "card.request_hardship",
+  "key": "b04",
+  "file": "src/engine/systems/credit.ts",
+  "find": "move += ON_TIME;\n      credit.missed = 0;",
+  "replace": "move += ON_TIME;",
+  "protects": "Meeting the due counts the misses back to none. With the mutation missed stays 1, and the first test fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "card.request_hardship puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "card.request_hardship",
+  "key": "b04",
+  "file": "src/engine/systems/credit.ts",
+  "find": "const plan = credit.hardship ? Math.min(statement, credit.hardship.payment) : undefined;",
+  "replace": "const plan: number | undefined = undefined;",
+  "protects": "On a plan, autopay asks the plan's payment, and that payment is what is due and what the statement asks. With the mutation the statement says 'at least $48.30' and autopay asks the whole $4,830, which bounces, so both tests fail in their setup's statement assertion.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "card.request_hardship puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+   "card.request_hardship is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "card.request_hardship",
+  "key": "b04",
+  "file": "src/ui/bank/BankStatements.tsx",
+  "find": "const onPlan = plan !== undefined && due !== undefined && due >= plan.since;",
+  "replace": "const onPlan = false;",
+  "protects": "The Statements page asks the plan's payment on a plan. With the mutation the 20 October statement says $48.30, so the second test fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": false,
+  "why": "0 matches"
+ },
+ {
+  "id": "statements",
+  "key": "b04",
+  "file": "src/engine/systems/statements.ts",
+  "find": "running += delta;",
+  "replace": "running -= delta;",
+  "protects": "Each line's balance is the one before it plus the line. With the mutation the Balance and Owed After columns are wrong, and the test fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "statements writes each line’s balance after it, as worked here: Chase Savings’ $413,043 less $1,000 and $250 moved out, and the card owing $5, $10 and then $7 after two meals and a $3 payment"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "statements",
+  "key": "b04",
+  "file": "src/ui/bank/BankStatements.tsx",
+  "find": "{formatMoney(line.balance * sign, cur)}",
+  "replace": "{formatMoney(line.amount * sign, cur)}",
+  "protects": "The screen shows the running balance, not the line's amount, in the last column. With the mutation it shows $250.00, $1,000.00 and the rest, and the test fails.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "statements writes each line’s balance after it, as worked here: Chase Savings’ $413,043 less $1,000 and $250 moved out, and the card owing $5, $10 and then $7 after two meals and a $3 payment"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "holidays",
+  "key": "b03",
+  "file": "src/engine/content/holidays.ts",
+  "find": "return all.filter((h) => !h.regionCode || h.regionCode === code);",
+  "replace": "return all.filter((h) => !h.regionCode);",
+  "protects": "Good Friday on New Haven's Calendar, and the doctor's visit moved off it. Run against a mocked copy of the module, it failed both tests.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "holidays PLAYER JOURNEY: New Haven’s Calendar in March 2027 has Connecticut’s Good Friday and no other state’s day, though she was born in New York, which doesn’t keep it",
+   "holidays PLAYER JOURNEY: a doctor’s visit whose 24-day wait ends on Good Friday is booked for Monday 29 March, and kept; a meal paid by debit card the day before posts that Monday, the bank keeping the Federal Reserve’s days"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "holidays",
+  "key": "b03",
+  "file": "src/engine/content/usholidays.ts",
+  "find": "nth(y, 11, 4, 4), // Thanksgiving",
+  "replace": "/* Thanksgiving: not a bank holiday */",
+  "protects": "The card's arrival on 7 December, Bank of America's decision on 30 November, and Overdraft Assist's Friday. Run against a mocked copy, it failed all three tests.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "holidays PLAYER JOURNEY: a debit card reported lost the day before Thanksgiving comes in Chase’s seven business days on Monday 7 December, rushed in two on Monday 30 November, and the card stopped meanwhile pays nothing",
+   "holidays PLAYER JOURNEY: Bank of America decides an application made the day before Thanksgiving in its two business days, on Monday 30 November, and the $100 sent from Chase arrives in Chase’s three, on Tuesday 1 December",
+   "holidays PLAYER JOURNEY: Chase’s Overdraft Assist waits for the end of Friday, the business day after Thanksgiving: Friday’s work-study wages spare the fee, and a deeper overdraft is charged Wednesday’s at Friday’s end, not Thursday’s, and Thanksgiving’s groceries, posted on the Friday, at Monday’s"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "holidays",
+  "key": "b03",
+  "file": "src/engine/systems/roundups.ts",
+  "find": "if (rule.when === 'business') { if (businessDay(countryId, ended.key, regionId)) moving = before; }",
+  "replace": "if (rule.when === 'business') { moving = before; }",
+  "protects": "Round-ups waiting out the weekend and MLK Day. The moves would come one a midnight from 17 to 21 January, not two.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "holidays LIFE FIXTURE (a New Haven life at Bank of America): round-ups move at a business day’s end, so Saturday’s to Martin Luther King Jr. Day’s wait for the end of Tuesday 20 January"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injuries",
+  "key": "b03",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "uninsuredMarkup: 1.75,",
+  "replace": "uninsuredMarkup: 1.7,",
+  "protects": "The uninsured bill's $699.13. Run against a mocked copy, it failed the test.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injuries LIFE FIXTURE (New Haven, uninsured): an everyday sprain’s care is $699.13, worked from CARE’s $180 and $100 grown by the BLS physicians’ services index and the 1.75 the uninsured are billed, and paid once at its due date"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injuries",
+  "key": "b03",
+  "file": "src/engine/content/safetynet.ts",
+  "find": "2026: 439.389",
+  "replace": "2026: 440.0",
+  "protects": "The growth from 2024's prices to 2026's by the physicians' services index. Run against a mocked copy, it failed the test.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injuries LIFE FIXTURE (New Haven, uninsured): an everyday sprain’s care is $699.13, worked from CARE’s $180 and $100 grown by the BLS physicians’ services index and the 1.75 the uninsured are billed, and paid once at its due date"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injuries",
+  "key": "b03",
+  "file": "src/engine/systems/eiself.ts",
+  "find": "if (!livesInCanada(person)) return 'EI is for someone living in Canada.';",
+  "replace": "if (false) return 'EI is for someone living in Canada.';",
+  "protects": "A student refused EI in its own words. She would be refused instead as a non-Canadian, and the error would differ.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injuries PLAYER JOURNEY: Canada’s EI, which a week laid up would draw on (`eiWeek`), is refused a New Haven student in its own words, nothing registered"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "body",
+  "key": "b03",
+  "file": "src/engine/content/body.ts",
+  "find": "[18.5, 1.51], [20, 1.13]",
+  "replace": "[18.5, 1.13], [20, 1.13]",
+  "protects": "The year's draw at the starved twin's band. Run against a mocked copy, it failed the test (b03-bmi-27 ended neither twin).",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "body PLAYER JOURNEY: an 86th birthday draws the year from the weight the game moved: five broke days take a twin under BMI 18.5 to the Lancet’s 1.51, and a seed between the two chances ends only her year"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "body",
+  "key": "b03",
+  "file": "src/engine/systems/health.ts",
+  "find": "const bmi = person.body ? bmiOf(person.body) : 22.5;",
+  "replace": "const bmi = 22.5;",
+  "protects": "Onset reading the moved weight. The fed twin's chance would be a healthy weight's, 0.000176 a month, under the seed's 0.000813, so no diabetes.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "body PLAYER JOURNEY: a condition’s onset reads the weight a month of broke days moved: diabetes begins on 1 October for a twin at BMI 30.5 and not for her twin at 29.4"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "body",
+  "key": "b03",
+  "file": "src/engine/content/body.ts",
+  "find": "eatenOut: 134,",
+  "replace": "eatenOut: 120,",
+  "protects": "The restaurant's extra. Run against a mocked copy, it failed the test (22 g off over twenty days).",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "body twenty days ordered in leave her heavier than her twin who ate in by Hall’s rule on 134 kcal a day (USDA ERS), 0.209 kg, his 23.9 a kilogram spent back on what she gained"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "mortality",
+  "key": "b03",
+  "file": "src/engine/systems/mortality.ts",
+  "find": "* frailty(person.wellbeing.condition, age) *",
+  "replace": "* 0.8 *",
+  "protects": "The redraw reading the worn body. The 'only the worn twin ends' seed (u 0.2257, over the sound 0.0699) would end neither twin.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "mortality PLAYER JOURNEY: the midnight after she’s worn to nothing redraws the year at 2.93 times the table and half worn at 1.55, from the condition then: each seed’s end where its own draw puts it, and the half-worn seed a sound redraw would have spared ends"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "mortality",
+  "key": "b03",
+  "file": "src/engine/systems/mortality.ts",
+  "find": "s.universe.meta.endedAge = ageOn(s, person, item.at);",
+  "replace": "s.universe.meta.endedAge = ageOn(s, person, item.at) + 1;",
+  "protects": "The END's age, endedAge 86 and 'Aged 86' on the screen.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "mortality PLAYER JOURNEY: the end her 86th birthday drew is the one that comes, and A Life, Ended shows her name, the dates, Aged 86, New Haven, her one payslip’s six hours at $23.00, every account she held, and Back To The Slots"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "mortality",
+  "key": "b03",
+  "file": "src/ui/shell/LifeEnded.tsx",
+  "find": "reduce((sum, y) => sum + y.acting + y.workStudy, 0)",
+  "replace": "reduce((sum, y) => sum + y.acting, 0)",
+  "protects": "Earned $138 from the work-study payslip. Run against a mocked copy, it failed the render test.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "mortality PLAYER JOURNEY: the end her 86th birthday drew is the one that comes, and A Life, Ended shows her name, the dates, Aged 86, New Haven, her one payslip’s six hours at $23.00, every account she held, and Back To The Slots"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+  "key": "b03",
+  "file": "src/engine/systems/school.ts",
+  "find": "if (hour < 12) return personalityOf(person, 'morning');",
+  "replace": "if (hour <= 12) return personalityOf(person, 'morning');",
+  "protects": "Noon as nobody's hour. The early riser's read at 12:00 would be 1.0914 of the plain twin's.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises PLAYER JOURNEY: the hour’s fit turns at its edges: an early riser’s read at 11:59 AM is 1.0914 of her plain twin’s and at noon the same; a night owl’s at 4:59 PM the same and at five 1.0914"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+  "key": "b03",
+  "file": "src/engine/systems/school.ts",
+  "find": "return { readiness: readiness(person) * hourFit(person, zonedParts(at, z).hour),",
+  "replace": "return { readiness: readiness(person),",
+  "protects": "Judged work meeting the hour's fit. The 9 AM showing and the 8 PM Cabaret night would meet each twin alike.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises PLAYER JOURNEY: the work judged at nine on 8 September meets an early riser at 1.0914 of her plain twin’s readiness, and the first Cabaret night at eight meets a night owl at 1.0914"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+  "key": "b03",
+  "file": "src/engine/systems/school.ts",
+  "find": "return move >= 0 ? move * personalityOf(person, 'bondWarmth') : move * personalityOf(person, 'bondWound');",
+  "replace": "return move >= 0 ? move : move * personalityOf(person, 'bondWound');",
+  "protects": "The detached twin's slower warmth. She would reach 25, a Friend, and be lifted on the night.",
+  "test": "tests/evidence2-b03.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises PLAYER JOURNEY: a co-lead at 15 (TEST SETUP) becomes a Friend at the cast list’s ten for a plain player and stays 23.545 for a detached twin: the list lifts only the plain one a friend’s half point, her look says Friend, and the first Carlotta night lifts her a point"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "b02",
+  "file": "src/engine/systems/health.ts",
+  "find": "if (at > bill.at + DENIALS.appealDays * MS_DAY) return",
+  "replace": "if (at > bill.at + (DENIALS.appealDays + 1) * MS_DAY) return",
+  "protects": "The 180-day window: the late twin, an hour past the 180th day, would still see Appeal It and not be refused.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided PLAYER JOURNEY: an appeal is taken once and within 180 days, and decided 60 days on; the 180th day is the last"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "b02",
+  "file": "src/engine/systems/health.ts",
+  "find": "const over = bill.amount - bill.denied.share;",
+  "replace": "const over = bill.amount;",
+  "protects": "The refund of exactly $138.98 to the account paid from, and the debt cut to the $45 share that Pay It Off then pays.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided PLAYER JOURNEY: paid, then overturned, gives the $138.98 paid over the share back to the account it was paid from, and nothing to any other",
+   "health.appeal_decided PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays: upheld, all $183.98; overturned, the $45 share"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appeal_decided",
+  "key": "b02",
+  "file": "src/engine/systems/health.ts",
+  "find": "bill.amount = bill.denied.share;",
+  "replace": "bill.amount = bill.amount;",
+  "protects": "The overturned bill read as $45.00 on Papers ('$45.00 Settled Denial Overturned', '$45.00 Owed As Debt Denial Overturned').",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided PLAYER JOURNEY: paid, then overturned, gives the $138.98 paid over the share back to the account it was paid from, and nothing to any other",
+   "health.appeal_decided PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays: upheld, all $183.98; overturned, the $45 share"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appointment",
+  "key": "b02",
+  "file": "src/engine/systems/appointments.ts",
+  "find": "reviewed(person, a.what, item.at);",
+  "replace": "",
+  "protects": "A kept review moves reviewedAt to the visit, and the next review is due a year after it. Without it reviewedAt stays at the diagnosis and the assertion fails.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appointment PLAYER JOURNEY: in New Haven a prescription a year old is filled all the same; a visit kept renews it, and a review kept moves the next one to a year after it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appointment",
+  "key": "b02",
+  "file": "src/engine/systems/appointments.ts",
+  "find": "renewPrescriptions(person, item.at);",
+  "replace": "",
+  "protects": "A kept visit renews the prescription: prescribedAt becomes the visit of 2 September 2027 and then the review of 30 September.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appointment PLAYER JOURNEY: in New Haven a prescription a year old is filled all the same; a visit kept renews it, and a review kept moves the next one to a year after it"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.appointment",
+  "key": "b02",
+  "file": "src/engine/systems/appointments.ts",
+  "find": "if (a.what === SPECIALIST) return undefined;",
+  "replace": "",
+  "protects": "A specialist refers no further. With the draw forced, a second 'A Referral' and a new appointment would follow.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appointment PLAYER JOURNEY: a visit the week books, kept, ends in a referral, a specialist booked 31 days on, seen, and referring no further"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.bill",
+  "key": "b02",
+  "file": "src/engine/systems/health.ts",
+  "find": "{ bill.paid = true; return; }",
+  "replace": "{ return; }",
+  "protects": "A bill paid at due is marked paid, and Papers reads 'Settled'.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.appeal_decided PLAYER JOURNEY: an appeal is taken once and within 180 days, and decided 60 days on; the 180th day is the last",
+   "health.appeal_decided PLAYER JOURNEY: paid, then overturned, gives the $138.98 paid over the share back to the account it was paid from, and nothing to any other",
+   "health.bill PLAYER JOURNEY: a sprain’s $699.13 of care, uninsured, falls due 30 days on and is paid from the checking account, Settled on Papers",
+   "health.bill PLAYER JOURNEY: unpaid in a drained twin, the sprain’s care is $699.13 of medical debt and Owed As Debt, and the midnight’s worry costs 4 of stress and 2 of morale against the paid twin"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.bill",
+  "key": "b02",
+  "file": "src/engine/systems/injury.ts",
+  "find": "const care = shareOf(person, spec.care, at, cur) + spec.therapy * shareOf(person, 'visit', at, cur);",
+  "replace": "const care = shareOf(person, spec.care, at, cur) + shareOf(person, 'visit', at, cur);",
+  "protects": "The injury's bill of $699.13: urgent care plus two therapy visits.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.bill PLAYER JOURNEY: a sprain’s $699.13 of care, uninsured, falls due 30 days on and is paid from the checking account, Settled on Papers",
+   "health.bill PLAYER JOURNEY: unpaid in a drained twin, the sprain’s care is $699.13 of medical debt and Owed As Debt, and the midnight’s worry costs 4 of stress and 2 of morale against the paid twin",
+   "health.bill A Medical Bill Went Unpaid says what the injury was in the sentence’s own case"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "health.bill",
+  "key": "b02",
+  "file": "src/engine/systems/spending.ts",
+  "find": "a.category === kind && a.balance < 0",
+  "replace": "a.category === kind && a.balance < -1_000_00",
+  "protects": "A medical debt is a money trouble, and the midnight's worry reads it: +4 stress and −2 morale against the paid twin.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "health.bill PLAYER JOURNEY: unpaid in a drained twin, the sprain’s care is $699.13 of medical debt and Owed As Debt, and the midnight’s worry costs 4 of stress and 2 of morale against the paid twin"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injury.comp",
+  "key": "b02",
+  "file": "src/engine/systems/injury.ts",
+  "find": "const waiting = offDays > rules.retroAfterDays ? 0 : rules.waitingDays;",
+  "replace": "const waiting = offDays >= rules.retroAfterDays ? 0 : rules.waitingDays;",
+  "protects": "Six days off pays three, $29.57, after Connecticut's three waiting days. The mutation would pay all six, $59.14.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injury.comp PLAYER JOURNEY: off six days, the first three are Connecticut’s waiting days and three are paid, $29.57; off seven, all seven are, $69.00"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injury.comp",
+  "key": "b02",
+  "file": "src/engine/content/injury.ts",
+  "find": "'us-ct': { share: 0.75,",
+  "replace": "'us-ct': { share: 0.7,",
+  "protects": "The week's rate of 75% of $92, $69.00, and the notice's '75% of your week’s wage after tax'.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injury.comp PLAYER JOURNEY: off six days, the first three are Connecticut’s waiting days and three are paid, $29.57; off seven, all seven are, $69.00",
+   "injury.comp PLAYER JOURNEY: concussed at the Summer Cabaret’s first call, paid a week and three days’ compensation, and the stipend only for the days not off",
+   "injury.comp the Summer Cabaret’s $375 week is paid Connecticut’s minimum, 75% of it, $281.25, to a resident and to an F-1 student alike"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "injury.comp",
+  "key": "b02",
+  "file": "src/engine/systems/school.ts",
+  "find": "const pay = Math.round(week * share * (1 - off / (7 * MS_DAY)));",
+  "replace": "const pay = Math.round(week * share);",
+  "protects": "The cabaret's stipend is paid only for the hours not off (4/168 and 68/168 taken off, the middle week nothing), so the wage and the compensation aren't paid for the same days.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "injury.comp PLAYER JOURNEY: concussed at the Summer Cabaret’s first call, paid a week and three days’ compensation, and the stipend only for the days not off"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "hygiene",
+  "key": "b02",
+  "file": "src/engine/systems/life.ts",
+  "find": "const soils = 1.6 * personalityOf(person, 'hygieneDrift');",
+  "replace": "const soils = 3.2 * personalityOf(person, 'hygieneDrift');",
+  "protects": "Hygiene falls 1.6 an hour awake, on stage as anywhere: 4.0 over the 2.5-hour performance.",
+  "test": "tests/evidence2-b02.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "hygiene PLAYER JOURNEY: on stage, at the Summer Cabaret’s first night, it falls 1.6 an hour as it does anywhere awake, not twice that"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "trait-spending",
+  "key": "b11",
+  "file": "src/engine/systems/spending.ts",
+  "find": "  return Math.round(foodAt(person.currentLocationId, saveCurrency(sim.universe), sim.now).day * personalityOf(person, 'spending'));",
+  "replace": "  return Math.round(foodAt(person.currentLocationId, saveCurrency(sim.universe), sim.now).day);",
+  "protects": "foodOf reads the spending knob. Every pick's first Groceries would post 1000, so posted would no longer equal {859, 1000, 1216, 1097}.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "trait-spending PLAYER JOURNEY: Going Out A Month on creation’s Review is the day’s groceries the clock first posts for the same pick, a month of 365/12 days, to the dollar: $261, $304, $370 and $334"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "trait-spending",
+  "key": "b11",
+  "file": "src/ui/creation/CharacterCreation.tsx",
+  "find": "const food = Math.round(costs.day * spending * 365 / 12);",
+  "replace": "const food = Math.round(costs.day * spending * 30);",
+  "protects": "Review's month is 365/12 days of the played day. With 30 days, frugal reads $258, not round(859 × 365/12 / 100) = $261.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "trait-spending PLAYER JOURNEY: Going Out A Month on creation’s Review is the day’s groceries the clock first posts for the same pick, a month of 365/12 days, to the dollar: $261, $304, $370 and $334"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-abilities",
+  "key": "b11",
+  "file": "src/engine/systems/attributes.ts",
+  "find": "  if (id !== 'stamina') return 100;",
+  "replace": "  return 100;",
+  "protects": "Stamina's Full is the fitness ceiling for her age, not 100. The Full test reads '99.4' and '99.3' and would get '100.0'.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-abilities PLAYER JOURNEY: Stamina’s Full is the fitness a body her age can be brought to, 99.4 at 24 and 99.3 the day the clock makes her 25, in its row and under the table; every other Full is 100.0",
+   "p-journey-history PLAYER JOURNEY: the milestones First strong work, First distinction-level work and First work at full mastery name the first taped piece past 65, past 80 and at mastery, once each (TEST SETUP: her abilities and techniques at full and the dials rested, as years of work would leave her)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-abilities",
+  "key": "b11",
+  "file": "src/engine/systems/school.ts",
+  "find": "  return Boolean(CRAFT_ABILITY[id] || ABILITY_KIN[id]);",
+  "replace": "  return true;",
+  "protects": "Presence, Composure, Discipline and Stamina read '—' under Classes Reach. With every ability counted as class-grown they would read numbers, and the title count would be 0, not 4.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-abilities PLAYER JOURNEY: Classes Reach is the craft as admitted and 26 more, or the mean of a new ability’s kin’s, held while the first week of classes moves Now; Presence, Composure, Discipline and Stamina read —, classes don’t build them"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-abilities",
+  "key": "b11",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": "say(`Readiness ${Math.round(c.readiness)}",
+  "replace": "say(`Readiness ${Math.round(readiness(person))}",
+  "protects": "Today prints readiness at the hour's fit. Without it the early riser and night owl would both read 54, where the test expects 48 and 59.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-abilities PLAYER JOURNEY: at 7 PM on the first day Today says readiness worked out here from the seven dials, 54 for a plain twin, 48 for an early riser and 59 for a night owl, on every row fatigue reaches, with the dimensions a task that lists fatigue reads it in; at 8 AM all twelve hold nothing back"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-journey-history",
+  "key": "b11",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": ".filter((c) => !filed.some((f) => f.production === c.production && f.role === c.role))",
+  "replace": ".filter(() => true)",
+  "protects": "A closed run already filed is said once. The dismissed r8-a would read 'Marie in Directors’ Thesis Production I, 2027' twice.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-journey-history PLAYER JOURNEY: dismissed in December 2027, her closed Woyzeck filed as a credit and still her casting, School Journey says each part she played once",
+   "p-journey-history a Rep night closed is on stage beside the School’s run, and filed by a withdrawal still once (TEST SETUP: the Rep run set on the record: only a fixture reaches it here)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-journey-history",
+  "key": "b11",
+  "file": "src/ui/workspaces/ProfileWorkspace.tsx",
+  "find": "const closed = school ? [school.casting, school.rep]",
+  "replace": "const closed = school ? [school.casting]",
+  "protects": "A closed Rep run is on stage before it is filed. Before the withdrawal the Rep test's line would lack 'Nina in The Seagull, 2027'.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-journey-history a Rep night closed is on stage beside the School’s run, and filed by a withdrawal still once (TEST SETUP: the Rep run set on the record: only a fixture reaches it here)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "p-journey-history",
+  "key": "b11",
+  "file": "src/engine/systems/artistry.ts",
+  "find": "  habitShare: 0.7,",
+  "replace": "  habitShare: 0.85,",
+  "protects": "A habit is named at 70% of five choices. Four driven of five (80%) would lose its 'How You Tend To Play It' line.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "p-journey-history PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5; not 4 of 4, nor 3 of 5 (a habit from 5 choices, at 70%)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "b11",
+  "file": "src/engine/systems/credit.ts",
+  "find": "const SUSPEND_AFTER = 2;",
+  "replace": "const SUSPEND_AFTER = 3;",
+  "protects": "The second missed due date suspends the card. The test expects the 'Your Card Is Suspended' notice and 'Your card is suspended, owing $850.', and would get '2 payments behind'.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "b11",
+  "file": "src/engine/systems/spending.ts",
+  "find": "  if (tax > 0) out.push({ kind: 'tax', amount: tax });",
+  "replace": "  void tax;",
+  "protects": "Income tax owed on a filed return weighs on What Needs You. The unpaid filing would read All Clear instead of 'You owe $166 of income tax.'",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and once its notices are read What Needs You says You owe $166 of income tax, 10% of her $1,656; her twin who could pay is All Clear (TEST SETUP: the bank emptied)"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-needs",
+  "key": "b11",
+  "file": "src/engine/world/world.ts",
+  "find": "    .sort((a, b) => b.importance - a.importance || b.at - a.at);",
+  "replace": "    .sort((a, b) => b.at - a.at);",
+  "protects": "The panel draws the most important notices first. Newest-first would draw other titles than the six expected.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-needs PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 157, each with its words and how long ago it came: 7 weeks, 2 months, 5 months, 4 weeks, 5d 3h and 5 weeks"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "bank.close_current",
+  "key": "resurv-0",
+  "file": "src/engine/systems/statements.ts",
+  "find": "  const end = account.closedAt ?? sim.now;",
+  "replace": "  const end = sim.now;",
+  "protects": "PLAYER JOURNEY: refuses Chase for the groceries pending on it… (run: killed, October and November periods appeared)",
+  "test": "tests/evidence2-b05.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false
+ },
+ {
+  "id": "card.report",
+  "key": "resurv-2",
+  "file": "src/engine/systems/security.ts",
+  "find": "const days = rush ? rules?.rushDays ?? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;",
+  "replace": "const days = rush ? ESTIMATE_RUSH_DAYS : rules?.standardDays ?? ESTIMATE_DAYS;",
+  "protects": "A bank's own rush days are read. Once the fix is in, this sends Wells Fargo's card on SLATE's estimated third business day, not its first, and the test fails. Capital One's 3 equals the estimate, so only the Wells Fargo half catches it. Before the fix the test already fails on the defect.",
+  "test": "tests/evidence2-b04.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-where-weather",
+  "key": "resurv-3",
+  "file": "src/engine/world/place.ts",
+  "find": "  return CITIES.get(player.currentLocationId) ?? CITIES.get(player.homeRegionId);",
+  "replace": "  return CITIES.get(player.homeRegionId) ?? CITIES.get(player.currentLocationId);",
+  "protects": "Home measures from where the player lives, not where she was born. With the mutation the London-born would read '… mi from home in London · +5h from home time.' and the New York-born '… from home in New York', instead of 'Home.'.",
+  "test": "tests/evidence2-b11.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-money",
+  "key": "resurv-1",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "alert={(primary?.balance ?? 0) < 0 ? 'Your account is overdrawn.' : undefined}",
+  "replace": "alert={(primary?.balance ?? 0) < -10_00 ? 'Your account is overdrawn.' : undefined}",
+  "protects": "The alert at any negative balance: at the played -$10.00 the first h-money test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-money PLAYER JOURNEY: debit card coverage opted into and the checking moved to savings, the first midnight’s $10.00 of groceries overdraw it: “-$10.00” and “Your account is overdrawn.”, across a reload; its Chase button opens the bank screen"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-money",
+  "key": "resurv-1",
+  "file": "src/engine/systems/lending.ts",
+  "find": "current.debitOverdraft = p.on === true;",
+  "replace": "current.debitOverdraft = false;",
+  "protects": "Debit card coverage opted into: the command returns { on: false }, nothing is paid into an overdraft, and the first h-money test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-money PLAYER JOURNEY: debit card coverage opted into and the checking moved to savings, the first midnight’s $10.00 of groceries overdraw it: “-$10.00” and “Your account is overdrawn.”, across a reload; its Chase button opens the bank screen"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-money",
+  "key": "resurv-1",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "primary?.name ?? 'No account'",
+  "replace": "primary?.name ?? 'Your account'",
+  "protects": "The fallback's words, which the fixture test reads as 'No account: $0.00.'",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-money “No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and the line names it; every account closed by hand, the line reads “No account: $0.00. Worth $0.” and “Your Bank” opens the bank screen"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-school",
+  "key": "resurv-1",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const next = enrolled ? booked ?? (classes !== undefined ? { label: 'Classes', at: classes } : undefined) : undefined;",
+  "replace": "const next = enrolled ? booked : undefined;",
+  "protects": "Next from nextClasses: both recess tests lose their 'Next: Classes, ...'.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-school PLAYER JOURNEY: at noon on Thursday 26 November, the fall recess, nothing the School books wants her, so Next is the next class day at nine, “Next: Classes, November 30, 2026 at 9:00 AM.”, across a reload",
+   "h-school PLAYER JOURNEY: a fall kept up ends in good standing, “In Good Standing” at the evaluation, and the day after, with nothing booked over the winter, Next is the spring’s first class day: “Next: Classes, January 11, 2027 at 9:00 AM.”"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-school",
+  "key": "resurv-1",
+  "file": "src/engine/systems/school.ts",
+  "find": "return 1 + school.classmates.filter((m) => read(m.craft) > mine).length;",
+  "replace": "return 1 + school.classmates.filter((m) => read(m.craft) >= mine).length;",
+  "protects": "The place counts only classmates strictly above her: the tie counts, and the rank test reads 7 where it expects 6.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-school the place in the class is one more than the classmates whose mean over the 21 skills is above hers: four at 60, one at 50 with one skill at 71, one tied at 50 and nine at 40 put her sixth; the tie raised a point in one skill puts her seventh"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-school",
+  "key": "resurv-1",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const troubled = school.standing === 'concern' || school.standing === 'warning' || school.standing === 'dismissed';",
+  "replace": "const troubled = school.standing === 'concern' || school.standing === 'dismissed';",
+  "protects": "The warning's alert, which the Year 2 test reads.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-school PLAYER JOURNEY: a first year left to the clock, its concern unremedied in the spring, is “Year 2, academic warning” in its second fall, Next the class day after, and the warning’s alert"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-papers",
+  "key": "resurv-1",
+  "file": "src/engine/systems/unemployment.ts",
+  "find": "dollars(((sorted[0] ?? 0) + (sorted[1] ?? 0)) / 2 / 26)",
+  "replace": "dollars((sorted[0] ?? 0) / 26)",
+  "protects": "Connecticut's weekly benefit, 1/26 of the two best quarters' average: the claim would pay $129, and the claim test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-papers PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January and paid $375 for thirteen Fridays, withdrawn on 1 September 2027 and claiming on 1 October: “Unemployment, $93 a week.”, across a reload; the Papers button opens Papers"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-papers",
+  "key": "resurv-1",
+  "file": "src/engine/systems/taxreturn.ts",
+  "find": "export const owedEverywhere = (person: Person, at: Instant): Money => owedAll(person, at) + owedToStates(person, at);",
+  "replace": "export const owedEverywhere = (person: Person, at: Instant): Money => owedAll(person, at);",
+  "protects": "Connecticut's half of what Home says is owed: $108 where the test expects $111.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-papers Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "h-papers",
+  "key": "resurv-1",
+  "file": "src/ui/screens/Home.tsx",
+  "find": "const owedTax = owedEverywhere(person, sim.now);",
+  "replace": "const owedTax = Object.values(person.returns ?? {}).reduce((n, r) => n + (r.owed ?? 0), 0);",
+  "protects": "The owed figure brought to today rather than the stored balance: $172 where the margin test expects $176.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "h-papers filed on 1 February with nothing in the bank, 180 days past its day Home says $176 owed, 0.5% for six months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172",
+   "h-papers Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-person",
+  "key": "resurv-1",
+  "file": "src/ui/creation/CharacterCreation.tsx",
+  "find": "const imperial = countryOfPlace(config.homeRegionId) === 'us';",
+  "replace": "const imperial = countryOfPlace(config.startLocationId) === 'us';",
+  "protects": "Creation's units follow the birthplace: a London-born student at Yale would be asked feet and pounds, and the London creation test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "l-person PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in centimeters and kilograms; 170 and 65 begun, her look in New Haven says “5 ft 7 in and 143 lb”"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-person",
+  "key": "resurv-1",
+  "file": "src/ui/looks/wellbeing.tsx",
+  "find": "{bodyWords(person.body, CITIES.get(person.currentLocationId)?.countryId === 'us')}",
+  "replace": "{bodyWords(person.body, CITIES.get(person.homeRegionId)?.countryId === 'us')}",
+  "protects": "The look's units follow where she lives: the London-born student in New Haven would read 170 cm and 65.0 kg.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "l-person PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in centimeters and kilograms; 170 and 65 begun, her look in New Haven says “5 ft 7 in and 143 lb”"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "l-person",
+  "key": "resurv-1",
+  "file": "src/engine/systems/injury.ts",
+  "find": "return injury && injury.until > at ? injury : undefined;",
+  "replace": "return injury && injury.until + MS_DAY > at ? injury : undefined;",
+  "protects": "The line's 'till October 6' is when the clock mends it: still mending at 9 AM that day, and the injury test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "l-person PLAYER JOURNEY: the first morning’s run breaks a bone at 8:30 AM: “till October 6, 2026”, 43 days, inside a broken bone’s 42 to 84; the clock still has it at 8 AM that day and has mended it by 9"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "n-decision-us-status",
+  "key": "resurv-1",
+  "file": "src/engine/systems/documents.ts",
+  "find": "const ends = Date.UTC(classOfYear(person), 4, 31, 12) + STARTING.graceDays * MS_DAY;",
+  "replace": "const ends = Date.UTC(classOfYear(person), 4, 21, 12) + STARTING.graceDays * MS_DAY;",
+  "protects": "The F-1 as issued for the class of 2029, to 30 July 2029, and the program end the decision is raised at.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "n-decision-us-status PLAYER JOURNEY: a graduate’s F-1, issued for the class of 2029 to 30 July 2029, is looked at by the clock on 31 May, the program’s end, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending to 30 August, which holds her status past 30 July and is approved for twelve months",
+   "n-decision-us-status Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "n-decision-us-status",
+  "key": "resurv-1",
+  "file": "src/engine/systems/permission.ts",
+  "find": "if (permission === sim.now && permission === end && ends !== undefined && ends > sim.now) return sim.now + 60_000;",
+  "replace": "",
+  "protects": "The status check a minute after a withdrawal, inside the grace: without it no decision is raised, and the refusal-form test fails.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "n-decision-us-status PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on, due the sixteenth, with nothing to apply for; Home shows it without a button; it lapses with her status, across a reload"
+  ],
+  "compiledFailed": false
+ },
+ {
+  "id": "n-decision-us-status",
+  "key": "resurv-1",
+  "file": "src/engine/systems/permission.ts",
+  "find": "export const STATUS_GRACE_DAYS = { f1: 60, opt: 60, o1: 10, withdrawn: 15, dismissed: 0 } as const;",
+  "replace": "export const STATUS_GRACE_DAYS = { f1: 30, opt: 60, o1: 10, withdrawn: 15, dismissed: 0 } as const;",
+  "protects": "Sixty days' grace after a degree: the decision's dueAt and its words, 30 July 2029.",
+  "test": "tests/evidence2-b12.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [
+   "n-decision-us-status PLAYER JOURNEY: a graduate’s F-1, issued for the class of 2029 to 30 July 2029, is looked at by the clock on 31 May, the program’s end, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending to 30 August, which holds her status past 30 July and is approved for twelve months"
+  ],
+  "compiledFailed": false
+ }
+]

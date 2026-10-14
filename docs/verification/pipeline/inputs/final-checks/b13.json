@@ -1,0 +1,68 @@
+{
+  "rows": [
+    {
+      "id": "i-ui-text",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Ran tests/evidence2-b13.test.ts and tests/evidence-g34-ui.test.ts on the tree: 22/22 pass, including the tree-wide i-stale-claims walk and g34's READ_CRAFTS test, so the gate-red problems the latest skeptic raised are gone.",
+        "Review gap 'Profile and guide/tutorial not held': closed. g34 renders creation's five steps and the Profile on new lives, and b13 renders every GUIDE entry through HelpProvider by its address, the contents and searches, and every CHAPTER through GuideProvider's dialog. The guide test is non-vacuous: more than 40 entries and more than 8 that name 'interest', and every one is under Money or Papers.",
+        "Review gap 'creation held by source scans': closed by g34's creation render. The creation.test.ts source scan is still there but has been superseded.",
+        "Skeptic problem 'new lives only': closed. A schema-93 save with an 'interest:sound_design' development record is opened through openSlot (migration 93->94 is asserted). The Profile and the ability's look are rendered. The literal past-tense line appears exactly twice on each, with no other interest wording. The person's look and the twin save say none. practice.exercise runs through sim.must, and a reload keeps the line. The mutations listed (sourceWords text, raw source key, migration filtering the history) would each break an assertion here.",
+        "Skeptic problem 'g34 header falsified / whitelisted in READ_AND_TRUE': fixed (defects3 #76). The g34 header at lines 20-24 now says new lives and names the one older-save line. b13's READ_AND_TRUE dropped that sentence and the READ_CRAFTS one, and a past-tense comment says why.",
+        "Skeptic problem 'claim correction not applied': still not applied in docs/verification/audit/ui.json or GAMEPLAY-COVERAGE.md:957. That is row text only, listed under staleText."
+      ],
+      "weakTests": [
+        {
+          "title": "i-ui-text > PLAYER JOURNEY: the guide’s reference, every entry opened by its own address, its contents, and a search for “interests” and for “interest”, names no interests, and says “interest” only on money’s and the papers’ pages, in money’s words",
+          "why": "The MONEY word list is loose (plans, terms, returns, accounts, pay*, charg*), and any block of seven words or fewer is exempt. A hobby sense of 'interest' inside a Money or Papers entry could pass. The goal restriction still catches it everywhere else."
+        },
+        {
+          "title": "i-ui-text > PLAYER JOURNEY: a 93 save with an hour of the Sound Design interest on its record, opened through openSlot, has the Profile and the ability’s look say that hour in the past tense, the one interest wording on either; its twin without the hour says none; an hour of practice takes the Listening column and the history keeps the line, across a save and a load",
+          "why": "For the ability's look it checks name, summary and body only, not kind, ways or provenance. Nothing there says interest today, so this is minor."
+        }
+      ],
+      "staleText": [
+        "audit/ui.json and GAMEPLAY-COVERAGE.md:957 explanation still says 'creation/profile only past-tense comments'. It should take evidence2-b13's claimCorrection: one past-tense player-facing line, 'An interest, from before they were removed' (sourceWords, src/ui/looks/actor.tsx), drawn on the Profile and the ability's look for a pre-2026-10-10 save's development record.",
+        "The review's claim 'the Profile has none' is false for an opened older save.",
+        "The tests field 'tests/creation.test.ts; tests/attributes-matrix.test.ts' should name tests/evidence-g34-ui.test.ts and tests/evidence2-b13.test.ts."
+      ]
+    },
+    {
+      "id": "i-stale-claims",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "The four present-tense leftovers are corrected in the tree, and the tree-wide test passes. They are src/engine/index.ts:889-890 (migration 92's comment, now 'the interests did too, until migration 94 dropped them on 2026-10-10'), tests/attributes-matrix.test.ts:4, tests/looks.test.ts:491-492 and docs/UNBITTEN.md:112. The review's two named leftovers are closed.",
+        "The two false READ_AND_TRUE entries the skeptic named (g34's 'every interest left is money's' and the READ_CRAFTS line) are gone. g34's READ_CRAFTS test passes again.",
+        "Still open: the review's gap 'Nothing fails if a new present-tense claim appears' and the skeptic's weak-rule problem. I ran the file's current NAMES and HISTORY regexes. All eight of the skeptic's present-tense examples still pass unflagged. NAMES misses singular forms such as 'An interest grows an ability by an hour of it.', 'The interest look opens from the Profile…', 'A loved interest lifts a meal…' and 'Spend an hour on an interest…'. HISTORY accepts 'until', 'drops', 'lets go', 'gone' and 'no longer', which present-tense sentences use ('The interests are kept on the sheet until the player drops them.'). HISTORY's doc comment, 'Words only history uses', is false for 'drops' and 'lets go'.",
+        "The behavior the row claims is right: the prose is corrected. What's missing is a guard that holds it, which is why the disposition is 'working, evidence missing'. The second agent's 'implementation missing' and its '[needs engine change]' on a comment edit were misclassified.",
+        "The skeptic noted that UNBITTEN.md was flagged only because the sentence split doesn't break after '.**'. That's moot now, since the entry was rewritten."
+      ],
+      "weakTests": [
+        {
+          "title": "i-stale-claims > tells a present-tense claim from its past-tense twin, where the first round’s check passed both",
+          "why": "It tests only hand-picked sentences. The rule still passes present-tense sentences that use a singular form, or that contain until/drops/gone/no longer/lets go."
+        },
+        {
+          "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+          "why": "It's green now, but it shares the NAMES/HISTORY weakness. A new present-tense claim in the singular, or one with 'until' or 'no longer', would not fail it."
+        },
+        {
+          "title": "i-stale-claims > keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
+          "why": "It uses the same permissive rule over the seven corrected files."
+        }
+      ],
+      "staleText": [
+        "The audit tests field 'none: read on 2026-10-12, not tested' should name tests/evidence-g34-ui.test.ts and tests/evidence2-b13.test.ts.",
+        "The explanation should record that the 2026-10-13 leftovers (index.ts migration 92 comment, attributes-matrix.test.ts:4, looks.test.ts:491-492, UNBITTEN.md) were corrected and are now held by the tree-wide walk.",
+        "The review's partialClass is 'stale-claim', not engine work. The second agent's '[needs engine change]' tag on index.ts:889 was wrong.",
+        "Outside the row: docs/REQUIREMENTS.md:287 says the contacts' 'three interests' in the present tense, and the walk exempts it by name (OTHER). That was a separate removal of 2026-10-09."
+      ]
+    }
+  ]
+}

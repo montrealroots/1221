@@ -1,0 +1,157 @@
+{
+  "rows": [
+    {
+      "id": "school.stipend",
+      "claimed": "partial (implementation missing): F-1 stipend withheld no federal tax",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The F-1 defect is fixed. STIPEND_KIND (src/engine/systems/school.ts:3764-3767) now adds federalStandardDeduction to a nonresident's wages before computeAnnualTax, so the 1040-NR's 10% is withheld from the first dollar. tests/evidence2-b08.test.ts 'an F-1 student's first stipend withholds ... $37.50' now passes. It asserts Tax Withheld 3750, a net of 33750, withheld 3750 and withheldBy {us}, and that the 1040-NR's balance is only the work-study's 10%.",
+        "The contradiction is gone. tests/evidence-g22-school.test.ts's F-1 test (:625-645) was corrected to $37.50, with a past-tense note. It used to pin $0, which contradicted b08's test.",
+        "All three review gaps are closed by clock-driven tests. g22 covers withholding into the account, Tax Withheld, withheld, and withheldBy['us-ct'] at 0 and at $55.69. The F-1 test covers the absence of FICA. b08 reads the resident's 2027 1040 whole: federal, Connecticut, payroll, withholding by authority, the balance and its owedTo split. I re-read each figure against the rule as the test states it.",
+        "Outside the review's gaps: leftovers4 said a stipend week under way at withdrawal or dismissal was called off with the rest. That is now fixed at school.ts:1832-1840: the week is paid for the share worked (CGS 31-71c).",
+        "Ran tests/evidence2-b08, evidence-g22-school, -g23, -g24 and -g20: 5 files, 120/120 pass."
+      ],
+      "weakTests": [
+        {
+          "title": "school.stipend > PLAYER JOURNEY: with $40,000 of wages earlier in the year, the next February's return reads the summer the clock paid whole: $3,819.96 federal, ...",
+          "why": "The federal literal is worked on SLATE's one federal table: 2024's brackets and $14,600 deduction, applied to 2027 (src/engine/content/tax.ts:135, effectiveFrom 2018; tax.due's defect 77, not fixed). It will move when that is fixed. Connecticut's $1,733.84 follows connecticutTax's single final rounding; the comment's own arithmetic gives $1,733.83. Neither undermines this row's withholding and recording claim."
+        }
+      ],
+      "staleText": [
+        "tests: 'no test pays a stipend by the clock and checks the return' is false. Cite tests/evidence-g22-school.test.ts 'school.stipend' (withholding, F-1 at the 1040-NR's 10%) and tests/evidence2-b08.test.ts 'school.stipend' (the 1040 read whole, F-1 $37.50), with a past-tense note.",
+        "status 'partial' should move to verified."
+      ]
+    },
+    {
+      "id": "abilities+techniques",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Gap 1 is closed. In evidence-g23-school, a played lab, Cabaret and festival rehearsal calls and nights, and the coursework:learn step each keep history entries that sum to the craft's rise.",
+        "Gap 2 is closed. b08's played Seagull understudy night is judged on {scene, speech, character, script}, with voice and movement read as abilities only. The test checks techniques, levels and limits, which judge records from the filtered set (evaluation.ts:320-326). Dropping the TECHNIQUES filter fails it.",
+        "Gap 3 is closed for each reader. judge: in b08, four abilities practised by command strictly raise the showing's overall and score, and the dims that read none of them stay equal. castFit: evidence-g20-school.test.ts:350 and :459. reachOf: in b08's plays.read twins, imagination rises in the ratio ((R-L)/5)^1.5 toward R, the mean of the kin's ceilings computed in the test, and doesn't rise at R.",
+        "The review's UI point is closed. b08 renders the Profile's Imagination reach with 'Reading a play' as its last change. evidence-g23-school renders the ability look's Last Change for a lab, Learn Lines, a night and a rehearsal.",
+        "All pass in this run."
+      ],
+      "weakTests": [
+        {
+          "title": "abilities+techniques > PLAYER JOURNEY: counts voice and movement once, as abilities, on a night that reads them: The Seagull's understudy run-through ...",
+          "why": "It checks the recorded techniques, levels and limits rather than the overall the review asked for. Both skeptics accepted this, since judge records what it actually passes. g23's replay test checks the overall."
+        }
+      ],
+      "staleText": [
+        "tests still cites tests/evaluation.test.ts 'counts voice and movement once...' (the inputs list only) and tests/school-fixes.test.ts's direct grewFrom call. Cite tests/evidence2-b08.test.ts 'abilities+techniques', tests/evidence-g23-school.test.ts 'abilities+techniques' and tests/evidence-g20-school.test.ts:350/:459 instead.",
+        "status reads 'partial' in docs/verification/audit/school.json and should be verified."
+      ]
+    },
+    {
+      "id": "genre demands",
+      "claimed": "partial (stale or wrongly grouped claim)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "The engine side is settled. withDemands, demandReads and DEMAND_WEIGHT no longer exist in src; grep finds them only in past-tense comments in briefs.ts, coursework.ts, engagement.ts and school.ts. src/engine/content/demands.ts's header is in the past tense and says a demand acts only through the briefs that stage it. The ONE RULE item was resolved by deleting the code.",
+        "The behaviour is shown. b08's played farce night (A Marriage Proposal) reads {comedy 2, scene 1, speech 1}; a twin with clown mastered has identical dims and overall. evidence-g23-school pins every brief's tapeReadsOf as the medium's base plus its own staged techniques, with every applied demand among them. briefs-content.test.ts holds the content rule.",
+        "The look's wording is fixed in src/ui/looks/actor.tsx:194: 'A self-tape in it reads ...' and 'A night of a play of its kind, or a class scene from one, reads its own material's techniques instead.' But no test shows the fix. The b08 look test extracts with /Work in it reads (.*?) : /, a phrase the look no longer contains, so the match is '' and not.toContain('Clown And Mask') passes vacuously. No test assertion contains 'self-tape in it'.",
+        "tests/engagement.test.ts 'makes every applied demand a requirement of the work...' is still cited, and still credits the demand with a rise that the brief's own staging makes.",
+        "The audit row's entry, downstream and tests all still describe withDemands acting at run time."
+      ],
+      "weakTests": [
+        {
+          "title": "genre demands > the farce's look says what a farce's work reads: not Clown, which a farce's night by the clock doesn't read",
+          "why": "Vacuous since the fix. Its regex looks for 'Work in it reads', which the look no longer says, so it extracts '' and the not.toContain passes whatever the look says. It should assert the new 'A self-tape in it reads ... Clown And Mask' and the play-night sentence."
+        },
+        {
+          "title": "tests/engagement.test.ts > makes every applied demand a requirement of the work: raising its technique raises the work, and it counts once",
+          "why": "The rise comes from the brief's own staged singing, so it can't fail if demands stop being read. The row still cites it."
+        }
+      ],
+      "staleText": [
+        "entry 'content/demands.ts withDemands' names a function that no longer exists. A demand now acts through content: every brief stages its genres' applied demands (tests/briefs-content.test.ts).",
+        "downstream should say: nothing at run time beyond the briefs that stage the demands. A play's night and a class scene read their material's techniques. The demand shows on the Profile's It Asks For column and on the genre look, as what a self-tape reads. Add, in the past tense, that tapeReadsOf, playReads and workContext called withDemands until 2026-10-13.",
+        "tests should drop engagement.test.ts 'makes every applied demand...' and cite tests/evidence-g23-school.test.ts 'genre demands', tests/evidence2-b08.test.ts 'genre demands' and tests/briefs-content.test.ts:102.",
+        "reads 'play kinds' and explanation 'castRead reads shown' are stale: a play's kinds no longer add reads, and the demand shows on It Asks For and the genre look."
+      ]
+    },
+    {
+      "id": "casting (castFit/castScore)",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Gap 1 is closed. Twins are played through Carlotta by the clock, and one sleeps through the closing night by command. With craft made alike, their fit is asserted equal (58.6). The reads differ by 0.2 x fit x the delivery gap, Samuel Park's read is the same in both and the order flips, and the part moves from Barbara Undershaft to featured.",
+        "Gap 2 is closed. Each night's delivery is worked in the test from the record's prep, required and readiness (prepFloor 0.35, fatigueFloor 0.6), not from runOf's sums, and lastWork.delivery is r3((1+sum)/5). A mutation that drops x.day fails it.",
+        "Gap 3 is closed. The real term's parts are asserted without a guard against partsFor's own rule (title or either, in read order). Theo Walsh below Hannah Bennett shows that a lower read can hold a bigger part.",
+        "The UI is covered by evidence-g24-school's render of Why This Cast.",
+        "All pass in this run."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/attributes-complete.test.ts > casts a real term by it, explains the cast, judges the classmates' run, and leaves recorded work as it was",
+          "why": "The ordering check is still behind `if (leads.length && featured.length)` (:108) and can pass having checked nothing. Its comment was corrected to partsFor's rule (leftovers4 item 76). It is no longer the row's evidence."
+        }
+      ],
+      "staleText": [
+        "tests: '...no test plays a run and checks the next casting moving with its delivery' is false. Cite tests/evidence2-b08.test.ts 'casting (castFit/castScore)' and tests/evidence-g24-school.test.ts 'casting (castFit/castScore)', with a past-tense note.",
+        "status 'partial' should move to verified."
+      ]
+    },
+    {
+      "id": "standing/term evaluation",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Gap 1 is closed. evidence-g24-school plays three cases by the clock: a fall left unprepared (47 of 47 unready gives a concern, and the worked twin stays good); a late Carlotta run judged once; and the at-reach rule. b08 isolates the pace: growth, attendance and coursework are identical, so the concern comes from the pace alone, and the Rep and Summer Cabaret refusals follow, in literal words.",
+        "Gap 2 is fixed in tools/acceptance-ui.mjs:707-725 (leftovers4 item 75). The leave-save step now must()s the Evaluations panel, at least one evaluated row and a standing label on every row, and it opens the first class's productions. The Standing tab is also rendered inside the gate (b08, g24), with the whole row text. The built-app script isn't part of the gate and wasn't run in this check.",
+        "Still open, from the latest skeptic: the 'behind' verdict isn't worked from the rule. termGrowth (school.ts:2806-2821) divides growth by room(start, ceiling) = max(0.02, (1 - start/ceiling)^1.5) and compares the result with growthFloor (0.5) x the class median's paced figure. b08 supports 'behind' only with raw classGrowth > 2 x growth, which the rule doesn't read, so a revert to raw-point comparison, or a growthFloor moved within the margin, would still pass. No other test works the room-relative pace on a played term: term-growth.test.ts's case at 40 of 100 that grew 0 is also behind under a raw rule."
+      ],
+      "weakTests": [
+        {
+          "title": "standing/term evaluation > PLAYER JOURNEY: the same worked fall weighed against a class three times as driven: ...",
+          "why": "It isolates the cause well, but justifies 'behind' with raw growth at 2x, not with the rule's room-relative pace against growthFloor x the class median. It should compute paced and classPace from the craft at the term's start, the ceilings and the classmates, then assert paced < 0.5 x classPace."
+        },
+        {
+          "title": "tools/acceptance-ui.mjs > [save: leave scenario] school: Your Classes, the first class's productions, the evaluations",
+          "why": "Now must()s the panel and the standing, but runs outside the gate and wasn't run here."
+        }
+      ],
+      "staleText": [
+        "tests still cites 'tests/school.test.ts standing its; tests/casting.test.ts run off; tests/school-fixes.test.ts; tests/term-growth.test.ts' (fixtures). Cite tests/evidence-g24-school.test.ts 'standing/term evaluation' and tests/evidence2-b08.test.ts 'standing/term evaluation'."
+      ]
+    },
+    {
+      "id": "preparation dims",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Gap 1 is closed, with the craft held alike. In b08, one twin reads the scene four times and the other twice. The craft is unchanged by the third and fourth reads, focus moves by under 0.02, and levels and abilities agree to 0.01 at the showing. Interpretation equals the factor 0.35 + 0.65 x (familiarity / 0.9) times the twin's, within the derived rounding, and the five dims that don't read familiarity are identical. The overall and the score are higher. A mutation that passes prep {} fails it.",
+        "Gap 2 is closed. evidence-g24-school checks peerNote after a played, kept rehearsal against three literal sentences, with status 'kept' asserted outside any branch and checked again after a reload.",
+        "Gap 3 is fixed in tools/acceptance-ui.mjs:240-275 (leftovers4 item 72). The step reads the work card's part figures, then requires the toast 'X: N minutes, Part up M%.', a moved clock, and that part's figure risen. Inside the gate, the Coursework render shows Knows The Scene for each twin (b08) and the Lines figure rising after a Learn Lines press (g24). The built-app script is outside the gate and wasn't run here.",
+        "All pass in this run."
+      ],
+      "weakTests": [
+        {
+          "title": "tools/acceptance-ui.mjs > coursework: a step of preparation done from its button, the clock moved and the step counted",
+          "why": "Now asserts the part's figure rose, but still skip()s when no preparation button is open (:244), and runs outside the gate."
+        },
+        {
+          "title": "tests/evidence-g23-school.test.ts > PLAYER JOURNEY: a coursework step that trains (Learn Lines) keeps its rise under coursework:learn, and Read The Scene, which trains nothing, keeps none",
+          "why": "The title says more than the test checks: Read The Scene keeps a focus entry under prepare:familiarity (PREP_ABILITY), and the test looked only at coursework:* sources (noted by the b08 agent)."
+        }
+      ],
+      "staleText": [
+        "tests still cites coursework-objective.test.ts, piece.test.ts and partners.test.ts (work built by hand, and peerNote checked inside a status branch). Cite tests/evidence2-b08.test.ts 'preparation dims' and tests/evidence-g24-school.test.ts 'preparation dims', along with tests/trace-commands.test.ts:53-80 and tests/traits-connected.test.ts:77-94."
+      ]
+    }
+  ]
+}

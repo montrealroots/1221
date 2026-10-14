@@ -1,0 +1,146 @@
+{
+  "rows": [
+    {
+      "id": "h-needs",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed by play (tests/evidence3-home.test.ts h-needs): 'You owe $1,882 that went unpaid.' A Move Money at 7:30 leaves Yale Health's 9 AM plan billing unpaid. $1,882 is half the Bulletin's $3,764. The test holds across a reload, settleArrears takes the sentence away at midnight, and a twin who kept the money is All Clear.",
+        "Closed by play: 'nearly at its limit' and '… is with collections'. A Scraping family's card is chosen through withFamily, which is the creation screen's own select. Its spending goes on the card and the autopay bounces. $1,423 is worked as 913 + 48×10 + 30 and sits under nine-tenths of the limit, so it does not weigh. At $1,630 it does. At the sixth miss the debt is $1,999 (the balance the hour before + the $40 fee). The test holds across a reload, and bank.pay_collections removes the sentence. CARD_FULL 0.85 would fail the first step.",
+        "Closed by play: 'You owe $50 for medical care.' The bill comes from a played injury (life.look_after exercise, seed g09-run-1668) at Capital One, not from billCare. The $50 is Yale Health's ER copay and is worked here. The test holds across a reload. The twin who kept her money is All Clear, and at Chase, which pays the item, the line says '$50 overdrawn'.",
+        "Closed earlier and still so: the decision rows, Go There, Dismiss and Mark N Read pressed on the panel, the six notices, a payment behind and suspended by play, and income tax by File It. 'N payments behind' left the screen on 2026-10-13, so the earlier fixture-only '2 payments behind' gap is gone with it.",
+        "Minor, not a row gap: the six notices' selection order is a literal snapshot (round two).",
+        "A weakness that is not a gap: 'Pay' for collections is sent as the command bank.pay_collections, not pressed on a screen. The Home sentence it removes is still read off the rendered panel."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > medical care owed, and a debt with collections / something gone unpaid / the card at nine-tenths",
+          "why": "These still rest on TEST SETUP debts. They are now redundant beside the played tests in evidence3-home, not the only evidence."
+        }
+      ],
+      "staleText": [
+        "tests/evidence3-home.test.ts:8-9, the file header, still says h-needs reaches 'You owe $10 that went unpaid.' (the first midnight's groceries). The test reads $1,882, Yale Health's plan billed at nine.",
+        "ui.json h-needs.tests says the money sentences 'rest on TEST SETUP'. That is true only of g32, and the played ones in evidence3-home are not yet listed (the round-three rowText would add them).",
+        "ui.json h-needs.corrected.now says 'No test reads the panel'. This has been false since 2026-10-13."
+      ]
+    },
+    {
+      "id": "h-money",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: the 'No account' fallback (Home.tsx:452, `primary?.name ?? 'No account'`) and its 'Your Bank' label (`primary?.institution ?? 'Your Bank'`) are drawn only over a checking closed by hand in evidence2-b12. Round three made the case for unreachability stronger by play. The poorest family ('nothing') has one checking at $43, and bank.close_current refuses it with the engine's words. A charge-off to collections leaves the checking named: 'Money Chase Total Checking: $0.00.' Neither of these reaches the fallback. Under THE ONE RULE the fallback is a declared word that no life reaches. It should be kept as a guard with a comment saying so, or removed. No test can close this gap.",
+        "Closed earlier and still so: the overdrawn alert by play, the bank button pressed, the LockedPanel and Locked Gated before ui.money and ui.bank, and the line against the profile's figures.",
+        "The earlier check's point still applies: round two's gapsClosed counted the 'Your Bank' label as closed, but it belongs with this open gap."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b12.test.ts > h-money > “No account” is a fixture’s…",
+          "why": "The checking is closed by hand (closedAt set). This proves the words, but not that a player can reach them."
+        }
+      ],
+      "staleText": [
+        "ui.json h-money.entry cites Home.tsx:450-458, in Your Affairs at :448. The line is at :449-457 and Your Affairs at :447.",
+        "ui.json h-money.corrected.now says 'No test renders Home'. This has been false since 2026-10-13."
+      ]
+    },
+    {
+      "id": "h-school",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed by play: the Graduated branch on a degree played. A London-born F-1 student is kept up by tools/policy.ts attentiveHour, which acts only through public commands (life.look_after, practice.exercise, life.sleep, health.enroll and the like), from 24 August 2026 to 22 May 2029. The run is fourteen slices, each a reload of the save the slice before left, and no slice may be dismissed, withdrawn or withheld. Home reads 'School Graduated, N of 16 in the class. Yale How This Works' before and after a reload. N is counted in the test as one plus the number of classmates whose mean over the 21 skills is strictly above hers, independent of rankIn and rankOf. 'Yale' follows the sentence directly, so there is no Next clause, and there is no 'Your standing is' alert. The earlier weak point (the rank read back through rankOf) does not apply to this test.",
+        "The defect ('Graduated, graduated') was closed on 2026-10-13 and is also held here by not.toContain.",
+        "Closed earlier and still so: Arriving, Year N, On Leave, Left the school, Next from booked and from nextClasses, and the standing alerts.",
+        "A dependency to note: the slices share module state (`kept`) and run in order. If a slice fails, the later tests fail on 'the slices played' rather than passing vacuously.",
+        "Ran on 2026-10-14 with one fork: all 26 tests in tests/evidence3-home.test.ts pass, both DEFECT tests included. The file took 195 seconds. The longest slices were 30.2 s (to 2028-11-01) and 29.1 s (to 2029-03-15). The claim's 'about 100 seconds, the longest 17' did not hold on this run. The slices are still inside each one's 60-second limit, but only by about half, so they could time out under a loaded full-suite run."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "ui.json h-school.entry cites SchoolLine at Home.tsx:485-513, mounted at :459. It is at :484-516, mounted at :458.",
+        "ui.json h-school.tests says of the graduate test 'no played life reaches one in a test’s time'. This has been false since round three.",
+        "ui.json h-school.corrected.now says 'No test renders Home'.",
+        "tests/evidence3-home.test.ts:17, the file header, says 'fifteen slices'. SLICES has fourteen, and its own comment at :432 says fourteen."
+      ]
+    },
+    {
+      "id": "h-papers",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The claim 'partial, waiting on the defect' no longer holds. 5f0cba03 fixed the defect in PapersLine (Home.tsx:523-526): it now names the newest open return that has something to pay, or else the newest open return. Past its due date the alert says 'was due' (:546). The DEFECT test (a 2026 return with nothing to pay left open, and 2027's $2,286 named) now passes. A further test holds 'is due' through the day before and 'was due' the day after, across a reload.",
+        "Closed by play: Connecticut's part of owedEverywhere on Home, on a family the creation screen offers (withFamily 'scraping'), left to the clock to 1 February 2028. $1,700.39 is worked from 2026's federal table and $585.33 from CT-1040's exemption, rates and credit. File It is pressed on Home with her money in a Chase CD, and the line reads '$2,286 of tax owed.' The day after the due date it reads '$2,359' (each authority's interest and penalty worked by hand: $1,709 + $650), across a reload. Mutating owedEverywhere to the IRS alone gives $1,700 and $1,709, so the test fails. The only engine figure the test leans on is f.income, which it checks equals the sum of the return's own parts and against CT's credit bracket. The tax on that income is worked independently.",
+        "Closed earlier and still so: the return alert's date, '$166 to pay' and 'a late penalty in it'; 'Cover: none.'; Unemployment $93 a week by play; and 'growing each month' only once the due date has passed."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence3-home.test.ts > h-papers > DEFECT (h-papers): on 1 February 2028, her 2026 return unfiled, … Home’s alert names the 2027 return and what it would pay; it names only the 2026 one, “due April 15, 2027”, ten months gone, and nothing of the $2,286",
+          "why": "The test is sound, but since 5f0cba03 its title is false in the present tense ('it names only the 2026 one'). It should be retitled without 'DEFECT' and in the past tense, as was done for defects 42, 43 and 76."
+        }
+      ],
+      "staleText": [
+        "ui.json h-papers.issue says 'Connecticut’s half is shown only on a family creation can’t offer'. This has been false since round three, and the issue also leaves out the open-return choice fixed on 2026-10-14.",
+        "ui.json h-papers.entry cites PapersLine at Home.tsx:519-554, mounted at :460. It is at :518-558, mounted at :459.",
+        "ui.json h-papers.explanation cites taxreturn.ts:526, Home.tsx:528 and Home.tsx:537,543. owedEverywhere is at taxreturn.ts:523, its use on Home at :531, and growing at :540.",
+        "ui.json h-papers.tests calls evidence2-b12's Connecticut test 'a needy family no player can start'. Creation has offered that family since 2026-10-14.",
+        "ui.json h-papers.corrected.now says 'No test renders Home'."
+      ]
+    },
+    {
+      "id": "n-decision-us-status",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed by play: the degree, which was the last open gap. This test uses the same played graduate as h-school (attentiveHour, fourteen slices across reloads), with nothing set by hand. The F-1 is checked untouched at creation (expires 30 July 2029). No decision exists on 30 May. The clock raises it at 31 May 2029 noon UTC, due 30 July (sixty days' grace, worked here), with both actions offered. 'Apply For OPT' is pressed on Home. It posts $470 from her own accounts (summed from the postings, a literal), resolves the decision on 1 June, and leaves the permit pending to 30 August (ninety days, a literal). After a reload she is in status on 1 August, and the permit is approved on 30 August, valid to 30 August 2030, with the OPT Approved notice's words.",
+        "Closed earlier and still so: premium through the decision ($2,250, 17 July counted without Juneteenth and Independence Day, a test now retitled out of DEFECT), the refusal form for a withdrawn F-1, played, and 'answered from Papers too'.",
+        "Note: the earlier weak point, that the premium DEFECT title was present tense, is fixed (evidence2-b12.test.ts:684 is retitled)."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "ui.json n-decision-us-status.issue says 'A played degree, the OPT-offering path’s start, is beyond a gate test’s time.' This has been false since round three.",
+        "ui.json n-decision-us-status.tests says the b12 journey's degree was conferred by setStanding, and does not yet list evidence3-home.",
+        "ui.json n-decision-us-status.entry cites the US_STATUS_KIND handler at permission.ts:264-294 and the decision at :279-287. The handler begins at :267 and the actions are at :286."
+      ]
+    },
+    {
+      "id": "p-journey-history",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The claim 'partial' no longer holds. Both defects it found were fixed in 5f0cba03, and the fix also closes its open gap. The gap was JourneyPanel's closed-Rep branch, which no understudy reached. school.ts now marks the run's last kept call as last, on call or performance alike, and closes the run at its curtain whether the understudy is sent on, not needed, or out of town. The test on the played save of 15 April 2027 (The Seagull ended 27 March; Nina was performed once) asserts credits are [] and that School Journey reads 'On stage: Nina in The Seagull, 2027.' That sentence can come only from the `closed` filter over school.rep, so the branch is now reached by play. The evidence2-b11 fixture is no longer the only evidence.",
+        "Closed: 'Graduated, graduated' on School Journey. ProfileWorkspace.tsx:504 leaves out the standing for a graduate, and the test pins '^School Journey Graduated How This Works On stage: ' on the played graduate.",
+        "Closed by play: every credit of a played degree is said once, The Seagull's Nina among them (wentOn 1). The sentence is built from the credits and each one is counted. The filter mutation fails the test.",
+        "Closed earlier and still so: Development History items, Your Work So Far rebuilt by hand, How You Tend To Play It, the milestones, Show Older Work, the Your School button, and the acceptance step (outside the gate).",
+        "Not covered, though outside the row's claim: the April test does not check when the run closed (rep.closed against 27 March's curtain), and nothing reads the new director's note for an understudy never sent on ('You covered … and didn’t go on')."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence3-home.test.ts > the graduate, played > DEFECT (p-journey-history): the played graduate’s School Journey says “Graduated”, once, …; it says “Graduated, graduated”",
+          "why": "The test passes since 5f0cba03, so its title is false in the present tense. It should be retitled without 'DEFECT' and in the past tense."
+        },
+        {
+          "title": "tests/evidence3-home.test.ts > the graduate, played > DEFECT (p-journey-history): on 15 April 2027, … School Journey says she was on stage in it …; it says “No production yet.”",
+          "why": "The same problem: the title is false in the present tense since the fix. The test also does not assert the close date."
+        }
+      ],
+      "staleText": [
+        "ui.json p-journey-history.issue says 'JourneyPanel’s Rep branch is held only by a fixture'. This has been false since 5f0cba03.",
+        "ui.json p-journey-history.entry cites JourneyPanel 482-543, WorkSoFarPanel 282-308 and HistoryPanel 545-564. The current lines are 486-550, 286-312 and 552-571.",
+        "ui.json p-journey-history.corrected.now says 'no test renders the School Journey'.",
+        "tests/evidence3-home.test.ts:27-32, the file header, still describes both defects in the present tense ('reads “Graduated, graduated”', 'is never closed')."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,677 @@
+{
+ "tutorial.read::On a finished guide missing chapters (as one read through before chapters were added), the top bar's Guide button says 'Guide (2 Left)'. nextChapter is undefined, no strip asks for those chapters, and the dialog opened at one offers no I’ve Read It (isNext is false), so the count can never fall.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g02-life.test.ts > tutorial.read > DEFECT: the top bar’s Guide button counts no chapters left on a finished guide, which takes none of them",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.appeal::An appeal overturned after the medical debt was paid down past the share takes only what is left off the debt. Of $150 paid toward a $183.98 bill that turns out to owe $45, the $105 over the share is never refused back, and the bill stays inDebt with debtSince set, so Papers reads Owed As Debt on a debt of $0.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g02-life.test.ts > health.appeal > DEFECT: overturned after a debt was paid down past the share, what was paid over the share comes back, and the bill is settled",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.dental::Yale Delta Dental Basic's $50 deductible and $1,000 maximum are kept by calendar year, though its plan year runs 1 October to 30 September: a filling on 18 January 2027 is charged a second deductible ($91.46 where it should be $51.46 on a $257.31 filling) after October 2026's filling paid it.": {
+  "on": "2026-10-13",
+  "test": "health.dental > DEFECT: a January filling is in the plan year that began on 1 October, so its $50 deductible, paid in October, isn’t charged again",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.pay_bill::health.pay_bill with a fromId that isn't an open current or savings account of theirs pays from the primary account instead of refusing: naming their own credit card took $900 from Chase Total Checking.": {
+  "on": "2026-10-13",
+  "test": "health.pay_bill > DEFECT: an account named that can’t pay a medical debt, their own credit card, is refused, not silently swapped for the current account",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "life.birthday::For somebody born on 29 February, the birthday notice on 28 February of a non-leap year says the age they were, not the age they turn ('Happy Birthday: 22' / 'You're 22 today.' for a 2004 birth in 2027). birthdays.ts puts the birthday on the 28th, but ageOn counts the year only from 1 March.": {
+  "on": "2026-10-13",
+  "test": "life.birthday > ENGINE DEFECT: born 29 February 2004, the birthday said on 28 February 2027 is her 23rd, the age she turns that day",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "life.commitment::A plan of one's own that comes due while the player is in hospital is marked 'done'. occupiedAt then returns it, so life.sleep from the hospital bed is refused 'You’re at Gym until 1:30 PM.'": {
+  "on": "2026-10-13",
+  "test": "life.commitment > ENGINE DEFECT: a plan come due while the player is in hospital is missed, and a sleep from the hospital bed isn’t refused for being at it",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.appeal_decided::An appeal overturned on a bill that went to debt and was then partly paid off keeps what was paid over the plan's share: only what is left of the debt comes off, nothing comes back to the bank, and the bill stays inDebt (Papers: Owed As Debt) with the debt at $0.": {
+  "on": "2026-10-13",
+  "test": "health.appeal_decided > DEFECT: partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.appeal_decided::'A Claim Denied', 'Appeal Won' and 'Appeal Upheld' lowercase the whole of what the care was, so the clinic's proper name reads 'fair haven community health care'.": {
+  "on": "2026-10-13",
+  "test": "health.appeal_decided > DEFECT: the denial’s and the decision’s notices name the clinic as it’s written",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.bill::'A Medical Bill Went Unpaid' lowercases the whole of what the care was, so the hospital's name reads 'yale new haven hospital, york street campus emergency department'.": {
+  "on": "2026-10-13",
+  "test": "health.bill > DEFECT: A Medical Bill Went Unpaid names the hospital as it’s written",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "injury.comp::A work-study injury records that one shift's pay as the week's wage: hurt at the second 4-hour elective of a week, atWork.weeklyWage is $92 while that Friday's 'Work-study wages, 8 hours' posting is the week's $184, so compensation is figured on half the week.": {
+  "on": "2026-10-13",
+  "test": "injury.comp > DEFECT: hurt at the second of two elective shifts in a week, the wage it records is the week’s $184, not the shift’s $92",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "injury.comp::Connecticut's after-tax rate takes a year of payroll tax (7.65%) off a work-study wage though work-study pay bears no FICA and no withholding (posted whole, school.ts:3114-3116); CGS 31-307 reduces the earnings by the deductions made from the wages, so a $92 week pays 75% of $92, $69.00, not $63.72.": {
+  "on": "2026-10-13",
+  "test": "injury.comp > DEFECT: the week’s rate is 75% of the $92 paid with nothing deducted from it, $69.00, not less a FICA that was never withheld",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "condition::The Condition look decides its sick-day line on the figure it shows, rounded, while the school decides on the condition itself. A student worn by five-hour nights to 54.83 is excused a sick day (school.call_in_sick ok), but the look shows '55, under the 98 …' and leaves out 'Under 55, a day off classes called in sick is excused.'": {
+  "on": "2026-10-13",
+  "test": "condition > DEFECT: the Condition look withholds the sick-day line from a student the school would excuse, at 54.8 shown as 55",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "seasons/flu::An unseen flu (care 'visit', 1 − CARE.fluSeesClinician = 63% of flus) takes 25 condition and 30 energy and sets fluUntil, but careFor returns before its notice, so the player is never told.": {
+  "on": "2026-10-13",
+  "test": "seasons/flu > DEFECT: an unseen flu is told, “You Have The Flu”, with nothing to pay",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "seasons/flu::Profile's Current Condition note says 'The flu holds back the voice'. Since 2026-10-10 illness also reaches movement, partnered and physical execution and consistency (content/tasks.ts).": {
+  "on": "2026-10-13",
+  "test": "seasons/flu > DEFECT: Profile’s For Work note says the flu holds back the body’s work as well as the voice",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "holidays::slot() moves a booked doctor's visit only off Saturdays and Sundays. A New Haven student whose 24-day wait ends on 26 November 2026 is booked for 10:00 AM on Thanksgiving Day.": {
+  "on": "2026-10-13",
+  "test": "holidays > DEFECT: a doctor’s visit booked from Monday 2 November, 24 days on, isn’t put on Thanksgiving Day: it’s Friday 27 November",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "body::bodyDay clamps the weight at 30 kg, but the starvation end needs BMI < 12. A body under about 158 cm (30 / 1.58² = 12.0) can never reach the end, and one already under 30 kg is lifted to 30 overnight while starving.": {
+  "on": "2026-10-13",
+  "test": "body > DEFECT: a 150 cm body starving isn’t held at 30 kg: from 27.3 kg (BMI 12.1) it gains nothing overnight, and its life ends under BMI 12 as a 170 cm body’s does",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.repay_loan::bank.repay_loan counts the interest to date as 30 days less the days to the next payment, so 20 days into a 31-day month it charges 19 days ($15.99 on $3,000 at 10.24%, where 20 days is $16.83), and 20 days into February it would charge 22.": {
+  "on": "2026-10-13",
+  "test": "bank.repay_loan > charges 20 days’ interest 20 days into a loan taken on 24 August, a 31-day month, where it charges 19 (a defect)",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.set_alerts::A Large Payment lowercases the whole of what was paid, so a payment's name reads 'yale delta dental basic, the year' and 'yale health plan, the fall term of 2026' (and an account named in a memo would be lowercased too).": {
+  "on": "2026-10-13",
+  "test": "bank.set_alerts > names Yale’s plans as they’re called in A Large Payment, where it lowercases the whole of what was paid (a defect)",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "card.request_hardship::A hardship plan paid off before a statement, or after a due date, never ends. The next statement owes nothing and schedules no due date, and only the DUE_KIND handler deletes hardship and the 'hardship' suspension. The card stays suspended with $0 room and nothing owed, for good, and card.request_hardship then refuses 'You’re on a plan already.'": {
+  "on": "2026-10-13",
+  "test": "card.request_hardship > ends once the card is paid off before its statement too, with no due date to wait for, and the card isn’t left suspended owing nothing",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "card.request_hardship::On a plan, the statement tells the holder '$4,800.00 to pay, at least $48.00.' That figure is the card's minimum, while the due date judges against the plan's $100. A holder who pays the $48 is charged a late fee, and the late notice reads 'The minimum was $48.00 and only $48.00 went in.'": {
+  "on": "2026-10-13",
+  "test": "card.request_hardship > names the plan’s $100 as what the statement asks and what the due date found short, where only the card’s $48 minimum was paid",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "card.set_everyday::card.set_everyday accepts a card that is being closed. cardFor allows it, and only BankCard.tsx:239 hides the button, so a card with no room can become the everyday card.": {
+  "on": "2026-10-13",
+  "test": "card.set_everyday > refuses to make a card being closed the everyday card, as the screen never offers it",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "statements::A card closed with its statements kept (CardState.cuts) keeps an open last period labelled 'So Far'. That period runs to the next pending statement, or a drawn date 31 days after its last cut, past its closing. A closed current account's last period ends at its closing and reads 'To Its Closing'. Example: the student's card closed on 20 September shows 'Statement Of October 21, 2026, So Far', ending 21 October.": {
+  "on": "2026-10-13",
+  "test": "statements > ends a closed card’s last period at its closing, as the row says a closed account’s does, not So Far",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "tax.pay::Still Owed (owedOn/partsOn), which Pay pays in full, charges a late-filed or IRS-assessed return a month of paying late that hasn't begun: payLateRateAt counts the months after filing afresh from the filing instant, so the month the filing splits is charged once in latePenalty (ceil to the filing) and again here (ceil from it), for the days until the due date's own month turns. On 13 August 2028, 485.5 days after a 15 April 2027 due date, it charges 8.5% where IRC 6651(a)(2) gives 8%: $361.45 shown against $360.59 plus half a day's interest.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g16-papers.test.ts > tax.pay > DEFECT: the day after the assessment, Still Owed charges no month of paying late not yet begun: sixteen months from the due date to 13 August 2028, not a seventeenth counted afresh from the assessment",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "benefits.assistance_month::The month's SNAP reads the month fifteen days before the payment, so a payment on the 16th or later reads its own month so far, not the calendar month before that the row ('last month's earnings') and both doc comments ('the calendar month before a moment', 'The month before a moment as SNAP counts it') name. A graduate on unemployment who applies on 20 January 2028 is paid $287.40 on the 27th from January's three Sundays of benefit, where December's nothing over $217 pays $306.00.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g16-papers.test.ts > benefits.assistance_month > DEFECT: reads the calendar month before the payment: claimed 20 January 2028, the month paid on the 27th is $306, December having brought nothing over $217, not January’s weeks so far",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "tax.season::Papers' No Returns Yet still says 'Each February, a year with any income, or anything owed or due back, has its return ready.' Since the filing threshold of 2026-10-13 (registerTaxReturn), a year with nothing either way and income under the standard deduction gets none: the student born in New York, with $1,670.59 of 2026 income and no return, is shown that sentence.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g16-papers.test.ts > tax.season > DEFECT: Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.take_shift::An elective evening booked through school.take_shift and then cancelled by a leave starting (or by leaving the School) keeps its 4 hours in workStudy.electiveHours. The SHIFT_KIND handler gives an elective evening's hours back whenever it isn't worked, but a cancelled evening never reaches the handler. Shifts And Pay's 'Elective Hours Asked For' then counts an evening that was never worked and never will be.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence-g19-school.test.ts > school.take_shift > DEFECT: an evening booked and then called off by a leave gives its four hours back, as an evening not worked does",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "genre.study::A scene for class from a play the game knows by kind isn't sped by studying that kind when the scene spells the play's title with a small 'of', 'for' or 'to'. genresOfPlay matches titles exactly, so four scenes never find their kinds and genreSpeed reads 1 for them: riders-sea 'Riders to the Sea' (list: 'Riders To The Sea', tragedy), earnest-2 'The Importance of Being Earnest', playboy-3 'The Playboy of the Western World' and measure-2-4 'Measure for Measure'. Riders to the Sea was set in the first fall on all 52 seeds probed.": {
+  "on": "2026-10-13",
+  "test": "genre.study > PLAYER JOURNEY: a scene for class from Riders to the Sea, which the game knows as a tragedy, is sped by studies of tragedy as Trifles is by drama: the first read after three days’ studies moves (1 + 31.11/600) ÷ (1 + 22/600) of one after two days’, and one after two days’ more than a twin’s who didn’t study",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.call::The Casting tab shows no director's note for a run no night of which was played. The note paragraph renders only under `casting.nights && (…)`, and a run whose every night was missed (excused) has no nights. So closeRun's note ('The run went on without you: …') reaches only the notification, and the finished panel shows 'Performed 0' with no note": {
+  "on": "2026-10-13",
+  "test": "school.call > shows the director’s note of a run played without them on the Casting tab, as it shows one with nights",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.summer::SUMMER_KIND credits and closes a closing night missed after nights were played only when the miss is excused. A closing missed unexcused after three nights played leaves the show with no credit, no note and no reflection, and the run is never closed. The Cabaret's missed closing (school.ts:3452-3455), a School production's (closeRun at 3350, keepCredit 1996-2000), closeRun's contract ('when its last night passes, played or not', 3197) and the review's todo all credit and close it.": {
+  "on": "2026-10-13",
+  "test": "school.summer > PLAYER JOURNEY: the first show’s closing missed away in New York after three nights: let go, and credited with the three and the run closed with its note and look back, as the Cabaret’s and a School production’s are",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "development ledger::The Profile's Development History, the Attributes table's Last Change and an ability's look print a Cabaret rehearsal call as “A rehearsal call: cabaret”: the bare key, lowercase": {
+  "on": "2026-10-13",
+  "test": "development ledger > PLAYER JOURNEY (FAILS until the engine is fixed): a Cabaret rehearsal call is said as the Cabaret’s, not by the bare key “cabaret”",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.make_up::A make-up session begun within an Incomplete's month that ends after it is taken. The deadline fires inside the session's two hours: the course becomes a Permanent Incomplete, the player is told 'Permanent Incomplete: Acting I' (it carries no credit), and onPermanent runs (withholding a degree that awaits it). The session then sets the same course to 'pass'.": {
+  "on": "2026-10-13",
+  "test": "school.make_up > a session begun an hour before its month runs out, which it can’t hold, is refused in its words, and the course isn’t passed after its deadline made it permanent",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.request_repeat::A second year's repeat is granted though the degree then takes ten semesters. repeatRefusal counts the semesters enrolled plus the repeat's two, not the program terms still to come after the repeated year. With year 1 repeated and year 2's spring failed (six enrolled, academic 3), it counts 'eight' and grants. Year 2 again and year 3 then make ten, past the Bulletin's nine (p.194), which courserecord.ts's header says SLATE refuses.": {
+  "on": "2026-10-13",
+  "test": "school.request_repeat > DEFECT: refuses a second year’s repeat that would take the degree to ten semesters, past the Bulletin’s nine",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.request_repeat::A repeat is accepted while an additional term is asked for, and both are granted. extraRefusal refuses an additional term while a repeat is pending, but repeatRefusal has no mirror check. Played on 2026-10-13, a last year's student got the additional term, and the retake passed in Fall 2029. She also got the repeat: offset 2, the class of 2030, and the third year's spring sat again in 2030, all for one course.": {
+  "on": "2026-10-13",
+  "test": "school.request_repeat > DEFECT: refuses a repeat while an additional term is asked for, as an additional term is refused while a repeat is",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.request_extra_term::Each of the additional term's class days is held twice. TERM_KIND's additional-term branch calls planWeek, which plans the week and puts a second weekly planning item (WEEK_KIND) on the calendar beside the one that has run since enrollment, so every week after is planned twice. When it was played, two WEEK_KIND items sat at 2 September 2029 at 6 PM, and each Wednesday's CLASSES_KIND ran twice. Movement Invention III's record counted 28 meetings for 14 Wednesdays, and the term's class days and classmates' growth were doubled, as would any day missed be.": {
+  "on": "2026-10-13",
+  "test": "school.request_extra_term > DEFECT: the additional term holds each of its class days once, Movement Invention III meeting its fourteen Wednesdays, counted against program term 4",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "p-journey-history::Once a production's run has closed (its last night played, the director's note given, and its 'run' milestone listed on the same panel), School Journey still says 'No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.' until the next term's casting files the credit: on r8-a, from 12 May to mid-September 2027.": {
+  "on": "2026-10-13",
+  "test": "p-journey-history: School Journey, Your Work So Far and Development History on the Player Profile > PLAYER JOURNEY: once the run has closed, its last night played and its average a milestone on the same panel, School Journey says she was on stage in it, not that it is running",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "n-decision-us-status::A withdrawn (or dismissed, or degree-withheld) F-1 student is never raised 'Your US Status Is Ending'. The status check is scheduled at the end of the fifteen days' grace instead of inside it, and at that moment it goes straight to Out Of Status.": {
+  "on": "2026-10-13",
+  "test": "n-decision-us-status > DEFECT: an F-1 who withdraws is raised “Your US Status Is Ending” in her fifteen days’ grace, due the sixteenth, with nothing to apply for",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "world.dismiss_decision::prune's comment names a reader that doesn't exist: a raiser reading a dismissal off a kept row. requireDecision skips dismissed rows and raises afresh, and no raiser dates a row more than 180 days out": {
+  "on": "2026-10-13",
+  "test": "none: a comment; the behavior that falsifies it is held by evidence-g02-life 'is read by no raiser…' and by this file's world.tick journey (the status notice dated 15 days from its raising)",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.choose_clinic::A visit at Bupa's pay-as-you-go private GP, chosen as one's doctor by an NHS-covered Londoner, is billed at £0 ('… Nothing to pay.'), the same as the NHS practice. The choice moves only the name on the notice, never the price": {
+  "on": "2026-10-13",
+  "test": "health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP, chosen as her doctor, is billed, since the NHS doesn’t pay a private GP; her twin at Soho Square’s NHS practice pays nothing",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.choose_clinic::New Haven lists one doctor's practice, which clinicFor already gives with nothing chosen. For every played life Your Doctor offers the same place twice ('The Town’s First Practice' and Fair Haven), and the choice changes no booking, bill or price": {
+  "on": "2026-10-13",
+  "test": "none fails: ‘for the New Haven student the choice decides nothing…’ holds the behavior as it stands and will change when a second practice is added",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "world.tick::prune's comment names a reader that doesn't exist: a raiser reading a dismissal off a kept row": {
+  "on": "2026-10-13",
+  "test": "none: a comment; this file's world.tick journey and evidence-g02-life 'is read by no raiser…' hold the behavior that falsifies it",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.appointment::A visit owed swallows every later visit the health week draws, and every review. One appointment called off on Papers, or missed asleep or in hospital, and never booked again ends the doctor for good, at no cost.": {
+  "on": "2026-10-13",
+  "test": "health.appointment > a visit owed and never booked again doesn’t swallow the next one the week draws: that week books a doctor",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "health.bill::An injury's bill is named with the injury's notice title in title case ('A Sprained Ankle: its care'). Since inSentence lowercases only a leading article (the fix of 2026-10-13 that kept clinic names), 'A Medical Bill Went Unpaid' reads '$699.13 for a Sprained Ankle: its care is a medical debt now.'": {
+  "on": "2026-10-13",
+  "test": "health.bill > A Medical Bill Went Unpaid says what the injury was in the sentence’s own case",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "injury.comp::Connecticut's minimum compensation is held to 75% of the wage after tax, where CGS 31-307(a) holds it to 75% of the average weekly wage. The statute: no less than 20% of the maximum, 'provided the minimum payment shall not exceed seventy-five per cent of the employee's average weekly wage, as determined under section 31-310', which is gross wages. With the maximum at $1,776, any week under $473.60 should pay 75% of its gross. The Summer Cabaret's $375 stipend instead pays a resident 75% of $375 less a year of federal tax and FICA ($252.67), and an F-1 student $274.19, where both are owed $281.25.": {
+  "on": "2026-10-13",
+  "test": "injury.comp > the Summer Cabaret’s $375 week is paid Connecticut’s minimum, 75% of it, $281.25, to a resident and to an F-1 student alike",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "hygiene::The hygiene dial's own comment says, in the present tense, that it falls twice as fast on set or on stage (`setGrime`) and that rooms notice. No code does either. setGrime exists only in that comment, and at the Summer Cabaret's first night 2.5 hours on stage cost 4.0, the waking hour's 1.6.": {
+  "on": "2026-10-13",
+  "test": "hygiene > model.ts says no more of hygiene than the engine does: not twice as fast on stage, and no room that notices",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "mortality::A Life, Ended counts a life ended between half a month and a month and a half after the first morning as '1 Months' under Years In The World.": {
+  "on": "2026-10-13",
+  "test": "mortality > DEFECT: a life ended under a year counts its one month as “1 Month”, not “1 Months”",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "mortality::Two comments still say acting's wages include residuals; nothing records one since the career went on 2026-10-09. recordWages' callers are work-study (school.ts:3157) and the Summer Cabaret's stipend (school.ts:3699), and neither passes residual.": {
+  "on": "2026-10-13",
+  "test": "None: the claim is prose, which no test on this line reads (tools/claims.mjs was the old line's). 'mortality > PLAYER JOURNEY: the end her 86th birthday drew…' shows what Earned counts: one work-study payslip of $138, and no residual.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.break_term::bank.break_term keeps a refusal ('You need a current account for the money.') and a day-handler guard that no life can reach. Both read accountlife.ts's currentOf, which returns person.primaryAccountId's account, and every life holds one from creation to its end. They are declared words that nothing reaches.": {
+  "on": "2026-10-13",
+  "test": "None can fail. No played life reaches the branch: only a fixture that deletes primaryAccountId would. The fix is a deletion, which no test sees.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "card.lock::card.lock's refusal '<bank> locks a card only by phone.' and the lockInApp field it reads are declared words that nothing reaches. No bank's researched terms set lockInApp to false, and the only reader is that one `=== false` test.": {
+  "on": "2026-10-13",
+  "test": "None can fail. No bank sets lockInApp to false, so no played life reaches the branch; the fix is a deletion.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "card.report::card.report never reads the rush days of a bank that lists rush days but no rush fee (Wells Fargo 1, Capital One 3, Shinhan). It refuses 'has no rush replacement SLATE knows of.', and Your Cards doesn't offer it, though both banks' pages offer a faster card. The row's 'reads SECURITY fees/days' holds only for the banks that list a rush fee.": {
+  "on": "2026-10-13",
+  "test": "card.report > rushes a Capital One debit card from Your Cards in its 3 business days and a Wells Fargo one in its 1, for no fee, as each bank’s terms list rush days and no rush fee",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.open_current::openRefusal's 'in a branch where you live' check is a tautology: a declared refusal that nothing can trigger": {
+  "on": "2026-10-13",
+  "test": "None can fail: the condition is always false. Deleting the line leaves every test in this file passing, which is the finding.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.set_order_source::bank.set_order_source declares a refusal that no standing order can trigger": {
+  "on": "2026-10-13",
+  "test": "None can fail: no order's toId is ever a current account. The test 'can’t make a current account a standing order’s target…' shows why.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.close_current::A closed account's last statement omits what posted at the closing (the remainder sent, and interest and fees settled on closing), and its closing balance is the pre-close balance, not $0.00": {
+  "on": "2026-10-13",
+  "test": "bank.close_current > ends Chase’s last statement at $0.00 with what it held sent to Capital One at the closing",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "bank.close_current::linkedTo declares a link, a standing order paying into a current account, that no standing order can make": {
+  "on": "2026-10-13",
+  "test": "None can fail: a standing order's toId is never a current account.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "documents.report_lost::documents.report_lost accepts a document that has run out (status 'valid' but past expiresAt), which the screen never offers; replace_license then issues a copy with the same past expiry": {
+  "on": "2026-10-13",
+  "test": "documents.report_lost > refuses a report of the license run out, which the screen never offers, and leaves it as it was",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "tax.pay::The IRS's substitute return (and a late return filed with a balance) charges interest from the due date on the tax alone. IRC 6601(e)(2)(B) runs interest on the 6651(a)(1) failure-to-file addition from the return's due date as well (irs.gov/payments/interest: the Failure to File penalty 'is due on the return due date'). The London student's 2026 1040-NR, assessed 12 August 2028, is $360.59 where the statute gives $376.73 ($32.28 of interest on $165.60 of tax and $165.60 of filing addition, not $16.14); CP2566's $353.15 should be $365.15; Still Owed and Pay in full carry the shortfall. (Smaller and not tested: after the assessment partsOn charges interest on the paying-late addition at once, where 6601(e)(2)(A) waits 21 days from notice and demand; about a cent here.)": {
+  "on": "2026-10-13",
+  "test": "tests/evidence2-b06.test.ts > tax.pay > DEFECT: assessed, the IRS charges interest from the due date on the filing addition as on the tax (IRC 6601(e)(2)(B)): $376.73, which Still Owed, and so Pay in full, carries",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "documents.us_status::Out of status, Covered Connecticut (and the Essential Plan) ends at its renewal because programFor returns nothing for someone not lawfully present, but the notice gives the income reason: a withdrawn F-1 student enrolled on her fifteenth day, out of status on the sixteenth, is told on 1 October 2027 'Last month’s income is over what it allows.' with September's income the bank's interest alone, far under 175% of the poverty line.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence2-b06.test.ts > documents.us_status > DEFECT: Covered Connecticut, taken in her fifteen days, ends at its renewal once she is out of status, and says so; not that last month’s income, the bank’s interest alone, is over what it allows",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "benefits.assistance_month::SNAP's month before is taken in UTC, but the earnings record keys a month in the home zone (recordBenefit, recordWages and recordInterest are passed s.homeZone). A graduate who claims at 9 PM on 24 January 2028 is paid at 9 PM on the 31st, still January in New Haven and 1 February in UTC, so the payment reads January so far ($372 of benefit, $259.50) where the calendar month before is December ($306). The counted months (monthKey) are keyed the same way.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence2-b06.test.ts > benefits.assistance_month > DEFECT: a claim made at nine on the evening of 24 January is paid at nine on the 31st, still January in New Haven: it reads December, $306, not January’s weeks, which are the month before only in UTC",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "benefits.assistance_month::snapMonth pays an eligible one-person household its 30% formula down to nothing, with no minimum benefit. 7 U.S.C. 2017(a) gives a household of one or two at least 8% of the thrifty food plan for one, $25 a month in FY2027 ($24 in FY2026; USDA's FY2027 cost-of-living adjustment). A played student in the Summer Cabaret, eligible (gross under Connecticut's 200%, net $1,283 under 100% of the poverty line), is paid nothing on 2 August 2027 for July's $1,875 and $10.05 on 1 September for August's $1,500.": {
+  "on": "2026-10-13",
+  "test": "tests/evidence2-b06.test.ts > benefits.assistance_month > DEFECT: the months the Cabaret’s wages are read pay a one-person household at least SNAP’s least, $25 in FY2027 (7 U.S.C. 2017(a); USDA’s cost-of-living adjustment of 21 August 2026), not nothing on July’s $1,875 or $11-odd on August’s $1,500",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.make_amends::The CLASS.amends comment falsifies the rule it documents. It says amends give back what each thing took, and gives a meeting or rehearsal missed as trust 6 and 'the bond 2 of the 3 it cost'. A partner rehearsal or a showing missed takes trust 12 and the bond 5, so amends give back half. The 6 and the 3 are an evening running lines missed (CLASS.study.missed). Incidents record only 'missed', not which kind, so the code cannot give back per source. Either the comment changes, or the owner rules the figures differ by source, which needs the source kept on the incident.": {
+  "on": "2026-10-13",
+  "test": "None fails: the defect is prose. tests/evidence2-b07.test.ts > school.make_amends > PLAYER JOURNEY: for an evening running lines slept through... pins the code's figures, 50→44→50 and −3→−1. tests/evidence-g18-school.test.ts pins a rehearsal's 38/−5 → 44/−3.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.respond::A classmate's moment open when the student withdraws or is dismissed (setStanding) or begins a leave (startLeave → cancelPending) never lapses. MOMENT_KIND ('school.moment') is a school.* item with payload.personId, so both loops call it off, and endCoursework lapses partner asks but not moments. The Coursework tab keeps showing the moment open, its 'Answer by 7:00 AM, September 1, 2026' long past. Its answers stay live (help, apology, boundary, an invitation whose evening passes). From code reading: after a leave, classMoment never draws another moment for the rest of the program, because an open moment stops every draw (classmates.ts:234).": {
+  "on": "2026-10-13",
+  "test": "tests/evidence2-b07.test.ts > school.respond > DEFECT: a moment left unanswered when she withdraws lapses at its hour, as one does at the School, and the Coursework tab lists it as Not Answered rather than offering its answers",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.stipend::An F-1 nonresident's Summer Cabaret stipend is withheld on a resident's standard deduction, so nothing federal is withheld. The 1040-NR the same save files taxes those wages at 10% from the first dollar.": {
+  "on": "2026-10-13",
+  "test": "school.stipend > PLAYER JOURNEY: an F-1 student’s first stipend withholds the 1040-NR’s own 10% of $375, $37.50, and no FICA; the next February’s 1040-NR leaves only the work-study’s 10% to pay",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "genre demands::The genre look tells a player that work in a farce reads Clown And Mask. A self-tape's brief in a farce does, because every brief stages its genres' demands, but a farce's night doesn't: every play has a material profile and reads its own techniques and its material's. Clown mastered changes nothing there.": {
+  "on": "2026-10-13",
+  "test": "genre demands > the farce’s look says what a farce’s work reads: not Clown, which a farce’s night by the clock doesn’t read",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "genre demands::withDemands is called at run time where it changes nothing. tapeReadsOf adds no technique to any brief (every brief stages its genres' demands), playReads' and workContext's no-material branches are never reached (every play and class scene has a material profile), and engagement.ts's tapeReads is read only by tests. demands.ts's header still describes them in the present tense as acting.": {
+  "on": "2026-10-13",
+  "test": "None can fail on behaviour: a branch that changes no outcome passes either way. ‘genre demands > PLAYER JOURNEY: a Summer Cabaret night of A Marriage Proposal, a farce, …’ here and tests/evidence-g23-school.test.ts ‘adds nothing to any brief’s take today…’ pin the no-op.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.make_up::A student whose School has ended (withdrawn, dismissed, the degree withheld) is let make up an Incomplete. makeUpRefusal never checks the standing, and setStanding has called off the Incomplete's deadline with every school.* item, so the record stays Incomplete for good. Played on seed b09-fall: withdrawn at 10 AM on 14 December 2026 with four Incompletes (Acting I, DRAM 123a/b, DRAM 873a/b, DRAM 50a). At 10 AM on 15 December school.make_up returned {madeUp 1, owed 1, passed true}, took two hours, and passed Acting I 'made up after an Incomplete' for a student who had left. The Standing tab drew Make Up A Session enabled on all four. Past the month (11 January 2027) it says 'Its month has run out.', where every other School command says 'You’re not at school.'.": {
+  "on": "2026-10-13",
+  "test": "school.make_up > DEFECT: a student who has withdrawn with an Incomplete open is refused a make-up session in the School’s words, before its month runs out and after, and the Standing tab grays the button with them",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.make_up::The New Haven refusal is a guard no play reaches: a declared word that nothing reads. No life is enrolled outside New Haven, and nothing moves a life after it begins.": {
+  "on": "2026-10-13",
+  "test": "None. No play reaches the guard, so no test can fail on it. school.make_up > PLAYER JOURNEY asserts the two conditions that keep it unreachable.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.extend_incomplete::A student whose School has ended is given a month more on an Incomplete, and its deadline goes back on their calendar, because extendRefusal never checks the standing. Played on seed b09-fall: withdrawn on 14 December 2026, school.extend_incomplete on 15 December returned {dueBy 9 February 2027 at 5 PM}. It rescheduled the reminder (2 February) and the deadline (9 February) that setStanding had called off. On 9 February Acting I became a Permanent Incomplete, with 'A Week Left: Acting I' and 'Permanent Incomplete: Acting I … at the year’s end you can ask to repeat the year, on the Standing tab.'. That went to a student whom school.request_repeat tells 'You’re not at school.'. The Standing tab drew Ask For A Month More on all four of their Incompletes.": {
+  "on": "2026-10-13",
+  "test": "school.extend_incomplete > DEFECT: a student who has withdrawn with an Incomplete open is refused a month more in the School’s words, before its month runs out and after; nothing goes back on the calendar, and the Standing tab offers none",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "school.extend_incomplete::A Permanent Incomplete that withholds a degree waiting on it tells the student 'at the year’s end you can ask to repeat the year, on the Standing tab'. In the same instant onPermanent withholds the degree, after which school.request_repeat and school.request_extra_term both say 'You’re not at school.'. Played on seed b09-last: On-Camera Acting Technique, Incomplete at Commencement on 21 May 2029 and not made up, lapsed at 5 PM on 27 May with that notice, then 'The Degree Isn’t Recommended'.": {
+  "on": "2026-10-13",
+  "test": "school.extend_incomplete > DEFECT: a Permanent Incomplete that withholds a waiting degree doesn’t tell the student to ask to repeat the year, which the withholding leaves them no way to ask",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "c-disp-ambition::The header comment of systems/personality.ts says ambition leans 'how much running on empty costs'. The engine leans stressGain, and every stress that arrives reads it: on empty, nerves, a turn, an injury, a rival's lead and money's worry. The comment is falsified by the code, the page and the Profile.": {
+  "on": "2026-10-13",
+  "test": "c-disp-ambition > says in the personality header what these lives show ambition leaning: every stress, not only what running on empty costs",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "c-disp-openness::A Cabaret performance reads openness. Creation and the Profile say Openness is 'how rehearsing new work does', and a Hughes or Carlotta festival performance reads none. An open student comes off a Cabaret curtain 3.6 morale above a conventional twin.": {
+  "on": "2026-10-13",
+  "test": "c-disp-openness > PLAYER JOURNEY: the Cabaret’s read-through takes openness, 3.6 between 5 and 95; its first curtain, not a rehearsal, moves the two alike, as the page’s “rehearsing new work” and the festival’s curtain have it",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "c-disp-openness::WorkDay.away, 'a day away', is declared and read but set by no call of enjoyWork. Nothing in the game is a day away, so the openness lean it gates is a declared word nothing writes.": {
+  "on": "2026-10-13",
+  "test": "c-disp-openness > declares no WorkDay field that no call of enjoyWork sets",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "c-traits::Dispositions & Traits tells the player that Keeps Accounts changes how much of the work's costs they can deduct. No played life has a cost of the work: recordJobCost has no caller, so receipts multiplies nothing. Keeps Accounts' own trait look says it decides nothing now.": {
+  "on": "2026-10-13",
+  "test": "c-traits > says of Keeps Accounts on Dispositions & Traits what its own look says, that its receipts decide nothing for a student",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "c-wealth::A student whose family rules out need pays the term's Yale Health plan from the bank. When checking can't cover it (for example, after the player moved the money to savings on the first morning), payFromCurrent returns false and the caller ignores it. The $1,882 charge vanishes: nothing is posted, nothing is owed, no money worry follows, and the notice says it was paid from the bank.": {
+  "on": "2026-10-13",
+  "test": "c-wealth > PLAYER JOURNEY: charges the term’s Yale Health plan when the money has been moved to savings before 9 AM: owed, not dropped",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "trait-spending::Review's comment over monthOf names an engine sum, `costsAt`, that doesn't exist. The figure is foodAt's day price × the spending knob × 365/12. The comment is prose the code contradicts.": {
+  "on": "2026-10-13",
+  "test": "None. A comment fails no test. The corrected comment's claim is held by 'trait-spending > PLAYER JOURNEY: Going Out A Month on creation’s Review is the day’s groceries the clock first posts for the same pick, a month of 365/12 days, to the dollar: $261, $304, $370 and $334', which passes.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "p-abilities::The Current Condition panel's Fine says fatigue 'reaches the work’s execution, consistency and responsiveness and leaves its interpretation be'. TASK_PROFILES gives fatigue to believability and connection as well (ALL = ['fatigue'] on every scene, song, performance and audition dimension that names them). At 7 PM, Today on the same Profile names 'believability, connection' under readiness 54. The sentence names three of the five dimensions fatigue reaches. It belongs to the p-condition row's panel; it was found here against this row's Today column.": {
+  "on": "2026-10-13",
+  "test": "p-abilities > PLAYER JOURNEY: at 7 PM the Current Condition panel’s fine print names every dimension Today on the same screen says fatigue reaches, believability and connection among them",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "p-journey-history::The built-app step 'profile: the development history shows the hour' asserts only that the heading exists. The heading is drawn whether the history is empty or not, so the step never reads the hour it names.": {
+  "on": "2026-10-13",
+  "test": "None in the gate. tools/acceptance-ui.mjs runs on the built app, outside vitest. The in-gate equivalent is round one's 'p-journey-history: … > PLAYER JOURNEY: an hour of Circles Of Attention puts its changes at the top of Development History…' in tests/evidence-g32-ui.test.ts.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "h-needs::The built-app step 'home: what needs you, and a decision taken from its card' passes as ok when no card exists, and after clicking an action asserts nothing. It only reports the counts.": {
+  "on": "2026-10-13",
+  "test": "None in the gate. The step runs on the built app, outside vitest. In the gate, round one's 'Dismiss and Mark N Read, pressed on the panel…' and this file's card and tax tests hold what the step was meant to show.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "h-where-weather::Home's away line ('<distance> from home in <city> · ±Nh from home time') and Local Time's '±Nh from home' note have been reached by nothing since 2026-10-09. homeCityOf returns the city the player stands in, which is the city Home profiles. homeCityOf's docstring still says, in the present tense, that 'jobs on location, sublets and relocation all move them now', which nothing in the engine does.": {
+  "on": "2026-10-13",
+  "test": "None. Dead code fails no test. 'h-where-weather > PLAYER JOURNEY: a student from abroad, born in London, reads Home. in New Haven as a New Yorker does…' holds the behavior the fix keeps.",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "h-papers::Home's Papers alert says the tax owed is growing each month before anything grows: a return filed early and unpaid reads 'with its interest and a late penalty growing each month' from the day of filing, though nothing accrues until the due date.": {
+  "on": "2026-10-13",
+  "test": "h-papers > DEFECT: filed early and left unpaid, Home says the tax is “growing each month” on the day it’s filed, though nothing accrues before the due date; it should say so only once the date has passed",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "n-decision-us-status::Premium processing's 30 business days skip weekends but not federal holidays. An OPT premium filing on Friday 1 June 2029 is decided on Friday 13 July instead of Tuesday 17 July, because Juneteenth (Tuesday 19 June) and Independence Day (Wednesday 4 July) are counted as business days.": {
+  "on": "2026-10-13",
+  "test": "n-decision-us-status > DEFECT: Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July; SLATE counts both, and decides it Friday 13 July",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "i-stale-claims::Migration 92's comment says in the present tense that the interests begin at nothing, though the block has made none since migration 94 (2026-10-10).": {
+  "on": "2026-10-13",
+  "test": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "i-stale-claims::The matrix test's header says in the present tense that every interest has its definition, though the interests and their matrix section went on 2026-10-10.": {
+  "on": "2026-10-13",
+  "test": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "i-stale-claims::A looks test's comment speaks of an interests line as if the person's look could still draw one.": {
+  "on": "2026-10-13",
+  "test": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "i-stale-claims::The open-work ledger's entry header says in the present tense that thirty-seven interests read nothing, and that coursework is filed by craft (Template.crafts), though both went on 2026-10-10.": {
+  "on": "2026-10-13",
+  "test": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
+  "how": "fixed in the code; the test that failed before it passes in the full suite"
+ },
+ "l-person::The person, trait and condition looks said 'they' of every person but the player, whatever their pronouns: a she/her person read 'Their body.' above 'On their papers. she/her'. Each is now said in the person's own pronouns (spokenOf): she/her and he/him singular, they/them and unknown pronouns 'they', and the player 'you'. The person look's dial, Readiness and injury way details said 'you' of another person, and are now said of them too.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-people.test.ts, all three tests: each failed with the file as it stood at HEAD (checked out over the change, run, restored)",
+  "how": "fixed in the code (src/ui/looks/wellbeing.tsx (spokenOf, DIALS.behind, the person look, the trait look, the condition look)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "l-person::evidence2-b12's hand-made she/her copy had held the defect as correct ('Their body.', 'On their papers. she/her'). It now expects 'Her body.' and 'On her papers.'. Its title and header say 'third person, in her pronouns' rather than “they”.": {
+  "on": "2026-10-15",
+  "test": "tests/evidence2-b12.test.ts > only the player is a Person: … draws the look’s third person, in her pronouns, without Your Own Plans",
+  "how": "fixed in the code (tests/evidence2-b12.test.ts:31-33, :607, :623-626); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "l-person::The dial look (sentenceFor) and the Readiness look said 'you' of whoever they belonged to, one press from another person's look that said her dials of her: 'you’ve a full day in you', 'the likelier a year is to be your last', 'How Well You Would Do Today', 'what’s costing you'. Each is now said in the person's pronouns (spokenOf), and the player's words are unchanged.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-people.test.ts > 'FIXTURE: her dials and her Readiness …': failed with the energy sentence put back to '… a full day in you.' and the kind to 'How Well You Would Do Today' ('expected 90, and she has a full day in you.'), passed restored.",
+  "how": "fixed in the code (src/ui/looks/wellbeing.tsx (sentenceFor, the dial look, the Readiness look)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "l-person::bodyUnits(livesIn, you = true): the change of the first pass left its 'where they live' branch with no caller, and the person look rewrote 'where you live' in the finished sentence. The parameter is now `lives`, the words for where the person lives, 'where you live' by default (creation's two calls, the player's), and the person look passes 'where she lives'.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-people.test.ts tests 1 and 2 ('… the United Kingdom, where she lives.', 'where he lives', 'where they live'): two failed with bodyUnits made to ignore `lives`, and passed restored.",
+  "how": "fixed in the code (src/engine/systems/body.ts (bodyUnits); src/ui/looks/wellbeing.tsx:190); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "i-stale-claims::The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.": {
+  "on": "2026-10-15",
+  "test": "The new examples test failed with the rule of 2026-10-14 put back (first failure: 'An interest is dropped from the sheet when the term ends.'). Both tree walks failed with '// An interest is dropped from the sheet when the term ends.' or '// Interests lift a meal until they are removed.' appended to src/ui/looks/wellbeing.tsx, and passed once it was removed.",
+  "how": "fixed in the code (tests/evidence3-person.test.ts (ONE, NAMES, AUX, REMOVAL, PRESENT, dated, unread, READ_TRUE, header); tests/evidence2-b13.test.ts (the same, READ_AND_TRUE, pres); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "i-stale-claims::The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.": {
+  "on": "2026-10-15",
+  "test": "The new examples test fails under the first pass's rule (every one of the ten must-catch examples passed it, and the present perfect was flagged, as the check found by running the regexes in node). The tree walks: with the open plural and MOD after 'a|the', ten sentences in the tree were newly flagged (three money 'the last interest day' in src/engine/content/pending.ts, five dated notes with 'interests too', one with 'the interests is', one with 'the interests beside them'); each was true, and the rule was corrected (A_MOD; 'too', 'is', 'beside' and the other prepositions in NOT_PRESENT) rather than the list lengthened. Nothing in the tree is newly flagged now.",
+  "how": "fixed in the code (tests/evidence3-person.test.ts (MOD, A_MOD, ONE, REMOVAL, PAST, NOT_PRESENT, ADV, ASIDE, PERFECT, PRESENT); tests/evidence2-b13.test.ts (the same)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "tax.pay_state::Connecticut's (every state's) collection on a balance counted from the due date where that is still to come: a return filed early and unpaid had DRS's bill, its notice of intent and its lien before the tax was due. Conn. Gen. Stat. 12-734 ('due and unpaid') and 12-35(a) ('within thirty days from its due date'), read at codes.findlaw.com on 2026-10-15.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-taxpapers.test.ts 'filed on 1 February unpaid, Connecticut’s bill waits …' and 'its first payment missed …' (both failed with the line reverted)",
+  "how": "fixed in the code (src/engine/systems/statetax.ts stateNextNotice); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "tax.pay_state::Connecticut’s interest ran in fractions of a cent and the whole owed was rounded, so the interest took a cent of the penalty’s rounding: the bill on $585.33 was $649.72, its interest $5.86, where 1% of $585.33 is $5.85 (Conn. Gen. Stat. 12-735). Each month’s interest is to the cent now (SLATE’s reading of “per month”), so it no longer hangs on how often the balance was brought up to date. What moved: the bill $649.72 → $649.71; the lien $655.57 → $655.56; on 25 June $661.42 → $661.41, the $100 splitting $17.56/$23.91 → $17.55/$23.92; the plan’s 1 May interest $4.87 → $4.88; three months read at once from the bill $17.57 → $17.55. Applies to every monthly-simple authority in STATE_TAX: Connecticut, Georgia, Hawaii, Oklahoma, and the Philadelphia, Columbus and Portland city taxes. No other test moved.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-taxpapers.test.ts ‘filed on 1 February unpaid …’, ‘a part refused in March …’, ‘asked for on Papers over 12 months …’ (all three failed with the line reverted)",
+  "how": "fixed in the code (src/engine/systems/statetax.ts stateAccrual (monthly-simple)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "tax.pay_state::A state’s penalty, interest and collection ran from the federal return’s due date, which for a 1040-NR without wages is 15 June. Connecticut’s return is due “on or before the fifteenth day of the fourth month” (Conn. Gen. Stat. 12-719(a), codes.findlaw.com, read 2026-10-15), and DRS’s Nonresident and Part-Year Resident Tax Information page (portal.ct.gov, read 2026-10-15) gives 15 April with no other date for a nonresident alien; DRS moves it past Emancipation Day as the IRS does (Form CT-1040NR/PY instructions for 2017: due 17 April 2018). stateDueOf takes the resident’s date for a 1040-NR; every state-side reader goes through it (statetax.ts, taxreturn.ts’s state lines, Papers’ state rows). The other states and cities in STATE_TAX take the same date as SLATE’s reading, unread state by state; no played life files in them.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-taxpapers.test.ts ‘a 1040-NR’s 15 June is the IRS’s alone …’ (failed with stateDueOf returning r.due)",
+  "how": "fixed in the code (src/engine/systems/statetax.ts stateDueOf; its callers in statetax.ts, taxreturn.ts (latePenaltyAll, the three-year item, amendState, the federal offset split) ); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "tax.catch_up_plan::Opening a save while an IRS plan was pending, in force or behind put an IRS letter on the calendar (armCollection), and the plan's end put a second beside it: two letters for one year. A live plan now holds it.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-taxpapers.test.ts 'left behind, it ends on 1 April …' (failed with the line removed: two pending TAX_NOTICE_KIND)",
+  "how": "fixed in the code (src/engine/systems/taxreturn.ts armCollection); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "tax.apply_state_plan::Connecticut refused a plan to anyone it had ever levied, though the levy had paid the year off: only a levied year still owed refuses it now.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-taxpapers.test.ts 'a year Connecticut levied and was paid by the levy doesn’t refuse …' (failed with the condition reverted)",
+  "how": "fixed in the code (src/engine/systems/statetax.ts statePlanRefusal); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::New Haven gained Yale Health Center's Student Health, a members-only practice (Yale Health covering them at the moment), with its own published wait (next weekday); clinicFor never gives a members-only practice with nothing chosen and gives the chosen one only while it sees them; clinicRefusal refuses it in Yale Health's words; Papers offers only practices that would see them": {
+  "on": "2026-10-15",
+  "test": "the four PLAYER JOURNEYs above",
+  "how": "fixed in the code (docs/research/world/research-health-visits.json; tools/build-clinics.mjs; src/engine/content/clinics.ts (rebuilt); src/engine/systems/clinics.ts seesThem :44, c); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::A practice's own published wait books the appointment (book uses Clinic.waitDays before the town's)": {
+  "on": "2026-10-15",
+  "test": "…booked the next weekday there, her twin … 24 days on at Fair Haven…",
+  "how": "fixed in the code (src/engine/systems/appointments.ts book :122-123); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::An appointment at a members-only practice that no longer sees them isn't kept: missed, owed, 'Not Seen At Your Practice'": {
+  "on": "2026-10-15",
+  "test": "…booked at Yale Health, then withdrawn the same Monday…",
+  "how": "fixed in the code (src/engine/systems/appointments.ts APPOINTMENT_KIND handler :158-165); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::An appointment's visit is had and named at the practice it was booked at, not whichever is chosen on the day": {
+  "on": "2026-10-15",
+  "test": "…a visit booked at Yale Health is had there though Fair Haven is picked before the day…",
+  "how": "fixed in the code (src/engine/systems/health.ts careFor :1270-1271 (event.clinicId); appointments.ts handler passes a.clinicId); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::followTheCover (src/engine/systems/appointments.ts) ran on every loadSave, not only on saves from before 2026-10-15, and couldn't tell an older save's booking from a current one. Played: a personal leave from 20 January 2027 without cover; the 25 January health week booked a visit at Fair Haven for ": {
+  "on": "2026-10-15",
+  "test": "tests/scope-health.test.ts health.choose_clinic: a booking with nothing picked is had where it was booked, whatever the cover does before its day, reloaded or not > PLAYER JOURNEY: uncovered on her leave, she’s booked at Fair Haven 24 days on by the 25 January week; she buys Affiliate cover; … billed $187.20, played straight through and reloaded before its day alike; canceled and booked again, it’s Yale Health the next weekday at $0",
+  "how": "fixed in the code (Decided the rule: an appointment is had at the practice it was booked at, whatever the cover does before its day, as a pick's already was (the 'booked at Yale H); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::The tutorial (src/engine/content/tutorial.ts:277) said Fair Haven books 'after its own wait'; Fair Haven publishes none, and its 24 days are New Haven's town figure (AMN's fifteen-metro average).": {
+  "on": "2026-10-15",
+  "test": "",
+  "how": "fixed in the code (The sentence now says Fair Haven 'sees anyone, and publishes no wait, so it books after New Haven’s, fifteen American cities’ average of twenty-four days'. test); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.choose_clinic::scope/health-result.json was stale (the first choose_clinic test's old title, its 'both $0' proof), and docs/UNBITTEN.md:307-330 still called Connecticut's prescription rule unresearched.": {
+  "on": "2026-10-15",
+  "test": "",
+  "how": "fixed in the code (health-result: the first test's title and proof are the current test's (Yale Health $0, the twin at Fair Haven billed $183.98), the older-save journey's title a); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::A bill records the plan's part (covered: price to the plan, planPaid), set at billing (none while denied), on an appeal overturned, and on a cover change billed back (repriceCare); Papers' Care And Its Bills shows it as Plan Paid. Until then what the plan paid was written nowhere.": {
+  "on": "2026-10-15",
+  "test": "the three journeys above (each fails with its line removed; run 2026-10-15)",
+  "how": "fixed in the code (src/engine/systems/health.ts MedicalBill.covered, planPrice :1219, careFor :1290-1293, repriceCare :1343, APPEAL_KIND :1527; src/ui/workspaces/PapersWorkspace.t); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::Found 2026-10-15: at a program’s renewal (src/engine/systems/health.ts, healthMonth), a Covered Connecticut member whose last month’s income fell under HUSKY D’s 138% line got programFor() = medicaid, which wasn’t her program’s kind, so her cover ended with “Your Public Cover Ended At Renewal: Last ": {
+  "on": "2026-10-15",
+  "test": "tests/need-paths.test.ts › health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock › PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line … (twins: with October’s work posted as TEST SETUP, renewed into HUSKY D from 12:30 AM on 1 November 2027, renewAt 1 May 2028, no “Ended” notice, still covered, across a reload; without it, ended with the work test named, not “over what it allows”)",
+  "how": "fixed in the code (From 2026-10-15, a renewal that finds her income in her state’s other program renews her into it from the renewal’s own instant: the old record ends at that ins); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::1. health.enroll asked no work test of a HUSKY D applicant from 2027: a member ended at renewal for having no work pressed Enroll the next day and had HUSKY D back.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-cover.test.ts › health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 › PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is refused HUSKY D on 1 February for January’s 6 hours, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in January she’s given HUSKY D; past the 60 days Enroll isn’t drawn (the work twin TEST SETUP: January’s wages posted)",
+  "how": "fixed in the code (From 2026-10-15 mayEnroll (src/engine/systems/health.ts) asks Medicaid’s community engagement of an applicant from 2027, on the month before the month she appli); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::2. Covered Connecticut was offered to anybody lawfully present on any income under 175%, though it’s had with the premium tax credit, which from 2027 a noncitizen has only with a green card (or as a Cuban or Haitian entrant or COFA migrant), and from 2026 nobody has under 100% of the poverty line.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-cover.test.ts › Covered Connecticut is had with the premium tax credit … › PLAYER JOURNEY: an F-1 student with need, withdrawn on 21 September 2026 and in her grace on 1 October, on September’s income under the credit’s $1,304.17, is given the marketplace, not Covered Connecticut",
+  "how": "fixed in the code (From 2026-10-15 `programFor` gives Covered Connecticut only where `creditAllowed`: last month’s income at least 100% of the year before’s poverty line, and for ); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::3. Unverified: a student who enrolls in Covered Connecticut (or HUSKY D) on a personal leave without Affiliate cover keeps it beside Yale Health when she returns.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-cover.test.ts › a program taken on a personal leave without Affiliate cover, and Yale Health back on the return › PLAYER JOURNEY: an Inherited family’s student enrolls in Covered Connecticut on her leave, on January’s interest; back at the School on 3 January 2028, Yale Health covers her and Covered Connecticut ends at the 1 February look, said",
+  "how": "fixed in the code (Confirmed by play: before 2026-10-15 Covered Connecticut taken on the leave ran on beside Yale Health after the return (the yaleAgain mutation shows it). From 2); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::engaged() (src/engine/systems/health.ts) read school attendance at the instant of applying, not over last month as Pub. L. 119-21 §71119 and Papers' own words do. Played: at the School all of January 2027, withdrawn on 1 February, refused HUSKY D on 2 February with 'last month had none of them'. And": {
+  "on": "2026-10-15",
+  "test": "tests/scope-cover.test.ts health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: at the School all of January 2027 and withdrawn on 1 February, she’s given HUSKY D on 2 February for January enrolled; on 1 April, March after the School, she’s refused",
+  "how": "fixed in the code (Read CMS's interim final rule of 3 June 2026 (CMS-2454-IFC, 42 CFR 435.552(c), public-inspection.federalregister.gov/2026-11094.pdf, read 2026-10-15): enrollmen); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::health.enroll's stated gap was partly false: tests/scope-cover.test.ts plays Covered Connecticut renewed on 1 September 2027 on interest alone; what's open is HUSKY D kept at renewal through work.": {
+  "on": "2026-10-15",
+  "test": "",
+  "how": "fixed in the code (scope/health-result.json health.enroll's after and rowText.gap rewritten to what the tree holds, with the earlier claim said in the past tense; enroll.corrected); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.enroll::CGS 20-616 lets a pharmacist give more than the 72 hours the RX comment and the research file cited: up to a 30-day supply of some diabetes drugs.": {
+  "on": "2026-10-15",
+  "test": "",
+  "how": "fixed in the code (Read FindLaw's text of 20-616 (current to 1 January 2025; cga.ct.gov refused the connection) on 2026-10-15: the 30-day supply is subsection (d), not (c) as the ); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "health.appointment::RX's comment gives Connecticut's rule and its sources; the guide's doctor entry says a New Haven renewal changes no fill and why": {
+  "on": "2026-10-15",
+  "test": "…a New Haven prescription past its first year…",
+  "how": "fixed in the code (src/engine/systems/health.ts RX comment above :722; src/engine/content/guide/papers.ts papers.doctor interpret); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.arrange_overdraft::A limit of 0 on an account with nothing arranged answered { limit: 0 } and changed nothing, at every bank including all five in New Haven; it's refused 'No overdraft is arranged on it.'": {
+  "on": "2026-10-15",
+  "test": "PLAYER JOURNEY: at each New Haven bank … (failed before: 'bank.arrange_overdraft went through'; run with the line removed)",
+  "how": "fixed in the code (src/engine/systems/lending.ts bank.arrange_overdraft); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::A current account canceled in its cooling-off was asked only whether anything used it (linkedTo), so one overdrawn closed with its debt, and one with money on its way, card payments pending or savings beside it closed too. It's asked Close It's own refusals (closeRefusal) now.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Toronto: an RBC chequing account … (failed before: 'bank.cancel_new went through' on the overdrawn account; run with linkedTo restored)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts bank.cancel_new); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Your Accounts Over Time offered Cancel It for savings and cards only, so the command's current-account branch had no control. A new current account other than the primary is offered, its Close It refusal said under it with the button grayed out.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Toronto: an RBC chequing account … (failed before: the panel didn't name the RBC account; run with the filter restored)",
+  "how": "fixed in the code (src/ui/bank/BankAccountLife.tsx); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::A current account canceled in its cooling-off closed with no interest paid and no fees charged, and its overdraft limit left on it, where Close It (closeNow) settles both and the guide said it “closes the same way”. It is settled as Close It settles one now: settleInterest, settleFees, the limit cleared; in Canada the charges for its operation while it was open come back (SOR/2021-181 s.5(2)), where Britain (BCOBS 6.3.2R) and Germany (BGB § 357b(2)) let the bank charge for the service provided. Fees past what it holds with its interest are refused (cancelRefusal), which the panel reads too. Its words on the panel say what comes back.": {
+  "on": "2026-10-15",
+  "test": "the Toronto fees, Berlin and Reykjavík FIXTUREs above (each failed with its part removed, 2026-10-15)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts bank.cancel_new and cancelRefusal; src/engine/systems/banking.ts closingFeesOf; src/ui/bank/BankAccountLife.tsx); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Canceling kept a savings account’s or term deposit’s interest from it everywhere, and paid a current account’s everywhere. It follows the country’s rule now: kept in Britain and Canada; returned, any already paid posted back with its tax and off the year’s income, in the EU/EEA countries and Mexico.": {
+  "on": "2026-10-15",
+  "test": "London NatWest; Berlin Flexgeld; Reykjavík",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts KEEPS_INTEREST, interestPaidSince, bank.cancel_new); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Canada’s refund of charges covered only a current account; it covers any deposit account now, and Mexico’s with it.": {
+  "on": "2026-10-15",
+  "test": "Toronto RBC savings",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts REFUNDS_CHARGES, chargesBackOf); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Korea’s deposits had a 14-day cooling-off its rule (금융소비자보호법 제46조) doesn’t give; removed, cards kept.": {
+  "on": "2026-10-15",
+  "test": "Seoul",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts inCoolingOff; guide/money.ts); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Close It closed a German account overdrawn by its closing fees; refused now, as Cancel It refuses it.": {
+  "on": "2026-10-15",
+  "test": "Berlin Close It",
+  "how": "fixed in the code (src/engine/systems/bankmoves.ts closeRefusal); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::A term’s interest taken during the term (bank.take_term_interest) went into the primary account, and Cancel It took it back out of there, but cancelRefusal counted only interest paid into the term itself, so nothing refused it and a Commerzbank primary was left at −€6.30 (Postbank −€6.08). interestBackOf now counts each payment by the holder’s account it went into, and cancelRefusal refuses while any of those holds less than goes back out of it. Deutsche Bank’s own terms say only that each side repays what it received within 30 days (its ZinsMarkt Widerrufsfolgen), nothing of keeping it back from the deposit, so it’s refused rather than taken from the term.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Berlin: a Deutsche Bank FestzinsSparen … (failed before: the command went through)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts interestBackOf, cancelRefusal); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Canada’s refund took every bank fee since opening, overdraft interest among them (it’s posted as a bank fee against Overdraft Interest), where SOR/2021-181 s.5(2)(b) refunds charges “other than interest charges”; and it was all credited against Bank Fees. chargesBackOf now leaves out a charge against Overdraft Interest and returns each charge by the expense line it was charged to, which the refund credits.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Toronto: … C$500 under until February … (failed before: C$23.76 refunded)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts chargesBackOf, bank.cancel_new); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Canada’s 14 and Mexico’s 10 days were counted as calendar days; their rules count business days (SOR/2021-181 s.5(1); LTOSF art. 11 Bis 1, “diez días hábiles”). coolingOffEnds counts them with afterBusinessDays in the bank’s country and the holder’s region; inCoolingOff and the panel’s “until” date read it (the panel had used the panel bank’s country’s days).": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Mexico City: a Banorte Inversión Enlace … ; tests/accountlife.test.ts changing one’s mind (each failed with calendar days)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts coolingOffEnds, inCoolingOff; src/ui/bank/BankAccountLife.tsx); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::A Canadian card had a 14-day cooling-off. Bank Act s.627.11 lets a credit card agreement be canceled “in accordance with any prescribed requirements”, and SOR/2021-181 prescribes them for a retail deposit account (s.5), a deposit-type instrument (s.6) and the products s.4 lists, no card among them (read 2026-10-15). inCoolingOff is false for a Canadian card.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, London: a Barclays card … in Toronto an RBC card has no Cancel It (failed before)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts inCoolingOff); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::Mexico’s right holds only “siempre y cuando el Cliente no haya utilizado u operado los productos o servicios financieros contratados” (art. 11 Bis 1, read 2026-10-15 at diputados.gob.mx, last reform 14 November 2025); SLATE didn’t ask. SLATE can tell: usedSince counts a payment out of the account by its holder, a card’s purchase among them, and not the bank’s fees, its interest or its tax; money paid in isn’t counted, an account being funded to be opened (SLATE’s reading). A used Mexican account is out of its cooling-off.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Mexico City: a Santander Débito LikeU … its twin that sent MXN 100 out (failed before: it was canceled)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts usedSince, inCoolingOff); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::A term’s interest taken during the term was found on canceling by its memo alone, “Interest: FestzinsSparen”, which every term at the bank shares, so canceling a new term took back what an older one had paid: out of the primary, off the year’s income, and counted in the refusal (€6.93 in the skeptic’s probe). bank.take_term_interest now carries the term itself in a posting of nothing, interestPaidSince finds a term’s payments by that posting, and the reversal leaves the zero posting out. Interest taken before the fix carries no such posting and isn’t found on canceling (in a save from before it, that interest gets no refusal and no reversal).": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Berlin: two Deutsche Bank FestzinsSparen … (failed with the memo match restored)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts interestPaidSince, bank.take_term_interest, bank.cancel_new); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.cancel_new::The cooling-off period ended at the hour the account opened on its last day (openedAt + days, or afterBusinessDays at the same hour), though Directive 2002/65/EC art. 6(1) gives 14 calendar days, SOR/2021-181 s.5(1) “within 14 business days after the day on which [it] is opened”, and LTOSF art. 11 Bis 1 “diez días hábiles posteriores”, and the panel named the day: an RBC account “until January 23” was refused at 11:30 AM on the 23rd. coolingOffEnds returns the last moment of that day in the save’s zone (endOfDay), and the panel names the date in that zone.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Toronto and Berlin: … 11:30 PM … 12:01 AM (failed with the old boundary restored)",
+  "how": "fixed in the code (src/engine/systems/accountlife.ts coolingOffEnds; src/ui/bank/BankAccountLife.tsx); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.take_overrun_loan::Taking the loan left negativeSince (and the letter's and closing notice's flags) from the overrun's first day unless a midnight found the account within its limit, so a life spending on into it was closed two months after the notice though the overrun was a loan. Back within the limit when taken, the count ends.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Paris … (failed before: negativeSince expected undefined, was the overrun’s first day; with that assertion removed the twin that took the loan was closed at midnight on 7 May 2026, run 2026-10-15)",
+  "how": "fixed in the code (src/engine/systems/lending.ts bank.take_overrun_loan); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "bank.savings_notice::'… Closed' named the primary account wherever the money went: for savings paid into the current account beside it at a second bank it named Deutsche Bank's AktivKonto. It names the account and bank it went to, and where it's sent in the bank's days, the day it arrives.": {
+  "on": "2026-10-15",
+  "test": "FIXTURE, Berlin: €3,000 in Postbank savings … (failed before: 'is in your AktivKonto.')",
+  "how": "fixed in the code (src/engine/systems/banking.ts closeSavings and SAVINGS_NOTICE_KIND); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.respond::Opening a save made before 2026-10-13 left a classmate's moment stranded open for good, its lapse called off by a leave, a withdrawal or a dismissal. Its answers stayed live past their hour, a late Say Yes was refused ‘That evening has passed.’, and classMoment drew no moment after it, so a student back from such a leave was never brought another. loadSave now runs strandedMoments: a moment past its hour is lapsed with its cost, and one before its hour has its lapse put back on the clock.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.respond > DEFECT: a save from before 2026-10-13 … and DEFECT: the same older save played on … (both failed with the call removed, and pass with it)",
+  "how": "fixed in the code (src/engine/systems/classmates.ts (strandedMoments, and lapse() factored from the MOMENT_KIND handler); src/engine/index.ts loadSave (one call)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.respond::Stale claim: classmates.ts (respondRefusal), guide coursework.class and the row said a save made before 2026-10-12 held moments until 10 PM. answerHours has been 22 since 2026-10-07; what changed on 2026-10-12 was its comment. The comment now says so in the past tense, the line is marked a guard, and the guide no longer lists it among refusals a player meets.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.respond > PLAYER JOURNEY: the four real saves …",
+  "how": "fixed in the code (src/engine/systems/classmates.ts:73-76 and respondRefusal; src/engine/content/guide/coursework.ts (unavailable)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_repeat::A Fail’s notice told every student ‘at the year’s end you can ask to repeat the year’, even in a year already repeated, where repeatRefusal refuses a second time. It now offers that only where the year can still be repeated. (Until the second round that meant a year not in repeatedYears; since then, a year with room in the nine semesters as the year’s end counts them, which takes in a year repeated.)": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated and Text Analysis I slept through again … (failed with repeatable forced true, passes with it)",
+  "how": "fixed in the code (src/engine/systems/courserecord.ts tellFails (repeatable); in settleCourses until the recheck); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_repeat::A Fail at an evaluation that dismissed the student (the faculty’s review, or the warning unmet) or withheld the degree was still told to ask to repeat the year at its end, which “You’re not at school.” then refused: the notice was said in settleCourses, before the evaluation read the Fails. It is said by tellFails after the evaluation settles the standing, with the School’s ending read, and so after the standing’s own notice at the same instant.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > the two dismissal journeys above (each fails with !ended removed, and each with its own call site passing false)",
+  "how": "fixed in the code (src/engine/systems/courserecord.ts tellFails; src/engine/systems/school.ts EVALUATION_KIND (both call sites)); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_repeat::A Permanent Incomplete in a year repeated once already was told to ask to repeat the year. It isn’t now: until the second round by a `repeated` check, since then by the count of semesters (`repeatOpen`, as `tellFails`).": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated, and in the repeated fall Acting I’s meetings called in sick … (played; fails with repeatRoom returning true). The FIXTURE test in tests/evidence-g26-school.test.ts that set repeatedYears by hand on a save with no repeat was removed: an impossible state, protecting only the removed clause.",
+  "how": "fixed in the code (src/engine/systems/courserecord.ts INCOMPLETE_DUE_KIND); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_repeat::After any repeat granted, a Fail or a Permanent Incomplete in any later year, at an evaluation that ended nothing, was still told to ask to repeat the year at its end, which “Repeating would make 10 semesters…” refused: the notices excluded only the year itself being repeated. They now read repeatRoom, the count as the year’s end will make it: those enrolled, the program’s terms still to be taken through that spring (the spring at a fall’s evaluation, the year’s two again after a repeat is granted), the year’s two again and the terms after (withRepeat). The caller’s first version counted those enrolled so far, which at a second fall’s evaluation after a first year’s repeat made nine and still offered; the terms to come were added on 2026-10-15. The `repeatedYears` clause in repeatOpen was then redundant (enrolled is the program terms taken plus two per repeat granted, so the count is 8 plus 2 per repeat) and was removed.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first year repeated and passed, then the second fall’s Clown slept through … (fails with repeatRoom true, and without the terms to come)",
+  "how": "fixed in the code (src/engine/systems/school.ts repeatRoom; src/engine/systems/courserecord.ts repeatOpen, tellFails, INCOMPLETE_DUE_KIND); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_repeat::A year split by a leave lost its fall’s Fail: repeatCourses picked the year’s courses by calendar term (the spring and the calendar term before it). A two-term leave begun at a spring, the only length leaveLengths grants from one, puts the year’s fall three calendar terms before its spring, so a fall Fail or Permanent Incomplete was dropped and the year’s end refused “Every course this year was passed: there’s nothing to repeat it for.”, after the notice (and the faculty’s review, “the year is to be repeated”) had offered it. It now picks by program term (`academic`, the record’s term less the offset before it). The request’s calendar terms (Repeat.terms) are the spring and the last term enrolled before it, not the calendar term before (yearTerms); nothing reads them yet. The other calendar-adjacency readers were checked: none in courserecord.ts or school.ts reads a course’s year by calendar; yearKeyOf (school.ts) groups work-study hours by the calendar’s academic year, the aid year they’re counted in, and was left.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.request_repeat > PLAYER JOURNEY: a first fall’s Fail, then a two-term medical leave begun at the spring … (fails with the old filter restored, run 2026-10-15; passes with the fix)",
+  "how": "fixed in the code (src/engine/systems/leave.ts repeatCourses, yearTerms, requestRepeat); the test that failed before it passes, and fails again with the fix taken out"
+ },
+ "school.request_extra_term::A retake failed in an additional term was told ‘at the year’s end you can ask to repeat the year’, while the same evaluation withheld the degree and every request was then refused ‘You’re not at school.’. The notice now ends at what is so.": {
+  "on": "2026-10-15",
+  "test": "tests/scope-school.test.ts > school.request_extra_term > PLAYER JOURNEY: an additional term granted and attended … (failed before, passes after)",
+  "how": "fixed in the code (src/engine/systems/courserecord.ts tellFails (repeatable: school.extra?.term !== term); in settleCourses until the recheck); the test that failed before it passes, and fails again with the fix taken out"
+ }
+}

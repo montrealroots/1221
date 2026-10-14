@@ -1,0 +1,112 @@
+{
+  "rows": [
+    {
+      "id": "holidays",
+      "claimed": "verified (disposition verified; gapsOpen empty)",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The latest skeptic's main problem is closed by the defect 54 fix in lending.ts. A weekend or holiday item is now dated to the next business day. The Overdraft Assist test (tests/evidence2-b03.test.ts:307-351) now expects one $34 fee at Friday's end, for Wednesday's item. It expects two $34 fees at Monday's end, for Thanksgiving's and Friday's items, which belong to Friday's business day. That is the skeptic's independent reading of Chase's rule. The shallow case is spared, nothing is held past Friday, and the result holds across a reload.",
+        "The review's appointments defect is fixed: slot() reads holidaysOn by the region she stands in (appointments.ts:111). Two tests cover it. evidence-g07-life's Thanksgiving DEFECT test passes. The Good Friday visit in Connecticut moves to Monday 29 March 14:00Z through health.book, is kept by the clock and survives a reload.",
+        "A US bank holiday is crossed through play, with literal dates, by five readers. Pending postings: the meal before Good Friday posts Monday on the Fed's days. security: the replacement card arrives 7 Dec, or 30 Nov rushed. bankmoves: Bank of America decides on 30 Nov and the deposit arrives 1 Dec. lending: Overdraft Assist. roundups: Martin Luther King Jr. Day. England's repeat order is reached through the clock on a London fixture.",
+        "The Calendar is rendered for New Haven in March 2027. It shows Connecticut's Good Friday, and the negative checks (other states' days that month, confirmed in us.tsv) are not vacuous.",
+        "Not blocking: the paper-visit case can't be reached by a new life, because booking a visit went on 2026-10-09. The test hand-builds the visit as a pre-2026-10-09 save would carry it, and is honestly labelled LIFE FIXTURE and TEST SETUP.",
+        "Run: tests/evidence2-b03 plus evidence-g07, g08 and g09-life, 93 of 93 pass."
+      ],
+      "weakTests": [
+        {
+          "title": "holidays > LIFE FIXTURE (London, a visa’s enrolment booked as a save from before 2026-10-09 has it): slept through on 26 March 2026, it’s booked again for Thursday 2 April, the last business day before the warning’s tenth, past Good Friday and Easter Monday",
+          "why": "Easter Monday (6 April) falls after the 5 April deadline and can't affect the date, so only Good Friday is exercised, though the title and comment name both. The visit's booking is hand-built TEST SETUP."
+        }
+      ],
+      "staleText": [
+        "downstream still says 'bankdays (pending postings, UK repeat Rx order)' in docs/verification/audit/life.json and docs/GAMEPLAY-COVERAGE.md:666. Replace it with the second round's claimCorrection: bankmoves, lending, security, roundups, papervisits (old saves only), health's repeat order, appointments' slot() via holidaysOn, and the Calendar.",
+        "The issue 'Doctor appointments ignore holidays' is false since 73b2a9ec, when slot() began skipping public holidays.",
+        "The review gap's 'appointments.ts:101-108 slot() moves only Saturdays and Sundays' is no longer true (now appointments.ts:102-111)."
+      ]
+    },
+    {
+      "id": "injuries",
+      "claimed": "verified (disposition verified; one gap left open, eiWeek, marked [deferred or removed])",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Every gap on live play is closed by tests that pass. Against an unhurt twin, an injury adds 6 stress and takes 4 morale, and the midnight weigh adds 1 stress and takes 1 morale. The next Work Out is refused through sim.execute, the save byte-identical across a reload. An everyday sprain is drawn by world.day_rollover. The crew injury at work is paid by workers' compensation with no bill (evidence-g07-life).",
+        "The skeptic's $699.13 weak test is fixed: the figure is now worked in the test from CARE's $180 and $100, CPI-U physicians' services 439.389/417.93 (rounded to the cent) and the 1.75 uninsured markup. It is billed and paid once, at its due date, across a reload.",
+        "eiWeek is a deferred system's reader, not a live gap. Canada's EI is deferred: GAMEPLAY-COVERAGE.md:881, benefits.ei_register, 'deferred'. eiWeekly reads acting earnings no Canadian life has had since the 2026-10-09 scope reset. health.ts:1403 still calls eiWeek every health week, and it pays nothing. docs/UNBITTEN.md doesn't record this; it should be ledgered.",
+        "The second agent's EI registration-refusal test shows no injury consequence and closes nothing in this row (see weakTests)."
+      ],
+      "weakTests": [
+        {
+          "title": "injuries > PLAYER JOURNEY: Canada’s EI, which a week laid up would draw on (`eiWeek`), is refused a New Haven student in its own words, nothing registered",
+          "why": "A registration refusal with no injury in it: it says nothing about laidUp reaching eiWeek, which pays $0 in every life."
+        }
+      ],
+      "staleText": [
+        "downstream 'trainingRefusal, laidUp->present, school conditions, eiWeek' (life.json; GAMEPLAY-COVERAGE.md:667): eiWeek is a deferred system's reader that pays nothing. Use the second round's claimCorrection.",
+        "review claim 'feeds a Canadian's EI week' overstates: no played life reaches it.",
+        "The second round's claimCorrection cites health.ts:1356 for the eiWeek call; it is now health.ts:1403."
+      ]
+    },
+    {
+      "id": "body",
+      "claimed": "verified (disposition verified; gapsOpen empty)",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "bmiHazard is read from a weight the game moved: broke midnights take a twin under BMI 18.5 before an 86th birthday. Seeds are classified against chances worked independently from the US 2024 table, frailty 0.8 and the Lancet's 1.13 and 1.51, and only the starved twin ends, at the instant u2 names.",
+        "Onset reads a moved weight: diabetes on 1 October for the twin still at BMI 30.5 and not her twin at 29.4, with chances worked from the CDC's 10.1 per thousand, Guh et al. and the population mix.",
+        "The order-in figure is pinned to 134 kcal within a few kcal a day, worked by Hall's rule. The 30 kg floor defect is fixed (body.ts clamps at 10 × height²), and its test passes.",
+        "Minor: the order-in comment says 'within 2' kcal, but per-midnight gram rounding loosens that by a few kcal; still far tighter than the 116 to 152 objected to."
+      ],
+      "weakTests": [],
+      "staleText": []
+    },
+    {
+      "id": "mortality",
+      "claimed": "partial (disposition implementation missing; open: the '1 Months' defect, and the stale residuals comments in LifeEnded.tsx and earnings.ts)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Both open items are fixed in the tree. LifeEnded.tsx renders plural(months, 'Month'). The DEFECT test ('Years In The World 1 Month') now passes.",
+        "The residuals comments are corrected in the past tense, at LifeEnded.tsx:27-31 and earnings.ts:19-22.",
+        "The redraw test is per seed against chances worked from frailty's shape on the condition that midnight left, and a stale-band redraw would fail its 'half' seed. The render test's END is the birthday's drawn END: same id, no cause, nothing cancelled. The screen is rendered before and after a reload, with Earned $138, Left Behind as every account held, and Back To The Slots calling exitToMenu once.",
+        "Leftover wording, not blocking: the evidence-g08-life.test.ts:244 title says worn twins end 'about 0.677'. 0.225491 × 3 is about 0.676, or 0.6758 with the year share, and the assertion uses the worked chance, not the title's number.",
+        "Leftover wording, not blocking: the render test's comment says the card is 'owing nothing' but asserts balance <= 0. The Left Behind expectation is still right."
+      ],
+      "weakTests": [
+        {
+          "title": "mortality > PLAYER JOURNEY: a New Haven student’s 95th birthday draws the year ahead from her condition then: worn twins end about 0.677 of the time, sound ones 0.180, and every sound twin’s end is her worn twin’s too",
+          "why": "Title figure is slightly off (about 0.676); the assertion itself uses the worked chance."
+        }
+      ],
+      "staleText": []
+    },
+    {
+      "id": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises",
+      "claimed": "partial (disposition stale or wrongly grouped claim; open: receipts, [deferred or removed])",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "receipts stays open. taxreturn.ts:895 multiplies y.jobCosts, which only recordJobCost (earnings.ts:276) writes, and nothing in src calls it. No play reaches it. It is the deferred trait-receipts item (GAMEPLAY-COVERAGE.md:439, with the owner's recommendation to retire it) and is ledgered in UNBITTEN. It's grouped with nine live knobs, and that grouping is the row's fault; the row was never split.",
+        "Nine live knobs, verified through play:",
+        "morning and evening: the hour's fit is shown at both edges through school.prepare. It is also read by the 9 AM class's skill growth, by judged work at nine, and on the 8 PM Cabaret night (1.0914 and 0.8909, to 9 places).",
+        "bondWarmth: read by bondWord, castListRead's half point, the classmate look and castCompany on the first Carlotta night, from a bond the engine's own move took to 25.",
+        "bondWound: takes −17.9 past the Rival line only for the twin who keeps accounts.",
+        "company and the four prep knobs: shown in evidence-g09-life, which passes.",
+        "The old weak tests in traits-connected.test.ts and arrears.test.ts are unchanged, but stronger tests now stand beside them for every live knob."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "downstream 'taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465' (GAMEPLAY-COVERAGE.md:680) is stale.",
+        "The second round's claimCorrection has drifted again. Its taxreturn.ts:840-841 is now :895. hourFit is at :919-922, read at :928 and :943. castCompany is at :307, read at :3397. bondMove is at :314, read at school.ts:2642, coursework.ts:325 and classmates.ts:184. castListRead is at :2531.",
+        "receipts should be split out of this row into the deferred trait-receipts item."
+      ]
+    }
+  ]
+}

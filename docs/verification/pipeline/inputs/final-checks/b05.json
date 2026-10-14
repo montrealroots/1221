@@ -1,0 +1,159 @@
+{
+  "rows": [
+    {
+      "id": "bank.open_current",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The second agent's one open item, the 'in a branch where you live' tautology (defect 14), is gone. openRefusal (bankmoves.ts:106-115) no longer has the line, and a past-tense comment says it went on 2026-10-13. The row has no declared refusal left that nothing reaches.",
+        "Checked against the tree: every refusal in Reads is sent through sim.execute in its literal words, with untouched() unchanged. 'Not a bank where you live' (gb-barclays) and the funding refusals are in evidence2-b05 and g14. The charged-off debt and the ChexSystems report are reached by the clock (Chase's $15 fees, closed at 60 days, $30 charged off). The minimum age, the branch hour and the US-person refusal are in g14 and papers-complete. A photo ID reported lost is in the b05 journey and g15.",
+        "Downstream is reached by play. The review turns the application down after documents.report_lost, Bank of America's 'Turned Down' notice comes at 7:30 on 26 August, and the $100 returns to Chase on 27 August, with a twin opened as the counterfactual. Funding arrives in Chase's days and the card follows (bank-moves). An unfunded account closes at 60 or 90 days. Apply is pressed through its own onClick (g14).",
+        "evidence2-b05.test.ts ran 16 of 16 on the current tree (VITEST_MAX_FORKS=1).",
+        "Accepted, not blocking: the ChexSystems rate tests use bands of about ±3σ. The draw is deterministic per (person, bank, report date), lending.ts:283. A mutation of 0.85 to 0.80 or 0.90 would probably survive, so the tests show 'about 85%' and 'about 50%' rather than the exact figure. The row claims the refusal, not a rate, and the refusal is pinned in its exact words.",
+        "Owner question, not a gap: a 24-year-old's never-funded Citi account takes Citi's published $5 fee, goes overdrawn, and is charged off with a ChexSystems report. The test pins this with figures that follow the sourced fee and waiver."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b05.test.ts > turns her away on the unpaid report at Citi, Wells Fargo and Bank of America in 78% to 92% of 240 draws ...",
+          "why": "The ±3σ band would let a decline rate of 0.80 or 0.90 pass. The report date is moved by hand across 80 dates (declared TEST SETUP)."
+        },
+        {
+          "title": "tests/evidence2-b05.test.ts > paid, the report turns her away in 40% to 60% of 320 draws ...",
+          "why": "The band is 128 to 192 of 320, which also passes a rate of 0.45 or 0.55."
+        }
+      ],
+      "staleText": [
+        "entry: 'Bank, Your Banks: Open An Account (BankMoves.tsx:62)'. The control is the Apply button of its own panel, Open An Account At Another Bank, at BankMoves.tsx:245 (handler `open` at :61). The claimCorrection's ':244' is already one line off.",
+        "changes: 'bankmoves.ts:316'. bank.open_current is now registered at bankmoves.ts:319, not :317 as the claimCorrection says.",
+        "tests field: it names only bank-moves and papers-complete. It should add tests/evidence-g14-money.test.ts (bank.open_current describe) and tests/evidence2-b05.test.ts (bank.open_current describe).",
+        "docs/GAMEPLAY-COVERAGE.md:385 and :821 still give the row's old summary and refs."
+      ]
+    },
+    {
+      "id": "bank.set_order_source",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The second agent's open item, 'It pays into that account.' (defect 15), is gone. bank.set_order_source (bankmoves.ts:433-444) no longer has it, and a past-tense comment at :440-441 says why. L9's unreachable remap in lending.ts was removed too (leftovers4).",
+        "Checked: the order's day after the move is played by the clock both ways. In g14, $50 is paid from Capital One on 28 August and lands in Chase savings on 2 September, monthly, across reloads. In b05, the moved-to account is unfunded, so the order doesn't go: Chase is untouched and there is one 'A Standing Order Didn’t Go' notice. Funded, it pays on 28 September and lands on 1 October. The figures are worked from three business days, independently.",
+        "The refusals are sent through sim.execute in their words: 'is closing' (Citi reaching its restricted close), 'No such standing order.', and a savings account or card refused as not an open current account (g14). A closing refusal on linkedTo, then a close once the order moved back (g14). Pay From There is pressed through its own onClick (g14, with the select's choice injected as TEST SETUP). The b05 test shows that no standing order can target a current account.",
+        "The latest skeptic's remaining problem is that tests/bank-lifecycle.test.ts 'a closing account takes no new standing order or autopay' still asserts only autopay, with closingAt set by hand. The behaviour its title promises for set_order_source is closed by g14's 'Citi Access Checking is closing.' Its title is stale wording in a test, superseded but not fixed."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/bank-lifecycle.test.ts > a closing account takes no new standing order or autopay",
+          "why": "It asserts only the autopay refusal, with closingAt written by hand. The title overstates. Retitle it, or give it the standing-order assertion."
+        }
+      ],
+      "staleText": [
+        "entry: 'Your Banks: a standing order’s Pay From (BankMoves.tsx:172)'. The control is What Pays From Where's Pay From There at BankMoves.tsx:186. The claimCorrection's ':184' is off.",
+        "changes: 'bankmoves.ts:430'. The handler is registered at bankmoves.ts:433, not :431.",
+        "tests field: it names only bank-moves 'moves the primary account…'. It should add tests/evidence-g14-money.test.ts and tests/evidence2-b05.test.ts (bank.set_order_source describes).",
+        "docs/GAMEPLAY-COVERAGE.md:251, :388 and :823 still say no test plays the order's day after the move, and still list 'It pays into that account.' among the refusals."
+      ]
+    },
+    {
+      "id": "bank.close_current",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Defect 16 is fixed. statements.ts:77 now counts the closing instant into a closed account's last period. 'ends Chase’s last statement at $0.00 with what it held sent to Capital One at the closing' passes, and before the fix it failed (checks.json). It asserts the literal last line, 'To Capital One: 360 Checking', -holding, balance 0, at closedAt, and closing 0.",
+        "Defect 17 is fixed. linkedTo's 'A standing order pays into it' branch is gone (routing.ts:86-89 says so in the past tense), so the row's 'nothing paid … into it' no longer declares an unreachable link.",
+        "Checked: every refusal in Reads is reached by play in its words. Only account, primary, and overdrawn by $15.00 from the clock's fee are in g14. Pending groceries from the clock, $100 on its way, and a payment set for a date into it are in b05. A payment set for a date, the savings beside it, 'Say which account…' and 'closes … already' are in g14. CLOSES_KIND's overdrawn branch gives one Didn’t Close notice from Citi's $5 fee on $2.00 (g14). The remainder arrives unguarded, exactly once, across reloads, on 16 September (b05) and 10 September (g14). The history-kept check that couldn't fail was replaced by the period list and the unchanged August statement. Close It is shut, then pressed (g14). Wages are moved by bank.redirect_deposits, not by depositTo by hand.",
+        "evidence2-b05.test.ts passed 16 of 16. Both former defect tests are green.",
+        "Superseded, not fixed: the `if (held > 0)` guard in tests/bank-moves.test.ts. cross-journeys still never checks the remainder's arrival. The gate covers both unguarded elsewhere."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/bank-moves.test.ts > moves the primary account, then wages, then orders, then closes Chase, with nothing lost",
+          "why": "`if (held > 0) { … }` still silently skips the remainder-arrival assertions. It is superseded by evidence2-b05's unguarded journey."
+        },
+        {
+          "title": "tests/cross-journeys.test.ts > opens and funds Capital One, has Yale pay there after its pay cycle, moves autopay and savings, closes Chase...",
+          "why": "It never asserts that the remainder reached Capital One. It is superseded."
+        }
+      ],
+      "staleText": [
+        "entry: 'Your Banks: Close (BankMoves.tsx:136)'. The control is Close It at BankMoves.tsx:150. The claimCorrection's ':148' is off.",
+        "changes: 'bankmoves.ts:457'. The handler is registered at bankmoves.ts:461, not :458.",
+        "reads: 'nothing paid from or into it'. Since 2026-10-13 linkedTo names only what pays from it, plus incoming wages and payments set for a date. The 'standing order … into' half went with defect 17.",
+        "tests field: it should add tests/evidence-g14-money.test.ts and tests/evidence2-b05.test.ts (bank.close_current describes).",
+        "docs/GAMEPLAY-COVERAGE.md:391 and :825 still give the old refs and summary."
+      ]
+    },
+    {
+      "id": "documents.report_lost",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Defect 18 is fixed. documents.ts:337 now refuses `!inForce(doc, s.now)`. 'refuses a report of the license run out, which the screen never offers, and leaves it as it was' passes on a license that ran out by 22 months of clock to 15 June 2028, with status still 'valid'. It failed before the fix (evidence2 run). L4, a replaced license issued already run out, is also fixed: identity.ts:149-155 refuses a replacement for a card that has run out or will before the replacement arrives.",
+        "Checked: the two-step UI is pressed through each button's own onClick (b05). Report Stolen… opens the confirm step on the passport's row only, matched by document number. Keep It closes it. Report Lost… on the license, then Cancel It, toasts 'Driving License reported lost and canceled.' and leaves status lost with no stolen flag. The row then reads 'Reported Lost File A Police Report Replace It, $17.50'. The F-1 row has neither button on either tab. A Run Out row has none. Both of the first skeptic's weak UI tests are superseded.",
+        "Downstream through commands: photoIdOf refuses Citi through bank.open_current after a report (g15, b05), and Bank of America's review turns an application down after one (b05 bank.open_current). The passport cascade spares the F-1 (g15). A second report is refused across a reload (g15). Statuses can't be reported (papers-fixes).",
+        "Noted, not a gap: inForce now also refuses a run-out passport. In life a DS-64 can be filed for an expired passport, but SLATE gives a lost run-out passport no consequence, so nothing outcome-bearing is lost.",
+        "Two older weak tests are still in the suite, superseded by the command-level tests above. defects-g27-1 tallies .ok, and guide-examples calls openRefusal directly."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/defects-g27-1.test.ts > takes a passport, a license, an international driving permit and an ID card, and refuses an F-1",
+          "why": "It tallies .ok only. Status and the stolen flag are asserted elsewhere (g15, b05)."
+        },
+        {
+          "title": "tests/guide-examples-papers.test.ts > documents.passport-id: a stolen ID card reported and replaced, and the photo ID that stands meanwhile",
+          "why": "It checks the bank refusal through openRefusal, not bank.open_current. Superseded by g15 and b05."
+        }
+      ],
+      "staleText": [
+        "entry: 'on any valid document, permits and visas included (Documents.tsx:64, WorkPane DocumentList kinds permit,visa)'. Now: Report Lost… / Report Stolen…, then Cancel It (Documents.tsx:76-81), only on a LOSABLE document in force (documents.ts:47). A status is refused, 'A status isn’t lost with its paper: it holds.' (documents.ts:338).",
+        "reads: 'doc status valid'. Since 2026-10-13 it reads inForce, so a document that has run out is refused (documents.ts:337).",
+        "changes: 'documents.ts:319-327'. The cascade is now at about documents.ts:341-345.",
+        "tests field: 'no test checks a document reported lost refused as photo ID' is false. tests/evidence-g15-papers.test.ts, tests/evidence2-b05.test.ts and tests/guide-examples-papers.test.ts check it. The field also omits tests/defects-g27-1.test.ts and tests/papers-complete.test.ts.",
+        "docs/GAMEPLAY-COVERAGE.md:257, :565 and :852 still carry the old entry and 'No test checks … photo ID'."
+      ]
+    },
+    {
+      "id": "benefits.claim",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed: defect 59 is fixed. The week is now read by workDoneIn, the work done in it, not by wages paid in it (unemployment.ts:224-230). b05 journey 1 now expects $93 for the week to 10 October, when the $138 was paid but no work was done. Journey 2 reaches a week with work by play: Saturday's six hours, withdrawal at five, claim filed, and the first Sunday pays $93 − ⅔×$138 = $1. Both figures are literals worked from CGS 31-229.",
+        "Closed: the base period is earned by school.summer_cabaret and school.withdraw, alternate base period included, at the literal $93 a week and $2,418. File A Claim is pressed. The 2028 return is compared with a twin that never claimed. The FUTA refusal is given in its exact sentence (g15).",
+        "OPEN, laid up: the laid-up availability check is still fed by a hand-written concussion (b05:645, g15:854). The latest skeptic showed play reaches it: life.look_after {action:'exercise'} draws from INJURY_MIX.run, which includes a fracture with off-work time (content/injury.ts:65), and a probe left her laidUp. No test lays her up by play and then has the clock certify a week at nothing. The hospital stay remains a defensible TEST SETUP: no command, and the clock draws 0.04 a year.",
+        "Preconditions still set by hand, which the first skeptic named: good standing before the Summer Cabaret (sim.player.school.standing = 'good'), and $20,000 of 2028 wages given both twins so a return exists (g15). Both are declared TEST SETUP. Neither is the row's own action.",
+        "Wrong comments in the test (house standard: part of the change). b05:628 still says the basic base period for an October 2027 filing is 'April 2026 to June 2027', which is five quarters. It is July 2026 to June 2027. b05's header (lines 46-47) says a concussion is one 'which no command brings', which the skeptic's look_after probe contradicts.",
+        "Noted, for the owner: journey 2 pays $1 for a week in which she was enrolled until Saturday at five. Availability is checked only on the Sunday certified (studentUnavailable on the day), not across the week, as CGS 31-235(b)'s week-based reading would.",
+        "Older weak tests are superseded but still in the suite: papers-complete's FUTA regex (/permission to work|base period/), coverage-gaps' .ok only, and guide-examples' basePeriodFor comparison."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence2-b05.test.ts > PLAYER JOURNEY: withdrawn on Wednesday 6 October 2027 with Saturday’s six hours owed … in hospital and laid up nothing, then $93",
+          "why": "The hospital stay and the concussion are written into state by hand. The concussion is reachable by play through life.look_after. Its base-period comment is wrong (five quarters)."
+        },
+        {
+          "title": "tests/evidence-g15-papers.test.ts > pays nothing for a week certified in hospital, nor for one laid up, the next week whole, and a week with three hours worked, $69, $93 less two-thirds of it, $47",
+          "why": "The hospital stay, the concussion, and a done SHIFT_KIND item with worked: 3 are all written by hand. The week-with-work half is now covered by play in b05 journey 2. The laid-up half isn't."
+        },
+        {
+          "title": "tests/papers-complete.test.ts > pays a noncitizen nothing without permission to work in the US",
+          "why": "/permission to work|base period/ still passes with the FUTA check deleted. It is superseded by g15's exact-sentence test."
+        }
+      ],
+      "staleText": [
+        "entry: 'Benefits tab 'File A Claim' (PapersWorkspace.tsx:472; HomeClaimsPanel 357)'. Now: Papers > Unemployment File A Claim at PapersWorkspace.tsx:827, and HomeClaimsPanel at :701.",
+        "reads: 'unemployment.ts:64-126,165-187'. monetary/claimStateFor/basePeriodFor/weekBenefit are now at about :68-146, and studentUnavailable/registerUnemployment at :175 onward.",
+        "downstream: 'taxreturn.ts:323'. figuresFor is now at taxreturn.ts:882. The claimCorrection's ':828/:836' is already stale.",
+        "tests field: 'no test earns the base period or leaves school through a command before claiming' is false. tests/evidence-g15-papers.test.ts and tests/evidence2-b05.test.ts do.",
+        "docs/GAMEPLAY-COVERAGE.md:431 still says weeks read their wages (workedBetween). Since 2026-10-13 they read work done (workDoneIn). docs/UNBITTEN.md (~line 80) says the same (leftovers4). Also :259, :567 and :854 still carry the old refs."
+      ]
+    }
+  ]
+}

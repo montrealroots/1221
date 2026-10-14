@@ -1,0 +1,1223 @@
+[
+ {
+  "key": "scope",
+  "testFile": "tests/scope-people.test.ts",
+  "rows": [
+   {
+    "id": "l-person",
+    "mutations": [
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/ui/looks/wellbeing.tsx",
+      "find": "  if (/^\\s*she\\b/i.test(person.pronouns ?? '')) return { they: 'she', them: 'her', their: 'her', are: 'is', s: third };",
+      "replace": "",
+      "protects": "she/her read as she/her ('Her body.', 'Who she is.', 'A Trait She Holds'): scope-people tests 1 to 3, and evidence2-b12's copy",
+      "test": "tests/scope-people.test.ts"
+     },
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/ui/looks/wellbeing.tsx",
+      "find": "  { key: 'energy', name: 'Energy', unit: 'level', behind: (p: Spoken) => `what the day has left in ${p.them}` },",
+      "replace": "  { key: 'energy', name: 'Energy', unit: 'level', behind: () => 'what the day has left in you' },",
+      "protects": "a dial way said of the person it belongs to: scope-people test 1 ('what the day has left in her', yous(her) empty)",
+      "test": "tests/scope-people.test.ts"
+     },
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/ui/looks/wellbeing.tsx",
+      "find": "kind: `A Condition ${upper(p.they)} ${upper(p.s('carry'))}`,",
+      "replace": "kind: isYou ? 'A Condition You Carry' : 'A Condition They Carry',",
+      "protects": "the condition look in the carrier's pronouns, with the y-to-ies agreement: scope-people test 3 ('A Condition He Carries')",
+      "test": "tests/scope-people.test.ts"
+     },
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/ui/looks/wellbeing.tsx",
+      "find": "      kind: `How Well ${upper(p.they)} Would Do Today`,",
+      "replace": "      kind: 'How Well You Would Do Today',",
+      "protects": "Readiness of another person in her pronouns: scope-people test 4 ('How Well She Would Do Today')",
+      "test": "tests/scope-people.test.ts"
+     },
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/ui/looks/wellbeing.tsx",
+      "find": "  const theyHold = p.they === 'you' ? 'you’ve' : `${p.they} ${one ? 'has' : 'have'}`;",
+      "replace": "  const theyHold = 'you’ve';",
+      "protects": "the Energy sentence's agreement: scope-people test 4 ('she has', 'he has', 'they have')",
+      "test": "tests/scope-people.test.ts"
+     },
+     {
+      "id": "l-person",
+      "key": "scope-people",
+      "file": "src/engine/systems/body.ts",
+      "find": "  const where = country ? `${theCountry(country)}, ${lives}` : lives;",
+      "replace": "  const where = country ? `${theCountry(country)}, where you live` : lives;",
+      "protects": "the units' why in the person's words: scope-people tests 1 and 2 ('where she lives', 'where he lives')",
+      "test": "tests/scope-people.test.ts"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "key": "scope",
+  "testFile": "tests/evidence3-person.test.ts",
+  "rows": [
+   {
+    "id": "i-stale-claims",
+    "mutations": [
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "const dated = (sentence: string) => REMOVAL.test(sentence) && !PRESENT.test(sentence.replace(MONEYS, ''));",
+      "replace": "const dated = (sentence: string) => REMOVAL.test(sentence);",
+      "protects": "a present clause beside a past one ('Interests lift a meal, and the owner removed the crafts.') and a dated present ('…until 2026-10-10.')",
+      "test": "tests/evidence3-person.test.ts"
+     },
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "(?<!\\b${AUX}\\s+(?:\\w+\\s+)?)\\b(?:removed|deleted|dropped)\\b",
+      "replace": "\\b(?:removed|deleted|dropped)\\b",
+      "protects": "present passives ('An interest is dropped…', 'until they are removed')",
+      "test": "tests/evidence3-person.test.ts"
+     },
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "another|your|my|our|her|his|their)",
+      "replace": "another)",
+      "protects": "possessive singulars ('Your interest lifts a meal.', 'My interest grows each week.')",
+      "test": "tests/evidence3-person.test.ts"
+     },
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "(?!${NOT_PRESENT}\\b)[a-z]+\\b|",
+      "replace": "(?:are|have|do|lift|grow|open)\\b|",
+      "protects": "a plural present verb outside any list ('Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour …')",
+      "test": "tests/evidence3-person.test.ts"
+     },
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "\\bwent(?=\\s+(?:on\\s+\\d|with\\b|that\\s+(?:day|week|month|year)\\b|when\\b)",
+      "replace": "\\bwent(?=\\s+(?:on|with|that|in the|when|at)\\b",
+      "protects": "'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value …'",
+      "test": "tests/evidence3-person.test.ts"
+     },
+     {
+      "id": "i-stale-claims",
+      "key": "scope-people",
+      "file": "tests/evidence3-person.test.ts",
+      "find": "\\binterests${ASIDE}(?:\\s+${ADV})?\\s+(?!${PERFECT})",
+      "replace": "\\binterests(?:\\s+${ADV})?\\s+",
+      "protects": "the present perfect read as the past ('Interests have been removed since 2026-10-10.') and a clause between subject and verb ('The interests, removed by the owner, lift a meal.')",
+      "test": "tests/evidence3-person.test.ts"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "key": "scope",
+  "testFile": "tests/scope-taxpapers.test.ts",
+  "rows": [
+   {
+    "id": "tax.pay_state",
+    "mutations": [
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  for (const part of order) {",
+      "replace": "  for (const part of (['tax', 'penalty', 'interest'] as const)) {",
+      "protects": "Connecticut's order: the $100's split",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "    if (amount > total) throw new CommandError(",
+      "replace": "    if (false) throw new CommandError(",
+      "protects": "the refusal past what's owed",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  const from = Math.max(sim.now, stateDueOf(r));",
+      "replace": "  const from = sim.now;",
+      "protects": "collection from the due date",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "interest += Math.max(0, months) * Math.round((i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0)));",
+      "replace": "interest += Math.max(0, months) * (i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0));",
+      "protects": "each month’s 1% to the cent: $649.71, $655.56, $17.55 read at once from the bill, $661.41, $4.88 (killed on 2026-10-15: three tests failed)",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "export const stateDueOf = (r: TaxReturn): Instant => (r.figures?.form === '1040-NR' ? Math.min(r.due, deadline(r.year)) : r.due);",
+      "replace": "export const stateDueOf = (r: TaxReturn): Instant => r.due;",
+      "protects": "Connecticut’s own due date on a 1040-NR due in June (killed on 2026-10-15: the bill pending 15 July, not 15 May)",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "&& owedToState(person, state, sim.now) <= 0) endStatePlan(sim, person, plan, 'paid', 'Paid off');",
+      "replace": "&& owedToState(person, state, sim.now) < 0) endStatePlan(sim, person, plan, 'paid', 'Paid off');",
+      "protects": "a state plan ended paid by Pay (killed on 2026-10-15)",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.pay_state",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "one.payload.state === state) sim.timeline.cancel(one.id, sim.now);\n  // Everything owed",
+      "replace": "one.payload.state === state) void 0;\n  // Everything owed",
+      "protects": "the pending levy taken off the calendar once paid (killed on 2026-10-15)",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.amend",
+    "mutations": [
+     {
+      "id": "tax.amend",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    if (change === 0 && now.irs === was.irs && !byState.length) throw",
+      "replace": "    if (false) throw",
+      "protects": "the played refusal: nothing to amend",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.revise_plan",
+    "mutations": [
+     {
+      "id": "tax.revise_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    plan.monthly = monthly;",
+      "replace": "",
+      "protects": "the next payment at the revised amount",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.revise_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    if (plan.status === 'default') { plan.status = 'active'; delete plan.defaultBy;",
+      "replace": "    if (false) { plan.status = 'active'; delete plan.defaultBy;",
+      "protects": "the default lifted",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.catch_up_plan",
+    "mutations": [
+     {
+      "id": "tax.catch_up_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    payPlan(s, person, due);",
+      "replace": "",
+      "protects": "owed falling by the payment",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.catch_up_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    if (person.taxPlan && ['pending', 'active', 'default'].includes(person.taxPlan.status)) continue;",
+      "replace": "",
+      "protects": "one IRS letter after a reload",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.apply_state_plan",
+    "mutations": [
+     {
+      "id": "tax.apply_state_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": " > rules.notices.length && r.stateDue?.[state]?.owed)) return",
+      "replace": " > rules.notices.length)) return",
+      "protects": "a paid levied year not refusing a plan",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.apply_state_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  } else if (!(months >= rules.plan.minMonths && months <= most)) {",
+      "replace": "  } else if (!(months >= 1 && months <= most)) {",
+      "protects": "the 2-month least",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.apply_state_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "interest += Math.max(0, months) * Math.round((i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0)));",
+      "replace": "interest += Math.max(0, months) * (i.yearly / 12) * (p.tax + (i.onPenalty ? p.penalty : 0));",
+      "protects": "each month’s 1% to the cent: $649.71, $655.56, $17.55 read at once from the bill, $661.41, $4.88 (killed on 2026-10-15: three tests failed)",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.catch_up_state_plan",
+    "mutations": [
+     {
+      "id": "tax.catch_up_state_plan",
+      "key": "scope-taxpapers",
+      "file": "src/engine/content/statetax.ts",
+      "find": "plan: { name: 'Installment Agreement', max: 50_000_00, minMonths: 2, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'none' }",
+      "replace": "plan: { name: 'Installment Agreement', max: 50_000_00, minMonths: 2, maxMonths: 12, fee: 0, feeAdded: false, decideDays: 0, decideAssumed: true, cure: { kind: 'next-due' }",
+      "protects": "Connecticut's plan ending at once (and so no catch-up)",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.lien_release",
+    "mutations": [
+     {
+      "id": "tax.lien_release",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "    releaseLater(s, person, r!, state);",
+      "replace": "",
+      "protects": "the release date and the release",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.lien_release",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  if (l.releaseDue !== undefined) return",
+      "replace": "  if (false) return",
+      "protects": "a second request refused",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "tax.lien_release",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "one.payload.state === state) sim.timeline.cancel(one.id, sim.now);\n  // Everything owed",
+      "replace": "one.payload.state === state) void 0;\n  // Everything owed",
+      "protects": "no levy after payment (killed on 2026-10-15)",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.lien_dispute",
+    "mutations": [
+     {
+      "id": "tax.lien_dispute",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  return Math.max(0, sd.balance) <= paidBefore;",
+      "replace": "  return true;",
+      "protects": "the refusal on a lien that secured tax owed",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.federal_lien_withdraw",
+    "mutations": [
+     {
+      "id": "tax.federal_lien_withdraw",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "threshold: 10_000_00",
+      "replace": "threshold: 1_000_00",
+      "protects": "no lien at her LT11",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "tax.request_waiver",
+    "mutations": [
+     {
+      "id": "tax.request_waiver",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/statetax.ts",
+      "find": "  if (!ty || !sd?.threeYear?.amount) return",
+      "replace": "  if (false) return",
+      "protects": "the refusal on a Connecticut year",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "documents.apply_ssn",
+    "mutations": [
+     {
+      "id": "documents.apply_ssn",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxid.ts",
+      "find": "  return citizenOf(person, 'US') || person.ssn?.status === 'issued';",
+      "replace": "  return citizenOf(person, 'US');",
+      "protects": "every reader's change once the card comes (evidence-g17-papers)",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "documents.apply_ssn",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxid.ts",
+      "find": "    s.advanceTo(s.now + SSN.visitMinutes * 60_000);",
+      "replace": "",
+      "protects": "the office's hour",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "documents.apply_ssn",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "const itin = r.figures.form === '1040-NR' && !hasSsn(person) ? SSN.itinWeeks * 7 : 0;",
+      "replace": "const itin = r.figures.form === '1040-NR' ? SSN.itinWeeks * 7 : 0;",
+      "protects": "the card saving the W-7’s seven weeks on a played refund (killed on 2026-10-15)",
+      "test": "tests/scope-taxpapers.test.ts"
+     },
+     {
+      "id": "documents.apply_ssn",
+      "key": "scope-taxpapers",
+      "file": "src/engine/systems/taxreturn.ts",
+      "find": "    const online = hasSsn(person);",
+      "replace": "    const online = true;",
+      "protects": "Form 9465’s 30 days without the card on a played balance (killed on 2026-10-15)",
+      "test": "tests/scope-taxpapers.test.ts"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "key": "scope",
+  "testFile": "tests/scope-health.test.ts",
+  "rows": [
+   {
+    "id": "health.choose_clinic",
+    "mutations": [
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/appointments.ts",
+      "find": "const days = what === SPECIALIST ? referralDays(person) : own ?? waitDays(",
+      "replace": "const days = what === SPECIALIST ? referralDays(person) : waitDays(",
+      "protects": "Yale Health's next-weekday booking (three journeys fail; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/clinics.ts",
+      "find": "if (care === 'visit' && own && seesThem(person, own, at)) return own;",
+      "replace": "if (care === 'visit' && own) return own;",
+      "protects": "a chosen members-only practice stops being their doctor when its cover ends (the continuity journey and the GUARD fail; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/appointments.ts",
+      "find": "if (at && at.members !== null && !seesThem(person, at, item.at)) {",
+      "replace": "if (false) {",
+      "protects": "an appointment at Yale Health after its cover ended isn't kept (the continuity journey fails; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/clinics.ts",
+      "find": "    if (theirs) return theirs;\n",
+      "replace": "",
+      "protects": "The default follows the cover. Run 2026-10-15, three fail in tests/scope-health.test.ts: the renamed two-practices journey, the member-picks-nothing journey and the member-picks-Fair-Haven journey (its twin).",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/clinics.ts",
+      "find": "  return clinicsIn(clinic.cityId).some((c) => c.members === 'yale' && DOCTOR_KINDS.includes(c.kind));",
+      "replace": "  return false;",
+      "protects": "A member's visit at Fair Haven isn't Yale Health's to pay. Run 2026-10-15, three fail: the two-practices journey, the picks-Fair-Haven journey and the older-save journey (the pick's bill).",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/appointments.ts",
+      "find": "      a.clinicId = theirs.id;\n",
+      "replace": "",
+      "protects": "An older save's default appointment is moved to Yale Health on opening. Run 2026-10-15, the older-save journey fails.",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "  const paying = planOf(person, at) && !(restrictedScope(person, at) && !hospital) && !outside;",
+      "replace": "  const paying = planOf(person, at) && !(restrictedScope(person, at) && !hospital);",
+      "protects": "The bill for a visit outside Yale Health's practice carries no plan-paid part. Run 2026-10-15, two fail: the two-practices journey and the picks-Fair-Haven journey. (Also checked: dropping '&& !outside' from the out-of-pocket line fails the picks-Fair-Haven journey.)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/index.ts",
+      "find": "  if (!opened.includes('followTheCover')) {",
+      "replace": "  if (true) {",
+      "protects": "The older-save step is taken once, on a save that doesn't name it. Run 2026-10-15 (recheck): three fail in tests/scope-health.test.ts, the older-save journey (its current save) and both cover-change journeys (the reload).",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/index.ts",
+      "find": "  universe.opened = [...ONCE_ON_OPENING];",
+      "replace": "",
+      "protects": "A new life is begun with every step named, so its first reload takes none (the cover-change journeys and the older-save journey; not run)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.choose_clinic",
+      "key": "scope-health",
+      "file": "src/engine/index.ts",
+      "find": "    opened.push('followTheCover');",
+      "replace": "",
+      "protects": "An older save's step is named once taken, so the next opening doesn't take it again (the older-save journey's opened check; not run)",
+      "test": "tests/scope-health.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "health.enroll",
+    "mutations": [
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "planPaid: denied ? 0 : Math.max(0, price - amount)",
+      "replace": "planPaid: Math.max(0, price - amount)",
+      "protects": "a denied claim's plan part is nothing (the denial journey fails)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "      if (bill.covered) bill.covered.planPaid = Math.max(0, bill.covered.price - bill.denied.share);",
+      "replace": "",
+      "protects": "an overturned appeal's plan part (the denial journey fails; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "planOf(person, e.at) ? Math.max(0, was.covered.price - now) : 0",
+      "replace": "Math.max(0, was.covered.price - now)",
+      "protects": "a cover canceled back leaves the plan paying nothing, the charity having made her uninsured share $0 (the emergency journey fails; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "  const school = enrolledIn(person, firstOf(p.year, p.month - 1), firstOf(p.year, p.month));",
+      "replace": "  const school = person.school !== undefined && !schoolEnded(person.school.standing) && person.school.leave?.status !== 'on';",
+      "protects": "HUSKY D reads the School over last month, not at the instant asked. Run 2026-10-15 (recheck): two fail in tests/scope-cover.test.ts, the leave journey and the January-then-withdrawn journey.",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "  if (schoolEnded(school.standing) && (school.endedAt ?? Number.NEGATIVE_INFINITY) < from) return false;",
+      "replace": "",
+      "protects": "A month after the School ended doesn't count (the January-then-withdrawn journey's 1 April refusal; not run)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.enroll",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "l.startedAt < from && (l.returnedAt === undefined",
+      "replace": "l.startedAt < until && (l.returnedAt === undefined",
+      "protects": "The month a leave begins counts whole (the leave journey’s 1 February HUSKY D; not run)",
+      "test": "tests/scope-health.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "health.appointment",
+    "mutations": [
+     {
+      "id": "health.appointment",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "validYears: { 'ca-bc': 2 }",
+      "replace": "validYears: { 'ca-bc': 2, 'us-ct': 1 }",
+      "protects": "Connecticut's prescription doesn't run out (the prescription journey fails; evidence2-b02 doesn't, stopping short of the year; run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     },
+     {
+      "id": "health.appointment",
+      "key": "scope-health",
+      "file": "src/engine/systems/health.ts",
+      "find": "const clinic = MEDICAL.includes(event.care) ? booked ?? clinicFor(",
+      "replace": "const clinic = MEDICAL.includes(event.care) ? clinicFor(",
+      "protects": "the visit is had at the practice booked (run 2026-10-15)",
+      "test": "tests/scope-health.test.ts"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "key": "scope",
+  "testFile": "tests/scope-money.test.ts",
+  "rows": [
+   {
+    "id": "bank.arrange_overdraft",
+    "mutations": [
+     {
+      "id": "bank.arrange_overdraft",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "      if ((current.overdraftLimit ?? 0) <= 0) throw new CommandError('No overdraft is arranged on it.');",
+      "replace": "",
+      "protects": "the limit-0 refusal (PLAYER JOURNEY at each New Haven bank)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.arrange_overdraft",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (account.balance >= -(account.overdraftLimit ?? 0)) { account.negativeSince = undefined; continue; }",
+      "replace": "    if (account.balance >= 0) { account.negativeSince = undefined; continue; }",
+      "protects": "leftOverdrawn reading the arranged limit (the London twins)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.arrange_overdraft",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (current.balance < -limit) throw new CommandError('You’re overdrawn by more than that already.');",
+      "replace": "",
+      "protects": "the panel test's lowered-limit refusal",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.cancel_new",
+    "mutations": [
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "    const refused = account.kind === 'checking' ? closeRefusal(s, person, account) : undefined;",
+      "replace": "    const refused = undefined as string | undefined; void closeRefusal;",
+      "protects": "the current account's refusals (Toronto chequing test)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/ui/bank/BankAccountLife.tsx",
+      "find": "(a.kind === 'savings' || a.kind === 'credit_card' || a.kind === 'checking') && inCoolingOff",
+      "replace": "(a.kind === 'savings' || a.kind === 'credit_card') && inCoolingOff",
+      "protects": "Cancel It drawn for a new current account",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "      if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }",
+      "replace": "      { account.closedAt = s.now; ensurePrimary(s, person); }",
+      "protects": "a card owing money is closing, not closed (Toronto card twins)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "      settleInterest(s, account, `Interest: ${account.name}, on canceling`);",
+      "replace": "",
+      "protects": "Reykjavík (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "      settleFees(s, account);",
+      "replace": "",
+      "protects": "Berlin (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "      if (isoOfAccount(account) === 'CA') {",
+      "replace": "      if (isoOfAccount(account) === 'XX') {",
+      "protects": "Toronto fees (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "  return short > 0 ?",
+      "replace": "  return short > 1_000_00 ?",
+      "protects": "Berlin’s refusal on the panel and the command (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "new Set(['GB', 'CA'])",
+      "replace": "new Set<string>([])",
+      "protects": "interest kept in Britain and Canada (London, Toronto, defects5 RBC term)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "      for (const t of interestPaidSince(s, account)) {",
+      "replace": "      for (const t of [] as typeof s.universe.transactions) {",
+      "protects": "interest paid in the window posted back (Berlin Flexgeld)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "  if (account.kind === 'credit_card' || !REFUNDS_CHARGES.has",
+      "replace": "  if (account.kind !== 'checking' || !REFUNDS_CHARGES.has",
+      "protects": "a Canadian savings account’s charges refunded (Toronto savings)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "  if (iso === 'KR' && account.kind !== 'credit_card') return false;",
+      "replace": "",
+      "protects": "no Korean deposit cooling-off (Seoul)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/bankmoves.ts",
+      "find": "  if (owed > 0 && short > 0) return",
+      "replace": "  if (owed > 0 && short > 0 && false) return",
+      "protects": "Close It refused for fees past the balance (Berlin Close It)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "    if (q.amount > 0 && sim.universe.accounts[q.accountId]?.ownerId === account.ownerId) back.set",
+      "replace": "    if (q.amount > 0 && q.accountId === account.id) back.set",
+      "protects": "Berlin term: the €6.30 refused back out of the primary (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "    if (id === account.id || !into || amount <= into.balance) continue;",
+      "replace": "    if (id === account.id || !into || amount <= into.balance + 1) continue;",
+      "protects": "Berlin term: the threshold is exactly what the primary holds (not run)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "    if (lines.some((q) => sim.universe.accounts[q.accountId]?.name === 'Overdraft Interest')) continue;",
+      "replace": "",
+      "protects": "Toronto: overdraft interest not refunded (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA', 'MX']);",
+      "replace": "const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA']);",
+      "protects": "Mexico City: both tests (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "const KEEPS_INTEREST: ReadonlySet<string> = new Set(['GB', 'CA']);",
+      "replace": "const KEEPS_INTEREST: ReadonlySet<string> = new Set(['GB', 'CA', 'MX']);",
+      "protects": "Mexico City: Banorte’s interest going back (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "const BUSINESS_DAY_COOLING: ReadonlySet<string> = new Set(['CA', 'MX']);",
+      "replace": "const BUSINESS_DAY_COOLING: ReadonlySet<string> = new Set([]);",
+      "protects": "Mexico City Banorte on 10 February; tests/accountlife.test.ts eighteen days on (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "  if (iso === 'CA' && account.kind === 'credit_card') return false;",
+      "replace": "",
+      "protects": "Toronto’s RBC card refused (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "  return sim.now <= ends && !(iso === 'MX' && usedSince(sim, account));",
+      "replace": "  return sim.now <= ends;",
+      "protects": "Mexico City: the used twin refused (run 2026-10-15: failed)",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_new",
+      "key": "scope-money",
+      "file": "src/engine/systems/accountlife.ts",
+      "find": "    if (t.category !== 'interest' && t.category !== 'bank_fee' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) return true;",
+      "replace": "    if (t.category !== 'interest' && t.postings.some((q) => q.accountId === account.id && q.amount < 0)) return true;",
+      "protects": "Mexico City: a bank charge doesn’t count as use, so the unused LikeU with its MXN 11.48 is still offered Cancel It (not run)",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.switch",
+    "mutations": [
+     {
+      "id": "bank.switch",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (!rule) {",
+      "replace": "    if (!rule && iso === 'XX') {",
+      "protects": "the US refusal with the steps (PLAYER JOURNEY)",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.take_overrun_loan",
+    "mutations": [
+     {
+      "id": "bank.take_overrun_loan",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (current.balance >= -(current.overdraftLimit ?? 0)) {",
+      "replace": "    if (current.balance >= 1e15) {",
+      "protects": "the closing count reset on taking the loan",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.take_overrun_loan",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    delete current.creditOffered;",
+      "replace": "",
+      "protects": "the offer cleared and the panel gone",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "card.money_transfer",
+    "mutations": [
+     {
+      "id": "card.money_transfer",
+      "key": "scope-money",
+      "file": "src/engine/systems/cash.ts",
+      "find": "  pay([...buckets].sort((a, b) => b.apr - a.apr), left);",
+      "replace": "  pay([...buckets].sort((a, b) => a.apr - b.apr), left);",
+      "protects": "the payment to the dearest balance first outside the US",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "card.money_transfer",
+      "key": "scope-money",
+      "file": "src/engine/systems/cardoffers.ts",
+      "find": "    const fee = Math.round(amount * terms.moneyTransferFee);",
+      "replace": "    const fee = 0;",
+      "protects": "the 3% fee (not run here: cardoffers.ts is outside this pass's files)",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.savings_notice",
+    "mutations": [
+     {
+      "id": "bank.savings_notice",
+      "key": "scope-money",
+      "file": "src/engine/systems/banking.ts",
+      "find": "    const where = `your ${went.to.name} at ${went.to.institution ?? 'your bank'}`;",
+      "replace": "    const where = `your ${current.name}`;",
+      "protects": "the notice naming the account the money went to",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.savings_notice",
+      "key": "scope-money",
+      "file": "src/engine/systems/banking.ts",
+      "find": "  const current = checkingAt(sim, person, account.bankId) ?? primary;",
+      "replace": "  const current = primary;",
+      "protects": "the money into the current account at the savings' own bank",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.switch_complete",
+    "mutations": [
+     {
+      "id": "bank.switch_complete",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "  const held = pending > 0 && old.balance >= 0 && !quietly ? pending : 0;",
+      "replace": "  const held = 0 * pending;",
+      "protects": "pending card payments held back",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.switch_complete",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    order.toId = moved.get(order.toId) ?? order.toId;",
+      "replace": "",
+      "protects": "standing orders re-pointed to the new savings",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.cancel_switch",
+    "mutations": [
+     {
+      "id": "bank.cancel_switch",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    for (const one of s.universe.scheduled) if (one.kind === SWITCH_REVIEW_KIND && one.status === 'pending' && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);",
+      "replace": "",
+      "protects": "the review canceled with the switch",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.cancel_switch",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    noteSwitch(person, { at: s.now, toBank: to?.name ?? String(item.payload.bankId), outcome: 'canceled' });",
+      "replace": "",
+      "protects": "the history entry and the panel's 'called off'",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "bank.stop_balance_transfer",
+    "mutations": [
+     {
+      "id": "bank.stop_balance_transfer",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (item.payload.keepBalance === true) throw new CommandError('Its balance transfer is stopped already.');",
+      "replace": "",
+      "protects": "the already-stopped refusal",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.stop_balance_transfer",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (s.now > by) throw new CommandError(`The transfer could be stopped until close of business ${formatDate(by, s.zone)}.`);",
+      "replace": "",
+      "protects": "the close-of-business deadline",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "bank.stop_balance_transfer",
+      "key": "scope-money",
+      "file": "src/engine/systems/lending.ts",
+      "find": "    if (one.payload.fromId === old.id) one.payload = { ...one.payload, fromId: fresh.id };",
+      "replace": "",
+      "protects": "a payment set for a date moving to the new bank",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "h-money",
+    "mutations": [
+     {
+      "id": "h-money",
+      "key": "scope-money",
+      "file": "src/ui/screens/Home.tsx",
+      "find": "${primary?.name ?? 'No account'}",
+      "replace": "${primary?.name ?? 'No acct'}",
+      "protects": "the guard's words",
+      "test": "tests/scope-money.test.ts"
+     },
+     {
+      "id": "h-money",
+      "key": "scope-money",
+      "file": "src/engine/systems/banking.ts",
+      "find": "  if (owner) recordInterest(owner, sim.now, sim.homeZone, earned);",
+      "replace": "  if (owner) { recordInterest(owner, sim.now, sim.homeZone, earned); recordInterest(owner, sim.now, sim.homeZone, earned); }",
+      "protects": "interest income counted once",
+      "test": "tests/scope-money.test.ts"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "key": "scope",
+  "testFile": "tests/scope-school.test.ts",
+  "rows": [
+   {
+    "id": "school.respond",
+    "mutations": [
+     {
+      "id": "school.respond",
+      "key": "scope-school",
+      "file": "src/engine/index.ts",
+      "find": "  strandedMoments(sim);\n",
+      "replace": "",
+      "protects": "both DEFECT tests (the lapse back on the clock once; lapsed at once and moments drawn again)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.respond",
+      "key": "scope-school",
+      "file": "src/engine/systems/classmates.ts",
+      "find": "      if (m.until <= sim.now) lapse(sim, person, m);",
+      "replace": "      if (m.until < 0) lapse(sim, person, m);",
+      "protects": "DEFECT: the same older save played on … (lapsed at once on opening, trust − 1)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.respond",
+      "key": "scope-school",
+      "file": "src/engine/systems/classmates.ts",
+      "find": "      if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === MOMENT_KIND && i.payload.momentId === m.id)) continue;",
+      "replace": "",
+      "protects": "the help moment of the real 2028 save (one lapse item) and DEFECT: … (a second open adds none). Run on 2026-10-15: both failed",
+      "test": "tests/scope-school.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "school.request_repeat",
+    "mutations": [
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/courserecord.ts",
+      "find": "return room(academic % 2 === 0 ? academic + 1 : academic);",
+      "replace": "return true;",
+      "protects": "the two journeys where only the count refuses: the repeated year’s Permanent Incomplete and the second fall’s Clown (the `repeatedYears` clause this mutation named before was removed on 2026-10-15; the repeated-spring Text Analysis I journey is dismissed at that evaluation)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/leave.ts",
+      "find": "      notify(s, person, 'Your Repeat Is Refused', `The chair and the dean refused it. ${why}`, 85);",
+      "replace": "",
+      "protects": "GUARD: the decision’s refusal of a first year (its notice in its words)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/courserecord.ts",
+      "find": "const repeatable = (r: CourseRecord) => !ended && school.extra",
+      "replace": "const repeatable = (r: CourseRecord) => school.extra",
+      "protects": "both dismissal journeys (run 2026-10-15: both failed)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "      tellFails(s, person, term, schoolEnded(person.school.standing), (a) => repeatRoom(person, a));",
+      "replace": "      tellFails(s, person, term, false, (a) => repeatRoom(person, a));",
+      "protects": "the warning-unmet journey (run 2026-10-15: failed)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "        tellFails(s, person, term, true, (a) => repeatRoom(person, a));",
+      "replace": "        tellFails(s, person, term, false, (a) => repeatRoom(person, a));",
+      "protects": "the review’s-dismissal journey (run 2026-10-15: failed)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/courserecord.ts",
+      "find": "const ask = person.school!.awaitingDegree || !repeatOpen(r, (a) => room(person, a)) ?",
+      "replace": "const ask = person.school!.awaitingDegree ?",
+      "protects": "the repeated year’s Permanent Incomplete journey (run 2026-10-15: failed)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "  if (!school) return false;\n  // The program term taken next",
+      "replace": "  if (!school) return false;\n  if (school) return true;\n  // The program term taken next",
+      "protects": "the second fall’s Clown journey and the repeated year’s Permanent Incomplete journey (run 2026-10-15: both failed)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "withRepeat(school, spring) + Math.max(0, spring + 1 - next) <=",
+      "replace": "withRepeat(school, spring) <=",
+      "protects": "the second fall’s Clown journey (run 2026-10-15: failed; the count read nine)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "Math.max(0, spring + 1 - next)",
+      "replace": "Math.max(0, spring - next)",
+      "protects": "the second fall’s Clown journey (not run: the count at the fall would read nine)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/leave.ts",
+      "find": "[end - 1, end].includes(r.academic ?? r.term)",
+      "replace": "(r.term === spring || r.term === spring - 1)",
+      "protects": "the leave-split year journey (run 2026-10-15: failed, the Standing tab drew no Ask To Repeat The Year…)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/leave.ts",
+      "find": "  const end = academicTerm(school, spring);",
+      "replace": "  const end = spring;",
+      "protects": "the leave-split year journey (run 2026-10-15: failed the same way)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_repeat",
+      "key": "scope-school",
+      "file": "src/engine/systems/leave.ts",
+      "find": "[enrolledTerms(school).filter((x) => x < spring).at(-1) ?? spring - 1, spring]",
+      "replace": "[spring - 1, spring]",
+      "protects": "the leave-split year journey’s terms [0, 3] (run 2026-10-15: failed)",
+      "test": "tests/scope-school.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "school.request_extra_term",
+    "mutations": [
+     {
+      "id": "school.request_extra_term",
+      "key": "scope-school",
+      "file": "src/engine/systems/courserecord.ts",
+      "find": "school.extra?.term !== term && ",
+      "replace": "",
+      "protects": "PLAYER JOURNEY: an additional term granted and attended … (the second notice's words)",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_extra_term",
+      "key": "scope-school",
+      "file": "src/engine/systems/leave.ts",
+      "find": "  if (!keptThrough(school) && disqualified(school)) return { why: 'The faculty’s disqualification stands against it.' };",
+      "replace": "",
+      "protects": "GUARD: a disqualification the faculty never judged (at the asking)",
+      "test": "tests/scope-school.test.ts"
+     }
+    ]
+   },
+   {
+    "id": "school.request_conversion",
+    "mutations": [
+     {
+      "id": "school.request_conversion",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "  const done = school.convertedHours?.[yearKey] ?? 0;",
+      "replace": "  const done = 0;",
+      "protects": "across a repeated year (asking again after a processing refused). Run on 2026-10-15: failed",
+      "test": "tests/scope-school.test.ts"
+     },
+     {
+      "id": "school.request_conversion",
+      "key": "scope-school",
+      "file": "src/engine/systems/school.ts",
+      "find": "export const yearKeyOf = (term: number): string => String(term - (termStart(term).fall ? 0 : 1));",
+      "replace": "export const yearKeyOf = (term: number): string => String(0 * term);",
+      "protects": "across a repeated year (excusedHours and convertedHours kept apart by year)",
+      "test": "tests/scope-school.test.ts"
+     }
+    ]
+   }
+  ]
+ }
+]

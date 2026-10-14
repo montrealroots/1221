@@ -1,0 +1,200 @@
+{
+  "testFile": "tests/evidence3-person.test.ts",
+  "rows": [
+    {
+      "id": "c-traits",
+      "testsAdded": [
+        { "title": "c-traits and trait-receipts: the receipts knob gone > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt", "closes": "The open receipts gap, closed by the knob's removal on 2026-10-14. The two traits that declared receipts are pressed on the rendered Dispositions & Traits through their own onClick (each enabled), and Begin's life holds both. Keeps Accounts' look has one row, 'How hard a slight from a classmate cuts +10% +10% with all you are'. Chaotic's has two: hygiene +30%/+24% and stress −8%/−8%, bent by hand. No trait's look, held or not, says a receipt or a deduction.", "evidenceKind": "render" },
+        { "title": "c-traits and trait-receipts: the receipts knob gone > declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read", "closes": "The check's weak test: evidence2-b10's coverage test fills a hand-typed HELD set as its journeys pass, and fails when run alone. This test reads no other test's state. The 19 declared knobs equal KNOB_READS' keys, each is asked for by name (personalityOf(…, 'knob')) at a reader in src outside the content, personality.ts and the trait look, receipts is in none of them, and no code in src writes or reads recordJobCost, jobCosts or RECEIPTS.", "evidenceKind": "fixture" }
+      ],
+      "gapsClosed": [
+        "receipts (the review's gap 2 in substance, and the check's 'removing the words left the knob'): the knob went on 2026-10-14 with taxreturn.ts's line and recordJobCost. Both traits that declared it are pressed on the page, their looks show only bondWound, hygieneDrift and stressGain, and a played return is the same with them or without (see trait-receipts).",
+        "The check's weak test, evidence2-b10 > c-traits > 'holds every knob a trait declares…' (HELD hand-typed and order-dependent): it is superseded by an order-independent check that each declared knob has a reader asking for it by name in src. Each of those readers is held through play by evidence2-b10's journeys.",
+        "Stale line numbers and the 'tests' field: given as rowText."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "entry": "Dispositions & Traits: trait buttons (CharacterCreation.tsx:608-724, PersonalityStep)",
+        "changes": "Person.personalityTraits (cleanPersonalityTraits, bootstrap.ts:382; systems/personality.ts)",
+        "downstream": "the personalityOf knobs at their readers (see trait-* items): all 19 declared knobs are reached in play. receipts (Chaotic 0.9, Keeps Accounts 1.3) reached none, because its only input, recordJobCost, had no caller. It went on 2026-10-14 with the return's line that read it, and Keeps Accounts now moves bondWound alone. Also looks/wellbeing.tsx:118-122 (each trait a way in) and 365-403 (the trait look).",
+        "tests": "tests/evidence-g28-ui.test.ts > c-traits (the buttons, Begin, the engine's refusals); tests/evidence2-b10.test.ts > c-traits (each knob through a command or the clock against a plain twin); tests/evidence3-person.test.ts > 'c-traits and trait-receipts: the receipts knob gone'. Until 2026-10-14 this cited tests/personality.test.ts 'reads every knob a trait can declare', which compares the declared knobs to a typed list and still runs."
+      },
+      "mutations": [
+        { "file": "src/engine/content/personality-traits.ts", "find": "systemMods: { bondWound: 1.1 },", "replace": "systemMods: { bondWound: 1.1, receipts: 1.3 } as never,", "protects": "receipts stays gone: the declared set no longer equals KNOB_READS, and the Keeps Accounts look grows a second row ('declares no knob…', and the journey's one-row count)" },
+        { "file": "src/engine/systems/school.ts", "find": "personalityOf(person, 'bondWound')", "replace": "1", "protects": "every declared knob is asked for by name at a reader: bondWound loses its only reader ('declares no knob…')" }
+      ],
+      "verdict": "verified",
+      "note": "Outside this row, and not editable here: tests/personality.test.ts 'reads every knob a trait can declare' still compares the declared knobs to a typed list, and evidence-g28-ui's 'moves every knob…' still calls personalityOf directly. Both remain weak tests in the gate. The row no longer cites them (rowText). The check's 'only one reader per knob is reached' belongs to the trait-* rows. Line numbers were read on the tree at 9088e699: bootstrap.ts:382 is cleanPersonalityTraits' call in createUniverse."
+    },
+    {
+      "id": "c-wealth",
+      "testsAdded": [
+        { "title": "c-wealth: Starting Point’s tiles are what Begin opens, for every family > PLAYER JOURNEY: <family> chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score (six tests: nothing, scraping, modest, comfortable, wealthy, inherited)", "closes": "The tiles were tied to the opened accounts for the wealthy life only, and nothing tied the card or the credit record for any other family. For each family chosen on Genres & Background's select through its own onChange: Starting Point draws no 'What You Are Starting With' picker, and its Checking, Savings, Credit Record and Credit Card tiles (limit, and what is owed) read the profile's euros at 0.92 to the dollar, worked by hand ($43/$0/520/no card; $1,348/$326/610/$1,630 with $913 owed; $5,217/$7,065/690/$6,522 with $457 owed; $19,565/$45,652/748/$21,739; $92,391/$413,043/795/$65,217; $260,870/$2,608,696/812/$163,043). The term callout matches need ($13,318.50 paid in) or no need ($1,882.00 to the plan). Begin through Review opens the same checking, savings, card limit and balance, and person.credit.score.", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "Nothing tied the creation tiles to the opened accounts beyond the wealthy life: now every family, with the card and the credit score.",
+        "The overclaiming tests/school.test.ts title: renamed in the tree on 2026-10-13 ('comes from a wealthy family, and has no birthplace chosen for it'). Only the row's text still cites the old title (rowText).",
+        "Stale 'entry', 'reads' and 'changes': since 2026-10-14 the wealth isn't forced. It is the family chosen on Genres & Background (rowText)."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "entry": "Genres & Background: Your Family, the select of the six families (CharacterCreation.tsx:849-881, FamilyChoice, its select at :868), from 2026-10-14; Starting Point's What Is Yours (:977-1034) says the money back in tiles, its What You Are Starting With select (:990-1000) drawn only where choosesWealth, never in a life at the school",
+        "reads": "config.wealth, set with config.family by withFamily (bootstrap.ts:200) from the family chosen; newLifeConfig starts wealthy, newLifeFrom keeps a draft's family and its means (bootstrap.ts:218-221), and choosesWealth (bootstrap.ts:228) is config.school === undefined. Until 2026-10-14 newLifeFrom forced 'wealthy' and no screen asked.",
+        "changes": "index.ts:175-232, populateWorld: the profile in the save's currency (177), checking and savings opened at the starting bank, the bank's card at the profile's limit with what it carries in (199-227), and openCredit's score (232)",
+        "tests": "tests/need-paths.test.ts 'Genres & Background offers the six families…'; tests/evidence-g29-ui.test.ts > c-wealth; tests/evidence2-b10.test.ts > c-wealth; tests/evidence3-person.test.ts > 'c-wealth: Starting Point’s tiles are what Begin opens, for every family'. Until 2026-10-13 this cited tests/creation.test.ts 'opens the accounts the money answer promises…' (a non-school life, the amounts never compared) and a school.test.ts title that overclaimed."
+      },
+      "mutations": [
+        { "file": "src/engine/world/bootstrap.ts", "find": "cardBalance: -840_00, creditScore: 610,", "replace": "cardBalance: -840_00, creditScore: 600,", "protects": "the scraping family's Credit Record tile and opened score, 610" },
+        { "file": "src/ui/creation/CharacterCreation.tsx", "find": "{choosesWealth(config) && (", "replace": "{true && (", "protects": "no What You Are Starting With picker in a life at the school" },
+        { "file": "src/engine/index.ts", "find": "openCredit(sim, player, wealth.creditScore);", "replace": "openCredit(sim, player, 795);", "protects": "the score Begin opens is the family's, not the wealthy one's, for the five other families" }
+      ],
+      "verdict": "verified",
+      "note": "tests/need-paths.test.ts (2026-10-14) already held checking, savings and Review's card line for all six families. This round adds the Starting Point tiles, the card's opened limit and balance, and the credit score."
+    },
+    {
+      "id": "c-family",
+      "testsAdded": [
+        { "title": "c-family: the means go with the family the select last chose > PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870", "closes": "Need reached for families need-paths doesn't play (it plays Scraping and Wealthy), and the select changed twice: the means go back with the money. Inherited gives family 'wealthy' and Review's 'Inherited, No Need Found'. Choosing Nothing on the same select clears the family, and Review says 'Nothing, Need Found'. Both are begun on one seed and played by the clock to noon on 24 August. Nothing's checking is $13,361.50 ($43 plus the $13,318.50 left after the plan), and Inherited's is $258,988.00 ($260,870 less $1,882). The fall's notices say which.", "evidenceKind": "clock" },
+        { "title": "c-wealth: Starting Point’s tiles are what Begin opens, for every family (the six tests)", "closes": "The callout's plan figure against the family: Starting Point says $13,318.50 paid in for the four families with need and $1,882.00 to the plan for Wealthy and Inherited, the amounts the term charges (need-paths and the test above).", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "findsNeed and hasNeed as parallel definitions: since 2026-10-14 both read needFor (content/school.ts:85). need-paths holds findsNeed(config) to hasNeed(the save's player) for all six families, and this file holds the means through play for Nothing and Inherited after the select changed.",
+        "The callout's plan figure against the amount charged: the Background callout and Starting Point's callout both say $1,882.00, and the term takes $1,882 from Inherited's bank and meets it from Nothing's scholarship.",
+        "Stale 'entry' ('(not shown) family wealthy') and line numbers: given as rowText."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "entry": "Genres & Background: Your Family, the six families (CharacterCreation.tsx:849-881, FamilyChoice; select :868, its need callout :872-878), from 2026-10-14. Until then it wasn't shown, and every new life's family was 'wealthy'.",
+        "reads": "config.family, set by withFamily (bootstrap.ts:200) through familyOf (:197): Wealthy and Inherited give 'wealthy', and the four below give none",
+        "changes": "Person.family (bootstrap.ts:376)",
+        "downstream": "systems/school.ts:1398 hasNeed, by needFor (content/school.ts:85): the living-expense scholarship each term, conversion to grant aid, and the aid a leave returns. With no need, the Yale Health plan comes from the bank. The creation callouts read findsNeed (bootstrap.ts:231), by the same needFor.",
+        "tests": "tests/need-paths.test.ts (the six families, the term's account, conversion, a leave); tests/evidence3-person.test.ts > 'c-family: the means go with the family the select last chose' and > 'c-wealth: Starting Point’s tiles…'. Until 2026-10-14 this cited only a wealthy life's test, as no other family could be made."
+      },
+      "mutations": [
+        { "file": "src/engine/world/bootstrap.ts", "find": "(wealth === 'wealthy' || wealth === 'inherited' ? 'wealthy' : undefined)", "replace": "(wealth === 'wealthy' ? 'wealthy' : undefined)", "protects": "Inherited's means rule need out: Review's 'Inherited, No Need Found' and the save's family 'wealthy'" },
+        { "file": "src/engine/world/bootstrap.ts", "find": "({ ...config, wealth, family: familyOf(wealth) })", "replace": "({ ...config, wealth, family: config.family ?? familyOf(wealth) })", "protects": "choosing Nothing after Inherited clears the family: 'Nothing, Need Found', and the scholarship paid" }
+      ],
+      "verdict": "verified",
+      "note": "The review's own verdict was verified with two gaps, and both are closed."
+    },
+    {
+      "id": "l-person",
+      "testsAdded": [
+        { "title": "l-person: the look reads the person it is of > a second Person in a played world opens as Somebody, in their words and the units of where they live, their own dials and trait, and no Your Own Plans; moved to New Haven, the units move", "closes": "The 'they' branch and 'Your Own Plans only for the player', with the second Person built the way bootstrap builds the player (createUniverse on a config of Bea's own: London, they/them, 160 cm and 55 kg, Curious, a background) in place of evidence2-b12's copy of the player. The world it goes into is a played life. The look reads Bea, not the player: 'Who they are. Curious.', 'Their body. 160 cm and 55.0 kg, a body mass index of 21.5: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where they live.', 'On their papers. they/them, a citizen of United Kingdom.', their background, Morale '31/100', no Your Own Plans, and kind 'Somebody'. The player's look in the same world keeps Your Own Plans and her own figures. Moving Bea to New Haven changes only her units ('5 ft 3 in and 121 lb … the units of the United States, where they live'), worked by hand. Both survive a save and a load.", "evidenceKind": "fixture" }
+      ],
+      "gapsClosed": [
+        "The check's weak test (a hand-inserted copy of the player): the second Person is now made by bootstrap's own createUniverse from a config of its own, and the test shows the look reads that person's body, units, papers, traits, background and dials, not the player's.",
+        "The unit split in the row's 'explanation': gone on 2026-10-14 (bodyUnits, the owner's rule). Creation and the look both use the units of where the person lives. need-paths holds it for London- and New York-born students, and this file holds it for 'where they live'. Corrected in rowText."
+      ],
+      "gapsOpen": [
+        "[only a fixture reaches it] 'Your Own Plans' only for the player, and every 'they' wording. No command adds a Person, and bootstrap.ts:414 is the only place one is added, so a played world holds the player alone (evidence2-b12 asserts it after a played fall). The branch reads correctly over a second Person built as bootstrap builds one."
+      ],
+      "disposition": "working, evidence missing",
+      "defects": [],
+      "rowText": {
+        "explanation": "Reads Person directly. The body is said in the units of where the person lives (bodyUnits(currentLocationId), wellbeing.tsx:166), the rule creation's Your Body reads by the town the life begins in (CharacterCreation.tsx:260). Each line says which units and why. Until 2026-10-14 creation asked in the units of the birthplace, so a London-born student at Yale typed centimeters and read feet on her own page.",
+        "tests": "tests/evidence-g33-ui.test.ts > l-person; tests/evidence2-b12.test.ts > l-person; tests/need-paths.test.ts > 'a body’s units, by where the person lives'; tests/evidence3-person.test.ts > 'l-person: the look reads the person it is of' (the 'they' branch over a second Person built as bootstrap builds one); tests/looks.test.ts"
+      },
+      "mutations": [
+        { "file": "src/ui/looks/wellbeing.tsx", "find": "bodyUnits(person.currentLocationId, isYou).imperial", "replace": "bodyUnits(sim.player.currentLocationId, isYou).imperial", "protects": "the units are the looked-at person's, where they live (Bea in London reads centimeters while the player is in New Haven)" },
+        { "file": "src/ui/looks/wellbeing.tsx", "find": "const isYou = person.id === sim.universe.playerId;", "replace": "const isYou = true;", "protects": "another person's look says 'they', 'Somebody', and offers no Your Own Plans" }
+      ],
+      "verdict": "partial",
+      "note": "Found in passing, latent and out of reach in play: the trait look resolves every trait against sim.player (wellbeing.tsx:367, 'person: sim.player'). So the 'Curious' way on Bea's look opens a look about the player, judged held or not by the player's traits, with the player's look as its parent. The look is unreachable with one Person, so no failing test was written. If a second Person ever exists, the trait look should take the person from the way that opened it."
+    },
+    {
+      "id": "i-stale-claims",
+      "testsAdded": [
+        { "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds every present-tense claim the check of 2026-10-13 passed, and passes each one’s twin dated by the removal; money’s interest isn’t taken for them", "closes": "The check's weak rule. Its four singular examples ('An interest grows an ability…', 'The interest look opens…', 'A loved interest lifts a meal.', 'Spend an hour on an interest.') and four that passed by 'until', 'drops', 'lets go', 'gone' or 'no longer' are all flagged. Their twins dated by the removal pass. Money's interest ('Its interest builds each day.', 'an interest penalty', 'an interest transaction') and the law's 'best interests' are not taken for the removed interests.", "evidenceKind": "fixture" },
+        { "title": "i-stale-claims: … > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside", "closes": "The tree-wide walk, held by the stricter rule. Its names are the plural, 'an interest', 'each/every/one/loved/that/this interest', 'interest's', 'the interest look/hour/list/sheet/record' and the code's names, with money's phrases taken out first. Its history words are only removed, deleted, went, dropped, 2026-10-10 and migration 93/94. Every sentence that matches without them is one of 26 read on 2026-10-14 and listed with why it is true (titles of absence, failure messages, migration 94's message, fixtures as 93 wrote them, money's interest, two already past). Each listed sentence must still be found.", "evidenceKind": "fixture" }
+      ],
+      "gapsClosed": [
+        "The check's 'All eight of the skeptic's present-tense examples still pass unflagged': the singular forms are now names, and 'until', 'drops', 'lets go', 'gone' and 'no longer' no longer count as history. Shown on the examples and their dated twins.",
+        "The check's weak tests in evidence2-b13 (the same permissive rule over the tree and over the seven corrected files): superseded by the stricter walk over the same tree.",
+        "The 'tests' field: given as rowText."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims; tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (from 2026-10-14: the plural and the singular named, only the removal's own words taken for history, 26 sentences read and listed true). Until 2026-10-14 the rule that held the tree passed a singular 'an interest' and any sentence with 'until', 'drops', 'gone' or 'no longer'.",
+        "issue": "None of the leftovers it found remain: each was put in the past tense on 2026-10-13. They are held by a tree-wide walk that, from 2026-10-14, names the singular too and takes only the removal's own words (removed, deleted, went, dropped, 2026-10-10, migration 93 or 94) for the past."
+      },
+      "mutations": [
+        { "file": "src/ui/looks/wellbeing.tsx", "find": "// The films they love, said back for the same reason;", "replace": "// An interest lifts a meal, until the player drops it. The films they love, said back for the same reason;", "protects": "a new present-tense claim in the singular, carrying 'until' and 'drops', fails the walk. evidence2-b13's rule passes it." },
+        { "file": "src/engine/index.ts", "find": "the game no longer keeps them.", "replace": "the game keeps them on the sheet.", "protects": "a sentence read and listed true that changes is no longer found, and the listed one must still be there" }
+      ],
+      "verdict": "verified",
+      "note": "The stricter rule found one sentence the earlier rule missed, because the earlier rule took 'an interest' only at a sentence's start: docs/WORLD.md's Stage 7d, 'It does for the mood what sitting out does, SLATE's estimate, and an interest in nature or sport lifts it more.' It is listed as true, not as a defect. It sits in a stage dated 'done 2026-09-30', in a document whose head says it was retired in the scope reset of 2026-10-09 and kept as history, with the boats it describes. Left to review: a possessive singular ('your interest', 'their interest') isn't named, because money says it too, and neither is a sentence that names one interest by name with no word for interests ('Cooking lifts a meal.'). No lexical rule tells those apart."
+    },
+    {
+      "id": "l-trait",
+      "testsAdded": [
+        { "title": "l-trait: the look’s figures are what play charges > PLAYER JOURNEY: Spender and Generous held; their looks say +25% and +10% of the food’s price on their own and +28% with all she is, and the meal through life.look_after costs $6.41 for the plain twin’s $5.00, and lifts the mood 2.273 for 2", "closes": "The trait look, which had only a shape crawl, is now held to play. Spender and Generous are pressed on the page. Spender's look says 'What the day’s food costs you +25% +28% with all you are' and 'How much a meal lifts the mood +15% +14%…'. Generous's says '+10% +28%…' and its bondWarmth '+10% +10%…'. Those are spending 1.25 × 1.1 = 1.375 bent in [0.7, 1.4] to 1.2819394, and mealMood 1.15 to 1.1364255, worked by hand. The meal through life.look_after charges 641 cents where the plain twin's charges 500, 1.282 times, the look's +28%. It lifts the mood 2.2729 for 2, the look's +14%.", "evidenceKind": "command" },
+        { "title": "l-trait: … > a trait not held opens as A Trait, its own figures and no “with all you are”; one held opens as A Trait You Hold, under her own look", "closes": "The held and not-held branches. Frugal unheld is 'A Trait', '−15%', with no combined column. Spender held alone is 'A Trait You Hold', '+25% +22% with all you are' (1.25 bent, 1.2156942), and her person look offers the way in.", "evidenceKind": "render" },
+        { "title": "c-traits and trait-receipts: the receipts knob gone > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed… (shared with c-traits)", "closes": "The deferral's cause. Keeps Accounts' and Chaotic's looks show no receipts row and no receipt or deduction in their words. No trait's look, held or not, says one.", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "'Deferred as trait-receipts: the receipts row moves nothing': the row is gone with the knob (2026-10-14). Every row the look now shows is a live knob, and its 'with all you are' figure equals what play charges (the meal's price and its mood).",
+        "'Crawl only': the look is rendered word for word for five traits, held and not held."
+      ],
+      "gapsOpen": [],
+      "disposition": "verified",
+      "defects": [],
+      "rowText": {
+        "entry": "trait look (looks/wellbeing.tsx:365-403)",
+        "explanation": "Each row is a knob the trait declares, in KNOB_READS' words, with the trait's own figure and, if held, the combined knob (personalityOf, bent inside KNOB_LIMITS). Spender and Generous held say +28% of the food's price with all she is, and the meal costs $6.41 for $5.00. Until 2026-10-14 Keeps Accounts and Chaotic showed a receipts row, a percentage that changed nothing in play. The knob went that day.",
+        "tests": "tests/evidence3-person.test.ts > 'l-trait: the look’s figures are what play charges' and > 'c-traits and trait-receipts: the receipts knob gone'; tests/evidence-g28-ui.test.ts > c-traits ('Begin makes the life with the four the page held…'); tests/looks.test.ts",
+        "status": "verified",
+        "issue": "",
+        "settled": "Reclassified from deferred on 2026-10-14: the receipts knob it was deferred for went that day, and the rows left are held to play."
+      },
+      "mutations": [
+        { "file": "src/ui/looks/wellbeing.tsx", "find": "{times(personalityOf(person, knob))} with all you are", "replace": "{times(x)} with all you are", "protects": "'with all you are' is the combined knob: Spender's +28% (not its own +25%) with Generous held" },
+        { "file": "src/ui/looks/wellbeing.tsx", "find": "const held = (person.personalityTraits ?? []).includes(id);", "replace": "const held = true;", "protects": "a trait not held opens as 'A Trait' with no combined column" },
+        { "file": "src/engine/systems/personality.ts", "find": "return bend(value, KNOB_LIMITS[knob]);", "replace": "return value;", "protects": "the look's combined figure and the price both bend inside the knob's limits: +28% and $6.41, not +38% and $6.88" }
+      ],
+      "verdict": "verified",
+      "note": "The row was deferred only because of receipts. With the knob gone it becomes an ordinary look row, verified. The latent person: sim.player in the trait look's resolve is recorded under l-person and can't be reached in play."
+    },
+    {
+      "id": "trait-receipts",
+      "testsAdded": [
+        { "title": "trait-receipts: changing the two traits changes no return > PLAYER JOURNEY: London-born twins, one holding Keeps Accounts and Chaotic, played to the tax season of 2027 with the same work each midnight, are given the same 2026 return to the cent, on income earned", "closes": "The row's own falsifiability test ('Change Keeps Accounts on/off on a played career -> identical return'), run through play. Both twins are made on the rendered pages and begun on one seed. They are played by the clock from 24 August 2026 across a save and a load on 1 November to 10 AM on 1 February 2027, when the tax season makes the 2026 return. A London-born student was chosen because an F-1 student's return is always made, while an American student's $1,670.59 is under 2026's $16,100 and makes none. Both get a 1040-NR with $1,656.00 of work-study (72 hours at $23.00), $14.59 of interest left out under IRC 871(i), $165.60 federal (10%) and a $165.60 balance, identical in every figure.", "evidenceKind": "clock" },
+        { "title": "c-traits and trait-receipts: the receipts knob gone > declares no knob that isn’t named…; receipts neither declared, described nor read (shared with c-traits)", "closes": "The removal in the code: no trait declares receipts, KNOB_READS has no receipts, nothing in src asks personalityOf for it, and no code in src writes or reads recordJobCost, jobCosts or RECEIPTS.", "evidenceKind": "fixture" },
+        { "title": "c-traits and trait-receipts: … > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed… (shared with c-traits)", "closes": "What the player sees: neither trait's look shows a receipts row or says a receipt or a deduction.", "evidenceKind": "render" }
+      ],
+      "gapsClosed": [
+        "'The knob multiplies a figure that is always 0': the knob, the return's line that read it and recordJobCost went on 2026-10-14 (the owner's decision, per the row's own recommendation). Held in the code, on the looks and through a played return.",
+        "'Chaotic's cost text and Keeps Accounts' description still claim an effect': both say none since 2026-10-13, and their looks show none.",
+        "The row's stale line numbers: rewritten as a record of the removal (rowText)."
+      ],
+      "gapsOpen": [],
+      "disposition": "deferred or removed",
+      "defects": [],
+      "rowText": {
+        "entry": "receipts (Chaotic 0.9, Keeps Accounts 1.3), until 2026-10-14",
+        "reads": "none. personalityOf(person, 'receipts') at taxreturn.ts went on 2026-10-14.",
+        "changes": "none. Until 2026-10-14 it set the share of y.jobCosts a return deducted, and y.jobCosts' only writer, earnings.ts recordJobCost, had no caller.",
+        "downstream": "none. The owner had the knob go on 2026-10-14, with the return's line that read it (taxreturn.ts:890-892 dates it), recordJobCost and jobCosts (earnings.ts:51-52, :275), RECEIPTS (content/safetynet.ts:419-420) and the knob's KNOB_READS entry (content/personality-traits.ts:84-86). Keeps Accounts moves bondWound alone, and Chaotic hygieneDrift and stressGain.",
+        "explanation": "Removed, not deferred. Two London-born twins, one holding Keeps Accounts and Chaotic, played to the 2027 tax season, are given the same 2026 1040-NR to the cent.",
+        "tests": "tests/evidence3-person.test.ts > 'trait-receipts: changing the two traits changes no return' and > 'c-traits and trait-receipts: the receipts knob gone'; tests/evidence2-b10.test.ts > c-traits ('says of Keeps Accounts on Dispositions & Traits what its own look says…'). Until 2026-10-14 this cited tests/costs.test.ts and tests/arrears.test.ts, which injected recordJobCost by hand.",
+        "status": "removed",
+        "issue": "",
+        "settled": "The owner retired the receipts modifier from Chaotic and Keeps Accounts on 2026-10-14, as recommended. It leaves the deferred list as a removal."
+      },
+      "mutations": [
+        { "file": "src/engine/systems/taxreturn.ts", "find": "const taxed = Math.max(0, income - deduction);", "replace": "const taxed = Math.max(0, income - deduction - ((person.personalityTraits ?? []).includes('keeps_accounts') ? 10000 : 0));", "protects": "a trait moving the return: the twins' 2026 figures differ, and the held twin's federal tax leaves $165.60" },
+        { "file": "src/engine/content/personality-traits.ts", "find": "systemMods: { bondWound: 1.1 },", "replace": "systemMods: { bondWound: 1.1, receipts: 1.3 } as never,", "protects": "the knob stays gone from the traits and the look" }
+      ],
+      "verdict": "verified",
+      "note": "What the row becomes: a removed item, not a deferred one. Its old claim ('Chaotic 0.9 and Keeps Accounts 1.3 set the share of the work's costs the return deducts') is no longer true of the code. The removal is verified in the code, on the looks and through a played return. So its verdict is verified as a removal, with status 'removed' in rowText, and it leaves the 16 deferred items. l-trait, deferred with it, becomes an ordinary verified look row."
+    }
+  ]
+}

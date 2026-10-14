@@ -1,0 +1,118 @@
+{
+  "key": "scope-money",
+  "ran": "2026-10-15",
+  "notes": [
+    "tests/scope-money.test.ts run alone (VITEST_MAX_FORKS=1): 25 passed, exit 0. tests/defects5.test.ts, tests/accountlife.test.ts and tests/money-fixes.test.ts run alone: 42 passed.",
+    "Reachability re-checked against the current tree. closeRefusal is called only by Close It (bankmoves.ts:474), by Cancel It (accountlife.ts:204) and by the BankMoves panel, so the new German fee refusal reaches no switch or charge-off path. No US bank arranges an overdraft, has a cooling-off, has a switching service, has a money-transfer card, gives an overrun loan or sets a savings allowance. Every money row except h-money stays unresolved for want of a reachable life.",
+    "Sources checked 2026-10-15. SOR/2021-181 s.5 reads as cited: 14 business days; the account closed without charge; charges refunded 'other than interest charges'; no credit-card cancellation right in that regulation. BCOBS 6.3.2R reads as cited: the customer pays only for the service actually provided. Korea: 금융소비자보호법 제46조 1항 names 보장성, 투자성 and 대출성 products and 금융상품자문, with no deposits, which matches the fix.",
+    "Probes were scratch scripts run with vite-node against the repo's src (scratchpad/probe/*.ts). The repository was not touched.",
+    "Guide and tutorial lines changed: in money.ts, the savings-notice line, Cancel It's conditions, outcomes and refusals, Close It's conditions and refusals, the arrange-overdraft refusal and Take The Loan; in tutorial.ts, the bank chapter. All of them match the code, except as listed under bank.cancel_new."
+  ],
+  "rows": [
+    {
+      "id": "bank.arrange_overdraft",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable by design: no US bank arranges an overdraft. The limit-0 refusal (lending.ts:1254-1256) holds in the current tree and is tested at all five banks across a reload (scope-money.test.ts:350). The London twins and the panel test are unchanged.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.cancel_new",
+      "claimed": "unresolved",
+      "holds": false,
+      "verdict": "unresolved",
+      "disposition": "Still unreachable: the US has no cooling-off. The first round's two problems are closed for real: the panel is drawn while a refusal holds (Toronto :486-497, Berlin :543-548), and a current account is settled on canceling. Of the four abroad fixes, Korea and the German Close It fee refusal hold. The interest-by-country fix and the Canadian charges fix each carry a defect that a probe reproduces. Mexico's half of both rules is untested. The row text overstates on those points.",
+      "problems": [
+        "Abroad fix 1, interest by country: when a term deposit's interest is taken during the term (bank.take_term_interest, accountlife.ts:391-405), it is paid into the primary current account. interestPaidSince (accountlife.ts:169-172) finds that payment by its memo, and the reversal (:457-461) takes it back out of the primary. But interestBackOf (:175-178) counts only postings on the term itself, so it counts 0, and cancelRefusal (:210) never sees it. Probe (scratchpad/probe/term2.ts), Berlin: Commerzbank primary; a €10,000 term at Deutsche Bank; 10 days; Take Interest pays €6.30 into the Commerzbank GiroKonto; the GiroKonto is spent to €0. Cancel It is not refused, and the primary ends at -€6.30. With a Postbank term the result is -€6.08. The panel says nothing, and the guide's refusal 'The interest it was paid, …, goes back, and is more than it holds' is never given. Reachable abroad at every EU/EEA bank with interestDuringTerm: Deutsche Bank, Postbank, Berliner Sparkasse, AIB, Íslandsbanki and Bankinter.",
+        "Abroad fix 2, Canada's charges: chargesBackOf (accountlife.ts:181-184) refunds every 'bank_fee' transaction since opening. Overdraft interest is posted as 'bank_fee' (lending.ts:1053, nominal 'Overdraft Interest'), so Canada refunds it. That goes against SOR/2021-181 s.5(2)(b) 'other than interest charges', which the code's own comment at :160-165 quotes. The refund is also credited against the 'Bank Fees' nominal, not 'Overdraft Interest'. Probe (scratchpad/probe/odint.ts), Toronto: RBC chequing opened on 26 January beside TD, C$1,000 arranged, C$500 under until February. Charges: monthly fee C$16.95, overdraft interest C$1.81, overdraft fee C$5.00. Canceled on 2 February, the refund is C$23.76, the C$1.81 of interest included.",
+        "Mexico (REFUNDS_CHARGES 'MX', and its absence from KEEPS_INTEREST, accountlife.ts:157,166) is reached by no test. Nothing in tests/ cancels a Mexican account. Removing 'MX' from REFUNDS_CHARGES, or adding it to KEEPS_INTEREST, survives. The result's mutation list covers neither.",
+        "Found in the sources and left unfixed, as the result says: Canada's period is 14 business days (SOR/2021-181 s.5(1), confirmed here) and Mexico's ten días hábiles, where inCoolingOff counts calendar days. Mexico's right holds only while the product hasn't been used or operated. SOR/2021-181 gives no 14-day right for a credit card, which SLATE still gives Canada's cards. These remain defects of the row abroad.",
+        "Two lines say 'Where the country has/gives a cooling-off period, a new savings account, term deposit, card or current account … can be canceled': tutorial.ts:352 and money.ts:477 (the guide's short text). Since the Korea fix, Korea has a period for cards alone, so the sentence is now untrue of Korea. It still omits Britain's fixed-rate exception, as it did before. The detailed Cancel It conditions line in money.ts is correct.",
+        "The Berlin Flexgeld test's title says the interest 'goes back with its tax' (scope-money.test.ts:604). The €1.50 is within the allowance, so no tax is withheld, and only the posting on the Flexgeld is asserted (:624). The tax half of the reversal runs on no tax posting and is untested."
+      ],
+      "weakTests": [
+        "FIXTURE, Berlin: a Deutsche Bank Flexgeld opened on 20 March with €10,000 and canceled on 2 April: … goes back with its tax … (no tax is in play)"
+      ]
+    },
+    {
+      "id": "bank.switch",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "The service switch is unreachable: SWITCHING has no US key. The photo-ID refusal, the steps, the absent panel and nothing set across a reload are proved. The recheck changed nothing, correctly.",
+      "problems": [
+        "As before: the refusal goes through sim.execute only, because no US control sends bank.switch. The row says so."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.take_overrun_loan",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable (French banks only). The first round's gap is closed. The test now asserts the case the fix changes: at the 8 April midnight the account is below zero and negativeSince is that midnight (scope-money.test.ts:947-951), and 125 days on it is still overdrawn, counted from that midnight (:962). Without the fix, negativeSince would carry the overrun's first day and the closing notice would already be given (titled at :923), so the taken twin would close inside the 125 days. That is consistent with the result's measured closure on 7 May.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "card.money_transfer",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable: no US card has moneyTransfer. The New Haven half and the London fixture are proved. The £15 fee literal in the London test would kill the cardoffers.ts mutation that was not run.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.savings_notice",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable (German allowance only). The notice-naming fix holds (banking.ts:655-663). Both Berlin tests assert the exact body, naming the account and its bank (:873, :898).",
+      "problems": [
+        "As before: the 'on its way to …, arriving …' branch has no test. The row says so."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "bank.switch_complete",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable (no US service). Unchanged: the London fixture is exact to the penny, and the held-back branch is proved.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.cancel_switch",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable. The first round's loose bound is now exact: every posting into the Barclays savings after the reload is [[15, 25_00]], and the balance moved by exactly 25_00 (scope-money.test.ts:798-800).",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "bank.stop_balance_transfer",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Unreachable. Unchanged: the London fixture, its three refusals and the re-pointed payment are proved.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "h-money",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Working. The month-end journey now has hand-worked literals, checked here. Interest of [8, 38]¢: 4,565,200¢ × 0.0001/365 = 1.25074¢ a day-end; 7 day-ends = 8.755¢, 8¢ paid with 0.755¢ carried; 30 day-ends on 4,565,208¢ plus the carry = 38.277¢, 38¢ paid. September's work-study pay of $414.00 on the 11th, 18th and 25th. Both are checked against the ledger and against a twin reloaded at each month's end. The fallback is still a true guard, tested as one.",
+      "problems": [
+        "As before: the GUARD test (scope-money.test.ts:263) duplicates evidence2-b12's fixture of the same fallback. Harmless."
+      ],
+      "weakTests": []
+    }
+  ]
+}

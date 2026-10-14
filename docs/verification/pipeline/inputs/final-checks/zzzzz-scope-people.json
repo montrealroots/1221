@@ -1,0 +1,33 @@
+{
+  "key": "scope-people",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "l-person",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Both rechecked closures are real. (1) In body.ts:173, bodyUnits(livesIn, lives = 'where you live') replaced the dead `you` flag. Creation's two calls (CharacterCreation.tsx:260, :906) take the default. wellbeing.tsx:190 passes `where ${p.they} ${p.s('live')}`, and the string replace is gone. The doc comment says in the past tense what the flag was. (2) sentenceFor (wellbeing.tsx:280+) and the Readiness look (:376+) now take spokenOf. No 'you' or 'your' is left in sentenceFor's branches (grepped). The player's branch, theyHold 'you’ve', keeps the player's words exactly, and evidence-g06-life, looks.test and the player assertions in scope-people test 4 pass. Test 4 asserts exact literals for she, he and they ('90, and she has a full day in her.', 'None to speak of. They’re square with the nights they’ve had.', 'How Well She Would Do Today'). It loops all eight dials for all three people with a no-'you' regex, and it reaches each dial through the way on her look. The mutation record is plausible: putting back 'a full day in you' or 'How Well You Would Do Today' fails it on an exact toBe. It is FIXTURE over a createUniverse-seeded second Person, which the owner's direction of 2026-10-15 accepts. Unreachability holds: no command adds a Person. scope-people (4), evidence2-b12 (21), evidence3-person, looks, evidence-g06-life, need-paths and evidence-g33-ui all ran green alone (173 tests over 9 files). No guide or tutorial line about the person look changed, and none needed to.",
+      "problems": [
+        "GATE: `node tools/coverage.mjs --check` fails on this row. docs/verification/audit/ui.json:7317 (l-person's added test) still cites evidence2-b12's old title ('… draws the look’s “they”, without Your Own Plans'). The test was retitled at tests/evidence2-b12.test.ts:608 to '… draws the look’s third person, in her pronouns, without Your Own Plans'. people-result.json doesn't name this in renamedTitles, so the integrator must update the audit row's title, and docs/GAMEPLAY-COVERAGE.md:961 if it quotes it.",
+        "src/engine/systems/life.ts:316 wellbeingSummary's energy<15 branch says 'You need sleep before anything else.' This is the summary of another person's own person look, the same class of defect as the fix. It is disclosed in outsideMyFiles and unreachable in play. No test covers it, because the fixture's dials sit above 15.",
+        "src/ui/looks/wellbeing.tsx:464 condition look `gone: 'You don’t carry that now.'` (and the trait look's equivalent) still says 'you' for another person's id. This is minor and not reachable in play."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "i-stale-claims",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Every first-round problem was worked. I ran the file's own regexes (evidence3-person.test.ts:602-665) in node. All ten new must-catch examples are flagged: an open plural verb, 'went on/in/at', an appositive or relative aside, the future and future perfect, and 'Her own favourite interest'. 'Interests have been removed since 2026-10-10.' now passes. The rule in evidence2-b13 is byte-identical, compared constant by constant over MONEYS through dated. READ_TRUE and READ_AND_TRUE hold 32 each, and rowText now says 32. b13's two titles were retitled, with a past-tense comment at :584/:596 saying what they said. The rowText explanation and issue now say it is a heuristic that catches the shapes its tests name, and that a present claim in another shape can still pass, which is the honest claim. The handoff's line 9 names `git merge-base --is-ancestor`. Both tree walks and both example tests are green. The heuristic's remaining limits are disclosed by the rowText, so they don't refute it.",
+      "problems": [
+        "GATE: `node tools/coverage.mjs --check` fails on this row. docs/verification/audit/ui.json:8454, :8460, :8495, :8504, :8513 and :8522 still cite b13's old titles ('… in the past, by a word only history uses …'), which no longer exist. The result defers this to the caller. It must be done before the gate can pass.",
+        "Heuristic limits I found by running the rule, all within the disclosed 'shape it doesn't name' caveat. These pass: 'Interests (cooking, travel) lift a meal, and the owner removed the crafts.' (a parenthetical aside, since ASIDE takes commas only); 'Interests: they lift a meal until 2026-10-10.'; 'Interests that you chose lift a meal until 2026-10-10.' ('that' is in NOT_PRESENT, so a restrictive relative hides the verb); and 'Interests have lifted a meal since 2026-10-10, and still do.'.",
+        "There is one false positive on true past prose. 'Interests each lifted a meal until 2026-10-10.' is flagged, because 'each' isn't in ADV or NOT_PRESENT (tests/evidence3-person.test.ts:645-646). It is harmless today, since the walk is green, but a future honest note of that shape would fail.",
+        "SLATE_CURRENT_MASTER_HANDOFF.md: the nine Superseded bullets' parentheses still say `git branch --merged main` while line 9 says merge-base. The result discloses this, and both checks hold. The handoff still has no section for the 2026-10-15 scope work, which is rule 11 for whoever closes the phase."
+      ],
+      "weakTests": []
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "key": "school",
+  "ran": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-school.test.ts: 11 of 11 passed (7.5 s of tests), at 5f0cba03. vitest.config includes tests/**/*.test.ts, so the file is in the gate. Read-only: no mutation was run; the mutations listed were judged by reading the assertions.",
+  "rows": [
+    {
+      "id": "school.respond",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed: the leave path. evidence3-school plays a personal leave asked on 12 January 2027 and begun at 10:00 on the 20th, with the 9:00 class's invitation open. MOMENT_KIND stays pending at 7:00 on the 21st, while the twin's SHIFT_KIND items stay pending and the player's are cancelled. At 7:01 the moment is lapsed, trust is trust - 1 (the figure taken before the lapse, not an engine helper), and both answers are refused 'It’s too late to answer: the moment passed.' with no STUDY_KIND booked. This exercises leave.ts:160 kept() with MOMENT_KIND. With evidence2-b07 (withdrawal) and evidence-g21 (dismissal), all three paths are played.",
+        "Still open: 'That evening has passed.' (classmates.ts:367). The new test reaches it only by editing a played save so the moment's until and its lapse are at 22:00 (TEST SETUP that stands in for a save made before 2026-10-12). No life played today reaches it, because a moment lapses at 7 AM, before its 19:00 evening. Whether the line stays is the owner's call under THE ONE RULE.",
+        "Still open: content/guide/coursework.ts:747 lists 'That evening has passed.' beside live refusals."
+      ],
+      "weakTests": [
+        { "title": "school.respond > “That evening has passed.”, reached only from a save as made before 2026-10-12, …", "why": "Fixture: the moment's until and its scheduled lapse are rewritten in the save JSON. It protects the branch, but it isn't player evidence. It says so in its title." },
+        { "title": "tests/coverage-gaps-classmates.test.ts > accepted lifts after two rehearsals kept; pushed back on, after four", "why": "It calls keptWith by hand. evidence-g18 carries the claim through the clock. It is still cited in the row's tests field." },
+        { "title": "tests/journey-school-year.test.ts > keeps the work fresh", "why": "It answers every moment and asserts nothing the answers set (unchanged)." }
+      ],
+      "staleText": [
+        "docs/verification/audit/school.json still has none of round3's rowText. The tests field still cites 'tests/coverage-gaps-classmates.test.ts (keptWith called by hand)' and leaves out evidence3-school.",
+        "issue: the row's text still says the choices were untested and moment.choice was read by nothing. stoppedAsking and owesYouLines read it.",
+        "corrected.now: 'a boundary’s lifting is checked by calling keptWith by hand' is false. evidence-g18 shows it through the clock.",
+        "review.claim: 'help away' (the New Haven refusal was removed on 2026-10-13).",
+        "content/guide/coursework.ts:747 lists 'That evening has passed.' as an ordinary refusal."
+      ]
+    },
+    {
+      "id": "school.take_shift",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the weekly cap at booking, which was the latest check's only open point. On e3-s1 (Scraping, chosen on the screen), Take An Elective Shift is pressed eight times through its Gated onClick on the rendered Work-Study tab. The toasts and the SHIFT_KIND items are asserted as eight literal evenings: 15–17, 21–24 and 28 September at 19:00, 4 hours each. The test sums each week from the calendar: the week of the 14th is the 19 September Saturday (6 hours) plus three evenings (18); the week of the 21st is four evenings (16). It shows Friday to Sunday 18–20 and 25–27 September had no requiresPlayer conflict, so the cap is what passed them by. The ninth press toasts nothing. The command is refused in the cap's exact words, with 8 electives and electiveHours 32 unchanged and 'Elective Hours Asked For 32' on the tab. Played to 29 September, all eight are done and no 'A Shift Over The Weekly Cap' notice came. This replaces work-limits.test.ts:41-47 as the evidence.",
+        "Closed earlier and still so: an evening called off on a withdrawal or a leave gives its hours back; the payday is read by the return (evidence-g19, evidence2-b07); days off and recesses are skipped (evidence-g25, evidence-g19)."
+      ],
+      "weakTests": [
+        { "title": "tests/work-limits.test.ts > refuses an elective shift past it at booking, and says the cap is why", "why": "The shifts are scheduled by hand and only the message is asserted. It is now supporting only. The row should move it there." }
+      ],
+      "staleText": [
+        "docs/verification/audit/school.json has none of round3's rowText yet. corrected.now still says no test plays the payday after an elective evening, and that is false.",
+        "entry 'school.ts:2337': the handler is at about :3835.",
+        "The tests field cites only school.test.ts. It doesn't cite evidence-g19, evidence2-b07 or evidence3-school.",
+        "The row doesn't say that, since 2026-10-13, elective evenings skip the term's days off."
+      ]
+    },
+    {
+      "id": "standing/term evaluation",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the latest check said 'behind' wasn't worked from the rule. evidence3-school's paces() works it with its own code: room = max(0.02, (1 − start/reach)^1.5), applied to the means of craftAtStart, craft and craftCeiling, and to each classmate's classAtStart and ceiling, with the class's upper median. It checks the record's growth and classGrowth agree to 1e-9. Then it splits raw points from pace in both directions on falls the clock plays to the 11 December evaluation. The near fall (0.9 of reach) has raw growth < 0.5 × the class's, but paced ≥ 1.1 × classPace: ahead, good. The far fall (0.4 of reach, class drive 4) has raw growth > 0.5 × the class's, but paced < 0.5 × classPace: behind, concern. For the far fall it asserts attendance 1, under half the pieces unready, no course failed and no run work, so the pace alone is the cause. Both falls draw the reason on the rendered Standing tab. A revert to raw-point comparison fails both. growthFloor at 0.35 fails the far one (margin 7.34 vs 9.40 at 0.5, 6.58 at 0.35). This matches termGrowth at school.ts:2816-2830.",
+        "Residual, not a gap: both falls begin at a starting craft, and the far class at a drive, set by hand (TEST SETUP, said so). Everything after is the clock. tools/acceptance-ui.mjs:707 is still outside the gate, but the Standing tab is rendered inside it (b08, g24, evidence3)."
+      ],
+      "weakTests": [
+        { "title": "evidence2-b08 > standing/term evaluation > PLAYER JOURNEY: the same worked fall weighed against a class three times as driven", "why": "It supports 'behind' only with raw growth at 2×. It is now superseded as the pace's evidence by evidence3-school." },
+        { "title": "evidence3-school > standing/term evaluation (both)", "why": "The starting craft is set by hand to 0.9 or 0.4 of reach, because no new life starts there. This is acceptable for the rule's arithmetic, but it isn't a start a player makes." }
+      ],
+      "staleText": [
+        "The tests field in docs/verification/audit/school.json still cites school.test.ts, casting.test.ts, school-fixes.test.ts and term-growth.test.ts (fixtures). It doesn't cite evidence-g24, evidence2-b08 or evidence3-school (round3 rowText not applied)."
+      ]
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open (unchanged, no test added): REPEAT_DECIDE_KIND's own refusals (leave.ts:~1194-1201, 'Your Repeat Is Refused' at :1200; withheld for a last year) are reached only through secondFail() in evidence2-b09. The unreachability argument was rechecked against the code and holds. decideAt is capped before the next term. withRepeat is recounted as at the asking. Only an evaluation makes a 'fail', and keptThrough judges each one there. An expired Incomplete becomes 'permanent', not 'fail'. A leave and a repeat exclude each other. So no played life trips the branch. Deleting it or keeping it as a guard is the owner's call under THE ONE RULE."
+      ],
+      "weakTests": [
+        { "title": "evidence2-b09 > school.request_repeat > the decision’s refusal of a first year, reached only from a fixture: …", "why": "Fixture only: secondFail() writes a Fail by hand." },
+        { "title": "evidence-g26 > school.request_repeat > PLAYER JOURNEY: beside an additional term it’s refused in each of its words, …", "why": "not.toContain('Ask To Repeat The Year…') can't fail with useState forced to 'request'. The drew(...) length-0 check carries it." }
+      ],
+      "staleText": [
+        "entry 'StudyPlanPanels.tsx:188' (Ask is at about :198); changes 'REPEAT_DECIDE_KIND (leave.ts:1134)' (handled at about :1187).",
+        "tests: '(the course failed set by hand)'. The failure is played in evidence-g26 and evidence2-b09.",
+        "The row should say that, since 2026-10-13, calling a repeat off after its thirty days withholds the degree. round3's rowText issue says it, but it isn't applied."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open (unchanged, no test added): the nine-semester refusals at the request (extraRefusal, leave.ts:594 on) and at the decision (EXTRA_DECIDE_KIND, leave.ts:1033 on) are reached only through ninthTerm(). The disqualification refusals are reached only through secondFail(). Both are evidence2-b09 fixtures. The argument that no played life reaches them was rechecked and holds: one repeat at most, a leave's term not enrolled, a second additional term refused, and no term beginning between the asking and the deciding. The owner's call under THE ONE RULE."
+      ],
+      "weakTests": [
+        { "title": "evidence2-b09 > school.request_extra_term > past the Bulletin’s nine, reached only from a fixture: …", "why": "Fixture only: ninthTerm() writes an enrolled term by hand." }
+      ],
+      "staleText": [
+        "downstream: 'refused past nine semesters' still reads as played. round3's rowText marks it fixture-only, but it isn't applied.",
+        "entry 'StudyPlanPanels.tsx:199' (about :209); changes 'EXTRA_DECIDE_KIND (leave.ts:988)' (the decision is at :1033).",
+        "tests: '(the sixth term’s record set by hand)'. The term is played in evidence-g26."
+      ]
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed: the latest check said every accepted path needed need, which no player could have. Since 9088e699 the select on Genres & Background (CharacterCreation.tsx:868) calls withFamily, so Scraping gives family undefined. The Start button hands that config to onStart unchanged (CharacterCreation.tsx:150-152). newLifeFrom keeps a draft's family (need-paths.test.ts:315-317). evidence3-school drives the real select's onChange and shows the config equals ON_AID. createSave from each g26/b09 seed gives a byte-identical universe, so those earlier journeys are lives a player can make.",
+        "Closed, played again on a screen-made London life (e3-c1). January: the Saturday called in sick, asked on the pressed button, pays $118.68 to checking, $138.00 to Scholarship income and $19.32 to Tax Withheld, with the notice in exact words and convertedHours {0: 6}. May: the 6 never-assigned hours, with assignedBooked 144, the stat '6 hours / 6 converted', and the second grant after a reload. The year's scholarship is 14_290_00 and withholding 2_000_60. Both are literals worked from $15,200.50, the books' $1,186.50 and 14%. The 2027 1040-NR differs from the never-asked twin by 2×6×$23 in scholarship and income and 2×$19.32 withheld. A medical leave calls the pending request off, with the on-leave refusal in exact words and nothing paid. All figures are independent literals.",
+        "Still open: the 'No Hours To Convert' notice (school.ts:3199) is reached only by a fixture (convertedHours written by hand, evidence2-b09). The argument that nothing lowers the hours between asking and processing holds on reading. Keeping it or deleting it is the owner's call under THE ONE RULE."
+      ],
+      "weakTests": [
+        { "title": "evidence2-b09 > school.request_conversion > a processing that finds nothing says so, reached only from a fixture: …", "why": "Fixture only: convertedHours written by hand." },
+        { "title": "evidence3-school > a need set by hand is the Scraping family chosen on the screen > …", "why": "It shows the config and the starting universe are equal. It does not press Start or render through SlateApp's start(), so the hand-off from onStart to createSave is read from the code, not tested." }
+      ],
+      "staleText": [
+        "tests/evidence-g25-school.test.ts:44 still calls need 'the family of no means a player can pick'. Since 2026-10-14 the screen picks it. The line is now true in a sense, but it was written when nothing picked it.",
+        "docs/verification/audit/school.json has none of round3's rowText. Its reads, downstream and issue still say no creation-screen life has need. The entry ('StudyPlanPanels.tsx:295'), changes ('school.ts:3011', which is school.buy_ppe) and persistent ('school.workStudy conversions') are stale, as the latest check said."
+      ]
+    },
+    {
+      "id": "school.pay_balance",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the latest check's caveat that a balance from a returned scholarship needs need no player could have. The equivalence test shows evidence-g26's g26-paid ON_AID life is the screen's Scraping life. evidence3-school plays it again on e3-r1. The leave begun on 20 January returns the literal $15,200.50 (worked from the rebate schedule: under a tenth of the 11 Jan–23 Apr classes has passed). The test then checks, in order: 'Pay something.' for 0; '$15,200.50 is owed; pay that or less.' for one cent more; $100.00 by command, returning {owed 15_100_50, held false} with checking 100_00 lower; at ACCOUNT_DUE_KIND, the hold plus $125.00 and the drawn 'Owed On Your Yale Account $15,225.50'; Pay From Your Bank pressed, giving 'Paid in full.', checking 15_225_50 lower, the hold gone with exactly one 'The Financial Hold Is Lifted', then 'owes no balance'. need-paths.test.ts covers the same on a screen-made life ($7,600.25). 'Your bank can’t cover it.', the late fee to $375, reregister after paying, and the diploma are in evidence-g26, as before.",
+        "Residual: the hold at a term start setting mustRegister without a leave (school.ts:~2963) is still reached only by evidence-g25's hand-posted $1,000 balance. In every played file, mustRegister comes from returnFromLeave. The review pointed this to school.reregister, and the player-visible pay_balance consequence (registration refused under the hold, then allowed once paid) is played. So it doesn't keep this row partial, but it stays open for school.reregister."
+      ],
+      "weakTests": [
+        { "title": "evidence-g26 > school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused …", "why": "titled(sim, 'A Financial Hold').length > 1 is loose. mustRegister comes from the leave's return, so it doesn't protect the hold-at-term-start path." }
+      ],
+      "staleText": [
+        "docs/verification/audit/school.json has none of round3's rowText. The issue still says nothing about a balance a leave returns reaching a screen-made life. The tests field doesn't cite need-paths or evidence3-school."
+      ]
+    }
+  ]
+}

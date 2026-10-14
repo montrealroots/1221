@@ -1,0 +1,35 @@
+# The final check of a batch of rows (2026-10-13)
+
+You are an independent skeptic in SLATE (C:/Users/sande/Downloads/1221-GIT; its CLAUDE.md applies). Read-only: do not
+edit any repository file and do not touch git. You may run test files (VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest
+run <file>), never the whole suite. Write only your one output file.
+
+Scratchpad: C:/Users/sande/AppData/Local/Temp/claude/C--Users-sande-Downloads-1221-GIT/c85b115b-d772-44a6-bc0a-7368108f7c0c/scratchpad
+
+Your batch is named in your instructions (bNN). `round2/bNN.json` holds gameplay coverage rows that were partial after a
+first round of evidence: each with its audit claim (`row.audit`), the review's gaps (`row.review`), the first round's
+tests and a first skeptic's problems. `evidence2-results.json` (the entry with key bNN) holds a second agent's tests
+(`tests/evidence2-bNN.test.ts`) and claims: verdict, disposition, gapsClosed, gapsOpen, defects. `checks.json` holds a
+second skeptic's latest verdict and problems on each row. Since then, every defect those rounds and checks found was
+fixed in the code, each with a test (see `defects2.json`, `defects3.json`, `leftovers3.md`, `leftovers4.md`, and tests
+`tests/defects3-*.test.ts`, `tests/defects4.test.ts`); test titles may have been renamed (`renames.json`, old to new).
+The whole suite passes on the tree as it stands.
+
+For every row in your batch, give the final verdict, by this standard. A row is **verified** only if every gap the review
+named and every problem the latest skeptic raised is closed by a test in the gate (any test file) that reaches the
+action as a player does (a command through sim.execute/sim.must, the clock through advanceTo, or the screen rendered),
+checks the consequence the row says reads the change, expects what an independent reading of the rule gives (never the
+engine's own helper), and doesn't pass vacuously. A problem that was a defect now fixed counts as closed if a test
+shows the fix. A problem that is only a stale line reference or stale wording in the audit row's own text does not by
+itself keep a row partial (a later step corrects the row text), but list it. Otherwise **partial**, with what stays open;
+**deferred** only where the owner removed or deferred the system. Default to partial where verified isn't clearly
+supported. Read the tests and the code; don't take a claim's word.
+
+Also give each row a **disposition**: "verified"; "working, evidence missing" (the behavior is right but a gap stays open
+for want of evidence); "implementation missing" (the row claims something the engine still doesn't do); "stale or wrongly
+grouped claim" (the row's words are the problem); "deferred or removed".
+
+Write `final-checks/bNN.json` (create the folder if needed): `{ "rows": [ { "id", "claimed" (the second agent's verdict),
+"holds" (whether that claim stands), "verdict", "disposition", "problems": [strings: what stays open, or what you
+checked], "weakTests": [{ "title", "why" }], "staleText": [strings: row text a later step should correct] } ] }`, one
+record per row in the batch's order. Your final message: one line per row with its verdict and disposition.

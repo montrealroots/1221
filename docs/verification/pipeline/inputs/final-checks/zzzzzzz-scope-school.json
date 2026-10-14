@@ -1,0 +1,58 @@
+{
+  "key": "scope-school",
+  "ran": "2026-10-15",
+  "round": "fourth: after repeatCourses came to pick the year by program term and yearTerms was added (leave.ts), the sc-lv journey was added, the last year's repeat billing was made a literal, and strandedMoments stopped writing an empty moments list on load",
+  "rows": [
+    {
+      "id": "school.respond",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The one change since the last round is sound. strandedMoments (classmates.ts:393-407) now reads `cw.moments ?? []` and no longer calls momentsOf, which used `??=` to write an empty list. It still calls courseworkOf (coursework.ts:276), which creates a coursework where a save has none. That creation never fires on load, though: createSave already makes the coursework. I probed this (scratchpad probe-cw7.ts): a fresh life serialised, opened with loadSave and serialised again gives a byte-identical universe (27150 = 27150, same: true). The guard, both DEFECT tests and the real-save journeys pass.",
+      "problems": [
+        "docs/verification/audit/school.json (school.respond) is still 'partial' and doesn't name strandedMoments. This is outside the fix agent's files and was listed as such."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Last round's defect is closed. repeatCourses (leave.ts:891-895) now keeps a failure where `(r.academic ?? r.term)` is in [end - 1, end], with end = academicTerm(school, spring). After a two-term leave from the first spring, the spring is calendar 3, academic 1, so the fall Fail at calendar 0, academic 0 is kept. The other cases still hold: a repeated year's earlier attempts are read by their latest (degreeShortfall), and the repeatedYears refusal still applies; earlier years' Fails sit at lower academic terms; a course left on a leave is still excluded as 'withdrawn'; an additional term is refused before this check. leaveLengths really does grant only two-term leaves from a spring. I checked COURSES: years 1, 2 and 3 have 7, 8 and 5 year-long courses, so one-term and three-term leaves from a spring, which return in a fall, are refused in every year, and the comment's 'the only length leaveLengths grants from one' is true. yearTerms (leave.ts:902) takes the last enrolled term before the spring, which gives [0, 3] here and [t-1, t] without a leave; evidence-g26:497's terms [0, 1] still pass. Nothing in src reads Repeat.terms (grepped), as its comment says. The UI's RepeatPanel (StudyPlanPanels.tsx:171) reads the same repeatCourses, so the panel now shows the course. The sc-lv journey (scope-school.test.ts:553) is played through commands and the clock. In order: the Fail's notice offering the year's end, as a literal; a personal leave refused with a literal; medical leaves of one and three terms refused, and two granted (firstTerm 1, returnTerm 3, offset 2); the return notice and a reload; reregistering; at the year's end, enrolled [0, 3] and term 3's records at academic 1 and passed; RepeatPanel rendered with Ask To Repeat The Year…; the request (decideAt, a literal on 5 May at six, and year 1, terms [0, 3], courses ['Play']); a reload; then granted with offset 4, classOf 2031, repeatedYears [1] and one notice. By reasoning, each of the three claimed mutations fails it. The old calendar filter at t=3 reads [2, 3], so the list is empty, the panel draws nothing, and toContain fails. `end = spring` gives the same empty list. `[spring - 1, spring]` gives terms [2, 3], not [0, 3]. The billing is now a literal, 24_784_65, for both terms, worked from content/school.ts (tuition 40_750_00, healthPlan 3_764_00, growth 0.0322 and 0.0810). I recomputed it independently: 40750 × 1.0322³ / 2 = 22407.282 → $22,407.28, and 3764 × 1.081³ / 2 = 2377.370 → $2,377.37, for $24,784.65. Rounding the year first and then halving gives the same cents. The changed guide lines are true of the code. guide/school.ts:560 now reads 'a course failed in that year’s fall or spring, a leave between them or not'; :598 reads 'only where that can still be asked'. Each has a dated past-tense comment. The repeatRoom leave branch is still untested and still decides nothing reachable, as the result says.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_repeat) is still 'partial' with the old wording. This is outside the fix agent's files and was listed as such."
+      ],
+      "weakTests": [
+        "The repeatRoom leave branch (school.ts) still has no test. It decides nothing a player reaches (worked in the third round), and the result says so rather than claiming it."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The repeatCourses change doesn't reach it: repeatRefusal refuses beside school.extra and beside a pending extraRequest before it reads repeatCourses. The retake journey and both GUARD tests pass.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_extra_term) is still 'partial'. This is outside the fix agent's files."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Nothing that touches it has changed. The repeated-year conversion journey (account moved by exactly 138_00 across each processing) and the GUARD pass. The result's note that yearKeyOf keys by the calendar's aid year, left as it was, is a deliberate choice and not a repeat reader.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_conversion) is still 'partial'. This is outside the fix agent's files."
+      ],
+      "weakTests": []
+    }
+  ],
+  "alsoChecked": {
+    "runs": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-school.test.ts: 20/20 passed, exit 0. tests/evidence-g26-school.test.ts alone: 24/24 passed.",
+    "probes": "scratchpad probe-cw7.ts: a fresh save reloads byte-identical, with coursework present from creation. scratchpad probe-yl7.ts: year-long courses per year are 7, 8 and 5.",
+    "tutorial": "This round's tutorial.ts diff touches health, taxes and banking lines only. No school line changed."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "key": "scope-health",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "health.choose_clinic",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "The pick is played well: the rendered select, the command, the clock, reloads, twins, and literals worked by hand. Yale Health's rule was checked against its page on 2026-10-15 and the quote is exact. But the default it introduced, 'with nothing picked a member is seen at Yale Health at $0', fails, and a reload changes the outcome, for a default booking made while she was uncovered whose day falls once Yale Health covers her again. That case was reached by play.",
+      "problems": [
+        "src/engine/systems/appointments.ts:167 followTheCover runs on every loadSave (src/engine/index.ts ~:309), not only on saves from before 2026-10-15. It moves ANY appointment booked at a practice open to anybody, for a person with no health.clinicId, whom Yale Health covers on the appointment's day. A current-build appointment booked by default at Fair Haven while she was uncovered, then covered again before the day, is therefore had at Fair Haven and billed as uninsured with no reload, and at Yale Health for $0 after one. PROBED 2026-10-15 (scratchpad/hprobe/reload.test.ts, no repo edits). Inherited citizen at Capital One, personal leave from 20 Jan 2027 (uncovered). The 25 Jan health week books 'A doctor’s visit' at us-ct-fhchc-grand for 18 Feb 2027. school.buy_affiliate that day makes coverOn 'yale'. Without a reload: logged 'A doctor’s visit, Fair Haven Community Health Care' at 18,720 cents. Frozen and thawed before the day: moved to us-ct-yalehealth-studenthealth and logged at 0. The same holds for a return from a leave (school.uncovered gap closed) before a default appointment's day.",
+        "The no-reload half of that case contradicts the row text and followTheCover's own comment (appointments.ts:158-166: 'would otherwise be billed as the uninsured's, a choice the player never made'). A member with nothing picked, booked at Fair Haven by the default while uncovered, is billed $187.20 by careFor (health.ts:1410, outside = true) once Affiliate or student cover is back. Nothing re-homes a pending default appointment when cover returns.",
+        "No test covers a default appointment that crosses a change of cover in either direction, except the withdrawal case (Yale to none, tests/scope-health.test.ts:283). The older-save journey (tests/scope-health.test.ts:593) is TEST SETUP only and can't tell an older save from a current one, because followTheCover can't either.",
+        "rowText.explanation and the tutorial (src/engine/content/tutorial.ts:277) say Fair Haven 'sees anyone, after its own wait'. Fair Haven publishes no wait (src/engine/content/clinics.ts waitDays null; research-health-visits.json says neither page publishes one). The 24 days are New Haven's town figure (AMN's 15-metro average, appointments.ts practiceWait -> US_DAYS), not Fair Haven's own.",
+        "scope/health-result.json is internally stale. The first choose_clinic test entry still names the old title ('her twin who didn’t 24 days on at Fair Haven; each is seen where booked, at $0'), and yale-result.json outsideMyFiles notes its ownerDecision text ('both $0 on Yale Health') is now false. The audit row in docs/verification/audit/life.json:2406 is not updated in the tree."
+      ],
+      "weakTests": [
+        "health.choose_clinic: Yale Health’s rule that a member’s care is had at its Health Center > PLAYER JOURNEY: a save an older build wrote, its member booked at Fair Haven by default and her twin by a pick, is opened … (TEST SETUP save rewrite; it proves the move, not that only older saves are moved)"
+      ]
+    },
+    {
+      "id": "health.enroll",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "The plan's part of a bill is real, tested on the clock and protected by mutation (a $45 copay with the plan paying $60.13, the denial and appeal, the reprice back). The renewal move and the three cover fixes are played and sourced. The verdict stays partial, but the stated gap is now partly false, and a new defect in the work test was reached by play.",
+      "problems": [
+        "src/engine/systems/health.ts:371-375 engaged() reads 'school at least half-time' at the instant asked (school.leave/standing now), not over the month before, the month the statute and Papers' own words ask about. It reads work over last month (lastMonthWork), so the two halves of the test cover different periods. PROBED 2026-10-15 (scratchpad/hprobe/school.test.ts): a Comfortable citizen in good standing at the School all of January 2027 (12 hours, $276 of work-study), withdrawn 1 Feb 2027, has mayEnroll on 2 Feb say 'From January 1, 2027, HUSKY D asks an applicant for 80 hours’ work, $580.00 of earnings or school at least half-time in the month before, and last month had none of them.' That is false: she was at school all of last month. 42 USC 1396a(xx)(2)(D) (enrolled at least half-time) would meet January. The renewal reads the same engaged(), so the same failure ends a member who left the School just before a renewal.",
+        "tests/scope-cover.test.ts:204 asserts REFUSED for a student at the School from 1 to 19 January 2027 (her leave began on 20 January). It encodes that reading as a literal and isn't neutral evidence for it. Whether a partial month at the School counts is at least arguable, and the test treats it as settled.",
+        "rowText.gap ('A renewal that keeps a program isn't reached by a played life … Covered Connecticut kept at a renewal isn't reachable'; yale-result.json enroll.why) is contradicted by the tree. tests/scope-cover.test.ts:377-393 plays an Inherited citizen's Covered Connecticut, taken on a leave, renewed on 1 September 2027 on August's interest (renewAt 1 Mar 2028, until undefined) by play alone. tests/need-paths.test.ts's HUSKY D -> Covered Connecticut renewal is also played alone. enroll.why's arithmetic assumes a family with need and work-study income, and overlooks the interest an Inherited life earns. The gap that does remain is HUSKY D kept at renewal by work (only TEST SETUP wages) and, from the defect above, by schooling over the month.",
+        "repriceCare (src/engine/systems/health.ts ~:1501) sets planPaid from planOf alone, without restrictedScope or outsideItsPractice. It's harmless now, since such bills carry no 'covered', but it doesn't match its comment 'nothing where the cover now reads none'.",
+        "The tutorial (src/engine/content/tutorial.ts:273) says Medicaid asks school at least half-time 'in the month before'. The code reads the School at the moment of applying or renewing (above)."
+      ],
+      "weakTests": [
+        "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is refused HUSKY D on 1 February for January’s 6 hours … (asserts a refusal for a month mostly spent enrolled)"
+      ]
+    },
+    {
+      "id": "health.appointment",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Holds. Several tests reach the appointment by the clock: the insured bill with its shares, payment and ledger; being had at the practice booked; not being kept at a members-only practice after its cover ends (with what's owed and Book An Appointment rendered); and the Connecticut prescription filled a year and twenty days on. The 16 re-dated tests were read in the diff. None was weakened: each re-dates or picks Fair Haven to keep its point, and some got stronger (evidence-g07 clinicId now exact, bills asserted where only '$0' was before). Two of them lost their Sunday shift (evidence2-b02's referral and evidence-g05's rebooking). Weekend and holiday shifts are still covered in evidence-g07, evidence2-b03, guide-examples-papers and scope-health (Thanksgiving).",
+      "problems": [
+        "The research and RX comment (src/engine/systems/health.ts:865; research-health-visits.json prescriptionValidity) say CGS 20-616(c) lets a pharmacist give 'one of at most 72 hours'. The subsection also allows up to a 30-day supply for certain diabetes drugs and devices (statute text via findlaw/lawserver, read 2026-10-15; cga.ct.gov refused TLS). The conclusion (no expiry period) is unaffected.",
+        "docs/UNBITTEN.md:307-330 ('A doctor’s visit and a condition’s review') still says Connecticut's rule (cited there as §20-614) is unresearched and offers RX.validYears['us-ct'] as a candidate. It is unmodified in the tree, so the open-work ledger contradicts the row (rule 15).",
+        "The reload divergence under health.choose_clinic also changes where this row's appointment is had (the practice booked is rewritten on load by followTheCover). It is filed under choose_clinic."
+      ],
+      "weakTests": []
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "key": "scope-taxpapers",
+  "ran": "2026-10-15",
+  "method": "Second round. Read scope/taxpapers-result.json (every row, its recheck lists and mutation records) against final-checks/zzzz-scope-taxpapers.json; tests/scope-taxpapers.test.ts in full; git diff of statetax.ts (stateDueOf, stateAccrual monthly rounding, stateNextNotice, statePlanRefusal), taxreturn.ts (armCollection, stateDueOf callers), PapersWorkspace.tsx, lending.ts, health.ts (for new income writers), guide/taxes.ts, guide/papers.ts, guide/money.ts and tutorial.ts. Ran tests/scope-taxpapers.test.ts alone: 17 passed. Probe (scratchpad/probe/nowage.probe.ts): London-born lives of all six families with their money in a CD from creation still buy the PPE and work, each with $1,656.00 of work-study in 2026 (wealthy and inherited too). Nothing in the repository was edited; no mutation was run (the result's mutation records were checked by reasoning against the assertions).",
+  "rows": [
+    {
+      "id": "tax.pay_state",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "All four of round one's problems are closed. A plan ended paid by Pay is now played (test :372; the <=0 to <0 mutation turns status 'paid' into 'active'). The rounding fix is real (stateAccrual rounds each month's 1%), and $649.71, $655.56, $661.41 and $17.55 are worked from 12-735. A levy is now shown pending before the payment (:338). Connecticut's April date on a 1040-NR comes from stateDueOf and is tested by TEST SETUP. Reverting it moves the pending bill to 15 July, so the test fails.",
+      "problems": [
+        "tests/scope-taxpapers.test.ts:539-542 and the result's recheck give the TEST SETUP's reason as 'Yale's work-study is paid on the clock to every student with need'. That is wrong. The Wealthy family, with no need and no scholarship, has the same $1,656.00 (:608, and the probe: all six families). Assigned shifts can be missed by play: away from New Haven, a sick day, PPE the bank can't cover, or not registered (src/engine/systems/school.ts:3127-3172). So a wage-free 1040-NR is not shown unreachable. The conclusion still survives for 2026 in substance: the scholarship alone, $14,014.00, is under Connecticut's $15,000 exemption, worked back from $3.35 = 25% of 2% of $670. So no Connecticut balance arises. 2027 isn't argued.",
+        "Minor display gap. On a 1040-NR without wages, Papers shows the return as 'Due' r.due, 15 June (src/ui/workspaces/PapersWorkspace.tsx:465), and No Returns Yet gives 15 June (:424), with no word that Connecticut's side runs from mid-April. Only the tutorial and the guide say so. The tutorial line (src/engine/content/tutorial.ts:276, 'File It by mid-April, or by June 15 on a 1040-NR with no wages on it, though Connecticut’s return on it is still due in mid-April.') is true of the code. stateDueOf gives Connecticut's penalty, interest, bill, non-filer notice and plan refusal the resident deadline. Connecticut has no file-late penalty (fileLate monthly 0), so filing late costs its 10% and 1% a month only where something is owed.",
+        "src/engine/content/guide/taxes.ts:196 and :246 say Connecticut's bill and levy come 'after the deadline'. On a 1040-NR due in June, 'the deadline' could be read as 15 June. The Penalty row (:269) says mid-April, so this is ambiguous, not false."
+      ],
+      "weakTests": [
+        "a 1040-NR’s 15 June is the IRS’s alone … (TEST SETUP of r.due; its stated reason for the setup is inaccurate, see problems)"
+      ]
+    },
+    {
+      "id": "tax.amend",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Still genuinely unreachable. The diffs since round one to health.ts, banking.ts, accountlife.ts, lending.ts, school.ts and courserecord.ts add no writer to a past year's record. Health premiums are still recorded to the year paid.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.revise_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played and unchanged. The guide's new sentence ('back in force …, its next payment comes 30 days on') is true: a miss schedules no next payment (taxreturn.ts:1444-1448), and revising schedules one 30 days on (:1491). The test's 9 April is 10 March + 30.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.catch_up_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Played. The armCollection hold is real and is tested by the one-letter assertion.",
+      "problems": [
+        "src/engine/content/guide/taxes.ts:393: 'Pressed on a plan in force: “Your plan isn’t behind.”' gives the IRS's words (taxreturn.ts:1463). A state's catch-up says 'That plan isn’t behind.' (statetax.ts:1125). The line sits under both kinds of plan. It's a minor inaccuracy, and only the IRS's case is reachable."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "tax.apply_state_plan",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Round one's $4.87 is closed. The 1 May interest is now $4.88, worked from 12-735 (1% of $487.77), and reverting the rounding fails it. The refusals and the statePlanRefusal fix are played. The guide's new refusal words match the code and the tests.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.catch_up_state_plan",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Still genuinely unreachable. Connecticut's cure is 'none', and every life files in Connecticut alone.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.lien_release",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Round one's vacuity is closed. The same life shows the levy pending for due+90 days (17 July) before paying (:338), and none after (:353). The reload is past 17 July with no levy notice (:367-368).",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.lien_dispute",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Still unreachable for Connecticut. The guide's new line, that the button stays grayed out on Connecticut's lien and why, is true of lienInError and the penalty-interest-tax order.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.federal_lien_withdraw",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Still unreachable: the LT11 is for $1,746.41 against the $10,000 threshold. The guide's new line ('A student’s year never owes the IRS $10,000 …') agrees.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "tax.request_waiver",
+      "claimed": "unresolved",
+      "holds": true,
+      "verdict": "unresolved",
+      "disposition": "Still unreachable: only Oregon charges the three-year penalty.",
+      "problems": [],
+      "weakTests": []
+    },
+    {
+      "id": "documents.apply_ssn",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Round one's gaps are closed. The W-7 reader is played on a London-born Scraping family life with no setup: $329.56 back in 21 days against 70, and none on day 69 (:580). The IRS plan reader is played on a Wealthy family life whose money went into a CD by the Bank commands (:600). Both fail under the recorded mutations (the itin condition; online forced true). The overstated text is removed. evidence-g17's older tests say TEST SETUP where they use it.",
+      "problems": [
+        "Minor, a comment only: the test's comment (:608), 'No scholarship: 10% of her $1,656.00 of work-study', shows the Wealthy student gets work-study too. That contradicts the 'every student with need' wording at :540 (see tax.pay_state). It doesn't change this row."
+      ],
+      "weakTests": []
+    }
+  ]
+}

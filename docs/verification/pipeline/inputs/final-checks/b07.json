@@ -1,0 +1,118 @@
+{
+  "rows": [
+    {
+      "id": "school.make_amends",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The CLASS.amends comment defect (defects2 #23) is fixed in src/engine/systems/classmates.ts:94-105. It now says a rehearsal or showing missed takes 12/5 and gets 6/2 back, a study evening gets back what it took less one bond point, and why the two can't be given back separately. The comment is written in the past tense. Tests pin the code's figures as literals: a rehearsal 38/-5 to 44/-3 (evidence-g18), a study evening 44/-3 to 50/-1 and a late call-off 46/0 to 50/0.",
+        "'Hannah is in New Haven.' was taken out of amendsRefusal on 2026-10-13 (defects3 #71; classmates.ts:376-378 comment). The fixture that reached it was removed from evidence-g18 (:892-894). This gap is closed because the refusal no longer exists.",
+        "The not-free refusal is tested through the command and on the rendered tab (evidence-g18 :894-918).",
+        "Boundary eligibility: twins run by the clock to 20 September, and the twin that made amends is never brought the boundary (evidence-g18). askRefusal and approachRefusal read the restored trust through the command (evidence-g18 :500, evidence-g24 :241).",
+        "castListRead: twins made right or not on 3 January. At the 4 January cast list, reached by the clock, the bonds are -22 against -14, the stress differs by exactly 1.5, and the Casting tab shows Rival against nothing. castCompany: on the 4 May first night, morale differs by exactly 1. Both are in evidence2-b07, which ran 10/10 in my run.",
+        "'Lifts no boundary' (the latest skeptic's open point): tests/guide-examples-coursework.test.ts 'Your Class, played' sets the boundary through school.respond. It then makes amends through the command, and an ask_partner five hours later is still refused 'asked to be asked a day ahead'. The boundary holds until the second rehearsal kept by the clock. The boundary moment itself is put on the record by hand. Its precondition, two unrepaired incidents (a missed rehearsal and a late call-off), was played, so the action and the consequence are both reached as a player does. I count this closed.",
+        "Minor: the castCompany test asserts the 23/25 bonds on 4 January, not on 4 May. The morale gap of exactly 1 (one friend at company weight 1) between otherwise identical twins still ties it to Imani."
+      ],
+      "weakTests": [
+        { "title": "tests/defects-g8-10.test.ts > making amends puts right what’s unrepaired and lifts no boundary; rehearsals kept since lift it", "why": "The incident and the boundary are written by hand and keptWith is called by hand. It is still in the gate, though played tests now carry its claims." },
+        { "title": "tests/guide-examples-coursework.test.ts > Your Class, played", "why": "The boundary moment is pushed onto the record by hand (TEST SETUP). The answer and the amends go through the command." }
+      ],
+      "staleText": [
+        "entry 'classmates.ts:385' (amendsRefusal and the command have moved)",
+        "reads 'in New Haven': the town check went on 2026-10-13",
+        "tests field: still says only commands-kept 'the bond and the time; it returns early...' and 'no test checks the boundary moment, askRefusal or the cast'. Both are false now.",
+        "corrected.now: 'amends for a late call-off raise the bond' and 'Nothing that reads what amends repair is checked'. Both are false since 73b2a9ec and the evidence files.",
+        "review.claim: 'lateCancel: trust 0, bond 1' and 'refused ... out of New Haven'. Both are false now."
+      ]
+    },
+    {
+      "id": "school.respond",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "The moment-lapse defect (defects2 #24) is fixed. school.ts:1848 skips MOMENT_KIND in setStanding's cancel loop, and leave.ts:160 keeps MOMENT_KIND. The withdrawal path is shown: the DEFECT test in evidence2-b07 now passes. It checks the moment is lapsed at 8:00, the answer is refused 'the moment passed', and the tab says 'Not Answered' with no answer buttons. The file runs 10/10.",
+        "Still open: no test shows the fix on the leave path (leave.ts kept()) or the dismissal path. Dismissal goes through the same setStanding loop the withdrawal reaches. The leave path is separate code and is untested.",
+        "Still open: 'That evening has passed.' (classmates.ts:364) is a declared word that no play reaches now the defect is fixed. A moment lapses at 7 AM the day after its class, and an invitation's evening is 19:00 the next day or later. No test in tests/ contains the string, and the guide still lists it (content/guide/coursework.ts:747). Under THE ONE RULE the owner decides whether to delete it or keep it as a guard.",
+        "Closed: 'That work is finished.' is reached in play through a withdrawal while a disagreement drawn by the clock is open. Hold, theirs and both are refused, nothing moves, through a reload. The twin who stayed holds: trust -1, readsApart obstacle, agree 0.9.",
+        "Closed: 'They’re in New Haven.' was removed on 2026-10-13 (defects3 #71, classmates.ts:357).",
+        "Closed by the first round (evidence-g18), and the skeptics agreed: hold, theirs and both with literals; tryBoth through partnerReadOf, cleared by a rehearsal kept by the clock; help 45 min +4/+3; apology ±2; argue -3/-4, lifting at the 4th kept by the clock; the clash refusal; ClassMoments rendered and pressed."
+      ],
+      "weakTests": [
+        { "title": "tests/coverage-gaps-classmates.test.ts > accepted lifts after two rehearsals kept; pushed back on, after four", "why": "It calls keptWith by hand. Its claim is now carried by evidence-g18 through the clock." },
+        { "title": "tests/journey-school-year.test.ts > keeps the work fresh", "why": "It answers every moment and asserts nothing the answers set." }
+      ],
+      "staleText": [
+        "issue: 'no behavior test of the choices; moment.choice on classmate (classmates.ts:323) read by nothing'. stoppedAsking and owesYouLines read it, and the choices are tested through the command. The claimCorrection was never applied to docs/verification/audit/school.json.",
+        "tests field: 'tests/coverage-gaps-classmates.test.ts' only",
+        "corrected.now: 'A boundary’s lifting is checked by calling keptWith by hand ... no test reads tryBoth through the scene together' is false now",
+        "entry 'classmates.ts:370' (respondRefusal is at :349)",
+        "review.claim: 'help away' (the New Haven refusal is gone)"
+      ]
+    },
+    {
+      "id": "school.take_shift",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: the row claims booking 'stays inside Yale's weekly cap (weekHours+4 <= weekCap)' (school.ts:3853, the 'cap of 19' error at :3860). The only test is tests/work-limits.test.ts:41-47, which schedules nine 6-hour shifts by hand and checks only the error message. It does not check that nothing was booked or that electiveHours was unchanged, and it never shows an evening skipped to a later week under the cap. Play can reach this: an assigned Saturday plus repeated presses of Take An Elective Shift. No later defect round or test addressed it. evidence-g21 :387 tests the cap when a shift is worked, not at booking, and that also uses hand-scheduled shifts.",
+        "Closed: withdrawal gives back a booked evening's hours. electiveHours goes 8 to 4, the tab reads 'Elective Hours Asked For 4' and 'You’re not at school.', the command is refused, and the payday pays $92 into yearOf/figuresFor at 9,200, against a twin who stayed paid 8 hours. This is evidence2-b07 and passed in my run. The leave path, the payday's recordWages read on the return, the on-call skip and the button press are closed in evidence-g19."
+      ],
+      "weakTests": [
+        { "title": "tests/work-limits.test.ts > refuses an elective shift past it at booking, and says the cap is why", "why": "The shifts are scheduled by hand and only the message is asserted. Nothing checks what was or wasn't booked, or electiveHours. It is the only evidence for the weekly-cap rule in the row's claim." }
+      ],
+      "staleText": [
+        "corrected.now: 'No test plays the payday after an elective evening, and none reads what a payday played through the clock records for the return' is false. The claimCorrection was never applied to docs/verification/audit/school.json.",
+        "entry 'school.ts:2337' (the handler is at :3835)",
+        "tests field: cites only school.test.ts"
+      ]
+    },
+    {
+      "id": "practice.exercise",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: 'This exercise has nothing it carries over to.' (practice.ts:102) cannot be reached. The 27-exercise test in evidence2-b07 shows that every exercise's variation carries over through the command. Only a fixture, an exercise with no design, would reach it. The guide still lists it (content/guide/craft.ts:405).",
+        "Still open: 'It takes a classmate, and you have no class to ask.' (practice.ts:67, :101) cannot be reached in play. A craft begins only at enrollment, which comes with a class of 15. A withdrawal keeps the 15, as evidence2-b07 shows, and nothing empties the class. Only the hand-emptied class in evidence-g20 :602 and the whynot-profile render reach it. The guide lists it (craft.ts:404). The New Haven refusals got the same treatment (defects3 #71, deleted); these were not deleted. Under THE ONE RULE the owner decides.",
+        "Closed: the bad-focus refusal through the command, with clock, history, experience and energy unchanged. Everything else (castFit and a taped brief against a twin, discipline's 1.08/0.92 lift, every focus and tier with carry-over, a duplicate actionId across a reload, every reachable refusal) is closed in evidence-g20.",
+        "Note: in the 27-exercise test, `carried.some((c) => c.target === e.trains)` can never be true, because carriesTo filters e.trains out. The load-bearing check is `!carried.length`, and it is sound."
+      ],
+      "weakTests": [
+        { "title": "practice.exercise > takes every one of the 27 exercises as a variation through the command, each carrying over to something it doesn’t train: “nothing it carries over to” is never said", "why": "One of its two conditions can never fail (the target is already filtered). The check that does the work is that carried is non-empty." }
+      ],
+      "staleText": [
+        "tests field: 'no test practices through the command and checks a judged piece or castFit reading what grew' is false (evidence-g20)",
+        "corrected.now: 'Not checked: a judged piece or castFit ... what discipline lifts; and a tier or a focus ... no test passes either to the command' is false",
+        "entry 'practice.ts:75'"
+      ]
+    },
+    {
+      "id": "school.term",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Checked: the second-fall workStudy reset is played by the clock with literals: assignedBooked 144, then {electiveHours 0, owedHours 4}, then the Saturday booked again and paid (evidence-g20).",
+        "Checked: numbering beside a Rep assignment is reached in order by the clock, with no guard, on g20-term's second fall (evidence2-b07, passes). The Rep calls are dated, and 13 of 20 rehearsals are kept and numbered 1..13 of 13, with read-through first and tech and dress last. A no-Rep twin is numbered 1..20. Every call kept gives process 13/13, with lines and blocking as literal powers. Staging before the overlap filter would break n/of and the stage split, so the test can fail.",
+        "TEST SETUP: doTheWork prepares the coursework each midnight to keep her in good standing. The twin's standing is set to concern by hand. Neither stands in for the action under test.",
+        "Residual: tests/production-staging.test.ts keeps its silent `if (!ours.length) return` (:31) and its `if (of >= 4)` guard (:37) on a term scheduled by hand. It is redundant now, but still in the gate."
+      ],
+      "weakTests": [
+        { "title": "tests/production-staging.test.ts > numbers every rehearsal call it keeps, one to the last, with its technical and its dress", "why": "Silent early return and an of>=4 guard, on a term scheduled by hand out of sequence. Its claim is now carried by the played test in evidence2-b07." }
+      ],
+      "staleText": [
+        "tests field: cites production-staging.test.ts and 'runs six terms' (a pure function) as the evidence. Neither the played evidence-g20 nor evidence2-b07 is named.",
+        "corrected.now: 'Since then each production’s calls are numbered on the calls it keeps (tests/production-staging.test.ts)' cites the guarded test only. The claimCorrection was not applied.",
+        "review gaps cite school.ts:2886/2907 for the workStudy reset, which has moved (about :2918)."
+      ]
+    }
+  ]
+}

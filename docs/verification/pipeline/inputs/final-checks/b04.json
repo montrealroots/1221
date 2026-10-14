@@ -1,0 +1,123 @@
+{
+  "rows": [
+    {
+      "id": "bank.break_term",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "implementation missing",
+      "problems": [
+        "Closed: the unreachable refusal 'You need a current account for the money.' and the day handler's `&& currentOf` guard were deleted. accountlife.ts:196-203 now has a past-tense note, and the command no longer carries the refusal (defect 11).",
+        "Closed: the notice that read '£10,000.00 … less £39.41' now reads '…after £39.41 taken for closing early.' (accountlife.ts:240, defect 57). Both b04 break_term tests and the g10 test assert the new words beside the exact £10,000.00 landing.",
+        "Closed: notice closes at a second bank, both ways, through the rendered BankAccountLife button and the clock (tests/evidence2-b04.test.ts:224, :253). The charge is worked independently (£10,000 × 4.11% × 35/365 = £39.41, lower than 90 days' £101.34). The downstream meal is refused before the close and bought after it.",
+        "Closed: breakTerm paying into the primary at another bank (fixed in 73b2a9ec, tested by the g10 Citi CD).",
+        "STILL OPEN (the latest skeptic's point): the screen says 'Closing on February 10, 2026, on the notice given.' (BankAccountLife.tsx:66, from breakAt = 07:30 10 Feb). The term actually closes and pays at 00:00 on 11 February, the next day_rollover (accountlife.ts:236). The test pins both: closedAt undefined at 23:59 on 10 February and gmt(2,11,0,0) after. So the day the screen names is not the day the money arrives. A player at an emptied primary is refused a meal all of 10 February (that is the shape of the second test). Either the close should land on the named day, or the screen should name the day it lands. The £39.41 itself counts 35 days to the named 10 February, which is a defensible reading. The payout is unaffected.",
+        "Ran: tests/evidence2-b04.test.ts and tests/evidence-g10-money.test.ts pass."
+      ],
+      "weakTests": [
+        {
+          "title": "bank.break_term > closes a NatWest term held beside a Barclays primary on 35 days’ notice by the clock, into the NatWest account kept beside it, less the £39.41 it earned, and Barclays sees none of it (a London life: no New Haven bank asks notice)",
+          "why": "It asserts as correct a screen naming 10 February as the closing day while the close happens at 00:00 on 11 February. The one-day gap is pinned, not judged. Its title still says 'less the £39.41', the wording defect 57 replaced."
+        }
+      ],
+      "staleText": [
+        "money.json entry 'BankAccountLife.tsx:72' is now :75 (the notice line is at :66).",
+        "money.json reads 'breakQuote accountlife.ts:69' is now about :73-115.",
+        "money.json changes 'breakTerm accountlife.ts:180 posts … to current' is now :196-223, and pays into the current account at the term's own bank, or sends to the primary (sendBetweenBanks).",
+        "money.json downstream 'account_life rollover accountlife.ts:219' is now :236-242.",
+        "money.json tests should add tests/evidence-g10-money.test.ts and tests/evidence2-b04.test.ts.",
+        "The review gap about the 'You need a current account for the money' refusal is moot: the refusal was deleted."
+      ]
+    },
+    {
+      "id": "card.lock",
+      "claimed": "partial (working, evidence missing)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: the phone-only refusal and the lockInApp field were deleted. security.ts:296-297 and content/security.ts:38 carry past-tense notes, and no src reader of lockInApp remains (defect 12).",
+        "Closed: the asymmetric fraud draw (defect 61). fraudOn (security.ts:374-376) now draws among the cards that work. tests/evidence2-b04.test.ts:292 locks each card from the rendered Your Cards. With the credit card locked, all six nights land on debit/checking and none on the card. With the debit card locked, all six land on the credit card and none on checking. That matches one independent reading: the rate is the person's, falling whole on whichever card works, as it does for a holder with no credit card. Both directions are asserted on the ledger postings, not only on the fraud record.",
+        "Closed in the first round (tests/evidence-g11-money.test.ts, confirmed by the first check): cardWorks with both cards locked, the credit lock through a life.look_after meal, the lock across serialise/loadSave with cardRoom 0, ATM refused and counter paying, and the stopped-card refusal in its words.",
+        "Not blocking: journey-money's ok-only lock steps and papers-complete's flag-only check are still in the suite. They are superseded and weak, but they assert nothing false.",
+        "Ran: tests/evidence2-b04.test.ts and tests/evidence-g11-money.test.ts pass."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json entry 'BankSecurity.tsx:67' is now :68.",
+        "money.json changes 'security.ts:273' is now the card.lock handler at about :293-302.",
+        "money.json downstream 'fraudOn’s cardWorks (security.ts:111)' should say fraudOn draws among the cards that work (security.ts:374-376), so a locked card's share moves to the other.",
+        "money.json tests names only security.test.ts:26's New York life. Add tests/evidence-g11-money.test.ts and tests/evidence2-b04.test.ts.",
+        "The review's claim 'refuses … a bank that locks only by phone' is no longer true: that refusal was deleted on 2026-10-13."
+      ]
+    },
+    {
+      "id": "card.report",
+      "claimed": "partial (implementation missing)",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed (L11 / defect 13): card.report now refuses only where the bank publishes no rush (security.ts:315-316). Wells Fargo's rush days were removed for a rushUnpublished note: its rush is for credit cards, 'additional fees may apply', and its agreement names a Rush Plastic Fee with no amount. It is refused in its own words, and the screen draws no rush button. Shinhan's emergency-card-abroad days were removed (tests/defects3-bank.test.ts:235). Capital One's 3 days are read: its rush is free, since its fee schedule lists no card fee.",
+        "tests/evidence2-b04.test.ts:347 presses the rendered 'Report It, Rush The New One' at Capital One. The card stops, the new one is due Thursday 27 August (three business days from Monday, worked by hand), no fee is posted, and the screen shows the arrival. At Wells Fargo there is no rush button, both card.report rushes are refused in the stated words and the card is not stopped, and a plain report arrives in five business days, Monday 31 August.",
+        "The second skeptic's weak test, which asserted a free Wells Fargo rush, was turned round to the refusal, and g12's matching test was corrected.",
+        "The other review gaps were closed in the first round (tests/evidence-g12-money.test.ts, confirmed by the first check): a purchase and the ATM behind a stopped card, a plain report through to replacement at Chase, a reload, and the screen.",
+        "Ran: tests/evidence2-b04.test.ts, tests/evidence-g12-money.test.ts and tests/defects3-bank.test.ts pass."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json entry 'BankSecurity.tsx:76,81' should become Report It and Report It, Rush The New One (drawn where the bank lists a rush fee or rush days, and not where the rush is unpublished).",
+        "money.json changes 'security.ts:283' is now card.report at about :304-326.",
+        "money.json tests cites only security.test.ts on Mexico City, London and New York lives. Add tests/evidence-g12-money.test.ts, tests/evidence2-b04.test.ts and tests/defects3-bank.test.ts.",
+        "The review's claim 'refuses … a rush the bank has no fee for' is no longer true: a rush is refused where the bank lists neither fee nor days, or where it charges for one without publishing the fee.",
+        "Per leftovers4.md, docs/TRACEABILITY.md may not list the Wells Fargo rush refusal yet."
+      ]
+    },
+    {
+      "id": "card.request_hardship",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Closed: once the plan ends, the statement still reads what it asked. CardState.issued now keeps the plan's payment and plan:true (credit.ts:797). BankStatements reads st.plan first (BankStatements.tsx:125-126). tests/hardship-plan-minimum.test.ts:138 pays the card off on 25 October and plays to the 10 November due date, where the plan ends. The October statement still says 'The least to pay is $101.00, the plan’s payment'. Across a reload, issued keeps $48/plan:false for September and $101/plan:true for October (:128).",
+        "Closed: the Reg Z minimum-only callout no longer shows on a plan statement (BankStatements.tsx:149-158). tests/hardship-plan-minimum.test.ts:150 renders the plan callout ($101 a month clears $4,830 in 4 years, ceil(4830/101) = 48 worked) and asserts that 'Paying only the minimum' is absent. The pre-plan September statement keeps it.",
+        "Closed: the 12:01 due date (defect 48). dueAt is normalised, and tests/evidence2-b04.test.ts:451 now asserts the late mark at exactly est(11,10,12,0). defects3 adds a calendar test.",
+        "Closed: the '(Rebuilt)' first statement (defect 49). The b04 page test asserts that September 20 is plain, August 20 is rebuilt, and no rebuilt note shows.",
+        "Closed (round 2, sound per the second skeptic): missed goes 1 → 0 when the plan's $101 is met, against a twin that goes 1 → 2 with a record mark and Chase's $40 repeat fee. Score 795 → 798.",
+        "Defect 68 (a plan paid off at a statement kept missed) was fixed, with a defects3 test.",
+        "Ran: tests/evidence2-b04.test.ts, tests/hardship-plan-minimum.test.ts and tests/defects3-bank.test.ts pass."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json entry 'BankCard.tsx:238' is now :246.",
+        "money.json changes 'cardlife.ts:211' is now card.request_hardship at about :215-230.",
+        "money.json downstream 'credit.ts:891 skips all accrual; :764 due = plan payment' is now the accrual skip at about credit.ts:947, autopayAsk at about :1062-1070, the reset at about :903-904, and the plan end at a due date or a statement. Add issued keeping the plan's payment (credit.ts:797) and the Statements page reading it.",
+        "money.json tests should add tests/evidence-g12-money.test.ts, tests/evidence2-b04.test.ts and tests/hardship-plan-minimum.test.ts.",
+        "The row's issue 'granted unconditionally…' is already corrected in its 'corrected' block. The status should follow."
+      ]
+    },
+    {
+      "id": "statements",
+      "claimed": "partial (working, evidence missing)",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Closed: running balances. tests/evidence2-b04.test.ts:481 renders the Balance and Owed After columns with figures worked by hand: $413,043 → $412,043 → $411,793 for savings, and $5 → $10 → $7 for the card.",
+        "Closed: the first kept statement drawn '(Rebuilt)' (defect 49). cardPeriods marks only n > 1 rebuilt (statements.ts:175-178), and the b04 hardship page test asserts it.",
+        "Closed: the December overlap and the rebuilt period a minute off across a year wrap, both listed in leftovers4.md as not fixed. They are now settled by `edge` normalising through normalDate (statements.ts:97). Its comment says the December period and the rebuilt period across a new year were a minute off.",
+        "STILL OPEN: cardPeriods reads sim.zone (statements.ts:167) while periodsOf reads sim.homeZone (:108). Both are set alike at bootstrap, and nothing writes either since travel was removed, so no played life can tell them apart and no test can close it. This is not deferral of the statements system itself. The one-line fix, homeZone in cardPeriods as periodsOf's comment ('the bank's own zone') says, could be made now.",
+        "Noted: cardPeriods' comment admits that a first statement whose day was moved before it, more than a month after the card's opening, is drawn as two periods, the older rebuilt. This is a known oddity no test pins.",
+        "Ran: tests/evidence2-b04.test.ts and tests/evidence-g13-money.test.ts pass."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "money.json reads 'ledger postings (activity statements.ts:60)' is now activity at about statements.ts:63-85, with each line's balance after it. Add the kept cuts (cardPeriods) and CardState.issued (minimum and plan).",
+        "money.json tests cites only tests/coverage-gaps-statements.test.ts. Add tests/evidence-g13-money.test.ts and tests/evidence2-b04.test.ts.",
+        "money.json issue 'periodsOf cuts every past card period on the current statement day (statements.ts:99)' is outdated: past periods are built from kept cuts.",
+        "The settled line 'a legacy card’s are marked Rebuilt' should say: periods before the first kept cut are marked Rebuilt, as for a card held from before the life began, but not the first kept statement itself."
+      ]
+    }
+  ]
+}

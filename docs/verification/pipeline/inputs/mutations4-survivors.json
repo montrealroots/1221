@@ -1,0 +1,59 @@
+[
+ {
+  "id": "documents.apply_ssn",
+  "key": "scope",
+  "file": "src/engine/systems/taxid.ts",
+  "find": "    s.advanceTo(s.now + SSN.visitMinutes * 60_000);",
+  "replace": "",
+  "protects": "the office's hour",
+  "test": "tests/scope-taxpapers.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "run in the tree 2026-10-15 after the clock assertion was added: KILLED"
+ },
+ {
+  "id": "i-stale-claims",
+  "key": "scope",
+  "file": "tests/evidence3-person.test.ts",
+  "find": "(?<!\\b${AUX}\\s+(?:\\w+\\s+)?)\\b(?:removed|deleted|dropped)\\b",
+  "replace": "\\b(?:removed|deleted|dropped)\\b",
+  "protects": "present passives ('An interest is dropped…', 'until they are removed')",
+  "test": "tests/evidence3-person.test.ts",
+  "applied": true,
+  "killed": true,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "run in the tree 2026-10-15 after two must-catch examples were added: KILLED"
+ },
+ {
+  "id": "school.request_extra_term",
+  "key": "scope",
+  "file": "src/engine/systems/courserecord.ts",
+  "find": "school.extra?.term !== term && ",
+  "replace": "",
+  "protects": "PLAYER JOURNEY: an additional term granted and attended … (the second notice's words)",
+  "test": "tests/scope-school.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false,
+  "removed": true,
+  "rerun": "the clause was redundant (ended settles it) and was removed 2026-10-15"
+ },
+ {
+  "id": "bank.cancel_new",
+  "key": "scope",
+  "file": "src/engine/systems/accountlife.ts",
+  "find": "    if (id === account.id || !into || amount <= into.balance) continue;",
+  "replace": "    if (id === account.id || !into || amount <= into.balance + 1) continue;",
+  "protects": "Berlin term: the threshold is exactly what the primary holds (not run)",
+  "test": "tests/scope-money.test.ts",
+  "applied": true,
+  "killed": false,
+  "by": [],
+  "compiledFailed": false,
+  "rerun": "run in the tree 2026-10-15 after the €6.29 step was added (… Pay in €0.01 first.): KILLED"
+ }
+]

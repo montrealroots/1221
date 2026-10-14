@@ -1,0 +1,41 @@
+{
+  "key": "scope-people",
+  "ran": "2026-10-15",
+  "rows": [
+    {
+      "id": "l-person",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The fix is real and the reach claim holds. spokenOf (wellbeing.tsx:63-70) drives the person, trait and condition looks and the dial, Readiness and injury way details. All three scope-people tests pass. Each would fail without the fix, since the old code had literal 'Their body.' and 'A Trait They Hold' and ways that said 'you'. They are FIXTURE renders over a createUniverse-built second Person, with save/load and the clock past the mend date. The test is not vacuous: every find is dereferenced with '!' and exact label lists are asserted. Unreachability was confirmed: universe.people is written only at bootstrap.ts:414, and classmates are School records. evidence2-b12, evidence3 l-person, looks.test.ts, g33 l-person and need-paths units are all green.",
+      "problems": [
+        "src/engine/systems/body.ts:168 `bodyUnits(livesIn, you = true)`. The change removed the only caller that passed `isYou` (wellbeing.tsx:190 now calls `bodyUnits(person.currentLocationId)` and string-replaces 'where you live'). The `you` parameter and its 'where they live' branch are now read by nothing, which breaks THE ONE RULE. Either delete the parameter or pass the pronoun in. The replace at wellbeing.tsx:190 also couples silently to bodyUnits' wording.",
+        "src/ui/looks/wellbeing.tsx:247-375. The dial look (sentenceFor, e.g. 'you’ve a full day in you', 'the likelier a year is to be your last') and the readiness look (kind 'How Well You Would Do Today', 'what’s costing you') still say 'you' of another person. These looks are one click from the person look's ways, which now say 'her'. It is the same class of defect, in the same file and in the row's downstream readers. The result discloses it in outsideMyFiles and it is unreachable in play, but no test opens a seeded person's dial or readiness look.",
+        "tests/scope-people.test.ts:75-80 `yous` excludes trait ways by design, and trait descriptions say 'you' of another person (disclosed in outsideMyFiles; content, outside the row)."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "i-stale-claims",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "Every acceptance item holds. All 14 must-catch examples are flagged and all 11 must-accept examples pass (evidence3) and b13's equivalents too. Both tree walks are green. evidence3 READ_TRUE and b13 READ_AND_TRUE are the same 32 entries. b13 dropped its old HISTORY rule. The handoff reconciliation is real: every branch and commit marked Superseded was confirmed in main's history with git merge-base --is-ancestor. Nothing was deleted, and no unmarked 'not merged' remains. But the rowText and issue claim more than the rule does ('a rule a present-tense claim can't pass'; 'a present clause beside a past one ... found'). Simple variants of the very shapes the tightening names still pass, and a natural, true dated note fails.",
+      "problems": [
+        "tests/evidence3-person.test.ts:632 (and evidence2-b13.test.ts:396). PRESENT's plural branch is a closed list of 46 verbs, so the claimed 'present clause beside a past one' is caught only for those verbs. 'Interests shape a meal, and the owner removed the crafts.' and 'Interests reward an hour, as removed crafts did.' both pass as dated. Checked by running the file's own regexes in node.",
+        "tests/evidence3-person.test.ts:626 (and b13:390). REMOVAL's 'went' lookahead accepts 'went on|in the|at', so 'Interests went on lifting a meal.', 'Interests went in the pot.' and 'Interests went at full value into every meal.' pass. These are kin of the 'went into' case the tightening claims to close.",
+        "tests/evidence3-person.test.ts:626/632. A removal participle in an appositive or relative clause dates a present claim: 'The interests, removed by the owner, lift a meal.' and 'Interests, which the owner removed, still lift a meal.' both pass. The future 'Interests will lift a meal until migration 94.' and the future perfect 'Each interest will have been removed by the term’s end.' also pass.",
+        "tests/evidence3-person.test.ts:609 (and b13:373). ONE allows one modifier, so 'Her own favourite interest lifts a meal.' passes even though ONE's doc comment names 'her own interest' as covered.",
+        "False positive on the must-accept side, tests/evidence3-person.test.ts:632. PRESENT counts 'interests have', so the true, dated note 'Interests have been removed since 2026-10-10.' is flagged. A future honest past-tense note in the present perfect would fail the walk.",
+        "scope/people-result.json rowText.explanation and issue. 'the tree is held to a rule a present-tense claim can't pass' and 'Both tree-wide walks fail on a new present-tense claim' are false of the code (see above). They should say the rule catches the listed shapes and is a heuristic.",
+        "scope/people-result.json rowText.tests says '31 sentences read and listed true', but READ_TRUE (tests/evidence3-person.test.ts) and READ_AND_TRUE (tests/evidence2-b13.test.ts) each hold 32 entries.",
+        "tests/evidence2-b13.test.ts:544 and :555. The titles still say 'in the past, by a word only history uses', which describes the HISTORY rule this change removed. The result reports this as 'Unchanged title, stricter rule', but the title now misdescribes the test.",
+        "SLATE_CURRENT_MASTER_HANDOFF.md:9 says the merges were checked with `git branch --merged main`, but people-result.json's handoff note says `git merge-base --is-ancestor`. Both are true, as I confirmed with merge-base, but the accounts differ. At :1687 the 'Superseded 2026-10-08' date stands against 397c6b11's author date of 2026-10-07, and 'two lines down' is three. Both are trivial. The handoff also has no section yet for the 2026-10-15 scope work itself (rule 11, for whoever closes the phase)."
+      ],
+      "weakTests": [
+        "i-stale-claims: … > finds the present passives, “went into”, the possessive and adjective singulars and a present clause beside a past one, which the check of 2026-10-14 passed; passes their dated twins and the dated notes in the tree",
+        "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside"
+      ]
+    }
+  ]
+}

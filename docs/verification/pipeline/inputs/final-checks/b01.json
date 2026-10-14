@@ -1,0 +1,97 @@
+{ "rows": [
+ {
+  "id": "life.look_after:order",
+  "claimed": "verified",
+  "holds": true,
+  "verdict": "verified",
+  "disposition": "verified",
+  "problems": [
+   "Checked: every review gap is closed through the command or clock. body.intake is +134 against 0 for a meal, and the weight after the clock's own midnight bodyDay matches 134/(23.9x365/ln2) (evidence-g01-life). A command refusal of an order nothing can pay leaves the clock, balances and intake unmoved. Morale is 50x0.04 over an idle twin.",
+   "Checked: onsetMonth and bmiHazard are reached through the clock on a weight the order put on (evidence2-b01, both journeys), against Eat A Meal twins. The thresholds come from published figures, not onsetYearly or bmiHazard. Order In is pressed on the rendered Look After menu.",
+   "Checked: the BMI prose the second skeptic flagged (24.99997, 25.0027, 39.99996) was corrected to 24.9997, 25.0024 and 39.9996, with a past-tense note (evidence2-b01.test.ts:15-16 and the title).",
+   "Checked: evidence2-b01 now passes 10/10, so the gate-red cross-cutting problem has gone. evidence-g01/g02/g03/g04-life and evidence2-b01 ran 109/109."
+  ],
+  "weakTests": [],
+  "staleText": [
+   "life.json entry 'TimeControls.tsx:490': LookAfterMenu's run('life.look_after', { action }) is now src/ui/shell/TimeControls.tsx:560.",
+   "life.json tests field names only defects-r3a-1, body and defects-g4-1. It should cite evidence-g01-life (intake, weight, morale, the command refusal) and evidence2-b01 (the onset and end-of-year journeys)."
+  ]
+ },
+ {
+  "id": "world.dismiss_decision",
+  "claimed": "partial",
+  "holds": false,
+  "verdict": "verified",
+  "disposition": "verified",
+  "problems": [
+   "The one gap the claim left open was fixed. That gap was world.ts prune's false present-tense comment, which said a raiser reads a dismissal off a kept row. world.ts:144-148 now says in the past tense that until 2026-10-13 it said so, that requireDecision passes over a dismissed row, and that every raiser dates its row within 180 days. The behavior that falsified the old comment is held by evidence-g02-life:411 'is read by no raiser'.",
+   "Checked: the other gaps are closed by played tests. Dismiss is pressed on the rendered Home. 'It’s dismissed already.' and 'No such decision.' are given through the command. take_decision_action is refused 'It’s dismissed.' across a reload, on a row this command dismissed. Prune has dropped the row by +183 days and keeps a dated row to its date. GameShell's count goes from 1 to none after Dismiss (evidence2-b01).",
+   "Checked: the g02-life header prose that leftovers4 flagged as present tense is now past tense (lines 17-19).",
+   "Note: the claim's '73 days' for the return is understated (a nonresident is due 15 June, about 134 days out). The world.ts comment's 'within 180 days' still holds."
+  ],
+  "weakTests": [],
+  "staleText": [
+   "life.json entry 'Home.tsx:267' should be Home.tsx:273 (Dismiss's run('world.dismiss_decision')).",
+   "life.json tests field cites only smoke.test.ts and life-fixes (dismissedAt set by hand). It should cite evidence-g02-life (the refusals, a reload, prune, 'is read by no raiser') and evidence2-b01 (GameShell's count)."
+  ]
+ },
+ {
+  "id": "world.set_preferences",
+  "claimed": "verified",
+  "holds": true,
+  "verdict": "verified",
+  "disposition": "verified",
+  "problems": [
+   "Checked: Pause stops the page's live clock in a real React root that is mounted once. Cutting timeSpeed from the tick's deps fails all three tests (the second skeptic's mutation run). The press goes through the provider's own run and refresh. A paused save opens paused. The halt at a plan of one's own pauses the save.",
+   "Checked: 'theme isn’t a preference.' (alone and beside timeSpeed) and 'The clock runs paused or live.' are given through the command, with preferences unchanged across a reload (evidence-g02-life).",
+   "The second skeptic's cross-cutting problem (the file red in the gate) has gone: evidence2-b01 passes 10/10."
+  ],
+  "weakTests": [],
+  "staleText": [
+   "life.json entry 'TimeControls.tsx:55' should be TimeControls.tsx:62 (setSpeed's run('world.set_preferences')).",
+   "life.json tests field cites plans.test.ts (a source-text match) and tutorial.test.ts. It should cite evidence-g02-life (the refusals) and evidence2-b01 (the live provider's Pause and Play, the paused save and the halt)."
+  ]
+ },
+ {
+  "id": "health.choose_clinic",
+  "claimed": "partial",
+  "holds": true,
+  "verdict": "partial",
+  "disposition": "stale or wrongly grouped claim",
+  "problems": [
+   "Fixed and shown: shareOf (health.ts:799-806) now bills a doctor's visit at a private practice's own self-pay price ahead of the public share, and SELF_PAY has uk-ldn-bupa-gp at £79. evidence-g03-life:379 now asserts the literal 'Your share is £79.00', where it used to pin 'Nothing to pay.', and the twin at Soho Square pays nothing. The evidence2-b01 London test, which failed by design, now passes. The two tests no longer contradict each other.",
+   "Fixed: Your Doctor is drawn only where a town keeps two or more practices (PapersWorkspace.tsx:880-883). evidence2-b01 shows the New Haven student gets no own-doctor box, is named Fair Haven, and is booked there by the 31 August health week at $0.",
+   "Still open: for every life the game makes (New Haven only; nothing moves a person after bootstrap since the scope reset), the command now has no control on any screen and decides nothing. The choice decides something only in London and Mexico City, which only quickSave LIFE FIXTURES reach: the booking, label and kept visit there, Bupa's £79, and Similares' MX$60 against the uninsured MX$3,311.60. The row describes a player action no played life can take. It needs to be recorded as not applying to New Haven, deferred with the other towns, or given a second New Haven practice (such as Yale Health). Until then it isn't verified.",
+   "Checked: the three refusals go through execute (evidence-g03-life:344). The Mexico City twin's price is now a literal worked from the rule's own figures."
+  ],
+  "weakTests": [
+   { "title": "tests/evidence2-b01.test.ts > health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP … is billed …", "why": "It asserts only that the bill is > 0 and the notice lacks 'Nothing to pay.'. The £79 literal is held in evidence-g03-life:379, so this is redundant, not wrong." }
+  ],
+  "staleText": [
+   "life.json entry 'PapersWorkspace.tsx:528' should be PapersWorkspace.tsx:901 (the own-doctor select's run('health.choose_clinic')).",
+   "life.json downstream 'clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn' should say that selfPay now applies to a private practice under public cover too (Bupa £79). It should also say that the select is drawn only where a town keeps two practices or more, so the row applies to no New Haven life.",
+   "life.json tests field names 'clinics.test.ts ‘names the place on the bill’' and defects-g8-4's New Haven choice, which can no longer be made on screen. It should cite evidence-g03-life (the refusals, London and Mexico City) and evidence2-b01."
+  ]
+ },
+ {
+  "id": "world.tick",
+  "claimed": "partial",
+  "holds": true,
+  "verdict": "partial",
+  "disposition": "stale or wrongly grouped claim",
+  "problems": [
+   "Checked: what a played life reaches is verified through the clock. Two real raisers are played: the London-born F-1's 2026 return (evidence-g04-life) and the withdrawal's US status notice (evidence2-b01). Each row is closed by the first tick after its date, with resolvedAt set and not dismissed, dropped from the rendered Home, kept at +179 days and gone by +183. Timeline pruning at 400 days and the single pending tick across reloads are shown.",
+   "Still open: the undated row's dismissal after 90 days (world.ts:131-136) and prune's keeping a closed row to a date more than 180 days ahead (world.ts:144-149) are reached only by rows a test raises by hand. Every raiser dates its row: taxreturn dueAt: due, permission dueAt: ends, accountlife dueAt: by, all within about 134 days. defects3 #70 proposed deleting the undated branch. The code kept it, with a comment that no raiser reaches it. Its words are still declared to the player in ui/looks/attention.tsx (QUIET_AFTER_DAYS, :172-296, 'Ninety days untouched closes an undated one') and in docs/CAPABILITIES.md and capabilities.json. These are declared words no played state reaches (the ONE RULE), awaiting the owner's choice to delete or keep.",
+   "The prune comment's false present-tense claim, that a raiser reads a dismissal, was fixed (world.ts:144-148, past tense).",
+   "The disposition is 'stale or wrongly grouped claim', not the second agent's 'working, evidence missing': no test on a played life can reach the undated branch, so no evidence could close it."
+  ],
+  "weakTests": [
+   { "title": "tests/evidence-g04-life.test.ts > PLAYER JOURNEY: an undated row is waved away by the tick after ninety days …", "why": "The undated row and the dismissed dated row are raised by hand with sim.requireDecision, a fixture of the state under test that no engine raiser produces. The comment at world.ts:131-135 now says so." }
+  ],
+  "staleText": [
+   "life.json changes 'expire/dismiss decisions, prune' should say that dated rows expire on the tick after their date, and that the undated 90-day dismissal is a rule no played life reaches.",
+   "life.json tests field cites only smoke.test.ts. It should cite evidence-g04-life (the return through the tick, timeline pruning) and evidence2-b01 (the status notice through the tick).",
+   "life.json explanation 'Home' could also name attention.tsx's 90-day lines, which describe the unreached branch."
+  ]
+ }
+]}

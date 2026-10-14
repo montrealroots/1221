@@ -1,0 +1,113 @@
+{
+  "rows": [
+    {
+      "id": "health.appeal_decided",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Ran tests/evidence2-b02.test.ts on the tree: all 14 pass. Ran evidence-g05-life, evidence-g06-life and defects-g23-1: all 61 pass. The three appeal journeys close what they claim. Both outcomes are forced. The 180-day window and the single appeal go through the command and Papers. The refund goes to the account the payment debited, read from the payment's postings, and no other account moves. The debt is read to the cent, and Pay It Off pays $183.98 when upheld and $45.00 when overturned.",
+        "Still open from the latest skeptic: the marketplace plan that every denial needs is reached only through a TEST SETUP recordWages of $3,000 (evidence2-b02.test.ts:245). Only a marketplace claim is denied (health.ts:1240). mayEnroll offers the marketplace only when programFor returns nothing (health.ts:331-350, 381), which needs last month's income above 175% of the year before's poverty line (content/safetynet.ts:218), about $2,282 a month in 2026. The only played income is work-study, paid weekly (school.ts:1800-1806, 3204-3218; 19 hours a week in term, 40 in recess, 50 elective hours a year, $23 an hour), and the Summer Cabaret's $375 a week. A term month tops out near $2,185. A summer month that combines the Cabaret with elective hours, followed by enrollment the next month after leaving, might clear the line, but no test plays it, and I could not establish it either way. So no test reaches the denial and appeal through income the player earned.",
+        "The two engine defects the first round found (the partly-paid debt branch and the clinic's lowercased name) are fixed. Their tests in tests/evidence-g05-life.test.ts pass.",
+        "The weak tests are superseded but still in the gate. tests/claims.test.ts:47-48 still accepts either outcome, with the amount check behind `if (outcome === 'overturned')`. tests/life-fixes.test.ts:41 still checks the debt only as lower than before, and the refund only on primaryAccountId.",
+        "Independence: $183.98 is worked from the engine's own content constants (CARE's $100, MEDICAL_CPI 439.389/417.930, the 1.75 markup), not from the helper. That is acceptable."
+      ],
+      "weakTests": [
+        { "title": "tests/claims.test.ts > a marketplace claim > appealed within 180 days, is decided 60 days on: upheld, or overturned to the plan’s share", "why": "Either outcome passes; the amount assertion is behind `if (outcome === 'overturned')` and is skipped silently on an upheld seed." },
+        { "title": "tests/life-fixes.test.ts > a medical bill unpaid when it falls due > denied, gone to debt, and overturned on appeal, comes off the debt and isn’t refunded", "why": "Checks the debt only as lower than before, and looks for a refund only on primaryAccountId; the marketplace plan is a fixture in a New York life." },
+        { "title": "tests/evidence2-b02.test.ts > health.appeal_decided > (all three PLAYER JOURNEYs)", "why": "Marketplace eligibility comes from a TEST SETUP recordWages of $3,000 that no played income source has been shown to reach." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:649 reads 'bill.denied, bill.paid'. The decision also reads bill.inDebt and the medical debt's balance (medicalDebtOf), and its changes leave out the posting to the debt account and the partly-paid refund (see the claimCorrection).",
+        "docs/GAMEPLAY-COVERAGE.md:649 tests column cites only claims.test.ts and life-fixes, both weak. It should cite tests/evidence2-b02.test.ts and tests/evidence-g05-life.test.ts.",
+        "docs/GAMEPLAY-COVERAGE.md:633 (health.appeal) says a marketplace claim is reached in New Haven 'only after the school, by health.enroll'. It should add that the route also needs last month's income over Covered Connecticut's 175%."
+      ]
+    },
+    {
+      "id": "health.appointment",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "implementation missing",
+      "problems": [
+        "The owed-visit defect (defects2 #5) is fixed. The health week now books the owed visit with the next one it draws (health.ts:1391-1399), and the review booking resumes. 'a visit owed and never booked again doesn’t swallow the next one…' now passes: booked 8 October, kept, owedVisit cleared. tests/defects-g23-1.test.ts was turned round and passes. Leftover L1 is fixed in code too (renewalDue at health.ts:769-773 books the owed visit), though only British Columbia reaches it.",
+        "The referral journey and the prescription-and-review journey pass. Both go through the health week and the clock, read the referral's 31-day booking, Papers, and the review's due date a year on.",
+        "Still open: in New Haven, where every played life lives, the claimed downstream 'renewPrescriptions -> fillMedicine' is read by nothing. rxValidUntil reads RX.validYears, which only 'ca-bc' has. The test measures 13 fills of a prescription that nothing renewed. Connecticut's rule (Conn. Gen. Stat. §20-614) is unresearched, and docs/UNBITTEN.md:322-335 keeps it open. This needs research or the owner, not a test.",
+        "Still open: British Columbia, where a renewal is read, is reached only by quickSave fixtures (medicine.test.ts, defects-g23-1)."
+      ],
+      "weakTests": [
+        { "title": "tests/referrals.test.ts > a referral > comes of a visit kept, and a missed one is booked again the specialist’s wait away", "why": "Still enters through book() called directly. It is superseded by the evidence2-b02 referral journey but still in the gate." },
+        { "title": "tests/defects-g8-6.test.ts > presentForCare takes the person and the moment...", "why": "A regex over the source. The behaviour is covered by the first round's laid-up and in-hospital journeys." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:650 downstream 'renewPrescriptions -> fillMedicine; reviewed; mayRefer' should say that in New Haven the renewal is read by nothing (see the claimCorrection).",
+        "docs/GAMEPLAY-COVERAGE.md:650 and :473 still say, in the present tense, 'while one is owed the health week drops every doctor’s visit it draws and books no review'. Fixed 2026-10-13; it should be past tense.",
+        "docs/GAMEPLAY-COVERAGE.md:650 tests column cites 'called off and never booked again, swallows every later visit and review...'. That defects-g23-1 test is now titled 'called off and never booked again, is booked by the next visit a Monday draws, and the review follows it…'."
+      ]
+    },
+    {
+      "id": "health.bill",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The one gap the second agent left open, defects2 #6 (an injury's bill named in title case), is fixed at injury.ts:107. 'A Medical Bill Went Unpaid says what the injury was in the sentence’s own case' now passes: '$699.13 for a sprained ankle: its care is a medical debt now.'",
+        "I checked every gap in the review and the skeptics. An injury's bill comes through play: a workout through life.look_after, uninsured after withdrawal. It is played to BILL_KIND. Paid, it posts −$699.13 on checking and +$699.13 to Medical Care, and Papers shows Settled. Drained, it becomes inDebt, Owed For Medical Care −$699.13, debtSince, and Papers shows Owed As Debt and Medical Debt. The notice is asserted in full.",
+        "The Trouble worry is now measured as its consequence, not through troubles() alone: +4 stress and −2 morale at the midnight against a paid twin. The figures match WORRY_STRESS and WORRY_MORALE for a middle personality. The first round's stay and therapy bills, the healthMonth report and pay_bill pass in evidence-g05-life.",
+        "$699.13 is worked from CARE's prices × BLS × 1.75 in the test, not from uninsuredPrice."
+      ],
+      "weakTests": [
+        { "title": "tests/injury.test.ts > getting hurt > bills its care away from work, and at work leaves it to workers’ compensation", "why": "Counts bills only. Superseded by the sprain journeys." },
+        { "title": "tests/life-fixes.test.ts > a medical bill unpaid when it falls due > is owed as debt and not settled, until the debt is paid", "why": "billCare called directly, a <= bound on the debt, a New York life. Superseded." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:651 tests column cites only injury.test.ts and life-fixes. It should cite tests/evidence2-b02.test.ts (the sprain's bill) and tests/evidence-g05-life.test.ts (the stay's and therapy's bills).",
+        "docs/GAMEPLAY-COVERAGE.md:474 and :651 issue 'Fixed: … (tests/life-fixes.test.ts)' names only the weak test."
+      ]
+    },
+    {
+      "id": "injury.comp",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The open defect, defects2 #7 (the CT minimum held to 75% of the after-tax wage), is fixed. compWeekly's floor is now min(20% of max, 75% of the gross weekly wage) (injury.ts:153-157). 'the Summer Cabaret’s $375 week is paid Connecticut’s minimum, 75% of it, $281.25, to a resident and to an F-1 student alike' passes. It plays both lives through the clock, and its $281.25 is worked from CGS 31-307(a) in the test.",
+        "The waiting-day branch runs through COMP_KIND by the clock. Six days off pays 3 days, $29.57. Seven days off pays all 7, $69.00. Both are pinned to the cent and agree with CGS 31-295(a). The Summer Cabaret journey checks the payment days (+7 and +10), the 3/7 split, the Workers’ Compensation income line, and that the stipend is cut only for the hours off.",
+        "The work-study wage defect (a shift's pay used as the week's) and the noFica defect, both from round one, were fixed earlier with passing tests. Leftover L5 is fixed: the notice now says '75% of your week’s wage' without 'after tax' when the minimum applies (injury.ts:57), and both journeys assert it in full.",
+        "Note: now that the minimum is fixed, the nonresident noFica branch changes no played amount. Every played week (the Cabaret's $375, work-study's) is under $473.60, where the floor governs. The F-1 twin shows the same $281.25, which is right but means the branch is unexercised as a difference.",
+        "Good standing for the Cabaret and the injury draws are TEST SETUP. Standing is reachable by a player who turns in coursework, so I don't count it as a fixture route."
+      ],
+      "weakTests": [
+        { "title": "tests/defects-g8-13.test.ts > PLAYER JOURNEY: the Summer Cabaret of 2027… > pays workers’ compensation for the days off…", "why": "Still checks compensation as count > 0. Superseded by the evidence2-b02 Cabaret journeys." },
+        { "title": "tests/life-fixes.test.ts > an injury at work > schedules workers’ compensation and pays it while off", "why": "mayHurt called directly with a hand-made work argument in a New York life; only existence checked. Superseded." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:655 tests column cites 'injury.test.ts calls compWeek directly' and life-fixes only. It should cite tests/evidence2-b02.test.ts and the first round's work-study journey.",
+        "The row's issue as audited ('No caller passes `work` to mayHurt…') is stale. Two callers pass it: the Summer Cabaret's calls and work-study's shifts (see the claimCorrection). The row's claim text 'Connecticut 75% after tax' should add that the minimum is 75% of the gross wage, which governs every played week."
+      ]
+    },
+    {
+      "id": "hygiene",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The open defect, defects2 #8 (the stale model.ts comment), is fixed. src/engine/domain/model.ts:71-79 now describes the drift, the shower and the midnight floor, and says in the past tense that it once claimed 'twice as fast on set or on stage (`setGrime`)' and that rooms noticed. 'model.ts says no more of hygiene than the engine does…' passes. setGrime appears in src only in that past-tense sentence.",
+        "Hygiene on stage at the Summer Cabaret's first performance falls 1.6 × 2.5 = 4.0, by the clock. The first round covered the rest, and it passes in tests/evidence-g06-life.test.ts: the shower through life.look_after (100, and stress down by a tenth), grime reached by play wearing 0.4 morale an hour against a showered twin, and readiness read through the classes.",
+        "The midnight floor of 82 (life.ts:1017) is pinned as it stands, for a body kept up and one asleep ('as it stands: the midnight floors it at 82…', evidence-g06-life:751). The code models it as the morning's shower, and the review called it by design. It is the row's own stated behaviour, not a defect or an unread word. Whether a skipped shower should outlive the day is a design question I leave to the owner. It doesn't keep the row partial."
+      ],
+      "weakTests": [
+        { "title": "tests/wellbeing-bites.test.ts > hygiene > wears on the mood for the hours spent under fifty", "why": "A fixture on a hand-built person. Superseded by the played grime journey." },
+        { "title": "tests/coverage-gaps-life.test.ts > a plan skipped > frees its time for Look After Yourself, once, across a reload", "why": "Asserts only ok for the wash." }
+      ],
+      "staleText": [
+        "docs/GAMEPLAY-COVERAGE.md:660 tests column cites only wellbeing-bites.test.ts's fixture. It should cite tests/evidence-g06-life.test.ts's hygiene journeys and tests/evidence2-b02.test.ts's stage journey.",
+        "docs/GAMEPLAY-COVERAGE.md:660 reads and changes are '—'. The row's claim names the drift, the shower, the workout and the midnight floor as what changes it."
+      ]
+    }
+  ]
+}

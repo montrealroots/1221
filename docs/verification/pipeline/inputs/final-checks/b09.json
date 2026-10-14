@@ -1,0 +1,135 @@
+{
+  "batch": "b09",
+  "checkedOn": "2026-10-13",
+  "runs": [
+    "tests/evidence2-b09.test.ts: 15 of 15 passed (VITEST_MAX_FORKS=1), including the three DEFECT tests that failed when the second agent ran it",
+    "tests/evidence-g25-school.test.ts + tests/evidence-g26-school.test.ts: 43 of 43 passed"
+  ],
+  "rows": [
+    {
+      "id": "school.make_up",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Every gap the review named is closed. (1) Two hours free: tests/evidence-g25-school.test.ts 'school.make_up > PLAYER JOURNEY: an Incomplete extended a month into the spring’s classes is refused an hour before class and in class…' sends school.make_up through the command at 8:00 and 10:00 and expects the literal refusals, with sim.now and madeUp unchanged. (2) The New Haven refusal is gone. courserecord.ts:185-186 says in the past tense that it went on 2026-10-13, and the b09 journey asserts both conditions that made it unreachable. (3) 'Its month has run out.' is gone (courserecord.ts:178-179). The boundary it was meant to guard is now 'Its month runs out at …' (courserecord.ts:184), held by g25 'a session begun an hour before its month runs out…', which passes. (4) The control is rendered and pressed in both g25 and the b09 journey.",
+        "Downstream, by play: in the b09 journey, Make Up A Session is pressed on the drawn Standing tab at 10 AM on 22 May 2029. It takes two hours, passes the course, empties degreeShortfall and cancels INCOMPLETE_DUE_KIND. conferIfReady makes the standing graduated at noon, once, through a save. The twin left alone is withheld at 5 PM on 27 May. All figures are literals: 14 meetings, 4 excused, 1 owed, and dueBy 27 May at 5 PM, thirty days after the evaluation.",
+        "The latest skeptic's problems are closed. The withdrawn-student defect is fixed at courserecord.ts:180 ('You’re not at school.'), and the b09 DEFECT test now passes. It reaches the refusal through sim.execute on 15 December and on 11 January, with the clock and record unchanged; the after-the-month assertion that the skeptic said was never reached now runs and passes. The New Haven guard is deleted, as the review's todo asked. The disposition complaint falls away because the defect is fixed.",
+        "Left as a note, not counted as open: for a student who has left the School, the Standing tab keeps drawing each Incomplete's line ('… by January 10, 2027.') with Make Up A Session grayed, permanently. Ask For A Month More is hidden instead. This agrees with the guide (guide/school.ts:584 lists 'You’re not at school.' for make-up; only :585, for the month more, says the button stops showing). The 2026-10-12 'stops showing once you’ve left' rule covers Call In Sick and Take A Shift only. The owner may want make-up aligned with that rule."
+      ],
+      "weakTests": [
+        {
+          "title": "school.make_up > DEFECT: a student who has withdrawn with an Incomplete open is refused a make-up session in the School’s words, before its month runs out and after, and the Standing tab grays the button with them",
+          "why": "Only the drawn-button assertion is over-specified. It expects the grayed button (which the guide supports), so a change that hid the button, as Call In Sick's does, would fail it. The command assertions carry the claim, and they pass."
+        }
+      ],
+      "staleText": [
+        "entry: 'SchoolWorkspace.tsx:566'. The button is at SchoolWorkspace.tsx:576.",
+        "reads: 'an Incomplete in its month, in New Haven, two hours free'. The New Haven check went on 2026-10-13. makeUpRefusal now reads: an Incomplete, the School not ended, its month able to hold the whole two-hour session ('Its month runs out at …'), and two hours free (startRefusal).",
+        "changes: 'courserecord.ts:178'. The command is at courserecord.ts:192, and the session is counted at :199. Line 178 is now a comment.",
+        "tests: names only student-experience.test.ts with the hospital stay set by hand. The played evidence is in tests/evidence-g25-school.test.ts and tests/evidence2-b09.test.ts."
+      ]
+    },
+    {
+      "id": "school.extend_incomplete",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "Every gap the review named is closed. (1) Permanent past the extended dueBy: g26 'PLAYER JOURNEY: Ask For A Month More, pressed on the Standing tab, moves Acting I’s month to 9 February…' passes, as does the b09 journey, which shows Incomplete at 4 PM and Permanent and withheld at 5 PM on 26 June, with the old 27 May passing harmlessly. (2) The moved reminder: dueItems are asserted at 19 June and 26 June at 5 PM, and 'A Week Left' comes at 5 PM on 19 June and not an hour before, with the body 'by June 26, 2029.'. (3) 'There’s no Incomplete in that course.' goes through the command in g26. 'Its month has run out.' went on 2026-10-13 (courserecord.ts:145-146 says why, in the past tense). (4) Render: Ask For A Month More is drawn and pressed in g26 and in b09, with the toast 'Extended to June 26, 2029.'.",
+        "Both defects the latest skeptic named are fixed, and their tests pass. The Permanent notice for a student with a degree waiting now ends at '.' (courserecord.ts:236). The b09 DEFECT test checks the whole body and that request_repeat and request_extra_term both answer 'You’re not at school.'. A withdrawn student is refused a month more with 'You’re not at school.' (courserecord.ts:143) on 15 December and 11 January: extended stays undefined, dueBy is unchanged, nothing is rescheduled, and the button isn't drawn. This also settles the skeptic's open question of what a withdrawn student past dueBy is told.",
+        "Mutation claims were not re-run here. The independent literals (30 days on, 7 days before, the times on either side of 5 PM) make the journey falsifiable against dropping scheduleDue or changing incompleteDays."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "entry: 'SchoolWorkspace.tsx:567'. The button is at SchoolWorkspace.tsx:577.",
+        "changes: 'courserecord.ts:196'. dueBy moves at courserecord.ts:217, and scheduleDue runs at :218.",
+        "reads: 'an Incomplete, extended once'. extendRefusal also refuses once the School has ended ('You’re not at school.').",
+        "tests: names only student-experience.test.ts with the Incomplete settled by hand. The played evidence is in tests/evidence-g26-school.test.ts and tests/evidence2-b09.test.ts."
+      ]
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: play never reaches REPEAT_DECIDE_KIND's own refusals (leave.ts:1182-1187: 'Your Repeat Is Refused' for a first year; for a last year, standing withheld with 'The chair and the dean refused your request to repeat the year. …'). Two b09 tests reach them through the clock, but only after secondFail() puts a Fail on the record by hand between the asking and the deciding. That is a fixture, not a player's path. I checked the unreachability argument against the code. The decision recounts withRepeat the way the request did (leave.ts:1181). decideAt is capped before the next term. facultyReview judges every disqualification at the evaluation that makes it, and keptThrough then covers it. So no played life can trip the branch. Under THE ONE RULE the owner decides whether to delete it. It stays a named gap, not closed by play.",
+        "Closed and passing, in g26 and b09: (1) kept-on-warning, then granted and not dismissed on the same Fails, which was the review's DEFECT; (2) the request's nine-semester refusal and the leave, next-year, every-passed and second-time refusals, all through the command; (3) the degree reading the best attempt, by play; (4) the year's courses meeting again; (5) Ask drawn and pressed, with the decision through a save; (6) the first skeptic's weak test, replaced by exact words for both the pending and the granted additional term. Without the school.extra line the refusal would read 'Your last year’s evaluation is past.', which shows the branch is distinguished.",
+        "Not a gap the review named, but noted: the ten-semester and repeat-beside-additional-term defect tests (g26) pass."
+      ],
+      "weakTests": [
+        {
+          "title": "school.request_repeat > PLAYER JOURNEY: beside an additional term it’s refused in each of its words, asked for and then granted, and the panel offers no repeat; a twin with neither is let ask",
+          "why": "`expect(panel.text).not.toContain('Ask To Repeat The Year…')` can't fail: useState is forced to 'request', and in that state StudyPlanPanels never draws that button. The claim is carried by `drew('school.request_repeat')` having length 0, which does test it."
+        },
+        {
+          "title": "school.request_repeat > the decision’s refusal of a first year, reached only from a fixture: …",
+          "why": "It reaches the branch only through secondFail(), a Fail written by hand that no play makes. It protects the code, but it isn't player evidence."
+        }
+      ],
+      "staleText": [
+        "entry: 'StudyPlanPanels.tsx:188'. Ask is at StudyPlanPanels.tsx:198.",
+        "changes: 'REPEAT_DECIDE_KIND (leave.ts:1134)'. The command is at leave.ts:1163, the decision is scheduled at :894, and REPEAT_DECIDE_KIND is handled at :1174.",
+        "tests: '(the course failed set by hand)'. The failure is played (by sleeping through meetings) in tests/evidence-g26-school.test.ts and tests/evidence2-b09.test.ts."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: play never reaches the refusal past nine semesters. That holds at the request (extraRefusal, leave.ts:614) and at the decision (EXTRA_DECIDE_KIND, leave.ts:1033-1038, which withholds the degree for a last year). The b09 tests reach both only after ninthTerm() writes a ninth enrolled term by hand. The row's own downstream names 'refused past nine semesters', so the row claims something that only a fixture shows. The same goes for the disqualification refusals (leave.ts:615 and the decision's), which are reached only through secondFail(). I checked the argument against the code. withRepeat allows one repeat, so eight terms are enrolled at a last evaluation. A leave's term isn't enrolled. school.extra refuses a second additional term (leave.ts:598). facultyReview judges each disqualification at its own evaluation. The owner decides under THE ONE RULE whether to delete these branches.",
+        "The latest skeptic's wording defect is fixed. REPEAT_DUE_KIND now withholds with 'The thirty days to finish the degree ended with nothing asked for, …' (leave.ts:1219). The fixture test asserts the new words, and a new b09 PLAYER JOURNEY reaches them for the played eight-enrolled student who was offered only an additional term, with the offer's notice checked not to mention a repeat. That closes the skeptic's weak test.",
+        "Closed, and still passing in g26: the I-20 a year longer (London-born); the additional term's classes played with no record set by hand; '6:DRAM 373a' counted against program term 4, 14 of 14 meetings, passed and conferred on 22 December; the button drawn and pressed; the request's refusals; the ninth semester allowed; the double-planned week fixed.",
+        "Noted, but the review didn't name it: extraRefusal's 'Its thirty days have run out.' (leave.ts:602) has no test, and looks unreachable at school for the same reason 'Its month has run out.' was. REPEAT_DUE_KIND withholds at repeatBy and ends the School, so a later asking gets 'You’re not at school.' first."
+      ],
+      "weakTests": [
+        {
+          "title": "school.request_extra_term > past the Bulletin’s nine, reached only from a fixture: refused at the asking in its words, the panel offering none, and the degree withheld at the thirty days’ end; a twin without it is let ask, as the ninth",
+          "why": "It reaches the refusal only through ninthTerm(), an enrolled term written by hand that no play makes. It isn't player evidence, though its expected words now read correctly."
+        }
+      ],
+      "staleText": [
+        "entry: 'StudyPlanPanels.tsx:199'. The button is at StudyPlanPanels.tsx:209.",
+        "changes: 'EXTRA_DECIDE_KIND (leave.ts:988)'. The command is at leave.ts:1017, and the decision is at :1028.",
+        "downstream: 'refused past nine semesters'. No played life reaches this, only a fixture. The row should say so.",
+        "tests: '(the sixth term’s record set by hand)'. The additional term is now played in tests/evidence-g26-school.test.ts."
+      ]
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "stale or wrongly grouped claim",
+      "problems": [
+        "Every accepted path is reached only by a life with need, which no player can have. That covers the request booked, the grant paid, 14% withheld, the year's scholarship, the return, and 'No Hours To Convert'. newLifeConfig and newLifeFrom (bootstrap.ts:191-202) force family 'wealthy', which was the owner's choice ('a wealthy family, in the engine only'). hasNeed (school.ts:1398) reads only family, and nothing writes person.family after a life begins. The b09 journey shows this by play: a creation-screen life is refused with 'no need was found' on the drawn button and through the command, and nothing is paid in January, while a twin given need by TEST SETUP is paid $138.00. By docs/GAMEPLAY-COVERAGE.md's own definition, a row reached only by a fixture is Unresolved. So the row's verified claim and its 'downstream' describe something no player meets. Whether need-based aid stays in the engine, or the row goes under Unresolved or Deferred, is the owner's call. No play test can close this.",
+        "On a need fixture, the defects the review named are fixed and held: January, June and the 1 February stat; 'returned hours equal paid hours', now asserted on the command's own return value ({at: 15 May noon, hours: 6} → $138.00, scholarship +$138.00 exactly, convertedHours {0: 6}); the January excused path and the 2027 return; nonresident withholding ($118.68 / $19.32); the no-aid and on-leave refusals; a leave cancelling a pending request. 'No Hours To Convert' is reached only from a fixture (convertedHours set by hand).",
+        "The button is pressed only through the Gated onClick under react-dom/server. No acceptance-ui step presses it in the built app. That step is outside the gate and couldn't make the row verified anyway."
+      ],
+      "weakTests": [
+        {
+          "title": "school.request_conversion > a processing that finds nothing says so, reached only from a fixture: no grant, no scholarship, and the request done; the twin without it is paid",
+          "why": "It reaches the branch only through convertedHours written by hand. No play reaches it."
+        },
+        {
+          "title": "school.request_conversion > PLAYER JOURNEY: in May the hours never assigned, asked on the drawn button, are paid at May’s processing to the hour asked, into the account and onto the year’s scholarship, once through a save (g26)",
+          "why": "Its need is TEST SETUP, which no creation-screen life can have. The returned-hours gap it left is now closed by the b09 test, on the same fixture."
+        }
+      ],
+      "staleText": [
+        "entry: 'StudyPlanPanels.tsx:295'. The button is at StudyPlanPanels.tsx:306.",
+        "changes: 'school.ts:3011', which is school.buy_ppe. The command is at school.ts:3170, and CONVERT_KIND is handled at :3181.",
+        "persistent: 'school.workStudy conversions'. The state is school.excusedHours and school.convertedHours, plus the scheduled CONVERT_KIND item.",
+        "reads/downstream and status: they describe an aid student's path as played, but no creation-screen life has need (every life's family is 'wealthy'). The row should say that it is reached only by a fixture.",
+        "tests/evidence-g25-school.test.ts header calls need 'the family of no means a player can pick'. No screen picks it."
+      ]
+    }
+  ]
+}

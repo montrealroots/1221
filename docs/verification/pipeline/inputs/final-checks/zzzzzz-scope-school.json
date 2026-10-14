@@ -1,0 +1,60 @@
+{
+  "key": "scope-school",
+  "ran": "2026-10-15",
+  "round": "third: after repeatRoom/repeatOpen came to count the terms still to come, the repeatedYears clause was removed, the Clown journey was added, and the evidence-g26 FIXTURE was removed",
+  "rows": [
+    {
+      "id": "school.respond",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Nothing touched it since the second round (classmates.ts strandedMoments and index.ts loadSave are as checked then).",
+      "problems": [
+        "docs/verification/audit/school.json (school.respond) still has the old wording. This is outside the fix agent's files and was listed as such."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_repeat",
+      "claimed": "verified",
+      "holds": false,
+      "verdict": "partial",
+      "disposition": "All three changes this round asked about are sound. (1) Removing the repeatedYears clause from repeatOpen (courserecord.ts:153-156) loses nothing. startLeave takes a leave's term out of `enrolled` (leave.ts:353), rescind puts it back (:675), and a save from before counts every term begun, so enrolled is at least the program terms taken plus two for each repeat granted. repeatRoom (school.ts:2945-2952) is withRepeat (enrolled + 2 + (5 - spring)) plus the program terms still to come through that spring. That comes to 8 + 2R at every point, R being the repeats granted. A year in repeatedYears means R >= 1, so the count is 10 or more, and room is false wherever the clause was true. I worked the in-between states: the repeated year's fall evaluation (3 + 2 + 4 + 1 = 10), a Permanent Incomplete after the grant but before the repeated terms (2 + 2 + 4 + 2 = 10), a last year's grant (6 + 2 + 0 + 2 = 10), and an additional term (13). Only a hand-set repeatedYears with no repeat behind it, a state no play makes, separated the clause from the count. (2) The count is right for every year: with no repeat, every fall and spring evaluation and the summer Permanent Incomplete read 8, as the year's end does. After a repeat they read 10 or more, as repeatRefusal's withRepeat does. The second fall after a year-1 repeat reads 5 + 1 + 2 + 2 = 10. That was the second round's case, now played as the Clown journey, which asserts the bare notice literal, the RepeatPanel without Ask To Repeat The Year… and the refusal literal 'Repeating would make 10 semesters…'. On a leave, `next = firstTerm - (offset - (returnTerm - firstTerm))` is the academic term the leave began in, which is taken again on return. The only notice told during a leave is a fall Incomplete run out in a spring leave. There the count is s + 2R + 2 + (5 - s) + 1 = 8 + 2R, which is correct. The branch decides nothing reachable, though. Without it, a two-term leave reads 9 + 2R, which gives the same answer. Only a three-term leave would differ, and leaveLengths' season rule refuses three-term leaves wherever a year-long course exists. The result says the branch is untested, and that is accurate. (3) The removed evidence-g26 test, as the first round described it (its source is no longer in the tree or the scratchpad), was a FIXTURE: repeatedYears=[1] set by hand at offset 0, asserting that the Permanent Incomplete's notice offered nothing. With the clause gone it would offer, because the impossible state counts 8. It protected only the clause. The Permanent Incomplete's result, its notice with the offer, the reload and the Standing tab are still asserted by the extension test at evidence-g26-school.test.ts:~411 and the no-extension test. The no-offer notice is asserted played, as a literal, in the scope-school Acting I journey. The comments in repeatOpen, tellFails, INCOMPLETE_DUE_KIND, repeatRoom and the g26 placeholder are in the past tense and true, and guide/school.ts:594 matches the count. One defect outside the count, found by reading, keeps the row partial: after a leave from a spring, the year's own fall Fail cannot be repeated for. The notice offers the repeat, and so does the guide.",
+      "problems": [
+        "src/engine/systems/leave.ts:888 repeatCourses keeps a failure only where `r.term === spring || r.term === spring - 1`, which are calendar terms. A two-term leave from a first-year spring (calendar 1 and 2, return 3) splits the year into calendar 0 and 3. At the year's end, repeatCourses(school, 3) drops a fall Fail or Permanent Incomplete at calendar 0. I confirmed this by probing the function on a hand-built record (vite-node, scratchpad probe-split.ts): it returns []. So repeatRefusal (leave.ts:863) refuses with 'Every course this year was passed: there’s nothing to repeat it for.' This holds for every year: a leave from a spring is a two-term leave (leaveLengths' season rule), so it always splits that year. Two consequences. First, a fall Incomplete that runs out during that leave is told 'at the year’s end you can ask to repeat the year' (courserecord.ts:270; repeatRoom reads 8 there, correctly), and the year's end then refuses it. Second, the guide's 'a course failed that year' (guide/school.ts:558) and 'only where that can still be asked' (:594) are false on that path. This was not played, and it is not in this round's diff: it is in leave.ts, which no fix touched. A fall Fail told before such a leave meets the same refusal at the year's end, and the faculty review's 'the year is to be repeated' would too. The fix is to read the year by academic term (`(r.academic ?? r.term)` within the year ending at academicTerm(school, spring)), not by calendar adjacency.",
+        "docs/verification/audit/school.json (school.request_repeat) has still not been updated. This is outside the fix agent's files and was listed as such."
+      ],
+      "weakTests": [
+        "tests/scope-school.test.ts:432 last year's repeat: billing past six is still asserted only as accountOwed > 0, not as a worked literal. This was carried over from the earlier rounds, and the fix agent did not take it up.",
+        "The leave branch of repeatRoom (school.ts:2949-2950) has no test. That is correct as things stand: no reachable state depends on it."
+      ]
+    },
+    {
+      "id": "school.request_extra_term",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "The second round's caveat is closed. A last-year Fail after an earlier repeat now reads repeatRoom: withRepeat(5) = 8 + 2 + 0 = 10, so the Fail's notice no longer offers a repeat beside 'Your Degree Isn’t Complete', which offers only the additional term. The retake journey in the additional term still passes with its literal. A Permanent Incomplete in an additional term counts 13 and offers nothing.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_extra_term) is still 'partial'. This is outside the fix agent's files and was listed as such."
+      ],
+      "weakTests": []
+    },
+    {
+      "id": "school.request_conversion",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "Nothing touched it since the second round. The repeated-year conversion journey and the GUARD pass.",
+      "problems": [
+        "docs/verification/audit/school.json (school.request_conversion) has the older wording. This is outside the fix agent's files."
+      ],
+      "weakTests": []
+    }
+  ],
+  "alsoChecked": {
+    "mutations claimed": "'the terms to come left out' fails the Clown journey: the count reads 9 at the second fall, and I confirmed that by arithmetic. It does not fail the Acting I journey, which counts 10 from the enrolled terms alone (4 + 2 + 4), and the result does not claim it does. repeatRoom forced true fails both journeys: both notices would offer.",
+    "defects-g9-1": "It calls tellFails with the default room (() => true), which is unaffected.",
+    "runs": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/scope-school.test.ts tests/evidence-g26-school.test.ts: 2 files, 43/43 passed, exit 0."
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "rows": [
+    {
+      "id": "trait-spending",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The one open item, the comment naming `costsAt`, is fixed. src/ui/creation/CharacterCreation.tsx:1027-1031 now names foodAt, spending and foodOf, and says in the past tense that until 2026-10-13 it named `costsAt`. No `costsAt` is left in src. A comment fails no test. The claim it makes is held by evidence2-b11's 'Going Out A Month ... is the day's groceries the clock first posts', which passes.",
+        "Checked: evidence-g30-ui's five round-one tests are present. A meal is pressed on the menu (429/500/608/549). Midnight groceries come to 859/1000/1216/1097, once each across a reload. Order In and spendRefusal are checked, and Review shows $261/$304/$370/$334. The b11 test ties Review to the clock's played Groceries posting x 365/12, with literal cents and no foodAt or monthOf. The latest skeptic's remaining points are the '[needs engine change]' tag, which is moot now, and the audit row's stale text, listed below.",
+        "Ran tests/evidence2-b11.test.ts: 15 of 15 pass."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "ui.json trait-spending.downstream still cites spending.ts:68-74 (spending.ts:298, life.ts:552-553) and CharacterCreation.tsx:1018. It should cite foodOf/mealOf spending.ts:74-80, buyTheDaysFood (called from life.ts at the day's start), costFor life.ts:591-592, and monthOf CharacterCreation.tsx:1033-1039, shown at :1097.",
+        "ui.json trait-spending.tests says 'no test checks foodOf or mealOf reading it'. It should cite tests/evidence-g30-ui.test.ts (trait-spending) and tests/evidence2-b11.test.ts.",
+        "The review gap about the stale comment at CharacterCreation.tsx:1023 has been closed by the source fix."
+      ]
+    },
+    {
+      "id": "p-abilities",
+      "claimed": "verified",
+      "holds": true,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The latest skeptic's over-report defect (69) is fixed. todayFor (ProfileWorkspace.tsx ~96-104) now pairs each reader's dims with that task's own conditions. The b11 7 PM and sprain tests and the g31 7 PM test now expect literal per-task tables.",
+        "I checked those tables independently with a scratch script over TASK_PROFILES, collecting per (task, dimension) the abilities whose dimension lists fatigue or injury. Fatigue: listening connection+responsiveness, presence connection, memory execution, vocal execution+consistency, physical execution, composure consistency, discipline consistency+execution, stamina consistency, adaptability responsiveness, focus execution+consistency. Injury: physical execution, stamina consistency, discipline consistency, focus consistency+execution, memory execution, composure consistency, vocal execution. Both match the tests' TIRED and injury expectations exactly (Emotional Depth: believability only).",
+        "The fine-print defect (38) is fixed. ProfileWorkspace.tsx:476 now names believability, connection, execution, consistency and responsiveness, and the b11 test that failed before now passes. The file is green, 15 of 15.",
+        "The review's other gaps are closed in evidence-g31-ui: Practice An Hour pressed with Now, Last Change and hours re-read; the Tier select pressed; Stamina's refusal and held/falling. In b11: Stamina's Full is 99.4, then 99.3 across a clock birthday; Classes Reach is worked from the admitted craft +26 or the kin means; '—' appears 4 times; readiness is worked by hand from the seven dials (48/54/59); 12 rows are asserted.",
+        "The line-reference correction was not applied; see staleText."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence-g31-ui.test.ts > p-abilities > PLAYER JOURNEY: at 7 PM on the first day, Today names what fatigue reaches of each ability, at readiness times the hour’s fit, and nothing for an ability read only in interpretation",
+          "why": "Its expected readiness is still built from the engine's readiness(). The b11 7 PM test supersedes it with byHand, so nothing is left open."
+        }
+      ],
+      "staleText": [
+        "ui.json p-abilities.entry cites ProfileWorkspace.tsx:193-221, 277-320. It should cite AbilitiesPanel ~283-325, PracticeButton ~168-187, PracticeControl ~195-223 and todayFor ~85-104, as of 2026-10-13.",
+        "ui.json p-abilities.tests says 'no test in the gate renders the panel' and cites attributes-complete as the engine evidence. It should cite tests/evidence-g31-ui.test.ts and tests/evidence2-b11.test.ts (p-abilities)."
+      ]
+    },
+    {
+      "id": "p-journey-history",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: JourneyPanel's school.rep branch (a closed Rep run on stage, then filed) is evidenced only by a fixture. The b11 test writes a closed Rep run onto a student under academic warning, a state the Rep casting rule (good standing) can't produce. A Rep understudy is play-reachable: evidence-g24-school reaches school.rep as The Seagull's Nina, and g19 does so with coursework prepared. Yet no test plays one to its close and reads School Journey.",
+        "Closed: defect 39, the built-app step. tools/acceptance-ui.mjs:557-569 now requires a practiced hour and finds that exercise's change among the newest Development History items, with its date and +x.xxx. This is outside the gate and was not run here. The in-gate equivalent is g32's 'an hour of Circles Of Attention puts its changes at the top of Development History'.",
+        "Closed: Your Work So Far is rebuilt by hand from the records on played r8-a and compared exactly, including after a reload. How You Tend To Play It is checked at 5/5 and 4/5, and is absent at 4/4 and 3/5. The three milestone kinds are matched to the first piece past 65, past 80 and at mastery; abilities set at full is labelled TEST SETUP. The closed-run filter runs on a played dismissal: Marie is said once, also after a reload.",
+        "Ran tests/evidence2-b11.test.ts: all p-journey-history tests pass."
+      ],
+      "weakTests": [
+        {
+          "title": "p-journey-history > a Rep night closed is on stage beside the School’s run, and filed by a withdrawal still once (TEST SETUP: the Rep run set on the record: only a fixture reaches it here)",
+          "why": "The fixture puts a Rep run on a student under academic warning, which casting never does. The branch can be reached by play (a Rep understudy cast in good standing), but this fixture is its only evidence."
+        }
+      ],
+      "staleText": [
+        "ui.json p-journey-history.entry cites ProfileWorkspace.tsx:444-518 and leaves out Your Work So Far. It should name School Journey, Your Work So Far and Development History, with JourneyPanel, WorkSoFarPanel and HistoryPanel's current lines.",
+        "ui.json p-journey-history.tests says the acceptance step finds the heading only and that defects-g3-1 reads none of it. Since 2026-10-13 the step reads the hour's change, and evidence-g32-ui and evidence2-b11 read every panel."
+      ]
+    },
+    {
+      "id": "h-needs",
+      "claimed": "partial",
+      "holds": true,
+      "verdict": "partial",
+      "disposition": "working, evidence missing",
+      "problems": [
+        "Still open: the latest skeptic's point that several weighing sentences rest only on TEST SETUP in evidence-g32-ui.test.ts:740-800. These are owed ('You owe $120 that went unpaid'), near-limit, medical and collections, each a debt account or balance posted against a test equity line. Collections is reachable by play: CHARGE_OFF_AFTER 6 sends a played card to collections, and an unpaid Yale Health bill opens medical debt. No test plays either to the Home sentence. Overdrawn by TEST SETUP was allowed by the review's todo.",
+        "Still open: 'Your card is N payments behind' for N >= 2, unsuspended (Home.tsx:65), is reached only by g32's fixture (missed: 2 set by hand). The hardship route the skeptic found was a defect, now fixed: defect 68 makes a nothing-owed statement reset missed to 0, and defects3-bank 'late once, on a plan, paid off' shows Home with no behind line. By the code, the second miss suspends the card (SUSPEND_AFTER 2), and a met due date resets the count. So the 'N payments behind' wording for N >= 2 now looks reachable by no played life: a declared word that the code should settle (remove, or show reachable), not evidence still to come.",
+        "Closed: defect 40, the built-app step. tools/acceptance-ui.mjs:189-204 now requires zero cards and the panel's own words 'No decision is waiting on you.' on the first day, and takes a decision on a save that has one. This is outside the gate and was not run here.",
+        "Closed: the six unread notices are read with their titles, bodies and hand-worked ages, and Go There is pressed. The card's one-behind and suspended states are reached by play: everyday credit, transfers to savings before each due date, $510 = 48x$10+$30 and $850 = 78x$10+$30+$40, also after a reload. Income tax is reached by pressing File It on an emptied bank (labelled TEST SETUP), giving $166 against the twin's All Clear. Round one's g32 tests cover the return row, Dismiss, Mark N Read, All Clear, the late return, clashes and the six-row cap.",
+        "Minor, as the skeptic said: the six notices' selection order is a literal snapshot, not worked from the importance rule. The second late fee being held to $40 uses the engine's minimum."
+      ],
+      "weakTests": [
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > medical care owed, and a debt with collections",
+          "why": "Both debts are opened and set by TEST SETUP. Collections and medical debt are reachable by play, and no played path reaches the Home sentence."
+        },
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > the card behind: a payment, two payments, suspended",
+          "why": "missed and suspended are assigned by hand. 'Two payments behind' unsuspended no longer appears reachable by play since defect 68's fix."
+        },
+        {
+          "title": "tests/evidence-g32-ui.test.ts > h-needs > something gone unpaid: You owe $120 that went unpaid.",
+          "why": "The arrears account is opened by TEST SETUP, not reached by a bill gone unpaid."
+        }
+      ],
+      "staleText": [
+        "ui.json h-needs.downstream says world.ts:33-97. It should cite world.dismiss_decision, take_decision_action, mark_read, expireDecisions and troubles() in systems/spending.ts at current lines.",
+        "ui.json h-needs.tests says the acceptance step checks nothing and no test renders the panel. Since 2026-10-13 the step reads the panel's words, and evidence-g32-ui and evidence2-b11 render and press it.",
+        "The weighing sentence list should note that 'N payments behind' for N >= 2 is reached by no played life since defect 68's fix (2026-10-13)."
+      ]
+    },
+    {
+      "id": "h-where-weather",
+      "claimed": "partial",
+      "holds": false,
+      "verdict": "verified",
+      "disposition": "verified",
+      "problems": [
+        "The only open gap, the away branch (distance and hours from home), went in defect 41's fix. Home.tsx:353-361 now always says 'Home.' with a past-tense JSX note, and Local Time's hours-from-home note went with it. homeCityOf's docstring (place.ts:96-104) is now in the past tense. The owner removed the home and its moves on 2026-10-09, so this part of the claim is deferred or removed, not missing. L8 also removed place.tsx's unreached away branches, tested in tests/defects3-place.test.ts. The place look still says miles from home for another city.",
+        "Every live behavior is closed by rendered tests in evidence-g32-ui: names, Home., 130K, Local Time, Daylight against the sunrise equation, °F/mph and °C/km/h, the strip against the next day, and a strip day opening its forecast. evidence2-b11 shows birthplace doesn't reach Home: the London-born and New York-born read the same line, and the Profile says From London.",
+        "Ran tests/evidence2-b11.test.ts: the h-where-weather test passes."
+      ],
+      "weakTests": [],
+      "staleText": [
+        "The review's claim says 'distance and hours from home when away or Home.'. That branch was removed on 2026-10-13 (nothing has put a player away since the scope of 2026-10-09), and the claim should say Home. only.",
+        "ui.json h-where-weather.entry cites Home.tsx:338-436. It should cite Where You Are and Weather at their current lines.",
+        "ui.json h-where-weather.tests says 'no test renders the panels'. It should cite tests/evidence-g32-ui.test.ts and tests/evidence2-b11.test.ts (h-where-weather)."
+      ]
+    }
+  ]
+}
