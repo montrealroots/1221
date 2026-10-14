@@ -744,7 +744,10 @@ export const COURSEWORK: readonly GuideEntry[] = [
       '“It’s too late to answer: the moment passed.”',
       '“You’ve answered it.”',
       '“That work is finished.”: another reading of a piece already shown.',
-      '“That evening has passed.” and “You have … then: say no instead.”',
+      '“You have … then: say no instead.”',
+      // Reached only from a save made before 2026-10-12, whose invitations waited past the evening they asked for
+      // (`respondRefusal`); one made since lapses first. Until 2026-10-14 it was listed as if any save could reach it.
+      '“That evening has passed.”, only on a save made before 2026-10-12, where an invitation could wait past its evening.',
       '“There’s nothing between you to make right.”',
       LOCKED,
     ],

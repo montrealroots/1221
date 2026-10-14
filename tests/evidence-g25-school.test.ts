@@ -41,10 +41,12 @@
  *
  * PLAYER JOURNEYS: a new life (`createSave` with `newLifeConfig`), Ada Cole, born in New York (the birthplace a player
  * picks on Identity, which `newLifeConfig` leaves empty) and an actor at Yale in New Haven from Monday 24 August 2026;
- * where the row is about need, the family of no means a player can pick (`family` undefined, `wealth` scraping), and
- * where it's about an F-1, born in London instead. The screens are rendered with react-dom/server as the player has
- * them: `useGame` stands in for the provider, `run` is the save's own `execute`, and Gated is the real one with its
- * onClick kept so the test can press it.
+ * where the row is about need, a family of no means (`family` undefined, `wealth` scraping), and where it's about an
+ * F-1, born in London instead. When this was written no player could pick that family: every new life's was wealthy
+ * until 2026-10-14, when creation began offering the family beside the background (`FAMILIES`, `withFamily`), its
+ * Scraping family this one. The screens are rendered with react-dom/server as the player has them: `useGame` stands
+ * in for the provider, `run` is the save's own `execute`, and Gated is the real one with its onClick kept so the test
+ * can press it.
  *
  * TEST SETUP, said again where it's done: the day's dials each six hours (`tended`), so the clock's consequences are
  * what's measured; the coursework done each midnight (`working`), so a student stays at the School to its second spring;
@@ -127,7 +129,7 @@ const zone = 'America/New_York';
 const at = (y: number, m: number, d: number, hh = 9, min = 0) => instantFromZoned({ year: y, month: m, day: d, hour: hh, minute: min }, zone);
 const dayOf = (t: number) => { const p = zonedParts(t, zone); return `${p.year}-${String(p.month).padStart(2, '0')}-${String(p.day).padStart(2, '0')}`; };
 const student = (seed: string, extra: Record<string, unknown> = {}) => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', ...extra });
-/** A family of no means, which Yale's aid meets: the player's own pick on Identity. */
+/** A family of no means, which Yale's aid meets: creation's Scraping family since 2026-10-14 (`withFamily`), no player's pick before. */
 const onAid = { family: undefined, wealth: 'scraping' };
 /** Born in London: at Yale on an F-1. */
 const londoner = { homeRegionId: 'uk-eng-london' };

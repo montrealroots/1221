@@ -1,35 +1,39 @@
 /**
- * Round three of 2026-10-14 for six rows the first two rounds (tests/evidence-g32-ui.test.ts, tests/evidence-g33-ui.test.ts,
- * tests/evidence2-b11.test.ts, tests/evidence2-b12.test.ts) left partial: Home's What Needs You and its three lines of
- * Your Affairs, a foreign graduate's status decision, and the Profile's School Journey. What those rounds reached only
- * by a fixture is reached here by play, now that creation offers a family with need (`withFamily`, `FAMILIES`, from
- * 2026-10-14), and a school is played to its degree in slices across reloads.
+ * Round three of 2026-10-14 was for six rows the first two rounds (tests/evidence-g32-ui.test.ts,
+ * tests/evidence-g33-ui.test.ts, tests/evidence2-b11.test.ts, tests/evidence2-b12.test.ts) left partial: Home's What
+ * Needs You and its three lines of Your Affairs, a foreign graduate's status decision, and the Profile's School Journey.
+ * What those rounds reached only by a fixture was reached here by play, once creation offered a family with need
+ * (`withFamily`, `FAMILIES`, from 2026-10-14), and a school was played to its degree in slices across reloads.
  *
- * - `h-needs`: the weighing sentences the first round wrote over hand-made debts, each reached by play: "You owe $10
- *   that went unpaid." (the checking moved to savings on the first morning, and the first midnight's groceries owed);
- *   "Your card is nearly at its limit, owing $1,630." (a Scraping family's card carried to its limit, the autopay
- *   bounced, where at $1,423 a month before it isn't), "$1,999 is with collections." at the sixth payment missed, gone
- *   once Pay is sent; and "You owe $50 for medical care." (a bone broken on the first morning's run, Yale Health's $50
- *   for the emergency room, the checking moved to savings before the bill's day).
- * - `h-money`: "No account" still reached by no life: the poorest family has a checking and nothing else, and the bank
- *   refuses to close it; a card charged off to collections leaves the checking named.
- * - `h-school`: the Graduated branch played: a student from London kept up hour by hour by the attentive policy from 24
- *   August 2026 to 22 May 2029, fifteen slices of under a minute each across reloads, reads "Graduated, N of 16 in the
- *   class." with no Next and no alert, N counted here from the class's craft.
- * - `h-papers`: Connecticut's part and the IRS's added on Home on a played life and year where both are owed: a
+ * - `h-needs`: the weighing sentences the first round wrote over hand-made debts were each reached by play: "You owe
+ *   $1,882 that went unpaid." (the checking moved to savings at 7:30 on the first morning, and the fall's Yale Health
+ *   plan billed at nine to nothing); "Your card is nearly at its limit, owing $1,630." (a Scraping family's card carried
+ *   to its limit, the autopay bounced, where at $1,423 a month before it wasn't), "$1,999 is with collections." at the
+ *   sixth payment missed, gone once Pay was sent; and "You owe $50 for medical care." (a bone broken on the first
+ *   morning's run, Yale Health's $50 for the emergency room, the checking moved to savings before the bill's day).
+ * - `h-money`: "No account" was reached by no life: the poorest family had a checking and nothing else, and the bank
+ *   refused to close it; a card charged off to collections left the checking named.
+ * - `h-school`: the Graduated branch was played: a student from London kept up hour by hour by the attentive policy from
+ *   24 August 2026 to 22 May 2029, in twenty-six slices of under ten seconds each across reloads, read "Graduated, N of
+ *   16 in the class." with no Next and no alert, N counted here from the class's craft.
+ * - `h-papers`: Connecticut's part and the IRS's were added on Home on a played life and year where both were owed: a
  *   Scraping family's student in 2027, $1,700.39 to the IRS on 2026's table and $585.33 to Connecticut, both worked here;
  *   her money put in a Chase CD, which the IRS can't draw on, and File It pressed: "$2,286 of tax owed", and the day
  *   past the due date "$2,359", each authority's interest and penalty in it. Left open, her 2027 return "is due April
  *   18, 2028" to the day before and "was due" on it the day past; until 2026-10-14 the alert said "is due" a date gone.
- * - `n-decision-us-status`: the OPT decision on a degree played, not conferred by hand: the played graduate's F-1 looked
- *   at by the clock on 31 May 2029, Apply For OPT pressed on Home on 1 June, $470, a permit pending to 30 August,
+ * - `n-decision-us-status`: the OPT decision on a degree played, not conferred by hand: the played graduate's F-1 was
+ *   looked at by the clock on 31 May 2029, Apply For OPT pressed on Home on 1 June, $470, a permit pending to 30 August,
  *   approved by the clock across a reload.
- * - `p-journey-history`: School Journey on the played graduate, every part she played said once. And two defects, each
- *   held by a test that fails until it's fixed: School Journey's subtitle for a graduate reads "Graduated, graduated"
- *   (the words Home's School line lost on 2026-10-13, ProfileWorkspace.tsx:503); and an understudy's Rep run that she
- *   went on in is never closed (`closeRun` is reached from a performance call, which an understudy's run has none of:
- *   school.ts:2725), so from The Seagull's last night, 27 March 2027, until the next casting files it in August, School
- *   Journey says "No production yet." with her night as Nina on the record.
+ * - `p-journey-history`: School Journey on the played graduate said every part she played once.
+ *
+ * Three defects this round found were fixed on 2026-10-14 (5f0cba03), and the tests that held them, titled DEFECT and
+ * failing until then, were retitled for what they assert: Home's Papers alert named the first open return by year, so
+ * on 1 February 2028 a 2026 return owing nothing, Connecticut's $3.35 taken by levy, was "due April 15, 2027" and the
+ * 2027 return's $2,286 wasn't named; School Journey's subtitle for a graduate read "Graduated, graduated" (the words
+ * Home's School line lost on 2026-10-13); and an understudy's Rep run that she went on in was never closed (`closeRun`
+ * was reached only from a last performance call, which an understudy's run, all on call, had none of), so from The
+ * Seagull's last night, 27 March 2027, until the next casting filed it in August, School Journey said "No production
+ * yet." with her night as Nina on the record.
  *
  * PLAYER JOURNEYS: new lives (`createSave` with `newLifeConfig`, the family chosen as creation's select chooses it,
  * `withFamily`), Ada Cole, she/her, an actress at Yale in New Haven from Monday 24 August 2026 at 7:30 AM, born in New
@@ -351,7 +355,7 @@ describe('h-papers', () => {
   /** Your Affairs' Papers line, its alerts in it. */
   const papers = (one: Simulation) => between(between(drawn(one, Home).text, 'Your Affairs'), 'Papers Cover', 'Papers How This Works');
 
-  it('DEFECT (h-papers): on 1 February 2028, her 2026 return unfiled, owing nobody since Connecticut’s levy, and her 2027 return owing $2,286, Home’s alert names the 2027 return and what it would pay; it names only the 2026 one, “due April 15, 2027”, ten months gone, and nothing of the $2,286', () => {
+  it('PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled, owing nobody since Connecticut’s levy, and her 2027 return owing $2,286, Home’s alert names the 2027 return and what it would pay', () => {
     const sim = needy();
     expect(sim.player.returns!['2026']!.filedAt).toBeUndefined();
     expect(sim.player.returns!['2027']!.figures.balance).toBe(2_285_72);
@@ -429,12 +433,18 @@ describe('h-papers', () => {
 /**
  * PLAYER JOURNEY: Ada, born in London, on an F-1, kept up hour by hour by the attentive policy from Monday 24 August 2026
  * to noon on 22 May 2029, the day after Commencement. The whole took 191 seconds in one run on this machine on
- * 2026-10-14 (tools/lives.ts's London profile graduates 39 lives of 39), so it is played in fourteen slices of under a
- * minute, each from the save the last one left, reloaded: about 100 seconds in all, the longest 17.
+ * 2026-10-14 (tools/lives.ts's London profile graduates 39 lives of 39), so it is played in slices, each from the save
+ * the last one left, reloaded. There were fourteen that day, the longest 20 seconds alone and up to 30 in a loaded full
+ * run, against each slice's 60-second limit; they were cut to twenty-six the same day, a month or so of term each and
+ * the summers whole: 119 seconds in all alone, the longest 9.6 (1 October to 1 November 2028), so a slice slowed
+ * threefold by a loaded run still finishes in half its limit. She graduated at the new cuts, and every test after the
+ * slices passed on them.
  */
 const SLICES: [number, number, number][] = [
-  [2026, 12, 1], [2027, 2, 15], [2027, 4, 15], [2027, 9, 1], [2027, 11, 1], [2028, 1, 15], [2028, 3, 15], [2028, 6, 1],
-  [2028, 11, 1], [2028, 12, 1], [2029, 2, 1], [2029, 3, 15], [2029, 4, 20], [2029, 5, 22],
+  [2026, 10, 15], [2026, 12, 1], [2027, 1, 15], [2027, 2, 15], [2027, 3, 15], [2027, 4, 15], [2027, 9, 1], [2027, 10, 1],
+  [2027, 11, 1], [2027, 12, 1], [2028, 1, 15], [2028, 2, 15], [2028, 3, 15], [2028, 6, 1], [2028, 9, 1], [2028, 10, 1],
+  [2028, 11, 1], [2028, 12, 1], [2029, 1, 1], [2029, 2, 1], [2029, 2, 15], [2029, 3, 1], [2029, 3, 15], [2029, 4, 1],
+  [2029, 4, 20], [2029, 5, 22],
 ];
 const kept: { text?: string; april2027?: string; graduated?: string } = {};
 const statusDecision = (sim: Simulation) => Object.values(sim.universe.decisions).filter((d) => d.refType === 'us-status');
@@ -452,6 +462,7 @@ describe('the graduate, played', () => {
       kept.text = serialise(sim.universe);
       if (y === 2027 && m === 4) kept.april2027 = kept.text;
       if (y === 2029 && m === 5) kept.graduated = kept.text;
+      // Each slice measured under ten seconds alone on 2026-10-14: the limit is six times the longest, for a loaded run.
     }, 60_000);
   }
 
@@ -512,13 +523,13 @@ describe('the graduate, played', () => {
     for (const c of credits) expect(journey(sim).split(`${c.role} in ${c.production}`).length - 1, c.role).toBe(1);
   });
 
-  it('DEFECT (p-journey-history): the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13; it says “Graduated, graduated”', () => {
+  it('p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13', () => {
     expect(kept.graduated, 'the slices played').toBeDefined();
     const sim = opened(kept.graduated!);
     expect(journey(sim)).toMatch(/^School Journey Graduated How This Works On stage: /);
   });
 
-  it('DEFECT (p-journey-history): on 15 April 2027, The Seagull closed on 27 March and her night as Nina on the record, School Journey says she was on stage in it, as it says of a School run closed; it says “No production yet.”', () => {
+  it('p-journey-history: PLAYER JOURNEY: on 15 April 2027, The Seagull closed on 27 March and her night as Nina on the record, School Journey says she was on stage in it, as it says of a School run closed', () => {
     expect(kept.april2027, 'the slices played').toBeDefined();
     const sim = opened(kept.april2027!);
     const rep = sim.player.school!.rep as NonNullable<typeof sim.player.school>['rep'] & { closed?: number };

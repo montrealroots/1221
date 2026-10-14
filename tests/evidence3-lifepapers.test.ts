@@ -13,23 +13,27 @@
  * - an Inherited family's money is 240,000 € and 2,400,000 € at SLATE's 0.92 to the dollar, $260,870 in checking and
  *   $2,608,696 in savings, as tests/need-paths.test.ts works it; all but $20,000 of it put in Chase's CD is $2,849,566,
  *   at Chase's 3.50% a year, a 365th a day: 37 days, 25 August to 30 September, is $10,110.10, and the CD's 212 days to
- *   its maturity on 24 March 2027 are $57,928.16;
+ *   its maturity on 24 March 2027 are $57,928.16; broken on 10 March 2027 after 198 midnights, $54,102.71 earned less
+ *   Chase's 180 days' interest for a term of six months to two years, $49,184.29, keeps $4,918.42;
  * - a doctor's visit uninsured is $183.98 and a marketplace's share $45, as tests/evidence-g05-life.test.ts works them,
- *   $138.98 between them;
+ *   $138.98 between them; New Haven's wait for a doctor is AMN Healthcare's fifteen-metro average, 23.5 days, and for
+ *   a specialist America's 31;
  * - Yale Health ends on a withdrawal by the fifteenth day of classes on the day, and after it thirty days on (Bulletin
  *   2026–27 p.174); a plan chosen before cover ends starts the first of the month on or after its end (45 CFR
  *   155.420(b)(2)(iv)), otherwise the first of next month; a withdrawn F-1 keeps her status fifteen days.
  *
- * What this round measured, and the two tests that failed on the tree of 2026-10-14 until that day's fixes:
+ * What this round measured, and the two tests that failed on the tree of 2026-10-14 until that day's fixes (5f0cba03),
+ * titled DEFECT until then and retitled for what they assert once they passed:
  * - A CD's interest was income nothing recorded. Chase's CD, opened on the first morning with an Inherited family's
  *   money, was credited $57,928.16 at its maturity, and neither the year's earnings (`recordInterest`) nor March's income
  *   saw a cent of it, where a savings account's month's interest and a CD's interest taken by hand were both recorded.
  *   So the student who withdrew on 1 April was given HUSKY D by Enroll, on March's $276 of work-study, where March's
  *   income was over Connecticut's line two hundredfold. It has been recorded since, wherever a term's interest is
- *   credited: renewed, moved to savings, paid out or broken (two tests below hold the last two). The interest taken by hand (`bank.take_term_interest`) is the way
- *   the F-1 here reaches the marketplace at all: with her savings left at Chase, Wells Fargo or Bank of America,
- *   September's income came to $435.44 at each, under the line, and Capital One, whose 3.00% carries the citizen of
- *   tests/need-paths.test.ts over it, won't open an F-1's account (creation gave her Chase when it was asked for).
+ *   credited: renewed, moved to savings, paid out or broken (two tests below hold the last two). The interest taken by
+ *   hand (`bank.take_term_interest`) is the way the F-1 here reaches the marketplace at all: with her savings left at
+ *   Chase, Wells Fargo or Bank of America, September's income came to $435.44 at each, under the line, and Capital One,
+ *   whose 3.00% carries the citizen of tests/need-paths.test.ts over it, won't open an F-1's account (creation gave her
+ *   Chase when it was asked for).
  * - Out of status, the marketplace plan an F-1 bought in her grace ends on the next month's look, before the month it was
  *   to start: Yale Health's thirty days after a late withdrawal outlast the status's fifteen, so in every played life a
  *   marketplace plan ended this way had not begun. The notice said "Your Marketplace Plan Has Ended" until that day's
@@ -45,8 +49,9 @@
  * lp-f1, lp-us, lp-ssn, lp-dr, lp-ap, lp-kn.
  *
  * TEST SETUP, said again where it's done: the week's illness draw forced to a doctor's visit or a stay in hospital, the
- * claim's draw to a denial and the appeal's to its outcome, as tests/evidence-g05-life.test.ts forces them; the rows of a
- * save from before 2026-10-14 left undated, as an older build wrote them.
+ * claim's draw to a denial and the appeal's to its outcome, as tests/evidence-g05-life.test.ts forces them, and a kept
+ * visit's referral draw to a referral; the rows of a save from before 2026-10-14 left undated, as an older build wrote
+ * them.
  */
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type FunctionComponent } from 'react';
@@ -56,7 +61,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily, type NewSaveConfig, type StartingWealth } from '@/engine/world/bootstrap';
 import { APPEAL_KIND, HEALTH_WEEK_KIND, coverOn, healthOf } from '@/engine/systems/health';
-import { appointmentsOf } from '@/engine/systems/appointments';
+import { SPECIALIST, appointmentsOf } from '@/engine/systems/appointments';
 import { earningsOf } from '@/engine/systems/earnings';
 import { payeeAccount } from '@/engine/systems/cash';
 import { openDecisions } from '@/engine/world/world';
@@ -195,6 +200,8 @@ function forceWeek(sim: Simulation, force: ReturnType<typeof forcing>, draws: nu
 
 const SHARE = 45_00;
 const UNINSURED = 183_98;
+/** New Haven’s wait for a doctor: AMN Healthcare’s 2025 average over its fifteen metros, 23.5 days, to the day. */
+const VISIT_WAIT = 24;
 /** Chase's CD of everything but $20,000: $2,849,566. */
 const IN_CD = 2_849_566_00;
 
@@ -265,7 +272,7 @@ describe('health.enroll, on income the clock paid (round three)', () => {
     expect(premiums(sim)).toEqual([[at(2026, 12, 1, 0, 30), 706_00]]);
   }, 60_000);
 
-  it('DEFECT: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D', () => {
+  it('PLAYER JOURNEY: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D', () => {
     const sim = createSave(1, 'lp-cd', { ...answers('inherited'), bankId: 'us-chase' });
     const cd = intoTheCd(sim);
     sim.advanceTo(at(2027, 3, 25, 9));
@@ -296,7 +303,7 @@ describe('health.enroll, on income the clock paid (round three)', () => {
     expect((earningsOf(sim.player).months['2027-03'] ?? 0) - before).toBe(57_928_16);
   }, 60_000);
 
-  it('PLAYER JOURNEY: the same CD broken on 10 March 2027, its interest less Chase’s 180 days’, records what it kept as the year’s interest and March’s income, once', () => {
+  it('PLAYER JOURNEY: the same CD broken on 10 March 2027, 198 days’ interest less Chase’s 180 days’, keeps $4,918.42, and records it as the year’s interest and March’s income, once', () => {
     const sim = createSave(1, 'lp-cd', { ...answers('inherited'), bankId: 'us-chase' });
     const cd = intoTheCd(sim);
     sim.advanceTo(at(2027, 3, 10, 9));
@@ -306,7 +313,16 @@ describe('health.enroll, on income the clock paid (round three)', () => {
     const broken = memos(sim, /^CD broken early$/);
     expect(broken).toHaveLength(1);
     const kept = -broken[0]!.postings.filter((p) => sim.universe.accounts[p.accountId]?.name === 'Interest').reduce((s, p) => s + p.amount, 0);
-    expect(kept).toBeGreaterThan(0);
+    // Worked by hand: a 365th of 3.50% on $2,849,566 a midnight, 198 midnights from 25 August 2026 to 10 March 2027,
+    // $54,102.71 to the cent below; Chase's penalty for a CD of seven months, in its 6-to-24-month band, 180 days'
+    // interest, $49,184.29, under the cap of what was earned (deposit account agreement, 26 September 2026). Kept,
+    // $4,918.42, before any tax on it (the Interest posting is what was earned, the tax its own posting).
+    const day = (IN_CD * 0.035) / 365;
+    const earned = Math.floor(198 * day);
+    const penalty = Math.round(180 * day);
+    expect([earned, penalty]).toEqual([54_102_71, 49_184_29]);
+    expect(earned - penalty).toBe(4_918_42);
+    expect(kept).toBe(4_918_42);
     expect(earningsOf(sim.player).years[2027]?.interest).toBe(kept);
     expect((earningsOf(sim.player).months['2027-03'] ?? 0) - before).toBe(kept);
     sim.advanceTo(at(2027, 3, 25, 9));
@@ -440,7 +456,7 @@ describe('documents.us_status, a marketplace plan bought in the grace (round thr
     expect(coverOn(u.player, u.now)).toBe('marketplace');
   }, 60_000);
 
-  it('DEFECT: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended', () => {
+  it('PLAYER JOURNEY: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended; with Yale Health still covering her that morning, her cover isn’t counted lost', () => {
     const f = thaw(graced().f1.dec);
     const said = f.universe.notifications.filter((n) => /^Your Marketplace Plan/.test(n.title)).map((n) => [n.at, n.title]);
     expect(said).toEqual([[at(2026, 11, 1, 0, 30), 'Your Marketplace Plan Won’t Begin']]);
@@ -561,7 +577,7 @@ describe('health.choose_clinic, for a family-made life (round three)', () => {
 });
 
 describe('health.appointment, a visit called off on a family-made life (round three)', () => {
-  it('PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more', () => {
+  it('PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more; a specialist it referred to, called off, is booked by the next such week as the specialist, 31 days on, not as the week’s own visit', () => {
     const sim = createSave(1, 'lp-ap', answers('modest'));
     const force = forcing(sim);
     forceWeek(sim, force, VISIT);
@@ -575,11 +591,26 @@ describe('health.appointment, a visit called off on a family-made life (round th
     const next = appointmentsOf(sim.player)[0]!;
     expect(next).toBeDefined();
     expect(next.at).toBeGreaterThan(week);
+    // TEST SETUP: the kept visit's referral draw forced to refer (America's 9.1%, `REFERRAL_SHARE`).
+    force('health.referral', [sim.player.id, next.id, next.at], [0]);
     sim.advanceTo(next.at + MS_HOUR);
     expect(healthOf(sim.player).owedVisit).toBeUndefined();
     expect((healthOf(sim.player).careLog ?? []).filter((c) => c.at === next.at).map((c) => c.what)).toEqual([`${first.what}, Fair Haven Community Health Care`]);
     expect(titled(sim, 'A Doctor’s Visit').map((n) => n.at)).toEqual([next.at]);
-    expect(titled(sim, 'A Doctor’s Visit').map((n) => n.at)).toEqual([next.at]);
+    // A doctor’s visit owed and one the week draws are the same words at the same wait, so the specialist is what tells
+    // them apart: owed, it’s booked as itself at America’s 31 days (`REFERRAL_DAYS`), where the week’s own visit would be
+    // “A doctor’s visit” at New Haven’s wait, the days the first was booked on.
+    const specialist = appointmentsOf(sim.player)[0]!;
+    expect(specialist.what).toBe(SPECIALIST);
+    sim.must({ kind: 'health.cancel_appointment', payload: { appointmentId: specialist.id } });
+    expect(healthOf(sim.player).owedVisit).toBe(SPECIALIST);
+    expect(papers(sim).text).toContain(`${SPECIALIST}: not yet seen`);
+    const third = forceWeek(sim, force, VISIT);
+    const booked = appointmentsOf(sim.player);
+    expect(booked.map((a) => a.what)).toEqual([SPECIALIST]);
+    expect(healthOf(sim.player).owedVisit).toBeUndefined();
+    const daysOn = (a: { at: Instant }, from: Instant) => Math.round((a.at - from) / MS_DAY);
+    expect([daysOn(booked[0]!, third), daysOn(next, week)]).toEqual([31, VISIT_WAIT]);
   }, 60_000);
 });
 
