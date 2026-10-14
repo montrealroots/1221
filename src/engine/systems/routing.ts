@@ -97,8 +97,15 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   for (const o of pay.standingOrders) {
     if (orderSource(sim, person, o)?.id === accountId) out.push(`A standing order pays from it on the ${o.day}`);
   }
-  for (const [, state] of Object.entries(person.credit?.cards ?? {})) if (state.autopayFrom === accountId) out.push('A card’s autopay pays from it');
-  if (person.credit?.autopayFrom === accountId) out.push('Your everyday card’s autopay pays from it');
+  // A card's autopay not yet pinned follows the primary account, as it pays (`autopaySource`), and a closed card's pays
+  // nothing. Until 2026-10-16 only a pinned one was named, so Your Banks gained the line after a reload once something
+  // had pinned it, and a closed card's was named too, refusing to close the account it had paid from.
+  const autopayFrom = (cardId: string | undefined, from: string | undefined) => {
+    const card = cardId ? sim.universe.accounts[cardId] : undefined;
+    return card && !card.closedAt ? from ?? person.primaryAccountId : undefined;
+  };
+  for (const [cardId, state] of Object.entries(person.credit?.cards ?? {})) if (autopayFrom(cardId, state.autopayFrom) === accountId) out.push('A card’s autopay pays from it');
+  if (autopayFrom(person.credit?.primaryId, person.credit?.autopayFrom) === accountId) out.push('Your everyday card’s autopay pays from it');
   for (const loan of Object.values(sim.universe.accounts)) {
     if (loan.ownerId === person.id && !loan.closedAt && loan.kind === 'loan' && loan.repayFromId === accountId) out.push(`${loan.name}’s payments come from it`);
   }

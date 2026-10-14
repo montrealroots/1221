@@ -48,7 +48,7 @@ import { recordInterest } from './earnings';
 import { marksFallOff } from './credit';
 import { checkingAt } from './lending';
 import { sendBetweenBanks, usPerson } from './bankmoves';
-import { abroadRefusal, balanceText, heldOf, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
+import { abroadRefusal, balanceText, chargeAbroadFee, heldOf, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -542,6 +542,8 @@ export function registerBanking(sim: Simulation): void {
       const was = (account.peak ??= {})[year];
       account.peak[year] = { max: Math.max(was?.max ?? held, held), last: held };
     }
+    // A fee for a customer abroad that was owed, taken once the account holds it (from 2026-10-16).
+    for (const account of Object.values(s.universe.accounts)) if (account.feeOwedHeld) chargeAbroadFee(s, account, 0);
     for (const account of Object.values(s.universe.accounts)) {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       if (account.dormant && ACCOUNT_LIFE[account.bankId]?.stopsInterest) continue;
@@ -602,17 +604,9 @@ export function registerBanking(sim: Simulation): void {
         });
       }
       // A bank's fee for a customer who lives abroad, on its schedule (from 2026-10-16: until then creation said it and
-      // nothing charged it), in its own figure.
+      // nothing charged it), in its own figure; owed, not overdrawn, where the account can't go below zero.
       const abroadFee = nonResidentFeeDue(s, account, item.at);
-      if (abroadFee) {
-        s.post({
-          memo: `Fee for a customer abroad: ${account.name}`, category: 'bank_fee',
-          postings: [
-            { accountId: account.id, amount: -abroadFee.fee, ...own(abroadFee.native) },
-            { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: abroadFee.fee },
-          ],
-        });
-      }
+      if (abroadFee) chargeAbroadFee(s, account, abroadFee.native);
       // The current account's statement, monthly, or at Germany's quarterly closing.
       if (account.kind === 'checking' && (!quarterly || month % 3 === 0)) {
         const owner = s.universe.people[account.ownerId];

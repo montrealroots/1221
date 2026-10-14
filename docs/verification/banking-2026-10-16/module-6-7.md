@@ -153,9 +153,11 @@ Yale card and Move Money had nothing past the right edge at 390. The two skips w
   Schedule B's foreign-account question isn't asked. A US person living abroad (8938's higher lines) or married isn't a
   Yale life.
 - A peak is the day's end: money in and out within a day isn't seen.
-- SMBC's ¥220 for a customer abroad is charged on the current account, which opens at nothing, so it goes overdrawn by
-  ¥220 a month (module 4's). The notice reads an overdrawn account as nothing, but the account itself is a defect.
-- The home savings' statements list every month back to its backdated opening (2018), each empty.
-- After a reload, Your Banks says "Your everyday card’s autopay pays from it." for Chase where it didn't before; seen in
-  the screens' test, not caused by a home account, and not looked into.
+- SMBC's ¥220 for a customer abroad was charged on the current account, which opens at nothing, so it went overdrawn
+  by ¥220 a month (module 4's). Fixed later on 2026-10-16 (`open-defects.md`): it comes from the savings at the bank, or
+  it's owed and payments abroad stop, as SMBC's terms say.
+- The home savings' statements listed every month back to its backdated opening (2018), each empty. Fixed the same
+  day: they start at the month the life began.
+- After a reload, Your Banks said "Your everyday card’s autopay pays from it." for Chase where it hadn't before. It was
+  looked into the same day: the line was missing before anything pinned the autopay, and is there now from the start.
 - The conditions an account is kept on are taken as met (`docs/UNBITTEN.md`).

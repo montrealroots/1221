@@ -129,6 +129,13 @@ export interface NonResidentFee {
   ageBelow?: number;
   /** What it is, in the bank's words, and what's uncertain. */
   note: string;
+  /**
+   * A bank whose current account can't go below zero (from 2026-10-16): the fee is taken from an account at the bank that
+   * holds it (`chargeAbroadFee`), and where none does it's owed, taken the first night one does, and meanwhile the bank
+   * sends nothing abroad, in these words. Until then every bank's fee overdrew the current account, which a home account
+   * at SMBC opens empty, by ¥220 a month while its savings held a million yen.
+   */
+  unpaid?: string;
 }
 
 export interface HomeTerms {
@@ -204,11 +211,18 @@ const READ: Readonly<Record<string, Partial<Omit<HomeTerms, 'bankId' | 'source' 
   'es-bankinter': { condition: 'Bankinter keeps it as a non-resident account, once you’ve given it proof that you no longer live in Spain, renewed every two years.' },
   'jp-mufg': {
     condition: 'MUFG keeps it through Global Direct, which a student going abroad to study applies for before leaving, as SLATE takes it you did.',
-    nonResidentFee: { amount: 300_00, months: 1, note: '¥300 a month for Global Direct' },
+    nonResidentFee: {
+      amount: 300_00, months: 1, note: '¥300 a month for Global Direct; what it does when the fee can’t be taken isn’t published, so SLATE takes SMBC’s rule: a Japanese ordinary deposit has no overdraft',
+      unpaid: 'MUFG sends nothing abroad while its Global Direct fee is unpaid, SLATE’s assumption from SMBC’s rule.',
+    },
   },
   'jp-smbc': {
     condition: 'SMBC keeps it through its Global Service, which a student going abroad to study registers for before leaving, as SLATE takes it you did; a cash card then works only at Japanese ATMs.',
-    nonResidentFee: { amount: 220_00, months: 1, note: '¥220 a month for the Global Service' },
+    nonResidentFee: {
+      amount: 220_00, months: 1, note: '¥220 a month for the Global Service',
+      // "If the fee cannot be debited, transfers and some other services stop" (the research's `nonResidentFee`).
+      unpaid: 'SMBC stops its payments abroad while the Global Service fee can’t be taken.',
+    },
   },
   'jp-mizuho': { condition: 'Mizuho keeps it once it’s changed to non-resident status at a branch, but then with no cash card and no internet banking.' },
   'jp-resona': { condition: 'Resona keeps it once it’s converted to a non-resident yen deposit at a branch before leaving.' },

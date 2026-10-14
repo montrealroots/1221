@@ -1326,6 +1326,8 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     later: [
       'Its savings earns the bank’s interest, and the bank charges its own monthly fee, as it would at home, and any fee it charges a customer abroad on its own schedule, in its money.',
+      // From 2026-10-16: until then a Japanese bank's fee overdrew the empty current account (`chargeAbroadFee`).
+      'A Japanese bank’s current account can’t go below zero: SMBC and MUFG take their fee from whichever of your accounts there holds it, and where neither does it’s owed, taken the first night one does, and the bank sends nothing abroad meanwhile.',
       `Its country takes its tax on a customer abroad from the interest: nothing in Britain, Germany or France, ${percentOf(NON_RESIDENT_TAX.JP!.rate)} in Japan.`,
       `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
       `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
@@ -1347,6 +1349,7 @@ export const MONEY: readonly GuideEntry[] = [
       'Savings, a term deposit, a loan, an overdraft or a card at the bank there, refused in its words: it opens nothing new for a customer abroad.',
       '“Yale pays into an account in America.” Wages are paid here.',
       '“SLATE has no research on what … charges to send a payment abroad.”, and the same for receiving one, where its fee isn’t published.',
+      '“SMBC stops its payments abroad while the Global Service fee can’t be taken.”, with what’s owed: pay into either account there and it’s taken that night.',
     ],
     mistakes: ['Choosing where you were born when you grew up somewhere else: the bank keeps the account of a customer who lived in its country, so say where you lived.'],
     related: ['bank.accounts', 'bank.other-banks'],

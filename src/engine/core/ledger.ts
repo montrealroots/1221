@@ -188,6 +188,12 @@ export interface Account {
    * reports on accounts abroad read it, FinCEN's FBAR the most and Form 8938 both (`foreignAccountsNotice`).
    */
   peak?: Record<string, { max: Money; last: Money }>;
+  /**
+   * On the current account: a fee for a customer abroad that no account at the bank held when it fell due, at a bank
+   * whose account can't go below zero (`NonResidentFee.unpaid`), in the bank's own money: owed, and taken the first night
+   * one holds it (from 2026-10-16).
+   */
+  feeOwedHeld?: Money;
 }
 
 export interface Posting {

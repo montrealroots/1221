@@ -11,7 +11,10 @@
  *   bank's words, wages in Yale's ("Yale pays into an account in America."), and cash paid in. Chase, where they live,
  *   opens savings the same day.
  * - Fees for a customer abroad on the bank's schedule, in its money: SMBC's ¥220 on 31 August, 22,000 sen, 147¢
- *   (22,000 / 150 = 146.67); BNP Paribas' €15 each month, 1,500 cents, 1,630¢; SG's €75 at the quarter's end for one of
+ *   (22,000 / 150 = 146.67), from the savings, since the current account opens empty and SMBC's can't go below zero
+ *   (until 2026-10-16 it went ¥220 overdrawn a month, and the overdraft's set-off settled the savings' interest early
+ *   every second month); owed where neither holds it, its payments abroad stopped in its words until a night one does,
+ *   ¥440 taken then for August and September; MUFG's ¥300 the same; BNP Paribas' €15 each month, 1,500 cents, 1,630¢; SG's €75 at the quarter's end for one of
  *   26, and none for one of 24; Deutsche Bank's €6.90 a month at its quarterly closing, 1,380 cents for August and
  *   September, 1,500¢ exactly (690 / 0.92 = 750 each).
  * - Tax at source on a non-resident: SMBC's savings, ¥1,059,750 (706,500¢), at 0.40% earn 706,500 × 0.004 / 365 =
@@ -20,6 +23,8 @@
  * - Barclays' notice on the first morning, once, through a reload, and its closing on October 23, 2026 (60 days from
  *   August 24): interest settled, the savings gathered, the whole sent to Chase in two business days of both countries,
  *   Tuesday October 27, less Barclays' 2.75% and Chase's $15.
+ * - Statements of HSBC UK's savings, opened before 2026, start at August 2026, the month the life began, as Chase's do
+ *   (until 2026-10-16 every month back to its opening, each empty).
  * - A home card as the primary: HSBC UK's 2.75% on the day's food, in pence; at another bank's machine here, $100 is
  *   7,900p, 2.75% is 217p and the 2% beside it its £1.75 minimum, 392p, with the machine owner's $3.22.
  */
@@ -35,6 +40,8 @@ import { instantFromZoned, MS_DAY } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { HOME_CLOSES_KIND } from '@/engine/systems/abroad';
 import { closeForOverdraft } from '@/engine/systems/lending';
+import { periodsOf } from '@/engine/systems/statements';
+import { linkedTo } from '@/engine/systems/routing';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 
@@ -46,7 +53,7 @@ const life = (extra: Partial<NewSaveConfig> = {}): NewSaveConfig => ({
   homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', ...extra,
 });
 const london = (bank: string, extra: Partial<NewSaveConfig> = {}) => life({ priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: bank, ...extra });
-const tokyo = (bank: string) => life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: bank });
+const tokyo = (bank: string): NewSaveConfig => life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: bank });
 const paris = (bank: string, extra: Partial<NewSaveConfig> = {}) => life({ homeRegionId: 'fr-idf-paris', priorResidence: { cityId: 'fr-idf-paris', fromYear: 2002, fromMonth: 6 }, homeBankId: bank, ...extra });
 const berlin = () => life({ homeRegionId: 'de-be-berlin', priorResidence: { cityId: 'de-be-berlin', fromYear: 2002, fromMonth: 6 }, homeBankId: 'de-deutsche-bank' });
 
@@ -108,7 +115,9 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     const japan = await make(tokyo('jp-smbc'));
     japan.advanceTo(day(japan, 9, 1, 6));
     const smbc = at(japan, 'jp-smbc', 'checking');
-    expect(postingsOn(japan, smbc, 'Fee for a customer abroad').map((p) => [p.amount, p.native])).toEqual([[-147, -22_000]]);
+    expect(postingsOn(japan, smbc, 'Fee for a customer abroad')).toEqual([]);
+    expect(postingsOn(japan, at(japan, 'jp-smbc', 'savings'), 'Fee for a customer abroad').map((p) => [p.amount, p.native])).toEqual([[-147, -22_000]]);
+    expect([smbc.held ?? 0, smbc.balance, smbc.feeOwedHeld]).toEqual([0, 0, undefined]);
 
     const bnp = await make(paris('fr-bnp-paribas'));
     bnp.advanceTo(day(bnp, 10, 1, 6));
@@ -122,6 +131,53 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     // €75 is 7,500 cents, 8,152¢ (7,500 / 0.92 = 8,152.17), at 30 September and not at 31 August.
     const sg = postingsOn(older, at(older, 'fr-societe-generale', 'checking'), 'Fee for a customer abroad');
     expect(sg.map((p) => [p.amount, p.native])).toEqual([[-8_152, -7_500]]);
+  });
+
+  it('owes SMBC’s ¥220 where no account there holds it, stops its payments abroad in its words, and takes it the night money arrives; MUFG’s ¥300 the same', async () => {
+    const sim = await make({ ...tokyo('jp-smbc'), savingsAtHome: false });
+    const smbc = at(sim, 'jp-smbc', 'checking');
+    const chase = at(sim, 'us-chase', 'checking');
+    sim.advanceTo(day(sim, 9, 1, 6));
+    expect(postingsOn(sim, smbc, 'Fee for a customer abroad')).toEqual([]);
+    expect([smbc.held ?? 0, smbc.feeOwedHeld]).toEqual([0, 22_000]);
+    // September's falls due on its last night too, and is owed beside August's.
+    sim.advanceTo(day(sim, 10, 1, 6));
+    expect([smbc.held ?? 0, smbc.feeOwedHeld]).toEqual([0, 44_000]);
+    // $11 from Chase is let in, and lands, less the margin and SMBC's ¥1,500 for receiving it, as less than the ¥440
+    // owed: nothing is taken, and SMBC sends nothing abroad.
+    const few = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: smbc.id, amount: 1_100 });
+    sim.advanceTo(few.arrivesAt + MS_DAY);
+    const little = smbc.held!;
+    expect(little).toBeGreaterThan(0);
+    expect(little).toBeLessThan(44_000);
+    expect(smbc.feeOwedHeld).toBe(44_000);
+    // Nor is it closed with the fee owed, as an overdrawn account isn't.
+    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('Its fee for a customer abroad, ¥440, is owed. The bank closes it only once that’s paid.');
+    expect(refused(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 100, in: 'JPY' }))
+      .toBe('SMBC stops its payments abroad while the Global Service fee can’t be taken. ¥440 of it is owed, taken the first night an account there holds it.');
+    // $100 more: the night it lands both months are taken together, and payments abroad go again.
+    const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: smbc.id, amount: 10_000 });
+    sim.advanceTo(sent.arrivesAt + MS_DAY);
+    expect(postingsOn(sim, smbc, 'Fee for a customer abroad').map((p) => [p.amount, p.native])).toEqual([[-293, -44_000]]);
+    const landed = postingsOn(sim, smbc, 'From ').map((p) => p.native!);
+    expect([smbc.held, smbc.feeOwedHeld]).toEqual([landed[0]! + landed[1]! - 44_000, undefined]);
+    expect(run(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 500_000, in: 'JPY' })).toMatchObject({ sent: 500_000, sentIn: 'JPY' });
+    expect(breaches(sim.universe)).toEqual([]);
+    expect(sim.ledger.audit()).toEqual([]);
+
+    // Savings left with ¥100, less than the fee, aren't taken below zero either: it's owed.
+    const drained = await make(tokyo('jp-smbc'));
+    const saved = at(drained, 'jp-smbc', 'savings');
+    run(drained, 'bank.transfer', { fromId: saved.id, toId: at(drained, 'us-chase', 'checking').id, amount: saved.held! - 350_000 - 10_000, in: 'JPY' });
+    drained.advanceTo(day(drained, 9, 1, 6));
+    expect(postingsOn(drained, saved, 'Fee for a customer abroad')).toEqual([]);
+    expect(saved.held).toBeGreaterThanOrEqual(10_000);
+    expect(saved.held).toBeLessThan(22_000);
+    expect(at(drained, 'jp-smbc', 'checking').feeOwedHeld).toBe(22_000);
+
+    const mufg = await make({ ...tokyo('jp-mufg'), savingsAtHome: false });
+    mufg.advanceTo(day(mufg, 9, 1, 6));
+    expect([at(mufg, 'jp-mufg', 'checking').held ?? 0, at(mufg, 'jp-mufg', 'checking').feeOwedHeld]).toEqual([0, 30_000]);
   });
 
   it('charges Deutsche Bank’s €6.90 a month at its quarterly closing in its own figure, and takes no tax from the Flexgeld’s interest', async () => {
@@ -240,5 +296,39 @@ describe('a card from home, as the everyday card here', () => {
   it('refuses SMBC’s card as the everyday card here, in its words', async () => {
     const sim = await make(tokyo('jp-smbc'));
     expect(refused(sim, 'bank.set_primary', { accountId: at(sim, 'jp-smbc', 'checking').id })).toBe('SMBC’s Global Service has its customers cancel the debit card before they leave Japan.');
+  });
+});
+
+describe('statements of an account held from before the life began', () => {
+  it('start at August 2026 for HSBC UK’s savings, opened years before, as for Chase’s current account', async () => {
+    const sim = await make(london('gb-hsbc'));
+    const saver = at(sim, 'gb-hsbc', 'savings');
+    expect(saver.openedAt).toBeLessThan(day(sim, 1, 1));
+    sim.advanceTo(day(sim, 9, 15));
+    // Until 2026-10-16 the savings listed every month back to its opening, each empty.
+    expect(periodsOf(sim, saver).map((p) => p.label)).toEqual(['September 2026, So Far', 'August 2026']);
+    expect(periodsOf(sim, at(sim, 'us-chase', 'checking')).map((p) => p.label)).toEqual(['September 2026, So Far', 'August 2026']);
+  });
+});
+
+describe('what Your Banks says an account is for, through a reload', () => {
+  it('names the everyday card’s autopay on Chase before a reload as after it, and not once the card has closed', async () => {
+    const sim = await make(london('gb-hsbc'));
+    const chase = at(sim, 'us-chase', 'checking');
+    const card = sim.player.credit!;
+    // Nothing has pinned the autopay yet: it follows the primary account, Chase's.
+    expect(card.autopayFrom).toBeUndefined();
+    expect(sim.player.primaryAccountId).toBe(chase.id);
+    const before = linkedTo(sim, sim.player, chase.id);
+    expect(before).toContain('Your everyday card’s autopay pays from it');
+    expect(linkedTo(sim, sim.player, at(sim, 'gb-hsbc', 'checking').id)).not.toContain('Your everyday card’s autopay pays from it');
+    const again = reload(sim);
+    expect(linkedTo(again, again.player, chase.id)).toEqual(before);
+    // Once the card has closed, its autopay pays from nothing, and isn't named.
+    const cardAccount = mine(again).find((a) => a.kind === 'credit_card')!;
+    run(again, 'card.close', { cardId: cardAccount.id });
+    again.advanceTo(again.now + 70 * MS_DAY);
+    expect(cardAccount.closedAt).toBeDefined();
+    expect(linkedTo(again, again.player, chase.id)).not.toContain('Your everyday card’s autopay pays from it');
   });
 });

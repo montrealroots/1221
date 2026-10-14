@@ -108,6 +108,8 @@ export function homeAccountLines(sim: Simulation, account: Account): string[] {
     const every = fee.months === 1 ? 'a month' : fee.months === 3 ? 'a quarter' : fee.months === 24 ? 'every two years' : `every ${fee.months} months`;
     const spared = fee.ageBelow !== undefined && owner && ageOn(sim, owner, sim.now) < fee.ageBelow ? `, not yet: it doesn’t charge one under ${fee.ageBelow}` : '';
     lines.push(`For a customer abroad ${bank.name} charges ${formatMoney(fee.amount, bank.currency)} ${every}${spared}.`);
+    if (fee.unpaid) lines.push(`It takes it from this account, or from your savings at ${bank.name} when this one doesn’t hold it.`);
+    if (account.feeOwedHeld) lines.push(`${formatMoney(account.feeOwedHeld, bank.currency)} of it is owed, taken the first night either account holds it. ${fee.unpaid}`);
   }
   const abroad = terms?.abroad;
   if (account.kind === 'checking') {
@@ -186,6 +188,37 @@ export function nonResidentFeeDue(sim: Simulation, account: Account, at: Instant
   }
   const currency = bankById(account.bankId!)!.currency;
   return { native: fee.amount, fee: toSave(sim, fee.amount, currency) };
+}
+
+/**
+ * Takes a fee for a customer abroad, with whatever of it is owed (from 2026-10-16: until then the month's end posted it
+ * on the current account whatever it held). At a bank whose account can't go below zero (`NonResidentFee.unpaid`), from
+ * the current account where it holds the whole, else from the holder's other account at the bank that does: in SLATE
+ * both are the same ordinary deposit, where the bank's own books debit one representative account, SLATE's reading. Where
+ * neither holds it, nothing is charged and the whole is owed on the current account (`feeOwedHeld`). The month's end
+ * calls it with the month's fee, and each night with none, which takes what's owed once it's held.
+ */
+export function chargeAbroadFee(sim: Simulation, account: Account, native: Money): void {
+  const due = native + (account.feeOwedHeld ?? 0);
+  if (due <= 0) return;
+  let from: Account | undefined = account;
+  if (homeTerms(account.bankId!)?.nonResidentFee?.unpaid && heldOf(account) < due) {
+    from = Object.values(sim.universe.accounts).find((a) => a.id !== account.id && !a.closedAt && a.ownerId === account.ownerId && a.bankId === account.bankId && a.kind === 'savings' && heldOf(a) >= due);
+    if (!from) {
+      account.feeOwedHeld = due;
+      return;
+    }
+  }
+  // Where the fee is the last of what it held, the last of its balance too, so it's empty in both figures.
+  const save = from.currency && from.held === due ? from.balance : toSave(sim, due, bankById(from.bankId!)!.currency);
+  sim.post({
+    memo: `Fee for a customer abroad: ${from.name}`, category: 'bank_fee',
+    postings: [
+      { accountId: from.id, amount: -save, ...(from.currency ? { native: -due } : {}) },
+      { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: save },
+    ],
+  });
+  delete account.feeOwedHeld;
 }
 
 /** Why a bank's card can't be the one used here, or nothing. */
@@ -300,6 +333,9 @@ export function abroadQuote(sim: Simulation, person: Person, from: Account, to: 
   const out = abroadTermsOf(fromBank.id);
   const into = abroadTermsOf(toBank.id);
   if (out?.outRefused) return { refused: out.outRefused };
+  // Its fee for a customer abroad unpaid, at a bank that then stops its payments abroad.
+  const owing = checkingsOf(sim, person).find((a) => a.bankId === fromBank.id && (a.feeOwedHeld ?? 0) > 0);
+  if (owing) return { refused: `${homeTerms(fromBank.id)!.nonResidentFee!.unpaid!} ${formatMoney(owing.feeOwedHeld!, fromBank.currency)} of it is owed, taken the first night an account there holds it.` };
   if (!out?.out) return { refused: `SLATE has no research on what ${fromBank.name} charges to send a payment abroad.` };
   if (!into?.incoming) return { refused: `SLATE has no research on what ${toBank.name} charges for a payment received from abroad.` };
   if (!(sent > 0)) return { refused: 'Say how much to send.' };
