@@ -1,6 +1,6 @@
 /**
  * SLATE — every genre, from the code, as a row (from 2026-10-16; phase 1 of the attributes-and-genres brief). A
- * read-only harness beside `tools/ag-baseline.ts`, whose JSON it reads for each genre's winner and nearest neighbour:
+ * read-only harness beside `tools/ag-baseline.ts`, whose JSON it reads for each genre's winner and nearest neighbor:
  * it writes docs/verification/attributes-genres-2026-10-16/genres-matrix.json and nothing else.
  *
  *   npx vite-node tools/ag-baseline.ts     (first)

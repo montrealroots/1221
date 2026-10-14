@@ -79,7 +79,7 @@ Terms used throughout:
 | H4 | Specialists are advantaged on suitable work | Specializing should pay where the work calls for it | Each specialist against the even actor where its ability reads most (baseline §2) | Ahead on at least 60% of those pieces for at least 10 of 12 abilities |
 | H5 | Generalists are useful | Balance shouldn't punish breadth into irrelevance | The even actor against the 12 specialists on each piece (baseline §2) | Ahead of at least half the specialists on at least 50% of pieces; within 1 point of the best on at least 10% |
 | H6 | Caps don't erase progression early | As T3 | As T3 | As T3 |
-| H7 | Randomness doesn't overwhelm skill, and still exists | Luck should colour a night, not decide who's better | Actors 10 levels apart on 100 briefs × 60 draws each: the better one's share of takes below the worse one's; the spread of one actor's takes (baseline §7) | Better loses under 10% at every level; a developing actor's takes range at least 1 point |
+| H7 | Randomness doesn't overwhelm skill, and still exists | Luck should color a night, not decide who's better | Actors 10 levels apart on 100 briefs × 60 draws each: the better one's share of takes below the worse one's; the spread of one actor's takes (baseline §7) | Better loses under 10% at every level; a developing actor's takes range at least 1 point |
 
 ## Long-Term Continuity
 
