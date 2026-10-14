@@ -1,0 +1,260 @@
+{
+ "seeds": [
+  "bs-10",
+  "bs-11",
+  "bs-12"
+ ],
+ "rows": [
+  {
+   "seed": "bs-10",
+   "strat": "tape-only",
+   "takes": 24,
+   "bestTake": 21.6,
+   "meanTake": 21.337499999999995,
+   "target": 60.8,
+   "heldOut": 59.68500000000002,
+   "abilityGain": -1.4399999999999409,
+   "practice": 53.59,
+   "hours": {
+    "prepare": 0,
+    "tape": 24,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-10",
+   "strat": "prepare",
+   "takes": 4,
+   "bestTake": 47,
+   "meanTake": 45.25,
+   "target": 60.8,
+   "heldOut": 59.720000000000006,
+   "abilityGain": -0.8486409091661926,
+   "practice": 40,
+   "hours": {
+    "prepare": 12.333333333333332,
+    "tape": 4,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-10",
+   "strat": "train",
+   "takes": 2,
+   "bestTake": 45.8,
+   "meanTake": 43.95,
+   "target": 61.2,
+   "heldOut": 60.05000000000001,
+   "abilityGain": 1.5215501608854538,
+   "practice": 20,
+   "hours": {
+    "prepare": 8.583333333333332,
+    "tape": 2,
+    "train": 9
+   }
+  },
+  {
+   "seed": "bs-10",
+   "strat": "breadth",
+   "takes": 12,
+   "bestTake": 21.6,
+   "meanTake": 20.875000000000004,
+   "target": 60.9,
+   "heldOut": 59.735,
+   "abilityGain": -1.0269304677837,
+   "practice": 120,
+   "hours": {
+    "prepare": 6,
+    "tape": 12,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-10",
+   "strat": "repeat",
+   "takes": 19,
+   "bestTake": 57.2,
+   "meanTake": 55.46315789473684,
+   "target": 60.8,
+   "heldOut": 59.69000000000001,
+   "abilityGain": -1.3550418976793708,
+   "practice": 51.96,
+   "hours": {
+    "prepare": 3.416666666666667,
+    "tape": 19,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-11",
+   "strat": "tape-only",
+   "takes": 24,
+   "bestTake": 20.9,
+   "meanTake": 20.562500000000004,
+   "target": 59,
+   "heldOut": 57.64,
+   "abilityGain": -1.4399999999999409,
+   "practice": 53.59,
+   "hours": {
+    "prepare": 0,
+    "tape": 24,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-11",
+   "strat": "prepare",
+   "takes": 4,
+   "bestTake": 44.6,
+   "meanTake": 43.15,
+   "target": 59.1,
+   "heldOut": 57.675,
+   "abilityGain": -0.8162690945590612,
+   "practice": 40,
+   "hours": {
+    "prepare": 12.333333333333332,
+    "tape": 4,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-11",
+   "strat": "train",
+   "takes": 2,
+   "bestTake": 43.5,
+   "meanTake": 42.65,
+   "target": 59.4,
+   "heldOut": 57.99499999999999,
+   "abilityGain": 1.7448322828458913,
+   "practice": 20,
+   "hours": {
+    "prepare": 8.583333333333332,
+    "tape": 2,
+    "train": 9
+   }
+  },
+  {
+   "seed": "bs-11",
+   "strat": "breadth",
+   "takes": 12,
+   "bestTake": 20.8,
+   "meanTake": 20.058333333333334,
+   "target": 59.1,
+   "heldOut": 57.69499999999999,
+   "abilityGain": -0.9876957394353667,
+   "practice": 120,
+   "hours": {
+    "prepare": 6,
+    "tape": 12,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-11",
+   "strat": "repeat",
+   "takes": 19,
+   "bestTake": 55.3,
+   "meanTake": 53.42631578947368,
+   "target": 59,
+   "heldOut": 57.645,
+   "abilityGain": -1.3520692105497574,
+   "practice": 53.2,
+   "hours": {
+    "prepare": 3.416666666666667,
+    "tape": 19,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-12",
+   "strat": "tape-only",
+   "takes": 24,
+   "bestTake": 20.8,
+   "meanTake": 20.445833333333336,
+   "target": 58.5,
+   "heldOut": 57.239999999999995,
+   "abilityGain": -1.4399999999999409,
+   "practice": 53.59,
+   "hours": {
+    "prepare": 0,
+    "tape": 24,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-12",
+   "strat": "prepare",
+   "takes": 4,
+   "bestTake": 43.2,
+   "meanTake": 42.175,
+   "target": 58.5,
+   "heldOut": 57.28000000000001,
+   "abilityGain": -0.8210294354023517,
+   "practice": 40,
+   "hours": {
+    "prepare": 12.333333333333332,
+    "tape": 4,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-12",
+   "strat": "train",
+   "takes": 2,
+   "bestTake": 42.1,
+   "meanTake": 41.150000000000006,
+   "target": 58.8,
+   "heldOut": 57.6,
+   "abilityGain": 1.7278761660071495,
+   "practice": 20,
+   "hours": {
+    "prepare": 8.583333333333332,
+    "tape": 2,
+    "train": 9
+   }
+  },
+  {
+   "seed": "bs-12",
+   "strat": "breadth",
+   "takes": 12,
+   "bestTake": 20.6,
+   "meanTake": 19.825,
+   "target": 58.5,
+   "heldOut": 57.3,
+   "abilityGain": -0.9905047871260422,
+   "practice": 120,
+   "hours": {
+    "prepare": 6,
+    "tape": 12,
+    "train": 0
+   }
+  },
+  {
+   "seed": "bs-12",
+   "strat": "repeat",
+   "takes": 19,
+   "bestTake": 55.3,
+   "meanTake": 53.089473684210525,
+   "target": 58.5,
+   "heldOut": 57.245000000000005,
+   "abilityGain": -1.35258872029749,
+   "practice": 51.96,
+   "hours": {
+    "prepare": 3.416666666666667,
+    "tape": 19,
+    "train": 0
+   }
+  }
+ ],
+ "table": [
+  "Seeds bs-10, bs-11, bs-12; n = 3 a cell. 24 hours each, three a day for eight days.",
+  "",
+  "| Way | Takes | Best Take | Mean Take | Target Brief, Fully Prepared | 20 Held-Out Briefs | Abilities Gained | Genre Practice Credited | Hours Preparing / Taping / Training |",
+  "|---|---|---|---|---|---|---|---|---|",
+  "| tape-only | 24.00 (sd 0.00, 24.00–24.00) | 21.10 (sd 0.44, 20.80–21.60) | 20.78 (sd 0.48, 20.45–21.34) | 59.43 (sd 1.21, 58.50–60.80) | 58.19 (sd 1.31, 57.24–59.69) | -1.44 (sd 0.00, -1.44–-1.44) | 53.59 (sd 0.00, 53.59–53.59) | 0.0 / 24.0 / 0.0 |",
+  "| prepare | 4.00 (sd 0.00, 4.00–4.00) | 44.93 (sd 1.92, 43.20–47.00) | 43.52 (sd 1.57, 42.17–45.25) | 59.47 (sd 1.19, 58.50–60.80) | 58.23 (sd 1.31, 57.28–59.72) | -0.83 (sd 0.02, -0.85–-0.82) | 40.00 (sd 0.00, 40.00–40.00) | 12.3 / 4.0 / 0.0 |",
+  "| train | 2.00 (sd 0.00, 2.00–2.00) | 43.80 (sd 1.87, 42.10–45.80) | 42.58 (sd 1.40, 41.15–43.95) | 59.80 (sd 1.25, 58.80–61.20) | 58.55 (sd 1.32, 57.60–60.05) | 1.66 (sd 0.12, 1.52–1.74) | 20.00 (sd 0.00, 20.00–20.00) | 8.6 / 2.0 / 9.0 |",
+  "| breadth | 12.00 (sd 0.00, 12.00–12.00) | 21.00 (sd 0.53, 20.60–21.60) | 20.25 (sd 0.55, 19.82–20.88) | 59.50 (sd 1.25, 58.50–60.90) | 58.24 (sd 1.31, 57.30–59.73) | -1.00 (sd 0.02, -1.03–-0.99) | 120.00 (sd 0.00, 120.00–120.00) | 6.0 / 12.0 / 0.0 |",
+  "| repeat | 19.00 (sd 0.00, 19.00–19.00) | 55.93 (sd 1.10, 55.30–57.20) | 53.99 (sd 1.28, 53.09–55.46) | 59.43 (sd 1.21, 58.50–60.80) | 58.19 (sd 1.31, 57.25–59.69) | -1.35 (sd 0.00, -1.36–-1.35) | 52.37 (sd 0.72, 51.96–53.20) | 3.4 / 19.0 / 0.0 |"
+ ]
+}

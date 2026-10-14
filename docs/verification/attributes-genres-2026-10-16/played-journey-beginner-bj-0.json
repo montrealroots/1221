@@ -1,0 +1,148 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 88.6,
+  "training": 86,
+  "study": 45
+ },
+ "takes": 21,
+ "briefs": 14,
+ "readings": 21,
+ "genres": 13,
+ "purposes": {
+  "first": 14,
+  "another-reading": 7
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 3,
+   "mean": 52.2,
+   "min": 50.4,
+   "max": 54.8
+  },
+  "m2": {
+   "n": 3,
+   "mean": 53.8,
+   "min": 52.8,
+   "max": 54.7
+  },
+  "m3": {
+   "n": 15,
+   "mean": 54,
+   "min": 46.4,
+   "max": 56.7
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 14,
+  "mean": 0.61,
+  "max": 1.2,
+  "over1": 3
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 5,
+  "longestSameTarget": 6,
+  "sequence": [
+   "7:emotionalDepth@55",
+   "14:emotionalDepth@55",
+   "21:vocal@52",
+   "28:imagination@57",
+   "35:vocal@52",
+   "42:physical@55",
+   "49:vocal@52",
+   "56:vocal@53",
+   "63:vocal@54",
+   "70:vocal@54",
+   "77:vocal@54",
+   "84:vocal@54",
+   "91:stamina@35",
+   "98:vocal@55",
+   "105:stamina@35",
+   "112:emotionalDepth@61",
+   "119:emotionalDepth@63"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 63,
+  "presence": 68,
+  "listening": 55,
+  "imagination": 60,
+  "focus": 56,
+  "memory": 57,
+  "adaptability": 55,
+  "composure": 45,
+  "vocal": 57,
+  "physical": 58,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 112,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "mother",
+   "sides": "",
+   "purpose": "first",
+   "overall": 52.5,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26.5 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-domestic_drama",
+   "genre": "domestic_drama",
+   "reading": "tired",
+   "sides": "",
+   "purpose": "first",
+   "overall": 56.3,
+   "chief": "Emotional Depth held back the believability by 24 points"
+  },
+  {
+   "day": 115,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 55.4,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-historical_fiction",
+   "genre": "historical_fiction",
+   "reading": "true",
+   "sides": "",
+   "purpose": "first",
+   "overall": 55.4,
+   "chief": "Emotional Depth held back the believability by 22.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 53.6,
+   "chief": "Emotional Depth held back the believability by 21.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "craft",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 52.1,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26.9 points"
+  }
+ ]
+}

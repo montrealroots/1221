@@ -1,0 +1,149 @@
+{
+ "profile": "specialist",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 94.4,
+  "training": 87,
+  "study": 36
+ },
+ "takes": 18,
+ "briefs": 11,
+ "readings": 15,
+ "genres": 11,
+ "purposes": {
+  "first": 11,
+  "callback": 3,
+  "another-reading": 4
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 64.1,
+   "min": 61.5,
+   "max": 66.7
+  },
+  "m2": {
+   "n": 2,
+   "mean": 62,
+   "min": 59.8,
+   "max": 64.2
+  },
+  "m3": {
+   "n": 14,
+   "mean": 60.8,
+   "min": 51.5,
+   "max": 65.8
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 11,
+  "mean": 1.73,
+  "max": 3.2,
+  "over1": 9
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 5,
+  "longestSameTarget": 5,
+  "sequence": [
+   "7:listening@50",
+   "14:listening@50",
+   "21:vocal@50",
+   "28:vocal@50",
+   "35:vocal@50",
+   "42:physical@51",
+   "49:vocal@51",
+   "56:vocal@51",
+   "63:vocal@52",
+   "70:discipline@51",
+   "77:stamina@36",
+   "84:stamina@35",
+   "91:stamina@35",
+   "98:stamina@35",
+   "105:stamina@35",
+   "112:listening@56",
+   "119:listening@58"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 58,
+  "imagination": 90,
+  "focus": 53,
+  "memory": 52,
+  "adaptability": 51,
+  "composure": 90,
+  "vocal": 53,
+  "physical": 57,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 110,
+   "brief": "brief-horror",
+   "genre": "horror",
+   "reading": "trust",
+   "sides": "",
+   "purpose": "first",
+   "overall": 62.4,
+   "chief": "Listening And Responsiveness held back the responsiveness by 30.7 points"
+  },
+  {
+   "day": 111,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "",
+   "purpose": "first",
+   "overall": 65.8,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 27 points"
+  },
+  {
+   "day": 114,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "driven",
+   "purpose": "callback",
+   "overall": 60.6,
+   "chief": "Listening And Responsiveness held back the connection by 31.9 points"
+  },
+  {
+   "day": 116,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 65.7,
+   "chief": "Knowing the genre wasn’t complete, which cost the interpretation 26.8 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "driven",
+   "purpose": "callback",
+   "overall": 57.3,
+   "chief": "Vocal Expression held back the execution by 17.6 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-backstage_musical-2",
+   "genre": "backstage_musical",
+   "reading": "sell",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 51.5,
+   "chief": "Vocal Expression held back the execution by 14.5 points"
+  }
+ ]
+}
