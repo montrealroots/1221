@@ -171,7 +171,7 @@
       "entry": "Identity: Billed As (CharacterCreation.tsx:414-449); validate refuses Continue until it is set (:1217-1219)",
       "reads": "config.performerTitle / settledTitle(pronouns)",
       "changes": "Person.performerTitle (bootstrap.ts:303-305 decided, :345 stored); meta.careerLabel (bootstrap.ts:316; refreshMeta, index.ts:259)",
-      "downstream": "systems/school.ts:2586, the casting pool’s title, read by partsFor (:2549-2559); :2632-2641, the lead-taken bond; :2699-2701, the Yale Rep role (Nina or Konstantin in 2027, then a part written for the title); companyPart :2183-2192 (title at :2188), the Summer Cabaret’s parts; systems/playreading.ts:77-82 partFor, a read’s part for you; index.ts:259, refreshMeta’s careerLabel; labels at Home.tsx:113, shell/GameShell.tsx:162, shell/LifeEnded.tsx:45 and ProfileWorkspace.tsx:171. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from.",
+      "downstream": "systems/school.ts:2586, the casting pool’s title, read by partsFor (:2549-2559); :2632-2641, the lead-taken bond; :2699-2701, the Yale Rep role (Nina or Konstantin in 2027, then a part written for the title); companyPart :2187-2198 (title at :2192), the Summer Cabaret’s parts, from 2026-10-14 never a lead for a student outside the four the play reads best; systems/playreading.ts:77-82 partFor, a read’s part for you; index.ts:259, refreshMeta’s careerLabel; labels at Home.tsx:113, shell/GameShell.tsx:162, shell/LifeEnded.tsx:45 and ProfileWorkspace.tsx:171. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from.",
       "explanation": "UI says 'at school you're cast in the parts a play writes for it' - engine does this.",
       "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall… casts her as Frau Bergmann and him as Hänschen Rilow, and the lead taken costs the bond…', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
       "status": "verified",
@@ -464,7 +464,7 @@
       "changes": "Person.homeRegionId (bootstrap.ts:351); citizenshipId through citizenshipFor, a birthplace in no country throwing (bootstrap.ts:292-293,352)",
       "downstream": "systems/body.ts drawnBody (:82-83, the birth country’s adults), called at creation (bootstrap.ts:388-390) from 2026-10-12; citizenshipId (row c-citizenship); systems/documents.ts startingDocuments (:468-505; a US-born citizen’s license from the birth state, :494-504); the creation BodyFields units, imperial for the US-born (CharacterCreation.tsx:255-256); the birth country’s places and holidays, loaded by index.ts loadPlacesFor (:1057). Until 2026-10-13 this also named content/bankdays.ts:22, which reads currentLocationId first, and documents.ts:475.",
       "explanation": "Decides citizenship and the drawn body.",
-      "tests": "tests/evidence-g27-ui.test.ts c-birthplace: 'PLAYER JOURNEY: draws the body from the birth country’s adults, not from New Haven where the life is lived…', 'asks Your Body in feet, inches and pounds of the US-born and in centimeters and kilograms of the Tokyo-born…', 'PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1…'; tests/citizenship.test.ts 'follows the birthplace, not where they live', 'refuses a birthplace in no real country'; tests/documents.test.ts 'give a student from abroad their passport and an F-1 visa…', 'give a US citizen a passport and a license…'",
+      "tests": "tests/evidence-g27-ui.test.ts c-birthplace: 'PLAYER JOURNEY: draws the body from the birth country’s adults, not from New Haven where the life is lived…', 'asks Your Body in feet, inches and pounds of the US-born and the Tokyo-born living in New Haven, and in centimeters and kilograms of the Tokyo-born living in Tokyo', 'PLAYER JOURNEY: gives a license from the birth state, California not Connecticut, and a Tokyo-born student a Japanese passport and an F-1…'; tests/citizenship.test.ts 'follows the birthplace, not where they live', 'refuses a birthplace in no real country'; tests/documents.test.ts 'give a student from abroad their passport and an F-1 visa…', 'give a US citizen a passport and a license…'",
       "status": "verified",
       "issue": "",
       "review": {
@@ -556,7 +556,7 @@
           },
           {
             "file": "evidence-g27-ui.test.ts",
-            "title": "c-birthplace > asks Your Body in feet, inches and pounds of the US-born and in centimeters and kilograms of the Tokyo-born, both living in New Haven",
+            "title": "c-birthplace > asks Your Body in feet, inches and pounds of the US-born and the Tokyo-born living in New Haven, and in centimeters and kilograms of the Tokyo-born living in Tokyo",
             "kind": "render",
             "closes": "The BodyFields units by birthplace were untested. They are now rendered with their values, and a field is pressed."
           },
@@ -1721,13 +1721,13 @@
     {
       "id": "c-traits",
       "kind": "creation",
-      "entry": "Dispositions & Traits: trait buttons (CharacterCreation.tsx:604-718, PersonalityStep: the toggle at 610-617, the pairs and their buttons at 683-714, each blocked one saying why at :694,707)",
+      "entry": "Dispositions & Traits: trait buttons (CharacterCreation.tsx:608-724, PersonalityStep)",
       "reads": "config.personalityTraits",
-      "changes": "Person.personalityTraits (cleanPersonalityTraits, bootstrap.ts:359; systems/personality.ts:58)",
-      "downstream": "personalityOf knobs at their readers (see trait-* items): 19 reached in play; receipts (Chaotic, Keeps Accounts) reaches none, its only writer recordJobCost (earnings.ts:276) having no caller since the scope reset of 2026-10-09, and the page has said so of Keeps Accounts since 2026-10-13 (CharacterCreation.tsx:664-676); looks/wellbeing.tsx:119-122 (each trait a way in) and 363-369 (the trait look)",
+      "changes": "Person.personalityTraits (cleanPersonalityTraits, bootstrap.ts:382; systems/personality.ts)",
+      "downstream": "the personalityOf knobs at their readers (see trait-* items): all 19 declared knobs are reached in play. receipts (Chaotic 0.9, Keeps Accounts 1.3) reached none, because its only input, recordJobCost, had no caller. It went on 2026-10-14 with the return's line that read it, and Keeps Accounts now moves bondWound alone. Also looks/wellbeing.tsx:118-122 (each trait a way in) and 365-403 (the trait look).",
       "explanation": "Max 4, conflicts enforced on screen and engine.",
-      "tests": "tests/evidence-g28-ui.test.ts c-traits: 'PLAYER JOURNEY: Early Riser held grays Night Owl with its clash; four held gray every other button…; one put down opens them again', 'PLAYER JOURNEY: Begin makes the life with the four the page held…', 'refuses in the engine what the page refuses…', 'PLAYER JOURNEY: Frugal pressed on the page makes the first meal $4.29…'; tests/evidence2-b10.test.ts c-traits: the hours, the meal, the night, the first midnight, the work and the classmates journeys, and 'says of Keeps Accounts on Dispositions & Traits what its own look says…'; tests/creation.test.ts 'carries every disposition and trait into the save'. Until 2026-10-13 this cited tests/personality.test.ts 'reads every knob a trait can declare', which compares the declared knobs to a typed list.",
-      "status": "partial",
+      "tests": "tests/evidence-g28-ui.test.ts c-traits (the buttons, Begin, the engine’s refusals, a knob moved for a life made with it); tests/evidence2-b10.test.ts c-traits (each knob through a command or the clock against a plain twin, and ‘holds every knob a trait declares to a reader in the journeys above’); tests/evidence3-person.test.ts ‘c-traits and trait-receipts: the receipts knob gone’ (from 2026-10-14: Keeps Accounts and Chaotic pressed, each look listing only the knobs it moves, and no knob declared that no reader asks for); tests/creation.test.ts ‘carries every disposition and trait into the save’. Until 2026-10-14 this cited tests/personality.test.ts ‘reads every knob a trait can declare…’, which compares the declared knobs to a typed list and still runs.",
+      "status": "verified",
       "issue": "",
       "review": {
         "on": "2026-10-13",
@@ -1798,7 +1798,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g28-ui.test.ts",
@@ -1868,29 +1868,40 @@
           },
           {
             "file": "evidence2-b10.test.ts",
-            "title": "c-traits > holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches",
+            "title": "c-traits > holds every knob a trait declares to a reader in the journeys above",
             "kind": "fixture",
             "closes": "This replaces personality.test.ts:312's typed list. The knobs declared across PERSONALITY_TRAITS must equal the 19 that passed a journey above, plus receipts. A source scan shows that recordJobCost, receipts' only input, has no caller in src."
           },
           {
             "file": "evidence2-b10.test.ts",
-            "title": "c-traits > says of Keeps Accounts on Dispositions & Traits what its own look says, that its receipts decide nothing for a student",
+            "title": "c-traits > says of Keeps Accounts on Dispositions & Traits what its own look says: how a slight cuts, and no receipt",
             "kind": "render",
             "closes": "The page's sentence on Keeps Accounts is held to its own trait look ('decides nothing now'). The test fails until the page says so."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-traits and trait-receipts: the receipts knob gone > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+            "kind": "render",
+            "closes": "The open receipts gap, closed by the knob's removal on 2026-10-14. The two traits that declared receipts are pressed on the rendered Dispositions & Traits through their own onClick (each enabled), and Begin's life holds both. Keeps Accounts' look has one row, 'How hard a slight from a classmate cuts +10% +10% with all you are'. Chaotic's has two: hygiene +30%/+24% and stress −8%/−8%, bent by hand. No trait's look, held or not, says a receipt or a deduction."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-traits and trait-receipts: the receipts knob gone > declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read",
+            "kind": "fixture",
+            "closes": "The check's weak test: evidence2-b10's coverage test fills a hand-typed HELD set as its journeys pass, and fails when run alone. This test reads no other test's state. The 19 declared knobs equal KNOB_READS' keys, each is asked for by name (personalityOf(…, 'knob')) at a reader in src outside the content, personality.ts and the trait look, receipts is in none of them, and no code in src writes or reads recordJobCost, jobCosts or RECEIPTS."
           }
         ],
         "gapsClosed": [
           "The trait buttons are rendered and pressed: the clash wording, a fifth disabled with 'You already hold four traits.', and a held trait put down so the others re-enable, ending at Begin and the Profile listing exactly the four.",
           "Stale line numbers: corrected in claimCorrection.",
           "personality.test.ts:312 held the declared knobs only to a typed list. Here every knob a trait declares except receipts (19 knobs) is held to its own reader, for a life made with the trait pressed on the page, against a plain twin, through a command or the clock. The figures are bent by hand: stressGain, stressRecovery, hygieneDrift, moraleSwing, mealMood, spending, sleepQuality, energyRecovery, appetite, illnessToll, morning, evening, readsAround, drills, skims, revises, bondWarmth, bondWound and company. A knob declared later with no reader fails the coverage test.",
-          "The check's weak test (the first round's 'moves every knob…', which called personalityOf and took its sides from systemMods) is superseded. No expectation here is asked of personalityOf or of a trait's declared numbers."
+          "The check's weak test (the first round's 'moves every knob…', which called personalityOf and took its sides from systemMods) is superseded. No expectation here is asked of personalityOf or of a trait's declared numbers.",
+          "receipts (the review's gap 2 in substance, and the check's 'removing the words left the knob'): the knob went on 2026-10-14 with taxreturn.ts's line and recordJobCost. Both traits that declared it are pressed on the page, their looks show only bondWound, hygieneDrift and stressGain, and a played return is the same with them or without (see trait-receipts).",
+          "The check's weak test, evidence2-b10 > c-traits > 'holds every knob a trait declares…' (HELD hand-typed and order-dependent): it is superseded by an order-independent check that each declared knob has a reader asking for it by name in src. Each of those readers is held through play by evidence2-b10's journeys.",
+          "Stale line numbers and the 'tests' field: given as rowText."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] receipts (Chaotic 0.9, Keeps Accounts 1.3) multiplies the work's costs a return deducts (taxreturn.ts:839). Its only writer, recordJobCost (earnings.ts:274), has no caller in src, only tests/arrears.test.ts:107 and tests/costs.test.ts:54. The career whose costs it read went in the scope reset of 2026-10-09, and a student pays none.",
-          "[needs engine change] The Traits card says Keeps Accounts changes 'how much of what your work costs you can deduct' (CharacterCreation.tsx:672-673), a deduction no played life has. Its own look says 'A student pays no cost of the work, so it decides nothing now'. The render test fails until the page says the same.",
-          "[stale claim] The row's 'tests' field cites tests/personality.test.ts 'reads every knob a trait can declare', which still compares the declared set to a typed list (line 312) and still runs in the gate. Editing it is outside this file. The row should cite this file's journeys in its place (claimCorrection)."
-        ],
-        "disposition": "implementation missing",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "Dispositions & Traits tells the player that Keeps Accounts changes how much of the work's costs they can deduct. No played life has a cost of the work: recordJobCost has no caller, so receipts multiplies nothing. Keeps Accounts' own trait look says it decides nothing now.",
@@ -1903,44 +1914,40 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "Changed since: the receipts trait wording. Chaotic's cost is now 'It shows on you sooner.', and Keeps Accounts' description no longer mentions 'every receipt'. The file header says, in the past tense, that both used to claim receipts as an effect. tests/defects5.test.ts > the receipts knob's traits pins both strings and KNOB_READS.receipts ending 'decides nothing now'. The words no longer claim what play doesn't do.",
-            "Still open, the review's gap 2 in substance: the receipts knob is still declared (chaotic: receipts 0.9, keeps_accounts: receipts 1.3; personality-traits.ts:184, :274; range personality.ts:110), and its only reader, taxreturn.ts:894, is fed by recordJobCost, which has no caller in src. Under THE ONE RULE a declared knob with nothing that reads it in play is the defect. Removing the words left the knob. Closing it needs the engine decision: delete the receipts mods and knob, or wire a cost of the work.",
-            "Still open (the latest skeptic's points, unchanged): only one reader per knob is reached in these journeys. evidence2-b10's HELD set is hand-typed and depends on test order. personality.test.ts 'reads every knob a trait can declare' still compares the declared set to a typed list. evidence-g28-ui's c-traits test still calls personalityOf directly with sides taken from the traits' own systemMods.",
-            "Closed earlier and still so: 19 knobs held to a reader through a command or the clock, each against a plain twin with the trait pressed on the rendered page; the Keeps Accounts copy on CharacterCreation."
+            "Closed: the receipts knob is gone from src. Only comments dating it remain: personality-traits.ts:20-27,84-86, personality.ts:110, taxreturn.ts:890-891, earnings.ts:51-52,275, safetynet.ts:419-420. Keeps Accounts declares { bondWound: 1.1 } and Chaotic { hygieneDrift: 1.3, stressGain: 0.92 }. The journey presses both on the rendered page through onClick, Begin makes the life holding both, and the looks show 1 and 2 rows with hand-bent figures (+10%, +24%, −8%) and no receipt or deduction.",
+            "Closed: the hand-typed, order-dependent HELD test was replaced by an order-independent check. I ran the regex myself: all 19 declared knobs equal KNOB_READS' keys, and each is asked for by name in src outside content/, personality.ts and wellbeing.tsx (stressGain and moraleSwing at 7 sites each, the rest at 1 to 3). No match is in a comment.",
+            "Review gap 1 (buttons: the fifth trait and a conflicting trait disabled, putting a trait down) was closed in round one by evidence-g28-ui, per b10. The latest skeptic's 'only one reader per knob reached' belongs to the trait-* rows, all verified in audit/ui.json except trait-receipts.",
+            "The file passes: 17 of 17 tests, run alone on 5f0cba03."
           ],
           "weakTests": [
             {
-              "title": "tests/evidence2-b10.test.ts > c-traits > holds every knob a trait declares to a reader in the journeys above, but receipts, which no student’s life reaches",
-              "why": "HELD is hand-typed and depends on order, and a HELD.add survives deleting the assertions before it."
+              "title": "tests/evidence3-person.test.ts > c-traits and trait-receipts > declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src…",
+              "why": "The check is lexical: it doesn't strip comments before collecting 'asked', and it shows a reader exists, not that play reaches it. No knob is currently matched only in a comment, and evidence2-b10's journeys hold each reader in play."
             },
             {
-              "title": "tests/personality.test.ts > what it does > reads every knob a trait can declare, where the life system bites",
-              "why": "It compares the declared knobs to a typed list."
+              "title": "tests/personality.test.ts > reads every knob a trait can declare, where the life system bites",
+              "why": "Still compares the declared set to a typed list, and still runs in the gate. The row no longer cites it."
             },
             {
-              "title": "tests/evidence-g28-ui.test.ts > c-traits > moves every knob a trait declares, for a life made with it, to the side the trait leans, against a plain twin made alike",
-              "why": "It calls personalityOf directly and takes its sides from the traits' own systemMods."
-            },
-            {
-              "title": "tests/defects5.test.ts > the receipts knob’s traits > say no effect of receipts, …",
-              "why": "It pins copy strings only. It shows the wording fix, not any behaviour."
+              "title": "tests/evidence-g28-ui.test.ts > c-traits > moves every knob a trait declares…",
+              "why": "Still calls personalityOf directly, with sides taken from the traits' own systemMods. Still in the gate."
             }
           ]
         },
         "claimCorrection": {
-          "field": "entry; changes; downstream; tests",
-          "said": "entry: CharacterCreation.tsx:663-694; changes: cleanPersonalityTraits, bootstrap.ts:345; downstream: personalityOf knobs (see trait-* items); looks/wellbeing.tsx:117-120,358 trait look; tests: tests/personality.test.ts 'keeps at most four traits...', 'reads every knob a trait can declare'; tests/creation.test.ts 'carries every disposition and trait into the save'",
-          "now": "entry: CharacterCreation.tsx:604-714 (PersonalityStep: the toggle at 610-617, the pairs and their buttons from 686); changes: cleanPersonalityTraits at bootstrap.ts:359 (systems/personality.ts:55-64); downstream: the personalityOf knobs at their readers (19 reached in play; receipts reaches none), and looks/wellbeing.tsx:117-122 (each trait a way in) and 363 (the trait look); tests: tests/evidence-g28-ui.test.ts > c-traits and tests/evidence2-b10.test.ts > c-traits. Until 2026-10-13 these cited lines that had since moved, and a test that compared the declared knobs to a typed list."
+          "field": "entry; changes; downstream",
+          "said": "entry: CharacterCreation.tsx:663-694; changes: cleanPersonalityTraits, bootstrap.ts:345; downstream: looks/wellbeing.tsx:117-120,358 trait look",
+          "now": "entry: CharacterCreation.tsx:604-714 (PersonalityStep: the toggle at 610-617, the groups' pairs and their buttons at 679-710); changes: cleanPersonalityTraits at bootstrap.ts:359 (systems/personality.ts:55-64); downstream: personalityOf knobs, looks/wellbeing.tsx:119-122 (each trait a way in) and 363 (the trait look). Until 2026-10-13 these said CharacterCreation.tsx:663-694, bootstrap.ts:345 and looks/wellbeing.tsx:117-120,358."
         }
       }
     },
@@ -2245,7 +2252,7 @@
           },
           {
             "file": "evidence-g28-ui.test.ts",
-            "title": "c-body > PLAYER JOURNEY: Your Body says it in centimeters and kilograms for a Londoner, its index beside them, and the life made out of range is drawn",
+            "title": "c-body > PLAYER JOURNEY: Your Body says it in centimeters and kilograms for a Londoner living in London, its index beside them, and the life made out of range is drawn",
             "kind": "render",
             "closes": "The review's metric step: height-cm 241 and weight-kg 90 show the centimeters/kilograms out-of-range text and a BMI field of 15.5. The life is drawn. Clearing the weight shows 'Give both, or neither' and an empty BMI."
           }
@@ -2404,13 +2411,13 @@
     {
       "id": "c-wealth",
       "kind": "creation",
-      "entry": "Starting Point: What Is Yours (CharacterCreation.tsx:933-988), whose What You Are Starting With select (:945-955) is drawn only where choosesWealth, never in a game life",
-      "reads": "config.wealth (forced 'wealthy' by newLifeFrom, bootstrap.ts:199-202; picker hidden since choosesWealth, :205, is false)",
-      "changes": "index.ts:175-227, populateWorld: the profile in the save’s currency (177), checking and savings opened at the starting bank (182-184), the bank’s card at the profile’s limit (199-227); openCredit score (index.ts:232). Until 2026-10-13 this cited index.ts:163-213 and 218.",
+      "entry": "Genres & Background: Your Family, the select of the six families (CharacterCreation.tsx:849-881, FamilyChoice, its select at :868), from 2026-10-14; Starting Point's What Is Yours (:977-1034) says the money back in tiles, its What You Are Starting With select (:990-1000) drawn only where choosesWealth, never in a life at the school",
+      "reads": "config.wealth, set with config.family by withFamily (bootstrap.ts:200) from the family chosen; newLifeConfig starts wealthy, newLifeFrom keeps a draft's family and its means (bootstrap.ts:218-221), and choosesWealth (bootstrap.ts:228) is config.school === undefined. Until 2026-10-14 newLifeFrom forced 'wealthy' and no screen asked.",
+      "changes": "index.ts:175-232, populateWorld: the profile in the save's currency (177), checking and savings opened at the starting bank, the bank's card at the profile's limit with what it carries in (199-227), and openCredit's score (232)",
       "downstream": "Bank, net worth, credit; the term’s Yale Health plan, paid from the opened checking or owed when it can’t be (school.ts:2997-2998). Until 2026-10-13 a plan checking couldn’t cover was dropped: neither paid nor owed, and the notice said it was paid from the bank.",
       "explanation": "Shown figures (wealthIn) equal opened accounts.",
-      "tests": "tests/evidence-g29-ui.test.ts c-wealth: 'opens the game’s own new life with $92,391 in Chase checking, $413,043 in savings, a $65,217 Chase card owing nothing and a credit score of 795', 'shows Starting Point’s tiles as the accounts Begin opens, with no picker…', 'makes a draft that asked for nothing a wealthy life all the same…'; tests/evidence2-b10.test.ts c-wealth: 'PLAYER JOURNEY: comes from a wealthy family, with its money in the bank… Begin opens $92,391 and $413,043 at Chase…', 'PLAYER JOURNEY: charges the term’s Yale Health plan when the money has been moved to savings before 9 AM: owed, not dropped', 'PLAYER JOURNEY: the plan the bank couldn’t take is said to be owed…'. Until 2026-10-13 this cited tests/creation.test.ts ‘opens the accounts the money answer promises…’ (a non-school life, the amounts never compared) and tests/school.test.ts ‘takes a wealthy family’s student’s health plan from the bank at nine on the first day of term, and pays in no scholarship’, whose title overclaimed: it asserted no account, and from 2026-10-13 it reads ‘comes from a wealthy family, and has no birthplace chosen for it’.",
-      "status": "partial",
+      "tests": "tests/need-paths.test.ts 'Genres & Background offers the six families…'; tests/evidence-g29-ui.test.ts > c-wealth; tests/evidence2-b10.test.ts > c-wealth; tests/evidence3-person.test.ts > 'c-wealth: Starting Point’s tiles are what Begin opens, for every family'. Until 2026-10-13 this cited tests/creation.test.ts 'opens the accounts the money answer promises…' (a non-school life, the amounts never compared) and a school.test.ts title that overclaimed.",
+      "status": "verified",
       "issue": "",
       "corrected": {
         "on": "2026-10-12",
@@ -2471,7 +2478,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g29-ui.test.ts",
@@ -2487,7 +2494,7 @@
           },
           {
             "file": "evidence-g29-ui.test.ts",
-            "title": "c-wealth > makes a draft that asked for nothing a wealthy life all the same, on the screen and in the bank",
+            "title": "c-wealth > makes a draft that asked for nothing a Nothing family’s life, on the screen and in the bank",
             "kind": "render",
             "closes": "The 'reads' claim (newLifeFrom forces wealthy, choosesWealth hides the picker) had no evidence. A stored draft saying 'nothing' still shows the wealthy tiles with no picker, and Begin opens $92,391 and a score of 795."
           },
@@ -2502,19 +2509,25 @@
             "title": "c-wealth > PLAYER JOURNEY: charges the term’s Yale Health plan when the money has been moved to savings before 9 AM: owed, not dropped",
             "kind": "command",
             "closes": "A defect found in passing. A player who moves checking to savings through bank.transfer at 7:30 is never charged the term's health plan. The test fails with 0 against 1,882.00."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-wealth: Starting Point’s tiles are what Begin opens, for every family > PLAYER JOURNEY: ${family} chosen on the select; What Is Yours shows it with no picker, and Begin opens the same checking, savings, card and credit score",
+            "kind": "render",
+            "closes": "The tiles were tied to the opened accounts for the wealthy life only, and nothing tied the card or the credit record for any other family. For each family chosen on Genres & Background's select through its own onChange: Starting Point draws no 'What You Are Starting With' picker, and its Checking, Savings, Credit Record and Credit Card tiles (limit, and what is owed) read the profile's euros at 0.92 to the dollar, worked by hand ($43/$0/520/no card; $1,348/$326/610/$1,630 with $913 owed; $5,217/$7,065/690/$6,522 with $457 owed; $19,565/$45,652/748/$21,739; $92,391/$413,043/795/$65,217; $260,870/$2,608,696/812/$163,043). The term callout matches need ($13,318.50 paid in) or no need ($1,882.00 to the plan). Begin through Review opens the same checking, savings, card limit and balance, and person.credit.score."
           }
         ],
         "gapsClosed": [
           "No test pins the opening amounts or the credit score of the game's own new life (wealthy, New Haven, USD).",
           "Nothing ties the creation tiles to the opened accounts.",
           "The row cites stale index lines: 163-213 is now 175-226 and 218 is now 232 (see claimCorrection).",
-          "The claim school.test.ts:188's title makes ('with its money in the bank') is now checked under that title in this file. The checks are the birthplace asked for and Continue held on Identity, family 'wealthy', $92,391 and $413,043 at Chase, and the term's first charge taken from that checking."
+          "The claim school.test.ts:188's title makes ('with its money in the bank') is now checked under that title in this file. The checks are the birthplace asked for and Continue held on Identity, family 'wealthy', $92,391 and $413,043 at Chase, and the term's first charge taken from that checking.",
+          "Nothing tied the creation tiles to the opened accounts beyond the wealthy life: now every family, with the card and the credit score.",
+          "The overclaiming tests/school.test.ts title: renamed in the tree on 2026-10-13 ('comes from a wealthy family, and has no birthplace chosen for it'). Only the row's text still cites the old title (rowText).",
+          "Stale 'entry', 'reads' and 'changes': since 2026-10-14 the wealth isn't forced. It is the family chosen on Genres & Background (rowText)."
         ],
-        "gapsOpen": [
-          "[stale claim] tests/school.test.ts:188's title still overclaims, because renaming it is an edit to that file. The row's 'tests' field cites it, and should cite tests/evidence-g29-ui.test.ts > c-wealth and this file's test of the same title (claimCorrection). The 'entry', 'reads' and 'changes' fields cite lines that have moved.",
-          "[needs engine change] Found downstream of the accounts this row opens: the term's Yale Health plan is dropped when checking can't pay it. school.ts:2941 ignores payFromCurrent's false. The plan is neither paid nor owed, nothing is in trouble, and the term's notice still says it 'was paid from your bank'."
-        ],
-        "disposition": "stale or wrongly grouped claim",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "A student whose family rules out need pays the term's Yale Health plan from the bank. When checking can't cover it (for example, after the player moved the money to savings on the first morning), payFromCurrent returns false and the caller ignores it. The $1,882 charge vanishes: nothing is posted, nothing is owed, no money worry follows, and the notice says it was paid from the bank.",
@@ -2527,53 +2540,49 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 9,
+          "killed": 9,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "Closed (defect fixed): school.ts, around lines 2997-2998, now owes the plan when payFromCurrent returns false. The notice says the bank couldn't cover it and that it is owed. Two journeys pass through bank.transfer and the clock. In the first, the plan totals 1,882.00 whether moved or not. In the second, the notice wording differs, Bills Owed is 1,882.00 and is paid back at the next midnight, and a withdrawal refunds it either way.",
-            "Checked: the first journey renders Identity (asks for a birthplace and holds Continue) and Starting Point's tiles through SlateApp. It presses Begin, then checks Chase $92,391 and $413,043, and $1,882 out of checking at 9 AM (half of the published $3,764), all with independent literals. The first round (tests/evidence-g29-ui.test.ts) pins the card's $65,217 limit and the credit score of 795, and ties the tiles to the opened accounts.",
-            "Open, a review gap that no test can close: tests/school.test.ts:188 'comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it' still asserts no account. Its overclaiming title is unchanged, and the row cites it. The claim is now checked under the same title in tests/evidence2-b10.test.ts, so closing it needs only a rename of the school.test.ts title, or a citation change. It is a test's words, not the engine."
+            "Closed: for each of the six families, the family is chosen through the select's own onChange (withFamily). Starting Point is rendered with no 'wealth' picker. The checking, savings, Credit Record and card tiles are read off the page, and Begin opens the same checking, savings, score, card limit and owed balance. I checked the literals against WEALTH_PROFILE (bootstrap.ts:233-239) at 0.92 euros to the dollar: 40/0.92 gives 43, 1,240/0.92 gives 1,348, 85,000/0.92 gives 92,391 and 240,000/0.92 gives 260,870. The credit scores are the profile's own literals.",
+            "Closed: tests/school.test.ts:188 is now titled 'comes from a wealthy family, and has no birthplace chosen for it'. The overclaim is gone from the tree.",
+            "Closed earlier (b10): the Yale Health plan is owed when checking can't cover it."
           ],
           "weakTests": [
             {
-              "title": "tests/school.test.ts > comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it",
-              "why": "Its title claims money in the bank, and it asserts no account. The same title now has a real test in evidence2-b10."
-            },
-            {
               "title": "tests/creation.test.ts > opens the accounts the money answer promises, and balances them",
-              "why": "Still cited by the row. It never compares against the promised amounts, and it is a non-school life."
+              "why": "Still in the gate: a non-school life, with the amounts never compared. The row no longer cites it."
             }
           ]
         },
         "claimCorrection": {
-          "field": "entry; reads; changes; tests",
-          "said": "entry: Starting Point: What You Are Starting With (CharacterCreation.tsx:925-935); reads: config.wealth (forced 'wealthy' by newLifeFrom, bootstrap.ts:183-186; picker hidden since choosesWealth false); changes: index.ts:163-213 accounts/savings/card/opening balance; openCredit score (index.ts:218); tests: tests/creation.test.ts ‘opens the accounts the money answer promises, and balances them’; tests/school.test.ts ‘comes from a wealthy family, with its money in the bank, and has no birthplace chosen for it’",
-          "now": "entry: Starting Point: What Is Yours (CharacterCreation.tsx:929-984), whose What You Are Starting With select (941-950) is drawn only where choosesWealth, never in a game life; reads: config.wealth, forced 'wealthy' by newLifeFrom (bootstrap.ts:199-202), the picker hidden while choosesWealth (bootstrap.ts:205) is false; changes: index.ts:175-232, populateWorld: the profile in the save's currency (177), checking and savings opened at the starting bank (184), the bank's card at the profile's limit (199-227) and openCredit's score (232); tests: tests/evidence-g29-ui.test.ts > c-wealth and tests/evidence2-b10.test.ts > c-wealth. Until 2026-10-13 these cited lines that had since moved, and two tests that never checked the amounts promised."
+          "field": "changes",
+          "said": "index.ts:163-213 accounts/savings/card/opening balance; openCredit score (index.ts:218)",
+          "now": "index.ts:175-227, populateWorld: the profile in the save's currency (177), checking and savings opened at the starting bank (182-185), and the bank's card at the profile's limit (199-227); openCredit score (index.ts:232). Until 2026-10-13 this cited index.ts:163-213 and 218, lines that had since moved."
         }
       }
     },
     {
       "id": "c-family",
       "kind": "creation",
-      "entry": "(not shown) family 'wealthy'",
-      "reads": "config.family",
-      "changes": "Person.family (bootstrap.ts:353)",
-      "downstream": "systems/school.ts:1398 hasNeed (read at :1410) -> no living-cost aid; UI callout findsNeed (bootstrap.ts:208; CharacterCreation.tsx:981-986), a parallel definition no test holds to hasNeed",
+      "entry": "Genres & Background: Your Family, the six families (CharacterCreation.tsx:849-881, FamilyChoice; select :868, its need callout :872-878), from 2026-10-14. Until then it wasn't shown, and every new life's family was 'wealthy'.",
+      "reads": "config.family, set by withFamily (bootstrap.ts:200) through familyOf (:197): Wealthy and Inherited give 'wealthy', and the four below give none",
+      "changes": "Person.family (bootstrap.ts:376)",
+      "downstream": "systems/school.ts:1398 hasNeed, by needFor (content/school.ts:85): the living-expense scholarship each term, conversion to grant aid, and the aid a leave returns. With no need, the Yale Health plan comes from the bank. The creation callouts read findsNeed (bootstrap.ts:231), by the same needFor.",
       "explanation": "Callout matches engine.",
-      "tests": "tests/school.test.ts ‘takes a wealthy family’s student’s health plan from the bank at nine on the first day of term, and pays in no scholarship’ (hasNeed); tests/evidence2-b10.test.ts c-wealth 'PLAYER JOURNEY: comes from a wealthy family, with its money in the bank… the term’s Yale Health plan, $1,882, comes out of that checking at 9 AM'. tests/school.test.ts ‘comes from a wealthy family, and has no birthplace chosen for it’ asserts the family and no account; until 2026-10-13 its title said “with its money in the bank” too.",
+      "tests": "tests/need-paths.test.ts ‘Genres & Background offers the six families, Wealthy chosen as creation chose before…’, ‘the Nothing family’s life begins with no card…’, ‘a draft carried back keeps the family it chose, and its means with it; a draft naming none the game knows comes back wealthy’, ‘PLAYER JOURNEY: a Scraping family’s student is paid $13,318.50 at the fall term’s start…’ (the term’s account); tests/evidence3-person.test.ts ‘c-family: the means go with the family the select last chose’ and ‘c-wealth: Starting Point’s tiles are what Begin opens, for every family’ (its six tests, one a family). Until 2026-10-14 this cited only a wealthy life’s tests, as no other family could be made.",
       "status": "verified",
       "issue": "",
       "corrected": {
         "on": "2026-10-12",
         "said": "Tested by: tests/school.test.ts:172 (newLifeConfig), a line that had moved, beside a test that sets the family and doesn’t read hasNeed.",
-        "now": "hasNeed is held by ‘takes a wealthy family’s student’s health plan from the bank..., and pays in no scholarship’."
+        "now": "Until 2026-10-14 hasNeed was held only by a wealthy family’s student paying the plan from the bank (school.test.ts), as no other family could be made; since then need-paths.test.ts plays each of the six the screen offers."
       },
       "review": {
         "on": "2026-10-13",
@@ -2614,6 +2623,48 @@
           "findsNeed (bootstrap.ts:208) and hasNeed (school.ts:1386) are parallel definitions with no test asserting they agree, and the callout's plan figure is not tested against the amount charged.",
           "The row cites stale lines: school.ts:801 is now 1386, and CharacterCreation.tsx:961-967 is now 977-982."
         ]
+      },
+      "after": {
+        "on": "2026-10-13",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-family: the means go with the family the select last chose > PLAYER JOURNEY: Inherited chosen, then Nothing: Review says Need Found, and at the fall term’s start Nothing’s student is paid $13,318.50 where Inherited’s pays the $1,882 plan from $260,870",
+            "kind": "command",
+            "closes": "Need reached for families need-paths doesn't play (it plays Scraping and Wealthy), and the select changed twice: the means go back with the money. Inherited gives family 'wealthy' and Review's 'Inherited, No Need Found'. Choosing Nothing on the same select clears the family, and Review says 'Nothing, Need Found'. Both are begun on one seed and played by the clock to noon on 24 August. Nothing's checking is $13,361.50 ($43 plus the $13,318.50 left after the plan), and Inherited's is $258,988.00 ($260,870 less $1,882). The fall's notices say which."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-wealth: Starting Point’s tiles are what Begin opens, for every family",
+            "kind": "render",
+            "closes": "The callout's plan figure against the family: Starting Point says $13,318.50 paid in for the four families with need and $1,882.00 to the plan for Wealthy and Inherited, the amounts the term charges (need-paths and the test above)."
+          }
+        ],
+        "gapsClosed": [
+          "findsNeed and hasNeed as parallel definitions: since 2026-10-14 both read needFor (content/school.ts:85). need-paths holds findsNeed(config) to hasNeed(the save's player) for all six families, and this file holds the means through play for Nothing and Inherited after the select changed.",
+          "The callout's plan figure against the amount charged: the Background callout and Starting Point's callout both say $1,882.00, and the term takes $1,882 from Inherited's bank and meets it from Nothing's scholarship.",
+          "Stale 'entry' ('(not shown) family wealthy') and line numbers: given as rowText."
+        ],
+        "gapsOpen": [],
+        "disposition": "verified",
+        "defects": [],
+        "mutations": {
+          "run": 2,
+          "killed": 2,
+          "survived": []
+        },
+        "verdict": "verified",
+        "claimed": "verified",
+        "check": {
+          "holds": true,
+          "verdict": "verified",
+          "problems": [
+            "Closed: findsNeed (bootstrap.ts:231) and hasNeed (systems/school.ts:1398) now both return needFor(family) (content/school.ts:85). They are no longer parallel definitions.",
+            "Closed: Inherited is chosen and then Nothing on the same select. Review says 'Inherited, No Need Found', then 'Nothing, Need Found', and the config's family goes back to undefined. Played to noon on 24 Aug, Nothing's checking is $13,361.50 ($43 plus $13,318.50) and Inherited's is $258,988 ($260,870 less $1,882). The term notices name the $1,882.00 plan, the same figure as the callout c-wealth's test reads. All are literals worked by hand."
+          ],
+          "weakTests": []
+        }
       }
     },
     {
@@ -4111,14 +4162,14 @@
     {
       "id": "trait-receipts",
       "kind": "trait",
-      "entry": "receipts (Chaotic 0.9, Keeps Accounts 1.3)",
-      "reads": "personalityOf(person,'receipts') at taxreturn.ts:894",
-      "changes": "share of y.jobCosts deducted (taxreturn.ts:894-895)",
-      "downstream": "y.jobCosts is written only by earnings.ts:276-278 recordJobCost, which no production code calls (only tests/costs.test.ts:54, tests/arrears.test.ts:108). The knob’s description (content/personality-traits.ts:83) has said since 2026-10-13 that it decides nothing for a student; until that day Chaotic’s cost (:183) said receipts go missing at tax time and Keeps Accounts’ description (:271) every receipt remembered, effects in the present tense; since then they say neither, and the file’s header says the knob decides nothing yet (:20-26).",
-      "explanation": "Reader multiplies a figure that is always 0 in play: the knob changes no outcome. Change Keeps Accounts on/off on a played career -> identical return.",
-      "tests": "tests/costs.test.ts 'counts the work's costs in New York's itemized deduction...' (injects recordJobCost by hand)",
+      "entry": "receipts (Chaotic 0.9, Keeps Accounts 1.3), until 2026-10-14",
+      "reads": "none. personalityOf(person, 'receipts') at taxreturn.ts went on 2026-10-14.",
+      "changes": "none. Until 2026-10-14 it set the share of y.jobCosts a return deducted, and y.jobCosts' only writer, earnings.ts recordJobCost, had no caller.",
+      "downstream": "none. The owner had the knob go on 2026-10-14, with the return's line that read it (taxreturn.ts:890-892 dates it), recordJobCost and jobCosts (earnings.ts:51-52, :275), RECEIPTS (content/safetynet.ts:419-420) and the knob's KNOB_READS entry (content/personality-traits.ts:84-86). Keeps Accounts moves bondWound alone, and Chaotic hygieneDrift and stressGain.",
+      "explanation": "Removed, not deferred. Two London-born twins, one holding Keeps Accounts and Chaotic, played to the 2027 tax season, are given the same 2026 1040-NR to the cent.",
+      "tests": "tests/evidence3-person.test.ts > 'trait-receipts: changing the two traits changes no return' and > 'c-traits and trait-receipts: the receipts knob gone'; tests/evidence2-b10.test.ts > c-traits ('says of Keeps Accounts on Dispositions & Traits what its own look says…'). Until 2026-10-14 this cited tests/costs.test.ts and tests/arrears.test.ts, which injected recordJobCost by hand.",
       "status": "deferred",
-      "issue": "Declared effect with no live input.",
+      "issue": "",
       "previous": "unresolved",
       "settled": "No receipt-dependent tax benefit reaches this student (research). Disclosed on the knob; mechanics and traits unchanged. Owner recommendation: retire the receipts modifier from Chaotic and Keeps Accounts.",
       "review": {
@@ -4155,6 +4206,58 @@
           "Chaotic's cost text (personality-traits.ts:179, 'receipts go missing at tax time') and Keeps Accounts' description (:268, 'every receipt with it') still claim an effect in the present tense.",
           "The row's line numbers are out of date (taxreturn.ts:326 is now 836; earnings.ts:200 is now 274)."
         ]
+      },
+      "after": {
+        "on": "2026-10-13",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "trait-receipts: changing the two traits changes no return > PLAYER JOURNEY: London-born twins, one holding Keeps Accounts and Chaotic, played to the tax season of 2027 with the same work each midnight, are given the same 2026 return to the cent, on income earned",
+            "kind": "command",
+            "closes": "The row's own falsifiability test ('Change Keeps Accounts on/off on a played career -> identical return'), run through play. Both twins are made on the rendered pages and begun on one seed. They are played by the clock from 24 August 2026 across a save and a load on 1 November to 10 AM on 1 February 2027, when the tax season makes the 2026 return. A London-born student was chosen because an F-1 student's return is always made, while an American student's $1,670.59 is under 2026's $16,100 and makes none. Both get a 1040-NR with $1,656.00 of work-study (72 hours at $23.00), $14.59 of interest left out under IRC 871(i), $165.60 federal (10%) and a $165.60 balance, identical in every figure."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-traits and trait-receipts: the receipts knob gone > declares no knob that isn’t named in KNOB_READS and asked for by name at a reader in src; receipts neither declared, described nor read",
+            "kind": "fixture",
+            "closes": "The removal in the code: no trait declares receipts, KNOB_READS has no receipts, nothing in src asks personalityOf for it, and no code in src writes or reads recordJobCost, jobCosts or RECEIPTS."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-traits and trait-receipts: … > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+            "kind": "render",
+            "closes": "What the player sees: neither trait's look shows a receipts row or says a receipt or a deduction."
+          }
+        ],
+        "gapsClosed": [
+          "'The knob multiplies a figure that is always 0': the knob, the return's line that read it and recordJobCost went on 2026-10-14 (the owner's decision, per the row's own recommendation). Held in the code, on the looks and through a played return.",
+          "'Chaotic's cost text and Keeps Accounts' description still claim an effect': both say none since 2026-10-13, and their looks show none.",
+          "The row's stale line numbers: rewritten as a record of the removal (rowText)."
+        ],
+        "gapsOpen": [],
+        "disposition": "deferred or removed",
+        "defects": [],
+        "mutations": {
+          "run": 2,
+          "killed": 2,
+          "survived": []
+        },
+        "verdict": "deferred",
+        "claimed": "verified",
+        "check": {
+          "holds": true,
+          "verdict": "deferred",
+          "problems": [
+            "The owner removed the knob on 2026-10-14, so by the standard the verdict is 'deferred' (removed), not 'verified'. The removal itself holds. No code in src reads or writes receipts, recordJobCost, jobCosts or RECEIPTS; only past-tense comments remain. KNOB_READS has no receipts, and no trait declares it. London-born twins played to 1 Feb 2027 across a reload get identical 2026 1040-NR figures (workStudy 1,656.00, federal 165.60, both worked by hand)."
+          ],
+          "weakTests": [
+            {
+              "title": "tests/evidence3-person.test.ts > trait-receipts > London-born twins … the same 2026 return",
+              "why": "Equality of the twins' returns would also hold for any trait that never reached the return. It shows absence, which is what a removal needs, and the agent's mutation gives it its teeth."
+            }
+          ]
+        }
       }
     },
     {
@@ -5548,13 +5651,13 @@
     {
       "id": "p-journey-history",
       "kind": "profile",
-      "entry": "School Journey, Your Work So Far, Development History (ProfileWorkspace.tsx: JourneyPanel 482-543, WorkSoFarPanel 282-308, HistoryPanel 545-564). Until 2026-10-13 this cited 444-518 and left out Your Work So Far.",
+      "entry": "School Journey, Your Work So Far, Development History (ProfileWorkspace.tsx: JourneyPanel 486-547, WorkSoFarPanel 286-312, HistoryPanel 549-568). Until 2026-10-13 this cited 444-518 and left out Your Work So Far.",
       "reads": "journeyOf, person.work, school.credits, developmentOf",
       "changes": "navigate /workspace/school",
       "downstream": "",
       "explanation": "",
       "tests": "tests/evidence-g32-ui.test.ts p-journey-history: 'PLAYER JOURNEY: an hour of Circles Of Attention puts its changes at the top of Development History…; a reload keeps them, once', 'PLAYER JOURNEY: a first year played to 10 May 2027…, and Show Older Work letting twenty more in', 'PLAYER JOURNEY: once the run has closed… School Journey says she was on stage in it, not that it is running', 'PLAYER JOURNEY: from the next casting, on 15 September 2027, the credit…; Your School goes to /workspace/school…', 'PLAYER JOURNEY: Your Work So Far is early days on a new life and, a year on, read from the pieces judged…', 'PLAYER JOURNEY: Development History, a year on, lists the latest fifteen changes…'; tests/evidence2-b11.test.ts p-journey-history: 'PLAYER JOURNEY: Your Work So Far at the end of a played school…', 'PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5…', 'PLAYER JOURNEY: the milestones First strong work…' (abilities at full by hand), 'PLAYER JOURNEY: dismissed in December 2027, her closed Woyzeck filed as a credit…', and 'a Rep night closed is on stage beside the School’s run…' (a fixture: the Rep branch’s only evidence); tools/acceptance-ui.mjs:557 “profile: the development history shows the hour”, on the built app, outside the gate, which since 2026-10-13 reads the hour’s change and not the heading only.",
-      "status": "partial",
+      "status": "verified",
       "issue": "None open in the row’s claim. Until 2026-10-13 School Journey said a closed run was running until the next term’s casting filed its credit (fixed that day). JourneyPanel’s Rep branch is held only by a fixture that puts a Rep run on a student casting would never send there.",
       "corrected": {
         "on": "2026-10-12",
@@ -5601,7 +5704,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
@@ -5668,6 +5771,24 @@
             "title": "p-journey-history > a Rep night closed is on stage beside the School’s run, and filed by a withdrawal still once (TEST SETUP: the Rep run set on the record: only a fixture reaches it here)",
             "kind": "fixture",
             "closes": "No test ran the fix's school.rep branch. Here a closed Rep run is on stage before filing, and after school.withdraw files it the panel still says it once."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says every part she was on stage in once, The Seagull’s Nina among them, as her credits keep them",
+            "kind": "render",
+            "closes": "A Rep understudy's run reached by play (The Seagull's Nina, sent on once, filed as a credit), and every credit of a played school said once, the closed-and-filed Portia among them"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > p-journey-history: PLAYER JOURNEY: the played graduate’s School Journey says “Graduated”, once, as Home’s School line has since 2026-10-13",
+            "kind": "render",
+            "closes": "Shows defect 1 below; fails until it's fixed"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > p-journey-history: PLAYER JOURNEY: on 15 April 2027, The Seagull closed on 27 March and her night as Nina on the record, School Journey says she was on stage in it, as it says of a School run closed",
+            "kind": "render",
+            "closes": "Shows defect 2 below; fails until it's fixed"
           }
         ],
         "gapsClosed": [
@@ -5677,12 +5798,13 @@
           "Your Work So Far's strength and weakness lines were expected from identityOf, and six sections were never read. Every section is now worked by hand from the records, and the habit section is read on played choices with its thresholds falsified.",
           "Milestones: first-strong, first-exceptional and first-mastery are now read, each matched to the first piece past its band line in the work kept.",
           "The fix's filter (a closed run already filed) ran in no test. It now runs on a played dismissal where the closed casting and its credit stand together.",
-          "The fix's school.rep branch ran in no test. It now runs through a TEST SETUP Rep run. Only a fixture reaches it here: the first-year Rep understudy is cast only for a student in good standing at the spring casting (school.ts:2643). All 40 seeds b11-rep-0..39, played by the clock alone, were under academic concern on 20 January 2027. Even in good standing, an understudy goes on at 2% a performance (ESTIMATE.goesOn)."
+          "The fix's school.rep branch ran in no test. It now runs through a TEST SETUP Rep run. Only a fixture reaches it here: the first-year Rep understudy is cast only for a student in good standing at the spring casting (school.ts:2643). All 40 seeds b11-rep-0..39, played by the clock alone, were under academic concern on 20 January 2027. Even in good standing, an understudy goes on at 2% a performance (ESTIMATE.goesOn).",
+          "The Rep reached by play: a played student cast as The Seagull's understudy, sent on once, her Nina on School Journey from the credit filed in August 2027."
         ],
         "gapsOpen": [
-          "[needs engine change] (a tools change, outside this file) tools/acceptance-ui.mjs:447-451 'profile: the development history shows the hour' still asserts only that the 'Development History' heading exists. The in-gate tests read the history's items; the built-app step's title claims more than it checks. The fix is under defects."
+          "[needs engine change] JourneyPanel's closed-Rep branch (`school.rep` with `closed`, ProfileWorkspace.tsx:497-500) is reached by no understudy: an understudy's Rep calls are 'oncall', never 'performance', so the run's last call is never marked last and closeRun never sets `closed` (school.ts:2725-2726). evidence2-b11's fixture is still its only evidence; a company member's Rep run (third year, at a director's invitation) would reach it, and no played life here was invited."
         ],
-        "disposition": "working, evidence missing",
+        "disposition": "verified",
         "defects": [
           {
             "summary": "Once a production's run has closed (its last night played, the director's note given, and its 'run' milestone listed on the same panel), School Journey still says 'No production finished yet; A Leading Part In A New Play in Carlotta Festival Of New Plays is running.' until the next term's casting files the credit: on r8-a, from 12 May to mid-September 2027.",
@@ -5701,35 +5823,50 @@
               "test": "None in the gate. tools/acceptance-ui.mjs runs on the built app, outside vitest. The in-gate equivalent is round one's 'p-journey-history: … > PLAYER JOURNEY: an hour of Circles Of Attention puts its changes at the top of Development History…' in tests/evidence-g32-ui.test.ts.",
               "how": "fixed in the code; the test that failed before it passes in the full suite"
             }
+          },
+          {
+            "summary": "School Journey's subtitle for a graduate reads 'Graduated, graduated': the standing label is appended after 'Graduated', the words Home's School line lost on 2026-10-13.",
+            "where": "src/ui/workspaces/ProfileWorkspace.tsx:503",
+            "fixed": null
+          },
+          {
+            "summary": "An understudy's Rep run she went on in is never closed, so from its last night until the next casting files it, School Journey leaves it out. Played: The Seagull ran to 27 March 2027, she went on once as Nina, and on 15 April School Journey says 'No production yet.'; the credit is filed only on 23 August 2027.",
+            "where": "src/engine/systems/school.ts:2725-2726 (`const final = reps.filter((r) => r.call === 'performance').at(-1); if (final) final.last = true;`: an understudy's run has only 'oncall' calls) and closeRun at :3282",
+            "fixed": null
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
+        "verdict": "verified",
         "claimed": "partial",
         "check": {
-          "holds": true,
-          "verdict": "partial",
+          "holds": false,
+          "verdict": "verified",
           "problems": [
-            "Still open: JourneyPanel's school.rep branch (a closed Rep run on stage, then filed) is evidenced only by a fixture. The b11 test writes a closed Rep run onto a student under academic warning, a state the Rep casting rule (good standing) can't produce. A Rep understudy is play-reachable: evidence-g24-school reaches school.rep as The Seagull's Nina, and g19 does so with coursework prepared. Yet no test plays one to its close and reads School Journey.",
-            "Closed: defect 39, the built-app step. tools/acceptance-ui.mjs:557-569 now requires a practiced hour and finds that exercise's change among the newest Development History items, with its date and +x.xxx. This is outside the gate and was not run here. The in-gate equivalent is g32's 'an hour of Circles Of Attention puts its changes at the top of Development History'.",
-            "Closed: Your Work So Far is rebuilt by hand from the records on played r8-a and compared exactly, including after a reload. How You Tend To Play It is checked at 5/5 and 4/5, and is absent at 4/4 and 3/5. The three milestone kinds are matched to the first piece past 65, past 80 and at mastery; abilities set at full is labelled TEST SETUP. The closed-run filter runs on a played dismissal: Marie is said once, also after a reload.",
-            "Ran tests/evidence2-b11.test.ts: all p-journey-history tests pass."
+            "The claim 'partial' no longer holds. Both defects it found were fixed in 5f0cba03, and the fix also closes its open gap. The gap was JourneyPanel's closed-Rep branch, which no understudy reached. school.ts now marks the run's last kept call as last, on call or performance alike, and closes the run at its curtain whether the understudy is sent on, not needed, or out of town. The test on the played save of 15 April 2027 (The Seagull ended 27 March; Nina was performed once) asserts credits are [] and that School Journey reads 'On stage: Nina in The Seagull, 2027.' That sentence can come only from the `closed` filter over school.rep, so the branch is now reached by play. The evidence2-b11 fixture is no longer the only evidence.",
+            "Closed: 'Graduated, graduated' on School Journey. ProfileWorkspace.tsx:504 leaves out the standing for a graduate, and the test pins '^School Journey Graduated How This Works On stage: ' on the played graduate.",
+            "Closed by play: every credit of a played degree is said once, The Seagull's Nina among them (wentOn 1). The sentence is built from the credits and each one is counted. The filter mutation fails the test.",
+            "Closed earlier and still so: Development History items, Your Work So Far rebuilt by hand, How You Tend To Play It, the milestones, Show Older Work, the Your School button, and the acceptance step (outside the gate).",
+            "Not covered, though outside the row's claim: the April test does not check when the run closed (rep.closed against 27 March's curtain), and nothing reads the new director's note for an understudy never sent on ('You covered … and didn’t go on')."
           ],
           "weakTests": [
             {
-              "title": "p-journey-history > a Rep night closed is on stage beside the School’s run, and filed by a withdrawal still once (TEST SETUP: the Rep run set on the record: only a fixture reaches it here)",
-              "why": "The fixture puts a Rep run on a student under academic warning, which casting never does. The branch can be reached by play (a Rep understudy cast in good standing), but this fixture is its only evidence."
+              "title": "tests/evidence3-home.test.ts > the graduate, played > DEFECT (p-journey-history): the played graduate’s School Journey says “Graduated”, once, …; it says “Graduated, graduated”",
+              "why": "The test passes since 5f0cba03, so its title is false in the present tense. It should be retitled without 'DEFECT' and in the past tense."
+            },
+            {
+              "title": "tests/evidence3-home.test.ts > the graduate, played > DEFECT (p-journey-history): on 15 April 2027, … School Journey says she was on stage in it …; it says “No production yet.”",
+              "why": "The same problem: the title is false in the present tense since the fix. The test also does not assert the close date."
             }
           ]
         },
         "claimCorrection": {
           "field": "entry",
           "said": "School Journey, Development History (ProfileWorkspace.tsx:444-518)",
-          "now": "School Journey, Your Work So Far, Development History (ProfileWorkspace.tsx: JourneyPanel 453-514, WorkSoFarPanel 255-281, HistoryPanel 516-535). Until 2026-10-13 this cited 444-518, lines the panels had moved from, and left out Your Work So Far, which stands between them."
+          "now": "School Journey, Your Work So Far, Development History (ProfileWorkspace.tsx:453-506, 255-281, 508-527). Until 2026-10-13 this cited 444-518, lines the panels had moved from, and left Your Work So Far out, which stands between them."
         }
       }
     },
@@ -5977,8 +6114,8 @@
       "changes": "world.take_decision_action, world.dismiss_decision, world.mark_read",
       "downstream": "world.ts:32-42 (world.dismiss_decision), 44-76 (world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 124-138, which closes a dated row at the world’s look after its day; what weighs is troubles() in systems/spending.ts:454-486. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read’s end and left the expiry out.",
       "explanation": "All Clear reads troubles() + calendar clashes. Until 2026-10-13 a card’s line could say 'N payments behind' for two or more; no played life reaches that once a card paid off resets its count (defect 68, fixed), and the sentence went: an unsuspended card is a payment behind (Home.tsx:65-68).",
-      "tests": "tests/evidence-g32-ui.test.ts h-needs: 'PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says', 'PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…; a reload keeps it so, and the return still files', 'PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…', 'PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…', the calendar clash and the six-row cap, and the money sentences ('something gone unpaid…', 'the current account overdrawn…', 'the card at nine-tenths of its limit…', 'the card behind: a payment, and suspended', 'medical care owed, and a debt with collections', 'income tax owed on a return filed…'), which rest on TEST SETUP; tests/evidence2-b11.test.ts h-needs: 'PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 157…', 'PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $510, then suspended owing $850…, across a reload', 'PLAYER JOURNEY: File It pressed with nothing in the bank… You owe $166 of income tax…'; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:196 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Unpaid, medical and collections are not played to the sentence. Until 2026-10-13 no test rendered the panel or All Clear.",
-      "status": "partial",
+      "tests": "tests/evidence3-home.test.ts h-needs (round three, 2026-10-14), every money sentence played: ‘PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine…’ (“You owe $1,882 that went unpaid.”), ‘PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date…’ (“nearly at its limit”, then “$1,999 is with collections.”), ‘PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run…’ (“You owe $50 for medical care.”, and at Chase $50 overdrawn instead); tests/evidence-g32-ui.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 her 2026 return is waiting…; Go There goes where each says’, ‘PLAYER JOURNEY: Dismiss and Mark N Read, pressed on the panel…; a reload keeps it so, and the return still files’, ‘PLAYER JOURNEY: File It, pressed in a guided life that hasn’t read “Cover, Benefits And Returns”, is refused…’, ‘PLAYER JOURNEY: a return left unfiled past 15 April is Overdue in red at midnight…’, the calendar clash and the six-row cap, and the money sentences (‘something gone unpaid…’, ‘the current account overdrawn…’, ‘the card at nine-tenths of its limit…’, ‘the card behind: a payment, and suspended’, ‘medical care owed, and a debt with collections’, ‘income tax owed on a return filed…’), which rest on TEST SETUP and stay beside the played ones; tests/evidence2-b11.test.ts h-needs: ‘PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 157…’, ‘PLAYER JOURNEY: her everyday spending put on the card… a payment behind owing $510, then suspended owing $850…, across a reload’, ‘PLAYER JOURNEY: File It pressed with nothing in the bank… You owe $166 of income tax…’; tests/smoke.test.ts ‘does the thing when the button on it is pressed’, ‘keeps the row open when the command behind the button refuses’; tools/acceptance-ui.mjs:196 “home: what needs you on the first day: no decision waiting, in the panel’s own words”, on the built app, outside the gate; until 2026-10-13 it was “home: what needs you, and a decision taken from its card”, which passed with no card and asserted nothing after a press. Until 2026-10-14 unpaid, near-limit, medical and collections rested only on TEST SETUP debts; until 2026-10-13 no test rendered the panel or All Clear.",
+      "status": "verified",
       "issue": "",
       "corrected": {
         "on": "2026-10-12",
@@ -6057,7 +6194,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
@@ -6154,6 +6291,24 @@
             "title": "h-needs > PLAYER JOURNEY: File It pressed with nothing in the bank files her return unpaid, and once its notices are read What Needs You says You owe $166 of income tax, 10% of her $1,656; her twin who could pay is All Clear (TEST SETUP: the bank emptied)",
             "kind": "render",
             "closes": "The income-tax sentence had rested on a TaxReturn written whole. Now the clock's own 2026 return is filed by pressing File It on the panel. Only the bank is emptied (TEST SETUP), so payFromBank fails and the return is owed 16560. 'You owe $166 of income tax' = $165.60 = 10% × $1,656, to the dollar. The twin who files with money reads All Clear."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: the checking moved to savings at 7:30 on the first morning, the fall’s Yale Health plan, $1,882, goes unpaid at nine: “You owe $1,882 that went unpaid.” at noon, across a reload, paid back out of savings at midnight; her twin who kept it is All Clear",
+            "kind": "command",
+            "closes": "'You owe $X that went unpaid.' reached by play (Move Money, then the clock's 9 AM plan billing into an empty checking), no TEST SETUP arrears account; $1,882 worked as half the Bulletin's $3,764; falsified by settleArrears at midnight and by the twin"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card, its spending put on it and the checking moved to savings before each due date: a payment behind at $1,423, then at its $1,630 limit “nearly at its limit”, then charged off at the sixth: “$1,999 is with collections.”, the checking still named on the Money line, and gone once Pay is sent",
+            "kind": "command",
+            "closes": "'nearly at its limit' and '… is with collections' reached by play: a family creation offers (withFamily 'scraping'), bank.set_payments credit, bank.transfer before six due dates; $1,423 = 913 + 48×10 + 30 under 90% of $1,630 (not near), $1,630 at the limit (near); collections = the card's balance the hour before + the $40 fee, $1,999; across a reload; bank.pay_collections takes the sentence away"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run, Yale Health’s $50 for the emergency room billed due in thirty days, the checking moved to savings the hour before: “You owe $50 for medical care.”, across a reload; her twin who kept it is All Clear, and at Chase, which pays an item past zero, she’s $50 overdrawn instead",
+            "kind": "command",
+            "closes": "'You owe $X for medical care.' with the bill itself raised by play (life.look_after exercise, seed g09-run-1668), not billCare by hand; $50 = Yale Health's emergency copay + 6 therapy visits at $0; the overdrawn sentence reached by play too (Chase's per-item cover)"
           }
         ],
         "gapsClosed": [
@@ -6162,13 +6317,14 @@
           "No test presses a button on the rendered panel and re-reads it.",
           "The unread list's titles, bodies and times were never read. They now are, for all six drawn, against hand-worked ages.",
           "Weak test 'the card behind': the a-payment-behind and suspended sentences are now reached by play (a bounced autopay at each due date) with amounts worked from the groceries and Reg Z's fees.",
-          "Weak test 'income tax owed on a return filed': the tax sentence is now reached by the played return filed from the panel. Only the empty bank is TEST SETUP."
+          "Weak test 'income tax owed on a return filed': the tax sentence is now reached by the played return filed from the panel. Only the empty bank is TEST SETUP.",
+          "Weak test 'something gone unpaid: You owe $120 that went unpaid.' (TEST SETUP arrears): the owed sentence is now reached by play, $1,882 of Yale Health's plan billed to an emptied checking.",
+          "Weak test 'medical care owed, and a debt with collections' (both debts TEST SETUP): medical debt is reached from a played injury's bill at a bank with no overdraft; collections from six played missed card payments (CHARGE_OFF_AFTER).",
+          "'Your card is nearly at its limit' rested only on a TEST SETUP balance: reached by a Scraping card's everyday spending, with its not-yet side at $1,423.",
+          "The overdrawn sentence, allowed as TEST SETUP by the review, is now also played (a $50 bill paid into Chase's per-item overdraft)."
         ],
-        "gapsOpen": [
-          "[needs engine change] (a tools change, outside this file) tools/acceptance-ui.mjs:172-182 'home: what needs you, and a decision taken from its card' still returns 'no decision waiting' when there is none, and asserts nothing after clicking. The fix is under defects.",
-          "[only a fixture reaches it] 'Your card is 2 payments behind' (missed ≥ 2, not suspended). afterMissed suspends the card at the second miss inside the same due-date handler (SUSPEND_AFTER 2, credit.ts:293 and 1108-1110), so a played card is never two behind and unsuspended: this file's played card goes from one behind straight to suspended. The only other route is a hardship plan's suspension lifted with the card paid to nothing (credit.ts:795), for the days until the next due date resets the count. Round one's fixture test reads the sentence."
-        ],
-        "disposition": "working, evidence missing",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "The built-app step 'home: what needs you, and a decision taken from its card' passes as ok when no card exists, and after clicking an action asserts nothing. It only reports the counts.",
@@ -6181,40 +6337,34 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 9,
+          "killed": 9,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "Closed (one of the earlier check's two open points): Home no longer says 'N payments behind' for two or more (Home.tsx:65-68). An unsuspended card is 'a payment behind', with a past-tense note. g32's 'the card behind' test dropped the hand-set missed: 2 case and says why. One behind and suspended are reached by play in evidence2-b11.",
-            "Still open: the weighing sentences for 'You owe $120 that went unpaid', 'nearly at its limit' and '… is with collections' rest only on TEST SETUP debt accounts in evidence-g32-ui.test.ts. Collections is reachable by play (CHARGE_OFF_AFTER 6), and no test plays it to Home. Medical debt is nearer play: evidence-g03-life.test.ts > health.pay_bill has the clock turn an unpaid bill into medical debt, and reads 'You owe $900 for medical care.' on Home and its absence once Pay It Off is pressed. The bill itself is raised by billCare by hand.",
-            "Closed earlier and still so: the six unread notices with titles, bodies and ages; Go There; the card's one-behind and suspended states by play, with $510/$850 worked and across a reload; income tax by File It ($166 vs All Clear); the acceptance step (outside the gate).",
-            "Minor: the six notices' selection order is a literal snapshot."
+            "Closed by play (tests/evidence3-home.test.ts h-needs): 'You owe $1,882 that went unpaid.' A Move Money at 7:30 leaves Yale Health's 9 AM plan billing unpaid. $1,882 is half the Bulletin's $3,764. The test holds across a reload, settleArrears takes the sentence away at midnight, and a twin who kept the money is All Clear.",
+            "Closed by play: 'nearly at its limit' and '… is with collections'. A Scraping family's card is chosen through withFamily, which is the creation screen's own select. Its spending goes on the card and the autopay bounces. $1,423 is worked as 913 + 48×10 + 30 and sits under nine-tenths of the limit, so it does not weigh. At $1,630 it does. At the sixth miss the debt is $1,999 (the balance the hour before + the $40 fee). The test holds across a reload, and bank.pay_collections removes the sentence. CARD_FULL 0.85 would fail the first step.",
+            "Closed by play: 'You owe $50 for medical care.' The bill comes from a played injury (life.look_after exercise, seed g09-run-1668) at Capital One, not from billCare. The $50 is Yale Health's ER copay and is worked here. The test holds across a reload. The twin who kept her money is All Clear, and at Chase, which pays the item, the line says '$50 overdrawn'.",
+            "Closed earlier and still so: the decision rows, Go There, Dismiss and Mark N Read pressed on the panel, the six notices, a payment behind and suspended by play, and income tax by File It. 'N payments behind' left the screen on 2026-10-13, so the earlier fixture-only '2 payments behind' gap is gone with it.",
+            "Minor, not a row gap: the six notices' selection order is a literal snapshot (round two).",
+            "A weakness that is not a gap: 'Pay' for collections is sent as the command bank.pay_collections, not pressed on a screen. The Home sentence it removes is still read off the rendered panel."
           ],
           "weakTests": [
             {
-              "title": "tests/evidence-g32-ui.test.ts > h-needs > medical care owed, and a debt with collections",
-              "why": "Both debts are opened by TEST SETUP. Collections is reachable by play and no played path reaches its Home sentence."
-            },
-            {
-              "title": "tests/evidence-g32-ui.test.ts > h-needs > something gone unpaid: You owe $120 that went unpaid.",
-              "why": "The arrears account is opened by TEST SETUP, not reached by a bill gone unpaid."
-            },
-            {
-              "title": "tests/evidence-g32-ui.test.ts > h-needs > the card behind: a payment, and suspended",
-              "why": "missed and suspended are still set by hand here. The played route is in evidence2-b11."
+              "title": "tests/evidence-g32-ui.test.ts > h-needs > medical care owed, and a debt with collections / something gone unpaid / the card at nine-tenths",
+              "why": "These still rest on TEST SETUP debts. They are now redundant beside the played tests in evidence3-home, not the only evidence."
             }
           ]
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "world.ts:33-97",
-          "now": "world.ts:33-43 (world.dismiss_decision), 45-76 (world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 123-133, which closes a dated row at the world's look after its day; what weighs is troubles() in systems/spending.ts:454-486. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read's end and left the expiry out."
+          "now": "world.ts:32-76 (world.dismiss_decision, world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 123-133, which closes a dated row at the world's look after its day. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read's end and left the expiry out."
         }
       }
     },
@@ -6476,7 +6626,7 @@
     {
       "id": "h-money",
       "kind": "home",
-      "entry": "Your Affairs: Money line (Home.tsx:450-458, in Your Affairs at :448)",
+      "entry": "Your Affairs: Money line (Home.tsx:449-457, in Your Affairs at :447)",
       "reads": "ledger.accountsOf, primaryAccountId, netWorth",
       "changes": "navigate bank",
       "downstream": "",
@@ -6537,7 +6687,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
@@ -6586,6 +6736,18 @@
             "title": "“No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and the line names it; every account closed by hand, the line reads “No account: $0.00. Worth $0.” and “Your Bank” opens the bank screen",
             "kind": "fixture",
             "closes": "Every account a command can close is closed (bank.close_savings, card.close). The bank refuses the last current account in its own words, and the line still names it at $505,434. Then the fallback's words and its 'Your Bank' label are rendered, and pressing it navigates to the bank, over TEST SETUP: the checking closed by hand."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-money > PLAYER JOURNEY: the poorest family, Nothing, has a checking and nothing else, $43, and the bank refuses to close it: the line names it, and “No account” is reached by no life",
+            "kind": "command",
+            "closes": "Strengthens the unreachability argument from the life with the fewest accounts creation can make: one checking, bank.close_current refused in its words, the line 'Chase Total Checking: $43.00. Worth $43.'"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: a Scraping family’s card … charged off at the sixth … the checking still named on the Money line …",
+            "kind": "command",
+            "closes": "A charge-off to collections, the one path that closes an account by the bank's hand in a played life, leaves the checking open and named: 'Money Chase Total Checking: $0.00.'"
           }
         ],
         "gapsClosed": [
@@ -6598,13 +6760,13 @@
           "The check's weak test ('No account' can't be reached, which checked one refusal): every closable account is now closed by command, the line still names the checking, and the fallback's words are rendered."
         ],
         "gapsOpen": [
-          "[only a fixture reaches it] The 'No account' fallback (Home.tsx:448, `primary?.name ?? 'No account'`) needs ledger.accountsOf to be empty, and no played life empties it. The savings and the card close by command, but bank.close_current refuses a life's only current account and its primary (bankmoves.ts closeRefusal). The bank closes an account itself only when another current account exists (closedByBank). A charge-off re-banks the life (lending.ts completeSwitch). Tested: every account a command can close is closed, the checking stays named, and only closing it by hand draws 'No account: $0.00. Worth $0.'"
+          "[only a fixture reaches it] The 'No account' fallback (Home.tsx:451, `primary?.name ?? 'No account'`) and its 'Your Bank' label (Home.tsx:453, `primary?.institution ?? 'Your Bank'`). No played life empties ledger.accountsOf: the poorest family creation offers has one checking, bank.close_current refuses a life's only current account, and a card charged off to collections leaves the checking named (both played here, 2026-10-14). Only evidence2-b12's hand-closed checking draws it. Under THE ONE RULE it is a declared word nothing reaches; it can stay as a guard, said so in a comment, or go."
         ],
         "disposition": "working, evidence missing",
         "defects": [],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 7,
+          "killed": 7,
           "survived": []
         },
         "verdict": "partial",
@@ -6613,35 +6775,34 @@
           "holds": true,
           "verdict": "partial",
           "problems": [
-            "Open: the 'No account' fallback (Home.tsx:450, `primary?.name ?? 'No account'`) and its 'Your Bank' label (Home.tsx:452, `primary?.institution ?? 'Your Bank'`) are drawn only after TEST SETUP closes the checking by hand (`checking.closedAt = sim.now`, evidence2-b12.test.ts:280). Play cannot reach either. bank.close_current refuses a life's only current account, and the bank and lending paths that close a current account always leave one open, as the second skeptic found when it read them. The fixture render shows the fallback's words and that 'Your Bank' navigates to ('/workspace/bank','Money'). It is not a played path, so the review's gap ('No account' fallback untested) is met only by a fixture. gapsClosed wrongly lists the 'Your Bank' label as closed. It belongs with this open gap.",
-            "Checked and closed by play: the overdrawn alert. bank.debit_overdraft on, a bank.transfer of the whole $92,391.00 to savings, and the clock's midnight groceries take the checking to -$10.00. The test reads 'Chase Total Checking: -$10.00. Worth $503,542. Your account is overdrawn.' across a reload, and the Chase press navigates to ('/workspace/bank','Money'). The twin that never opted in reads '$0.00. Worth $503,542, $10 of it owed.' with no alert. The worth moved from the claimed $505,424 to $503,542 after the c-wealth fix (Yale Health's $1,882 plan, now owed and paid from savings). The test's comment explains the change in the past tense.",
-            "Closed in round one and still in the gate: the line against the profile's figures, a played Move Money clearing the alert across a reload, the card's 'of it owed', and the LockedPanel and Locked Gated button before ui.money and ui.bank, reached through tutorial.read.",
-            "Ran tests/evidence2-b12.test.ts and tests/evidence-g33-ui.test.ts on 2026-10-13: 56 of 56 pass."
+            "Still open: the 'No account' fallback (Home.tsx:452, `primary?.name ?? 'No account'`) and its 'Your Bank' label (`primary?.institution ?? 'Your Bank'`) are drawn only over a checking closed by hand in evidence2-b12. Round three made the case for unreachability stronger by play. The poorest family ('nothing') has one checking at $43, and bank.close_current refuses it with the engine's words. A charge-off to collections leaves the checking named: 'Money Chase Total Checking: $0.00.' Neither of these reaches the fallback. Under THE ONE RULE the fallback is a declared word that no life reaches. It should be kept as a guard with a comment saying so, or removed. No test can close this gap.",
+            "Closed earlier and still so: the overdrawn alert by play, the bank button pressed, the LockedPanel and Locked Gated before ui.money and ui.bank, and the line against the profile's figures.",
+            "The earlier check's point still applies: round two's gapsClosed counted the 'Your Bank' label as closed, but it belongs with this open gap."
           ],
           "weakTests": [
             {
-              "title": "“No account” is a fixture’s: the savings closed into the checking and the card closed, the bank refuses the checking, and the line names it; every account closed by hand, the line reads “No account: $0.00. Worth $0.” and “Your Bank” opens the bank screen",
-              "why": "The fallback is drawn only over a hand-closed account. It proves the words, but not that a player can see them."
+              "title": "tests/evidence2-b12.test.ts > h-money > “No account” is a fixture’s…",
+              "why": "The checking is closed by hand (closedAt set). This proves the words, but not that a player can reach them."
             }
           ]
         },
         "claimCorrection": {
           "field": "tests",
           "said": "none renders it: Home’s source is read by tests/cards.test.ts ‘run the card from the bank’s screen, and keep Home to a line of money (from 2026-10-10)’ and tests/defects-g12-1.test.ts, for what the Money line holds; no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
-          "now": "tests/evidence-g33-ui.test.ts ‘h-money’ and tests/evidence2-b12.test.ts ‘h-money’ render Home over played saves. They check the line against the wealthy profile's figures, and the overdrawn alert reached by an opted-in debit card's $10.00 of groceries, beside a twin that owes it instead. They also check a Move Money clearing the alert, the card's “of it owed”, and the Chase button. In a guided life they check the LockedPanel and the Locked button, and they render the “No account” fallback, which only a fixture reaches. tests/guide-examples-money.test.ts ‘money.affairs’ renders the line against the guide's figures. Until 2026-10-13 this said no test rendered Home, though guide-examples-money did."
+          "now": "tests/evidence-g33-ui.test.ts ‘h-money’ renders Home over played saves and checks: the line against the wealthy profile’s figures; the overdrawn alert, and a Move Money clearing it across a reload; the card’s “of it owed”; the Chase button’s navigation to /workspace/bank; and, in a guided life, the LockedPanel and the Locked button. tests/guide-examples-money.test.ts ‘money.affairs’ renders the line against the guide’s figures. Until 2026-10-13 this said no test rendered Home, though guide-examples-money did."
         }
       }
     },
     {
       "id": "h-school",
       "kind": "home",
-      "entry": "Your Affairs: School line (SchoolLine, Home.tsx:485-513, mounted at :459)",
+      "entry": "Your Affairs: School line (SchoolLine, Home.tsx:484-516, mounted at :458)",
       "reads": "person.school, scheduled school items, nextClasses, rankIn",
       "changes": "navigate school",
       "downstream": "",
       "explanation": "",
       "tests": "tests/evidence-g33-ui.test.ts h-school: 'PLAYER JOURNEY: a new student is “Arriving, good standing”…; its Yale button opens the School screen', 'a day in, “Year 1, good standing”…', 'PLAYER JOURNEY: a fall played without going to class ends in the faculty’s concern…', 'PLAYER JOURNEY: a personal leave asked on 13 January 2027… is “On Leave”, with no Next', 'PLAYER JOURNEY: withdrawn on 1 September 2026, “Left the school, withdrawn”…', 'a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next' (the degree set by setStanding: no played life reaches one in a test’s time), 'PLAYER JOURNEY, guided: School is its LockedPanel until “Drama School” is read…'; tests/evidence2-b12.test.ts h-school: the fall recess’s and the winter’s Next from nextClasses, 'On Leave, academic concern', 'Year 2, academic warning', 'Left the school, dismissed', and the place in the class as a worked literal. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line.",
-      "status": "partial",
+      "status": "verified",
       "issue": "None. Until 2026-10-13 a graduate’s line read 'Graduated, graduated, N of 16 in the class.'; it says Graduated once since (evidence-g33-ui holds it).",
       "corrected": {
         "on": "2026-10-12",
@@ -6703,7 +6864,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
@@ -6782,6 +6943,18 @@
             "title": "the place in the class is one more than the classmates whose mean over the 21 skills is above hers: four at 60, one at 50 with one skill at 71, one tied at 50 and nine at 40 put her sixth; the tie raised a point in one skill puts her seventh",
             "kind": "fixture",
             "closes": "The rank as a worked literal rather than a copy of rankIn (the check's fourth problem). The craft records are set by TEST SETUP so the rule's words give 6 of 16, then 7 of 16. This pins 'above' as strict and the mean as taken over all 21 skills."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > PLAYER JOURNEY: kept up to ${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}, from the save the slice before left",
+            "kind": "command",
+            "closes": "A degree played: a London-born student kept up hour by hour by tools/policy.ts attentiveHour from 24 August 2026 to 22 May 2029, in fourteen slices each under a minute (0.8 to 17 seconds each in the run of 2026-10-14, about 100 in all), each from the serialised save the last left, reloaded"
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > h-school: PLAYER JOURNEY: the degree played, Home says “Graduated, N of 16 in the class.”, N one more than the classmates whose mean over the 21 skills is above hers, with no Next and no alert, across a reload",
+            "kind": "render",
+            "closes": "The Graduated branch on a played degree, not setStanding by hand: 'Graduated' once, the place counted here from the craft records, no Next, no alert, after a reload"
           }
         ],
         "gapsClosed": [
@@ -6792,55 +6965,49 @@
           "The check's weak concern test, whose Next came from a booked item: superseded by the two recess tests, which tell the sources apart.",
           "The check's loose On Leave test: 'On Leave, academic concern' and its alert are pinned.",
           "The check's 'rank compared with rankOf': it is now asserted as a literal from craft records set to known means.",
-          "The review's 'no test asserts any branch': Year 2, warning and dismissed are added to round one's branches, each with its alert."
+          "The review's 'no test asserts any branch': Year 2, warning and dismissed are added to round one's branches, each with its alert.",
+          "[only a fixture reaches it] The Graduated branch: now reached by a played degree, in slices across reloads (round two judged three played years too long for one test)."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] The Graduated branch. A played degree needs six terms with every course passed (Commencement, 21 May 2029). Left to the clock, a life is warned in its second fall and dismissed after it (both tested here). The attentive policy keeps a life in good standing, but its fall term took 12 to 35 seconds here and a played year took 128 seconds on this machine, so three years go far past a test's 60 seconds. Round one renders the branch over the School's own setStanding."
-        ],
-        "disposition": "working, evidence missing",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "Open: the Graduated branch is drawn only over setStanding('graduated'), set by hand on day one (evidence-g33-ui.test.ts:342-348). That test does show the 'Graduated, graduated' defect fixed, so the defect counts as closed. But no test in the gate renders a degree reached by play. student-experience.test.ts and school-journey-gaps.test.ts also set the graduation by hand. The branch is reachable by play (six terms kept up), just slower than a gate test allows, so this is missing evidence, not an unreachable branch.",
-            "Checked and closed: Next from nextClasses. At noon on 26 Nov 2026 (the fall recess) and on 12 Dec after a kept-up fall, bookedFor(sim) is asserted empty with the same predicate Home uses, and the line reads 'Next: Classes, November 30, 2026 at 9:00 AM.' and 'January 11, 2027 at 9:00 AM.'. Both dates are anchored in the Bulletin's content. The mutation `next = enrolled ? booked : undefined` fails both.",
-            "Checked and closed: On Leave is pinned as 'On Leave, academic concern' with the concern's alert and no Next. 'Year 2, academic warning' and 'Left the school, dismissed', each with its alert, are reached by the clock, the dismissal across a reload.",
-            "Checked and closed: the rank as a worked literal. The craft means are set by TEST SETUP so the rule's own words give 6 of 16, then 7 of 16 when the tie is raised. That pins a strict 'above' and a mean over all 21 skills, and it is independent of rankIn.",
-            "Ran on 2026-10-13: all pass."
+            "Closed by play: the Graduated branch on a degree played. A London-born F-1 student is kept up by tools/policy.ts attentiveHour, which acts only through public commands (life.look_after, practice.exercise, life.sleep, health.enroll and the like), from 24 August 2026 to 22 May 2029. The run is fourteen slices, each a reload of the save the slice before left, and no slice may be dismissed, withdrawn or withheld. Home reads 'School Graduated, N of 16 in the class. Yale How This Works' before and after a reload. N is counted in the test as one plus the number of classmates whose mean over the 21 skills is strictly above hers, independent of rankIn and rankOf. 'Yale' follows the sentence directly, so there is no Next clause, and there is no 'Your standing is' alert. The earlier weak point (the rank read back through rankOf) does not apply to this test.",
+            "The defect ('Graduated, graduated') was closed on 2026-10-13 and is also held here by not.toContain.",
+            "Closed earlier and still so: Arriving, Year N, On Leave, Left the school, Next from booked and from nextClasses, and the standing alerts.",
+            "A dependency to note: the slices share module state (`kept`) and run in order. If a slice fails, the later tests fail on 'the slices played' rather than passing vacuously.",
+            "Ran on 2026-10-14 with one fork: all 26 tests in tests/evidence3-home.test.ts pass, both DEFECT tests included. The file took 195 seconds. The longest slices were 30.2 s (to 2028-11-01) and 29.1 s (to 2029-03-15). The claim's 'about 100 seconds, the longest 17' did not hold on this run. The slices are still inside each one's 60-second limit, but only by about half, so they could time out under a loaded full-suite run."
           ],
-          "weakTests": [
-            {
-              "title": "a graduate’s line says Graduated once, not “Graduated, graduated”, with no Next",
-              "why": "The degree is conferred by setStanding on day one rather than reached by play. It also reads the rank back through rankOf, a copy of rankIn."
-            }
-          ]
+          "weakTests": []
         },
         "claimCorrection": {
           "field": "tests",
           "said": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
-          "now": "tests/evidence-g33-ui.test.ts ‘h-school’ and tests/evidence2-b12.test.ts ‘h-school’ render the line in each branch. They cover Arriving, Year 1 and Year 2, academic concern, warning and dismissal with their alerts, On Leave, Left the school, and Graduated. They cover Next from a booked item, Next from nextClasses in the fall and winter recesses, and no Next on a leave or once the school has ended. They check the place in the class against a worked literal, the Yale button and the LockedPanel. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line."
+          "now": "tests/evidence-g33-ui.test.ts ‘h-school’ renders the line in each of its branches (Arriving, Year 1, academic concern with its alert, On Leave, Left the school, Graduated), along with its Next, its place in the class, its Yale button and its LockedPanel. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line."
         }
       }
     },
     {
       "id": "h-papers",
       "kind": "home",
-      "entry": "Your Affairs: Papers line (PapersLine, Home.tsx:519-554, mounted at :460)",
+      "entry": "Your Affairs: Papers line (PapersLine, Home.tsx:518-552, mounted at :459)",
       "reads": "coverOn, person.returns, latePenalty, unemployment.claim",
       "changes": "navigate papers",
       "downstream": "",
-      "explanation": "Tax owed is owedEverywhere’s (taxreturn.ts:526: the IRS’s and the states', each with its interest and penalty to today, as the Papers screen’s; Home.tsx:528). Until 2026-10-10 it summed the figure stored at the last accrual and its words left the interest out. Until 2026-10-13 it said the tax was 'growing each month' from the day an early return was filed unpaid; it says so only once something owed is past its due date since (Home.tsx:537,543).",
-      "tests": "tests/evidence-g33-ui.test.ts h-papers: 'PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”…; the Papers button opens Papers', 'three days past its day unfiled: “$174 to pay, a late penalty in it”…', 'filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date…', 'PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.”…', 'a claim for unemployment is refused at school and after leaving it…'; tests/evidence2-b12.test.ts h-papers: 'PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January… “Unemployment, $93 a week.”, across a reload…', 'filed on 1 February with nothing in the bank, 180 days past its day Home says $176 owed…', 'Connecticut’s half…' (a needy family no player can start: TEST SETUP), 'filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date…'; tests/defects-g8-4.test.ts (its cover clause). Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line.",
-      "status": "partial",
-      "issue": "None. The understated, stale figure was fixed on 2026-10-10 (owedEverywhere, held since 2026-10-13 by evidence-g33-ui and evidence2-b12), and the 'growing each month' said before the due date was fixed on 2026-10-13 (defect 42). Connecticut’s half is shown only on a family creation can’t offer.",
+      "explanation": "Tax owed is owedEverywhere’s (taxreturn.ts:523: the IRS’s and the states’, each with its interest and penalty to today, as the Papers screen’s; Home.tsx:527). Until 2026-10-10 it summed the figure stored at the last accrual and its words left the interest out. Until 2026-10-13 it said the tax was 'growing each month' from the day an early return was filed unpaid; it says so only once something owed is past its due date since (Home.tsx:536).",
+      "tests": "tests/evidence-g33-ui.test.ts h-papers: ‘PLAYER JOURNEY: the return the tax season raised is “due April 15, 2027, $166 to pay”…; the Papers button opens Papers’, ‘three days past its day unfiled: “$174 to pay, a late penalty in it”…’, ‘filed on 1 February with nothing in the bank: “$166 of tax owed” to the due date…’, ‘PLAYER JOURNEY: withdrawn by the fifteenth day of classes, Yale Health is gone: “Cover: none.”…’, ‘a claim for unemployment is refused at school and after leaving it…’; tests/evidence2-b12.test.ts h-papers: ‘PLAYER JOURNEY: a fall kept up, the Summer Cabaret joined in January… “Unemployment, $93 a week.”, across a reload…’, ‘filed on 1 February with nothing in the bank, 180 days past its day Home says $176 owed…’, ‘Connecticut’s half…’ (its TEST SETUP family the Scraping one creation offers since 2026-10-14; on 2026’s table it owes the IRS nothing, so it reads Connecticut’s alone), ‘filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date…’; tests/evidence3-home.test.ts h-papers (round three, 2026-10-14): ‘PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027…’ (both parts played, filed unpaid from Home with her money in a CD: “$2,286 of tax owed”, and the day past the due date “$2,359”), ‘PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled…’, ‘PLAYER JOURNEY: her 2027 return left open, it “is due April 18, 2028” on 1 February…’; tests/defects-g8-4.test.ts (its cover clause). Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line.",
+      "status": "verified",
+      "issue": "None. The understated, stale figure was fixed on 2026-10-10 (owedEverywhere, held since 2026-10-13 by evidence-g33-ui and evidence2-b12), and the ‘growing each month’ said before the due date was fixed on 2026-10-13 (defect 42). Until 2026-10-14 Connecticut’s half was shown only on a family creation couldn’t offer; since then it is played on a student whose family the screen offers (evidence3-home).",
       "auditStatus": "partial",
       "settled": "Fixed: reads owedOn, interest and penalty included.",
       "corrected": {
@@ -6904,7 +7071,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
@@ -6950,7 +7117,7 @@
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110",
+            "title": "Connecticut’s half: a student with need owes nothing to the IRS on 2026’s table and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $4, Connecticut’s $3.72 with its 10% and a month’s 1%, where the balance stored would say $3",
             "kind": "command",
             "closes": "owedToStates exercised through the rendered alert (the check's third problem). The life is a family with need, as TEST SETUP. The $111 is told apart from the IRS's alone ($108) and from the stored balances ($110), with Connecticut's 10% and 1% a month (12-735)."
           },
@@ -6959,6 +7126,18 @@
             "title": "filed early and left unpaid, Home says the tax owed without “growing each month” on the day it’s filed and the day before the due date, nothing accruing before it, and says it once the date has passed",
             "kind": "render",
             "closes": "Asserts the right wording for the review's fourth gap (the check's second problem). It fails until Home.tsx is fixed."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-papers > PLAYER JOURNEY: a student with need owes the IRS $1,700.39 and Connecticut $585.33 on 2027; her money put in a Chase CD and File It pressed on Home, it files unpaid: “$2,286 of tax owed”, both parts, and the day past the due date “$2,359”, each with its own interest and penalty, across a reload",
+            "kind": "render",
+            "closes": "Connecticut's part and the IRS's added on Home on a played life: a Scraping family (withFamily) left to the clock to 1 February 2028; $1,700.39 worked from 2026's table (Rev. Proc. 2025-32: $16,100, 10% to $12,400, 12% above) and $585.33 from CT-1040's (exemption $12,000, 2% and 4.5%, credit 12%); 'The 2027 return is due April 18, 2028, $2,286 to pay.' before filing; the bank emptied by play (savings into checking, checking into a Chase CD, which payFromBank can't reach), File It pressed on Home: '$2,286 of tax owed.'; the day after the due date '$2,359' ($1,709 the IRS's at 0.5% and a day's 7%, $650 Connecticut's at 10% and 1%), across a reload. No TEST SETUP."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "h-papers > PLAYER JOURNEY: on 1 February 2028, her 2026 return unfiled, owing nobody since Connecticut’s levy, and her 2027 return owing $2,286, Home’s alert names the 2027 return and what it would pay",
+            "kind": "command",
+            "closes": "Shows the defect below; fails until it's fixed"
           }
         ],
         "gapsClosed": [
@@ -6968,12 +7147,11 @@
           "The review's and the check's 'Unemployment clause never rendered': it is now rendered from a played claim. Round one's reason was wrong. Work-study wages are excluded from unemployment's quarters, but the Summer Cabaret's stipend counts, and a student kept in good standing through her first fall can join its company.",
           "The check's 'margin of a single dollar': $176 against the stored $172, 180 days past due.",
           "The check's 'owedToStates contributes nothing': Connecticut's $3.72 is now part of the $111 Home shows.",
-          "The check's weak test (only the clause's absence): replaced by the clause rendered with its figure."
+          "The check's weak test (only the clause's absence): replaced by the clause rendered with its figure.",
+          "Connecticut's half on Home rested on a life no player could start (family undefined, wealth scraping, TEST SETUP), and since 2026's table the IRS was owed nothing in its played year, so the test no longer added two parts. Now: a family creation offers, 2027, both owed ($1,700.39 and $585.33), both added on Home before and after the due date, the bank emptied by play rather than by a posting."
         ],
-        "gapsOpen": [
-          "[needs engine change] A return filed early and left unpaid gets an alert saying 'with its interest and a late penalty growing each month' from the day of filing. Interest and the late-payment penalty run only from the due date (IRC 6601(a), 6651(a)(2)), and the balance is still $165.60 the day before it. The DEFECT test shows this and fails."
-        ],
-        "disposition": "working, evidence missing",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "Home's Papers alert says the tax owed is growing each month before anything grows: a return filed early and unpaid reads 'with its interest and a late penalty growing each month' from the day of filing, though nothing accrues until the due date.",
@@ -6983,40 +7161,39 @@
               "test": "h-papers > DEFECT: filed early and left unpaid, Home says the tax is “growing each month” on the day it’s filed, though nothing accrues before the due date; it should say so only once the date has passed",
               "how": "fixed in the code; the test that failed before it passes in the full suite"
             }
+          },
+          {
+            "summary": "Home's Papers alert names only the first unfiled return by key order, even one with nothing to pay and long past its date, and hides a later return that owes. A student with need left to the clock never files 2026 (Connecticut's $3.35 is taken by levy); on 1 February 2028 the alert reads 'The 2026 return is due April 15, 2027.' and says nothing of the 2027 return's $2,286 to pay. Filing 2026 from Papers brings the 2027 alert back.",
+            "where": "src/ui/screens/Home.tsx:522 (`const open = Object.values(person.returns ?? {}).find((r) => r.filedAt === undefined)`) and the alert at :541",
+            "fixed": null
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
+        "verdict": "verified",
         "claimed": "partial",
         "check": {
           "holds": false,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "The claim's 'implementation missing' no longer holds. Defect 42 ('growing each month' said before the due date) is fixed: Home.tsx:534-540 adds `growing`, true only once a return with something owed is past its due date. The test still titled 'DEFECT: filed early and left unpaid ...' now passes. On the day of filing it reads '$166 of tax owed' without 'growing'. The day before the due date it reads the same, with troubles() at $165.60. The day after, it reads 'growing each month'. defects3-50-70.test.ts:260 holds the guide's matching words. The verdict stays partial for the reason below.",
-            "Open: Connecticut's half of owedEverywhere on Home ($3.72 of $111) is shown only on a life no player can start (`family: undefined, wealth: 'scraping'`, TEST SETUP). bootstrap's newLifeFrom makes every new life the wealthy family's, so a played student never owes Connecticut within reach. The IRS half is shown by play: $176 against the stored $172 at 180 days past due, worked from IRC 6651(a)(2) and 7% compounded daily, with the bank emptied by TEST SETUP and the filing played.",
-            "Checked and closed by play: the Unemployment clause. A kept-up fall, the Summer Cabaret joined by command, thirteen $375 Fridays, a withdrawal, a refusal on 2 Sep in the engine's words, and a claim on 1 Oct give 'Unemployment, $93 a week.'. That figure is worked as floor((3375+1500)/2/26). The test holds across a reload, and the Papers press navigates.",
-            "Checked and closed in round one: the return alert's date and '$166 to pay', 'a late penalty in it' at $174, and 'Cover: none.' with 'You have no health cover.' after a played withdrawal.",
-            "Ran on 2026-10-13: all pass."
+            "The claim 'partial, waiting on the defect' no longer holds. 5f0cba03 fixed the defect in PapersLine (Home.tsx:523-526): it now names the newest open return that has something to pay, or else the newest open return. Past its due date the alert says 'was due' (:546). The DEFECT test (a 2026 return with nothing to pay left open, and 2027's $2,286 named) now passes. A further test holds 'is due' through the day before and 'was due' the day after, across a reload.",
+            "Closed by play: Connecticut's part of owedEverywhere on Home, on a family the creation screen offers (withFamily 'scraping'), left to the clock to 1 February 2028. $1,700.39 is worked from 2026's federal table and $585.33 from CT-1040's exemption, rates and credit. File It is pressed on Home with her money in a Chase CD, and the line reads '$2,286 of tax owed.' The day after the due date it reads '$2,359' (each authority's interest and penalty worked by hand: $1,709 + $650), across a reload. Mutating owedEverywhere to the IRS alone gives $1,700 and $1,709, so the test fails. The only engine figure the test leans on is f.income, which it checks equals the sum of the return's own parts and against CT's credit bracket. The tax on that income is worked independently.",
+            "Closed earlier and still so: the return alert's date, '$166 to pay' and 'a late penalty in it'; 'Cover: none.'; Unemployment $93 a week by play; and 'growing each month' only once the due date has passed."
           ],
           "weakTests": [
             {
-              "title": "DEFECT: filed early and left unpaid, Home says the tax is “growing each month” on the day it’s filed, though nothing accrues before the due date; it should say so only once the date has passed",
-              "why": "The test is sound, but its title is now false in the present tense: Home no longer says this. Under the house standard it should be retitled, with 'DEFECT:' dropped and the past tense used. renames.json does not cover it."
-            },
-            {
-              "title": "Connecticut’s half: a student with need owes $107.00 to the IRS and $3.35 to Connecticut; filed unpaid, the day past its due date Home says $111, $107.56 and Connecticut’s $3.72 with its 10% and a month’s 1%, where the IRS’s alone would say $108 and the balances stored $110",
-              "why": "It starts from a family that creation cannot offer, so the states' half is shown only on a fixture start."
+              "title": "tests/evidence3-home.test.ts > h-papers > DEFECT (h-papers): on 1 February 2028, her 2026 return unfiled, … Home’s alert names the 2027 return and what it would pay; it names only the 2026 one, “due April 15, 2027”, ten months gone, and nothing of the $2,286",
+              "why": "The test is sound, but since 5f0cba03 its title is false in the present tense ('it names only the 2026 one'). It should be retitled without 'DEFECT' and in the past tense, as was done for defects 42, 43 and 76."
             }
           ]
         },
         "claimCorrection": {
           "field": "tests",
           "said": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
-          "now": "tests/evidence-g33-ui.test.ts ‘h-papers’ and tests/evidence2-b12.test.ts ‘h-papers’ render the line over played tax years and a played claim. They check the return's due date and what it pays, the late penalty in it, and tax owed at owedEverywhere's figure, $4 beyond the stored balance and with Connecticut's part. They check no cover after a withdrawal, “Unemployment, $93 a week.” from a claim the Summer Cabaret's wages paid for, and the Papers button. defects-g8-4 reads its cover clause. Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line."
+          "now": "tests/evidence-g33-ui.test.ts ‘h-papers’ renders the line over a played F-1 tax year. It checks: the return's due date and what it pays; the late penalty in it; tax owed at owedEverywhere's figure, beyond the stored balance; no cover after a withdrawal; and the Papers button. defects-g8-4 reads its cover clause. Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line."
         }
       }
     },
@@ -7027,8 +7204,8 @@
       "reads": "wellbeing dials, traits, body, injury, pronouns, citizenship, raceEthnicity, background, genres",
       "changes": "none",
       "downstream": "trait/condition/dial/readiness/plans looks",
-      "explanation": "Reads Person directly. Body units go by currentLocationId (wellbeing.tsx:164); creation’s go by birthplace (CharacterCreation.tsx:256). Born in London, creation asks centimeters and kilograms, and the look in New Haven says 5 ft 7 in and 143 lb. Until 2026-10-13 this cited wellbeing.tsx:161 and CharacterCreation.tsx:255.",
-      "tests": "tests/evidence-g33-ui.test.ts l-person: 'PLAYER JOURNEY: her name on Home opens her: the trait, her body in feet and pounds where she lives, her papers, her own terms, her background and films; the eight dials, Readiness, Curious, a drawn Depression kept up, and Your Own Plans', 'Let It Go turns Depression’s way to “Left alone, and what that does”, across a reload…', 'the units are where she lives: the same 170 cm and 65 kg read “170 cm and 65.0 kg” for a life in London', 'PLAYER JOURNEY: the first morning’s run breaks a bone…'; tests/evidence2-b12.test.ts l-person: 'PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in centimeters and kilograms…', 'born in New York, the same step asks feet, inches and pounds…', 'PLAYER JOURNEY: the first morning’s run breaks a bone at 8:30 AM… mended it by 9', 'only the player is a Person…' (the 'they' branch and the player-only Your Own Plans only over a Person put in by hand); tests/looks.test.ts",
+      "explanation": "Reads Person directly. The body is said in the units of where the person lives (bodyUnits(currentLocationId), wellbeing.tsx:166), the rule creation's Your Body reads by the town the life begins in (CharacterCreation.tsx:260). Each line says which units and why. Until 2026-10-14 creation asked in the units of the birthplace, so a London-born student at Yale typed centimeters and read feet on her own page.",
+      "tests": "tests/evidence-g33-ui.test.ts > l-person; tests/evidence2-b12.test.ts > l-person; tests/need-paths.test.ts > 'a body’s units, by where the person lives'; tests/evidence3-person.test.ts > 'l-person: the look reads the person it is of' (the 'they' branch over a second Person built as bootstrap builds one); tests/looks.test.ts",
       "status": "partial",
       "issue": "Minor unit inconsistency.",
       "review": {
@@ -7091,7 +7268,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
@@ -7119,7 +7296,7 @@
           },
           {
             "file": "evidence2-b12.test.ts",
-            "title": "PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in centimeters and kilograms; 170 and 65 begun, her look in New Haven says “5 ft 7 in and 143 lb”",
+            "title": "PLAYER JOURNEY: born in London on Identity, the Starting Point asks her body in feet, inches and pounds, the units of New Haven where she’ll live; 5, 7 and 143 begun, her look in New Haven says them back",
             "kind": "render",
             "closes": "The creation side of the unit split, played through Who Are You Going To Be? as the player has it. Names, pronouns, country and London are chosen in the picker, Continue is pressed to the Starting Point, and its Your Body asks Height (Centimeters) and Weight (Kilograms) and shows a body mass index of 22.5. After Begin, the look in New Haven says 5 ft 7 in and 143 lb."
           },
@@ -7140,22 +7317,30 @@
             "title": "only the player is a Person: after a fall played the world holds her alone, and a person look for anyone else is gone; only a second Person put there by hand draws the look’s “they”, without Your Own Plans",
             "kind": "fixture",
             "closes": "Shows why the 'they' branch and 'Your Own Plans only for the player' can't be reached in play. A second Person put in by hand shows that branch's words: 'Their body.', 'On their papers.', and no Your Own Plans."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "l-person: the look reads the person it is of > a second Person in a played world opens as Somebody, in their words and the units of where they live, their own dials and trait, and no Your Own Plans; moved to New Haven, the units move",
+            "kind": "fixture",
+            "closes": "The 'they' branch and 'Your Own Plans only for the player', with the second Person built the way bootstrap builds the player (createUniverse on a config of Bea's own: London, they/them, 160 cm and 55 kg, Curious, a background) in place of evidence2-b12's copy of the player. The world it goes into is a played life. The look reads Bea, not the player: 'Who they are. Curious.', 'Their body. 160 cm and 55.0 kg, a body mass index of 21.5: healthy weight. In centimeters and kilograms, the units of the United Kingdom, where they live.', 'On their papers. they/them, a citizen of United Kingdom.', their background, Morale '31/100', no Your Own Plans, and kind 'Somebody'. The player's look in the same world keeps Your Own Plans and her own figures. Moving Bea to New Haven changes only her units ('5 ft 3 in and 121 lb … the units of the United States, where they live'), worked by hand. Both survive a save and a load."
           }
         ],
         "gapsClosed": [
           "Unasserted traits line, body words and units, pronouns and citizenship line, race/ethnicity line, injury line and the condition ways' detail: each is now asserted word for word on the rendered look.",
           "The look's side of the unit split: tested both ways. A London-born student in New Haven reads imperial; a life in London reads metric.",
           "The check's 'creation side of the unit split is not rendered': it is now rendered and played for a London and a New York birthplace, and the look reads both in New Haven's units.",
-          "The check's 'injury date read back as a literal': the date is now tied to the clock that mends it and to the content's healing range."
+          "The check's 'injury date read back as a literal': the date is now tied to the clock that mends it and to the content's healing range.",
+          "The check's weak test (a hand-inserted copy of the player): the second Person is now made by bootstrap's own createUniverse from a config of its own, and the test shows the look reads that person's body, units, papers, traits, background and dials, not the player's.",
+          "The unit split in the row's 'explanation': gone on 2026-10-14 (bodyUnits, the owner's rule). Creation and the look both use the units of where the person lives. need-paths holds it for London- and New York-born students, and this file holds it for 'where they live'. Corrected in rowText."
         ],
         "gapsOpen": [
-          "[only a fixture reaches it] 'Your Own Plans' only for the player, and every 'they' wording. A played world holds one Person: bootstrap.ts:391 is the only place a Person is added, and after a played fall universe.people is her alone (tested). Every way into a person look names her, and any other id resolves to 'They aren’t part of this story any more.' Only a second Person put in by hand draws the branch, which reads correctly."
+          "[only a fixture reaches it] 'Your Own Plans' only for the player, and every 'they' wording. No command adds a Person, and bootstrap.ts:414 is the only place one is added, so a played world holds the player alone (evidence2-b12 asserts it after a played fall). The branch reads correctly over a second Person built as bootstrap builds one."
         ],
         "disposition": "working, evidence missing",
         "defects": [],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 7,
+          "killed": 7,
           "survived": []
         },
         "verdict": "partial",
@@ -7164,23 +7349,21 @@
           "holds": true,
           "verdict": "partial",
           "problems": [
-            "Open: 'Your Own Plans' shown only for the player, and every 'they' wording ('Their body.', 'On their papers.'). Both are drawn only over a second Person put into universe.people by hand. Play holds one Person: bootstrap.ts is the only place a Person is added, and after a played fall universe.people is her alone, which the test asserts. Any other id resolves to 'They aren’t part of this story any more.'. The branch can't be reached in play, so the review's gap is met only by a fixture.",
-            "Checked and closed: the creation side of the unit split, played through CharacterCreation's own handlers. Born in London, the screen asks Centimeters and Kilograms, 170 and 65 give a BMI of 22.5, and the look in New Haven reads '5 ft 7 in and 143 lb'. Born in New York, it asks feet, inches and pounds: 5, 7 and 143 give 170.2 cm and 64.9 kg, a BMI of 22.4. The conversions are worked by hand.",
-            "Checked and closed: the injury date is tied to the clock. The line is present at 8 AM on 6 Oct and gone by 9 AM. The '43 days' assertion is a calendar identity that doesn't read the injury record, but the 8 to 9 AM bracket carries the tie.",
-            "Closed in round one: every body line word for word, the ways in order, Depression's Kept up and Left alone through health.treat across a reload, and the trait, condition and plans looks opened by pressing their ways.",
-            "Ran on 2026-10-13: all pass."
+            "Open, unchanged in kind: the 'they' wording and 'Your Own Plans' only for the player are drawn only over a hand-inserted second Person. Bea is now built by createUniverse, but she is still put into universe.people by the test, and bootstrap.ts:414 is the only place a Person is added in play. No player journey reaches the branch.",
+            "Closed: the unit split. Both creation (CharacterCreation.tsx:260) and the look (wellbeing.tsx:168) now use bodyUnits of where the person lives, and moving Bea's currentLocationId moves her units (160 cm gives 5 ft 3 in, 55 kg gives 121 lb).",
+            "Closed since the agent's note (5f0cba03): the trait look and the condition look now resolve the person named in the id (wellbeing.tsx:374, :436). Tests show Bea's Curious opens 'A Trait They Hold' under her look, and Bea's Depression opens 'A Condition They Carry'. Both are also fixture-only."
           ],
           "weakTests": [
             {
-              "title": "only the player is a Person: after a fall played the world holds her alone, and a person look for anyone else is gone; only a second Person put there by hand draws the look’s “they”, without Your Own Plans",
-              "why": "The 'they' branch and the player-only Your Own Plans are shown only over a hand-inserted Person."
+              "title": "tests/evidence3-person.test.ts > l-person > a second Person in a played world opens as Somebody…",
+              "why": "The second Person is TEST SETUP, inserted by hand. Play can't reach it."
             }
           ]
         },
         "claimCorrection": {
           "field": "explanation",
           "said": "Reads Person directly. Body units by currentLocationId (wellbeing.tsx:161) vs creation by birthplace (CharacterCreation.tsx:255).",
-          "now": "Reads Person directly. Body units go by currentLocationId (wellbeing.tsx:164); creation's go by birthplace (CharacterCreation.tsx:256). Born in London, creation asks centimeters and kilograms, and the look in New Haven says 5 ft 7 in and 143 lb. Born in New York, both use feet and pounds (tests/evidence2-b12.test.ts). Until 2026-10-13 this cited wellbeing.tsx:161 and CharacterCreation.tsx:255."
+          "now": "Reads Person directly. Body units by currentLocationId (wellbeing.tsx:164) vs creation by birthplace (CharacterCreation.tsx:256): a London-born student in New Haven reads 5 ft 7 in and 143 lb, and a life in London reads 170 cm and 65.0 kg (tests/evidence-g33-ui.test.ts). Until 2026-10-13 this cited wellbeing.tsx:161 and CharacterCreation.tsx:255."
         }
       }
     },
@@ -7303,14 +7486,14 @@
     {
       "id": "l-trait",
       "kind": "look",
-      "entry": "trait look (looks/wellbeing.tsx:363-401)",
+      "entry": "trait look (looks/wellbeing.tsx:365-403)",
       "reads": "systemMods, KNOB_READS, personalityOf",
       "changes": "none",
       "downstream": "readiness look",
-      "explanation": "Figures are the trait’s and the combined knob. For Keeps Accounts/Chaotic the receipts row shows a percentage that changes nothing in play, and since 2026-10-13 its words (KNOB_READS, content/personality-traits.ts:83) say so: 'A student pays no cost of the work, so it decides nothing now'.",
-      "tests": "tests/evidence-g28-ui.test.ts c-traits 'PLAYER JOURNEY: Begin makes the life with the four the page held, and the Review, the Profile, Yourself and the trait look say them back'; tests/evidence2-b10.test.ts c-traits 'says of Keeps Accounts on Dispositions & Traits what its own look says, that its receipts decide nothing for a student'; tests/looks.test.ts",
-      "status": "deferred",
-      "issue": "See trait-receipts.",
+      "explanation": "Each row is a knob the trait declares, in KNOB_READS' words, with the trait's own figure and, if held, the combined knob (personalityOf, bent inside KNOB_LIMITS). Spender and Generous held say +28% of the food's price with all she is, and the meal costs $6.41 for $5.00. Until 2026-10-14 Keeps Accounts and Chaotic showed a receipts row, a percentage that changed nothing in play. The knob went that day.",
+      "tests": "tests/evidence3-person.test.ts > 'l-trait: the look’s figures are what play charges' and > 'c-traits and trait-receipts: the receipts knob gone'; tests/evidence-g28-ui.test.ts > c-traits ('Begin makes the life with the four the page held…'); tests/looks.test.ts",
+      "status": "verified",
+      "issue": "",
       "previous": "partial",
       "settled": "As trait-receipts. Reclassified from partial: the gap it pointed at is the same unresolved one.",
       "review": {
@@ -7345,6 +7528,58 @@
         "gaps": [
           "Deferred as trait-receipts: the receipts row moves nothing in a New Haven student's life, though KNOB_READS now says so in words."
         ]
+      },
+      "after": {
+        "on": "2026-10-13",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "l-trait: the look’s figures are what play charges > PLAYER JOURNEY: Spender and Generous held; their looks say +25% and +10% of the food’s price on their own and +28% with all she is, and the meal through life.look_after costs $6.41 for the plain twin’s $5.00, and lifts the mood 2.273 for 2",
+            "kind": "command",
+            "closes": "The trait look, which had only a shape crawl, is now held to play. Spender and Generous are pressed on the page. Spender's look says 'What the day’s food costs you +25% +28% with all you are' and 'How much a meal lifts the mood +15% +14%…'. Generous's says '+10% +28%…' and its bondWarmth '+10% +10%…'. Those are spending 1.25 × 1.1 = 1.375 bent in [0.7, 1.4] to 1.2819394, and mealMood 1.15 to 1.1364255, worked by hand. The meal through life.look_after charges 641 cents where the plain twin's charges 500, 1.282 times, the look's +28%. It lifts the mood 2.2729 for 2, the look's +14%."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "l-trait: … > a trait not held opens as A Trait, its own figures and no “with all you are”; one held opens as A Trait You Hold, under her own look",
+            "kind": "render",
+            "closes": "The held and not-held branches. Frugal unheld is 'A Trait', '−15%', with no combined column. Spender held alone is 'A Trait You Hold', '+25% +22% with all you are' (1.25 bent, 1.2156942), and her person look offers the way in."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "c-traits and trait-receipts: the receipts knob gone > PLAYER JOURNEY: Keeps Accounts and Chaotic pressed on the page make a life holding both; each look lists only the knobs it still moves, its own and with all she is, and neither says a receipt",
+            "kind": "render",
+            "closes": "The deferral's cause. Keeps Accounts' and Chaotic's looks show no receipts row and no receipt or deduction in their words. No trait's look, held or not, says one."
+          }
+        ],
+        "gapsClosed": [
+          "'Deferred as trait-receipts: the receipts row moves nothing': the row is gone with the knob (2026-10-14). Every row the look now shows is a live knob, and its 'with all you are' figure equals what play charges (the meal's price and its mood).",
+          "'Crawl only': the look is rendered word for word for five traits, held and not held."
+        ],
+        "gapsOpen": [],
+        "disposition": "verified",
+        "defects": [],
+        "mutations": {
+          "run": 2,
+          "killed": 2,
+          "survived": []
+        },
+        "verdict": "verified",
+        "claimed": "verified",
+        "check": {
+          "holds": true,
+          "verdict": "verified",
+          "problems": [
+            "Closed: receipts, the reason for the deferral, is gone. Spender and Generous are pressed on the page. The looks render +25%, +10%, +28% with all she is, and +15%, +14%. Played through life.look_after, the meal costs 641 cents against the plain twin's 500, and lifts the mood by 2×1.1364255057 against 2. I bent the figures by hand and they agree (Spender alone: 1.25 in [0.7, 1.4] is 1.2157, +22%).",
+            "Closed: a trait not held opens as 'A Trait' with no combined column, and one held opens as 'A Trait You Hold'."
+          ],
+          "weakTests": [
+            {
+              "title": "tests/evidence3-person.test.ts > l-trait > both tests",
+              "why": "The trait look is opened through resolveLook(lookAt('trait', id)), not by pressing the way on the Profile. The Profile way is checked only by label (Spender is among the person look's ways). This is a minor gap."
+            }
+          ]
+        }
       }
     },
     {
@@ -7571,11 +7806,11 @@
       "kind": "notification",
       "entry": "Decision ‘Your US Status Is Ending’ -> Apply For OPT, or Apply For OPT, Premium Processing (permission.ts:279-287, in the US_STATUS_KIND handler at 264-294; statusCheckAt at :197)",
       "reads": "",
-      "changes": "documents.apply_opt (permission.ts:227-242), standard or with premium as chosen: pays the fee, OPT permit pending, ninety days standard or thirty federal business days premium (businessDaysOn, :58, which has skipped federal holidays as well as weekends since 2026-10-13: until then Juneteenth and Independence Day were counted); the decision answered once OPT is applied for, from Papers too (:240)",
-      "downstream": "OPT approval (permission.ts:244-265), at the permit’s readyAt: twelve months from the later of the program’s end and the approval. Until 2026-10-13 this cited 165-183.",
+      "changes": "documents.apply_opt (permission.ts:227-242), standard or with premium as chosen: pays the fee, OPT permit pending, ninety days standard or thirty federal business days premium (businessDaysOn, which has skipped federal holidays as well as weekends since 2026-10-13: until then Juneteenth and Independence Day were counted); the decision answered once OPT is applied for, from Papers too (:240)",
+      "downstream": "OPT approval (the PERMISSION_KIND handler, permission.ts:244-265), at the permit’s readyAt: twelve months from the later of the program’s end and the approval. Until 2026-10-13 this cited 165-183.",
       "explanation": "Offers standard first and premium by name, and closes once OPT is applied for (since 2026-10-10). Until then it was silently premium, and stayed open after OPT was applied for from Papers. One who leaves without the degree is raised it with nothing to apply for, in the grace; until 2026-10-13 a withdrawn F-1 was never raised it, the check falling at the grace’s end and going straight to out of status.",
-      "tests": "tests/evidence2-b12.test.ts n-decision-us-status: 'PLAYER JOURNEY: a graduate’s F-1, issued for the class of 2029 to 30 July 2029, is looked at by the clock on 31 May…; Apply For OPT pressed on Home on 1 June pays $470…' (the degree conferred by setStanding on the first day), 'Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July', 'PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on…; Home shows it without a button…'; tests/evidence-g33-ui.test.ts n-decision-us-status: 'the clock raises “Your US Status Is Ending” at the program’s end…', 'PLAYER JOURNEY: Apply For OPT pressed on Home pays $470…', 'applied for from Papers with documents.apply_opt, the decision is answered at that moment', 'Apply For OPT, Premium Processing pays $2,250…', 'PLAYER JOURNEY: an F-1 who withdraws is raised “Your US Status Is Ending” in her fifteen days’ grace…'; tests/papers-fixes.test.ts ‘offers OPT standard first and premium by name, and is answered once OPT is applied for’",
-      "status": "partial",
+      "tests": "tests/evidence3-home.test.ts n-decision-us-status (round three, 2026-10-14): the decision on a degree played to Commencement, Apply For OPT pressed on Home; tests/evidence2-b12.test.ts (premium in thirty federal business days; the withdrawn F-1's refusal form, played); tests/evidence-g33-ui.test.ts (from Papers, answered at once); tests/papers-fixes.test.ts.",
+      "status": "verified",
       "issue": "None. The premium fee was hidden until 2026-10-10 and untested until 2026-10-13; the defects found that day (a withdrawn F-1 never raised the decision; premium’s business days counting federal holidays) were fixed. A played degree, the OPT-offering path’s start, is beyond a gate test’s time.",
       "auditStatus": "partial",
       "settled": "As documents.apply_opt (tests/papers-fixes.test.ts).",
@@ -7631,7 +7866,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g33-ui.test.ts",
@@ -7686,6 +7921,12 @@
             "title": "PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on, due the sixteenth, with nothing to apply for; Home shows it without a button; it lapses with her status, across a reload",
             "kind": "command",
             "closes": "The refusal form reached by play, now that statusCheckAt is fixed. The decision has no actions and is due 16 September (15 days' grace). Home shows its words without an Apply button. She is out of status on the 16th, 'Out Of Status' is said once, and the decision is closed by the 19th, across a reload."
+          },
+          {
+            "file": "evidence3-home.test.ts",
+            "title": "the graduate, played > n-decision-us-status: PLAYER JOURNEY: the played graduate’s F-1 is looked at by the clock on 31 May 2029, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending ninety days, to 30 August, which holds her status past 30 July and is approved for twelve months, across a reload",
+            "kind": "command",
+            "closes": "The OPT-offering decision on a degree played (the fourteen slices), not setStanding: raised 31 May 2029 at noon UTC, due 30 July, both actions offered; Apply For OPT pressed on Home: $470 from her accounts, decision resolved, permit pending to 30 August (ninety days), status held on 1 August, approved 30 August for twelve months, after a reload"
           }
         ],
         "gapsClosed": [
@@ -7695,13 +7936,11 @@
           "The row's line references are stale (see claimCorrection).",
           "The check's 'asserted dueAt echoes the hand-set expiresAt': the F-1 is no longer touched, and dueAt (30 July 2029) follows from its issued expiry and 8 CFR's sixty days.",
           "The review's 'no test covers the refusal form': a played withdrawal raises it with actions [], and it is shown on Home and lapses with her status.",
-          "The check's weak test (the decision raised at a hand-moved program end): replaced by the clock's look at the F-1's own end."
+          "The check's weak test (the decision raised at a hand-moved program end): replaced by the clock's look at the F-1's own end.",
+          "[only a fixture reaches it] The degree itself: now played, in slices across reloads; nothing set by hand."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] The degree itself. OPT is offered only after a completed degree (optRefusal). A played degree takes six terms with every course passed. Left to the clock a life is dismissed after its second fall (tested in h-school), and the attentive policy's three years go far past a test's 60 seconds (12 to 35 seconds for a fall term here). The School's own setStanding confers the degree on the first day; nothing else is set.",
-          "[needs engine change] Premium processing's 30 business days count federal holidays as business days. Filed on 1 June 2029, the application is decided on 13 July; USCIS's count, which skips Juneteenth and Independence Day, gives 17 July. The DEFECT test shows this and fails."
-        ],
-        "disposition": "working, evidence missing",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "A withdrawn (or dismissed, or degree-withheld) F-1 student is never raised 'Your US Status Is Ending'. The status check is scheduled at the end of the fifteen days' grace instead of inside it, and at that moment it goes straight to Out Of Status.",
@@ -7723,38 +7962,26 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
-          "holds": false,
-          "verdict": "partial",
+          "holds": true,
+          "verdict": "verified",
           "problems": [
-            "The claim's 'implementation missing' no longer holds. Defect 43 (premium processing counting federal holidays) is fixed. permission.ts:56-61's businessDaysOn takes `federal` and skips federalHoliday, and documents.apply_opt passes `true` (permission.ts:229). The test still titled 'DEFECT: Apply For OPT, Premium Processing ...' now passes, with readyAt on 17 July 2029 counted by hand under 8 CFR 106.4 and the $2,250 memo. The verdict stays partial for the reason below.",
-            "Open: the OPT-offering decision, the row's main path, is still reached only after TEST SETUP confers the degree with setStanding('graduated') on day one. Everything after that is played: the clock raises the decision at the F-1's own program end of 31 May 2029, due 30 July. The F-1 is untouched, and STARTING.graceDays and STATUS_GRACE_DAYS.f1 are independently pinned. The Home press pays $470, a permit is pending to 30 Aug, status is held past 30 July, and the clock approves it for twelve months across a reload. A degree is reachable by play, just not inside a gate test, so this is missing evidence.",
-            "Checked and closed by play: the refusal form. A withdrawal on 1 Sep 2026 raises the decision a minute later with actions [], due 16 Sep. Home shows it with no Apply button, and it lapses with her status across a reload.",
-            "Checked and closed: 'answered from Papers too'. In round one, documents.apply_opt run directly resolves the decision at that moment, so it can fail on permission.ts's resolve.",
-            "Checked and closed: defect 76's stale prose in tests/evidence-g33-ui.test.ts. The header at :46-47 is now in the past tense, and :820 notes the old 'DEFECT:' title.",
-            "Ran on 2026-10-13: all pass."
+            "Closed by play: the degree, which was the last open gap. This test uses the same played graduate as h-school (attentiveHour, fourteen slices across reloads), with nothing set by hand. The F-1 is checked untouched at creation (expires 30 July 2029). No decision exists on 30 May. The clock raises it at 31 May 2029 noon UTC, due 30 July (sixty days' grace, worked here), with both actions offered. 'Apply For OPT' is pressed on Home. It posts $470 from her own accounts (summed from the postings, a literal), resolves the decision on 1 June, and leaves the permit pending to 30 August (ninety days, a literal). After a reload she is in status on 1 August, and the permit is approved on 30 August, valid to 30 August 2030, with the OPT Approved notice's words.",
+            "Closed earlier and still so: premium through the decision ($2,250, 17 July counted without Juneteenth and Independence Day, a test now retitled out of DEFECT), the refusal form for a withdrawn F-1, played, and 'answered from Papers too'.",
+            "Note: the earlier weak point, that the premium DEFECT title was present tense, is fixed (evidence2-b12.test.ts:684 is retitled)."
           ],
-          "weakTests": [
-            {
-              "title": "DEFECT: Apply For OPT, Premium Processing pressed on Home on Friday 1 June 2029 pays $2,250, and is decided in thirty business days with Juneteenth and Independence Day not among them, on Tuesday 17 July; SLATE counts both, and decides it Friday 13 July",
-              "why": "The test is sound, but its title says in the present tense that 'SLATE counts both, and decides it Friday 13 July', which the fix falsified. It should be retitled, with 'DEFECT:' dropped and the past tense used. renames.json does not cover it. The same pattern was fixed in g33 as defect 76."
-            },
-            {
-              "title": "PLAYER JOURNEY: a graduate’s F-1, issued for the class of 2029 to 30 July 2029, is looked at by the clock on 31 May, the program’s end, due 30 July; Apply For OPT pressed on Home on 1 June pays $470 and leaves a permit pending to 30 August, which holds her status past 30 July and is approved for twelve months",
-              "why": "The degree is conferred by setStanding on day one. Everything after it is played."
-            }
-          ]
+          "weakTests": []
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "OPT approval (permission.ts:165-183)",
-          "now": "OPT approval (permission.ts:208-229), at the permit's readyAt: twelve months from the later of the program's end and the approval. Until 2026-10-13 this cited 165-183."
+          "now": "OPT approval (permission.ts:204-225), at the permit's readyAt: twelve months from the later of the program's end and the approval. Until 2026-10-13 this cited 165-183."
         }
       }
     },
@@ -7811,12 +8038,12 @@
     {
       "id": "n-dismiss-expire",
       "kind": "notification",
-      "entry": "Dismiss; expiry (world.ts:32-42; expireDecisions at 124-138, the undated 90-day dismissal at :136; prune at 141-158, whose exception for a closed row with its date still ahead is at :153)",
+      "entry": "Dismiss; expiry (world.ts:32-42; expireDecisions at 117-130, a row closing on its date at :128; prune at 133-150). Until 2026-10-14 expireDecisions dismissed an undated row after 90 days and prune kept a closed row to a date still ahead; the owner had both go that day.",
       "reads": "",
       "changes": "dismissedAt / resolvedAt; prune after 180 days",
       "downstream": "",
       "explanation": "",
-      "tests": "tests/evidence-g34-ui.test.ts n-dismiss-expire: 'PLAYER JOURNEY: a London-born student’s 2026 return, Dismiss pressed on Home, leaves What Needs You at once; a second press is refused…; kept 180 days, then gone, and the command says “No such decision.”' (its 'nothing asks again' part can’t fail: the raiser asks once a year), 'RULE NO PLAY REACHES: dismisses an undated row left alone once it is more than 90 days old, at the next world tick…', 'keeps a dismissed row dated 300 days on past the 180 days, to its date…', 'lists on Home what is open, overdue first, then by urgency, then the soonest date…'; tests/smoke.test.ts 'closes a dated row on its date, and forgets it a season later' and 'is marked dismissed when waved away, and isn’t among the open rows eight days on' (until 2026-10-13 titled “stops asking once the row is waved away”) (no raiser reads a dismissal: requireDecision passes over a dismissed row and raises a fresh one). Until 2026-10-13 world.ts’s prune said a raiser read a dismissal off a kept row; none does.",
+      "tests": "tests/evidence-g34-ui.test.ts n-dismiss-expire: 'PLAYER JOURNEY: a London-born student’s 2026 return, Dismiss pressed on Home, leaves What Needs You at once; a second press is refused…; kept 180 days, then gone, and the command says “No such decision.”' (its 'nothing asks again' part can’t fail: the raiser asks once a year), 'lets a dismissed row dated 300 days on go at the first tick past its 180 days, its date not come', 'lists on Home what is open, overdue first, then by urgency, then the soonest date…'; tests/smoke.test.ts 'closes a dated row on its date, and forgets it a season later' and 'is marked dismissed when waved away, and isn’t among the open rows eight days on' (until 2026-10-13 titled “stops asking once the row is waved away”) (no raiser reads a dismissal: requireDecision passes over a dismissed row and raises a fresh one). Until 2026-10-13 world.ts’s prune said a raiser read a dismissal off a kept row; none does. Until 2026-10-14 this cited “RULE NO PLAY REACHES: dismisses an undated row left alone once it is more than 90 days old…” and “keeps a dismissed row dated 300 days on past the 180 days, to its date…”, both of rules that went that day; the first went with its rule, and the second is the 300-day test above, rewritten.",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7881,13 +8108,7 @@
           },
           {
             "file": "evidence-g34-ui.test.ts",
-            "title": "n-dismiss-expire > dismisses an undated row left alone once it is more than 90 days old, at the next world tick, never resolving it; keeps it 180 days from then, across a save and a load, and lets it go at the tick after",
-            "kind": "command",
-            "closes": "The undated 90-day auto-dismiss (world.ts:130-131), which no test covered: dismissedAt is Sunday 22 November 2026, 7:30 AM EST, resolvedAt is never set, and the row is deleted 180 days later, across a reload"
-          },
-          {
-            "file": "evidence-g34-ui.test.ts",
-            "title": "n-dismiss-expire > keeps a dismissed row dated 300 days on past the 180 days, to its date, and lets it go at the first tick after the date",
+            "title": "n-dismiss-expire > lets a dismissed row dated 300 days on go at the first tick past its 180 days, its date not come",
             "kind": "command",
             "closes": "A closed row whose dueAt is still ahead is kept (world.ts:145) and is deleted once the date passes"
           },
@@ -8161,9 +8382,9 @@
       "changes": "",
       "downstream": "",
       "explanation": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Until 2026-10-13 four more said the interests in the present tense: migration 92's comment in src/engine/index.ts (now :896-897), tests/attributes-matrix.test.ts:4, tests/looks.test.ts:491-492 and docs/UNBITTEN.md:112; each is in the past tense since.",
-      "tests": "tests/evidence-g34-ui.test.ts i-stale-claims: 'names READ_CRAFTS nowhere in the code, the tests or the docs, but in the audit trail that records its correction', 'has the capability documents pair no interest with love or enjoyment, and name no interests', 'keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected'; tests/evidence2-b13.test.ts i-stale-claims: 'keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true…', 'keeps every sentence naming the interests in the places the row corrected in the past…', 'tells a present-tense claim from its past-tense twin…'. Their rule is loose: a singular “an interest”, or a present-tense sentence with “until”, “drops”, “gone” or “no longer”, passes unflagged. Until 2026-10-13 this said none: read on 2026-10-12, not tested.",
+      "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims; tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (from 2026-10-14: the plural and the singular named, only the removal’s own words taken for history, 26 sentences read and listed true). Until 2026-10-14 the rule that held the tree passed a singular “an interest” and any sentence with “until”, “drops”, “gone” or “no longer”.",
       "status": "partial",
-      "issue": "None of the leftovers it found remain: each was put in the past tense on 2026-10-13. What holds them is the tree-wide walk in evidence2-b13, whose rule a new present-tense claim in the singular, or one using 'until' or 'no longer', can pass.",
+      "issue": "None of the leftovers it found remain: each was put in the past tense on 2026-10-13. They are held by a tree-wide walk that, from 2026-10-14, names the singular too and takes only the removal's own words (removed, deleted, went, dropped, 2026-10-10, migration 93 or 94) for the past.",
       "auditStatus": "partial",
       "settled": "capabilities.json, CAPABILITIES.md and the comments corrected.",
       "corrected": {
@@ -8202,7 +8423,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g34-ui.test.ts",
@@ -8239,6 +8460,18 @@
             "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
             "kind": "fixture",
             "closes": "Review gap 'Nothing fails if a new present-tense claim appears', and the first round's open 'needs a claims tool'. The walk covers over 600 files in src/, tests/ and docs/, leaving out docs/verification/, docs/GAMEPLAY-COVERAGE.md, docs/research/, docs/drill-down-research.json and this file. It finds 74 sentences naming the removed interests. Each must carry a word of history or be one of 20 sentences listed with why they're true as written: titles and statements of absence, failure messages, fixtures written as 93 wrote them, and two sentences already in the past. Each listed sentence must still be found. It fails on the four leftovers below, and will fail on any new one."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds every present-tense claim the check of 2026-10-13 passed, and passes each one’s twin dated by the removal; money’s interest isn’t taken for them",
+            "kind": "fixture",
+            "closes": "The check's weak rule. Its four singular examples ('An interest grows an ability…', 'The interest look opens…', 'A loved interest lifts a meal.', 'Spend an hour on an interest.') and four that passed by 'until', 'drops', 'lets go', 'gone' or 'no longer' are all flagged. Their twins dated by the removal pass. Money's interest ('Its interest builds each day.', 'an interest penalty', 'an interest transaction') and the law's 'best interests' are not taken for the removed interests."
+          },
+          {
+            "file": "evidence3-person.test.ts",
+            "title": "i-stale-claims: … > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside",
+            "kind": "fixture",
+            "closes": "The tree-wide walk, held by the stricter rule. Its names are the plural, 'an interest', 'each/every/one/loved/that/this interest', 'interest's', 'the interest look/hour/list/sheet/record' and the code's names, with money's phrases taken out first. Its history words are only removed, deleted, went, dropped, 2026-10-10 and migration 93/94. Every sentence that matches without them is one of 26 read on 2026-10-14 and listed with why it is true (titles of absence, failure messages, migration 94's message, fixtures as 93 wrote them, money's interest, two already past). Each listed sentence must still be found."
           }
         ],
         "gapsClosed": [
@@ -8246,14 +8479,12 @@
           "Review: 'Nothing fails if a new present-tense claim appears.' Closed: the src/, tests/ and docs/ walk fails on any sentence that names the removed interests without a word of history, unless it was read and listed as true. It goes green once the four leftovers are put in the past.",
           "Check weak test (PAST accepted 'was', 'had', 'kept', 'named', 'carried', 'stood'): replaced by words only history uses, and shown to tell the check's own example from its past-tense twin.",
           "Check: 'It also covers only five files': the rule now covers src/, tests/ and docs/, and the row's seven places are held on their own, green.",
-          "First round open: 'a comment-level regex … cannot be a test'. Sentences are now read with the TypeScript parser, so a quote in a regex or comment can't run a string on. Statements of absence such as tests/migration-94's 'gives a new life no interests to drop' are read and listed rather than guessed by a regex."
+          "First round open: 'a comment-level regex … cannot be a test'. Sentences are now read with the TypeScript parser, so a quote in a regex or comment can't run a string on. Statements of absence such as tests/migration-94's 'gives a new life no interests to drop' are read and listed rather than guessed by a regex.",
+          "The check's 'All eight of the skeptic's present-tense examples still pass unflagged': the singular forms are now names, and 'until', 'drops', 'lets go', 'gone' and 'no longer' no longer count as history. Shown on the examples and their dated twins.",
+          "The check's weak tests in evidence2-b13 (the same permissive rule over the tree and over the seven corrected files): superseded by the stricter walk over the same tree.",
+          "The 'tests' field: given as rowText."
         ],
-        "gapsOpen": [
-          "[needs engine change] src/engine/index.ts:889-890, migration 92's comment, still says 'familiarity, sessions and interests begin at nothing, which is what the save records of them', in the present tense. The 92 block has made no interests since 2026-10-10 (index.ts:903 sets byGenre only). The tree-wide test fails on it.",
-          "[stale claim] tests/attributes-matrix.test.ts:4 still says 'every interest and genre has its definition', while the same test holds '## Interests' gone. It needs an edit to that test file, which this round doesn't write. The tree-wide test fails on it, and the claimCorrection records it.",
-          "[stale claim] tests/looks.test.ts:491-492 still says 'no empty line where the background, the interests and the films would be', as if an interests line could be drawn. It needs an edit to that test file. The tree-wide test fails on it.",
-          "[stale claim] docs/UNBITTEN.md:110, a leftover the review didn't list, found here. Its header '**Thirty-seven interests and most genres read nothing.**' is in the present tense, and so is its 'coursework by the craft it's done in (`Template.crafts`)', although both went on 2026-10-10. It needs an edit to the ledger. The tree-wide test fails on it."
-        ],
+        "gapsOpen": [],
         "disposition": "working, evidence missing",
         "defects": [
           {
@@ -8294,41 +8525,40 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
         "verdict": "partial",
-        "claimed": "partial",
+        "claimed": "verified",
         "check": {
-          "holds": true,
+          "holds": false,
           "verdict": "partial",
           "problems": [
-            "The four present-tense leftovers are corrected in the tree, and the tree-wide test passes. They are src/engine/index.ts:889-890 (migration 92's comment, now 'the interests did too, until migration 94 dropped them on 2026-10-10'), tests/attributes-matrix.test.ts:4, tests/looks.test.ts:491-492 and docs/UNBITTEN.md:112. The review's two named leftovers are closed.",
-            "The two false READ_AND_TRUE entries the skeptic named (g34's 'every interest left is money's' and the READ_CRAFTS line) are gone. g34's READ_CRAFTS test passes again.",
-            "Still open: the review's gap 'Nothing fails if a new present-tense claim appears' and the skeptic's weak-rule problem. I ran the file's current NAMES and HISTORY regexes. All eight of the skeptic's present-tense examples still pass unflagged. NAMES misses singular forms such as 'An interest grows an ability by an hour of it.', 'The interest look opens from the Profile…', 'A loved interest lifts a meal…' and 'Spend an hour on an interest…'. HISTORY accepts 'until', 'drops', 'lets go', 'gone' and 'no longer', which present-tense sentences use ('The interests are kept on the sheet until the player drops them.'). HISTORY's doc comment, 'Words only history uses', is false for 'drops' and 'lets go'.",
-            "The behavior the row claims is right: the prose is corrected. What's missing is a guard that holds it, which is why the disposition is 'working, evidence missing'. The second agent's 'implementation missing' and its '[needs engine change]' on a comment edit were misclassified.",
-            "The skeptic noted that UNBITTEN.md was flagged only because the sentence split doesn't break after '.**'. That's moot now, since the entry was rewritten."
+            "Closed: the eight present-tense examples from the earlier check are flagged now, and 'until', 'gone', 'no longer', 'drops' and 'lets go' no longer pass a sentence alone. The tree-wide walk passes and isn't vacuous: it covers more than 600 files and more than 60 sentences, and every READ_TRUE entry must still be found.",
+            "Still open, the review's gap 'nothing fails if a new present-tense claim appears' and the same weakness the earlier check named, now through REMOVAL. REMOVAL accepts 'removed', 'deleted', 'dropped' and 'went' anywhere in a sentence, and present-tense passive sentences use those words. I ran the file's own NAMES and REMOVAL. 'An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.' and 'Interests went into every meal.' all pass unflagged.",
+            "Still open, as the agent acknowledges: NAMES doesn't match 'your interest', 'her interest in cooking' or 'a favourite interest' ('favourite' isn't in its list of determiners). 'Your interest lifts a meal.' and 'A favourite interest lifts a meal.' pass.",
+            "The prose in the tree is correct, as the walk shows. What is missing is a guard that holds it, so the disposition is 'working, evidence missing', not 'verified'."
           ],
           "weakTests": [
             {
-              "title": "i-stale-claims > tells a present-tense claim from its past-tense twin, where the first round’s check passed both",
-              "why": "It tests only hand-picked sentences. The rule still passes present-tense sentences that use a singular form, or that contain until/drops/gone/no longer/lets go."
+              "title": "tests/evidence3-person.test.ts > i-stale-claims > finds every present-tense claim the check of 2026-10-13 passed…",
+              "why": "It tests only hand-picked sentences. Present passives with 'removed' or 'dropped', and unlisted singulars, still pass the rule."
             },
             {
-              "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ in the past, by a word only history uses, or among the sentences read and found true; the audit trail and the research records aside",
-              "why": "It's green now, but it shares the NAMES/HISTORY weakness. A new present-tense claim in the singular, or one with 'until' or 'no longer', would not fail it."
+              "title": "tests/evidence3-person.test.ts > i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal…",
+              "why": "It shares REMOVAL's permissiveness. A new present-tense claim that says 'is removed', 'are dropped' or 'went', or names one interest by possessive or an unlisted determiner, wouldn't fail it."
             },
             {
-              "title": "i-stale-claims > keeps every sentence naming the interests in the places the row corrected in the past, by a word only history uses, or among the sentences read and found true",
-              "why": "It uses the same permissive rule over the seven corrected files."
+              "title": "tests/evidence2-b13.test.ts > i-stale-claims (the earlier, permissive rule)",
+              "why": "Still in the gate, and superseded."
             }
           ]
         },
         "claimCorrection": {
           "field": "explanation",
           "said": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense.",
-          "now": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Those places were corrected, and tests/evidence-g34-ui.test.ts and tests/evidence2-b13.test.ts hold them. On 2026-10-13 four present-tense leftovers remained outside them: migration 92's comment in src/engine/index.ts ('familiarity, sessions and interests begin at nothing'), tests/attributes-matrix.test.ts:4 ('every interest and genre has its definition'), tests/looks.test.ts:491-492 ('no empty line where the background, the interests and the films would be') and docs/UNBITTEN.md:110 ('Thirty-seven interests and most genres read nothing'). tests/evidence2-b13.test.ts fails until each is in the past tense. It also fails on any new sentence in src/, tests/ or docs/ that names the interests without a word of history and isn't among the sentences it read and found true."
+          "now": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Those places are corrected, and tests/evidence-g34-ui.test.ts holds them. On 2026-10-13, three present-tense leftovers remained outside them: src/engine/index.ts:889 (migration 92's 'familiarity, sessions and interests begin at nothing', although the 92 block has made no interests since 2026-10-10), tests/attributes-matrix.test.ts:4 ('every interest and genre has its definition') and tests/looks.test.ts:491-492 ('no empty line where ... the interests ... would be')."
         }
       }
     },

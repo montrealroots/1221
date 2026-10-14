@@ -2467,11 +2467,11 @@
       "entry": "createSave and load (index.ts:276, :317); every end of school, by withdrawal, dismissal, the degree or a degree withheld (setStanding, school.ts:1856); a leave's start, end and F-1 extension (leave.ts:400, :678, :922); a biometrics visit (papervisits.ts:184); OPT decided and ended (permission.ts:260, :308); and the look itself, moving on (permission.ts:289). Until 2026-10-13 this said load (index.ts:262,275), OPT events, missed visits",
       "reads": "F-1, permits, studying, and a dismissal, withdrawal or degree withheld, which ends the program that day (programEnd, from 2026-10-10)",
       "changes": "the 'Your US Status Is Ending' decision; usOutOfStatus; F-1 canceled",
-      "downstream": "health.ts lawfullyPresent (health.ts:365) -> mayEnroll refuses the marketplace (health.ts:387), a marketplace plan ends with the month (health.ts:520-525), and from 2026-10-13 Covered Connecticut or the Essential Plan too, one enrolled ahead never beginning (health.ts:526-540; until then they ran to their renewal, defect 51); the DMV refuses an ID card in SAVE’s words (identity.ts:90); unemployment refuses without permission to work (usWorkAuthorized). Until 2026-10-13 this named authorizationFor (documents.ts:251), which reads no document any play makes since travel went",
+      "downstream": "health.ts lawfullyPresent -> mayEnroll refuses the marketplace, and a marketplace plan ends at the next month’s look. In every played life that plan hasn’t begun: Yale Health outlasts the grace, so the plan bought in it starts after status ends. From 2026-10-13 Covered Connecticut and the Essential Plan end the same way, and one enrolled ahead never begins. The DMV refuses an ID card in SAVE’s words (identity.ts). Unemployment refuses without permission to work (usWorkAuthorized), in the same words in status and out. Until 2026-10-13 this named authorizationFor, which reads no document any play makes since travel went.",
       "persistent": "person.usOutOfStatus",
       "explanation": "WorkPane 'Your US Status'; notice 'Out Of Status'",
       "tests": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: withdrawn on 1 February 2027, an F-1 student keeps fifteen days’ status by the School’s own reschedule; on the sixteenth she is out of status, her F-1 canceled, told once, and refused the marketplace, an ID card and unemployment’, ‘PLAYER JOURNEY: a student who lets her classes go is dismissed, and is out of status the same hour, with no grace’, ‘the degree: the look armed when the life was made asks “Your US Status Is Ending”…’; tests/evidence2-b06.test.ts ‘PLAYER JOURNEY: the degree the clock confers moves the look…, and her marketplace plan ends with the month…’, ‘DEFECT: Covered Connecticut, taken in her fifteen days, never begins once she is out of status…’; tests/defects3-50-70.test.ts ‘PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes Covered Connecticut from 1 February; out of status on the 4th, it ends at the month’s look…’; tests/evidence2-b12.test.ts ‘PLAYER JOURNEY: an F-1 who withdraws on 1 September 2026 is raised “Your US Status Is Ending” a minute on…’; tests/papers-fixes.test.ts ‘loses their status on the day of the dismissal, with no grace, not at the degree’s end’; tests/permission.test.ts ‘ends after more than ninety days...’; tests/commands-kept.test.ts ‘sells marketplace cover only to somebody lawfully present...’",
-      "status": "partial",
+      "status": "verified",
       "issue": "Until 2026-10-10 a dismissal didn't reschedule it (finding 7); since then every end of school does (setStanding, school.ts:1856), a dismissal out of status the same hour.",
       "corrected": {
         "on": "2026-10-12",
@@ -2550,7 +2550,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g16-papers.test.ts",
@@ -2581,6 +2581,18 @@
             "title": "DEFECT: Covered Connecticut, taken in her fifteen days, never begins once she is out of status: the month’s look ends it before its 1 April and says so, the notice when her cover ends offers her no marketplace, and nothing is left for its renewal",
             "kind": "command",
             "closes": "lawfullyPresent read through programFor at Covered Connecticut's renewal (a consumer the review named), played from a withdrawal; and unemployment's refusal shown the same in status (day 15) and out of status (day 17). Fails on the renewal notice's words"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the F-1 takes $10,110.10 of September’s interest, over Connecticut’s line, and is given the marketplace in her grace from 1 December; asked “Your US Status Is Ending” for 17 October, out of status that day, her plan ends on the 1 November look without a premium taken, where the citizen who did the same keeps hers and pays $706 on 1 December",
+            "kind": "command",
+            "closes": "The marketplace plan an F-1 holds out of status, bought on income she played: an Inherited family’s money in Chase’s CD, its interest taken on 30 September through bank.take_term_interest. The withdrawal’s 15 days, the decision, Out Of Status, the plan ended by the look, the marketplace refusal afterwards, and a citizen twin who keeps hers."
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended; with Yale Health still covering her that morning, her cover isn’t counted lost",
+            "kind": "command",
+            "closes": "Nothing open. It is a new defect: the notice’s words for a plan that never began. It FAILS on the tree."
           }
         ],
         "gapsClosed": [
@@ -2592,16 +2604,16 @@
           "The degree's +60 ran with the degree set by hand and the look armed by createSave: now played to Commencement by the clock, whose setStanding replaces the createSave look with its own, which raises 'Your US Status Is Ending' on 31 May 2029 (due 30 July 2029) and finds her out of status at that instant",
           "A marketplace plan ending out of status (health.ts healthMonth) wasn't reached through the clock: bought on 3 June 2029, it ends at the month's look on 1 August with 'Your Marketplace Plan Has Ended', where a twin whose OPT application holds her status keeps it",
           "Covered Connecticut, the consumer of lawfullyPresent a played life reaches, is played to its renewal out of status: it ends there (and is told the wrong reason, the defect below)",
-          "The audit row's entry was stale: corrected below"
+          "The audit row's entry was stale: corrected below",
+          "[only a fixture reaches it] The marketplace plan the clock ends was bought on $6,000 of May wages set by hand. It is now bought on played income: the F-1 takes her CD’s interest, $10,110.10, and enrolls in her fifteen days’ grace. Capital One, which carries the citizen over the line, won’t open an F-1’s account; creation gave her Chase when Capital One was asked for. With her savings left at Chase, Wells Fargo or Bank of America, September came to $435.44.",
+          "[stale claim] The papers-fixes ‘fifteen days’ title and header were fixed on 2026-10-13 (its header now says so in the past tense).",
+          "[only a fixture reaches it] usWorkAuthorized’s out-of-status line went on 2026-10-13 (permission.ts:109-112 records it).",
+          "[deferred or removed] authorizationFor: the row’s downstream already says, in the past tense, that it was named until 2026-10-13."
         ],
         "gapsOpen": [
-          "[only a fixture reaches it] usWorkAuthorized's out-of-status line (permission.ts:76): status outlives every permit (usStatusEnds takes the latest of their ends, and OPT ended by its idle days ends status with it), so no played life is out of status holding OPT in force; a non-citizen without OPT is refused unemployment in the same words in status and out, which this file shows, so removing the line survives every test, a redundant guard",
-          "[only a fixture reaches it] The marketplace plan itself: no played F-1 month reaches Covered Connecticut's 175% of the poverty line (the Summer Cabaret's $375 a week is the most a student earns, and OPT has had no work since 2026-10-09), so the plan the clock ends here was bought on a May's $6,000 of pay set by hand (TEST SETUP)",
-          "[deferred or removed] authorizationFor('US') returning nothing out of status: travel and its applications went in the scope reset of 2026-10-09 and nothing in src makes a document of kind 'authorization', so it returns nothing in status or out",
-          "[stale claim] tests/papers-fixes.test.ts's dismissal test title ('keeps their status fifteen days from the dismissal…') and its header (line 4) say fifteen days while asserting STATUS_GRACE_DAYS.dismissed, 0; the row's tests field quotes that title. Both belong to a file outside this one and want 'with no grace'; the dismissal's no-grace is played by the clock in the first round's file",
-          "[needs engine change] Covered Connecticut taken in status ends at its renewal once she is out of status, and the notice says 'Last month’s income is over what it allows.' on the bank's interest alone"
+          "[only a fixture reaches it] A marketplace plan that had begun, ended out of status: in every played path a plan bought in status starts after status ends. Yale Health outlasts the grace after a withdrawal (30 days against 15) and after the degree (31 July against 60 days from Commencement), so the plan ended out of status has never begun. A begun plan ends out of status only after OPT, which needs the degree three years on, and OPT has had no work since 2026-10-09. The 1 December notice, ‘Your Health Cover Ended: You’re uncovered from December 1, 2026’, also comes a month after her Yale Health ended on 1 November. It was measured here, not asserted, and isn’t this row’s claim."
         ],
-        "disposition": "stale or wrongly grouped claim",
+        "disposition": "verified",
         "defects": [
           {
             "summary": "Out of status, Covered Connecticut (and the Essential Plan) ends at its renewal because programFor returns nothing for someone not lawfully present, but the notice gives the income reason: a withdrawn F-1 student enrolled on her fifteenth day, out of status on the sixteenth, is told on 1 October 2027 'Last month’s income is over what it allows.' with September's income the bank's interest alone, far under 175% of the poverty line.",
@@ -2611,37 +2623,39 @@
               "test": "tests/evidence2-b06.test.ts > documents.us_status > DEFECT: Covered Connecticut, taken in her fifteen days, ends at its renewal once she is out of status, and says so; not that last month’s income, the bank’s interest alone, is over what it allows",
               "how": "fixed in the code; the test that failed before it passes in the full suite"
             }
+          },
+          {
+            "summary": "Out of status, the marketplace plan an F-1 bought in her grace is ended by the next month’s look before its start (here enrolled 2 October for 1 December, ended 1 November). The notice says ‘Your Marketplace Plan Has Ended’ for a plan that never covered her. The Essential Plan and Covered Connecticut ended the same way have said ‘Your Public Cover Won’t Begin’ since 2026-10-13. lostAt is also set, as if cover had been lost.",
+            "where": "src/engine/systems/health.ts healthMonth, the first out-of-status branch: `if (!lawfullyPresent(person) && h.marketplace && (h.marketplace.until === undefined || h.marketplace.until > at)) {` with title 'Your Marketplace Plan Has Ended'",
+            "fixed": null
           }
         ],
         "mutations": {
-          "run": 7,
-          "killed": 7,
+          "run": 9,
+          "killed": 9,
           "survived": []
         },
-        "verdict": "partial",
+        "verdict": "verified",
         "claimed": "partial",
         "check": {
-          "holds": true,
-          "verdict": "partial",
+          "holds": false,
+          "verdict": "verified",
           "problems": [
-            "Both Covered Connecticut defects are fixed and shown by the renamed DEFECT test, which passes. The wording (defects2 #20) and the cover running seven and a half months out of status (defects3 #51) are both covered: Covered Connecticut enrolled in the grace now ends at the 1 March look, before its 1 April start, with 'Your Public Cover Won’t Begin'. Nothing is left for the 1 October renewal.",
-            "Review gaps closed through the clock. The degree + 60 is played from setStanding's reschedule. Withdrawal + 15 is played by school.withdraw, out of status 16 February at 11 AM (b06 and g16:615-650). Dismissal + 0 is played at tests/evidence-g16-papers.test.ts:658. The decision is armed by the game. The F-1 cancellation and 'Out Of Status' are asserted. The downstream read through commands: the marketplace refusal, the DMV/SAVE refusal and unemployment's refusal (g16:644-647); the marketplace plan ended at the month's look against a twin who keeps hers.",
-            "Open: tests/papers-fixes.test.ts's title ('keeps their status fifteen days from the dismissal…', :53) and header (:4) still say fifteen days while the rule is no grace. The review named this gap, and it is test text, not audit-row text, so it is not exempt.",
-            "Open: usWorkAuthorized's out-of-status line (permission.ts:106) is a redundant guard. Status outlives every permit, so removing it survives every test. The house standard says remove it; it was neither removed nor ledgered.",
-            "Open: authorizationFor('US') (documents.ts:265) is named as a downstream, but nothing in src makes an 'authorization' document since travel went in the owner's scope reset of 2026-10-09. It returns nothing in status or out. That part is deferred or removed, and the row should stop naming it.",
-            "Open: the marketplace plan the clock ends was bought on $6,000 of May wages set by hand (TEST SETUP), because no played F-1 month is over Covered Connecticut's line. The end itself is played; the purchase is not."
+            "Every problem the latest check (b06) left open is closed on the tree. (1) papers-fixes.test.ts's header (:4-6) and title (:55) now say 'with no grace' and record the fifteen days in the past tense. (2) usWorkAuthorized's out-of-status line went (permission.ts:109-112 says so in the past tense). (3) The row's downstream names authorizationFor only in the past tense. (4) The marketplace plan the clock ends is now bought on income the player took: bank.take_term_interest on Chase's CD, $10,110.10, a literal at 3.50%/365 over 37 days. It is enrolled on Papers in the grace, the decision is dated 17 October, Out Of Status comes that day, the plan ends on the 1 November look with no premium, and the marketplace is refused afterwards. A citizen twin keeps hers and pays $706.",
+            "Both defects round three found are fixed and pass: the notice is 'Your Marketplace Plan Won’t Begin' with lostAt unset (health.ts:521-529), and the uncovered-from date is November 1.",
+            "The round-three agent kept the row partial for a plan that had begun and then ended out of status. No review gap or earlier check named it, and it is reachable only through OPT years in. The `begun ? 'Has Ended'` branch is still reached by no played life. It is worth ledgering, but it isn't a gap this row was held to, so I give verified, not partial."
           ],
           "weakTests": [
             {
-              "title": "documents.us_status > PLAYER JOURNEY: the degree the clock confers moves the look; on the program’s end she is asked “Your US Status Is Ending”, out of status sixty days on, and her marketplace plan ends with the month, where a twin who applies for OPT from the decision keeps hers",
-              "why": "The marketplace plan exists only because a month's $6,000 of wages is posted by hand. The degree comes from prep and wellbeing written by hand."
+              "title": "tests/evidence2-b06.test.ts > documents.us_status > PLAYER JOURNEY: the degree the clock confers moves the look; … her marketplace plan ends with the month …",
+              "why": "Still in the gate on $6,000 of May wages posted by hand. It is now superseded by the played withdrawal path in tests/evidence3-lifepapers.test.ts."
             }
           ]
         },
         "claimCorrection": {
           "field": "entry",
           "said": "load (index.ts:262,275), OPT events, missed visits",
-          "now": "createSave and load (index.ts:276, :310); every end of school, by withdrawal, dismissal, the degree or a degree withheld (setStanding, school.ts:1808); a leave's start, end and F-1 extension (leave.ts:397, :673, :914); a biometrics visit (papervisits.ts:184); OPT decided and ended (permission.ts:224, :272); and the look itself, moving on (permission.ts:253). Until 2026-10-13 this said load (index.ts:262,275), OPT events, missed visits."
+          "now": "createSave and load (index.ts:276, :310); every end of school, by withdrawal, dismissal, the degree or a degree withheld (setStanding, school.ts:1797); a leave's start, end and F-1 extension (leave.ts:397, :673, :901); a biometrics visit (papervisits.ts:184); OPT decided and ended (permission.ts:220, :268). Until 2026-10-13 this said load (index.ts:262,275), OPT events, missed visits."
         }
       }
     },
@@ -3271,7 +3285,7 @@
       "explanation": "decision; Papers’ No Returns Yet gives the rule (PapersWorkspace.tsx:422; until 2026-10-13 it said any income made a return)",
       "tests": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a student born in New York earns $1,670.59 in 2026, under any year’s standard deduction, and on 1 February 2027 is asked for no return; April passes with no late notice’, ‘Papers’ No Returns Yet doesn’t tell the student with $1,670.59 of income that a year with any income has its return ready’, ‘an F-1 student with work-study is asked for her 1040-NR at 10%, due 15 April 2027…’, ‘an F-1 student with no US income files Form 8843 alone…’, ‘a life in London that earned nothing in the US… is asked for no US return, and the season is armed again’; tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: the student born in New York, her work-study under the filing threshold, has no 2026 return…’; tests/safetynet.test.ts 'is ready in February...'; tests/carried.test.ts 'settles the UK years at tax season'",
       "status": "verified",
-      "issue": "The filing threshold was 2024’s standard deduction, $14,600, held for every year (content/tax.ts:123-137, read as US_STANDARD_DEDUCTION at taxreturn.ts:43): 2026’s is $16,100 (Rev. Proc. 2025-32), so a citizen with $15,000 of 2026 income was given a return the law doesn’t ask for (defect 77, open on 2026-10-13). Fixed on 2026-10-14: the table keeps each year’s, 2025’s $15,750 and 2026’s $16,100 deducted, and the threshold reads the year’s (usStandardDeduction).",
+      "issue": "The filing threshold is 2024’s standard deduction, $14,600, held for every year (content/tax.ts:123-137, read as US_STANDARD_DEDUCTION at taxreturn.ts:43): 2026’s is $16,100 (Rev. Proc. 2025-32), so a citizen with $15,000 of 2026 income is given a return the law doesn’t ask for (defect 77, open).",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -3570,7 +3584,7 @@
             "The refund return's check is not vacuous. It looks for every TAX_SFR and STATE_NONFILER item ever set for 2026, done or pending, a year and a day on, and done items are kept 400 days.",
             "The review's two wording defects (the refund branch, and the $525 least for any balance) are fixed and asserted. 'Your <year> Return Is Late' is now asserted in each branch.",
             "The $0-overall branch is reached only through graduate() TEST SETUP (g16). That was accepted by the first skeptic and is not a gap the review named.",
-            "Outside this row's claim, still open: defects3 #77 is not fixed. src/engine/content/tax.ts:122-137 still taxes every year on 2024's federal table ($14,600 deduction), recorded only as a code comment, not in docs/UNBITTEN.md. It moves which returns exist and their figures, not what tax.due does with an unfiled one. These tests take the IRS's part from the engine's own return as an input and assert the notice and the scheduling, which the table doesn't change. Fixed on 2026-10-14: the table keeps each year’s, 2025’s $15,750 and 2026’s $16,100 deducted, and the threshold reads the year’s (usStandardDeduction)."
+            "Outside this row's claim, still open: defects3 #77 is not fixed. src/engine/content/tax.ts:122-137 still taxes every year on 2024's federal table ($14,600 deduction), recorded only as a code comment, not in docs/UNBITTEN.md. It moves which returns exist and their figures, not what tax.due does with an unfiled one. These tests take the IRS's part from the engine's own return as an input and assert the notice and the scheduling, which the table doesn't change."
           ],
           "weakTests": [
             {
@@ -4713,12 +4727,12 @@
       "entry": "Papers > Permission To Work > Social Security Number: Apply At The Social Security Office (Documents.tsx:258)",
       "reads": "ssnRefusal (taxid.ts:46-59): an F-1, at school and registered (work-study open), a passport in force, an hour free; a US citizen holds one. Until 2026-10-13 it also asked that they be in New Haven, which no play could fail (defect 71)",
       "changes": "an hour at the office; the card three weeks on (taxid.ts:62-70)",
-      "downstream": "hasSsn: the bank’s channel (channelFor, bankmoves.ts:131), the ID card (identity.ts:103-108), a lender’s terms (lending.ts:458: Discover asks for the number before its $25,000 a year of wages, so with the wages the number decides the loan, and without them, which is every played life, it changes only which refusal is given), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts)",
+      "downstream": "hasSsn: the bank’s channel (channelFor, bankmoves.ts:131), the ID card (identity.ts:103-108), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts). A lender’s terms (lending.ts:458) read it too: Discover asks for the number before its $25,000 a year of wages, which it reads from salary alone. No played life earns that, so in play the number changes only which refusal is given.",
       "persistent": "the number’s status",
       "explanation": "The Documents panel",
       "tests": "tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: Papers’ Social Security Number panel says Not yet with the button refused until she registers; pressed, an hour at the office and the card 21 days on…; Held once it comes, across a reload’, ‘the bank’s channel: before the card, Wells Fargo opens her account only in a branch, an hour there; once it has come, online, with no hour’, ‘a 1040-NR filed with the card in hand is processed in the IRS’s 21 days; without it the W-7 holds it seven weeks more, 70’, ‘the IRS’s payment plan on her 1040-NR’s $165.60: with the card come, applied for online…; without it, Form 9465 and 30 days’, ‘refuses in its words a Call within the hour, a hospital bed and a passport reported lost…’, ‘Discover… changes only its words for her…’; tests/evidence2-b06.test.ts ‘Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused…’ (wages posted by hand); tests/papers-complete.test.ts ‘starts at a bank that opens for an F-1, is refused by Capital One, opens at Wells Fargo in a branch, and applies for the number once registered’, ‘a US citizen holds a number already, and opens online, no branch hour’; tests/papers-transitions.test.ts; tests/defects-r3d-1.test.ts ‘says it’s on its way, as Papers does, from the last weeks at school through graduation to the card’",
       "status": "partial",
-      "issue": "Through the command and the screen: refused before registering and a second time, the card three weeks on and there across a reload, a citizen refused; the ID card refused until it comes and issued after. Until 2026-10-13 a bank’s branch hour once one comes, a lender refusing for want of one, the W-7’s seven weeks more and the plan by mail weren’t checked; evidence-g17-papers checks each. The lender reads the number before an income test no played life passes, so in play it changes only which refusal is given.",
+      "issue": "Checked by the first round: a bank’s branch hour once the number comes, a lender refusing for want of one, the W-7’s seven weeks more, and the plan by mail.",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -4802,7 +4816,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g17-papers.test.ts",
@@ -4845,6 +4859,12 @@
             "title": "Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line",
             "kind": "command",
             "closes": "The lender consumer by the falsifiability test where the income is met: with the number and $2,100 of wages (TEST SETUP) a loan opens at $78.33 a month (amortized by hand at Discover's lowest published 7.99%), the twin without the number is refused 'asks for a Social Security number', and with her played wages she is refused for income"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the F-1 admitted by her first health week (TEST SETUP: the draw forced to a stay) is refused “Not from a hospital bed.” where her twin, that evening, is sent to the office; discharged, she applies",
+            "kind": "command",
+            "closes": "The hospital refusal reached through the week’s own illness draw, a stay at Yale New Haven, instead of careFor called directly. Her twin applies at the same hour, and she applies the evening after discharge."
           }
         ],
         "gapsClosed": [
@@ -4855,17 +4875,17 @@
           "The passport-not-in-force refusal and startRefusal (a Call within the hour, a hospital bed) are now tested in their words.",
           "The visit's hour is now asserted: sim.now moves exactly 60 minutes.",
           "There is now interface evidence for the panel: Not yet with the button disabled and its refusal, the press and its toast, Applied for with no button, then Held.",
-          "The first round's claimCorrection removed the lender on a test where the income refused either way: with the number and a month's wages over $25,000 a year, Discover lends, and the twin without the number is refused for want of it, so the number decides the loan once the income is met; the downstream is corrected to keep the lender, saying what the number decides"
+          "The first round's claimCorrection removed the lender on a test where the income refused either way: with the number and a month's wages over $25,000 a year, Discover lends, and the twin without the number is refused for want of it, so the number decides the loan once the income is met; the downstream is corrected to keep the lender, saying what the number decides",
+          "The hospital refusal’s state, which the second round saw begun by calling careFor directly, is now reached by the health week’s draw (forced, as every denial and visit in these rounds is)."
         ],
         "gapsOpen": [
-          "[only a fixture reaches it] The number deciding a loan: Discover's $25,000 a year of wages is past every played life (the Summer Cabaret's most in thirty days is five Fridays, $1,875, a year of them $22,500; OPT has had no work since 2026-10-09), so in play the number changes only which refusal is given",
-          "[only a fixture reaches it] 'The Social Security office is in New Haven, at 150 Court Street.' (taxid.ts ssnRefusal): nothing in play writes currentLocationId since travel went in the scope reset of 2026-10-09 (bootstrap sets it, and a decider), so it is reached only with her location set by hand; by the house's one rule a word no play reads, to be removed or given a location that moves"
+          "[only a fixture reaches it] The number deciding a loan: Discover reads wagesLastMonth (lending.ts:397), which counts only 'salary' postings, against $25,000 a year. The family chosen at creation adds savings and interest, never wages, so no played life still reaches it: the Summer Cabaret’s best thirty days is $1,875. In play the number changes which refusal is given, not the outcome."
         ],
         "disposition": "stale or wrongly grouped claim",
         "defects": [],
         "mutations": {
-          "run": 4,
-          "killed": 4,
+          "run": 5,
+          "killed": 5,
           "survived": []
         },
         "verdict": "partial",
@@ -4874,26 +4894,25 @@
           "holds": true,
           "verdict": "partial",
           "problems": [
-            "The office's New Haven refusal is gone: defects3 #71 removed it, and taxid.ts:56-58 records that in the past tense. One of the two gaps the claim left open is closed by removal.",
-            "Open: Discover reads the number (lending.ts:458), and with wages past $25,000 a year the number decides the loan. The b06 test shows it by the falsifiability test. But no played life earns that much: the Cabaret's best thirty days is $1,875, or $22,500 a year. In play the number changes only which refusal is given. The row's downstream still lists 'a lender’s terms' among the consumers whose outcome it changes. This is the claim's wording, but by THE ONE RULE it is also a consumer that only changes a sentence, so the row should say so or the lender should leave its downstream.",
-            "Open, carried from the first skeptic: the hospital refusal ('Not from a hospital bed.') is reached by calling careFor directly to start a stay (tests/evidence-g17-papers.test.ts:124-125, TEST SETUP). The command is run through sim.execute, but the state is not played.",
-            "Checked closed by the first round (tests/evidence-g17-papers.test.ts:659-820): the panel from Not yet to Held, pressed on the screen; the hour at the office and the 21 days; Wells Fargo's branch before the card and online after; the 1040-NR's 21 days with the card against 70 without; the IRS plan online with the card against Form 9465 by mail without; and the refusals for a Call within the hour, a passport reported lost, and a citizen."
+            "Closed: the hospital refusal is now reached by the health week's own draw (forced to a stay, as every draw in these rounds is), not by careFor called directly. The twin is sent at the same hour (+21 days, a literal), and she applies the evening after discharge.",
+            "Still open: the lender consumer. Discover reads hasSsn only before its $25,000-a-year wage test, and wagesLastMonth counts 'salary' alone. No played life reaches that line: the Cabaret's best is $1,875 in thirty days, and family money is interest, not wages. In play the number changes which refusal is given, not the outcome. That fails the falsifiability test for that consumer. The audit row's downstream now admits it, but it still lists 'a lender’s terms' among hasSsn's readers. The row either drops the lender from its downstream or stays partial.",
+            "Everything else the review named was closed by the first round: the channel, the W-7's seven weeks, the IRS plan online against by mail, the hour, the panel, and the refusals. The New Haven-office refusal was removed (defects3 #71)."
           ],
           "weakTests": [
             {
-              "title": "documents.apply_ssn > Discover reads the number: with it and a month’s wages past $25,000 a year it lends $2,500 over 36 months at $78.33; her twin without it is refused for want of it; no played life’s wages reach that line",
-              "why": "$2,100 of wages is posted by hand. The 7.99% APR and $78.33 rest on SLATE crediting a three-week-old F-1 arrival with a 780+ record, so the terms are SLATE's, not Discover's. Only the refusal-versus-approval contrast is independent."
+              "title": "tests/evidence2-b06.test.ts > documents.apply_ssn > Discover reads the number: … a month’s wages past $25,000 a year …",
+              "why": "$2,100 of wages is posted by hand. The terms ($78.33 at 7.99%) are SLATE's own, not an independent figure. Only the refused-against-approved contrast holds."
             },
             {
               "title": "tests/evidence-g17-papers.test.ts > refuses in its words a Call within the hour, a hospital bed and a passport reported lost…",
-              "why": "The hospital stay is begun by calling careFor directly, not reached by play."
+              "why": "Still in the gate with the stay begun by calling careFor directly. It is now superseded for the hospital refusal by tests/evidence3-lifepapers.test.ts."
             }
           ]
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "hasSsn: the bank’s channel (bankmoves.ts), the ID card (identity.ts), a lender’s terms (lending.ts), the 1040-NR’s W-7 and its seven weeks more, the IRS plan applied for online or by mail (taxreturn.ts)",
-          "now": "hasSsn: the bank’s channel (bankmoves.ts channelFor), the ID card (identity.ts), a lender’s terms (lending.ts loanOffer: Discover asks for the number before its $25,000 a year of wages, so with the wages the number decides the loan, and without them, which is every played life, it changes only which refusal is given), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts). The first round's correction of 2026-10-13 dropped the lender on a test where the income refused either way; the lender reads the number."
+          "now": "hasSsn: the bank’s channel (bankmoves.ts channelFor), the ID card (identity.ts), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts). Until 2026-10-13 this also named 'a lender’s terms (lending.ts)'. Discover asking for a number changes only which refusal a student is given; its $25,000 of income refuses her with the number or without."
         }
       }
     }

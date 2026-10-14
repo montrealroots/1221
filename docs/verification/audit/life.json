@@ -1272,7 +1272,7 @@
       "downstream": "world.ts:openDecisions (off the Home’s list); world.ts prune, a season after; take_decision_action refuses a dismissed row",
       "persistent": "decision",
       "explanation": "Home Decision Center",
-      "tests": "tests/evidence-g02-life.test.ts world.dismiss_decision ‘PLAYER JOURNEY: Dismiss on Home’s card takes the return’s question off; refused again and for no id; across a reload File It is refused; the return still comes due’, ‘is read by no raiser…’, ‘keeps a dismissed row about a date not yet come until the date has passed, and forgets an undated one 180 days on’ (rows raised by hand); tests/evidence2-b01.test.ts world.dismiss_decision ‘PLAYER JOURNEY: the rail’s count on GameShell is the status notice alone once the notices are read, and Dismiss on Home takes it to none…’; smoke.test.ts ‘is marked dismissed when waved away, and isn’t among the open rows eight days on’ (until 2026-10-13 titled “stops asking once the row is waved away”); tests/life-fixes.test.ts ‘acted on once, or dismissed, isn’t acted on again’ (dismissedAt set by hand)",
+      "tests": "tests/evidence-g02-life.test.ts world.dismiss_decision ‘PLAYER JOURNEY: Dismiss on Home’s card takes the return’s question off; refused again and for no id; across a reload File It is refused; the return still comes due’, ‘is read by no raiser…’, ‘forgets a dismissed row 180 days on, its date ahead or not’ (a row raised by hand, dated 200 days on; until 2026-10-14 titled ‘forgets a dismissed row 180 days on, its date ahead or not’); tests/evidence2-b01.test.ts world.dismiss_decision ‘PLAYER JOURNEY: the rail’s count on GameShell is the status notice alone once the notices are read, and Dismiss on Home takes it to none…’; smoke.test.ts ‘is marked dismissed when waved away, and isn’t among the open rows eight days on’ (until 2026-10-13 titled “stops asking once the row is waved away”); tests/life-fixes.test.ts ‘acted on once, or dismissed, isn’t acted on again’ (dismissedAt set by hand)",
       "status": "verified",
       "issue": "",
       "read": true,
@@ -1345,7 +1345,7 @@
           },
           {
             "file": "evidence-g02-life.test.ts",
-            "title": "world.dismiss_decision > keeps a dismissed row about a date not yet come until the date has passed, and forgets an undated one 180 days on",
+            "title": "world.dismiss_decision > forgets a dismissed row 180 days on, its date ahead or not",
             "kind": "command",
             "closes": "prune a season on: undated dismissed row gone by +185 days, dated row (due +200 d) kept until its date passed, gone by +203"
           },
@@ -2410,7 +2410,7 @@
       "changes": "health.clinicId",
       "downstream": "clinics.ts:clinicFor -> shareOf selfPay (a private practice’s own price, under public cover too from 2026-10-13, health.ts:805), careFor bill name, bookIn. For the New Haven student, the only life the game makes, none of them changes: New Haven keeps one doctor’s practice, Fair Haven Community Health Care, the one clinicFor gives with nothing chosen, and Papers draws no Your Doctor there. Each is checked after a choice only in quickSave lives in London and Mexico City. Until 2026-10-13 this didn’t say so.",
       "persistent": "clinicId",
-      "explanation": "Papers select",
+      "explanation": "Papers select, drawn only where a town keeps two practices or more, and so never for a played life",
       "tests": "tests/evidence-g03-life.test.ts health.choose_clinic ‘refuses through the command in its own words…’, ‘LIFE FIXTURE (London, which lists more than one practice): the doctor picked on Your Doctor is where the week’s visit is booked and had…’ (Bupa’s £79 against Soho Square’s nothing), ‘LIFE FIXTURE (Mexico City…): the doctor chosen bills an uninsured visit at its own published MX$60…’; tests/evidence2-b01.test.ts health.choose_clinic ‘for the New Haven student there’s no choice to make: Papers names Fair Haven…’, ‘LIFE FIXTURE (Mexico City…): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60…’, ‘LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP… is billed…’ (the bill only above nothing); clinics.test.ts ‘their own doctor, chosen in the town they live in, sees them’ (London); tests/defects-g8-4.test.ts ‘shows the empty choice only while nothing is chosen…’ (chosen in London on the rendered Papers; New Haven shows no Your Doctor); checking less: clinics.test.ts ‘names the place on the bill’, ‘is the provider’s own self-pay price...’ (the town’s first practice, never one chosen)",
       "status": "partial",
       "issue": "",
@@ -2474,7 +2474,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -2511,6 +2511,12 @@
             "title": "health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP, chosen as her doctor, is billed, since the NHS doesn’t pay a private GP; her twin at Soho Square’s NHS practice pays nothing",
             "kind": "command",
             "closes": "Turns the first round's pinned 'Nothing to pay.' at a private GP into the right behavior, which FAILS today: an engine defect, reported below"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the Scraping family’s student has no Your Doctor on Papers; the command, sent with New Haven’s one practice, books her twin’s same visit at the same place and price",
+            "kind": "render",
+            "closes": "Re-measured on the tree of 2026-10-14 with a life made with need: Papers draws no select, and choosing changes no booking, practice or share (Fair Haven, $0 under Yale Health, for both)"
           }
         ],
         "gapsClosed": [
@@ -2520,9 +2526,8 @@
           "Refusals through execute and downstream after a choice where one decides something: closed by the first round (London, Mexico City)"
         ],
         "gapsOpen": [
-          "[needs engine change] For the New Haven student, the only life the game makes, the choice decides nothing. content/clinics.ts lists one doctor's practice in New Haven, Fair Haven Community Health Care, the one clinicFor gives with nothing chosen. This file's first test shows it offered alone, and twins booked at the same place on the same day at the same $0. A Yale Health member is seen there rather than at Yale Health's own practice",
-          "[only a fixture reaches it] Where the choice does decide something only quickSave lives get there: London's booking, label and kept visit, and Mexico City's self-pay MX$60 beside the uninsured MX$3,311.60. Every new life lives in New Haven, and the journeys and moves went in the scope reset of 2026-10-09",
-          "[needs engine change] A pay-as-you-go private GP chosen under NHS cover is paid at the NHS's £0: shareOf answers publicCareShareOf first, whatever the practice, and SELF_PAY holds no price for Bupa. The London test asserts the visit is billed and fails"
+          "[needs engine change] For every life the game makes (New Haven only), the choice decides nothing. content/clinics.ts lists one doctor’s practice there, Fair Haven Community Health Care, which clinicFor gives with nothing chosen, and Papers draws no Your Doctor. This file shows a family-made life booked at the same place, hour and share with the choice and without it. Closing it needs a second New Haven practice in content (Yale Health’s own, where its members are seen) or the row recorded as not applying to New Haven.",
+          "[only a fixture reaches it] Where the choice does decide something (London’s Bupa £79, Mexico City’s MX$60), only quickSave lives reach it. Every new life lives in New Haven."
         ],
         "disposition": "stale or wrongly grouped claim",
         "defects": [
@@ -2546,32 +2551,35 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 7,
+          "killed": 7,
           "survived": []
         },
         "verdict": "partial",
-        "claimed": "partial",
+        "claimed": "deferred",
         "check": {
-          "holds": true,
+          "holds": false,
           "verdict": "partial",
           "problems": [
-            "Fixed and shown: shareOf (health.ts:799-806) now bills a doctor's visit at a private practice's own self-pay price ahead of the public share, and SELF_PAY has uk-ldn-bupa-gp at £79. evidence-g03-life:379 now asserts the literal 'Your share is £79.00', where it used to pin 'Nothing to pay.', and the twin at Soho Square pays nothing. The evidence2-b01 London test, which failed by design, now passes. The two tests no longer contradict each other.",
-            "Fixed: Your Doctor is drawn only where a town keeps two or more practices (PapersWorkspace.tsx:880-883). evidence2-b01 shows the New Haven student gets no own-doctor box, is named Fair Haven, and is booked there by the 31 August health week at $0.",
-            "Still open: for every life the game makes (New Haven only; nothing moves a person after bootstrap since the scope reset), the command now has no control on any screen and decides nothing. The choice decides something only in London and Mexico City, which only quickSave LIFE FIXTURES reach: the booking, label and kept visit there, Bupa's £79, and Similares' MX$60 against the uninsured MX$3,311.60. The row describes a player action no played life can take. It needs to be recorded as not applying to New Haven, deferred with the other towns, or given a second New Haven practice (such as Yale Health). Until then it isn't verified.",
-            "Checked: the three refusals go through execute (evidence-g03-life:344). The Mexico City twin's price is now a literal worked from the rule's own figures."
+            "The round-three agent gave 'deferred', but nothing shows the owner deferred or removed this row. There is no entry in the handoff, UNBITTEN or the owner's decisions in 9088e699. Deferred is for the owner's removals only. Its own disposition, 'stale or wrongly grouped claim', disagrees with the verdict.",
+            "The new test only re-measures the open gap: for a family-made New Haven life, Papers draws no Your Doctor, and choosing the town's one practice books the same visit, place and $0 share as the twin who didn't choose. That is evidence that the command decides nothing in play. It closes nothing.",
+            "Still open, as the latest check said: no played life can take this action on a screen, and the choice changes no outcome in New Haven. The outcomes it does change (London's Bupa at £79, Mexico City's MX$60) are reached only by quickSave fixtures. It needs a second New Haven practice, the row recorded as not applying to New Haven, or the owner's deferral."
           ],
           "weakTests": [
             {
-              "title": "tests/evidence2-b01.test.ts > health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP … is billed …",
-              "why": "It asserts only that the bill is > 0 and the notice lacks 'Nothing to pay.'. The £79 literal is held in evidence-g03-life:379, so this is redundant, not wrong."
+              "title": "tests/evidence3-lifepapers.test.ts > health.choose_clinic > PLAYER JOURNEY: the Scraping family’s student has no Your Doctor …",
+              "why": "It shows a no-op, sent by command with no control drawn. It is evidence of the gap, not of the row's claim."
+            },
+            {
+              "title": "tests/evidence2-b01.test.ts > health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s … is billed …",
+              "why": "Carried from b01: it asserts only bill > 0. The £79 literal is in evidence-g03-life."
             }
           ]
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn",
-          "now": "clinics.ts:clinicFor -> shareOf selfPay (uninsured only), careFor bill name, bookIn, where a town lists more than one doctor's practice. For the New Haven student, the only life the game makes, none of them changes: New Haven lists one, Fair Haven Community Health Care, the one clinicFor gives with nothing chosen. Each is checked after a choice only in quickSave lives in London and Mexico City. Until 2026-10-13 this didn't say so."
+          "now": "clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn. Until 2026-10-13 this didn't say that for the New Haven student none of them changes: New Haven lists one doctor's practice, Fair Haven Community Health Care, the one clinicFor gives with nothing chosen. Each is checked after a choice where it decides something, London (the booking, its calendar label and the kept visit) and Mexico City (the self-pay MX$60 on the bill). The entry is PapersWorkspace.tsx:895, not :528."
         }
       }
     },
@@ -2707,7 +2715,7 @@
         "on": "2026-10-12",
         "status": "verified",
         "said": "Downstream teethAndEyesShareOf and healthMonth’s premium and end; verified on costs.test.ts and journey-life.test.ts. Until the fourth review of 2026-10-12 the Note cited only New York’s plan, on a life that isn’t a student’s, and left out the student’s own plan, Yale’s, which the command drives and teethAndEyesShareOf reads.",
-        "now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:209-220), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:150-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:228-231). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:237-239, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price."
+        "now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:209-220), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:151-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:228-231). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:237-239, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price."
       },
       "review": {
         "on": "2026-10-13",
@@ -2937,7 +2945,7 @@
       "persistent": "cover",
       "explanation": "Papers",
       "tests": "tests/evidence-g03-life.test.ts health.enroll ‘PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November; the clock charges Access Health CT’s $706…’ (the wages put in by hand), ‘PLAYER JOURNEY: withdrawn, Enroll pressed puts them in HUSKY D from 1 November…’, ‘at school, refused through the command in Yale Health’s words…’; tests/defects-g8-5.test.ts ‘PLAYER JOURNEY: withdrawn after the fifteenth day of classes, enrolling starts cover the day Yale Health ends…’, ‘PLAYER JOURNEY: withdrawn on 20 September…’; tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: HUSKY D ends at its renewal…’ (enrolled through Papers’ Enroll); safetynet.test.ts, medicaluis.test.ts (a New Haven life that isn’t the student’s, and Medi-Cal)",
-      "status": "verified",
+      "status": "partial",
       "issue": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll, health.ts:374-375), through the command across a reload in tests/evidence-g03-life.test.ts.",
       "corrected": {
         "on": "2026-10-12",
@@ -3000,7 +3008,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 1,
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -3019,6 +3027,24 @@
             "title": "PLAYER JOURNEY: withdrawn with September’s wages over every program’s limit, Enroll puts them in the marketplace from 1 November; the clock charges Access Health CT’s $706 on 1 November and 1 December, once each across a reload, and a visit is the plan’s $45",
             "kind": "command",
             "closes": "a marketplace enrollment through the command followed to healthMonth charging its premium on the clock, once a month across a reload, kept for the premium credit"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the Inherited student’s marketplace, Enrolled from 1 November on Papers, is charged $706 on 1 November and 1 December and $786 on 1 January 2027, each once across a reload; it’s refused again in its own words before and after it begins",
+            "kind": "command",
+            "closes": "The marketplace premium charged by healthMonth after an enrollment made through the command, on income the clock paid (Capital One’s $6,436.10 of September interest for an Inherited family). Until now the premium was shown only on September wages set by hand, and tests/need-paths.test.ts checks only coverOn. This test also shows the 2027 benchmark taking over on 1 January."
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: withdrawn after the fifteenth day, on 9 October, Yale Health covers thirty days more, to 8 November, and Enroll gives the marketplace from 1 December, the first of the month after Yale’s end, not 1 November; no premium is taken on 1 November",
+            "kind": "command",
+            "closes": "The later-of rule (Yale Health’s end against the first of next month), which the second round couldn’t tell apart because both gave 1 November there"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: a CD’s interest, $57,928.16 at its maturity on 24 March 2027, is income the year’s record and March’s income test read, so Enroll on 1 April gives the marketplace, not HUSKY D",
+            "kind": "command",
+            "closes": "Nothing open. It is a new defect found on the income Enroll reads. It FAILS on the tree."
           }
         ],
         "gapsClosed": [
@@ -3026,27 +3052,48 @@
           "'You’re enrolled.' while a plan is active, through the command",
           "Marketplace enrollment through the command followed to healthMonth's $706 'Marketplace health plan premium' on 1 November and 1 December, once each, and h.premiums",
           "The refusal at school through execute",
-          "UI: Enroll rendered and pressed, its toasts for HUSKY D and the marketplace"
+          "UI: Enroll rendered and pressed, its toasts for HUSKY D and the marketplace",
+          "The second round’s check said the marketplace path needed September’s wages set by hand (recordWages, TEST SETUP). That gap is closed: tests/need-paths.test.ts reaches the marketplace through Enroll pressed on Papers, on interest the clock paid an Inherited family made on the creation screen, and this file follows that plan to the $706, $706 and $786 the clock charges.",
+          "The later-of rule is now distinguished: Enroll gives 1 December after a late withdrawal, where Yale Health ends on 8 November, against 1 November after an early one."
         ],
-        "gapsOpen": [],
-        "defects": [],
+        "gapsOpen": [
+          "[only a fixture reaches it] The claim’s ‘healthMonth renews a program’ is still tested only on a program put in by hand (safetynet.test.ts). It was never a named gap. A played life with need is renewed only at Covered Connecticut’s or HUSKY D’s renewal months later, and this round didn’t play it."
+        ],
+        "disposition": "working, evidence missing",
+        "defects": [
+          {
+            "summary": "A term deposit’s interest at maturity is not recorded as income. endTerm’s creditInterest (renewed or moved to savings) and the paid-out branch post the interest but never call recordInterest. So it is missing from the year’s earnings, which the return taxes, and from the month’s income, which programFor and mayEnroll read. An Inherited student with $2,849,566 in Chase’s CD is credited $57,928.16 on 24 March 2027, but March’s income reads $276. Enroll on 1 April gives HUSKY D (measured: kind 'medicaid', from 1 June 2027) where the marketplace is due. By contrast, a savings account’s monthly interest (banking.ts payInterest) and a CD’s interest taken by hand (bank.take_term_interest) are both recorded.",
+            "where": "src/engine/systems/accountlife.ts creditInterest (:440-449, used by endTerm’s 'renews' and 'savings'); src/engine/systems/lending.ts the term deposit’s paid-out branch (~:1106-1117)",
+            "fixed": null
+          }
+        ],
         "mutations": {
-          "run": 3,
-          "killed": 3,
+          "run": 6,
+          "killed": 6,
           "survived": []
         },
-        "verdict": "verified",
+        "verdict": "partial",
         "claimed": "verified",
         "check": {
-          "holds": true,
-          "verdict": "verified",
+          "holds": false,
+          "verdict": "partial",
           "problems": [
-            "All four gaps are closed through the command and rendered Papers. 'Yale Health covers you while you're at the School.' is refused through execute, and Papers shows no Enroll button. Withdrawn, Enroll is pressed (toast for HUSKY D from November 1). 'You're enrolled from November 1, 2026.' is refused before and after a reload, and 'You're enrolled.' on 2 November. For the marketplace, the clock charges $706 (KFF's CT 2026 benchmark, a literal) on 1 November and 1 December, once each across a reload, kept in premiums[2026].",
-            "HUSKY D's shares and the marketplace's $45/$75/$450 are read only through Papers' quote (careQuote), not on a bill the clock raises.",
-            "The claim's 'healthMonth renews a program' is still tested only on a program put in by hand (the safetynet.test.ts weak test is unchanged). It isn't a named gap or in the row's downstream.",
-            "The marketplace path needs September's wages set by hand (recordWages, TEST SETUP). Withdrawn on 2 October, both 'first of next month' and 'when Yale Health ends' give 1 November, so the later-of rule isn't distinguished here."
+            "Ran tests/evidence3-lifepapers.test.ts on the tree (5f0cba03): 16 of 16 pass, including the CD-income DEFECT test and the two paid-out and broken-CD tests added with the fix. accountlife.ts:456 (creditInterest) and lending.ts:1118 (paid out) now call recordInterest, as accountlife.ts:223 (broken) does.",
+            "Closed: the marketplace on played income. need-paths.test.ts:497 enrolls through Papers on Capital One interest the clock paid, and this file follows it to $706, $706 and $786 (KFF 2026 and 2027 literals), once each across a reload, and to 'You’re enrolled from …' and 'You’re enrolled.' through execute. The later-of rule is now told apart: a late withdrawal gives 1 December against Yale Health's 8 November end, with no premium on 1 November.",
+            "Still open, raised by the latest earlier check and not addressed: HUSKY D's shares and the marketplace's $45/$75/$450 are read only through Papers' quote (careQuote; evidence-g03-life:572-600, evidence-g05-life:680). No test has the clock raise a bill under an approved marketplace or HUSKY D plan and read its share. The $45 appears only as a denied claim's denied.share and as the amount an appeal overturns to. The row's downstream is 'coverOn/planOf -> every share', so the share on a clock-raised bill is the consequence the row names.",
+            "Partly open: 'healthMonth renews a program'. The round-three agent says only safetynet.test.ts reaches it, but that is out of date. evidence-g05-life.test.ts:647 enrolls in HUSKY D on Papers and plays it ending at its 1 September 2027 renewal for no work. The renewing branch (80 hours, six months more) is reached only on wages posted by hand (wagesPosted, TEST SETUP), and a withdrawn student has no played work.",
+            "The DEFECT test is titled 'March’s income test read' but asserts only years[2027].interest, not months['2027-03']. The consequence (the marketplace from June 1, not HUSKY D) does read March's income, so the month is covered indirectly. The paid-out and broken tests check the month directly."
           ],
-          "weakTests": []
+          "weakTests": [
+            {
+              "title": "tests/evidence3-lifepapers.test.ts > health.enroll > PLAYER JOURNEY: the same CD broken on 10 March 2027 … records what it kept …",
+              "why": "The figure it expects, `kept`, is read from the engine's own 'CD broken early' posting, and only checked to be > 0. No literal is worked from Chase's 180-day penalty, so a wrong penalty passes. It tests that the posting and the record agree, not the amount."
+            },
+            {
+              "title": "tests/safetynet.test.ts (the program renewal put in by hand)",
+              "why": "Still the only test of the renewal that keeps cover through work, except g05's, which needs wages posted by hand."
+            }
+          ]
         },
         "claimCorrection": {
           "field": "entry",
@@ -4246,12 +4293,12 @@
       "kind": "scheduled",
       "entry": "index.ts armWorldClock",
       "reads": "decisions, timeline",
-      "changes": "expires a dated decision on the tick after its date (world.ts:128), and prunes: closed rows 180 days on, kept to a date still ahead (world.ts:153), and the timeline’s done items after 400 days. Its dismissal of an undated row after ninety days (world.ts:136), and the keeping past 180 days, are rules no played life reaches, since every raiser dates its row within 180 days. Until 2026-10-13 this said expire/dismiss decisions, prune.",
+      "changes": "Closes a dated decision on the tick after its date (resolvedAt), and prunes: closed rows 180 days on, and the timeline’s done items after 400 days. Until 2026-10-14 it also dismissed an undated row after ninety days untouched and kept a closed row to a date still ahead, rules no played life reached. The owner had both go, and a save’s undated rows are dated on load (migrate).",
       "downstream": "openDecisions",
       "persistent": "decisions",
-      "explanation": "Home; the decision look (ui/looks/attention.tsx), whose ninety-day words (QUIET_AFTER_DAYS, :45) describe the undated branch no played life reaches",
-      "tests": "tests/evidence-g04-life.test.ts world.tick ‘PLAYER JOURNEY: a London-born student’s 2026 return, raised on 1 February, is on Home until its date; the tick after closes it…’, ‘PLAYER JOURNEY: an undated row is waved away by the tick after ninety days…’ (rows raised by hand: no raiser leaves one undated); tests/evidence2-b01.test.ts world.tick ‘PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date…’; tests/defects3-50-70.test.ts What Needs You ‘PLAYER JOURNEY: each question an F-1 student is asked carries its date…’; smoke.test.ts 'closes a dated row on its date, and forgets it a season later'",
-      "status": "partial",
+      "explanation": "Home; the decision look (ui/looks/attention.tsx), whose ninety-day words went on 2026-10-14",
+      "tests": "tests/evidence-g04-life.test.ts world.tick ‘PLAYER JOURNEY: a London-born student’s 2026 return, raised on 1 February, is on Home until its date; the tick after closes it…’, ‘PLAYER JOURNEY: a row dismissed with its date 300 days ahead is forgotten 180 days on; a day’s done items go after 400 days, across a reload’ (a row raised by hand, dated past any raiser’s reach; it failed with the keeping to its date put back); tests/decisions-2026-10-14.test.ts ‘every decision has a date’ (each raiser’s row dated through its own play: the return, the US status, the escheat letter; and an older save’s undated row dated at load and closed by the tick after); tests/evidence2-b01.test.ts world.tick ‘PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date…’; tests/defects3-50-70.test.ts What Needs You ‘PLAYER JOURNEY: each question an F-1 student is asked carries its date…’; smoke.test.ts 'closes a dated row on its date, and forgets it a season later'. Until 2026-10-14 this cited “PLAYER JOURNEY: an undated row is waved away by the tick after ninety days…” (rows raised by hand), a test that went with the rule.",
+      "status": "verified",
       "issue": "",
       "review": {
         "on": "2026-10-13",
@@ -4299,7 +4346,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g04-life.test.ts",
@@ -4309,7 +4356,7 @@
           },
           {
             "file": "evidence-g04-life.test.ts",
-            "title": "PLAYER JOURNEY: an undated row is waved away by the tick after ninety days and forgotten 180 days on; one dismissed with its date ahead is kept to its date; a day’s done items go after 400 days, across a reload",
+            "title": "PLAYER JOURNEY: a row dismissed with its date 300 days ahead is forgotten 180 days on; a day’s done items go after 400 days, across a reload",
             "kind": "command",
             "closes": "Undated expiry (world.ts:131): dismissed by the tick after 90 days, gone from openDecisions and Home, refused 'It’s dismissed.', and deleted 180 days later. A row dismissed with its date ahead is kept past 180 days, to its date. Timeline pruning: the first night's rollover is gone after 400 days and the fifth night's is kept. The tick is armed once across a reload."
           },
@@ -4318,20 +4365,31 @@
             "title": "world.tick > PLAYER JOURNEY: the status notice a withdrawal raises, dated fifteen days on, is on Home until its date; the tick after closes it, Home drops it, and it’s gone 180 days after; its date was inside a season of its raising, as every raiser’s is",
             "kind": "command",
             "closes": "A second real raiser through the tick, across two reloads with one pending tick. 'Your US Status Is Ending' was dated 15 days less a minute from its raising, on Home until its date. The first tick after the date closed it (resolvedAt within 2 days, not dismissed), Home dropped it, and the out-of-status notice came on its date. It was kept at +179 days and deleted by +183"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: the F-1’s “Your US Status Is Ending”, dated 17 October, is closed by the first tick after it, leaves the open list, and is kept 180 days from closing, gone by the 183rd, across a reload",
+            "kind": "command",
+            "closes": "A real raiser’s dated row through the clock on the tree of 2026-10-14: closed within two days of its date (resolvedAt, not dismissed), gone from openDecisions, kept 180 days, then pruned"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "a save an older build left with undated rows (TEST SETUP) loads with the open one dated ninety days from its raising, closed by the tick after that date, and the closed one let go",
+            "kind": "fixture",
+            "closes": "The rule that replaced the undated branch: migrate dates an open undated row createdAt + 90 days, with its step’s words, and lets a closed one go. The tick then closes the dated row."
           }
         ],
         "gapsClosed": [
           "Undated expiry, dismissal after 90 days untouched, is tested through the clock.",
           "Timeline pruning (400 days) is tested through the clock.",
           "A real raiser runs through the tick: the London-born student's 'Your 2026 Tax Return' closes on its date and leaves the rendered Home.",
-          "Evidence that no played life reaches the undated rule or the keeping to a date: the second raiser a played life meets dates its row 15 days out, and the first round's return 73"
+          "Evidence that no played life reaches the undated rule or the keeping to a date: the second raiser a played life meets dates its row 15 days out, and the first round's return 73",
+          "[deferred or removed] The undated row’s dismissal after ninety days: the owner had it go on 2026-10-14. expireDecisions now closes only dated rows, requireDecision requires dueAt, and migrate dates an older save’s undated rows.",
+          "[deferred or removed] Keeping a closed row past 180 days to a date still ahead: went on 2026-10-14 (world.ts prune).",
+          "[needs engine change] prune’s comment naming a reader that doesn’t exist: rewritten in the past tense on 2026-10-13 and again on 2026-10-14."
         ],
-        "gapsOpen": [
-          "[only a fixture reaches it] The undated row's dismissal after ninety days untouched (world.ts:131). Every raiser dates its row: taxreturn.ts dueAt: due, permission.ts dueAt: ends (it returns before raising when ends is undefined), accountlife.ts dueAt: by. So its precondition is a row raised by hand (evidence-g04-life), a declared rule no raiser reaches",
-          "[only a fixture reaches it] Keeping a closed row past 180 days to its date (world.ts:144). Every raiser's date is within 180 days of its raising: the return 73 days, the status notice 15 (here) or 60, the escheat notice 90. So the clause binds only a hand-raised row",
-          "[needs engine change] world.ts:143-144's comment says a raiser reads a dismissal off a kept row. None does: requireDecision skips closed rows and raises afresh. The same defect is reported under world.dismiss_decision"
-        ],
-        "disposition": "stale or wrongly grouped claim",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [
           {
             "summary": "prune's comment names a reader that doesn't exist: a raiser reading a dismissal off a kept row",
@@ -4344,25 +4402,24 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 9,
+          "killed": 9,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "Checked: what a played life reaches is verified through the clock. Two real raisers are played: the London-born F-1's 2026 return (evidence-g04-life) and the withdrawal's US status notice (evidence2-b01). Each row is closed by the first tick after its date, with resolvedAt set and not dismissed, dropped from the rendered Home, kept at +179 days and gone by +183. Timeline pruning at 400 days and the single pending tick across reloads are shown.",
-            "Still open: the undated row's dismissal after 90 days (world.ts:131-136) and prune's keeping a closed row to a date more than 180 days ahead (world.ts:144-149) are reached only by rows a test raises by hand. Every raiser dates its row: taxreturn dueAt: due, permission dueAt: ends, accountlife dueAt: by, all within about 134 days. defects3 #70 proposed deleting the undated branch. The code kept it, with a comment that no raiser reaches it. Its words are still declared to the player in ui/looks/attention.tsx (QUIET_AFTER_DAYS, :172-296, 'Ninety days untouched closes an undated one') and in docs/CAPABILITIES.md and capabilities.json. These are declared words no played state reaches (the ONE RULE), awaiting the owner's choice to delete or keep.",
-            "The prune comment's false present-tense claim, that a raiser reads a dismissal, was fixed (world.ts:144-148, past tense).",
-            "The disposition is 'stale or wrongly grouped claim', not the second agent's 'working, evidence missing': no test on a played life can reach the undated branch, so no evidence could close it."
+            "The owner's decision is confirmed in commit 9088e699: 'the 90-day rule for an undated decision went … the type now requires a date; an old save's undated row is dated'. expireDecisions (world.ts:125-129) closes only on dueAt. Prune (world.ts:133-150) keeps 180 days from closing, with no keeping to a date still ahead. attention.tsx's ninety-day words survive only in past-tense comments (:36, :268). CAPABILITIES.md says it in the past tense.",
+            "Review gaps: the undated expiry was removed by the owner, and its replacement (migrate dates an open undated row createdAt+90 and drops a closed one) is tested on an older save's JSON. Timeline pruning is in evidence-g04-life. A real raiser runs through the tick: the F-1's played 'Your US Status Is Ending' is closed within two days of 17 October with resolvedAt (not dismissedAt), leaves openDecisions, is kept at +179 days and gone by +183, across a reload. The stale prune comment was rewritten in the past tense (world.ts:143-144).",
+            "The latest check's open items (the undated branch and keeping to a later date) are both removed by the owner, so nothing it raised stays open."
           ],
           "weakTests": [
             {
-              "title": "tests/evidence-g04-life.test.ts > PLAYER JOURNEY: an undated row is waved away by the tick after ninety days …",
-              "why": "The undated row and the dismissed dated row are raised by hand with sim.requireDecision, a fixture of the state under test that no engine raiser produces. The comment at world.ts:131-135 now says so."
+              "title": "tests/evidence3-lifepapers.test.ts > world.tick > a save an older build left with undated rows (TEST SETUP) …",
+              "why": "A fixture by necessity: no current build writes an undated row. It is acceptable as migration evidence, but it is not a played path."
             }
           ]
         },
@@ -4383,7 +4440,7 @@
       "persistent": "ledger",
       "explanation": "'Appeal Won/Upheld' notice",
       "tests": "tests/evidence2-b02.test.ts health.appeal_decided ‘PLAYER JOURNEY: an appeal is taken once and within 180 days, and decided 60 days on…’, ‘PLAYER JOURNEY: paid, then overturned, gives the $138.98 paid over the share back to the account it was paid from, and nothing to any other’, ‘PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays: upheld, all $183.98; overturned, the $45 share’; tests/evidence-g05-life.test.ts health.appeal_decided ‘PLAYER JOURNEY: paid, then overturned…’, ‘PLAYER JOURNEY: upheld, leaves the bill at $183.98…’, ‘PLAYER JOURNEY: gone to debt, then overturned…’, ‘partly paid off as debt, then overturned, gives back what was paid over the share, and the bill is settled’, ‘the denial’s and the decision’s notices name the clinic as it’s written’ (the draws forced, and the marketplace on wages put in by hand); tests/evidence-g02-life.test.ts health.appeal; checking less: claims.test.ts (either outcome passes), tests/life-fixes.test.ts ‘denied, gone to debt, and overturned on appeal…’ (the debt only lower, a New York life)",
-      "status": "partial",
+      "status": "verified",
       "issue": "Fixed 2026-10-10: a bill gone to debt is taken off the debt, not refunded. Fixed 2026-10-13: paid down past the share, what was paid over it comes back and the bill is settled (health.ts:1472-1474), and the notices name the clinic as it’s written (inSentence). Open: every test reaches the denial on a marketplace plan bought on wages put in by hand; no played income has been shown to clear Covered Connecticut’s line.",
       "auditStatus": "partial",
       "settled": "Fixed with health.appeal (tests/life-fixes.test.ts).",
@@ -4440,7 +4497,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -4489,6 +4546,18 @@
             "title": "health.appeal_decided > PLAYER JOURNEY: gone to debt, the decision is what Pay It Off pays: upheld, all $183.98; overturned, the $45 share",
             "kind": "render",
             "closes": "Upheld twin gone to debt: the debt stays at −$183.98, there is no 'Appeal won' posting, the 'Appeal Upheld' notice is asserted in full, and Papers reads '$183.98 Owed As Debt Denial Upheld'. Overturned twin: Papers reads '$45.00 Owed As Debt Denial Overturned'. Downstream, Papers' Pay It Off (health.pay_bill reads medicalDebtOf) pays exactly $183.98 in one twin and $45.00 in the other. Both bills are then settled and the debt is 0."
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: paid when due and upheld, the bill stays $183.98, nothing comes back, the notice says the plan kept its denial, and Papers says Denial Upheld",
+            "kind": "render",
+            "closes": "The upheld path on a played marketplace, the Inherited life’s interest, where before the plan was bought on $3,000 of wages set by hand: the amount is unchanged, nothing is posted, the 'Appeal Upheld' notice appears, and Papers reads 'Denial Upheld'"
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: savings unlinked and checking moved to savings before the bill falls due, it goes to debt, $183.98; overturned, the debt is the $45 share, and Pay It Off on Papers pays $45.00 and settles it",
+            "kind": "command",
+            "closes": "The went-to-debt-then-overturned path on a played marketplace, reached by the player’s own bank commands (bank.set_payments, bank.transfer). $138.98 comes off the debt and nothing goes to the bank. Papers moves from Owed As Debt to Denial Overturned, Pay It Off pays $45.00, and the bill reads Settled."
           }
         ],
         "gapsClosed": [
@@ -4502,10 +4571,11 @@
           "tests/life-fixes.test.ts's weak test (debt only 'less than owed', the refund looked for only on primaryAccountId) is superseded. The debt is read to the cent (−$183.98, cut to −$45, and Pay It Off paying $45.00, not $183.98), and the refund is checked against every account of the player's.",
           "The skeptic's independence points: the refund account is now the one the bill was paid from, not payeeAccount's answer, and $183.98 is worked from CARE's $100, BLS physicians' index 2024→2026 and the 1.75 markup rather than copied from the denial notice.",
           "The upheld path after the bill went to debt (debt unchanged, no posting, the notice, Papers) had no test.",
-          "The decision's consequence downstream of the ledger: health.pay_bill reads the debt the decision left."
+          "The decision's consequence downstream of the ledger: health.pay_bill reads the debt the decision left.",
+          "The remaining open problem, that the marketplace plan every denial needs was reached only through a TEST SETUP recordWages of $3,000, is closed. tests/need-paths.test.ts plays the overturned-after-paid path on an Inherited family’s Capital One interest, and this file plays the upheld path and the debt-then-overturned path on the same played plan. Only the draws (visit, denial, outcome) are forced, as evidence-g05-life forces them."
         ],
         "gapsOpen": [],
-        "disposition": "working, evidence missing",
+        "disposition": "verified",
         "defects": [
           {
             "summary": "An appeal overturned on a bill that went to debt and was then partly paid off keeps what was paid over the plan's share: only what is left of the debt comes off, nothing comes back to the bank, and the bill stays inDebt (Papers: Owed As Debt) with the debt at $0.",
@@ -4527,41 +4597,39 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 9,
+          "killed": 9,
           "survived": []
         },
-        "verdict": "partial",
+        "verdict": "verified",
         "claimed": "verified",
         "check": {
-          "holds": false,
-          "verdict": "partial",
+          "holds": true,
+          "verdict": "verified",
           "problems": [
-            "Ran tests/evidence2-b02.test.ts on the tree: all 14 pass. Ran evidence-g05-life, evidence-g06-life and defects-g23-1: all 61 pass. The three appeal journeys close what they claim. Both outcomes are forced. The 180-day window and the single appeal go through the command and Papers. The refund goes to the account the payment debited, read from the payment's postings, and no other account moves. The debt is read to the cent, and Pay It Off pays $183.98 when upheld and $45.00 when overturned.",
-            "Still open from the latest skeptic: the marketplace plan that every denial needs is reached only through a TEST SETUP recordWages of $3,000 (evidence2-b02.test.ts:245). Only a marketplace claim is denied (health.ts:1240). mayEnroll offers the marketplace only when programFor returns nothing (health.ts:331-350, 381), which needs last month's income above 175% of the year before's poverty line (content/safetynet.ts:218), about $2,282 a month in 2026. The only played income is work-study, paid weekly (school.ts:1800-1806, 3204-3218; 19 hours a week in term, 40 in recess, 50 elective hours a year, $23 an hour), and the Summer Cabaret's $375 a week. A term month tops out near $2,185. A summer month that combines the Cabaret with elective hours, followed by enrollment the next month after leaving, might clear the line, but no test plays it, and I could not establish it either way. So no test reaches the denial and appeal through income the player earned.",
-            "The two engine defects the first round found (the partly-paid debt branch and the clinic's lowercased name) are fixed. Their tests in tests/evidence-g05-life.test.ts pass.",
-            "The weak tests are superseded but still in the gate. tests/claims.test.ts:47-48 still accepts either outcome, with the amount check behind `if (outcome === 'overturned')`. tests/life-fixes.test.ts:41 still checks the debt only as lower than before, and the refund only on primaryAccountId.",
-            "Independence: $183.98 is worked from the engine's own content constants (CARE's $100, MEDICAL_CPI 439.389/417.930, the 1.75 markup), not from the helper. That is acceptable."
+            "Closed: the one problem the latest check left open. The denial's marketplace is now reached on income the clock paid (an Inherited family's interest). need-paths.test.ts:512 plays the case paid, then overturned ($138.98 back to the payee account). This file plays the upheld case: $183.98 kept, no 'Appeal won' posting, the 'Appeal Upheld' notice in its words, and Papers 'Denial Upheld'. It also plays debt-then-overturned through the player's own bank.set_payments and bank.transfer: debt -$183.98, then -$45, [[138_98, 0]] split between debt and bank, Pay It Off pressed paying $45.00, and Papers moving from Owed As Debt to Denial Overturned to Settled.",
+            "Review gaps: the refund's amount and account, the upheld consequence and both notices, the Papers render, and the played route are closed. The partly-paid-debt branch is held by evidence-g05-life on a marketplace put in by hand, not on the played plan. It is the same code, and the review's route gap is met by the three played outcomes, so this doesn't keep the row partial. I note it.",
+            "The draws (illness, denial, outcome) are forced, as in every round. The figures ($183.98, $45, $138.98) are literals worked from content constants, as the earlier check accepted."
           ],
           "weakTests": [
             {
-              "title": "tests/claims.test.ts > a marketplace claim > appealed within 180 days, is decided 60 days on: upheld, or overturned to the plan’s share",
-              "why": "Either outcome passes; the amount assertion is behind `if (outcome === 'overturned')` and is skipped silently on an upheld seed."
+              "title": "tests/claims.test.ts > a marketplace claim > appealed within 180 days … upheld, or overturned to the plan’s share",
+              "why": "Still in the gate. Either outcome passes, and the amount check sits behind `if (outcome === 'overturned')`."
             },
             {
-              "title": "tests/life-fixes.test.ts > a medical bill unpaid when it falls due > denied, gone to debt, and overturned on appeal, comes off the debt and isn’t refunded",
-              "why": "Checks the debt only as lower than before, and looks for a refund only on primaryAccountId; the marketplace plan is a fixture in a New York life."
+              "title": "tests/life-fixes.test.ts > … denied, gone to debt, and overturned on appeal …",
+              "why": "Still in the gate. It checks the debt only as lower than before, on a New York marketplace put in by hand."
             },
             {
-              "title": "tests/evidence2-b02.test.ts > health.appeal_decided > (all three PLAYER JOURNEYs)",
-              "why": "Marketplace eligibility comes from a TEST SETUP recordWages of $3,000 that no played income source has been shown to reach."
+              "title": "tests/evidence3-lifepapers.test.ts > health.appeal_decided > PLAYER JOURNEY: paid when due and upheld …",
+              "why": "The 'no posting at the decision's hour' check filters on memos containing bill.what. If the refund memo ever stopped naming the bill, this line would pass vacuously. The /^Appeal won: / check beside it holds the claim."
             }
           ]
         },
         "claimCorrection": {
           "field": "reads",
           "said": "bill.denied, bill.paid",
-          "now": "Until 2026-10-13 this said bill.denied, bill.paid, and its changes left out the debt. The decision reads bill.denied, bill.paid, bill.inDebt and the medical debt's balance (medicalDebtOf). Overturned, it does three things. It posts what was paid over the share back to the account it was paid from. It takes what went to debt over the share off Owed For Medical Care, giving back anything paid toward that debt past what is left. It sets bill.amount to the share, which is what Papers' Pay It Off then pays."
+          "now": "Until 2026-10-13 this said bill.denied, bill.paid, and its changes left out the debt. The decision reads bill.denied, bill.paid, bill.inDebt and the medical debt's balance (medicalDebtOf); overturned, it posts what was paid over the share to the payee account, or takes what went to debt over it off the Owed For Medical Care account, and sets bill.amount to the share."
         }
       }
     },
@@ -4658,7 +4726,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -4689,6 +4757,12 @@
             "title": "health.appointment > a visit owed and never booked again doesn’t swallow the next one the week draws: that week books a doctor",
             "kind": "command",
             "closes": "The owed-visit swallow is held as a defect. After Call It Off leaves a visit owed, the next week's drawn visit should book a doctor 24 days on, be kept, and settle what is owed. It fails: no appointment is booked."
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "PLAYER JOURNEY: a visit called off is owed on Papers, and the next week the draw sends to the doctor books it; kept, it’s owed no more; a specialist it referred to, called off, is booked by the next such week as the specialist, 31 days on, not as the week’s own visit",
+            "kind": "command",
+            "closes": "The fix of 2026-10-13 (an owed visit no longer swallows the next) re-shown on a family-made life: Papers’ ‘A doctor’s visit: not yet seen’, the next drawn visit booked with the owed one, kept at Fair Haven, owedVisit cleared"
           }
         ],
         "gapsClosed": [
@@ -4697,14 +4771,14 @@
           "tests/referrals.test.ts's weak test (book() called directly, the referral checked alone) is superseded. A referral is reached from a visit the health week booked and the clock kept, and the specialist is booked, shown on Papers, seen and refers no further.",
           "tests/defects-g23-1.test.ts's weak test (careFor, renewPrescriptions and reviewed called directly) is superseded. The handler, run by the clock, renews prescriptions and records the review. The review's downstream is read: the next review is due a year after the one kept, and none comes sooner.",
           "That New Haven's renewal is read by nothing is now measured through play. The prescription is taken as written at the first fill, 7 September 2026, and the medicine is filled 13 times to 30 August 2027 with nothing renewing it.",
-          "tests/defects-g8-6.test.ts's source regex is covered by the first round's laid-up and in-hospital journeys (tests/evidence-g05-life.test.ts)."
+          "tests/defects-g8-6.test.ts's source regex is covered by the first round's laid-up and in-hospital journeys (tests/evidence-g05-life.test.ts).",
+          "[needs engine change] An owed visit swallowing every later visit and review: fixed on 2026-10-13 and shown here through the command and the clock."
         ],
         "gapsOpen": [
-          "[stale claim] The row's downstream 'renewPrescriptions -> fillMedicine' is dead in every played life. fillMedicine reads prescribedAt only through rxValidUntil, where RX.validYears gives an end, and only 'ca-bc' has one. A year-old prescription is filled in New Haven all the same (measured: 13 fills). Connecticut's rule (CGS 20-614) was never read, per docs/UNBITTEN.md. See claimCorrection.",
-          "[only a fixture reaches it] British Columbia is the one place a renewal is read, and no played life lives there. atSchool starts every new life at Yale in New Haven, so only quickSave's Vancouver (tests/medicine.test.ts, tests/defects-g23-1.test.ts) reaches it.",
-          "[needs engine change] While owedVisit is set, the health week drops every drawn visit and books no review (health.ts 1350, 1358). One appointment called off and never booked again ends the doctor for good. See defects."
+          "[stale claim] ‘renewPrescriptions -> fillMedicine’ is read by nothing in New Haven, where every played life lives. fillMedicine reads prescribedAt only through rxValidUntil, where RX.validYears gives an end, and only ca-bc has one. Connecticut’s rule (CGS 20-614) is unresearched (docs/UNBITTEN.md). The row’s downstream already says this as of 2026-10-13. It needs research or the owner, not a test.",
+          "[only a fixture reaches it] British Columbia, the one place a renewal is read, is reached only by quickSave’s Vancouver."
         ],
-        "disposition": "implementation missing",
+        "disposition": "stale or wrongly grouped claim",
         "defects": [
           {
             "summary": "A visit owed swallows every later visit the health week draws, and every review. One appointment called off on Papers, or missed asleep or in hospital, and never booked again ends the doctor for good, at no cost.",
@@ -4717,8 +4791,8 @@
           }
         ],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 7,
+          "killed": 7,
           "survived": []
         },
         "verdict": "partial",
@@ -4727,26 +4801,24 @@
           "holds": true,
           "verdict": "partial",
           "problems": [
-            "The owed-visit defect (defects2 #5) is fixed. The health week now books the owed visit with the next one it draws (health.ts:1391-1399), and the review booking resumes. 'a visit owed and never booked again doesn’t swallow the next one…' now passes: booked 8 October, kept, owedVisit cleared. tests/defects-g23-1.test.ts was turned round and passes. Leftover L1 is fixed in code too (renewalDue at health.ts:769-773 books the owed visit), though only British Columbia reaches it.",
-            "The referral journey and the prescription-and-review journey pass. Both go through the health week and the clock, read the referral's 31-day booking, Papers, and the review's due date a year on.",
-            "Still open: in New Haven, where every played life lives, the claimed downstream 'renewPrescriptions -> fillMedicine' is read by nothing. rxValidUntil reads RX.validYears, which only 'ca-bc' has. The test measures 13 fills of a prescription that nothing renewed. Connecticut's rule (Conn. Gen. Stat. §20-614) is unresearched, and docs/UNBITTEN.md:322-335 keeps it open. This needs research or the owner, not a test.",
-            "Still open: British Columbia, where a renewal is read, is reached only by quickSave fixtures (medicine.test.ts, defects-g23-1)."
+            "Closed: the owed-visit fix is re-shown on a family-made life. After Call It Off, Papers shows 'not yet seen', the next drawn week books, the visit is kept at Fair Haven, owedVisit is cleared, and one 'A Doctor’s Visit' notice is sent. The laid-up and in-hospital gaps were closed by evidence-g05-life.",
+            "Still open, as the latest check said: in New Haven, where every played life lives, 'renewPrescriptions -> fillMedicine' is read by nothing. rxValidUntil reads RX.validYears, which only ca-bc has, and British Columbia is reached only by quickSave. Closing it needs Connecticut's rule researched (CGS 20-614) or the owner. No test can close it."
           ],
           "weakTests": [
             {
-              "title": "tests/referrals.test.ts > a referral > comes of a visit kept, and a missed one is booked again the specialist’s wait away",
-              "why": "Still enters through book() called directly. It is superseded by the evidence2-b02 referral journey but still in the gate."
+              "title": "tests/evidence3-lifepapers.test.ts > health.appointment > PLAYER JOURNEY: a visit called off is owed on Papers …",
+              "why": "The owed visit's 'what' and the newly drawn visit's 'what' are the same words, so the careLog line can't tell 'the owed visit was booked' from 'the drawn visit was booked'. Only owedVisit being cleared holds the fix. Lines 581-582 are the same assertion twice."
             },
             {
-              "title": "tests/defects-g8-6.test.ts > presentForCare takes the person and the moment...",
-              "why": "A regex over the source. The behaviour is covered by the first round's laid-up and in-hospital journeys."
+              "title": "tests/referrals.test.ts > a referral > comes of a visit kept …",
+              "why": "Carried: it still enters through book() called directly."
             }
           ]
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "renewPrescriptions -> fillMedicine; reviewed; mayRefer",
-          "now": "Until 2026-10-13 this said renewPrescriptions -> fillMedicine; reviewed; mayRefer. In a played life, which is always in New Haven, the renewal is read by nothing. fillMedicine takes the prescription as written at its first fill and reads its date only where RX.validYears gives an end, British Columbia, which only a fixture reaches. reviewed moves reviewedAt, which the next review's due date reads twelve months on. mayRefer books a specialist at 9.1%, 31 days on, who refers no further. A visit missed or called off sets owedVisit, which drops the health week's later visits and reviews until health.book."
+          "now": "Until 2026-10-13 this said renewPrescriptions -> fillMedicine; reviewed; mayRefer. In New Haven a kept visit's renewal is read by nothing (fillMedicine reads prescribedAt only where RX.validYears gives an end, British Columbia); a review moves reviewedAt, which only the next review's due date reads; mayRefer books a specialist at 9.1%. A missed visit sets owedVisit, which drops the health week's later visits and reviews."
         }
       }
     },
@@ -9286,17 +9358,17 @@
       "entry": "",
       "reads": "",
       "changes": "",
-      "downstream": "taxreturn.ts:894-895 (receipts, in figuresFor, multiplying jobCosts, which only recordJobCost, earnings.ts:276, writes and nothing calls); school.ts:307-308 (castCompany, read on a performance night at :3397); :314-315 (bondMove, read by the cast list at :2642, coursework.ts:325 and classmates.ts:184; the bonds it moves are read by bondWord, :319); :922-925 (hourFit, read by focusAt at :931 and conditionAt at :947); coursework.ts:568-573 (prepLean, read by prepare at :593 and briefs.ts:424). Until 2026-10-13 this said taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465.",
+      "downstream": "school.ts castCompany (read on a performance night), bondMove (read by the cast list, coursework.ts and classmates.ts; the bonds it moves are read by bondWord), hourFit (read by focusAt and conditionAt); coursework.ts prepLean (read by prepare and briefs.ts). Until 2026-10-14 it also named taxreturn.ts figuresFor’s receipts, which went with its knob.",
       "persistent": "",
       "explanation": "",
-      "tests": "tests/evidence-g09-life.test.ts (morning and evening through school.prepare at both hours and the afternoon’s control; the four prep knobs to 9 places; bondWarmth and bondWound through the spring cast list, school.respond, a study evening slept through and school.ask_partner; company on the first Carlotta night); tests/evidence2-b03.test.ts (hourFit at its edges, morning read by the 9 AM classes, both by judged work and the Cabaret night, bondWarmth and bondWound across bondWord’s lines); traits-connected.test.ts; checking less: arrears.test.ts ‘deducts every receipt…’ (job costs injected by hand, which no play records)",
-      "status": "partial",
-      "issue": "Nine readers reached through play (tests/evidence-g09-life.test.ts, tests/evidence2-b03.test.ts). receipts isn’t: it multiplies jobCosts (taxreturn.ts:895), which only recordJobCost (earnings.ts:276) writes and nothing in src calls, so it’s the deferred trait-receipts item, grouped here with nine live knobs. Until 2026-10-13 Chaotic’s cost and Keeps Accounts’ description said the receipts as an effect; they don’t since (personality-traits.ts:183, :271).",
+      "tests": "tests/evidence-g09-life.test.ts (morning and evening through school.prepare at both hours and the afternoon’s control; the four prep knobs to 9 places; bondWarmth and bondWound through the spring cast list, school.respond, a study evening slept through and school.ask_partner; company on the first Carlotta night); tests/evidence2-b03.test.ts (hourFit at its edges, morning read by the 9 AM classes, both by judged work and the Cabaret night, bondWarmth and bondWound across bondWord’s lines); traits-connected.test.ts; tests/evidence2-b10.test.ts c-traits ‘holds every knob a trait declares to a reader in the journeys above’ (every declared knob, none left out since 2026-10-14). Until 2026-10-14 this cited, checking less, arrears.test.ts “deducts every receipt…” (job costs injected by hand, which no play recorded); it went with the knob, and arrears.test.ts ‘files the same return for somebody who keeps accounts, the chaotic and the plain…’ holds the return the same for Keeps Accounts, Chaotic and neither.",
+      "status": "verified",
+      "issue": "Nine readers reached through play (tests/evidence-g09-life.test.ts, tests/evidence2-b03.test.ts). Until 2026-10-14 the row grouped a tenth, receipts, which reached no reader (it multiplied jobCosts, which only recordJobCost wrote and nothing in src called): the deferred trait-receipts item. The owner had the knob go on 2026-10-14, and the row is the nine. Until 2026-10-13 Chaotic’s cost and Keeps Accounts’ description said the receipts as an effect.",
       "corrected": {
         "on": "2026-10-12",
         "status": "verified",
         "said": "Note: ‘readers confirmed’, for all ten, receipts among them.",
-        "now": "Nine readers confirmed. The receipts reader multiplies job costs nothing in play records, which arrears.test.ts ‘deducts every receipt...’ injects by hand: as trait-receipts, unresolved."
+        "now": "Nine readers confirmed. Until 2026-10-14 a tenth, receipts, multiplied job costs nothing in play recorded, which arrears.test.ts injected by hand, and stood apart as trait-receipts, unresolved; the owner had the knob go that day."
       },
       "review": {
         "on": "2026-10-13",
@@ -9362,7 +9434,7 @@
       },
       "after": {
         "on": "2026-10-13",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g09-life.test.ts",
@@ -9447,6 +9519,12 @@
             "title": "knob:bondWarmth|bondWound|company|morning|evening|readsAround|drills|skims|revises > PLAYER JOURNEY: a classmate at −17.9 (TEST SETUP) whose lead she took is cut 2 by the cast list to −19.9 for a plain player and 2.196 to −20.096 for one who keeps accounts, a Rival on her look",
             "kind": "command",
             "closes": "bondWound's reader. The cast list's −2 (10 − 12) crosses bondWord's Rival line for the twin who keeps accounts and not for the plain one, and the classmate look says ' Rival.' for her alone."
+          },
+          {
+            "file": "evidence3-lifepapers.test.ts",
+            "title": "Keeps Accounts and Chaotic, held by a life made with them, say on their looks only the knobs they still move; no trait, limit or look carries receipts",
+            "kind": "render",
+            "closes": "receipts’ removal on 2026-10-14. The two traits that carried it (Chaotic 0.9, Keeps Accounts 1.3) now show only bondWound +10%, hygieneDrift +30% and stressGain −8% on their rendered looks. KNOB_LIMITS and KNOB_READS name the same knobs, and none is receipts."
           }
         ],
         "gapsClosed": [
@@ -9460,38 +9538,37 @@
           "Bond tests now read the bond's readers, not only Classmate.bond: bondWord, castListRead, the classmate look and castCompany's friend count on a performance night. The friend is made by the engine's own bond move from a precondition, not set to 30 by hand.",
           "The claimCorrection's stale line numbers are corrected again: taxreturn.ts:840-841, and hourFit read at :927 and :942.",
           "The four prep knobs stay verified to 9 places through school.prepare, by the first round, as the skeptic confirmed.",
-          "The old weak tests in traits-connected.test.ts (focusAt's value) and arrears.test.ts (job costs injected) are other files and are left unchanged. Each knob they named is now shown through play here or in evidence-g09-life, except receipts."
+          "The old weak tests in traits-connected.test.ts (focusAt's value) and arrears.test.ts (job costs injected) are other files and are left unchanged. Each knob they named is now shown through play here or in evidence-g09-life, except receipts.",
+          "[deferred or removed] receipts: the knob went on 2026-10-14 (personality-traits.ts KNOB_READS and the two traits’ systemMods, personality.ts KNOB_LIMITS, taxreturn.ts figuresFor, earnings.ts jobCosts), so the row is the nine live knobs, each verified through play in earlier rounds (evidence-g09-life, the second round’s morning/evening, bondWarmth and bondWound journeys)."
         ],
-        "gapsOpen": [
-          "[deferred or removed] receipts: taxreturn.ts:840-841 multiplies y.jobCosts, which only recordJobCost (earnings.ts:274) writes, and nothing in src calls it. A student's return multiplies 0, so no command or clock can show the knob change an outcome. It is the deferred trait-receipts item: GAMEPLAY-COVERAGE.md 'trait-receipts', deferred, with the owner's recommendation to retire the receipts modifier from Chaotic and Keeps Accounts; UNBITTEN.md 'The receipts knob and jobCosts'. The review's split into that row can't be made here, since rows aren't split."
-        ],
-        "disposition": "stale or wrongly grouped claim",
+        "gapsOpen": [],
+        "disposition": "verified",
         "defects": [],
         "mutations": {
-          "run": 6,
-          "killed": 6,
+          "run": 8,
+          "killed": 8,
           "survived": []
         },
-        "verdict": "partial",
-        "claimed": "partial",
+        "verdict": "verified",
+        "claimed": "verified",
         "check": {
           "holds": true,
-          "verdict": "partial",
+          "verdict": "verified",
           "problems": [
-            "receipts stays open. taxreturn.ts:895 multiplies y.jobCosts, which only recordJobCost (earnings.ts:276) writes, and nothing in src calls it. No play reaches it. It is the deferred trait-receipts item (GAMEPLAY-COVERAGE.md:439, with the owner's recommendation to retire it) and is ledgered in UNBITTEN. It's grouped with nine live knobs, and that grouping is the row's fault; the row was never split.",
-            "Nine live knobs, verified through play:",
-            "morning and evening: the hour's fit is shown at both edges through school.prepare. It is also read by the 9 AM class's skill growth, by judged work at nine, and on the 8 PM Cabaret night (1.0914 and 0.8909, to 9 places).",
-            "bondWarmth: read by bondWord, castListRead's half point, the classmate look and castCompany on the first Carlotta night, from a bond the engine's own move took to 25.",
-            "bondWound: takes −17.9 past the Rival line only for the twin who keeps accounts.",
-            "company and the four prep knobs: shown in evidence-g09-life, which passes.",
-            "The old weak tests in traits-connected.test.ts and arrears.test.ts are unchanged, but stronger tests now stand beside them for every live knob."
+            "The owner's decision is confirmed in 9088e699 ('the receipts knob went'). In src, receipts, jobCosts and recordJobCost remain only in past-tense comments (personality-traits.ts:20-27, :84; earnings.ts:51, :275; taxreturn.ts:890). The new test renders Keeps Accounts' and Chaotic's looks on a life made with them. Each shows only its live figures (+10%, +30%, −8%, matching the systemMods), and neither carries 'receipt'. KNOB_LIMITS and KNOB_READS agree, and no trait has receipts.",
+            "The nine live knobs were verified through play by the latest check (b03): morning and evening through prepare, the 9 AM class, judged work and the 8 PM Cabaret; bondWarmth and bondWound through the cast list and classmates; company and the four prep knobs in evidence-g09-life. The only problem it left open was receipts, which is now removed."
           ],
-          "weakTests": []
+          "weakTests": [
+            {
+              "title": "tests/traits-connected.test.ts and tests/arrears.test.ts (the old knob tests)",
+              "why": "Carried from b03: still in the gate and weaker than the evidence-g09 and evidence2 journeys beside them."
+            }
+          ]
         },
         "claimCorrection": {
           "field": "downstream",
           "said": "taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465",
-          "now": "taxreturn.ts:840-841 (receipts, in figuresFor, multiplying jobCosts nothing in play records). school.ts:308-312 (castCompany, read on a performance night at :3338). school.ts:315-317 (bondMove, read by the cast list at :2590, coursework.ts:327 and classmates.ts:175); the bonds it moves are read by bondWord (:320-323) for the cast list's read (castListRead, :2479), the cast notice (:2729), the classmate look (ui/looks/classmate.tsx:45) and the School screen's cast table (SchoolWorkspace.tsx:470). school.ts:918-922 (hourFit, read by focusAt at :927 and conditionAt at :942). coursework.ts:568-576 (prepLean, read by prepare at :593). Until 2026-10-13 this said taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465. The first round's correction that day gave taxreturn.ts:836-837 and focusAt's and conditionAt's declarations for where hourFit is read."
+          "now": "taxreturn.ts:836-837 (receipts, in figuresFor); school.ts:307-311 (castCompany, read on a performance night at :3324), :314-316 (bondMove, read by the cast list at school.ts:2579, coursework.ts:327 and classmates.ts:175), :907-911 (hourFit, read by focusAt at :914 and conditionAt at :924); coursework.ts:568-576 (prepLean, read by prepare at :593). Until 2026-10-13 this said taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465."
         }
       }
     }

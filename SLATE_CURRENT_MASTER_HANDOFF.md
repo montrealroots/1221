@@ -1,3 +1,31 @@
+# Read First: The Open Items Finished, 2026-10-14
+
+The owner's brief of 2026-10-14, done on `claude/verification-gaps` from `0124c32f`, pushed, **not merged and not
+deployed**. The account is `docs/verification/OPEN-ITEMS-2026-10-14.md`.
+
+## What the pass did
+
+- The federal tax table is kept by year from irs.gov (2024's, 2025's $15,750, 2026's $16,100, held after); until
+  2026-10-14 every year was taxed on 2024's.
+- Creation offers the family, so a life with need is a player's choice; the scholarship, the conversion of hours and
+  leave aid are played on lives the creation screen makes.
+- The owner's decisions are in: the 90-day undated-decision rule went, a skipped shower is recorded as costing nothing
+  past its day, no unearned lead in the company's shows, units by where a person lives, the receipts knob went.
+- A third round of evidence and its skeptics: **271 of 328 rows verified** (258 before), 11 partial, 19 unresolved,
+  16 deferred. Its defects fixed, among them a term deposit's interest never counted as income.
+
+## Verification on the final tree
+
+Typecheck, lint, the suite in three foreground shards (324 files, 3,940 tests, all passed; the machine's memory twice
+stopped a single run), and all seventeen checks: exit 0. Built app: 60 passed, 0 failed, 2 skipped at 1440 and 390.
+Long runs and scenarios: breaches 0.
+
+## Still the owner's
+
+- The 11 partial rows (the account names each one's gap); whether the faculty decision's refusals no play reaches stay
+  as guards; a second practice in New Haven, without which choosing a doctor decides nothing.
+- Merging to `main` and any Base44 deployment (read §10 below first).
+
 # Read First: The Verification Gaps Closed, 2026-10-13
 
 The owner's brief of 2026-10-13, "Close The Verification Gaps And Complete The Current Build's Acceptance Evidence",
@@ -28,7 +56,7 @@ is `docs/verification/VERIFICATION-GAPS-2026-10-13.md`; the rows are `docs/verif
 
 ## Still the owner's
 
-- **The federal tax table is 2024's** for every year (`src/engine/content/tax.ts`); 2026's isn't in.
+- The federal tax table was 2024's for every year until 2026-10-14, when 2025's and 2026's went in (see the section above).
 - The forced wealthy family puts need-based paths (conversion of hours, leave aid, `school.request_conversion`) out of a
   new life's reach: Unresolved or Deferred?
 - The 90-day rule for an undated decision; a skipped shower's cost past the day; `companyPart`'s floored lead; creation's
