@@ -602,7 +602,10 @@ describe('i-stale-claims', () => {
     // own walk, which leaves this file and itself aside.
     const files = [...walk('src'), ...walk('tests'), ...walk('docs')].map(posix)
       .filter((f) => /\.(ts|tsx|mjs|js|json|md)$/.test(f))
-      .filter((f) => !f.startsWith('docs/verification/') && f !== 'docs/GAMEPLAY-COVERAGE.md' && !f.startsWith('docs/research/') && f !== 'docs/drill-down-research.json' && f !== 'tests/evidence2-b13.test.ts' && f !== 'tests/evidence3-person.test.ts');
+      // The banks' research as the engine reads it (`content/home-accounts.json`, from 2026-10-16) is set aside with the
+      // research it's copied from: it quotes the banks' own terms, "the customer's legitimate interests" among them. Until
+      // 2026-10-16 this copy of the rule read it, and failed on those quotes, while evidence3-person's set it aside.
+      .filter((f) => !f.startsWith('docs/verification/') && f !== 'docs/GAMEPLAY-COVERAGE.md' && !f.startsWith('docs/research/') && f !== 'docs/drill-down-research.json' && f !== 'src/engine/content/home-accounts.json' && f !== 'tests/evidence2-b13.test.ts' && f !== 'tests/evidence3-person.test.ts');
     expect(files.length).toBeGreaterThan(600);
     const found = namingIn(files);
     expect(found.length).toBeGreaterThan(60);

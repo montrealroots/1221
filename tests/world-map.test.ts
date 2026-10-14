@@ -234,11 +234,13 @@ describe('the picker and the map it draws', () => {
     expect(source).toMatch(/loadWorldMap/);
   });
 
-  it('is on the creation screen twice, once for where you were born and once for where you live', () => {
+  // Twice until 2026-10-16, when the Before Yale card asked where the student lived before Yale (the home account).
+  it('is on the creation screen three times, for where you were born, where you live, and where you lived before Yale', () => {
     const creation = readFileSync(new URL('../src/ui/creation/CharacterCreation.tsx', import.meta.url), 'utf8');
     expect(creation).toMatch(/import\s*\{[^}]*LocationPicker[^}]*\}\s*from/);
-    expect(creation.match(/<LocationPicker/g) ?? []).toHaveLength(2);
+    expect(creation.match(/<LocationPicker/g) ?? []).toHaveLength(3);
     expect(creation).toContain('idPrefix="born"');
     expect(creation).toContain('idPrefix="live"');
+    expect(creation).toContain('idPrefix="before"');
   });
 });
