@@ -9,7 +9,9 @@
  *
  * - **Money**: every transaction balances to zero in whole cents and is dated
  *   no later than now, and every account's balance is the sum of what was
- *   posted to it (the ledger's law, `core/ledger.ts`).
+ *   posted to it (the ledger's law, `core/ledger.ts`); an account in another
+ *   currency holds the sum of its postings' own figures, and only such an
+ *   account's postings carry one (from 2026-10-16).
  * - **Things**: each item's id is its own, its quantity a finite number not
  *   below zero, its condition between worn out and new, and where it is
  *   names something that exists: a vehicle, an order or a container of
@@ -48,6 +50,22 @@ export function breaches(u: SaveUniverse, now: Instant = u.now): Breach[] {
   for (const a of Object.values(u.accounts)) {
     if (!Number.isInteger(a.balance)) add('balance not whole cents', `${a.name}: ${a.balance}`);
     else if (a.balance !== (posted.get(a.id) ?? 0)) add('balance not the sum of its postings', `${a.name}: ${a.balance} against ${posted.get(a.id) ?? 0}`);
+  }
+  // An account in another currency's own figure (from 2026-10-16): what the bank shows is the sum of its postings'
+  // native, every posting to it carries one, and a posting to an account kept in the save's money carries none.
+  const native = new Map<string, number>();
+  for (const t of u.transactions) {
+    for (const p of t.postings) {
+      const currency = u.accounts[p.accountId]?.currency;
+      if (currency !== undefined && p.native === undefined) add('posting in another currency without its figure', `${t.memo}: ${p.accountId}`);
+      if (currency === undefined && p.native !== undefined) add('figure in another currency on an account kept in the save’s', `${t.memo}: ${p.accountId}`);
+      if (p.native !== undefined && !Number.isInteger(p.native)) add('posting not whole cents', `${t.memo}: native ${p.native}`);
+      if (currency !== undefined && p.native !== undefined) native.set(p.accountId, (native.get(p.accountId) ?? 0) + p.native);
+    }
+  }
+  for (const a of Object.values(u.accounts)) {
+    if (a.currency !== undefined && (a.held ?? 0) !== (native.get(a.id) ?? 0)) add('held not the sum of its postings', `${a.name}: ${a.held ?? 0} ${a.currency} against ${native.get(a.id) ?? 0}`);
+    if (a.currency === undefined && a.held !== undefined) add('figure in another currency on an account kept in the save’s', `${a.name}: held ${a.held}`);
   }
 
   // People and their things.

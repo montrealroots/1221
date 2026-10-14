@@ -5,6 +5,18 @@
  * Every transaction balances to exactly zero across its postings, with income
  * and expense modeled as nominal counter-accounts, so the universe can prove
  * at any moment that no money was invented or destroyed.
+ *
+ * An account at a bank whose currency isn't the save's (from 2026-10-16, the
+ * owner's decision that a Yale student may keep a bank account at home) keeps
+ * a second figure beside its balance: `held`, the bank's own, in its own minor
+ * units, the sum of its postings' `native`. Until then such an account could
+ * be kept only in the save's cents, and that isn't exact: a sum of
+ * conversions isn't the conversion of the sum (five postings of 1¢ are 1p
+ * each at the bank, 5p, and 5¢ converted is 4p), and £10,000 a bank sold for
+ * $12,700 reads £10,033.00 converted back. A
+ * transaction still balances in the save's cents, so conservation, the
+ * server's sums and every balance are as they were; `held` is what the bank
+ * shows. Rates don't move, so there is no gain or loss on exchange.
  */
 
 import type { Instant } from './time';
@@ -155,12 +167,34 @@ export interface Account {
   /** A loan's monthly payment and its term. */
   loanPayment?: Money;
   loanMonths?: number;
+  /**
+   * The bank's currency, only where it isn't the save's (from 2026-10-16): the account then keeps `held`, and each
+   * posting to it a `native`.
+   */
+  currency?: string;
+  /** What the bank shows, in its currency's minor units: the sum of the postings' `native`, never assigned outside `post`. */
+  held?: Money;
+  /**
+   * When it was last used before the save began, for an account a person brought into it (from 2026-10-16): until then
+   * an account nothing had posted to counted as untouched since it opened, and one opened years before the save would
+   * have gone inactive at its first month's end (`systems/lending.ts` `lastUsed`).
+   */
+  lastUsedBefore?: Instant;
 }
 
 export interface Posting {
   accountId: string;
+  /** In the save's cents; a transaction's amounts sum to zero. */
   amount: Money;
+  /**
+   * The same movement in the account's own currency (from 2026-10-16), on a posting to an account with a `currency` and
+   * on no other. A caller that knows it exactly passes it; otherwise `post` works it out.
+   */
+  native?: Money;
 }
+
+/** An amount in the save's cents, in a currency's minor units; nothing where there's no rate. */
+export type ToCurrency = (amount: Money, currency: string) => Money | undefined;
 
 export interface LedgerTransaction {
   id: string;
@@ -190,7 +224,8 @@ export class LedgerError extends Error {
 }
 
 export class Ledger {
-  constructor(private host: LedgerHost) {}
+  /** `toCurrency` converts the save's cents into an account's currency, for a posting that doesn't say its `native`. */
+  constructor(private host: LedgerHost, private toCurrency?: ToCurrency) {}
 
   account(id: string): Account {
     const acct = this.host.accounts[id];
@@ -235,12 +270,58 @@ export class Ledger {
         `Transaction ${txn.id} ('${txn.memo}') doesn’t balance: postings sum to ${sum} cents, expected 0.`,
       );
     }
-    for (const p of txn.postings) {
-      const acct = this.account(p.accountId);
+    // Every account found and every native worked out before anything moves (from 2026-10-16), so a refused posting
+    // leaves no balance changed.
+    const accounts = txn.postings.map((p) => this.account(p.accountId));
+    const natives = accounts.some((a) => a.currency !== undefined) || txn.postings.some((p) => p.native !== undefined)
+      ? this.nativesOf(txn, accounts) : undefined;
+    txn.postings.forEach((p, i) => {
+      const acct = accounts[i]!;
       acct.balance += p.amount;
-    }
+      const native = natives?.[i];
+      if (native !== undefined) {
+        p.native = native;
+        acct.held = (acct.held ?? 0) + native;
+      }
+    });
     this.host.transactions.push(txn);
     return txn;
+  }
+
+  /**
+   * Each posting's figure in its account's currency, or nothing for an account kept in the save's (from 2026-10-16).
+   *
+   * A posting that takes out exactly what the account holds takes out exactly what the bank shows, so an account
+   * emptied is empty in both figures: converting the balance instead would leave behind whatever the two figures had
+   * drifted apart by (five 1¢ postings hold 5p, and 5¢ converted is 4p, so 1p would stay at the bank).
+   */
+  private nativesOf(txn: LedgerTransaction, accounts: Account[]): (Money | undefined)[] {
+    const balance = new Map<string, Money>();
+    const held = new Map<string, Money>();
+    return txn.postings.map((p, i) => {
+      const acct = accounts[i]!;
+      if (acct.currency === undefined) {
+        if (p.native !== undefined) {
+          throw new LedgerError(`Transaction ${txn.id} ('${txn.memo}') gives ${acct.name} a figure in another currency, and it’s kept in the save’s.`);
+        }
+        return undefined;
+      }
+      const was = balance.get(acct.id) ?? acct.balance;
+      const wasHeld = held.get(acct.id) ?? acct.held ?? 0;
+      let native = p.native;
+      if (native === undefined) {
+        native = p.amount === -was ? -wasHeld : this.toCurrency?.(p.amount, acct.currency);
+        if (native === undefined) {
+          throw new LedgerError(`Transaction ${txn.id} ('${txn.memo}') can’t be put in ${acct.currency} for ${acct.name}: there’s no rate.`);
+        }
+      }
+      if (!Number.isInteger(native)) {
+        throw new LedgerError(`Non-integer native amount ${native} in ${txn.id} ('${txn.memo}'). Money is always minor units.`);
+      }
+      balance.set(acct.id, was + p.amount);
+      held.set(acct.id, wasHeld + native);
+      return native;
+    });
   }
 
   /** Available spend: cash balance, or remaining credit on a revolving line. */
@@ -279,6 +360,19 @@ export class Ledger {
     return totals;
   }
 
+  /** Recomputes what each account in another currency holds, from its postings' `native` (from 2026-10-16). */
+  recomputeHeld(): Record<string, Money> {
+    const totals: Record<string, Money> = {};
+    for (const [id, acct] of Object.entries(this.host.accounts)) if (acct.currency !== undefined) totals[id] = 0;
+    for (const txn of this.host.transactions) {
+      for (const p of txn.postings) {
+        const was = totals[p.accountId];
+        if (p.native !== undefined && was !== undefined) totals[p.accountId] = was + p.native;
+      }
+    }
+    return totals;
+  }
+
   /**
    * Proves the ledger is internally consistent. Returns a list of problems;
    * an empty list means the books balance.
@@ -290,6 +384,22 @@ export class Ledger {
       const expected = recomputed[id] ?? 0;
       if (expected !== acct.balance) {
         problems.push(`Account ${id} (${acct.name}) cached balance ${acct.balance} != posted total ${expected}.`);
+      }
+    }
+    // The second figure's law (from 2026-10-16): what the bank shows is the sum of the postings' native, every posting
+    // to an account in another currency carries one, and no other posting does.
+    for (const [id, total] of Object.entries(this.recomputeHeld())) {
+      const acct = this.host.accounts[id]!;
+      if ((acct.held ?? 0) !== total) problems.push(`Account ${id} (${acct.name}) holds ${acct.held ?? 0} ${acct.currency} != posted total ${total}.`);
+    }
+    for (const [id, acct] of Object.entries(this.host.accounts)) {
+      if (acct.currency === undefined && acct.held !== undefined) problems.push(`Account ${id} (${acct.name}) holds a figure in another currency, and it’s kept in the save’s.`);
+    }
+    for (const txn of this.host.transactions) {
+      for (const p of txn.postings) {
+        const currency = this.host.accounts[p.accountId]?.currency;
+        if (currency !== undefined && p.native === undefined) problems.push(`Transaction ${txn.id} ('${txn.memo}') posts to ${p.accountId} without its figure in ${currency}.`);
+        if (currency === undefined && p.native !== undefined) problems.push(`Transaction ${txn.id} ('${txn.memo}') gives ${p.accountId} a figure in another currency, and it’s kept in the save’s.`);
       }
     }
     let grand = 0;

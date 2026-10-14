@@ -612,16 +612,20 @@ export function chargeForPurchase(sim: Simulation, person: Person): void {
   charge(sim, current, inSaveMoney(sim, card.perPurchase, bank.currency), 'Debit card purchase fee', 'bank_fee', 'Bank Fees');
 }
 
-/** When an account last had money moved in or out by its owner or their employer, not the bank. */
+/**
+ * When an account last had money moved in or out by its owner or their employer, not the bank; for an account brought
+ * into the save, no earlier than its last use before it (`lastUsedBefore`, from 2026-10-16).
+ */
 function lastUsed(sim: Simulation, account: Account): Instant {
+  const before = account.lastUsedBefore ?? account.openedAt;
   const list = sim.universe.transactions;
   for (let i = list.length - 1; i >= 0; i -= 1) {
     const t = list[i]!;
     if (t.at < account.openedAt) break;
     if (t.category === 'interest' || t.category === 'bank_fee' || t.category === 'tax_refund') continue;
-    if (t.postings.some((p) => p.accountId === account.id)) return t.at;
+    if (t.postings.some((p) => p.accountId === account.id)) return Math.max(t.at, before);
   }
-  return account.openedAt;
+  return before;
 }
 
 /** Transactions on an account between two moments, other than the bank's own. */
