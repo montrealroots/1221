@@ -1,4 +1,7 @@
-# Completing The Current Scope, 2026-10-15
+# The Current Scope Pass, 2026-10-15
+
+Titled “Completing The Current Scope” until 2026-10-15: the pass worked every open row, and left the work listed under
+Still Open, so the scope wasn’t complete. That work is the owner’s next brief, on `claude/remaining-acceptance`.
 
 The owner's brief of 2026-10-15 ("SLATE: Complete The Remaining Current-Scope Work And Prove Acceptance"), done on
 `claude/current-scope-acceptance` from `main` at `bef4bde5`. The pass before it is `OPEN-ITEMS-2026-10-14.md`, whose
@@ -123,8 +126,8 @@ every playthrough was tested: what passed is listed above, and what wasn't is li
 
 ## Repository
 
-Branch `claude/current-scope-acceptance`, from `bef4bde5`, committed and pushed. **Not merged to `main` and not deployed.** The
-owner said to merge it on 2026-10-15; the fast-forward push to `main` was refused to Claude by the session’s permission
-check, so it waits on the owner (`git push origin claude/current-scope-acceptance:main`). No pull request was opened: the
+Branch `claude/current-scope-acceptance`, from `bef4bde5`, committed, pushed, and **merged to `main` by fast-forward at
+`e021eb5f` on the owner's word (2026-10-15); not deployed.** A first push to `main` was refused to Claude by the session’s
+permission check, and made when the owner said again to merge it. No pull request was opened: the
 GitHub CLI wasn’t signed in on this machine. The pipeline that generates the audit, kept until then only in a session’s
 scratchpad, is in `docs/verification/pipeline/`, and regenerates the committed audit with no difference.

@@ -1,10 +1,15 @@
-# Read First: The Current Scope Completed, 2026-10-15
+# Read First: The Current Scope Pass, 2026-10-15, And The Work It Left Open
+
+This heading said “The Current Scope Completed” until 2026-10-15, which its own list of work found and not fixed
+contradicted: the pass worked every open row, and the scope is **not complete**. Two rows stay partial and work found
+and not fixed stands open (below, and in the account); the owner’s brief of 2026-10-15, “Close The Remaining Acceptance
+Gaps And Known Unfinished Work”, is closing it on `claude/remaining-acceptance`.
 
 The owner's brief of 2026-10-15 ("SLATE: Complete The Remaining Current-Scope Work And Prove Acceptance"), done on
-`claude/current-scope-acceptance` from `main` at `bef4bde5`, committed and pushed. **Not merged to `main` and not
-deployed.** The owner said to merge it on 2026-10-15; the fast-forward push to `main` was refused to Claude by the
-session's permission check (a merge without review), so it waits on the owner (below). No pull request was opened: the
-GitHub CLI wasn’t signed in on this machine. The account is `docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open
+`claude/current-scope-acceptance` from `main` at `bef4bde5`, committed, pushed, and **merged to `main` by fast-forward
+at `e021eb5f` on the owner's word (2026-10-15; this note's own commit followed it there); not deployed**. A first push
+to `main` was refused to Claude by the session's permission check, and made when the owner said again to merge it. No
+pull request was opened: the GitHub CLI wasn’t signed in on this machine. The account is `docs/verification/CURRENT-SCOPE-2026-10-15.md`; each open
 row's checklist and result are in `docs/verification/scope/`; the pipeline that generates the audit is in
 `docs/verification/pipeline/`.
 
@@ -39,9 +44,7 @@ Typecheck, lint, the suite in three foreground shards (330 files, 4,040 tests, a
 - The nine bank rows: Unresolved or Deferred.
 - Carried: an IRS letter before the due date on an early filing; Connecticut's “filed in error” control and the controls
   no play reaches, as guards.
-- Merging this branch to `main`: a fast-forward, `main` still at `bef4bde5` and an ancestor of the branch. The owner
-  runs `git push origin claude/current-scope-acceptance:main` (or allows it to Claude); then this section says merged,
-  and `git fetch origin main:main` brings the local `main` along.
+- Merging to `main` was done on 2026-10-15 (until then this said it waited on the owner).
 - Any Base44 deployment (read §10 below first). The save schema didn't move: `SaveUniverse.opened` is optional.
 
 ## For the next session
