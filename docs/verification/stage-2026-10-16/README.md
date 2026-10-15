@@ -169,3 +169,20 @@ The commits since change only the acceptance tool and these documents.
   - Notes: none said again after it was taken.
 - **No dominant way of playing.** On stage, an even actor's better scale is restrained on 50 and expansive on 33 of
   85, and two or more interpretations are within a point on 84 of 86.
+
+## Verification
+
+  - **The gate:** `npm run gate` exited 0 on `8c9a8292`, read from a file: 348 files and 4,184 tests, typecheck, lint
+    and all seventeen checks, the tree unchanged.
+    - The first run, on `10a0914f`, failed four tests. Each read the stage's new projection: the microphone test
+      compared with a stage that no longer leans nothing, and three casting journeys had pinned parts that casting
+      now reads otherwise. Each was corrected to what it holds (`fe5ccc61`).
+    - The second run, on `fe5ccc61`, failed the typecheck in one of those tests. It was fixed in `8c9a8292`.
+  - **The build:** exit 0.
+  - **The built app at 1440 and 390,** from all 14 scenario saves written again on the new engine (0 breaches and 0
+    unbalanced each): 70 passed, 0 failed, 2 skipped (the two since 2026-10-12), 0 errors, 0 overflows. That includes
+    the new stage step: a drama scene's Restrained, citing What's Kept Hidden and A Private Exchange, chosen and kept
+    through a reload.
+    - Its first two runs timed out on the step's own locators. Both were fixed in the tool (`c5a23c09`, `1ccf2867`), and the
+      commits since `8c9a8292` change only that tool and these documents.
+  - In a cloud container (Linux), not the owner's PowerShell machine.
