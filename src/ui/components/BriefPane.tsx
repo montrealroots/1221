@@ -32,7 +32,7 @@ import { studyRefusal } from '@/engine/systems/engagement';
 
 import { identityOf } from '@/engine/systems/artistry';
 import { levelOf } from '@/engine/systems/attributes';
-import { adviceFor } from '@/engine/systems/next-steps';
+import { adviceFor, heldVersusNext } from '@/engine/systems/next-steps';
 
 const TONE: Record<string, string> = { comic: 'Comic', grave: 'Grave', lyric: 'Lyric', grotesque: 'Grotesque' };
 
@@ -269,6 +269,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <div className="col gap-1">
           <div className="eyebrow">What To Work On</div>
           <p className="small" style={{ margin: 0 }}><strong>{top.label}</strong>. {top.why}{top.recurring && <> <span className="xs dim">From your work for life: {top.recurring.evidence.join('; ')}; it last held a piece back on {formatDate(top.recurring.last, sim.zone)}.</span></>}</p>
+          {heldVersusNext(person, recs) && <p className="xs" style={{ margin: 0 }}>{heldVersusNext(person, recs)}</p>}
           {unread && <p className="xs dim" style={{ margin: 0 }}>No practice brief reads {top.label.toLowerCase()}, so a take won’t show it and none is suggested for it.</p>}
           <div>{practice(top.target)}</div>
         </div>

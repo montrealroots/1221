@@ -223,7 +223,9 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     if (c.points < RECOMMEND.floor) continue;
     out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: Math.round(c.points * 10) / 10, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
   }
-  out.sort((a, b) => b.points - a.points || a.target.localeCompare(b.target));
+  // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't.
+  const rank = (r: Recommendation) => r.forecast?.points ?? r.points;
+  out.sort((a, b) => rank(b) - rank(a) || a.target.localeCompare(b.target));
   // The weakness the work so far keeps coming back to, where it's here at all: said, with what it rests on, and first
   // where it's within half a point of the top. Forecast (from 2026-10-16), only where it's about as useful as the top:
   // what keeps holding you back and what pays most to train are two things, and the order says the second.
