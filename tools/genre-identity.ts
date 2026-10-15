@@ -104,11 +104,13 @@ const result = {
  * `--md file`: the genre matrix, every genre a row, beside the run with no register (`--before file.json`, written by
  * this tool with `--off`): its families, its register and where that comes from, the techniques its research applies,
  * what the take weighs and draws on, the preparation that answers it, its briefs and how they differ, its nearest
- * neighbour before and after, and whether that neighbour shares its register (legitimate overlap) or not.
+ * neighbor before and after, and whether that neighbor shares its register (legitimate overlap) or not.
  */
 const MD = arg('md', '');
 if (MD) {
-  const before = arg('before', '') ? JSON.parse(readFileSync(arg('before', ''), 'utf8')) as typeof result : undefined;
+  // A run of this tool, or ag-baseline's own JSON (its genre section's `distance.nearestAll`), for the code before.
+  const raw = arg('before', '') ? JSON.parse(readFileSync(arg('before', ''), 'utf8')) as { nearest?: typeof nearest; genres?: { distance: { nearestAll: { genre: string; nearest: string; distance: number }[] } } } : undefined;
+  const before = raw ? { nearest: raw.nearest ?? raw.genres!.distance.nearestAll } : undefined;
   const near = new Map(nearest.map((x) => [x.genre, x]));
   const label = (g: string) => GENRE_BY_ID[g]?.label ?? g;
   const row = (g: string) => {
@@ -118,14 +120,15 @@ if (MD) {
     const draws = [...new Set(cs.flatMap(concernDraws))].join(', ');
     const parts = [...new Set(cs.flatMap((c) => CONCERNS[c].parts))].join(', ');
     const tech = applied(g) ? (GENRE_DEMANDS[g]?.tags ?? []).map((t) => DEMAND_LABEL[t.tag]).join(', ') : '';
-    const bs = own(g).map((b) => `${b.title} (${b.size}, stakes ${b.stakes ?? 1}, ${b.readerPlays ?? 'steady'} reader, t${b.timing} ph${b.physical} pa${b.partner} vo${b.vocal} im${b.improvisation})`).join('; ');
+    const bs = own(g).map((b) => `${b.title} (${b.size}, stakes ${b.stakes ?? 1}, ${b.readerPlays ?? 'steady'} reader, t${b.timing} ph${b.physical} pa${b.partner} vo${b.vocal} im${b.improvisation}; read as ${b.readings.map((r) => r.label).join(' or ')})`).join('; ');
+    const conv = GENRE_DEFS[g]!.conventions.length > 140 ? `${GENRE_DEFS[g]!.conventions.slice(0, 137).replace(/\s+\S*$/, '')}…` : GENRE_DEFS[g]!.conventions;
     const n = near.get(g)!;
     const was = before?.nearest.find((x) => x.genre === g);
-    return `| ${label(g)} | ${GENRE_DEFS[g]!.families.join(', ')} | ${cs.map((c) => CONCERNS[c].label).join(', ')} (${r?.basis ?? '—'}) | ${tech || '—'} | ${leans} | ${draws} | ${parts} | ${bs} | ${was ? `${label(was.nearest)} ${was.distance}` : '—'} | ${label(n.nearest)} ${n.distance}${n.sharesRegister ? ' (same register)' : ''} | ${n.within} |`;
+    return `| ${label(g)} | ${conv} | ${GENRE_DEFS[g]!.families.join(', ')} | ${cs.map((c) => CONCERNS[c].label).join(', ')} (${r?.basis ?? '—'}) | ${tech || '—'} | ${leans} | ${draws} | ${parts} | ${bs} | ${was ? `${label(was.nearest)} ${was.distance}` : '—'} | ${label(n.nearest)} ${n.distance}${n.sharesRegister ? ' (same register)' : ''} | ${n.within} |`;
   };
   const lines = [
-    '| Genre | Families | Register (basis) | Techniques Applied | Take Weighs More | Draws On | Preparation That Answers It | Its Briefs | Nearest Before | Nearest Now | Its Own Briefs Apart |',
-    '|---|---|---|---|---|---|---|---|---|---|---|',
+    '| Genre | Conventions | Families | Register (basis) | Techniques Applied | Take Weighs More | Draws On | Preparation That Answers It | Its Briefs | Nearest Before | Nearest Now | Its Own Briefs Apart |',
+    '|---|---|---|---|---|---|---|---|---|---|---|---|',
     ...GENRES.map(row),
   ];
   writeFileSync(MD, `${lines.join('\n')}\n`);

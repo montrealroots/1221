@@ -1196,6 +1196,59 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
   await overflow('profile brief (brief save)');
 }
 
+// From the genre-differentiation pass of 2026-10-16: each genre's register on its brief, through the screens. The
+// seven pairs whose briefs once read alike each opened, The Genre Asks read on both and found different; then Nordic
+// Noir's brief and Social Realism's, two registers apart, prepared, read, rehearsed and taped, the take's note naming
+// the genre's concern where one asked for what held it back, saved, continued, and taped again.
+const PAIRS = [['Biker', 'Coming Of Age'], ['Children’s', 'Science Fantasy'], ['Christmas', 'Holiday'], ['Dystopian', 'Medical Drama'], ['Espionage', 'Neorealism'], ['Family', 'Steampunk'], ['Nordic Noir', 'Social Realism']];
+async function genreAsks(label) {
+  await openBrief(label);
+  const text = await briefPane().innerText();
+  const at = text.search(/The Genre Asks/i);
+  must(at >= 0, `${label}: no The Genre Asks`);
+  return text.slice(at, at + 400).split('\n').slice(1, 4).join(' ').trim();
+}
+if (DIR && existsSync(`${DIR}/brief.json`)) {
+  await step('[save: brief scenario] genres: the seven pairs that once read alike each say a different register on their briefs', async () => {
+    await openSave('brief.json');
+    const said = [];
+    for (const [a, b] of PAIRS) {
+      const [x, y] = [await genreAsks(a), await genreAsks(b)];
+      must(x && y && x !== y, `${a} and ${b} say the same: ${x}`);
+      said.push(`${a}: ${x.split(':')[0]} / ${b}: ${y.split(':')[0]}`);
+    }
+    return said.join('; ').slice(0, 400);
+  });
+  for (const label of ['Nordic Noir', 'Social Realism']) {
+    await step(`[save: brief scenario] genres: ${label}’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again`, async () => {
+      await openBrief(label);
+      await briefButton(/^Break It Down/);
+      await briefButton(/^Learn The Lines/);
+      const radios = briefPane().locator('input[type=radio][name^="reading-"]');
+      await radios.nth(0).check(); await wait(300);
+      await briefButton(/^Read It This Way$/);
+      await briefButton(/^Rehearse It On Your Feet/);
+      const said = await briefButton(/^Tape It/);
+      const first = num(said, /Taped: (\d+\.\d)/);
+      must(!Number.isNaN(first), `no result said: ${said}`);
+      const text = await briefPane().innerText();
+      must(/The Last Take/i.test(text), 'no last take');
+      must(/held back the|wasn’t complete|didn’t fit|asked more than/.test(text), 'what held it back isn’t said');
+      const note = text.match(/[^\n.]*asks for it/)?.[0] ?? '(no concern behind the limit)';
+      await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+      await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+      await openBrief(label);
+      must(await briefPane().locator('table[data-takes] tbody tr').count() >= 1, 'the take isn’t kept after Continue');
+      await briefButton(/^Rehearse It On Your Feet/);
+      const again = await briefButton(/^Tape It/);
+      must(/Taped: \d+\.\d/.test(again), `no second take: ${again}`);
+      must(await briefPane().locator('table[data-takes] tbody tr').count() >= 2, 'two takes not kept');
+      return `${said}; ${note.trim().slice(0, 120)}; after Continue: ${again}`;
+    });
+  }
+  await overflow('profile brief (genre registers)');
+}
+
 // From the remaining-gaps pass of 2026-10-11: a lien's lifecycle and a plan's recovery, carried out through the screens.
 const lienLine = () => page.getByText(/Connecticut Tax Lien · /).first();
 if (DIR && existsSync(`${DIR}/lien.json`)) {

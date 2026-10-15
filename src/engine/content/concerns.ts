@@ -5,7 +5,7 @@
  * Until then a genre was what its two practice briefs happened to share: the engine read nothing of the genre itself
  * but how well it was known and, for 41 genres, the techniques its scenes staged (`content/demands.ts`). Seven pairs of
  * briefs of different genres were the same in every number a take read (`docs/verification/genres-2026-10-16/`), and
- * 148 of the 149 genres had a nearer neighbour than their own second brief.
+ * 148 of the 149 genres had a nearer neighbor than their own second brief.
  *
  * A concern is a register the work is played in, not a technique and not a setting: the feeling kept under the
  * surface, the joke's rhythm, the period's manners, belief in a thing that isn't there. Each rests on an acting
@@ -89,8 +89,8 @@ export const CONCERNS: Readonly<Record<Concern, ConcernDef>> = {
   },
   spontaneity: {
     label: 'Caught Live',
-    words: 'Behaviour that looks unrehearsed: real listening, the next line taken from what the other person just did.',
-    principle: 'Naturalism, the Moscow Art Theatre’s and Stanislavsky’s realistic acting (topic 10); the genre claims are non-professional casting, improvised dialogue and withheld scripts.',
+    words: 'Behavior that looks unrehearsed: real listening, the next line taken from what the other person just did.',
+    principle: 'Naturalism, the Moscow Art Theater’s and Stanislavsky’s realistic acting (topic 10); the genre claims are non-professional casting, improvised dialogue and withheld scripts.',
     lean: { connection: 1.15, responsiveness: 1.1 },
     inputs: { connection: [{ ability: 'listening', weight: 0.5 }], responsiveness: [{ ability: 'adaptability', weight: 0.3 }] },
     parts: ['rehearsal'],
@@ -99,7 +99,7 @@ export const CONCERNS: Readonly<Record<Concern, ConcernDef>> = {
   exactness: {
     label: 'Dense Text, Exact',
     words: 'A lot of words, or difficult ones, delivered fluently and at speed: jargon, argument or deduction as second nature.',
-    principle: 'Fluency from memory (LAMDA’s criteria, topic 1); the genre claims are dense, fast dialogue mastered by repetition, memorised closing arguments and medical jargon drilled before the shoot.',
+    principle: 'Fluency from memory (LAMDA’s criteria, topic 1); the genre claims are dense, fast dialogue mastered by repetition, memorized closing arguments and medical jargon drilled before the shoot.',
     lean: { execution: 1.15, interpretation: 1.05 },
     inputs: { execution: [{ ability: 'memory', weight: 0.5 }], interpretation: [{ ability: 'focus', weight: 0.3 }] },
     parts: ['memorization'],

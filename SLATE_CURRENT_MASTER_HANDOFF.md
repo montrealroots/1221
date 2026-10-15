@@ -1,6 +1,32 @@
+# Read First: Genre Differentiation, 2026-10-16
+
+**This section is the current status.** Every section below is history. The account is
+`docs/verification/genres-2026-10-16/README.md`, the complete genre matrix `genre-matrix.md` beside it, and the work
+plan's section 4. Done on `claude/zen-mccarthy-i88ujw` from `main` at `35d032d`, for the owner's brief “Complete Genre
+Differentiation And Prove Each Genre’s Identity”. Pushed, a pull request opened, **not merged, not deployed**. The save
+schema didn't move (`Take.concern` is optional) and neither did `RULESET`: the register changes the context a take is
+judged in, not the judge.
+
+- **Every genre has a register** (`content/concerns.ts`, `content/genre-register.ts`, `systems/register.ts`): one or
+  two of thirteen concerns, read by every take of a brief written for it at a reading's strength, a lean that moves
+  weight and adds none. 113 genres rest on their research, 36 on SLATE's reading, and the screen says which.
+- **The seven identical pairs** (G2) were revised from their own scenes' text: 0 identical pairs, with the register and
+  without it.
+- **The player sees it:** The Genre Asks on the brief, the genre's look, the take's note naming the concern behind its
+  chief limit, the guide's genre entry and the tutorial.
+- **Proved:** `tests/genre-identity.test.ts` and `tests/genre-identity-screens.test.ts` (12 tests), 12 mutations of the
+  register killed plus a pair revision undone, `tools/genre-identity.ts`, `tools/brief-journeys.ts --no-register`, and two
+  acceptance steps at 1440 and 390. Mastery stays at 100 on all 4,495 piece-reading-way checks.
+- **The owner's decisions (open):** G1 as written fails (0.95×, 1.22× with length and stakes held) and can't reach 1.5
+  without one rigid formula per genre; no threshold moved. A way of playing doesn't interact with the genre. F2 is a
+  little worse (301 of 447, from 311).
+- **Next:** the rest of attributes phase 2c (the late-term decline, F2/H1, the workbook rule, long and UI journeys), then
+  the remaining acceptance gaps.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
 # Read First: Three Briefs, Two Well Along, 2026-10-16
 
-**This section is the current status.** The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
+**This section was the current status until genre differentiation, later on 2026-10-16** (**Superseded:** the first section above is). The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
 read its Resume Here first. Every section below is history. Until later on 2026-10-16 this section said banking modules
 6 and 7 and attributes phase 2b were mid-work and uncommitted, and that the gate hadn't run; all three changed that day.
 
