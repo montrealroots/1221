@@ -48,7 +48,9 @@ an affinity for the sides it bears on, and what it rests on:
 - **The rehearsal mark.** How far the chosen side has to be rehearsed in.
 - **The take's account.** The forecast and the last take say what the side's suitability gave or cost the take, apart
   from what the abilities cost, in the form "Played that way it suited the scene (Restrained, Suits The Scene), which
-  gave it N points; your abilities and techniques cost it M." The acceptance run's own sentence is in the work plan.
+  gave it N points; your abilities and techniques cost it M." In the built app at 1440 (`tools/acceptance-ui.mjs`, Melodrama's brief played expansive, on `88182cc4`), it read:
+  "Played that way it suited the scene (Expansive, Suits The Scene), which gave it 0.3 points; your abilities and
+  techniques cost it 21." It was the same after Save & Exit and Continue.
 - **It survives a reload.** The take keeps the account (`Take.grain`).
 - **Kept results stay as they were.** `RULESET` moved to `evaluation-5`, so a result kept under evaluation-4 is shown as
   it was and not worked out again by the new judge.

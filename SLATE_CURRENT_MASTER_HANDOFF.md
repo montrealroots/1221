@@ -29,6 +29,10 @@ checklist; each part has its account:
   - **London's dismissal.** It's pre-existing: the same on `35d032d` and `1bb76ac`. 24 to 26 of 46 class pieces a term
     are unready from the third term, with attendance at 100%, and every attentive profile has most class scenes unready
     (87 of 113 in New York). It's coursework balance, outside this brief, and queued as its own task.
+- **Verified on `88182cc4`.** `npm run gate` exited 0, read from a file: 345 files and 4,160 tests, typecheck, lint and
+  all seventeen checks. The built app at 1440 and 390, from every scenario save written again on that code: 65 passed,
+  0 failed, 2 skipped at each. In a cloud container (Linux), not the owner's PowerShell machine.
+- **Next:** the owner's decisions above, then the coursework-balance pass (London) and the remaining acceptance gaps.
 - The stash, worktrees and untracked root files: this container has none, and nothing touched any.
 
 # Read First: Genre Differentiation, 2026-10-16
