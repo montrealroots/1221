@@ -65,8 +65,17 @@ Older code was held by the gate and the reviews before it, not read again line b
 - **The build,** on `f06331be`, whose code is the code merged: exit 0.
 - **The fourteen scenario saves,** written again by `tools/scenario-saves.mjs` on that code: every run exit 0, each save
   0 breaches and 0 unbalanced.
-- **Still running when this was committed:** the built app at 1440 and 390, and the full gate on the final revision.
-  Their figures replace this line when they're in.
+- **The built app at 1440 and 390,** on that build, from those saves: 70 passed, 0 failed, 2 skipped (the two since
+  2026-10-12), 0 errors, 0 overflows at each. That includes the warning's new words, Shown Today rising with Run It
+  With A Reader, both kept through Save & Exit and Continue, and the stage step.
+  - The first run at 1440 failed four steps, all on the workload save. The tool's pattern still expected the warning's
+    earlier words, so its first step failed before it pressed Go There, and the next three were left on Home. The tool
+    was fixed (`027f3631`); 390 ran on the fixed tool, and 1440 was run again.
+- **The gate,** on `027f3631`: `npm run gate` exited 0, read from a file: 348 files and 4,192 tests (eight more than
+  the baseline, each this sweep's), typecheck, lint and all seventeen checks, the tree unchanged. The commit after it
+  changes only this file and the work plan, and the gate was run again on it before the merge.
+- In a cloud container (Linux), not the owner's PowerShell machine. It had no stash, worktrees or untracked root
+  files, and nothing touched any.
 
 ## Open, In Order
 
