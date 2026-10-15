@@ -146,3 +146,26 @@ For example, the suitability of restrained and expansive:
   - the reader ignored;
   - mastery broken against the grain;
   - an old result judged again.
+
+## The Student's Experience, Played Again On The Final Engine (`runs/`, on `2eb0a294`)
+
+The commits since change only the acceptance tool and these documents.
+- **24 lives through graduation** (`runs/lives.jsonl`):
+  - 20 graduated and the 4 autopilot controls were dismissed, each term's standing as before this change;
+  - breaches, unbalanced entries and errors were 0 on every life;
+  - every concern outside the controls was a production night, named by its review: Ghosts, Woyzeck, Major Barbara,
+    the Carlotta Festival.
+- **The workload** (`runs/wl-*.json`, 1.4 years):
+  - London's four seeds and New York's are good, with 9 to 15 of 46 Unready in the third term, as before;
+  - the neglect control is dismissed and warned in each of its terms.
+- **The mastery plans** (`runs/plan-*.json`): all six reach 100 on every payoff tape and graduate on the same day.
+  Everything comes full 0 to 2 days later than before.
+- **Advice** (`runs/advice-played-cases.json`): the 40 played cases are identical to before, case for case: 40 of 40
+  within a tenth, the exact best in 38.
+- **Repetition and stale advice** (`runs/variety-v-0.json`, three years). Graduated, breaches 0.
+  - Advice: 10 distinct top recommendations over 157 weeks. None given for an input at full, none stuck, and the
+    longest unresolved stretch 2 weeks (it was 3).
+  - Practice: every one of 2,093 hours had distinct feedback.
+  - Notes: none said again after it was taken.
+- **No dominant way of playing.** On stage, an even actor's better scale is restrained on 50 and expansive on 33 of
+  85, and two or more interpretations are within a point on 84 of 86.
