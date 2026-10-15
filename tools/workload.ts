@@ -135,6 +135,8 @@ const out = {
       shown: shown.length, unready: shown.filter((a) => band(a) === 'unready').length, partsShortAtShowing: short,
     };
   }),
+  // What the school said, and when: the term's warning, each review's notice and the standing it left.
+  notices: sim.universe.notifications.filter((n) => n.category === 'school' && /Coursework|Concern|Warning|Dismiss|Standing|Probation/.test(n.title)).map((n) => `${new Date(n.at).toISOString().slice(0, 10)} ${n.title}: ${n.body.slice(0, 400)}`),
   breaches: breaches(sim.universe).length,
 };
 console.log(JSON.stringify(out, null, 1));

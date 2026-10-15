@@ -25,7 +25,7 @@ import {
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
-import { playingPreview, playingRefusal, remedyWords, shortParts, showingForecast } from '@/engine/systems/coursework';
+import { playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, urgentWork } from '@/engine/systems/coursework';
 import { bandOfQuality, chiefLimit } from '@/engine/systems/evaluation';
 import { EVALUATION } from '@/engine/content/tasks';
 import { materialOf } from '@/engine/systems/material';
@@ -44,11 +44,24 @@ export function CourseworkPane() {
   const person = useWorld((s) => s.player);
   const cw = courseworkOf(sim, person);
   if (!cw) return null;
-  const open = cw.assignments.filter((a) => a.status === 'open' || a.status === 'revising');
+  // Soonest due first (from 2026-10-16, `urgentWork`): until then in the order each piece was set.
+  const urgent = urgentWork(sim, person);
+  const open = urgent.map((u) => u.a);
+  const short = urgent.filter((u) => u.short.length > 0).slice(0, 3);
   const past = cw.assignments.filter((a) => a.status !== 'open' && a.status !== 'revising').slice(-12).reverse();
   return (
     <div className="col gap-5">
       {!cw.orientation.behind && <FirstWeek />}
+      {short.length > 0 && (
+        <Panel title="Due Soonest" help="school.prepare">
+          <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
+            {short.map(({ a, due, forecast, short: parts }) => {
+              const t = templateById(a.template)!;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}: about {forecast.toFixed(1)} ({BAND_LABEL[bandOfQuality(forecast)]}) shown today. Short of complete: {parts.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</li>;
+            })}
+          </ul>
+        </Panel>
+      )}
       {open.length === 0
         ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}

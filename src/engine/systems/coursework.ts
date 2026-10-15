@@ -1115,6 +1115,18 @@ export function shortParts(person: Person, a: Assignment): PrepDim[] {
   return (Object.entries(preparedParts(person, a, due)) as [PrepDim, number][]).filter(([d, v]) => w[d] !== undefined && v < EVALUATION.complete.coursework - 0.005).map(([d]) => d);
 }
 
+/**
+ * The open work in the order to prepare it (from 2026-10-16): soonest due first, and of two due the same day the one
+ * that would come out lower shown today. Each comes with that figure and its parts short of complete. Until then the
+ * panel listed the work in the order it was set, and nothing on it said which piece was most urgent.
+ */
+export function urgentWork(sim: Simulation, person: Person): { a: Assignment; due: string; forecast: number; short: PrepDim[] }[] {
+  return (courseworkOf(sim, person)?.assignments ?? [])
+    .filter((a) => a.status === 'open' || a.status === 'revising')
+    .map((a) => ({ a, due: a.status === 'revising' ? a.revision!.dueOn : a.dueOn, forecast: showingForecast(sim, person, a).overall, short: shortParts(person, a) }))
+    .sort((x, y) => x.due.localeCompare(y.due) || x.forecast - y.forecast);
+}
+
 /** The steps that answer a part, in words (from 2026-10-16): the partner part by asking the partner for an evening, or a reader. */
 export function remedyWords(a: Assignment, dim: PrepDim): string {
   const acts = activitiesOf(a).filter((x) => x.dim === dim);

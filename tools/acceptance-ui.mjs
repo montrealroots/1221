@@ -1074,15 +1074,17 @@ if (DIR) {
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
     return words.slice(0, 220);
   });
-  await step('[save: workload scenario] coursework: a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
+  await step('[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
     await tab('Coursework');
+    const soonest = (await page.locator('[data-due-soonest] li').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
+    must(/^[^:]+: .+, due .+: about \d+\.\d \((Unready|Working|Strong|Exceptional)\) shown today\. Short of complete: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
     must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
     id = await forecast().getAttribute('data-shown-today');
     const words = (await forecast().innerText()).replace(/\s+/g, ' ');
     must(/^Shown Today: on a good day it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
     must(/Short of complete: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
     shown = await figure(id);
-    return words.slice(0, 260);
+    return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;
   });
   await step('[save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises', async () => {
     const panel = page.locator('.panel').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();

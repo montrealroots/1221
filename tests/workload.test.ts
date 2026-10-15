@@ -12,7 +12,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { EVALUATION } from '@/engine/content/tasks';
-import { courseworkOf, remedyWords, shortParts, showingForecast, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
+import { courseworkOf, remedyWords, shortParts, showingForecast, urgentWork, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
 import { classPeriod, ESTIMATE } from '@/engine/systems/school';
 import { chiefLimit } from '@/engine/systems/evaluation';
 
@@ -91,6 +91,23 @@ describe('school workload, said before it’s held against you', () => {
     // The forecast reads no day: the same whatever the student's readiness now.
     sim.player.wellbeing.energy = 10;
     expect(showingForecast(sim, sim.player, a).overall).toBe(withIt.overall);
+  }, 120_000);
+
+  it('the work is listed in the order to prepare it: soonest due first, and of two due the same day the one that would come out lower', () => {
+    const sim = life('workload-forecast');
+    tended(sim, at(2026, 9, 10));
+    const u = urgentWork(sim, sim.player);
+    expect(u.length).toBeGreaterThanOrEqual(3);
+    for (let i = 1; i < u.length; i += 1) expect(u[i - 1]!.due <= u[i]!.due).toBe(true);
+    expect(u.map((x) => x.forecast)).toEqual(u.map((x) => showingForecast(sim, sim.player, x.a).overall));
+    // Two due the same day: TEST SETUP the first of them prepared to complete, and it goes after the other.
+    const day = u.find((x, i) => u.findIndex((y) => y.due === x.due) !== i)!.due;
+    const [first, second] = u.filter((x) => x.due === day);
+    for (const k of Object.keys(first!.a.prep) as (keyof Assignment['prep'])[]) first!.a.prep[k] = 1;
+    first!.a.reader = 1;
+    const v = urgentWork(sim, sim.player).filter((x) => x.due === day);
+    expect(v[0]!.a.id).toBe(second!.a.id);
+    expect(v.find((x) => x.a.id === first!.a.id)!.forecast).toBeGreaterThan(v[0]!.forecast);
   }, 120_000);
 
   it('PLAYER JOURNEY: the term’s review names what held the Unready pieces back, and what answers it', () => {
