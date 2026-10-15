@@ -1,0 +1,854 @@
+{
+ "mode": "plan",
+ "genre": "musical",
+ "seed": "m-0",
+ "targets": [
+  "emotionalDepth",
+  "imagination",
+  "listening",
+  "presence",
+  "memory",
+  "focus",
+  "composure",
+  "discipline",
+  "adaptability",
+  "physical",
+  "vocal",
+  "stamina",
+  "screen",
+  "scene",
+  "singing",
+  "dance"
+ ],
+ "masteredOn": "2030-10-16",
+ "graduated": "2029-05-21",
+ "standing": "graduated",
+ "brief": "brief-musical",
+ "progress": {
+  "emotionalDepth": {
+   "sessions": 239,
+   "start": 58,
+   "firstSession": "2027-06-19",
+   "full": {
+    "day": 1514,
+    "date": "2030-10-16",
+    "sessions": 239
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "imagination": {
+   "sessions": 314,
+   "start": 50.2,
+   "firstSession": "2026-11-08",
+   "full": {
+    "day": 1514,
+    "date": "2030-10-16",
+    "sessions": 314
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "listening": {
+   "sessions": 268,
+   "start": 54.5,
+   "firstSession": "2027-05-17",
+   "full": {
+    "day": 1512,
+    "date": "2030-10-14",
+    "sessions": 268
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "presence": {
+   "sessions": 293,
+   "start": 60.2,
+   "firstSession": "2027-03-13",
+   "full": {
+    "day": 1512,
+    "date": "2030-10-14",
+    "sessions": 293
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "memory": {
+   "sessions": 336,
+   "start": 49.1,
+   "firstSession": "2026-08-25",
+   "full": {
+    "day": 1514,
+    "date": "2030-10-16",
+    "sessions": 336
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "focus": {
+   "sessions": 302,
+   "start": 54.6,
+   "firstSession": "2026-12-22",
+   "full": {
+    "day": 1513,
+    "date": "2030-10-15",
+    "sessions": 302
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "composure": {
+   "sessions": 340,
+   "start": 44.3,
+   "firstSession": "2026-08-25",
+   "full": {
+    "day": 1512,
+    "date": "2030-10-14",
+    "sessions": 340
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "discipline": {
+   "sessions": 0,
+   "start": 57.5,
+   "full": {
+    "day": 412,
+    "date": "2027-10-10",
+    "sessions": 0
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "adaptability": {
+   "sessions": 309,
+   "start": 56.1,
+   "firstSession": "2026-12-25",
+   "full": {
+    "day": 1511,
+    "date": "2030-10-13",
+    "sessions": 309
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "physical": {
+   "sessions": 312,
+   "start": 50.2,
+   "firstSession": "2026-12-03",
+   "full": {
+    "day": 1511,
+    "date": "2030-10-13",
+    "sessions": 312
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "vocal": {
+   "sessions": 304,
+   "start": 52.5,
+   "firstSession": "2026-12-05",
+   "full": {
+    "day": 1512,
+    "date": "2030-10-14",
+    "sessions": 304
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "stamina": {
+   "sessions": 398,
+   "start": 50,
+   "firstSession": "2026-08-25",
+   "full": {
+    "day": 309,
+    "date": "2027-06-29",
+    "sessions": 115
+   },
+   "end": 98.72,
+   "fullAt": 98.9
+  },
+  "screen": {
+   "sessions": 340,
+   "start": 52.5,
+   "firstSession": "2026-11-01",
+   "mastered": {
+    "day": 1214,
+    "date": "2029-12-20",
+    "sessions": 256
+   },
+   "full": {
+    "day": 1513,
+    "date": "2030-10-15",
+    "sessions": 340
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "scene": {
+   "sessions": 272,
+   "start": 52.9,
+   "firstSession": "2026-12-25",
+   "mastered": {
+    "day": 1214,
+    "date": "2029-12-20",
+    "sessions": 188
+   },
+   "full": {
+    "day": 1514,
+    "date": "2030-10-16",
+    "sessions": 272
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "singing": {
+   "sessions": 317,
+   "start": 55.7,
+   "firstSession": "2026-12-11",
+   "mastered": {
+    "day": 1212,
+    "date": "2029-12-18",
+    "sessions": 234
+   },
+   "full": {
+    "day": 1513,
+    "date": "2030-10-15",
+    "sessions": 317
+   },
+   "end": 100,
+   "fullAt": 100
+  },
+  "dance": {
+   "sessions": 352,
+   "start": 51.6,
+   "firstSession": "2026-10-24",
+   "mastered": {
+    "day": 1212,
+    "date": "2029-12-18",
+    "sessions": 257
+   },
+   "full": {
+    "day": 1513,
+    "date": "2030-10-15",
+    "sessions": 352
+   },
+   "end": 100,
+   "fullAt": 100
+  }
+ },
+ "familiarity": 90.3,
+ "known": 100,
+ "prep": {
+  "interpretation": 0.848,
+  "memorization": 0.853,
+  "rehearsal": 0.828
+ },
+ "tapesOnTheWay": [
+  {
+   "date": "2026-09-24",
+   "overall": 56.4,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2026-10-24",
+   "overall": 58.1,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2026-11-23",
+   "overall": 59,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2026-12-22",
+   "overall": 44,
+   "mastery": false,
+   "readiness": 80
+  },
+  {
+   "date": "2027-01-22",
+   "overall": 61.8,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-02-21",
+   "overall": 63.4,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-03-23",
+   "overall": 64.5,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-04-22",
+   "overall": 65.6,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-05-21",
+   "overall": 60.2,
+   "mastery": false,
+   "readiness": 82
+  },
+  {
+   "date": "2027-06-20",
+   "overall": 63,
+   "mastery": false,
+   "readiness": 78
+  },
+  {
+   "date": "2027-07-20",
+   "overall": 64.2,
+   "mastery": false,
+   "readiness": 81
+  },
+  {
+   "date": "2027-08-19",
+   "overall": 66.8,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2027-09-19",
+   "overall": 67.3,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-10-19",
+   "overall": 68.2,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-11-18",
+   "overall": 67.7,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2027-12-17",
+   "overall": 69.8,
+   "mastery": false,
+   "readiness": 82
+  },
+  {
+   "date": "2028-01-17",
+   "overall": 50,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-02-16",
+   "overall": 71.4,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-03-17",
+   "overall": 70.8,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-04-16",
+   "overall": 71.3,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-05-15",
+   "overall": 72,
+   "mastery": false,
+   "readiness": 58
+  },
+  {
+   "date": "2028-06-14",
+   "overall": 74,
+   "mastery": false,
+   "readiness": 64
+  },
+  {
+   "date": "2028-07-14",
+   "overall": 74.5,
+   "mastery": false,
+   "readiness": 57
+  },
+  {
+   "date": "2028-08-13",
+   "overall": 76.9,
+   "mastery": false,
+   "readiness": 59
+  },
+  {
+   "date": "2028-09-13",
+   "overall": 77.3,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-10-13",
+   "overall": 76.8,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-11-12",
+   "overall": 76.8,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2028-12-11",
+   "overall": 77.1,
+   "mastery": false,
+   "readiness": 57
+  },
+  {
+   "date": "2029-01-11",
+   "overall": 79.7,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-02-10",
+   "overall": 79.8,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-03-12",
+   "overall": 79.5,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-04-11",
+   "overall": 80,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-05-11",
+   "overall": 82.2,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-06-10",
+   "overall": 83.4,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-07-10",
+   "overall": 84.1,
+   "mastery": false,
+   "readiness": 100
+  },
+  {
+   "date": "2029-08-09",
+   "overall": 85.3,
+   "mastery": false,
+   "readiness": 80
+  },
+  {
+   "date": "2029-09-08",
+   "overall": 86.2,
+   "mastery": false,
+   "readiness": 94
+  },
+  {
+   "date": "2029-10-08",
+   "overall": 87.2,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2029-11-07",
+   "overall": 88.5,
+   "mastery": false,
+   "readiness": 80
+  },
+  {
+   "date": "2029-12-07",
+   "overall": 89.4,
+   "mastery": false,
+   "readiness": 80
+  },
+  {
+   "date": "2030-01-06",
+   "overall": 90.6,
+   "mastery": false,
+   "readiness": 94
+  },
+  {
+   "date": "2030-02-05",
+   "overall": 92,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2030-03-07",
+   "overall": 92.8,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2030-04-06",
+   "overall": 93.8,
+   "mastery": false,
+   "readiness": 85
+  },
+  {
+   "date": "2030-05-06",
+   "overall": 94.7,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2030-06-05",
+   "overall": 95.8,
+   "mastery": false,
+   "readiness": 80
+  },
+  {
+   "date": "2030-07-05",
+   "overall": 67.9,
+   "mastery": false,
+   "readiness": 79
+  },
+  {
+   "date": "2030-08-04",
+   "overall": 68,
+   "mastery": false,
+   "readiness": 77
+  },
+  {
+   "date": "2030-09-03",
+   "overall": 98.5,
+   "mastery": false,
+   "readiness": 66
+  },
+  {
+   "date": "2030-10-03",
+   "overall": 99.6,
+   "mastery": false,
+   "readiness": 77
+  }
+ ],
+ "payoff": [
+  {
+   "date": "2030-10-18",
+   "overall": 100,
+   "mastery": true,
+   "readiness": 82
+  },
+  {
+   "date": "2030-10-19",
+   "overall": 100,
+   "mastery": true,
+   "readiness": 96
+  },
+  {
+   "date": "2030-10-20",
+   "overall": 100,
+   "mastery": true,
+   "readiness": 96
+  }
+ ],
+ "twins": {
+  "healthy": {
+   "overall": 100,
+   "mastery": true,
+   "dims": {
+    "believability": 100,
+    "interpretation": 100,
+    "connection": 100,
+    "execution": 100,
+    "consistency": 100,
+    "responsiveness": 100
+   },
+   "condition": {
+    "readiness": 89.66255109883244
+   },
+   "limits": []
+  },
+  "flu": {
+   "overall": 89.7,
+   "mastery": false,
+   "dims": {
+    "believability": 100,
+    "interpretation": 100,
+    "connection": 100,
+    "execution": 85,
+    "consistency": 100,
+    "responsiveness": 100
+   },
+   "condition": {
+    "readiness": 71.40120784563067,
+    "ill": true
+   },
+   "limits": [
+    "execution: Down With The Flu (\u221215)"
+   ]
+  },
+  "sprain": {
+   "overall": 70.2,
+   "mastery": false,
+   "dims": {
+    "believability": 100,
+    "interpretation": 100,
+    "connection": 100,
+    "execution": 60,
+    "consistency": 60,
+    "responsiveness": 100
+   },
+   "condition": {
+    "readiness": 95.68328673752569,
+    "injured": true
+   },
+   "limits": [
+    "execution: An Injury Still Mending (\u221240)",
+    "consistency: An Injury Still Mending (\u221240)"
+   ]
+  },
+  "concussion": {
+   "overall": 60,
+   "mastery": false,
+   "dims": {
+    "believability": 60,
+    "interpretation": 60,
+    "connection": 60,
+    "execution": 60,
+    "consistency": 60,
+    "responsiveness": 60
+   },
+   "condition": {
+    "readiness": 95.68328673752569,
+    "concussed": true
+   },
+   "limits": [
+    "execution: A Concussion Still Mending (\u221240)",
+    "believability: A Concussion Still Mending (\u221240)",
+    "interpretation: A Concussion Still Mending (\u221240)"
+   ]
+  },
+  "deep cut": {
+   "overall": 100,
+   "mastery": true,
+   "dims": {
+    "believability": 100,
+    "interpretation": 100,
+    "connection": 100,
+    "execution": 100,
+    "consistency": 100,
+    "responsiveness": 100
+   },
+   "condition": {
+    "readiness": 89.66255109883244
+   },
+   "limits": []
+  },
+  "flu, recovered": {
+   "overall": 100,
+   "mastery": true,
+   "dims": {
+    "believability": 100,
+    "interpretation": 100,
+    "connection": 100,
+    "execution": 100,
+    "consistency": 100,
+    "responsiveness": 100
+   },
+   "condition": {
+    "readiness": 91.18996054525842
+   },
+   "limits": []
+  },
+  "sprain, recovered": {
+   "overall": 70.2,
+   "mastery": false,
+   "dims": {
+    "believability": 99.9,
+    "interpretation": 100,
+    "connection": 99.9,
+    "execution": 60,
+    "consistency": 60,
+    "responsiveness": 99.9
+   },
+   "condition": {
+    "readiness": 95.40852521390248,
+    "injured": true
+   },
+   "limits": [
+    "execution: An Injury Still Mending (\u221240)",
+    "consistency: An Injury Still Mending (\u221240)",
+    "believability: Stamina, By Beat 3 (\u22120.1)"
+   ]
+  }
+ },
+ "journeyMastery": {
+  "scene": 0,
+  "written": 0,
+  "movement": 0,
+  "voice": 0,
+  "improvisation": 0,
+  "tapeOnFeet": 3,
+  "partnered": 0,
+  "performance": 0,
+  "clown": 0,
+  "song": 0,
+  "camera": 0,
+  "audition": 0
+ },
+ "refused": {
+  "sessions a day": 16,
+  "four hours today": 69132,
+  "one workout a day": 964,
+  "Rehearsal With Lucia starts at N:N PM: there isn\u2019t the time ": 196,
+  "Rehearsal With Lucia is at N:N PM, and there isn\u2019t time.": 13,
+  "already practised today": 721,
+  "You\u2019re at Rehearsal With Lucia until N:N PM.": 210,
+  "Rehearsal With Isaiah starts at N:N PM: there isn\u2019t the time": 210,
+  "Rehearsal With Isaiah is at N:N PM, and there isn\u2019t time.": 13,
+  "You\u2019re at Rehearsal With Isaiah until N:N PM.": 225,
+  "You\u2019re at Work-Study Shift until N:N PM.": 6558,
+  "You\u2019re at Drama N: The Theatrical Event until N:N PM.": 627,
+  "Rehearsal With Grace starts at N:N PM: there isn\u2019t the time ": 168,
+  "Rehearsal With Grace is at N:N PM, and there isn\u2019t time.": 11,
+  "You\u2019re at Rehearsal With Grace until N:N PM.": 179,
+  "Rehearsal With Hannah starts at N:N PM: there isn\u2019t the time": 210,
+  "Rehearsal With Hannah is at N:N PM, and there isn\u2019t time.": 15,
+  "You\u2019re at Rehearsal With Hannah until N:N PM.": 227,
+  "Rehearsal With Zoe starts at N:N PM: there isn\u2019t the time be": 196,
+  "Rehearsal With Zoe is at N:N PM, and there isn\u2019t time.": 13,
+  "You\u2019re at Rehearsal With Zoe until N:N PM.": 210,
+  "Rehearsal With Chloe is at N:N PM, and there isn\u2019t time.": 13,
+  "Rehearsal With Chloe starts at N:N PM: there isn\u2019t the time ": 224,
+  "You\u2019re at Rehearsal With Chloe until N:N PM.": 237,
+  "Rehearsal With Imani is at N:N PM, and there isn\u2019t time.": 22,
+  "Rehearsal With Imani starts at N:N PM: there isn\u2019t the time ": 336,
+  "You\u2019re at Rehearsal With Imani until N:N PM.": 387,
+  "Rehearsal With Samuel starts at N:N PM: there isn\u2019t the time": 196,
+  "You\u2019re at Rehearsal With Samuel until N:N PM.": 222,
+  "Rehearsal With Samuel is at N:N PM, and there isn\u2019t time.": 11,
+  "Rehearsal With Marcus is at N:N PM, and there isn\u2019t time.": 8,
+  "Rehearsal With Marcus starts at N:N PM: there isn\u2019t the time": 126,
+  "You\u2019re at Rehearsal With Marcus until N:N PM.": 164,
+  "Rehearsal With Elena starts at N:N PM: there isn\u2019t the time ": 196,
+  "Rehearsal With Elena is at N:N PM, and there isn\u2019t time.": 13,
+  "You\u2019re at Rehearsal With Elena until N:N PM.": 239,
+  "Rehearsal With Priya starts at N:N PM: there isn\u2019t the time ": 280,
+  "Rehearsal With Priya is at N:N PM, and there isn\u2019t time.": 20,
+  "You\u2019re at Rehearsal With Priya until N:N PM.": 315,
+  "Rehearsal With Mateo starts at N:N PM: there isn\u2019t the time ": 238,
+  "Rehearsal With Mateo is at N:N PM, and there isn\u2019t time.": 18,
+  "You\u2019re at Rehearsal With Mateo until N:N PM.": 286,
+  "Rehearsal With Ethan starts at N:N PM: there isn\u2019t the time ": 168,
+  "You\u2019re at Rehearsal With Ethan until N:N PM.": 195,
+  "Rehearsal With Ethan is at N:N PM, and there isn\u2019t time.": 11,
+  "Rehearsal With Sofia starts at N:N PM: there isn\u2019t the time ": 209,
+  "Rehearsal With Sofia is at N:N PM, and there isn\u2019t time.": 16,
+  "You\u2019re at Rehearsal With Sofia until N:N PM.": 241,
+  "Rehearsal With Daniel is at N:N PM, and there isn\u2019t time.": 16,
+  "You\u2019re at Rehearsal With Daniel until N:N PM.": 246,
+  "Rehearsal With Daniel starts at N:N PM: there isn\u2019t the time": 182,
+  "Running Lines With Elena is at N:N PM, and there isn\u2019t time.": 2,
+  "You\u2019re at Running Lines With Elena until N:N PM.": 16,
+  "You\u2019re too tired to train. Sleep first.": 19,
+  "Not with a pulled muscle; it has N days yet to mend.": 260,
+  "Not with a pulled muscle; it has N day yet to mend.": 22,
+  "You\u2019re at The Seagull: Understudy Rehearsal until N:N PM.": 489,
+  "You\u2019re at The Seagull: Understudy Run-Through until N:N PM.": 30,
+  "You\u2019re at The New Play Lab until N:N PM.": 450,
+  "Running Lines With Samuel starts at N:N PM: there isn\u2019t the ": 14,
+  "Running Lines With Samuel is at N:N PM, and there isn\u2019t time": 1,
+  "You\u2019re at Running Lines With Samuel until N:N PM.": 15,
+  "You\u2019re at Carlotta Festival Of New Plays: Read-Through until": 90,
+  "You\u2019re at Carlotta Festival Of New Plays: Blocking Rehearsal": 354,
+  "You\u2019re at Carlotta Festival Of New Plays: Rehearsal until N:": 450,
+  "You\u2019re at Carlotta Festival Of New Plays: Technical Rehearsa": 90,
+  "You\u2019re at Carlotta Festival Of New Plays: Dress Rehearsal un": 90,
+  "You\u2019re at Yale Rep\u2019s October Production: Understudy Rehearsa": 981,
+  "You\u2019re at Directors\u2019 Thesis Production I: Read-Through until": 90,
+  "You\u2019re at Directors\u2019 Thesis Production I: Blocking Rehearsal": 360,
+  "Running Lines With Daniel starts at N:N PM: there isn\u2019t the ": 14,
+  "Running Lines With Daniel is at N:N PM, and there isn\u2019t time": 1,
+  "You\u2019re at Running Lines With Daniel until N:N PM.": 15,
+  "You\u2019re at Directors\u2019 Thesis Production I: Rehearsal until N:": 495,
+  "You\u2019re at Directors\u2019 Thesis Production I: Technical Rehearsa": 75,
+  "You\u2019re at Directors\u2019 Thesis Production I: Dress Rehearsal un": 75,
+  "Directors\u2019 Thesis Production I: Performance starts at N:N PM": 98,
+  "Directors\u2019 Thesis Production I: Performance is at N:N PM, an": 7,
+  "You\u2019re at Directors\u2019 Thesis Production I: Performance until ": 240,
+  "You\u2019re at Yale Rep\u2019s October Production: Understudy Run-Thro": 60,
+  "Running Lines With Sofia starts at N:N PM: there isn\u2019t the t": 28,
+  "Running Lines With Sofia is at N:N PM, and there isn\u2019t time.": 2,
+  "You\u2019re at Running Lines With Sofia until N:N PM.": 30,
+  "You\u2019re at Directors\u2019 Thesis Production III: Read-Through unt": 84,
+  "You\u2019re at Directors\u2019 Thesis Production III: Blocking Rehears": 348,
+  "You\u2019re at Directors\u2019 Thesis Production III: Rehearsal until ": 450,
+  "Running Lines With Isaiah starts at N:N PM: there isn\u2019t the ": 28,
+  "You\u2019re at Running Lines With Isaiah until N:N PM.": 30,
+  "You\u2019re at Directors\u2019 Thesis Production III: Technical Rehear": 90,
+  "You\u2019re at Directors\u2019 Thesis Production III: Dress Rehearsal ": 90,
+  "Directors\u2019 Thesis Production III: Performance starts at N:N ": 84,
+  "You\u2019re at Directors\u2019 Thesis Production III: Performance unti": 210,
+  "Running Lines With Hannah starts at N:N PM: there isn\u2019t the ": 14,
+  "You\u2019re at Running Lines With Hannah until N:N PM.": 15,
+  "Running Lines With Lucia starts at N:N PM: there isn\u2019t the t": 14,
+  "Running Lines With Lucia is at N:N PM, and there isn\u2019t time.": 1,
+  "You\u2019re at Running Lines With Lucia until N:N PM.": 15,
+  "Running Lines With Priya starts at N:N PM: there isn\u2019t the t": 14,
+  "Running Lines With Priya is at N:N PM, and there isn\u2019t time.": 1,
+  "You\u2019re at Running Lines With Priya until N:N PM.": 15,
+  "Running Lines With Ethan starts at N:N PM: there isn\u2019t the t": 14,
+  "Running Lines With Ethan is at N:N PM, and there isn\u2019t time.": 1,
+  "You\u2019re at Running Lines With Ethan until N:N PM.": 15,
+  "Running Lines With Marcus starts at N:N PM: there isn\u2019t the ": 14,
+  "Running Lines With Marcus is at N:N PM, and there isn\u2019t time": 1,
+  "You\u2019re at Running Lines With Marcus until N:N PM.": 15,
+  "You\u2019re at Directors\u2019 Thesis Production II: Read-Through unti": 75,
+  "You\u2019re at Directors\u2019 Thesis Production II: Blocking Rehearsa": 525,
+  "Running Lines With Elena starts at N:N PM: there isn\u2019t the t": 14,
+  "You\u2019re at Directors\u2019 Thesis Production II: Rehearsal until N": 840,
+  "Running Lines With Chloe starts at N:N PM: there isn\u2019t the t": 14,
+  "Running Lines With Chloe is at N:N PM, and there isn\u2019t time.": 1,
+  "You\u2019re at Running Lines With Chloe until N:N PM.": 15,
+  "You\u2019re at Directors\u2019 Thesis Production II: Technical Rehears": 90,
+  "You\u2019re at Directors\u2019 Thesis Production II: Dress Rehearsal u": 90,
+  "Directors\u2019 Thesis Production II: Performance starts at N:N P": 98,
+  "Directors\u2019 Thesis Production II: Performance is at N:N PM, a": 7,
+  "You\u2019re at Directors\u2019 Thesis Production II: Performance until": 210,
+  "You\u2019re at Shakespeare Repertory Project I: Read-Through unti": 90,
+  "You\u2019re at Shakespeare Repertory Project I: Blocking Rehearsa": 438,
+  "You\u2019re at Shakespeare Repertory Project I: Rehearsal until N": 630,
+  "You\u2019re at You Are The Creator: Your Showing until N:N PM.": 45,
+  "Running Lines With Imani starts at N:N PM: there isn\u2019t the t": 14,
+  "Running Lines With Imani is at N:N PM, and there isn\u2019t time.": 1,
+  "You\u2019re at Running Lines With Imani until N:N PM.": 15,
+  "You\u2019re at Shakespeare Repertory Project I: Technical Rehears": 90,
+  "You\u2019re at Shakespeare Repertory Project I: Dress Rehearsal u": 90,
+  "Shakespeare Repertory Project I: Performance starts at N:N P": 28,
+  "Shakespeare Repertory Project I: Performance is at N:N PM, a": 2,
+  "You\u2019re at Shakespeare Repertory Project I: Performance until": 60,
+  "Running Lines With Isaiah is at N:N PM, and there isn\u2019t time": 1,
+  "Not with a broken bone; it has N days yet to mend.": 927,
+  "Not with a broken bone; it has N day yet to mend.": 16,
+  "You\u2019re too tired to work on your feet. Sleep first.": 12
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "reloads": 49,
+ "hours": 36456
+}
