@@ -1,0 +1,195 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 88.3,
+  "training": 94,
+  "study": 45
+ },
+ "takes": 22,
+ "briefs": 15,
+ "readings": 22,
+ "genres": 13,
+ "purposes": {
+  "first": 15,
+  "another-reading": 7
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 3,
+   "mean": 55.1,
+   "min": 54,
+   "max": 56.8
+  },
+  "m2": {
+   "n": 3,
+   "mean": 56.1,
+   "min": 53.1,
+   "max": 57.8
+  },
+  "m3": {
+   "n": 16,
+   "mean": 55.5,
+   "min": 46.9,
+   "max": 59.8
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 15,
+  "mean": 0.45,
+  "max": 1,
+  "over1": 0
+ },
+ "notes": {
+  "takes": 22,
+  "distinct": 6,
+  "longestSame": 3,
+  "sameAgainInAnotherGenre": 4,
+  "withConcern": 14,
+  "concerns": [
+   "sincerity",
+   "rhythm",
+   "heightened",
+   "exactness",
+   "partnership",
+   "extremity",
+   "restraint"
+  ],
+  "asShown": {
+   "distinct": 13,
+   "longestSame": 2,
+   "sameAgainInAnotherGenre": 1
+  },
+  "sequence": [
+   "d2 absurdist first 54: Emotional Depth held back the believability",
+   "d13 coming_of_age first 56.8: Emotional Depth held back the believability: coming_of_age\u2019s sincerity",
+   "d14 absurdist another-reading 54.4: Focus held back the execution: absurdist\u2019s rhythm",
+   "d61 concert_film first 57.5: Emotional Depth held back the believability",
+   "d62 animated first 53.1: Vocal Expression held back the execution: animated\u2019s heightened",
+   "d62 coming_of_age another-reading 57.8: Emotional Depth held back the believability: coming_of_age\u2019s sincerity",
+   "d96 anime first 57.3: Focus held back the execution: anime\u2019s exactness",
+   "d97 prison_film first 58.6: Emotional Depth held back the believability: prison_film\u2019s partnership",
+   "d97 concert_film another-reading 57.7: Composure held back the consistency",
+   "d103 sea_adventure first 53.7: Emotional Depth held back the believability: sea_adventure\u2019s extremity",
+   "d105 animated first 55.3: Vocal Expression held back the execution: animated\u2019s heightened",
+   "d105 animated another-reading 53.1: Vocal Expression held back the execution: animated\u2019s heightened",
+   "d108 anime first 46.9: Vocal Expression held back the execution: anime\u2019s heightened",
+   "d110 spy first 59.8: Emotional Depth held back the believability",
+   "d110 anime another-reading 58.6: Focus held back the execution: anime\u2019s exactness",
+   "d111 war first 55.4: Physical Expression held back the execution: war\u2019s extremity",
+   "d113 espionage first 52.4: Composure held back the consistency: espionage\u2019s restraint",
+   "d114 prison_film another-reading 58.7: Emotional Depth held back the believability: prison_film\u2019s partnership",
+   "d116 gangster first 52.7: Emotional Depth held back the believability",
+   "d117 film_noir first 56.2: Emotional Depth held back the believability",
+   "d118 sea_adventure another-reading 53.6: Vocal Expression held back the execution",
+   "d119 blaxploitation first 58.2: Memory held back the execution"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 5,
+  "sequence": [
+   "7:imagination@57",
+   "14:imagination@57",
+   "21:focus@54",
+   "28:imagination@58",
+   "35:vocal@52",
+   "42:focus@54",
+   "49:vocal@53",
+   "56:focus@55",
+   "63:vocal@54",
+   "70:vocal@54",
+   "77:vocal@54",
+   "84:vocal@55",
+   "91:vocal@55",
+   "98:focus@56",
+   "105:vocal@56",
+   "112:composure@46",
+   "119:composure@49"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 58,
+  "presence": 68,
+  "listening": 55,
+  "imagination": 61,
+  "focus": 57,
+  "memory": 57,
+  "adaptability": 55,
+  "composure": 49,
+  "vocal": 58,
+  "physical": 58,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-espionage",
+   "genre": "espionage",
+   "reading": "father",
+   "sides": "",
+   "purpose": "first",
+   "overall": 52.4,
+   "chief": "Composure held back the consistency by 41.5 points",
+   "concern": "restraint"
+  },
+  {
+   "day": 114,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 58.7,
+   "chief": "Emotional Depth held back the believability by 19.3 points",
+   "concern": "partnership"
+  },
+  {
+   "day": 116,
+   "brief": "brief-gangster-2",
+   "genre": "gangster",
+   "reading": "fear",
+   "sides": "",
+   "purpose": "first",
+   "overall": 52.7,
+   "chief": "Emotional Depth held back the believability by 20.6 points"
+  },
+  {
+   "day": 117,
+   "brief": "brief-film_noir",
+   "genre": "film_noir",
+   "reading": "liked",
+   "sides": "",
+   "purpose": "first",
+   "overall": 56.2,
+   "chief": "Emotional Depth held back the believability by 16.2 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-sea_adventure",
+   "genre": "sea_adventure",
+   "reading": "craft",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 53.6,
+   "chief": "Vocal Expression held back the execution by 9.1 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-blaxploitation",
+   "genre": "blaxploitation",
+   "reading": "block",
+   "sides": "",
+   "purpose": "first",
+   "overall": 58.2,
+   "chief": "Memory held back the execution by 11.4 points"
+  }
+ ]
+}
