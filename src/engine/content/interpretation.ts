@@ -111,9 +111,13 @@ export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affini
  * `band`: where a side counts as suiting the scene or going against its grain. `concern`: what a register's affinity
  * counts for beside the scene's own signals. At 1, as first set, a genre's two scenes disagreed on the scale axis in 10% of
  * genres (criterion I2 asks 20%): the register outweighed everything the scene itself said, a genre rule by another name. Chosen against the criteria written
- * before (docs/verification/interpretation-2026-10-16/criteria.md).
+ * before (docs/verification/interpretation-2026-10-16/criteria.md). `reader`: what the reader's way of playing the other
+ * part (`READER_AFFINITY`) counts for, the same as a register's concern. It counted in full until later on 2026-10-16,
+ * twice what a concern did, set so when the reader was added and never weighed against the register: on the held-out
+ * briefs, where most readers press, withhold or surprise, it alone decided 40% of the cases where two genres that pull
+ * opposite ways came out alike (the genre signature's S3, docs/verification/genres-2026-10-16/g1-replacement.md).
  */
-export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5, reader: 1 } as const;
+export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5, reader: 0.5 } as const;
 
 export type GrainBand = 'suits' | 'either' | 'against';
 export const GRAIN_LABEL: Readonly<Record<GrainBand, string>> = { suits: 'Suits The Scene', either: 'Either Way', against: 'Against The Grain' };

@@ -156,7 +156,9 @@ function measure(scenes: readonly Brief[]) {
  * Related pairs (a concern shared) off the grid are measured beside them, for overlap kept, not for a threshold.
  */
 function validate() {
-  const PAIRS = ABILITIES.map((a, i) => actor({ [a]: 72, [ABILITIES[(i + 1) % ABILITIES.length]!]: 72 }, (600 - 144) / (ABILITIES.length - 2)));
+  // `--s3-profiles`: S3's own one-ability profiles in place of the pairs, a sensitivity run after the validation, not
+  // part of it (g1-replacement.md says which is which).
+  const PAIRS = flag('s3-profiles') ? SPECIALISTS : ABILITIES.map((a, i) => actor({ [a]: 72, [ABILITIES[(i + 1) % ABILITIES.length]!]: 72 }, (600 - 144) / (ABILITIES.length - 2)));
   const scenes = BRIEFS.filter((b) => b.readings.length > 1);
   const seen = new Set<string>();
   for (let i = 0; i < genres.length; i += 3) for (let j = i + 1; j < genres.length; j += 5) seen.add(`${genres[i]}|${genres[j]}`);
@@ -197,7 +199,7 @@ function validate() {
     return { cases: n, differ, share: r3(differ / Math.max(1, n)), withATie: ties, byReader: Object.fromEntries(Object.entries(byReader).map(([k, [a, c]]) => [k, `${a} of ${c} (${(100 * a / c).toFixed(1)}%)`])) };
   };
   const c = tally(contrasting);
-  return { scenes: scenes.length, readingPlayed: 'the second', profiles: 'two abilities at 72, each with the next', contrastingPairs: contrasting.length, relatedPairs: related.length, S3: { ...c, holds: c.differ / Math.max(1, c.cases) >= 0.8 }, related: tally(related) };
+  return { scenes: scenes.length, readingPlayed: 'the second', profiles: flag('s3-profiles') ? 'one ability at 85, as S3' : 'two abilities at 72, each with the next', contrastingPairs: contrasting.length, relatedPairs: related.length, S3: { ...c, holds: c.differ / Math.max(1, c.cases) >= 0.8 }, related: tally(related) };
 }
 
 // `--fresh`: the briefs neither sample read, for validating the revision (every brief not every third).
