@@ -26,16 +26,19 @@ deployed to Base44.
 npm install
 npm run dev          # http://localhost:5173
 npm run validate     # typecheck, lint, and the whole test suite
-npm run gate         # validate, then twelve checks on the words, the docs and the ledgers
+npm run gate         # validate, then seventeen checks on the words, the docs and the ledgers
 npm run build        # production bundle into dist/
 npm run audit        # build, serve it, and measure the layout in a real browser
 ```
 
 `npm run gate` is the gate: `npm run validate`, then title case, the label
 sweep, plurals, the voice, the tics, the docs' file references, what nothing
-reads, the deciders, spelling, typos, the gazetteer and the inventory. It must
-exit 0 before anything ships. It said `npm run validate` was the gate, which
-left the twelve checks out.
+reads, the deciders, spelling, typos, the gazetteer, the inventory, the
+developer map, the traceability table, the capabilities, the gameplay coverage
+audit and the student matrix (`package.json`, `gate`). It must exit 0 before
+anything ships. It said `npm run validate` was the gate, which left the checks
+out; then, until 2026-10-16, that it ran twelve, after the last five had joined
+it.
 
 ---
 
@@ -240,6 +243,9 @@ npm test
 | `livelihood` | What was left open after the money system: a notice at two months owed and eviction to a sofa that sleeps badly, a room again once there's a deposit, moving's deposit and the rest of the month, two months' deposit for a poor record, and the card's limit raised and cut by the record. A move refused under a notice to pay or quit, and paid for with the old deposit back counted. |
 | `day-bounds` | A day is a date on the calendar, not 24 hours: the night into a day whose clocks skip midnight, the Day look, the month grid, the plan form, the hours of the weather and the week ahead, on 23- and 25-hour days. |
 | `base44-contract` | The four server functions executed against an in-memory stand-in for the SDK: every guard, ordering rule and error path. |
+| `briefs`, `genre-identity`, `genre-reader` | A practice brief chosen, prepared and taped; each genre's register read by its takes and told apart from the others; the reader's way of playing weighed as a register's concern is. |
+| `interpretation`, `interpretation-journey`, `stage-interpretation` | A way of playing read against the scene: what suits it and what goes against its grain, by its genre, reader, medium, features, circumstances and the reading taken; the stage's house read as projection; every side that fits reaching 100 at full ability. |
+| `advice`, `workload` | What to improve next, forecast on the real growth curve; a piece's Shown Today forecast, the term's warning counted as its review counts, and the review naming the cause. |
 | `interface`, `navigation`, `cohesion` | The interface is text, every door opens onto something, and the screens agree with the engine. |
 | `server-guards` | The server-side checks that stand between a browser and storage. |
 | `base44-adapter` | The client speaks the platform's documented protocol: invoke by name, JSON on `.data`, non-2xx thrown, local mirroring, graceful fallback. |

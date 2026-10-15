@@ -33,7 +33,8 @@ On `5b27379` (`criteria-after.json`):
    scene names, the first a play is listed under. Their suitability only; the register's lean and draw on class work
    are as they were. Found by the fresh set, below.
 3. **The stage leans a quarter each way** (`MEDIUM_AFFINITY.stage`, expansive 0.5 and restrained −0.25 until then), as
-   the camera was set earlier the same day. Found by the fresh set, below.
+   the camera was set earlier the same day. Found by the fresh set, below. It leaned so until evaluation-8, later the
+   same day, when it came to lean no way, the house read as projection on the execution (`../stage-2026-10-16/`).
 
 A fourth change was tried and taken back: grave beats carrying restraint at a quarter, the mirror of comic beats
 carrying size. It pushed the designed briefs to 20.9% expansive and was a weaker argument than the others.
@@ -58,11 +59,14 @@ carrying size. It pushed the designed briefs to 20.9% expansive and was a weaker
   only scale signal a class scene had.
 - **What was changed in response.** Changes 2 and 3 above. After them the spread is 1.52, but expansive is still ahead on
   every one. Since the set informed those changes, it's no longer an independent test.
-- **Why it still fails.** The registers of the theater genres a class scene can name (drama: Played Straight; comedy:
-  Comic Rhythm; tragedy: Played Large, States At The Limit; tragicomedy: Comic Rhythm) carry nothing that favors
-  restraint. A class scene has no reader, and no signal of its own that does either. So on stage, for an even actor,
-  expansive is the better scale on every class scene. That breaks "no universal best interpretation" on that axis on
-  stage. Other axes (pace, structure) still give two or more interpretations within a point on every one (I5, 100%).
-- **What would fix it, and why it isn't done here.** It needs content, not a coefficient: each class scene's own
-  register, from what its text asks (The Seagull's subtext, A Doll's House's last scene). Inventing a signal to pass
-  would be the arbitrary difference the brief rules out. That's a research task, and the owner's to authorize.
+- **Why it still failed then.** This said the registers of the theater genres a class scene can name (drama: Played
+  Straight; comedy: Comic Rhythm; tragedy: Played Large, States At The Limit; tragicomedy: Comic Rhythm) carried
+  nothing that favors restraint. Drama's did: Played Straight carries restrained a quarter, an eighth at the register's
+  half weight, and never outweighed the house's quarter and a voice's demand counted as size. A class scene had no
+  reader, and no signal of its own for restraint. So on stage, for an even actor, expansive was the better scale on
+  every class scene, which broke "no universal best interpretation" on that axis on stage. Other axes (pace,
+  structure) still gave two or more interpretations within a point on every one (I5, 100%).
+- **What would fix it.** This said it needed content, not a coefficient (each class scene's own register, from what its
+  text asks), and that it was a research task, the owner's to authorize. The owner's next brief, the same day, asked
+  for it: the house was read as projection and not as size, and each scene's circumstances were read from its text
+  (`../stage-2026-10-16/`). Restrained came out ahead on 50 of the 85 and expansive on 33.

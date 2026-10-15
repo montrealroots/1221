@@ -2,7 +2,8 @@
 
 The owner's brief "Finish Genre Interpretation, Improve Training Advice, And Prove Long-Term Integration", part 2. The
 measure was written before it was first run (`criteria.md`); `tools/advice.ts` plays it, through the harness
-`tools/advice-harness.ts` that `tests/advice.test.ts` shares. Not merged, not deployed.
+`tools/advice-harness.ts` that `tests/advice.test.ts` shares. Merged to `main` in pull request #31 (`eb0b6022`); not
+deployed.
 
 ## The Cause
 

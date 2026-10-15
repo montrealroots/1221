@@ -2,7 +2,8 @@
 
 The owner's brief "Complete Genre Differentiation And Prove Each Genre's Identity", done on `claude/zen-mccarthy-i88ujw`
 from `main` at `35d032d`. It uses the work plan's dating (2026-10-16); the commits are dated 2026-10-14 and 2026-10-15
-by the clock. It's not merged or deployed. The complete genre matrix is `genre-matrix.md`.
+by the clock. Merged to `main` in pull request #31 (`eb0b6022`); not deployed. The complete genre matrix is
+`genre-matrix.md`.
 
 ## What Was Wrong
 
@@ -193,15 +194,20 @@ matrix's brief counts, which the pairs' revisions had moved. `ecd76e4` regenerat
   rightly share a register are each other's nearest neighbors. With the register at a reading's strength it's 0.95×,
   and 1.22× with length and stakes held. Feature floors from each genre's concerns across 152 briefs would reach 1.38.
   The thresholds weren't moved. Keeping 1.5 means one formula per genre; recalibrating it, or measuring the controlled
-  ratio, is the owner's call.
+  ratio, is the owner's call. **Settled since:** G1 was replaced by the genre signature, defined before it ran
+  (`g1-replacement.md`), which passes on every sample from evaluation-7, its S2 as revised.
 - **A way of playing it doesn't interact with the genre.** Restrained against expansive moves a take by the actor's own
   abilities, the same within a tenth in Nordic noir, melodrama and social realism. A reading's advantage moves about a
   tenth between genres too. A genre-appropriate choice shows in who the genre rewards and which preparation pays, not in
   the playing choice. Making some ways of playing suit a genre would be a rule that some interpretations are less right,
-  against the house rule that none is: the owner's decision.
-- **F2 is a little worse:** 301 of 447, against 311.
+  against the house rule that none is: the owner's decision. **Superseded the same day:** the owner's next brief asked
+  for it, and a way of playing is now read against the scene, its genre's register among what it reads, without making
+  any side wrong (`../interpretation-2026-10-16/`).
+- **F2 is a little worse:** 301 of 447, against 311. **Superseded the same day:** F2's measurement was found to be
+  flawed, and its replacement, F2-A, played 40 of 40 (`../advice-2026-10-16/`).
 - **The register's claims are mostly the research's low-confidence ones**, and 36 genres' are SLATE's reading. A brief
   listed under further genres is played in the register of the genre it was written for (`kinds[0]`).
 - **Not re-run:** the long journeys through graduation and the mastery plans (`tools/mastery.ts --mode plan`), as phase
-  2c of the attributes brief would. The scenario saves were written again for the acceptance run, and each ended with
+  2c of the attributes brief would. **Run since:** `../journeys-2026-10-16/`, and on evaluation-8
+  `../stage-2026-10-16/runs/`. The scenario saves were written again for the acceptance run, and each ended with
   breaches 0 and unbalanced 0.

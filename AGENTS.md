@@ -3,7 +3,9 @@
 ## What this is
 
 SLATE is a Vite 5 + React 18 + TypeScript single-page app — an actor/actress life
-simulator. The entire simulation runs in the browser; saves go to localStorage.
+simulator. The entire simulation runs in the browser; saves go to IndexedDB, and to
+localStorage where IndexedDB isn't available (`src/engine/persistence/local.ts`). Until
+then they went to localStorage alone, and a save found there is moved across on load.
 No backend is needed for local development.
 
 ## Running it
@@ -36,4 +38,7 @@ env var is also passed through from the platform.
 - `curl localhost:3000` should return the SLATE HTML shell.
 - The app renders a startup screen with three save slots.
 - `npm run validate` runs typecheck + lint + tests.
-- `npm run gate` is the full verification gate (validate + 15 doc/code checks; 16 until catalog-coverage left it on 2026-10-09).
+- `npm run gate` is the full verification gate: validate, then 17 doc and code checks
+  (`package.json`, `gate`). This said 15 until 2026-10-16, after coverage (2026-10-13)
+  and student-matrix (2026-10-10) had joined it; it was 16 until catalog-coverage left it
+  on 2026-10-09.

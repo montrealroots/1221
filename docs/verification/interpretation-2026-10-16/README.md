@@ -3,7 +3,7 @@
 The owner's brief "Finish Genre Interpretation, Improve Training Advice, And Prove Long-Term Integration", part 1, on
 `claude/zen-mccarthy-i88ujw` after the genre differentiation of the same day. The criteria were written before the model
 was tuned (`criteria.md`); `tools/interpretation.ts` measures them, `tools/interpretation-examples.ts` writes
-`examples.md`. Not merged, not deployed.
+`examples.md`. Merged to `main` in pull request #31 (`eb0b6022`); not deployed.
 
 ## What Was Wrong
 
@@ -21,11 +21,12 @@ an affinity for the sides it bears on, and what it rests on:
 | Signal | Carries | Works Against | Why |
 |---|---|---|---|
 | The genre's register, at half weight | e.g. Feeling Held In: restrained, measured; Comic Rhythm: driven, set; Caught Live: open | e.g. expansive; measured; set | each concern's principle, cited in `content/concerns.ts` |
-| The reader | pressing: driven, open, expansive; withholding: measured, restrained; unpredictable: open | measured; driven; set | met, waited out, taken live |
-| The medium | a close frame: restrained; a house: expansive | expansive; restrained | the scale the medium takes |
+| The reader, at half weight from evaluation-7 (in full until then) | pressing: driven, open, expansive; withholding: measured, restrained; unpredictable: open | measured; driven; set | met, waited out, taken live |
+| The medium | a close frame: restrained; a house: expansive, until evaluation-8, when it came to lean no way (`../stage-2026-10-16/`) | expansive; restrained, until evaluation-8 | the scale the medium takes |
 | Its tones, by share | comic: driven, expansive; grave and lyric: measured; grotesque: expansive | comic: measured | a joke wants pace, grief wants time |
 | Its turns, up to three | measured | | a turn earned, not skipped |
-| Its features, by level | timing: driven, set; improvisation: open; a physical score: set; a partner at 3: open; voice work: expansive | improvisation: set | what each asks of the playing |
+| Its features, by level | timing: driven, set; improvisation: open; a physical score: set; a partner at 3: open; voice work: expansive (on stage, not from evaluation-8) | improvisation: set | what each asks of the playing |
+| A stage scene's circumstances, by level, from evaluation-8 | what's kept hidden and a private exchange: restrained; spoken to many and a conflict out loud: expansive | the other side of each | what the text says the scene hides, how private it is, who it's spoken to |
 | Its language | heightened: expansive; verse: set, measured | | sized to; placed and given time |
 | No one but the lens | expansive | | presence carries it |
 | The reading taken | the side that leans the way the reading leans | the side that leans away | a reading that puts weight on consistency coheres with playing it set |
@@ -78,15 +79,16 @@ out). `--off` is the way of playing as it was.
 | I4: the even actor follows suitability (≥ 75%) | 100% | 100% | 37.3% |
 | I5: two or more interpretations within a point (≥ 80%) | 100% | 100% | 100% |
 
-**Where it falls short, and why:**
-- **I3's sign clause fails on the designed briefs.** Expansive comes out ahead in 23.0% of briefs against 25%. Its
-  suitability is the better side's in 41.9%. The gap is the camera's own weighting: a close frame weighs believability
-  1.2× (`CAMERA_LEAN`), and restrained leans on believability, so the same suitability is worth more to restrained. In
-  19 briefs expansive suits a little better (by 0.03 to 0.16, inside the Either Way band) and restrained still comes
-  out level or ahead. That's a real effect of the medium. The threshold wasn't moved, and nothing was bent to pass it.
-- **I3's spread fails on the held-out briefs.** It's 0.92 against 1.0. It was 2.03 before the camera was halved and the
-  register weighted at half. Those two changes traded spread for the genre-scene balance I2 asks; I2 holds and I3's
-  spread falls just short on the briefs not looked at.
+**Where it fell short, and why** (as measured here; both clauses passed later that day, after `i3-review.md`
+made a side's suitability reach every dimension it leans on, in proportion):
+- **I3's sign clause failed on the designed briefs.** Expansive came out ahead in 23.0% of briefs against 25%. Its
+  suitability was the better side's in 41.9%. The gap was the camera's own weighting: a close frame weighs believability
+  1.2× (`CAMERA_LEAN`), and restrained leans on believability, so the same suitability was worth more to restrained. In
+  19 briefs expansive suited a little better (by 0.03 to 0.16, inside the Either Way band) and restrained still came
+  out level or ahead. The threshold wasn't moved, and nothing was bent to pass it. After the review it was 27.0%.
+- **I3's spread failed on the held-out briefs.** It was 0.92 against 1.0, and 2.03 before the camera was halved and the
+  register weighted at half. Those two changes traded spread for the genre-scene balance I2 asks. After the review it
+  was 1.22.
 
 ## Proof
 
@@ -107,8 +109,9 @@ out). `--off` is the way of playing as it was.
 
 - Suitability is read on practice briefs from everything above. A class scene and a production's night read it from
   their material (tones, turns, features, language, medium) and, from later on 2026-10-16, their genre's register: a
-  class scene's named genre, a play's first (`sceneOfMaterial`, `i3-review.md`). Until then they read no register. They
-  have no reader or reading of their own in the engine.
+  class scene's named genre, a play's first (`sceneOfMaterial`, `i3-review.md`). Until then they read no register. From
+  evaluation-8 they read their circumstances too (`../stage-2026-10-16/`). They have no reader or reading of their own
+  in the engine.
 - A segment played its own way in the workbook (Play This Part Another Way) isn't read against the scene: only the
   piece's own sides are.
 - The affinities are SLATE's, each from its signal's principle; no source puts a number on them.
