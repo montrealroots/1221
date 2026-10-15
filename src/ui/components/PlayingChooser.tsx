@@ -18,7 +18,7 @@ import { misfitOf, sidesOf, transitionsOf, type Playing } from '@/engine/systems
 import { abilityDef } from '@/engine/systems/attributes';
 import type { Evaluation } from '@/engine/systems/evaluation';
 import { SKILLS } from '@/engine/content/school';
-import { GRAIN_LABEL } from '@/engine/content/interpretation';
+import { CIRCUMSTANCE_AFFINITY, GRAIN_LABEL } from '@/engine/content/interpretation';
 import { requiredFor, sceneOfMaterial, suitabilityOf, type Scene } from '@/engine/systems/interpretation';
 
 const LEVEL = ['None', 'Some', 'Much', 'Built On It'];
@@ -27,9 +27,14 @@ const LANGUAGE_WORD: Record<MaterialProfile['language'], string> = { everyday: '
 
 type Choice = Omit<Playing, 'chosenAt' | 'prep'>;
 
-/** A material's demands, with the text's reasons. */
+/**
+ * A material's demands, with the text's reasons. A stage scene's circumstances too, each with its reason (from 2026-10-16,
+ * later): until then each of the 86 class scenes and plays had a reason written for each circumstance, and no screen
+ * showed it, while The Scene named the circumstance alone.
+ */
 export function MaterialDemands({ material }: { material: MaterialProfile }) {
   const features = (['timing', 'physical', 'partner', 'vocal', 'improvisation'] as const).filter((f) => material[f] > 0);
+  const circumstances = (Object.entries(material.circumstances ?? {}) as [keyof typeof CIRCUMSTANCE_AFFINITY, number][]).filter(([, level]) => level > 0);
   const tech = Object.keys(material.techniques ?? {}).map((k) => SKILLS.find((s) => s.id === k)?.label ?? k);
   return (
     <div className="col gap-1">
@@ -37,6 +42,7 @@ export function MaterialDemands({ material }: { material: MaterialProfile }) {
       <ul className="small" style={{ margin: 0 }}>
         <li><strong>{LANGUAGE_WORD[material.language]}</strong>{material.medium === 'camera' ? ', on camera' : ''}{material.why.language ? `: ${material.why.language}` : ''}</li>
         {features.map((f) => <li key={f}><strong>{FEATURE_WORD[f]}: {LEVEL[material[f]]}</strong>{material.why[f] ? `. ${material.why[f]}` : ''}</li>)}
+        {circumstances.map(([c, level]) => <li key={c} data-circumstance={c}><strong>{CIRCUMSTANCE_AFFINITY[c].label}: {LEVEL[level]}</strong>{material.why[c] ? `. ${material.why[c]}` : ''}</li>)}
         <li><strong>{material.tones.length > 1 ? `Tone: ${material.tones.join(' to ')}` : `Tone: ${material.tones[0]}`}</strong>, {transitionsOf(material)} transition{transitionsOf(material) === 1 ? '' : 's'} to play{material.why.tones ? `. ${material.why.tones}` : material.why.turns ? `. ${material.why.turns}` : ''}</li>
         {tech.length > 0 && <li><strong>Techniques It Asks: {tech.join(', ')}</strong>{material.why.techniques ? `. ${material.why.techniques}` : ''}</li>}
         {material.allows && <li><strong>It Only Takes: {Object.values(material.allows).flat().map((v) => APPROACH_EFFECT[v as AxisValue].label).join(', ')}</strong>{material.why.allows ? `. ${material.why.allows}` : ''}</li>}
@@ -124,7 +130,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
       <div>
         <Gated feature={feature} className="btn btn-sm" disabled={!changed} onClick={() => onChoose(draft)}>{current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way'}</Gated>
       </div>
-      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against its grain, by what the scene is (its genre, its reader, its tones and turns, its features, the medium and the reading you’ve taken): with the grain it’s easier to make work and asks less rehearsal, against it harder and more, and at full ability either reaches 100.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
+      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against its grain, by what the scene is (its genre, its reader, its tones and turns, its features and language, its circumstances, the medium and the reading you’ve taken): with the grain it’s easier to make work and asks less rehearsal, against it harder and more, and at full ability either reaches 100.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
     </div>
   );
 }

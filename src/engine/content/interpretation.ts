@@ -9,8 +9,11 @@
  *
  * Each thing in a scene that bears on a side is a signal, with an affinity for each side it bears on, from -1 (it works
  * against that side) to 1 (it carries it). A side's suitability is the sum of its signals, halved and held to -1..1.
- * No signal decides alone, so no genre has a rule: a Nordic noir scene with a pressing reader and comic beats can suit
- * driven, where the genre's own Feeling Held In leans the other way (`tests/interpretation.test.ts`).
+ * No signal decides alone, so no genre has a rule: the genre's register is read, and the scene can still say otherwise
+ * (`tests/interpretation.test.ts`, Nordic noir's and melodrama's scales). This said a Nordic noir scene with a pressing
+ * reader and comic beats could suit driven. No test played one, and neither Nordic noir brief has a pressing reader:
+ * measured on 2026-10-16 with the reader at half weight, one put in place of the withholding reader took driven to 0.24
+ * at most, short of suiting, against measured's 0.64 or more.
  *
  * What suitability does (`GRAIN`): a side with the grain of the scene is easier to make work, and one against it harder,
  * as a share of the work's difficulty on the dimensions the side leans on; and one against it asks more rehearsal before
@@ -63,7 +66,7 @@ export const READER_AFFINITY: Readonly<Record<'steady' | 'pressing' | 'withholdi
  * being on camera: a rule for the medium, not a reading of the scene. Halved on 2026-10-16, before any other change.
  * The stage's was 0.5 for expansive and -0.25 for restrained until later that day, when the class scenes and the plays,
  * measured for the first time, came out expansive on every one: The Seagull and A Doll's House decided by the house's
- * size. A medium leans, a quarter each way, and doesn't decide (docs/verification/interpretation-2026-10-16/i3-review.md).
+ * size. From then a medium leant a quarter each way at most, and didn't decide (docs/verification/interpretation-2026-10-16/i3-review.md).
  * The stage leans no way from later that day: a house asks the voice and the body to reach it, which is projection and
  * is read on the take's execution (`STAGE_LEAN`), not a larger way of playing. A quarter for expansive on every stage
  * scene had made expansive the better side on all 85 class scenes and plays (docs/verification/stage-2026-10-16/).
@@ -91,7 +94,11 @@ export const SOLO_AFFINITY: Affinity = { expansive: 0.25 };
 /** Each change of tone, up to three: a turn wants its time, so it's earned and not skipped. */
 export const TURN_AFFINITY: Affinity = { measured: 0.15 };
 
-/** What its features ask, per level: a timed scene wants its pace and its beats placed; improvisation wants it open; a voice at full stretch wants size. */
+/**
+ * What its features ask, per level: a timed scene wants its pace and its beats placed; improvisation wants it open; a
+ * voice at full stretch wants size, at a camera or a microphone. On stage, from 2026-10-16, a voice's demand is the
+ * house's to reach, read on the execution (`STAGE_LEAN`), and isn't counted here (`suitabilityOf`).
+ */
 export const FEATURE_AFFINITY: Readonly<Record<'timing' | 'improvisation' | 'physical' | 'partner' | 'vocal', { affinity: Affinity; label: string; from?: number }>> = {
   timing: { affinity: { driven: 0.25, set: 0.25 }, label: 'Its Timing' },
   improvisation: { affinity: { open: 0.5, set: -0.5 }, label: 'What It Leaves To Be Found' },

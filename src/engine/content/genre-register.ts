@@ -1,6 +1,8 @@
 /**
  * SLATE — each genre's register: the concerns its scenes are played in (from 2026-10-16, `content/concerns.ts`), read
- * by every take of a brief written for it (`systems/briefs.ts`, `registerOf`).
+ * by every take of a brief written for it (`systems/briefs.ts`, `registerOf`), and from later on 2026-10-16 by how well
+ * a way of playing suits a class scene or a play of the genre, its suitability only (`sceneOfMaterial`,
+ * `systems/interpretation.ts`).
  *
  * One or two concerns a genre, each with why. `basis` says where that comes from: `research` where the genre's own
  * research claim (`content/genre-demands.json`, from `docs/research/attributes/research-genre-demands.json`, mostly at
