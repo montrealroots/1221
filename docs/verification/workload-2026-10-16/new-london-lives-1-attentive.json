@@ -1,0 +1,195 @@
+{
+ "seed": "lives-1",
+ "profile": "london",
+ "policy": "attentive",
+ "ended": "2028-01-17",
+ "standing": "good",
+ "hours": 12264.7,
+ "terms": [
+  {
+   "termsBegun": 0,
+   "supply": {
+    "idle:other": 1
+   },
+   "shown": 0,
+   "unready": 0,
+   "partsShortAtShowing": {}
+  },
+  {
+   "termsBegun": 1,
+   "supply": {
+    "at:health.appointment": 0.3,
+    "at:school.classes": 390,
+    "at:school.lab": 42,
+    "at:school.orientation": 11.5,
+    "at:school.partner_rehearsal": 127.5,
+    "at:school.shift": 72,
+    "at:school.study_session": 2,
+    "idle:other": 657,
+    "idle:working-hours": 297.8,
+    "life.sleep": 931,
+    "prepare:familiarity": 97.2,
+    "prepare:interpretation": 120.5,
+    "prepare:memorization": 67.3,
+    "prepare:reader": 10,
+    "prepare:rehearsal": 172.4,
+    "prepare:revision": 59,
+    "school.choose": 6.7,
+    "school.respond": 3.8
+   },
+   "demand": {
+    "pieces": 47,
+    "hoursToComplete": 581.5,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 78,
+     "memorization": 63,
+     "rehearsal": 175.5,
+     "partner": 87,
+     "revision": 64,
+     "interpretation": 114
+    }
+   },
+   "shown": 47,
+   "unready": 5,
+   "partsShortAtShowing": {
+    "revision": 7,
+    "rehearsal": 8,
+    "familiarity": 1,
+    "interpretation": 1,
+    "partner": 5
+   }
+  },
+  {
+   "termsBegun": 2,
+   "supply": {
+    "at:health.appointment": 0.7,
+    "at:school.call:performance": 10,
+    "at:school.call:rehearsal": 105,
+    "at:school.call:runthrough": 3,
+    "at:school.classes": 390,
+    "at:school.lab": 30,
+    "at:school.partner_rehearsal": 52.5,
+    "at:school.shift": 72,
+    "at:school.study_session": 1,
+    "idle:other": 1499,
+    "idle:working-hours": 1054,
+    "life.sleep": 1617,
+    "prepare:familiarity": 114.3,
+    "prepare:interpretation": 120,
+    "prepare:memorization": 76.8,
+    "prepare:reader": 32,
+    "prepare:rehearsal": 153,
+    "prepare:revision": 67,
+    "school.choose": 8.3,
+    "school.learn_part": 26,
+    "school.respond": 2.3,
+    "school.work_note": 3.3
+   },
+   "demand": {
+    "pieces": 45,
+    "hoursToComplete": 502.5,
+    "partnerHours": 57,
+    "byPart": {
+     "familiarity": 84,
+     "memorization": 51,
+     "rehearsal": 148.5,
+     "partner": 57,
+     "interpretation": 114,
+     "revision": 48
+    }
+   },
+   "shown": 45,
+   "unready": 4,
+   "partsShortAtShowing": {
+    "rehearsal": 8,
+    "partner": 8
+   }
+  },
+  {
+   "termsBegun": 3,
+   "supply": {
+    "at:health.appointment": 0.3,
+    "at:school.call:performance": 20,
+    "at:school.call:rehearsal": 106,
+    "at:school.call:runthrough": 3,
+    "at:school.classes": 414,
+    "at:school.partner_rehearsal": 48,
+    "at:school.shift": 78,
+    "at:school.study_session": 3,
+    "idle:other": 640,
+    "idle:working-hours": 347,
+    "life.sleep": 931,
+    "prepare:familiarity": 51.5,
+    "prepare:interpretation": 92.2,
+    "prepare:memorization": 99.8,
+    "prepare:reader": 40,
+    "prepare:rehearsal": 130.7,
+    "prepare:revision": 38,
+    "school.choose": 10,
+    "school.learn_part": 26,
+    "school.respond": 3,
+    "school.work_note": 3.9
+   },
+   "demand": {
+    "pieces": 46,
+    "hoursToComplete": 563.3,
+    "partnerHours": 87,
+    "byPart": {
+     "familiarity": 48,
+     "memorization": 76.5,
+     "interpretation": 111.3,
+     "rehearsal": 192.5,
+     "partner": 87,
+     "revision": 48
+    }
+   },
+   "shown": 46,
+   "unready": 15,
+   "partsShortAtShowing": {
+    "partner": 15,
+    "familiarity": 4,
+    "rehearsal": 17,
+    "memorization": 1,
+    "interpretation": 6,
+    "revision": 6
+   }
+  },
+  {
+   "termsBegun": 4,
+   "supply": {
+    "at:school.call:rehearsal": 48,
+    "at:school.classes": 30,
+    "at:school.partner_rehearsal": 3,
+    "at:school.shift": 6,
+    "idle:other": 78,
+    "idle:working-hours": 23,
+    "life.sleep": 98,
+    "prepare:familiarity": 4,
+    "prepare:interpretation": 4.2,
+    "prepare:memorization": 10,
+    "prepare:rehearsal": 7,
+    "school.choose": 0.8,
+    "school.learn_part": 12,
+    "school.work_note": 2
+   },
+   "demand": {
+    "pieces": 9,
+    "hoursToComplete": 126,
+    "partnerHours": 19,
+    "byPart": {
+     "familiarity": 14,
+     "memorization": 19,
+     "interpretation": 24.8,
+     "rehearsal": 41.3,
+     "partner": 19,
+     "revision": 8
+    }
+   },
+   "shown": 0,
+   "unready": 0,
+   "partsShortAtShowing": {}
+  }
+ ],
+ "breaches": 0
+}

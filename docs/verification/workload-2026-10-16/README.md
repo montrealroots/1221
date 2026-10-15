@@ -105,9 +105,9 @@ Unready of shown in each of the first three terms, and the standing at the end (
 | London, lives-1 | 12/47, 10/45, 24/46: concern | 5/47, 4/45, 15/46: good |
 | London, lives-2 | 15/47, 14/45, 24/46: concern | 5/47, 7/45, 12/46: good |
 | London, lives-3 | 13/47, 12/45, 23/46: concern | 5/47, 3/45, 9/46: good |
-| New York, lives-0 | 15/47, 9/45, 22/46 | 9/47, 0/45, 7/46: good |
-| Mexico City, lives-0 | 15/47, 9/45, 22/46 | 9/47, 0/45, 9/46: good |
-| Scraping, Los Angeles, lives-0 | 15/47, 9/45, 22/46 | 9/47, 0/45, 9/46: good |
+| New York, lives-0 | 15/47, 9/45, 22/46: concern, from two productions | 9/47, 0/45, 7/46: good |
+| Mexico City, lives-0 | 15/47, 9/45, 22/46: good | 9/47, 0/45, 9/46: good |
+| Scraping, Los Angeles, lives-0 | 15/47, 9/45, 22/46: good | 9/47, 0/45, 9/46: good |
 | London, lives-0, neglect | 47/47, 45/45, 46/46: dismissed | the same: dismissed, warned in the first term |
 
 - **The hours moved, and the total didn't.** In every new run the student spent 77 to 142 hours a term with the partner
@@ -116,6 +116,16 @@ Unready of shown in each of the first three terms, and the standing at the end (
 - **The scraping student kept the same school hours.** The policy takes its shifts and pays its bills in the hours
   outside the school's, so money didn't take hours from the coursework here. Money's own pressures are in the 24 lives
   (`../journeys-2026-10-16/`).
+- **Old New York's concern wasn't coursework.** It had 22 of 46 Unready, under the mark. Its review (`notices` in
+  `old-new-york-lives-0-attentive.json`) reads: "Your work in Carlotta Festival Of New Plays and Blood Wedding fell short
+  of what the program asks."
+  - Mexico City and the scraping student, on the same seed, had the same coursework and no such notice. The New York
+    student is she/her and the other two he/him. Casting reads that, so different parts are the likeliest source,
+    but these runs don't record the casts.
+  - On the new code the New York student's nights didn't fall short. Between the two runs the coursework hours and
+    I3's reading of plays both changed (`../interpretation-2026-10-16/i3-review.md`), and these runs don't separate
+    the two.
+  - Nothing here is put down to where a student was born.
 - **Breaches 0, in every run.**
 
 ## Remaining
