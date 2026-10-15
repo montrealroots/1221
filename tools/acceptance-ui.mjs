@@ -1113,6 +1113,37 @@ if (DIR) {
     must(after === before, `${before} → ${after}`);
     return `kept at ${shown}`;
   });
+  // A stage scene's way of playing (from 2026-10-16, docs/verification/stage-2026-10-16/): The Scene names what the
+  // scene's circumstances ask of its scale, never the house, and the side that suits it is chosen, rehearsed-in mark
+  // said, and kept through a reload.
+  await step('[save: workload scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept', async () => {
+    await rail('School'); await tab('Coursework');
+    const CIRC = /What’s Kept Hidden|A Private Exchange|Spoken To Many|A Conflict Out Loud/;
+    const tables = page.locator('table').filter({ has: page.locator('td[data-suit]') });
+    const n = await tables.count();
+    must(n > 0, 'no How You’ll Play It on an open piece');
+    let picked = '';
+    for (let i = 0; i < n && !picked; i += 1) {
+      const t = tables.nth(i);
+      const text = (await t.innerText()).replace(/\s+/g, ' ');
+      must(!/A House To Reach/.test(text), `the house is still a reason: ${text.slice(0, 200)}`);
+      if (!CIRC.test(text)) continue;
+      const row = t.locator('tr').filter({ has: page.locator('td[data-suit="suits"]') }).filter({ hasText: /^Scale|Restrained|Expansive/ }).filter({ hasText: CIRC }).first();
+      if (!(await row.count())) continue;
+      await row.locator('input[type="radio"]').check(); await wait(400);
+      const panel = page.locator('section.card').filter({ has: t }).last();
+      const said = (await panel.innerText()).replace(/\s+/g, ' ');
+      must(/with the grain of the scene, it asks less/.test(said), `no rehearsed-in mark said for the side that suits it: ${said.slice(0, 300)}`);
+      await panel.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).first().click(); await wait(1200); await settleDialogs();
+      picked = (await row.innerText()).replace(/\s+/g, ' ').slice(0, 160);
+    }
+    must(picked, 'no stage scene whose suited scale side rests on its circumstances');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('School'); await tab('Coursework');
+    must(/rehearsed in to \d+% \(complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
+    return picked;
+  });
   await overflow('school coursework (workload save)');
 }
 
