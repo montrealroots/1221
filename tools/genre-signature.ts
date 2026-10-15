@@ -15,7 +15,7 @@ import { BRIEFS, type Brief } from '../src/engine/content/briefs';
 import { ABILITY_DEFS } from '../src/engine/content/abilities';
 import { CONCERN_STRENGTH } from '../src/engine/content/concerns';
 import { GENRE_REGISTER } from '../src/engine/content/genre-register';
-import { GRAIN } from '../src/engine/content/interpretation';
+import { CONCERN_AFFINITY, GRAIN } from '../src/engine/content/interpretation';
 import type { AxisValue } from '../src/engine/content/material';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, readingOf, sceneOf, type BriefRecord } from '../src/engine/systems/briefs';
@@ -45,8 +45,17 @@ function score(b: Brief, p: Performer, prep: Partial<Record<(typeof PARTS)[numbe
   const ctx = briefContext(nobody, b, rec, { reading, prep: { genre: 1 } });
   return judgePiece(SEED, p, { ...ctx, condition: { readiness: 100 }, key: `sig:${b.id}`, expected: true }, briefPiece(b, { ...rec, reading }, reading)).overall;
 }
-/** What a scene comes to as a genre: who it rewards, how it suits being played, which preparation matters. */
+/** What a scene comes to as a genre: who it rewards, how it suits being played, which preparation matters. Kept per scene and genre: S2 and S3 read the same ones. */
+const outcomes = new Map<string, number[]>();
 function outcome(b: Brief): number[] {
+  const key = `${b.id}|${b.kinds[0]}`;
+  const had = outcomes.get(key);
+  if (had) return had;
+  const v = measureOutcome(b);
+  outcomes.set(key, v);
+  return v;
+}
+function measureOutcome(b: Brief): number[] {
   const even = score(b, EVEN);
   const scene = sceneOf(b, readingOf(b, b.readings[0]!.id));
   return [
@@ -55,6 +64,12 @@ function outcome(b: Brief): number[] {
     ...PARTS.map((part) => even - score(b, EVEN, { [part]: 0.5 })),
   ];
 }
+/**
+ * How alike two registers are, from what they declare and never from what they're measured to do: the sum of their
+ * concerns' affinities for the six sides, compared by cosine. Read only by `--diagnose`.
+ */
+const affinityOf = (g: string) => SIDES.map((side) => GENRE_REGISTER[g]!.concerns.reduce((a, c) => a + (CONCERN_AFFINITY[c].affinity[side] ?? 0), 0));
+function kinship(g: string, h: string): number { const x = affinityOf(g), y = affinityOf(h); const d = x.reduce((s, v, i) => s + v * y[i]!, 0); const n = Math.hypot(...x) * Math.hypot(...y); return n > 0 ? d / n : 0; }
 const sub = (x: number[], y: number[]) => x.map((v, i) => v - y[i]!);
 const mean = (xs: number[]) => (xs.length ? xs.reduce((a, x) => a + x, 0) / xs.length : 0);
 const r3 = (x: number) => Math.round(x * 1000) / 1000;
@@ -87,16 +102,28 @@ function measure(scenes: readonly Brief[]) {
   const pick = (v: number[]) => ({ spec: v.slice(0, SPECIALISTS.length).indexOf(Math.max(...v.slice(0, SPECIALISTS.length))), sides: [0, 2, 4].map((i) => (v[SPECIALISTS.length + i]! >= v[SPECIALISTS.length + i + 1]! ? 0 : 1)).join('') });
   const contrast: [string, string][] = [];
   for (let i = 0; i < genres.length; i += 3) for (let j = i + 1; j < genres.length; j += 5) if (shared(genres[i]!, genres[j]!) === 0) contrast.push([genres[i]!, genres[j]!]);
+  const missBy = { scene: {} as Record<string, number>, pair: {} as Record<string, number>, kin: {} as Record<string, [number, number]>, what: {} as Record<string, number> };
   for (const b of scenes) for (const [g, h] of contrast) {
     const x = pick(outcome(as(b, g))), y = pick(outcome(as(b, h)));
-    s3n += 1; if (x.spec !== y.spec || x.sides !== y.sides) s3ok += 1;
+    const differ = x.spec !== y.spec || x.sides !== y.sides;
+    s3n += 1; if (differ) s3ok += 1;
+    const bin = (Math.round(kinship(g, h) * 2) / 2).toFixed(1);
+    const kb = (missBy.kin[bin] ??= [0, 0]); kb[1] += 1;
+    if (!differ) {
+      kb[0] += 1;
+      missBy.scene[b.id] = (missBy.scene[b.id] ?? 0) + 1;
+      missBy.pair[`${g}/${h}`] = (missBy.pair[`${g}/${h}`] ?? 0) + 1;
+      missBy.what[x.sides] = (missBy.what[x.sides] ?? 0) + 1;
+    }
   }
+  const top = (r: Record<string, number>, n: number) => Object.fromEntries(Object.entries(r).sort((a, b) => b[1] - a[1]).slice(0, n));
   const meanBy = Object.fromEntries(Object.entries(byShared).map(([n, xs]) => [n, r3(mean(xs))]));
   return {
     scenes: scenes.length, genres: genres.length,
     S1: { meanCos: r3(mean(s1.map((x) => x.cos))), least: r3(Math.min(...s1.map((x) => x.cos))), under07: s1.filter((x) => x.cos < 0.7).map((x) => x.g), holds: s1.every((x) => x.cos >= 0.7) },
     S2: { meanDistanceBySharedConcerns: meanBy, pairs: Object.fromEntries(Object.entries(byShared).map(([n, xs]) => [n, xs.length])), noneOverOne: r3((meanBy['0'] ?? 0) / Math.max(1e-9, meanBy['1'] ?? 0)), nearestSharesAConcern: r3(nearestShares / genres.length), holds: (meanBy['0'] ?? 0) >= 1.5 * (meanBy['1'] ?? 0) && (meanBy['1'] ?? 0) > (meanBy['2'] ?? 0) && nearestShares / genres.length >= 0.9 },
-    S3: { cases: s3n, differ: r3(s3ok / Math.max(1, s3n)), holds: s3ok / Math.max(1, s3n) >= 0.8 },
+    S3: { cases: s3n, differ: r3(s3ok / Math.max(1, s3n)), holds: s3ok / Math.max(1, s3n) >= 0.8,
+      ...(flag('diagnose') ? { missesByKinship: missBy.kin, missedSides: top(missBy.what, 8), missesByScene: top(missBy.scene, 12), missesByPair: top(missBy.pair, 12) } : {}) },
   };
 }
 
