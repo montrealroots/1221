@@ -292,12 +292,16 @@ greater suitability, a tie to the first side, or else the best profile.
 
 **S3 on its own samples** (contrasting pairs on S3's grid, first readings, one-ability profiles at 85):
 
+Counts from `s3-exact-1*.json` (before) and `s3-exact-0.5*.json` (after), read from the tool's numerators:
+
 | Sample | Before (Reader In Full) | After (Reader As A Concern) |
 |---|---|---|
-| Designed (50 briefs) | 89.0% | 88.9% (12,757 of 14,350) |
-| Held out (50) | 81.0% | 82.8% (11,882 of 14,350) |
-| Fresh designed (99) | 86.7% | 87.4% |
-| **Fresh held out (99), the 78.9% shortfall** | **78.9% (22,432 of 28,413)** | **82.0% (23,299 of 28,413)** |
+| Designed (50 briefs) | 12,769 of 14,350 (88.98%) | 12,757 of 14,350 (88.90%): 12 fewer |
+| Held out (50) | 11,623 of 14,350 (81.00%) | 11,887 of 14,350 (82.84%) |
+| Fresh designed (99) | 24,638 of 28,413 (86.71%) | 24,832 of 28,413 (87.40%) |
+| **Fresh held out (99), the 78.9% shortfall** | **22,432 of 28,413 (78.95%)** | **23,300 of 28,413 (82.00%)** |
+
+The designed sample lost 12 cases, and it's still well above the bar. Those 12 weren't traced one by one.
 
 **Fresh validation** (`validate-before.json`, `validate-after.json`), as defined above. There are 1,156,538
 contrasting cases: 298 briefs in their second reading, 3,881 pairs off the grid, and two-ability profiles.
@@ -327,9 +331,11 @@ contrasting cases: 298 briefs in their second reading, 3,881 pairs off the grid,
 - **Related pairs differ far less than contrasting ones** (57.2% against 87.8%). Overlap between genres that share a
   concern is kept.
 
-**Remaining misses on the fresh held-out sample: 5,114 of 28,413.** This is the diagnosis's breakdown before the change,
-which still holds. Most are the scene's own signals deciding (I2's point), legitimate overlap where the opposed axis
-isn't the one the scene leaves open, and ties picked to the first side. None is a mislabeled pair.
+**Remaining misses on the fresh held-out sample: 5,113 of 28,413.** They weren't classified again after the change.
+Before it, the 5,981 misses broke down as follows, and none was a mislabeled pair:
+- 26% were the scene's own signals deciding whatever was changed;
+- under 4% were the cap or ties;
+- the rest were the reader and the register's weight, which is what this change acts on.
 
 **The falsifier** (`blind.json`, `blind-validate.json`): with the genre ignored, S1, S2 and S3 fail on every sample, and
 0 of the 1,156,538 fresh cases differ.
