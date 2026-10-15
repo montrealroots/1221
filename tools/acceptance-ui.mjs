@@ -1052,6 +1052,68 @@ if (DIR) {
   await overflow('bank accounts (round-ups save)');
 }
 
+// The term's warning on coursework and a piece's Shown Today, answered (from 2026-10-16, the owner's brief "Finish School
+// Workload Balance"). The save is the `workload` scenario's (`tools/scenarios.ts -- --scenario workload --seed sc-0
+// --save workload.json`): a student who prepared everything but the scenes' partner part, stopped the day A Word On Your
+// Coursework came, with a scene still short of it. Given a directory of saves, a missing workload save is a failure too.
+if (DIR) {
+  const forecast = () => page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
+  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+\.\d)/) ?? [])[1] ?? NaN);
+  let id = '';
+  let shown = NaN;
+  await step('[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day', async () => {
+    must(existsSync(`${DIR}/workload.json`), 'no workload save: write it with tools/scenarios.ts --scenario workload');
+    await openSave('workload.json');
+    await rail('Home');
+    const item = page.locator('.list-item').filter({ hasText: /^A Word On Your Coursework/ }).first();
+    must(await item.count(), 'no A Word On Your Coursework among the unread on Home');
+    const words = (await item.innerText()).replace(/\s+/g, ' ');
+    must(/\d+ of the \d+ pieces shown this term so far were Unready\. Most often short on them: [^.]+, on \d+ of the \d+\. .+ answers it\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/The faculty reviews the term on [^:]+: half the term’s pieces Unready by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
+    must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
+    return words.slice(0, 220);
+  });
+  await step('[save: workload scenario] coursework: a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
+    await tab('Coursework');
+    must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
+    id = await forecast().getAttribute('data-shown-today');
+    const words = (await forecast().innerText()).replace(/\s+/g, ' ');
+    must(/^Shown Today: on a good day it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
+    must(/Short of complete: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
+    shown = await figure(id);
+    return words.slice(0, 260);
+  });
+  await step('[save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises', async () => {
+    const panel = page.locator('.panel').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
+    let b = panel.getByRole('button', { name: /^Run It With A Reader/ }).first();
+    must(await b.count(), 'no Run It With A Reader on the scene');
+    let waited = '';
+    for (let i = 0; i < 3 && await b.isDisabled(); i += 1) {
+      waited += ` [${(await panel.locator('.why-not').first().innerText().catch(() => '')).slice(0, 80)}]`;
+      await advance('This Evening'); await rail('School'); await tab('Coursework');
+      b = page.locator('.panel').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last().getByRole('button', { name: /^Run It With A Reader/ }).first();
+      shown = await figure(id);
+    }
+    must(!(await b.isDisabled()), `still grayed:${waited}`);
+    await b.click(); await wait(1500); await settleDialogs();
+    const after = await figure(id);
+    must(after > shown, `Shown Today ${shown} → ${after}`);
+    shown = after;
+    return `${waited ? `waited for the evening${waited}; ` : ''}${id}: Shown Today rose to ${after}`;
+  });
+  await step('[save: workload scenario] save and exit, Continue: Shown Today and the warning as they were', async () => {
+    const before = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('School'); await tab('Coursework');
+    const after = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
+    must(after === before, `${before} → ${after}`);
+    return `kept at ${shown}`;
+  });
+  await overflow('school coursework (workload save)');
+}
+
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
 if (DIR && existsSync(`${DIR}/withdraw.json`)) {
   await step('[save: withdraw scenario] school: the class left goes on, and says so', async () => {

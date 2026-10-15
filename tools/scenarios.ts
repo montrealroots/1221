@@ -18,6 +18,8 @@
  *   "Still: I don’t know what you want in the second half." and seven ways; sc-0's craft notes all fell under a back
  *   strain, and it never stopped.
  * - `roundups`: a New Haven student at Citi, a few days in, round-ups not yet set up (from 2026-10-13).
+ * - `workload`: a student who prepares everything but the scenes' partner part, as the policy did until 2026-10-16,
+ *   stopped the day the term's warning comes (A Word On Your Coursework), with a scene still open to answer it.
  *
  *   npx vite-node tools/scenarios.ts -- --scenario leave --seed sc-0 [--watch] [--years 1.5 --save leave.json]
  *   npx vite-node tools/scenarios.ts -- --scenario direction --from part.json --years 0.2 --save part2.json   # goes on
@@ -38,6 +40,7 @@ import { POLICY, attentiveHour, life } from './policy';
 import { hasProcess, ownWorkRefusal, solutionsOf } from '../src/engine/systems/production';
 import { workPiece } from '../src/engine/systems/workpieces';
 import { wayRefusal } from '../src/engine/systems/workbook';
+import { courseworkOf, partnerPart } from '../src/engine/systems/coursework';
 import { ADJUSTMENTS } from '../src/engine/content/workbook';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
@@ -46,7 +49,7 @@ const SEED = arg('seed', 'sc-0');
 const NY = 'America/New_York';
 const on = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
 
-interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; ownWork?: false; workNotes?: false; daily(sim: Simulation, log: string[]): void; stopWhen?(sim: Simulation, log: string[]): boolean }
+interface Hook { years: number; config: Record<string, unknown>; resident?: boolean; ownWork?: false; workNotes?: false; partnerPart?: false; daily(sim: Simulation, log: string[]): void; stopWhen?(sim: Simulation, log: string[]): boolean }
 
 /** TEST SETUP: a 2026 W-2 of $40,000 with nothing withheld, then the bank emptied and the return filed on 15 February. */
 const owingOnFiling = (sim: Simulation, log: string[]) => {
@@ -86,6 +89,11 @@ const comeBack = (sim: Simulation, log: string[]) => {
 };
 
 const SCENARIOS: Record<string, Hook> = {
+  workload: {
+    years: 1.4, config: { homeRegionId: 'us-ny-newyork' }, partnerPart: false,
+    daily() {},
+    stopWhen: (sim) => sim.universe.notifications.some((n) => n.title === 'A Word On Your Coursework') && Boolean(courseworkOf(sim, sim.player)?.assignments.some((a) => a.status === 'open' && a.partner !== undefined && partnerPart(a) < 0.5)),
+  },
   leave: {
     years: 5.4, config: { homeRegionId: 'us-ny-newyork' },
     daily(sim, log) {
@@ -258,6 +266,7 @@ const hook = SCENARIOS[SCENARIO];
 if (!hook) throw new Error(`No scenario ${SCENARIO}: ${Object.keys(SCENARIOS).join(', ')}`);
 if (hook.ownWork === false) POLICY.ownWork = false;
 if (hook.workNotes === false) POLICY.workNotes = false;
+if (hook.partnerPart === false) POLICY.partnerPart = false;
 // `--from <save>` goes on from a save an earlier run wrote (from 2026-10-13), so a long run can go in slices: `--years` is
 // then how much further. The scenario's hook runs as before; its log starts again with each slice.
 let sim = process.argv.includes('--from') ? loadSave(deserialise(readFileSync(arg('from', ''), 'utf8')) as never) : hook.resident ? quickSave(hook.config as never, SEED) : life(SEED, { pronouns: 'they/them', ...hook.config } as never);

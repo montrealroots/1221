@@ -129,7 +129,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
           const now = showingForecast(sim, person, a);
           const short = shortParts(person, a);
           return (
-            <div className="small" data-shown-today="">
+            <div className="small" data-shown-today={a.id}>
               <strong>Shown Today:</strong> on a good day it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the showing asks.'}
               {short.length > 0 && <span> Short of complete: {short.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>

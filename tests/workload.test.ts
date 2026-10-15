@@ -20,11 +20,11 @@ const NY = 'America/New_York';
 const at = (y: number, m: number, d: number, h = 9) => instantFromZoned({ year: y, month: m, day: d, hour: h }, NY);
 // TEST SETUP: the day kept rested, so the preparation is what's measured; `prepare` sets every open piece's parts, the
 // partner's and the reader's too, at the level given (the road the student took, without the hours).
-function tended(sim: Simulation, until: number, prepare?: number) {
+function tended(sim: Simulation, until: number, prepare?: number, which: (a: Assignment, i: number) => boolean = () => true) {
   while (sim.now < until) {
     Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 });
     sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
-    if (prepare !== undefined) for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) if (a.status === 'open') { for (const k of Object.keys(a.prep) as (keyof Assignment['prep'])[]) a.prep[k] = prepare; a.reader = prepare; }
+    if (prepare !== undefined) for (const [i, a] of (courseworkOf(sim, sim.player)?.assignments ?? []).entries()) if (a.status === 'open' && which(a, i)) { for (const k of Object.keys(a.prep) as (keyof Assignment['prep'])[]) a.prep[k] = prepare; a.reader = prepare; }
     sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR));
   }
 }
@@ -52,6 +52,17 @@ describe('school workload, said before it’s held against you', () => {
     tended(sim, at(2026, 10, 27));
     expect(warnings(sim)).toHaveLength(1);
   }, 180_000);
+
+  it('the warning comes before the review’s mark is reached: a term with some pieces prepared is warned while fewer than half are Unready', () => {
+    const sim = life('workload-warned');
+    // TEST SETUP: two pieces in three prepared to complete, by their place in the list; the rest left.
+    tended(sim, at(2026, 11, 20), 1, (_, i) => i % 3 < 2);
+    const ws = warnings(sim);
+    expect(ws).toHaveLength(1);
+    const [, unready, shown] = /^(\d+) of the (\d+) pieces shown/.exec(ws[0]!.body)!.map(Number);
+    expect(unready).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * shown!);
+    expect(unready).toBeLessThan(ESTIMATE.coursework.unready * shown!);
+  }, 240_000);
 
   it('a twin prepared to complete isn’t warned: the warning reads the pieces, not the calendar', () => {
     const sim = life('workload-warned');

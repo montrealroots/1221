@@ -76,7 +76,7 @@ import { titleCaseLabel } from '../../core/text';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '../approaches';
 import { PIECE } from '../piece';
 import { ADJUSTMENTS, WORKBOOK } from '../workbook';
-import { CHOOSE_MINUTES, READER, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
+import { CHOOSE_MINUTES, READER, TERM_CHECK, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
 import { APPROACH, APPROACHES, LEARNING } from '../../systems/learning';
 import { CHOICES, CLASS, PRIORITY_WORDS } from '../../systems/classmates';
 import { ENSEMBLE } from '../../systems/ensemble';
@@ -242,15 +242,16 @@ export const COURSEWORK: readonly GuideEntry[] = [
     title: 'Preparing Coursework',
     goal: 'coursework',
     covers: ['school.prepare', 'look.assignment'],
-    synonyms: ['assignment', 'scene study', 'coursework steps', 'learn lines', 'read the scene', 'rehearse alone', 'work on the note', 'due date', 'weighs', 'piece of coursework'],
-    questions: ['How do I prepare a scene for class?', 'When is my work due?', 'Why is a step grayed out?', 'What does Weighs mean?', 'How long does learning lines take?', 'What happens if I miss the class it’s due at?'],
+    synonyms: ['assignment', 'scene study', 'coursework steps', 'learn lines', 'read the scene', 'rehearse alone', 'work on the note', 'due date', 'weighs', 'piece of coursework', 'shown today', 'a word on your coursework', 'unready', 'why is my work unready'],
+    questions: ['How do I prepare a scene for class?', 'When is my work due?', 'Why is a step grayed out?', 'What does Weighs mean?', 'How long does learning lines take?', 'What happens if I miss the class it’s due at?', 'What would it come to if I showed it today?', 'Why was I warned about my coursework?'],
     where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, Each Piece Of Work Set' },
     available: `${OPENED}, once a course has set work: at one of its meetings, or for the first-year fall courses at orientation’s session on the courses.`,
     short: `Each course with work sets a piece at one of its meetings, due a set number of its meetings later (${word(SCENE_STUDY.dueAfter)} for ${SCENE_STUDY.title} in ${ACTING.name}), with a scene, your part in it and a partner from the class where the work has them. Its panel on Coursework shows each part of the preparation, how far along it stands and its Weighs, with a button for each step. A step takes its time and moves its part by a share of what’s left, so the same step again moves it less. At the meeting it’s due the work is shown once and judged on your own result, and its band sets what that meeting grows your craft by.`,
     steps: [
       'Open School, then Coursework. Each open piece has a panel headed by its course and its title, with the day it’s due and the skills it’s shown for.',
       'Read what it is: the play, the scene and where it falls, your part and who plays the other, and Put First, the part this work weighs more.',
-      'Each part of the preparation has its figure, with Weighs under it: its share when the showing chooses its note. Press a step to do it. Its tip gives the minutes it takes, or why it can’t be done now, and the reasons are listed under the buttons.',
+      `Each part of the preparation has its figure, with Weighs under it and what completes it, ${pct(EVALUATION.complete.coursework)}. Press a step to do it. Its tip gives the minutes it takes, or why it can’t be done now, and the reasons are listed under the buttons.`,
+      'Read Shown Today: what the piece would come to if it were shown today on a good day, what holds it back most, and each part short of complete with the steps that answer it.',
       'Press the panel’s title to open the piece itself: each part with Prepared and Weighs, the same figures as the panel’s, with ways to the course, the day it’s due and your readiness.',
       'Be in New Haven and awake at nine on the day it’s due: the course’s meeting is where it’s shown.',
     ],
@@ -284,12 +285,14 @@ export const COURSEWORK: readonly GuideEntry[] = [
     later: [
       `At nine on the day it’s due the course meets, and the work is shown once in place of the meeting’s ordinary growth: the course’s skills grow ${pct(WORK.weight.unready)} of an ordinary meeting’s for Unready, ${pct(WORK.weight.working)} for Working, ${pct(WORK.weight.strong)} for Strong and ${pct(WORK.weight.exceptional)} for Exceptional.`,
       `Away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next meeting, or is excused if none is left. Away without one, it’s Not Shown and never taken later; it counts as unready at the term’s evaluation, and a partner’s trust falls ${-WORK.trust.missed}.`,
+      `In the term, once ${TERM_CHECK.after} of its pieces have been shown and ${pct(ESTIMATE.coursework.unready - TERM_CHECK.margin)} or more of them were Unready, A Word On Your Coursework comes once: how many, the part most often short on them, the steps that answer it, how many pieces are still to come and the day the faculty reviews the term.`,
       `At the term’s evaluation, with ${ESTIMATE.coursework.shown} or more pieces due, ${pct(ESTIMATE.coursework.unready)} or more of them unready or not shown falls short, and ${pct(ESTIMATE.coursework.strong)} or more Strong or better is noted.`,
       'Work a course revises comes back to be shown again at its next meeting, with the note to take; work in rounds is shown a round at a time. Work still open when the term’s classes end lapses.',
     ],
     interpret: [
       'A part’s figure is how far it’s prepared. Weighs is its share when the showing chooses its note; the result reads the parts through the dimensions they bear on. Put First’s part weighs more in both, and the line beside it says why it was chosen.',
-      `At ${pct(EVALUATION.complete.coursework)} a part is complete for the showing.`,
+      `At ${pct(EVALUATION.complete.coursework)} a part is complete for the showing. Below it, the dimensions that read it are held back: a part at nothing holds them to ${pct(EVALUATION.prepFloor)} of themselves, whatever it Weighs.`,
+      'Shown Today is the showing’s own judge with the day taken out: no draw, and you as rested as you could be. It moves when a part does, and the band beside the figure says what it would earn.',
       'A scene you’ve worked before says so, and asks for the other part, or for another reading at the table.',
       'Work Shown keeps the last twelve pieces and how each went: its band, or “Not Shown”, “Excused, Not Shown” or “Lapsed At Term’s End”.',
     ],
@@ -311,6 +314,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `Starting a long step just before a class: ${LEARN.label} on a long scene takes ${SCENE_SIZE_MINUTES.long} minutes. Leave room for it.`,
       'Sleeping through the meeting it’s due: the work isn’t shown and never taken later. Unwell, call in sick before nine and it moves to the next meeting.',
       `Leaving it to the day before: a daily step counts once a day, and a rehearsal with your partner has to be agreed at least ${WORK.rehearsal.aheadHours} hours ahead.`,
+      `Leaving a scene’s partner part at nothing because it Weighs little: the dimensions it bears on are held to ${pct(EVALUATION.prepFloor)} of themselves however well the rest is prepared, and Shown Today says what that costs before the showing. Ask your partner for an evening a few days ahead, or ${READER.label}.`,
     ],
     related: ['coursework.table', 'coursework.playing', 'coursework.partners', 'coursework.feedback', 'coursework.workbook', 'school.orientation', 'school.standing'],
     connections: [

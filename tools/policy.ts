@@ -62,9 +62,11 @@ export function evening(sim: Simulation) {
  * `workNotes` off (from 2026-10-13) the part, the blocking and a note on either are done, and a note on the craft is left,
  * so the lines and the blocking come to where a director turns to the craft and a craft note waits for the player
  * (`tools/scenarios.ts direction`). Its first run left every note, a note on the blocking too, and the blocking never
- * reached where a director turns to the craft: a blocking note worked is how a student sets it between calls.
+ * reached where a director turns to the craft: a blocking note worked is how a student sets it between calls. With
+ * `partnerPart` off (from 2026-10-16) the scenes' partner part is left as the policy left it until that day, so a save
+ * reaches the term's warning with the rest prepared (`tools/scenarios.ts workload`).
  */
-export const POLICY = { ownWork: true, workNotes: true };
+export const POLICY = { ownWork: true, workNotes: true, partnerPart: true };
 
 const lastNoteOf = (sim: Simulation, person: Simulation['player'], which: (typeof WHICH)[number]) => { const h = holderFor(sim, person, which); return hasProcess(h) ? h.process.notes.at(-1) : undefined; };
 
@@ -97,7 +99,7 @@ export function freeHour(sim: Simulation): boolean {
     // can't come, a reader. Until then the policy skipped every step on the partner part and only said yes when a
     // partner asked: played on 2026-10-16, a London student's scenes stood at nothing there, and the student was
     // dismissed with 292 working hours idle in the term (docs/verification/workload-2026-10-16/README.md).
-    if (a.partner !== undefined && partnerPart(a) < EVALUATION.complete.coursework) {
+    if (POLICY.partnerPart && a.partner !== undefined && partnerPart(a) < EVALUATION.complete.coursework) {
       const ahead = () => a.rehearsals.some((r) => r.status === 'booked' && r.at > sim.now);
       if (!ahead()) {
         for (const d of [0, 1, 2]) {
