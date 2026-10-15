@@ -63,6 +63,7 @@
  * midnight for the Seagull understudy, as tests/school.test.ts plays one; every classmate's craft at 95 for the twin cast
  * beside them.
  */
+import { WORKBOOK } from '@/engine/content/workbook';
 import { describe, expect, it, vi } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -619,7 +620,9 @@ describe('school.work_note', () => {
       // What was tried, its figure then and at the next call, and, where it moved nothing, that it didn't.
       expect(n.text).toContain(`You tried ${prior.answer!.label!.toLowerCase()}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
       expect(n.text).toMatch(prior.taken ? /^Better since the last note\. You tried / : /^Still: /);
-      if (prior.outcome === 'learned') expect(n.text).toContain('which didn’t move it: worth knowing, and not the answer.');
+      // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
+      const worse = Math.min(prior.answer!.after, prior.answer!.now ?? prior.answer!.after) - prior.answer!.before <= -WORKBOOK.evidence;
+      if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);
     }
 
     // The closing: the calls as the calendar has them, the notes as they were given, taken and answered in the work.

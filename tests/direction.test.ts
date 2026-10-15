@@ -94,7 +94,9 @@ describe('a note on the craft', () => {
     // The note given after a learned one on the same thing says what was tried didn't move it.
     const i = notes.findIndex((n) => n.outcome === 'learned' && n.answer!.after === n.answer!.before);
     const next = notes.slice(i + 1).find((m) => m.focus.kind === 'craft' && (m.focus as { note: string }).note === (notes[i]!.focus as { note: string }).note && (m.focus as { segment?: number }).segment === (notes[i]!.focus as { segment?: number }).segment);
-    if (next) expect(next.text).toContain('which didn’t move it: worth knowing, and not the answer.');
+    // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
+    const worse = (a: NonNullable<DirectorNote['answer']>) => Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence;
+    if (next) expect(next.text).toContain(`which ${worse(notes[i]!.answer!) ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);
     // The way that moved nothing isn't the way it's worked again.
     const unmoved = notes.filter((n) => n.answer?.solution && n.answer.after === n.answer.before).map((n) => `${(n.focus as { problem: string }).problem}|${n.answer!.solution}`);
     expect(new Set(unmoved).size).toBe(unmoved.length);

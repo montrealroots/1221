@@ -37,6 +37,7 @@
  * kept. The action and its readers always run through the engine. A FIXTURE on a played record says so where it is one.
  * Screens are rendered with react-dom/server, as tests/rehearsal-notes-history.test.ts renders them.
  */
+import { trainingForecast } from '@/engine/systems/advice';
 import { describe, expect, it, vi } from 'vitest';
 import { createElement, type FunctionComponent } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -576,33 +577,26 @@ describe('work records + journey', () => {
     for (const [d, q] of Object.entries(night.dims) as [Dimension, number][]) expect(body).toContain(`${DIMENSION_LABEL[d]} ${q.toFixed(1)}`);
   });
 
-  it('PLAYER JOURNEY: What To Work On reads the played work: the ability or technique that cost the latest twelve pieces most, weighted to the latest, is named with what it cost', () => {
+  it('PLAYER JOURNEY: What To Work On reads the played work: the ability or technique twenty hours of practice would pay most for on the latest pieces is named with its forecast', () => {
     const sim = afterCabaret();
-    // The rule's numbers: the latest 12 pieces, the i-th of them weighted i, each limit's cost to the whole (its `whole`,
-    // or a quarter of what it cost its dimension), scaled by the room left now against the least it had then; abilities
-    // full at 100, techniques at 90 (stamina, full by age, isn't among them here).
+    // Until 2026-10-16 this worked out the rule of that day by hand (each limit's cost to the whole across the latest
+    // twelve pieces, scaled by the room left) and found it named. From then What To Work On Next is forecast
+    // (`systems/advice.ts`): the hours of each input's own exercise, replayed on the latest pieces with you as you are now.
+    // That it names what the hours really pay most for is played in tests/advice.test.ts; here, that the Profile names
+    // the forecast's first, an input the played work read and that has room, in the forecast's own figures.
     const latest = [...(sim.player.work ?? [])].sort((a, b) => a.at - b.at).slice(-12);
-    const total = latest.reduce((s, _w, i) => s + i + 1, 0);
-    const cost = new Map<string, { label: string; points: number; then: number; ability: boolean }>();
-    latest.forEach((w, i) => {
-      for (const l of w.limits.filter((x) => x.kind === 'ability' || x.kind === 'technique')) {
-        const then = (l.kind === 'ability' ? w.inputs.abilities[l.what as AbilityId] : w.inputs.levels?.[l.what as Skill]) ?? 0;
-        const c = cost.get(l.what) ?? { label: l.label, points: 0, then, ability: l.kind === 'ability' };
-        c.points += (l.whole ?? l.by / 4) * (i + 1) / total;
-        c.then = Math.min(c.then, then);
-        cost.set(l.what, c);
-      }
-    });
-    const scored = [...cost].filter(([what]) => what !== 'stamina').map(([what, c]) => {
-      const full = c.ability ? 100 : 90;
-      const now = levelOf(sim, sim.player, what as Skill);
-      return { what, label: c.label, now, full, points: c.points * Math.min(1, Math.max(0, full - now) / Math.max(1, full - c.then)) };
-    }).sort((a, b) => b.points - a.points);
-    const top = scored[0]!;
-    expect(top.points).toBeGreaterThanOrEqual(0.5);
-    const exercise = EXERCISES.find((e) => e.trains === top.what)!;
-    const esc = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*${esc(top.label)} , ${esc(exercise.label)} at the \\w+ tier\\. It cost your recent work about ${esc(String(r1(top.points)))} points? of the whole a piece, weighted to the latest; it’s at ${Math.round(top.now)} of ${top.full}\\.`));
+    const read = new Set(latest.flatMap((w) => [...Object.keys(w.inputs.abilities), ...Object.keys(w.inputs.techniques)]));
+    const f = trainingForecast(sim, sim.player);
+    const [what, top] = [...f].sort((x, y) => y[1].points - x[1].points)[0]!;
+    expect(read.has(what)).toBe(true);
+    // Forecast from the level as it is now, which has room.
+    expect(top.from).toBeCloseTo(levelOf(sim, sim.player, what as Skill), 6);
+    expect(top.to).toBeGreaterThan(top.from);
+    expect(top.points).toBeGreaterThanOrEqual(0.1);
+    const exercise = EXERCISES.find((e) => e.trains === what)!;
+    const esc = (x: string) => x.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const each = r1(top.points);
+    expect(shown(sim, ProfileWorkspace)).toMatch(new RegExp(`What To Work On Next .*, ${esc(exercise.label)} at the \\w+ tier\\. ${top.hours} hours of its exercise would take it from ${Math.round(top.from)} to about ${Math.round(top.to)}, worth about ${esc(String(each))} points? a piece on your recent work`));
   });
 
   it('PLAYER JOURNEY: Taking Direction reads, for life, the notes on the craft a run gave and those the work answered', () => {

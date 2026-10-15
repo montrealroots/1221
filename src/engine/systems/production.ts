@@ -355,7 +355,7 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   // whether it moved it: a way that changed nothing is said to have, not called better.
   const a = before.answer;
   const moved = a?.solution ? Math.max(a.after, a.now ?? a.after) - a.before : 0;
-  const tried = a?.solution ? ` You tried ${(a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution).toLowerCase()}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? ', which didn’t move it: worth knowing, and not the answer' : ''}.` : '';
+  const tried = a?.solution ? ` You tried ${(a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution).toLowerCase()}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? (Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence ? ', which made it worse: worth knowing, and not the answer' : ', which didn’t move it: worth knowing, and not the answer') : ''}.` : '';
   return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${continued(words)}${tried}${history}`;
 }
 
