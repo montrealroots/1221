@@ -17,6 +17,9 @@ judged in, not the judge.
 - **Proved:** `tests/genre-identity.test.ts` and `tests/genre-identity-screens.test.ts` (12 tests), 12 mutations of the
   register killed plus a pair revision undone, `tools/genre-identity.ts`, `tools/brief-journeys.ts --no-register`, and two
   acceptance steps at 1440 and 390. Mastery stays at 100 on all 4,495 piece-reading-way checks.
+- **Verified on `ecd76e4`:** `npm run gate` exit 0, read from a file (342 files, 4,145 tests, typecheck, lint, all
+  seventeen checks); the build, and the built app at 1440 and 390: 64 passed, 0 failed, 2 skipped at each, from every
+  scenario save written again on that code. In a cloud container (Linux), not the owner's PowerShell machine.
 - **The owner's decisions (open):** G1 as written fails (0.95×, 1.22× with length and stakes held) and can't reach 1.5
   without one rigid formula per genre; no threshold moved. A way of playing doesn't interact with the genre. F2 is a
   little worse (301 of 447, from 311).

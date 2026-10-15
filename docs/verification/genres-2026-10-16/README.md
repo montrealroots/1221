@@ -175,7 +175,15 @@ the same ability held several takes back, in different genres, each for that gen
 - Nordic noir's and social realism's briefs prepared, read, rehearsed, taped, the note read, saved, continued and taped
   again.
 
-They ran at 1440 and at 390 against the build of this revision. The results are in the work plan and the handoff.
+They ran at 1440 and at 390 against the build of `ecd76e4`, with every scenario save written again on that code
+(`tools/scenarios.ts`, thirteen runs, breaches 0 and unbalanced 0 in each): **64 passed, 0 failed, 2 skipped** at both
+widths, 0 page errors, 0 overflows (`acceptance-1440.json`, `acceptance-390.json`). The two skips are the ones every run
+since 2026-10-12 has had: Work It Through on the new life's scene and the rehearsal controls on a part with no calls.
+
+**The gate.** `npm run gate` on `ecd76e4` in this repository, its exit read from a file: exit 0, **342 files and 4,145
+tests** all passed, typecheck, lint and all seventeen checks; the working tree the same before and after. In a cloud
+container (Linux), not the owner's PowerShell machine. The first gate, on `0214324`, failed one test: the attributes
+matrix's brief counts, which the pairs' revisions had moved. `ecd76e4` regenerated it and gave the register its row.
 
 ## What's Still Open, And The Owner's Decisions
 
@@ -195,5 +203,5 @@ They ran at 1440 and at 390 against the build of this revision. The results are 
 - **The register's claims are mostly the research's low-confidence ones**, and 36 genres' are SLATE's reading. A brief
   listed under further genres is played in the register of the genre it was written for (`kinds[0]`).
 - **Not re-run:** the long journeys through graduation and the mastery plans (`tools/mastery.ts --mode plan`), as phase
-  2c of the attributes brief would. The other scenario saves of the acceptance run (tax, leave, lien and the rest) weren't
-  regenerated, since nothing here reaches them.
+  2c of the attributes brief would. The scenario saves were written again for the acceptance run, and each ended with
+  breaches 0 and unbalanced 0.
