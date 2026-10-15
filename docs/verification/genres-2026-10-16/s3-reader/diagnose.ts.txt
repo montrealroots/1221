@@ -1,0 +1,80 @@
+// Scratch diagnosis of S3's misses on the held-out-fresh sample (second briefs, i % 3 != 0), revised contrast.
+import { writeFileSync } from 'node:fs';
+import { BRIEFS, type Brief } from '/home/user/1221/src/engine/content/briefs';
+import { ABILITY_DEFS } from '/home/user/1221/src/engine/content/abilities';
+import { GENRE_REGISTER } from '/home/user/1221/src/engine/content/genre-register';
+import { CONCERN_AFFINITY } from '/home/user/1221/src/engine/content/interpretation';
+import type { AxisValue } from '/home/user/1221/src/engine/content/material';
+import type { Person } from '/home/user/1221/src/engine/domain/model';
+import { briefContext, briefMaterial, briefPiece, readingOf, sceneOf, type BriefRecord } from '/home/user/1221/src/engine/systems/briefs';
+import type { Performer } from '/home/user/1221/src/engine/systems/evaluation';
+import { judgePiece } from '/home/user/1221/src/engine/systems/piece';
+import { suitabilityOf } from '/home/user/1221/src/engine/systems/interpretation';
+
+const nobody = { engagement: { byGenre: {} } } as unknown as Person;
+const ABILITIES = ABILITY_DEFS.map((d) => d.id).filter((a) => a !== 'stamina');
+const SIDES: AxisValue[] = ['measured', 'driven', 'restrained', 'expansive', 'set', 'open'];
+const AXN = ['pace', 'scale', 'structure'];
+const actor = (ab: Partial<Record<string, number>>, fill: number): Performer => ({ ability: (id) => ab[id] ?? fill, full: () => 100, technique: () => 50 });
+const EVEN = actor({}, 50);
+const SPEC = ABILITIES.map((a) => actor({ [a]: 85 }, (600 - 85) / 11));
+const as = (b: Brief, g: string): Brief => ({ ...b, kinds: [g] });
+const score = (b: Brief, p: Performer) => { const reading = b.readings[0]!.id; const rec: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] }; const ctx = briefContext(nobody, b, rec, { reading, prep: { genre: 1 } }); return judgePiece('signature', p, { ...ctx, condition: { readiness: 100 }, key: `sig:${b.id}`, expected: true }, briefPiece(b, { ...rec, reading }, reading)).overall; };
+const genres = Object.keys(GENRE_REGISTER).sort();
+const aff = (g: string) => SIDES.map((s) => GENRE_REGISTER[g]!.concerns.reduce((a, c) => a + (CONCERN_AFFINITY[c].affinity[s] ?? 0), 0));
+const kin = (g: string, h: string) => { const x = aff(g), y = aff(h); const d = x.reduce((s, v, i) => s + v * y[i]!, 0); const n = Math.hypot(...x) * Math.hypot(...y); return n ? d / n : 0; };
+const shared = (a: string, b: string) => GENRE_REGISTER[a]!.concerns.filter((c) => GENRE_REGISTER[b]!.concerns.includes(c)).length;
+const axisLean = (g: string) => [0, 2, 4].map((i) => aff(g)[i]! - aff(g)[i + 1]!);
+const scenes = BRIEFS.filter((b) => /-\d+$/.test(b.id)).filter((_, i) => i % 3 !== 0);
+const contrast: [string, string][] = [];
+for (let i = 0; i < genres.length; i += 3) for (let j = i + 1; j < genres.length; j += 5) if (shared(genres[i]!, genres[j]!) === 0 && kin(genres[i]!, genres[j]!) < 0) contrast.push([genres[i]!, genres[j]!]);
+type O = { spec: number; specMargin: number; s: number[]; picks: string; sNoReader: number[]; raw: number[]; rawNoReader: number[]; rawReg: number[] };
+const cache = new Map<string, O>();
+function out(b: Brief, g: string): O {
+  const k = `${b.id}|${g}`; const had = cache.get(k); if (had) return had;
+  const x = as(b, g); const even = score(x, EVEN); const d = SPEC.map((p) => score(x, p) - even);
+  const sorted = [...d].sort((a, c) => c - a);
+  const scene = sceneOf(x, readingOf(x, x.readings[0]!.id)); const m = briefMaterial(x);
+  const s = SIDES.map((side) => suitabilityOf(side, m, scene).s);
+  const sNoReader = SIDES.map((side) => suitabilityOf(side, m, { ...scene, readerPlays: undefined }).s);
+  const sig = SIDES.map((side) => suitabilityOf(side, m, scene).signals);
+  const raw = sig.map((xs) => xs.reduce((t, v) => t + v.v, 0));
+  const rawNoReader = SIDES.map((side) => suitabilityOf(side, m, { ...scene, readerPlays: undefined }).signals.reduce((t, v) => t + v.v, 0));
+  const rawReg = sig.map((xs, i) => raw[i]! + xs.filter((v) => v.source.includes('’s ')).reduce((t, v) => t + v.v, 0));
+  const o = { spec: d.indexOf(sorted[0]!), specMargin: sorted[0]! - sorted[1]!, s, picks: [0, 2, 4].map((i) => (s[i]! >= s[i + 1]! ? 0 : 1)).join(''), sNoReader, raw, rawNoReader, rawReg };
+  cache.set(k, o); return o;
+}
+const cfs: Record<string, number> = {};
+let n = 0, ok = 0; const cls: Record<string, number> = {}; const rows: unknown[] = [];
+for (const b of scenes) for (const [g, h] of contrast) {
+  const x = out(b, g), y = out(b, h); n += 1;
+  if (x.spec !== y.spec || x.picks !== y.picks) { ok += 1; continue; }
+  const pk = (v: number[]) => [0, 2, 4].map((i) => (v[i]! > v[i + 1]! ? 0 : v[i]! < v[i + 1]! ? 1 : 2)).join('');
+  const cf = { unclamped: pk(x.raw) !== pk(y.raw), noReader: pk(x.rawNoReader) !== pk(y.rawNoReader), fullReg: pk(x.rawReg) !== pk(y.rawReg), tie: pk(x.s).includes('2') || pk(y.s).includes('2') };
+  for (const [k, v] of Object.entries(cf)) if (v) cfs[k] = (cfs[k] ?? 0) + 1;
+  if (!cf.unclamped && !cf.noReader && !cf.fullReg) cfs.none = (cfs.none ?? 0) + 1;
+  if (cf.unclamped && !cf.noReader) cfs.onlyUnclamped = (cfs.onlyUnclamped ?? 0) + 1;
+  if (cf.noReader && !cf.unclamped) cfs.onlyNoReader = (cfs.onlyNoReader ?? 0) + 1;
+  const lg0 = axisLean(g), lh0 = axisLean(h); if (![0, 1, 2].some((a) => lg0[a]! * lh0[a]! < 0)) cfs.noAxisOpposed = (cfs.noAxisOpposed ?? 0) + 1;
+  // Which axes the registers oppose on, and what happened there.
+  const lg = axisLean(g), lh = axisLean(h);
+  const opp = [0, 1, 2].filter((a) => lg[a]! * lh[a]! < 0);
+  const tags: string[] = [];
+  if (!opp.length) tags.push('no-axis-opposed');
+  for (const a of opp) {
+    const i = a * 2;
+    const dx = x.s[i]! - x.s[i + 1]!, dy = y.s[i]! - y.s[i + 1]!;
+    if (dx === 0 || dy === 0) tags.push(`tie:${AXN[a]}`);
+    if ([x.s[i], x.s[i + 1], y.s[i], y.s[i + 1]].some((v) => Math.abs(v!) >= 1)) tags.push(`clamp:${AXN[a]}`);
+    const nx = x.sNoReader[i]! - x.sNoReader[i + 1]!, ny = y.sNoReader[i]! - y.sNoReader[i + 1]!;
+    if ((nx >= 0) !== (ny >= 0)) tags.push(`reader-decides:${AXN[a]}`);
+    else tags.push(`scene-decides:${AXN[a]}`);
+  }
+  const key = tags.join(' ');
+  cls[key] = (cls[key] ?? 0) + 1;
+  if (rows.length < 4000) rows.push({ b: b.id, reader: b.medium === 'voice' ? 'voice' : b.readerPlays ?? 'steady', g, h, opp: opp.map((a) => AXN[a]), x: x.s, y: y.s, specX: ABILITIES[x.spec], margin: Math.round(Math.min(x.specMargin, y.specMargin) * 100) / 100, tags });
+}
+console.log('cases', n, 'differ', ok, (ok / n).toFixed(4));
+console.log('counterfactuals among misses', cfs);
+console.log(Object.entries(cls).sort((a, c) => c[1] - a[1]).slice(0, 30));
+writeFileSync('/tmp/claude-0/-home-user-1221/59e38238-f2eb-5b0b-a500-e7c591e49dbe/scratchpad/s3/misses.json', JSON.stringify(rows, null, 0));

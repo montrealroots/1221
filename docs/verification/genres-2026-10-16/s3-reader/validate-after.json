@@ -1,0 +1,38 @@
+{
+ "blind": false,
+ "reader": 0.5,
+ "validate": {
+  "scenes": 298,
+  "readingPlayed": "the second",
+  "profiles": "two abilities at 72, each with the next",
+  "contrastingPairs": 3881,
+  "relatedPairs": 2312,
+  "S3": {
+   "cases": 1156538,
+   "differ": 1015539,
+   "share": 0.878,
+   "withATie": 54169,
+   "byReader": {
+    "steady": "560562 of 624841 (89.7%)",
+    "voice": "113348 of 135835 (83.4%)",
+    "pressing": "125253 of 139716 (89.6%)",
+    "unpredictable": "109174 of 128073 (85.2%)",
+    "withholding": "107202 of 128073 (83.7%)"
+   },
+   "holds": true
+  },
+  "related": {
+   "cases": 688976,
+   "differ": 394144,
+   "share": 0.572,
+   "withATie": 29540,
+   "byReader": {
+    "steady": "221171 of 372232 (59.4%)",
+    "voice": "41483 of 80920 (51.3%)",
+    "pressing": "49160 of 83232 (59.1%)",
+    "unpredictable": "40254 of 76296 (52.8%)",
+    "withholding": "42076 of 76296 (55.1%)"
+   }
+  }
+ }
+}
