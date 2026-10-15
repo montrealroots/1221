@@ -56,7 +56,7 @@ twenty days through `practice.exercise` in its own copy of the save, against a b
 | A near-tie said | 1 | 6 |
 
 - **Without credit for a declared tie**, the advice is still within a tenth of the best in 40 of 40, and names the exact
-  best in 37.
+  best in 38.
 - **Forecast against realized**, over 529 candidates, the gains correlate at 0.88. Every realized gain is about a
   quarter of a point above its forecast. That's what any day of practice brings beyond its own target (the discipline
   lift, transfers), the same for every copy, so it doesn't change the order.

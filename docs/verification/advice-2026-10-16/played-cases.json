@@ -504,9 +504,9 @@
    "brief-slasher",
    "brief-yakuza-2"
   ],
-  "first": "imagination",
+  "first": "screen",
   "tiedWith": [
-   "On Camera"
+   "Imagination"
   ],
   "chief": "composure",
   "chiefIsFirst": false,
@@ -543,7 +543,7 @@
   },
   "best": "screen",
   "bestGain": 0.85,
-  "firstGain": 0.78,
+  "firstGain": 0.85,
   "pass": true
  },
  {

@@ -1,0 +1,80 @@
+{
+ "strength": 0,
+ "prep": 0,
+ "I2": {
+  "pace": {
+   "genresWithTwo": 149,
+   "differs": 29.5,
+   "betterSide": {
+    "measured": 49.3,
+    "driven": 49.3
+   }
+  },
+  "scale": {
+   "genresWithTwo": 149,
+   "differs": 21.5,
+   "betterSide": {
+    "restrained": 56.7,
+    "expansive": 41.9
+   }
+  },
+  "structure": {
+   "genresWithTwo": 149,
+   "differs": 39.6,
+   "betterSide": {
+    "set": 55,
+    "open": 44.3
+   }
+  }
+ },
+ "designed": {
+  "briefs": 149,
+  "I1": {
+   "checked": 8010,
+   "at100": 8010,
+   "holds": true
+  },
+  "I3": {
+   "n": 148,
+   "sd": 0.03,
+   "restrainedAhead": 2.7,
+   "expansiveAhead": 5.4,
+   "min": -0.1,
+   "max": 0.1
+  },
+  "I4": {
+   "restrainedSuitsMore": 94,
+   "specialistExpansiveWins": 100,
+   "bandApart": 83,
+   "evenActorFollowsSuitability": 37.3
+  },
+  "I5": {
+   "atLeastTwoWithinAPoint": 100
+  }
+ },
+ "heldOut": {
+  "briefs": 149,
+  "I1": {
+   "checked": 9117,
+   "at100": 9117,
+   "holds": true
+  },
+  "I3": {
+   "n": 148,
+   "sd": 0.02,
+   "restrainedAhead": 1.4,
+   "expansiveAhead": 4.7,
+   "min": -0.1,
+   "max": 0.1
+  },
+  "I4": {
+   "restrainedSuitsMore": 73,
+   "specialistExpansiveWins": 100,
+   "bandApart": 90,
+   "evenActorFollowsSuitability": 52.2
+  },
+  "I5": {
+   "atLeastTwoWithinAPoint": 100
+  }
+ }
+}
