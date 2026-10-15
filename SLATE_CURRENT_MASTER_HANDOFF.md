@@ -36,7 +36,14 @@ its evidence is in `s3-reader/`.
   - The stage set's expansive bias (100% of class scenes and plays): unchanged, not reached by this change, and the
     owner's.
   - Section 2 of the work plan: the six acceptance areas.
-- **Verification:** RESULTS-PENDING.
+- **Verified.**
+  - **The gate:** `npm run gate` exited 0 on `03853058`, read from a file: 347 files and 4,173 tests, typecheck, lint
+    and all seventeen checks, the tree unchanged. The first run, on `3a926f92`, failed on the developer map and the
+    traceability table, which didn't yet name the new test. Both were written again.
+  - **The build:** exit 0.
+  - **The built app at 1440 and 390**, from all 14 scenario saves written again on the new code (0 breaches, 0
+    unbalanced each): 69 passed, 0 failed, 2 skipped (the two since 2026-10-12), 0 errors, 0 overflows.
+  - In a cloud container (Linux), not the owner's PowerShell machine.
 - The stash, worktrees and untracked root files: this container has none, and nothing touched any.
 
 # Earlier: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
