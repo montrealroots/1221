@@ -87,3 +87,39 @@ spending the hours is best on every measure.
 - Repeating takes gives the best mean take (53.52).
 - Breadth gives the most genre practice (47.61).
 - Across the five ways, the held-out briefs lie within half a point of each other (57.76 to 58.21).
+
+## Played Again After The Workload And I3 Changes (Later On 2026-10-16)
+
+`after-workload/` holds the same 24 lives and six mastery plans, played on `0cdbbe0c`: the coursework changes
+(`../workload-2026-10-16/`) and I3's (`../interpretation-2026-10-16/i3-review.md`). Each life was its own `--why` run
+(`npx vite-node tools/lives.ts -- --why --seed lives-N --profile "<name>" --years 3.2`). The runs above are kept as they
+were.
+
+| Profile | Graduated, Before | Graduated, After | Breaches, Unbalanced, Errors | A Term Short, After |
+|---|---|---|---|---|
+| New York, attentive | 4 of 4 | 4 of 4 | 0, 0, 0 | seed 3: a concern in the fourth term |
+| Mexico City, attentive | 4 of 4 | 4 of 4 | 0, 0, 0 | seed 3: a concern in the fourth term |
+| London, early riser and curious, attentive | **0 of 4** | **4 of 4** | 0, 0, 0 | seeds 0, 2, 3: a concern in the fourth term |
+| Reykjavik, autopilot | 0 of 4 | 0 of 4: concern, warning, dismissed | 0, 0, 0 | the control |
+| New York, practicing | 4 of 4 | 4 of 4 | 0, 0, 0 | none |
+| Scraping, the flu and an injury, attentive | 4 of 4 | 4 of 4 | 0, 0, 0 | seed 2: concern, then warning, in the third and fourth terms; seed 3: a concern in the fourth |
+
+- **Every concern after the change was a production, not coursework.** Each review names a production that "fell
+  short of what the program asks": Major Barbara, Woyzeck, Ghosts (three times), or Carlotta Festival Of New Plays and
+  Hedda Gabler. Attendance was at 100% of what was asked, and craft grew ahead of the class.
+- **Each student was back in good standing the next term**, and graduated.
+- **The scraping student on seed 2** missed three class days excused (the flu and the injury) and had two terms short on
+  its productions before it recovered.
+- **The mastery plans**, after the change:
+
+  | Genre | Seed | First Tape | Graduated | Everything Full | Payoff Tapes | Breaches |
+  |---|---|---|---|---|---|---|
+  | Nordic noir | m-0 | 57.5 | 2029-05-21 | 2029-11-17 (was 2029-12-11) | 100, 100, 100 | 0 |
+  | Nordic noir | m-1 | 58.2 | 2029-05-21 | 2029-12-01 | 100, 100, 100 | 0 |
+  | Social realism | m-0 | 60.2 | 2029-05-21 | 2029-11-17 | 100, 100, 100 | 0 |
+  | Social realism | m-1 | 59.9 | 2029-05-21 | 2029-12-01 | 100, 100, 100 | 0 |
+  | Musical | m-0 | 56.4 | 2029-05-21 | 2030-10-16 | 100, 100, 100 | 0 |
+  | Slapstick | m-0 | 58.1 | 2029-05-21 | 2030-12-29 | 100, 100, 100 | 0 |
+
+  Mastery is still reached on every one, with the same graduation day. Everything comes full between three weeks
+  sooner and two weeks later than before.
