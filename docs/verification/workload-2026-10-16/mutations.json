@@ -1,0 +1,138 @@
+[
+ {
+  "mutation": "I1 grain not applied in the judge",
+  "verdict": "KILLED",
+  "testsFailed": 6
+ },
+ {
+  "mutation": "I2 suitability sign flipped",
+  "verdict": "KILLED",
+  "testsFailed": 6
+ },
+ {
+  "mutation": "I3 the register left out of suitability",
+  "verdict": "KILLED",
+  "testsFailed": 4
+ },
+ {
+  "mutation": "I4 the reading left out of suitability",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "I5 rehearsal mark the same for every side",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "I6 the take keeps no grain",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "I7 the brief passes no scene",
+  "verdict": "KILLED",
+  "testsFailed": 5
+ },
+ {
+  "mutation": "A1 advice ranked least first",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "A2 advice from the limits, not the forecast",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "A3 growth without diminishing returns",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "A4 no tie ever said",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "A5 an input at full still advised",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "A6 candidates only the kept limits",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "N1 the old tolerance back",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "N2 a limit gone when overtaken",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "N3 an unmoving way offered again",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "N4 a learned note counted as taken",
+  "verdict": "KILLED",
+  "testsFailed": 3
+ },
+ {
+  "mutation": "I8 suitability on the most-leaned dimension only",
+  "first": "SURVIVED",
+  "after": "KILLED",
+  "note": "the proportional-reach test added to tests/interpretation.test.ts, 2026-10-16"
+ },
+ {
+  "mutation": "W1 no warning in the term",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "W2 warned at every showing",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "W3 warned only at the review mark",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W4 the forecast reads the day",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W5 a part short until it is full",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W6 the review names no cause",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W7 the partner remedy names no reader",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W8 the work in the order it was set",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "W9 of two due the same day, the order it was set",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ }
+]

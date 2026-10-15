@@ -135,3 +135,15 @@ Unready of shown in each of the first three terms, and the standing at the end (
   review's mark, and what a player answers by asking earlier: Due Soonest and Shown Today say when.
 - **The policy is one player.** A player who asks for every evening a week ahead would do better than it; one who
   ignores the warning will fare as the old runs did.
+
+## Mutations (`mutations.json`)
+
+27 mutations, each run alone against the tests that protect it, in a clean copy of the tree:
+- **Coursework, W1 to W9:** no warning; warned at every showing; warned only at the review's mark; the forecast reading
+  the day; a part short until it's full; the review naming no cause; the remedy naming no reader; the work in the order
+  it was set; and two pieces due the same day in that order.
+- **I8:** suitability reaching only a side's most-leaned dimension.
+- **The 17 from the earlier brief.**
+
+Every one was killed. I8 survived the first run, since no test read the proportional reach, and was killed once
+`tests/interpretation.test.ts` asked it of expansive's execution.

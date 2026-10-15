@@ -8,14 +8,14 @@
 import { describe, expect, it } from 'vitest';
 import { BRIEF_BY_ID, BRIEFS, type Brief } from '@/engine/content/briefs';
 import { MASTERED } from '@/engine/content/abilities';
-import { PLAYING } from '@/engine/content/approaches';
+import { APPROACH_EFFECT, PLAYING } from '@/engine/content/approaches';
 import { GRAIN } from '@/engine/content/interpretation';
 import type { Person } from '@/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, sceneOf, readingOf, type BriefRecord } from '@/engine/systems/briefs';
 import { chiefLimit, replay, type Performer } from '@/engine/systems/evaluation';
 import { judgePiece } from '@/engine/systems/piece';
 import { misfitOf, type Playing } from '@/engine/systems/material';
-import { requiredFor, suitabilityOf } from '@/engine/systems/interpretation';
+import { grainOf, requiredFor, suitabilityOf } from '@/engine/systems/interpretation';
 import { grainRead, grainWords } from '@/engine/systems/interpretation-read';
 import { TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import type { Axis, AxisValue } from '@/engine/content/material';
@@ -128,6 +128,21 @@ describe('a way of playing, read against the scene', () => {
     const prepLimit = (sides: Sides) => judgeIt(noir, EVEN, sides, { approach: at }).limits.some((l) => l.kind === 'preparation' && l.what === 'approach');
     expect(prepLimit({ scale: 'restrained' })).toBe(false);
     expect(prepLimit({ scale: 'expansive' })).toBe(true);
+  });
+
+  it('reaches every dimension a side leans on, by how far it leans there: expansive’s execution gets a fifth of its connection’s', () => {
+    // From 2026-10-16, later (i3-review.md): until then only a dimension leant 1.1 or more, and expansive's execution
+    // (1.05), the voice and the body sized to the house, never met the scene's grain.
+    const b = BRIEFS.find((x) => x.medium === 'voice' && Math.abs(suitabilityOf('expansive', briefMaterial(x), sceneOf(x)).s) >= 0.3)!;
+    expect(b).toBeDefined();
+    const task = Object.values(TASK_PROFILES).find((t) => t.dims.connection && t.dims.execution)!;
+    const { grain } = grainOf(task, ['expansive'], briefMaterial(b), sceneOf(b));
+    const lean = APPROACH_EFFECT.expansive.lean;
+    const share = (lean.execution! - 1) / (lean.connection! - 1);
+    expect(share).toBeCloseTo(0.2, 5);
+    expect(grain.execution).toBeDefined();
+    expect(Math.sign(grain.execution!.d)).toBe(Math.sign(grain.connection!.d));
+    expect(Math.abs(grain.execution!.d - grain.connection!.d * share)).toBeLessThanOrEqual(0.01);
   });
 
   it('keeps a result with its grain, and works it out again the same', () => {
