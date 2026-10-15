@@ -167,3 +167,53 @@ independent test of the revision. The revision is measured on:
   sampled (`i % 3 ≠ 0`, 99), and the further briefs that weren't sampled (99).
 
 The revision passes only if it holds on both fresh samples.
+
+### Results Of The Revision, Measured After The Definition Above
+
+Measured on `edc22502` (the engine as of `f99d9dc6`) with `tools/genre-signature.ts`:
+- `signature-revised.json`: the designed and held-out samples;
+- `--fresh`, `signature-revised-fresh.json`: the fresh samples;
+- `--blind` and `--blind --fresh`: the genre ignored, on both.
+
+| | Designed (50) | Held Out (50) | Fresh Designed (99) | Fresh Held Out (99) | Genre Ignored, All Four |
+|---|---|---|---|---|---|
+| S1 (≥ 0.7) | 0.90 | 0.88 | 0.90 | 0.87 (least 0.74) | 0: fails |
+| S2 original: none over one (≥ 1.5×) | 1.47: fails | 1.47: fails | 1.47: fails | 1.47: fails | 0: fails |
+| **S2 revised: contrasting over one (≥ 1.5×)** | **1.60: passes** | **1.61: passes** | **1.60: passes** | **1.61: passes** | 0: fails |
+| S2: nearest shares a concern (≥ 90%) | 98.7% | 98.7% | 98.7% | 98.7% | 18.8%: fails |
+| S3 original (≥ 80%) | 82.3% | 71.8%: fails | 78.8%: fails | 69.4%: fails | 0%: fails |
+| **S3 revised (≥ 80%)** | **89.0%** | **81.0%** | **86.7%** | **78.9%: fails** | 0%: fails |
+
+The contrasting pairs are 4,168 of the 11,026 genre pairs for S2. For S3 they're 14,350 of 29,250 (pair, scene) cases
+per 50 scenes.
+
+**What it says:**
+- **The revision is right about S2.** With declared kin taken out of "contrasting", contrasting genres are 1.6× as far
+  apart as genres that share a concern, on every sample, the fresh ones too. Genre ignored, it fails.
+- **S3, revised, falls short on the fresh held-out briefs**, at 78.9% against 80%. As defined above, the revision
+  passes only if it holds on both fresh samples. **It doesn't, so S3 isn't passed**, and nothing was tuned to make it.
+- **Why it falls short** (`signature-revised-fresh-diagnose.json`). Five in six of the further briefs are written with a
+  reader who plays the other part a way (pressing, withholding or unpredictable), or are voice takes. Nine in ten of
+  the first briefs have a steady reader. On the fresh samples, contrasting genres led to the same outcome:
+
+  | Reader | Fresh Designed | Fresh Held Out |
+  |---|---|---|
+  | Steady | 12.5% | 13.7% |
+  | Pressing | 3.8% | 23.7% |
+  | Unpredictable | 25.4% | 20.1% |
+  | Withholding | 33.9% | 26.4% |
+  | Voice | 9.2% | 20.6% |
+
+  A reader's way is read at full weight and a genre's register at half (interpretation criteria, I2: so a genre isn't a
+  rule). So where a scene's reader presses, withholds or surprises, the reader decides the side whatever the genre. The
+  scenes missed most were Apocalyptic 2, Concert Film 2, Musical 2, Horror Comedy 2 and Screwball Comedy 2.
+- **The genres and scenes that fail.** No genre fails S1; the least is 0.74. S3's misses lie in scenes, not genres. Under the
+  original proxy the pairs missed most were Biker and Cosmic Horror, Docufiction and Romance, and Adventure and Costume
+  Drama (`signature-diagnose.json`). Under the revision the misses are the scenes above, the ones with a reader's way.
+
+**Not changed, and why.** Closing the last 1.1 points would mean one of two things:
+- **Weighting the register over the scene's reader.** At full weight a genre's two scenes disagreed on scale in only
+  10% of genres, against I2's 20%: the genre as a rule, which the owner's brief rules out.
+- **Giving the reader less weight because S3 asks it.** That's tuning against the criterion.
+
+Both are the owner's to weigh, with this table. The original S2 and S3 results stand as recorded, failing.
