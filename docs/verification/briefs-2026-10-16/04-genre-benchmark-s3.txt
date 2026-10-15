@@ -1,0 +1,94 @@
+SLATE: Resolve The Remaining Genre Benchmark With Defensible Changes And Proof
+
+Focus only on the remaining genre-signature benchmark, S3. Inspect the latest main branch first; the last reviewed main revision was eb0b602, containing the merged genre and interpretation work.
+
+The last recorded fresh held-out result was 78.9% against the existing 80% requirement. Investigate and resolve that shortfall without weakening the test or making unrelated changes.
+
+1. Diagnose The Actual Failures
+
+Read the benchmark definition, its revision history, per-case results, genre registers, interpretation rules, and reader behavior.
+
+Identify which genre/scene comparisons fail and why. Distinguish:
+
+* Legitimate overlap.
+* Incorrect genre assignments.
+* Missing or weak scene signals.
+* Reader behavior overwhelming relevant genre differences.
+* Rounding, ties, or measurement defects.
+
+Treat the report’s reader-versus-register explanation as a hypothesis to verify, not a conclusion to assume.
+
+2. Fix The Cause
+
+I authorize narrowly scoped adjustments to genre-versus-reader weighting, their interaction, and demonstrably incorrect genre or scene data where the evidence supports them.
+
+Preserve meaningful contributions from both genre and reader behavior. A reader should change how the scene is played without routinely erasing relevant genre distinctions.
+
+Do not:
+
+* Lower the 80% threshold to pass.
+* Remove difficult cases or relabel them after seeing their results.
+* Add arbitrary genre bonuses.
+* Make all scenes within a genre identical.
+* Eliminate legitimate overlap between related genres.
+* Introduce genre-specific exceptions solely to satisfy the benchmark.
+
+If an actual metric defect prevents a valid resolution, document it precisely and report the blocker instead of silently redefining success.
+
+3. Validate Beyond The Known Sample
+
+Treat previously inspected “held-out” cases as known data once used for tuning.
+
+Define and preserve fresh validation cases before evaluating the proposed change. Include different scene demands, reader styles, ability profiles, and contrasting versus related genres.
+
+Report:
+
+* The original 78.9% result.
+* Results after the change on the original cases.
+* Results on genuinely fresh cases.
+* Numerators, denominators, tie handling, and sample definitions.
+* Remaining failures by cause.
+
+Do not stop after a tiny numerical increase on the old sample. Demonstrate that the change generalizes.
+
+4. Protect Existing Behavior
+
+Verify that the change preserves:
+
+* S1, S2, and S4.
+* Interpretation criteria that already pass.
+* Multiple fitting interpretations.
+* Variation between scenes in the same genre.
+* Individual performance separated from ensemble results.
+* Existing mastery guarantees.
+* Historical results and save compatibility.
+* Training-advice accuracy.
+
+Keep the known stage-scene expansive bias explicitly visible. Do not claim this benchmark fix resolves it unless separately demonstrated, and do not worsen it.
+
+If evaluation behavior changes, follow the established ruleset-versioning approach.
+
+5. Prove It In Gameplay
+
+Provide controlled before-and-after examples showing:
+
+* A previously failing contrasting pair now differs for a meaningful reason.
+* Reader behavior still matters.
+* Related genres retain appropriate overlap.
+* A mastered, properly prepared actor still reaches maximum personal quality.
+
+Use real commands and downstream outcomes. Add regression tests with independent expectations and targeted mutations proving the tests detect lost genre influence or incorrectly ignored reader behavior.
+
+6. Finish And Report
+
+Run focused checks during implementation, then the required full regression gate and build. Run affected desktop/mobile journeys if player-facing behavior changes.
+
+Update the benchmark report, matrices, tutorials where needed, and current handoff.
+
+Deliver the exact implementation, tested revision, before-and-after results, fresh validation evidence, regression results, and any remaining limitations.
+
+Continue until S3 meets its existing acceptance criteria with defensible evidence, or a concrete blocker is established. Do not declare success from a rounded percentage or an unsupported “10/10.”
+
+Commit and push the work and prepare a reviewable pull request. Do not merge or deploy without explicit authorization.
+
+Preserve all other outstanding tasks. This is a focused genre-benchmark fix, not permission to restart the broader build.

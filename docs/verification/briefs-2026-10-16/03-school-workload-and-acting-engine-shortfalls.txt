@@ -1,0 +1,190 @@
+SLATE: Finish School Workload Balance And The Remaining Acting-Engine Shortfalls
+
+Continue from the latest interpretation, advice, and genre work. The last reviewed working revision was 5b27379 on claude/zen-mccarthy-i88ujw; main was still at 35d032d. Inspect the actual current state before editing and preserve all newer work.
+
+Implement the fixes, verify their effects, and provide reproducible evidence. Do not stop at a plan, automatically weaken acceptance criteria, or declare completion while known requirements remain unmet.
+
+1. Investigate The School Workload Problem
+
+The latest report found:
+
+* The London profile was dismissed on all four tested seeds despite 100% attendance.
+* From the third term, 24–26 of its 46 class pieces per term were unready.
+* Other attentive profiles also had many unready scenes.
+* The London outcome reproduced before the latest genre changes.
+
+Determine the cause before changing the balance.
+
+Trace:
+Assigned Work → Notice And Deadlines → Available Time → Preparation Options → Preparation Progress → Class Performance → Feedback → Academic Standing → Intervention → Final Outcome.
+
+Distinguish:
+
+* A scheduling or engine defect.
+* An unrealistic workload.
+* A weak automated play policy.
+* Poor player choices.
+* Legitimate consequences of low skill or incomplete preparation.
+* Misleading readiness labels or forecasts.
+
+Attendance alone must not guarantee passing. Equally, a reasonable, attentive strategy must not fail because of hidden requirements, impossible scheduling, ineffective controls, or preparation that the game fails to credit.
+
+2. Establish A Feasible Student Schedule
+
+Measure each term’s actual time demands:
+
+* Required classes and rehearsals.
+* Assigned preparation and memorization.
+* Performances and assessments.
+* Work-study obligations where applicable.
+* Sleep, recovery, meals, and other necessary existing actions.
+* Illness, leave, and reasonable disruption.
+
+Account for overlapping obligations, advance notice, deadlines, and the opportunity to prepare before the relevant class.
+
+Use authoritative school information where factual requirements matter. Distinguish researched requirements from SLATE’s designed time costs.
+
+Demonstrate at least one feasible, understandable strategy for representative starting profiles. Do not rely on hidden knowledge, impossible action sequences, or eliminating recovery to make the schedule work.
+
+Fix the actual cause. Do not simply lower pass thresholds, raise starting attributes, grant free preparation, or remove consequences.
+
+3. Make Preparation And Feedback Consistent
+
+Verify that:
+
+* Relevant preparation reaches the correct piece and assessment.
+* Repeated work earns the intended progress without duplication.
+* Practice duration, diminishing returns, and completion marks agree.
+* Changing an interpretation preserves applicable work and clearly explains any new preparation needed.
+* Readiness labels accurately describe what remains.
+* Advice prioritizes urgent work appropriately.
+* Players receive actionable warnings early enough to respond.
+* Leave, repeated terms, extra terms, and reloads preserve legitimate progress.
+
+Make the consequences understandable before the player is penalized. A warning should identify the problem, the available remedy, and the relevant deadline.
+
+Keep school challenge meaningful. Neglectful strategies should still carry appropriate risks.
+
+4. Complete The Remaining Interpretation Criteria
+
+Recheck the latest I3 shortfalls:
+
+* Expansive playing ahead in 23% of designed briefs against the stated 25% target.
+* Held-out interpretation spread of 0.92 against the stated 1.0 target.
+
+Investigate whether these indicate weak differentiation, biased scene coverage, medium effects, or a flawed measurement.
+
+Improve the model where justified while preserving:
+
+* Scene-specific suitability.
+* Multiple coherent interpretations.
+* Meaningful skill advantages.
+* No universal best interpretation.
+* Maximum personal quality under the established mastery conditions.
+* Historical results and save compatibility.
+
+Do not force equal win rates or arbitrary numerical differences merely to pass.
+
+If a criterion is demonstrably inappropriate, document the defect, preserve its original result, and propose a principled replacement before tuning against it. Validate the replacement on fresh held-out examples. Do not quietly redefine success.
+
+5. Complete The Genre-Signature Shortfalls
+
+Recheck the replacement genre-signature results:
+
+* S2’s ratio of 1.47 against 1.5.
+* S3’s held-out result of 72% against 80%.
+
+Identify which genres and scenes cause the failures.
+
+Strengthen genuinely weak distinctions through meaningful scene demands, interpretation interactions, preparation, and feedback. Preserve legitimate overlap among related genres and variation within each genre.
+
+Do not make every scene in a genre follow one template. Do not replace substantive differences with cosmetic descriptions or arbitrary bonuses.
+
+Show the original, revised, and held-out measurements side by side.
+
+6. Preserve The Improvements Already Demonstrated
+
+Keep:
+
+* Training recommendations based on realistic gains.
+* Separate explanations for the last performance’s limitation and the best next training step.
+* Honest director-note outcomes.
+* No ineffective adjustment falsely marked as improvement.
+* Individual performance separated from ensemble results.
+* Genre proficiency contributing only where relevant.
+* All established mastery guarantees.
+
+Rerun the advice comparisons after changes that could affect their validity. Preserve the distinction between exact-best recommendations and recommendations within the documented tolerance.
+
+7. Test Complete Student Journeys
+
+Compare the old and new implementations with matched seeds and profiles.
+
+Include:
+
+* The four London cases.
+* Multiple attentive strategies.
+* Relevant financial backgrounds and work-study demands.
+* Specialists and generalists.
+* Students recovering from setbacks.
+* A deliberately neglectful strategy as a control.
+
+Report more than graduation counts:
+
+* Available hours and scheduled obligations.
+* Assigned and completed preparation.
+* Readiness at assessment.
+* Attendance.
+* Performance and academic standing.
+* Warnings received and actions taken.
+* Recovery and fatigue.
+* Why each student graduated, repeated, withdrew, or was dismissed.
+
+Do not assert that birthplace itself caused a difference. Identify the actual starting conditions and choices.
+
+Run graduation-length journeys, save/load comparisons, and representative mastery plans. Verify realistic challenge alongside achievable success.
+
+8. Verify Through The Interface
+
+Demonstrate desktop and mobile journeys where the player:
+
+* Finds assigned work and deadlines.
+* Understands the preparation required.
+* Plans and completes the work.
+* Changes an interpretation.
+* Receives accurate feedback.
+* Responds to an academic warning.
+* Saves, reloads, and continues without losing progress.
+
+Update tutorials and contextual help with the actual rules. Preserve Title Case, navigation context, and the paused tutorial clock.
+
+9. Work Efficiently And Prove The Result
+
+Reuse existing research, scenarios, and evidence. Use focused tests during implementation and avoid duplicated broad investigations.
+
+For every defect, establish a failing reproduction, implement the fix, and test its downstream effects. Use independently calculated expectations and targeted mutation tests.
+
+Run the full required regression gate, production build, and affected desktop/mobile acceptance journeys on the final integrated code revision. Record exact commands and exit codes.
+
+Do not hide failed journeys, weaken assertions to save usage, or reuse old passing results for changed behavior.
+
+10. Deliver A Complete Handoff
+
+Commit:
+
+* The root-cause analysis.
+* Before-and-after workload budgets.
+* The implementation changes and their gameplay effects.
+* Interpretation and genre-signature results.
+* Long-journey evidence and mastery results.
+* Test results, skips, and limitations.
+* Updated tutorials, coverage records, and work plan.
+* The exact tested revision.
+
+Preserve the earlier six acceptance areas as outstanding unless they are actually completed. This task does not cancel them or authorize restoring removed systems.
+
+Continue until the authorized work is implemented and verified, or a concrete blocker prevents further progress. Complete independent work before reporting a blocker.
+
+Commit and push to the appropriate working branch and prepare a reviewable pull request. Do not merge or deploy without explicit authorization.
+
+The goal is a challenging but feasible school journey, meaningful acting choices, and consistently useful feedback—all connected and supported by evidence.

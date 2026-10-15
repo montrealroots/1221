@@ -1,0 +1,131 @@
+SLATE: Complete Genre Differentiation And Prove Each Genre’s Identity
+
+Focus exclusively on genre differentiation. Continue from the latest code, preserve other ongoing work, and do not reopen banking or unrelated acceptance tasks.
+
+Read the repository instructions, current work plan, genre matrix, phase-2b report, existing briefs, evaluation rules, and genre acceptance criteria before editing.
+
+1. Resolve The Seven Identical Genre Pairs
+
+The last reviewed report identified these mechanically identical pairs:
+
+* Biker / Coming Of Age
+* Children’s / Science Fantasy
+* Christmas / Holiday
+* Dystopian / Medical Drama
+* Espionage / Neorealism
+* Family / Steampunk
+* Nordic Noir / Social Realism
+
+Recheck them against the current implementation. Identify exactly which engine-consumed values and choices are identical, then give each genre an appropriate, demonstrated identity.
+
+Do not differentiate them by arbitrary numerical offsets or different descriptions over identical behavior.
+
+2. Review Every Genre
+
+Inspect every genre in the actual catalog—not only these seven pairs.
+
+For each, document:
+
+* Its defining conventions and dramatic concerns.
+* Relevant performance demands.
+* Interpretation choices and their tradeoffs.
+* What preparation helps and why.
+* How its scenes vary internally.
+* Which engine calculations read those distinctions.
+* How the player sees and understands the consequences.
+
+Recognize that the catalog may mix genres, settings, audiences, movements, and seasonal categories. A setting label does not automatically require a unique acting technique. Where two categories legitimately share performance demands, differentiate their situations, constraints, interpretation opportunities, and feedback without inventing false acting rules.
+
+3. Implement Meaningful Differences
+
+Use the existing scene and evaluation systems wherever possible. Distinctions may involve:
+
+* Stakes and objectives.
+* Subtext and explicitness.
+* Emotional restraint or intensity.
+* Rhythm, timing, and tonal transitions.
+* Physical or vocal demands.
+* Relationship dynamics and partner cues.
+* Text complexity and continuity.
+* Acceptable interpretation choices.
+
+Ensure these properties affect preparation, rehearsal, evaluation, or specific feedback where appropriate.
+
+Avoid one rigid formula for every scene in a genre. Give genres recognizable tendencies while allowing different roles, scenes, and valid interpretations.
+
+Add or revise briefs where the current content cannot demonstrate sufficient range. Do not use a large content count as a substitute for depth.
+
+4. Preserve Attribute Integration And Mastery
+
+Use existing attributes and genre proficiency coherently. Keep this work focused on genre differentiation; change shared evaluation code only where necessary for that goal.
+
+Preserve:
+
+* Relevant genre learning improving relevant work.
+* Unrelated genre mastery providing no unjustified universal bonus.
+* The established maximum-personal-quality guarantee under qualifying mastery conditions.
+* Individual performance being distinct from ensemble results.
+* Existing saved results and evaluation-version compatibility.
+
+Do not differentiate genres by making some permanently incapable of maximum quality.
+
+5. Make Consequences Visible
+
+The player should understand why approaching two genres differently matters.
+
+Update relevant brief descriptions, rehearsal feedback, genre explanations, and contextual tutorials. Explain actual mechanics and choices without exposing unnecessary developer terminology.
+
+Feedback must reflect the evaluation evidence. Remember prior rehearsal decisions and avoid repeating resolved advice.
+
+Follow existing Title Case and interface conventions.
+
+6. Prove The Differences
+
+Keep the existing acceptance thresholds fixed unless a documented flaw requires correction. Do not loosen them merely to obtain passing results.
+
+Provide:
+
+* A before-and-after matrix covering every genre.
+* A specific demonstration for each formerly identical pair.
+* Controlled comparisons using the same actor, proficiency, condition, and preparation.
+* Examples where genre-appropriate choices affect the relevant outcome.
+* Examples showing multiple interpretations can succeed.
+* Low, medium, high, and mastered proficiency checks.
+* Tests preventing unintended effects on unrelated genres.
+* Save/load checks and preservation of historical results.
+
+Compare genre behavior across varied scenes, rather than relying on one carefully selected brief. Distinguish legitimate overlap from accidental duplication.
+
+Use targeted mutation tests to show that removing the new genre distinctions breaks the relevant tests.
+
+7. Verify The Player Experience
+
+Play representative journeys through selecting a brief, preparing, rehearsing, interpreting, performing, receiving feedback, and continuing after a reload.
+
+Cover the formerly identical pairs and representative contrasting genre families. Include desktop and mobile checks for affected interactions.
+
+Measure repeated content and feedback during repeated practice. Improve meaningful variation where the same choices and advice recur despite changed circumstances.
+
+Do not claim infinite unique content or that automated tests prove subjective enjoyment.
+
+8. Work Efficiently And Finish
+
+Reuse existing research, infrastructure, and completed evidence. Research only unresolved genre-specific questions, using appropriate authoritative sources and distinguishing acting principles from SLATE’s designed formulas.
+
+Avoid duplicated agent assignments and repeated repository-wide investigation. Run focused tests while implementing, then the required full regression gate and build on the final integrated revision.
+
+Continue until every genre-differentiation acceptance item is implemented and demonstrated, or a concrete blocker prevents further progress. Do not stop after producing the matrix or a plan.
+
+Deliver:
+
+* The implementation commit and branch.
+* Exactly what changed for each formerly identical pair.
+* The complete genre matrix.
+* Before-and-after gameplay examples.
+* Test commands, results, and mutation evidence.
+* Remaining limitations or genuine unresolved decisions.
+* Updated tutorials and handoff.
+
+Commit and push the completed work and prepare a reviewable pull request. Do not merge or deploy without explicit authorization.
+
+The goal is recognizable, varied, mechanically meaningful genres that work naturally with the attribute engine—with proof, not cosmetic labels.

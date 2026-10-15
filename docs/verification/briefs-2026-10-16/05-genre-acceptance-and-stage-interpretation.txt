@@ -1,0 +1,180 @@
+SLATE: Finish Genre Acceptance And Correct The Stage-Interpretation Bias
+
+Complete the remaining genre work while preserving everything already implemented. This command consolidates the previous genre-benchmark instructions and adds the unresolved stage-interpretation problem.
+
+Inspect the latest code, branch status, work plan, handoff, and reports first. If the previous benchmark task is already underway or completed, continue from its results. Do not duplicate or overwrite that work.
+
+The last reviewed problems were:
+
+* S3 measured 78.9% against its 80% requirement on fresh held-out cases.
+* Every scene in the fresh stage sample favored expansive acting.
+
+Verify their current status before making changes.
+
+1. Resolve The Remaining Genre Benchmark
+
+Investigate the failing S3 comparisons individually. Determine whether each failure comes from:
+
+* Legitimate genre overlap.
+* Weak or incorrect genre assignments.
+* Missing scene-specific demands.
+* Reader behavior overwhelming relevant genre differences.
+* Rounding, ties, or measurement defects.
+
+I authorize justified changes to genre-versus-reader weighting, their interaction, and incorrect genre or scene data.
+
+Preserve both influences: genre should matter, and the reader should still affect the scene. Do not lower the 80% target, delete difficult cases, or add arbitrary bonuses to obtain a pass.
+
+Treat previously inspected validation cases as known data. Define fresh cases before evaluating the revised implementation. Report results on the original sample and the fresh sample, including numerators, denominators, ties, and remaining failures.
+
+If the metric itself has a demonstrable defect, preserve its original result and explain the defect explicitly. Do not quietly redefine success.
+
+2. Correct The Stage-Interpretation Bias
+
+Investigate why every scene in the fresh stage sample favors expansive acting.
+
+Separate:
+
+* Being audible and physically readable in a theater.
+* Emotional intensity.
+* Expressive scale.
+* Pace and rhythm.
+* A character’s restraint or concealment.
+* The intimacy or distance of the scene.
+
+Projection must not automatically mean expansive emotional acting. A restrained performance can still communicate clearly across a theater.
+
+Research the relevant acting principles and inspect each scene’s actual text, circumstances, medium, relationships, stakes, tone, and demands.
+
+Add or correct scene-specific interpretation signals where the evidence supports them. Do not solve a content problem by blindly increasing or decreasing a global coefficient.
+
+Preserve genuine differences between:
+
+* Intimate exchanges and public speeches.
+* Concealed motives and overt confrontation.
+* Naturalistic scenes and heightened theatrical work.
+* Comic, tragic, lyrical, and physically expressive material.
+
+Use the actual existing catalog. Do not assume every example of one genre requires the same interpretation.
+
+3. Preserve Multiple Valid Interpretations
+
+Do not replace “expansive always wins” with “restrained always wins,” a forced 50/50 split, or random alternation.
+
+Require demonstrable cases where:
+
+* Restraint is supported by the scene.
+* Expansive playing is supported by the scene.
+* Both are coherent but make different demands.
+* An actor’s strengths can make a harder interpretation successful.
+* Different scenes within the same genre reward different approaches.
+
+Explain suitability through the scene’s evidence. Show the distinction between interpretation suitability and execution quality.
+
+Preserve maximum personal quality for a mastered, properly prepared actor choosing an interpretation the game explicitly treats as fitting. Do not silently remove fitting options to protect the guarantee.
+
+4. Verify Genre Coverage And Integration
+
+Audit every genre entry for:
+
+* Its defining conventions and meaningful overlap.
+* Its implemented demands.
+* Its interaction with relevant attributes.
+* Its available interpretation choices.
+* Preparation and rehearsal consequences.
+* Accurate feedback and tutorials.
+
+Focus changes on demonstrated weaknesses. Reuse existing content and research where sufficient.
+
+Ensure the seven formerly identical pairs remain differentiated. Prevent the new stage changes from erasing camera-scene improvements.
+
+Verify that genre mastery helps relevant work without granting unjustified bonuses to unrelated genres.
+
+5. Keep Feedback And Progression Honest
+
+The interface must explain:
+
+* Why an interpretation suits the scene or works against it.
+* Which demands require more preparation.
+* What the actor executed well.
+* What actually limited the result.
+* Which realistic next step is most useful.
+
+Keep forecasts, results, director’s notes, and training advice consistent with the engine.
+
+An experiment that changes nothing may provide useful information, but must not falsely resolve a note or claim improvement. Avoid repeatedly recommending an ineffective adjustment in unchanged circumstances.
+
+Preserve saved choices, rehearsal evidence, and historical performance results. Version evaluation changes where required.
+
+6. Prove The Improvements
+
+Write the acceptance criteria before tuning. Preserve existing passing criteria and the established S3 target.
+
+Provide:
+
+* Controlled before-and-after comparisons.
+* Fresh validation cases not used for tuning.
+* Contrasting and related genres.
+* Different readers, media, and scene demands.
+* Specialists, generalists, and different proficiency levels.
+* Maximum-quality checks across fitting interpretations.
+* Save/load and historical-result checks.
+
+Use tests that assert meaningful outcomes rather than copying the implementation’s formula.
+
+Include targeted mutations showing that the tests fail when:
+
+* Genre influence is removed.
+* Scene-specific stage signals are ignored.
+* Reader behavior is ignored.
+* One interpretation is universally favored.
+* Mastery or historical-result preservation breaks.
+
+Keep original failures visible beside final results. Do not declare completion from a rounded percentage.
+
+7. Check The Full Student Experience
+
+Rerun representative school journeys through graduation and the affected played mastery plans.
+
+Confirm that:
+
+* The workload fixes remain effective.
+* Students can prepare for the actual demands shown.
+* School warnings and deadlines remain useful.
+* Training advice remains accurate after the evaluation changes.
+* Neglect retains appropriate consequences.
+* No new universally dominant practice or interpretation strategy emerges.
+
+Measure repeated feedback and stale advice. Do not disguise unchanged behavior with alternate wording.
+
+Play affected desktop and mobile flows through choosing an interpretation, preparing, rehearsing, performing, reading the explanation, saving, and continuing.
+
+8. Work Efficiently And Complete Verification
+
+Keep Fast Mode off. Reuse existing research, matrices, scenarios, and evidence. Avoid overlapping assignments and repeated repository-wide investigation.
+
+Run focused tests during implementation. Run the required complete regression gate, production build, and affected UI acceptance on the final integrated revision.
+
+Fix failures and rerun the checks necessary to establish the final result. Do not weaken tests or skip necessary evidence to save usage.
+
+9. Deliver Inspectable Completion Evidence
+
+Commit and provide:
+
+* The cause of each remaining defect.
+* The changes made and their gameplay consequences.
+* Original and final S3 results.
+* Fresh validation results.
+* Stage examples supporting restraint, expansive playing, and multiple valid approaches.
+* Updated genre matrices and tutorials.
+* Mastery, advice, graduation, and persistence results.
+* Exact commands, exit codes, skips, and limitations.
+* The tested commit and updated handoff.
+
+Continue until every authorized requirement in this task is implemented and demonstrated, or a concrete blocker prevents further progress. Finish all independent work before reporting a blocker.
+
+Preserve the six earlier acceptance areas as separate outstanding work unless actually completed. Do not claim that finishing genres completes the entire game.
+
+Commit and push the work and prepare a reviewable pull request. Do not merge or deploy without explicit authorization.
+
+The goal is a genre system whose distinctions, interpretation choices, preparation demands, and consequences remain convincing across both screen and stage—with reproducible proof.
