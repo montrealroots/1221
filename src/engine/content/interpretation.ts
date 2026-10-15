@@ -51,10 +51,10 @@ export const CONCERN_AFFINITY: Readonly<Record<Concern, { affinity: Affinity; wh
 
 /** How the reader plays the other part (`Brief.readerPlays`): a pressing reader is met, a withholding one waited out, an unpredictable one taken live. */
 export const READER_AFFINITY: Readonly<Record<'steady' | 'pressing' | 'withholding' | 'unpredictable', { affinity: Affinity; label: string }>> = {
-  steady: { affinity: { set: 0.25 }, label: 'A steady reader' },
-  pressing: { affinity: { driven: 0.5, open: 0.5, expansive: 0.25, measured: -0.25 }, label: 'A pressing reader' },
-  withholding: { affinity: { measured: 0.5, restrained: 0.25, driven: -0.5 }, label: 'A withholding reader' },
-  unpredictable: { affinity: { open: 1, set: -1 }, label: 'An unpredictable reader' },
+  steady: { affinity: { set: 0.25 }, label: 'A Steady Reader' },
+  pressing: { affinity: { driven: 0.5, open: 0.5, expansive: 0.25, measured: -0.25 }, label: 'A Pressing Reader' },
+  withholding: { affinity: { measured: 0.5, restrained: 0.25, driven: -0.5 }, label: 'A Withholding Reader' },
+  unpredictable: { affinity: { open: 1, set: -1 }, label: 'An Unpredictable Reader' },
 };
 
 /**
@@ -63,17 +63,17 @@ export const READER_AFFINITY: Readonly<Record<'steady' | 'pressing' | 'withholdi
  * being on camera: a rule for the medium, not a reading of the scene. Halved on 2026-10-16, before any other change.
  */
 export const MEDIUM_AFFINITY: Readonly<Record<'stage' | 'camera' | 'voice', { affinity: Affinity; label: string }>> = {
-  camera: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'A close frame' },
-  stage: { affinity: { expansive: 0.5, restrained: -0.25 }, label: 'A house to reach' },
-  voice: { affinity: {}, label: 'A microphone' },
+  camera: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'A Close Frame' },
+  stage: { affinity: { expansive: 0.5, restrained: -0.25 }, label: 'A House To Reach' },
+  voice: { affinity: {}, label: 'A Microphone' },
 };
 
 /** The tones it's played in, by their share of its beats: a joke wants pace, grief and a lyric beat want time, the grotesque wants size. */
 export const TONE_AFFINITY: Readonly<Record<'comic' | 'grave' | 'lyric' | 'grotesque', { affinity: Affinity; label: string }>> = {
-  comic: { affinity: { driven: 0.75, expansive: 0.25, measured: -0.5 }, label: 'Its comic beats' },
-  grave: { affinity: { measured: 0.5 }, label: 'Its grave beats' },
-  lyric: { affinity: { measured: 0.5 }, label: 'Its lyric beats' },
-  grotesque: { affinity: { expansive: 0.75 }, label: 'Its grotesque beats' },
+  comic: { affinity: { driven: 0.75, expansive: 0.25, measured: -0.5 }, label: 'Its Comic Beats' },
+  grave: { affinity: { measured: 0.5 }, label: 'Its Grave Beats' },
+  lyric: { affinity: { measured: 0.5 }, label: 'Its Lyric Beats' },
+  grotesque: { affinity: { expansive: 0.75 }, label: 'Its Grotesque Beats' },
 };
 
 /**
@@ -87,17 +87,17 @@ export const TURN_AFFINITY: Affinity = { measured: 0.15 };
 
 /** What its features ask, per level: a timed scene wants its pace and its beats placed; improvisation wants it open; a voice at full stretch wants size. */
 export const FEATURE_AFFINITY: Readonly<Record<'timing' | 'improvisation' | 'physical' | 'partner' | 'vocal', { affinity: Affinity; label: string; from?: number }>> = {
-  timing: { affinity: { driven: 0.25, set: 0.25 }, label: 'Its timing' },
-  improvisation: { affinity: { open: 0.5, set: -0.5 }, label: 'What it leaves to be found' },
-  physical: { affinity: { set: 0.25 }, label: 'Its physical score', from: 2 },
-  partner: { affinity: { open: 0.5 }, label: 'Its partner', from: 3 },
-  vocal: { affinity: { expansive: 0.25 }, label: 'Its voice work', from: 2 },
+  timing: { affinity: { driven: 0.25, set: 0.25 }, label: 'Its Timing' },
+  improvisation: { affinity: { open: 0.5, set: -0.5 }, label: 'What It Leaves To Be Found' },
+  physical: { affinity: { set: 0.25 }, label: 'Its Physical Score', from: 2 },
+  partner: { affinity: { open: 0.5 }, label: 'Its Partner', from: 3 },
+  vocal: { affinity: { expansive: 0.25 }, label: 'Its Voice Work', from: 2 },
 };
 
 /** The language: heightened text wants to be sized to, verse placed and given its time. */
 export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affinity: Affinity; label: string }>> = {
-  heightened: { affinity: { expansive: 0.5 }, label: 'Its heightened language' },
-  verse: { affinity: { set: 0.5, measured: 0.5 }, label: 'Its verse' },
+  heightened: { affinity: { expansive: 0.5 }, label: 'Its Heightened Language' },
+  verse: { affinity: { set: 0.5, measured: 0.5 }, label: 'Its Verse' },
 };
 
 /**

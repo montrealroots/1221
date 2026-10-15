@@ -28,6 +28,6 @@ export function heldVersusNext(person: Person, recs: readonly Recommendation[]):
   const held = last?.limits.find((l) => l.kind === 'ability' || l.kind === 'technique');
   if (!top || !held || held.what === top.target) return undefined;
   const theirs = recs.find((r) => r.target === held.what);
-  const said = theirs?.forecast ? `${theirs.forecast.hours} hours of it are forecast at about ${theirs.points} points a piece, against ${top.points} for ${top.label.toLowerCase()}` : `training it is forecast to pay less than ${top.label.toLowerCase()} does`;
+  const said = theirs?.forecast ? `${theirs.forecast.hours} hours of it are forecast at about ${theirs.points} points a piece, against ${top.points} for ${top.label.toLowerCase()}` : `it would pay less to train than ${top.label.toLowerCase()}`;
   return `What held your last piece back most was ${held.label.toLowerCase()}, but it isn’t what pays most to train now: ${said}, which your recent work reads across more of it or has more room to grow in.`;
 }

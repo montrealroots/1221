@@ -80,9 +80,9 @@ export function suitabilityOf(side: AxisValue, material: MaterialProfile | undef
     push(MEDIUM_AFFINITY[material.medium].label, MEDIUM_AFFINITY[material.medium].affinity[side] ?? 0);
     const shares = toneShares(material);
     for (const t of Object.keys(TONE_AFFINITY) as (keyof typeof TONE_AFFINITY)[]) if (shares[t]) push(TONE_AFFINITY[t].label, (TONE_AFFINITY[t].affinity[side] ?? 0) * shares[t]!);
-    if (material.partner === 0 && material.medium !== 'voice') push('No one to play off but the lens', SOLO_AFFINITY[side] ?? 0);
+    if (material.partner === 0 && material.medium !== 'voice') push('No One To Play Off But The Lens', SOLO_AFFINITY[side] ?? 0);
     const turns = Math.min(3, turnsOf(material));
-    if (turns) push(`Its ${turns === 1 ? 'turn' : `${turns} turns`}`, (TURN_AFFINITY[side] ?? 0) * turns);
+    if (turns) push(`Its ${turns === 1 ? 'Turn' : `${turns} Turns`}`, (TURN_AFFINITY[side] ?? 0) * turns);
     for (const f of Object.keys(FEATURE_AFFINITY) as (keyof typeof FEATURE_AFFINITY)[]) {
       const level = material[f];
       const e = FEATURE_AFFINITY[f];
@@ -90,7 +90,7 @@ export function suitabilityOf(side: AxisValue, material: MaterialProfile | undef
     }
     if (material.language !== 'everyday') push(LANGUAGE_AFFINITY[material.language].label, LANGUAGE_AFFINITY[material.language].affinity[side] ?? 0);
   }
-  if (scene.reading) push(`Your reading, ${scene.reading.label}`, readingCoherence(side, scene.reading.lean));
+  if (scene.reading) push(`Your Reading, ${scene.reading.label}`, readingCoherence(side, scene.reading.lean));
   signals.sort((a, b) => Math.abs(b.v) - Math.abs(a.v));
   const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));
   return { side, s, band: s >= GRAIN.band ? 'suits' : s <= -GRAIN.band ? 'against' : 'either', signals };

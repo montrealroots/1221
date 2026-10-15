@@ -70,7 +70,7 @@ describe('a way of playing and the advice, played', () => {
     // moves on to something else; the practice itself is played once through its command.
     go(sim, 'practice.exercise', { exercise: exerciseFor(top.target as never)!.id, tier: matchedTier(levelOf(sim, sim.player, top.target as never)), focus: 'steady' });
     sim.advanceTo(sim.now + MS_DAY);
-    if (top.target in sim.player.attrs!) (sim.player.attrs as Record<string, number>)[top.target] = 100; else (sim.player.craft as Record<string, number>)[top.target] = 100;
+    if (top.target in sim.player.attrs!) (sim.player.attrs as unknown as Record<string, number>)[top.target] = 100; else (sim.player.craft as unknown as Record<string, number>)[top.target] = 100;
     const after = adviceFor(sim, sim.player).find((x) => x.forecast);
     expect(after?.target).not.toBe(top.target);
   }, 120_000);

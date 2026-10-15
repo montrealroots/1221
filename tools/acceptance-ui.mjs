@@ -922,14 +922,16 @@ if (DIR) {
     must(await callGone(), 'no call came within five mornings');
     // What came of the note: on its own line where it's still the last, or in the notes so far.
     const last = (await noteLine().innerText()).replace(/\s+/g, ' ');
-    let outcome = /Taken|Not Taken/.test(last) && last.includes(first.split(': ').slice(1).join(': ').slice(0, 30)) ? last : '';
+    // From 2026-10-16 a craft note's outcome is one of four: Resolved, Taken: Better, Tried: Learned From, Not Moved, or Not Taken.
+    const OUTCOME = /Resolved|Taken: Better|Learned From|Not Taken|· Taken/;
+    let outcome = OUTCOME.test(last) && last.includes(first.split(': ').slice(1).join(': ').slice(0, 30)) ? last : '';
     if (!outcome) {
       must(await history().count(), 'the notes so far aren’t shown');
       await history().locator('summary').click(); await wait(300);
       const items = await history().locator('li').allInnerTexts();
-      outcome = items.find((x) => /Worked /.test(x) && /Taken|Not Taken/.test(x)) ?? '';
+      outcome = items.find((x) => /Worked /.test(x) && OUTCOME.test(x)) ?? '';
     }
-    must(/at the next call/.test(outcome) && /· (Taken|Not Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
+    must(/at the next call/.test(outcome) && /· (Resolved|Taken: Better|Tried: Learned From, Not Moved|Not Taken|Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
     const after = Number(((await partBook().innerText()).match(/(\d+)% rehearsed in/) ?? [])[1] ?? NaN);
     if (!Number.isNaN(rehearsedIn)) must(after > rehearsedIn, `the kept change wasn’t rehearsed in at the call: ${rehearsedIn}% → ${after}%`);
     const nowNight = await nightNow();
@@ -1246,6 +1248,41 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
       return `${said}; ${note.trim().slice(0, 120)}; after Continue: ${again}`;
     });
   }
+  // From 2026-10-16: a way of playing read against the scene, and the advice forecast. Melodrama's brief, played the way
+  // its scene suits: The Scene names each side's band and what it rests on, the chosen side's rehearsal mark, the take's
+  // account of what the way gave apart from what the abilities cost, What To Work On's forecast, kept through a reload.
+  await step('[save: brief scenario] interpretation: Melodrama played the way its scene suits, the take saying what the way gave, the advice forecast, saved and continued', async () => {
+    await openBrief('Melodrama');
+    await briefButton(/^Break It Down/);
+    await briefButton(/^Learn The Lines/);
+    await briefPane().locator('input[type=radio][name^="reading-"]').nth(0).check(); await wait(300);
+    await briefButton(/^Read It This Way$/);
+    const row = (side) => briefPane().locator('tr', { has: page.getByText(new RegExp(`^${side}$`)) }).first();
+    const band = async (side) => (await row(side).locator('td[data-suit]').getAttribute('data-suit')) ?? '';
+    const [ex, re] = [await band('Expansive'), await band('Restrained')];
+    must(ex && re, 'no The Scene column');
+    must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
+    await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
+    const mark = (await briefPane().innerText()).match(/This one is complete at (\d+)% rehearsed in: ([^.]+)/);
+    must(mark && Number(mark[1]) < 90 && /with the grain/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
+    await briefButton(/^Play It This Way$/);
+    await briefButton(/^Rehearse It On Your Feet/);
+    await briefButton(/^Rehearse It On Your Feet/);
+    const said = await briefButton(/^Tape It/);
+    must(/Taped: \d+\.\d/.test(said), `no take: ${said}`);
+    const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
+    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
+    const advice = text.match(/(\d+) hours of its exercise would take it from \d+ to about \d+, worth about [\d.]+ points? a piece/)?.[0];
+    must(advice, 'What To Work On isn’t forecast');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await openBrief('Melodrama');
+    const back = (await briefPane().innerText()).replace(/\s+/g, ' ');
+    must(back.includes(grain), 'the take’s account isn’t kept after Continue');
+    must(back.includes(advice), 'the advice isn’t the same after Continue');
+    return `Expansive ${ex}, Restrained ${re}; ${mark[0]}; ${said}; ${grain.slice(0, 140)}; ${advice}`;
+  });
   await overflow('profile brief (genre registers)');
 }
 

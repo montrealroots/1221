@@ -64,3 +64,35 @@ G1 (`docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md`, mea
 **The falsifier.** The same measure with the genre ignored (`--blind`): the register's lean and draw at 0, its
 suitability signals at 0, and the genre's applied techniques left as the scene's own. It must fail S1, S2 and S3. If it
 doesn't, the measure isn't measuring genre.
+
+## Results, Measured After The Definition Above
+
+`npx vite-node tools/genre-signature.ts -- --out signature.json` and `-- --blind --out signature-blind.json`, on the
+engine as of `939e4fbc` (the commits since change the guide and the tools, not anything this reads): 149 genres over 50 designed scenes and 50 held-out ones. G1 as written was measured again with
+`tools/genre-identity.ts` (`identity-g1-as-written-final.json`, `identity-g1-controlled-final.json`).
+
+| | Designed | Held Out | Genre Ignored (`--blind`) |
+|---|---|---|---|
+| G1 as written (1.5×; own second brief nearest) | 0.951×, 146 nearer: fails | | |
+| G1, length and stakes held | 1.216×, 140 nearer | | |
+| S1: same direction across scenes (≥ 0.7) | 0.90, least 0.84: **passes** | 0.88, least 0.79: **passes** | 0: fails |
+| S2: distance by concerns shared | none 6.21, one 4.21, two 0 | none 6.07, one 4.14, two 0 | all 0 |
+| S2: none over one (≥ 1.5×) | 1.47×: **fails** | 1.47×: **fails** | 0: fails |
+| S2: nearest shares a concern (≥ 90%) | 98.7%: **passes** | 98.7%: **passes** | 18.8%: fails |
+| S3: contrasting genres change outcomes (≥ 80%) | 82.3%: **passes** | 71.8%: **fails** | 0%: fails |
+| S4: identical briefs across genres (G2) | 0: **passes** | | |
+
+**What it says:**
+- **The signature measures genre, and G1 didn't.** With the genre ignored, every criterion fails: no signature, no
+  distance, no outcome changed.
+- **A genre's conventions are recognizable across very different scenes** (S1). Related genres are each other's nearest
+  (S2, 98.7%). Contrasting genres are farther apart than related ones in order (6.2, 4.2, 0).
+- **Two clauses fall short:**
+  - **S2's ratio** is 1.47 against 1.5. A genre sharing one concern with another shares half its register, and that half
+    already moves it far from the genres it shares nothing with.
+  - **S3 on held-out scenes** is 71.8% against 80%. On those scenes, a contrasting genre more often leads to the same best
+    side or specialist. That's the price of weighting the register at half beside the scene's own signals, which I2 of
+    the interpretation criteria asked for so that a genre isn't a rule (`../interpretation-2026-10-16/README.md`). The
+    scene can outvote the genre, by design, and does on 28% of held-out cases.
+- **Nothing was tuned against it**, as this file said before it ran. Both are the owner's to weigh: accept the
+  shortfalls, or raise the register's weight in suitability and accept I2's.
