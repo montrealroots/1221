@@ -1,0 +1,125 @@
+Prepare A Complete, Verified SLATE Session Handoff
+
+I am moving to a new Claude Code session. Before I leave, preserve all current SLATE work and the information needed to continue exactly where we stopped.
+
+This instruction authorizes committing and pushing current project work and merging verified, intended SLATE changes into main. It does not authorize blindly merging every branch, applying unrelated stashes, deleting worktrees, overwriting unrelated changes, or deploying the application.
+
+1. Inspect Before Changing Anything
+
+Confirm the connected repository and remote. The expected repository is yvcbcjhsy7-prog/1221.
+
+Fetch the remote state and inspect:
+
+* Current branch and commit.
+* Local and remote main.
+* Open pull requests and intended unmerged work.
+* Uncommitted changes and untracked project files.
+* Local commits not pushed.
+* Relevant branches, worktrees, and stashes.
+
+Respect existing instructions protecting unrelated stashes, worktrees, and files. Do not apply, pop, delete, reset, force-push, or discard them.
+
+Identify precisely which changes belong to this session. Do not assume every branch or file belongs in main.
+
+2. Preserve The Work And Its Context
+
+Update SLATE_CURRENT_MASTER_HANDOFF.md and the current work plan with:
+
+* The verified repository, branches, and commit history relevant to this work.
+* What has been implemented and merged.
+* What has been implemented but remains unmerged.
+* What is incomplete, failed, deferred, or blocked.
+* The current game scope and removed systems that must remain removed.
+* The current ruleset and save schema.
+* Important design decisions, formulas, research, assumptions, and acceptance criteria.
+* Reproduction steps for known issues.
+* Tests run, tested commits, commands, exit codes, results, and skipped coverage.
+* Environment requirements and setup commands.
+* Deployment status, distinguished from merge status.
+* The exact next tasks and their order.
+
+Preserve useful research, verification reports, scenario-generation scripts, and reproducible evidence in appropriate repository locations. Replace references to temporary files or session-only scratchpads with durable project files where needed.
+
+Do not commit credentials, API keys, session tokens, personal account information, dependency directories, or unnecessary generated files. Record required environment-variable names without their values.
+
+Capture the substance of available session decisions and instructions accurately. Do not claim to have exported hidden session state, inaccessible conversations, or information you cannot recover.
+
+3. Record The Next Brief Accurately
+
+The next task is the “Implement SLATE’s Complete Integration And Acceptance Pass” brief, which I will paste into the new session.
+
+Record its intended scope:
+
+* All six remaining acceptance areas.
+* Attribute phase 2c and close-out, including H4 and L3.
+* Stage criteria ST3, ST4, and ST6.
+* Attribute and genre balance, differentiation, mastery, and downstream effects.
+* Complete current school, money/banking, and papers journeys.
+* The missing played-term test for missed assignments and revisions.
+* Connected tutorials, persistence, navigation, and meaningful consequences.
+* Final regression, integration, built-app, and long-run verification.
+
+Do not start that new implementation brief during this handoff task.
+
+If its full text is available in this session, preserve it verbatim in a clearly named project brief. Otherwise record this summary and explicitly instruct the new session to wait for the complete brief rather than inventing missing instructions.
+
+4. Commit, Push, And Integrate Intended Work
+
+Review the changes before committing. Group related changes into understandable commits.
+
+For intended implementation changes:
+
+* Run the required verification.
+* Fix issues introduced by those changes.
+* Push the branch.
+* Create or update the appropriate pull request.
+* Merge when required checks and repository rules permit.
+
+Do not bypass protections or merge known-broken work to make the handoff appear complete. If a blocker prevents merging, push the work safely and document its exact branch, commit, pull request, failing check, and next action.
+
+Preserve unrelated work in place. Report it without folding it into this task.
+
+Update the handoff to match the actual final integration state and push those documentation changes too.
+
+5. Verify GitHub Holds The Result
+
+After pushing and merging, fetch again and verify:
+
+* Local and remote commit references agree where expected.
+* Every intended handoff file and commit is reachable on GitHub.
+* Each intended pull request has the reported status.
+* The final main commit contains the intended integrated changes.
+* No relevant unpushed work is left behind.
+* Any remaining local changes are explicitly identified and explained.
+
+Record which source commit the tests covered and whether later changes affect code or documentation. Do not imply a final merge was tested if only an earlier source state was tested.
+
+Do not claim the whole workspace is clean without checking the relevant worktree.
+
+6. Give Me A Final Handoff Receipt
+
+Report:
+
+* Repository URL.
+* Final remote main SHA.
+* Working branch and SHA, if any work remains outside main.
+* Commit and pull-request links.
+* Handoff and work-plan links.
+* Verification results.
+* Anything not merged or not preserved, and why.
+* Deployment status.
+* The precise next action.
+
+Finally, give me one copy-and-paste “New Session Startup” message that tells the new session to:
+
+1. Verify it is connected to the correct repository.
+2. Inspect local changes before updating the checkout.
+3. Fetch and confirm the handoff’s final commit is present.
+4. Read the repository instructions, master handoff, work plan, and referenced evidence.
+5. Preserve unrelated stashes, worktrees, and local files.
+6. Summarize the actual current state and remaining work.
+7. Wait for my complete implementation brief, then execute it from this baseline without repeating completed work.
+
+Do not include instructions to reset or overwrite a dirty checkout.
+
+Complete the handoff and remote verification before declaring that I can safely continue in a new session.

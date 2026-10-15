@@ -1,0 +1,127 @@
+SLATE: Finish Genre Interpretation, Improve Training Advice, And Prove Long-Term Integration
+
+Continue from the latest genre-differentiation work. Inspect the current repository and branches first; the last reviewed genre revision was 1bb76ac on claude/zen-mccarthy-i88ujw. Preserve that work and any newer changes.
+
+This task completes the remaining genre-related weaknesses. Do not restart completed research, expand unrelated systems, or cancel the other outstanding briefs.
+
+1. Make Interpretation Choices Matter In Context
+
+Currently, restrained versus expansive playing barely interacts with genre. Implement meaningful interactions between interpretation and the actual scene:
+
+* Genre conventions.
+* Text, objectives, stakes, and subtext.
+* Tone and tonal transitions.
+* Relationships and partner behavior.
+* Medium and performance scale.
+* Preparation and the actor’s abilities.
+
+I authorize context-sensitive interpretation tradeoffs. “Multiple interpretations can succeed” does not mean every interpretation must produce the same result in every situation.
+
+Do not create blanket rules such as “restraint always wins in noir” or “expansive acting is wrong in realism.” Support more than one coherent interpretation, with different demands and preparation paths.
+
+Distinguish a choice’s suitability from how skillfully the actor executes it. Explain both through actual evaluation evidence.
+
+Preserve the established mastery guarantee: a fully mastered, appropriately prepared actor must still reach maximum personal quality on every interpretation the game explicitly treats as fitting. Define and expose suitability clearly; do not silently reclassify existing options merely to make tests pass.
+
+2. Fix “What To Improve Next”
+
+The latest report found the first recommended weakness identifies the largest realistic gain in only 301 of 447 cases, or 67.3%.
+
+Investigate the cause and improve the recommendation engine.
+
+Distinguish:
+
+* What most limited the last performance.
+* What the player can most usefully improve next.
+
+Those are not necessarily the same thing.
+
+Compare realistic, available next steps with their actual time, costs, prerequisites, diminishing returns, and expected benefits. Consider relevant training, genre study, preparation, rehearsal, and recovery.
+
+Keep recommendations deterministic and explainable. Do not mutate the real save while forecasting alternatives.
+
+Verify recommendations against independently played outcomes, including held-out cases. Preserve the existing acceptance target unless a documented measurement defect justifies revising it; do not lower it simply to obtain a pass.
+
+When multiple options are effectively tied, acknowledge that rather than inventing precision. Update advice when circumstances or the player’s abilities change.
+
+3. Resolve The Genre-Separation Metric Properly
+
+Investigate G1’s failure and the report’s claim that its original requirements conflict with legitimate genre overlap.
+
+Do not flatten a genre’s scenes into identical templates to satisfy a metric. Do not impose arbitrary differences on closely related genres.
+
+I authorize replacing a demonstrably invalid metric with a better justified one, provided you:
+
+* Preserve the original definition and its failed result.
+* Explain precisely what it measures incorrectly.
+* Define the replacement before tuning against it.
+* Test on cases not used to design it.
+* Show that an implementation ignoring genre fails the replacement.
+
+Assess:
+
+* Recognizable conventions across varied scenes.
+* Meaningful differences between genuinely contrasting genres.
+* Appropriate overlap among related genres.
+* Context-sensitive differences in choices, preparation, or outcomes.
+* No accidental duplication across differently described briefs.
+
+Do not require all 149 genres to have unique numerical formulas. Require their advertised distinctions to have defensible gameplay meaning.
+
+4. Keep Feedback Connected And Honest
+
+Ensure brief explanations, forecasts, rehearsal evidence, performance results, and training advice all read the same underlying rules.
+
+When an interpretation succeeds or struggles, explain the specific reason. When a problem is resolved, stop repeating the obsolete advice.
+
+Review the existing issue where a rehearsal adjustment can count as answering a director’s note without changing anything. Distinguish trying an adjustment, learning from it, addressing the note, and resolving the problem. A useful unsuccessful experiment may produce evidence, but it must not falsely claim improvement.
+
+Persist relevant choices and findings across reloads. Preserve historical results under their original evaluation rules; version changed calculations where necessary.
+
+5. Prove The Complete Player Journey
+
+Run controlled comparisons across contrasting and overlapping genres, including the seven formerly identical pairs.
+
+Cover:
+
+* Different ability profiles and proficiency levels.
+* Multiple coherent interpretations.
+* Preparation and condition differences.
+* Changing recommendations after training.
+* Mastery and individual-versus-ensemble guarantees.
+* Save/load continuity and historical results.
+
+Rerun graduation-length journeys and the played mastery plans on the new implementation. Include contrasting student profiles and enough seeds to investigate actual failures or instability.
+
+Measure repeated feedback, stale advice, progression bottlenecks, and dominant strategies. Fix the causes rather than disguising repetition with alternate wording.
+
+Verify desktop and mobile journeys through choosing an interpretation, preparing, rehearsing, performing, reading feedback, following advice, and continuing after a reload.
+
+6. Work Efficiently And Complete Verification
+
+Reuse existing matrices, research, scenarios, and tools. Keep assignments bounded and avoid duplicated investigation.
+
+Run focused tests during implementation, then the complete required regression gate, production build, and affected UI acceptance journeys on the final code revision.
+
+Use independent expected outcomes and targeted mutation tests. Demonstrate that removing interpretation interactions or breaking recommendation ranking causes relevant tests to fail.
+
+Do not weaken assertions or omit required checks to save usage. Do not perform repeated broad test runs without a concrete reason.
+
+7. Deliver Inspectable Proof
+
+Commit:
+
+* The interpretation model and its documented tradeoffs.
+* Before-and-after examples showing context-sensitive choices.
+* Recommendation accuracy, costs, and held-out results.
+* The original and replacement G1 measurements, if changed.
+* Updated genre/attribute matrices and tutorials.
+* Graduation and mastery journey results.
+* Exact commands, seeds, test results, skips, and limitations.
+* The tested commit and updated handoff.
+
+Continue until these authorized requirements are implemented and verified, or a concrete blocker prevents further progress. Finish all independent work before reporting a blocker.
+
+Commit and push the work and prepare a reviewable pull request. Do not merge or deploy without explicit authorization.
+
+The goal is genres that influence meaningful acting decisions, advice that reliably helps the player improve, and progression that stays coherent across the full school journey—with reproducible evidence.
