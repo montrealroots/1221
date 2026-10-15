@@ -75,7 +75,7 @@ import {
 import { actingOf } from './school';
 import { CLASS, boundaryRefusal, keptWith, momentsOf, noteIncident } from './classmates';
 import { laidUp, trainingRefusal } from './injury';
-import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, type SchoolRecord } from './school';
+import { academicTerm, cabaretEvenings, CABARET_RUN, coursesFor, ESTIMATE, type SchoolRecord } from './school';
 import { choose, materialContext, materialOf, rehearseChoice, sidesOf, type Playing } from './material';
 import { PLAYING } from '../content/approaches';
 import { featureSpeed, noteMaterial } from './experience';
@@ -265,6 +265,8 @@ export interface Coursework {
   /** Every note given, by what it's about, across courses (`systems/learning.ts`). */
   notes?: NoteRecord[];
   orientation: { done: Partial<Record<OrientationTask, Instant>>; behind?: boolean };
+  /** The terms a warning in the term was given for (from 2026-10-16, `termWarning`): once a term. */
+  warned?: number[];
 }
 
 export const ORIENTATION_KIND = 'school.orientation';
@@ -979,7 +981,8 @@ export function workContext(a: Assignment, parts: Record<string, number>, requir
     const read = materialContext(task, material, playing);
     const techniques = { ...t.reads } as Partial<Record<Skill, number>>;
     for (const [k, w] of Object.entries(material.techniques ?? {}) as [Skill, number][]) if (techniques[k] === undefined) techniques[k] = w;
-    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
+    if (req.approach !== undefined) req.approach = read.required;
+    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain };
   }
   // Work with no scene has no play and no genre to lean it: a way of playing chosen leans it, and what’s put first, as a
   // scene’s material does. Until 2026-10-13 its scene’s play’s genres were looked up here, and their families’ lean
@@ -1085,7 +1088,85 @@ export function show(sim: Simulation, person: Person, a: Assignment, onDay: stri
   const text = held ? `It didn’t come together today: ${held.charAt(0).toLowerCase()}${held.slice(1)}. The next step, once it does: ${body}` : feedbackWords(kind, body, prior, pick?.level);
   a.feedback = { course: c.name, teachers: c.teachers, text, focus, kind, ...(prior ? { before: { on: prior.on, course: prior.course } } : {}) };
   a.shown = showing;
+  termWarning(sim, person, a);
   return showing;
+}
+
+/**
+ * What a piece would come to shown today, on a good day, with no draw (from 2026-10-16): the showing's own judge
+ * (`judgeWork`) with the day taken out, so what's said holds it back is the preparation and the craft. Until then a
+ * piece showed each part's figure and its weight and nothing of what the showing would make of them: a part at 0 that
+ * "weighed 15%" held the dimensions that read it to a third of themselves.
+ */
+export function showingForecast(sim: Simulation, person: Person, a: Assignment): Evaluation {
+  const w = weightsOf(a);
+  const due = a.status === 'revising' ? a.revision!.dueOn : a.dueOn;
+  const parts = Object.fromEntries(Object.entries(preparedParts(person, a, due)).filter(([d]) => w[d as PrepDim] !== undefined)) as Record<string, number>;
+  const required = Object.fromEntries(Object.keys(parts).map((d) => [d, EVALUATION.complete.coursework]));
+  const ctx = { ...workContext(a, parts, required), condition: { readiness: 100 }, key: `forecast:${a.id}`, expected: true };
+  const piece = scenePiece(a);
+  return piece ? judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece) : evaluate(sim, person, ctx);
+}
+
+/** The parts of a piece short of what completes them, as the showing reads them (from 2026-10-16). */
+export function shortParts(person: Person, a: Assignment): PrepDim[] {
+  const w = weightsOf(a);
+  const due = a.status === 'revising' ? a.revision!.dueOn : a.dueOn;
+  return (Object.entries(preparedParts(person, a, due)) as [PrepDim, number][]).filter(([d, v]) => w[d] !== undefined && v < EVALUATION.complete.coursework - 0.005).map(([d]) => d);
+}
+
+/**
+ * The open work in the order to prepare it (from 2026-10-16): soonest due first, and of two due the same day the one
+ * that would come out lower shown today. Each comes with that figure and its parts short of complete. Until then the
+ * panel listed the work in the order it was set, and nothing on it said which piece was most urgent.
+ */
+export function urgentWork(sim: Simulation, person: Person): { a: Assignment; due: string; forecast: number; short: PrepDim[] }[] {
+  return (courseworkOf(sim, person)?.assignments ?? [])
+    .filter((a) => a.status === 'open' || a.status === 'revising')
+    .map((a) => ({ a, due: a.status === 'revising' ? a.revision!.dueOn : a.dueOn, forecast: showingForecast(sim, person, a).overall, short: shortParts(person, a) }))
+    .sort((x, y) => x.due.localeCompare(y.due) || x.forecast - y.forecast);
+}
+
+/** The steps that answer a part, in words (from 2026-10-16): the partner part by asking the partner for an evening, or a reader. */
+export function remedyWords(a: Assignment, dim: PrepDim): string {
+  const acts = activitiesOf(a).filter((x) => x.dim === dim);
+  if (dim === 'partner') {
+    const ask = acts.find((x) => x.id !== READER.id);
+    return `${ask ? `${ask.label}, asked for an evening at least ${WORK.rehearsal.aheadHours} hours ahead` : 'an evening with your partner'}, or ${READER.label}`;
+  }
+  const labels = [...new Set(acts.map((x) => x.label))];
+  return labels.length > 1 ? `${labels.slice(0, -1).join(', ')} or ${labels.at(-1)}` : labels[0] ?? 'its own step';
+}
+
+/**
+ * A warning in the term, early enough to act on (from 2026-10-16, the owner's brief "Finish School Workload Balance"):
+ * once `TERM_CHECK.after` of a term's pieces have been shown and the share unready reaches the review's mark less
+ * `TERM_CHECK.margin`, a notice says how many, the part most often short across them, the steps that answer it, the
+ * pieces still to come, and the day the faculty reviews the term. Once a term. Until then the first a student heard was
+ * the review's own notice, after the term, which named the count and not the cause: played on 2026-10-16, a student
+ * dismissed with attendance at 100% had left the partner part at nothing on most scenes, with 292 working hours idle.
+ */
+export const TERM_CHECK = { after: 6, margin: 0.15 } as const;
+
+export function termWarning(sim: Simulation, person: Person, a: Assignment): void {
+  const cw = courseworkOf(sim, person);
+  if (!cw || person.id !== sim.universe.playerId || cw.warned?.includes(a.term)) return;
+  const term = cw.assignments.filter((x) => x.term === a.term);
+  const shown = term.filter((x) => x.shown);
+  if (shown.length < TERM_CHECK.after) return;
+  const bandOf = (x: Assignment) => (x.revision?.missed ? 'unready' : x.revision?.band ?? x.shown!.band);
+  const unready = shown.filter((x) => bandOf(x) === 'unready');
+  const mark = ESTIMATE.coursework.unready;
+  if (unready.length < (mark - TERM_CHECK.margin) * shown.length) return;
+  (cw.warned ??= []).push(a.term);
+  const short = new Map<PrepDim, { n: number; piece: Assignment }>();
+  for (const x of unready) for (const d of shortParts(person, x)) { const c = short.get(d) ?? { n: 0, piece: x }; c.n += 1; short.set(d, c); }
+  const top = [...short.entries()].sort((p, q) => q[1].n - p[1].n)[0];
+  const t = top ? templateById(top[1].piece.template)! : undefined;
+  const cause = top && t ? ` Most often short on them: ${t.dims[top[0]]!.label.toLowerCase()}, on ${top[1].n} of the ${unready.length}. ${remedyWords(top[1].piece, top[0])} answers it.` : ' Each one’s own forecast says what held it back.';
+  const left = term.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;
+  const review = at(classPeriod(a.term).to, 17);
+  sim.notify({ category: 'school', title: 'A Word On Your Coursework', body: `${unready.length} of the ${shown.length} pieces shown this term so far were Unready.${cause} ${left ? `${left} more ${left === 1 ? 'is' : 'are'} still to come.` : 'None is still to come.'} The faculty reviews the term on ${formatDate(review, zone())}: half the term’s pieces Unready by then is short of what the program asks, and a notice of concern follows. Each piece’s Shown Today line says what it would come to now and what holds it back.`, importance: 75, route: '/workspace/school' });
 }
 
 /** Whether a note was taken by its revision: the part risen enough, the choice now supported, or the note worked on. */

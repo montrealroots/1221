@@ -17,6 +17,7 @@
  * hour is training on what recent work names (`practiceHour`).
  */
 import { writeFileSync } from 'node:fs';
+import { CONCERN_STRENGTH } from '../src/engine/content/concerns';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY } from '../src/engine/core/time';
 import { BRIEFS, BRIEF_BY_ID, type Brief } from '../src/engine/content/briefs';
@@ -24,19 +25,22 @@ import { FILM_GENRES } from '../src/engine/content/film-genres';
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
 import { evenCraft } from '../src/engine/systems/school';
 import { abilityFull, abilityOf, levelOf } from '../src/engine/systems/attributes';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { identityOf } from '../src/engine/systems/artistry';
-import { exerciseFor } from '../src/engine/content/practice';
-import { matchedTier } from '../src/engine/systems/practice';
+
+
+
+
 import { breaches } from '../src/engine/core/invariants';
 import { loadSave } from '../src/engine';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { forecast, prepareRefusal, preview, recordOf, requiredOf, suggestions, tapeRefusal } from '../src/engine/systems/briefs';
 import { studyRefusal } from '../src/engine/systems/engagement';
 import { attentiveHour, life, practiceHour } from './policy';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const PROFILE = arg('profile', 'beginner');
+/** `--no-register` (TEST SETUP, from 2026-10-16): the genres' registers set to nothing for the run, as before them. */
+if (process.argv.includes('--no-register')) { CONCERN_STRENGTH.lean = 0; CONCERN_STRENGTH.draw = 0; }
 const SEED = arg('seed', 'bj-0');
 const DAYS = Number(arg('days', '120'));
 const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
@@ -63,7 +67,7 @@ setUp(sim);
 const order = [...FILM_GENRES.map((g) => g.id)].sort((a, b) => { const h = (s: string) => [...`${SEED}:${s}`].reduce((x, c) => (x * 31 + c.charCodeAt(0)) >>> 0, 7); return h(a) - h(b); });
 let current: string | undefined;
 const studied = new Map<string, number>();
-const log = { hours: { brief: 0, training: 0, study: 0 }, takes: [] as { day: number; brief: string; genre: string; reading: string; sides: string; purpose: string; overall: number; chief?: string }[], recs: [] as { day: number; target: string; level: number }[] };
+const log = { hours: { brief: 0, training: 0, study: 0 }, takes: [] as { day: number; brief: string; genre: string; reading: string; sides: string; purpose: string; overall: number; chief?: string; concern?: string }[], recs: [] as { day: number; target: string; level: number }[] };
 const day0 = sim.now;
 const dayOf = () => Math.floor((sim.now - day0) / MS_DAY);
 
@@ -79,7 +83,7 @@ function weakness() {
   const p = sim.player;
   // An ability or technique only, as the brief pane takes it (from 2026-10-12: until then only a preparation was passed
   // over, so a day's condition or a fit could be the weakness a brief was suggested for, at 0% of the work).
-  const r = recommendations((id) => levelOf(sim, p, id as never), (id) => (isAbility(id) ? abilityFull(sim, p, id as AbilityId) : MASTERED), p.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(p, sim.now, sim.homeZone), identityOf(p).recurring).find((x) => !x.target.includes(':'));
+  const r = adviceFor(sim, p).find((x) => !x.target.includes(':'));
   return r ? { target: r.target, label: r.label, level: levelOf(sim, p, r.target as never), full: isAbility(r.target) ? abilityFull(sim, p, r.target as AbilityId) : MASTERED } : undefined;
 }
 
@@ -132,7 +136,7 @@ function briefHour(): boolean {
     const r = sim.execute<{ overall: number; purpose: string }>({ kind: 'practice.self_tape', payload: { genre, brief: b.id } });
     if (r.ok) {
       const t = recordOf(p, b.id).takes.at(-1)!;
-      log.takes.push({ day: dayOf(), brief: b.id, genre, reading: t.reading, sides: t.sides.join('+'), purpose: t.purpose, overall: t.overall, ...(t.chief ? { chief: t.chief } : {}) });
+      log.takes.push({ day: dayOf(), brief: b.id, genre, reading: t.reading, sides: t.sides.join('+'), purpose: t.purpose, overall: t.overall, ...(t.chief ? { chief: t.chief } : {}), ...(t.concern ? { concern: t.concern } : {}) });
       log.hours.brief += 1;
       if (!recordOf(p, b.id).callback) current = undefined;
       return true;
@@ -172,6 +176,21 @@ const result = {
   sameTakeTwiceInARow: t.filter((x, i) => i > 0 && x.brief === t[i - 1]!.brief && x.reading === t[i - 1]!.reading && x.sides === t[i - 1]!.sides && x.purpose === 'again').length,
   quality: Object.fromEntries(Object.entries(months).map(([m, xs]) => [m, { n: xs.length, mean: Math.round(xs.reduce((a, x) => a + x, 0) / xs.length * 10) / 10, min: Math.min(...xs), max: Math.max(...xs) }])),
   readingSpreadAtEnd: spread.length ? { n: spread.length, mean: Math.round(spread.reduce((a, x) => a + x, 0) / spread.length * 100) / 100, max: Math.round(Math.max(...spread) * 100) / 100, over1: spread.filter((x) => x > 1).length } : undefined,
+  // The take's note in repeated practice (from 2026-10-16): what held each take back, without its figure, and the
+  // concern behind it; how many different notes there were, the longest run of one, and how many times one note came
+  // again on a take of another genre.
+  notes: (() => {
+    const note = (t: (typeof log.takes)[number]) => (t.chief ?? 'Nothing').replace(/ by [\d.]+ points$/, '').replace(/ [\d.]+ points$/, '');
+    const ns = log.takes.map(note);
+    let run = 0; let best = 0; let acrossGenres = 0;
+    ns.forEach((n, i) => { run = i > 0 && n === ns[i - 1] ? run + 1 : 1; best = Math.max(best, run); if (i > 0 && n === ns[i - 1] && log.takes[i]!.genre !== log.takes[i - 1]!.genre) acrossGenres += 1; });
+    // The note as the screen shows it: with the genre's concern behind it where one asked for it, and with no register
+    // (`--no-register`) the limit alone, as the screen showed it before 2026-10-16.
+    const shown = log.takes.map((t, i) => (t.concern && !process.argv.includes('--no-register') ? `${ns[i]}: ${t.genre}’s ${t.concern}` : ns[i]!));
+    let sRun = 0; let sBest = 0; let sAcross = 0;
+    shown.forEach((n, i) => { sRun = i > 0 && n === shown[i - 1] ? sRun + 1 : 1; sBest = Math.max(sBest, sRun); if (i > 0 && n === shown[i - 1] && log.takes[i]!.genre !== log.takes[i - 1]!.genre) sAcross += 1; });
+    return { takes: ns.length, distinct: new Set(ns).size, longestSame: best, sameAgainInAnotherGenre: acrossGenres, withConcern: log.takes.filter((t) => t.concern).length, concerns: [...new Set(log.takes.map((t) => t.concern).filter(Boolean))], asShown: { distinct: new Set(shown).size, longestSame: sBest, sameAgainInAnotherGenre: sAcross }, sequence: log.takes.map((t, i) => `d${t.day} ${t.genre} ${t.purpose} ${t.overall}: ${shown[i]}`) };
+  })(),
   recommendations: { weeks: log.recs.length, distinctTargets: new Set(log.recs.map((r) => r.target)).size, longestSameTarget: log.recs.reduce((acc, r, i) => { const run = i > 0 && r.target === log.recs[i - 1]!.target ? acc.run + 1 : 1; return { run, best: Math.max(acc.best, run) }; }, { run: 0, best: 0 }).best, sequence: log.recs.map((r) => `${r.day}:${r.target}@${r.level}`).slice(0, 30) },
   abilities: Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, Math.round(abilityOf(sim, sim.player, d.id))])),
   breaches: breaches(sim.universe).length, unbalanced: sim.ledger.audit().length,

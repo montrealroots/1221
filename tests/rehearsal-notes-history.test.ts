@@ -73,7 +73,9 @@ describe('the director’s notes so far', () => {
     // Every note but the last, with its outcome as the process has it.
     for (const n of notes.slice(0, -1)) {
       expect(text, n.text).toContain(n.text);
-      const word = n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken';
+      // From 2026-10-16 a craft note says what became of it (`NoteOutcome`); a note not on the craft as before.
+      const OUTCOME = { resolved: '· Resolved', better: '· Taken: Better', learned: '· Tried: Learned From, Not Moved', unchanged: '· Not Taken' } as const;
+      const word = n.outcome ? OUTCOME[n.outcome] : n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken';
       expect(text).toContain(`${n.text} ${word}`);
     }
     // A craft note worked a way: the way, its figure before and after, and at the next call.

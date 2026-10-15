@@ -64,6 +64,8 @@
  * needed New Haven.
  */
 
+import { GRAIN, GRAIN_LABEL } from '../interpretation';
+import { requiredFor, suitabilityOf } from '../../systems/interpretation';
 import { CHAPTER_FOR } from '../tutorial';
 import { STEP_SPEED } from '../abilities';
 import { COURSES, SKILLS } from '../school';
@@ -74,7 +76,7 @@ import { titleCaseLabel } from '../../core/text';
 import { AXES, APPROACH_EFFECT, MISFIT, PLAYING } from '../approaches';
 import { PIECE } from '../piece';
 import { ADJUSTMENTS, WORKBOOK } from '../workbook';
-import { CHOOSE_MINUTES, READER, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
+import { CHOOSE_MINUTES, READER, TERM_CHECK, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
 import { APPROACH, APPROACHES, LEARNING } from '../../systems/learning';
 import { CHOICES, CLASS, PRIORITY_WORDS } from '../../systems/classmates';
 import { ENSEMBLE } from '../../systems/ensemble';
@@ -170,7 +172,12 @@ const SCANNED = after(SCAN.gain, SCANS);
 const CHOICE_STEP = ALONE.gain * PLAYING.gainShare;
 const CHOSEN_TWICE = after(CHOICE_STEP, 2);
 const KEPT_ON_CHANGE = CHOSEN_TWICE * PLAYING.keptOnChange;
-const STEPS_TO_COMPLETE = (() => { let n = 0; while (after(CHOICE_STEP, n, KEPT_ON_CHANGE) < PLAYING.complete && n < 50) n += 1; return n; })();
+// The mark Driven is complete at in the example's scene, The Seagull (from 2026-10-16, `requiredFor`): the scene's own,
+// by how well the side suits it, where until then every choice was complete at `PLAYING.complete`.
+const EXAMPLE_SCENE = materialOf('seagull-4')!;
+const DRIVEN_SUITS = suitabilityOf('driven', EXAMPLE_SCENE);
+const DRIVEN_MARK = requiredFor(['driven'], EXAMPLE_SCENE);
+const STEPS_TO_COMPLETE = (() => { let n = 0; while (after(CHOICE_STEP, n, KEPT_ON_CHANGE) < DRIVEN_MARK && n < 50) n += 1; return n; })();
 /** Where those steps leave it: past complete, by the last step's share. */
 const CHOICE_DONE = after(CHOICE_STEP, STEPS_TO_COMPLETE, KEPT_ON_CHANGE);
 
@@ -235,15 +242,16 @@ export const COURSEWORK: readonly GuideEntry[] = [
     title: 'Preparing Coursework',
     goal: 'coursework',
     covers: ['school.prepare', 'look.assignment'],
-    synonyms: ['assignment', 'scene study', 'coursework steps', 'learn lines', 'read the scene', 'rehearse alone', 'work on the note', 'due date', 'weighs', 'piece of coursework'],
-    questions: ['How do I prepare a scene for class?', 'When is my work due?', 'Why is a step grayed out?', 'What does Weighs mean?', 'How long does learning lines take?', 'What happens if I miss the class it’s due at?'],
+    synonyms: ['assignment', 'scene study', 'coursework steps', 'learn lines', 'read the scene', 'rehearse alone', 'work on the note', 'due date', 'weighs', 'piece of coursework', 'shown today', 'due soonest', 'what to prepare first', 'a word on your coursework', 'unready', 'why is my work unready'],
+    questions: ['How do I prepare a scene for class?', 'When is my work due?', 'Why is a step grayed out?', 'What does Weighs mean?', 'How long does learning lines take?', 'What happens if I miss the class it’s due at?', 'What would it come to if I showed it today?', 'Why was I warned about my coursework?'],
     where: { route: ROUTE, tab: COURSEWORK_TAB, label: 'School, Coursework, Each Piece Of Work Set' },
     available: `${OPENED}, once a course has set work: at one of its meetings, or for the first-year fall courses at orientation’s session on the courses.`,
     short: `Each course with work sets a piece at one of its meetings, due a set number of its meetings later (${word(SCENE_STUDY.dueAfter)} for ${SCENE_STUDY.title} in ${ACTING.name}), with a scene, your part in it and a partner from the class where the work has them. Its panel on Coursework shows each part of the preparation, how far along it stands and its Weighs, with a button for each step. A step takes its time and moves its part by a share of what’s left, so the same step again moves it less. At the meeting it’s due the work is shown once and judged on your own result, and its band sets what that meeting grows your craft by.`,
     steps: [
-      'Open School, then Coursework. Each open piece has a panel headed by its course and its title, with the day it’s due and the skills it’s shown for.',
+      'Open School, then Coursework. Due Soonest, at the top, names up to three pieces still short of complete, the one due soonest first: what each would come to shown today and what answers each part short. Under it, each open piece has a panel, in the same order, headed by its course and its title, with the day it’s due and the skills it’s shown for.',
       'Read what it is: the play, the scene and where it falls, your part and who plays the other, and Put First, the part this work weighs more.',
-      'Each part of the preparation has its figure, with Weighs under it: its share when the showing chooses its note. Press a step to do it. Its tip gives the minutes it takes, or why it can’t be done now, and the reasons are listed under the buttons.',
+      `Each part of the preparation has its figure, with Weighs under it and what completes it, ${pct(EVALUATION.complete.coursework)}. Press a step to do it. Its tip gives the minutes it takes, or why it can’t be done now, and the reasons are listed under the buttons.`,
+      'Read Shown Today: what the piece would come to if it were shown today on a good day, what holds it back most, and each part short of complete with the steps that answer it.',
       'Press the panel’s title to open the piece itself: each part with Prepared and Weighs, the same figures as the panel’s, with ways to the course, the day it’s due and your readiness.',
       'Be in New Haven and awake at nine on the day it’s due: the course’s meeting is where it’s shown.',
     ],
@@ -277,12 +285,14 @@ export const COURSEWORK: readonly GuideEntry[] = [
     later: [
       `At nine on the day it’s due the course meets, and the work is shown once in place of the meeting’s ordinary growth: the course’s skills grow ${pct(WORK.weight.unready)} of an ordinary meeting’s for Unready, ${pct(WORK.weight.working)} for Working, ${pct(WORK.weight.strong)} for Strong and ${pct(WORK.weight.exceptional)} for Exceptional.`,
       `Away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next meeting, or is excused if none is left. Away without one, it’s Not Shown and never taken later; it counts as unready at the term’s evaluation, and a partner’s trust falls ${-WORK.trust.missed}.`,
+      `In the term, once ${TERM_CHECK.after} of its pieces have been shown and ${pct(ESTIMATE.coursework.unready - TERM_CHECK.margin)} or more of them were Unready, A Word On Your Coursework comes once: how many, the part most often short on them, the steps that answer it, how many pieces are still to come and the day the faculty reviews the term.`,
       `At the term’s evaluation, with ${ESTIMATE.coursework.shown} or more pieces due, ${pct(ESTIMATE.coursework.unready)} or more of them unready or not shown falls short, and ${pct(ESTIMATE.coursework.strong)} or more Strong or better is noted.`,
       'Work a course revises comes back to be shown again at its next meeting, with the note to take; work in rounds is shown a round at a time. Work still open when the term’s classes end lapses.',
     ],
     interpret: [
       'A part’s figure is how far it’s prepared. Weighs is its share when the showing chooses its note; the result reads the parts through the dimensions they bear on. Put First’s part weighs more in both, and the line beside it says why it was chosen.',
-      `At ${pct(EVALUATION.complete.coursework)} a part is complete for the showing.`,
+      `At ${pct(EVALUATION.complete.coursework)} a part is complete for the showing. Below it, the dimensions that read it are held back: a part at nothing holds them to ${pct(EVALUATION.prepFloor)} of themselves, whatever it Weighs.`,
+      'Shown Today is the showing’s own judge with the day taken out: no draw, and you as rested as you could be. It moves when a part does, and the band beside the figure says what it would earn.',
       'A scene you’ve worked before says so, and asks for the other part, or for another reading at the table.',
       'Work Shown keeps the last twelve pieces and how each went: its band, or “Not Shown”, “Excused, Not Shown” or “Lapsed At Term’s End”.',
     ],
@@ -304,6 +314,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `Starting a long step just before a class: ${LEARN.label} on a long scene takes ${SCENE_SIZE_MINUTES.long} minutes. Leave room for it.`,
       'Sleeping through the meeting it’s due: the work isn’t shown and never taken later. Unwell, call in sick before nine and it moves to the next meeting.',
       `Leaving it to the day before: a daily step counts once a day, and a rehearsal with your partner has to be agreed at least ${WORK.rehearsal.aheadHours} hours ahead.`,
+      `Leaving a scene’s partner part at nothing because it Weighs little: the dimensions it bears on are held to ${pct(EVALUATION.prepFloor)} of themselves however well the rest is prepared, and Shown Today says what that costs before the showing. Ask your partner for an evening a few days ahead, or ${READER.label}.`,
     ],
     related: ['coursework.table', 'coursework.playing', 'coursework.partners', 'coursework.feedback', 'coursework.workbook', 'school.orientation', 'school.standing'],
     connections: [
@@ -425,6 +436,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'What Each Side Draws On', value: `${(Object.keys(APPROACH_EFFECT) as (keyof typeof APPROACH_EFFECT)[]).map((s) => `${APPROACH_EFFECT[s].label}, ${drawsOn(s)}`).join('; ')}${STAMINA_SIDES.length ? `. ${andList(STAMINA_SIDES)} ${STAMINA_SIDES.length > 1 ? 'draw' : 'draws'} on stamina too, in work shown whole, with no scene; a scene is judged part by part, reads stamina only as tiring toward the end however it’s played, and its table leaves stamina out` : ''}` },
       { label: 'Lean', value: 'Each side moves weight between the showing’s dimensions and never adds any: a choice changes what counts most, never the total', estimate: true },
       { label: 'Fit', value: `A side the scene doesn’t take holds the dimensions it leans on to ${pct(MISFIT)} of themselves, and says so before you choose`, estimate: true },
+      { label: 'The Scene', value: `How well each side suits the scene, from what the scene is: its tones and turns, its features, its language and its medium, and for a practice brief its genre’s register, its reader and the reading you’ve taken. ${GRAIN_LABEL.suits} makes the side easier to make work on the dimensions it leans on, up to ${pct(GRAIN.strength)} of the work’s difficulty, and asks less rehearsal, complete at down to ${pct(PLAYING.complete - GRAIN.prep)}; ${GRAIN_LABEL.against} makes it harder and asks more, up to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}. At full ability every side that fits still reaches 100`, estimate: true },
     ],
     now: [
       `“Chosen: rehearsed in to …%.” A first choice starts at 0%; the same choice again keeps all of it; a different one keeps ${pct(PLAYING.keptOnChange)}.`,
@@ -438,6 +450,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     interpret: [
       'Fully Prepared is the expected result with no draw, every part complete and a good day: what the choice can reach, not where the work stands now.',
       '“Doesn’t fit:” under a side says the scene doesn’t take it, and why.',
+      `The Scene names each side ${GRAIN_LABEL.suits}, ${GRAIN_LABEL.either} or ${GRAIN_LABEL.against} and the two or three things in the scene it rests on, for it or against it. It isn’t a verdict on the side: one you do well can still beat one that suits the scene better, and the take’s result says what the side’s suitability gave or cost apart from what your abilities cost.`,
       `“Your choice now is rehearsed in to …% (complete at ${pct(PLAYING.complete)})” is how far along it is.`,
       'With nothing chosen, the work is read by its own genre and material alone.',
     ],
@@ -460,9 +473,9 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { to: 'craft.identity', kind: 'history', why: 'Every side chosen and shown is kept, and Your Work So Far names one you choose most of the time.' },
     ],
     example: {
-      setup: `${SCENE_STUDY.title}, the lines learned, at readiness 80 and an even nature, nothing chosen yet.`,
+      setup: `${SCENE_STUDY.title} on ${EXAMPLE_SCENE.title}, the lines learned, at readiness 80 and an even nature, nothing chosen yet.`,
       steps: [`Choose ${APPROACH_EFFECT.measured.label} on ${AXES.pace.label} and press Play It This Way.`, `${ALONE.label} twice.`, `Change to ${APPROACH_EFFECT.driven.label}.`],
-      result: `The choice starts at 0%. Each ${ALONE.label} moves it ${pct(CHOICE_STEP)} of what’s left, so two bring it to ${pct(CHOSEN_TWICE)}. The change keeps ${pct(KEPT_ON_CHANGE)}, and from there ${word(STEPS_TO_COMPLETE)} more steps of ${ALONE.label} bring it to ${pct(CHOICE_DONE)}, past the ${pct(PLAYING.complete)} that completes it.`,
+      result: `The choice starts at 0%. Each ${ALONE.label} moves it ${pct(CHOICE_STEP)} of what’s left, so two bring it to ${pct(CHOSEN_TWICE)}. The change keeps ${pct(KEPT_ON_CHANGE)}, and from there ${word(STEPS_TO_COMPLETE)} more steps of ${ALONE.label} bring it to ${pct(CHOICE_DONE)}, past the ${pct(DRIVEN_MARK)} that completes it in ${EXAMPLE_SCENE.title}, where ${APPROACH_EFFECT.driven.label} is ${GRAIN_LABEL[DRIVEN_SUITS.band]}.`,
     },
   },
   {

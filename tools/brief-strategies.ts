@@ -20,13 +20,14 @@ import { newLifeConfig } from '../src/engine/world/bootstrap';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY, MS_HOUR, instantFromZoned } from '../src/engine/core/time';
 import { BRIEFS, BRIEF_BY_ID } from '../src/engine/content/briefs';
-import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
-import { abilityFull, abilityOf, levelOf } from '../src/engine/systems/attributes';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { identityOf } from '../src/engine/systems/artistry';
+import { ABILITY_DEFS } from '../src/engine/content/abilities';
+import { abilityOf } from '../src/engine/systems/attributes';
+
+
 import { exerciseFor } from '../src/engine/content/practice';
-import { matchedTier, practiceRefusal } from '../src/engine/systems/practice';
+import { practiceRefusal } from '../src/engine/systems/practice';
 import { preview, prepareRefusal, recordOf, requiredOf } from '../src/engine/systems/briefs';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const SEEDS = arg('seeds', 'bs-0,bs-1,bs-2').split(',');
@@ -34,7 +35,6 @@ const STRATS = ['tape-only', 'prepare', 'train', 'breadth', 'repeat'] as const;
 type Strat = (typeof STRATS)[number];
 const TARGET = 'brief-drama';
 const HELD = BRIEFS.filter((b) => b.id !== TARGET).filter((_, i) => i % 7 === 3).slice(0, 20);
-const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
 
 function student(seed: string): Simulation {
   const sim = createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'they/them' });
@@ -68,7 +68,7 @@ function tape(sim: Simulation, id: string, takes: number[]): void {
 }
 function train(sim: Simulation): boolean {
   const p = sim.player;
-  const r = recommendations((id) => levelOf(sim, p, id as never), (id) => (isAbility(id) ? abilityFull(sim, p, id as AbilityId) : MASTERED), p.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(p, sim.now, sim.homeZone), identityOf(p).recurring).find((x) => x.exercise);
+  const r = adviceFor(sim, p).find((x) => x.exercise);
   const e = r ? exerciseFor(r.target as never) : undefined;
   return Boolean(e && !practiceRefusal(sim, p, e) && sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok);
 }

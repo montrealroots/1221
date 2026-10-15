@@ -109,7 +109,8 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, type Assignment } from './coursework';
+import { templateById } from '../content/coursework';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, remedyWords, scheduleOrientation, setWork, shortParts, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
@@ -2265,11 +2266,11 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const proc = hasProcess(holder) ? holder.process : undefined;
   const playing = proc?.playing;
   const prepWith: Record<string, number> = { ...prep };
-  if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = PLAYING.complete; }
   const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;
+  if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = read?.required ?? PLAYING.complete; }
   const ctx = {
     task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
-    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
+    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
     ...(expected ? { expected: true } : {}),
   };
   return evaluatePiece(sim, person, ctx, playPiece(holder));
@@ -2316,7 +2317,7 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const proc = hasProcess(holder) ? holder.process : undefined;
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
   const read = materialContext(E, material, chosen, proc?.direction);
-  const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, key: `preview:${holder.play ?? ''}`, expected: true };
+  const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
   return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder));
 }
 
@@ -2885,7 +2886,12 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const short = shortOtherwise || t.breaches > 0;
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
-  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
+  // What held the unready ones back, and what answers it (from 2026-10-16): until then the notice gave the count alone.
+  const shortOn = new Map<string, { n: number; piece: Assignment; label: string }>();
+  for (const a of shown.filter((x) => bandOf(x) === 'unready' && templateById(x.template))) for (const d of shortParts(person, a)) { const c = shortOn.get(d) ?? { n: 0, piece: a, label: templateById(a.template)!.dims[d]!.label }; c.n += 1; shortOn.set(d, c); }
+  const most = [...shortOn.entries()].sort((p, q) => q[1].n - p[1].n)[0];
+  const why = most ? ` Most often short on them: ${most[1].label.toLowerCase()}, on ${most[1].n}; ${remedyWords(most[1].piece, most[0] as never)} answers it.` : '';
+  const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';
   const reason = `You were at ${pct(attendance)} of what was asked of you, and your craft grew ${growth.toFixed(1)} against the class’s ${classGrowth.toFixed(1)}: for the room each of you had to grow, ${pace} the class.${onStage}${inClass}${notPassed}${breached}`;

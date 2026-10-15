@@ -50,6 +50,11 @@ import { APPROACH_EFFECT, AXES, PLAYING } from '../content/approaches';
 import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief, type Reading } from '../content/briefs';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
+import { GENRE_REGISTER } from '../content/genre-register';
+import { CONCERNS, CONCERN_STRENGTH, type Concern } from '../content/concerns';
+import { concernBehind } from './register';
+import type { Scene } from './interpretation';
+import { grainRead } from './interpretation-read';
 import { GENRE_BY_ID } from '../content/film-genres';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Skill } from '../content/school';
@@ -177,6 +182,17 @@ export interface Take {
   expected: number;
   band: string;
   chief?: string;
+  /**
+   * The genre's concern behind `chief` (from 2026-10-16, `concernBehind`): where its register asked for the ability that
+   * held the take back most. Absent on a take from before, or where the limit was anything else.
+   */
+  concern?: Concern;
+  /**
+   * What the way it was played came to against the scene (from 2026-10-16, `grainRead`): the points it gave the take (or,
+   * negative, cost it), what the actor's abilities and techniques cost it, and the sides' suitability. Absent on a take
+   * from before, or one played with nothing chosen.
+   */
+  grain?: { points: number; ability: number; why: string };
   purpose: Purpose;
   /** The callback's direction it answered, where it was one. */
   callback?: { axis: Axis; side: AxisValue };
@@ -247,6 +263,13 @@ export function tapeReadsOf(b: Brief): Partial<Record<Skill, number>> {
   for (const [k, w] of Object.entries(b.techniques ?? {}) as [Skill, number][]) out[k] = Math.max(out[k] ?? 0, w * BRIEF.staged);
   return out;
 }
+
+/**
+ * The concerns a brief is played in: its genre's register, the genre it was written for (`kinds[0]`), from 2026-10-16.
+ * A brief listed under further genres is still that genre's scene; its other listings carry their techniques
+ * (`content/demands.ts`), not their register.
+ */
+export const registerOf = (b: Brief): readonly Concern[] => GENRE_REGISTER[b.kinds[0]!]?.concerns ?? [];
 
 /** The changes between beats and the beats held two ways, as the material counts them. */
 export function turnsOf(b: Brief): { transitions: number; blends: number } {
@@ -319,15 +342,23 @@ const directionOf = (rec: BriefRecord): Partial<Record<Axis, AxisValue>> | undef
 /** The task a brief is judged as: on its feet where its scene is built on physical work, so an injury reaches it. */
 export const taskOf = (b: Brief) => (b.physical >= 2 ? TASK_PROFILES.tapeOnFeet! : TASK_PROFILES.tape!);
 
+/** A brief as a scene a way of playing is read against (from 2026-10-16): its genre's register, its reader, the reading taken. */
+export function sceneOf(b: Brief, reading?: Reading): Scene {
+  return { genre: b.kinds[0]!, concerns: registerOf(b), ...(b.medium === 'voice' ? {} : { readerPlays: b.readerPlays ?? 'steady' }), ...(reading ? { reading: { label: reading.label, lean: reading.lean } } : {}) };
+}
+
 export function briefContext(person: Person, b: Brief, rec: BriefRecord, over: { reading?: string; playing?: Playing; prep?: Partial<Record<string, number>>; callback?: boolean } = {}) {
   const task = taskOf(b);
   const material = briefMaterial(b);
   const playing = over.playing ?? rec.playing;
   const callback = over.callback ?? Boolean(rec.callback);
-  const read = materialContext(task, material, playing, callback ? directionOf(rec) : undefined);
+  const readingNow = readingOf(b, over.reading ?? rec.reading);
+  // The scene a way of playing is read against (from 2026-10-16, `systems/interpretation.ts`): its genre's register,
+  // its reader and the reading taken, beside its material.
+  const read = materialContext(task, material, playing, callback ? directionOf(rec) : undefined, sceneOf(b, readingNow));
   const lean = { ...read.lean };
   const inputs: Partial<Record<Dimension, { ability: AbilityId; weight: number }[]>> = Object.fromEntries(Object.entries(read.inputs).map(([d, xs]) => [d, (xs ?? []).map((x) => ({ ...x }))]));
-  const reading = readingOf(b, over.reading ?? rec.reading);
+  const reading = readingNow;
   if (reading) {
     for (const [d, x] of Object.entries(reading.lean) as [Dimension, number][]) if (lean[d] !== undefined) lean[d] = lean[d]! * x ** BRIEF.readingLean;
     for (const dr of reading.draws) {
@@ -347,10 +378,21 @@ export function briefContext(person: Person, b: Brief, rec: BriefRecord, over: {
       for (const x of xs) { const had = list.find((y) => y.ability === x.ability); if (had) had.weight += x.weight; else list.push({ ...x }); }
     }
   }
+  // The register of the genre it was written for (from 2026-10-16, `GENRE_REGISTER`): each concern leaned and drawn
+  // on as a reader's way of playing is, so the genre moves weight between the dimensions and adds none.
+  for (const c of registerOf(b)) {
+    const def = CONCERNS[c];
+    for (const [d, x] of Object.entries(def.lean) as [Dimension, number][]) if (lean[d] !== undefined) lean[d] = lean[d]! * x ** CONCERN_STRENGTH.lean;
+    for (const [d, xs] of Object.entries(def.inputs) as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) {
+      if (!task.dims[d]) continue;
+      const list = (inputs[d] ??= []);
+      for (const x of xs) { const w = x.weight * CONCERN_STRENGTH.draw; const had = list.find((y) => y.ability === x.ability); if (had) had.weight += w; else list.push({ ability: x.ability, weight: w }); }
+    }
+  }
   const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b), ...(over.prep ?? {}) } as Record<string, number>;
   const required = requiredOf(b);
-  if (sidesOf(playing).length) { prep.approach = over.prep?.approach ?? playing!.prep; required.approach = PLAYING.complete; }
-  return { task, techniques: tapeReadsOf(b), prep, required, difficulty: BRIEF.difficulty + (callback ? BRIEF.callback : 0) + ((b.stakes ?? 1) - 1) * BRIEF.stakes, lean, inputs, extraPrep: read.prep, fit: read.fit };
+  if (sidesOf(playing).length) { prep.approach = over.prep?.approach ?? playing!.prep; required.approach = read.required; }
+  return { task, techniques: tapeReadsOf(b), prep, required, difficulty: BRIEF.difficulty + (callback ? BRIEF.callback : 0) + ((b.stakes ?? 1) - 1) * BRIEF.stakes, lean, inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain };
 }
 
 /** What a take would come to now, with today's preparation and condition and no draw: what the player sees before taping. */
@@ -594,13 +636,17 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   practiceGenres(sim, person, b.kinds, worth * 0.5 ** again * practiceShare(rec, b));
   noteMaterial(person, { material: briefMaterial(b), at: sim.now, overall: e.overall, approaches: sidesOf(rec.playing), shown: true });
   const chief = chiefLimit(e);
+  // The genre's concern behind it, where its register asked for the ability that held the take back (from 2026-10-16).
+  const concern = concernBehind(b, e);
+  // What the way it was played came to against the scene (from 2026-10-16), kept so the take says it after a reload.
+  const g = grainRead(e);
   // The take with its reader, and what it leaves between you and a classmate who read.
   const together = takeTogether(sim, person, b, rec, e);
   if (together && rec.reader) afterTogether(sim, person, rec.reader.mate, together, b.title);
   if (together) countTogether(person, together);
   const answered = rec.callback ? rec.playing?.[rec.callback.axis] === rec.callback.side : undefined;
   const take: Take = {
-    at: sim.now, genre, reading: reading.id, sides: sidesOf(rec.playing), prep: { ...ctx.prep }, overall: e.overall, expected, band, ...(chief ? { chief } : {}), purpose,
+    at: sim.now, genre, reading: reading.id, sides: sidesOf(rec.playing), prep: { ...ctx.prep }, overall: e.overall, expected, band, ...(chief ? { chief } : {}), ...(concern ? { concern } : {}), ...(g ? { grain: { points: g.points, ability: g.ability, why: [...new Set(g.on.map((x) => x.why))].join('; ') } } : {}), purpose,
     ...(rec.callback ? { callback: { axis: rec.callback.axis, side: rec.callback.side }, answered } : {}),
     ...(together ? { together: { overall: together.overall, contribution: together.contribution, reader: together.partner, ...(together.slip ? { slip: together.slip } : {}), words: sharedWords(e.overall, together) } } : {}),
     key,

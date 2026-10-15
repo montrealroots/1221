@@ -16,8 +16,11 @@ import { GENRE_DEFS } from './genres';
 import { FILM_GENRES } from './film-genres';
 import { TASK_PROFILES, TEMPLATE_TASK, DIMENSION_LABEL, type Dimension } from './tasks';
 import { DEMAND_TECHNIQUE, GENRE_DEMANDS, genreTags } from './demands';
-import { APPROACH_EFFECT, BLEND_EFFECT, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, TRANSITION_EFFECT, VOICE_LEAN } from './approaches';
+import { PLAYING, APPROACH_EFFECT, BLEND_EFFECT, CAMERA_LEAN, FEATURE_EFFECT, LANGUAGE_EFFECT, TRANSITION_EFFECT, VOICE_LEAN } from './approaches';
 import { PLAY_MATERIAL, SCENE_MATERIAL } from './material';
+import { CONCERN_IDS } from './concerns';
+import { GRAIN } from './interpretation';
+import { GENRE_REGISTER } from './genre-register';
 import { BRIEFS } from './briefs';
 
 const SAVED: Readonly<Partial<Record<AbilityId, string>>> = { emotionalDepth: '`craft.emotion`', memory: '`craft.memorization`', vocal: '`craft.voice`', physical: '`craft.movement`', stamina: '`wellbeing.fitness`' };
@@ -82,7 +85,12 @@ export function attributesMatrix(): string {
   out.push(row(['Two tones held at once', 'a brief’s beat with two tones', `${BRIEFS.filter((b) => b.beats.some((x) => x.tones.length > 1)).length} briefs`, `each: ${effect(BLEND_EFFECT)}; a brief’s rehearsal counts complete 0.04 higher`, 'Where It Turns, held at once', 'believability, interpretation; the rehearsal part', '`tests/briefs.test.ts` (tone held and tone changed)']));
   out.push(row(['The medium', 'the material’s medium', `${BRIEFS.filter((b) => b.medium === 'camera').length} briefs on camera, ${BRIEFS.filter((b) => b.medium === 'voice').length} at a microphone`, `camera leans ${dimsOf(CAMERA_LEAN)}; a microphone leans ${dimsOf(VOICE_LEAN)}`, 'the brief’s heading', 'the dimensions’ weights', '`tests/briefs.test.ts`']));
   out.push(row(['A way of playing it', '`Playing` on an assignment, a part or a brief', 'a scene’s, a part’s or a brief’s chooser', Object.entries(APPROACH_EFFECT).map(([k, e]) => `${k}: leans ${dimsOf(e.lean)}`).join('; '), 'How You’ll Play It, with each side’s fully prepared result', 'the dimensions’ weights; its rehearsal a part of preparation; a misfit only from the material or a direction', '`tests/material.test.ts`, `tests/briefs.test.ts`']));
+  // How well a side suits the scene (from 2026-10-16): until then the row above was the whole of a way of playing.
+  out.push(row(['A way of playing it, against the scene', 'the scene: its tones, turns, features, language and medium; a brief’s genre register, reader and reading taken', 'the same choosers', `each side’s suitability, -1 to 1, from the scene’s signals; up to ${GRAIN.strength} of the work’s difficulty on the dimensions it leans on, easier with the grain and harder against it, scaled by the stakes; its rehearsal complete at ${Math.round((PLAYING.complete - GRAIN.prep) * 100)}% to ${Math.round(Math.min(1, PLAYING.complete + GRAIN.prep) * 100)}%; nothing at full capacity`, 'The Scene, beside each side; the take’s account of what the side gave or cost apart from the abilities', 'the dimensions’ difficulty; the choice’s rehearsal mark', '`tests/interpretation.test.ts`, `tests/interpretation-journey.test.ts`']));
   out.push(row(['A reading of a brief', '`briefs[id].reading`', `each brief’s ${Math.min(...BRIEFS.map((b) => b.readings.length))} to ${Math.max(...BRIEFS.map((b) => b.readings.length))}, ${BRIEFS.reduce((s, b) => s + b.readings.length, 0)} in all`, 'its leans squared and its abilities doubled, normalized; never a misfit', 'Your Reading, each with what it rests on and its fully prepared result', 'the dimensions’ weights and inputs; the breakdown kept half on a change', '`tests/briefs.test.ts` (no reading misfits; each reading changes what the work leans on)']));
+  // The genre's register (from 2026-10-16): until then the matrix had no row for it, though every take of a brief read it.
+  const registers = Object.values(GENRE_REGISTER);
+  out.push(row(['A genre’s register', 'the genre’s concerns (`content/genre-register.ts`, `content/concerns.ts`)', `every take of a brief written for the genre: ${registers.length} genres, ${CONCERN_IDS.length} concerns, ${registers.filter((r) => r.basis === 'research').length} from the research and ${registers.filter((r) => r.basis === 'reading').length} SLATE’s reading`, 'each concern’s leans squared and its abilities doubled, as a reading’s, normalized; adds no weight', 'The Genre Asks; the genre’s look; the take’s note naming the concern behind its chief limit', 'a taped brief’s dimensions’ weights and inputs', '`tests/genre-identity.test.ts`, `tests/genre-identity-screens.test.ts`']));
 
   // What a player does to develop and prepare (from 2026-10-12), each with what it moves and what reads that.
   out.push('', '## Training And Preparation Actions', '', HEAD);

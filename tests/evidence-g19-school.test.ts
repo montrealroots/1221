@@ -63,6 +63,7 @@
  * midnight for the Seagull understudy, as tests/school.test.ts plays one; every classmate's craft at 95 for the twin cast
  * beside them.
  */
+import { WORKBOOK } from '@/engine/content/workbook';
 import { describe, expect, it, vi } from 'vitest';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
@@ -611,11 +612,17 @@ describe('school.work_note', () => {
       return prior?.answer?.solution ? [{ n, prior }] : [];
     });
     expect(again.length).toBeGreaterThan(0);
-    expect(again.some(({ prior }) => prior.taken === true)).toBe(true);
+    // Until 2026-10-16 this asked for a note given again after one taken; every such note here had been taken by a way
+    // that moved nothing. A note taken from then has its problem gone or its figure risen, and the next note is on
+    // something else (`noteFor` passes over the problem just taken), so here every one given again follows one not taken.
     expect(again.some(({ prior }) => prior.taken === false)).toBe(true);
     for (const { n, prior } of again) {
-      expect(n.text).toContain(`You tried ${prior.answer!.label!.toLowerCase()}: ${prior.answer!.before} then, ${prior.answer!.after} now.`);
+      // What was tried, its figure then and at the next call, and, where it moved nothing, that it didn't.
+      expect(n.text).toContain(`You tried ${prior.answer!.label!.toLowerCase()}: ${prior.answer!.before} then, ${prior.answer!.now ?? prior.answer!.after} now`);
       expect(n.text).toMatch(prior.taken ? /^Better since the last note\. You tried / : /^Still: /);
+      // Worse by the evidence at the call, it says it made it worse; otherwise that it didn't move it.
+      const worse = Math.min(prior.answer!.after, prior.answer!.now ?? prior.answer!.after) - prior.answer!.before <= -WORKBOOK.evidence;
+      if (prior.outcome === 'learned') expect(n.text).toContain(`which ${worse ? 'made it worse' : 'didn’t move it'}: worth knowing, and not the answer.`);
     }
 
     // The closing: the calls as the calendar has them, the notes as they were given, taken and answered in the work.
@@ -626,7 +633,9 @@ describe('school.work_note', () => {
     expect(untaken.some((n) => n.focus.kind === 'craft')).toBe(true);
     const looking = titled(sim, `Looking Back: ${TITLE}`);
     expect(looking).toHaveLength(1);
-    expect(looking[0]!.body).toContain(`${TITLE}: ${calls.filter((c) => c.status === 'done').length} calls answered of ${calls.length}; ${given.filter((n) => n.taken).length} of ${given.length} notes taken, ${notes.filter((n) => n.focus.kind === 'craft' && n.taken).length} answered in the work; the dress ${proc(sim).dress}.`);
+    const answered = notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
+    const learned = notes.filter((n) => n.outcome === 'learned').length;
+    expect(looking[0]!.body).toContain(`${TITLE}: ${calls.filter((c) => c.status === 'done').length} calls answered of ${calls.length}; ${given.filter((n) => n.taken).length} of ${given.length} notes taken${answered ? `, ${answered} answered in the work` : ''}${learned ? `, ${learned} worked and learned from without moving ${learned === 1 ? 'it' : 'them'}` : ''}; the dress ${proc(sim).dress}.`);
     expect(looking[0]!.body).toContain('What’s still open goes with you into class.');
     // Each craft note not taken, in the class's ledger as the part of a scene's preparation that answers it.
     const ledger = notesOf(courseworkOf(sim, sim.player)!);

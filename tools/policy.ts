@@ -7,22 +7,24 @@ import { createSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import { newLifeConfig, type NewSaveConfig } from '../src/engine/world/bootstrap';
 import { templateById } from '../src/engine/content/coursework';
-import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
+import { READER, WORK, askRefusal, courseworkOf, partnerPart, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
+import { EVALUATION } from '../src/engine/content/tasks';
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
-import { MS_HOUR, zonedParts } from '../src/engine/core/time';
+import { MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { WHICH, hasProcess, holderFor, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { identityOf } from '../src/engine/systems/artistry';
-import { matchedTier } from '../src/engine/systems/practice';
-import { abilityFull, levelOf } from '../src/engine/systems/attributes';
-import { MASTERED } from '../src/engine/content/abilities';
+
+
+
+
+
 import { practiceRefusal, practicedToday } from '../src/engine/systems/practice';
 import { makeUpRefusal } from '../src/engine/systems/courserecord';
 import { PRACTICE, exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
 import { abilityOf } from '../src/engine/systems/attributes';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 export function life(seed: string, p: Partial<NewSaveConfig>): Simulation {
   return createSave(1, seed, { ...newLifeConfig(), firstName: 'Ada', lastName: 'Cole', pronouns: 'they/them', ...p });
@@ -60,9 +62,11 @@ export function evening(sim: Simulation) {
  * `workNotes` off (from 2026-10-13) the part, the blocking and a note on either are done, and a note on the craft is left,
  * so the lines and the blocking come to where a director turns to the craft and a craft note waits for the player
  * (`tools/scenarios.ts direction`). Its first run left every note, a note on the blocking too, and the blocking never
- * reached where a director turns to the craft: a blocking note worked is how a student sets it between calls.
+ * reached where a director turns to the craft: a blocking note worked is how a student sets it between calls. With
+ * `partnerPart` off (from 2026-10-16) the scenes' partner part is left as the policy left it until that day, so a save
+ * reaches the term's warning with the rest prepared (`tools/scenarios.ts workload`).
  */
-export const POLICY = { ownWork: true, workNotes: true };
+export const POLICY = { ownWork: true, workNotes: true, partnerPart: true };
 
 const lastNoteOf = (sim: Simulation, person: Simulation['player'], which: (typeof WHICH)[number]) => { const h = holderFor(sim, person, which); return hasProcess(h) ? h.process.notes.at(-1) : undefined; };
 
@@ -87,8 +91,27 @@ export function freeHour(sim: Simulation): boolean {
   const open = (cw?.assignments ?? []).filter((x) => x.status === 'open' || x.status === 'revising')
     .sort((x, y) => (x.status === 'revising' ? x.revision!.dueOn : x.dueOn).localeCompare(y.status === 'revising' ? y.revision!.dueOn : y.dueOn));
   for (const a of open) {
-    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < 0.95 && !prepareRefusal(sim, person, a, x.id));
+    // Each part to what completes it (`EVALUATION.complete.coursework`), as the piece says. Until 2026-10-16 to 0.95, past
+    // the mark, which spent hours the next piece needed.
+    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < EVALUATION.complete.coursework && !prepareRefusal(sim, person, a, x.id));
     if (act && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).ok) return true;
+    // The partner part, as the piece's steps offer it (from 2026-10-16): an evening asked of the partner, and where they
+    // can't come, a reader. Until then the policy skipped every step on the partner part and only said yes when a
+    // partner asked: played on 2026-10-16, a London student's scenes stood at nothing there, and the student was
+    // dismissed with 292 working hours idle in the term (docs/verification/workload-2026-10-16/README.md).
+    if (POLICY.partnerPart && a.partner !== undefined && partnerPart(a) < EVALUATION.complete.coursework) {
+      const ahead = () => a.rehearsals.some((r) => r.status === 'booked' && r.at > sim.now);
+      if (!ahead()) {
+        for (const d of [0, 1, 2]) {
+          const p = zonedParts(sim.now + d * 86_400_000, sim.homeZone);
+          const when = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 19 }, sim.homeZone);
+          if (when < sim.now + WORK.rehearsal.aheadHours * MS_HOUR) continue;
+          if (askRefusal(sim, person, a, when).refused) continue;
+          if (sim.execute<{ accepted: boolean }>({ kind: 'school.ask_partner', payload: { assignmentId: a.id, at: when } }).value?.accepted) break;
+        }
+      }
+      if (!ahead() && !prepareRefusal(sim, person, a, READER.id) && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: READER.id } }).ok) return true;
+    }
   }
   return false;
 }
@@ -107,8 +130,7 @@ export function practiceHour(sim: Simulation): boolean {
   if (practicedToday(sim, person) >= PRACTICE.dailyHours) return false;
   // What cost recent work and still has room (`recommendations`, from 2026-10-10; until then the input that cost the
   // last five pieces most, even once it had grown full), practiced at the tier that matches it, a steady hour.
-  const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
-  const limit = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring).find((r) => r.exercise);
+  const limit = adviceFor(sim, person).find((r) => r.exercise);
   const target = limit?.target ?? ABILITY_DEFS.map((d) => d.id).filter((id) => exerciseFor(id)).sort((a, b) => abilityOf(sim, person, a) - abilityOf(sim, person, b))[0];
   const e = target ? exerciseFor(target as AbilityId) : undefined;
   if (e && !practiceRefusal(sim, person, e)) return sim.execute({ kind: 'practice.exercise', payload: { exercise: e.id } }).ok;

@@ -18,6 +18,7 @@ import type { Dimension, TaskProfile } from '../content/tasks';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
 import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
+import { grainOf, sceneOfMaterial, type Scene, type Suitability } from './interpretation';
 
 /** How the player has chosen to play a piece, and how far the choice is rehearsed in. */
 export interface Playing {
@@ -37,6 +38,11 @@ export interface MaterialRead {
   prep: Partial<Record<Dimension, readonly string[]>>;
   /** Where the choice doesn't fit: the factor, and why. */
   fit: Partial<Record<Dimension, { f: number; label: string }>>;
+  /** How well the chosen sides suit the scene (from 2026-10-16, `grainOf`): a share of difficulty by dimension, and each side's suitability. */
+  grain: Partial<Record<Dimension, { d: number; label: string }>>;
+  suits: Suitability[];
+  /** How much of the choice's rehearsal completes it: `PLAYING.complete`, less with the grain and more against it. */
+  required: number;
 }
 
 /** Tasks that aren't performed: the material's body, voice and partner don't reach them. */
@@ -106,7 +112,7 @@ const add = (to: Record<string, { ability: AbilityId; weight: number }[]>, d: Di
  * What a material and a choice ask of a task. `direction` is a director's request on an axis, for a production.
  * A choice's preparation is read by every dimension it leans on, as the part `approach`.
  */
-export function materialContext(task: TaskProfile, material: MaterialProfile | undefined, playing?: Playing, direction?: Partial<Record<Axis, AxisValue>>): MaterialRead {
+export function materialContext(task: TaskProfile, material: MaterialProfile | undefined, playing?: Playing, direction?: Partial<Record<Axis, AxisValue>>, scene: Scene = {}): MaterialRead {
   const dims = Object.keys(task.dims) as Dimension[];
   const lean: Partial<Record<Dimension, number>> = Object.fromEntries(dims.map((d) => [d, 1]));
   const inputs: Record<string, { ability: AbilityId; weight: number }[]> = {};
@@ -164,7 +170,11 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
     }
     for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs);
   }
-  return { lean, inputs, prep, fit };
+  // How well the sides suit the scene (from 2026-10-16, `systems/interpretation.ts`). Work that isn't performed isn't played.
+  // A class scene's or a play's own genre, where the caller gives no scene (from 2026-10-16, later: `sceneOfMaterial`).
+  const read = Object.keys(scene).length ? scene : sceneOfMaterial(material);
+  const g = performed ? grainOf(task, sidesOf(playing), material, read) : { grain: {}, required: PLAYING.complete, suits: [] };
+  return { lean, inputs, prep, fit, grain: g.grain, suits: g.suits, required: g.required };
 }
 
 /** A choice made or changed: what was worked is kept in full for the same choice, halved for a different one. */

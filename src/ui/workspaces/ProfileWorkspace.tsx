@@ -23,7 +23,7 @@ import { ARTISTRY, identityOf } from '@/engine/systems/artistry';
 import { CITIES, COUNTRIES } from '@/engine/content/geography';
 import { ABILITY_DEFS, MASTERED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '@/engine/content/abilities';
 import { EXERCISE_BY_ID, EXERCISE_DESIGN, FOCUS, TIER, exerciseFor, PRACTICE, type PracticeFocus } from '@/engine/content/practice';
-import { experienceOf, FEATURE_LABEL, practicedDaysAgo, recommendations } from '@/engine/systems/experience';
+import { experienceOf, FEATURE_LABEL } from '@/engine/systems/experience';
 import { matchedTier } from '@/engine/systems/practice';
 import { levelOf } from '@/engine/systems/attributes';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
@@ -83,6 +83,7 @@ import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine/core/simulation';
 import { BriefPane, studiedWords } from '@/ui/components/BriefPane';
 import { briefsOf } from '@/engine/content/briefs';
+import { adviceFor } from '@/engine/systems/next-steps';
 
 const one = (x: number) => x.toFixed(1);
 const PAGE = 16;
@@ -265,7 +266,7 @@ function NextWork() {
   const person = useWorld((s) => s.player);
   // Days since an exercise was last practised, for the focus (`recommendations`, from 2026-10-12), as a brief's pane
   // reads them (`practicedDaysAgo`).
-  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (ABILITY_DEFS.some((d) => d.id === id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring);
+  const recs = adviceFor(sim, person);
   // Nothing judged yet isn't nothing held back (from 2026-10-12: until then a new student read that their recent work
   // wasn’t held back by anything).
   if (!(person.work ?? []).length) return <p className="small" style={{ margin: 0 }}>No work of yours has been judged yet: what to work on is read from what holds judged work back.</p>;

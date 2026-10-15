@@ -214,7 +214,8 @@ describe('stamina counts by how long and how hard a piece is', () => {
     const plays = PLAY_MATERIAL.map((m) => work(m, true, plus(EVEN, 'stamina', 10)) - work(m, true, EVEN));
     expect(plays.reduce((a, x) => a + x, 0) / plays.length).toBeGreaterThanOrEqual(0.5);
     const light = like(BRIEF_BY_ID['brief-drama']!, { size: 'short', physical: 0, vocal: 0 });
-    expect(effectOn(light, 'stamina')).toBeLessThanOrEqual(0.1);
+    // At the precision a take is kept to (from 2026-10-16: the genre's register left it at 0.1 and a float's remainder).
+    expect(Math.round(effectOn(light, 'stamina') * 1000) / 1000).toBeLessThanOrEqual(0.1);
   });
 });
 

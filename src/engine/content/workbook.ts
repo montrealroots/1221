@@ -58,6 +58,10 @@ export const WORKBOOK = {
   segmentGap: 2,
   /** A problem's figure risen this far is evidence the adjustment worked. */
   evidence: 0.5,
+  /** A way whose figure moved less than this either way moved nothing (from 2026-10-16): it isn't offered at that problem again. */
+  unmoved: 0.05,
+  /** What a limit must cost the piece, in points of the whole, to be a problem worth naming (`problemsOf`), and still there (`stillThere`). */
+  named: 0.5,
   /** The most problems offered at once, and the tries kept. */
   offered: 8, triesKept: 24,
 } as const;

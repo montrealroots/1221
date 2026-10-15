@@ -1,6 +1,137 @@
+# Read First: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
+
+**This section is the current status.** Every section below is history. It covers the owner's brief "Finish School
+Workload Balance And The Remaining Acting-Engine Shortfalls", on `claude/zen-mccarthy-i88ujw`, in the same pull
+request: not merged, not deployed. The checklist is section 6 of the work plan
+(`docs/verification/WORKPLAN-2026-10-16.md`). Section 2's six acceptance areas are still open and untouched.
+
+- **Why London was dismissed** (`docs/verification/workload-2026-10-16/`).
+  - It wasn't the hours. A term asked 503 to 582 hours to complete from nothing. In London's third term the student
+    left 292 working hours idle, and no sleep was cut.
+  - The play policy never worked a scene's partner part, which held the dimensions that read it to a third, and it
+    over-prepared the rest.
+  - The game didn't help: "Weighs 15%" read as worth 15%, nothing forecast a showing, nothing warned in the term, and
+    the review named no cause.
+- **What changed.**
+  - **Shown Today** on each piece, by the showing's own judge.
+  - **"Complete at 90%"** beside each part.
+  - **A Word On Your Coursework.** Once a term, after 6 shown with 35% or more Unready, it gives the count, the part
+    most often short, its remedy and the review's day.
+  - **The review names the cause.**
+  - **Due Soonest**, with the work listed soonest due first.
+  - **The policy** asks the partner, or runs it with a reader.
+  - **Not changed:** the review's mark, the band thresholds, `prepFloor` and starting attributes.
+- **The matched runs.** London on seeds 0 to 3 went from 23 to 24 of 46 Unready in the third term (concern, then
+  dismissal) to 9 to 15 (good). New York, Mexico City and the scraping student went from 22 to 7 to 9. Neglect is still
+  dismissed, now warned in the first term.
+- **I3** (`docs/verification/interpretation-2026-10-16/i3-review.md`).
+  - Suitability now reaches every dimension a side leans on, in proportion.
+  - Class scenes and plays read their genre's register.
+  - The stage leans a quarter each way.
+  - `RULESET` is evaluation-6.
+  - The designed and held-out briefs pass. The fresh stage set comes out expansive on every scene.
+- **The genre signature** (`docs/verification/genres-2026-10-16/g1-replacement.md`, "Revision").
+  - "Shares no concern" was the wrong proxy for contrast: S3's misses rise with the declared kinship of the two
+    registers.
+  - The revision (no concern shared and opposed pulls) was committed before it was measured.
+  - S2 passes on every sample.
+  - S3 is 78.9% on the fresh held-out briefs against 80%: a reader's way at full weight outvotes a register at half.
+- **The earlier work, played again.** The 40 advice cases came out byte-identical. The interpretation examples were
+  written again.
+- **The owner's decisions:**
+  - S3 on the fresh held-out briefs: change the register-to-reader weighting, or accept;
+  - the class scenes' own registers, which are content to research;
+  - the earlier I3 and signature decisions: the designed and held-out I3 clauses now pass, and S2 passes as revised.
+- **Long runs** (`docs/verification/journeys-2026-10-16/README.md`, "Played Again").
+  - **The 24 lives on the new code:** 20 graduated, against 16 before. London graduated on 4 of 4 seeds, against 0.
+    Breaches, unbalanced entries and errors were 0 on every life.
+  - **Every concern left was a production night**, named by its review.
+  - **Mastery plans:** all six still reach 100, and each comes full 16 to 24 days sooner.
+- **Mutations:** 27, each killed (`docs/verification/workload-2026-10-16/mutations.json`). I8 survived at first, and a
+  test was added.
+- **Verified.**
+  - **Gate:** `npm run gate` exited 0 on `e9f1d73e`, read from a file: 346 files and 4,167 tests, typecheck, lint and
+    all seventeen checks.
+  - **Build:** exit 0.
+  - **The built app, first run on `e9f1d73e`:** 9 failures at each width.
+    - 8 were the brief save: the policy's new 7 PM partner evening grayed its steps.
+    - 1 was a wrong selector in the new workload step.
+  - **After the fixes, on `4ee34491`** (tools only, the same build): 69 passed, 0 failed, 2 skipped (the two since
+    2026-10-12), 0 errors, 0 overflows at 1440 and at 390. That's from all 14 scenario saves written again, each with 0
+    breaches and 0 unbalanced.
+  - This ran in a cloud container (Linux), not the owner's PowerShell machine.
+- **Next:** the owner's decisions, then section 2's six acceptance areas.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
+# Earlier: Interpretation, Advice And The Long Journeys, 2026-10-16
+
+History now: the section above is the current status. The owner's brief "Finish Genre Interpretation,
+Improve Training Advice, And Prove Long-Term Integration", on `claude/zen-mccarthy-i88ujw` after the genre
+differentiation of the same day (both in the pull request, not merged, not deployed). The work plan's section 5 is the
+checklist; each part has its account:
+
+- **A way of playing, read against the scene** (`docs/verification/interpretation-2026-10-16/`). A side suits the scene
+  or goes against its grain, by its genre's register (at half weight), its reader, medium, tones, turns, features,
+  language and the reading taken. It moves a share of difficulty and the choice's rehearsal mark, never the ceiling:
+  every fitting side still reaches 100 (8,010 and 9,117 checks).
+  - **What the screen shows.** The Scene column, and the take's account of what the way gave apart from the abilities.
+  - **Rules.** `RULESET` moved to evaluation-5, so older results show as they were.
+  - **Criteria.** Written first; all pass but two clauses of I3 (expansive ahead in 23.0% of designed briefs against
+    25%, the camera's own weighting; the spread 0.92 against 1.0 on held-out ones).
+- **What to improve next, forecast** (`docs/verification/advice-2026-10-16/`). Twenty hours of each input's exercise on
+  the real growth curve, replayed on the recent work. On 40 played cases, its first was the largest realized gain in 40
+  (30 held out), against 16 for the advice as it was. The take's chief limit still answers what held it back, and the
+  pane says where the two differ.
+- **A director's note** (`docs/verification/notes-2026-10-16/`). It's resolved, better, learned or unchanged; only the
+  first two are taken. A way that moved nothing no longer takes it, and isn't offered again.
+- **G1 replaced by the genre signature** (`docs/verification/genres-2026-10-16/g1-replacement.md`, defined before it
+  ran). S1 and S4 pass, S2's ordering and nearest-neighbor clauses pass, its ratio is 1.47 against 1.5, and S3 is 82%
+  designed and 72% held out against 80%. Genre-blind, every criterion fails. G1 as written is still 0.95.
+- **Long journeys** (`docs/verification/journeys-2026-10-16/`). 24 lives of 3.2 years, with 0 breaches, 0 unbalanced and
+  0 errors; 16 graduated. The played mastery plans reach 100.
+- **The owner's decisions:**
+  - the two I3 clauses and the two signature clauses (tune the register's weight, or accept);
+  - **London's dismissal.** It's pre-existing: the same on `35d032d` and `1bb76ac`. 24 to 26 of 46 class pieces a term
+    are unready from the third term, with attendance at 100%, and every attentive profile has most class scenes unready
+    (87 of 113 in New York). It's coursework balance, outside this brief, and queued as its own task.
+- **Verified on `88182cc4`.** `npm run gate` exited 0, read from a file: 345 files and 4,160 tests, typecheck, lint and
+  all seventeen checks. The built app at 1440 and 390, from every scenario save written again on that code: 65 passed,
+  0 failed, 2 skipped at each. In a cloud container (Linux), not the owner's PowerShell machine.
+- **Next:** the owner's decisions above, then the coursework-balance pass (London) and the remaining acceptance gaps.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
+# Read First: Genre Differentiation, 2026-10-16
+
+**This section was the current status until later on 2026-10-16** (**Superseded:** the first section above is). Every section below is history. The account is
+`docs/verification/genres-2026-10-16/README.md`, the complete genre matrix `genre-matrix.md` beside it, and the work
+plan's section 4. Done on `claude/zen-mccarthy-i88ujw` from `main` at `35d032d`, for the owner's brief “Complete Genre
+Differentiation And Prove Each Genre’s Identity”. Pushed, a pull request opened, **not merged, not deployed**. The save
+schema didn't move (`Take.concern` is optional) and neither did `RULESET`: the register changes the context a take is
+judged in, not the judge.
+
+- **Every genre has a register** (`content/concerns.ts`, `content/genre-register.ts`, `systems/register.ts`): one or
+  two of thirteen concerns, read by every take of a brief written for it at a reading's strength, a lean that moves
+  weight and adds none. 113 genres rest on their research, 36 on SLATE's reading, and the screen says which.
+- **The seven identical pairs** (G2) were revised from their own scenes' text: 0 identical pairs, with the register and
+  without it.
+- **The player sees it:** The Genre Asks on the brief, the genre's look, the take's note naming the concern behind its
+  chief limit, the guide's genre entry and the tutorial.
+- **Proved:** `tests/genre-identity.test.ts` and `tests/genre-identity-screens.test.ts` (12 tests), 12 mutations of the
+  register killed plus a pair revision undone, `tools/genre-identity.ts`, `tools/brief-journeys.ts --no-register`, and two
+  acceptance steps at 1440 and 390. Mastery stays at 100 on all 4,495 piece-reading-way checks.
+- **Verified on `ecd76e4`:** `npm run gate` exit 0, read from a file (342 files, 4,145 tests, typecheck, lint, all
+  seventeen checks); the build, and the built app at 1440 and 390: 64 passed, 0 failed, 2 skipped at each, from every
+  scenario save written again on that code. In a cloud container (Linux), not the owner's PowerShell machine.
+- **The owner's decisions (open):** G1 as written fails (0.95×, 1.22× with length and stakes held) and can't reach 1.5
+  without one rigid formula per genre; no threshold moved. A way of playing doesn't interact with the genre. F2 is a
+  little worse (301 of 447, from 311).
+- **Next:** the rest of attributes phase 2c (the late-term decline, F2/H1, the workbook rule, long and UI journeys), then
+  the remaining acceptance gaps.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
 # Read First: Three Briefs, Two Well Along, 2026-10-16
 
-**This section is the current status.** The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
+**This section was the current status until genre differentiation, later on 2026-10-16** (**Superseded:** the first section above is). The checklist that crosses a switch is `docs/verification/WORKPLAN-2026-10-16.md`:
 read its Resume Here first. Every section below is history. Until later on 2026-10-16 this section said banking modules
 6 and 7 and attributes phase 2b were mid-work and uncommitted, and that the gate hadn't run; all three changed that day.
 

@@ -325,7 +325,7 @@ export const BRIEFS_A: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-biker', title: 'No Patch Tonight', kinds: ['biker'], medium: 'camera', size: 'short',
+    id: 'brief-biker', title: 'No Patch Tonight', kinds: ['biker'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'pressing',
     logline: 'At a roadside diner after a long run, a club’s road captain tells the kid who has followed them for a year that he won’t be getting his patch, and should go home.',
     circumstances: 'A truck-stop diner on a desert highway at two in the morning, the club’s bikes lined up outside the window. The members voted an hour ago. The captain offered to be the one to tell him.',
     relationship: 'She brought him in. He has fixed her bike, run her errands and slept on her floor for a year.',
@@ -338,7 +338,7 @@ export const BRIEFS_A: readonly Brief[] = [
       { what: 'She tells him straight: no patch.', tones: ['grave'] },
       { what: 'He begs; she sets her old riding gloves on the table in front of him and tells him to go home by daylight.', tones: ['grave', 'lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 0, partner: 3, vocal: 0, improvisation: 0,
     why: {
       partner: 'Everything she says is aimed at his reactions, and she has to hold steady while he falls apart.',
       beats: 'An easy meal, a hard sentence, then a gift that tells him she cared all along.',
@@ -601,8 +601,9 @@ export const BRIEFS_A: readonly Brief[] = [
       { what: 'She stops him and sets the ball on the step; he doesn’t know what to do with kindness.', tones: ['comic', 'grave'] },
       { what: 'She asks if he wants to help fix it, and he says yes before he can think.', tones: ['lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 1, improvisation: 0,
     why: {
+      timing: 'The formal speech is played for laughs, and her kindness has to land on its cues and stop it dead.',
       partner: 'His speech is knocked off course by her reactions, and the scene follows where she takes it.',
       beats: 'A rehearsed confession played for laughs, surprise at being forgiven, then a friendship begun.',
     },
@@ -625,7 +626,7 @@ export const BRIEFS_A: readonly Brief[] = [
       { what: 'He tells her why he still ordered it.', tones: ['grave'] },
       { what: 'She asks him to stay and eat a slice with her, under the shop’s one string of lights.', tones: ['lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 0, improvisation: 0,
     why: {
       partner: 'She meant to stay brisk, and his story changes her by the line.',
       beats: 'Brisk comedy, the grief they share, then the season’s warmth given plainly.',

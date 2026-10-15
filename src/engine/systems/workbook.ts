@@ -114,7 +114,7 @@ export function problemsOf(p: WorkPiece): Problem[] {
     out.push({ id: 'stamina', kind: 'stamina', segment: last, label: 'Tiring Late In The Piece', why: `Stamina costs the piece ${stamina.whole} points, most of it in ${segs[last]!.label.toLowerCase()}, which comes to ${segs[last]!.overall}.`, measure: segs[last]!.overall, gap: (stamina.whole ?? 0) * 2 });
   }
   const top = e.limits.find((l) => l.kind === 'ability' || l.kind === 'technique');
-  if (top && (top.whole ?? 0) >= 0.5) {
+  if (top && (top.whole ?? 0) >= WORKBOOK.named) {
     // Worked where the piece is weakest: the lowest segment, played another way, can draw on something else.
     const at = segs.length ? segs.reduce((b, s, i) => (s.overall < segs[b]!.overall ? i : b), 0) : undefined;
     out.push({ id: `limit:${top.what}`, kind: 'limit', ...(at !== undefined ? { segment: at } : {}), label: `${top.label} Holds It Back`, why: `${top.label} costs the ${DIMENSION_LABEL[top.dimension].toLowerCase()} ${top.by} points, ${top.whole} of the whole${at !== undefined ? `; ${segs[at]!.label.toLowerCase()} is where the piece is weakest, at ${segs[at]!.overall}` : ''}. Work on it trains it a little; a segment played another way draws on something else.`, measure: e.overall, gap: top.whole ?? 0 });
@@ -156,8 +156,15 @@ function waysFor(p: WorkPiece): { axis: Axis; side: AxisValue }[] {
   return out;
 }
 
+/**
+ * A way already tried at a problem and put back, or (from 2026-10-16) kept but measured to move nothing at all (under
+ * `WORKBOOK.unmoved`): it isn't offered again, since it has said what it can. Until then a way that changed nothing stayed
+ * on offer, and was the one a note was worked with again and again: played on 2026-10-16, a note on emotional depth was
+ * worked Work It Slowly four times, 53 to 53 each time. A way that moves a little, a segment rehearsed in by a few tenths,
+ * stays on offer.
+ */
 const tried = (book: Workbook | undefined, problem: string, adjustment: AdjustmentId, option?: string) =>
-  (book?.tries ?? []).some((t) => t.problem === problem && t.adjustment === adjustment && (t.option ?? '') === (option ?? '') && t.verdict === 'revised');
+  (book?.tries ?? []).some((t) => t.problem === problem && t.adjustment === adjustment && (t.option ?? '') === (option ?? '') && (t.verdict === 'revised' || (t.verdict === 'kept' && Math.abs(t.after - t.before) < WORKBOOK.unmoved)));
 
 /** The adjustments the problem being worked on admits, each a different change; none put back for it before. */
 export function optionsOf(p: WorkPiece, problem: Problem): Option[] {
@@ -174,7 +181,7 @@ export function optionsOf(p: WorkPiece, problem: Problem): Option[] {
   const heldBy = seg ? abilityHolding(p, seg) : undefined;
   for (const a of Object.values(ADJUSTMENTS)) {
     if (!a.answers.includes(problem.kind as ProblemKind)) continue;
-    if (a.id === 'work-beat') { if (s !== undefined && (work[s] ?? 0) < 0.97 && (shortThere || heldBy || problem.kind === 'limit' || problem.kind === 'turn')) out.push({ adjustment: a.id, label: a.label, words: a.words, minutes: a.minutes, segment: s }); continue; }
+    if (a.id === 'work-beat') { if (s !== undefined && (work[s] ?? 0) < 0.97 && (shortThere || heldBy || problem.kind === 'limit' || problem.kind === 'turn') && !tried(book, problem.id, a.id)) out.push({ adjustment: a.id, label: a.label, words: a.words, minutes: a.minutes, segment: s }); continue; }
     if (a.id === 'run-into') { if (s !== undefined && s > 0 && segs[s]?.turnInto && (work[s] ?? 0) < 0.97) out.push({ adjustment: a.id, label: a.label, words: a.words, minutes: a.minutes, segment: s }); continue; }
     if (a.id === 'beat-way') {
       if (s === undefined || book?.ways?.[s]) continue;
@@ -348,4 +355,19 @@ export function registerWorkbook(sim: Simulation, workPiece: FindPiece): void {
     if (no) throw new CommandError(no);
     return settle(piece!, p?.keep !== false);
   });
+}
+
+/**
+ * Whether a problem is still there (from 2026-10-16): a limit while it still costs the piece `WORKBOOK.named` of the whole
+ * or more, whether or not it's the costliest; anything else while the forecast's problems still name it. Until then a
+ * limit "left the forecast" when another input overtook it as the costliest, and a note on it was called answered while
+ * its figure fell: played on 2026-10-16, emotional depth's note was resolved as the part fell from 53.1 to 50.3.
+ */
+export function stillThere(p: WorkPiece, id: string): boolean {
+  if (id.startsWith('limit:')) {
+    const what = id.slice('limit:'.length);
+    const cost = p.forecast().limits.filter((l) => l.what === what && (l.kind === 'ability' || l.kind === 'technique')).reduce((t, l) => t + (l.whole ?? 0), 0);
+    return cost >= WORKBOOK.named;
+  }
+  return problemsOf(p).some((x) => x.id === id);
 }

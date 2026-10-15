@@ -27,7 +27,11 @@ import type { AbilityId } from './abilities';
  * (`DEMAND_EFFECT`, `content/approaches.ts`), and stamina's load set by a piece's length. A result kept under three
  * isn't replayed under four (`replay`), so no kept result changes.
  */
-export const RULESET = 'evaluation-4 (2026-10-16)';
+// evaluation-5 from 2026-10-16, later: a way of playing read against the scene (`EvalContext.grain`), so a result kept
+// under evaluation-4 is shown as it was and not worked out again by today's judge.
+// evaluation-6 from later on 2026-10-16: a way of playing's suitability reaches every dimension it leans on, a class scene
+// and a play are read in their genre's register, and the stage leans a quarter each way (`grainOf`, `sceneOfMaterial`).
+export const RULESET = 'evaluation-6 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 

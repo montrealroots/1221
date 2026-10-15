@@ -38,7 +38,11 @@
  * work keeps coming back to in a brief's pane as well as on the Profile; the pane heads it What To Work On and gives
  * only the first ability or technique recommended (`BriefPane.tsx`), so it names that weakness only when it comes first.
  * And the take's What To Work On was said to name what holds your work back most, where that weakness goes first while
- * it's within `RECOMMEND.recurringWithin` of the top (`recommendations`).
+ * it was within `RECOMMEND.recurringWithin` of the top (`recommendations`).
+ *
+ * From 2026-10-16 What To Work On Next is forecast (`systems/advice.ts`): what each input's hours of practice would be
+ * worth on the recent work, so what held a take back most and what pays most to train are two things, and the entries
+ * say so; the recurring weakness goes first only where it's about as useful as the top (`tied`).
  *
  * The Profile has no tabs, so no entry names one.
  *
@@ -59,6 +63,7 @@
  * actor and a genre's 0% of the 30% were typed beside the constants they copied.
  */
 
+import { ADVICE } from '../../systems/advice';
 import { CHAPTER_BY_ID } from '../tutorial';
 import { ABILITY_DEFS, DEVELOPMENT, MASTERED, STEP_SPEED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '../abilities';
 import { EXERCISES, EXERCISE_BY_ID, FOCUS, FOCUS_RATE, PRACTICE, TIER } from '../practice';
@@ -79,12 +84,14 @@ import { ENSEMBLE, sharedOf, type PartnerRead } from '../../systems/ensemble';
 import { bandOfQuality, chiefLimit, WORK_KEPT, type Performer } from '../../systems/evaluation';
 import { BAND_LABEL, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
 import { ARTISTRY } from '../../systems/artistry';
-import { EXPERIENCE, RECOMMEND } from '../../systems/experience';
+import { EXPERIENCE } from '../../systems/experience';
 import { matchedTier } from '../../systems/practice';
 import { EVERYDAY_FITNESS, FITNESS, SPENT } from '../../systems/life';
 import { KNOB_LIMITS } from '../../systems/personality';
 import { SELF_TAPE } from '../../systems/engagement';
 import type { GuideEntry } from './types';
+import { ceilingAt } from '../lifespan';
+import { CONCERNS, CONCERN_IDS } from '../concerns';
 
 // --- where it is ------------------------------------------------------------------------------------------------------
 
@@ -189,8 +196,14 @@ const afterTwoDays = (gain: number): number => gain + gain * DAY_TWO_SPEED * (1 
 const PREP_MINUTES = (['read', 'lines', 'rehearse'] as const).reduce((a, s) => a + stepMinutes(DRAMA, s), 0);
 const [READING_ONE, READING_TWO] = [DRAMA.readings[0]!, DRAMA.readings[1] ?? DRAMA.readings[0]!];
 
+/**
+ * Stamina's full for the examples' life: born June 2002, so 24 when the term begins in August 2026 (`abilityFull`, a
+ * body's ceiling at its age). Until 2026-10-16 the examples' performer had every full at 100, and a played life's take
+ * matched it to the tenth only by rounding: the genre's register moved the weights and the two came a tenth apart.
+ */
+const STAMINA_FULL = ceilingAt(24).fitness;
 /** An actor at one level in everything, and another way here and there: the examples' performer. */
-const actor = (rest: number, levels: Partial<Record<AbilityId, number>> = {}): Performer => ({ ability: (a) => levels[a] ?? rest, full: () => 100, technique: () => rest });
+const actor = (rest: number, levels: Partial<Record<AbilityId, number>> = {}): Performer => ({ ability: (a) => levels[a] ?? rest, full: (a) => (a === 'stamina' ? STAMINA_FULL : 100), technique: () => rest });
 const NOBODY = {} as Person;
 const PREPARED: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] };
 const FULL_PREP = { interpretation: 1, memorization: 1, rehearsal: 1, genre: 1 };
@@ -203,7 +216,13 @@ function take(performer: Performer, reading: string, readiness: number, callback
   return { e, weights: pieceWeights(ctx.task, ctx.lean, spec) };
 }
 
-const EVEN = actor(60);
+/**
+ * The examples' actor's level, in everything. 62 from 2026-10-16: at 60 the take with a recording reading came to 65.0
+ * played and 64.9 here, on the line a callback is earned at, so a tenth decided whether the example's callback existed
+ * at all, and the genre's register moved it that tenth. At 62 it's earned with room to spare.
+ */
+const AT = 62;
+const EVEN = actor(AT);
 const TAPED = take(EVEN, READING_ONE.id, 80);
 const CALLBACK = take(EVEN, READING_ONE.id, 80, true);
 const LAST_BEAT = TAPED.e.piece!.segments[TAPED.e.piece!.segments.length - 1]!;
@@ -255,7 +274,6 @@ const READER_WAYS = Object.values(READER_PLAYS).map((p) => {
 const HABIT_SO_FAR = Math.max(1, ARTISTRY.habitAt - 2);
 
 /** Points of the whole, a half written so. */
-const pointsWord = (n: number): string => (n === 0.5 ? 'half a point' : n === 1 ? 'a point' : `${n} points`);
 
 /** Whether any genre has more than one brief, so its pane shows a list of them (the second situations, from 2026-10-12). */
 const SEVERAL = FILM_GENRES.some((g) => briefsOf(g.id).length > 1);
@@ -299,7 +317,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Classes Reach', value: 'Where classes and ordinary work level off for you: a technique’s own ceiling, an ability’s its kin’s in the craft. Practice goes past it to full' },
       { label: 'A Technique', value: `0 to 100, mastered at ${MASTERED}: work that reads it asks no more past that` },
       { label: 'Today', value: `Readiness under ${EVALUATION.sufficientReadiness}, the flu, an injury or a concussion, and the dimensions of work each one reaches` },
-      { label: 'What To Work On Next', value: `The abilities and techniques that cost your recent work ${pointsWord(RECOMMEND.floor)} of the whole a piece or more, weighted to the latest, while they still have room; a short preparation, a day’s condition or a choice that didn’t fit says what to do differently. The weakness your work keeps coming back to, where it’s among them, says how many pieces it has held back for life and the points of the whole in all, with “From your work for life:” and the day it last held one back, and goes first within ${pointsWord(RECOMMEND.recurringWithin)} of the top. It isn’t brought back at full or under the floor` },
+      { label: 'What To Work On Next', value: `Each ability and technique your recent work read, forecast: ${ADVICE.sessions} hours of its exercise on the curve practice really follows, slower the nearer it is to full, and your recent work worked out again with you as you are now and with it where those hours would take it; the most worth it first, weighted to the latest. Two within a tenth of a point, or a tenth of the larger, are said to be about as useful. A short preparation, a day’s condition or a choice that didn’t fit says what to do differently. The weakness your work keeps coming back to says how many pieces it has held back for life, with “From your work for life:” and the day it last held one back, and goes first only where it’s about as useful as the top. An input at full drops out, as does one forecast under a tenth of a point` },
       { label: 'School Journey', value: `The latest ${WORK_KEPT} pieces of work in full, and every piece ever judged counted by half-year` },
       { label: 'Development History', value: `The latest ${DEVELOPMENT.historyKept} changes to an ability or a technique, each with what made it` },
     ],
@@ -439,8 +457,8 @@ export const CRAFT: readonly GuideEntry[] = [
     title: 'Genres',
     goal: 'craft',
     covers: ['genre.study', 'look.genre'],
-    synonyms: ['genre', 'study a genre', 'study it', 'study the genre', 'genre familiarity', 'genre practice', 'loved genre', 'genre requirements', 'knowing the genre', 'film of the kind'],
-    questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
+    synonyms: ['genre', 'study a genre', 'study it', 'study the genre', 'genre familiarity', 'genre practice', 'loved genre', 'genre requirements', 'knowing the genre', 'film of the kind', 'genre register', 'the genre asks'],
+    questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Why does a genre’s scene play differently from another’s?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
     where: { route: PROFILE, label: 'Player Profile, Genres' },
     available: `${OPENED}.`,
     short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it. Study It is ${plural(ENGAGEMENT.genre.minutes, 'minute')} with a play of the kind the game has, or a film of it. The better of the two is how well you know the genre: a taped brief in it reads that as part of its preparation, every point to ${pct(BRIEF.complete.genre)} showing in the take, and a scene or a part from a play of its kind is prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day, and the work comes out as good as it would have.`,
@@ -463,6 +481,8 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} at 100: a scene for class from a play of the kind, and a part’s lines in one. A brief’s own steps read the material met before instead` },
       // A take of its brief reads it; a play’s night or a class scene reads its own material’s (until 2026-10-13 this said
       // “their work reads it”, which a farce’s night, reading no clown, didn’t).
+      // From 2026-10-16 (`content/genre-register.ts`): every genre's scenes are played in a register.
+      { label: 'How Its Scenes Are Played', value: `Every genre has one or two concerns, ${CONCERN_IDS.length} in all, such as ${CONCERNS.restraint.label}, ${CONCERNS.rhythm.label} or ${CONCERNS.spontaneity.label}: every take of a brief written for it weighs the dimensions they lean on more and draws on the abilities they ask, as strongly as a reading counts. It moves weight and adds none: a take fully prepared at full ability comes to 100 in every genre` },
       { label: 'What It Asks For', value: `${APPLIED} genres ask a technique of an actor, where the research established it: their brief stages it, and a take of it reads it; a night of a play of the kind, or a class scene from one, reads its own material’s techniques instead` },
     ],
     now: [
@@ -477,6 +497,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research rests on one example”, or “Nothing past the camera’s own”.',
       'A genre’s look gives Familiarity, Practice and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps read the material met before instead. It gives what the research found the genre asks, and how sure it is.',
       `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it.`,
+      'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what the take weighs more and draws on, and which part of preparation answers it. A take held back most by an ability a concern asks for says so: “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”.',
       '“You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t speed the work or cap it.',
     ],
     unavailable: [
@@ -486,6 +507,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     mistakes: [
       'Studying one genre for hours in a day: each study the same day adds half the one before. One a day, over a few days, goes further.',
+      'Playing every genre’s scene the same way: two scenes can stage the same features and still ask different things, since each genre’s register weighs the take its own way. A way of playing it that leans where the genre does puts more of the take on what that genre asks.',
       `Studying on past ${pct(BRIEF.complete.genre)} for a take: past that it adds to a take no more, though it still speeds a scene or a part from a play of the kind.`,
       'Expecting a brief’s steps to go faster in a genre you know: they read the material’s features met before, and the genre is its own part of the take.',
       `Taping cold to learn a genre: a take taped with nothing prepared is ${pct(BRIEF.practiceUnprepared)} of a prepared take’s practice in it.`,
@@ -745,7 +767,7 @@ export const CRAFT: readonly GuideEntry[] = [
       `Press Tape It (${SELF_TAPE.minutes} Min). The toast gives the result and its band.`,
       `The Last Take gives the result, the reading and the way played, what it was for and what held it back, the take with its reader, its beats and each dimension. Your Takes Of It keeps the last ${BRIEF.takesKept}.`,
       'With a callback, its note shows above How You’ll Play It: choose the side it asks, rehearse it in, and tape.',
-      `What To Work On names the ability or technique holding your work back most, or the one your work keeps coming back to where it’s within ${pointsWord(RECOMMEND.recurringWithin)} of the top, with its practice. Where It Would Show Next lists briefs to tape next, each with why and a button that opens it.`,
+      `What To Work On names the ability or technique most worth ${ADVICE.sessions} hours of practice now, forecast on your recent work, with its practice; where that isn’t what held your last piece back most, it says so and why. Where It Would Show Next lists briefs to tape next, each with why and a button that opens it.`,
     ],
     needs: [
       'A reading chosen, and a life in training.',
@@ -776,7 +798,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     later: [
       'A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.',
-      'What held the take back is read by What To Work On Next and by Your Work So Far, and the next suggestions in Where It Would Show Next follow from it.',
+      'What held the take back is read by Your Work So Far; What To Work On Next forecasts every input the take read, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.',
     ],
     interpret: [
       'What a take is for is said plainly: a first take, a callback, another reading, the same reading played another way, better prepared or better able than last time, or the same again, worth half as practice.',
@@ -810,7 +832,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'body.sleep', kind: 'optional', why: `Rested, at readiness ${EVALUATION.sufficientReadiness} or more, tiredness costs a take nothing.` },
     ],
     example: {
-      setup: `${DRAMA.title}, read as ${READING_ONE.label} and fully prepared, by an actor at 60 in every ability and technique, rested at readiness 80, with no draw.`,
+      setup: `${DRAMA.title}, read as ${READING_ONE.label} and fully prepared, by an actor at ${AT} in every ability and technique, rested at readiness 80, with no draw.`,
       steps: ['Press Tape It.', 'Read The Last Take, beat by beat.', 'Tape the callback it earns, at the same level, with nothing else changed.'],
       result: `It comes to ${one(TAPED.e.overall)}, ${band(TAPED.e.overall)}: its beats ${andList(TAPED.e.piece!.segments.map((s) => one(s.overall)))}, the last beat ${pct(1 - LAST_BEAT.drain)} off for stamina, continuity ${one(TAPED.e.piece!.continuity)}. ${CHIEF ? `${CHIEF}.` : ''} With the recording reading, the take together is ${one(WITH_RECORDING)}, ${WITH_RECORDING >= STRONG ? 'enough for a callback' : 'short of a callback'}. Pitched as a callback, the same take comes to ${one(CALLBACK.e.overall)}, ${band(CALLBACK.e.overall)}, and played no differently it leaves the note unanswered: the callback is still yours.`,
     },
@@ -877,7 +899,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'body.how', kind: 'optional', why: 'Readiness at the hour is the condition every piece reads.' },
     ],
     example: {
-      setup: `The take of ${DRAMA.title} under Taping A Brief: an actor at 60 in everything, fully prepared, at readiness 80, with no draw.`,
+      setup: `The take of ${DRAMA.title} under Taping A Brief: an actor at ${AT} in everything, fully prepared, at readiness 80, with no draw.`,
       steps: ['Open it from School Journey.', 'Read Part By Part.'],
       result: `${one(TAPED.e.overall)} of 100, ${band(TAPED.e.overall)}. ${CHIEF ? `The summary says what held it back most: ${CHIEF}.` : 'Everything it asked was met.'} Part By Part gives ${andList(TAPED.e.piece!.segments.map((s) => `${s.label} ${one(s.overall)}`))}; ${LAST_BEAT.label} is Tiring, ${pct(1 - LAST_BEAT.drain)} off, and continuity is ${one(TAPED.e.piece!.continuity)}.`,
     },
@@ -923,7 +945,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'A strength is your abilities’ and techniques’ already: it’s shown, and adds nothing to a result.',
       `Reliability reads every term’s calls together, those before this term kept with this term’s, so it doesn’t start again with a term; it shows once ${ARTISTRY.least} calls have been made.`,
       'A section with too little behind it isn’t shown.',
-      `The first ability or technique in What Keeps Holding It Back is the one your work keeps coming back to. What To Work On Next gives its count for life and puts it first within ${pointsWord(RECOMMEND.recurringWithin)} of the top, and a director’s note on it ends “It’s your … again: it’s held back … of your pieces before this.” Neither moves a figure.`,
+      `The first ability or technique in What Keeps Holding It Back is the one your work keeps coming back to. What To Work On Next gives its count for life and puts it first where it’s about as useful to train as the top, and a director’s note on it ends “It’s your … again: it’s held back … of your pieces before this.” Neither moves a figure.`,
     ],
     unavailable: ['A section shows only once there’s enough behind it, and Early days stands until patterns can be named.'],
     mistakes: [

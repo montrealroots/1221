@@ -260,7 +260,7 @@ export const BRIEFS_E: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-science_fantasy', title: 'The Messenger In The Shrine', kinds: ['science_fantasy'], medium: 'camera', size: 'short',
+    id: 'brief-science_fantasy', title: 'The Messenger In The Shrine', kinds: ['science_fantasy'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'withholding',
     logline: 'A stranded mechanic tries to talk a village wise woman out of the crashed survey drone her people worship, for its power cell.',
     circumstances: 'A shrine on a colony world settled so long ago that its people have forgotten the ships, at dusk. A survey drone fell here forty years back and is kept under a woven canopy as a messenger from the sky. Aster’s own shuttle needs its power cell to lift off before the season turns.',
     relationship: 'Strangers: an outsider who arrived two days ago and the woman who keeps the shrine.',
@@ -273,7 +273,7 @@ export const BRIEFS_E: readonly Brief[] = [
       { what: 'Mother Ibbet reads the drone’s serial number aloud, and Aster’s story falls apart.', tones: ['comic', 'grave'] },
       { what: 'The price is passage off the world, and Aster sees how long the old woman has waited.', tones: ['lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 1,
     why: {
       partner: 'Her con works on what she thinks the old woman believes, and fails on what she actually knows.',
       beats: 'A con played with confidence, its collapse, funny and alarming at once, then a bargain that shows the keeper’s longing.',
@@ -478,8 +478,9 @@ export const BRIEFS_E: readonly Brief[] = [
       { what: 'Bev offers her the appreciation-week tote bag, and Lucía laughs.', tones: ['comic', 'grave'] },
       { what: 'She asks Bev to sign the sum and send it up, and waits until she does.', tones: ['grave'] },
     ],
-    language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 0, partner: 3, vocal: 0, improvisation: 2,
     why: {
+      improvisation: 'Only the sum and her demand are fixed: how she gets Bev to sign is found against whatever Bev says, as a real office conversation goes.',
       partner: 'Bev is on her side and still in the way, and Lucía has to work out how to use that.',
       beats: 'A plain case, a gift so small it’s absurd, then a demand made with patience.',
     },
@@ -613,7 +614,7 @@ export const BRIEFS_E: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-steampunk', title: 'The Pressure Certificate', kinds: ['steampunk'], medium: 'camera', size: 'short',
+    id: 'brief-steampunk', title: 'The Pressure Certificate', kinds: ['steampunk'], medium: 'camera', size: 'short', stakes: 2,
     logline: 'An airship engineer must persuade a guild inspector to certify her boiler for tomorrow’s race, knowing the gauge reads high for a reason she can’t admit.',
     circumstances: 'A brass-fitted engine room in a mooring tower over an alternate Victorian city, the night before the Guild Cup air race. Her boiler runs above the guild’s limit because she redesigned the valves herself, and the redesign is unpatented and unapproved. The inspector has his hand on the gauge.',
     relationship: 'Inspector and engineer, who know each other by reputation: his for strictness, hers for winning.',
@@ -626,8 +627,9 @@ export const BRIEFS_E: readonly Brief[] = [
       { what: 'He reaches for the valve housing; she stops him, and has to say why.', tones: ['grave'] },
       { what: 'She shows him the valves, and he stares at them a long time, then asks how.', tones: ['lyric', 'comic'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'heightened', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
+      language: 'Guild procedure has its own formal, technical Victorian register, and she bluffs in it.',
       partner: 'She’s working the inspector the whole scene, and his interest in the end is what she plays for.',
       beats: 'A bluff, the bluff caught, then the pride of showing what she made.',
     },

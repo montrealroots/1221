@@ -79,6 +79,7 @@ import { MASTERED, TECHNIQUES, TECHNIQUE_LABEL } from '../content/abilities';
 import { type Dimension, type DimensionSpec, type TaskProfile, DIMENSION_LABEL, EVALUATION, RULESET } from '../content/tasks';
 import type { Skill } from '../content/school';
 import { judgePiece, type PieceResult, type PieceSpec } from './piece';
+import { GRAIN } from '../content/interpretation';
 
 export type { Dimension, TaskProfile } from '../content/tasks';
 
@@ -129,6 +130,11 @@ export interface EvalContext {
   extraPrep?: Partial<Record<Dimension, readonly string[]>>;
   /** Where the way it's played doesn't fit: the factor on a dimension, and why. */
   fit?: Partial<Record<Dimension, { f: number; label: string }>>;
+  /**
+   * How well the way it's played suits the scene (from 2026-10-16, `systems/interpretation.ts`): a share of difficulty
+   * on a dimension, negative with the grain and positive against it, and why. At full capacity it asks nothing.
+   */
+  grain?: Partial<Record<Dimension, { d: number; label: string }>>;
   /** A stable key for the bounded draw: the same work on the same day draws the same. */
   key: string;
   /** What the work would be expected to come to, with no draw: a casting read, which judges no night (from 2026-10-10). */
@@ -153,7 +159,7 @@ export interface Condition {
 }
 
 export interface Limit {
-  kind: 'ability' | 'technique' | 'preparation' | 'condition' | 'difficulty' | 'fit';
+  kind: 'ability' | 'technique' | 'preparation' | 'condition' | 'difficulty' | 'fit' | 'suitability';
   what: string;
   label: string;
   dimension: Dimension;
@@ -182,6 +188,12 @@ export interface DimensionResult {
   day: number;
   /** The way it's played against the material or the direction: 1 where it fits (from 2026-10-10). */
   fit?: number;
+  /**
+   * What the way it's played came to against the scene (from 2026-10-16): its share of difficulty, and the points it gave
+   * (with the grain, positive) or cost (against it, negative), the dimension worked out again without it. Apart from what
+   * the actor's abilities cost, which the limits say.
+   */
+  grain?: { d: number; points: number; label: string };
   variation: number;
   strongest?: { what: string; label: string };
   limits: Limit[];
@@ -210,6 +222,8 @@ export interface Evaluation {
     inputs?: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>>;
     extraPrep?: Partial<Record<Dimension, readonly string[]>>;
     fit?: Partial<Record<Dimension, { f: number; label: string }>>;
+    /** The way it's played against the scene (from 2026-10-16). */
+    grain?: Partial<Record<Dimension, { d: number; label: string }>>;
     /** A piece judged in segments (from 2026-10-12, `systems/piece.ts`): the segments, their work, the part and the load. */
     piece?: PieceSpec;
   };
@@ -310,8 +324,22 @@ export function replay(record: { inputs: Evaluation['inputs']; task: string; rul
   const i = record.inputs;
   if (!i.levels || !i.fulls || i.seed === undefined) return undefined;
   if (record.ruleset !== undefined && record.ruleset !== RULESET) return undefined;
-  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}) };
+  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}), ...(i.grain ? { grain: i.grain } : {}) };
   return i.piece ? judgePiece(i.seed, frozenPerformer(i), ctx, i.piece) : judge(i.seed, frozenPerformer(i), ctx);
+}
+
+/**
+ * A kept result's work judged again by another performer, with no draw (from 2026-10-16): the same piece, its
+ * preparation, its condition and how it was played, done by someone else, or by the same person as they are now. What
+ * advice forecasts by (`systems/advice.ts`); it reads only the record, so it never touches a save. A result kept under
+ * other rules isn't, as `replay` isn't.
+ */
+export function replayAs(record: { inputs: Evaluation['inputs']; task: string; ruleset?: string }, profile: TaskProfile, performer: Performer): Evaluation | undefined {
+  const i = record.inputs;
+  if (i.seed === undefined) return undefined;
+  if (record.ruleset !== undefined && record.ruleset !== RULESET) return undefined;
+  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, expected: true, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {}), ...(i.extraPrep ? { extraPrep: i.extraPrep } : {}), ...(i.fit ? { fit: i.fit } : {}), ...(i.grain ? { grain: i.grain } : {}) };
+  return i.piece ? judgePiece(i.seed, performer, ctx, i.piece) : judge(i.seed, performer, ctx);
 }
 
 /** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. */
@@ -334,6 +362,10 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     const spec = specWith(base, ctx.inputs?.[d], ctx.extraPrep?.[d]);
     const fit = ctx.fit?.[d];
     const f = fit ? clamp(fit.f, 0, 1) : 1;
+    // The way it's played against the scene (from 2026-10-16): a share of this dimension's difficulty. The exponent is
+    // held to `GRAIN.floor` or more, so the easiest side of the easiest work still asks something of the craft.
+    const g = ctx.grain?.[d];
+    const diff = g ? Math.max(GRAIN.floor - 1, ctx.difficulty + g.d) : ctx.difficulty;
     const terms = termsOf(spec, level, full, techniques, craftLevel);
     // The draw is the save's own, by its seed: two lives don't draw the same night.
     const dr = ctx.expected ? 0 : draw(`${seed}:${ctx.key}:${d}`);
@@ -361,32 +393,35 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
     // A tired day widens the draw (`fatigueSpread`); a sufficient day leaves it as it is.
     const spread = ctx.condition.readiness < E.sufficientReadiness ? 1 + E.fatigueSpread * (1 - clamp(ctx.condition.readiness / E.sufficientReadiness, 0, 1)) : 1;
 
-    const now = dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, f, spread);
+    const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);
     const limits: Limit[] = [];
     const cost = (q: number) => r1(Math.max(0, q - now.quality));
     for (const [i, t] of terms.entries()) {
       if (t.n >= 1) continue;
       mastery = false;
       const whole = terms.map((x, j) => (j === i ? { ...x, n: 1 } : x));
-      limits.push({ kind: t.kind, what: t.what, label: t.label, dimension: d, by: cost(dimensionQuality(whole, ctx.difficulty, prepared, condition, dr, f, spread).quality) });
+      limits.push({ kind: t.kind, what: t.what, label: t.label, dimension: d, by: cost(dimensionQuality(whole, diff, prepared, condition, dr, f, spread).quality) });
     }
-    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Work Is', dimension: d, by: cost(dimensionQuality(terms, 0, prepared, condition, dr, f, spread).quality) });
+    if (now.capacity < 1 && ctx.difficulty > 0) limits.push({ kind: 'difficulty', what: 'difficulty', label: 'How Hard The Work Is', dimension: d, by: cost(dimensionQuality(terms, diff - ctx.difficulty, prepared, condition, dr, f, spread).quality) });
+    // What the way it's played came to against the scene: the dimension again without its share of difficulty.
+    const without = g ? dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, f, spread).quality : now.quality;
+    if (g && g.d > 0) limits.push({ kind: 'suitability', what: 'grain', label: g.label, dimension: d, by: cost(without) });
     for (const p of parts) {
       if (p.f >= 1) continue;
       mastery = false;
       const rest = parts.reduce((m, x) => (x === p ? m : Math.min(m, x.f)), 1);
-      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? (p.part === 'approach' ? 'The way you chose to play it, rehearsed in' : p.part), dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, rest, condition, dr, f, spread).quality) });
+      limits.push({ kind: 'preparation', what: p.part, label: ctx.task.prepLabel?.[p.part] ?? (p.part === 'approach' ? 'The way you chose to play it, rehearsed in' : p.part), dimension: d, by: cost(dimensionQuality(terms, diff, rest, condition, dr, f, spread).quality) });
     }
     for (const c of causes) {
       mastery = false;
-      limits.push({ kind: 'condition', what: c.what, label: c.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition / c.f, dr, f, c.what === 'fatigue' ? 1 : spread).quality) });
+      limits.push({ kind: 'condition', what: c.what, label: c.label, dimension: d, by: cost(dimensionQuality(terms, diff, prepared, condition / c.f, dr, f, c.what === 'fatigue' ? 1 : spread).quality) });
     }
     if (f < 1) {
       mastery = false;
-      limits.push({ kind: 'fit', what: 'fit', label: fit!.label, dimension: d, by: cost(dimensionQuality(terms, ctx.difficulty, prepared, condition, dr, 1, spread).quality) });
+      limits.push({ kind: 'fit', what: 'fit', label: fit!.label, dimension: d, by: cost(dimensionQuality(terms, diff, prepared, condition, dr, 1, spread).quality) });
     }
     const strongest = terms.reduce<Term | undefined>((b, t) => (!b || t.n > b.n ? t : b), undefined);
-    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, day, ...(f < 1 ? { fit: f } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
+    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, day, ...(f < 1 ? { fit: f } : {}), ...(g ? { grain: { d: g.d, points: r1(now.quality - without), label: g.label } } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
   }
 
   const overall = r1(wholeOf(dims, weights));
@@ -398,7 +433,7 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
   return {
     ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
     limits: dims.flatMap((x) => x.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
-    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}) },
+    inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}), ...(ctx.grain && Object.keys(ctx.grain).length ? { grain: ctx.grain } : {}) },
   };
 }
 
@@ -573,5 +608,6 @@ export function chiefLimit(e: Pick<Evaluation, 'limits'>): string | undefined {
   if (l.kind === 'condition') return `${l.label}, which cost the ${dim} ${l.by} points`;
   if (l.kind === 'difficulty') return `The work asked more than the craft yet holds, which cost the ${dim} ${l.by} points`;
   if (l.kind === 'fit') return `The way you played it didn’t fit (${l.label}), which cost the ${dim} ${l.by} points`;
+  if (l.kind === 'suitability') return `Playing it against the grain of the scene (${l.label}) cost the ${dim} ${l.by} points`;
   return `${l.label} held back the ${dim} by ${l.by} points`;
 }

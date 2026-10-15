@@ -922,14 +922,16 @@ if (DIR) {
     must(await callGone(), 'no call came within five mornings');
     // What came of the note: on its own line where it's still the last, or in the notes so far.
     const last = (await noteLine().innerText()).replace(/\s+/g, ' ');
-    let outcome = /Taken|Not Taken/.test(last) && last.includes(first.split(': ').slice(1).join(': ').slice(0, 30)) ? last : '';
+    // From 2026-10-16 a craft note's outcome is one of four: Resolved, Taken: Better, Tried: Learned From, Not Moved, or Not Taken.
+    const OUTCOME = /Resolved|Taken: Better|Learned From|Not Taken|· Taken/;
+    let outcome = OUTCOME.test(last) && last.includes(first.split(': ').slice(1).join(': ').slice(0, 30)) ? last : '';
     if (!outcome) {
       must(await history().count(), 'the notes so far aren’t shown');
       await history().locator('summary').click(); await wait(300);
       const items = await history().locator('li').allInnerTexts();
-      outcome = items.find((x) => /Worked /.test(x) && /Taken|Not Taken/.test(x)) ?? '';
+      outcome = items.find((x) => /Worked /.test(x) && OUTCOME.test(x)) ?? '';
     }
-    must(/at the next call/.test(outcome) && /· (Taken|Not Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
+    must(/at the next call/.test(outcome) && /· (Resolved|Taken: Better|Tried: Learned From, Not Moved|Not Taken|Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
     const after = Number(((await partBook().innerText()).match(/(\d+)% rehearsed in/) ?? [])[1] ?? NaN);
     if (!Number.isNaN(rehearsedIn)) must(after > rehearsedIn, `the kept change wasn’t rehearsed in at the call: ${rehearsedIn}% → ${after}%`);
     const nowNight = await nightNow();
@@ -1048,6 +1050,70 @@ if (DIR) {
     return 'kept';
   });
   await overflow('bank accounts (round-ups save)');
+}
+
+// The term's warning on coursework and a piece's Shown Today, answered (from 2026-10-16, the owner's brief "Finish School
+// Workload Balance"). The save is the `workload` scenario's (`tools/scenarios.ts -- --scenario workload --seed sc-0
+// --save workload.json`): a student who prepared everything but the scenes' partner part, stopped the day A Word On Your
+// Coursework came, with a scene still short of it. Given a directory of saves, a missing workload save is a failure too.
+if (DIR) {
+  const forecast = () => page.locator('[data-shown-today]').filter({ hasText: /Run It With A Reader/ }).first();
+  const figure = async (id) => Number(((await page.locator(`[data-shown-today="${id}"]`).innerText()).match(/would come to about (\d+\.\d)/) ?? [])[1] ?? NaN);
+  let id = '';
+  let shown = NaN;
+  await step('[save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day', async () => {
+    must(existsSync(`${DIR}/workload.json`), 'no workload save: write it with tools/scenarios.ts --scenario workload');
+    await openSave('workload.json');
+    await rail('Home');
+    const item = page.locator('.list-item').filter({ hasText: /^A Word On Your Coursework/ }).first();
+    must(await item.count(), 'no A Word On Your Coursework among the unread on Home');
+    const words = (await item.innerText()).replace(/\s+/g, ' ');
+    must(/\d+ of the \d+ pieces shown this term so far were Unready\. Most often short on them: [^.]+, on \d+ of the \d+\. .+ answers it\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/The faculty reviews the term on [^:]+: half the term’s pieces Unready by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
+    must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
+    return words.slice(0, 220);
+  });
+  await step('[save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy', async () => {
+    await tab('Coursework');
+    const soonest = (await page.locator('[data-due-soonest] li').first().innerText().catch(() => '')).replace(/\s+/g, ' ');
+    must(/^[^:]+: .+, due .+: about \d+\.\d \((Unready|Working|Strong|Exceptional)\) shown today\. Short of complete: /.test(soonest), `no Due Soonest with the piece, its day, its figure and what’s short: ${soonest || '(nothing)'}`);
+    must(await forecast().count(), 'no Shown Today naming Run It With A Reader on an open scene');
+    id = await forecast().getAttribute('data-shown-today');
+    const words = (await forecast().innerText()).replace(/\s+/g, ' ');
+    must(/^Shown Today: on a good day it would come to about \d+\.\d \((Unready|Working|Strong|Exceptional)\)\./.test(words), `not its figure and band: ${words}`);
+    must(/Short of complete: .*Run It With A Reader/.test(words), `not the part short with its remedy: ${words}`);
+    shown = await figure(id);
+    return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;
+  });
+  await step('[save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises', async () => {
+    const panel = page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
+    let b = panel.getByRole('button', { name: /^Run It With A Reader/ }).first();
+    must(await b.count(), 'no Run It With A Reader on the scene');
+    let waited = '';
+    for (let i = 0; i < 3 && await b.isDisabled(); i += 1) {
+      waited += ` [${(await panel.locator('.why-not').first().innerText().catch(() => '')).slice(0, 80)}]`;
+      await advance('This Evening'); await rail('School'); await tab('Coursework');
+      b = page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last().getByRole('button', { name: /^Run It With A Reader/ }).first();
+      shown = await figure(id);
+    }
+    must(!(await b.isDisabled()), `still grayed:${waited}`);
+    await b.click(); await wait(1500); await settleDialogs();
+    const after = await figure(id);
+    must(after > shown, `Shown Today ${shown} → ${after}`);
+    shown = after;
+    return `${waited ? `waited for the evening${waited}; ` : ''}${id}: Shown Today rose to ${after}`;
+  });
+  await step('[save: workload scenario] save and exit, Continue: Shown Today and the warning as they were', async () => {
+    const before = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await rail('School'); await tab('Coursework');
+    const after = (await page.locator(`[data-shown-today="${id}"]`).innerText()).replace(/\s+/g, ' ');
+    must(after === before, `${before} → ${after}`);
+    return `kept at ${shown}`;
+  });
+  await overflow('school coursework (workload save)');
 }
 
 // From the limitations pass of 2026-10-11: a class left behind, and a return a state assessed itself.
@@ -1194,6 +1260,94 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     return 'kept';
   });
   await overflow('profile brief (brief save)');
+}
+
+// From the genre-differentiation pass of 2026-10-16: each genre's register on its brief, through the screens. The
+// seven pairs whose briefs once read alike each opened, The Genre Asks read on both and found different; then Nordic
+// Noir's brief and Social Realism's, two registers apart, prepared, read, rehearsed and taped, the take's note naming
+// the genre's concern where one asked for what held it back, saved, continued, and taped again.
+const PAIRS = [['Biker', 'Coming Of Age'], ['Children’s', 'Science Fantasy'], ['Christmas', 'Holiday'], ['Dystopian', 'Medical Drama'], ['Espionage', 'Neorealism'], ['Family', 'Steampunk'], ['Nordic Noir', 'Social Realism']];
+async function genreAsks(label) {
+  await openBrief(label);
+  const text = await briefPane().innerText();
+  const at = text.search(/The Genre Asks/i);
+  must(at >= 0, `${label}: no The Genre Asks`);
+  return text.slice(at, at + 400).split('\n').slice(1, 4).join(' ').trim();
+}
+if (DIR && existsSync(`${DIR}/brief.json`)) {
+  await step('[save: brief scenario] genres: the seven pairs that once read alike each say a different register on their briefs', async () => {
+    await openSave('brief.json');
+    const said = [];
+    for (const [a, b] of PAIRS) {
+      const [x, y] = [await genreAsks(a), await genreAsks(b)];
+      must(x && y && x !== y, `${a} and ${b} say the same: ${x}`);
+      said.push(`${a}: ${x.split(':')[0]} / ${b}: ${y.split(':')[0]}`);
+    }
+    return said.join('; ').slice(0, 400);
+  });
+  for (const label of ['Nordic Noir', 'Social Realism']) {
+    await step(`[save: brief scenario] genres: ${label}’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again`, async () => {
+      await openBrief(label);
+      await briefButton(/^Break It Down/);
+      await briefButton(/^Learn The Lines/);
+      const radios = briefPane().locator('input[type=radio][name^="reading-"]');
+      await radios.nth(0).check(); await wait(300);
+      await briefButton(/^Read It This Way$/);
+      await briefButton(/^Rehearse It On Your Feet/);
+      const said = await briefButton(/^Tape It/);
+      const first = num(said, /Taped: (\d+\.\d)/);
+      must(!Number.isNaN(first), `no result said: ${said}`);
+      const text = await briefPane().innerText();
+      must(/The Last Take/i.test(text), 'no last take');
+      must(/held back the|wasn’t complete|didn’t fit|asked more than/.test(text), 'what held it back isn’t said');
+      const note = text.match(/[^\n.]*asks for it/)?.[0] ?? '(no concern behind the limit)';
+      await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+      await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+      await openBrief(label);
+      must(await briefPane().locator('table[data-takes] tbody tr').count() >= 1, 'the take isn’t kept after Continue');
+      await briefButton(/^Rehearse It On Your Feet/);
+      const again = await briefButton(/^Tape It/);
+      must(/Taped: \d+\.\d/.test(again), `no second take: ${again}`);
+      must(await briefPane().locator('table[data-takes] tbody tr').count() >= 2, 'two takes not kept');
+      return `${said}; ${note.trim().slice(0, 120)}; after Continue: ${again}`;
+    });
+  }
+  // From 2026-10-16: a way of playing read against the scene, and the advice forecast. Melodrama's brief, played the way
+  // its scene suits: The Scene names each side's band and what it rests on, the chosen side's rehearsal mark, the take's
+  // account of what the way gave apart from what the abilities cost, What To Work On's forecast, kept through a reload.
+  await step('[save: brief scenario] interpretation: Melodrama played the way its scene suits, the take saying what the way gave, the advice forecast, saved and continued', async () => {
+    await openBrief('Melodrama');
+    await briefButton(/^Break It Down/);
+    await briefButton(/^Learn The Lines/);
+    await briefPane().locator('input[type=radio][name^="reading-"]').nth(0).check(); await wait(300);
+    await briefButton(/^Read It This Way$/);
+    const row = (side) => briefPane().locator('tr', { has: page.getByText(new RegExp(`^${side}$`)) }).first();
+    const band = async (side) => (await row(side).locator('td[data-suit]').getAttribute('data-suit')) ?? '';
+    const [ex, re] = [await band('Expansive'), await band('Restrained')];
+    must(ex && re, 'no The Scene column');
+    must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
+    await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
+    const mark = (await briefPane().innerText()).match(/This one is complete at (\d+)% rehearsed in: ([^.]+)/);
+    must(mark && Number(mark[1]) < 90 && /with the grain/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
+    await briefButton(/^Play It This Way$/);
+    await briefButton(/^Rehearse It On Your Feet/);
+    await briefButton(/^Rehearse It On Your Feet/);
+    const said = await briefButton(/^Tape It/);
+    must(/Taped: \d+\.\d/.test(said), `no take: ${said}`);
+    const text = (await briefPane().innerText()).replace(/\s+/g, ' ');
+    const grain = text.match(/Played that way it suited the scene \([^)]*\), which gave it [\d.]+ points; your abilities and techniques cost it [\d.]+\./)?.[0];
+    must(grain, `the take doesn’t say what the way gave: ${text.slice(text.indexOf('The Last Take'), text.indexOf('The Last Take') + 400)}`);
+    const advice = text.match(/(\d+) hours of its exercise would take it from \d+ to about \d+, worth about [\d.]+ points? a piece/)?.[0];
+    must(advice, 'What To Work On isn’t forecast');
+    await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
+    await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
+    await openBrief('Melodrama');
+    const back = (await briefPane().innerText()).replace(/\s+/g, ' ');
+    must(back.includes(grain), 'the take’s account isn’t kept after Continue');
+    must(back.includes(advice), 'the advice isn’t the same after Continue');
+    return `Expansive ${ex}, Restrained ${re}; ${mark[0]}; ${said}; ${grain.slice(0, 140)}; ${advice}`;
+  });
+  await overflow('profile brief (genre registers)');
 }
 
 // From the remaining-gaps pass of 2026-10-11: a lien's lifecycle and a plan's recovery, carried out through the screens.

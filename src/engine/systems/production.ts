@@ -63,7 +63,7 @@ import { noteMaterial } from './experience';
 import { countDirection } from './evaluation';
 import { identityOf } from './artistry';
 import { WORKBOOK, ADJUSTMENTS, type AdjustmentId } from '../content/workbook';
-import { optionsOf, problemsOf, tryAdjustment, wayRefusal, type Problem, type WorkPiece } from './workbook';
+import { optionsOf, problemsOf, stillThere, tryAdjustment, wayRefusal, type Problem, type WorkPiece } from './workbook';
 import { workPiece } from './workpieces';
 import { rehearseWays } from './piece';
 
@@ -79,6 +79,11 @@ export const PROCESS = {
   factor: { lines: 0.5, blocking: 0.3, notes: 0.2, slope: 0.3, least: 0.85, most: 1.15 },
   /** A note taken: that call's growth. */
   noteTaken: 1.1,
+  /**
+   * A craft note worked and learned from without moving it (from 2026-10-16): half a taken note's, in the call's growth
+   * and in the notes share a night reads. The work was done and its evidence kept; nothing it measured improved.
+   */
+  noteLearned: 0.5,
 } as const;
 
 export type Stage = 'read' | 'blocking' | 'work' | 'tech' | 'dress' | 'techdress' | 'understudy';
@@ -106,8 +111,16 @@ export type Format = 'production' | 'cabaret';
 export type CraftNote = 'objective' | 'listening' | 'pacing' | 'behavior' | 'transitions' | 'relationship';
 export type NoteFocus = { kind: 'lines' } | { kind: 'blocking' } | { kind: 'skill'; skill: Skill } | { kind: 'direction'; axis: Axis; side: AxisValue }
   | { kind: 'craft'; note: CraftNote; problem: string; segment?: number; where?: string; measure: number };
+/**
+ * What became of a craft note by the next call (from 2026-10-16): `resolved`, its problem gone from the part's forecast;
+ * `better`, a way kept that moved the note's own figure by `WORKBOOK.evidence` or more; `learned`, a way tried and its
+ * evidence kept, but nothing moved; `unchanged`, not worked and still there. Only the first two are a note taken.
+ */
+export type NoteOutcome = 'resolved' | 'better' | 'learned' | 'unchanged';
 export interface DirectorNote {
   at: Instant; text: string; focus: NoteFocus; worked?: boolean; taken?: boolean;
+  /** What became of it, for a craft note (from 2026-10-16). Absent on a note from before, or one not on the craft. */
+  outcome?: NoteOutcome;
   /** How it was answered (from 2026-10-12): the way tried and its own evidence, before and after it, and the note's figure at the next call. */
   answer?: { solution?: string; label?: string; before: number; after: number; now?: number };
 }
@@ -200,9 +213,12 @@ export function stagesOf(n: number): Stage[] {
 const labelOf = (skill: Skill) => SKILLS.find((k) => k.id === skill)?.label ?? skill;
 const clamp01 = (n: number) => Math.max(0, Math.min(1, n));
 
-/** The notes taken, as a share of the notes given; none given, none to take. */
-const notesShare = (p: { notes: { taken?: boolean }[] }) => (p.notes.length ? p.notes.filter((n) => n.taken).length / p.notes.length : 0);
-const scoreOf = (p: { lines: number; blocking: number; notes: { taken?: boolean }[] }) => PROCESS.factor.lines * p.lines + PROCESS.factor.blocking * p.blocking + PROCESS.factor.notes * notesShare(p);
+/**
+ * The notes taken, as a share of the notes given; none given, none to take. A craft note learned from without moving it
+ * counts `PROCESS.noteLearned` of one (from 2026-10-16): until then such a note counted as taken whole.
+ */
+const notesShare = (p: { notes: { taken?: boolean; outcome?: NoteOutcome }[] }) => (p.notes.length ? p.notes.reduce((t, n) => t + (n.taken ? 1 : n.outcome === 'learned' ? PROCESS.noteLearned : 0), 0) / p.notes.length : 0);
+const scoreOf = (p: { lines: number; blocking: number; notes: { taken?: boolean; outcome?: NoteOutcome }[] }) => PROCESS.factor.lines * p.lines + PROCESS.factor.blocking * p.blocking + PROCESS.factor.notes * notesShare(p);
 
 type Kept = Pick<Process, 'lines' | 'blocking' | 'blockingMissed'>;
 /** What a note is on: a blocking call missed and not caught up, the lines past off-book, the blocking short, else the play's craft. */
@@ -335,8 +351,11 @@ export function noteText(f: NoteFocus, before?: DirectorNote, recurring?: { targ
   const words = noteWords(f);
   const history = f.kind === 'craft' && recurring && f.problem === `limit:${recurring.target}` ? ` It’s your ${recurring.label.toLowerCase()} again: it’s held back ${recurring.pieces} of your pieces before this.` : '';
   if (!before) return `${words}${history}`;
-  // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12).
-  const tried = before.answer?.solution ? ` You tried ${(before.answer.label ?? ADJUSTMENTS[before.answer.solution as AdjustmentId]?.label ?? before.answer.solution).toLowerCase()}: ${before.answer.before} then, ${before.answer.after} now.` : '';
+  // What was tried for it before, said, where it was worked a way of its own (from 2026-10-12), and from 2026-10-16
+  // whether it moved it: a way that changed nothing is said to have, not called better.
+  const a = before.answer;
+  const moved = a?.solution ? Math.max(a.after, a.now ?? a.after) - a.before : 0;
+  const tried = a?.solution ? ` You tried ${(a.label ?? ADJUSTMENTS[a.solution as AdjustmentId]?.label ?? a.solution).toLowerCase()}: ${a.before} then, ${a.now ?? a.after} now${before.outcome === 'learned' || (before.outcome === undefined && moved < WORKBOOK.evidence && !before.taken) ? (Math.min(a.after, a.now ?? a.after) - a.before <= -WORKBOOK.evidence ? ', which made it worse: worth knowing, and not the answer' : ', which didn’t move it: worth knowing, and not the answer') : ''}.` : '';
   return before.taken ? `Better since the last note.${tried} ${words}${history}` : `Still: ${continued(words)}${tried}${history}`;
 }
 
@@ -374,19 +393,24 @@ export function solutionsOf(piece: WorkPiece | undefined, note: DirectorNote | u
 }
 
 /**
- * Whether a craft note was answered by the next call: worked a way that didn't make it worse (its own evidence, the
- * figure before and after the way was tried), and the way kept; or its problem gone from the part's forecast, whatever
- * did it. A note left alone is taken only where the calls answered it. Its figure now is kept beside it either way.
+ * What became of a craft note by the next call (from 2026-10-16, `NoteOutcome`): resolved where its problem has left the
+ * part's forecast, whatever did it; better where a way was worked and kept and the note's own figure, then or now, stands
+ * `WORKBOOK.evidence` or more over where it was; learned where a way was worked and nothing moved; unchanged otherwise.
+ * Until then a way that changed nothing answered the note (its figure after at least where it was, less a twentieth of
+ * a point): played on 2026-10-16, every one of 16 craft notes across four seeds was taken by a way that moved its figure
+ * by 0.0, with the problem still in the forecast (docs/verification/notes-2026-10-16/README.md). Its figure now is kept.
  */
-function addressed(piece: WorkPiece | undefined, note: DirectorNote & { focus: Extract<NoteFocus, { kind: 'craft' }> }): { yes: boolean; now: number } {
+function addressed(piece: WorkPiece | undefined, note: DirectorNote & { focus: Extract<NoteFocus, { kind: 'craft' }> }): { outcome: NoteOutcome; now: number } {
   const f = note.focus;
-  if (!piece) return { yes: Boolean(note.worked), now: f.measure };
-  const still = problemsOf(piece).find((x) => x.id === f.problem);
+  if (!piece) return { outcome: note.worked ? 'learned' : 'unchanged', now: f.measure };
+  const still = stillThere(piece, f.problem);
   const e = piece.forecast();
   const now = f.segment !== undefined && !f.problem.startsWith('limit:') ? e.piece?.segments[f.segment]?.overall ?? e.overall : e.overall;
+  if (!still) return { outcome: 'resolved', now };
   const kept = piece.peek()?.tries.filter((t) => t.problem === f.problem).at(-1)?.verdict !== 'revised';
-  const worked = Boolean(note.worked && note.answer && kept && note.answer.after >= note.answer.before - WORKBOOK.evidence / 10);
-  return { yes: !still || worked, now };
+  if (!note.worked || !note.answer) return { outcome: 'unchanged', now };
+  const moved = Math.max(note.answer.after, now) - note.answer.before;
+  return { outcome: kept && moved >= WORKBOOK.evidence ? 'better' : 'learned', now };
 }
 
 /** A craft note worked a way that was then put back: it can be worked another way. */
@@ -424,10 +448,12 @@ export function callAnswered(sim: Simulation, person: Person, holder: Holder, st
     if (last.focus.kind === 'craft') {
       // A craft note is taken where the work answered it (`addressed`); its figure at the call is kept beside it.
       const a = addressed(piece, last as DirectorNote & { focus: Extract<NoteFocus, { kind: 'craft' }> });
-      last.taken = a.yes;
+      last.outcome = a.outcome;
+      last.taken = a.outcome === 'resolved' || a.outcome === 'better';
       last.answer = { ...(last.answer ?? { before: last.focus.measure, after: last.focus.measure }), now: Math.round(a.now * 10) / 10 };
     } else last.taken = last.focus.kind === 'direction' ? !againstDirection(p) : Boolean(last.worked) || takenUnworked(p, last.focus.kind);
     if (last.taken) weight = PROCESS.noteTaken;
+    else if (last.outcome === 'learned') weight = 1 + (PROCESS.noteTaken - 1) * PROCESS.noteLearned;
     // Answered direction, for life (`Journey.direction`, from 2026-10-12): the craft's notes and the director's requests.
     if (last.taken && (last.focus.kind === 'craft' || last.focus.kind === 'direction')) countDirection(person, { answered: true });
   }
@@ -575,7 +601,7 @@ export function registerProduction(sim: Simulation, focusAt: (sim: Simulation, p
       const piece = workPiece(s, person, `part:${which}`);
       const ways = solutionsOf(piece, note);
       const way = ways.find((o) => o.adjustment === p?.solution && (o.option ?? '') === String(p?.option ?? '')) ?? (p?.solution ? undefined : ways[0]);
-      if (!piece || !way) throw new CommandError(ways.length ? 'That isn’t one of the ways at this note.' : 'There’s no way left at this note that hasn’t been tried and put back.');
+      if (!piece || !way) throw new CommandError(ways.length ? 'That isn’t one of the ways at this note.' : 'There’s no way left at this note that hasn’t been tried and put back, or tried and found to change nothing.');
       const book = piece.book();
       if (book.tries.some((t) => t.verdict === 'pending')) throw new CommandError('Keep or put back the change you tried first.');
       // What refuses the way through Work It Through refuses it here (from 2026-10-12): until then a way was worked
@@ -634,7 +660,9 @@ export function reflect(sim: Simulation, person: Person, holder: Holder, title: 
   // every call kept makes", the readiness factor that from 2026-10-09 reached only a night's growth, not the night.
   const company = p.together?.n ? ` With the company the nights came to ${Math.round(p.together.sum / p.together.n)} on average${p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered` : ''}` : ''}.` : '';
   const answered = p.notes.filter((n) => n.focus.kind === 'craft' && n.taken).length;
-  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${answered ? `, ${answered} answered in the work` : ''}${p.dress ? `; the dress ${p.dress}` : ''}.${company}${open.length ? ' What’s still open goes with you into class.' : ''}`;
+  // Worked and learned from, without moving it (from 2026-10-16): said apart from the notes taken.
+  const learned = p.notes.filter((n) => n.outcome === 'learned').length;
+  const text = `${title}: ${p.calls} ${p.calls === 1 ? 'call' : 'calls'} answered of ${p.of ?? p.calls}; ${taken} of ${given.length} ${given.length === 1 ? 'note' : 'notes'} taken${answered ? `, ${answered} answered in the work` : ''}${learned ? `, ${learned} worked and learned from without moving ${learned === 1 ? 'it' : 'them'}` : ''}${p.dress ? `; the dress ${p.dress}` : ''}.${company}${open.length ? ' What’s still open goes with you into class.' : ''}`;
   p.reflection = { on: sim.now, text };
   const cw = courseworkOf(sim, person);
   if (cw) {
