@@ -57,6 +57,11 @@ describe('the stage reads the scene, not the house', () => {
     const VOICE_BODY = actor({ vocal: 85, physical: 85 }, 43);
     // No way of playing chosen, so suitability, which differs by medium, isn't what's compared.
     expect(judge(m, VOICE_BODY)).toBeGreaterThan(judge({ ...m, medium: 'camera' }, VOICE_BODY));
+    // The house weighs the take's execution, the voice and the body, as a microphone does, and more than a close frame,
+    // which weighs believability instead: the same bare scene in each medium.
+    const lean = (medium: MaterialProfile['medium']) => materialContext(task, { ...m, medium, circumstances: {}, vocal: 0, physical: 0, timing: 0 }).lean!;
+    expect(lean('stage').execution).toBe(lean('voice').execution);
+    expect(lean('stage').execution).toBeGreaterThan(lean('camera').execution!);
   });
 
   it('a sung song is the voice’s demand, not size: Othello’s willow song, two women at bedtime, suits restraint', () => {
