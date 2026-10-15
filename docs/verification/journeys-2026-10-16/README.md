@@ -121,5 +121,5 @@ were.
   | Musical | m-0 | 56.4 | 2029-05-21 | 2030-10-16 | 100, 100, 100 | 0 |
   | Slapstick | m-0 | 58.1 | 2029-05-21 | 2030-12-29 | 100, 100, 100 | 0 |
 
-  Mastery is still reached on every one, with the same graduation day. Everything comes full between three weeks
-  sooner and two weeks later than before.
+  Mastery is still reached on every one, with the same graduation day. Everything comes full 16 to 24 days sooner
+  than before on every plan.
