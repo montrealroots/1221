@@ -1068,8 +1068,11 @@ if (DIR) {
     const item = page.locator('.list-item').filter({ hasText: /^A Word On Your Coursework/ }).first();
     must(await item.count(), 'no A Word On Your Coursework among the unread on Home');
     const words = (await item.innerText()).replace(/\s+/g, ' ');
-    must(/\d+ of the \d+ pieces shown this term so far were Unready\. Most often short on them: [^.]+, on \d+ of the \d+\. .+ answers it\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
-    must(/The faculty reviews the term on [^:]+: half the term’s pieces Unready by then/.test(words), `no review day: ${words.slice(0, 300)}`);
+    // The words as the sweep of 2026-10-16 left them: the count as the review counts it ("due … Unready or not shown"
+    // where a piece was missed), and the part most often short "on N of the M shown". Until then this matched the
+    // warning's earlier words, and the sweep's first run here failed on them.
+    must(/\d+ of the \d+ pieces (shown this term so far were Unready|due this term so far were Unready or not shown)\. Most often short on them: [^.]+, on \d+ of the \d+ shown\. .+ answers it\./.test(words), `not its count, cause and remedy: ${words.slice(0, 300)}`);
+    must(/The faculty reviews the term on [^:]+: half the term’s pieces Unready or not shown by then/.test(words), `no review day: ${words.slice(0, 300)}`);
     await item.getByRole('button', { name: /^Go There$/ }).click(); await wait(1200);
     must(new URL(page.url()).hash.startsWith('#/workspace/school'), `Go There opened ${new URL(page.url()).hash}`);
     return words.slice(0, 220);
