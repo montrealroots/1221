@@ -139,8 +139,8 @@ function measure(scenes: readonly Brief[]) {
     S1: { meanCos: r3(mean(s1.map((x) => x.cos))), least: r3(Math.min(...s1.map((x) => x.cos))), under07: s1.filter((x) => x.cos < 0.7).map((x) => x.g), holds: s1.every((x) => x.cos >= 0.7) },
     S2: { meanDistanceBySharedConcerns: meanBy, pairs: Object.fromEntries(Object.entries(byShared).map(([n, xs]) => [n, xs.length])), noneOverOne: r3((meanBy['0'] ?? 0) / Math.max(1e-9, meanBy['1'] ?? 0)), nearestSharesAConcern: r3(nearestShares / genres.length), holds: (meanBy['0'] ?? 0) >= 1.5 * (meanBy['1'] ?? 0) && (meanBy['1'] ?? 0) > (meanBy['2'] ?? 0) && nearestShares / genres.length >= 0.9 },
     S2revised: { opposedPairs: opposed.length, opposed: r3(mean(opposed)), one, opposedOverOne: r3(mean(opposed) / Math.max(1e-9, one)), nearestSharesAConcern: r3(nearestShares / genres.length), holds: mean(opposed) >= 1.5 * one && one > (meanBy['2'] ?? 0) && nearestShares / genres.length >= 0.9 },
-    S3revised: { cases: r3n, differ: r3(r3ok / Math.max(1, r3n)), holds: r3ok / Math.max(1, r3n) >= 0.8, ...(flag('diagnose') ? { missesByMediumAndReader: missBy.revised, missesByScene: top(missBy.revisedScene, 15) } : {}) },
-    S3: { cases: s3n, differ: r3(s3ok / Math.max(1, s3n)), holds: s3ok / Math.max(1, s3n) >= 0.8,
+    S3revised: { cases: r3n, differing: r3ok, differ: r3(r3ok / Math.max(1, r3n)), holds: r3ok / Math.max(1, r3n) >= 0.8, ...(flag('diagnose') ? { missesByMediumAndReader: missBy.revised, missesByScene: top(missBy.revisedScene, 15) } : {}) },
+    S3: { cases: s3n, differing: s3ok, differ: r3(s3ok / Math.max(1, s3n)), holds: s3ok / Math.max(1, s3n) >= 0.8,
       ...(flag('diagnose') ? { missesByKinship: missBy.kin, missedSides: top(missBy.what, 8), missesByScene: top(missBy.scene, 12), missesByPair: top(missBy.pair, 12) } : {}) },
   };
 }
