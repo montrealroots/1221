@@ -1,6 +1,54 @@
-# Read First: Interpretation, Advice And The Long Journeys, 2026-10-16
+# Read First: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
 
-**This section is the current status.** Every section below is history. The owner's brief "Finish Genre Interpretation,
+**This section is the current status.** Every section below is history. It covers the owner's brief "Finish School
+Workload Balance And The Remaining Acting-Engine Shortfalls", on `claude/zen-mccarthy-i88ujw`, in the same pull
+request: not merged, not deployed. The checklist is section 6 of the work plan
+(`docs/verification/WORKPLAN-2026-10-16.md`). Section 2's six acceptance areas are still open and untouched.
+
+- **Why London was dismissed** (`docs/verification/workload-2026-10-16/`).
+  - It wasn't the hours. A term asked 503 to 582 hours to complete from nothing. In London's third term the student
+    left 292 working hours idle, and no sleep was cut.
+  - The play policy never worked a scene's partner part, which held the dimensions that read it to a third, and it
+    over-prepared the rest.
+  - The game didn't help: "Weighs 15%" read as worth 15%, nothing forecast a showing, nothing warned in the term, and
+    the review named no cause.
+- **What changed.**
+  - **Shown Today** on each piece, by the showing's own judge.
+  - **"Complete at 90%"** beside each part.
+  - **A Word On Your Coursework.** Once a term, after 6 shown with 35% or more Unready, it gives the count, the part
+    most often short, its remedy and the review's day.
+  - **The review names the cause.**
+  - **Due Soonest**, with the work listed soonest due first.
+  - **The policy** asks the partner, or runs it with a reader.
+  - **Not changed:** the review's mark, the band thresholds, `prepFloor` and starting attributes.
+- **The matched runs.** London on seeds 0 to 3 went from 23 to 24 of 46 Unready in the third term (concern, then
+  dismissal) to 9 to 15 (good). New York, Mexico City and the scraping student went from 22 to 7 to 9. Neglect is still
+  dismissed, now warned in the first term.
+- **I3** (`docs/verification/interpretation-2026-10-16/i3-review.md`).
+  - Suitability now reaches every dimension a side leans on, in proportion.
+  - Class scenes and plays read their genre's register.
+  - The stage leans a quarter each way.
+  - `RULESET` is evaluation-6.
+  - The designed and held-out briefs pass. The fresh stage set comes out expansive on every scene.
+- **The genre signature** (`docs/verification/genres-2026-10-16/g1-replacement.md`, "Revision").
+  - "Shares no concern" was the wrong proxy for contrast: S3's misses rise with the declared kinship of the two
+    registers.
+  - The revision (no concern shared and opposed pulls) was committed before it was measured.
+  - S2 passes on every sample.
+  - S3 is 78.9% on the fresh held-out briefs against 80%: a reader's way at full weight outvotes a register at half.
+- **The earlier work, played again.** The 40 advice cases came out byte-identical. The interpretation examples were
+  written again.
+- **The owner's decisions:**
+  - S3 on the fresh held-out briefs: change the register-to-reader weighting, or accept;
+  - the class scenes' own registers, which are content to research;
+  - the earlier I3 and signature decisions, now answered by the above.
+- **Verification:** RESULTS-PENDING.
+- **Next:** the owner's decisions, then section 2's six acceptance areas.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
+# Earlier: Interpretation, Advice And The Long Journeys, 2026-10-16
+
+History now: the section above is the current status. The owner's brief "Finish Genre Interpretation,
 Improve Training Advice, And Prove Long-Term Integration", on `claude/zen-mccarthy-i88ujw` after the genre
 differentiation of the same day (both in the pull request, not merged, not deployed). The work plan's section 5 is the
 checklist; each part has its account:
