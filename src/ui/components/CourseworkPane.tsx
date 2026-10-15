@@ -25,7 +25,9 @@ import {
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
-import { playingPreview, playingRefusal } from '@/engine/systems/coursework';
+import { playingPreview, playingRefusal, remedyWords, shortParts, showingForecast } from '@/engine/systems/coursework';
+import { bandOfQuality, chiefLimit } from '@/engine/systems/evaluation';
+import { EVALUATION } from '@/engine/content/tasks';
 import { materialOf } from '@/engine/systems/material';
 import { at } from '@/ui/looks/subject';
 import { LookRegion, Open } from '@/ui/looks/Look';
@@ -119,8 +121,20 @@ function AssignmentCard({ a }: { a: Assignment }) {
           </div>
         )}
         <div className="grid grid-3">
-          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}`} />)}
+          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Weighs ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
         </div>
+        {/* What the showing would make of it today (from 2026-10-16, `showingForecast`): until then a part at nothing that
+            "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. */}
+        {(a.status === 'open' || a.status === 'revising') && (() => {
+          const now = showingForecast(sim, person, a);
+          const short = shortParts(person, a);
+          return (
+            <div className="small" data-shown-today="">
+              <strong>Shown Today:</strong> on a good day it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the showing asks.'}
+              {short.length > 0 && <span> Short of complete: {short.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</span>}
+            </div>
+          );
+        })()}
         <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
           {activitiesOf(a).filter((x) => x.dim !== 'partner' || x.id === READER.id).map((act) => {
             const no = prepareRefusal(sim, person, a, act.id);

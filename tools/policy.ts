@@ -7,10 +7,11 @@ import { createSave } from '../src/engine';
 import type { Simulation } from '../src/engine/core/simulation';
 import { newLifeConfig, type NewSaveConfig } from '../src/engine/world/bootstrap';
 import { templateById } from '../src/engine/content/coursework';
-import { courseworkOf, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
+import { READER, WORK, askRefusal, courseworkOf, partnerPart, prepareRefusal, questionsFor } from '../src/engine/systems/coursework';
+import { EVALUATION } from '../src/engine/content/tasks';
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
-import { MS_HOUR, zonedParts } from '../src/engine/core/time';
+import { MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { WHICH, hasProcess, holderFor, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
 
@@ -88,8 +89,27 @@ export function freeHour(sim: Simulation): boolean {
   const open = (cw?.assignments ?? []).filter((x) => x.status === 'open' || x.status === 'revising')
     .sort((x, y) => (x.status === 'revising' ? x.revision!.dueOn : x.dueOn).localeCompare(y.status === 'revising' ? y.revision!.dueOn : y.dueOn));
   for (const a of open) {
-    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < 0.95 && !prepareRefusal(sim, person, a, x.id));
+    // Each part to what completes it (`EVALUATION.complete.coursework`), as the piece says. Until 2026-10-16 to 0.95, past
+    // the mark, which spent hours the next piece needed.
+    const act = templateById(a.template)!.activities.find((x) => x.dim !== 'partner' && (a.prep[x.dim] ?? 0) < EVALUATION.complete.coursework && !prepareRefusal(sim, person, a, x.id));
     if (act && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } }).ok) return true;
+    // The partner part, as the piece's steps offer it (from 2026-10-16): an evening asked of the partner, and where they
+    // can't come, a reader. Until then the policy skipped every step on the partner part and only said yes when a
+    // partner asked: played on 2026-10-16, a London student's scenes stood at nothing there, and the student was
+    // dismissed with 292 working hours idle in the term (docs/verification/workload-2026-10-16/README.md).
+    if (a.partner !== undefined && partnerPart(a) < EVALUATION.complete.coursework) {
+      const ahead = () => a.rehearsals.some((r) => r.status === 'booked' && r.at > sim.now);
+      if (!ahead()) {
+        for (const d of [0, 1, 2]) {
+          const p = zonedParts(sim.now + d * 86_400_000, sim.homeZone);
+          const when = instantFromZoned({ year: p.year, month: p.month, day: p.day, hour: 19 }, sim.homeZone);
+          if (when < sim.now + WORK.rehearsal.aheadHours * MS_HOUR) continue;
+          if (askRefusal(sim, person, a, when).refused) continue;
+          if (sim.execute<{ accepted: boolean }>({ kind: 'school.ask_partner', payload: { assignmentId: a.id, at: when } }).value?.accepted) break;
+        }
+      }
+      if (!ahead() && !prepareRefusal(sim, person, a, READER.id) && sim.execute({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: READER.id } }).ok) return true;
+    }
   }
   return false;
 }

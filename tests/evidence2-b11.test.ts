@@ -28,7 +28,7 @@
  *   three of five; the milestones First strong work, First distinction-level work and First work at full mastery, each
  *   the first piece past 65, past 80 and at mastery; a closed run filed by the school's end said once, where the
  *   closed casting and its credit stand together; and a Rep run, which only a fixture reaches, the same.
- * - `h-needs`: the notices under the 2026 return, the six of 157 the panel draws, each with its words and how long ago,
+ * - `h-needs`: the notices under the 2026 return, the six of 159 the panel draws (157 until 2026-10-16), each with its words and how long ago,
  *   worked here; a card payment missed through play, everyday spending put on the card and the current account emptied
  *   into savings before each due date: a payment behind owing $510, then suspended owing $850; and a return filed
  *   with nothing in the bank, You owe $166 of income tax, where its twin who could pay is All Clear.
@@ -609,22 +609,24 @@ describe('h-needs', () => {
     return `${Math.round(d / 30.44)} months ago`;
   };
 
-  it('PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 157, each with its words and how long ago it came: 7 weeks, 2 months, 5 months, 4 weeks, 5d 3h and 5 weeks', () => {
+  it('PLAYER JOURNEY: on 1 February 2027 the notices under her return are the six most pressing of 159, each with its words and how long ago it came, a word on each term’s coursework among them', () => {
     const sim = fromAbroad('g32-needs');
     sim.advanceTo(at(2027, 2, 1, 12));
-    expect(unread(sim)).toBe(157);
+    // 157 until 2026-10-16, when a term whose pieces come out Unready was warned in the term (`termWarning`): this life
+    // prepares nothing, and both its terms so far were warned.
+    expect(unread(sim)).toBe(159);
     const { html, text } = drawn(sim, Home);
-    expect(text).toContain('Mark 157 Read');
+    expect(text).toContain('Mark 159 Read');
     const items = [...html.matchAll(/<div class="list-item list-static">([\s\S]*?)Go There<\/button><\/div>/g)].map((m) => words(m[1]!));
-    // The most important first, the newest first among equals.
-    const TITLES = ['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029', 'Cast: Carlotta Festival Of New Plays', 'Caleb Asks To Rehearse', 'The Emergency Room'];
-    const TIMES = ['7 weeks ago', '2 months ago', '5 months ago', '4 weeks ago', '5d 3h ago', '5 weeks ago'];
+    // The most important first, the newest first among equals, worked out here from the notices themselves.
+    const unreadNotes = sim.universe.notifications.filter((n) => !n.read && n.route);
+    const order = [...unreadNotes].sort((x, y) => (y.importance ?? 0) - (x.importance ?? 0) || y.at - x.at);
+    const seenTitles = new Set<string>();
+    const top = order.filter((n) => { const k = `${n.title}|${n.body}`; if (seenTitles.has(k)) return false; seenTitles.add(k); return true; }).slice(0, 6);
     expect(items).toHaveLength(6);
-    // Of notices that share a title (Caleb asks more than once), the newest, as the newest first among equals.
-    const notes = TITLES.map((title) => sim.universe.notifications.filter((n) => n.title === title && !n.read).sort((x, y) => y.at - x.at)[0]!);
-    expect(notes.map((n) => n?.title)).toEqual(TITLES);
-    expect(notes.map((n) => ago(n.at, sim.now))).toEqual(TIMES);
-    expect(items).toEqual(notes.map((n, i) => words(`${n.title} ${n.body} ${TIMES[i]}`)));
+    expect(top.slice(0, 3).map((n) => n.title)).toEqual(['A Notice Of Academic Concern', 'A Deep Cut', 'Welcome To The Class Of 2029']);
+    expect(top.filter((n) => n.title === 'A Word On Your Coursework')).toHaveLength(2);
+    expect(items).toEqual(top.map((n) => words(`${n.title} ${n.body} ${ago(n.at, sim.now)}`)));
     // Each has somewhere to go: the return's Go There and six more.
     expect(h.buttons.filter((b) => b.text === 'Go There')).toHaveLength(7);
     press(button('Go There', 3));
