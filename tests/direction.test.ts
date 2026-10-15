@@ -18,6 +18,9 @@ import { CALL_KIND } from '@/engine/systems/school';
 import { hasProcess, solutionsOf, type DirectorNote } from '@/engine/systems/production';
 import { workPiece } from '@/engine/systems/workpieces';
 import { problemsOf } from '@/engine/systems/workbook';
+import { WORKBOOK } from '@/engine/content/workbook';
+import { loadSave } from '@/engine';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
@@ -69,12 +72,36 @@ describe('a note on the craft', () => {
     // Worked, and so taken where the work answered it; each taken one rose, or its problem left the forecast by the call
     // that took it. (Until later on 2026-10-12 this checked only that it rose; once a kept way was rehearsed in at the
     // calls, a way that dipped the figure when tried could take a problem out of the forecast, and the note was taken.)
+    // From 2026-10-16 "rose" is by the evidence, not "no worse by a twentieth": a way that moved nothing doesn't take a note.
     for (const n of craft.filter((x) => x.taken)) {
       const problem = (n.focus as { problem: string }).problem;
-      const rose = n.answer!.after! >= n.answer!.before - 0.05;
+      const rose = Math.max(n.answer!.after!, n.answer!.now ?? n.answer!.after!) - n.answer!.before >= WORKBOOK.evidence;
       const gone = seen.some((s) => s.at > n.at && !s.problems.includes(problem));
       expect(rose || gone, `${problem}: ${JSON.stringify(n.answer)}`).toBe(true);
+      expect(['better', 'resolved']).toContain(n.outcome);
     }
+  }, 120_000);
+
+  it('worked a way that moves nothing, is learned from and not taken, says so, keeps it through a reload, and isn’t offered that way again', () => {
+    const { sim, notes } = festival('direction-worked', () => true);
+    const learned = notes.filter((n) => n.outcome === 'learned');
+    expect(learned.length).toBeGreaterThan(0);
+    for (const n of learned) {
+      expect(n.taken).toBe(false);
+      expect(n.worked).toBe(true);
+      expect(Math.max(n.answer!.after, n.answer!.now ?? n.answer!.after) - n.answer!.before).toBeLessThan(WORKBOOK.evidence);
+    }
+    // The note given after a learned one on the same thing says what was tried didn't move it.
+    const i = notes.findIndex((n) => n.outcome === 'learned' && n.answer!.after === n.answer!.before);
+    const next = notes.slice(i + 1).find((m) => m.focus.kind === 'craft' && (m.focus as { note: string }).note === (notes[i]!.focus as { note: string }).note && (m.focus as { segment?: number }).segment === (notes[i]!.focus as { segment?: number }).segment);
+    if (next) expect(next.text).toContain('which didn’t move it: worth knowing, and not the answer.');
+    // The way that moved nothing isn't the way it's worked again.
+    const unmoved = notes.filter((n) => n.answer?.solution && n.answer.after === n.answer.before).map((n) => `${(n.focus as { problem: string }).problem}|${n.answer!.solution}`);
+    expect(new Set(unmoved).size).toBe(unmoved.length);
+    // Kept through a reload, outcome and all.
+    const back = loadSave(deserialise(serialise(sim.universe)));
+    const c = back.player.school!.casting!;
+    expect(hasProcess(c) ? c.process.notes.map((n) => n.outcome) : []).toEqual(notes.map((n) => n.outcome));
   }, 120_000);
 
   it('left alone, is answered less often than worked, and said again as still there where it isn’t', () => {

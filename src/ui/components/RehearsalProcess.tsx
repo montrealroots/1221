@@ -19,8 +19,8 @@ import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { formatDate } from '@/engine/core/time';
 import { CITIES } from '@/engine/content/geography';
 import { YALE_DRAMA } from '@/engine/content/school';
-import { ADJUSTMENTS } from '@/engine/content/workbook';
-import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, partPlayingRefusal, reworkable, solutionsOf, type Holder, type Which } from '@/engine/systems/production';
+import { ADJUSTMENTS, WORKBOOK } from '@/engine/content/workbook';
+import { PROCESS, hasProcess, nightFactor, ownWorkRefusal, partPlayingRefusal, reworkable, solutionsOf, type DirectorNote, type Holder, type Which } from '@/engine/systems/production';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
 import { Segments, WorkThrough } from '@/ui/components/WorkThrough';
 import { materialOf } from '@/engine/systems/material';
@@ -31,6 +31,13 @@ import { wayRefusal } from '@/engine/systems/workbook';
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
 const DRESS_WORD: Record<string, string> = { off: 'An Off Run', solid: 'Solid', strong: 'Strong', remarkable: 'Remarkable' };
+
+/**
+ * A note's state in words (from 2026-10-16, `NoteOutcome`): what became of it, so a way that changed nothing reads as
+ * tried and learned from, not taken. A note from before has no outcome and reads as it did.
+ */
+const OUTCOME_WORD = { resolved: '· Resolved', better: '· Taken: Better', learned: '· Tried: Learned From, Not Moved', unchanged: '· Not Taken' } as const;
+const noteState = (n: DirectorNote, notYet: string) => (n.outcome ? OUTCOME_WORD[n.outcome] : n.taken === undefined ? (n.worked ? '· Worked On' : `· ${notYet}`) : n.taken ? '· Taken' : '· Not Taken');
 
 export function RehearsalProcess({ casting, which }: { casting: Holder; which: Which }) {
   const { sim, run, toast } = useGame();
@@ -49,7 +56,9 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
   const noteWhy = note ?? (piece && chosen ? wayRefusal(sim, person, piece, chosen.adjustment) : undefined);
   const work = () => {
     const r = run<{ before?: number; after?: number; pending?: boolean }>('school.work_note', { which, ...(chosen ? { solution: chosen.adjustment, ...(chosen.option ? { option: chosen.option } : {}) } : {}) });
-    if (r.ok) toast(r.value!.before !== undefined ? `Worked ${chosen?.label.toLowerCase() ?? 'on it'}: ${r.value!.before} to ${r.value!.after}.${r.value!.pending ? ' Keep it or put it back, below.' : ' The next call will show it.'}` : 'Worked on: the next call will show it.', 'positive');
+    // Said as it measured (from 2026-10-16): a way that moved nothing says so, and isn't called an answer.
+    const moved = r.ok && r.value!.before !== undefined ? r.value!.after! - r.value!.before : 0;
+    if (r.ok) toast(r.value!.before !== undefined ? `Worked ${chosen?.label.toLowerCase() ?? 'on it'}: ${r.value!.before} to ${r.value!.after}.${Math.abs(moved) < WORKBOOK.evidence ? ' It didn’t move it: worth knowing, and not yet the answer.' : ''}${r.value!.pending ? ' Keep it or put it back, below.' : ' The next call will show it.'}` : 'Worked on: the next call will show it.', 'positive');
   };
   return (
     <div className="col gap-2">
@@ -68,7 +77,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
           <div className="row-between" style={{ alignItems: 'flex-start' }}>
             <div>
               The director’s last note, {formatDate(last.at, zone())}: {last.text}
-              <span className="xs dim"> {last.taken === undefined ? (last.worked ? '· Worked On' : '· Not Worked On Yet') : last.taken ? '· Taken' : '· Not Taken'}</span>
+              <span className="xs dim"> {noteState(last, 'Not Worked On Yet')}</span>
             </div>
             <HowItWorks help="school.work_note" />
           </div>
@@ -90,7 +99,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
           <div className="xs dim">Simulated notes: the game’s words, not a director’s.</div>
         </div>
       )}
-      {p && p.notes.length > 1 && <div className="xs dim">{`Notes taken: ${p.notes.filter((n) => n.taken).length} of ${p.notes.filter((n) => n.taken !== undefined).length}.`}</div>}
+      {p && p.notes.length > 1 && <div className="xs dim">{`Notes taken: ${p.notes.filter((n) => n.taken).length} of ${p.notes.filter((n) => n.taken !== undefined).length}.${p.notes.some((n) => n.outcome === 'learned') ? ` Worked and learned from without moving: ${p.notes.filter((n) => n.outcome === 'learned').length}.` : ''}`}</div>}
       {/* The notes before the last, each with what came of it (from 2026-10-13): until then a note's outcome went from
           the screen when the next call gave another, and a player couldn't see whether the note they worked was taken,
           only a count. History, read from the process: it changes nothing. */}
@@ -101,7 +110,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
             {p.notes.slice(0, -1).reverse().map((n) => (
               <li key={n.at} style={{ marginBottom: 'var(--s1)' }}>
                 {formatDate(n.at, zone())}: {n.text}{' '}
-                <span className="dim">{n.taken === undefined ? (n.worked ? '· Worked On' : '· Not Worked On') : n.taken ? '· Taken' : '· Not Taken'}</span>
+                <span className="dim">{noteState(n, 'Not Worked On')}</span>
                 {n.answer?.solution && <span className="dim">{` · Worked ${(n.answer.label ?? ADJUSTMENTS[n.answer.solution as keyof typeof ADJUSTMENTS]?.label ?? n.answer.solution).toLowerCase()}: ${n.answer.before} before, ${n.answer.after} after${n.answer.now !== undefined ? `, ${n.answer.now} at the next call` : ''}`}</span>}
               </li>
             ))}

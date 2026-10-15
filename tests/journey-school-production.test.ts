@@ -6,6 +6,7 @@
  * and the four nights played on what the rehearsals made; saved and loaded
  * midway, every step the button's command, and the ledgers whole at the end.
  */
+import { WORKBOOK } from '@/engine/content/workbook';
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -62,14 +63,23 @@ describe('journey: a production, from the read-through to the closing night', ()
     tended(sim, rehearsals.at(-1)!.at + 7 * MS_HOUR);
     expect(proc()!.dress).toBeDefined();
     expect(casting().performed).toBe(0);
-    expect(proc()!.notes.every((n) => n.taken)).toBe(true);
-    // Notes worked are answered (acceptance pass, 2026-10-11): none comes back as 'Still:', and a skill note given again
-    // after it was taken says so.
+    // Every note is closed by the next call. Until 2026-10-16 every worked note was taken, and none came back as 'Still:'
+    // (acceptance pass, 2026-10-11); a craft note worked a way that moved nothing was taken with the rest. From then a
+    // note on the lines, the blocking or a skill is taken worked, as before, and a note on the craft only where its
+    // problem went or its own figure rose by the evidence (`NoteOutcome`); worked and unmoved, it's learned from.
     const notes = proc()!.notes;
-    expect(notes.some((n) => /^Still:/.test(n.text))).toBe(false);
+    expect(notes.every((n) => n.taken !== undefined)).toBe(true);
+    expect(notes.filter((n) => n.focus.kind !== 'craft').every((n) => n.taken)).toBe(true);
+    for (const n of notes.filter((x) => x.focus.kind === 'craft')) {
+      expect(n.taken).toBe(n.outcome === 'better' || n.outcome === 'resolved');
+      if (n.outcome === 'better') expect(Math.max(n.answer!.after, n.answer!.now ?? n.answer!.after) - n.answer!.before).toBeGreaterThanOrEqual(WORKBOOK.evidence);
+      if (n.outcome === 'learned') expect(n.worked).toBe(true);
+    }
+    // A note given again says what came of the last: better where it was taken, still where it wasn't.
     for (let i = 1; i < notes.length; i += 1) {
       const a = notes[i - 1]!, b = notes[i]!;
-      if (a.taken && JSON.stringify(a.focus) === JSON.stringify(b.focus)) expect(b.text).toMatch(/^Better since the last note/);
+      const same = a.focus.kind === 'craft' && b.focus.kind === 'craft' ? a.focus.note === b.focus.note && a.focus.segment === b.focus.segment : JSON.stringify(a.focus) === JSON.stringify(b.focus);
+      if (same) expect(b.text).toMatch(a.taken ? /^Better since the last note/ : /^Still:/);
     }
     const factor = nightFactor(casting());
     expect(factor).toBeGreaterThan(1);
