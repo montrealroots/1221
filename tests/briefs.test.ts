@@ -445,9 +445,11 @@ describe('what each new rule holds (2026-10-12)', () => {
     const w = (b: Brief) => { const c = briefContext(nobody, b, blank(), { reading: b.readings[0]!.id }); const ws = leanedWeights(c.task, [], c.lean); const t = Object.values(ws).reduce((s, x) => s + (x ?? 0), 0); return { exec: ws.execution! / t, bel: ws.believability! / t }; };
     expect(w(voice).exec).toBeGreaterThan(w(asCamera).exec);
     expect(w(asCamera).bel).toBeGreaterThan(w(voice).bel);
-    // Against no medium at all, the microphone's own lean shows.
+    // Against a medium that leans nothing on execution, the microphone's own lean shows: the camera, which leans
+    // believability. Until 2026-10-16 the stage leant nothing at all and was the comparison; since then its house leans
+    // execution as the microphone does (`STAGE_LEAN`, docs/verification/stage-2026-10-16/).
     const plain = briefMaterial(voice);
-    const ctxPlain = materialContext(TASK_PROFILES.tape!, { ...plain, id: `${plain.id}-plain`, medium: 'stage' });
+    const ctxPlain = materialContext(TASK_PROFILES.tape!, { ...plain, id: `${plain.id}-plain`, medium: 'camera' });
     const ctxVoice = materialContext(TASK_PROFILES.tape!, plain);
     expect(ctxVoice.lean.execution! / ctxPlain.lean.execution!).toBeCloseTo(1.2, 6);
   });
