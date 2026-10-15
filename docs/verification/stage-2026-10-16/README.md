@@ -2,7 +2,8 @@
 
 The owner's brief "Finish Genre Acceptance And Correct The Stage-Interpretation Bias". The criteria (`criteria.md`)
 and the sources (`research.md`) were committed in `c253ba58`, before any change. The scenes' circumstances and the model
-were committed in `fe0cca8d`, before any measurement of them. Not merged, not deployed.
+were committed in `fe0cca8d`, before any measurement of them. Merged to `main` in pull request #32 (`0d66ce60`); not
+deployed.
 
 ## What Was Wrong (`baseline.txt`)
 
@@ -13,8 +14,10 @@ On the 85 class scenes and plays where both scales fit, for an even actor at 55:
   heard and read across a theater as playing large.
 - **The voice.** "Its Voice Work" counted a voice's demand as size: Othello 4.3's willow song, sung at bedtime between
   two women, counted +0.75 for expansive.
-- **No signal for restraint.** Not one stage scene had any. A stage has no reader and no close frame, and nothing
-  said what a scene hides or how private it is. Drama's register evened the scales at best.
+- **Nothing in a scene's own text for restraint.** A stage has no reader and no close frame, and nothing said what a
+  scene hides or how private it is. The only signal for restraint was a register's: drama's Played Straight, an eighth
+  at half weight, which evened the scales at best. This said "not one stage scene had any" until the sweep of
+  2026-10-16, which found the eighth.
 
 ## What Changed
 

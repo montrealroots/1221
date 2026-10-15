@@ -7,6 +7,10 @@
  * scenes' own texts (`content/material.ts`, `why`), not from the formula; what's set by hand is TEST SETUP and named.
  */
 import { describe, expect, it } from 'vitest';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { MaterialDemands } from '@/ui/components/PlayingChooser';
+import { CIRCUMSTANCE_AFFINITY } from '@/engine/content/interpretation';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
@@ -111,6 +115,19 @@ describe('the stage reads the scene, not the house', () => {
     for (const id of ['caesar-2-1', 'caesar-4-3', 'othello-4-3', 'antigone-441']) {
       expect(judge(byId(id), MASTER, 'restrained')).toBe(100);
       expect(judge(byId(id), MASTER, 'expansive')).toBe(100);
+    }
+  });
+
+  it('what a scene asks shows each circumstance with its level and its reason from the text, as it shows a feature', () => {
+    // Found by the sweep of 2026-10-16: every reason was written, and no screen showed one.
+    const m = byId('caesar-2-1');
+    const html = renderToStaticMarkup(createElement(MaterialDemands, { material: m })).replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+    const shown = Object.entries(m.circumstances ?? {}).filter(([, l]) => l! > 0);
+    expect(shown.length).toBeGreaterThanOrEqual(2);
+    for (const [c] of shown) {
+      expect(html).toContain(`data-circumstance="${c}"`);
+      expect(html).toContain(CIRCUMSTANCE_AFFINITY[c as keyof typeof CIRCUMSTANCE_AFFINITY].label);
+      expect(html).toContain(m.why[c as keyof typeof m.why]!);
     }
   });
 

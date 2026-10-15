@@ -12,7 +12,8 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { EVALUATION } from '@/engine/content/tasks';
-import { courseworkOf, remedyWords, shortParts, showingForecast, urgentWork, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
+import { bandFor, courseworkOf, mostShort, remedyWords, shortParts, showingForecast, termTally, termWarning, urgentWork, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
+import { templateById } from '@/engine/content/coursework';
 import { classPeriod, ESTIMATE } from '@/engine/systems/school';
 import { chiefLimit } from '@/engine/systems/evaluation';
 
@@ -42,7 +43,7 @@ describe('school workload, said before it’s held against you', () => {
     const shown = cw.assignments.filter((a) => a.term === term && a.shown);
     expect(shown.length).toBeGreaterThanOrEqual(TERM_CHECK.after);
     // Its figures are the term's own at the moment it was given: at least the mark less the margin, Unready.
-    const said = /^(\d+) of the (\d+) pieces shown this term so far were Unready\. Most often short on them: ([a-z ’]+), on (\d+) of the \d+\. (.+?) answers it\./.exec(ws[0]!.body)!;
+    const said = /^(\d+) of the (\d+) pieces shown this term so far were Unready\. Most often short on them: ([a-z ’]+), on (\d+) of the \d+ shown\. (.+?) answers it\./.exec(ws[0]!.body)!;
     expect(said).not.toBeNull();
     expect(Number(said[1])).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * Number(said[2]));
     expect(ws[0]!.body).toContain(`The faculty reviews the term on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
@@ -117,4 +118,70 @@ describe('school workload, said before it’s held against you', () => {
     expect(concern, 'a term with every piece unprepared draws a concern').toBeDefined();
     expect(concern!.body).toMatch(/pieces due in class were unready or not shown, short of what the program asks\. Most often short on them: [a-z ’]+, on \d+; .+ answers it\./);
   }, 300_000);
+});
+
+describe('school workload, found by the sweep (2026-10-16)', () => {
+  it('the warning counts as the review does: a piece missed is due and Unready, so a term short with misses is warned', () => {
+    const sim = life('workload-warned');
+    // A twin prepared to complete, unwarned (above), its term then TEST SETUP: under the mark by the pieces shown, and
+    // over it once the pieces left open are missed.
+    tended(sim, at(2026, 10, 20), 1);
+    expect(warnings(sim)).toHaveLength(0);
+    const cw = courseworkOf(sim, sim.player)!;
+    const term = cw.assignments.find((a) => a.shown)!.term;
+    const shown = cw.assignments.filter((a) => a.term === term && a.shown && !a.revision);
+    expect(shown.length).toBeGreaterThanOrEqual(TERM_CHECK.after);
+    const mark = ESTIMATE.coursework.unready - TERM_CHECK.margin;
+    const unready = Math.ceil(mark * shown.length) - 1;
+    for (const [i, a] of shown.entries()) a.shown!.band = i < unready ? 'unready' : 'working';
+    const missed = cw.assignments.filter((a) => a.term === term && !a.shown && a.status === 'open');
+    expect(missed.length).toBeGreaterThanOrEqual(1);
+    for (const a of missed) a.status = 'missed';
+    const t = termTally(cw.assignments, term);
+    expect(t.notShown).toBe(missed.length);
+    expect(t.shown).toBe(cw.assignments.filter((a) => a.term === term && a.shown).length + missed.length);
+    // Short of the mark by the pieces shown alone, over it with the missed counted.
+    expect(unready).toBeLessThan(mark * shown.length);
+    expect(t.unready).toBeGreaterThanOrEqual(mark * t.shown);
+    termWarning(sim, sim.player, missed[0]!);
+    expect(warnings(sim)).toHaveLength(1);
+    expect(warnings(sim)[0]!.body).toMatch(new RegExp(`^${t.unready} of the ${t.shown} pieces due this term so far were Unready or not shown\\.`));
+    expect(warnings(sim)[0]!.body).toContain('your standing falls a step');
+    expect(warnings(sim)[0]!.body).not.toMatch(/still to come|notice of concern/);
+  }, 180_000);
+
+  it('the part most often short is counted by what it is on each piece and what answers it there, and every piece counted has it', () => {
+    const sim = life('workload-warned');
+    tended(sim, at(2026, 10, 20));
+    const cw = courseworkOf(sim, sim.player)!;
+    const term = cw.warned![0]!;
+    const pieces = termTally(cw.assignments, term).unreadyShown;
+    const top = mostShort(sim.player, pieces)!;
+    const having = pieces.filter((a) => shortParts(sim.player, a).some((d) => templateById(a.template)!.dims[d]!.label === top.label && remedyWords(a, d) === top.remedy));
+    expect(having.length).toBe(top.n);
+    // The part's key alone names different work on different templates: counted by it, more pieces were put together.
+    const keys = new Set(pieces.flatMap((a) => shortParts(sim.player, a).filter((d) => templateById(a.template)!.dims[d]!.label === top.label)));
+    const byKey = Math.max(...[...keys].map((d) => pieces.filter((a) => shortParts(sim.player, a).includes(d)).length));
+    expect(byKey).toBeGreaterThanOrEqual(top.n);
+  }, 180_000);
+
+  it('a scene’s table work is answered by the Table Work’s questions, not by “its own step”', () => {
+    const sim = life('workload-forecast');
+    tended(sim, at(2026, 9, 10));
+    const a = courseworkOf(sim, sim.player)!.assignments.find((x) => x.sceneId && templateById(x.template)!.dims.interpretation && !templateById(x.template)!.activities.some((s) => s.dim === 'interpretation'))!;
+    expect(a).toBeDefined();
+    expect(remedyWords(a, 'interpretation')).toMatch(/Table Work/);
+    expect(remedyWords(a, 'interpretation')).not.toMatch(/its own step/);
+  }, 120_000);
+
+  it('a piece played smaller is forecast at the band its showing gives: no higher than Working', () => {
+    const sim = life('workload-forecast');
+    tended(sim, at(2026, 9, 10));
+    const a = courseworkOf(sim, sim.player)!.assignments.find((x) => x.status === 'open')!;
+    expect(bandFor(a, 95)).toBe('exceptional');
+    // TEST SETUP: a smaller piece of a part asked for.
+    a.approach = { kind: 'smaller', dim: 'rehearsal' } as Assignment['approach'];
+    expect(bandFor(a, 95)).toBe('working');
+    expect(bandFor(a, 20)).toBe('unready');
+  }, 120_000);
 });

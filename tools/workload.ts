@@ -8,7 +8,15 @@
  * part, practice, looking after yourself), and what was left (idle, inside the policy's working hours or outside them).
  * Demand: each class piece set in the term, the hours its parts take to reach what completes them from nothing, at a
  * day's full focus, by the template's cheapest step for each part (the partner part by a rehearsal with the partner, or
- * by a reader where there's none). And at each showing, each part's level against what completes it.
+ * by a reader where there's none). And at each showing, the parts it was short on, as the showing read them
+ * (`shortParts`): the parts its template is judged on, the partner part with a reader's evenings in it, the table work's
+ * answers, read within the hour of the showing. Until later on 2026-10-16 this read each step's own part at the run's
+ * end, after any work done since the showing; it left the reader's evenings out of the partner part, counted parts a
+ * template's steps work on whether or not its showing reads them, and read the table work as its step alone. On
+ * London's lives-0, the same life with the same showings and bands, the third term read at the run's end had 14 pieces
+ * short on the partner part and 17 on rehearsal (`docs/verification/stage-2026-10-16/runs/`); read at the showing, 10
+ * and 18 (`docs/verification/workload-2026-10-16/at-showing-london-lives-0-attentive.json`). The demand's hours are
+ * still by each step's part, the revision's among them.
  *
  *   npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 [--policy attentive|neglect] [--out f.json]
  */
@@ -16,7 +24,7 @@ import { writeFileSync } from 'node:fs';
 import type { Simulation } from '../src/engine/core/simulation';
 import { MS_DAY, MS_HOUR, zonedParts } from '../src/engine/core/time';
 import { templateById } from '../src/engine/content/coursework';
-import { courseworkOf, workContext, READER, type Assignment } from '../src/engine/systems/coursework';
+import { courseworkOf, shortParts, workContext, READER, type Assignment } from '../src/engine/systems/coursework';
 import { suggestedSleep } from '../src/engine/systems/life';
 import { breaches } from '../src/engine/core/invariants';
 import { life, evening, freeHour, keepCovered, lookAfter } from './policy';
@@ -71,6 +79,9 @@ const scanItems = () => {
 };
 for (const it of sim.universe.scheduled) if (it.status === 'done' || it.status === 'missed') seen.add(it.id);
 
+// Each piece's parts short at its showing, read within the hour it was shown.
+const atShow = new Map<string, string[]>();
+const scanShown = () => { for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) if (a.shown && !atShow.has(a.id)) atShow.set(a.id, shortParts(sim.player, a)); };
 let hours = 0;
 while (sim.now < end && sim.universe.meta.endedAt === undefined && !['dismissed', 'graduated', 'withdrawn'].includes(sim.player.school?.standing ?? '')) {
   const hour = zonedParts(sim.now, sim.zone).hour;
@@ -80,7 +91,7 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined && !['dismissed'
     if (hour === 12) keepCovered(sim);
     if (hour === 20 && sim.player.currentLocationId === 'us-ct-newhaven') evening(sim);
     const weekend = [0, 6].includes(new Date(sim.now).getUTCDay());
-    if (hour >= (weekend ? 10 : 15) && hour < 22 && freeHour(sim)) { scanItems(); hours += (sim.now - before) / MS_HOUR; continue; }
+    if (hour >= (weekend ? 10 : 15) && hour < 22 && freeHour(sim)) { scanItems(); scanShown(); hours += (sim.now - before) / MS_HOUR; continue; }
   } else {
     // The control: looked after, the evening's answers given, nothing prepared and no part worked.
     lookAfter(sim);
@@ -88,10 +99,11 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined && !['dismissed'
   }
   if ((hour >= 23 || hour < 5) && (sim.player.awakeSince ?? 0) <= sim.now) {
     const r = sim.execute({ kind: 'life.sleep', payload: { hours: suggestedSleep(sim).hours } });
-    if (r.ok) { scanItems(); hours += (sim.now - before) / MS_HOUR; continue; }
+    if (r.ok) { scanItems(); scanShown(); hours += (sim.now - before) / MS_HOUR; continue; }
   }
   sim.advanceTo(sim.now + MS_HOUR);
   scanItems();
+  scanShown();
   const step = (sim.now - before) / MS_HOUR;
   hours += step;
   // An hour nothing took: inside the policy's working hours or outside them.
@@ -102,10 +114,10 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined && !['dismissed'
 // Demand: each piece set in a term, the hours its parts take to complete from nothing at full focus, and where its parts
 // stood at the showing.
 const steps = (gain: number, need: number) => { let n = 0; let p = 0; while (p < need - 1e-9 && n < 99) { p += gain * (1 - p); n += 1; } return n; };
-const demand = new Map<number, { pieces: number; hours: number; partnerHours: number; byPart: Bucket; atShowing: Bucket[] }>();
+const demand = new Map<number, { pieces: number; hours: number; partnerHours: number; byPart: Bucket }>();
 for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) {
   const t = templateById(a.template)!;
-  const d = demand.get(a.term) ?? { pieces: 0, hours: 0, partnerHours: 0, byPart: {}, atShowing: [] };
+  const d = demand.get(a.term) ?? { pieces: 0, hours: 0, partnerHours: 0, byPart: {} };
   d.pieces += 1;
   const required = workContext(a as Assignment, {}, {}).required as Record<string, number>;
   const dims = [...new Set(t.activities.map((x) => x.dim))];
@@ -118,7 +130,6 @@ for (const a of courseworkOf(sim, sim.player)?.assignments ?? []) {
     if (dim === 'partner') d.partnerHours += h;
     d.byPart[dim] = (d.byPart[dim] ?? 0) + h;
   }
-  if (a.shown) d.atShowing.push(Object.fromEntries(dims.map((dim) => [dim, r1(((a.prep as Record<string, number>)[dim] ?? 0) / (required[dim] ?? 0.9))])));
   demand.set(a.term, d);
 }
 const out = {
@@ -128,7 +139,7 @@ const out = {
     const d = demand.get(t - 1);
     const shown = (courseworkOf(sim, sim.player)?.assignments ?? []).filter((a) => a.term === t - 1 && a.shown);
     const band = (a: Assignment) => (a.revision?.missed ? 'unready' : a.revision?.band ?? a.shown!.band);
-    const short = (d?.atShowing ?? []).reduce((acc, x) => { for (const [k, v] of Object.entries(x)) if (v < 1) acc[k] = (acc[k] ?? 0) + 1; return acc; }, {} as Bucket);
+    const short = shown.reduce((acc, a) => { for (const k of atShow.get(a.id) ?? []) acc[k] = (acc[k] ?? 0) + 1; return acc; }, {} as Bucket);
     return {
       termsBegun: t, supply: Object.fromEntries(Object.entries(b).map(([k, v]) => [k, r1(v)]).sort()),
       demand: d ? { pieces: d.pieces, hoursToComplete: r1(d.hours), partnerHours: r1(d.partnerHours), byPart: Object.fromEntries(Object.entries(d.byPart).map(([k, v]) => [k, r1(v)])) } : undefined,

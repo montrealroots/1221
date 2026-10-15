@@ -34,6 +34,11 @@ single-life flag is `--why`), and the four outputs were byte-identical: the live
 - **What it is.** It's coursework balance, outside this brief (which asks not to expand unrelated systems). It's
   recorded in the handoff and queued as its own task. The run of 2026-10-10 (`docs/verification/REPORT.md`) had London
   graduating, so it came in between: phase 2b's rebalancing is the first place to look.
+- **Superseded the same day.** The owner's next brief took it up (`../workload-2026-10-16/`). The cause wasn't phase
+  2b's rebalancing: the play policy never worked a scene's partner part, and the game didn't say what that cost. Played
+  again on that code, London graduated on 4 of 4 seeds (`after-workload/`), and again on evaluation-8
+  (`../stage-2026-10-16/runs/lives.jsonl`), where 20 of the 24 lives graduated and the four dismissed were the
+  autopilot control's.
 
 ## The Played Mastery Plans
 

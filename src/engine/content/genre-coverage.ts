@@ -13,6 +13,8 @@ import { EVALUATION } from './tasks';
 import { THESIS_PLAYS, SHAKESPEARE_PLAYS, REP_PLAYS, SUMMER_PLAYS } from './plays';
 import { SCENES } from './coursework';
 import { BRIEFS, briefsOf } from './briefs';
+import { GENRE_REGISTER } from './genre-register';
+import { CONCERNS } from './concerns';
 
 /**
  * Why an entry the research holds at medium or high confidence asks no technique past the shared ones: SLATE's
@@ -88,7 +90,13 @@ Every genre has the same working mechanics, and every one is reachable from the 
 - **Familiarity**, from \`genre.study\` (an hour and a half with a play of the kind the game has, or a film of the kind),
   half again the same day. It speeds the preparation of a scene or a part in the genre, the best of a work's genres and
   never the sum. For a taped brief, knowing the genre is a part of its preparation, the better of familiarity and
-  practice, complete at 30, and it doesn't also speed the brief's steps.
+  practice, complete at 90 (at 30 until 2026-10-16), and it doesn't also speed the brief's steps.
+- **Its register** (from 2026-10-16, \`content/genre-register.ts\`): ${Object.keys(GENRE_REGISTER).length} of ${n} genres have
+  one, the conventions its scenes are played in, ${Object.keys(CONCERNS).length} concerns among them, one or two a genre,
+  each with where it's from. It's read by every take of a brief written for the genre, and it says how well a way of
+  playing suits that brief, a class scene of the genre or a play listed under it first. This list left it out until
+  the sweep of 2026-10-16. Each genre's register, techniques and stage scenes are in
+  \`docs/verification/stage-2026-10-16/genre-audit.md\`.
 - **Practice**, from work done in it: nights in a play of the kind and taped briefs, shared among a work's genres so two
   tags don't count twice.
 - **Families**: the dimensions a work in it counts for lean by its families (\`EVALUATION.familyLean\`), the mean of

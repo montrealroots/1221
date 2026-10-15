@@ -5,9 +5,10 @@
  * a farce asked for physical comedy, The Importance of Being Earnest among them, though its comedy is verbal. A
  * genre is a family resemblance, not a specification, and the brief of 2026-10-10 asked for the material to say what
  * it needs. So each scene a course can set and each play a production can cast has a profile here: what its text and
- * its staging ask, each feature with the reason the text gives. A work with a profile is read by it and by nothing
- * genre-wide; a work with none (a self-tape of a genre, with no script in the game) still reads its genre's researched
- * demands, said as genre-wide and uncertain (`content/demands.ts`).
+ * its staging ask, each feature with the reason the text gives. A work with a profile is read by it and by no
+ * genre-wide demand; from 2026-10-16 its genre's register still says how well a way of playing suits it, its suitability
+ * only (`sceneOfMaterial`, `systems/interpretation.ts`). A work with none (a self-tape of a genre, with no script in the
+ * game) still reads its genre's researched demands, said as genre-wide and uncertain (`content/demands.ts`).
  *
  * The features, each 0 (none asked) to 3 (the material is built on it):
  * - `timing`: exactness of rhythm, cue pick-up and the placing of a line or a beat;
@@ -70,7 +71,9 @@ export interface MaterialProfile {
    * What the scene's circumstances ask of its scale (from 2026-10-16, docs/verification/stage-2026-10-16/), each 0 to
    * 3 as the features are: what a character hides (`concealment`), how private the exchange is (`intimacy`), how far it's
    * spoken to many (`address`), and how far the conflict is brought out loud (`confrontation`). Read from the text,
-   * each with its reason; until then a stage scene had no signal for restraint, and every one came out expansive.
+   * each with its reason. Until then nothing in a stage scene's own text argued for restraint: its genre's register
+   * could, from earlier that day (drama's Played Straight, at half weight), and never outweighed the house and the
+   * voice, so every one came out expansive.
    */
   circumstances?: Partial<Record<Circumstance, Level>>;
   /** Why, feature by feature, from the text. */

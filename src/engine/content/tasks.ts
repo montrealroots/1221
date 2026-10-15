@@ -30,7 +30,7 @@ import type { AbilityId } from './abilities';
 // evaluation-5 from 2026-10-16, later: a way of playing read against the scene (`EvalContext.grain`), so a result kept
 // under evaluation-4 is shown as it was and not worked out again by today's judge.
 // evaluation-6 from later on 2026-10-16: a way of playing's suitability reaches every dimension it leans on, a class scene
-// and a play are read in their genre's register, and the stage leans a quarter each way (`grainOf`, `sceneOfMaterial`).
+// and a play are read in their genre's register, and the stage leant a quarter each way, until evaluation-8 (`grainOf`, `sceneOfMaterial`).
 // evaluation-7 from later still on 2026-10-16: the reader's way of playing the other part counts toward a side's
 // suitability as a register's concern does (`GRAIN.reader`), so a take played opposite a reader may come out otherwise.
 // evaluation-8 from later still: a stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale, a stage

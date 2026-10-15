@@ -1,8 +1,137 @@
-# Read First: Genre Acceptance And The Stage, 2026-10-16
+# Read First: The Sweep, And Where Everything Stands, 2026-10-16
 
-**This section is the current status.** Every section below is history. It covers the owner's brief "Finish Genre
+**This section is the current status, written for a fresh session to start from.** Every section below is history.
+After pull request #32 the owner asked: "do a sweep throughout the entire code/game and make sure everything is up to
+the standard I want it to be and then push and merge all information and all notes so I can pick this up in an
+entirely new session." Done on `claude/zen-mccarthy-i88ujw` from `main` at `0d66ce60`, in pull request #33, merged to
+`main` at that word. Not deployed.
+
+## Where It Stands
+
+- **`main` carries everything.** Every brief of 2026-10-16 was merged: #28 to #30 (`claude/remaining-acceptance`, then
+  this branch: banking's home accounts, the attributes' phases 1 to 2b, banking's defects and skeptics), #31 (genre
+  differentiation, interpretation, advice, the school workload), #32 (S3 and the stage) and #33 (this sweep). Nothing
+  is on a branch alone.
+- **Not deployed.** Base44 deployment waits for the owner and the gate (rule 14). Read §10 further down first.
+- **The rules:** `RULESET` is `evaluation-8 (2026-10-16)`; the save schema is 94 in both places (`SAVE_SCHEMA_VERSION`,
+  `SUPPORTED_SCHEMA_VERSION`). The sweep moved neither.
+- **The checklist** is `docs/verification/WORKPLAN-2026-10-16.md`, sections 1 to 9. Read its Resume Here first.
+
+## What The Sweep Found And Did
+
+Three audits ran, of the docs, of the source's comments, and of the week's code for bugs. Each finding was read against
+the code before anything changed, and each figure here was measured again, not taken from an audit. Their reach:
+- the docs: the handoff, the work plan, the accounts, the top-level docs;
+- the comments: every claim in `src/`, `tools/` and `tests/` that the week's changes could have falsified;
+- the bug review: the week's code, `5b27379a..0d66ce60` in `src/` and `tools/`.
+Older code was held by the gate and the reviews before it, not read again line by line.
+
+- **In the game**, each fix with a test that fails with the old rule put back:
+  - **A choice's rehearsal stalled short of its mark.** Once rehearsal's own part was full, a step stopped rehearsing a
+    choice in at 90%, the mark from before suitability moved it to 80-100%. A side against the grain stalled near
+    93.5%: a mastered actor prepared twenty days taped 99.3, not 100, on brief-rockumentary-2 played Set, which asks 97%.
+    Briefs and coursework now read the scene's own mark (`requiredFor`, `choiceMark`). Of the sides that fit, 16 of
+    1,769 on briefs and 49 of 511 on class scenes and plays ask more than 93.5%. (The commit's message says "49
+    class-scene sides"; the plays are among them.)
+  - **The term's warning counted otherwise than the review it warns of.** A piece missed unexcused is due and Unready to
+    the review and was nothing to the warning: six shown with two Unready, then two missed, was 2 of 6 to the warning
+    and 4 of 8 to the review. Both read `termTally`, and the
+    warning is looked at after every piece due, missed or shown again.
+  - **Its words.** The part most often short was grouped by its key across templates, and on a played term said 19
+    pieces had a part by a name and remedy that 4 had (`mostShort`). A scene's table work was answered by "its own
+    step" (now the Table Work's questions). "Still to come" counted what was set; "a notice of concern follows" was
+    true only from good standing (now: the standing falls a step).
+  - **Shown Today and Due Soonest** banded a smaller piece by its score, where the showing caps it at Working (`bandFor`).
+  - **A scene's circumstances** had a reason from the text for each, written for all 86 class scenes and plays, and no
+    screen showed one. What It Asks lists them now, as it does a feature.
+- **In the tools.** `tools/workload.ts` reads each piece's short parts at its showing, as the showing does. On London's
+  lives-0 the third term's partner part read 14 short at the run's end and 10 at the showing. `tools/scenario-saves.mjs`
+  writes the acceptance run's 14 saves; until now that recipe lived in a session's scratchpad.
+- **In the notes.**
+  - Ten comments and screen notes the stage change had falsified, and a comment citing a test that didn't exist.
+  - The guide's "complete at 90%" in coursework, briefs and productions.
+  - Every account's "not merged".
+  - The gate's seventeen checks (AGENTS.md said 15, README.md twelve).
+  - Saves in IndexedDB, in AGENTS.md.
+  - ENGINE-MODEL.md, written for evaluation-3, now says so and indexes evaluation-4 to -8.
+  - The genre coverage page now lists the register.
+  - The stale lines of the sections below are marked superseded in place.
+- **Not changed:** no evaluation formula, threshold, ruleset or schema.
+
+## Verified
+
+- **The baseline gate,** before any change, on `0d66ce60`: `npm run gate` exited 0, read from a file: 348 files and
+  4,184 tests, typecheck, lint and all seventeen checks.
+- **The build,** on `f06331be`, whose code is the code merged: exit 0.
+- **The fourteen scenario saves,** written again by `tools/scenario-saves.mjs` on that code: every run exit 0, each save
+  0 breaches and 0 unbalanced.
+- **The built app at 1440 and 390,** on that build, from those saves: 70 passed, 0 failed, 2 skipped (the two since
+  2026-10-12), 0 errors, 0 overflows at each. That includes the warning's new words, Shown Today rising with Run It
+  With A Reader, both kept through Save & Exit and Continue, and the stage step.
+  - The first run at 1440 failed four steps, all on the workload save. The tool's pattern still expected the warning's
+    earlier words, so its first step failed before it pressed Go There, and the next three were left on Home. The tool
+    was fixed (`027f3631`); 390 ran on the fixed tool, and 1440 was run again.
+- **The gate,** on `027f3631`: `npm run gate` exited 0, read from a file: 348 files and 4,192 tests (eight more than
+  the baseline, each this sweep's), typecheck, lint and all seventeen checks, the tree unchanged. The commit after it
+  changes only this file and the work plan, and the gate was run again on it before the merge.
+- In a cloud container (Linux), not the owner's PowerShell machine. It had no stash, worktrees or untracked root
+  files, and nothing touched any.
+
+## Open, In Order
+
+1. **Section 2 of the work plan: the six acceptance areas.** Not started. Each has its instructions in
+   `docs/verification/prompts-2026-10-16/`, with the shared `remaining-prompt.txt`, and writes
+   `docs/verification/remaining/<key>-checklist.json` before any code.
+2. **The stage's three shortfalls**, the owner's (`docs/verification/stage-2026-10-16/README.md`):
+   - ST3, the even actor the same: 159 of 171, every difference within one 0.1 rounding step;
+   - ST4, drama: all 25 catalog drama scenes suit restraint, with no public or brawling drama scene: add that content, or
+     accept;
+   - ST6, the restrained specialist against the grain: 7 of 34 against 25%, restrained drawing half what expansive does
+     (`APPROACH_EFFECT`): weigh its draw, or accept.
+3. **The attributes brief's phase 2c and close-out** (work plan section 3). Still failing at phase 2b and not measured
+   again by name since: H4 (specialists, 3 of 12) and L3 (a specialist's late-term decline)
+   (`docs/verification/attributes-genres-2026-10-16/phase-2b.md`). F2 and H1 went to the advice brief (F2-A, 40 of 40).
+4. **Deployment,** on the owner's word only.
+
+Known and left, each said where it lives:
+- The warning's new call sites (after a miss, a revision missed, a showing again) are held by the counting's test, which
+  calls the warning directly, not by a played term that misses a piece.
+- The workload tool's demand still counts each step's part, a revision's among them (its header says so).
+
+## Picking It Up
+
+On the owner's machine, in PowerShell 7 (CLAUDE.md):
+
+```powershell
+git fetch origin; git status -sb; git log --oneline -5; git stash list; git worktree list
+npm ci
+npm run gate *> "$env:TEMP\gate.txt"
+"exit=$LASTEXITCODE" | Out-File -Encoding utf8 "$env:TEMP\gate-exit.txt"
+```
+
+What was last seen there (the work plan's Resume Here): one stash entry, never to be applied, popped or dropped; other
+worktrees, never to be merged; untracked root files, left alone. A cloud container has none of them.
+
+The built app, with a preview in its own terminal:
+
+```powershell
+npm run build
+npx vite preview --port 4181 --strictPort
+node tools/scenario-saves.mjs "$env:TEMP\saves"
+$env:SLATE_BASE = "http://localhost:4181"
+node tools/acceptance-ui.mjs "$env:TEMP\acc-1440" 1440 "$env:TEMP\saves"
+node tools/acceptance-ui.mjs "$env:TEMP\acc-390" 390 "$env:TEMP\saves"
+```
+
+Each writes `report.json`. The two steps skipped at each width have been skipped since 2026-10-12. A preview left
+running serves the build it started with, so start a fresh one after each build.
+
+# Earlier: Genre Acceptance And The Stage, 2026-10-16
+
+History now: the section above is the current status. It covers the owner's brief "Finish Genre
 Acceptance And Correct The Stage-Interpretation Bias", on `claude/zen-mccarthy-i88ujw` after the S3 work below, in the
-same pull request (#32): not merged, not deployed. The accounts are `docs/verification/stage-2026-10-16/` and
+same pull request (#32): not merged, not deployed. **Superseded:** merged to `main` as `0d66ce60` at the owner's
+"Merge and push all of this."; still not deployed. The accounts are `docs/verification/stage-2026-10-16/` and
 `docs/verification/genres-2026-10-16/g1-replacement.md`.
 
 - **S3** (the section below, unchanged by this one): 23,300 of 28,413 on the fresh held-out sample (82.00%, from
@@ -41,13 +170,14 @@ same pull request (#32): not merged, not deployed. The accounts are `docs/verifi
   - the three shortfalls above (owner's: add drama content, or weigh restrained's draw);
   - section 2's six acceptance areas.
 
-  Finishing the genres isn't finishing the game.
+  Finishing the genres isn't finishing the game. (Both still open after the sweep; the section above lists them.)
 
 # Earlier: The Genre Benchmark S3, Resolved, 2026-10-16
 
 History now: the section above is the current status. It covers the owner's brief "Resolve The
 Remaining Genre Benchmark With Defensible Changes And Proof", on `claude/zen-mccarthy-i88ujw`, restarted from `main` at
 `eb0b6022` after pull request #31 was merged. A new pull request is opened for the owner: not merged, not deployed.
+**Superseded:** that was #32, merged as `0d66ce60`.
 The account is `docs/verification/genres-2026-10-16/g1-replacement.md` ("S3: The Reader Weighed As A Concern"), and
 its evidence is in `s3-reader/`.
 
@@ -79,7 +209,7 @@ its evidence is in `s3-reader/`.
   - Tests: `tests/genre-reader.test.ts` (6). Five mutations, each killed.
 - **Still open.**
   - The stage set's expansive bias (100% of class scenes and plays): unchanged, not reached by this change, and the
-    owner's.
+    owner's. **Superseded:** the owner's next brief corrected it (the section on genre acceptance and the stage).
   - Section 2 of the work plan: the six acceptance areas.
 - **Verified.**
   - **The gate:** `npm run gate` exited 0 on `03853058`, read from a file: 347 files and 4,173 tests, typecheck, lint
@@ -95,7 +225,7 @@ its evidence is in `s3-reader/`.
 
 History now: the section above is the current status. It covers the owner's brief "Finish School
 Workload Balance And The Remaining Acting-Engine Shortfalls", on `claude/zen-mccarthy-i88ujw`, in the same pull
-request: not merged, not deployed. The checklist is section 6 of the work plan
+request: not merged, not deployed (**Superseded:** #31, merged as `eb0b6022`). The checklist is section 6 of the work plan
 (`docs/verification/WORKPLAN-2026-10-16.md`). Section 2's six acceptance areas are still open and untouched.
 
 - **Why London was dismissed** (`docs/verification/workload-2026-10-16/`).
@@ -123,18 +253,23 @@ request: not merged, not deployed. The checklist is section 6 of the work plan
   - The stage leans a quarter each way.
   - `RULESET` is evaluation-6.
   - The designed and held-out briefs pass. The fresh stage set comes out expansive on every scene.
+  - **Superseded:** from evaluation-8 the stage leans no way, and restrained is ahead on 50 of the 85 and expansive on
+    33 (`docs/verification/stage-2026-10-16/`).
 - **The genre signature** (`docs/verification/genres-2026-10-16/g1-replacement.md`, "Revision").
   - "Shares no concern" was the wrong proxy for contrast: S3's misses rise with the declared kinship of the two
     registers.
   - The revision (no concern shared and opposed pulls) was committed before it was measured.
   - S2 passes on every sample.
   - S3 is 78.9% on the fresh held-out briefs against 80%: a reader's way at full weight outvotes a register at half.
+    **Superseded:** with the reader at half weight (evaluation-7) it passed at 82.00%.
 - **The earlier work, played again.** The 40 advice cases came out byte-identical. The interpretation examples were
   written again.
 - **The owner's decisions:**
   - S3 on the fresh held-out briefs: change the register-to-reader weighting, or accept;
   - the class scenes' own registers, which are content to research;
   - the earlier I3 and signature decisions: the designed and held-out I3 clauses now pass, and S2 passes as revised.
+  - **Superseded:** the owner's next two briefs took the first two (S3 resolved; each scene's circumstances read from
+    its text), and the third was settled as it says.
 - **Long runs** (`docs/verification/journeys-2026-10-16/README.md`, "Played Again").
   - **The 24 lives on the new code:** 20 graduated, against 16 before. London graduated on 4 of 4 seeds, against 0.
     Breaches, unbalanced entries and errors were 0 on every life.
@@ -153,14 +288,16 @@ request: not merged, not deployed. The checklist is section 6 of the work plan
     2026-10-12), 0 errors, 0 overflows at 1440 and at 390. That's from all 14 scenario saves written again, each with 0
     breaches and 0 unbalanced.
   - This ran in a cloud container (Linux), not the owner's PowerShell machine.
-- **Next:** the owner's decisions, then section 2's six acceptance areas.
+- **Next:** the owner's decisions, then section 2's six acceptance areas. (**Superseded:** the decisions were taken;
+  section 2 is still open.)
 - The stash, worktrees and untracked root files: this container has none, and nothing touched any.
 
 # Earlier: Interpretation, Advice And The Long Journeys, 2026-10-16
 
 History now: the section above is the current status. The owner's brief "Finish Genre Interpretation,
 Improve Training Advice, And Prove Long-Term Integration", on `claude/zen-mccarthy-i88ujw` after the genre
-differentiation of the same day (both in the pull request, not merged, not deployed). The work plan's section 5 is the
+differentiation of the same day (both in the pull request, not merged, not deployed; **Superseded:** #31, merged as
+`eb0b6022`). The work plan's section 5 is the
 checklist; each part has its account:
 
 - **A way of playing, read against the scene** (`docs/verification/interpretation-2026-10-16/`). A side suits the scene
@@ -198,7 +335,8 @@ checklist; each part has its account:
 **This section was the current status until later on 2026-10-16** (**Superseded:** the first section above is). Every section below is history. The account is
 `docs/verification/genres-2026-10-16/README.md`, the complete genre matrix `genre-matrix.md` beside it, and the work
 plan's section 4. Done on `claude/zen-mccarthy-i88ujw` from `main` at `35d032d`, for the owner's brief “Complete Genre
-Differentiation And Prove Each Genre’s Identity”. Pushed, a pull request opened, **not merged, not deployed**. The save
+Differentiation And Prove Each Genre’s Identity”. Pushed, a pull request opened, **not merged, not deployed**
+(**Superseded:** #31, merged as `eb0b6022`; not deployed). The save
 schema didn't move (`Take.concern` is optional) and neither did `RULESET`: the register changes the context a take is
 judged in, not the judge.
 
@@ -217,7 +355,8 @@ judged in, not the judge.
   scenario save written again on that code. In a cloud container (Linux), not the owner's PowerShell machine.
 - **The owner's decisions (open):** G1 as written fails (0.95×, 1.22× with length and stakes held) and can't reach 1.5
   without one rigid formula per genre; no threshold moved. A way of playing doesn't interact with the genre. F2 is a
-  little worse (301 of 447, from 311).
+  little worse (301 of 447, from 311). **Superseded:** G1 was replaced by the genre signature, a way of playing is read
+  against the scene, and F2's replacement played 40 of 40 (the sections above).
 - **Next:** the rest of attributes phase 2c (the late-term decline, F2/H1, the workbook rule, long and UI journeys), then
   the remaining acceptance gaps.
 - The stash, worktrees and untracked root files: this container has none, and nothing touched any.
@@ -230,7 +369,7 @@ read its Resume Here first. Every section below is history. Until later on 2026-
 
 - **Banking, closed (2026-10-16, later):** the open defects and the skeptics' review are done
   (`docs/verification/banking-2026-10-16/open-defects.md`, `skeptics.md`), on `claude/zen-mccarthy-i88ujw` at
-  `2553644`, pushed, not merged. The home current account opens with its own fees until graduation; until then 21 of 54
+  `2553644`, pushed, not merged (**Superseded:** merged in #30, `35d032d5`). The home current account opens with its own fees until graduation; until then 21 of 54
   banks overdrew and closed it in an idle life. The full gate passed on `2553644`: 340 files and 4,133 tests, typecheck,
   lint, and all seventeen checks exit 0, read from a file, run in a cloud container (Linux), not the owner's PowerShell
   machine. That container had no stash, worktrees or untracked root files. The built app hasn't run since modules 6 and

@@ -2,7 +2,7 @@
  * SLATE — a way of playing read against the scene it's played in (from 2026-10-16; `content/interpretation.ts`).
  *
  * `suitabilityOf` sums what a scene's signals say of a side: its genre's register, the reader, the medium, its tones and
- * turns, its features and language, and the reading taken of it. `grainOf` turns the chosen sides' suitability into what
+ * turns, its features and language, its circumstances (from 2026-10-16, later), and the reading taken of it. `grainOf` turns the chosen sides' suitability into what
  * the evaluation reads: a share of difficulty on each dimension a side leans on (`EvalContext.grain`) and how much of the
  * choice's rehearsal completes it. The brief's pane, the take's result and the guide read the same functions, so what
  * the screen says a choice suits is what the take is judged by.

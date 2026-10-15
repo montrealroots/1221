@@ -109,8 +109,7 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { templateById } from '../content/coursework';
-import { courseworkOf, lapseTerm, meetingWeight, mateRecord, partnerAsks, reliabilityOf, reliabilityFor, remedyWords, scheduleOrientation, setWork, shortParts, type Assignment } from './coursework';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, mostShort, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, termTally, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
@@ -2866,14 +2865,9 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   delete school.unreviewed;
   const workedPoorly = work !== undefined && work <= ESTIMATE.workFloor;
   // The term's coursework as shown (`ESTIMATE.coursework`).
-  const termWork = ((school as SchoolRecord & { coursework?: { assignments: Assignment[] } }).coursework?.assignments ?? []).filter((a) => a.term === term);
-  const shown = termWork.filter((a) => a.shown);
-  // A piece shown again stands at its second showing's band; one not there to be shown again is unready.
-  const bandOf = (a: Assignment) => (a.revision?.missed ? 'unready' : a.revision?.band ?? a.shown!.band);
-  // A piece not shown at all, unexcused, counts as unready (from 2026-10-10: until then it counted as nothing, and
-  // staying away was safer than showing unready work).
-  const notShown = termWork.filter((a) => a.status === 'missed' && !a.shown).length;
-  const cw = { shown: shown.length + notShown, unready: shown.filter((a) => bandOf(a) === 'unready').length + notShown, strong: shown.filter((a) => bandOf(a) === 'strong' || bandOf(a) === 'exceptional').length };
+  // Read as the warning in the term reads it (`termTally`): a piece shown again at its second band, one missed unready.
+  const tally = termTally((school as SchoolRecord & { coursework?: { assignments: Assignment[] } }).coursework?.assignments ?? [], term);
+  const cw = { shown: tally.shown, unready: tally.unready, strong: tally.strong };
   const counted = cw.shown >= ESTIMATE.coursework.shown;
   const unreadyWork = counted && cw.unready >= ESTIMATE.coursework.unready * cw.shown;
   const strongWork = counted && !unreadyWork && cw.strong >= ESTIMATE.coursework.strong * cw.shown;
@@ -2887,10 +2881,8 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
   // What held the unready ones back, and what answers it (from 2026-10-16): until then the notice gave the count alone.
-  const shortOn = new Map<string, { n: number; piece: Assignment; label: string }>();
-  for (const a of shown.filter((x) => bandOf(x) === 'unready' && templateById(x.template))) for (const d of shortParts(person, a)) { const c = shortOn.get(d) ?? { n: 0, piece: a, label: templateById(a.template)!.dims[d]!.label }; c.n += 1; shortOn.set(d, c); }
-  const most = [...shortOn.entries()].sort((p, q) => q[1].n - p[1].n)[0];
-  const why = most ? ` Most often short on them: ${most[1].label.toLowerCase()}, on ${most[1].n}; ${remedyWords(most[1].piece, most[0] as never)} answers it.` : '';
+  const most = mostShort(person, tally.unreadyShown);
+  const why = most ? ` Most often short on them: ${most.label.toLowerCase()}, on ${most.n}; ${most.remedy} answers it.` : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';

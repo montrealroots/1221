@@ -1,7 +1,9 @@
 # The Attribute And Genre Engine: Its Model, Invariants And Balance
 
-Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset is `evaluation-3`, and §9
-says what changed. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
+Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset was `evaluation-3`, and §9
+says what changed. From 2026-10-16 it's `evaluation-8`, and §10 says where each change since `evaluation-3` is
+written. This document wasn't rewritten for them: where its §1 to §9 and §10's accounts disagree, the accounts hold, and
+the lines found false are marked in place. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
 which. The research gives directions and orderings much more often than sizes. Where a size is SLATE's, the balance
 section says how much the conclusions depend on it.
 
@@ -50,7 +52,8 @@ When fatigue is the limit removed, its spread goes too.
 - A brief's beats count apart (§8): a change of tones between beats is a transition (adaptability, composure); a beat
   with two tones held at once is a blend (emotional depth, imagination). Each asks more rehearsal before it counts.
 - A choice of pace, scale and structure leans the weights (×0.9 to ×1.2 per side) and adds inputs.
-- Where a choice's lean is 1.1 or more, the choice must be rehearsed in (prep part `approach`, complete at 0.9).
+- Where a choice's lean is 1.1 or more, the choice must be rehearsed in (prep part `approach`, complete at 0.9; from
+  `evaluation-5`, at 0.8 to 1.0 by how well the side suits the scene, §10).
 - A change of choice keeps half of what was rehearsed (`PLAYING.keptOnChange`).
 - Against the material or the director's direction, a choice is held to `MISFIT = 0.85`. This is said before the
   choice is made.
@@ -412,9 +415,9 @@ section was written, two from the connected-journey pass (§9).
   - the lines, complete at 0.8;
   - rehearsal, complete at `0.5 + 0.08·transitions + 0.04·blends`, at most 0.85, until §9 judged a brief beat by beat:
     each beat now asks 0.5, and 0.15 more where a change of tone leads into it, 0.08 where it holds two, up to 0.85;
-  - knowing the genre, the better of familiarity and practice, complete at 0.3.
+  - knowing the genre, the better of familiarity and practice, complete at 0.3 (at 0.9 from `evaluation-4`, §10).
 
-  A way of playing it adds its own rehearsal, complete at 0.9.
+  A way of playing it adds its own rehearsal, complete at 0.9 (at 0.8 to 1.0 from `evaluation-5`, §10).
 - **The steps:** Break It Down takes 30 minutes, Learn The Lines 30, 50 or 70 (a long brief, from §9), Rehearse It On
   Your Feet 45. Each moves
   its part by `gain · focus · trait · featureSpeed · (1 − part)`, at gains of 0.6, 0.6 and 0.5, halved again the same
@@ -772,3 +775,19 @@ Each piece counts once now (`limitsOnce`), and the backfill a save gets on openi
   from the world.
 - **A specialist in one ability is behind wherever its material doesn't call for it,** and about even on scenes built
   on it, by the weakest-dimension term. That's said here and in each piece's limits, never hidden by a bonus.
+
+---
+
+## 10. Since `evaluation-3`: Where Each Change Is Written
+
+Each ruleset is kept on every result, and a result kept under an older one is shown as it was (`replay`). The history is
+in `RULESET`'s comments (`content/tasks.ts`); each change has its account, with its criteria, tests and mutations:
+
+| Ruleset | What changed | Account |
+|---|---|---|
+| `evaluation-4` | Knowing the genre read over its whole range, complete at 0.9 with a floor of three quarters (`partFloor`); the task profiles' weights moved to what a piece demands (`DEMAND_EFFECT`); stamina's load set by a piece's length. | `docs/verification/attributes-genres-2026-10-16/phase-2b.md` |
+| `evaluation-5` | A way of playing read against the scene: each side's suitability moves a share of difficulty on the dimensions it leans on, and the choice's rehearsal mark from 0.8 to 1.0 (`GRAIN`, `grainOf`). | `docs/verification/interpretation-2026-10-16/` |
+| `evaluation-6` | Suitability reaches every dimension a side leans on, in proportion; a class scene and a play are read in their genre's register (`sceneOfMaterial`); the stage leant a quarter each way. | `docs/verification/interpretation-2026-10-16/i3-review.md` |
+| `evaluation-7` | The reader counts toward suitability at half weight, as a register's concern does (`GRAIN.reader`). | `docs/verification/genres-2026-10-16/g1-replacement.md` |
+| `evaluation-8` | A stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale; a stage voice's demand no longer counts as size; a scene's circumstances say what its scale asks (`CIRCUMSTANCE_AFFINITY`). | `docs/verification/stage-2026-10-16/` |
+

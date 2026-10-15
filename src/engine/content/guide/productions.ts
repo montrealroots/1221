@@ -49,6 +49,7 @@ import { DIMENSION_LABEL, EVALUATION, type Dimension } from '../tasks';
 import { PIECE, TONE_LEAN } from '../piece';
 import { ADJUSTMENTS, WORKBOOK } from '../workbook';
 import { APPROACH_EFFECT, MISFIT, PLAYING } from '../approaches';
+import { GRAIN } from '../interpretation';
 import type { AxisValue } from '../material';
 import {
   BONDS, CAST_LIST, ESTIMATE, NIGHT_DIFFICULTY, NIGHT_LEAST, NIGHT_VALUE, castScore, evenCraft, rehearsalDays, schoolProduction, summerRuns,
@@ -499,7 +500,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { label: 'Pace', value: axisFact('measured', 'driven') },
       { label: 'Scale', value: axisFact('restrained', 'expansive') },
       { label: 'Structure', value: axisFact('set', 'open') },
-      { label: 'Rehearsed In', value: `Every call after the read-through rehearses it in, ${pct(CALL_GAIN)} of what’s left: complete at ${pct(PLAYING.complete)}, ${word(CALLS_TO_COMPLETE)} calls from nothing. Short of it, what it leans on reads as preparation not done`, estimate: true },
+      { label: 'Rehearsed In', value: `Every call after the read-through rehearses it in, ${pct(CALL_GAIN)} of what’s left: complete at the play’s own mark, ${pct(PLAYING.complete)} where the play leans neither way on the side or has no text to read it against, as a festival of new plays has, and ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))} by how well the play suits it; ${word(CALLS_TO_COMPLETE)} calls from nothing to ${pct(PLAYING.complete)}. Short of it, what it leans on reads as preparation not done`, estimate: true },
       { label: 'A Change Of Mind', value: `Keeps ${pct(PLAYING.keptOnChange)} of what was rehearsed in` },
       { label: 'Doesn’t Fit', value: `A side the play doesn’t take, or one against the director’s request, holds each dimension it leans on to ${pct(MISFIT)} of itself` },
       { label: 'Fully Prepared', value: 'The evaluation’s own night for the part played that way, as a supporting part at the School, rested, every part of preparation complete, with no draw' },
@@ -519,7 +520,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'Fully Prepared shows what a way can reach with everything complete; A Night Now, above it, shows the part as it stands today.',
       'At full ability every side that fits reaches 100. Below it, a side that leans on what you do well shows you better.',
       '“Doesn’t fit:” under a side gives the reason: the play’s own, or “The director has asked for it …”.',
-      `“Your choice now is rehearsed in to …% (complete at ${pct(PLAYING.complete)})” is how far the calls have taken it.`,
+      '“Your choice now is rehearsed in to …% (complete at …%)” is how far the calls have taken it, against the play’s own mark.',
     ],
     unavailable: [
       '“You aren’t cast in anything there.”',
@@ -580,7 +581,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     reads: [
       { label: 'The Part’s Techniques', value: 'What the play asks, its techniques and its kinds of play, as Why This Cast lists them' },
       { label: 'The Abilities', value: 'Believability from emotional depth and a little imagination, interpretation from imagination, connection from presence (a house’s, weighed heavily) and listening, execution from memory (every line of the part) and the voice and the body, consistency from composure and discipline (the score kept night after night), responsiveness from listening and adaptability; believability weighs most. The play’s own demands add to them: its partners listening, a grave play emotional depth, a comic one focus, a lyric or grotesque one imagination, verse memory, a fight or a dance the body and discipline', estimate: true },
-      { label: 'Preparation', value: `The lines, the blocking and the notes taken, against what coming to every call makes and never under ${pct(NIGHT_LEAST.lines)} of the lines or the blocking; and how far your choice in How You’ll Play It has been rehearsed in, against ${pct(PLAYING.complete)}` },
+      { label: 'Preparation', value: `The lines, the blocking and the notes taken, against what coming to every call makes and never under ${pct(NIGHT_LEAST.lines)} of the lines or the blocking; and how far your choice in How You’ll Play It has been rehearsed in, against its mark, ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}` },
       { label: 'Each Movement', value: `Its own blocking with any work on it, and its tones leaning what counts: ${TONES}`, estimate: true },
       { label: 'Stamina', value: `A drain growing through the evening, none at the first movement and at the last up to ${pct(PIECE.drain)} off what tiring reaches, by the evening’s load, ${pct(PIECE.load.night)} for its length and more for the play’s physical and vocal work, and how far your stamina is from full`, estimate: true },
       { label: 'A Slip', value: `A movement ${PIECE.slipAt} or more points under what it was expected to come to carries ${pct(PIECE.rattle)} of it into the next movement’s believability and consistency, less as composure and adaptability recover it. At full abilities and mastered techniques there’s no draw, and so no slip`, estimate: true },
