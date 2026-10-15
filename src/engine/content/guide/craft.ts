@@ -38,7 +38,11 @@
  * work keeps coming back to in a brief's pane as well as on the Profile; the pane heads it What To Work On and gives
  * only the first ability or technique recommended (`BriefPane.tsx`), so it names that weakness only when it comes first.
  * And the take's What To Work On was said to name what holds your work back most, where that weakness goes first while
- * it's within `RECOMMEND.recurringWithin` of the top (`recommendations`).
+ * it was within `RECOMMEND.recurringWithin` of the top (`recommendations`).
+ *
+ * From 2026-10-16 What To Work On Next is forecast (`systems/advice.ts`): what each input's hours of practice would be
+ * worth on the recent work, so what held a take back most and what pays most to train are two things, and the entries
+ * say so; the recurring weakness goes first only where it's about as useful as the top (`tied`).
  *
  * The Profile has no tabs, so no entry names one.
  *
@@ -59,6 +63,7 @@
  * actor and a genre's 0% of the 30% were typed beside the constants they copied.
  */
 
+import { ADVICE } from '../../systems/advice';
 import { CHAPTER_BY_ID } from '../tutorial';
 import { ABILITY_DEFS, DEVELOPMENT, MASTERED, STEP_SPEED, TECHNIQUES, TECHNIQUE_LABEL, type AbilityId } from '../abilities';
 import { EXERCISES, EXERCISE_BY_ID, FOCUS, FOCUS_RATE, PRACTICE, TIER } from '../practice';
@@ -79,7 +84,7 @@ import { ENSEMBLE, sharedOf, type PartnerRead } from '../../systems/ensemble';
 import { bandOfQuality, chiefLimit, WORK_KEPT, type Performer } from '../../systems/evaluation';
 import { BAND_LABEL, TOGETHER_BOND, TOGETHER_COVERED, WORK } from '../../systems/coursework';
 import { ARTISTRY } from '../../systems/artistry';
-import { EXPERIENCE, RECOMMEND } from '../../systems/experience';
+import { EXPERIENCE } from '../../systems/experience';
 import { matchedTier } from '../../systems/practice';
 import { EVERYDAY_FITNESS, FITNESS, SPENT } from '../../systems/life';
 import { KNOB_LIMITS } from '../../systems/personality';
@@ -269,7 +274,6 @@ const READER_WAYS = Object.values(READER_PLAYS).map((p) => {
 const HABIT_SO_FAR = Math.max(1, ARTISTRY.habitAt - 2);
 
 /** Points of the whole, a half written so. */
-const pointsWord = (n: number): string => (n === 0.5 ? 'half a point' : n === 1 ? 'a point' : `${n} points`);
 
 /** Whether any genre has more than one brief, so its pane shows a list of them (the second situations, from 2026-10-12). */
 const SEVERAL = FILM_GENRES.some((g) => briefsOf(g.id).length > 1);
@@ -313,7 +317,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Classes Reach', value: 'Where classes and ordinary work level off for you: a technique’s own ceiling, an ability’s its kin’s in the craft. Practice goes past it to full' },
       { label: 'A Technique', value: `0 to 100, mastered at ${MASTERED}: work that reads it asks no more past that` },
       { label: 'Today', value: `Readiness under ${EVALUATION.sufficientReadiness}, the flu, an injury or a concussion, and the dimensions of work each one reaches` },
-      { label: 'What To Work On Next', value: `The abilities and techniques that cost your recent work ${pointsWord(RECOMMEND.floor)} of the whole a piece or more, weighted to the latest, while they still have room; a short preparation, a day’s condition or a choice that didn’t fit says what to do differently. The weakness your work keeps coming back to, where it’s among them, says how many pieces it has held back for life and the points of the whole in all, with “From your work for life:” and the day it last held one back, and goes first within ${pointsWord(RECOMMEND.recurringWithin)} of the top. It isn’t brought back at full or under the floor` },
+      { label: 'What To Work On Next', value: `Each ability and technique your recent work read, forecast: ${ADVICE.sessions} hours of its exercise on the curve practice really follows, slower the nearer it is to full, and your recent work worked out again with you as you are now and with it where those hours would take it; the most worth it first, weighted to the latest. Two within a tenth of a point, or a tenth of the larger, are said to be about as useful. A short preparation, a day’s condition or a choice that didn’t fit says what to do differently. The weakness your work keeps coming back to says how many pieces it has held back for life, with “From your work for life:” and the day it last held one back, and goes first only where it’s about as useful as the top. Nothing at full is advised, and nothing forecast under a tenth of a point` },
       { label: 'School Journey', value: `The latest ${WORK_KEPT} pieces of work in full, and every piece ever judged counted by half-year` },
       { label: 'Development History', value: `The latest ${DEVELOPMENT.historyKept} changes to an ability or a technique, each with what made it` },
     ],
@@ -763,7 +767,7 @@ export const CRAFT: readonly GuideEntry[] = [
       `Press Tape It (${SELF_TAPE.minutes} Min). The toast gives the result and its band.`,
       `The Last Take gives the result, the reading and the way played, what it was for and what held it back, the take with its reader, its beats and each dimension. Your Takes Of It keeps the last ${BRIEF.takesKept}.`,
       'With a callback, its note shows above How You’ll Play It: choose the side it asks, rehearse it in, and tape.',
-      `What To Work On names the ability or technique holding your work back most, or the one your work keeps coming back to where it’s within ${pointsWord(RECOMMEND.recurringWithin)} of the top, with its practice. Where It Would Show Next lists briefs to tape next, each with why and a button that opens it.`,
+      `What To Work On names the ability or technique most worth ${ADVICE.sessions} hours of practice now, forecast on your recent work, with its practice; where that isn’t what held your last piece back most, it says so and why. Where It Would Show Next lists briefs to tape next, each with why and a button that opens it.`,
     ],
     needs: [
       'A reading chosen, and a life in training.',
@@ -794,7 +798,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     later: [
       'A callback stays until a take plays it the way its note asks; that take ends the round, and only a take that isn’t a callback earns the next.',
-      'What held the take back is read by What To Work On Next and by Your Work So Far, and the next suggestions in Where It Would Show Next follow from it.',
+      'What held the take back is read by Your Work So Far; What To Work On Next forecasts every input the take read, so what held it back most and what pays most to train can be two things, and the pane says which. The next suggestions in Where It Would Show Next follow from what it names.',
     ],
     interpret: [
       'What a take is for is said plainly: a first take, a callback, another reading, the same reading played another way, better prepared or better able than last time, or the same again, worth half as practice.',
@@ -941,7 +945,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'A strength is your abilities’ and techniques’ already: it’s shown, and adds nothing to a result.',
       `Reliability reads every term’s calls together, those before this term kept with this term’s, so it doesn’t start again with a term; it shows once ${ARTISTRY.least} calls have been made.`,
       'A section with too little behind it isn’t shown.',
-      `The first ability or technique in What Keeps Holding It Back is the one your work keeps coming back to. What To Work On Next gives its count for life and puts it first within ${pointsWord(RECOMMEND.recurringWithin)} of the top, and a director’s note on it ends “It’s your … again: it’s held back … of your pieces before this.” Neither moves a figure.`,
+      `The first ability or technique in What Keeps Holding It Back is the one your work keeps coming back to. What To Work On Next gives its count for life and puts it first where it’s about as useful to train as the top, and a director’s note on it ends “It’s your … again: it’s held back … of your pieces before this.” Neither moves a figure.`,
     ],
     unavailable: ['A section shows only once there’s enough behind it, and Early days stands until patterns can be named.'],
     mistakes: [

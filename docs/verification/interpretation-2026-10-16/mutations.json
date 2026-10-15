@@ -1,0 +1,87 @@
+[
+ {
+  "mutation": "I1 grain not applied in the judge",
+  "result": "KILLED",
+  "failingTests": 6
+ },
+ {
+  "mutation": "I2 suitability sign flipped",
+  "result": "KILLED",
+  "failingTests": 6
+ },
+ {
+  "mutation": "I3 the register left out of suitability",
+  "result": "KILLED",
+  "failingTests": 4
+ },
+ {
+  "mutation": "I4 the reading left out of suitability",
+  "result": "KILLED",
+  "failingTests": 2
+ },
+ {
+  "mutation": "I6 the take keeps no grain",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "I7 the brief passes no scene",
+  "result": "KILLED",
+  "failingTests": 5
+ },
+ {
+  "mutation": "A1 advice ranked least first",
+  "result": "KILLED",
+  "failingTests": 2
+ },
+ {
+  "mutation": "A2 advice from the limits, not the forecast",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "A3 growth without diminishing returns",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "A4 no tie ever said",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "A5 an input at full still advised",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "A6 candidates only the kept limits",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "N1 the old tolerance back",
+  "result": "KILLED",
+  "failingTests": 2
+ },
+ {
+  "mutation": "N2 a limit gone when overtaken",
+  "result": "KILLED",
+  "failingTests": 1
+ },
+ {
+  "mutation": "N3 an unmoving way offered again",
+  "result": "KILLED",
+  "failingTests": 2
+ },
+ {
+  "mutation": "N4 a learned note counted as taken",
+  "result": "KILLED",
+  "failingTests": 3
+ },
+ {
+  "mutation": "I5 rehearsal mark the same for every side",
+  "result": "KILLED",
+  "failingTests": 1
+ }
+]

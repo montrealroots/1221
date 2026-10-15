@@ -1,0 +1,63 @@
+{
+ "blind": false,
+ "designed": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.9,
+   "least": 0.84,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.207,
+    "1": 4.213,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.473,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S3": {
+   "cases": 29250,
+   "differ": 0.823,
+   "holds": true
+  }
+ },
+ "heldOut": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.877,
+   "least": 0.792,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.069,
+    "1": 4.138,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.467,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S3": {
+   "cases": 29250,
+   "differ": 0.718,
+   "holds": false
+  }
+ }
+}

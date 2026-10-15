@@ -108,6 +108,11 @@ describe('a note on the craft', () => {
     const left = festival('direction-worked', (_sim, n) => n.focus.kind !== 'craft').notes.filter((n) => n.focus.kind === 'craft');
     const worked = festival('direction-worked', () => true).notes.filter((n) => n.focus.kind === 'craft');
     expect(left.length).toBeGreaterThan(0);
+    // Left alone, none is resolved while the part falls: a limit is still there while its own cost names it, however
+    // another input overtakes it (from 2026-10-16; until then this seed's emotional depth note was resolved as the part
+    // fell from 53.1 to 50.3).
+    for (const n of left.filter((x) => x.outcome === 'resolved')) expect(n.answer!.now ?? n.answer!.after).toBeGreaterThanOrEqual(n.answer!.before - WORKBOOK.evidence);
+    expect(left.every((n) => n.outcome === 'unchanged' || n.outcome === 'resolved')).toBe(true);
     const share = (xs: DirectorNote[]) => xs.filter((n) => n.taken).length / Math.max(1, xs.length);
     // The falsifiability test: working the notes changes what comes of them.
     expect(share(worked)).toBeGreaterThan(share(left));

@@ -527,7 +527,7 @@ describe('How You’ll Play A Scene, played', () => {
     expect(pct(r.twice)).toBe(figure(result, /two bring it to (\d+)%/));
     expect(pct(r.kept)).toBe(figure(result, /The change keeps (\d+)%/));
     // Until the verifying play of 2026-10-12 it said they brought it "to 90%", the mark it passes.
-    const [more, to, complete] = said(result, /from there (\w+) more steps of Rehearse Alone bring it to (\d+)%, past the (\d+)% that completes it/);
+    const [more, to, complete] = said(result, /from there (\w+) more steps of Rehearse Alone bring it to (\d+)%, past the (\d+)% that completes it in /);
     expect(r.more).toBe(wordNum(more!));
     expect(pct(r.end)).toBe(Number(to));
     // The mark that completes it, read from the engine: what the showing asks of the choice, and what it makes of it.

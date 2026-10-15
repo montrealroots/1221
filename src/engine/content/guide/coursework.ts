@@ -64,6 +64,8 @@
  * needed New Haven.
  */
 
+import { GRAIN, GRAIN_LABEL } from '../interpretation';
+import { requiredFor, suitabilityOf } from '../../systems/interpretation';
 import { CHAPTER_FOR } from '../tutorial';
 import { STEP_SPEED } from '../abilities';
 import { COURSES, SKILLS } from '../school';
@@ -170,7 +172,12 @@ const SCANNED = after(SCAN.gain, SCANS);
 const CHOICE_STEP = ALONE.gain * PLAYING.gainShare;
 const CHOSEN_TWICE = after(CHOICE_STEP, 2);
 const KEPT_ON_CHANGE = CHOSEN_TWICE * PLAYING.keptOnChange;
-const STEPS_TO_COMPLETE = (() => { let n = 0; while (after(CHOICE_STEP, n, KEPT_ON_CHANGE) < PLAYING.complete && n < 50) n += 1; return n; })();
+// The mark Driven is complete at in the example's scene, The Seagull (from 2026-10-16, `requiredFor`): the scene's own,
+// by how well the side suits it, where until then every choice was complete at `PLAYING.complete`.
+const EXAMPLE_SCENE = materialOf('seagull-4')!;
+const DRIVEN_SUITS = suitabilityOf('driven', EXAMPLE_SCENE);
+const DRIVEN_MARK = requiredFor(['driven'], EXAMPLE_SCENE);
+const STEPS_TO_COMPLETE = (() => { let n = 0; while (after(CHOICE_STEP, n, KEPT_ON_CHANGE) < DRIVEN_MARK && n < 50) n += 1; return n; })();
 /** Where those steps leave it: past complete, by the last step's share. */
 const CHOICE_DONE = after(CHOICE_STEP, STEPS_TO_COMPLETE, KEPT_ON_CHANGE);
 
@@ -425,6 +432,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'What Each Side Draws On', value: `${(Object.keys(APPROACH_EFFECT) as (keyof typeof APPROACH_EFFECT)[]).map((s) => `${APPROACH_EFFECT[s].label}, ${drawsOn(s)}`).join('; ')}${STAMINA_SIDES.length ? `. ${andList(STAMINA_SIDES)} ${STAMINA_SIDES.length > 1 ? 'draw' : 'draws'} on stamina too, in work shown whole, with no scene; a scene is judged part by part, reads stamina only as tiring toward the end however it’s played, and its table leaves stamina out` : ''}` },
       { label: 'Lean', value: 'Each side moves weight between the showing’s dimensions and never adds any: a choice changes what counts most, never the total', estimate: true },
       { label: 'Fit', value: `A side the scene doesn’t take holds the dimensions it leans on to ${pct(MISFIT)} of themselves, and says so before you choose`, estimate: true },
+      { label: 'The Scene', value: `How well each side suits the scene, from what the scene is: its tones and turns, its features, its language and its medium, and for a practice brief its genre’s register, its reader and the reading you’ve taken. ${GRAIN_LABEL.suits} makes the side easier to make work on the dimensions it leans on, up to ${pct(GRAIN.strength)} of the work’s difficulty, and asks less rehearsal, complete at down to ${pct(PLAYING.complete - GRAIN.prep)}; ${GRAIN_LABEL.against} makes it harder and asks more, up to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}. At full ability every side that fits still reaches 100`, estimate: true },
     ],
     now: [
       `“Chosen: rehearsed in to …%.” A first choice starts at 0%; the same choice again keeps all of it; a different one keeps ${pct(PLAYING.keptOnChange)}.`,
@@ -438,6 +446,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     interpret: [
       'Fully Prepared is the expected result with no draw, every part complete and a good day: what the choice can reach, not where the work stands now.',
       '“Doesn’t fit:” under a side says the scene doesn’t take it, and why.',
+      `The Scene names each side ${GRAIN_LABEL.suits}, ${GRAIN_LABEL.either} or ${GRAIN_LABEL.against} and the two or three things in the scene it rests on, for it or against it. It isn’t a verdict on the side: one you do well can still beat one that suits the scene better, and the take’s result says what the side’s suitability gave or cost apart from what your abilities cost.`,
       `“Your choice now is rehearsed in to …% (complete at ${pct(PLAYING.complete)})” is how far along it is.`,
       'With nothing chosen, the work is read by its own genre and material alone.',
     ],
@@ -460,9 +469,9 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { to: 'craft.identity', kind: 'history', why: 'Every side chosen and shown is kept, and Your Work So Far names one you choose most of the time.' },
     ],
     example: {
-      setup: `${SCENE_STUDY.title}, the lines learned, at readiness 80 and an even nature, nothing chosen yet.`,
+      setup: `${SCENE_STUDY.title} on ${EXAMPLE_SCENE.title}, the lines learned, at readiness 80 and an even nature, nothing chosen yet.`,
       steps: [`Choose ${APPROACH_EFFECT.measured.label} on ${AXES.pace.label} and press Play It This Way.`, `${ALONE.label} twice.`, `Change to ${APPROACH_EFFECT.driven.label}.`],
-      result: `The choice starts at 0%. Each ${ALONE.label} moves it ${pct(CHOICE_STEP)} of what’s left, so two bring it to ${pct(CHOSEN_TWICE)}. The change keeps ${pct(KEPT_ON_CHANGE)}, and from there ${word(STEPS_TO_COMPLETE)} more steps of ${ALONE.label} bring it to ${pct(CHOICE_DONE)}, past the ${pct(PLAYING.complete)} that completes it.`,
+      result: `The choice starts at 0%. Each ${ALONE.label} moves it ${pct(CHOICE_STEP)} of what’s left, so two bring it to ${pct(CHOSEN_TWICE)}. The change keeps ${pct(KEPT_ON_CHANGE)}, and from there ${word(STEPS_TO_COMPLETE)} more steps of ${ALONE.label} bring it to ${pct(CHOICE_DONE)}, past the ${pct(DRIVEN_MARK)} that completes it in ${EXAMPLE_SCENE.title}, where ${APPROACH_EFFECT.driven.label} is ${GRAIN_LABEL[DRIVEN_SUITS.band]}.`,
     },
   },
   {
