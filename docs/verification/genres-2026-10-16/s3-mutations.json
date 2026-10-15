@@ -1,0 +1,32 @@
+[
+ {
+  "mutation": "I2 suitability sign flipped",
+  "verdict": "KILLED",
+  "testsFailed": 6
+ },
+ {
+  "mutation": "I3 the register left out of suitability",
+  "verdict": "KILLED",
+  "testsFailed": 4
+ },
+ {
+  "mutation": "I4 the reading left out of suitability",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "G1 the reader back in full",
+  "verdict": "KILLED",
+  "testsFailed": 4
+ },
+ {
+  "mutation": "G2 the reader ignored in suitability",
+  "verdict": "KILLED",
+  "testsFailed": 5
+ },
+ {
+  "mutation": "G3 the register ignored in suitability",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ }
+]
