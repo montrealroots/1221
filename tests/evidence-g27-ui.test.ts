@@ -284,7 +284,7 @@ describe('c-performerTitle', () => {
     // a lead is 12 off it (`BONDS.leadTaken`), so 10 − 12 = −2. Wendla, an actress's lead, costs her and not him; Melchior
     // and Moritz, an actor's, cost him and not her.
     const r3 = (m: number) => Math.round(m * 1000) / 1000;
-    const [wendla, melchior, moritz] = ['Wendla Bergmann', 'Melchior Gabor', 'Moritz Stiefel'].map((p) => holder(her.sim, p)!);
+    const [wendla, melchior, moritz] = ['Wendla Bergmann', 'Melchior Gabor', 'Moritz Stiefel'].map((p) => holder(her.sim, p)!) as [string, string, string];
     expect([wendla, melchior, moritz].map((n) => r3(her.moved[n]!))).toEqual([-2, 10, 10]);
     expect([wendla, melchior, moritz].map((n) => r3(him.moved[n]!))).toEqual([10, -2, -2]);
 
