@@ -1,7 +1,7 @@
 # School Workload: Why An Attentive Student Was Dismissed, And What Changed, 2026-10-16
 
 The owner's brief "Finish School Workload Balance And The Remaining Acting-Engine Shortfalls", parts 1 to 3 and 7. On
-`claude/zen-mccarthy-i88ujw`, from `5b27379a`. Not merged, not deployed.
+`claude/zen-mccarthy-i88ujw`, from `5b27379a`. Merged to `main` in pull request #31 (`eb0b6022`); not deployed.
 
 `tools/workload.ts` measures each term of one life, played through the public commands by the policy `tools/lives.ts`
 plays (`tools/policy.ts`):
@@ -33,7 +33,8 @@ seed and profile, and 1.4 years: three full terms and the start of a fourth.
 **What happened, piece by piece.**
 - **The partner part was left at nothing.** A scene's partner part stood at nothing on most scenes: of the 46 pieces, 15
   were shown with the partner part short, and 21 with rehearsal short. Rehearsal is held to the least of the parts it
-  reads.
+  reads. Those counts were read by `tools/workload.ts` at the run's end, not at the showing. A part only rises, and the
+  old line had no reader, so they were at least that many at the showing.
 - **What a part at nothing costs.** The showing reads each dimension through the least prepared part it bears on
   (`EVALUATION.prepFloor`, 0.35). So a part at nothing held the dimensions that read it to about a third of themselves,
   whatever else was prepared.
@@ -76,6 +77,14 @@ The game:
    - the part most often short on them, and the steps that answer it;
    - how many pieces are still to come;
    - the day the faculty reviews the term.
+
+   **Corrected later on 2026-10-16** (the sweep, `tests/workload.test.ts`, "found by the sweep"). It counted the pieces
+   shown alone, where the review also counts a piece missed unexcused as due and Unready, so a term could reach the
+   review's mark with no warning. It now counts as the review does (`termTally`), and is looked at after every piece
+   due, missed or shown again. "Still to come" counted the pieces set and not yet shown, at most one a course, so it
+   now says that. It said a notice of concern would follow, where the review steps the standing down one. And it counted
+   the part most often short by its key across templates, which put 19 pieces under one piece's words on a played term
+   where 4 had that part by that name; it's now counted by the part's name and remedy (`mostShort`).
 4. **The review names the cause.** The term's notice of concern now names the part most often short on the Unready
    pieces, and what answers it.
 5. **Due Soonest** (`urgentWork`). The open work is listed soonest due first, and two due the same day by which would
@@ -133,6 +142,9 @@ Unready of shown in each of the first three terms, and the standing at the end (
 - **Scenes are still Unready in the new runs**, 9 to 15 of 46 in the third term. They're short on rehearsal and the
   partner part where a partner couldn't come in time and a reader's daily step didn't cover it. That's under the
   review's mark, and what a player answers by asking earlier: Due Soonest and Shown Today say when.
+  - Read at the showing, with the reader's evenings counted (`at-showing-london-lives-0-attentive.json`, the tool
+    corrected later on 2026-10-16), London's lives-0 third term had 18 pieces short on rehearsal and 10 on the partner
+    part. Read at the run's end, as the runs above were, it had 17 and 14 (`../stage-2026-10-16/runs/`).
 - **The policy is one player.** A player who asks for every evening a week ahead would do better than it; one who
   ignores the warning will fare as the old runs did.
 
