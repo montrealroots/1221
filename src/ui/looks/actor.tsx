@@ -17,6 +17,8 @@ import { ABILITY_DEFS, ABILITY_KIN, DEVELOPMENT, MASTERED, TECHNIQUE_LABEL, type
 import { DIMENSION_LABEL, DIMENSION_MEANS, TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { EXERCISES, exerciseFor } from '@/engine/content/practice';
 import { GENRE_DEFS } from '@/engine/content/genres';
+import { CONCERNS } from '@/engine/content/concerns';
+import { concernDraws, concernsOf, concernWords, registerBasisWords } from '@/engine/systems/register';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { abilityDef, abilityFull, abilityOf, developmentOf, isAbility, targetId } from '@/engine/systems/attributes';
 import { classesGrow, reachOf } from '@/engine/systems/school';
@@ -198,6 +200,13 @@ defineLook<TheGenre>('genre', {
               <p className="xs dim">The research, in its own words: {demand.sourceSupports} ({demand.how}; {demand.confidence} confidence). Uncertain: {demand.uncertainty}</p>
             </>
           )}
+          {/* Its register (from 2026-10-16, `GENRE_REGISTER`): what every take of a brief written for it reads. */}
+          {concernsOf(id).length > 0 && (
+            <>
+              <p className="small"><strong>How its scenes are played.</strong> {registerBasisWords(id)}</p>
+              <ul className="small">{concernsOf(id).map((c) => <li key={c}>{concernWords(c)}</li>)}</ul>
+            </>
+          )}
           <p className="small"><strong>To study it.</strong> {play ? `Read ${play.title}${play.by ? `, by ${play.by}` : ''}, a play of the kind the game has, or watch a film of the kind.` : 'Watch a film of the kind.'} A brief in it is finished work: taped, and judged beat by beat as a taped brief, its own material leaning it.</p>
           <p className="xs dim">Its definition’s source: {def.source}.{demand ? ` Its demands’ source: ${demand.source}.` : ''}</p>
           <p className="small">{loved ? 'You love it: a day of work in it is a better day. Loving it doesn’t speed the work or cap it.' : 'Loving a genre makes a day of work in it better; it doesn’t make you better at it.'}</p>
@@ -205,6 +214,7 @@ defineLook<TheGenre>('genre', {
       ),
       ways: [
         ...(applied(id) ? (demand?.tags ?? []).map((t) => ({ to: at('skill', DEMAND_TECHNIQUE[t.tag]), label: TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t.tag]], detail: `What it asks for: ${DEMAND_LABEL[t.tag]}` })) : []),
+        ...[...new Set(concernsOf(id).flatMap(concernDraws))].map((a) => ({ to: at('ability', a), label: ABILITY_DEFS.find((d) => d.id === a)?.label ?? a, detail: `Its scenes draw on it: ${concernsOf(id).filter((c) => concernDraws(c).includes(a)).map((c) => CONCERNS[c].label).join(', ')}` })),
         ...tapes.map((w) => ({ to: at('work', w.inputs.key), label: w.what, detail: `${one(w.overall)}, ${formatDate(w.at, zoneOf(sim))}` })),
       ],
       provenance: `From docs/research/attributes/: its definition ${def.how === 'read directly' ? 'read at the source' : 'from a search’s summary'}, its demands at ${demand?.confidence ?? 'low'} confidence.`,

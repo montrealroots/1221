@@ -60,7 +60,7 @@ export const BRIEFS_D: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-medical_drama', title: 'Handover At Seven', kinds: ['medical_drama'], medium: 'camera', size: 'medium',
+    id: 'brief-medical_drama', title: 'Handover At Seven', kinds: ['medical_drama'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
     logline: 'A resident at the end of a night shift hands over a patient she’s worried about to an attending who thinks the numbers look fine.',
     circumstances: 'A ward corridor at seven in the morning, outside bed fourteen. The patient, a retired bus driver admitted with abdominal pain, has had a slowly rising heart rate and falling blood pressure through the night, each reading still inside the range that triggers a call.',
     relationship: 'Colleagues a few months into working together; the attending is respected, brisk, and rarely wrong.',
@@ -325,7 +325,7 @@ export const BRIEFS_D: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-neorealism', title: 'The Sewing Machine', kinds: ['neorealism'], medium: 'camera', size: 'short',
+    id: 'brief-neorealism', title: 'The Sewing Machine', kinds: ['neorealism'], medium: 'camera', size: 'short', stakes: 2,
     logline: 'A seamstress tries to pawn her sewing machine to pay the doctor who’s treating her son, knowing it’s how she earns their keep.',
     circumstances: 'A pawnshop on a working street in a port city, Saturday at closing. Her son has a fever on his chest, and the doctor won’t come again until his bill is paid; the machine is how she takes in mending, and without it there’s no money next week either.',
     relationship: 'Customer and pawnbroker; she has been in before, with a ring and a coat, and he remembers her.',
@@ -338,7 +338,7 @@ export const BRIEFS_D: readonly Brief[] = [
       { what: 'He offers less than she needs; she bargains, plainly and without pride.', tones: ['grave'] },
       { what: 'She takes back the tin of needles and thread she can still sew with by hand, and accepts less.', tones: ['grave', 'lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 1,
     why: {
       partner: 'The bargaining moves by his offers, and she has to read how far he’ll go.',
       beats: 'A careful presentation, a hard bargain, then a small choice that says everything about what she values.',
@@ -376,7 +376,7 @@ export const BRIEFS_D: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-nordic_noir', title: 'The Ferry Timetable', kinds: ['nordic_noir'], medium: 'camera', size: 'medium',
+    id: 'brief-nordic_noir', title: 'The Ferry Timetable', kinds: ['nordic_noir'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'withholding',
     logline: 'A detective questions the ticket clerk at a winter ferry terminal about a missing woman, and realizes the clerk has been waiting to be asked.',
     circumstances: 'A ferry terminal on a northern coast in January, three in the afternoon and already dark. A young woman missing for nine days was last seen buying a ticket here; the clerk was on shift and has said nothing until now.',
     relationship: 'Strangers; the detective is from the city and the clerk has lived on the coast all his life.',

@@ -8,7 +8,7 @@ import type { Brief } from './types';
 
 export const BRIEFS_B: readonly Brief[] = [
   {
-    id: 'brief-coming_of_age', title: 'Last Week’s Pay', kinds: ['coming_of_age'], medium: 'camera', size: 'short',
+    id: 'brief-coming_of_age', title: 'Last Week’s Pay', kinds: ['coming_of_age'], medium: 'camera', size: 'short', readerPlays: 'unpredictable',
     logline: 'A fifteen-year-old goes to the back door of the bakery where he worked all summer to collect his last week’s pay, and learns the owner he looked up to has been lying to everyone.',
     circumstances: 'The alley behind a small-town bakery, the first cold evening of September. A sign went up in the window this afternoon: closed for good. Nobody on the staff was told, and nobody was paid on Friday.',
     relationship: 'She hired him when nobody else would, taught him to run the ovens, and called him her right hand. He has never had to ask her for anything.',
@@ -21,7 +21,7 @@ export const BRIEFS_B: readonly Brief[] = [
       { what: 'She admits there’s no money this week, and she knew a month ago.', tones: ['grave'] },
       { what: 'He tells her he’d have worked the week for free if she’d asked, and he means it, and he holds his hand out anyway.', tones: ['grave', 'lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 1, physical: 0, partner: 2, vocal: 0, improvisation: 1,
     why: {
       partner: 'He came with a speech, and everything after it depends on what she admits and how.',
       beats: 'A comic start he can’t control, the turn when she admits it, then a boy holding two true things at once.',
@@ -464,7 +464,7 @@ export const BRIEFS_B: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-dystopian', title: 'The Household Count', kinds: ['dystopian'], medium: 'camera', size: 'medium',
+    id: 'brief-dystopian', title: 'The Household Count', kinds: ['dystopian'], medium: 'camera', size: 'medium', stakes: 3, readerPlays: 'withholding',
     logline: 'In a state that assigns housing by headcount, a son asks the census officer to leave his grandmother off the form, while she coughs in the next room.',
     circumstances: 'A two-room flat in a housing block, on census morning. The state assigns flats by household size and age, and a household with a member over eighty is moved to a smaller flat in an outer district. His grandmother is eighty-three and lies in the next room.',
     relationship: 'Strangers, though she grew up three blocks away. Her visits are recorded, and her own allocation depends on accurate counts.',
@@ -567,7 +567,7 @@ export const BRIEFS_B: readonly Brief[] = [
     ],
   },
   {
-    id: 'brief-espionage', title: 'The Launderette', kinds: ['espionage'], medium: 'camera', size: 'short',
+    id: 'brief-espionage', title: 'The Launderette', kinds: ['espionage'], medium: 'camera', size: 'short', stakes: 3, readerPlays: 'withholding',
     logline: 'An informant brings his last delivery to his handler in a launderette, and has to find out whether he’s being pulled out without showing he’s afraid.',
     circumstances: 'A launderette on a wet Tuesday evening, in an unnamed European city. He’s been passing papers from the ministry for six years. Two of the network were arrested last week. He has the delivery in a folded newspaper.',
     relationship: 'Handler and source. They’ve met twenty times and never used their real names.',

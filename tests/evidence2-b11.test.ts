@@ -521,10 +521,13 @@ describe('p-journey-history', () => {
     // distinction-level one the brief prepared with the genre still unknown; and mastery the genre studied once a day until
     // the brief counts it known. (Until then the strong take was the prepared one, held under 80 by the genre unknown.)
     const step = (s: string) => { rest(); expect(sim.execute({ kind: 'brief.prepare', payload: { brief: b.id, step: s } }).ok, s).toBe(true); };
+    // From 2026-10-16 the genre's register leans the take too (`content/genre-register.ts`), and a step of each part with
+    // the reading changed once came to 80.0, past the strong band: the reading is changed and changed back, each change
+    // keeping half the breakdown (`BRIEF.readingKept`), so the strong take, 73.7, is a quarter of the breakdown in.
     for (const s of ['read', 'lines', 'rehearse']) step(s);
-    expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[1]!.id } }).ok).toBe(true);
+    for (const r of [1, 0]) expect(sim.execute({ kind: 'brief.choose', payload: { brief: b.id, reading: b.readings[r]!.id } }).ok).toBe(true);
     tape();
-    for (const s of ['read', 'read', 'read', 'lines', 'lines', 'rehearse', 'rehearse', 'rehearse']) step(s);
+    for (const s of ['read', 'read', 'read', 'lines', 'lines', 'rehearse', 'rehearse', 'rehearse', 'rehearse']) step(s);
     for (let k = 0; k < 3; k++) tape();
     // Once a day, at the first hour the calendar leaves free.
     let studies = 0;

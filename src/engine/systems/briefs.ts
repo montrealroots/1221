@@ -52,6 +52,7 @@ import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
 import { GENRE_REGISTER } from '../content/genre-register';
 import { CONCERNS, CONCERN_STRENGTH, type Concern } from '../content/concerns';
+import { concernBehind } from './register';
 import { GENRE_BY_ID } from '../content/film-genres';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Skill } from '../content/school';
@@ -179,6 +180,11 @@ export interface Take {
   expected: number;
   band: string;
   chief?: string;
+  /**
+   * The genre's concern behind `chief` (from 2026-10-16, `concernBehind`): where its register asked for the ability that
+   * held the take back most. Absent on a take from before, or where the limit was anything else.
+   */
+  concern?: Concern;
   purpose: Purpose;
   /** The callback's direction it answered, where it was one. */
   callback?: { axis: Axis; side: AxisValue };
@@ -614,13 +620,15 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   practiceGenres(sim, person, b.kinds, worth * 0.5 ** again * practiceShare(rec, b));
   noteMaterial(person, { material: briefMaterial(b), at: sim.now, overall: e.overall, approaches: sidesOf(rec.playing), shown: true });
   const chief = chiefLimit(e);
+  // The genre's concern behind it, where its register asked for the ability that held the take back (from 2026-10-16).
+  const concern = concernBehind(b, e);
   // The take with its reader, and what it leaves between you and a classmate who read.
   const together = takeTogether(sim, person, b, rec, e);
   if (together && rec.reader) afterTogether(sim, person, rec.reader.mate, together, b.title);
   if (together) countTogether(person, together);
   const answered = rec.callback ? rec.playing?.[rec.callback.axis] === rec.callback.side : undefined;
   const take: Take = {
-    at: sim.now, genre, reading: reading.id, sides: sidesOf(rec.playing), prep: { ...ctx.prep }, overall: e.overall, expected, band, ...(chief ? { chief } : {}), purpose,
+    at: sim.now, genre, reading: reading.id, sides: sidesOf(rec.playing), prep: { ...ctx.prep }, overall: e.overall, expected, band, ...(chief ? { chief } : {}), ...(concern ? { concern } : {}), purpose,
     ...(rec.callback ? { callback: { axis: rec.callback.axis, side: rec.callback.side }, answered } : {}),
     ...(together ? { together: { overall: together.overall, contribution: together.contribution, reader: together.partner, ...(together.slip ? { slip: together.slip } : {}), words: sharedWords(e.overall, together) } } : {}),
     key,

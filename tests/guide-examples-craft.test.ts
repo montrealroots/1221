@@ -291,9 +291,9 @@ const PLAYS = {
     return { actor, first, second, breakdown, changed, kept: recordOf(sim.player, DRAMA.id).prep.interpretation };
   },
   reader() {
-    // With the recording: prepared over the two days, the actor at 60 at the take (TEST SETUP), and taped.
-    /** TEST SETUP: the actor at 60 when it’s measured, rested; then the take with the reader, as it stands. */
-    const measured = (sim: Simulation) => { atLevel(sim, 60); rested(sim); return { prep: recordOf(sim.player, DRAMA.id).reader?.prep ?? 1, ...togetherNow(sim) }; };
+    // With the recording: prepared over the two days, the actor at 62 at the take (TEST SETUP), and taped.
+    /** TEST SETUP: the actor at 62 when it’s measured, rested; then the take with the reader, as it stands. */
+    const measured = (sim: Simulation) => { atLevel(sim, 62); rested(sim); return { prep: recordOf(sim.player, DRAMA.id).reader?.prep ?? 1, ...togetherNow(sim) }; };
     // With the recording, then taped.
     const alone = preparedDrama('guide-craft-reader-alone');
     const recording = measured(alone);
@@ -323,7 +323,7 @@ const PLAYS = {
   },
   tape() {
     const sim = preparedDrama('guide-craft-tape');
-    atLevel(sim, 60); rested(sim); // TEST SETUP: the actor at 60 at the take.
+    atLevel(sim, 62); rested(sim); // TEST SETUP: the actor at 62 at the take, as the guide's examples have it.
     const prepared = forecast(sim, sim.player, DRAMA);
     press(sim, 'practice.self_tape', { genre: DRAMA.kinds[0] });
     const rec = recordOf(sim.player, DRAMA.id);
@@ -333,14 +333,14 @@ const PLAYS = {
     const together = takeTogether(sim, sim.player, DRAMA, rec, u)!;
     const callback = rec.callback ? { ...rec.callback } : undefined;
     // The callback it earns, at the same level, nothing else changed.
-    atLevel(sim, 60); rested(sim);
+    atLevel(sim, 62); rested(sim);
     const again = press<{ purpose: string }>(sim, 'practice.self_tape', { genre: DRAMA.kinds[0] });
     const second = rec.takes.at(-1)!;
     return { prepared, take, w, u, together, callback, again, second, still: rec.callback };
   },
   work() {
     const sim = preparedDrama('guide-craft-work');
-    atLevel(sim, 60); rested(sim); // TEST SETUP: the actor at 60 at the take.
+    atLevel(sim, 62); rested(sim); // TEST SETUP: the actor at 62 at the take, as the guide's examples have it.
     press(sim, 'practice.self_tape', { genre: DRAMA.kinds[0] });
     const w = sim.player.work!.at(-1)!;
     const look = resolveLook(sim, { kind: 'work', id: w.inputs.key }) as Looked;

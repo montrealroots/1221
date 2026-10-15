@@ -44,8 +44,9 @@ export const BRIEFS_C: readonly Brief[] = [
       { what: 'She asks if he even wants to go, and he tells her the truth: he’s scared too.', tones: ['grave'] },
       { what: 'They agree on one term, that the treehouse sign comes with them, and she lets him lead her to the ladder.', tones: ['lyric', 'comic'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 2, physical: 1, partner: 3, vocal: 0, improvisation: 0,
     why: {
+      timing: 'Her demands and his counter-offers are a comic routine, each answer landing on her last line.',
       partner: 'He answers each demand as it comes, and her question decides when he stops joking.',
       beats: 'A treaty played for laughs, one honest answer, then a deal that’s funny and tender at once.',
     },
@@ -403,8 +404,9 @@ export const BRIEFS_C: readonly Brief[] = [
       { what: 'She finds his card propped against the napkin holder, and tells him about the sale.', tones: ['grave'] },
       { what: 'She brings out the pie with a paper turkey on a toothpick stuck in it and sits down across from him in the booth, which she has never done.', tones: ['lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 2, physical: 1, partner: 2, vocal: 0, improvisation: 0,
     why: {
+      timing: 'Their gravy jokes are a double act eleven years practiced, and the news has to be slipped in between the laughs.',
       partner: 'She tells him when he’s ready to hear it, and he decides how the news lands.',
       beats: 'An old routine, the news inside it, and a tradition broken on purpose, every bit of it played in earnest.',
     },

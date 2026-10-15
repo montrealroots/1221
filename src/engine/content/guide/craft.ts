@@ -85,6 +85,8 @@ import { EVERYDAY_FITNESS, FITNESS, SPENT } from '../../systems/life';
 import { KNOB_LIMITS } from '../../systems/personality';
 import { SELF_TAPE } from '../../systems/engagement';
 import type { GuideEntry } from './types';
+import { ceilingAt } from '../lifespan';
+import { CONCERNS, CONCERN_IDS } from '../concerns';
 
 // --- where it is ------------------------------------------------------------------------------------------------------
 
@@ -189,8 +191,14 @@ const afterTwoDays = (gain: number): number => gain + gain * DAY_TWO_SPEED * (1 
 const PREP_MINUTES = (['read', 'lines', 'rehearse'] as const).reduce((a, s) => a + stepMinutes(DRAMA, s), 0);
 const [READING_ONE, READING_TWO] = [DRAMA.readings[0]!, DRAMA.readings[1] ?? DRAMA.readings[0]!];
 
+/**
+ * Stamina's full for the examples' life: born June 2002, so 24 when the term begins in August 2026 (`abilityFull`, a
+ * body's ceiling at its age). Until 2026-10-16 the examples' performer had every full at 100, and a played life's take
+ * matched it to the tenth only by rounding: the genre's register moved the weights and the two came a tenth apart.
+ */
+const STAMINA_FULL = ceilingAt(24).fitness;
 /** An actor at one level in everything, and another way here and there: the examples' performer. */
-const actor = (rest: number, levels: Partial<Record<AbilityId, number>> = {}): Performer => ({ ability: (a) => levels[a] ?? rest, full: () => 100, technique: () => rest });
+const actor = (rest: number, levels: Partial<Record<AbilityId, number>> = {}): Performer => ({ ability: (a) => levels[a] ?? rest, full: (a) => (a === 'stamina' ? STAMINA_FULL : 100), technique: () => rest });
 const NOBODY = {} as Person;
 const PREPARED: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] };
 const FULL_PREP = { interpretation: 1, memorization: 1, rehearsal: 1, genre: 1 };
@@ -203,7 +211,13 @@ function take(performer: Performer, reading: string, readiness: number, callback
   return { e, weights: pieceWeights(ctx.task, ctx.lean, spec) };
 }
 
-const EVEN = actor(60);
+/**
+ * The examples' actor's level, in everything. 62 from 2026-10-16: at 60 the take with a recording reading came to 65.0
+ * played and 64.9 here, on the line a callback is earned at, so a tenth decided whether the example's callback existed
+ * at all, and the genre's register moved it that tenth. At 62 it's earned with room to spare.
+ */
+const AT = 62;
+const EVEN = actor(AT);
 const TAPED = take(EVEN, READING_ONE.id, 80);
 const CALLBACK = take(EVEN, READING_ONE.id, 80, true);
 const LAST_BEAT = TAPED.e.piece!.segments[TAPED.e.piece!.segments.length - 1]!;
@@ -439,8 +453,8 @@ export const CRAFT: readonly GuideEntry[] = [
     title: 'Genres',
     goal: 'craft',
     covers: ['genre.study', 'look.genre'],
-    synonyms: ['genre', 'study a genre', 'study it', 'study the genre', 'genre familiarity', 'genre practice', 'loved genre', 'genre requirements', 'knowing the genre', 'film of the kind'],
-    questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
+    synonyms: ['genre', 'study a genre', 'study it', 'study the genre', 'genre familiarity', 'genre practice', 'loved genre', 'genre requirements', 'knowing the genre', 'film of the kind', 'genre register', 'the genre asks'],
+    questions: ['How do I get to know a genre?', 'What does studying a genre do?', 'Why does a genre’s scene play differently from another’s?', 'Does loving a genre make me better at it?', 'What does a genre ask of an actor?', 'Why is Knowing The Genre short on my brief?'],
     where: { route: PROFILE, label: 'Player Profile, Genres' },
     available: `${OPENED}.`,
     short: `Each of the ${FILM_GENRES.length} genres keeps two figures of yours: familiarity, from studying it, and practice, from work done in it. Study It is ${plural(ENGAGEMENT.genre.minutes, 'minute')} with a play of the kind the game has, or a film of it. The better of the two is how well you know the genre: a taped brief in it reads that as part of its preparation, every point to ${pct(BRIEF.complete.genre)} showing in the take, and a scene or a part from a play of its kind is prepared up to ${pct(ENGAGEMENT.genreSpeed)} faster. Loving a genre makes a day of its work a better day, and the work comes out as good as it would have.`,
@@ -463,6 +477,8 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Faster Preparation', value: `Up to ${pct(ENGAGEMENT.genreSpeed)} at 100: a scene for class from a play of the kind, and a part’s lines in one. A brief’s own steps read the material met before instead` },
       // A take of its brief reads it; a play’s night or a class scene reads its own material’s (until 2026-10-13 this said
       // “their work reads it”, which a farce’s night, reading no clown, didn’t).
+      // From 2026-10-16 (`content/genre-register.ts`): every genre's scenes are played in a register.
+      { label: 'How Its Scenes Are Played', value: `Every genre has one or two concerns, ${CONCERN_IDS.length} in all, such as ${CONCERNS.restraint.label}, ${CONCERNS.rhythm.label} or ${CONCERNS.spontaneity.label}: every take of a brief written for it weighs the dimensions they lean on more and draws on the abilities they ask, as strongly as a reading counts. It moves weight and adds none: a take fully prepared at full ability comes to 100 in every genre` },
       { label: 'What It Asks For', value: `${APPLIED} genres ask a technique of an actor, where the research established it: their brief stages it, and a take of it reads it; a night of a play of the kind, or a class scene from one, reads its own material’s techniques instead` },
     ],
     now: [
@@ -477,6 +493,7 @@ export const CRAFT: readonly GuideEntry[] = [
       'It Asks For names each technique with your level against mastery, or says the research didn’t establish one: “Not established: the research rests on one example”, or “Nothing past the camera’s own”.',
       'A genre’s look gives Familiarity, Practice and Preparation: how much faster the better of the two makes a scene or a part from a play of its kind, where a brief’s steps read the material met before instead. It gives what the research found the genre asks, and how sure it is.',
       `Knowing The Genre, inside a brief, is the better of the first two against the ${pct(BRIEF.complete.genre)} that completes it.`,
+      'The Genre Asks, inside a brief, names each of its genre’s concerns: what it asks, what the take weighs more and draws on, and which part of preparation answers it. A take held back most by an ability a concern asks for says so: “Composure held back the consistency by 4.2 points: Nordic Noir’s Feeling Held In asks for it”.',
       '“You love it” on a genre’s look means a day of its work is a better day: loving it doesn’t speed the work or cap it.',
     ],
     unavailable: [
@@ -486,6 +503,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     mistakes: [
       'Studying one genre for hours in a day: each study the same day adds half the one before. One a day, over a few days, goes further.',
+      'Playing every genre’s scene the same way: two scenes can stage the same features and still ask different things, since each genre’s register weighs the take its own way. A way of playing it that leans where the genre does puts more of the take on what that genre asks.',
       `Studying on past ${pct(BRIEF.complete.genre)} for a take: past that it adds to a take no more, though it still speeds a scene or a part from a play of the kind.`,
       'Expecting a brief’s steps to go faster in a genre you know: they read the material’s features met before, and the genre is its own part of the take.',
       `Taping cold to learn a genre: a take taped with nothing prepared is ${pct(BRIEF.practiceUnprepared)} of a prepared take’s practice in it.`,
@@ -810,7 +828,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'body.sleep', kind: 'optional', why: `Rested, at readiness ${EVALUATION.sufficientReadiness} or more, tiredness costs a take nothing.` },
     ],
     example: {
-      setup: `${DRAMA.title}, read as ${READING_ONE.label} and fully prepared, by an actor at 60 in every ability and technique, rested at readiness 80, with no draw.`,
+      setup: `${DRAMA.title}, read as ${READING_ONE.label} and fully prepared, by an actor at ${AT} in every ability and technique, rested at readiness 80, with no draw.`,
       steps: ['Press Tape It.', 'Read The Last Take, beat by beat.', 'Tape the callback it earns, at the same level, with nothing else changed.'],
       result: `It comes to ${one(TAPED.e.overall)}, ${band(TAPED.e.overall)}: its beats ${andList(TAPED.e.piece!.segments.map((s) => one(s.overall)))}, the last beat ${pct(1 - LAST_BEAT.drain)} off for stamina, continuity ${one(TAPED.e.piece!.continuity)}. ${CHIEF ? `${CHIEF}.` : ''} With the recording reading, the take together is ${one(WITH_RECORDING)}, ${WITH_RECORDING >= STRONG ? 'enough for a callback' : 'short of a callback'}. Pitched as a callback, the same take comes to ${one(CALLBACK.e.overall)}, ${band(CALLBACK.e.overall)}, and played no differently it leaves the note unanswered: the callback is still yours.`,
     },
@@ -877,7 +895,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'body.how', kind: 'optional', why: 'Readiness at the hour is the condition every piece reads.' },
     ],
     example: {
-      setup: `The take of ${DRAMA.title} under Taping A Brief: an actor at 60 in everything, fully prepared, at readiness 80, with no draw.`,
+      setup: `The take of ${DRAMA.title} under Taping A Brief: an actor at ${AT} in everything, fully prepared, at readiness 80, with no draw.`,
       steps: ['Open it from School Journey.', 'Read Part By Part.'],
       result: `${one(TAPED.e.overall)} of 100, ${band(TAPED.e.overall)}. ${CHIEF ? `The summary says what held it back most: ${CHIEF}.` : 'Everything it asked was met.'} Part By Part gives ${andList(TAPED.e.piece!.segments.map((s) => `${s.label} ${one(s.overall)}`))}; ${LAST_BEAT.label} is Tiring, ${pct(1 - LAST_BEAT.drain)} off, and continuity is ${one(TAPED.e.piece!.continuity)}.`,
     },

@@ -19,6 +19,8 @@ import { DIMENSION_LABEL, TASK_PROFILES } from '@/engine/content/tasks';
 import { abilityFull, abilityOf } from '@/engine/systems/attributes';
 import { bandOfQuality, chiefLimit, replay } from '@/engine/systems/evaluation';
 import { BAND_LABEL } from '@/engine/systems/coursework';
+import { concernBehind, concernNote, concernsOf, concernWords, registerBasisWords } from '@/engine/systems/register';
+import type { Concern } from '@/engine/content/concerns';
 import { BRIEF, PURPOSE_WORDS, READER_PLAYS, asksOf, briefsRead, genreKnown, briefMaterial, forecast, prepareRefusal, preview, purposeOf, readerRefusal, readingOf, requiredOf, stepMinutes, suggestions, tapeRefusal, turnsOf, type BriefStep } from '@/engine/systems/briefs';
 import { PIECE } from '@/engine/content/piece';
 import { Segments, WorkThrough } from '@/ui/components/WorkThrough';
@@ -132,6 +134,11 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
   };
   const study = studyRefusal(sim, person, genre);
   const plays = readerPlaysWords(b);
+  const scenesGenre = b.kinds[0]!;
+  const asked = concernsOf(scenesGenre);
+  /** A limit's note with the genre's concern behind it, where its register asked for that ability. */
+  const withConcern = (chief: string | undefined, c: Concern | undefined) => (chief ? `${chief}${c ? `: ${concernNote(scenesGenre, c)}` : ''}.` : '');
+  const nowConcern = concernBehind(b, now);
   return (
     <div className="col gap-3" data-brief={b.id}>
       <div className="row gap-2 wrap" style={{ alignItems: 'baseline' }}>
@@ -153,6 +160,8 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
           <dt>You Play</dt><dd>{b.you}</dd>
           <dt>{b.medium === 'voice' ? 'You Speak To' : 'The Reader Plays'}</dt><dd>{b.reader}</dd>
           {plays && <><dt>How They Play It</dt><dd>{plays}</dd></>}
+          {/* The register of the genre it was written for (from 2026-10-16, `GENRE_REGISTER`): what every take of it reads. */}
+          {asked.length > 0 && <><dt>The Genre Asks</dt><dd><ul className="small" style={{ margin: 0, paddingLeft: '1.1em' }}>{asked.map((c) => <li key={c}>{concernWords(c)}</li>)}</ul><span className="xs dim">{scenesGenre !== genre ? `It’s a ${GENRE_BY_ID[scenesGenre]?.label ?? scenesGenre} scene, played in that genre’s register. ` : ''}{registerBasisWords(scenesGenre)}</span></dd></>}
           <dt>What You Want</dt><dd>{b.objective}</dd>
           <dt>What’s In The Way</dt><dd>{b.obstacle}</dd>
         </dl>
@@ -225,7 +234,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       <div className="col gap-1">
         <div className="row-between"><div className="eyebrow">The Take</div><HowItWorks help="practice.self_tape" /></div>
         <p className="small" style={{ margin: 0 }}>
-          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the take asks.'} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
+          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? withConcern(chiefLimit(now), nowConcern) : 'Every part of it is where the take asks.'} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
         </p>
         <div>
           <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? `An hour: ${b.title}, ${readingOf(b, rec?.reading)?.label ?? ''}`} onClick={() => { const r = run<{ overall: number; purpose: string; band: string }>('practice.self_tape', { genre, brief: b.id }); if (r.ok) toast(`Taped: ${r.value!.overall.toFixed(1)}, ${BAND_LABEL[r.value!.band as keyof typeof BAND_LABEL]}.`, 'positive'); }}>Tape It (60 Min)</Gated>
@@ -239,7 +248,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       {last && (
         <div className="col gap-1">
           <div className="eyebrow">The Last Take, {formatDate(last.at, sim.zone)}</div>
-          <p className="small" style={{ margin: 0 }}><strong>{last.overall.toFixed(1)}</strong>, {BAND_LABEL[last.band as keyof typeof BAND_LABEL]}: {readingOf(b, last.reading)?.label}{last.sides.length ? `, played ${last.sides.join(' and ')}` : ''}. {PURPOSE_WORDS[last.purpose]} {last.chief ? `${last.chief}.` : ''}{last.callback ? (last.answered ? ' The callback’s note was answered.' : ' Played against the callback’s note: the callback is still yours.') : ''}</p>
+          <p className="small" style={{ margin: 0 }}><strong>{last.overall.toFixed(1)}</strong>, {BAND_LABEL[last.band as keyof typeof BAND_LABEL]}: {readingOf(b, last.reading)?.label}{last.sides.length ? `, played ${last.sides.join(' and ')}` : ''}. {PURPOSE_WORDS[last.purpose]} {withConcern(last.chief, last.concern)}{last.callback ? (last.answered ? ' The callback’s note was answered.' : ' Played against the callback’s note: the callback is still yours.') : ''}</p>
           {last.together && <p className="small" style={{ margin: 0 }}><strong>With {last.together.reader}.</strong> {last.together.words} A casting office sees the take with its reader: that’s what a callback reads.</p>}
           {lastEval && <Segments e={lastEval} caption="The Last Take, Beat By Beat" />}
           {lastWork && (
@@ -277,7 +286,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
               <thead><tr><th scope="col">When</th><th scope="col">Reading</th><th scope="col">Played</th><th scope="col">For</th><th scope="col" className="num">Result</th><th scope="col">Held Back Most By</th></tr></thead>
               <tbody>
                 {[...rec.takes].reverse().map((t) => (
-                  <tr key={t.key}><td className="nowrap">{formatDate(t.at, sim.zone)}</td><td>{readingOf(b, t.reading)?.label}</td><td className="xs">{t.sides.length ? t.sides.join(', ') : 'Left open'}{t.callback ? ', a callback' : ''}</td><td className="xs">{PURPOSE_WORDS[t.purpose]}</td><td className="num mono">{t.overall.toFixed(1)}</td><td className="xs">{t.chief ?? 'Nothing'}</td></tr>
+                  <tr key={t.key}><td className="nowrap">{formatDate(t.at, sim.zone)}</td><td>{readingOf(b, t.reading)?.label}</td><td className="xs">{t.sides.length ? t.sides.join(', ') : 'Left open'}{t.callback ? ', a callback' : ''}</td><td className="xs">{PURPOSE_WORDS[t.purpose]}</td><td className="num mono">{t.overall.toFixed(1)}</td><td className="xs">{t.chief ? `${t.chief}${t.concern ? `: ${concernNote(scenesGenre, t.concern)}` : ''}` : 'Nothing'}</td></tr>
                 ))}
               </tbody>
             </table>
