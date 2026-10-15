@@ -177,7 +177,7 @@ The earlier passes (banking, school, papers, health, the current scope) are in t
 | Built app, 1440 | the same | the same at 1440 | 0 | the same; a first run failed 4 steps on the tool's old pattern, fixed in `027f3631` |
 | Gate | `027f3631` | `npm run gate`, from a file | 0 | 348 files, 4,192 tests, the tree unchanged |
 | Gate | `ebe8e5b3` (#33's head) | the same | 0 | the same |
-| Gate | the commit that wrote this section | the same | — | run after it was committed; the next commit records the result |
+| Gate | `72c69f93` (the commit that wrote this section) | the same | 0 | 348 files, 4,192 tests, the tree unchanged. The commit after it changes only this row and the work plan's line |
 
 - **What the code changes since were:** none since `027f3631` but tools and documents. `f06331be` to `027f3631` changed
   `tools/acceptance-ui.mjs` alone. #34 adds `tools/rehearsal-mark-saves.ts` and `tools/captures.mjs`; each was run from
