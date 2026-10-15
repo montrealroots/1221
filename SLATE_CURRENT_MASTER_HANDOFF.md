@@ -1,6 +1,37 @@
-# Read First: The Genre Benchmark S3, Resolved, 2026-10-16
+# Read First: Genre Acceptance And The Stage, 2026-10-16
 
-**This section is the current status.** Every section below is history. It covers the owner's brief "Resolve The
+**This section is the current status.** Every section below is history. It covers the owner's brief "Finish Genre
+Acceptance And Correct The Stage-Interpretation Bias", on `claude/zen-mccarthy-i88ujw` after the S3 work below, in the
+same pull request (#32): not merged, not deployed. The accounts are `docs/verification/stage-2026-10-16/` and
+`docs/verification/genres-2026-10-16/g1-replacement.md`.
+
+- **S3** (the section below, unchanged by this one): 23,300 of 28,413 on the fresh held-out sample (82.00%, from
+  78.95%), and 1,015,539 of 1,156,538 fresh (87.8%). The stage change didn't move it: every brief's suitability is
+  identical.
+- **The stage bias.** Expansive was ahead on 85 of 85 class scenes and plays: the house's +0.25 for size, a voice's
+  demand counted as size, and not one signal for restraint.
+  - **Projection is now a demand.** The house weighs execution 1.2, as a microphone does, and pulls no scale.
+  - **Every scene says its circumstances,** from its text: what it hides, how private it is, how far it's spoken to
+    many, how far its conflict is out loud.
+  - `RULESET` is evaluation-8.
+  - Restrained is now ahead on 50 and expansive on 33. On the fresh production nights it's 16 and 13 of 29.
+  - Mastery holds on all 2,277 combinations and 783 nights.
+- **Shortfalls against the criteria written first,** each with its cause in the README:
+  - **ST3's "even actor the same":** 159 of 171, every difference within one 0.1 rounding step.
+  - **ST4, drama:** all 25 catalog drama scenes suit restraint; it has no public or brawling drama scene.
+  - **ST6, the restrained specialist against the grain:** 7 of 34, against 25%. Expansive draws twice what restrained
+    does, as `APPROACH_EFFECT` was.
+- **The genre audit** (`genre-audit.md`): knowing a genre helps its own brief in 149 of 149, and another's in none.
+- **Verification:** RESULTS-PENDING.
+- **Open:**
+  - the three shortfalls above (owner's: add drama content, or weigh restrained's draw);
+  - section 2's six acceptance areas.
+
+  Finishing the genres isn't finishing the game.
+
+# Earlier: The Genre Benchmark S3, Resolved, 2026-10-16
+
+History now: the section above is the current status. It covers the owner's brief "Resolve The
 Remaining Genre Benchmark With Defensible Changes And Proof", on `claude/zen-mccarthy-i88ujw`, restarted from `main` at
 `eb0b6022` after pull request #31 was merged. A new pull request is opened for the owner: not merged, not deployed.
 The account is `docs/verification/genres-2026-10-16/g1-replacement.md` ("S3: The Reader Weighed As A Concern"), and
