@@ -78,7 +78,7 @@ export function suitabilityOf(side: AxisValue, material: MaterialProfile | undef
   const push = (source: string, v: number) => { if (Math.abs(v) >= 0.005) signals.push({ source, v: r2(v) }); };
   const genre = scene.genre ? GENRE_BY_ID[scene.genre]?.label ?? scene.genre : undefined;
   for (const c of scene.concerns ?? []) push(`${genre ? `${genre}’s ` : ''}${CONCERNS[c].label}: ${CONCERN_AFFINITY[c].why}`, (CONCERN_AFFINITY[c].affinity[side] ?? 0) * GRAIN.concern);
-  if (scene.readerPlays) push(READER_AFFINITY[scene.readerPlays].label, READER_AFFINITY[scene.readerPlays].affinity[side] ?? 0);
+  if (scene.readerPlays) push(READER_AFFINITY[scene.readerPlays].label, (READER_AFFINITY[scene.readerPlays].affinity[side] ?? 0) * GRAIN.reader);
   if (material) {
     push(MEDIUM_AFFINITY[material.medium].label, MEDIUM_AFFINITY[material.medium].affinity[side] ?? 0);
     const shares = toneShares(material);

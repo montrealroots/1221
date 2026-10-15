@@ -145,10 +145,65 @@ function measure(scenes: readonly Brief[]) {
   };
 }
 
+/**
+ * `--validate` (from 2026-10-16, the owner's brief "Resolve The Remaining Genre Benchmark"; defined in
+ * g1-replacement.md, "S3: The Reader Weighed As A Concern", before any change was measured on it). Every brief has been
+ * read by some sample, so this set is fresh in what S3 has never read:
+ * - each brief played in its **second reading** (S3 reads the first);
+ * - the contrasting genre pairs **off S3's grid** (S3 samples every third genre against every fifth after it);
+ * - a **different family of ability profiles**: two abilities at 72, each with the next, the rest even.
+ * Picked as S3 picks: the best profile, and on each axis the side whose suitability is the greater, a tie to the first.
+ * Related pairs (a concern shared) off the grid are measured beside them, for overlap kept, not for a threshold.
+ */
+function validate() {
+  const PAIRS = ABILITIES.map((a, i) => actor({ [a]: 72, [ABILITIES[(i + 1) % ABILITIES.length]!]: 72 }, (600 - 144) / (ABILITIES.length - 2)));
+  const scenes = BRIEFS.filter((b) => b.readings.length > 1);
+  const seen = new Set<string>();
+  for (let i = 0; i < genres.length; i += 3) for (let j = i + 1; j < genres.length; j += 5) seen.add(`${genres[i]}|${genres[j]}`);
+  const shared = (a: string, b: string) => GENRE_REGISTER[a]!.concerns.filter((c) => GENRE_REGISTER[b]!.concerns.includes(c)).length;
+  const contrasting: [string, string][] = [], related: [string, string][] = [];
+  for (let i = 0; i < genres.length; i += 1) for (let j = i + 1; j < genres.length; j += 1) {
+    const [g, h] = [genres[i]!, genres[j]!];
+    if (seen.has(`${g}|${h}`)) continue;
+    if (shared(g, h) === 0 && kinship(g, h) < 0) contrasting.push([g, h]); else if (shared(g, h) > 0) related.push([g, h]);
+  }
+  const picks = new Map<string, { spec: number; sides: string; ties: number }>();
+  const pickOf = (b: Brief, g: string) => {
+    const key = `${b.id}|${g}`;
+    const had = picks.get(key);
+    if (had) return had;
+    const x = as(b, g);
+    const reading = x.readings[1]!.id;
+    const rec: BriefRecord = { prep: { interpretation: 1, memorization: 1, rehearsal: 1 }, takes: [] };
+    const ctx = briefContext(nobody, x, rec, { reading, prep: { genre: 1 } });
+    const piece = briefPiece(x, { ...rec, reading }, reading);
+    const v = PAIRS.map((p) => judgePiece(SEED, p, { ...ctx, condition: { readiness: 100 }, key: `sig:${x.id}`, expected: true }, piece).overall);
+    const scene = sceneOf(x, readingOf(x, reading));
+    const s = SIDES.map((side) => suitabilityOf(side, briefMaterial(x), scene).s);
+    const p = { spec: v.indexOf(Math.max(...v)), sides: [0, 2, 4].map((k) => (s[k]! >= s[k + 1]! ? 0 : 1)).join(''), ties: [0, 2, 4].filter((k) => s[k] === s[k + 1]).length };
+    picks.set(key, p);
+    return p;
+  };
+  const tally = (pairs: [string, string][]) => {
+    let n = 0, differ = 0, ties = 0;
+    const byReader: Record<string, [number, number]> = {};
+    for (const b of scenes) for (const [g, h] of pairs) {
+      const x = pickOf(b, g), y = pickOf(b, h);
+      const d = x.spec !== y.spec || x.sides !== y.sides;
+      n += 1; if (d) differ += 1; if (x.ties || y.ties) ties += 1;
+      const r = b.medium === 'voice' ? 'voice' : b.readerPlays ?? 'steady';
+      const t = (byReader[r] ??= [0, 0]); t[1] += 1; if (d) t[0] += 1;
+    }
+    return { cases: n, differ, share: r3(differ / Math.max(1, n)), withATie: ties, byReader: Object.fromEntries(Object.entries(byReader).map(([k, [a, c]]) => [k, `${a} of ${c} (${(100 * a / c).toFixed(1)}%)`])) };
+  };
+  const c = tally(contrasting);
+  return { scenes: scenes.length, readingPlayed: 'the second', profiles: 'two abilities at 72, each with the next', contrastingPairs: contrasting.length, relatedPairs: related.length, S3: { ...c, holds: c.differ / Math.max(1, c.cases) >= 0.8 }, related: tally(related) };
+}
+
 // `--fresh`: the briefs neither sample read, for validating the revision (every brief not every third).
 const designedFresh = BRIEFS.filter((b) => !/-\d+$/.test(b.id)).filter((_, i) => i % 3 !== 0);
 const heldOutFresh = BRIEFS.filter((b) => /-\d+$/.test(b.id)).filter((_, i) => i % 3 !== 0);
-const out = flag('fresh')
+const out = flag('validate') ? { blind: flag('blind'), reader: GRAIN.reader, validate: validate() } : flag('fresh')
   ? { blind: flag('blind'), designedFresh: measure(designedFresh), heldOutFresh: measure(heldOutFresh) }
   : { blind: flag('blind'), designed: measure(designed), heldOut: measure(heldOut) };
 console.log(JSON.stringify(out, null, 1));

@@ -113,7 +113,7 @@ export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affini
  * genres (criterion I2 asks 20%): the register outweighed everything the scene itself said, a genre rule by another name. Chosen against the criteria written
  * before (docs/verification/interpretation-2026-10-16/criteria.md).
  */
-export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5 } as const;
+export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5, reader: 1 } as const;
 
 export type GrainBand = 'suits' | 'either' | 'against';
 export const GRAIN_LABEL: Readonly<Record<GrainBand, string>> = { suits: 'Suits The Scene', either: 'Either Way', against: 'Against The Grain' };

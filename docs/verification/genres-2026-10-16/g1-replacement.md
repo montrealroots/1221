@@ -217,3 +217,70 @@ per 50 scenes.
 - **Giving the reader less weight because S3 asks it.** That's tuning against the criterion.
 
 Both are the owner's to weigh, with this table. The original S2 and S3 results stand as recorded, failing.
+
+## S3: The Reader Weighed As A Concern, Defined Before It Was Validated (2026-10-16, The Owner's Later Brief)
+
+The owner's brief "Resolve The Remaining Genre Benchmark With Defensible Changes And Proof". It started from `main` at
+`eb0b6022`. S3 and its 80% threshold are unchanged. Nothing was removed or relabeled.
+
+### The Diagnosis, On The Known Fresh Held-Out Sample
+
+The baseline: 22,432 of 28,413 contrasting (pair, scene) cases differ, 78.95%, leaving 5,981 misses. Each miss was
+tested against counterfactuals: suitability without the reader, with the register at full weight, and without the
+cap at ±1. A tie is an axis whose two sides are equal.
+
+| Counterfactual, Of The 5,981 Misses | Misses It Would Rescue |
+|---|---|
+| The register at full weight | 3,735 (62%) |
+| The reader left out | 2,389 (40%); 2,197 of them nothing else rescues |
+| The cap at ±1 lifted | 193 (3%) |
+| An exact tie on an axis, either genre | 236 involved |
+| None of the above | 1,548 (26%) |
+
+- **No miss is a mislabeled pair.** In every miss the two registers' declared pulls are opposed on at least one axis.
+- **The 1,548 that nothing rescues are legitimate.** They're the scene's own features, tones, medium and reading
+  deciding, with the cap involved in only one of them. That's I2's point: a genre isn't a rule.
+- **The cap and ties are minor.** They're reported and not changed. Changing how a tie is picked would change the
+  benchmark.
+- **The reader's hypothesis holds in part.** The reader alone decides 40% of the misses. The reason is a weighting
+  inconsistency: a register's concern counts at half its affinity (`GRAIN.concern`, 0.5), set when full weight made a
+  genre a rule. The reader, one signal like one concern, counts at full: a pressing, withholding or unpredictable reader
+  pulls up to twice as hard as any concern. No record says why it was set at full; it was never tuned.
+
+### The Change, And Why
+
+**`GRAIN.reader` = `GRAIN.concern` = 0.5.** A reader's affinity counts as a register concern's does.
+- **The principle.** Each is one source's way of playing the scene, and neither should outweigh the other by default.
+- **What's kept.**
+  - The reader still moves suitability.
+  - The reader's lean and draw on the take are unchanged (`READER_PLAYS`).
+  - No genre data, threshold, sample or pick rule changes.
+- **What this doesn't do.**
+  - It isn't fitted to S3. No other value was tried.
+  - Lowering the reader below a concern, or raising the register past half, was ruled out. One would make the reader
+    count for less than a concern does. The other would bring back the genre-as-rule that I2 caught.
+
+On the known samples, measured before this was written (exploration, not validation):
+- **S3** went from 78.9% to 82.0% on the fresh held-out sample and from 71.8% to 82.8% on the held-out one; designed
+  is 88.9% and fresh designed 87.4%.
+- **S1 and S2** hold.
+- **The interpretation criteria all hold.** I2's scale clause is the closest, at 20.8% against 20%, from 21.5%.
+
+### Fresh Validation, Defined Here Before It Was Run (`--validate`)
+
+Every brief has been read by some sample. So this set is fresh in what S3 has never read:
+- **The reading.** Every brief (298, all with a second reading) is played in its second reading. S3 plays the first.
+- **The genre pairs.** Every contrasting pair (no concern shared, declared pulls opposed) that's off S3's grid. S3
+  samples every third genre against every fifth after it.
+- **The ability profiles.** Twelve profiles of two abilities at 72 (each with the next), the rest even. S3 uses one
+  ability at 85.
+- **The pick.** As S3's: the best profile, and on each axis the greater suitability, a tie to the first side. Ties are
+  counted and reported.
+- **Related pairs** (a concern shared) off the grid are measured beside them, to show overlap kept, with no threshold.
+
+**Passes if:**
+- with the change, at least 80% of the fresh contrasting cases differ;
+- related pairs differ less often than contrasting ones.
+
+The measure runs at both reader weights, 1 (before) and 0.5 (after). The share is reported with its numerator and
+denominator, and by the reader's style.
