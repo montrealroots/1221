@@ -1,6 +1,47 @@
-# Read First: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
+# Read First: The Genre Benchmark S3, Resolved, 2026-10-16
 
-**This section is the current status.** Every section below is history. It covers the owner's brief "Finish School
+**This section is the current status.** Every section below is history. It covers the owner's brief "Resolve The
+Remaining Genre Benchmark With Defensible Changes And Proof", on `claude/zen-mccarthy-i88ujw`, restarted from `main` at
+`eb0b6022` after pull request #31 was merged. A new pull request is opened for the owner: not merged, not deployed.
+The account is `docs/verification/genres-2026-10-16/g1-replacement.md` ("S3: The Reader Weighed As A Concern"), and
+its evidence is in `s3-reader/`.
+
+- **The diagnosis**, on the 78.9% sample (22,432 of 28,413):
+  - The reader alone decided 40% of the 5,981 misses.
+  - The register's half weight against every scene signal decided 62%.
+  - The scene's own signals decided 26% whatever was changed.
+  - The cap and ties decided under 4%.
+  - No miss was a mislabeled pair.
+- **The change.** `GRAIN.reader` is 0.5, from 1: the reader counts as a register concern does (`GRAIN.concern`), where
+  before it counted twice as much, and nothing recorded why. `RULESET` is evaluation-7. Nothing else moved: not the
+  threshold, the samples, the pick or the genre data.
+- **The results**, from the tool's numerators:
+  - fresh held-out: 22,432 to 23,300 of 28,413 (78.95% to 82.00%);
+  - held-out: 81.00% to 82.84%;
+  - fresh designed: 86.71% to 87.40%;
+  - designed: 88.98% to 88.90%, 12 cases fewer.
+- **Fresh validation, defined before it ran** (`fade7e1c`): second readings, contrasting pairs off S3's grid, and
+  two-ability profiles.
+  - 1,015,539 of 1,156,538 differ (87.8%), against 86.3% before. It passed at both weights, so it shows the change
+    generalizes but doesn't discriminate it.
+  - Related pairs differ in 57.2%.
+  - With the genre ignored, 0 differ.
+- **What's kept.**
+  - S1, S2 revised and S4.
+  - Every interpretation criterion. I2's scale clause is at 20.8% against 20%, the closest.
+  - Advice: 40 of 40, as before, case for case.
+  - Mastery at 100 against the reader.
+  - Tests: `tests/genre-reader.test.ts` (6). Five mutations, each killed.
+- **Still open.**
+  - The stage set's expansive bias (100% of class scenes and plays): unchanged, not reached by this change, and the
+    owner's.
+  - Section 2 of the work plan: the six acceptance areas.
+- **Verification:** RESULTS-PENDING.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
+# Earlier: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
+
+History now: the section above is the current status. It covers the owner's brief "Finish School
 Workload Balance And The Remaining Acting-Engine Shortfalls", on `claude/zen-mccarthy-i88ujw`, in the same pull
 request: not merged, not deployed. The checklist is section 6 of the work plan
 (`docs/verification/WORKPLAN-2026-10-16.md`). Section 2's six acceptance areas are still open and untouched.
