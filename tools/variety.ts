@@ -25,14 +25,15 @@ import { breaches } from '../src/engine/core/invariants';
 import { abilityFull, levelOf } from '../src/engine/systems/attributes';
 import { courseworkOf } from '../src/engine/systems/coursework';
 import { momentsOf } from '../src/engine/systems/classmates';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { identityOf } from '../src/engine/systems/artistry';
-import { matchedTier } from '../src/engine/systems/practice';
+
+
+
 import { exerciseFor } from '../src/engine/content/practice';
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
 import { SCENE_MATERIAL, PLAY_MATERIAL } from '../src/engine/content/material';
 import { EXERCISES } from '../src/engine/content/practice';
 import { attentiveHour, life, practiceHour } from './policy';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const SEED = arg('seed', 'v-0');
@@ -73,7 +74,7 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined) {
   const week = Math.floor((sim.now - start) / (7 * MS_DAY));
   if (week !== lastWeek) {
     lastWeek = week;
-    const recs = recommendations((id) => levelOf(sim, sim.player, id as never), (id) => full(sim, id), sim.player.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(sim.player, sim.now, sim.homeZone), identityOf(sim.player).recurring);
+    const recs = adviceFor(sim, sim.player);
     const top = recs.find((r) => r.exercise);
     const cw = courseworkOf(sim, sim.player);
     // A decision about how to do the work open this week: a moment to answer, open work with a way of playing to choose.

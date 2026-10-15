@@ -18,6 +18,8 @@ import { misfitOf, sidesOf, transitionsOf, type Playing } from '@/engine/systems
 import { abilityDef } from '@/engine/systems/attributes';
 import type { Evaluation } from '@/engine/systems/evaluation';
 import { SKILLS } from '@/engine/content/school';
+import { GRAIN_LABEL } from '@/engine/content/interpretation';
+import { requiredFor, suitabilityOf, type Scene } from '@/engine/systems/interpretation';
 
 const LEVEL = ['None', 'Some', 'Much', 'Built On It'];
 const FEATURE_WORD: Record<string, string> = { timing: 'Timing', physical: 'Physical Work', partner: 'Playing Off The Partner', vocal: 'Vocal Demand', improvisation: 'Freedom To Improvise' };
@@ -43,8 +45,10 @@ export function MaterialDemands({ material }: { material: MaterialProfile }) {
   );
 }
 
-export function PlayingChooser({ material, current, direction, preview, feature, help, onChoose }: {
+export function PlayingChooser({ material, scene, current, direction, preview, feature, help, onChoose }: {
   material?: MaterialProfile;
+  /** What the scene is beyond its material (from 2026-10-16): a brief's genre register, its reader, the reading taken. */
+  scene?: Scene;
   current?: Playing;
   direction?: Partial<Record<Axis, AxisValue>>;
   preview: (c: Choice) => Evaluation;
@@ -68,19 +72,25 @@ export function PlayingChooser({ material, current, direction, preview, feature,
   const now = preview(draft);
   const changed = current ? !same(draft, current) : sidesOf({ ...draft, chosenAt: 0, prep: 0 }).length > 0;
   const asked = Object.entries(direction ?? {}) as [Axis, AxisValue][];
+  // How much of the choice's rehearsal completes it (from 2026-10-16): less with the scene's grain, more against it.
+  const draftSides = sidesOf({ ...draft, chosenAt: 0, prep: 0 });
+  const completeAt = requiredFor(draftSides, material, scene);
   return (
     <div className="col gap-2">
       {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
       {asked.length > 0 && <p className="small" style={{ margin: 0 }}>The director has asked for it {asked.map(([, v]) => APPROACH_EFFECT[v].label.toLowerCase()).join(' and ')}: {asked.map(([, v]) => APPROACH_EFFECT[v].words).join(' ')}</p>}
       <div className="table-scroll">
         <table>
-          <thead><tr><th scope="col">Axis</th><th scope="col">Choice</th><th scope="col">What It Draws On</th><th scope="col" className="num">Fully Prepared</th></tr></thead>
+          <thead><tr><th scope="col">Axis</th><th scope="col">Choice</th><th scope="col">The Scene</th><th scope="col">What It Draws On</th><th scope="col" className="num">Fully Prepared</th></tr></thead>
           <tbody>
             {(Object.keys(AXES) as Axis[]).flatMap((axis) => AXES[axis].values.map((side, i) => {
               const e = APPROACH_EFFECT[side];
               const why = misfitOf(axis, side, material, direction);
               const chosen = draft[axis] === side;
               const result = preview({ ...draft, [axis]: side }).overall;
+              // How well the side suits the scene (from 2026-10-16, `systems/interpretation.ts`): its band and what it rests on.
+              const suit = suitabilityOf(side, material, scene);
+              const rests = suit.signals.filter((g) => Math.abs(g.v) >= 0.1).slice(0, 3);
               const draws = [...new Set(Object.values(e.inputs).flat().filter((x) => !movements || x!.ability !== 'stamina').map((x) => abilityDef(x!.ability).label))].join(', ');
               return (
                 <tr key={side}>
@@ -91,6 +101,7 @@ export function PlayingChooser({ material, current, direction, preview, feature,
                       <span><strong>{e.label}</strong> <span className="xs">{e.words}</span>{why && <span className="xs" style={{ display: 'block', color: 'var(--warning, inherit)' }}>Doesn’t fit: {why}</span>}</span>
                     </label>
                   </td>
+                  <td className="xs" data-suit={suit.band}><strong>{GRAIN_LABEL[suit.band]}</strong>{rests.length ? <ul style={{ margin: 0, paddingLeft: '1.1em' }}>{rests.map((g) => <li key={g.source}>{g.source}: {g.v > 0 ? 'for it' : 'against it'}</li>)}</ul> : <span style={{ display: 'block' }}>Nothing in the scene leans either way.</span>}</td>
                   <td className="xs">{draws}</td>
                   <td className="num mono">{result.toFixed(1)}</td>
                 </tr>
@@ -104,13 +115,14 @@ export function PlayingChooser({ material, current, direction, preview, feature,
       </div>
       <p className="small" style={{ margin: 0 }}>
         Played this way, fully prepared and on a good day: {now.overall.toFixed(1)}, against {open.toFixed(1)} with nothing chosen.
-        {current && sidesOf(current).length > 0 ? ` Your choice now is rehearsed in to ${Math.round(current.prep * 100)}% (complete at ${Math.round(PLAYING.complete * 100)}%), by work on your feet.` : ' A choice is rehearsed in by work on your feet after it’s made.'}
+        {current && sidesOf(current).length > 0 ? ` Your choice now is rehearsed in to ${Math.round(current.prep * 100)}% (complete at ${Math.round(requiredFor(sidesOf(current), material, scene) * 100)}%), by work on your feet.` : ' A choice is rehearsed in by work on your feet after it’s made.'}
+        {draftSides.length > 0 ? ` This one is complete at ${Math.round(completeAt * 100)}% rehearsed in: ${completeAt < PLAYING.complete ? 'with the grain of the scene, it asks less' : completeAt > PLAYING.complete ? 'against the grain of the scene, it asks more' : 'neither with the grain nor against it'}.` : ''}
         {changed && current && sidesOf(current).length > 0 ? ` Changing it keeps ${Math.round(PLAYING.keptOnChange * 100)}% of that.` : ''}
       </p>
       <div>
         <Gated feature={feature} className="btn btn-sm" disabled={!changed} onClick={() => onChoose(draft)}>{current && sidesOf(current).length ? 'Change How You Play It' : 'Play It This Way'}</Gated>
       </div>
-      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
+      <Fine>Each side leans the work’s quality dimensions toward what it is and draws on the abilities shown; leaning moves weight, never adds it, so at full ability every choice that fits reaches 100. Below it, a choice that leans on what you do well shows you better. A choice the material or the director doesn’t take holds the dimensions it leans on to {Math.round(MISFIT * 100)}% of themselves. A choice that fits can still suit the scene or go against its grain, by what the scene is (its genre, its reader, its tones and turns, its features, the medium and the reading you’ve taken): with the grain it’s easier to make work and asks less rehearsal, against it harder and more, and at full ability either reaches 100.{movements ? ' Judged in its movements, the work reads stamina only as tiring late in it, however it’s played, so no side draws on it here.' : ''} The sizes are SLATE’s design.</Fine>
     </div>
   );
 }

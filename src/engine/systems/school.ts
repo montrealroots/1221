@@ -2265,11 +2265,11 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const proc = hasProcess(holder) ? holder.process : undefined;
   const playing = proc?.playing;
   const prepWith: Record<string, number> = { ...prep };
-  if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = PLAYING.complete; }
   const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;
+  if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = read?.required ?? PLAYING.complete; }
   const ctx = {
     task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
-    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
+    condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
     ...(expected ? { expected: true } : {}),
   };
   return evaluatePiece(sim, person, ctx, playPiece(holder));
@@ -2316,7 +2316,7 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const proc = hasProcess(holder) ? holder.process : undefined;
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
   const read = materialContext(E, material, chosen, proc?.direction);
-  const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, key: `preview:${holder.play ?? ''}`, expected: true };
+  const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
   return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder));
 }
 

@@ -25,16 +25,17 @@ import { FILM_GENRES } from '../src/engine/content/film-genres';
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
 import { evenCraft } from '../src/engine/systems/school';
 import { abilityFull, abilityOf, levelOf } from '../src/engine/systems/attributes';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { identityOf } from '../src/engine/systems/artistry';
-import { exerciseFor } from '../src/engine/content/practice';
-import { matchedTier } from '../src/engine/systems/practice';
+
+
+
+
 import { breaches } from '../src/engine/core/invariants';
 import { loadSave } from '../src/engine';
 import { deserialise, serialise } from '../src/engine/persistence/adapter';
 import { forecast, prepareRefusal, preview, recordOf, requiredOf, suggestions, tapeRefusal } from '../src/engine/systems/briefs';
 import { studyRefusal } from '../src/engine/systems/engagement';
 import { attentiveHour, life, practiceHour } from './policy';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const PROFILE = arg('profile', 'beginner');
@@ -82,7 +83,7 @@ function weakness() {
   const p = sim.player;
   // An ability or technique only, as the brief pane takes it (from 2026-10-12: until then only a preparation was passed
   // over, so a day's condition or a fit could be the weakness a brief was suggested for, at 0% of the work).
-  const r = recommendations((id) => levelOf(sim, p, id as never), (id) => (isAbility(id) ? abilityFull(sim, p, id as AbilityId) : MASTERED), p.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(p, sim.now, sim.homeZone), identityOf(p).recurring).find((x) => !x.target.includes(':'));
+  const r = adviceFor(sim, p).find((x) => !x.target.includes(':'));
   return r ? { target: r.target, label: r.label, level: levelOf(sim, p, r.target as never), full: isAbility(r.target) ? abilityFull(sim, p, r.target as AbilityId) : MASTERED } : undefined;
 }
 

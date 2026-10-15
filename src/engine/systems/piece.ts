@@ -313,9 +313,11 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
     const limits = [...merged.values()].map((l) => ({ ...l, by: r1(l.by), whole: r1(l.whole ?? 0) })).filter((l) => l.by > 0).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
     const mean = (pick: (x: DimensionResult) => number) => at.reduce((s, x, i) => s + pick(x) * w(i), 0);
     const fits = at.map((x) => x.fit).filter((x): x is number => x !== undefined);
+    // The way it's played against the scene (from 2026-10-16): each segment's points, by its weight.
+    const grains = at.map((x, i) => ({ g: x.grain, w: w(i) })).filter((x) => x.g);
     return {
       dimension: d0.dimension, label: d0.label, quality: r1(mean((x) => x.quality)), capacity: mean((x) => x.capacity), prepared: mean((x) => x.prepared), condition: mean((x) => x.condition), day: mean((x) => x.day),
-      ...(fits.length ? { fit: Math.min(...fits) } : {}), variation: mean((x) => x.variation), ...(d0.strongest ? { strongest: d0.strongest } : {}), limits,
+      ...(fits.length ? { fit: Math.min(...fits) } : {}), ...(grains.length ? { grain: { d: grains[0]!.g!.d, label: grains[0]!.g!.label, points: r1(grains.reduce((t, x) => t + x.g!.points * x.w, 0)) } } : {}), variation: mean((x) => x.variation), ...(d0.strongest ? { strongest: d0.strongest } : {}), limits,
     };
   });
   const overall = r1(results.reduce((s, r, i) => s + r.overall * w(i), 0));
@@ -327,14 +329,14 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   for (const a of ['stamina', 'composure', 'adaptability'] as AbilityId[]) { abilities[a] = performer.ability(a); fulls[a] = performer.full(a); }
   const first = results[0]!;
   // The piece's own reads, not segment 0's: replaying applies each segment's tones and its own way again.
-  const { lean: _lean, inputs: _inputs, extraPrep: _extra, fit: _fit, ...rest } = first.inputs;
-  void _lean; void _inputs; void _extra; void _fit;
+  const { lean: _lean, inputs: _inputs, extraPrep: _extra, fit: _fit, grain: _grain, ...rest } = first.inputs;
+  void _lean; void _inputs; void _extra; void _fit; void _grain;
   return {
     ruleset: first.ruleset, task: ctx.task.id, taskLabel: ctx.task.label, dimensions, overall, mastery: results.every((r) => r.mastery),
     limits: dimensions.flatMap((d) => d.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
     inputs: {
       ...rest, abilities, fulls, levels: Object.assign({}, ...results.map((r) => r.inputs.levels ?? {})), prep: { ...ctx.prep }, required: { ...ctx.required }, key: ctx.key,
-      ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}),
+      ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}), ...(ctx.grain && Object.keys(ctx.grain).length ? { grain: ctx.grain } : {}),
       piece: spec,
     },
     piece: { segments, continuity, lowest: Math.min(...segments.map((x) => x.overall)) },

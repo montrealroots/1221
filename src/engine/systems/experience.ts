@@ -30,6 +30,9 @@ import type { MaterialProfile } from '../content/material';
 import type { Identity } from './artistry';
 import { ENGAGEMENT } from '../content/engagement';
 import { blendsOf, transitionsOf } from './material';
+import { tied, type Forecast } from './advice';
+import { ABILITY_DEFS, TECHNIQUE_LABEL } from '../content/abilities';
+import type { Skill } from '../content/school';
 
 export interface Experience {
   features: Record<string, { met: number; practiced: number; best?: number; last?: Instant }>;
@@ -113,6 +116,10 @@ export interface Recommendation {
   target: string; label: string; exercise?: string; tier?: 0 | 1 | 2; focus: string; why: string; points: number;
   /** Where it's the weakness the work so far keeps coming back to (from 2026-10-12): the last piece it held back and what that rests on, which the screens show beside it; the pieces and the points are in `why`. */
   recurring?: { last: number; evidence: readonly string[] };
+  /** What its hours were forecast to bring (from 2026-10-16, `systems/advice.ts`): the level now and after, and the hours. */
+  forecast?: Forecast;
+  /** Other training about as useful as this (from 2026-10-16, `tied`): said beside the first, so a near-tie isn't called a winner. */
+  tiedWith?: string[];
 }
 
 /**
@@ -120,6 +127,10 @@ export interface Recommendation {
  * recurring weakness has to be to be put first (from 2026-10-12). Both SLATE's.
  */
 export const RECOMMEND = { floor: 0.5, recurringWithin: 0.5 } as const;
+
+/** The least a forecast's hours must be worth, in points a piece, to be recommended (from 2026-10-16): a tenth, the least a result shows. */
+const ADVICE_FLOOR = 0.1;
+const labelOf = (id: string) => ABILITY_DEFS.find((d) => d.id === id)?.label ?? TECHNIQUE_LABEL[id as Skill] ?? id;
 
 /** Days since an exercise was last practised, by the calendar at home (`lastDay`), for `recommendations`' focus; undefined where it never was. */
 export function practicedDaysAgo(person: Person, now: Instant, zone: string): (exercise: string) => number | undefined {
@@ -146,7 +157,7 @@ export function practicedDaysAgo(person: Person, now: Instant, zone: string): (e
  * within `RECOMMEND.recurringWithin` of the top. It's only ever one already here: at full, or under the floor, it isn't
  * brought back. No recommendation's points, exercise, tier or focus is moved by it, only the words and the order.
  */
-export function recommendations(levelOf: (id: string) => number, fullOf: (id: string) => number, work: readonly { at: number; limits: readonly { kind: string; what: string; label: string; by: number; whole?: number }[]; inputs: { abilities: Record<string, number | undefined>; levels?: Record<string, number | undefined> } }[], exerciseFor: (id: string) => { id: string } | undefined, matchedTier: (level: number) => 0 | 1 | 2, recent = 12, lastPracticed?: (exercise: string) => number | undefined, recurring?: Identity['recurring']): Recommendation[] {
+export function recommendations(levelOf: (id: string) => number, fullOf: (id: string) => number, work: readonly { at: number; limits: readonly { kind: string; what: string; label: string; by: number; whole?: number }[]; inputs: { abilities: Record<string, number | undefined>; levels?: Record<string, number | undefined> } }[], exerciseFor: (id: string) => { id: string } | undefined, matchedTier: (level: number) => 0 | 1 | 2, recent = 12, lastPracticed?: (exercise: string) => number | undefined, recurring?: Identity['recurring'], forecast?: ReadonlyMap<string, Forecast>): Recommendation[] {
   const latest = [...work].sort((a, b) => a.at - b.at).slice(-recent);
   const cost = new Map<string, { label: string; points: number; then: number }>();
   const prepCost = new Map<string, { label: string; points: number }>();
@@ -175,7 +186,22 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     }
   });
   const out: Recommendation[] = [];
-  for (const [what, c] of cost) {
+  // Forecast (from 2026-10-16, `systems/advice.ts`): what each input's hours would be worth on the recent work, every input
+  // it read, in place of what each cost made whole. Where there's no forecast (no work kept under today's rules), as before.
+  const forecasting = forecast !== undefined && forecast.size > 0;
+  if (forecasting) {
+    for (const [what, f] of forecast!) {
+      if (f.points < ADVICE_FLOOR) continue;
+      const ex = exerciseFor(what);
+      if (!ex) continue;
+      const since = lastPracticed?.(ex.id);
+      const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
+      const label = cost.get(what)?.label ?? labelOf(what);
+      const each = Math.round(f.points * 10) / 10;
+      out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}, worth about ${each} ${each === 1 ? 'point' : 'points'} a piece on your recent work (${f.pieces} of the pieces read it), worked out again with you as you are now. ${focus === 'spaced' ? 'Spaced: the last session was a day to a week ago, when spacing pays.' : 'Steady to begin; spaced pays once the last session is a day to a week old.'}` });
+    }
+  }
+  for (const [what, c] of forecasting ? [] : cost) {
     const now = levelOf(what);
     const full = fullOf(what);
     if (now >= full) continue;
@@ -197,14 +223,22 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     if (c.points < RECOMMEND.floor) continue;
     out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: Math.round(c.points * 10) / 10, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
   }
-  out.sort((a, b) => b.points - a.points);
+  out.sort((a, b) => b.points - a.points || a.target.localeCompare(b.target));
   // The weakness the work so far keeps coming back to, where it's here at all: said, with what it rests on, and first
-  // where it's within half a point of the top.
+  // where it's within half a point of the top. Forecast (from 2026-10-16), only where it's about as useful as the top:
+  // what keeps holding you back and what pays most to train are two things, and the order says the second.
   const mine = recurring ? out.find((r) => r.target === recurring.target) : undefined;
   if (recurring && mine) {
     mine.recurring = { last: recurring.last, evidence: recurring.evidence };
     mine.why = `${mine.why} Your work keeps coming back to it: it’s held back ${recurring.pieces} of your pieces for life, ${recurring.whole} ${recurring.whole === 1 ? 'point' : 'points'} of the whole in all.`;
-    if (mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
+    const top = out.find((r) => r.forecast) ?? out[0]!;
+    if (forecasting ? mine.forecast && tied(mine.points, top.points) : mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
+  }
+  // Training about as useful as the first's (from 2026-10-16): said beside it, not ranked as if a tenth decided it.
+  const firstTraining = out.find((r) => r.forecast);
+  if (firstTraining) {
+    const near = out.filter((r) => r !== firstTraining && r.forecast && tied(r.forecast.points, firstTraining.forecast!.points)).map((r) => r.label);
+    if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; either is a sound next step.`; }
   }
   return out.slice(0, 5);
 }

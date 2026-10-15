@@ -18,19 +18,21 @@ import { GENRE_BY_ID } from '@/engine/content/film-genres';
 import { DIMENSION_LABEL, TASK_PROFILES } from '@/engine/content/tasks';
 import { abilityFull, abilityOf } from '@/engine/systems/attributes';
 import { bandOfQuality, chiefLimit, replay } from '@/engine/systems/evaluation';
+import { grainRead, grainWords, takeGrainWords } from '@/engine/systems/interpretation-read';
 import { BAND_LABEL } from '@/engine/systems/coursework';
 import { concernBehind, concernNote, concernsOf, concernWords, registerBasisWords } from '@/engine/systems/register';
 import type { Concern } from '@/engine/content/concerns';
-import { BRIEF, PURPOSE_WORDS, READER_PLAYS, asksOf, briefsRead, genreKnown, briefMaterial, forecast, prepareRefusal, preview, purposeOf, readerRefusal, readingOf, requiredOf, stepMinutes, suggestions, tapeRefusal, turnsOf, type BriefStep } from '@/engine/systems/briefs';
+import { BRIEF, PURPOSE_WORDS, READER_PLAYS, asksOf, briefsRead, genreKnown, briefMaterial, forecast, prepareRefusal, preview, purposeOf, readerRefusal, readingOf, requiredOf, sceneOf, stepMinutes, suggestions, tapeRefusal, turnsOf, type BriefStep } from '@/engine/systems/briefs';
 import { PIECE } from '@/engine/content/piece';
 import { Segments, WorkThrough } from '@/ui/components/WorkThrough';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { studyRefusal } from '@/engine/systems/engagement';
-import { exerciseFor } from '@/engine/content/practice';
-import { matchedTier } from '@/engine/systems/practice';
-import { practicedDaysAgo, recommendations } from '@/engine/systems/experience';
+
+
+
 import { identityOf } from '@/engine/systems/artistry';
 import { levelOf } from '@/engine/systems/attributes';
+import { adviceFor } from '@/engine/systems/next-steps';
 
 const TONE: Record<string, string> = { comic: 'Comic', grave: 'Grave', lyric: 'Lyric', grotesque: 'Grotesque' };
 
@@ -120,7 +122,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
   // a point of the top. Until then the pane passed neither, so the same weakness read "Steady to begin" here and
   // "Spaced" on the Profile, and the identity reached only the suggestions below.
   const identity = identityOf(person);
-  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identity.recurring);
+  const recs = adviceFor(sim, person);
   // An ability or technique only (from 2026-10-12: until then only a preparation was passed over, so a day's condition
   // or a fit could be named the weakness, with a brief suggested for it at 0% of the work and practice offered for it).
   const top = recs.find((r) => !r.target.includes(':'));
@@ -226,7 +228,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
 
       {rec?.callback && <p className="small" style={{ margin: 0 }}><strong>A Callback.</strong> {rec.callback.why} It’s pitched harder than a first take.</p>}
       {rec?.reading && (
-        <PlayingChooser material={material} current={rec.playing} direction={rec.callback ? { [rec.callback.axis]: rec.callback.side } as Partial<Record<Axis, typeof rec.callback.side>> : undefined} feature="brief.choose" preview={(c) => preview(sim, person, b, rec.reading!, c)} onChoose={(c) => { const r = run('brief.choose', { brief: b.id, reading: rec.reading, ...c }); if (r.ok) toast('Chosen: rehearse it in on your feet.', 'positive'); }} />
+        <PlayingChooser material={material} scene={sceneOf(b, readingOf(b, rec.reading))} current={rec.playing} direction={rec.callback ? { [rec.callback.axis]: rec.callback.side } as Partial<Record<Axis, typeof rec.callback.side>> : undefined} feature="brief.choose" preview={(c) => preview(sim, person, b, rec.reading!, c)} onChoose={(c) => { const r = run('brief.choose', { brief: b.id, reading: rec.reading, ...c }); if (r.ok) toast('Chosen: rehearse it in on your feet.', 'positive'); }} />
       )}
 
       {b.medium !== 'voice' && <ReaderChoice b={b} />}
@@ -234,7 +236,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       <div className="col gap-1">
         <div className="row-between"><div className="eyebrow">The Take</div><HowItWorks help="practice.self_tape" /></div>
         <p className="small" style={{ margin: 0 }}>
-          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? withConcern(chiefLimit(now), nowConcern) : 'Every part of it is where the take asks.'} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
+          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? withConcern(chiefLimit(now), nowConcern) : 'Every part of it is where the take asks.'} {grainWords(grainRead(now))} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
         </p>
         <div>
           <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? `An hour: ${b.title}, ${readingOf(b, rec?.reading)?.label ?? ''}`} onClick={() => { const r = run<{ overall: number; purpose: string; band: string }>('practice.self_tape', { genre, brief: b.id }); if (r.ok) toast(`Taped: ${r.value!.overall.toFixed(1)}, ${BAND_LABEL[r.value!.band as keyof typeof BAND_LABEL]}.`, 'positive'); }}>Tape It (60 Min)</Gated>
@@ -248,7 +250,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       {last && (
         <div className="col gap-1">
           <div className="eyebrow">The Last Take, {formatDate(last.at, sim.zone)}</div>
-          <p className="small" style={{ margin: 0 }}><strong>{last.overall.toFixed(1)}</strong>, {BAND_LABEL[last.band as keyof typeof BAND_LABEL]}: {readingOf(b, last.reading)?.label}{last.sides.length ? `, played ${last.sides.join(' and ')}` : ''}. {PURPOSE_WORDS[last.purpose]} {withConcern(last.chief, last.concern)}{last.callback ? (last.answered ? ' The callback’s note was answered.' : ' Played against the callback’s note: the callback is still yours.') : ''}</p>
+          <p className="small" style={{ margin: 0 }}><strong>{last.overall.toFixed(1)}</strong>, {BAND_LABEL[last.band as keyof typeof BAND_LABEL]}: {readingOf(b, last.reading)?.label}{last.sides.length ? `, played ${last.sides.join(' and ')}` : ''}. {PURPOSE_WORDS[last.purpose]} {withConcern(last.chief, last.concern)}{last.grain ? ` ${takeGrainWords(last.grain)}` : ''}{last.callback ? (last.answered ? ' The callback’s note was answered.' : ' Played against the callback’s note: the callback is still yours.') : ''}</p>
           {last.together && <p className="small" style={{ margin: 0 }}><strong>With {last.together.reader}.</strong> {last.together.words} A casting office sees the take with its reader: that’s what a callback reads.</p>}
           {lastEval && <Segments e={lastEval} caption="The Last Take, Beat By Beat" />}
           {lastWork && (

@@ -979,7 +979,8 @@ export function workContext(a: Assignment, parts: Record<string, number>, requir
     const read = materialContext(task, material, playing);
     const techniques = { ...t.reads } as Partial<Record<Skill, number>>;
     for (const [k, w] of Object.entries(material.techniques ?? {}) as [Skill, number][]) if (techniques[k] === undefined) techniques[k] = w;
-    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit };
+    if (req.approach !== undefined) req.approach = read.required;
+    return { task, techniques, prep, required: req, difficulty: difficultyOf(t), lean: putFirst(read.lean), inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain };
   }
   // Work with no scene has no play and no genre to lean it: a way of playing chosen leans it, and what’s put first, as a
   // scene’s material does. Until 2026-10-13 its scene’s play’s genres were looked up here, and their families’ lean

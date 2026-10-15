@@ -36,15 +36,16 @@ import { MASTERED, TECHNIQUES } from '../src/engine/content/abilities';
 import { attributesOf, abilityFull, levelOf } from '../src/engine/systems/attributes';
 import { courseworkOf, notesOf } from '../src/engine/systems/coursework';
 import { identityOf } from '../src/engine/systems/artistry';
-import { practicedDaysAgo, recommendations } from '../src/engine/systems/experience';
-import { matchedTier } from '../src/engine/systems/practice';
-import { exerciseFor } from '../src/engine/content/practice';
+
+
+
 import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
 import { BRIEF, forecast, prepareRefusal, suggestions, tapeRefusal } from '../src/engine/systems/briefs';
 import { optionsOf, problemsOf } from '../src/engine/systems/workbook';
 import { workPiece } from '../src/engine/systems/workpieces';
 import { hasProcess, type DirectorNote, type NoteFocus } from '../src/engine/systems/production';
 import { attentiveHour, life } from './policy';
+import { adviceFor } from '../src/engine/systems/next-steps';
 
 const arg = (name: string, fallback: string) => { const i = process.argv.indexOf(`--${name}`); return i >= 0 ? process.argv[i + 1]! : fallback; };
 const MONTHS = Number(arg('months', '4'));
@@ -68,7 +69,7 @@ const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
 /** A free hour on a brief, as the screen offers it: the brief in hand or the first suggestion, then its next step. */
 function briefHour(sim: Simulation, state: { brief?: string; log: string[] }): boolean {
   const person = sim.player;
-  const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring);
+  const recs = adviceFor(sim, person);
   const top = recs.find((r) => !r.target.includes(':'));
   if (!state.brief) {
     const ideas = suggestions(person, top ? { target: top.target, label: top.label, level: levelOf(sim, person, top.target as never), full: isAbility(top.target) ? abilityFull(sim, person, top.target as AbilityId) : MASTERED } : undefined, identityOf(person));
@@ -135,7 +136,7 @@ function play(seed: string, profile: Profile): Result {
     // A recommendation of an input already at full: one that fails to adapt.
     if (sim.now % (7 * MS_DAY) < 3_600_000) {
       const person = sim.player;
-      const recs = recommendations((id) => levelOf(sim, person, id as never), (id) => (isAbility(id) ? abilityFull(sim, person, id as AbilityId) : MASTERED), person.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(person, sim.now, sim.homeZone), identityOf(person).recurring);
+      const recs = adviceFor(sim, person);
       for (const r of recs) if (!r.target.includes(':') && levelOf(sim, person, r.target as never) >= (isAbility(r.target) ? abilityFull(sim, person, r.target as AbilityId) : MASTERED)) recsAfterFull += 1;
     }
   }

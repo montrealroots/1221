@@ -32,6 +32,7 @@ import { matchedTier } from '@/engine/systems/practice';
 import { BRIEFS, BRIEF_BY_ID } from '@/engine/content/briefs';
 import { FILM_GENRES, GENRE_BY_ID } from '@/engine/content/film-genres';
 import { briefsRead, shareOf, suggestions } from '@/engine/systems/briefs';
+import { trainingForecast, tied } from '@/engine/systems/advice';
 import { identityOf, type Identity } from '@/engine/systems/artistry';
 import { CALL_KIND } from '@/engine/systems/school';
 import { hasProcess, noteText, type NoteFocus } from '@/engine/systems/production';
@@ -81,8 +82,11 @@ const pane = (sim: Simulation, genre: string, brief?: string) => {
   return renderToStaticMarkup(createElement(BriefPane, { genre, ...(brief ? { brief } : {}), onOpen: () => undefined, practice: (id: string) => createElement('span', { 'data-practice': id }) }));
 };
 const isAbility = (id: string) => ABILITY_DEFS.some((d) => d.id === id);
-/** What To Work On as the Profile reads it, with the identity's recurring weakness or without. */
-const recsOf = (sim: Simulation, recurring?: Identity['recurring']) => recommendations((id) => levelOf(sim, sim.player, id as never), (id) => (isAbility(id) ? abilityFull(sim, sim.player, id as AbilityId) : MASTERED), sim.player.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(sim.player, sim.now, sim.homeZone), recurring);
+/**
+ * What To Work On as the Profile reads it, with the identity's recurring weakness or without. From 2026-10-16 with the
+ * forecast of what each input's hours are worth (`trainingForecast`), as the Profile and the pane read it.
+ */
+const recsOf = (sim: Simulation, recurring?: Identity['recurring']) => recommendations((id) => levelOf(sim, sim.player, id as never), (id) => (isAbility(id) ? abilityFull(sim, sim.player, id as AbilityId) : MASTERED), sim.player.work ?? [], (id) => exerciseFor(id as never), matchedTier, 12, practicedDaysAgo(sim.player, sim.now, sim.homeZone), recurring, trainingForecast(sim, sim.player));
 /** Everything a recommendation decides, without its words, in a fixed order. */
 const numbers = (rs: readonly Recommendation[]) => rs.map(({ target, points, exercise, tier, focus }) => ({ target, points, exercise, tier, focus })).sort((a, b) => a.target.localeCompare(b.target));
 const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -128,9 +132,13 @@ describe('a brief suggested for a weakness', () => {
   it('in a brief’s pane, isn’t made for a technique no brief reads, and the pane says none reads it', () => {
     const sim = student('r8-pane-unread');
     taped(sim, 'brief-drama');
-    // FIXTURE: the take held back most by script analysis, a technique the coursework reads and no brief does (played,
-    // a student whose script work lags meets it in class work; here it's set on the last piece judged).
+    // FIXTURE: the last piece read script analysis, a technique the coursework reads and no brief does, and the student
+    // is far behind in it (played, a student whose script work lags meets it in class work; here it's set on the last
+    // piece judged). Until 2026-10-16 the fixture put a limit on the piece alone; advice from then forecasts from what a
+    // piece read (`trainingForecast`), so the piece reads it, and it's forecast as the most worth training.
     const w = sim.player.work!.at(-1)!;
+    w.inputs.techniques = { ...w.inputs.techniques, script: 4 };
+    sim.player.craft!.script = 0;
     w.limits = [{ kind: 'technique', what: 'script', label: TECHNIQUE_LABEL.script, dimension: 'interpretation', by: 60, whole: 30 }, ...w.limits];
     w.inputs.levels = { ...(w.inputs.levels ?? {}), script: sim.player.craft!.script };
     expect(recsOf(sim).find((r) => !r.target.includes(':'))?.target).toBe('script');
@@ -142,6 +150,7 @@ describe('a brief suggested for a weakness', () => {
     // The falsifiability test: with the take held back by something a brief reads, a brief is suggested for it, and
     // the pane doesn't say none reads it.
     w.limits = w.limits.filter((l) => l.what !== 'script');
+    w.inputs.techniques = Object.fromEntries(Object.entries(w.inputs.techniques).filter(([k]) => k !== 'script'));
     const read = pane(sim, 'drama', 'brief-drama');
     expect(read).not.toContain('No practice brief reads');
   });
@@ -220,11 +229,14 @@ describe('What To Work On, with the work so far', () => {
     const html = profile(sim);
     expect(html).toContain(`it’s held back ${r.pieces} of your pieces for life`);
     expect(html).toContain(`From your work for life: ${r.evidence.join('; ')}`);
-    // A brief's pane names the first ability or technique, here the same weakness, and says it the same way.
-    expect(withIt.find((x) => !x.target.includes(':'))?.target).toBe(r.target);
+    // A brief's pane names the first ability or technique and says it as the Profile does. Until 2026-10-16 that was
+    // the recurring weakness here, put first within half a point; from then what's first is what training pays most for
+    // (`trainingForecast`), and the recurring weakness goes first only where it's about as useful.
+    const first = withIt.find((x) => !x.target.includes(':'))!;
     const brief = pane(sim, 'drama', 'brief-drama');
-    expect(brief).toContain(`<strong>${mine.label}</strong>. ${mine.why}`);
-    expect(brief).toContain(`From your work for life: ${r.evidence.join('; ')}`);
+    expect(brief).toContain(`<strong>${first.label}</strong>. ${first.why}`);
+    // About as useful as the top, it goes first; otherwise it's said where its forecast puts it, with its pieces for life.
+    if (tied(mine.points, first.points)) expect(first.target).toBe(r.target); else expect(first.points).toBeGreaterThan(mine.points);
   }, 120_000);
 });
 
