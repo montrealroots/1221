@@ -98,15 +98,17 @@ out). `--off` is the way of playing as it was.
   the register or the reading left out, one rehearsal mark for every side, the take keeping no account, the brief
   passing no scene.
 - **Before and after.** `examples.md`: the same actor, scene, reading and preparation, each side, before and after. For
-  example, in Nordic noir the even actor was 59.4 either way and is now 61.6 restrained and 58.1 expansive. The
-  presence, voice and body specialist there preferred expansive before (52.4 against 51.5) and restrained after (53.9
-  against 52.2). In melodrama, where expansive suits, the specialist still prefers it (58.3 against 56.8).
+  example, in Nordic noir the even actor was 59.4 either way and is now 61.9 restrained and 58.0 expansive. The
+  presence, voice and body specialist there preferred expansive before (52.4 against 51.5) and restrained after (54.3
+  against 52.1). In melodrama, where expansive suits, the specialist still prefers it (58.8 against 56.8). Regenerated
+  on 2026-10-16, later, after I3's review (`i3-review.md`); it read 61.6 and 58.1, 53.9 and 52.2, and 58.3 until then.
 
 ## Limits
 
 - Suitability is read on practice briefs from everything above. A class scene and a production's night read it from
-  their material alone (tones, turns, features, language, medium): they have no genre register, reader or reading of
-  their own in the engine.
+  their material (tones, turns, features, language, medium) and, from later on 2026-10-16, their genre's register: a
+  class scene's named genre, a play's first (`sceneOfMaterial`, `i3-review.md`). Until then they read no register. They
+  have no reader or reading of their own in the engine.
 - A segment played its own way in the workbook (Play This Part Another Way) isn't read against the scene: only the
   piece's own sides are.
 - The affinities are SLATE's, each from its signal's principle; no source puts a number on them.
