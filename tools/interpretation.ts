@@ -6,7 +6,7 @@
  * strengths were set) and, held out, on the further briefs (`brief-<genre>-2` and on), which weren't. `--off` sets the
  * grain's strength and its rehearsal shift to 0: the way of playing as it was before, which the criteria should fail.
  *
- *   npx vite-node tools/interpretation.ts -- [--off] [--out file.json] [--md file.md]
+ *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md]
  */
 import { writeFileSync } from 'node:fs';
 import { BRIEFS, type Brief } from '../src/engine/content/briefs';
@@ -140,7 +140,93 @@ function measureFresh() {
   return { materials: mats.length, I1: { checked: i1n, at100: i1ok, holds: i1n === i1ok }, I3: { n: diffs.length, sd: r2(sd(diffs)), restrainedAhead: pct(diffs.filter((d) => d > 0).length, diffs.length), expansiveAhead: pct(diffs.filter((d) => d < 0).length, diffs.length) }, I4: { bandApart: bn, evenActorFollowsSuitability: pct(bok, bn) }, I5: { atLeastTwoWithinAPoint: pct(i5, mats.length) } };
 }
 
-const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}) };
+/**
+ * `--stage` (from 2026-10-16, docs/verification/stage-2026-10-16/criteria.md, written before this was run): ST1 to ST8
+ * on the 85 class scenes and plays as class scenes, and the fresh sets F1 (the plays as a production's night, its own
+ * task) and F2 (even actors at 40 and 75).
+ */
+function measureStage() {
+  const sceneTask = TASK_PROFILES.scene!;
+  const difficulty = difficultyOf(templateById('scene-study')!);
+  const judgeAs = (task: typeof sceneTask, m: MaterialProfile, p: Performer, sides: Sides): number => {
+    const read = materialContext(task, m, Object.keys(sides).length ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
+    const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(Object.keys(sides).length ? { approach: 1 } : {}) };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
+    return judgePiece(SEED, p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).overall;
+  };
+  const both = (m: MaterialProfile) => !misfitOf('scale', 'restrained', m) && !misfitOf('scale', 'expansive', m);
+  const suit = (m: MaterialProfile) => { const sc = sceneOfMaterial(m); return { r: suitabilityOf('restrained', m, sc), e: suitabilityOf('expansive', m, sc) }; };
+  const ahead = (task: typeof sceneTask, mats: readonly MaterialProfile[], p: Performer) => {
+    let r = 0, e = 0, n = 0;
+    for (const m of mats) { if (!both(m)) continue; n += 1; const d = judgeAs(task, m, p, { scale: 'restrained' }) - judgeAs(task, m, p, { scale: 'expansive' }); if (d > 0) r += 1; else if (d < 0) e += 1; }
+    return { n, restrainedAhead: r, expansiveAhead: e, holds: r >= 0.25 * n && e >= 0.25 * n };
+  };
+  const follows = (task: typeof sceneTask, mats: readonly MaterialProfile[], p: Performer) => {
+    let n = 0, ok = 0;
+    for (const m of mats) { if (!both(m)) continue; const { r, e } = suit(m); if (Math.abs(r.s - e.s) < GRAIN.band) continue; n += 1; const d = judgeAs(task, m, p, { scale: 'restrained' }) - judgeAs(task, m, p, { scale: 'expansive' }); if ((r.s > e.s) === (d > 0)) ok += 1; }
+    return { n, follow: ok, share: pct(ok, n), holds: ok >= 0.75 * n };
+  };
+  const mastery = (task: typeof sceneTask, mats: readonly MaterialProfile[]) => {
+    let n = 0, ok = 0;
+    for (const m of mats) for (const c of combos) if ((Object.entries(c) as [Axis, AxisValue][]).every(([a, v]) => !misfitOf(a, v, m))) { n += 1; if (judgeAs(task, m, MASTER, c) === 100) ok += 1; }
+    return { checked: n, at100: ok, holds: n === ok };
+  };
+  const several = (task: typeof sceneTask, mats: readonly MaterialProfile[]) => {
+    let ok = 0;
+    for (const m of mats) { const all = combos.filter((c) => (Object.entries(c) as [Axis, AxisValue][]).every(([a, v]) => !misfitOf(a, v, m))).map((c) => judgeAs(task, m, EVEN, c)); const best = Math.max(...all); if (all.filter((x) => x >= best - 1).length >= 2) ok += 1; }
+    return { materials: mats.length, atLeastTwoWithinAPoint: ok, share: pct(ok, mats.length), holds: ok >= 0.8 * mats.length };
+  };
+  const mats = [...SCENE_MATERIAL, ...PLAY_MATERIAL];
+  // ST2: the house's own scale signal, and what the better side rests on.
+  let st2n = 0, st2ok = 0;
+  const house = mats.some((m) => [suit(m).r, suit(m).e].some((x) => x.signals.some((g) => g.source === 'A House To Reach')));
+  for (const m of mats) { if (!both(m)) continue; const { r, e } = suit(m); if (Math.abs(r.s - e.s) < GRAIN.band) continue; st2n += 1; const better = r.s > e.s ? r : e; const top = better.signals.find((g) => g.v > 0); if (top && top.source !== 'A House To Reach') st2ok += 1; }
+  // ST3: projection is a demand. With the grain held at 0 (so suitability, which differs by medium, isn't what's
+  // compared), the voice-and-body specialist does better on stage than at a close frame; the even actor the same.
+  const strength = GRAIN.strength;
+  Object.assign(GRAIN as Record<string, number>, { strength: 0 });
+  const VOICE_BODY = actor({ vocal: 85, physical: 85 }, (600 - 170) / 10);
+  let st3n = 0, st3ok = 0, evenSame = 0;
+  for (const m of mats) for (const scale of ['restrained', 'expansive'] as const) {
+    if (misfitOf('scale', scale, m)) continue;
+    const cam = { ...m, medium: 'camera' as const };
+    st3n += 1;
+    if (judgeAs(sceneTask, m, VOICE_BODY, { scale }) > judgeAs(sceneTask, cam, VOICE_BODY, { scale })) st3ok += 1;
+    if (Math.abs(judgeAs(sceneTask, m, EVEN, { scale }) - judgeAs(sceneTask, cam, EVEN, { scale })) < 0.05) evenSame += 1;
+  }
+  Object.assign(GRAIN as Record<string, number>, { strength });
+  // ST4: within each genre with five or more stage materials, both sides better-suited somewhere.
+  const byGenre: Record<string, { r: number; e: number; n: number }> = {};
+  for (const m of mats) { if (!both(m)) continue; const g = sceneOfMaterial(m).genre ?? 'none'; const { r, e } = suit(m); const x = (byGenre[g] ??= { r: 0, e: 0, n: 0 }); x.n += 1; if (r.s > e.s) x.r += 1; else if (e.s > r.s) x.e += 1; }
+  const big = Object.entries(byGenre).filter(([, x]) => x.n >= 5);
+  // ST6: strength carrying the harder side.
+  const fill = (n: number) => (600 - n) / 8;
+  const EXP = actor({ presence: 85, vocal: 75, physical: 75 }, fill(235));
+  const RES = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, fill(235));
+  let st6a = 0, st6an = 0, st6b = 0, st6bn = 0;
+  for (const m of mats) {
+    if (!both(m)) continue;
+    const { r, e } = suit(m);
+    if (r.s > e.s) { st6an += 1; if (judgeAs(sceneTask, m, EXP, { scale: 'expansive' }) > judgeAs(sceneTask, m, EXP, { scale: 'restrained' })) st6a += 1; }
+    if (e.s > r.s) { st6bn += 1; if (judgeAs(sceneTask, m, RES, { scale: 'restrained' }) > judgeAs(sceneTask, m, RES, { scale: 'expansive' })) st6b += 1; }
+  }
+  const perf = TASK_PROFILES.performance!;
+  return {
+    ST1: ahead(sceneTask, mats, EVEN),
+    ST2: { houseSignalOnAnyMaterial: house, bandApart: st2n, restsOnTheScene: st2ok, holds: !house && st2ok === st2n },
+    ST3: { cases: st3n, specialistBetterOnStage: st3ok, evenActorSame: evenSame, holds: st3ok === st3n && evenSame === st3n },
+    ST4: { genres: Object.fromEntries(big.map(([g, x]) => [g, x])), holds: big.every(([, x]) => x.r >= 1 && x.e >= 1) },
+    ST5: mastery(sceneTask, mats),
+    ST6: { expansiveSpecialistWinsAgainstTheGrain: `${st6a} of ${st6an}`, restrainedSpecialistWinsAgainstTheGrain: `${st6b} of ${st6bn}`, holds: st6a >= 0.25 * st6an && st6b >= 0.25 * st6bn },
+    ST7: several(sceneTask, mats),
+    ST8: follows(sceneTask, mats, EVEN),
+    F1: { task: 'performance', ST1: ahead(perf, PLAY_MATERIAL, EVEN), ST5: mastery(perf, PLAY_MATERIAL), ST7: several(perf, PLAY_MATERIAL), ST8: follows(perf, PLAY_MATERIAL, EVEN) },
+    F2: { at40: { ST1: ahead(sceneTask, mats, actor({}, 40)), ST8: follows(sceneTask, mats, actor({}, 40)) }, at75: { ST1: ahead(sceneTask, mats, actor({}, 75)), ST8: follows(sceneTask, mats, actor({}, 75)) } },
+    bySide: mats.filter(both).map((m) => { const { r, e } = suit(m); return `${m.id}: restrained ${r.s}, expansive ${e.s}`; }),
+  };
+}
+
+const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}), ...(flag('stage') ? { stage: measureStage() } : {}) };
 console.log(JSON.stringify(out, null, 1));
 const o = arg('out', '');
 if (o) writeFileSync(o, `${JSON.stringify(out, null, 1)}\n`);

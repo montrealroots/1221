@@ -31,7 +31,11 @@ import type { AbilityId } from './abilities';
 // under evaluation-4 is shown as it was and not worked out again by today's judge.
 // evaluation-6 from later on 2026-10-16: a way of playing's suitability reaches every dimension it leans on, a class scene
 // and a play are read in their genre's register, and the stage leans a quarter each way (`grainOf`, `sceneOfMaterial`).
-export const RULESET = 'evaluation-6 (2026-10-16)';
+// evaluation-7 from later still on 2026-10-16: the reader's way of playing the other part counts toward a side's
+// suitability as a register's concern does (`GRAIN.reader`), so a take played opposite a reader may come out otherwise.
+// evaluation-8 from later still: a stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale, a stage
+// voice's demand no longer counts as size, and a scene's circumstances say what its scale asks.
+export const RULESET = 'evaluation-8 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 

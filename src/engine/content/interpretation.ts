@@ -64,10 +64,13 @@ export const READER_AFFINITY: Readonly<Record<'steady' | 'pressing' | 'withholdi
  * The stage's was 0.5 for expansive and -0.25 for restrained until later that day, when the class scenes and the plays,
  * measured for the first time, came out expansive on every one: The Seagull and A Doll's House decided by the house's
  * size. A medium leans, a quarter each way, and doesn't decide (docs/verification/interpretation-2026-10-16/i3-review.md).
+ * The stage leans no way from later that day: a house asks the voice and the body to reach it, which is projection and
+ * is read on the take's execution (`STAGE_LEAN`), not a larger way of playing. A quarter for expansive on every stage
+ * scene had made expansive the better side on all 85 class scenes and plays (docs/verification/stage-2026-10-16/).
  */
 export const MEDIUM_AFFINITY: Readonly<Record<'stage' | 'camera' | 'voice', { affinity: Affinity; label: string }>> = {
   camera: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'A Close Frame' },
-  stage: { affinity: { expansive: 0.25, restrained: -0.25 }, label: 'A House To Reach' },
+  stage: { affinity: {}, label: 'A House To Reach' },
   voice: { affinity: {}, label: 'A Microphone' },
 };
 
@@ -97,6 +100,19 @@ export const FEATURE_AFFINITY: Readonly<Record<'timing' | 'improvisation' | 'phy
   vocal: { affinity: { expansive: 0.25 }, label: 'Its Voice Work', from: 2 },
 };
 
+/**
+ * A scene's circumstances (`MaterialProfile.circumstances`, from 2026-10-16), a quarter a level each way, as a
+ * feature's level counts: what's hidden and how private it is argue for restraint; speaking to many and conflict brought
+ * out loud argue for size. Intensity, pace and the genre's register are read apart, by the tones, the timing and the
+ * register; a scene built on one circumstance (level 3) counts as much as its genre's whole register.
+ */
+export const CIRCUMSTANCE_AFFINITY: Readonly<Record<'concealment' | 'intimacy' | 'address' | 'confrontation', { affinity: Affinity; label: string }>> = {
+  concealment: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'What’s Kept Hidden' },
+  intimacy: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'A Private Exchange' },
+  address: { affinity: { expansive: 0.25, restrained: -0.25 }, label: 'Spoken To Many' },
+  confrontation: { affinity: { expansive: 0.25, restrained: -0.25 }, label: 'A Conflict Out Loud' },
+};
+
 /** The language: heightened text wants to be sized to, verse placed and given its time. */
 export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affinity: Affinity; label: string }>> = {
   heightened: { affinity: { expansive: 0.5 }, label: 'Its Heightened Language' },
@@ -111,9 +127,13 @@ export const LANGUAGE_AFFINITY: Readonly<Record<'heightened' | 'verse', { affini
  * `band`: where a side counts as suiting the scene or going against its grain. `concern`: what a register's affinity
  * counts for beside the scene's own signals. At 1, as first set, a genre's two scenes disagreed on the scale axis in 10% of
  * genres (criterion I2 asks 20%): the register outweighed everything the scene itself said, a genre rule by another name. Chosen against the criteria written
- * before (docs/verification/interpretation-2026-10-16/criteria.md).
+ * before (docs/verification/interpretation-2026-10-16/criteria.md). `reader`: what the reader's way of playing the other
+ * part (`READER_AFFINITY`) counts for, the same as a register's concern. It counted in full until later on 2026-10-16,
+ * twice what a concern did, set so when the reader was added and never weighed against the register: on the held-out
+ * briefs, where most readers press, withhold or surprise, it alone decided 40% of the cases where two genres that pull
+ * opposite ways came out alike (the genre signature's S3, docs/verification/genres-2026-10-16/g1-replacement.md).
  */
-export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5 } as const;
+export const GRAIN = { strength: 0.3, stakesStep: 0.15, prep: 0.1, reading: 0.5, band: 0.25, floor: 0.25, concern: 0.5, reader: 0.5 } as const;
 
 export type GrainBand = 'suits' | 'either' | 'against';
 export const GRAIN_LABEL: Readonly<Record<GrainBand, string>> = { suits: 'Suits The Scene', either: 'Either Way', against: 'Against The Grain' };

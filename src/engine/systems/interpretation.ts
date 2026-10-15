@@ -10,7 +10,7 @@
 
 import { AXES, APPROACH_EFFECT, PLAYING } from '../content/approaches';
 import { CONCERNS, type Concern } from '../content/concerns';
-import { CONCERN_AFFINITY, FEATURE_AFFINITY, SOLO_AFFINITY, GRAIN, GRAIN_LABEL, LANGUAGE_AFFINITY, MEDIUM_AFFINITY, READER_AFFINITY, TONE_AFFINITY, TURN_AFFINITY, type GrainBand } from '../content/interpretation';
+import { CIRCUMSTANCE_AFFINITY, CONCERN_AFFINITY, FEATURE_AFFINITY, SOLO_AFFINITY, GRAIN, GRAIN_LABEL, LANGUAGE_AFFINITY, MEDIUM_AFFINITY, READER_AFFINITY, TONE_AFFINITY, TURN_AFFINITY, type GrainBand } from '../content/interpretation';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Dimension, TaskProfile } from '../content/tasks';
 import { GENRE_BY_ID } from '../content/film-genres';
@@ -78,7 +78,7 @@ export function suitabilityOf(side: AxisValue, material: MaterialProfile | undef
   const push = (source: string, v: number) => { if (Math.abs(v) >= 0.005) signals.push({ source, v: r2(v) }); };
   const genre = scene.genre ? GENRE_BY_ID[scene.genre]?.label ?? scene.genre : undefined;
   for (const c of scene.concerns ?? []) push(`${genre ? `${genre}’s ` : ''}${CONCERNS[c].label}: ${CONCERN_AFFINITY[c].why}`, (CONCERN_AFFINITY[c].affinity[side] ?? 0) * GRAIN.concern);
-  if (scene.readerPlays) push(READER_AFFINITY[scene.readerPlays].label, READER_AFFINITY[scene.readerPlays].affinity[side] ?? 0);
+  if (scene.readerPlays) push(READER_AFFINITY[scene.readerPlays].label, (READER_AFFINITY[scene.readerPlays].affinity[side] ?? 0) * GRAIN.reader);
   if (material) {
     push(MEDIUM_AFFINITY[material.medium].label, MEDIUM_AFFINITY[material.medium].affinity[side] ?? 0);
     const shares = toneShares(material);
@@ -89,8 +89,12 @@ export function suitabilityOf(side: AxisValue, material: MaterialProfile | undef
     for (const f of Object.keys(FEATURE_AFFINITY) as (keyof typeof FEATURE_AFFINITY)[]) {
       const level = material[f];
       const e = FEATURE_AFFINITY[f];
+      // On stage a voice's demand is the house's to reach, read on the execution (`STAGE_LEAN`), not a size of playing
+      // (from 2026-10-16): until then Othello's willow song, sung low at bedtime, counted three quarters for expansive.
+      if (f === 'vocal' && material.medium === 'stage') continue;
       if (level && level >= (e.from ?? 1)) push(e.label, (e.affinity[side] ?? 0) * level);
     }
+    for (const [c, level] of Object.entries(material.circumstances ?? {}) as [keyof typeof CIRCUMSTANCE_AFFINITY, number][]) if (level) push(CIRCUMSTANCE_AFFINITY[c].label, (CIRCUMSTANCE_AFFINITY[c].affinity[side] ?? 0) * level);
     if (material.language !== 'everyday') push(LANGUAGE_AFFINITY[material.language].label, LANGUAGE_AFFINITY[material.language].affinity[side] ?? 0);
   }
   if (scene.reading) push(`Your Reading, ${scene.reading.label}`, readingCoherence(side, scene.reading.lean));

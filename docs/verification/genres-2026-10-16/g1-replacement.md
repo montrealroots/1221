@@ -217,3 +217,156 @@ per 50 scenes.
 - **Giving the reader less weight because S3 asks it.** That's tuning against the criterion.
 
 Both are the owner's to weigh, with this table. The original S2 and S3 results stand as recorded, failing.
+
+## S3: The Reader Weighed As A Concern, Defined Before It Was Validated (2026-10-16, The Owner's Later Brief)
+
+The owner's brief "Resolve The Remaining Genre Benchmark With Defensible Changes And Proof". It started from `main` at
+`eb0b6022`. S3 and its 80% threshold are unchanged. Nothing was removed or relabeled.
+
+### The Diagnosis, On The Known Fresh Held-Out Sample
+
+The baseline: 22,432 of 28,413 contrasting (pair, scene) cases differ, 78.95%, leaving 5,981 misses. Each miss was
+tested against counterfactuals: suitability without the reader, with the register at full weight, and without the
+cap at ±1. A tie is an axis whose two sides are equal.
+
+| Counterfactual, Of The 5,981 Misses | Misses It Would Rescue |
+|---|---|
+| The register at full weight | 3,735 (62%) |
+| The reader left out | 2,389 (40%); 2,197 of them nothing else rescues |
+| The cap at ±1 lifted | 193 (3%) |
+| An exact tie on an axis, either genre | 236 involved |
+| None of the above | 1,548 (26%) |
+
+- **No miss is a mislabeled pair.** In every miss the two registers' declared pulls are opposed on at least one axis.
+- **The 1,548 that nothing rescues are legitimate.** They're the scene's own features, tones, medium and reading
+  deciding, with the cap involved in only one of them. That's I2's point: a genre isn't a rule.
+- **The cap and ties are minor.** They're reported and not changed. Changing how a tie is picked would change the
+  benchmark.
+- **The reader's hypothesis holds in part.** The reader alone decides 40% of the misses. The reason is a weighting
+  inconsistency: a register's concern counts at half its affinity (`GRAIN.concern`, 0.5), set when full weight made a
+  genre a rule. The reader, one signal like one concern, counts at full: a pressing, withholding or unpredictable reader
+  pulls up to twice as hard as any concern. No record says why it was set at full; it was never tuned.
+
+### The Change, And Why
+
+**`GRAIN.reader` = `GRAIN.concern` = 0.5.** A reader's affinity counts as a register concern's does.
+- **The principle.** Each is one source's way of playing the scene, and neither should outweigh the other by default.
+- **What's kept.**
+  - The reader still moves suitability.
+  - The reader's lean and draw on the take are unchanged (`READER_PLAYS`).
+  - No genre data, threshold, sample or pick rule changes.
+- **What this doesn't do.**
+  - It isn't fitted to S3. No other value was tried.
+  - Lowering the reader below a concern, or raising the register past half, was ruled out. One would make the reader
+    count for less than a concern does. The other would bring back the genre-as-rule that I2 caught.
+
+On the known samples, measured before this was written (exploration, not validation):
+- **S3** went from 78.9% to 82.0% on the fresh held-out sample and from 71.8% to 82.8% on the held-out one; designed
+  is 88.9% and fresh designed 87.4%.
+- **S1 and S2** hold.
+- **The interpretation criteria all hold.** I2's scale clause is the closest, at 20.8% against 20%, from 21.5%.
+
+### Fresh Validation, Defined Here Before It Was Run (`--validate`)
+
+Every brief has been read by some sample. So this set is fresh in what S3 has never read:
+- **The reading.** Every brief (298, all with a second reading) is played in its second reading. S3 plays the first.
+- **The genre pairs.** Every contrasting pair (no concern shared, declared pulls opposed) that's off S3's grid. S3
+  samples every third genre against every fifth after it.
+- **The ability profiles.** Twelve profiles of two abilities at 72 (each with the next), the rest even. S3 uses one
+  ability at 85.
+- **The pick.** As S3's: the best profile, and on each axis the greater suitability, a tie to the first side. Ties are
+  counted and reported.
+- **Related pairs** (a concern shared) off the grid are measured beside them, to show overlap kept, with no threshold.
+
+**Passes if:**
+- with the change, at least 80% of the fresh contrasting cases differ;
+- related pairs differ less often than contrasting ones.
+
+The measure runs at both reader weights, 1 (before) and 0.5 (after). The share is reported with its numerator and
+denominator, and by the reader's style.
+
+### Results Of The Change, Measured After The Definition Above (`s3-reader/`)
+
+The change is `GRAIN.reader` at 0.5, `RULESET` evaluation-7, in `b1b9faf1`. S3's pick is unchanged: on each axis the
+greater suitability, a tie to the first side, or else the best profile.
+
+**S3 on its own samples** (contrasting pairs on S3's grid, first readings, one-ability profiles at 85):
+
+Counts from `s3-exact-1*.json` (before) and `s3-exact-0.5*.json` (after), read from the tool's numerators:
+
+| Sample | Before (Reader In Full) | After (Reader As A Concern) |
+|---|---|---|
+| Designed (50 briefs) | 12,769 of 14,350 (88.98%) | 12,757 of 14,350 (88.90%): 12 fewer |
+| Held out (50) | 11,623 of 14,350 (81.00%) | 11,887 of 14,350 (82.84%) |
+| Fresh designed (99) | 24,638 of 28,413 (86.71%) | 24,832 of 28,413 (87.40%) |
+| **Fresh held out (99), the 78.9% shortfall** | **22,432 of 28,413 (78.95%)** | **23,300 of 28,413 (82.00%)** |
+
+The designed sample lost 12 cases, and it's still well above the bar. Those 12 weren't traced one by one.
+
+**Fresh validation** (`validate-before.json`, `validate-after.json`), as defined above. There are 1,156,538
+contrasting cases: 298 briefs in their second reading, 3,881 pairs off the grid, and two-ability profiles.
+
+| | Before | After |
+|---|---|---|
+| **Contrasting pairs differ (≥ 80%)** | 998,357 (86.3%) | **1,015,539 (87.8%): passes** |
+| Steady reader | 88.9% | 89.7% |
+| Pressing reader | 85.7% | 89.6% |
+| Unpredictable reader | 83.5% | 85.2% |
+| Withholding reader | 80.2% | 83.7% |
+| Voice (no reader) | 83.4% | 83.4% |
+| Cases with a tie on some axis (picked to the first side) | 48,429 | 54,169 |
+| Related pairs differ (2,312 pairs; overlap kept, no threshold) | 56.3% | 57.2% |
+
+**What the validation shows, and what it doesn't.**
+- **It passes, and it's honest about its strength.** The fresh set passes the 80% bar at both weights.
+  - **The change generalizes.** It helps on every reader's way: most where the reader presses, withholds or
+    surprises, and not at all on voice takes, which have no reader.
+  - **It hurts nothing.**
+  - **It doesn't discriminate.** Alone, it couldn't tell the change from no change. The discriminating evidence is the
+    known samples above, where the shortfall was, and the diagnosis.
+- **Why the fresh set is easier.** A sensitivity run, after the validation and not part of it, used S3's own
+  one-ability profiles (`sensitivity-s3-profiles-*.json`): 84.1% before and 86.1% after. So the fresh set is easier
+  because of its second readings and off-grid pairs, not its profiles. The fresh held-out slice of S3's grid stays the
+  hardest.
+- **Related pairs differ far less than contrasting ones** (57.2% against 87.8%). Overlap between genres that share a
+  concern is kept.
+
+**Remaining misses on the fresh held-out sample: 5,113 of 28,413.** They weren't classified again after the change.
+Before it, the 5,981 misses broke down as follows, and none was a mislabeled pair:
+- 26% were the scene's own signals deciding whatever was changed;
+- under 4% were the cap or ties;
+- the rest were the reader and the register's weight, which is what this change acts on.
+
+**The falsifier** (`blind.json`, `blind-validate.json`): with the genre ignored, S1, S2 and S3 fail on every sample, and
+0 of the 1,156,538 fresh cases differ.
+
+**What's kept** (`interpretation-criteria-after.json`, `signature-after*.json`):
+- **S1:** 0.90 / 0.88, least 0.79. **S2 revised:** 1.60 / 1.61, nearest shares a concern 98.7%. S4 is unchanged:
+  `RULESET` and the register don't touch which briefs are identical, and `tests/genre-identity.test.ts` passes.
+- **Interpretation criteria:**
+  - I1 on all 8,010, 9,117 and 2,277 checks.
+  - I2 pace 24.2%, scale **20.8%** (it was 21.5%; the closest to its 20% bar), structure 32.9%.
+  - I3 spread 1.29 and 1.19, expansive ahead 27.0% and 41.2%.
+  - I4: the even actor follows suitability 100%.
+  - I5 ≥ 98.7%.
+- **The stage set's bias, unchanged and still open.** Expansive is ahead on 100% of the class scenes and plays. A class
+  scene has no reader, so this change can't reach it, and doesn't claim to.
+- **Advice:** the 40 played cases are the same as before, case for case: 40 of 40 within a tenth, the exact best in 38.
+- **Historical results:** `RULESET` evaluation-7. A take kept under evaluation-6 is shown as it was, not judged again.
+
+**Proof in play** (`tests/genre-reader.test.ts`, 6, expectations worked from the affinities):
+- A withholding reader counts 0.25 on measured: half its 0.5.
+- Absurdist and chase on brief-apocalyptic-2's scene now read the pace driven and measured. With the reader in full
+  both read measured: absurdist's 0.36 against 0.28.
+- The reader still moves the pace by half its affinity: steady against withholding.
+- Absurdist and comedy, which share Comic Rhythm, still agree.
+- Through the commands, driven taped against the withholding reader now gives back less, and measured gains less.
+  Measured still gains more than driven.
+- A mastered actor prepared over days reaches 100 played against the reader.
+
+**Mutations** (`mutations.json`): each was killed:
+- the reader back in full;
+- the reader left out;
+- the register left out;
+- the sign flipped;
+- the reading left out.

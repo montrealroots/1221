@@ -1,6 +1,99 @@
-# Read First: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
+# Read First: Genre Acceptance And The Stage, 2026-10-16
 
-**This section is the current status.** Every section below is history. It covers the owner's brief "Finish School
+**This section is the current status.** Every section below is history. It covers the owner's brief "Finish Genre
+Acceptance And Correct The Stage-Interpretation Bias", on `claude/zen-mccarthy-i88ujw` after the S3 work below, in the
+same pull request (#32): not merged, not deployed. The accounts are `docs/verification/stage-2026-10-16/` and
+`docs/verification/genres-2026-10-16/g1-replacement.md`.
+
+- **S3** (the section below, unchanged by this one): 23,300 of 28,413 on the fresh held-out sample (82.00%, from
+  78.95%), and 1,015,539 of 1,156,538 fresh (87.8%). The stage change didn't move it: every brief's suitability is
+  identical.
+- **The stage bias.** Expansive was ahead on 85 of 85 class scenes and plays: the house's +0.25 for size, a voice's
+  demand counted as size, and not one signal for restraint.
+  - **Projection is now a demand.** The house weighs execution 1.2, as a microphone does, and pulls no scale.
+  - **Every scene says its circumstances,** from its text: what it hides, how private it is, how far it's spoken to
+    many, how far its conflict is out loud.
+  - `RULESET` is evaluation-8.
+  - Restrained is now ahead on 50 and expansive on 33. On the fresh production nights it's 16 and 13 of 29.
+  - Mastery holds on all 2,277 combinations and 783 nights.
+- **Shortfalls against the criteria written first,** each with its cause in the README:
+  - **ST3's "even actor the same":** 159 of 171, every difference within one 0.1 rounding step.
+  - **ST4, drama:** all 25 catalog drama scenes suit restraint; it has no public or brawling drama scene.
+  - **ST6, the restrained specialist against the grain:** 7 of 34, against 25%. Expansive draws twice what restrained
+    does, as `APPROACH_EFFECT` was.
+- **The genre audit** (`genre-audit.md`): knowing a genre helps its own brief in 149 of 149, and another's in none.
+- **Verified.**
+  - **The gate:** `npm run gate` exited 0 on `8c9a8292`, read from a file: 348 files and 4,184 tests, typecheck, lint
+    and all seventeen checks, the tree unchanged.
+    - The first run, on `10a0914f`, failed four tests. Each read the stage's new projection: the microphone test
+      compared with a stage that no longer leans nothing, and three casting journeys had pinned parts that casting
+      now reads otherwise. Each was corrected to what it holds (`fe5ccc61`).
+    - The second run, on `fe5ccc61`, failed the typecheck in one of those tests. It was fixed in `8c9a8292`.
+  - **The build:** exit 0.
+  - **The built app at 1440 and 390,** from all 14 scenario saves written again on the new engine (0 breaches and 0
+    unbalanced each): 70 passed, 0 failed, 2 skipped (the two since 2026-10-12), 0 errors, 0 overflows. That includes
+    the new stage step: a drama scene's Restrained, citing What's Kept Hidden and A Private Exchange, chosen and kept
+    through a reload.
+    - Its first two runs timed out on the step's own locators. Both were fixed in the tool (`c5a23c09`, `1ccf2867`), and the
+      commits since `8c9a8292` change only that tool and these documents.
+  - In a cloud container (Linux), not the owner's PowerShell machine.
+- **Open:**
+  - the three shortfalls above (owner's: add drama content, or weigh restrained's draw);
+  - section 2's six acceptance areas.
+
+  Finishing the genres isn't finishing the game.
+
+# Earlier: The Genre Benchmark S3, Resolved, 2026-10-16
+
+History now: the section above is the current status. It covers the owner's brief "Resolve The
+Remaining Genre Benchmark With Defensible Changes And Proof", on `claude/zen-mccarthy-i88ujw`, restarted from `main` at
+`eb0b6022` after pull request #31 was merged. A new pull request is opened for the owner: not merged, not deployed.
+The account is `docs/verification/genres-2026-10-16/g1-replacement.md` ("S3: The Reader Weighed As A Concern"), and
+its evidence is in `s3-reader/`.
+
+- **The diagnosis**, on the 78.9% sample (22,432 of 28,413):
+  - The reader alone decided 40% of the 5,981 misses.
+  - The register's half weight against every scene signal decided 62%.
+  - The scene's own signals decided 26% whatever was changed.
+  - The cap and ties decided under 4%.
+  - No miss was a mislabeled pair.
+- **The change.** `GRAIN.reader` is 0.5, from 1: the reader counts as a register concern does (`GRAIN.concern`), where
+  before it counted twice as much, and nothing recorded why. `RULESET` is evaluation-7. Nothing else moved: not the
+  threshold, the samples, the pick or the genre data.
+- **The results**, from the tool's numerators:
+  - fresh held-out: 22,432 to 23,300 of 28,413 (78.95% to 82.00%);
+  - held-out: 81.00% to 82.84%;
+  - fresh designed: 86.71% to 87.40%;
+  - designed: 88.98% to 88.90%, 12 cases fewer.
+- **Fresh validation, defined before it ran** (`fade7e1c`): second readings, contrasting pairs off S3's grid, and
+  two-ability profiles.
+  - 1,015,539 of 1,156,538 differ (87.8%), against 86.3% before. It passed at both weights, so it shows the change
+    generalizes but doesn't discriminate it.
+  - Related pairs differ in 57.2%.
+  - With the genre ignored, 0 differ.
+- **What's kept.**
+  - S1, S2 revised and S4.
+  - Every interpretation criterion. I2's scale clause is at 20.8% against 20%, the closest.
+  - Advice: 40 of 40, as before, case for case.
+  - Mastery at 100 against the reader.
+  - Tests: `tests/genre-reader.test.ts` (6). Five mutations, each killed.
+- **Still open.**
+  - The stage set's expansive bias (100% of class scenes and plays): unchanged, not reached by this change, and the
+    owner's.
+  - Section 2 of the work plan: the six acceptance areas.
+- **Verified.**
+  - **The gate:** `npm run gate` exited 0 on `03853058`, read from a file: 347 files and 4,173 tests, typecheck, lint
+    and all seventeen checks, the tree unchanged. The first run, on `3a926f92`, failed on the developer map and the
+    traceability table, which didn't yet name the new test. Both were written again.
+  - **The build:** exit 0.
+  - **The built app at 1440 and 390**, from all 14 scenario saves written again on the new code (0 breaches, 0
+    unbalanced each): 69 passed, 0 failed, 2 skipped (the two since 2026-10-12), 0 errors, 0 overflows.
+  - In a cloud container (Linux), not the owner's PowerShell machine.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
+# Earlier: School Workload And The Remaining Acting-Engine Shortfalls, 2026-10-16
+
+History now: the section above is the current status. It covers the owner's brief "Finish School
 Workload Balance And The Remaining Acting-Engine Shortfalls", on `claude/zen-mccarthy-i88ujw`, in the same pull
 request: not merged, not deployed. The checklist is section 6 of the work plan
 (`docs/verification/WORKPLAN-2026-10-16.md`). Section 2's six acceptance areas are still open and untouched.

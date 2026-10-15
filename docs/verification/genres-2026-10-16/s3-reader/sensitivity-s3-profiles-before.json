@@ -1,0 +1,38 @@
+{
+ "blind": false,
+ "reader": 1,
+ "validate": {
+  "scenes": 298,
+  "readingPlayed": "the second",
+  "profiles": "one ability at 85, as S3",
+  "contrastingPairs": 3881,
+  "relatedPairs": 2312,
+  "S3": {
+   "cases": 1156538,
+   "differ": 973167,
+   "share": 0.841,
+   "withATie": 48429,
+   "byReader": {
+    "steady": "538531 of 624841 (86.2%)",
+    "voice": "113450 of 135835 (83.5%)",
+    "pressing": "115215 of 139716 (82.5%)",
+    "unpredictable": "103334 of 128073 (80.7%)",
+    "withholding": "102637 of 128073 (80.1%)"
+   },
+   "holds": true
+  },
+  "related": {
+   "cases": 688976,
+   "differ": 357769,
+   "share": 0.519,
+   "withATie": 25279,
+   "byReader": {
+    "steady": "198154 of 372232 (53.2%)",
+    "voice": "41302 of 80920 (51.0%)",
+    "pressing": "42024 of 83232 (50.5%)",
+    "unpredictable": "37064 of 76296 (48.6%)",
+    "withholding": "39225 of 76296 (51.4%)"
+   }
+  }
+ }
+}

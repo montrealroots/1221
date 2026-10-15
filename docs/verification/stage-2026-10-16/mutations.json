@@ -1,0 +1,47 @@
+[
+ {
+  "mutation": "S1 the house back as a pull toward expansive",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ },
+ {
+  "mutation": "S2 the scene's circumstances ignored",
+  "verdict": "KILLED",
+  "testsFailed": 6
+ },
+ {
+  "mutation": "S3 a stage voice read as size again",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "S4 the house not read as projection",
+  "verdict": "SURVIVED on the first run; KILLED (1) once the test compared the stage's execution with the microphone's and the camera's",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "S5 restraint favored everywhere",
+  "verdict": "KILLED",
+  "testsFailed": 4
+ },
+ {
+  "mutation": "S6 genre influence removed",
+  "verdict": "KILLED",
+  "testsFailed": 7
+ },
+ {
+  "mutation": "S7 reader ignored",
+  "verdict": "KILLED",
+  "testsFailed": 5
+ },
+ {
+  "mutation": "S8 mastery broken against the grain",
+  "verdict": "KILLED",
+  "testsFailed": 1
+ },
+ {
+  "mutation": "S9 an old result judged again",
+  "verdict": "KILLED",
+  "testsFailed": 2
+ }
+]

@@ -804,9 +804,10 @@ describe('p-genres', () => {
     sim.must({ kind: 'genre.study', payload: { genre: 'comedy' } });
     // A year on, the second fall's casting: Major Barbara, a comedy, a satire and a political drama.
     sim.advanceTo(at(2027, 9, 11, 8));
-    // Lady Britomart from 2026-10-16, when casting's read came to weigh a night's abilities as the play demands
-    // (`BASE_INPUTS`); Barbara Undershaft until then. The play, and so the kinds below, are the same.
-    expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Lady Britomart' });
+    // Barbara Undershaft until 2026-10-16, Lady Britomart from then, when casting's read came to weigh a night's abilities as
+    // the play demands (`BASE_INPUTS`), and Barbara again from later that day, when a stage's house came to weigh the
+    // voice and the body (`STAGE_LEAN`). The play, and so the kinds below, are the same.
+    expect(sim.player.school!.casting).toMatchObject({ play: 'Major Barbara', role: 'Barbara Undershaft' });
     expect(sentence(profile(sim))).toBe('Drama, Comedy. Satire is the kind your next part’s play is, and the one of its kinds you know least.');
     expect(studyRefusal(sim, sim.player, 'satire')).toBeUndefined();
     sim.must({ kind: 'genre.study', payload: { genre: 'satire' } });
