@@ -1087,14 +1087,14 @@ if (DIR) {
     return `${soonest.slice(0, 140)} | ${words.slice(0, 200)}`;
   });
   await step('[save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises', async () => {
-    const panel = page.locator('.panel').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
+    const panel = page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last();
     let b = panel.getByRole('button', { name: /^Run It With A Reader/ }).first();
     must(await b.count(), 'no Run It With A Reader on the scene');
     let waited = '';
     for (let i = 0; i < 3 && await b.isDisabled(); i += 1) {
       waited += ` [${(await panel.locator('.why-not').first().innerText().catch(() => '')).slice(0, 80)}]`;
       await advance('This Evening'); await rail('School'); await tab('Coursework');
-      b = page.locator('.panel').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last().getByRole('button', { name: /^Run It With A Reader/ }).first();
+      b = page.locator('section.card').filter({ has: page.locator(`[data-shown-today="${id}"]`) }).last().getByRole('button', { name: /^Run It With A Reader/ }).first();
       shown = await figure(id);
     }
     must(!(await b.isDisabled()), `still grayed:${waited}`);

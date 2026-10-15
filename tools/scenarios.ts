@@ -213,8 +213,10 @@ const SCENARIOS: Record<string, Hook> = {
   },
   // A student a few weeks into the first term, saved on a free Saturday morning (from 2026-10-12), so the built app's
   // practice-brief journey has hours to spend: choose a genre, read its brief, prepare it, tape it, train, tape again.
+  // The partner part left alone (from 2026-10-16): the brief's journey is played through the afternoon the save stops
+  // on, and the policy's evening asked of a scene partner, booked at seven, sat across it and grayed every step.
   brief: {
-    years: 0.053, config: { homeRegionId: 'us-ny-newyork' },
+    years: 0.053, config: { homeRegionId: 'us-ny-newyork' }, partnerPart: false,
     daily() {},
   },
   withdraw: {
