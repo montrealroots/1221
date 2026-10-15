@@ -138,7 +138,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.cancel_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | No repeat is asked for.; … Confirm to go ahead. | — | — | school.term | 2 | — |
 | `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal) | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.choose_part_playing` | Implemented But Unverified | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also partPlayingRefusal) | — | — | — | 5 | — |
-| `school.choose_playing` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also playingRefusal) | — | — | — | 4 | — |
+| `school.choose_playing` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also playingRefusal) | — | — | — | 5 | — |
 | `school.extend_incomplete` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/courserecord.ts` | — (also extendRefusal) | — | — | — | 4 | — |
 | `school.learn_part` | Verified (journey) | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also ownWorkRefusal) | — | — | — | 12 | journey-school-production.test.ts |
 | `school.make_amends` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/classmates.ts` | — (also amendsRefusal) | status | — | — | 6 | — |
