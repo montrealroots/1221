@@ -61,10 +61,13 @@ export const READER_AFFINITY: Readonly<Record<'steady' | 'pressing' | 'withholdi
  * The medium's scale: a close frame takes less than a house does. The camera's was 0.5 each way when first set, and
  * measured against the criteria (I3) it made restrained the better side on 74% of briefs, every brief but the voice ones
  * being on camera: a rule for the medium, not a reading of the scene. Halved on 2026-10-16, before any other change.
+ * The stage's was 0.5 for expansive and -0.25 for restrained until later that day, when the class scenes and the plays,
+ * measured for the first time, came out expansive on every one: The Seagull and A Doll's House decided by the house's
+ * size. A medium leans, a quarter each way, and doesn't decide (docs/verification/interpretation-2026-10-16/i3-review.md).
  */
 export const MEDIUM_AFFINITY: Readonly<Record<'stage' | 'camera' | 'voice', { affinity: Affinity; label: string }>> = {
   camera: { affinity: { restrained: 0.25, expansive: -0.25 }, label: 'A Close Frame' },
-  stage: { affinity: { expansive: 0.5, restrained: -0.25 }, label: 'A House To Reach' },
+  stage: { affinity: { expansive: 0.25, restrained: -0.25 }, label: 'A House To Reach' },
   voice: { affinity: {}, label: 'A Microphone' },
 };
 

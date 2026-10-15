@@ -18,7 +18,7 @@ import type { Dimension, TaskProfile } from '../content/tasks';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
 import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
-import { grainOf, type Scene, type Suitability } from './interpretation';
+import { grainOf, sceneOfMaterial, type Scene, type Suitability } from './interpretation';
 
 /** How the player has chosen to play a piece, and how far the choice is rehearsed in. */
 export interface Playing {
@@ -171,7 +171,9 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
     for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs);
   }
   // How well the sides suit the scene (from 2026-10-16, `systems/interpretation.ts`). Work that isn't performed isn't played.
-  const g = performed ? grainOf(task, sidesOf(playing), material, scene) : { grain: {}, required: PLAYING.complete, suits: [] };
+  // A class scene's or a play's own genre, where the caller gives no scene (from 2026-10-16, later: `sceneOfMaterial`).
+  const read = Object.keys(scene).length ? scene : sceneOfMaterial(material);
+  const g = performed ? grainOf(task, sidesOf(playing), material, read) : { grain: {}, required: PLAYING.complete, suits: [] };
   return { lean, inputs, prep, fit, grain: g.grain, suits: g.suits, required: g.required };
 }
 

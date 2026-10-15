@@ -19,7 +19,7 @@ import { abilityDef } from '@/engine/systems/attributes';
 import type { Evaluation } from '@/engine/systems/evaluation';
 import { SKILLS } from '@/engine/content/school';
 import { GRAIN_LABEL } from '@/engine/content/interpretation';
-import { requiredFor, suitabilityOf, type Scene } from '@/engine/systems/interpretation';
+import { requiredFor, sceneOfMaterial, suitabilityOf, type Scene } from '@/engine/systems/interpretation';
 
 const LEVEL = ['None', 'Some', 'Much', 'Built On It'];
 const FEATURE_WORD: Record<string, string> = { timing: 'Timing', physical: 'Physical Work', partner: 'Playing Off The Partner', vocal: 'Vocal Demand', improvisation: 'Freedom To Improvise' };
@@ -74,7 +74,9 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
   const asked = Object.entries(direction ?? {}) as [Axis, AxisValue][];
   // How much of the choice's rehearsal completes it (from 2026-10-16): less with the scene's grain, more against it.
   const draftSides = sidesOf({ ...draft, chosenAt: 0, prep: 0 });
-  const completeAt = requiredFor(draftSides, material, scene);
+  // The scene as the take reads it: the caller's, or a class scene's or a play's own genre (`sceneOfMaterial`).
+  const sceneRead = scene ?? sceneOfMaterial(material);
+  const completeAt = requiredFor(draftSides, material, sceneRead);
   return (
     <div className="col gap-2">
       {help ? <div className="row-between"><div className="eyebrow">How You’ll Play It</div><HowItWorks help={help} /></div> : <div className="eyebrow">How You’ll Play It</div>}
@@ -89,7 +91,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
               const chosen = draft[axis] === side;
               const result = preview({ ...draft, [axis]: side }).overall;
               // How well the side suits the scene (from 2026-10-16, `systems/interpretation.ts`): its band and what it rests on.
-              const suit = suitabilityOf(side, material, scene);
+              const suit = suitabilityOf(side, material, sceneRead);
               const rests = suit.signals.filter((g) => Math.abs(g.v) >= 0.1).slice(0, 3);
               const draws = [...new Set(Object.values(e.inputs).flat().filter((x) => !movements || x!.ability !== 'stamina').map((x) => abilityDef(x!.ability).label))].join(', ');
               return (
@@ -115,7 +117,7 @@ export function PlayingChooser({ material, scene, current, direction, preview, f
       </div>
       <p className="small" style={{ margin: 0 }}>
         Played this way, fully prepared and on a good day: {now.overall.toFixed(1)}, against {open.toFixed(1)} with nothing chosen.
-        {current && sidesOf(current).length > 0 ? ` Your choice now is rehearsed in to ${Math.round(current.prep * 100)}% (complete at ${Math.round(requiredFor(sidesOf(current), material, scene) * 100)}%), by work on your feet.` : ' A choice is rehearsed in by work on your feet after it’s made.'}
+        {current && sidesOf(current).length > 0 ? ` Your choice now is rehearsed in to ${Math.round(current.prep * 100)}% (complete at ${Math.round(requiredFor(sidesOf(current), material, sceneRead) * 100)}%), by work on your feet.` : ' A choice is rehearsed in by work on your feet after it’s made.'}
         {draftSides.length > 0 ? ` This one is complete at ${Math.round(completeAt * 100)}% rehearsed in: ${completeAt < PLAYING.complete ? 'with the grain of the scene, it asks less' : completeAt > PLAYING.complete ? 'against the grain of the scene, it asks more' : 'neither with the grain nor against it'}.` : ''}
         {changed && current && sidesOf(current).length > 0 ? ` Changing it keeps ${Math.round(PLAYING.keptOnChange * 100)}% of that.` : ''}
       </p>

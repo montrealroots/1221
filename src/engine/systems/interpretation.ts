@@ -14,6 +14,9 @@ import { CONCERN_AFFINITY, FEATURE_AFFINITY, SOLO_AFFINITY, GRAIN, GRAIN_LABEL, 
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Dimension, TaskProfile } from '../content/tasks';
 import { GENRE_BY_ID } from '../content/film-genres';
+import { GENRE_REGISTER } from '../content/genre-register';
+import { SCENES } from '../content/coursework';
+import { genresOfPlay } from '../content/plays';
 
 /** What a scene is, beyond its material, for reading a choice against it: its genre's register, its reader, the reading taken. */
 export interface Scene {
@@ -104,8 +107,8 @@ export const axisSuitability = (axis: Axis, material: MaterialProfile | undefine
 export const stakesScale = (stakes: number | undefined) => 1 + GRAIN.stakesStep * ((stakes ?? 1) - 1);
 
 /**
- * What the chosen sides' suitability asks of the evaluation: on each dimension a side leans on (by 1.1 or more, where its
- * rehearsal is read), a share of difficulty, negative with the grain and positive against it; and how much of the
+ * What the chosen sides' suitability asks of the evaluation: on each dimension a side leans on, by how far it leans there
+ * against its most, a share of difficulty, negative with the grain and positive against it; and how much of the
  * choice's rehearsal completes it, the sides' mean suitability moving it from `PLAYING.complete`.
  */
 export function grainOf(task: TaskProfile, sides: readonly AxisValue[], material: MaterialProfile | undefined, scene: Scene = {}): { grain: Partial<Record<Dimension, { d: number; label: string }>>; required: number; suits: Suitability[] } {
@@ -115,11 +118,16 @@ export function grainOf(task: TaskProfile, sides: readonly AxisValue[], material
   for (const x of suits) {
     const e = APPROACH_EFFECT[x.side];
     if (x.s === 0) continue;
+    // Every dimension the side leans on, by how far it leans there against its most (from 2026-10-16, later). Until then
+    // only a dimension leant 1.1 or more, where the choice's rehearsal is read: expansive's execution (1.05), the voice and
+    // the body sized up, never met the scene's grain, and at a microphone, where execution weighs most, the side's
+    // suitability hardly reached the take (docs/verification/interpretation-2026-10-16/i3-review.md).
+    const most = Math.max(...Object.values(e.lean)) - 1;
     for (const [d, lean] of Object.entries(e.lean) as [Dimension, number][]) {
-      if (lean < 1.1 || !task.dims[d]) continue;
+      if (lean <= 1 || !task.dims[d]) continue;
       const had = grain[d];
       const label = `${e.label}, ${GRAIN_LABEL[x.band]}`;
-      grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s * k), label: had ? `${had.label}; ${label}` : label };
+      grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s * k * ((lean - 1) / most)), label: had ? `${had.label}; ${label}` : label };
     }
   }
   const mean = suits.length ? suits.reduce((t, x) => t + x.s, 0) / suits.length : 0;
@@ -139,3 +147,19 @@ export function requiredFor(sides: readonly AxisValue[], material: MaterialProfi
   const mean = sides.reduce((t, side) => t + suitabilityOf(side, material, scene).s, 0) / sides.length;
   return r2(clamp(PLAYING.complete - GRAIN.prep * mean, PLAYING.complete - GRAIN.prep, 1));
 }
+
+/**
+ * The scene a class scene or a play is read as, where nothing more is given (from 2026-10-16, later): its genre's
+ * register, as a brief's is, the genre a class scene names and the first a play is listed under (`kinds[0]`, as a brief's
+ * first genre is). Until then a class scene and a play were read by their material alone, and nothing in any of them
+ * could favor restraint: measured on the 86 of them, fresh to the criteria, expansive came out ahead on every one
+ * (docs/verification/interpretation-2026-10-16/i3-review.md). Their suitability only: the register's lean and draw on
+ * class work stay as they were.
+ */
+export function sceneOfMaterial(material: MaterialProfile | undefined): Scene {
+  if (!material) return {};
+  const genre = SCENE_BY_ID.get(material.id)?.genre ?? genresOfPlay(material.title)?.[0];
+  const concerns = genre ? GENRE_REGISTER[genre]?.concerns : undefined;
+  return genre && concerns?.length ? { genre, concerns } : {};
+}
+const SCENE_BY_ID = new Map(SCENES.map((x) => [x.id, x]));
