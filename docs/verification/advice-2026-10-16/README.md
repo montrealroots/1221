@@ -57,6 +57,10 @@ twenty days through `practice.exercise` in its own copy of the save, against a b
 
 - **Without credit for a declared tie**, the advice is still within a tenth of the best in 40 of 40, and names the exact
   best in 38.
+- **Played again later on 2026-10-16**, after I3's change to how far a way of playing's suitability reaches
+  (`../interpretation-2026-10-16/i3-review.md`), on `d32b016f`: every case is the same as above, to the byte. That's
+  40 of 40 within a tenth, the exact best in 38, and 529 candidates correlating at 0.88. Twenty days of an exercise
+  don't read which side a scene suits.
 - **Forecast against realized**, over 529 candidates, the gains correlate at 0.88. Every realized gain is about a
   quarter of a point above its forecast. That's what any day of practice brings beyond its own target (the discipline
   lift, transfers), the same for every copy, so it doesn't change the order.
