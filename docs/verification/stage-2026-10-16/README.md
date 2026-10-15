@@ -51,14 +51,14 @@ For example, the suitability of restrained and expansive:
 | The Seagull, Act Four | −0.06 / 0 | **0.32** / −0.37 | Konstantin's study at night, two people alone |
 | Trifles | −0.06 / 0 | **0.69** / −0.75 | they hide the bird from the men upstairs; the agreement is never spoken |
 | The Cherry Orchard, Act Four | −0.06 / 0.07 | **0.69** / −0.68 | the proposal everyone arranged is never spoken |
-| Othello 4.3, the willow song | −0.5 / 0.88 | restrained suits | two women alone at bedtime; the song is the voice's demand, not size |
-| Macbeth 1.7 | −0.5 / 0.5 | restrained suits | murder planned under the king's roof, the feast next door |
-| Julius Caesar 2.1, the orchard | −0.5 / 0.5 | restrained suits | husband and wife before dawn; he hides the conspiracy |
-| Julius Caesar 4.3, the tent | −0.5 / 0.75 | expansive suits | a quarrel of short, hard exchanges |
-| Antigone | −0.5 / 1 | expansive suits | a public trial before the palace; she defies the king to his face |
+| Othello 4.3, the willow song | −0.5 / 0.88 | **0.13** / −0.12 | two women alone at bedtime; the song is the voice's demand, not size |
+| Macbeth 1.7 | −0.5 / 0.5 | **0.38** / −0.37 | murder planned under the king's roof, the feast next door |
+| Julius Caesar 2.1, the orchard | −0.5 / 0.5 | **0.25** / −0.25 | husband and wife before dawn; he hides the conspiracy |
+| Julius Caesar 4.3, the tent | −0.5 / 0.75 | −0.25 / **0.25** | a quarrel of short, hard exchanges |
+| Antigone | −0.5 / 1 | −1 / **1** | a public trial before the palace; she defies the king to his face |
 | Pygmalion, Act Four | −0.12 / 0.44 | −0.25 / **0.56** | she has it out with him and throws his slippers |
-| The Proposal | −0.12 / 0.5 | expansive suits | it ends in shouting over the meadows |
-| Lady Windermere's Fan, Act One | −0.12 / 0.44 | restrained suits | Darlington's compliments carry a warning she doesn't hear |
+| The Proposal | −0.12 / 0.5 | −0.37 / **0.5** | it ends in shouting over the meadows |
+| Lady Windermere's Fan, Act One | −0.12 / 0.44 | **0.38** / −0.06 | Darlington's compliments carry a warning she doesn't hear |
 | Romeo And Juliet 2.2 | −0.5 / 0.75 | 0 / 0, **either** | a vow at night that mustn't be heard, against tragedy's register |
 
 ## The Criteria, Measured (`after.json`, `tools/interpretation.ts -- --fresh --stage`)
@@ -83,8 +83,8 @@ For example, the suitability of restrained and expansive:
 - **ST4, drama.** Every one of the catalog's 25 drama scenes and plays is a private, naturalist two-hander: Ibsen,
   Chekhov, Strindberg, Glaspell and the original scenes. Each is read in what it hides. Drama's register, Played
   Straight, already leans to restraint. The catalog has no drama scene of a public speech or a brawl to argue for size.
-  Within the genre the scenes still differ in how far they suit restraint, from Miss Julie at 0.07 to Hedda Gabler at
-  0.69, but none tips. Comedy and tragedy show both ways (13 / 15 and 4 / 16). No drama scene's signals were changed
+  Within the genre the scenes still differ in how far they suit restraint, from Miss Julie at 0.07 to Hedda Gabler's second
+  act at 0.82, but none tips. Comedy and tragedy show both ways (13 / 15 and 4 / 16). No drama scene's signals were changed
   after the measurement to pass.
 - **ST6, the restrained specialist.** A restrained specialist wins against the grain where expansive suits only narrowly
   (a gap of 0.3 or less). It loses where it suits strongly. The stage's expansive scenes are its public trials,
