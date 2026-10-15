@@ -16,7 +16,7 @@
 import type { AbilityId } from '../content/abilities';
 import type { Dimension, TaskProfile } from '../content/tasks';
 import { MATERIAL_BY_ID, type Axis, type AxisValue, type Feature, type MaterialProfile } from '../content/material';
-import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, type Inputs } from '../content/approaches';
+import { APPROACH_EFFECT, AXES, BLEND_EFFECT, CAMERA_LEAN, DEMAND_EFFECT, FEATURE_EFFECT, LANGUAGE_EFFECT, MISFIT, PLAYING, TRANSITION_EFFECT, VOICE_LEAN, STAGE_LEAN, type Inputs } from '../content/approaches';
 import type { Instant } from '../core/time';
 import { grainOf, sceneOfMaterial, type Scene, type Suitability } from './interpretation';
 
@@ -155,6 +155,7 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
     }
     if (material.medium === 'camera') for (const [d, x] of Object.entries(CAMERA_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
     if (material.medium === 'voice') for (const [d, x] of Object.entries(VOICE_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
+    if (material.medium === 'stage') for (const [d, x] of Object.entries(STAGE_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
   }
   for (const axis of Object.keys(AXES) as Axis[]) {
     const side = playing?.[axis];

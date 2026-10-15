@@ -167,3 +167,10 @@ export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 
 
 /** A voice alone at a microphone (from 2026-10-12): the voice carries everything, so its execution weighs most. SLATE's design. */
 export const VOICE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };
+/**
+ * A house to reach (from 2026-10-16): on stage, the voice and the body have to carry to the back row, which weighs the
+ * take's execution as a microphone's demand does, whichever way it's played. Until then the stage leant nothing here and
+ * read its house as a quarter's pull toward playing expansive (`MEDIUM_AFFINITY`), as if being heard were playing
+ * large; projection is support and clear intention, not size (docs/verification/stage-2026-10-16/research.md).
+ */
+export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };
