@@ -65,7 +65,7 @@
  */
 
 import { GRAIN, GRAIN_LABEL } from '../interpretation';
-import { requiredFor, suitabilityOf } from '../../systems/interpretation';
+import { requiredFor, sceneOfMaterial, suitabilityOf } from '../../systems/interpretation';
 import { CHAPTER_FOR } from '../tutorial';
 import { STEP_SPEED } from '../abilities';
 import { COURSES, SKILLS } from '../school';
@@ -173,10 +173,12 @@ const CHOICE_STEP = ALONE.gain * PLAYING.gainShare;
 const CHOSEN_TWICE = after(CHOICE_STEP, 2);
 const KEPT_ON_CHANGE = CHOSEN_TWICE * PLAYING.keptOnChange;
 // The mark Driven is complete at in the example's scene, The Seagull (from 2026-10-16, `requiredFor`): the scene's own,
-// by how well the side suits it, where until then every choice was complete at `PLAYING.complete`.
+// by how well the side suits it, where until then every choice was complete at `PLAYING.complete`. Read in the
+// scene's genre's register, as the game reads it (`sceneOfMaterial`): until 2026-10-16, later, the example left the
+// register out, and came to the same figure only because drama's pulls no pace.
 const EXAMPLE_SCENE = materialOf('seagull-4')!;
-const DRIVEN_SUITS = suitabilityOf('driven', EXAMPLE_SCENE);
-const DRIVEN_MARK = requiredFor(['driven'], EXAMPLE_SCENE);
+const DRIVEN_SUITS = suitabilityOf('driven', EXAMPLE_SCENE, sceneOfMaterial(EXAMPLE_SCENE));
+const DRIVEN_MARK = requiredFor(['driven'], EXAMPLE_SCENE, sceneOfMaterial(EXAMPLE_SCENE));
 const STEPS_TO_COMPLETE = (() => { let n = 0; while (after(CHOICE_STEP, n, KEPT_ON_CHANGE) < DRIVEN_MARK && n < 50) n += 1; return n; })();
 /** Where those steps leave it: past complete, by the last step's share. */
 const CHOICE_DONE = after(CHOICE_STEP, STEPS_TO_COMPLETE, KEPT_ON_CHANGE);
@@ -285,7 +287,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     later: [
       `At nine on the day it’s due the course meets, and the work is shown once in place of the meeting’s ordinary growth: the course’s skills grow ${pct(WORK.weight.unready)} of an ordinary meeting’s for Unready, ${pct(WORK.weight.working)} for Working, ${pct(WORK.weight.strong)} for Strong and ${pct(WORK.weight.exceptional)} for Exceptional.`,
       `Away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next meeting, or is excused if none is left. Away without one, it’s Not Shown and never taken later; it counts as unready at the term’s evaluation, and a partner’s trust falls ${-WORK.trust.missed}.`,
-      `In the term, once ${TERM_CHECK.after} of its pieces have been shown and ${pct(ESTIMATE.coursework.unready - TERM_CHECK.margin)} or more of them were Unready, A Word On Your Coursework comes once: how many, the part most often short on them, the steps that answer it, how many pieces are still to come and the day the faculty reviews the term.`,
+      `In the term, once ${TERM_CHECK.after} of its pieces have been due and ${pct(ESTIMATE.coursework.unready - TERM_CHECK.margin)} or more of them were Unready or not shown, as the review counts them, A Word On Your Coursework comes once: how many, the part most often short on those shown, the steps that answer it, how many pieces set are still to be shown and the day the faculty reviews the term.`,
       `At the term’s evaluation, with ${ESTIMATE.coursework.shown} or more pieces due, ${pct(ESTIMATE.coursework.unready)} or more of them unready or not shown falls short, and ${pct(ESTIMATE.coursework.strong)} or more Strong or better is noted.`,
       'Work a course revises comes back to be shown again at its next meeting, with the note to take; work in rounds is shown a round at a time. Work still open when the term’s classes end lapses.',
     ],
@@ -432,11 +434,11 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { label: 'A Change Of Mind', value: `Keeps ${pct(PLAYING.keptOnChange)} of what was rehearsed in`, estimate: true },
     ],
     reads: [
-      { label: 'Rehearsed In', value: `Read as a part of the preparation by each dimension the choice leans on by a tenth or more, complete at ${pct(PLAYING.complete)}`, estimate: true },
+      { label: 'Rehearsed In', value: `Read as a part of the preparation by each dimension the choice leans on by a tenth or more, complete at the scene’s own mark: ${pct(PLAYING.complete)} where the scene leans neither way on the side, and ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))} by how well it suits it (The Scene)`, estimate: true },
       { label: 'What Each Side Draws On', value: `${(Object.keys(APPROACH_EFFECT) as (keyof typeof APPROACH_EFFECT)[]).map((s) => `${APPROACH_EFFECT[s].label}, ${drawsOn(s)}`).join('; ')}${STAMINA_SIDES.length ? `. ${andList(STAMINA_SIDES)} ${STAMINA_SIDES.length > 1 ? 'draw' : 'draws'} on stamina too, in work shown whole, with no scene; a scene is judged part by part, reads stamina only as tiring toward the end however it’s played, and its table leaves stamina out` : ''}` },
       { label: 'Lean', value: 'Each side moves weight between the showing’s dimensions and never adds any: a choice changes what counts most, never the total', estimate: true },
       { label: 'Fit', value: `A side the scene doesn’t take holds the dimensions it leans on to ${pct(MISFIT)} of themselves, and says so before you choose`, estimate: true },
-      { label: 'The Scene', value: `How well each side suits the scene, from what the scene is: its tones and turns, its features, its language and its medium, and for a practice brief its genre’s register, its reader and the reading you’ve taken. The register’s concerns and the reader each count for ${pct(GRAIN.reader)} of the way they lean, the same, so neither settles it alone. A class scene and a play also say what their circumstances ask of the scale: what a character keeps hidden and a private exchange argue for ${APPROACH_EFFECT.restrained.label}; speaking to many and a conflict brought out loud argue for ${APPROACH_EFFECT.expansive.label}. A stage’s house asks your voice and body to reach the back row, whichever way you play it: that’s weighed on the take’s execution, and it doesn’t make playing large the better choice. ${GRAIN_LABEL.suits} makes the side easier to make work on the dimensions it leans on, up to ${pct(GRAIN.strength)} of the work’s difficulty, and asks less rehearsal, complete at down to ${pct(PLAYING.complete - GRAIN.prep)}; ${GRAIN_LABEL.against} makes it harder and asks more, up to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}. At full ability every side that fits still reaches 100`, estimate: true },
+      { label: 'The Scene', value: `How well each side suits the scene, from what the scene is: its genre’s register, its tones and turns, its features, its language and its medium, and for a practice brief its reader and the reading you’ve taken. The register’s concerns and the reader each count for ${pct(GRAIN.reader)} of the way they lean, the same, so neither settles it alone. A class scene and a play also say what their circumstances ask of the scale: what a character keeps hidden and a private exchange argue for ${APPROACH_EFFECT.restrained.label}; speaking to many and a conflict brought out loud argue for ${APPROACH_EFFECT.expansive.label}. A stage’s house asks your voice and body to reach the back row, whichever way you play it: that’s weighed on the take’s execution, and it doesn’t make playing large the better choice. ${GRAIN_LABEL.suits} makes the side easier to make work on the dimensions it leans on, up to ${pct(GRAIN.strength)} of the work’s difficulty, and asks less rehearsal, complete at down to ${pct(PLAYING.complete - GRAIN.prep)}; ${GRAIN_LABEL.against} makes it harder and asks more, up to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}. At full ability every side that fits still reaches 100`, estimate: true },
     ],
     now: [
       `“Chosen: rehearsed in to …%.” A first choice starts at 0%; the same choice again keeps all of it; a different one keeps ${pct(PLAYING.keptOnChange)}.`,
@@ -444,14 +446,14 @@ export const COURSEWORK: readonly GuideEntry[] = [
       'The sides chosen are kept on your record of how you play.',
     ],
     later: [
-      `Each step of rehearsal rehearses it in by ${pct(PLAYING.gainShare)} of that step’s own share, of what’s left, and keeps doing so after its own part is complete, until the choice reaches ${pct(PLAYING.complete)}. A rehearsal kept with your partner does the same, by ${pct(PLAYING.gainShare)} of its own share.`,
+      `Each step of rehearsal rehearses it in by ${pct(PLAYING.gainShare)} of that step’s own share, of what’s left, and keeps doing so after its own part is complete, until the choice is complete at the scene’s own mark. A rehearsal kept with your partner does the same, by ${pct(PLAYING.gainShare)} of its own share.`,
       'The showing reads it with the rest of the preparation, and Your Work So Far names a side you choose most of the time as a habit.',
     ],
     interpret: [
       'Fully Prepared is the expected result with no draw, every part complete and a good day: what the choice can reach, not where the work stands now.',
       '“Doesn’t fit:” under a side says the scene doesn’t take it, and why.',
       `The Scene names each side ${GRAIN_LABEL.suits}, ${GRAIN_LABEL.either} or ${GRAIN_LABEL.against} and the two or three things in the scene it rests on, for it or against it. It isn’t a verdict on the side: one you do well can still beat one that suits the scene better, and the take’s result says what the side’s suitability gave or cost apart from what your abilities cost.`,
-      `“Your choice now is rehearsed in to …% (complete at ${pct(PLAYING.complete)})” is how far along it is.`,
+      '“Your choice now is rehearsed in to …% (complete at …%)” is how far along it is, against the scene’s own mark.',
       'With nothing chosen, the work is read by its own genre and material alone.',
     ],
     unavailable: [
@@ -461,7 +463,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     mistakes: [
       `Changing your mind late: a change keeps ${pct(PLAYING.keptOnChange)} of the rehearsal, so a choice changed the night before starts from that share of what the old one had.`,
-      `Choosing and never rehearsing it: short of ${pct(PLAYING.complete)}, the choice counts as a part of the preparation not yet complete, and holds back the dimensions it leans on most.`,
+      'Choosing and never rehearsing it: short of the scene’s mark, the choice counts as a part of the preparation not yet complete, and holds back the dimensions it leans on most.',
       'Choosing a side the scene doesn’t take: it says so first, and the dimensions it leans on are held back.',
     ],
     related: ['coursework.prepare', 'coursework.workbook', 'craft.identity', 'productions.part'],

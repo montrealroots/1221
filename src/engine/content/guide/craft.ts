@@ -73,6 +73,7 @@ import { genreTags } from '../demands';
 import { BRIEFS, BRIEF_BY_ID, briefsOf } from '../briefs';
 import { PIECE } from '../piece';
 import { APPROACH_EFFECT, AXES, MISFIT, PLAYING } from '../approaches';
+import { GRAIN } from '../interpretation';
 import { WORKBOOK } from '../workbook';
 import { DIMENSION_LABEL, EVALUATION, TASK_PROFILES, type Dimension } from '../tasks';
 import { plural } from '../../core/text';
@@ -633,7 +634,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'A Reading', value: `Its leans on the dimensions raised to the power ${BRIEF.readingLean}, and the abilities it draws on at ${BRIEF.readingDraw} times their weight, then normalized so weight only moves`, estimate: true },
       { label: 'The Reading’s Heart', value: `The beat whose tones lean most the way the reading leans weighs ${BRIEF.readingHeart} times the others in the take, where one beat does`, estimate: true },
       { label: 'A Way Of Playing It', value: 'Each side leans the dimensions toward what it is and draws on the abilities shown under What It Draws On. Stamina isn’t among them for a brief: a take reads stamina only as its drain through the beats, however you play it' },
-      { label: 'Rehearsed In', value: `Complete at ${pct(PLAYING.complete)}; ${BRIEF.steps.rehearse.label} moves it ${pct(PLAYING.gainShare)} of the step’s reach, of what’s left` },
+      { label: 'Rehearsed In', value: `Complete at the scene’s own mark, ${pct(PLAYING.complete)} where it leans neither way on the side and ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))} by how well it suits it; ${BRIEF.steps.rehearse.label} moves it ${pct(PLAYING.gainShare)} of the step’s reach, of what’s left, until it’s there` },
       { label: 'Fit', value: `A side the brief’s text forbids, or the other side to a callback’s note, holds the dimensions it leans on to ${pct(MISFIT)} of themselves`, estimate: true },
     ],
     now: [

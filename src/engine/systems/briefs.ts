@@ -46,14 +46,14 @@ import type { Instant } from '../core/time';
 import { formatTime, zonedParts } from '../core/time';
 import type { AbilityId } from '../content/abilities';
 import { MASTERED } from '../content/abilities';
-import { APPROACH_EFFECT, AXES, PLAYING } from '../content/approaches';
+import { APPROACH_EFFECT, AXES } from '../content/approaches';
 import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief, type Reading } from '../content/briefs';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
 import { GENRE_REGISTER } from '../content/genre-register';
 import { CONCERNS, CONCERN_STRENGTH, type Concern } from '../content/concerns';
 import { concernBehind } from './register';
-import type { Scene } from './interpretation';
+import { requiredFor, type Scene } from './interpretation';
 import { grainRead } from './interpretation-read';
 import { GENRE_BY_ID } from '../content/film-genres';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
@@ -450,7 +450,11 @@ export function prepareRefusal(sim: Simulation, person: Person, b: Brief | undef
   if (!s) return 'That isn’t a step of a brief.';
   const rec = peek(person, b.id);
   // Rehearsal complete still rehearses in a way of playing chosen after it: a callback's note answered, a change of mind.
-  const choiceToRehearse = step === 'rehearse' && sidesOf(rec.playing).length > 0 && rec.playing!.prep < PLAYING.complete;
+  // It does so until the choice is complete at the scene's own mark (`requiredFor`, as the take reads it). Until
+  // 2026-10-16 it stopped at `PLAYING.complete`, the mark before suitability moved it, and a side against the grain,
+  // asking up to 100%, stalled at about 93.5%: a mastered actor prepared twenty days taped 99.3 played Set on
+  // brief-rockumentary-2, which asks 97%.
+  const choiceToRehearse = step === 'rehearse' && sidesOf(rec.playing).length > 0 && rec.playing!.prep < requiredFor(sidesOf(rec.playing), briefMaterial(b), sceneOf(b, readingOf(b, rec.reading)));
   if (rec.prep[s.part] >= 0.97 && !choiceToRehearse) return 'There’s nothing more to gain from it now.';
   if (step === 'rehearse' && rec.prep.memorization < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
   if (s.feet) {

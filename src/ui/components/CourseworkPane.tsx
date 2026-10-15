@@ -25,8 +25,8 @@ import {
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
-import { playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, urgentWork } from '@/engine/systems/coursework';
-import { bandOfQuality, chiefLimit } from '@/engine/systems/evaluation';
+import { bandFor, playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, urgentWork } from '@/engine/systems/coursework';
+import { chiefLimit } from '@/engine/systems/evaluation';
 import { EVALUATION } from '@/engine/content/tasks';
 import { materialOf } from '@/engine/systems/material';
 import { at } from '@/ui/looks/subject';
@@ -57,7 +57,7 @@ export function CourseworkPane() {
           <ul className="small" data-due-soonest="" style={{ margin: 0, paddingLeft: '1.1rem' }}>
             {short.map(({ a, due, forecast, short: parts }) => {
               const t = templateById(a.template)!;
-              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}: about {forecast.toFixed(1)} ({BAND_LABEL[bandOfQuality(forecast)]}) shown today. Short of complete: {parts.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</li>;
+              return <li key={a.id}><strong>{courseName(a.course)}: {t.title}</strong>, due {dayOfKey(due)}: about {forecast.toFixed(1)} ({BAND_LABEL[bandFor(a, forecast)]}) shown today. Short of complete: {parts.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</li>;
             })}
           </ul>
         </Panel>
@@ -143,7 +143,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
           const short = shortParts(person, a);
           return (
             <div className="small" data-shown-today={a.id}>
-              <strong>Shown Today:</strong> on a good day it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the showing asks.'}
+              <strong>Shown Today:</strong> on a good day it would come to about {now.overall.toFixed(1)} ({BAND_LABEL[bandFor(a, now.overall)]}). {chiefLimit(now) ? `${chiefLimit(now)}.` : 'Every part of it is where the showing asks.'}
               {short.length > 0 && <span> Short of complete: {short.map((d) => `${t.dims[d]!.label.toLowerCase()} (${remedyWords(a, d)})`).join('; ')}.</span>}
             </div>
           );

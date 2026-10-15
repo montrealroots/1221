@@ -19,8 +19,10 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief } from '@/engine/content/briefs';
 import { AXES } from '@/engine/content/approaches';
 import { MASTERED } from '@/engine/content/abilities';
-import type { Axis } from '@/engine/content/material';
-import { BRIEF, briefContext, briefMaterial, briefPiece, genreKnown, prepSpeed, recordOf, requiredOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
+import { SCENE_MATERIAL, type Axis } from '@/engine/content/material';
+import { BRIEF, briefContext, briefMaterial, briefPiece, genreKnown, prepSpeed, readingOf, recordOf, requiredOf, sceneOf, shareOf, suggestions, tapeReadsOf, type BriefRecord } from '@/engine/systems/briefs';
+import { requiredFor, sceneOfMaterial } from '@/engine/systems/interpretation';
+import { MS_DAY } from '@/engine/core/time';
 import { leanedWeights, type Performer } from '@/engine/systems/evaluation';
 import { judgePiece, segmentRequired } from '@/engine/systems/piece';
 import { PIECE } from '@/engine/content/piece';
@@ -29,7 +31,7 @@ import { materialContext, misfitOf, type Playing } from '@/engine/systems/materi
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { evenCraft } from '@/engine/systems/school';
 import { abilityFull } from '@/engine/systems/attributes';
-import { activitiesOf, courseworkOf, prepareRefusal, setWork } from '@/engine/systems/coursework';
+import { activitiesOf, choiceMark, courseworkOf, prepareRefusal, setWork } from '@/engine/systems/coursework';
 
 const ABILITIES = ['emotionalDepth', 'presence', 'listening', 'imagination', 'focus', 'memory', 'adaptability', 'composure', 'vocal', 'physical', 'discipline', 'stamina'] as const;
 const nobody = { engagement: { byGenre: {} } } as unknown as Person;
@@ -476,5 +478,61 @@ describe('found by the mastery tool’s twins (2026-10-12)', () => {
       expect(well, b.id).toBe(100);
       if (b === dance) expect(hurt, b.id).toBeLessThan(100); else expect(hurt, b.id).toBe(100);
     }
+  });
+});
+
+describe('found by the sweep (2026-10-16)', () => {
+  // A choice's rehearsal is complete at the scene's own mark, 80% to 100% by how well the side suits it (`requiredFor`).
+  // Until this, a step of rehearsal whose part was full stopped rehearsing a choice in at 90%, the mark before
+  // suitability moved it, and a side asking more stalled short of complete.
+  const ROCK = BRIEF_BY_ID['brief-rockumentary-2']!;
+  const rockMark = () => requiredFor(['set'], briefMaterial(ROCK), sceneOf(ROCK, readingOf(ROCK, ROCK.readings[0]!.id)));
+
+  it('a step of rehearsal rehearses a choice in to the scene’s mark, past 90%, and no further once it’s there', () => {
+    const sim = student('brief-mark-step');
+    expect(go(sim, 'brief.choose', { brief: ROCK.id, reading: ROCK.readings[0]!.id, structure: 'set' }).ok).toBe(true);
+    const rec = recordOf(sim.player, ROCK.id);
+    expect(rockMark()).toBeGreaterThan(0.95);
+    // TEST SETUP: every part complete, the choice rehearsed in past 90% and short of its mark.
+    rec.prep = { interpretation: 1, memorization: 1, rehearsal: 1 };
+    rec.playing!.prep = 0.93;
+    expect(go(sim, 'brief.prepare', { brief: ROCK.id, step: 'rehearse' }).ok).toBe(true);
+    expect(rec.playing!.prep).toBeGreaterThan(0.93);
+    rec.playing!.prep = rockMark();
+    expect(go(sim, 'brief.prepare', { brief: ROCK.id, step: 'rehearse' }).error).toMatch(/nothing more to gain/);
+  });
+
+  it('PLAYER JOURNEY: a mastered actor, prepared a day at a time, reaches 100 on a side against the grain that asks 97%', () => {
+    const sim = student('brief-mark-played');
+    mastered(sim);
+    genreState(sim.player, ROCK.kinds[0]!).familiarity = 100;
+    expect(go(sim, 'brief.choose', { brief: ROCK.id, reading: ROCK.readings[0]!.id, structure: 'set' }).ok).toBe(true);
+    for (let day = 0; day < 20; day += 1) {
+      sim.advanceTo(sim.now + MS_DAY);
+      for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: ROCK.id, step });
+    }
+    expect(recordOf(sim.player, ROCK.id).playing!.prep).toBeGreaterThanOrEqual(rockMark());
+    sim.player.wellbeing.fitness = abilityFull(sim, sim.player, 'stamina');
+    expect(go(sim, 'practice.self_tape', { genre: ROCK.kinds[0], brief: ROCK.id }).value!.overall).toBe(100);
+  }, 120_000);
+
+  it('coursework rehearses a choice in to its scene’s mark too: Hedda Gabler’s second act, played expansive, asks 99%', () => {
+    const sim = student('cw-mark');
+    const a = setWork(sim, sim.player, 'DRAM 103a/b', { year: 2026, month: 9, day: 28 })!;
+    const act = activitiesOf(a).find((x) => x.dim === 'rehearsal')!;
+    expect(act).toBeDefined();
+    courseworkOf(sim, sim.player)!.orientation.done.tour = sim.now;
+    // TEST SETUP: the piece set on Hedda Gabler's second act, its parts complete, the choice past 90%.
+    const hedda = SCENE_MATERIAL.find((m) => m.id === 'hedda-2')!;
+    a.sceneId = hedda.id;
+    a.prep.memorization = 1;
+    a.prep.rehearsal = 0.99;
+    a.playing = { scale: 'expansive', chosenAt: sim.now, prep: 0.95 };
+    rest(sim);
+    expect(choiceMark(a)).toBe(requiredFor(['expansive'], hedda, sceneOfMaterial(hedda)));
+    expect(choiceMark(a)).toBeGreaterThan(0.95);
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toBeUndefined();
+    a.playing.prep = choiceMark(a);
+    expect(prepareRefusal(sim, sim.player, a, act.id)).toMatch(/nothing more to gain/);
   });
 });
