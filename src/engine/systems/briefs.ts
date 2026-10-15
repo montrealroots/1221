@@ -50,6 +50,8 @@ import { APPROACH_EFFECT, AXES, PLAYING } from '../content/approaches';
 import { BRIEFS, BRIEF_BY_ID, briefsOf, type Brief, type Reading } from '../content/briefs';
 import { ENGAGEMENT } from '../content/engagement';
 import { GENRE_DEFS } from '../content/genres';
+import { GENRE_REGISTER } from '../content/genre-register';
+import { CONCERNS, CONCERN_STRENGTH, type Concern } from '../content/concerns';
 import { GENRE_BY_ID } from '../content/film-genres';
 import type { Axis, AxisValue, MaterialProfile } from '../content/material';
 import type { Skill } from '../content/school';
@@ -248,6 +250,13 @@ export function tapeReadsOf(b: Brief): Partial<Record<Skill, number>> {
   return out;
 }
 
+/**
+ * The concerns a brief is played in: its genre's register, the genre it was written for (`kinds[0]`), from 2026-10-16.
+ * A brief listed under further genres is still that genre's scene; its other listings carry their techniques
+ * (`content/demands.ts`), not their register.
+ */
+export const registerOf = (b: Brief): readonly Concern[] => GENRE_REGISTER[b.kinds[0]!]?.concerns ?? [];
+
 /** The changes between beats and the beats held two ways, as the material counts them. */
 export function turnsOf(b: Brief): { transitions: number; blends: number } {
   const key = (x: { tones: readonly string[] }) => [...x.tones].sort().join('+');
@@ -345,6 +354,17 @@ export function briefContext(person: Person, b: Brief, rec: BriefRecord, over: {
       if (!task.dims[d]) continue;
       const list = (inputs[d] ??= []);
       for (const x of xs) { const had = list.find((y) => y.ability === x.ability); if (had) had.weight += x.weight; else list.push({ ...x }); }
+    }
+  }
+  // The register of the genre it was written for (from 2026-10-16, `GENRE_REGISTER`): each concern leaned and drawn
+  // on as a reader's way of playing is, so the genre moves weight between the dimensions and adds none.
+  for (const c of registerOf(b)) {
+    const def = CONCERNS[c];
+    for (const [d, x] of Object.entries(def.lean) as [Dimension, number][]) if (lean[d] !== undefined) lean[d] = lean[d]! * x ** CONCERN_STRENGTH.lean;
+    for (const [d, xs] of Object.entries(def.inputs) as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) {
+      if (!task.dims[d]) continue;
+      const list = (inputs[d] ??= []);
+      for (const x of xs) { const w = x.weight * CONCERN_STRENGTH.draw; const had = list.find((y) => y.ability === x.ability); if (had) had.weight += w; else list.push({ ability: x.ability, weight: w }); }
     }
   }
   const prep: Record<string, number> = { ...rec.prep, genre: genreKnown(person, b), ...(over.prep ?? {}) } as Record<string, number>;

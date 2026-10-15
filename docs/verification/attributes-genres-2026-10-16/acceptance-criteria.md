@@ -45,6 +45,29 @@ Terms used throughout:
 | G4 | Every genre offers enough to play | Variety needs more than one scene and more than one reading | Briefs written for each genre; readings for each; the reader's way of playing varied within the catalog | At least 2 briefs and 4 readings for every genre; at least 3 reader behaviours in use |
 | G5 | Genre proficiency progresses across its range | Knowing a genre should keep mattering past its first hours | The effect of known from 0 to 100 on the genre's own taped briefs (baseline §5) | A rise from 30 to 100 known still changes something on its own briefs (the take, the time its preparation takes, or what is offered), by an amount the screen shows |
 
+### G1 And G2, Reviewed On 2026-10-16 (Genre Differentiation)
+
+The owner's brief "Complete Genre Differentiation And Prove Each Genre's Identity" gave every genre a register, the
+concerns its scenes are played in (`content/concerns.ts`, `content/genre-register.ts`). Measuring G1 against it found a
+flaw in G1 itself. Its thresholds aren't changed here: that's the owner's decision, and the evidence is in
+`docs/verification/genres-2026-10-16/README.md`.
+
+- **G1's first clause** (between genres at least 1.5× within) counts every difference between a genre's two scenes against
+  the genre. That includes their length and stakes, and a short scene and a long one of the same genre differ in what
+  memory and stamina carry. It was reached only by making a genre's two scenes the same in length, stakes, medium,
+  language and all five features, leaving only situations, beats, readers and readings to differ: 1.75 to 2.04 in a
+  simulation (TEST SETUP). That's one rigid formula per genre, which the brief rules out ("Avoid one rigid formula for
+  every scene in a genre"). With the register at a reading's strength and nothing else changed, it's 0.93 as measured
+  and 1.20 with length and stakes held at the catalog's (`--controlled`). Feature floors from each genre's concerns,
+  across 152 briefs, reach 1.38.
+- **G1's second clause** (at most 15 genres with a neighbour nearer than their own second brief) compares the nearest
+  of 148 other genres with one pair of a genre's own scenes. Genres that legitimately share a register (the period
+  dramas, the deadpan comedies, the creature films) are each other's nearest neighbours by design. Even with every
+  genre's scenes made identical it isn't met (108 to 118 of 149).
+- **G2's measurement** follows its definition, "every number the engine reads": from 2026-10-16 that includes the
+  genre's register, which every take of its brief reads (`tools/genre-identity.ts`, beside ag-baseline's own signature,
+  which leaves it out).
+
 ## §5 The Mastery Guarantee, Executable
 
 | Id | Criterion | Rationale | Measurement | Threshold |
