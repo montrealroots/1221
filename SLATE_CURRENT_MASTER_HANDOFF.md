@@ -1,6 +1,251 @@
-# Read First: The Sweep, And Where Everything Stands, 2026-10-16
+# Read First: The Session Handoff, 2026-10-16
 
-**This section is the current status, written for a fresh session to start from.** Every section below is history.
+**This section is the current status, and where a new session starts.** Every section below is history. It was written
+at the owner's "Prepare A Complete, Verified SLATE Session Handoff" (`docs/verification/briefs-2026-10-16/07-session-handoff.txt`),
+after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34. Merged isn't deployed: nothing is.
+
+## 1. The Repository, Verified On 2026-10-16
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`.
+- **`main`:** #34's merge commit, the first on `main` after `297452ed`. A file can't name the commit that merges it: the
+  handoff's receipt names it, and `git log origin/main -1` shows it. Its tree is the tree of #34's head, which the gate
+  passed on (section 7).
+- **The working branch,** `claude/zen-mccarthy-i88ujw`, is wholly in `main`. Nothing of this session's is unmerged.
+- **This session's pull requests,** each merged with a merge commit at the owner's word:
+
+  | Pull Request | Merge | What It Carried |
+  |---|---|---|
+  | #30 | `35d032d5` | banking's home-country accounts (modules 1 to 7), the attributes' phases 1 to 2b, banking's defects and skeptics |
+  | #31 | `eb0b6022` | genre differentiation; interpretation, advice, notes and the long journeys; the school workload |
+  | #32 | `0d66ce60` | the genre benchmark S3; the stage and a way of playing |
+  | #33 | `297452ed` | the sweep |
+  | #34 | the first after `297452ed` | this handoff: the briefs verbatim, the sweep's account, two tools |
+
+  Before them, #28 and #29 merged `claude/current-scope-acceptance` and `claude/remaining-acceptance`.
+- **Open pull requests:** none, checked before #34 was opened.
+- **Branches with commits not in `main`,** checked against the full history. The container's clone was shallow, and
+  every branch looked unmerged until `git fetch --unshallow`. None is this session's, and each was left as it is:
+  - the seventeen `base44/setup-*` branches, one or two commits each, the Base44 platform's own setup of 2026-09-03 to
+    09-25 (`main` took a version of it in #24);
+  - `claude/scope-reset`, one WIP commit, superseded on 2026-10-09 before it compiled;
+  - `fix-main-cbc9a69be967` and `fix-save-error`, one commit each, the `loadPlacesFor` import, fixed in `main` in
+    `e71e79ca`.
+
+  Every other branch, the backups among them, is wholly in `main`.
+- **Stashes, worktrees and local files.** This container has no stash and one worktree, and nothing was left
+  uncommitted. On the owner's machine, as last recorded there (the work plan's Resume Here): one stash entry, never to be
+  applied, popped or dropped; other worktrees, never to be merged; untracked root files, left alone.
+- **A checkout's local `main` may be stale.** This container's was 79 commits behind and was fast-forwarded. Compare
+  with `origin/main`.
+
+## 2. What's Done, And Where It's Written
+
+Each of the owner's briefs of this session is kept verbatim in `docs/verification/briefs-2026-10-16/`, with where it
+was answered:
+- **Genre differentiation** (`genres-2026-10-16/`): every genre has a register, one or two of thirteen concerns, read by
+  every take of its briefs; the seven identical pairs revised.
+- **Interpretation, advice, notes, long journeys** (`interpretation-2026-10-16/`, `advice-2026-10-16/`,
+  `notes-2026-10-16/`, `journeys-2026-10-16/`): a way of playing is read against the scene; What To Improve Next
+  forecast on the real growth curve (40 of 40); a director's note resolved, better, learned or unchanged; 24 lives
+  through graduation.
+- **The school workload** (`workload-2026-10-16/`): the cause was the play policy's, and the game didn't say what a part
+  at nothing costs. Shown Today, the term's warning, the review naming the cause and Due Soonest were added. London
+  graduated on 4 of 4 seeds, against 0.
+- **S3** (`genres-2026-10-16/g1-replacement.md`): the reader counts at half weight, as a register's concern does; 82.00%
+  on the fresh held-out sample.
+- **The stage** (`stage-2026-10-16/`): the house is projection, read on the execution, and pulls no scale; each scene's
+  circumstances come from its text. Restrained is better on 50 of the 85 class scenes and plays, expansive on 33.
+- **The sweep** (`sweep-2026-10-16/`): a choice is rehearsed in to its scene's own mark; the term's warning counts as
+  its review does; a scene's circumstances are shown with their reasons; every stale note was corrected.
+- **This handoff:** the briefs kept verbatim; the sweep's account; `tools/rehearsal-mark-saves.ts` and
+  `tools/captures.mjs`, which reproduce the sweep's screens; this section; the work plan's section 10.
+
+The earlier passes (banking, school, papers, health, the current scope) are in the sections below and their accounts.
+
+## 3. What Isn't Done
+
+- **Implemented and unmerged:** nothing of this session's.
+- **Not started:** the work plan's section 2, the six remaining acceptance areas. Each has its instructions in
+  `docs/verification/prompts-2026-10-16/` and writes its checklist before any code.
+- **Falling short, each the owner's call** (`docs/verification/stage-2026-10-16/README.md`):
+  - ST3, the even actor the same on stage and at a close frame: 159 of 171, every difference within one 0.1 rounding step;
+  - ST4, drama: all 25 catalog drama scenes suit restraint, with no public or brawling drama scene;
+  - ST6, the restrained specialist against the grain: 7 of 34 against 25%. Restrained draws emotional depth 1, and
+    expansive presence 1, vocal 0.5 and physical 0.5 (`APPROACH_EFFECT`).
+- **The attributes' phase 2c and close-out:** H4 (specialists, 3 of 12) and L3 (a specialist's late-term decline) were
+  failing at phase 2b and haven't been measured again by name (`docs/verification/attributes-genres-2026-10-16/phase-2b.md`).
+  L1 met there. F2 and H1 went to the advice brief.
+- **Untested by play:** a term that misses a piece and a revision. The warning counts both since the sweep, and its test
+  calls the warning directly.
+- **The current-scope rows** (`docs/verification/CURRENT-SCOPE-2026-10-15.md`): 2 partial (`i-stale-claims`,
+  `health.enroll`), 14 unresolved, each with why, and 16 deferred.
+- **Blocked outside the game** (README.md, "What these tests do not cover"): deployed authentication, Base44's
+  row-level security, cross-account isolation, and real browsers and devices.
+- **The next brief,** "Implement SLATE's Complete Integration And Acceptance Pass", isn't here yet. Its scope as the
+  owner recorded it is `docs/verification/briefs-2026-10-16/08-next-integration-and-acceptance-pass.md`. Wait for the
+  owner to paste it, and don't invent what it leaves out.
+
+## 4. The Game's Scope
+
+- **In it:**
+  - creation;
+  - a Yale School of Drama student's life in New Haven: classes, coursework, productions and casting, the term's review,
+    the degree;
+  - the body: sleep, looking after yourself, health and cover;
+  - banking: five US banks, and a home-country account kept from before Yale where its bank's terms allow;
+  - papers: US and Connecticut tax, documents, immigration status;
+  - practice briefs, 149 genres, the attributes and ways of playing.
+- **Removed by the owner's scope reset of 2026-10-09, and to stay removed** (`docs/REQUIREMENTS.md`, "Retired by the
+  owner's scope reset"; `docs/UNBITTEN.md`, "The scope reset"):
+  - the home and its rent and bills, and the rented room;
+  - travel and stays, and cars and every other vehicle;
+  - land and building;
+  - the career: the industry, the agencies, and the school's way into it;
+  - shops and possessions, the wardrobe, the kitchen, pets and the catalogs;
+  - the assistant, the social life and the rail.
+
+  The banking decision of 2026-10-16 restored no travel or relocation, and no parental leave was added. Nothing restores
+  any of it without the owner.
+
+## 5. The Rules, The Schema And The Model
+
+- **`RULESET`** is `evaluation-8 (2026-10-16)` (`content/tasks.ts`). A result kept under another ruleset is shown as it
+  was, not judged again. What each of evaluation-4 to 8 changed: `docs/ENGINE-MODEL.md` §10.
+- **The save schema** is 94, in `SAVE_SCHEMA_VERSION` (`src/engine/domain/model.ts`) and `SUPPORTED_SCHEMA_VERSION`
+  (`base44/shared/guard.js`). Move both together, by hand (CLAUDE.md, rule 14).
+- **The formulas a take is judged by,** each in its file, every size SLATE's own design unless its account cites a
+  source:
+  - **Preparation:** each part is read against what completes it, and the least counts. A part's factor is floor plus
+    (1 − floor) times min(1, prepared over required). The floor is `EVALUATION.prepFloor`, 0.35, and 0.75 for knowing the
+    genre (`partFloor`) (`systems/evaluation.ts`).
+  - **Suitability** (`systems/interpretation.ts`, `content/interpretation.ts`): the sum of a scene's signals, halved and
+    held to −1 to 1, rounded to 0.01. The signals:
+    - the register's concerns and the reader, each at half (`GRAIN.concern`, `GRAIN.reader`);
+    - the medium: the camera a quarter for restraint, and the stage and the microphone nothing;
+    - its tones, by share;
+    - its turns, up to three, 0.15 each;
+    - its features, by level; the voice isn't counted on stage;
+    - its circumstances, a quarter a level;
+    - its language, and the reading taken.
+
+    A side Suits The Scene at 0.25 or more and goes Against The Grain at −0.25 or less (`GRAIN.band`).
+  - **What suitability moves:**
+    - **Difficulty.** On each dimension a side leans on, it moves 0.3 × s × the stakes' scale × (lean − 1) ÷ (its most
+      − 1), never below `GRAIN.floor`'s bound (`grainOf`).
+    - **The choice's rehearsal mark.** 0.9 − 0.1 × mean s, held to 0.8 to 1.0 (`requiredFor`). A step of rehearsal
+      rehearses the choice in by 0.9 of its gain, of what's left, until that mark (`choiceMark` for coursework).
+  - **The stage:** a house weighs execution 1.2 (`STAGE_LEAN`, `content/approaches.ts`).
+  - **Mastery:** at full capacity difficulty asks nothing, so every side that fits reaches 100. Suitability is never a cap.
+  - **The term:** the review counts a piece shown again at its second band, and one missed unexcused as due and Unready.
+    It reads the term at 3 or more due, with 50% Unready short of the mark (`ESTIMATE.coursework`). The warning comes
+    once a term, at 6 due and 35% (`TERM_CHECK`, `termTally`).
+- **Criteria, each written before its measurement:**
+  - interpretation I1 to I5 (`docs/verification/interpretation-2026-10-16/criteria.md`);
+  - the genre signature S1 to S4 (`docs/verification/genres-2026-10-16/g1-replacement.md`);
+  - the stage ST1 to ST8, F1 and F2 (`docs/verification/stage-2026-10-16/criteria.md`);
+  - the attributes' criteria (`docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md`);
+  - the advice's (`docs/verification/advice-2026-10-16/criteria.md`).
+- **Research:** the genres' (`src/engine/content/genre-demands.json`, from `docs/research/attributes/`); the stage's
+  (`docs/verification/stage-2026-10-16/research.md`); 60 banks' terms (`docs/research/banking/home-accounts.json`).
+  Most of the genre research is at low confidence, and a register's basis is shown as research or SLATE's reading.
+
+## 6. Known Issues, And How To Reproduce Them
+
+- **ST3, ST4, ST6:** `npx vite-node tools/interpretation.ts -- --fresh --stage --out <file>`, read against the stage
+  account's table. `tools/genre-audit.ts` lists each genre's stage scenes by the side they suit.
+- **H4 and L3:**
+  - the criteria: `npx vite-node tools/ag-baseline.ts -- --out <file>`;
+  - L3: `npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write <file>`.
+
+  Both are as `phase-2b.md` ran them.
+- **A term that misses pieces:** no test plays one. `tests/workload.test.ts`, "found by the sweep", sets the misses by
+  hand and calls `termWarning`.
+- **The gate's test workers:** `VITEST_MAX_FORKS` set below the CPU count, alone, stops vitest before any test ("minThreads
+  and maxThreads must not conflict", seen here with 2 on 4 CPUs). Set `VITEST_MIN_FORKS` with it, or neither.
+- **A shallow clone** makes merged branches look unmerged: `git fetch --unshallow origin` before comparing branches.
+- **The built app's two skipped steps** have been skipped since 2026-10-12, because no scenario save reaches them: Work
+  It Through's way kept or put back, and the rehearsal controls of a part with calls.
+
+## 7. What Was Tested, On What
+
+| Check | Source Revision | Command | Exit | Result |
+|---|---|---|---|---|
+| Gate, baseline | `0d66ce60` | `npm run gate`, exit read from a file | 0 | 348 files, 4,184 tests, typecheck, lint, all seventeen checks |
+| Build | `f06331be` | `npm run build` | 0 | |
+| Scenario saves | `f06331be` | `node tools/scenario-saves.mjs <dir>` | 0 | 14 of 14, each 0 breaches and 0 unbalanced |
+| Built app, 390 | `f06331be`'s build | `node tools/acceptance-ui.mjs <out> 390 <dir>` | 0 | 70 passed, 0 failed, 2 skipped, 0 errors, 0 overflows |
+| Built app, 1440 | the same | the same at 1440 | 0 | the same; a first run failed 4 steps on the tool's old pattern, fixed in `027f3631` |
+| Gate | `027f3631` | `npm run gate`, from a file | 0 | 348 files, 4,192 tests, the tree unchanged |
+| Gate | `ebe8e5b3` (#33's head) | the same | 0 | the same |
+| Gate | the commit that wrote this section | the same | — | run after it was committed; the next commit records the result |
+
+- **What the code changes since were:** none since `027f3631` but tools and documents. `f06331be` to `027f3631` changed
+  `tools/acceptance-ui.mjs` alone. #34 adds `tools/rehearsal-mark-saves.ts` and `tools/captures.mjs`; each was run from
+  the repository, reproducing the sweep's states and screens. So the built app's run covers `main`'s game code.
+- **Not run:**
+  - the long lives in the sweep or this handoff, since no evaluation changed; they were last played on evaluation-8 for
+    the stage brief (`docs/verification/stage-2026-10-16/runs/`);
+  - anything on the owner's PowerShell machine: everything above ran in a cloud container (Linux);
+  - a deployed Base44 app.
+
+## 8. The Environment
+
+- **Software:** Node 22 (22.22.0 here) and npm 10. Install with `npm ci`; never commit `node_modules`. Playwright ^1.62
+  with Chromium, from `npx playwright install chromium` or a browser at `CHROMIUM_PATH`. On the owner's machine,
+  PowerShell 7 (`pwsh`).
+- **Environment variables,** named here and never committed with a value:
+  - for the tools: `SLATE_BASE` and `SLATE_BASE_BEFORE` (the builds a tool opens), `CHROMIUM_PATH`, `SLATE_VOICE_BUDGET`
+    (voice-check, 40 by default), and vitest's `VITEST_MAX_FORKS` and `VITEST_MIN_FORKS`;
+  - for Base44's smoke test, from `.env.example`: `SLATE_BASE44_URL`, `SLATE_BASE44_TOKEN` and `SLATE_SCHEMA_VERSION`;
+  - `ANTHROPIC_API_KEY`, read only by the retired assistant's server function;
+  - the older screenshot tools' own, in each tool's header.
+- **The gate, from a file** (CLAUDE.md):
+
+  ```powershell
+  npm run gate *> "$env:TEMP\gate.txt"
+  "exit=$LASTEXITCODE" | Out-File -Encoding utf8 "$env:TEMP\gate-exit.txt"
+  ```
+- **The built app,** with each preview in its own terminal, started fresh after each build:
+
+  ```powershell
+  npm run build
+  npx vite preview --port 4181 --strictPort
+  node tools/scenario-saves.mjs "$env:TEMP\saves"
+  $env:SLATE_BASE = "http://localhost:4181"
+  node tools/acceptance-ui.mjs "$env:TEMP\acc-1440" 1440 "$env:TEMP\saves"
+  node tools/acceptance-ui.mjs "$env:TEMP\acc-390" 390 "$env:TEMP\saves"
+  ```
+- **The sweep's screens:**
+  1. `npx vite-node tools/rehearsal-mark-saves.ts -- "$env:TEMP\marks"`;
+  2. `node tools/captures.mjs "$env:TEMP\caps" 1440 "$env:TEMP\saves" "$env:TEMP\marks"`.
+
+  `SLATE_BASE_BEFORE` names a build of `0d66ce60` for the "before".
+
+## 9. Deployment
+
+Not deployed. Every merge above is to `main` only. Base44 deployment happens on the owner's word, after the gate passes
+(rule 14). Read §10 further down first: a deployment from an older line refuses schema 94 saves.
+
+## 10. Next, In Order
+
+1. **The startup checks.** Repository, local changes, `origin/main` holding #34's merge, the instructions, this file,
+   the work plan, the briefs. Preserve the stash, worktrees and local files.
+2. **Wait for the owner's brief,** "Implement SLATE's Complete Integration And Acceptance Pass". Keep it verbatim
+   beside `docs/verification/briefs-2026-10-16/08-next-integration-and-acceptance-pass.md`.
+3. **Then carry it out from this baseline,** without repeating what's done. Its recorded scope:
+   - the six acceptance areas;
+   - phase 2c with H4 and L3;
+   - ST3, ST4 and ST6;
+   - the attributes' and genres' balance, differentiation, mastery and downstream effects;
+   - the school, money and papers journeys complete;
+   - the played term with missed pieces and revisions;
+   - connected tutorials, persistence, navigation and consequences;
+   - final regression, integration, built-app and long-run verification.
+
+# Earlier: The Sweep, And Where Everything Stood, 2026-10-16
+
+History now: the section above is the current status, and supersedes this one's Open and Picking It Up. Its account is
+`docs/verification/sweep-2026-10-16/README.md`.
 After pull request #32 the owner asked: "do a sweep throughout the entire code/game and make sure everything is up to
 the standard I want it to be and then push and merge all information and all notes so I can pick this up in an
 entirely new session." Done on `claude/zen-mccarthy-i88ujw` from `main` at `0d66ce60`, in pull request #33, merged to
