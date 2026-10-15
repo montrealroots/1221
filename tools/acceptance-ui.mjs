@@ -1130,12 +1130,14 @@ if (DIR) {
       if (!CIRC.test(text)) continue;
       const row = t.locator('tr').filter({ has: page.locator('td[data-suit="suits"]') }).filter({ hasText: /^Scale|Restrained|Expansive/ }).filter({ hasText: CIRC }).first();
       if (!(await row.count())) continue;
+      // Read before the choice: once chosen, the chooser draws again and the row isn't the one found.
+      const rowText = (await row.innerText()).replace(/\s+/g, ' ').slice(0, 160);
       await row.locator('input[type="radio"]').check(); await wait(400);
       const panel = page.locator('section.card').filter({ has: t }).last();
       const said = (await panel.innerText()).replace(/\s+/g, ' ');
       must(/with the grain of the scene, it asks less/.test(said), `no rehearsed-in mark said for the side that suits it: ${said.slice(0, 300)}`);
       await panel.getByRole('button', { name: /^(Play It This Way|Change How You Play It)$/ }).first().click(); await wait(1200); await settleDialogs();
-      picked = (await row.innerText()).replace(/\s+/g, ' ').slice(0, 160);
+      picked = rowText;
     }
     must(picked, 'no stage scene whose suited scale side rests on its circumstances');
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
