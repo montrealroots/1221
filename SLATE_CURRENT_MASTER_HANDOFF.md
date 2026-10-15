@@ -41,8 +41,25 @@ request: not merged, not deployed. The checklist is section 6 of the work plan
 - **The owner's decisions:**
   - S3 on the fresh held-out briefs: change the register-to-reader weighting, or accept;
   - the class scenes' own registers, which are content to research;
-  - the earlier I3 and signature decisions, now answered by the above.
-- **Verification:** RESULTS-PENDING.
+  - the earlier I3 and signature decisions: the designed and held-out I3 clauses now pass, and S2 passes as revised.
+- **Long runs** (`docs/verification/journeys-2026-10-16/README.md`, "Played Again").
+  - **The 24 lives on the new code:** 20 graduated, against 16 before. London graduated on 4 of 4 seeds, against 0.
+    Breaches, unbalanced entries and errors were 0 on every life.
+  - **Every concern left was a production night**, named by its review.
+  - **Mastery plans:** all six still reach 100, and each comes full 16 to 24 days sooner.
+- **Mutations:** 27, each killed (`docs/verification/workload-2026-10-16/mutations.json`). I8 survived at first, and a
+  test was added.
+- **Verified.**
+  - **Gate:** `npm run gate` exited 0 on `e9f1d73e`, read from a file: 346 files and 4,167 tests, typecheck, lint and
+    all seventeen checks.
+  - **Build:** exit 0.
+  - **The built app, first run on `e9f1d73e`:** 9 failures at each width.
+    - 8 were the brief save: the policy's new 7 PM partner evening grayed its steps.
+    - 1 was a wrong selector in the new workload step.
+  - **After the fixes, on `4ee34491`** (tools only, the same build): 69 passed, 0 failed, 2 skipped (the two since
+    2026-10-12), 0 errors, 0 overflows at 1440 and at 390. That's from all 14 scenario saves written again, each with 0
+    breaches and 0 unbalanced.
+  - This ran in a cloud container (Linux), not the owner's PowerShell machine.
 - **Next:** the owner's decisions, then section 2's six acceptance areas.
 - The stash, worktrees and untracked root files: this container has none, and nothing touched any.
 
