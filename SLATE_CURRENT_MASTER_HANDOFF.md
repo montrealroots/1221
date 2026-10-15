@@ -1,6 +1,39 @@
+# Read First: Interpretation, Advice And The Long Journeys, 2026-10-16
+
+**This section is the current status.** Every section below is history. The owner's brief "Finish Genre Interpretation,
+Improve Training Advice, And Prove Long-Term Integration", on `claude/zen-mccarthy-i88ujw` after the genre
+differentiation of the same day (both in the pull request, not merged, not deployed). The work plan's section 5 is the
+checklist; each part has its account:
+
+- **A way of playing, read against the scene** (`docs/verification/interpretation-2026-10-16/`). A side suits the scene
+  or goes against its grain, by its genre's register (at half weight), its reader, medium, tones, turns, features,
+  language and the reading taken. It moves a share of difficulty and the choice's rehearsal mark, never the ceiling:
+  every fitting side still reaches 100 (8,010 and 9,117 checks).
+  - **What the screen shows.** The Scene column, and the take's account of what the way gave apart from the abilities.
+  - **Rules.** `RULESET` moved to evaluation-5, so older results show as they were.
+  - **Criteria.** Written first; all pass but two clauses of I3 (expansive ahead in 23.0% of designed briefs against
+    25%, the camera's own weighting; the spread 0.92 against 1.0 on held-out ones).
+- **What to improve next, forecast** (`docs/verification/advice-2026-10-16/`). Twenty hours of each input's exercise on
+  the real growth curve, replayed on the recent work. On 40 played cases, its first was the largest realized gain in 40
+  (30 held out), against 16 for the advice as it was. The take's chief limit still answers what held it back, and the
+  pane says where the two differ.
+- **A director's note** (`docs/verification/notes-2026-10-16/`). It's resolved, better, learned or unchanged; only the
+  first two are taken. A way that moved nothing no longer takes it, and isn't offered again.
+- **G1 replaced by the genre signature** (`docs/verification/genres-2026-10-16/g1-replacement.md`, defined before it
+  ran). S1 and S4 pass, S2's ordering and nearest-neighbor clauses pass, its ratio is 1.47 against 1.5, and S3 is 82%
+  designed and 72% held out against 80%. Genre-blind, every criterion fails. G1 as written is still 0.95.
+- **Long journeys** (`docs/verification/journeys-2026-10-16/`). 24 lives of 3.2 years, with 0 breaches, 0 unbalanced and
+  0 errors; 16 graduated. The played mastery plans reach 100.
+- **The owner's decisions:**
+  - the two I3 clauses and the two signature clauses (tune the register's weight, or accept);
+  - **London's dismissal.** It's pre-existing: the same on `35d032d` and `1bb76ac`. 24 to 26 of 46 class pieces a term
+    are unready from the third term, with attendance at 100%, and every attentive profile has most class scenes unready
+    (87 of 113 in New York). It's coursework balance, outside this brief, and queued as its own task.
+- The stash, worktrees and untracked root files: this container has none, and nothing touched any.
+
 # Read First: Genre Differentiation, 2026-10-16
 
-**This section is the current status.** Every section below is history. The account is
+**This section was the current status until later on 2026-10-16** (**Superseded:** the first section above is). Every section below is history. The account is
 `docs/verification/genres-2026-10-16/README.md`, the complete genre matrix `genre-matrix.md` beside it, and the work
 plan's section 4. Done on `claude/zen-mccarthy-i88ujw` from `main` at `35d032d`, for the owner's brief “Complete Genre
 Differentiation And Prove Each Genre’s Identity”. Pushed, a pull request opened, **not merged, not deployed**. The save
