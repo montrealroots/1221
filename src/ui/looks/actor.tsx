@@ -168,7 +168,7 @@ defineLook<TheGenre>('genre', {
     const speed = genreSpeed(person, [id]);
     const play = playOfGenre(id);
     // Its briefs' takes (from 2026-10-12: until then this looked for keys a self-tape stopped writing when briefs came, and listed nothing).
-    // A take of a brief retired on 2026-10-16 is still the genre's (`briefKinds`): until then only a brief offered now was looked up.
+    // A take of a brief retired on 2026-10-16 is still the genre’s (`briefKinds`): until then only a brief offered now was looked up.
     const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && briefKinds(w.inputs.key.split(':')[2] ?? '').includes(id)).slice(-3).reverse();
     const demand = GENRE_DEMANDS[id];
     return {
