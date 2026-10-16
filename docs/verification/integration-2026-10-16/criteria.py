@@ -196,12 +196,13 @@ for r in rows:
         r['evidence'] = f"{r['evidence']}; {A10}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{A10}/figures.json'}]
 # Brief 10's final runs (runs-10/, figures.json read from their outputs, none typed): the long runs, the built app and the
-# advice on 2634283b's code, the gate on the commit gate.txt names. Until then these rows were brief 09's, on bcd75970
+# advice on 57b64401's code, the gate on the commit gate.txt names. They ran first on 2634283b and then on 567d27dd, which
+# the Mastered and Table Work's fix each left behind; the outputs those runs share with 57b64401's are the same. Until then these rows were brief 09's, on bcd75970
 # and 7c1198a2, which brief 10's code left behind.
 # Until the runs' figures are there, these rows stay brief 09's, and the matrix calls them unverified.
 FIG10R = json.load(open(f'{D}/runs-10/figures.json', encoding='utf-8')) if os.path.exists(f'{D}/runs-10/figures.json') else {}
 GATE10 = re.search(r'^at (\w+)', open(f'{D}/runs-10/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG10R else None
-RUNS10, BUILT10 = {'commit': '2634283b', 'watch': 'engine'}, {'commit': '2634283b', 'watch': 'app'}
+RUNS10, BUILT10 = {'commit': '57b64401', 'watch': 'engine'}, {'commit': '57b64401', 'watch': 'app'}
 for r in rows:
     m = r.get('measured')
     if m in (RUNS09, BUILT09, GATE09):

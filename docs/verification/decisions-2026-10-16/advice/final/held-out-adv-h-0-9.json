@@ -1,6 +1,6 @@
 {
- "commit": "2634283b7def46c6d200842c3efd9cb6beb6adc5",
- "clean": true,
+ "commit": "57b6440155052931a68c7d207cb0f864f05dc9db",
+ "clean": false,
  "command": "npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-0-9.json",
  "cases": [
   {

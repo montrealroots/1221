@@ -1,0 +1,74 @@
+ok   startup: the save slots load: 3 empty slots
+ok   creation: five steps, Continue held until each validates, Begin: began as Alex; step one asked: Choose the town or city you were born in.
+ok   guide: a new player’s controls are locked until its chapters are read; read, they open: 12 locked at the start; 17 chapters read; none locked now
+ok   home: what needs you on the first day: no decision waiting, in the panel’s own words: No decision is waiting on you.
+ok   advance: One Hour moves the clock an hour: 7:30 AM → 8:30 AM
+ok   look after yourself: an item from its menu, and what it says: "Eat A MealMost Worth It": Eat A Meal: done at 9:10 AM.
+ok   advance: Next Monday, to term, until coursework is set: August 31, 2026 3:00 PM; dialogs: On The Way, Registration And Your Account, Meeting Your Class, Meeting The Acting Faculty, The Building, The Studios And The L
+ok   school: registration and orientation are findable, and say what they ask: orientation panel shown; Register button absent (registered)
+ok   coursework: a step of preparation done from its button, the clock moved and the step counted: “Read The Scene”: 3:00 PM → 3:40 PM; Knows The Scene 0% → 43%; Read The Scene: 40 minutes, Knows The Scene up 43%.
+ok   coursework: a way of playing it chosen and rehearsed in: Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen: rehearsed in to 0%.
+ok   coursework: table work answered from its select: 4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 43%. | Chosen: rehearsed in to 0%. | Decided at the table.
+ok   coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back: told to learn some of the lines first: Learn Lines: Chosen: rehearsed in to 0%. | Decided at the table. | Learn Lines: 45 minutes, L; Learn Lines: Learn Lines: 
+ok   help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus: Orientation Week → Your Standing And Classes → Back; the tab and the focus kept; August 31, 2026 5:50 PM
+ok   help: the keyboard: ? opens the contents, / goes to the search, a word finds entries: 8 entries for "partner"
+ok   help: Show Me Where goes to the entry’s screen and tab, Back To Help returns to the same trail: “A Card’s Offers”: Accounts → #/workspace/bank, Cards; back to Contents › Search: transfer › A Card’s Offers
+ok   help: a half-typed amount kept across How This Works, closed with Escape and with Close: kept: 12.34, closed with Escape and with Close
+ok   help: opened from the Advance and Look After Yourself menus, closed with Close and with Escape: the menu still open, the focus on its How This Works: Advance Time: Close; Advance Time: Escape; Look After Yourself: Close; Look After Yourself: Escape
+ok   help: reading it holds the live clock: a minute open, the same minute; closed, it moves; Pause stops it a minute: open: 5:50 PM → 5:50 PM; closed: → 5:51 PM; paused: 5:51 PM, a minute on 5:51 PM
+ok   navigation keeps context: School’s tab kept across Money and back: Casting
+ok   casting: with no part yet, the tab says when casting comes; with one, its rehearsal controls: Not Cast Yet How This Works The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a seco
+ok   practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained: 5:51 PM → 6:51 PM: Sense Memory: +0.12. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A 
+ok   profile: the development history shows the hour: August 31, 2026: Emotional Depth +0.118, Sense Memory
+ok   money: a transfer refused for more than the account holds, in the engine’s words, then made: Chase Total Checking holds $90,434. / Chase Total Checking holds $90,434. | Moved $1.
+ok   papers: its five tabs open: all five
+ok   save and exit, then Continue: the same day and hour: August 31, 2026 6:51 PM
+ok   address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School: #/workspace/school at Coursework; #/workspace/school?help=school.repeat, then #/workspace/school
+ok   address: Skip To Content, from the keyboard, moves the focus to the content and leaves School where it is: #/workspace/school, the focus on #main
+ok   interruption: an advance past a commitment stops at it and asks; Stand Here leaves the clock where it is: stopped at September 1, 2026 9:00 AM; Stand Here kept it there
+ok   [save: tax-plan scenario] papers: who it’s owed to, a part paid to Connecticut, its plan asked for: Paid Connecticut DRS: $0.00 to the tax, $10.00 to penalties, $0.00 to interest. $1,492.10 still owed. / Paid Connecticut DRS: $0.00 to the tax, $10.00 to penalt
+ok   [save: tax-plan scenario] papers: the IRS plan in force, its own panel saying what it covers, each month and the next payment: COVERS $5,880.47 2026 / EACH MONTH $81.68 By direct debit / NEXT PAYMENT June 20, 2027
+ok   [save: leave scenario] school: Your Classes, the first class’s productions, the evaluations: the first class’s 2 productions; 1 terms evaluated: Fall Term 2026 Good Standing
+ok   [save: leave scenario] casting: the rehearsal controls work, or say why not: grayed: Learn The Part: You know the part. Catch Up The Blocking: You haven’t missed any blocking. Work On The Note: There’s no note to work on.
+ok   [save: rehearsal scenario] casting: Learn The Part, and the lines rise on the screen: An hour on the part: lines at 76%.; lines 64% → 76%
+ok   [save: rehearsal scenario] casting: Work On The Note, and the note is marked worked on: An hour on the part: lines at 76%. | Worked on: the next call will show it.
+ok   [save: rehearsal scenario] casting: a way of playing chosen, then rehearsed in at the next call: Worked on: the next call will show it. | Chosen: rehearsed in to 0%.; then at the call: 0% → 27%
+ok   [save: decision scenario] home: Your 2026 Tax Return on its card, File It pressed, the card gone and the return filed: 1 → 0 cards; the 2026 Return: Filed February 11, 2027
+ok   [save: direction scenario] casting: a craft note from the director, its problem, its place and its figure, not yet worked: The director’s last note, April 23, 2027: Still: who are they to you in the second half? Decide, and let it show. · Not Worked On Yet
+ok   [save: direction scenario] help: the note’s How This Works, a connected system followed and back, the note and its ways as they were: The Director’s Notes → Learning A Part → Back; the note and its way as they were
+ok   [save: direction scenario] casting: the ways inspected, a change of how it’s played tried, its evidence said, and kept: "Play The Second Half Measured" of 7; 9:00 AM → 9:30 AM: Worked play the second half measured: 51.1 to 50.2. Keep it or put it back, below.; kept, 66% rehearsed
+ok   [save: direction scenario] casting: worked once, Work On The Note is refused, its reason said in words, and pressing it does nothing: Learn The Part: You know the part. Catch Up The Blocking: You haven’t missed any blocking. Work On The Note: You’ve worked on it: the next call will show it. No
+ok   [save: direction scenario] the next call: the change rehearsed in further, the note taken or still there, the night now, and the history: April 23, 2027: Still: who are they to you in the second half? Decide, and let it show. · Tried: Learned From, Not Moved · Worked play the second half measured:
+ok   [save: direction scenario] save and exit, Continue: the note’s outcome and the try kept: 1 tries kept, the notes as they were
+ok   [save: direction scenario] left unanswered: at the next call the note is not taken, and comes again as still there or is shown so: The director’s last note, April 27, 2027: Still: who are they to you in the second half? Decide, and let it show. · Not Worked On Yet
+ok   [save: roundups scenario] bank: Citi’s Spend & Save, its words, its choices, refused with why until they’re made: Round-Ups, Spend & Save. Each purchase on your Citi debit card or Citi credit card is rounded up to the next whole dollar into a running tally, paid from your c
+ok   [save: roundups scenario] help: the panel’s How This Works, searched, a connected entry and back; the choices and the clock as they were: Round-Ups → How You Pay → Back; "keep the change" finds it; Weekly and $75 kept; August 28, 2026 4:50 PM
+ok   [save: roundups scenario] bank: turned on, a week played: what came of it said, a transfer of up to $15 or purchases that rounded up to nothing: 8 purchases since the last transfer were already a multiple of $1.00, so rounded up to nothing.
+ok   [save: roundups scenario] save and exit, Continue: still on, its choices and its last transfer kept: kept
+ok   [save: workload scenario] home: A Word On Your Coursework, how many, the part most often short, what answers it and the review’s day: A Word On Your Coursework 3 of the 6 pieces shown this term so far were Unready. Most often short on them: with your partner, on 2 of the 3 shown. Rehearse With
+ok   [save: workload scenario] coursework: Due Soonest first, then a scene’s Shown Today, its figure, what holds it back and the part short with its remedy: Speech And Accents II: Sound Changes And A Text, due September 28, 2027: about 49.3 (Unready) shown today. Short of complete: drills (Drill  | Shown Today: on a
+ok   [save: workload scenario] coursework: Run It With A Reader pressed, and Shown Today rises: waited for the evening [Not now: You’re at Classes until 3:00 PM.]; assignment_00002s: Shown Today rose to 27
+ok   [save: workload scenario] save and exit, Continue: Shown Today and the warning as they were: kept at 27
+ok   [save: workload scenario] coursework: a stage scene’s How You’ll Play It names its circumstances, not the house; the side that suits it chosen and kept: Scale Restrained Less shown than felt: the feeling held under the surface. Suits The Scene A Private Exchange: for it What’s Kept Hidden: for it Drama’s Played 
+ok   [save: withdraw scenario] school: the class left goes on, and says so: The class of 2029, who went on without you after you left the School on April 7, 2027: Nadia Donovan, Zoe Park, Aaliyah Bennett, Priya Patel, Ethan Haddad, Chlo
+ok   [save: nonfiler scenario] papers: Connecticut’s own assessment of a return never filed, and its rules in words: Assessed by Connecticut DRS with no return from you, September 14, 2027. File your own to replace it.
+ok   [save: brief scenario] profile: a genre’s brief opened, the scene and what it asks shown before any time is spent: The Spare Key / A practice brief for Drama: an original scene written for SLATE, taped to a reader off camera.
+ok   [save: brief scenario] brief: broken down, lines learned, a reading chosen and rehearsed, each spending its time: 4:05 PM → 6:10 PM; it would come to about 47.1 (Unready).
+ok   [save: brief scenario] brief: taped, the result read, what held it back and what to work on shown: Reading it as Hearing Him Out. | Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 46.5, Unready. / undefined
+ok   [save: brief scenario] brief: the weakness trained from the brief, an hour of practice: Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 46.5, Unready. | Voice Work: +0.16.
+ok   [save: brief scenario] brief: prepared further and taped again, better, and the record says why: 46.5 → 51.1: September 12, 2026 Hearing Him Out Left open Better prepared or better able than last time: it should show. 51.1 Emotional Depth held back the beli
+ok   [save: brief scenario] brief: Work It Through on its beats: a problem named, a way tried, its evidence shown, kept: "The Turn Into Beat 2" → Work It Slowly (30 Min), 11:15 PM → 11:45 PM: Taped: 51.1, Working. | Work It Slowly: 48.4 to 52.1.
+ok   [save: brief scenario] brief: a classmate chosen to read opposite, taped, the take together said beside your own: Work It Slowly: 48.4 to 52.1. | Reading with Nadia Donovan.; Work It Slowly: 48.4 to 52.1. | Reading with Nadia Donovan. | Taped: 49.8, Unready.; Nadia Isn’t Th
+ok   [save: brief scenario] save and exit, Continue: the brief, its takes and its preparation kept: kept
+ok   [save: brief scenario] genres: the seven pairs that once read alike each say a different register on their briefs: Biker: Command Of The Frame / Coming Of Age: Caught Live; Children’s: Played Straight / Science Fantasy: Belief In What Isn’t There; Christmas: Played Straight 
+ok   [save: brief scenario] genres: Nordic Noir’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again: Reading it as Closed And Exact. | Rehearse It On Your Feet: 45 minutes, 46% further. | Taped: 45.0, Unready.; 7 points: Nordic Noir’s Feeling Held In asks for i
+ok   [save: brief scenario] genres: Social Realism’s brief prepared, read, rehearsed and taped, the note read, saved, continued and taped again: Reading it as Too Tired To Fight. | Rehearse It On Your Feet: 45 minutes, 40% further. | Taped: 43.1, Unready.; (no concern behind the limit); after Continue: R
+ok   [save: brief scenario] interpretation: Melodrama played the way its scene suits, the take saying what the way gave, the advice forecast, saved and continued: Expansive suits, Restrained either; This one is complete at 83% rehearsed in: with the grain of the scene, it asks less; Rehearse It On Your Feet: 45 minutes, 3
+ok   [save: lien scenario] papers: Connecticut’s lien filed, its release refused with why until it’s paid: Connecticut Tax Lien · Filed. Filed as its collection reached that step. It secured $1,502.10, recorded with the town cl / Not now: It’s released once the balan
+ok   [save: lien scenario] papers: paid in full, then its release asked, and the lien says so: Paid Connecticut DRS in full. / Paid Connecticut DRS in full. | Asked: released by July 15, 2027.
+ok   [save: lien scenario] save and exit, Continue, and weeks on: released: Connecticut Tax Lien · Released. Filed as its collection reached that step. It secured $1,502.10, recorded with the town clerk’s land records and the Secretary 
+ok   [save: lien scenario] papers: the IRS plan says it covers federal tax only, a state’s being the state’s, and is applied for from its own panel: Applied: answered by July 20, 2027, a fee of $29.00.
+ok   [save: missed-plan scenario] papers: the IRS plan in default, caught up, and back in force: Caught up: $81.68 paid.
+ok   home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves money to it, and the pounds and dollars both show: Kept At HSBC UK: £326,303 In Flexible Saver / Chase sends $100.00 for a $5.00 fee. At 2.6% under SLATE’s rate (SLATE’s assumption: the bank publishes no margin,
+
+72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows

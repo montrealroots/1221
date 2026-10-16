@@ -1,0 +1,22 @@
+at 57b64401, 0 tracked files uncommitted, 2026-10-16T21:44:26Z
+advice-adv-0-9 exit=0 secs=17 cmd: npx vite-node tools/advice.ts -- --cases adv-0..9 --out <advice>/adv-0-9.json
+held-out-adv-10-19 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-10..19 --held-out --out <advice>/held-out-adv-10-19.json
+held-out-adv-20-29 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-20..29 --held-out --out <advice>/held-out-adv-20-29.json
+held-out-adv-30-39 exit=0 secs=17 cmd: npx vite-node tools/advice.ts -- --cases adv-30..39 --held-out --out <advice>/held-out-adv-30-39.json
+held-out-adv-h-0-9 exit=0 secs=14 cmd: npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out <advice>/held-out-adv-h-0-9.json
+held-out-adv-h-10-19 exit=0 secs=25 cmd: npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out --out <advice>/held-out-adv-h-10-19.json
+held-out-adv-h-20-29 exit=0 secs=34 cmd: npx vite-node tools/advice.ts -- --cases adv-h-20..29 --held-out --out <advice>/held-out-adv-h-20-29.json
+held-out-adv-h-30-39 exit=0 secs=15 cmd: npx vite-node tools/advice.ts -- --cases adv-h-30..39 --held-out --out <advice>/held-out-adv-h-30-39.json
+held-out-adv-h-40-49 exit=0 secs=24 cmd: npx vite-node tools/advice.ts -- --cases adv-h-40..49 --held-out --out <advice>/held-out-adv-h-40-49.json
+held-out-adv-h-50-59 exit=0 secs=34 cmd: npx vite-node tools/advice.ts -- --cases adv-h-50..59 --held-out --out <advice>/held-out-adv-h-50-59.json
+held-out-adv-h-60-69 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-h-60..69 --held-out --out <advice>/held-out-adv-h-60-69.json
+held-out-adv-h-70-79 exit=0 secs=23 cmd: npx vite-node tools/advice.ts -- --cases adv-h-70..79 --held-out --out <advice>/held-out-adv-h-70-79.json
+held-out-adv-h-80-89 exit=0 secs=35 cmd: npx vite-node tools/advice.ts -- --cases adv-h-80..89 --held-out --out <advice>/held-out-adv-h-80-89.json
+held-out-adv-h-90-99 exit=0 secs=14 cmd: npx vite-node tools/advice.ts -- --cases adv-h-90..99 --held-out --out <advice>/held-out-adv-h-90-99.json
+held-out-adv-h-100-109 exit=0 secs=25 cmd: npx vite-node tools/advice.ts -- --cases adv-h-100..109 --held-out --out <advice>/held-out-adv-h-100-109.json
+held-out-adv-h-110-119 exit=0 secs=38 cmd: npx vite-node tools/advice.ts -- --cases adv-h-110..119 --held-out --out <advice>/held-out-adv-h-110-119.json
+build exit=0 secs=62 cmd: npm run build
+saves exit=0 secs=243 cmd: node tools/scenario-saves.mjs <scratch>/saves
+acceptance-1440 exit=0 secs=861 cmd: env SLATE_BASE=http://localhost:4183 node tools/acceptance-ui.mjs <scratch>/acc-1440 1440 <scratch>/saves
+acceptance-390 exit=0 secs=702 cmd: env SLATE_BASE=http://localhost:4183 node tools/acceptance-ui.mjs <scratch>/acc-390 390 <scratch>/saves
+DONE 2026-10-16T22:21:43Z

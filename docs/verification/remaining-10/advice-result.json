@@ -709,7 +709,7 @@
     },
     {
      "file": "docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json",
-     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b (the four areas integrated), then --summarize",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b and again on 57b64401 (the tested commit), then --summarize",
      "kind": "measurement (seeded, played through the commands)",
      "proves": "the held-out set run once again on the integrated code, as advice.md asked: every clause’s verdict the same (final/README.md)"
     }
@@ -765,5 +765,5 @@
    "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json; docs/verification/remaining-10/advice-result.json"
   }
  },
- "integratedRun": "On 2026-10-16, after the four areas were integrated, the held-out set ran once more on 2634283b, a clone of the branch with a clean tracked tree (decisions-2026-10-16/advice/final/). Every clause’s verdict is this area’s: (b) 118 of 120, the least band 28 of 30 and stage 39 of 40; (c) 120 of 120 at 1.965×; (d) 0; (e) 118 of 120; (f) the first-named’s ladder falls 30 of 30, every candidate 276 of 287; (g) 519 of 519; (h) fell 113 of 120, changed where another led 51 of 51; (i) 120 of 120; F2-A’s 40 cases 40 of 40."
+ "integratedRun": "On 2026-10-16, after the four areas were integrated, the held-out set ran once more on 2634283b, a clone of the branch with a clean tracked tree, and again on 57b64401, the tested commit, case for case the same (decisions-2026-10-16/advice/final/, its README). Every clause’s verdict is this area’s: (b) 118 of 120, the least band 28 of 30 and stage 39 of 40; (c) 120 of 120 at 1.965×; (d) 0; (e) 118 of 120; (f) the first-named’s ladder falls 30 of 30, every candidate 276 of 287; (g) 519 of 519; (h) fell 113 of 120, changed where another led 51 of 51; (i) 120 of 120; F2-A’s 40 cases 40 of 40."
 }

@@ -1,7 +1,7 @@
 {
- "commit": "2634283b7def46c6d200842c3efd9cb6beb6adc5",
- "clean": true,
- "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/decisions-2026-10-16/advice/final/held-out-adv-10-19.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-20-29.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-30-39.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-0-9.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-10-19.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-20-29.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-30-39.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-40-49.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-50-59.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-60-69.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-70-79.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-80-89.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-90-99.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-100-109.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-110-119.json --out docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json",
+ "commit": "57b6440155052931a68c7d207cb0f864f05dc9db",
+ "clean": false,
+ "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/decisions-2026-10-16/advice/final/held-out-adv-10-19.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-20-29.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-30-39.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-0-9.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-10-19.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-20-29.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-30-39.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-40-49.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-50-59.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-60-69.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-70-79.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-80-89.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-90-99.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-100-109.json docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-110-119.json docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json --out docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json",
  "files": [
   "docs/verification/decisions-2026-10-16/advice/final/held-out-adv-10-19.json",
   "docs/verification/decisions-2026-10-16/advice/final/held-out-adv-20-29.json",
@@ -20,7 +20,7 @@
   "docs/verification/decisions-2026-10-16/advice/final/held-out-adv-h-110-119.json"
  ],
  "commits": [
-  "2634283b7def46c6d200842c3efd9cb6beb6adc5"
+  "57b6440155052931a68c7d207cb0f864f05dc9db"
  ],
  "cases": 150,
  "groups": {

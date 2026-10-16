@@ -1,12 +1,12 @@
 {
- "commit": "2634283b7def46c6d200842c3efd9cb6beb6adc5",
- "clean": true,
+ "commit": "57b6440155052931a68c7d207cb0f864f05dc9db",
+ "clean": false,
  "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/decisions-2026-10-16/advice/final/adv-0-9.json --out docs/verification/decisions-2026-10-16/advice/final/adv-0-9-summary.json",
  "files": [
   "docs/verification/decisions-2026-10-16/advice/final/adv-0-9.json"
  ],
  "commits": [
-  "2634283b7def46c6d200842c3efd9cb6beb6adc5"
+  "57b6440155052931a68c7d207cb0f864f05dc9db"
  ],
  "cases": 10,
  "groups": {

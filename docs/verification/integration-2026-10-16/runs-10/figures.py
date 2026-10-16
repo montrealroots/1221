@@ -39,7 +39,7 @@ out['INT-long-runs'] = (f"lives: {len(lives)}, {grad} graduated, {len(dismissed)
                         f"variety: {v['standing']}, breaches {v['breaches']}, {v['recommendations']['distinctTops']} distinct top recommendations over {v['recommendations']['weeks']} weeks, none at full ({v['recommendations']['recommendedAtFull']}), the longest unresolved {v['recommendations']['longestUnresolved']} weeks, the same practice situation {v['practice']['longestSameSituationInARow']} in a row at most; "
                         f"freshness: {len(fr)} runs, {len(repeat)} with a take or scene repeated outside the mastered profile; scenario saves {saves_ok} of {len(saves)}")
 out['MA5'] = '; '.join(f"{k}: mastered {p['masteredOn']}, payoff {[t['overall'] for t in p['payoff']]}" for k, p in plans.items())
-cases = [c for f in sorted(glob.glob(f'{ADV}/adv-0-9.json') + glob.glob(f'{ADV}/held-out-*.json')) for c in json.load(open(f, encoding='utf-8'))['cases']]
+cases = [c for f in sorted(glob.glob(f'{ADV}/adv-0-9.json') + glob.glob(f'{ADV}/held-out-adv-*.json')) for c in json.load(open(f, encoding='utf-8'))['cases']]
 f2a = sorted((c for c in cases if re.fullmatch(r'adv-\d+', c['seed'])), key=lambda c: int(c['seed'][4:]))
 assert [c['seed'] for c in f2a] == [f'adv-{i}' for i in range(40)], [c['seed'] for c in f2a]
 out['F2-A'] = f"{sum(1 for c in f2a if c['pass'])} of {len(f2a)} advice cases: the first named input the best to raise"

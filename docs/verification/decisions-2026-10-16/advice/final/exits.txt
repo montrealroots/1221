@@ -1,16 +1,17 @@
-advice-adv-0-9 exit=0 secs=19 cmd: npx vite-node tools/advice.ts -- --cases adv-0..9 --out adv-0-9.json
-held-out-adv-10-19 exit=0 secs=18 cmd: npx vite-node tools/advice.ts -- --cases adv-10..19 --held-out --out held-out-adv-10-19.json
-held-out-adv-20-29 exit=0 secs=19 cmd: npx vite-node tools/advice.ts -- --cases adv-20..29 --held-out --out held-out-adv-20-29.json
-held-out-adv-30-39 exit=0 secs=19 cmd: npx vite-node tools/advice.ts -- --cases adv-30..39 --held-out --out held-out-adv-30-39.json
-held-out-adv-h-0-9 exit=0 secs=22 cmd: npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out held-out-adv-h-0-9.json
-held-out-adv-h-10-19 exit=0 secs=31 cmd: npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out --out held-out-adv-h-10-19.json
-held-out-adv-h-20-29 exit=0 secs=38 cmd: npx vite-node tools/advice.ts -- --cases adv-h-20..29 --held-out --out held-out-adv-h-20-29.json
-held-out-adv-h-30-39 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-h-30..39 --held-out --out held-out-adv-h-30-39.json
-held-out-adv-h-40-49 exit=0 secs=27 cmd: npx vite-node tools/advice.ts -- --cases adv-h-40..49 --held-out --out held-out-adv-h-40-49.json
-held-out-adv-h-50-59 exit=0 secs=35 cmd: npx vite-node tools/advice.ts -- --cases adv-h-50..59 --held-out --out held-out-adv-h-50-59.json
-held-out-adv-h-60-69 exit=0 secs=17 cmd: npx vite-node tools/advice.ts -- --cases adv-h-60..69 --held-out --out held-out-adv-h-60-69.json
-held-out-adv-h-70-79 exit=0 secs=25 cmd: npx vite-node tools/advice.ts -- --cases adv-h-70..79 --held-out --out held-out-adv-h-70-79.json
-held-out-adv-h-80-89 exit=0 secs=38 cmd: npx vite-node tools/advice.ts -- --cases adv-h-80..89 --held-out --out held-out-adv-h-80-89.json
-held-out-adv-h-90-99 exit=0 secs=15 cmd: npx vite-node tools/advice.ts -- --cases adv-h-90..99 --held-out --out held-out-adv-h-90-99.json
-held-out-adv-h-100-109 exit=0 secs=29 cmd: npx vite-node tools/advice.ts -- --cases adv-h-100..109 --held-out --out held-out-adv-h-100-109.json
-held-out-adv-h-110-119 exit=0 secs=43 cmd: npx vite-node tools/advice.ts -- --cases adv-h-110..119 --held-out --out held-out-adv-h-110-119.json
+at 57b64401, 0 tracked files uncommitted, 2026-10-16T21:44:26Z
+advice-adv-0-9 exit=0 secs=17 cmd: npx vite-node tools/advice.ts -- --cases adv-0..9 --out adv-0-9.json
+held-out-adv-10-19 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-10..19 --held-out --out held-out-adv-10-19.json
+held-out-adv-20-29 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-20..29 --held-out --out held-out-adv-20-29.json
+held-out-adv-30-39 exit=0 secs=17 cmd: npx vite-node tools/advice.ts -- --cases adv-30..39 --held-out --out held-out-adv-30-39.json
+held-out-adv-h-0-9 exit=0 secs=14 cmd: npx vite-node tools/advice.ts -- --cases adv-h-0..9 --held-out --out held-out-adv-h-0-9.json
+held-out-adv-h-10-19 exit=0 secs=25 cmd: npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out --out held-out-adv-h-10-19.json
+held-out-adv-h-20-29 exit=0 secs=34 cmd: npx vite-node tools/advice.ts -- --cases adv-h-20..29 --held-out --out held-out-adv-h-20-29.json
+held-out-adv-h-30-39 exit=0 secs=15 cmd: npx vite-node tools/advice.ts -- --cases adv-h-30..39 --held-out --out held-out-adv-h-30-39.json
+held-out-adv-h-40-49 exit=0 secs=24 cmd: npx vite-node tools/advice.ts -- --cases adv-h-40..49 --held-out --out held-out-adv-h-40-49.json
+held-out-adv-h-50-59 exit=0 secs=34 cmd: npx vite-node tools/advice.ts -- --cases adv-h-50..59 --held-out --out held-out-adv-h-50-59.json
+held-out-adv-h-60-69 exit=0 secs=16 cmd: npx vite-node tools/advice.ts -- --cases adv-h-60..69 --held-out --out held-out-adv-h-60-69.json
+held-out-adv-h-70-79 exit=0 secs=23 cmd: npx vite-node tools/advice.ts -- --cases adv-h-70..79 --held-out --out held-out-adv-h-70-79.json
+held-out-adv-h-80-89 exit=0 secs=35 cmd: npx vite-node tools/advice.ts -- --cases adv-h-80..89 --held-out --out held-out-adv-h-80-89.json
+held-out-adv-h-90-99 exit=0 secs=14 cmd: npx vite-node tools/advice.ts -- --cases adv-h-90..99 --held-out --out held-out-adv-h-90-99.json
+held-out-adv-h-100-109 exit=0 secs=25 cmd: npx vite-node tools/advice.ts -- --cases adv-h-100..109 --held-out --out held-out-adv-h-100-109.json
+held-out-adv-h-110-119 exit=0 secs=38 cmd: npx vite-node tools/advice.ts -- --cases adv-h-110..119 --held-out --out held-out-adv-h-110-119.json

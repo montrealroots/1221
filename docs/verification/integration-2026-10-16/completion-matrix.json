@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 524 of 608 rows in scope Implemented And Verified (86.1%); 69 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 529 of 608 rows in scope Implemented And Verified (87.0%); 64 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -4265,10 +4265,10 @@
    "source": "audit",
    "goal": "Prepare the work a course sets, decide its readings, work at a recurring note another way, and take the feedback | Answering a table-work question (CourseworkPane select) takes CHOOSE_MINUTES (10) and sets a.answers[q]; refused when the work is finished, the question/option isn't the work's, familiarity < 0.3, the same answer, or not free. interpretationOf/answersScore read it into the preparation the showing judges; an answer the text cuts against is a choice note (noteCandidates), given again after it was resolved; a supported answer to a question an open choice note names takes it at the showing; classMoment's disagreement needs an answered question; a step's interpretation requirement and the workbook's problems read interpretationOf.",
    "entry": "CourseworkPane table work; coursework.ts:1447 school.choose (registerCoursework) | guide: Drama School | CourseworkPane.tsx",
-   "preconditions": "An open or revising assignment, in New Haven, not busy; table work on a text known to 0.3; new feedback read before preparing on; another way only for a note given often, once a day | refused where: That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal)",
+   "preconditions": "An open or revising assignment, in New Haven, not busy; table work on a text known to 0.3; new feedback read before preparing on; another way only for a note given often, once a day | refused where: That isn’t a question this work asks.; That isn’t one of the answers.; That’s your answer already. (also tableWorkRefusal, startRefusal)",
    "reads": "open or revising work (‘That work is finished.’), its question and option, familiarity>=0.3, not the same answer, occupied (startRefusal)",
    "decisions": "chooses: assignmentId, question, option, supported",
-   "validation": "refusals: That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal) | costs: Each step takes its minutes and moves one dimension of the preparation. The work is shown once, at the course’s meeting, inside the class’s reckoning, and the feedback is marked simulated. No money moves",
+   "validation": "refusals: That isn’t a question this work asks.; That isn’t one of the answers.; That’s your answer already. (also tableWorkRefusal, startRefusal) | costs: Each step takes its minutes and moves one dimension of the preparation. The work is shown once, at the course’s meeting, inside the class’s reckoning, and the feedback is marked simulated. No money moves",
    "changes": "a.answers[q]; 10 min",
    "later": "Not recorded",
    "systems": "interpretationOf/answersScore -> judgeWork prep; noteCandidates choice note, given again after it was resolved where the text is cut against again (from 2026-10-12); a choice note taken where the work answers its question as the text supports (show, from 2026-10-12); classMoment disagreement | show and meetingWeight at the class meeting (systems/coursework.ts, systems/school.ts); noteCandidates, mainNote and persistentFor (systems/coursework.ts); the next scene and partner (systems/learning.ts); prepareRefusal, which reads feedback.seen",
@@ -11307,7 +11307,7 @@
    "saveLoad": "Not recorded",
    "failure": "Not recorded",
    "implementation": "Not recorded",
-   "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b (the four areas integrated), then --summarize’ (measurement (seeded, played through the commands))",
+   "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize’ (measurement (seeded, played through the commands)); docs/verification/decisions-2026-10-16/advice/final/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out, fifteen batches on 2634283b and again on 57b64401 (the tested commit), then --summarize’ (measurement (seeded, played through the commands))",
    "sourceStatus": "implemented",
    "status": "Implemented, Verification Incomplete",
    "disposition": "implemented",
@@ -13687,18 +13687,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise; brief 10 (57b64401): 40 of 40 advice cases: the first named input the best to raise",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
+   "status": "Implemented And Verified",
    "before": "40 of 40; the exact best in 38",
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "bcd75970",
+    "commit": "57b64401",
     "watch": "engine"
-   },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14121,18 +14120,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]; brief 10 (57b64401): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-28, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
+   "status": "Implemented And Verified",
    "before": "all six plans (journeys-2026-10-16)",
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "bcd75970",
+    "commit": "57b64401",
     "watch": "engine"
-   },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14424,16 +14422,15 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (57b64401): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
+   "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "bcd75970",
+    "commit": "57b64401",
     "watch": "app"
-   },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14451,16 +14448,15 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (57b64401): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
+   "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "bcd75970",
+    "commit": "57b64401",
     "watch": "app"
-   },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14478,16 +14474,15 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14; brief 10 (57b64401): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0, errors 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 8 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 3 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
+   "status": "Implemented And Verified",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "bcd75970",
+    "commit": "57b64401",
     "watch": "engine"
-   },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/approaches.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
