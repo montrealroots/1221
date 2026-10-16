@@ -441,6 +441,12 @@ export function monthlyPayment(amount: Money, apr: number, months: number): Mone
 export function overdraftOffer(sim: Simulation, person: Person, account?: Account): { min: Money; max: Money; rate: number } | { refused: string } {
   const current = account && !account.closedAt && account.ownerId === person.id && account.kind === 'checking' ? account : currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
+  // Nothing new at a bank in another country, in its words (`abroadRefusal`): first, as the command asked it first. From
+  // later on 2026-10-16 here, which the panel reads; until then the command alone asked it, and Borrowing at a home bank
+  // kept from London drew "It would arrange up to $414 at 39.9%" and Arrange It, which the command then refused
+  // (tests/integration-home-lending.test.ts).
+  const away = abroadRefusal(person, bank);
+  if (away) return { refused: away };
   const terms = lendingOf(bank).overdraft;
   if (!bank || !terms) return { refused: `${bank?.name ?? 'Your bank'} doesn’t offer an overdraft SLATE has terms for.` };
   if (terms.kind !== 'arranged') return { refused: `${bank.name} doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.` };
@@ -461,6 +467,10 @@ export function overdraftOffer(sim: Simulation, person: Person, account?: Accoun
  */
 export function loanOffer(sim: Simulation, person: Person, amount: Money, months: number, bankId?: string, purpose: 'education' | 'other' = 'other'): { apr: number; payment: Money; terms: Loan } | { refused: string } {
   const bank = bankId ? bankById(bankId) : bankOf(sim, person);
+  // Nothing new at a bank in another country, first, as the overdraft's offer (from later on 2026-10-16; until then the
+  // command alone asked it, and the Personal Loan panel quoted a loan the command refused).
+  const away = abroadRefusal(person, bank);
+  if (away) return { refused: away };
   const terms = lendingOf(bank).loan;
   if (!bank || !terms) return { refused: `${bank?.name ?? 'Your bank'} publishes no personal loan rate SLATE has.` };
   // The lender's own conditions (from 2026-10-10): a purpose it won't lend for, a Social Security number, an income.
@@ -1374,9 +1384,8 @@ export function registerLending(sim: Simulation): void {
       delete current.overdraftPerUse;
       return { limit: 0 };
     }
-    // Nothing new at a bank in another country (from 2026-10-16), in its words.
-    const away = abroadRefusal(person, bankById(current.bankId ?? ''));
-    if (away) throw new CommandError(away);
+    // Nothing new at a bank in another country (from 2026-10-16), in its words: asked by `overdraftOffer` since later that
+    // day, which the panel reads too; until then asked here first, and again nowhere the panel looked.
     const offer = overdraftOffer(s, person, current);
     if ('refused' in offer) throw new CommandError(offer.refused);
     if (limit < offer.min || limit > offer.max) {
@@ -1411,8 +1420,8 @@ export function registerLending(sim: Simulation): void {
     // At the bank named, any they keep a current account at (from 2026-10-10), else the primary's.
     const bank = p.bankId ? bankById(String(p.bankId)) : bankOf(s, person);
     if (!bank) throw new CommandError('That isn’t a bank you keep an account at.');
-    const away = abroadRefusal(person, bank);
-    if (away) throw new CommandError(away);
+    // A bank in another country lends nothing new: asked by `loanOffer` since later on 2026-10-16, which the panel reads;
+    // until then asked here, before it.
     const offer = loanOffer(s, person, amount, months, bank.id, p.purpose === 'education' ? 'education' : 'other');
     if ('refused' in offer) throw new CommandError(offer.refused);
     // Paid into the current account named, else the one at the lender (or the primary, for a lender they don't bank
