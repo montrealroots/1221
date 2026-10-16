@@ -40,9 +40,10 @@ import { GRAIN } from '@/engine/content/interpretation';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '@/engine/content/material';
 import { templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
-import { materialContext, misfitOf } from '@/engine/systems/material';
-import { AXES } from '@/engine/content/approaches';
+import { materialContext, misfitOf, type Playing } from '@/engine/systems/material';
 import type { Axis, AxisValue } from '@/engine/content/material';
+
+type Sides = Omit<Playing, 'chosenAt' | 'prep'>;
 import { SCENES } from '@/engine/content/coursework';
 import { HOUSE_SCENES } from '@/engine/content/scenes-house';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
@@ -147,7 +148,7 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
   const all = [...SCENE_MATERIAL, ...PLAY_MATERIAL];
   const byId = (id: string) => all.find((m) => m.id === id)!;
   /** A scene as Scene Study pitches it, every part complete, no way of playing chosen: as `tools/ag-baseline.ts` judges one. */
-  const scene = (m: MaterialProfile, p: Performer, sides: Partial<Record<Axis, AxisValue>> = {}): Evaluation => {
+  const scene = (m: MaterialProfile, p: Performer, sides: Sides = {}): Evaluation => {
     const chosen = Object.keys(sides).length > 0;
     const read = materialContext(task, m, chosen ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
     const prep: Record<string, number> = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(chosen ? { approach: 1 } : {}) };
@@ -191,8 +192,8 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
     let n = 0;
     for (const id of NEW) {
       const m = byId(id);
-      for (const pace of [undefined, ...AXES.pace.values]) for (const scale of [undefined, ...AXES.scale.values]) for (const structure of [undefined, ...AXES.structure.values]) {
-        const sides = { ...(pace ? { pace } : {}), ...(scale ? { scale } : {}), ...(structure ? { structure } : {}) } as Partial<Record<Axis, AxisValue>>;
+      for (const pace of [undefined, 'measured', 'driven'] as const) for (const scale of [undefined, 'restrained', 'expansive'] as const) for (const structure of [undefined, 'set', 'open'] as const) {
+        const sides: Sides = { ...(pace ? { pace } : {}), ...(scale ? { scale } : {}), ...(structure ? { structure } : {}) };
         if ((Object.entries(sides) as [Axis, AxisValue][]).some(([a, v]) => misfitOf(a, v, m))) continue;
         const e = scene(m, MASTER, sides);
         expect(e.overall, `${id} ${JSON.stringify(sides)}`).toBe(100);
