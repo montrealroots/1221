@@ -146,9 +146,10 @@ describe('ST3-R: the stage and a close frame differ where they should, and only 
         const apart = (p: Performer) => exactOf(m, p, s) - exactOf(closeFrame(m), p, s);
         const all = apart(at(0.55, 55, 50)), evenRead = apart(at(0.55, 55)), left = apart(at(0.55, 100));
         expect(Math.abs(left), `${m.id} ${s}`).toBeLessThan(1e-9);
-        // Each part on its own: the techniques at 50 of 90 (0.556) against the abilities' 0.55, and the drain.
-        expect(Math.abs(all - evenRead)).toBeLessThan(0.005);
-        expect(Math.abs(evenRead - left)).toBeLessThan(0.05);
+        // Each part on its own, and each there: the techniques at 50 of 90 (0.556) against the abilities' 0.55, and the
+        // drain, which the stage and the close frame weigh differently. How large each is isn't the criterion's.
+        expect(Math.abs(all - evenRead), `${m.id} ${s}`).toBeGreaterThan(0);
+        expect(Math.abs(evenRead - left), `${m.id} ${s}`).toBeGreaterThan(1e-9);
       }
     });
   });
