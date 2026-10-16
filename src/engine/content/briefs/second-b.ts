@@ -63,29 +63,37 @@ export const SECOND_B: readonly Brief[] = [
       { id: 'wings', label: 'Playing To The Wings', reading: 'The gap is a conversation with Teodor, and the crowd overhears two old friends getting through it together.', rests: 'He’s restrung a hundred guitars for her and gives her estimates he never keeps.', lean: { connection: 1.2, consistency: 0.9 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }] },
     ],
   },
+  // `brief-conspiracy_thriller-2`, The Revised Forecast (2026-10-12), went on 2026-10-16. On camera with The Amended
+  // Minutes' features within one and no technique, its first reading the first's (Follow The Words as Setting The Trap:
+  // execution by focus) and the focus specialist rewarded most on both, it asked of the actor what the first did in three
+  // of the six parts `tools/genre-pairs.ts` reads (docs/verification/integration-2026-10-16/genres-09.md). Its id isn't
+  // reused: a save that prepared it keeps its record, and this scene starts fresh (`RETIRED_BRIEFS`).
   {
-    id: 'brief-conspiracy_thriller-2', title: 'The Revised Forecast', kinds: ['conspiracy_thriller'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'pressing',
-    logline: 'Fourteen minutes before the evening news, a TV meteorologist is told to drop a flood warning from her forecast, finds that three rival stations dropped it this afternoon in the same words, and has to get her news director to let her read it anyway.',
-    circumstances: 'The weather office of a regional TV station, fourteen minutes before the six o’clock bulletin, with the river gauges on her screen. A note from the station’s new owners asks her to replace the flood warning in tonight’s forecast with a paragraph they supplied. She has just checked the websites of the market’s three other stations, under three different owners: all three took the warning down this afternoon and put up the same paragraph, word for word.',
-    relationship: 'She and the news director started at the station the same week, twelve years ago, and he’s godfather to her son.',
-    you: 'Ines Calder, forty-four, chief meteorologist, half made up for air.',
-    reader: 'Rafe Doherty, the news director, who brought her the note and keeps checking the clock.',
-    objective: 'Get his say-so to put the flood warning back into tonight’s forecast before the countdown ends.',
-    obstacle: 'He says the paragraph came from upstairs and it’s routine, the countdown won’t stop, and if she reads the warning without his say, she’s off the air tonight.',
+    id: 'brief-conspiracy_thriller-3', title: 'Everything In Order', kinds: ['conspiracy_thriller'], medium: 'voice', size: 'long', stakes: 3,
+    logline: 'In a parked car at night, an accounts clerk records for a reporter everything she knows about her employer’s payments, in order and with every name and figure, before the car that has followed her twice this week comes round again.',
+    circumstances: 'A supermarket parking lot at eleven at night, her car under a light, the engine off. For two years she has processed payments from the port authority to a consultancy that has no staff and no office. The reporter she wrote to has asked for a recorded statement: names, dates and amounts, in order. A gray sedan has followed her home twice this week. Recorded alone at a microphone, as the statement she makes into her phone.',
+    relationship: 'The reporter is a stranger she has spoken to once, for four minutes, from a pay phone.',
+    you: 'Margit Hale, fifty-one, a senior accounts clerk, careful, exact and more frightened than she has ever been.',
+    reader: 'No reader: the voice speaks into the phone for the reporter, and now and then to herself, about the headlights.',
+    objective: 'Get the whole statement recorded, exactly, before she loses her nerve.',
+    obstacle: 'There’s a great deal to say and all of it has to be exact, nobody is there to steady her, and every pair of headlights might be the sedan.',
     beats: [
-      { what: 'She lays the three websites beside the note, the same paragraph four times, and he calls it a coincidence.', tones: ['grave'] },
-      { what: 'He jokes that the river’s never read a website, and she laughs with him, and asks again to read the warning.', tones: ['comic', 'grave'] },
-      { what: 'With two minutes called, she asks him to look at her and say the river’s safe, and he can’t.', tones: ['grave'] },
+      { what: 'She gives her name, her employer and the date, as plainly as the first line of a ledger.', tones: ['grave'] },
+      { what: 'The payments in order: dates, amounts, the consultancy’s name and the account it pays into.', tones: ['grave'] },
+      { what: 'Headlights sweep the car; she stops mid-figure, and goes back to the start of the line.', tones: ['grave', 'grotesque'] },
+      { what: 'She says the name she has been avoiding, the man who signs the payments, and her voice changes.', tones: ['grave'] },
+      { what: 'She tells the reporter where the copies are and that she’s going home now, and makes a joke about the groceries she didn’t buy.', tones: ['comic', 'lyric'] },
     ],
-    language: 'everyday', timing: 3, physical: 0, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 2, physical: 0, partner: 0, vocal: 2, improvisation: 0,
     why: {
-      timing: 'The minutes to air are called off camera by the reader at set moments, and each call cuts what she has left to win him over.',
-      partner: 'He’s pushing her toward the studio the whole time, and she has to read in his hurry how much he knows and how much he minds.',
-      beats: 'Evidence he waves away, a shared joke she uses to ask again, then a question he can’t answer to her face.',
+      timing: 'The statement goes in order, each figure in its place, and the break for the headlights has to stop it and start it again exactly where it broke.',
+      vocal: 'A voice alone at a microphone keeping its evenness through two years of figures, and changing once, on one name.',
+      beats: 'A plain opening, the figures in order, an interruption, the name, then a joke on the way home.',
     },
     readings: [
-      { id: 'words', label: 'Follow The Words', reading: 'She’s a scientist with a reporter’s nose, and the matching words are the story she won’t let go.', rests: 'Three stations under three owners put up the same paragraph, word for word, on the same afternoon.', lean: { execution: 1.15, interpretation: 1.15 }, draws: [{ dim: 'execution', ability: 'focus', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
-      { id: 'friend', label: 'Twelve Years With Rafe', reading: 'The conspiracy matters to her because her oldest friend at work is part of it, and she’s asking him to come back to her side.', rests: 'He’s her son’s godfather, they started the same week, and in the last beat he can’t look at her.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'emotionalDepth', weight: 0.4 }] },
+      { id: 'ledger', label: 'Like A Ledger', reading: 'She’s an accountant giving evidence: the exactness is her armor, and the figures do the frightening.', rests: 'Names, dates and amounts, in order, as plainly as the first line of a ledger.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'memory', weight: 0.6 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
+      { id: 'nerve', label: 'Before Her Nerve Goes', reading: 'She’s holding on by her fingernails, and every figure is said to keep the fear down.', rests: 'She stops mid-figure at the headlights and goes back to the start of the line.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
+      { id: 'name', label: 'The Name', reading: 'The whole statement is a run-up to one name, and the scene is whether she can say it.', rests: 'She says the name she has been avoiding, and her voice changes.', lean: { interpretation: 1.2, believability: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
     ],
   },
   {

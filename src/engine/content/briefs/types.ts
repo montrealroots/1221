@@ -61,7 +61,10 @@ export interface Reading {
 }
 
 export interface Brief {
-  /** `brief-<genre id>` for the brief written for a genre, `-2` and on for further ones. */
+  /**
+   * `brief-<genre id>` for the brief written for a genre, `-2` and on for further ones. An id is never reused: the
+   * fourteen second situations retired on 2026-10-16 were replaced under `-3` (`RETIRED_BRIEFS`).
+   */
   id: string;
   /** Title Case. The scene's own title, invented, never a real work's. */
   title: string;

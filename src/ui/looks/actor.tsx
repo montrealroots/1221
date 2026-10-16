@@ -29,7 +29,7 @@ import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine
 import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
 import { Segments } from '@/ui/components/WorkThrough';
-import { BRIEF_BY_ID } from '@/engine/content/briefs';
+import { briefKinds } from '@/engine/content/briefs';
 import { TEMPLATES } from '@/engine/content/coursework';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -168,7 +168,8 @@ defineLook<TheGenre>('genre', {
     const speed = genreSpeed(person, [id]);
     const play = playOfGenre(id);
     // Its briefs' takes (from 2026-10-12: until then this looked for keys a self-tape stopped writing when briefs came, and listed nothing).
-    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && (BRIEF_BY_ID[w.inputs.key.split(':')[2] ?? '']?.kinds ?? []).includes(id)).slice(-3).reverse();
+    // A take of a brief retired on 2026-10-16 is still the genre's (`briefKinds`): until then only a brief offered now was looked up.
+    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && briefKinds(w.inputs.key.split(':')[2] ?? '').includes(id)).slice(-3).reverse();
     const demand = GENRE_DEMANDS[id];
     return {
       name: GENRE_BY_ID[id]!.label,

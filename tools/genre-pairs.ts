@@ -103,7 +103,7 @@ export function readOf(b: Brief) {
   return {
     id: b.id, title: b.title, medium: b.medium, language: b.language, stakes: b.stakes ?? 1, reader: b.medium === 'voice' ? 'none' : (b.readerPlays ?? 'steady'),
     transitions: t.transitions, blends: t.blends, task: taskOf(b).label, techniques: Object.keys(b.techniques ?? {}).sort().join(', ') || 'none',
-    reads: tapeReadsOf(b), features: FEATURES.map((f) => b[f]), size: b.size, lines: stepMinutes(b, 'lines'),
+    reads: tapeReadsOf(b), features: FEATURES.map((f): number => b[f]), size: b.size, lines: stepMinutes(b, 'lines'),
     trains: rehearseTrains(b) ?? 'nothing', speeds: rehearseSpeed(b) ?? 'nothing', readings, rewarded,
     sides: betterSides(b), sidesWithoutRegister: betterSides(b, false), why: sidesWhy(b),
   };
