@@ -103,8 +103,8 @@
    "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
    "sourceStatus": "Not Met",
    "decision": {
-    "question": "ST3 asks an even actor to come out the same on stage and at a close frame, while the stage weighs execution and the actor’s stamina drains on it: equal results from unequal effective inputs. Is the amended ST3′ (identical effective inputs give identical results; every remaining difference is put down to a stage demand, stamina or execution weighting) the criterion?",
-    "evidence": "docs/verification/integration-2026-10-16/st3.md: 157 of 171 as shown; every exact difference under 0.021, an actor even in what’s read and not draining identical to 3e-14",
+    "question": "ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?",
+    "evidence": "docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
     "recommendation": "Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met"
    }
   },
@@ -194,7 +194,7 @@
    "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Partially Implemented",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -207,7 +207,11 @@
    "before": "expansive 21 of 49; restrained 7 of 34",
    "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
    "sourceStatus": "Not Met",
-   "gap": "The restrained specialist comes out ahead against the grain on 8 of 38, under 25% (st6.md); being worked under brief 09, section 2"
+   "decision": {
+    "question": "ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?",
+    "evidence": "docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met"
+   }
   },
   {
    "id": "ST7",
@@ -1132,7 +1136,7 @@
    "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
-   "status": "Partially Implemented",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/h4.md"
@@ -1147,7 +1151,11 @@
    "before": "1 of 12",
    "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
    "sourceStatus": "Not Met",
-   "gap": "2 of 12 specialists ahead on 60% of their work; presence, discipline and stamina have no work of their own (h4.md); being worked under brief 09, section 2"
+   "decision": {
+    "question": "H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?",
+    "evidence": "docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10"
+   }
   },
   {
    "id": "F2",
@@ -1508,7 +1516,7 @@
    "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
-   "status": "Partially Implemented",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/l3.md"
@@ -1520,7 +1528,11 @@
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
    "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
    "sourceStatus": "Not Met",
-   "gap": "As written, the specialist’s last month (64.1) is under its first (65.5) because it earned harder callbacks; the controlled measure rises on every take (l3.md); being worked under brief 09, section 2"
+   "decision": {
+    "question": "L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?",
+    "evidence": "docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist"
+   }
   },
   {
    "id": "MA1",

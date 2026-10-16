@@ -2777,5 +2777,35 @@
     "defects": []
    }
   ]
+ },
+ {
+  "key": "remaining-09-judge",
+  "testFile": "tests/evidence-g27-ui.test.ts",
+  "rows": [
+   {
+    "id": "c-performerTitle",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-judge",
+  "testFile": "tests/fitness.test.ts",
+  "rows": [
+   {
+    "id": "fitness",
+    "testsAdded": [
+     {
+      "title": "a class that trains the body as hard as a workout, attended > holds and builds fitness at each combat class of the spring as a workout indoors does, where the twin who misses them falls 0.18 every midnight; the fall’s classes count none",
+      "closes": "four Friday combat classes, each building 0.667 (a workout indoors at that readiness) and holding three midnights: 69.61 against the away twin's 64.96; the fall's classes none; the hold on the save; the class the day's first workout; the Work Out line after the class says it is the second, a class having counted as one",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
  }
 ]

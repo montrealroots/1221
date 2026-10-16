@@ -49,17 +49,17 @@
      "proves": "ST3 165 of 179, ST6 8 of 38, H4 2 of 12, L3 65.5 → 64.1 and 54.0 → 56.6 on d7127819; the signature, identity and audit files byte-identical to closeout/'s"
     },
     {
-     "file": "judge-logs (the session's scratchpad)",
+     "file": "docs/verification/integration-2026-10-16/baseline-09/tests-summary.txt",
      "title": "the judge's 51 test files run one at a time on d7127819",
      "kind": "suite",
-     "proves": "51 of 51 files exit 0, 1,036 tests passed, before any change"
+     "proves": "51 of 51 files exit 0, 1,036 tests passed, before any change",
+     "kept": "Copied from the session’s scratchpad into the repository at the integration, 2026-10-16"
     }
    ],
    "fixes": [],
    "sources": [],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged"
   },
@@ -122,7 +122,6 @@
      "failed": 1
     }
    ],
-   "rowText": {},
    "tutorial": "unchanged (no mechanic changed)",
    "guide": "unchanged (no mechanic changed)",
    "ownerDecision": "Accept ST3′ (st3.md) in place of ST3's second clause, or keep ST3 as the record. The clause asks two results that differ by up to 0.021 (the drain the stage weighs differently, which ST3's own first clause and the piece's continuity read) to show the same tenth; no boundary of rounding can, and removing the difference would remove the stage's execution weight or stamina's drain."
@@ -157,7 +156,6 @@
    ],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged",
    "ownerDecision": "ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept."
@@ -258,7 +256,6 @@
      "failed": 1
     }
    ],
-   "rowText": {},
    "tutorial": "unchanged (no mechanic changed; the scenes show their own demands and reasons on the screen, MaterialDemands)",
    "guide": "unchanged (no mechanic changed); docs/ENGINE-MODEL.md counts 64 scenes and says why the ruleset stayed",
    "ownerDecision": "H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units as a brief's beats are, each a new mechanic or a weight to be argued with a source first.",
@@ -300,7 +297,6 @@
    ],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged",
    "ownerDecision": "L3 as written measures what was taped as much as how well; a student who earns callbacks fails it. Recommended: adopt L3′ (l3.md) beside the journey metric, both kept."
@@ -324,10 +320,11 @@
      "proves": "failed once after the new scenes (each genre's count of coursework scenes moved: Comedy 6 → 7, Fairy Tale 1 → 2, Historical Drama 3 → 4, Political Drama 2 → 3) and passed with docs/GENRE-COVERAGE.md regenerated from the tables"
     },
     {
-     "file": "the session's judge-logs/tests/final/summary.txt",
+     "file": "docs/verification/integration-2026-10-16/final-09/tests-summary.txt",
      "title": "57 test files one at a time",
      "kind": "suite (one file at a time)",
-     "proves": "56 exit 0 at once, genre-coverage 0 after its record was regenerated; 1,074 passed, 0 failed"
+     "proves": "56 exit 0 at once, genre-coverage 0 after its record was regenerated; 1,074 passed, 0 failed",
+     "kept": "Copied from the session’s scratchpad into the repository at the integration, 2026-10-16"
     },
     {
      "file": "docs/verification/integration-2026-10-16/followup-09/README.md",
@@ -346,7 +343,6 @@
    "sources": [],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged"
   },
@@ -564,11 +560,11 @@
      "failed": 1
     }
    ],
-   "rowText": {
-    "fitness and school.prepare audit rows": "two cited test titles renamed through the pipeline (resolve-titles.cjs)"
-   },
    "tutorial": "unchanged for the units (the profile chapter already says many beats ask discipline)",
-   "guide": "Working A Problem Through's example (parts by its tones and its turns; the named problem kept), the productions guide's nights (each turn within the tones, more than three asking discipline)"
+   "guide": "Working A Problem Through's example (parts by its tones and its turns; the named problem kept), the productions guide's nights (each turn within the tones, more than three asking discipline)",
+   "notes": [
+    "fitness and school.prepare audit rows: two cited test titles renamed through the pipeline (resolve-titles.cjs)"
+   ]
   },
   {
    "id": "judge.stamina-load",
@@ -594,7 +590,6 @@
    ],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged",
    "ownerDecision": "Found reading it: the load reads a night's body and voice, not its length, so four one-acts among the eight at 1 (The Bear, A Marriage Proposal, Riders To The Sea, Salomé) are loaded as whole evenings; the catalog keeps no running time. Whether a night's load should read its length, and each play's length read from its text, is for the owner."
@@ -692,11 +687,11 @@
      "failed": 1
     }
    ],
-   "rowText": {
-    "fitness": "entry: Work Out; from 2026-10-16 a class that trains the body as hard (doc-fields.json, regenerated)"
-   },
    "tutorial": "the profile chapter: stamina built by a workout and by a class that trains the body as hard",
-   "guide": "body (what holds fitness, the day's workouts), craft (Stamina's fall and how it's built)"
+   "guide": "body (what holds fitness, the day's workouts), craft (Stamina's fall and how it's built)",
+   "notes": [
+    "fitness: entry: Work Out; from 2026-10-16 a class that trains the body as hard (doc-fields.json, regenerated)"
+   ]
   },
   {
    "id": "judge.coverage-row",
@@ -721,7 +716,6 @@
    "sources": [],
    "assumptions": [],
    "mutations": [],
-   "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged"
   }

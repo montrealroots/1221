@@ -611,6 +611,48 @@
   "09-journeys/journeys.d-lapse-prescription": {
    "rows": [],
    "why": "A fill in the lapse repriced when Affiliate cover is bought back to its start: school.buy_affiliate’s repricing, and the health week that fills it (its log, HealthRecord.fills)."
+  },
+  "09-judge/judge.baseline": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.ST3": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.ST6": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.H4": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.L3": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.remeasure": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.stamina-load": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.coverage-row": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.length": {
+   "rows": [],
+   "why": "A scene and a play judged in their units (evaluation-10): its own tests call the judging functions on a piece; the one played test it changed is the casting it moved, mapped by test."
+  },
+  "09-judge/judge.classes-fitness": {
+   "rows": [
+    "fitness"
+   ],
+   "why": "A class that trains the body as hard as a workout counts as one (from 2026-10-16): the spring’s combat classes attended through the clock, against a twin away, read on fitness each midnight."
   }
  },
  "fragments": {
@@ -748,6 +790,15 @@
      "health.request_hardship"
     ],
     "read": "FIXTURE (the program’s end set by hand): the hardship refused in words that say so, nothing moved, Papers drawing no button."
+   }
+  ],
+  "09-judge": [
+   {
+    "title": "PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow",
+    "rows": [
+     "c-performerTitle"
+    ],
+    "read": "The second fall’s casting played across a save and a load: Spring Awakening’s night read by its long score casts Frau Gabor and Hänschen Rilow (evaluation-10), where it cast Frau Bergmann and Ernst Röbel."
    }
   ]
  }

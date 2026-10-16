@@ -272,8 +272,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g27-ui.test.ts",
