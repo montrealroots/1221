@@ -54,6 +54,7 @@ import type { Axis, AxisValue } from '@/engine/content/material';
 type Sides = Omit<Playing, 'chosenAt' | 'prep'>;
 import { SCENES } from '@/engine/content/coursework';
 import { HOUSE_SCENES } from '@/engine/content/scenes-house';
+import { MEETING_SCENES } from '@/engine/content/scenes-meeting';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
 import { createSave, cutIntoUnits, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -176,7 +177,10 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
   const PRESENCE: Performer = { ability: (id) => (id === 'presence' ? 85 : (600 - 85) / 11), full: () => 100, technique: () => 50 };
 
   it('before brief 09 no class scene or play had a partner level under 2; the speeches to a crowd have 1, and the rule reaches them: presence 2 more on connection and its lean half again, by each level under 2', () => {
-    for (const m of all.filter((x) => !NEW.includes(x.id))) expect(m.partner, m.id).toBeGreaterThanOrEqual(2);
+    // Brief 10's two public meetings (`content/scenes-meeting.ts`, 2026-10-16) are played to a crowd at partner 1 too, and
+    // came after brief 09: until then this read every scene but the house's as the catalog before brief 09.
+    const LATER = MEETING_SCENES.map((x) => x.id);
+    for (const m of all.filter((x) => !NEW.includes(x.id) && !LATER.includes(x.id))) expect(m.partner, m.id).toBeGreaterThanOrEqual(2);
     for (const id of ['caesar-3-2', 'henry5-4-3', 'oedipus-1']) {
       const m = byId(id);
       expect(m.partner, id).toBe(1);
