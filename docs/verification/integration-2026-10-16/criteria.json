@@ -1,0 +1,1714 @@
+{
+ "rows": [
+  {
+   "id": "ST1",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 25% each side",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/stage-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "restrained 50, expansive 33 of 85",
+   "after": "restrained 49, expansive 37 of 89"
+  },
+  {
+   "id": "ST2",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "The house moves no scale; the better side rests on the scene",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: no house signal; every band-apart case rests on the scene",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 72 of 72; after: 75 of 75",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "72 of 72",
+   "after": "75 of 75"
+  },
+  {
+   "id": "ST3",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Projection is a demand: the voice-and-body specialist better on stage; the even actor the same on both",
+   "entry": "the same, and tests/rounding-once.test.ts",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: specialist 171 of 171; even actor the same on 171 of 171",
+   "changes": "A result rounded once from exact parts (evaluation-9); the 0.1 steps were the rounding’s",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts",
+   "status": "Not Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3.md"
+    },
+    {
+     "file": "tests/rounding-once.test.ts",
+     "title": "an actor even in everything the formula reads, its stamina not draining, comes out the same on stage and at a close frame on every case"
+    },
+    {
+     "file": "tests/rounding-once.test.ts",
+     "title": "the criterion’s even actor comes out less than half a rounding step apart on every case"
+    }
+   ],
+   "before": "specialist 171/171; even actor 159 of 171",
+   "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part"
+  },
+  {
+   "id": "ST4",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: at least one each way in every genre with 5 or more materials",
+   "changes": "Four public-domain drama scenes of public or open conflict, read from their texts before measurement (`content/scenes-public.ts`)",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
+   "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st6.md"
+    },
+    {
+     "file": "tests/integration-stage.test.ts",
+     "title": "the catalog’s drama has scenes where restraint suits better and scenes where size does"
+    }
+   ],
+   "before": "drama 25 / 0",
+   "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16"
+  },
+  {
+   "id": "ST5",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Mastery: a mastered, prepared actor reaches 100 on every fitting combination",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: every case",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "2,277 of 2,277",
+   "after": "2,385 of 2,385"
+  },
+  {
+   "id": "ST6",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Strength carries the harder side: specialists ahead against the grain on at least 25%",
+   "entry": "the same, and probe/st6 (the cases in st6.md)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 25% for each specialist",
+   "changes": "Restraint draws composure and focus as well as emotional depth (sourced); it moved no case",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
+   "status": "Not Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st6.md"
+    },
+    {
+     "file": "tests/integration-stage.test.ts",
+     "title": "on a class scene, a restrained take rises with focus and with composure"
+    }
+   ],
+   "before": "expansive 21 of 49; restrained 7 of 34",
+   "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)"
+  },
+  {
+   "id": "ST7",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "More than one good way: two or more interpretations within a point of the best",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 80% of materials",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 84 of 86; after: 88 of 90",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "84 of 86",
+   "after": "88 of 90"
+  },
+  {
+   "id": "ST8",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "The even actor follows the scene where the sides are a band apart",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 75%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 72 of 72; after: 75 of 75",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "72 of 72",
+   "after": "75 of 75"
+  },
+  {
+   "id": "ST9",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2",
+   "entry": "the tools for each",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as each says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "held",
+   "after": "see I1 to I5, S1 to S4 and G2"
+  },
+  {
+   "id": "Stage F1",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Fresh validation: the plays as a night (ST1, ST5, ST7, ST8)",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as each",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: all hold; after: all hold",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "all hold",
+   "after": "all hold"
+  },
+  {
+   "id": "Stage F2",
+   "group": "Criteria: The Stage",
+   "kind": "criterion",
+   "goal": "Fresh validation: even actors at 40 and 75 (ST1, ST8)",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as each",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: all hold; after: all hold",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    }
+   ],
+   "before": "all hold",
+   "after": "all hold"
+  },
+  {
+   "id": "I1",
+   "group": "Criteria: Interpretation",
+   "kind": "criterion",
+   "goal": "A mastered actor reaches 100 on every fitting combination of briefs and readings",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: every case",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "8,010 and 9,117 at 100",
+   "after": "8,010, 9,117 and 2,385 at 100"
+  },
+  {
+   "id": "I2",
+   "group": "Criteria: Interpretation",
+   "kind": "criterion",
+   "goal": "The better-suited side differs within a genre on each axis",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 20% of genres",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "pace 24.2%, scale 20.8%, structure 32.9%",
+   "after": "the same"
+  },
+  {
+   "id": "I3",
+   "group": "Criteria: Interpretation",
+   "kind": "criterion",
+   "goal": "Suitability spreads results and neither scale side dominates",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: the account’s",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
+   "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%"
+  },
+  {
+   "id": "I4",
+   "group": "Criteria: Interpretation",
+   "kind": "criterion",
+   "goal": "The even actor follows suitability where the sides are a band apart",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 75%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 100%; after: 100% on every sample",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "100%",
+   "after": "100% on every sample"
+  },
+  {
+   "id": "I5",
+   "group": "Criteria: Interpretation",
+   "kind": "criterion",
+   "goal": "Two or more ways within a point of the best",
+   "entry": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 80%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "≥ 98.7%",
+   "after": "99.3%, 98.0%, 97.8%"
+  },
+  {
+   "id": "A1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Every ability is causal somewhere",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: each of the 12 with a kind of work at a mean effect of 0.5 or more",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met; after: met",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "met",
+   "after": "met"
+  },
+  {
+   "id": "A2",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "No two abilities do the same job",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: no pair of effects correlated at 0.9 or more",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: highest 0.536; after: highest 0.527",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "highest 0.536",
+   "after": "highest 0.527"
+  },
+  {
+   "id": "A3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "No ability is a universal bonus",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: none moves 95% of pieces with a cv under 0.30",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met; after: met",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "met",
+   "after": "met"
+  },
+  {
+   "id": "T2",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Training resists exploits (a): four hours of one exercise at most half four different ones",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: at most half",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 1.875 of 4; after: 1.875 of 4",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "1.875 of 4",
+   "after": "1.875 of 4"
+  },
+  {
+   "id": "T3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 25%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 36%; after: 36%",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "36%",
+   "after": "36%"
+  },
+  {
+   "id": "G3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Different genres reward different actors",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: no actor best on more than half the genres; 4 actors best on 10 or more",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "53 of 149; 8 actors",
+   "after": "53 of 149; 8 actors"
+  },
+  {
+   "id": "G4",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Every genre offers enough to play",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 2 briefs and 4 readings a genre; 3 reader behaviours",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met; after: met",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "met",
+   "after": "met"
+  },
+  {
+   "id": "G5",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Genre proficiency progresses across its range",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: a rise from 30 to 100 known changes the take",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "51.23 → 53.86",
+   "after": "51.22 → 53.86"
+  },
+  {
+   "id": "M1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Maximum work quality under the qualifying conditions is 100 on every judged piece",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: every case 100, no drawn case off it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off"
+  },
+  {
+   "id": "M3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Nobody else can hold a mastered player’s own result under 100",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 100, or a route the player controls",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "own 100 on 56 scenes, the partner never coming (the reader)",
+   "after": "own 100 on 60 scenes"
+  },
+  {
+   "id": "O1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Your own result is invariant to the reader",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: sd 0",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: sd 0; after: sd 0",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "sd 0",
+   "after": "sd 0"
+  },
+  {
+   "id": "O2",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "The take together moves with the reader",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 5 points apart",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "93.1, 86.1, 100",
+   "after": "93.1, 86.1, 100"
+  },
+  {
+   "id": "H2",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "No universally dominant allocation",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: no actor best on more than half the pieces of a kind with 30 or more",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "briefs 96 of 298; scenes 20 of 56",
+   "after": "briefs 96 of 298; scenes 20 of 60"
+  },
+  {
+   "id": "H5",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Generalists are useful",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: ahead of half the specialists on 50%; within a point of the best on 10%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "427 of 427; 26.5%",
+   "after": "431 of 431; 26.9%"
+  },
+  {
+   "id": "H7",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Randomness doesn’t overwhelm skill, and still exists",
+   "entry": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: better loses under 10%; a developing actor ranges a point",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 0%; 2.61; after: 0%; 2.62",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    }
+   ],
+   "before": "0%; 2.61",
+   "after": "0%; 2.62"
+  },
+  {
+   "id": "H4",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Specialists are advantaged on suitable work",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: ahead on 60% of the pieces where its ability reads most, for 10 of 12",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
+   "status": "Not Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/h4.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/h4/grid.txt"
+    }
+   ],
+   "before": "1 of 12",
+   "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)"
+  },
+  {
+   "id": "F2",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Acting on the first-named weakness pays more than training at random (as written)",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: named 2× the mean read; unread 0; the largest gain in 80%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md",
+   "status": "Not Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
+    },
+    {
+     "file": "docs/verification/advice-2026-10-16/criteria.md"
+    }
+   ],
+   "before": "303 of 447 (67.8%)",
+   "after": "302 of 447 (67.6%)"
+  },
+  {
+   "id": "F2-A",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "The advice’s first-named input is the largest realized gain, played",
+   "entry": "npx vite-node tools/advice.ts (docs/verification/advice-2026-10-16/README.md)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 80% held out and designed",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 40 of 40; after: measured again in the long runs",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/advice-2026-10-16/README.md",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "docs/verification/advice-2026-10-16/README.md"
+    }
+   ],
+   "before": "40 of 40",
+   "after": "measured again in the long runs"
+  },
+  {
+   "id": "G1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "A genre’s label predicts what its work asks (as written)",
+   "entry": "tools/ag-baseline.ts §3",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 1.5×; at most 15 with a nearer neighbor",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Replaced by the genre signature S1 to S4 on 2026-10-16 (work plan section 5), defined before it ran",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/genres-2026-10-16/g1-replacement.md",
+   "status": "Superseded",
+   "citations": [
+    {
+     "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    }
+   ],
+   "before": "fails",
+   "after": "fails"
+  },
+  {
+   "id": "A4",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "What the game says an ability does, it does",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; A4 brought to restraint’s new draw (composure, focus)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; A4 brought to restraint’s new draw (composure, focus)"
+  },
+  {
+   "id": "A5",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Every ability can be developed by an action the player chooses, and says what moved",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; unchanged code",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; unchanged code"
+  },
+  {
+   "id": "T1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Training says its value before and after",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; unchanged code",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T1)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; unchanged code"
+  },
+  {
+   "id": "O3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Grades and bands read the personal result; casting the expected; preparation and condition named as limits",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; unchanged code",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; unchanged code"
+  },
+  {
+   "id": "F1",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Every note names what the evaluation found",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; unchanged code",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F1)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; unchanged code"
+  },
+  {
+   "id": "F3",
+   "group": "Criteria: The Attributes",
+   "kind": "criterion",
+   "goal": "Feedback says the condition and the preparation apart from ability",
+   "entry": "By reading the code (phase-2b.md §9)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as the criterion says",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: met by review; after: met by review; unchanged code",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F3)",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
+    }
+   ],
+   "before": "met by review",
+   "after": "met by review; unchanged code"
+  },
+  {
+   "id": "L1",
+   "group": "Criteria: Long-Term Continuity",
+   "kind": "criterion",
+   "goal": "Repeated feedback changes or is acted on",
+   "entry": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed bj-0 --days 120",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: at most 4 weeks running",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json"
+    }
+   ],
+   "before": "specialist 4, beginner 3",
+   "after": "specialist 4, beginner 3"
+  },
+  {
+   "id": "L2",
+   "group": "Criteria: Long-Term Continuity",
+   "kind": "criterion",
+   "goal": "No mindless repetition",
+   "entry": "the same",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 0",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 0; after: 0",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
+    }
+   ],
+   "before": "0",
+   "after": "0"
+  },
+  {
+   "id": "L3",
+   "group": "Criteria: Long-Term Continuity",
+   "kind": "criterion",
+   "goal": "A learning student’s work improves over a term (as written: the last month’s mean at or over the first’s)",
+   "entry": "the same, with --trace",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: every non-mastered profile",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
+   "status": "Not Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/l3.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json"
+    }
+   ],
+   "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
+   "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19"
+  },
+  {
+   "id": "MA1",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "An ability a piece reads, raised by practice, raises the take",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "title": "PLAYER JOURNEY: a week of Circles Of Attention raises a comic brief’s forecast"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA2",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "An ability it doesn’t read, raised by practice, moves it by nothing of that ability",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "title": "PLAYER JOURNEY: a week of Circles Of Attention raises a comic brief’s forecast"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA3",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "No dimension, segment or whole leaves 0 to 100 on any judged piece",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "title": "every brief and reading, every class scene and every play as a night"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA4",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "An ability read twice by one dimension is counted once, at its summed weight",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "title": "a grave scene’s believability reads emotional depth from the task and from the material"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA6",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "At mastery no draw moves a result off 100",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/engine-properties.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/engine-properties.test.ts"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA7",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "Each shortfall a take has is named in words",
+   "entry": "Played through the commands (practice.exercise, brief.choose, brief.prepare, practice.self_tape)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "The brief’s forecast and How You’ll Play It; the take’s note",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: holds",
+   "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "title": "PLAYER JOURNEY: a brief taped with its lines barely begun names the lines"
+    }
+   ],
+   "before": "not measured before",
+   "after": "holds"
+  },
+  {
+   "id": "MA5",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "A played mastery plan reaches 100 on every payoff tape",
+   "entry": "npx vite-node tools/mastery.ts -- --mode plan (the long runs)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: every payoff tape 100",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: all six plans (stage-2026-10-16/runs/); after: measured again in the long runs",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/stage-2026-10-16/runs",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "docs/verification/stage-2026-10-16/runs"
+    }
+   ],
+   "before": "all six plans (stage-2026-10-16/runs/)",
+   "after": "measured again in the long runs"
+  },
+  {
+   "id": "MA8",
+   "group": "Criteria: Mastery Through Play",
+   "kind": "criterion",
+   "goal": "Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review counts them",
+   "entry": "tests/remaining-school-term.test.ts (the school area)",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: not measured before; after: with the school area",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "tests/remaining-school-term.test.ts",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "tests/remaining-school-term.test.ts"
+    }
+   ],
+   "before": "not measured before",
+   "after": "with the school area"
+  },
+  {
+   "id": "S1",
+   "group": "Criteria: The Genres",
+   "kind": "criterion",
+   "goal": "A genre’s conventions are recognizable across very different scenes",
+   "entry": "npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: mean cosine 0.7 or more, every genre",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
+   "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature-fresh.json"
+    },
+    {
+     "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    }
+   ],
+   "before": "0.90, 0.88, 0.90, 0.87",
+   "after": "0.901, 0.883, 0.904, 0.880"
+  },
+  {
+   "id": "S2",
+   "group": "Criteria: The Genres",
+   "kind": "criterion",
+   "goal": "Contrasting genres differ and related ones overlap (revised)",
+   "entry": "npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: contrasting over one 1.5×; nearest shares a concern 90%",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
+   "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature-fresh.json"
+    },
+    {
+     "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    }
+   ],
+   "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
+   "after": "1.599, 1.612, 1.598, 1.613; 98.7%"
+  },
+  {
+   "id": "S3",
+   "group": "Criteria: The Genres",
+   "kind": "criterion",
+   "goal": "Contrasting genres change outcomes on the same scene (revised), on all four samples",
+   "entry": "npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 80% on each",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
+   "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature-fresh.json"
+    },
+    {
+     "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    }
+   ],
+   "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
+   "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)"
+  },
+  {
+   "id": "S4",
+   "group": "Criteria: The Genres",
+   "kind": "criterion",
+   "goal": "No two briefs of different genres identical in every number a take reads (G2)",
+   "entry": "npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: 0 pairs",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
+   "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "Before: 0; after: 0",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/signature-fresh.json"
+    },
+    {
+     "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    }
+   ],
+   "before": "0",
+   "after": "0"
+  },
+  {
+   "id": "Genre Audit",
+   "group": "Criteria: The Genres",
+   "kind": "criterion",
+   "goal": "Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits",
+   "entry": "npx vite-node tools/genre-audit.ts -- --out <file>",
+   "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
+   "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
+   "decisions": "None: a measurement, not a player decision",
+   "validation": "Threshold: helps its own in every genre; leaks into none",
+   "changes": "Nothing in this pass",
+   "later": "None",
+   "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
+   "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
+   "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
+   "failure": "The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)",
+   "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/closeout/genre-audit.md"
+    },
+    {
+     "file": "tests/genre-identity.test.ts"
+    }
+   ],
+   "before": "149 of 149; 0; 56 to weigh",
+   "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)"
+  }
+ ]
+}
