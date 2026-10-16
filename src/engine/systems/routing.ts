@@ -120,7 +120,7 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
  * A bank closed the account on them (\`closeForOverdraft\`): what was paid into it is paid into the account they keep
  * elsewhere, as a payer re-sends a payment returned from a closed account (SLATE doesn't keep the return and the
  * re-sending apart). Autopay from it isn't moved: it fails, and says so, until the player moves it. A standing order from
- * it ends with it (`endOrdersFrom`, from 2026-10-16), the bank having held it; until then it stayed, and failed and said
+ * it ends with it (`endOrdersOf`, from 2026-10-16), the bank having held it; until then it stayed, and failed and said
  * so every month for good.
  */
 export function redirectAway(sim: Simulation, person: Person, fromId: string, toId: string): void {

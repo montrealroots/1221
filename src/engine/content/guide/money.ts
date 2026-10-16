@@ -522,7 +522,10 @@ export const MONEY: readonly GuideEntry[] = [
       // and a current account was paid its interest in every country. Until that day's recheck Canada's refund took
       // overdraft interest with the charges, which its rule leaves out, and this said nothing of it. Until that day's
       // second recheck it left out the machine owner's fee, which isn't the bank's and isn't refunded (`chargesBackOf`).
-      'Cancel It: a savings account, term deposit or current account closes without penalty, into the current account at its bank, or with none there sent to your primary account in the bank’s days. In Britain and Canada its interest is paid, as the rule leaves you what it earned; elsewhere, Europe and Mexico, the interest goes back, any already paid into it with the rest, as their rules return what each side received. In Canada and Mexico the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee; elsewhere a current account is charged the fees it owes, as Close It charges them. A card closes to anything new, with what was spent on it still to repay.',
+      // From 2026-10-16: the overdraft interest built since the 1st charged (`settleOverdraftInterest`), and a term's interest
+      // taken before 2026-10-15 found in an older save (`findTermInterest`); until then canceling dropped the one and missed
+      // the other.
+      'Cancel It: a savings account, term deposit or current account closes without penalty, into the current account at its bank, or with none there sent to your primary account in the bank’s days. In Britain and Canada its interest is paid, as the rule leaves you what it earned; elsewhere, Europe and Mexico, the interest goes back, any already paid into it with the rest, as their rules return what each side received. In Canada and Mexico the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee; elsewhere a current account is charged the fees it owes, as Close It charges them. A current account is charged the overdraft interest built since the 1st everywhere, never refunded. A term deposit’s interest taken during its term in a save from before 2026-10-15 is found once when the save is opened, from the term’s own interest built and what it has left, and goes back the same way; where the save’s records can’t say which term paid it, it stays paid, as it was. A card closes to anything new, with what was spent on it still to repay.',
       'Claim It Back: all of it comes back into your primary current account.',
       'Save Alerts: the lines are kept, and checked from the day’s end on.',
     ],
@@ -543,7 +546,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“That account isn’t dormant.”',
       '“Its cooling-off period has passed, or there isn’t one here for it.”',
       '“Your primary current account can’t be canceled. Make another primary first.”',
-      'A current account, on Close It’s own refusals, said under it with Cancel It grayed out: “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, or “Its fees, …, are more than it holds. Pay in … first.”',
+      'A current account, on Close It’s own refusals, said under it with Cancel It grayed out: “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, “Its fees, …, are more than it holds. Pay in … first.”, or with overdraft interest built since the 1st, “Its overdraft interest, …, and its fees, …, are more than it holds. Pay in … first.”',
       'Any account, where the interest it was paid goes back and it holds less: “The interest it was paid, …, goes back, and is more than it holds. Pay in … first.”, or with its fees, “Its fees, …, and the interest it was paid, …, are more than it holds. Pay in … first.”',
       // From 2026-10-15's recheck: a term's interest taken during the term went back out of the primary account unasked.
       'A term deposit whose interest was taken into another account that now holds less: “The interest it paid into …, …, goes back out of it, and is more than it holds. Pay in … first.”',
@@ -1145,7 +1148,10 @@ export const MONEY: readonly GuideEntry[] = [
     later: [
       'Overdrawn: interest builds each day where the bank charges it, and is charged on the 1st. Chase holds an item’s fee to the end of the next business day and lets it go if the account is back by then.',
       'A loan’s payment, the same day each month: the month’s interest, then the payment from the repayment account, easy-access savings at its bank where savings is linked, and its overdraft. Short, the bank charges its returned payment fee where it has one, 50 points come off your record, and what’s left is still owed.',
-      `Below zero past any arranged limit for ${ESTIMATE.closeAfterDays} days: the bank takes what your other accounts there hold toward it, charges off the rest to collections and closes the account, and ${ESTIMATE.chargeOffHit} points come off your record. A US bank reports it to ChexSystems for ${CHEX.years} years, and the next US bank turns you away about ${pct(CHEX.declines.unpaid)} of the time while it’s unpaid, ${pct(CHEX.declines.paid)} once it’s paid.`,
+      // From 2026-10-16 the debt is all of it to the day, and a standing order from or into an account it closes ends with it:
+      // until then the overdraft interest built since the 1st and Germany's quarter of fees were dropped with the account,
+      // and the order failed every month.
+      `Below zero past any arranged limit for ${ESTIMATE.closeAfterDays} days: the bank takes what your other accounts there hold toward it, with the overdraft interest built since the 1st and any fees owed to the day, charges off the rest to collections and closes the account, and ${ESTIMATE.chargeOffHit} points come off your record. A standing order paying from or into an account it closes ends with it, said in its notice. A US bank reports it to ChexSystems for ${CHEX.years} years, and the next US bank turns you away about ${pct(CHEX.declines.unpaid)} of the time while it’s unpaid, ${pct(CHEX.declines.paid)} once it’s paid.`,
       `In France: a letter ${FRANCE.informAfterDays} days past the limit, and a loan for the overrun offered at ${FRANCE.offerAfterDays}.`,
     ],
     interpret: [
@@ -1212,7 +1218,8 @@ export const MONEY: readonly GuideEntry[] = [
       'Without a Social Security number, Chase, Bank of America and Wells Fargo open an account only in a branch where you live.',
       'No charged-off debt owed to that bank, and no ChexSystems report it turns you away on.',
       // Until 2026-10-15 a German account's fees closing would charge weren't among these, and Close It closed it overdrawn.
-      'To close a current account: another current account, and this one not primary, not overdrawn, with no money on its way, nothing paying from or into it, no savings beside it, no card payments pending, and in Germany enough in it for the fees closing charges.',
+      // Until 2026-10-16 the overdraft interest built since the 1st wasn't either: closing dropped it.
+      'To close a current account: another current account, and this one not primary, not overdrawn, with no money on its way, nothing paying from or into it, no savings beside it, no card payments pending, and enough in it for the overdraft interest built since the 1st and, in Germany, the fees closing charges.',
       'Keep The Balance There: a British switch under way, past its last day to be called off and not a partial one, up to close of business on the working day before its date.',
     ],
     costs: [
@@ -1228,20 +1235,23 @@ export const MONEY: readonly GuideEntry[] = [
       { label: 'Where A Bank Doesn’t Say', value: `A debit card in the bank’s replacement card’s days, or ${ESTIMATE_CARD_DAYS} business days where it gives none`, estimate: true },
     ],
     reads: [
-      { label: 'The New Bank’s Rules', value: `Its review days, opening deposit and card days, whether it closes an account left unfunded or at zero, and how money it sends to another bank arrives: by its own days or cut-off, else by the country’s scheme, else in SLATE’s estimate of ${businessDays(ESTIMATE_SEND_DAYS)}` },
+      // Its monthly fee from 2026-10-16, when the panel began to say it before Apply (`ui/bank/BankMoves.tsx`).
+      { label: 'The New Bank’s Rules', value: `Its review days, opening deposit and card days, whether it closes an account left unfunded or at zero, how money it sends to another bank arrives (by its own days or cut-off, else by the country’s scheme, else in SLATE’s estimate of ${businessDays(ESTIMATE_SEND_DAYS)}), and its current account’s monthly fee and how it’s waived` },
       { label: 'What Uses The Old Account', value: 'Wages paid into it, standing orders, card autopay, loan payments and payments set for a date' },
       { label: 'Britain’s Switch', value: `${GB_SWITCH.workingDays} working days; called off up to ${GB_SWITCH.cancelBeforeDays} working days before its date, and its balance transfer alone stopped up to the working day before` },
     ],
     now: [
       'Apply, decided at once: the account opens at nothing and its card is on its way. Under review, the bank decides on its day. Any opening deposit leaves your account now.',
-      `Close It: interest and fees settled, what it holds sent to the account you named, at once at the same bank or otherwise in the bank’s days, and the account closed with its history kept. Citi keeps one open, restricted, while card payments post, up to ${CITI_OPEN.closeWithPendingDays} days.`,
+      // From 2026-10-16 the overdraft interest built since the 1st is settled with them (`settleOverdraftInterest`).
+      `Close It: interest, any overdraft interest built since the 1st and fees settled, what it holds sent to the account you named, at once at the same bank or otherwise in the bank’s days, and the account closed with its history kept. Citi keeps one open, restricted, while card payments post, up to ${CITI_OPEN.closeWithPendingDays} days.`,
       'Switch: set for its date, and the new bank looks at the application the next day.',
       'Call It Off: the switch is canceled, and your accounts and payments stay where they are.',
       'Keep The Balance There: the switch goes ahead on its date and your payments move, but the balance stays in the old account, which stays open.',
     ],
     later: [
       'On the decision day: opened, or turned down with the reason; a deposit sent comes back to the account it left.',
-      `${CAPITAL_ONE_OPEN.fundWithinDays !== undefined ? `Capital One closes an account not funded in ${CAPITAL_ONE_OPEN.fundWithinDays} days` : 'A bank may close an account left unfunded'}, and Citi one left at zero for ${CITI_OPEN.closesAtZeroAfterDays}.`,
+      // From 2026-10-16 such a close settles first (`closedByBank`): until then it closed and settled after.
+      `${CAPITAL_ONE_OPEN.fundWithinDays !== undefined ? `Capital One closes an account not funded in ${CAPITAL_ONE_OPEN.fundWithinDays} days` : 'A bank may close an account left unfunded'}, and Citi one left at zero for ${CITI_OPEN.closesAtZeroAfterDays}, where closing leaves nothing owed: any interest it built goes to your primary account, and a standing order paying from it ends with it, said in the bank’s notice. Where its fees would take it below zero, it stays open and they’re charged when due.`,
       'On a switch’s date: the new accounts open, and balances, wages, standing orders, autopay, loan repayments and payments set for a date move as the old account closes. With its balance transfer stopped, or on a partial switch, the payments move and the old account stays open with its balance. Overdrawn on the day, the old one stays open, blocked to all but paying in, until it’s repaid.',
     ],
     interpret: [
@@ -1261,7 +1271,7 @@ export const MONEY: readonly GuideEntry[] = [
       // scope reset of 2026-10-09, and it went from `openRefusal` (`systems/bankmoves.ts`) that day.
       'Without a Social Security number, in a branch: “Not from a hospital bed.”, “You’re at … until ….” or “… starts at …: there isn’t the time before it.”',
       '“… asks for an opening deposit of …, sent from another of your accounts.” and “That account is at … already.”',
-      'Closing: “It’s your only current account.”, “It’s your primary account. Make another primary first.”, “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, or “Its fees, …, are more than it holds. Pay in … first.”',
+      'Closing: “It’s your only current account.”, “It’s your primary account. Make another primary first.”, “It’s overdrawn by ….”, “Money is on its way into or out of it.”, a list of what still uses it, “… is open beside it. Close it first.”, “Card payments are still pending on it.”, “Its fees, …, are more than it holds. Pay in … first.”, or, with overdraft interest built since the 1st, “Its overdraft interest, …, is more than it holds.” or “Its overdraft interest, …, and its fees, …, are more than it holds.”',
       'Switching, in the US: “There’s no switching service here: …” Elsewhere: “A switch is already under way.”, “Clear the overdraft before switching; the new bank won’t take it on.” or “A partial switch is a Current Account Switch Service step, in Britain only.”',
       'Calling it off: “This country’s switching service publishes no right to call a switch off: it runs to its date.” or “It could be called off until …”',
       'Keep The Balance There: “No switch is under way.”, “This country’s switching service publishes no such step.”, “Its balance transfer is stopped already.” or “The transfer could be stopped until close of business ….”',

@@ -35,7 +35,7 @@ import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDaysIn, daysOfAccount } from '../content/bankdays';
 import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, US_REPORTS, type AbroadTerms, type Charge } from '../content/homeaccounts';
 import { homeOf } from './earnings';
-import { isoOf, dropPaymentsFor, endedWords, endOrdersFrom, settleFees, settleInterest } from './banking';
+import { isoOf, dropPaymentsFor, endedWords, endOrdersOf, settleFees, settleInterest } from './banking';
 import { ARRIVES_KIND, inTransitOf, usPerson } from './bankmoves';
 import { checkingsOf, settleOverdraftInterest } from './lending';
 import { depositAccount, redirectAway } from './routing';
@@ -529,8 +529,8 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   const held = heldOf(current);
   let arrives: Instant | undefined;
   if (held > 0 && into) arrives = sendAbroad(sim, person, current, into, held, into.bankId, true);
-  // A standing order paying from one of them ends with it, said once below (`endOrdersFrom`, from 2026-10-16).
-  const ended = mine.flatMap((account) => endOrdersFrom(sim, person, account));
+  // A standing order paying from one of them ends with it, said once below (`endOrdersOf`, from 2026-10-16).
+  const ended = mine.flatMap((account) => endOrdersOf(sim, person, account));
   for (const account of mine) {
     account.accrued = 0;
     account.closedAt = sim.now;

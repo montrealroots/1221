@@ -85,7 +85,7 @@ import { redirectAway } from './routing';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
-import { bankOf, banksFor, dropPaymentsFor, endedWords, endOrdersFrom, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
+import { bankOf, banksFor, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
 import type { StandingOrder } from './payments';
 import { savingsLeftThisMonth } from './cash';
 import { homeOf, recordInterest } from './earnings';
@@ -1020,11 +1020,11 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     setOff(account, covers ? -current.balance : account.balance, covers ? -(current.held ?? 0) : account.held ?? 0);
   }
   const cur = saveCurrency(sim.universe);
-  // The standing orders paying from an account it closes end with it, and payments set for a date to or from it and orders
-  // into it go as every other close takes them (`endOrdersFrom`, `dropPaymentsFor`, from 2026-10-16: until then each
-  // order said “A Standing Order Didn’t Go” every month for good, and orders into savings closed here did the same).
+  // The standing orders paying from an account it closes, or into it, end with it, said once in the notice (`endOrdersOf`,
+  // from 2026-10-16: until then each said “A Standing Order Didn’t Go” every month for good). A payment set for a date
+  // to or from it still fails on its day, and says so then.
   const ended: StandingOrder[] = [];
-  const letGo = (account: Account) => { ended.push(...endOrdersFrom(sim, person, account)); dropPaymentsFor(sim, person, account); };
+  const letGo = (account: Account) => { ended.push(...endOrdersOf(sim, person, account)); };
   if (current.balance >= 0) {
     // What the person holds there covered it: the bank takes it, closes
     // the accounts that ran below zero, and nothing is charged off. The

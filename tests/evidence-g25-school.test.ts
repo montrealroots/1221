@@ -672,7 +672,8 @@ describe('school.buy_affiliate', () => {
     expect(sim.execute({ kind: 'school.buy_affiliate', payload: {} }).error).toBe('Affiliate cover for the leave’s two terms is $8,950.00, with the $1,882.00 student fee you paid credited, paid in full now. Confirm to buy it.');
     // TEST SETUP: the bank emptied, as spending would leave it.
     drain(sim);
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your bank can’t cover it.');
+    // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('Your current account and the savings beside it have nothing to pay it with: move money into your current account first.');
     expect(sim.player.school!.leave!.affiliate).toBeUndefined();
     expect(sim.player.school!.uncovered).toEqual([{ from: at(2027, 1, 20, 12) }]);
     expect(healthOf(sim.player).bills.find((b) => b.id === bill.id)!.amount).toBe(billed);

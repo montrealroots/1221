@@ -486,17 +486,17 @@ export function dropPaymentsFor(sim: Simulation, person: Person, account: Accoun
 }
 
 /**
- * The standing orders paying from an account its bank closed of its own accord, ended with it, the bank having held
- * them, and returned for the closing notice to name (from 2026-10-16). Until then they stayed, and each month said “A
+ * The standing orders paying from an account its bank closed of its own accord, or into it, ended with it, the bank having
+ * held them, and returned for the closing notice to name (from 2026-10-16). Until then they stayed, and each month said “A
  * Standing Order Didn’t Go … is closed” for good (docs/verification/remaining/banking-checklist.json,
- * banking.1.standing-orders). Close It and Cancel It refuse while one pays from the account (`linkedTo`), so only a
- * bank's own close meets one. An order that never named its account follows the primary account (`orderSource`), and
- * keeps following it.
+ * banking.1.standing-orders). Close It and Cancel It refuse while one pays from the account (`linkedTo`), and take those
+ * into it (`dropPaymentsFor`), so only a bank's own close meets one. An order that never named its account follows the
+ * primary account (`orderSource`), and keeps following it.
  */
-export function endOrdersFrom(sim: Simulation, person: Person, account: Account): StandingOrder[] {
+export function endOrdersOf(sim: Simulation, person: Person, account: Account): StandingOrder[] {
   const pay = person.payments;
   if (!pay) return [];
-  const ended = pay.standingOrders.filter((o) => o.fromId === account.id);
+  const ended = pay.standingOrders.filter((o) => o.fromId === account.id || o.toId === account.id);
   if (ended.length === 0) return [];
   const gone = new Set(ended.map((o) => o.id));
   pay.standingOrders = pay.standingOrders.filter((o) => !gone.has(o.id));
@@ -510,7 +510,7 @@ export function endOrdersFrom(sim: Simulation, person: Person, account: Account)
 export function endedWords(sim: Simulation, ended: readonly StandingOrder[]): string {
   if (ended.length === 0) return '';
   const each = ended.map((o) => `${formatMoney(o.amount, saveCurrency(sim.universe))} into ${sim.universe.accounts[o.toId]?.name ?? 'your savings'} on the ${o.day}`);
-  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it: set ${ended.length === 1 ? 'one' : 'them'} up again from another account on How You Pay.`;
+  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it: set ${ended.length === 1 ? 'one' : 'them'} up again on How You Pay.`;
 }
 
 /**

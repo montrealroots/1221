@@ -29,7 +29,9 @@
  * Move Money pressed and its button grayed, so one press is one transfer; and after a bank closes an account, nothing
  * more posts to it, no statement, no alert, no order.
  *
- * Every figure is worked here from the rule's own numbers and written as a literal, never asked of the engine's helper.
+ * Every figure is worked here from the rule's own numbers, never asked of the engine's helper: as a literal where the
+ * figures are fixed, and from the balance the account stood at where it's kept in another currency, its dollars set by
+ * SLATE's rate.
  *
  * PLAYER JOURNEYS: new lives made as the creation screen makes them (`createSave` with `newLifeConfig`, the family given by
  * `withFamily`), Ada Cole at Yale in New Haven from Monday 24 August 2026 at 7:30 AM, born in New York, at Chase unless
@@ -47,7 +49,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createElement, type ReactElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { readFileSync } from 'node:fs';
-import { createSave, loadPlacesFor, loadSave, quickSave } from '@/engine';
+import { gunzipSync } from 'node:zlib';
+import { createSave, loadPlacesFor, loadSave, migrate, quickSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Account, LedgerTransaction } from '@/engine/core/ledger';
 import { newLifeConfig, withFamily, type NewSaveConfig, type StartingWealth } from '@/engine/world/bootstrap';
@@ -285,6 +288,17 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     sim.advanceTo(berlin(2026, 4, 2, 12));
     expect(touched(sim, db.id, berlin(2026, 3, 7, 1))).toEqual([]);
     expect(breaches(sim.universe)).toEqual([]);
+    // Its twin, played a day at a time and reloaded at each month's start, comes to the same postings on the account.
+    let twin = inBerlin('de-commerzbank', 'rb-setoff-de');
+    const twinDb = twin.universe.accounts[ok<{ accountId: string }>(twin, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
+    setTo(twin, twinDb, -100_00); // TEST SETUP
+    for (let day = berlin(2026, 1, 6, 12); day <= berlin(2026, 3, 8, 12); day += MS_DAY) {
+      twin.advanceTo(day);
+      if (new Date(day).getUTCDate() === 1) twin = reload(twin);
+    }
+    const memos = (x: Simulation) => x.universe.transactions.filter((t) => t.postings.some((q) => q.accountId === db.id)).map((t) => [t.memo, t.postings.find((q) => q.accountId === db.id)!.amount]);
+    expect(memos(twin)).toEqual(memos(sim));
+    expect(byName(twin, 'Owed To Deutsche Bank, In Collections').balance).toBe(-122_89);
   }, 60_000);
 
   it('FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again', () => {
@@ -331,9 +345,27 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     // under the allowance, settled before it, as Germany pays at the quarter's end.
     expect(postedTo(sim, 'Interest: Flexgeld, before the set-off', flex.id)).toEqual([41]);
     expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 122_89]);
-    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20 ended with it: set one up again from another account on How You Pay.']);
+    expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20 ended with it: set one up again on How You Pay.']);
     // It failed on 20 January and 20 February, said once and brought up to the later day; not on 20 March.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => n.at)).toEqual([berlin(2026, 2, 20, 9)]);
+    expect(paymentsOf(sim.player).standingOrders).toEqual([]);
+    expect(breaches(sim.universe)).toEqual([]);
+  }, 60_000);
+
+  it('FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March', () => {
+    const sim = inBerlin('de-commerzbank', 'rb-order-into');
+    const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
+    const flex = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_savings', { bankId: 'de-deutsche-bank' }).accountId]!;
+    setTo(sim, db, -100_00); // TEST SETUP
+    ok(sim, 'bank.add_standing_order', { toId: flex.id, amount: 10_00, day: 20 });
+    sim.advanceTo(berlin(2026, 3, 21, 12));
+    // It went from Commerzbank on 20 January and 20 February, SEPA landing at once: €20 in the Flexgeld, all of it set off.
+    expect(postedTo(sim, 'To Flexgeld at Deutsche Bank', flex.id)).toEqual([10_00, 10_00]);
+    expect([db.closedAt, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), berlin(2026, 3, 7, 0), 0]);
+    const closed = titled(sim, 'Deutsche Bank Closed Your Account');
+    expect(closed).toHaveLength(1);
+    expect(closed[0]!.body.endsWith('Your money is at Commerzbank now. Its standing order of €10.00 into Flexgeld on the 20 ended with it: set one up again on How You Pay.')).toBe(true);
+    expect(titled(sim, 'A Standing Order Didn’t Go')).toEqual([]);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
@@ -377,6 +409,9 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     const sim = ada('rb-barclays-od', 'modest', { homeRegionId: 'uk-eng-london', priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-barclays', bankId: 'us-chase' } as Partial<NewSaveConfig>);
     await loadPlacesFor(sim.universe);
     const current = mine(sim).find((a) => a.bankId === 'gb-barclays' && a.kind === 'checking')!;
+    const saver = mine(sim).find((a) => a.bankId === 'gb-barclays' && a.kind === 'savings')!;
+    // A standing order of $100 from Chase into the Barclays saver on the 28th, paid abroad each month until the close.
+    ok(sim, 'bank.add_standing_order', { toId: saver.id, amount: 100_00, day: 28 });
     sim.advanceTo(at(2026, 10, 1, 12));
     const kept = current.balance;
     setTo(sim, current, -300_00); // TEST SETUP
@@ -388,6 +423,11 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(current.closedAt).toBeDefined();
     expect(postedTo(sim, 'Overdraft interest, on closing', current.id)).toEqual([-3_77]);
     expect(current.balance).toBe(0);
+    // The order into the saver ends with it, said in the notice; none follows on 28 October.
+    expect(titled(sim, 'Barclays Closed Your Account')[0]!.body.endsWith(`Its standing order of $100.00 into ${saver.name} on the 28 ended with it: set one up again on How You Pay.`)).toBe(true);
+    sim.advanceTo(at(2026, 10, 29, 12));
+    expect(paymentsOf(sim.player).standingOrders).toEqual([]);
+    expect(titled(sim, 'A Standing Order Didn’t Go')).toEqual([]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 120_000);
 
@@ -441,7 +481,7 @@ describe('banking.1: an account a bank closed stops', () => {
     sim.advanceTo(capone.fundBy! + 2 * MS_DAY);
     expect(capone.closedAt).toBeDefined();
     const closedBy = titled(sim, 'Capital One Closed 360 Checking');
-    expect(closedBy.map((n) => n.body)).toEqual(['It wasn’t funded within 60 days of opening, and the bank closes an account that isn’t. Its standing order of $50.00 into Chase Savings on the 15 ended with it: set one up again from another account on How You Pay.']);
+    expect(closedBy.map((n) => n.body)).toEqual(['It wasn’t funded within 60 days of opening, and the bank closes an account that isn’t. Its standing order of $50.00 into Chase Savings on the 15 ended with it: set one up again on How You Pay.']);
     expect(paymentsOf(sim.player).standingOrders.map((o) => o.id)).toEqual([fromCiti.id]);
     // Citi's $5 a month, for an owner of 24 with no direct deposit, on 31 October and 30 November, takes it to −$10, and
     // sixty days below zero, from 1 November, close it on 31 December.
@@ -450,7 +490,7 @@ describe('banking.1: an account a bank closed stops', () => {
     const citiNow = sim.universe.accounts[citi.id]!;
     expect(citiNow.closedAt).toBeDefined();
     expect(postedTo(sim, 'Charged off by Citi', citi.id)).toEqual([10_00]);
-    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20 ended with it: set one up again from another account on How You Pay.']);
+    expect(titled(sim, 'Citi Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. $10.00 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Chase now. Its standing order of $20.00 into Chase Savings on the 20 ended with it: set one up again on How You Pay.']);
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     const quiet = Math.max(citiNow.closedAt!, sim.universe.accounts[capone.id]!.closedAt!) + 1;
     sim.advanceTo(at(2027, 4, 2, 12));
@@ -506,8 +546,15 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     sim.advanceTo(berlin(2026, 1, 13, 12));
     expect(ok<{ paid: number }>(sim, 'bank.take_term_interest', { accountId: term.id })).toEqual({ paid: 1_39 });
     sim.advanceTo(berlin(2026, 1, 15, 12));
-    const older = loadSave(asOlderBuild(sim) as never);
+    const written = asOlderBuild(sim) as { transactions: LedgerTransaction[]; accounts: Record<string, Account> };
+    const balances = Object.fromEntries(Object.values(written.accounts).map((a) => [a.id, a.balance]));
+    const count = written.transactions.length;
+    const older = loadSave(written as never);
     expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+    // Opening it posts nothing and changes no balance or transaction: the step only finds.
+    expect(older.universe.transactions).toHaveLength(count);
+    expect(Object.fromEntries(Object.values(older.universe.accounts).filter((a) => a.id in balances).map((a) => [a.id, a.balance]))).toEqual(balances);
+    expect(older.universe.transactions.filter((x) => x.memo === 'Interest: FestzinsSparen').map((x) => x.postings.length)).toEqual([3, 3]);
     const t = older.universe.accounts[term.id]!;
     const takes = older.universe.transactions.filter((x) => x.memo === 'Interest: FestzinsSparen');
     expect(takes).toHaveLength(2);
@@ -614,6 +661,19 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     expect(breaches(older.universe)).toEqual([]);
   }, 60_000);
 
+  it('the four saves older builds wrote (2026-10-10 and 2026-10-11, tests/fixtures), migrated and opened as a slot opens them, take the step once and name it; New Haven lives, they hold no term deposit, so nothing is found', () => {
+    for (const name of ['old-tax-plan-ff837dfa', 'old-leave-ff837dfa', 'old-nonfiler-086d00ca', 'old-state-plan-086d00ca']) {
+      const u = deserialise(gunzipSync(readFileSync(`tests/fixtures/${name}.json.gz`)).toString('utf8'));
+      expect(u.opened, name).toBeUndefined();
+      migrate(u);
+      const sim = loadSave(u as never);
+      expect(sim.universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+      expect(Object.values(sim.universe.accounts).filter((a) => a.category === 'term'), name).toEqual([]);
+      expect(Object.values(sim.universe.accounts).filter((a) => a.untaggedTakes !== undefined), name).toEqual([]);
+      expect(reload(sim).universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+    }
+  }, 120_000);
+
   it('a save this build began names the step and finds nothing: a take is tagged, and opening it, once or twice, adds no record', () => {
     const sim = inBerlin('de-deutsche-bank', 'rb-current-term');
     setTo(sim, primary(sim), 10_000_00); // TEST SETUP
@@ -635,7 +695,7 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
 // ---------------------------------------------------------------------------
 
 describe('banking.s7.school: a payment to Yale comes from the current account and the savings beside it', () => {
-  it('PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 she is told the $65,217.00 the bank can pay and what to do, pays that, and a reload changes nothing', () => {
+  it('PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing', () => {
     // TEST SETUP: a charge on the Yale account, as a term past the sixth makes one (`billUnsupportedTerm`), which a played
     // life reaches only after three years (tests/scope-school.test.ts plays a repeated year to its bill).
     const charge = (s: Simulation, amount: number) => s.post({ memo: 'TEST SETUP: a term billed', category: 'school', postings: [{ accountId: s.nominalAccount('expense', 'School').id, amount }, { accountId: yaleAccount(s, s.player)!.id, amount: -amount }] });
@@ -659,6 +719,25 @@ describe('banking.s7.school: a payment to Yale comes from the current account an
     expect(sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').map((t) => t.postings.find((q) => q.accountId === yaleAccount(sim, sim.player)!.id)!.amount)).toEqual([20_000_00, 45_217_00]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
+
+  it('PLAYER JOURNEY: a Comfortable student on a personal leave from 20 January 2027, her Chase Total Checking down to $100.00 (TEST SETUP), buys Affiliate cover, $8,950.00, from it and Chase Savings beside it', () => {
+    const sim = ada('rb-yale-affiliate', 'comfortable');
+    // TEST SETUP: played by somebody who looks after themselves, the dials set each six hours, as tests/leave.test.ts does.
+    const tended = (until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
+    tended(at(2027, 1, 12, 12));
+    const asked = ok<{ decideAt: number }>(sim, 'school.request_leave', { kind: 'personal', reason: 'family' });
+    tended(asked.decideAt + MS_HOUR);
+    expect(sim.player.school!.leave!.status).toBe('on');
+    const checking = primary(sim);
+    const savings = byName(sim, 'Chase Savings');
+    setTo(sim, checking, 100_00); // TEST SETUP
+    const before = savings.balance;
+    // Two terms at $5,416, less the spring's $1,882 student fee paid (tests/evidence-g25-school.test.ts works it).
+    expect(ok<{ cost: number }>(sim, 'school.buy_affiliate', { confirm: true }).cost).toBe(8_950_00);
+    expect([checking.balance, before - savings.balance]).toEqual([0, 8_850_00]);
+    expect(sim.player.school!.leave!.affiliate).toMatchObject({ by: 'self', cost: 8_950_00 });
+    expect(breaches(sim.universe)).toEqual([]);
+  }, 180_000);
 });
 
 // ---------------------------------------------------------------------------

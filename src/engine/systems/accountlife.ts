@@ -191,8 +191,7 @@ function interestPaidSince(sim: Simulation, account: Account) {
  * “Interest: <the term's name>”, a name every term at the bank shares, and nothing against the term. What tells two
  * same-named terms apart is the term itself: it builds its balance × its fixed rate / 365 at each day's end
  * (`systems/lending.ts`), a take is the whole cents built then (`bank.take_term_interest`), and what's left is its
- * `accrued`. So each open term in a country with a cooling-off period, at a bank that lets interest be taken during the
- * term and not yet renewed, has its accrual replayed from its opening to now, day end by day end, the build's own
+ * `accrued`. So each term has its accrual replayed from its opening to now, day end by day end, the build's own
  * arithmetic in its own order, through the untagged takes under its name since it opened that no earlier term has
  * claimed. A take is its own where its gross is what the replay has built then, and the set taken is the one that leaves
  * exactly its `accrued` now: the earliest such set where two would (twins opened together and taken the same day leave
@@ -208,11 +207,13 @@ export function findTermInterest(sim: Simulation): number {
   if (!income) return 0;
   const grossOf = (t: LedgerTransaction) => -t.postings.filter((q) => q.accountId === income.id).reduce((n, q) => n + q.amount, 0);
   const claimed = new Set<string>();
-  const open = terms
-    .filter((a) => !a.closedAt && a.renewedAt === undefined && a.bankId && ACCOUNT_LIFE[a.bankId]?.interestDuringTerm && UNCLAIMED[isoOfAccount(a) ?? '']?.coolingOffDays !== undefined)
-    .sort((a, b) => a.openedAt - b.openedAt || a.id.localeCompare(b.id));
+  // Every term, oldest first. Whether it's open, which country or bank it's at, and whether it renewed aren't asked: a take
+  // is found only where the replay reproduces the term, and a closed one (holding nothing, building nothing) and one that
+  // renewed (its balance and what it had built changed then) don't, and a term no country lets be canceled reads nothing
+  // it's given. Asking them changed no outcome (each survived its mutation, 2026-10-16), and they went.
+  const inOrder = [...terms].sort((a, b) => a.openedAt - b.openedAt || a.id.localeCompare(b.id));
   let found = 0;
-  for (const term of open) {
+  for (const term of inOrder) {
     const into = (q: { accountId: string; amount: Money }) => q.amount > 0 && accounts[q.accountId]?.ownerId === term.ownerId && !accounts[q.accountId]?.nominal;
     const candidates = sim.universe.transactions.filter((t) => t.category === 'interest' && t.memo === `Interest: ${term.name}` && t.at >= term.openedAt
       && !claimed.has(t.id) && !t.postings.some((q) => termIds.has(q.accountId)) && t.postings.some(into) && grossOf(t) > 0);

@@ -514,7 +514,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       `“You’ve had N terms of leave; the Bulletin allows ${LEAVE_RULES.maxTerms} in all.”`,
       'Notice: “Its deadline has passed.”, or after a medical leave, why a physician can’t clear you yet.',
       'Register: “A financial hold stops registration: … is owed on your Yale account.”',
-      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, or “It could be bought until …”.',
+      // The bank's refusal from 2026-10-16, when Affiliate cover began to be paid from the savings beside the current account
+      // too; until then it was “Your bank can’t cover it.”, and this list left it out.
+      'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, “It could be bought until …”, or, as it’s paid in full, “Your current account and the savings beside it can pay … of it now: it’s paid in full, so move money into your current account first.” or “… have nothing to pay it with: move money into your current account first.”',
       'Appeal: “Only a leave the dean imposed can be appealed.” or “The appeal had to be in by …”.',
       'Call It Off, on a leave the dean imposed: “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing to the dean by …”.',
     ],
@@ -671,14 +673,15 @@ export const SCHOOL: readonly GuideEntry[] = [
       'On Shifts And Pay, press Ask For Conversion To Grant Aid when Convertible To Grant Aid shows hours.',
     ],
     needs: [
-      'To pay: something owed, no more than it, and a bank that can cover it.',
+      // Until 2026-10-16 the savings beside the current account counted only where linked to it.
+      'To pay: something owed, no more than it, and that much in your current account and the easy-access savings beside it, as Yale takes a payment from a checking or savings account.',
       `An aid review: ${SIX} terms enrolled, or a repeat or an additional term granted; one review a student.`,
       'Conversion: need found by Yale’s assessment, not on leave, and hours to convert.',
     ],
     costs: [
       { label: `A Term Past ${upper(SIX)}`, value: `${usd(SEVENTH.tuition)} tuition and ${usd(SEVENTH.healthPlan)} for Yale Health in ${season(SEVENTH_TERM)}, due in ${EXTENDED_STUDY.dueDays} days`, estimate: true },
       { label: 'Late Fee', value: `${usd(EXTENDED_STUDY.lateFee)} a month while it’s owed, to ${usd(EXTENDED_STUDY.lateFeeTermCap)} a term` },
-      { label: 'Paying', value: 'From your bank, at once, with no time taken' },
+      { label: 'Paying', value: 'From your current account, then the easy-access savings at its bank, at once, with no time taken' },
       { label: 'Grant Aid', value: `${usd(WORK_STUDY.hourly)} for each hour converted, up to ${WORK_LIMITS.convertibleHours} hours a year, taxed as a scholarship` },
       { label: 'Asking For Conversion', value: 'No time and no money: the grant comes at the processing it’s booked for' },
     ],
@@ -713,7 +716,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Figures here are the dollars Yale bills; the screen shows them in your save’s money.',
     ],
     unavailable: [
-      '“Your Yale account owes no balance.”, “Pay something.”, “… is owed; pay that or less.” or “Your bank can’t cover it.”',
+      // Until 2026-10-16 the last was “Your bank can’t cover it.”, said with savings at the bank that could: a payment to
+      // Yale reached savings only where linked (`fromBankToYale`, systems/leave.ts).
+      '“Your Yale account owes no balance.”, “Pay something.”, “… is owed; pay that or less.”, “Your current account and the savings beside it can pay … of it now: pay that or less, or move money into your current account first.” or “Your current account and the savings beside it have nothing to pay it with: move money into your current account first.”',
       '“Support past six terms is reviewed once a seventh is coming: you’re within the six.”',
       '“It’s with the aid office, decided by …” or “The aid office has reviewed your support.”',
       '“Conversion to grant aid is for students on financial aid, and no need was found for you.”',

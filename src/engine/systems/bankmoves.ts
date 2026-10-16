@@ -36,7 +36,7 @@ import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDays, businessDay, daysOfAccount } from '../content/bankdays';
 import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, OPENING, TRANSFERS, type Opening } from '../content/bankopening';
 import { SECURITY } from '../content/security';
-import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, endedWords, endOrdersFrom, inSaveMoney, interestTaxFor, openOne, owingWords, settleFees, settleInterest } from './banking';
+import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, openOne, owingWords, settleFees, settleInterest } from './banking';
 import { checkingAt, checkingsOf, collectionsOf, declines, overdraftInterestOf, settleOverdraftInterest, CHEX } from './lending';
 import { changeDeposits, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
 import { autopaySource, cardsOf } from './credit';
@@ -335,7 +335,7 @@ function closeNow(sim: Simulation, person: Person, account: Account, remainderTo
 /**
  * The bank closes an account it opened that was never funded, or one idle at zero past its days. Payments into it go to
  * the account kept elsewhere, as a payer re-sends a returned one (`redirectAway`); autopay from it fails until moved, and
- * says so; a standing order from it ends with it (`endOrdersFrom`, from 2026-10-16: until then it failed and said so every
+ * says so; a standing order from it ends with it (`endOrdersOf`, from 2026-10-16: until then it failed and said so every
  * month for good).
  *
  * What closing settles is worked out first (from 2026-10-16): the interest built, less its tax, against the fees closing
@@ -357,7 +357,7 @@ function closedByBank(sim: Simulation, person: Person, account: Account, why: st
   if (left < 0) return;
   if (person.primaryAccountId === account.id) person.primaryAccountId = other.id;
   redirectAway(sim, person, account.id, other.id);
-  const ended = endOrdersFrom(sim, person, account);
+  const ended = endOrdersOf(sim, person, account);
   const into = sim.universe.accounts[person.primaryAccountId ?? other.id] ?? other;
   const arrives = closeNow(sim, person, account, into);
   const sent = left > 0 ? ` Its ${formatMoney(left, saveCurrency(sim.universe))} of interest ${arrives !== undefined && arrives > sim.now ? `is on its way to ${into.name}, arriving ${formatDate(arrives, sim.zone)}` : `went to ${into.name}`}.` : '';
