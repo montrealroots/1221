@@ -1,0 +1,151 @@
+Finish SLATE’s Remaining Integration Gaps And Reconcile The Completion Evidence
+Continue the existing integration pass. Implement the remaining work; do not restart completed systems or perform another documentation-only pass.
+First verify the current remote state. At the last review, main was ef784ccd and PR #35 held the integration work on claude/peaceful-hamilton-59zdbb. These may have advanced. Preserve all existing changes and follow the repository’s instructions.
+Read the latest handoff, integration report, completion matrix, original criteria, and remaining-area results. Compare their claims against the actual code and GitHub state.
+
+1. Make Completion Reporting Accurate
+
+The handoff lists unfinished work while the completion matrix says “467 rows, none open.” Reconcile this immediately.
+A requirement being documented, classified, or assigned an owner does not make it implemented or verified.
+Use distinct statuses:
+
+* Implemented And Verified.
+* Implemented, Verification Incomplete.
+* Partially Implemented.
+* Not Implemented.
+* Blocked Externally.
+* Decision Required.
+* Explicitly Deferred.
+
+Include every known shortfall and missing test in the matrix. Show separate totals for these statuses. Do not include deferred, blocked, decision-required, or merely documented rows in the completed numerator.
+Update stale PR and merge statements using GitHub’s actual state.
+
+2. Resolve The Original Stage And Attribute Shortfalls
+
+Reproduce ST3, ST6, H4, and L3 on the current code before changing them. Preserve the original results and criteria.
+ST3 — Consistent Evaluation:
+
+* Retain full-precision calculation and final-boundary rounding.
+* Separate rounding defects from legitimate differences caused by stage demands, stamina, or execution weighting.
+* Test identical effective inputs for identical results.
+* Demonstrate why any remaining stage/camera difference exists.
+* If the original criterion demands equality while intentionally varying a relevant input, document that conflict and propose an amended criterion. Do not silently replace it or count the original as passed.
+
+ST6 — Restrained Specialists:
+
+* Investigate why the measured result remains 8/38 rather than meeting the stated target.
+* Trace individual failing cases through abilities, material, suitability, preparation, and scoring.
+* Implement justified balance or content corrections.
+* Preserve meaningful expansive acting and scene-specific demands.
+* Do not add an arbitrary restraint bonus, remove difficult cases, or manufacture a 50/50 split.
+
+H4 — Specialist Performance:
+
+* Investigate all 12 specialist profiles, including those that remain below target.
+* Distinguish missing opportunities, inappropriate benchmark assignments, and actual scoring weaknesses.
+* Add justified in-scope material and development paths for underrepresented strengths, including presence, discipline, and stamina where appropriate.
+* Specialists should have meaningful advantages on fitting work without making every attribute equally powerful in every scene.
+* Preserve the original H4 result alongside any proposed replacement.
+
+L3 — Long-Term Progress:
+
+* Compare the same work, interpretation, preparation, and conditions at earlier and later ability levels.
+* Separately report the changing mix and difficulty of work attempted during the term.
+* Fix unintended regression.
+* Do not force rising average scores by preventing students from attempting harder material.
+* Retain both the original journey metric and controlled progress measurements.
+
+I authorize evidence-based implementation and balance improvements within the current scope. I do not authorize silently weakening acceptance criteria. If a genuine design contradiction remains, finish every unblocked item and present the exact decision, evidence, and recommended resolution.
+
+3. Finish Genre Variation Where It Is Too Thin
+
+Audit the 54 genres whose two briefs currently favor identical sides across all interpretation axes.
+Matching preferences alone do not prove identical gameplay. Compare their actual:
+
+* Dramatic circumstances.
+* Objectives and obstacles.
+* Technique demands.
+* Preparation actions.
+* Valid interpretations.
+* Feedback and consequences.
+
+Where two briefs are substantively repetitive, revise or expand them with genre-appropriate, original material. Create meaningful differences that the engine reads—not renamed descriptions.
+Preserve genre identity. Do not force a genre to favor an unsuitable acting style merely to make a variation statistic pass.
+Provide a per-genre before-and-after table showing what changed, what the engine now reads differently, and the verification evidence. Explain any retained matching preferences.
+Re-run genre differentiation, mastery, cross-genre isolation, and fresh held-out validation after relevant changes.
+
+4. Complete The Remaining Banking Behavior
+
+Resolve the documented German account-closing fee-proration issue:
+
+* Verify the applicable rule and affected account terms using authoritative sources.
+* Implement the appropriate partial-period calculation.
+* Reconcile fees already collected, accrued charges, and refunds where applicable.
+* Use precise monetary arithmetic and balanced ledger entries.
+* Show the amount and explanation before confirmation.
+* Verify month boundaries, leap years, closing dates, insufficient funds, repeat attempts, and save/load.
+
+Audit the remaining banking decision rows individually. Implement objectively supported requirements already covered by my realism brief. Do not use “owner decision” to postpone routine implementation.
+Where there is a genuine product choice, inconsistent source evidence, or an external dependency, state exactly what is missing and why it cannot be resolved from the existing instructions.
+
+5. Close The Specific Coverage And Test Gaps
+
+* Add complete audit entries for the nine commands currently traced outside the audit, using their actual command IDs.
+* Include the brief, workbook, interpretation, and life.look_after paths.
+* Exercise health.request_hardship’s renewal branch through normal gameplay, including persistence and the resulting decision.
+* Review all 13 unresolved coverage rows and resolve every implementable in-scope requirement.
+* Preserve explicit deferrals separately; do not restore removed systems.
+* Integrate completion-matrix validation into the required verification workflow and update the documented check count consistently, subject to applicable repository rules.
+
+The matrix checker must validate status consistency and required evidence—not merely that a referenced file exists. Stale evidence from unrelated code must not establish current verification.
+
+6. Finish School, Money, And Papers As Connected Journeys
+
+Review the six areas’ completed changes for remaining holes across their boundaries.
+Verify complete player journeys involving:
+
+* School requirements, preparation, attendance, missed work, revisions, warnings, evaluations, and progression.
+* Payments, pending funds, fees, account restrictions, closures, and recovery.
+* Required documents, applications, verification, expiration, correction, and renewal where supported by the current game.
+* Health eligibility and billing where they affect retained school or financial systems.
+
+Every exposed action must validate relevant state, change the correct state, trigger appropriate consequences, explain the result, and survive save/load.
+Remove placeholders, misleading controls, stale forecasts, and dead ends. Explain legitimate restrictions and the available next step.
+Do not create arbitrary effects simply to claim everything “bites.” Each mechanic must produce consequences appropriate to its purpose. No advertised functionality may exist only as decorative text.
+
+7. Verify The Final Integrated Code
+
+For every defect, add a regression test that fails when the defective behavior is restored.
+During development, use targeted tests. Once changes are integrated, run:
+
+* The full required gate and production build.
+* Regenerated scenario saves.
+* Built-app desktop and mobile acceptance.
+* Relevant full school and financial/document journeys.
+* Mastery through normal game commands.
+* Specialist/generalist balance tests.
+* Fresh genre validation.
+* Persistence, migration, duplicate-action, and interrupted-operation checks.
+* Long-run continuity and ledger/invariant checks.
+
+Keep tests deterministic where appropriate and record seeds for simulations.
+Do not weaken assertions, skip failing cases, or alter expected outputs solely to make the suite green. Investigate each failure and retain evidence of its cause.
+Identify the exact tested source commit. If gameplay code changes afterward, rerun the affected verification and required final gate before claiming completion.
+
+8. Deliver A Truthful Close-Out
+
+Provide:
+
+* Every requirement’s final status.
+* Original versus final ST3, ST6, H4, and L3 results.
+* Proposed criteria changes clearly separated from approved criteria.
+* Genre-variation findings and changes.
+* Banking-proration evidence.
+* Results for the nine audit entries, hardship renewal, and all 13 unresolved rows.
+* Test commands, commit IDs, exit codes, counts, and observed failures.
+* Any remaining external blocker or genuine design decision.
+* An updated handoff and accurate PR description.
+
+Continue until every implementable in-scope item is complete and verified. If a genuine blocker remains, complete all independent work before reporting it; do not fabricate a passing result.
+Commit and push the finished work to the appropriate branch and update the existing PR when applicable. Follow the established merge and deployment authorization rules.
+My intended outcome remains the same: deep, coherent attributes and genres, complete current school/money/papers journeys, meaningful downstream effects, accurate tutorials, persistent continuity, and evidence supporting every completion claim.
