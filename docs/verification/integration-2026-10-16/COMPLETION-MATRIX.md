@@ -15,27 +15,28 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 
 ## Totals
 
-| Group | Rows | Deferred | Implemented | Informational | Legacy | Met | Not Met | Open | Partial | Superseded | Unresolved | Verified |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Life, Health And Time | 67 | 1 |  |  |  |  |  |  | 1 |  |  | 65 |
-| Money | 68 |  |  |  |  |  |  |  |  |  | 9 | 59 |
-| Papers | 51 | 14 |  |  | 2 |  |  |  |  |  | 5 | 30 |
-| School | 71 |  |  |  |  |  |  |  |  |  |  | 71 |
-| Creation, Profile, Home And The Looks | 71 | 1 |  | 8 | 1 |  |  |  | 1 |  |  | 60 |
-| Commands Traced Outside The Audit | 9 |  | 9 |  |  |  |  |  |  |  |  |  |
-| Remaining Area: banking | 16 |  |  |  |  |  |  | 16 |  |  |  |  |
-| Remaining Area: health-billing | 3 |  |  |  |  |  |  | 3 |  |  |  |  |
-| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  | 7 |  |  |  |  |
-| Remaining Area: school | 10 |  |  |  |  |  |  | 10 |  |  |  |  |
-| Remaining Area: tax | 18 |  |  |  |  |  |  | 18 |  |  |  |  |
-| Criteria: The Stage | 11 |  |  |  |  | 9 | 2 |  |  |  |  |  |
-| Criteria: Interpretation | 5 |  |  |  |  | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 |  |  |  |  | 21 | 2 | 1 |  | 1 |  |  |
-| Criteria: Long-Term Continuity | 3 |  |  |  |  | 2 | 1 |  |  |  |  |  |
-| Criteria: Mastery Through Play | 8 |  |  |  |  | 6 |  | 2 |  |  |  |  |
-| Criteria: The Genres | 5 |  |  |  |  | 5 |  |  |  |  |  |  |
-| Integration | 9 |  |  |  |  | 4 |  | 5 |  |  |  |  |
-| **All** | **457** | **16** | **9** | **8** | **3** | **52** | **5** | **62** | **2** | **1** | **14** | **285** |
+| Group | Rows | Deferred | Implemented | Implemented But Unverified | Informational | Legacy | Met | Not Met | Open | Owner's Decision | Partial | Superseded | Unresolved | Verified |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Life, Health And Time | 67 | 1 |  |  |  |  |  |  |  |  | 1 |  |  | 65 |
+| Money | 68 |  |  |  |  |  |  |  |  |  |  |  | 9 | 59 |
+| Papers | 51 | 14 |  |  |  | 2 |  |  |  |  |  |  | 5 | 30 |
+| School | 71 |  |  |  |  |  |  |  |  |  |  |  |  | 71 |
+| Creation, Profile, Home And The Looks | 71 | 1 |  |  | 8 | 1 |  |  |  |  | 1 |  |  | 60 |
+| Commands Traced Outside The Audit | 11 |  | 9 | 2 |  |  |  |  |  |  |  |  |  |  |
+| Remaining Area: banking | 16 |  |  |  |  |  |  |  |  | 1 |  |  |  | 15 |
+| Remaining Area: coverage | 7 |  |  |  |  |  |  |  | 7 |  |  |  |  |  |
+| Remaining Area: health-billing | 3 |  |  |  |  |  |  |  |  |  |  |  |  | 3 |
+| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  |  |  |  |  |  |  | 7 |
+| Remaining Area: school | 10 |  |  |  |  |  |  |  |  |  |  |  |  | 10 |
+| Remaining Area: tax | 18 |  |  |  |  |  |  |  |  |  |  |  |  | 18 |
+| Criteria: The Stage | 11 |  |  |  |  |  | 9 | 2 |  |  |  |  |  |  |
+| Criteria: Interpretation | 5 |  |  |  |  |  | 5 |  |  |  |  |  |  |  |
+| Criteria: The Attributes | 25 |  |  |  |  |  | 21 | 2 | 1 |  |  | 1 |  |  |
+| Criteria: Long-Term Continuity | 3 |  |  |  |  |  | 2 | 1 |  |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 |  |  |  |  |  | 6 |  | 2 |  |  |  |  |  |
+| Criteria: The Genres | 5 |  |  |  |  |  | 5 |  |  |  |  |  |  |  |
+| Integration | 9 |  |  |  |  |  | 4 |  | 5 |  |  |  |  |  |
+| **All** | **466** | **16** | **9** | **2** | **8** | **3** | **52** | **5** | **15** | **1** | **2** | **1** | **14** | **338** |
 
 ## Life, Health And Time
 
@@ -397,6 +398,8 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `brief.choose` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / A Reading And A Way To Play It (`… | Implemented | `brief.choose`: `tests/attributes-complete.test.ts`, `tests/briefs.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.… |
 | `brief.prepare` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Preparing A Brief (`craft.brief-p… | Implemented | `brief.prepare`: `tests/briefs.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.… |
 | `brief.reader` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Who Reads With You (`craft.brief-… | Implemented | `brief.reader`: `tests/defects-g31-1.test.ts`, `tests/determinism-played.test.ts`, `tests/ensemble.test.ts`, `tests/guide-examples-craft.test.ts` / 5 test files |
+| `health.apply` | Not recorded | Implemented But Unverified | 1 test files |
+| `health.request_hardship` | Not recorded | Implemented But Unverified | 1 test files |
 | `life.look_after` | Eat, order in, shower, work out or unwind, each for its time | Implemented | 39 test files / journey-life.test.ts |
 | `school.choose_part_playing` | Choose how to play a class scene or a part you’re cast in: its pace, scale and structure / How You’ll Play A Part (`productions.playing`) | Implemented | `school.choose_part_playing`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-12.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-productions.te… |
 | `school.choose_playing` | Choose how to play a class scene or a part you’re cast in: its pace, scale and structure / How You’ll Play A Scene (`coursework.playing`) | Implemented | `school.choose_playing`: `tests/defects-g8-10.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/trace-commands.test.ts… |
@@ -408,80 +411,92 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `banking.1` | A bank closing an idle German account at zero (closedByBank and the dormancy/idle path): it can go negative from fees on closing; make the … | Open | tests/remaining-banking.test.ts: GUARD: a German bank given a zero-close rule (TEST SETUP) with fees due isn't closed into a negative, its fees post at the qua… |
-| `banking.1.overdraft-interest` | Found on the way (2026-10-16, before any change): overdraft interest built in the month is dropped by every close, so a closure erases that… | Open | tests/remaining-banking.test.ts: a home account abroad overdrawn, paid back and closed before the 1st is charged the interest built, worked by hand from the ba… |
-| `banking.1.standing-orders` | Found on the way: a standing order from an account the bank closed on its own fails every month for good, and says so every month. | Open | tests/remaining-banking.test.ts PLAYER JOURNEY: a New Haven student's order from Capital One's account ends at its close, said once in the notice, and no “A St… |
-| `banking.1.pro-rata` | Found on the way: Germany's month's fee is charged whole on any closing. | Open | The finding, the rule and the options in banking-result.json; nothing changed. |
-| `banking.2` | Interest withdrawn from a term deposit before 2026-10-15 (Take Interest) isn't found when the term is canceled in its cooling-off period. | Open | tests/remaining-banking.test.ts: TEST SETUP older saves (Berlin quickSave lives, labelled FIXTURE, written as that build wrote them and opened through loadSave… |
-| `banking.s7.opening` | Account opening, eligibility, required documents, and verification. | Open | Existing: tests/bank-moves.test.ts, tests/scope-money.test.ts (switch to Citi refused for a photo ID, then steps), tests/evidence-g14-money.test.ts (the openin… |
-| `banking.s7.ownership` | Existing account ownership and retention. | Open | Existing: tests/home-account-creation.test.ts, tests/home-account-abroad.test.ts, tests/home-account-idle.test.ts, tests/home-account-screens.test.ts, tests/ho… |
-| `banking.s7.switching` | Switching banks without silently replacing existing accounts. | Open | Existing: tests/scope-money.test.ts bank.switch (New Haven refused with the steps; CASS on fixtures), tests/bank-moves.test.ts, tests/defects5.test.ts. |
-| `banking.s7.closure` | Account closure, remaining balances, pending activity, and obligations. | Open | Existing: tests/evidence2-b05.test.ts (the refusals: money on its way, card payments pending), tests/bank-moves.test.ts, tests/scope-money.test.ts bank.close_c… |
-| `banking.s7.funds` | Available, pending, and posted funds. | Open | Existing: tests/pending.test.ts, tests/defects-g13-1.test.ts and tests/defects-r5-2.test.ts (Money In Transit). New: PLAYER JOURNEY in tests/remaining-banking.… |
-| `banking.s7.transfers` | Transfers, settlement times, fees, currencies, exchange rates, and rounding. | Open | Existing: tests/home-account-transfers.test.ts, tests/bankdays.test.ts, tests/bank-moves.test.ts, tests/home-account-ledger.test.ts. New: Move Money pressed tw… |
-| `banking.s7.rejections` | Rejections, failed transfers, reversals, and duplicate submissions. | Open | Existing: tests/bank-moves.test.ts (“A Transfer Came Back”, turned down), tests/evidence2-b05.test.ts, tests/payments.test.ts, tests/defects-g16-1.test.ts. |
-| `banking.s7.statements` | Statements, transaction history, and explanations. | Open | Existing: tests/statements.test.ts, tests/coverage-gaps-statements.test.ts, tests/statements-hardship.test.ts, tests/home-account-screens.test.ts. |
-| `banking.s7.features` | Existing interest, overdraft, card, loan, or other account features. | Open | Existing: tests/lending.test.ts, tests/banking.test.ts, tests/cards.test.ts, tests/cardlife.test.ts, tests/money-plan-interest.test.ts, tests/scope-money.test.… |
-| `banking.s7.school` | School payments and other retained financial obligations. | Open | tests/remaining-banking.test.ts PLAYER JOURNEY: the Comfortable student pays $20,000.00 from checking and savings, the hold lifts where it was one, the ledger … |
-| `banking.s7.holds` | Holds or restrictions and legitimate recovery paths. | Open | Existing: tests/accountlife.test.ts, tests/evidence-g12-money.test.ts (reactivate, card lock), tests/arrears.test.ts (collections, second chance), tests/financ… |
+| `banking.1` | A bank closing an idle German account at zero (closedByBank and the dormancy/idle path): it can go negative from fees on closing; make the … | Verified | tests/remaining-banking.test.ts ‘banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero b… |
+| `banking.1.overdraft-interest` | Found on the way (2026-10-16, before any change): overdraft interest built in the month is dropped by every close, so a closure erases that… | Verified | tests/remaining-banking.test.ts ‘banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5… |
+| `banking.1.standing-orders` | Found on the way: a standing order from an account the bank closed on its own fails every month for good, and says so every month. | Verified | tests/remaining-banking.test.ts ‘banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Che… |
+| `banking.1.pro-rata` | Found on the way: Germany's month's fee is charged whole on any closing. | Owner's Decision | The finding, the rule and the options in banking-result.json; nothing changed. |
+| `banking.2` | Interest withdrawn from a term deposit before 2026-10-15 (Take Interest) isn't found when the term is canceled in its cooling-off period. | Verified | tests/remaining-banking.test.ts ‘banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche B… |
+| `banking.s7.opening` | Account opening, eligibility, required documents, and verification. | Verified | tests/remaining-banking.test.ts ‘banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: the panel that opens an account at anoth… |
+| `banking.s7.ownership` | Existing account ownership and retention. | Verified | tests/home-account-creation.test.ts ‘names a real bank in each entry, in its country, with a source, and maps retention to what the bank does’ (static); tests/… |
+| `banking.s7.switching` | Switching banks without silently replacing existing accounts. | Verified | tests/bank-moves.test.ts ‘runs no switch: there is no US switching service, and the screen gives the steps instead’ (command); tests/bank-moves.test.ts ‘moves … |
+| `banking.s7.closure` | Account closure, remaining balances, pending activity, and obligations. | Verified | tests/remaining-banking.test.ts ‘banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5… |
+| `banking.s7.funds` | Available, pending, and posted funds. | Verified | tests/remaining-banking.test.ts ‘banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account … |
+| `banking.s7.transfers` | Transfers, settlement times, fees, currencies, exchange rates, and rounding. | Verified | tests/remaining-banking.test.ts ‘banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: Move Money with $25 typed, pressed once,… |
+| `banking.s7.rejections` | Rejections, failed transfers, reversals, and duplicate submissions. | Verified | tests/remaining-banking.test.ts ‘banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account … |
+| `banking.s7.statements` | Statements, transaction history, and explanations. | Verified | tests/statements.test.ts ‘open at the balance before them, and each carries the balance after it, to the balance now’ (unit); tests/statements.test.ts ‘run a q… |
+| `banking.s7.features` | Existing interest, overdraft, card, loan, or other account features. | Verified | tests/lending.test.ts ‘sets off only what savings there needs to give, and charges off the rest’ (clock); tests/remaining-banking.test.ts ‘banking.1: a bank’s … |
+| `banking.s7.school` | School payments and other retained financial obligations. | Verified | tests/remaining-banking.test.ts ‘banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable … |
+| `banking.s7.holds` | Holds or restrictions and legitimate recovery paths. | Verified | tests/arrears.test.ts ‘reports a US charge-off to ChexSystems, and most banks turn the report away for five years, fewer once it’s paid’ (clock); tests/defects… |
+
+## Remaining Area: coverage
+
+| Row | Goal | Status | Evidence |
+|---|---|---|---|
+| `coverage.1-separate-totals` | Separate totals (the brief's item 1): a per-row evidence class written by the pipeline into each audit row, a second table on docs/GAMEPLAY… | Open | static (tools): `node tools/coverage.mjs --check` exits 0 on the regenerated audit and prints the class totals; the class table's rows add to 328 and each stat… |
+| `coverage.2-i-stale-claims` | i-stale-claims (the brief's item 2): the `static` evidence kind defined on the page with its standard (reaches the text the claim is about,… | Open | static: coverage.mjs --check exits 0 with i-stale-claims verified, class static; it fails, in a copy, when (a) an example quoted in classes.json is altered so … |
+| `coverage.3-unresolved-rows` | The 14 unresolved rows (the brief's item 3): each row's words distinguish current Yale-player acceptance (unreachable, and why), retained e… | Open | static: coverage.mjs --check fails an engine-class row whose acceptance lacks any of the four parts; each test the engine part names lands (title in its file),… |
+| `coverage.4-fold-areas` | This pass's areas folded in (the brief's item 4): a fold step that reads every docs/verification/remaining/*-result.json present (rowText i… | Open | command (node): the pipeline, run twice in the README's order in the tree, reproduces itself byte for byte on a third run (nothing changes); the committed hand… |
+| `coverage.d-renames-chain` | Defect found on the way: a test renamed twice isn't followed to its last name. | Open | command (node): regenerated in the copy, c-performerTitle's title is 'Frau Bergmann' and coverage.mjs reports nothing for it; with the one-step lookup restored… |
+| `coverage.d-fixture-kind` | Defect found on the way: a test labelled FIXTURE or GUARD is recorded as a command or a render. | Open | static: coverage.mjs --check exits 0 with the kinds corrected (no verified row loses its holding evidence); the evidence-by-kind table's fixture count rises by… |
+| `coverage.d-evidence-cell` | Defect found on the way: the Evidence column says every round's test was 'added 2026-10-13'. | Open | static: the regenerated page's Evidence cells say it; coverage.mjs --check exits 0. |
 
 ## Remaining Area: health-billing
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `health-billing.1-reprice-plan-part` | `repriceCare`'s insurer portion (planPaid, near health.ts:1530) doesn't match its documented intent: find exactly how, decide what's right,… | Open | tests/remaining-health-billing.test.ts: (1) PLAYER JOURNEY: a Yale Health emergency in the fall's first week (TEST SETUP: the week's draw forced), then school.… |
-| `health-billing.2-husky-d-kept-through-work` | health.enroll's remaining evidence gap: HUSKY D kept at renewal through work, on a FIXTURE (wages posted by hand for the look-back the elig… | Open | tests/remaining-health-billing.test.ts, FIXTURE + clock + reload, dates and the six months worked by hand. |
-| `health-billing.3-insured-paths-trace` | Trace verification, with tests, for the insured paths: Eligibility → Application → Approval → Effective Coverage → Appointment → Bill → Pat… | Open | tests/remaining-health-billing.test.ts, PLAYER JOURNEY for each cover, render + command + clock + reload + jump-vs-steps. |
+| `health-billing.1-reprice-plan-part` | `repriceCare`'s insurer portion (planPaid, near health.ts:1530) doesn't match its documented intent: find exactly how, decide what's right,… | Verified | tests/remaining-health-billing.test.ts ‘PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the co… |
+| `health-billing.2-husky-d-kept-through-work` | health.enroll's remaining evidence gap: HUSKY D kept at renewal through work, on a FIXTURE (wages posted by hand for the look-back the elig… | Verified | tests/remaining-health-billing.test.ts ‘FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September… |
+| `health-billing.3-insured-paths-trace` | Trace verification, with tests, for the insured paths: Eligibility → Application → Approval → Effective Coverage → Appointment → Bill → Pat… | Verified | tests/remaining-health-billing.test.ts ‘PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks F… |
 
 ## Remaining Area: health-eligibility
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `health-eligibility.1-covered-ct-status-barred` | Covered Connecticut eligibility for a noncitizen at 100–138% of the poverty line who is barred from HUSKY D by immigration status | Open | tests/remaining-health-eligibility.test.ts: FIXTURE (an F-1 student's status kept past her grace and a month's income set by hand, as tests/scope-cover.test.ts… |
-| `health-eligibility.2-work-exemptions` | Work-test exemptions (Pub. L. 119-21 §71119: mandatory and optional exceptions and the specified excluded individuals), applied before deni… | Open | tests/remaining-health-eligibility.test.ts: (a) PLAYER JOURNEY: a life born in 1960 (66), withdrawn, applies in January 2027 with no work and is given HUSKY D;… |
-| `health-eligibility.3-notice-and-response` | Required notice and response periods: §71119's notice of noncompliance and 30 days to show compliance before denial or disenrollment; the a… | Open | tests/remaining-health-eligibility.test.ts: PLAYER JOURNEY renewal on the clock: notice on 1 November 2027 00:30; covered on 30 November and 5 December; decisi… |
-| `health-eligibility.4-look-back` | The look-back at application and renewal: Connecticut's chosen period, applied at each | Open | tests/remaining-health-eligibility.test.ts: renewal on 1 November 2027 with work in June 2027 only (TEST SETUP: wages posted by hand, which no withdrawn life h… |
-| `health-eligibility.5-f1-premium-credit-2026` | Whether a nonresident-alien F-1 student qualifies for advance premium tax credits in 2026; what the engine should do in 2026 (the marketpla… | Open | tests/remaining-health-eligibility.test.ts: FIXTURE (a 2026 year's record set by hand: no played F-1 life pays marketplace premiums in 2026, her status ending … |
-| `health-eligibility.6-work-test-income` | FOUND ON THE WAY: the work test's $580 a month is MAGI-based monthly income, not wages alone | Open | tests/remaining-health-eligibility.test.ts: PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at Capital One set on 30 November 2026 to $365,000 so D… |
-| `health-eligibility.7-renewal-and-decision-notices` | FOUND ON THE WAY: a renewal kept says nothing, and every renewal's decision must be said (with what it read) | Open | tests/remaining-health-billing.test.ts (item health-billing.2) and remaining-health-eligibility.test.ts: the kept renewal's notice once, across a reload. |
+| `health-eligibility.1-covered-ct-status-barred` | Covered Connecticut eligibility for a noncitizen at 100–138% of the poverty line who is barred from HUSKY D by immigration status | Verified | tests/remaining-health-eligibility.test.ts ‘FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from… |
+| `health-eligibility.2-work-exemptions` | Work-test exemptions (Pub. L. 119-21 §71119: mandatory and optional exceptions and the specified excluded individuals), applied before deni… | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a student born in 1960, 66, withdrawn, is given HUSKY D on 4 January 2027 with no work, as the rule… |
+| `health-eligibility.3-notice-and-response` | Required notice and response periods: §71119's notice of noncompliance and 30 days to show compliance before denial or disenrollment; the a… | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a… |
+| `health-eligibility.4-look-back` | The look-back at application and renewal: Connecticut's chosen period, applied at each | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same… |
+| `health-eligibility.5-f1-premium-credit-2026` | Whether a nonresident-alien F-1 student qualifies for advance premium tax credits in 2026; what the engine should do in 2026 (the marketpla… | Verified | tests/remaining-health-eligibility.test.ts ‘FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 104… |
+| `health-eligibility.6-work-test-income` | FOUND ON THE WAY: the work test's $580 a month is MAGI-based monthly income, not wages alone | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given… |
+| `health-eligibility.7-renewal-and-decision-notices` | FOUND ON THE WAY: a renewal kept says nothing, and every renewal's decision must be said (with what it read) | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same… |
 
 ## Remaining Area: school
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `school.repeat-room-leave` | `repeatRoom`’s leave branch (src/engine/systems/school.ts) | Open | tests/remaining-school.test.ts PLAYER JOURNEY (command, clock, render): the Incompletes extended past the leave’s start become Permanent on 9 February 2027 dur… |
-| `school.unreached-refusals` | Every other control or refusal in the school system that no current player journey reaches | Open | tests/remaining-school.test.ts “school.unreached-refusals” describe: each inventory row its assertion of the exact words and that nothing moved (clock, ledger,… |
-| `school.d-appeal-before-begun` | Defect found by school.unreached-refusals: a dean’s leave granted for the next term | Open | tests/remaining-school.test.ts DEFECT (command, clock, render): the played chain to the dean’s leave from Spring Term 2027; the panel draws Appeal To The Dean … |
-| `school.continuity` | School continuity across leave, return, repeated terms, failures, extra terms, graduation decisions and reloads | Open | tests/remaining-school.test.ts PLAYER JOURNEY (A) and (B), each a straight twin against a reloaded twin. |
-| `school.s6.missed-term` | The missed-work term (the brief’s section 6; sweep-2026-10-16 “Left Open”) | Open | tests/remaining-school-term.test.ts PLAYER JOURNEY (command, clock, render, reload).; Mutations: TERM_CHECK.after 6 → 5; termTally without notShown; the revisi… |
-| `school.d-coursework-shown` | Defects found by school.s6.missed-term: a missed revision and the review’s coursework count shown nowhere | Open | tests/remaining-school-term.test.ts DEFECT (render): Work Shown reads “Not Shown Again” for the missed revision; the Standing tile and the Evaluations row read… |
-| `school.s6.journey` | From creation to the endpoint: every school system the brief names, where it’s implemented and tested, and connections missing | Open | the result’s journey map, each line citing implementation and test; the continuity journeys |
-| `school.s6.policy` | Yale’s policy against SLATE’s design | Open | tests/remaining-school.test.ts static/render: the corrected sentences read as corrected (guide entries rendered from the engine’s guide data). |
-| `school.s6.dead-ends` | No dead-end warning | Open | tests/remaining-school.test.ts PLAYER JOURNEY: the second fall’s Fail after a repeat names the additional term, and at the last year’s end Ask For An Additiona… |
-| `school.d-not-registered-hold` | Defect found by school.s6.dead-ends (added 2026-10-16 before its fix): the Not Registered notice under a financial hold | Open | tests/remaining-school.test.ts DEFECT (clock, command): the Clown journey left unpaid to Spring Term 2030’s first class: the notice names the hold and the sum;… |
+| `school.repeat-room-leave` | `repeatRoom`’s leave branch (src/engine/systems/school.ts) | Verified | tests/remaining-school.test.ts ‘school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: Incompletes extended past a medical leave’s start run o… |
+| `school.unreached-refusals` | Every other control or refusal in the school system that no current player journey reaches | Verified | tests/remaining-school.test.ts ‘school.unreached-refusals: each refusal no test reached, reached’ (command, clock, render, guard) |
+| `school.d-appeal-before-begun` | Defect found by school.unreached-refusals: a dean’s leave granted for the next term | Verified | tests/remaining-school.test.ts ‘school.d-appeal-before-begun: a dean’s leave granted from the next term > DEFECT: its panel draws Appeal To The Dean and no Cal… |
+| `school.continuity` | School continuity across leave, return, repeated terms, failures, extra terms, graduation decisions and reloads | Verified | tests/remaining-school.test.ts ‘school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads > PLAYER JOURNEY (… |
+| `school.s6.missed-term` | The missed-work term (the brief’s section 6; sweep-2026-10-16 “Left Open”) | Verified | tests/remaining-school-term.test.ts ‘the missed-work term, played > PLAYER JOURNEY: two pieces missed unexcused, a revision missed and the pieces after shown: … |
+| `school.d-coursework-shown` | Defects found by school.s6.missed-term: a missed revision and the review’s coursework count shown nowhere | Verified | tests/remaining-school-term.test.ts ‘the missed-work term, on the screen > DEFECT: after the first miss, every Shown Today line is an open piece’s, the missed … |
+| `school.s6.journey` | From creation to the endpoint: every school system the brief names, where it’s implemented and tested, and connections missing | Verified | tests/remaining-school.test.ts ‘school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads’ (command, clock, … |
+| `school.s6.policy` | Yale’s policy against SLATE’s design | Verified | tests/remaining-school.test.ts ‘school.s6.policy: SLATE’s design not presented as Yale’s policy, nor its simulated staff as real > the guide says whose each ru… |
+| `school.s6.dead-ends` | No dead-end warning | Verified | tests/remaining-school.test.ts ‘school.s6.dead-ends: … > PLAYER JOURNEY: a second fall’s Fail after the first year’s repeat can’t be repeated for, and its noti… |
+| `school.d-not-registered-hold` | Defect found by school.s6.dead-ends (added 2026-10-16 before its fix): the Not Registered notice under a financial hold | Verified | tests/remaining-school.test.ts ‘school.d-not-registered-hold: a term begun under a financial hold > DEFECT: the Not Registered notice names the hold, the sum o… |
 
 ## Remaining Area: tax
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `tax.early_filing_notices` | IRS correspondence arriving before the payment due date after an early filing (taxreturn.ts armCollection / nextNotice, COLLECTION.noticeWe… | Open | tests/remaining-tax.test.ts PLAYER JOURNEY (clock, render, command): the Scraping family's 2027 return filed on Papers on 1 February 2028 unpaid: Notice CP14 a… |
-| `tax.ct_filed_in_error` | Connecticut's “filed in error” control (Papers, a state lien panel: Ask For Its Withdrawal As Filed In Error, tax.lien_dispute) | Open | tests/remaining-tax.test.ts PLAYER JOURNEY (render, command, clock): the Scraping family's 2027 Connecticut lien, filed by the clock at the notice of intent: P… |
-| `tax.amend` | tax.amend (unresolved row): Amend The Return on a filed year | Open | tests/remaining-tax.test.ts FIXTURE (command, clock): more tax on a 1040-X, its interest the hand-worked figure, owed added, one processed notice, across a rel… |
-| `tax.catch_up_state_plan` | tax.catch_up_state_plan (unresolved row): a state plan's Catch Up | Open | tests/remaining-tax.test.ts FIXTURE (render, command, clock): New York's plan missed, Catch Up drawn and pressed, active past endsBy, the next payment taken, a… |
-| `tax.lien_dispute` | tax.lien_dispute (unresolved row): Ask For Its Withdrawal As Filed In Error | Open | The tests named under tax.ct_filed_in_error |
-| `tax.federal_lien_withdraw` | tax.federal_lien_withdraw (unresolved row): the IRS lien panel's Withdraw / Release As Erroneous | Open | tests/remaining-tax.test.ts FIXTURE (render, command, clock): the erroneous lien released as erroneous in 14 days through the rendered button, its notice once,… |
-| `tax.request_waiver` | tax.request_waiver (unresolved row): Oregon's three-year penalty waiver | Open | tests/remaining-tax.test.ts FIXTURE (command): 70% before any notice, 50% after a demand, worked by hand; FIXTURE (command): a penalty partly paid then waived:… |
-| `tax.other_refusals` | Every other tax/papers control or refusal no current player journey reaches (taxreturn.ts, statetax.ts, taxid.ts, PapersWorkspace.tsx) | Open | tests/remaining-tax.test.ts GUARD: tests, one per guard above, each with nothing moved; The played refusals stay cited where tests/scope-taxpapers.test.ts and … |
-| `tax.s8.inventory` | What Papers contains (the owner's brief, section 8): the Papers screen and the documents system | Open | tests/remaining-papers.test.ts PLAYER JOURNEY (render, command): a London-born student's Papers lists her passport and F-1; each read by the SSA and the DMV as… |
-| `tax.s8.passport` | The passport's lifecycle: eligibility, application, fee and time, issue and term, renewal, loss and replacement, and what a missing or expi… | Open | tests/remaining-papers.test.ts PLAYER JOURNEY (render, command, clock): a London-born student's Renew It on Papers charges £116.50 in dollars, no Faster drawn … |
-| `tax.s8.idcard` | The state ID card's lifecycle (Connecticut's non-driver identification card) and the documents it requires | Open | tests/remaining-papers.test.ts PLAYER JOURNEY (render, command, clock): a London-born student's number come, her passport reported lost on Papers: Get Non-Driv… |
-| `tax.s8.f1_status` | The F-1 student visa and status: issue, term, grace, end, and what reads it | Open | Existing verified rows' tests (documents.us_status, documents.permission, documents.opt_week); tests/remaining-papers.test.ts: the F-1 read by the DMV and the … |
-| `tax.s8.ssn` | The Social Security number: eligibility, application, card, and readers | Open | tests/scope-taxpapers.test.ts documents.apply_ssn journeys; tests/evidence-g17-papers.test.ts; GUARD tests in tests/remaining-tax.test.ts |
-| `tax.s8.opt` | OPT (Form I-765, the EAD): window, fee, decision, term, days without work, status | Open | Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV |
-| `tax.s8.license` | A driving license held from before (identity only since the scope reset) | Open | Existing verified rows' tests (documents.replace_license, documents.report_lost) |
-| `tax.s8.visas_authorizations` | Visas and travel authorizations, and Going Abroad | Open | tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading) |
-| `tax.s8.residence_naturalization` | Residence abroad and naturalization (Residence Abroad on Permission To Work) | Open | The deferred rows as they stand |
-| `tax.s8.jurisdiction` | Jurisdiction: US federal (USCIS, SSA, IRS, State), Connecticut (DMV, DRS), the home country's office; real requirements apart from SLATE's … | Open | docs/verification/remaining/tax-result.json sources and assumptions per item |
+| `tax.early_filing_notices` | IRS correspondence arriving before the payment due date after an early filing (taxreturn.ts armCollection / nextNotice, COLLECTION.noticeWe… | Verified | tests/remaining-tax.test.ts ‘PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the d… |
+| `tax.ct_filed_in_error` | Connecticut's “filed in error” control (Papers, a state lien panel: Ask For Its Withdrawal As Filed In Error, tax.lien_dispute) | Verified | tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Fil… |
+| `tax.amend` | tax.amend (unresolved row): Amend The Return on a filed year | Verified | tests/remaining-tax.test.ts ‘tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July… |
+| `tax.catch_up_state_plan` | tax.catch_up_state_plan (unresolved row): a state plan's Catch Up | Verified | tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed: the plan in force past the day it would have ended, its next pa… |
+| `tax.lien_dispute` | tax.lien_dispute (unresolved row): Ask For Its Withdrawal As Filed In Error | Verified | tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Fil… |
+| `tax.federal_lien_withdraw` | tax.federal_lien_withdraw (unresolved row): the IRS lien panel's Withdraw / Release As Erroneous | Verified | tests/remaining-tax.test.ts ‘tax.federal_lien_withdraw (FIXTURE: a New York quick-save owing over $10,000) > FIXTURE: the IRS’s own return assessed for a year … |
+| `tax.request_waiver` | tax.request_waiver (unresolved row): Oregon's three-year penalty waiver | Verified | tests/remaining-tax.test.ts ‘tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: her own 2001 return filed before any notice, p… |
+| `tax.other_refusals` | Every other tax/papers control or refusal no current player journey reaches (taxreturn.ts, statetax.ts, taxid.ts, PapersWorkspace.tsx) | Verified | tests/remaining-tax.test.ts ‘GUARD: a return filed twice, a year with no return, and one not filed amended: refused in their words, nothing moved, no second bi… |
+| `tax.s8.inventory` | What Papers contains (the owner's brief, section 8): the Papers screen and the documents system | Verified | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: a London-born student’s papers are her passport and her F-1; the Social Security office, a new bank and the DMV… |
+| `tax.s8.passport` | The passport's lifecycle: eligibility, application, fee and time, issue and term, renewal, loss and replacement, and what a missing or expi… | Verified | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dolla… |
+| `tax.s8.idcard` | The state ID card's lifecycle (Connecticut's non-driver identification card) and the documents it requires | Verified | tests/remaining-papers.test.ts ‘PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reaso… |
+| `tax.s8.f1_status` | The F-1 student visa and status: issue, term, grace, end, and what reads it | Verified | Existing verified rows' tests (documents.us_status, documents.permission, documents.opt_week); tests/remaining-papers.test.ts: the F-1 read by the DMV and the … |
+| `tax.s8.ssn` | The Social Security number: eligibility, application, card, and readers | Verified | tests/scope-taxpapers.test.ts documents.apply_ssn journeys; tests/evidence-g17-papers.test.ts; GUARD tests in tests/remaining-tax.test.ts |
+| `tax.s8.opt` | OPT (Form I-765, the EAD): window, fee, decision, term, days without work, status | Verified | Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV |
+| `tax.s8.license` | A driving license held from before (identity only since the scope reset) | Verified | Existing verified rows' tests (documents.replace_license, documents.report_lost) |
+| `tax.s8.visas_authorizations` | Visas and travel authorizations, and Going Abroad | Verified | tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading) |
+| `tax.s8.residence_naturalization` | Residence abroad and naturalization (Residence Abroad on Permission To Work) | Verified | The deferred rows as they stand |
+| `tax.s8.jurisdiction` | Jurisdiction: US federal (USCIS, SSA, IRS, State), Connecticut (DMV, DRS), the home country's office; real requirements apart from SLATE's … | Verified | docs/verification/remaining/tax-result.json sources and assumptions per item |
 
 ## Criteria: The Stage
 
@@ -607,66 +622,22 @@ Every row not verified or met, with what its own fields say is open.
 - **`brief.choose`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also chooseRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts)…
 - **`brief.prepare`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also prepareRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts…
 - **`brief.reader`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also readerRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts)…
+- **`health.apply`** (Commands Traced Outside The Audit, Implemented But Unverified): refusals said in the player's words: — (also applyRefusal)
+- **`health.request_hardship`** (Commands Traced Outside The Audit, Implemented But Unverified): refusals said in the player's words: — (also hardshipRefusal)
 - **`life.look_after`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: That isn’t something you can do for yourself here.; The payment didn’t go through. (also lookAfterRefusal) / Until 2026-10-12 this was called Verified, while two of its claims had no test through the command, and until later that day these limits called a shower, an hour unwinding and a meal you needed checked through the command, while the shower and the meal…
 - **`school.choose_part_playing`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also partPlayingRefusal) / Until 2026-10-12 this was called Verified on tests/trace-commands.test.ts alone, whose title said the showing read the choice while the test checked only that a shown scene refused a new one. What’s driven through the engine there: school.choose_playing chooses a way, work on the feet (school.prepare) rehearses it in, and a change…
 - **`school.choose_playing`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also playingRefusal) / Until 2026-10-12 this was called Verified on tests/trace-commands.test.ts alone, whose title said the showing read the choice while the test checked only that a shown scene refused a new one. What’s driven through the engine there: school.choose_playing chooses a way, work on the feet (school.prepare) rehearses it in, and a change kee…
 - **`work.identify`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also identifyRefusal) / Until 2026-10-12 this was called Verified, while no test played a night after a way was kept, and these limits said no test worked a class scene, while tests/defects-g8-9.test.ts did. Driven through the commands and checked on a brief: a problem named, an adjustment tried and its evidence kept, a change of a beat waiting to be kept o…
 - **`work.settle`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also settleRefusal) / Until 2026-10-12 this was called Verified, while no test played a night after a way was kept, and these limits said no test worked a class scene, while tests/defects-g8-9.test.ts did. Driven through the commands and checked on a brief: a problem named, an adjustment tried and its evidence kept, a change of a beat waiting to be kept or …
 - **`work.try`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also tryRefusal) / Until 2026-10-12 this was called Verified, while no test played a night after a way was kept, and these limits said no test worked a class scene, while tests/defects-g8-9.test.ts did. Driven through the commands and checked on a brief: a problem named, an adjustment tried and its evidence kept, a change of a beat waiting to be kept or put…
-- **`banking.1`** (Remaining Area: banking, Open): closedByBank's settlement: necessary defensive guard (no current journey gives it anything to settle). closeForOverdraft's dropped fees and overdraft interest: required reachable behavior (a played home account abroad reaches it).
-- **`banking.1.overdraft-interest`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.1.standing-orders`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.1.pro-rata`** (Remaining Area: banking, Open): owner decision
-- **`banking.2`** (Remaining Area: banking, Open): older-save compatibility
-- **`banking.s7.opening`** (Remaining Area: banking, Open): required reachable behavior (the explanation)
-- **`banking.s7.ownership`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.switching`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.closure`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.funds`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.transfers`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.rejections`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.statements`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.features`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.school`** (Remaining Area: banking, Open): required reachable behavior
-- **`banking.s7.holds`** (Remaining Area: banking, Open): required reachable behavior
-- **`health-billing.1-reprice-plan-part`** (Remaining Area: health-billing, Open): required reachable behavior (withdrawal by the fifteenth day and Affiliate cover bought back are both played)
-- **`health-billing.2-husky-d-kept-through-work`** (Remaining Area: health-billing, Open): older-save compatibility is not the point: a necessary FIXTURE for an engine path (HUSKY D with work) no current journey reaches
-- **`health-billing.3-insured-paths-trace`** (Remaining Area: health-billing, Open): required reachable behavior
-- **`health-eligibility.1-covered-ct-status-barred`** (Remaining Area: health-eligibility, Open): required reachable behavior for the rule (programFor is read by every Enroll and renewal); the status-barred 100–138% case itself is reached only on a FIXTURE: no played life is a noncitizen in status at that income with cover open
-- **`health-eligibility.2-work-exemptions`** (Remaining Area: health-eligibility, Open): required reachable behavior (age over 64, SNAP and the stay are reachable by play); under 19 a necessary defensive guard
-- **`health-eligibility.3-notice-and-response`** (Remaining Area: health-eligibility, Open): required reachable behavior
-- **`health-eligibility.4-look-back`** (Remaining Area: health-eligibility, Open): required reachable behavior
-- **`health-eligibility.5-f1-premium-credit-2026`** (Remaining Area: health-eligibility, Open): required behavior on a state no played life reaches (FIXTURE): the return's rule is read by every return
-- **`health-eligibility.6-work-test-income`** (Remaining Area: health-eligibility, Open): required reachable behavior
-- **`health-eligibility.7-renewal-and-decision-notices`** (Remaining Area: health-eligibility, Open): required reachable behavior
-- **`school.repeat-room-leave`** (Remaining Area: school, Open): necessary defensive guard (reached by play; decides nothing a two-term leave reaches)
-- **`school.unreached-refusals`** (Remaining Area: school, Open): per row in inventory
-- **`school.d-appeal-before-begun`** (Remaining Area: school, Open): misleading player-facing control; a refusal that says something false
-- **`school.continuity`** (Remaining Area: school, Open): required reachable behavior
-- **`school.s6.missed-term`** (Remaining Area: school, Open): required reachable behavior
-- **`school.d-coursework-shown`** (Remaining Area: school, Open): misleading player-facing control (Work Shown); declared value with no reader (the review’s count)
-- **`school.s6.journey`** (Remaining Area: school, Open): required reachable behavior
-- **`school.s6.policy`** (Remaining Area: school, Open): required reachable behavior (the words players read)
-- **`school.s6.dead-ends`** (Remaining Area: school, Open): required reachable behavior
-- **`school.d-not-registered-hold`** (Remaining Area: school, Open): misleading player-facing notice (names a control the state refuses)
-- **`tax.early_filing_notices`** (Remaining Area: tax, Open): Not recorded
-- **`tax.ct_filed_in_error`** (Remaining Area: tax, Open): misleading player-facing control (for Connecticut: drawn on every Connecticut lien, enabled by no valid Connecticut state); the command behind it is a necessary defensive guard and retained engine behavior for a state whose assessment can differ from the return (California, tested by fixture)
-- **`tax.amend`** (Remaining Area: tax, Open): required reachable behavior, unreachable in the current scope (no income reaches a filed year); retained engine behavior tested through fixtures
-- **`tax.catch_up_state_plan`** (Remaining Area: tax, Open): required reachable behavior for a state whose plans have a cure, unreachable in the current scope (Connecticut alone, cure none); retained engine behavior tested through fixtures
-- **`tax.lien_dispute`** (Remaining Area: tax, Open): misleading player-facing control for Connecticut (corrected); necessary defensive guard and retained engine behavior otherwise
-- **`tax.federal_lien_withdraw`** (Remaining Area: tax, Open): required reachable behavior for a balance of $10,000 or more, unreachable in the current scope; retained engine behavior tested through fixtures
-- **`tax.request_waiver`** (Remaining Area: tax, Open): required reachable behavior for an Oregon filer, unreachable in the current scope; retained engine behavior tested through fixtures
-- **`tax.other_refusals`** (Remaining Area: tax, Open): per refusal as listed: necessary defensive guard (duplicate submission, a screen that never sends it, another state's rule, a limit no student balance reaches) or required reachable behavior already played
-- **`tax.s8.inventory`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.passport`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.idcard`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.f1_status`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.ssn`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.opt`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.license`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.visas_authorizations`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.residence_naturalization`** (Remaining Area: tax, Open): Not recorded
-- **`tax.s8.jurisdiction`** (Remaining Area: tax, Open): Not recorded
+- **`banking.1.pro-rata`** (Remaining Area: banking, Owner's Decision): How a German bank works the pro rata share isn’t read from any bank’s price list: by the days the account was open in the month, from its opening day where it opened that month, would be SLATE’s reading.
+- **`coverage.1-separate-totals`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
+- **`coverage.2-i-stale-claims`** (Remaining Area: coverage, Open): required reachable behavior (the standard; the row's own claim is the repository's text)
+- **`coverage.3-unresolved-rows`** (Remaining Area: coverage, Open): required reachable behavior (row words); bank.savings_notice: required reachable behavior, unverified by play (reported)
+- **`coverage.4-fold-areas`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
+- **`coverage.d-renames-chain`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
+- **`coverage.d-fixture-kind`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
+- **`coverage.d-evidence-cell`** (Remaining Area: coverage, Open): misleading player-facing control (here a misleading sentence on the coverage page, not a game control)
 - **`ST3`** (Criteria: The Stage, Not Met): As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted
 - **`ST6`** (Criteria: The Stage, Not Met): The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md
 - **`H4`** (Criteria: The Attributes, Not Met): Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md

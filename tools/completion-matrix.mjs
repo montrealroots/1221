@@ -180,7 +180,7 @@ for (const [id, t] of tr.commands) {
   });
 }
 
-const DISPOSITION = { fixed: 'Verified', implemented: 'Verified', 'guard kept and tested': 'Verified', 'older-save compatibility kept and tested': 'Verified', 'control corrected': 'Verified', 'removed as redundant': 'Verified', 'verified as it stands': 'Verified', 'uncertainty recorded': 'Partial', 'owner decision': "Owner's Decision" };
+const DISPOSITION = { fixed: 'Verified', verified: 'Verified', implemented: 'Verified', 'guard kept and tested': 'Verified', 'older-save compatibility kept and tested': 'Verified', 'control corrected': 'Verified', 'removed as redundant': 'Verified', 'verified as it stands': 'Verified', 'uncertainty recorded': 'Partial', 'owner decision': "Owner's Decision" };
 for (const { key, item, result } of areas()) {
   const ev = result?.evidence?.map((e) => `${e.file}${e.title ? ` ‘${e.title}’` : ''}${e.kind ? ` (${e.kind})` : ''}`) ?? [];
   rows.push({
@@ -188,7 +188,11 @@ for (const { key, item, result } of areas()) {
     goal: clean(item.item), entry: join(item.affectedSystems), preconditions: clean(item.requirement), reads: clean(item.currentBehavior), decisions: clean(item.plan),
     validation: clean(item.classification), changes: join(result?.fixes?.map((f) => f.summary)), later: NONE, systems: join(item.affectedSystems), sees: join(result?.guide, result?.tutorial),
     saveLoad: NONE, failure: join(result?.assumptions), implementation: join(result?.fixes?.map((f) => f.where)), evidence: ev.length ? ev.join('; ') : join(item.acceptance),
-    status: result ? (DISPOSITION[result.disposition] ?? result.disposition) : 'Open',
+    // By the disposition's own leading words, where an area added why after them ("fixed (…)", "control corrected (words)"):
+    // until later on 2026-10-16 only the bare words were read, and eleven such rows stood in the totals as statuses of
+    // their own. The whole disposition is kept beside the status.
+    status: result ? (DISPOSITION[Object.keys(DISPOSITION).find((k) => result.disposition === k || result.disposition?.startsWith(`${k} `) || result.disposition?.startsWith(`${k},`)) ?? ''] ?? result.disposition) : 'Open',
+    disposition: result?.disposition,
     citations: result?.evidence?.map((e) => ({ file: e.file, title: e.title })) ?? [],
   });
 }
@@ -206,7 +210,15 @@ for (const r of rows) {
   for (const c of r.citations ?? []) {
     const file = c.file.split(':')[0];
     if (!existsSync(file)) { problems.push(`${r.id}: cites ${file}, which isn't there`); continue; }
-    if (c.title && file.endsWith('.ts') && !readFileSync(file, 'utf8').includes(c.title.slice(0, 60))) problems.push(`${r.id}: ${file} has no test titled ‘${c.title.slice(0, 60)}’`);
+    // A title is cited as vitest names it, its describes before it (`describe > it`), and cut short anywhere with “…” or
+    // "...": each piece of it, cut at those, is in the file. Until later on 2026-10-16 the title's first 60 characters had
+    // to be, which no `describe > it` citation was.
+    if (c.title && file.endsWith('.ts')) {
+      const text = readFileSync(file, 'utf8');
+      const pieces = c.title.split(' > ').flatMap((p) => p.split(/…|\.\.\./)).map((p) => p.trim()).filter((p) => p.length >= 8);
+      const missing = pieces.find((p) => !text.includes(p));
+      if (!pieces.length || missing) problems.push(`${r.id}: ${file} has no test titled ‘${(missing ?? c.title).slice(0, 60)}’`);
+    }
   }
 }
 for (const id of tr.commands.keys()) if (!rows.some((r) => r.id === id)) problems.push(`${id}: a command with no row`);

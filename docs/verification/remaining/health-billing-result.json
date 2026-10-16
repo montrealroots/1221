@@ -45,9 +45,16 @@
     },
     {
      "file": "tests/leave.test.ts",
-     "title": "(the leave and withdrawal reprice tests)",
+     "title": "PLAYER JOURNEY: asked on the third day of spring classes, begun on its decision: aid returned on the rebate schedule…",
      "kind": "command",
-     "proves": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once."
+     "proves": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once.",
+     "citedAs": "(the leave and withdrawal reprice tests), named by title by the integration pass on 2026-10-16"
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "a withdrawal by the fifteenth day of classes > cancels Yale Health back to the insurance term’s start, and care had in it is billed as uninsured, a bill of its own",
+     "kind": "command",
+     "proves": "“Care Billed Again” once."
     }
    ],
    "fixes": [
@@ -212,7 +219,14 @@
     },
     {
      "file": "tests/scope-health.test.ts",
-     "title": "(health.choose_clinic and Access Health CT tests)",
+     "title": "health.choose_clinic, New Haven’s two practices",
+     "kind": "render+command+clock",
+     "proves": "The select on Papers, the denial and appeal: unchanged and passing.",
+     "citedAs": "(health.choose_clinic and Access Health CT tests), named by title by the integration pass on 2026-10-16"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills",
      "kind": "render+command+clock",
      "proves": "The select on Papers, the denial and appeal: unchanged and passing."
     }

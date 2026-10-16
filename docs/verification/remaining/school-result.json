@@ -162,9 +162,10 @@
    "evidence": [
     {
      "file": "tests/remaining-school.test.ts",
-     "title": "school.unreached-refusals: each refusal no test reached, reached (16 tests)",
+     "title": "school.unreached-refusals: each refusal no test reached, reached",
      "kind": "command, clock, render, guard",
-     "proves": "Each row of the inventory reached and its exact words asserted; each refusal checked to move nothing (clock, ledger length, calendar length, the school record)."
+     "proves": "Each row of the inventory reached and its exact words asserted; each refusal checked to move nothing (clock, ledger length, calendar length, the school record).",
+     "count": 16
     }
    ],
    "inventory": [
@@ -792,9 +793,10 @@
    "evidence": [
     {
      "file": "tests/remaining-school.test.ts",
-     "title": "school.continuity (A) and (B)",
+     "title": "school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads",
      "kind": "command, clock, reload",
-     "proves": "Creation to the degree and to a withheld degree, played."
+     "proves": "Creation to the degree and to a withheld degree, played.",
+     "citedAs": "school.continuity (A) and (B), named by its describe by the integration pass on 2026-10-16"
     }
    ],
    "notAdded": "Advising meetings (the Bulletin’s chair consulting a struggling student, p.194) aren’t modeled as meetings: the term’s warning and the review’s notice stand for them. No institutional machinery was added.",
