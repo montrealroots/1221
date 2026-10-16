@@ -1,0 +1,306 @@
+Implement SLATE’s Complete Integration And Acceptance Pass
+
+Work in the existing SLATE repository. Finish the implementation, repair defects, validate the playable experience, and provide reproducible evidence. Do not stop after an audit, plan, coverage matrix, documentation update, or partial implementation.
+
+My goal is exceptional depth and a cohesive, logical simulation. Attributes, genres, school, money, papers, character creation, and the other currently retained systems must function together. Every gameplay choice must read relevant state, make a meaningful difference, and produce appropriate downstream consequences.
+
+“10/10,” “100/100,” and “100% complete” mean all agreed requirements in the completion matrix are implemented and verified. They are not labels you may award yourself because tests happen to pass.
+
+1. Establish The Actual Starting Point
+
+Read the current repository instructions, main branch, master handoff, work plan, remaining acceptance briefs, verification reports, and relevant source code.
+
+Start with:
+
+* SLATE_CURRENT_MASTER_HANDOFF.md
+* docs/verification/WORKPLAN-2026-10-16.md
+* docs/verification/prompts-2026-10-16/
+* docs/verification/remaining/
+* docs/verification/stage-2026-10-16/
+* docs/verification/attributes-genres-2026-10-16/
+
+Verify their current equivalents if files have moved.
+
+Identify what is implemented, what is incomplete, what failed its criteria, what is only documented, and what lacks a playable interface. Preserve existing work and saves. Do not overwrite unrelated changes, apply or delete unrelated stashes, or merge unrelated worktrees.
+
+Build on the currently retained game. Do not restore removed industry, travel, housing, vehicles, shopping, or other personal-life systems. Existing explicit deferrals remain separate unless this instruction specifically brings them into scope.
+
+Finishing school, money, papers, attributes, genres, and their necessary integrations is authorized. Implement missing supporting functionality needed to complete those journeys.
+
+2. Define Completion Before Changing The Results
+
+Create one traceable completion matrix covering:
+
+* Every currently exposed gameplay feature.
+* Every relevant creation-suite selection.
+* All six remaining acceptance areas, using their actual briefs.
+* Attribute and genre acceptance criteria.
+* School, money, and papers.
+* Integration, persistence, tutorials, accessibility, and failure recovery.
+
+For each requirement record:
+
+* The player’s goal and entry point.
+* Preconditions and eligibility.
+* State read.
+* Available decisions.
+* Validation and costs.
+* State changes and scheduled consequences.
+* Other systems affected.
+* What the player sees and can drill into.
+* Save/load behavior.
+* Failure, cancellation, and recovery behavior where applicable.
+* Implementation location.
+* Test and evidence.
+* Current status.
+
+Keep the matrix actionable. Do not replace implementation with an enormous speculative feature list.
+
+Add missing functionality when it closes a real hole in an in-scope journey. Do not quietly narrow requirements to make completion easier. Record additions and their acceptance criteria before implementing them.
+
+3. Close Every Known Attribute And Genre Gap
+
+Reproduce the remaining failures before fixing them.
+
+Resolve:
+
+* ST3: the even-actor consistency criterion and its rounding discrepancies.
+* ST4: insufficient variety in the drama scene catalog.
+* ST6: restrained-specialist performance against the scene’s preference.
+* H4: the unresolved specialist-performance criterion.
+* L3: the unresolved specialist late-term decline.
+* Attribute phase 2c and close-out.
+* Any additional failures uncovered by the current source and reports.
+
+Do not lower thresholds, discard difficult cases, relabel failures as passes, or hardcode benchmark outcomes.
+
+For ST3, distinguish a real scoring inconsistency from display rounding. Preserve appropriate precision and round at the proper boundary. If a criterion is mathematically contradictory, explain the contradiction and propose a corrected criterion without counting the original as passed.
+
+For ST4, research and add suitable drama material with genuinely different circumstances, including public or confrontational scenes where appropriate. Preserve the integrity of existing private scenes. Do not force equal outcomes across a catalog simply to produce a balanced chart. Use lawful excerpts, references, or original exercises rather than copying protected scripts without permission.
+
+For ST6 and H4, investigate the actual input weights, difficulty, preparation, and opportunity distribution. Specialists must have meaningful strengths and limitations, with several viable development paths.
+
+For L3, trace the decline across the term: workload, fatigue, readiness, material demands, progression, deadlines, and evaluation. Fix unintended deterioration without removing legitimate consequences of poor preparation.
+
+4. Make Mastery Reliably Matter
+
+Attributes, technique, genre familiarity, genre practice, scene interpretation, preparation, and relevant wellbeing must contribute in clear, coherent ways.
+
+Ensure:
+
+* Increasing a relevant ability does not accidentally reduce otherwise identical work quality.
+* Unrelated skills do not create unjustified benefits.
+* No bonus is double-counted across connected systems.
+* No score exceeds its intended bounds.
+* No rounding or preparation stall blocks legitimate mastery.
+* Relevant maximum abilities and mastery, full preparation, a valid interpretation, and suitable conditions produce the intended maximum work quality.
+* Randomness does not arbitrarily defeat the established mastery guarantee.
+* Poor preparation, incompatible choices, or adverse conditions have explained consequences.
+* Maximum acting quality does not automatically guarantee unrelated outcomes.
+
+Test these through real game actions, not only by constructing an ideal evaluation object.
+
+5. Complete Genre Depth And Differentiation
+
+Audit every genre currently present. Discover the current count from the code.
+
+Each genre must have a coherent identity expressed through suitable combinations of:
+
+* Dramatic concerns and conventions.
+* Performance demands.
+* Scene circumstances.
+* Preparation and training.
+* Interpretation choices.
+* Feedback and progression.
+* Relevant school material and exercises.
+
+Shared mechanics are appropriate, but different labels must not conceal identical experiences where meaningful differences should exist.
+
+Verify the existing genre benchmark and fresh held-out cases after changes. Keep training, tuning, and validation samples distinguishable. Report both aggregate results and weak genres or subgroups.
+
+Verify that genre mastery benefits appropriate work, transfers only where justified, and survives save/load and progression.
+
+6. Finish School As A Playable Journey
+
+Follow the player from character creation through entry, orientation, successive terms, evaluations, and the existing school endpoint.
+
+Complete the currently established school systems and missing connections, including where applicable:
+
+* Enrollment and required records.
+* Curriculum, prerequisites, schedules, and deadlines.
+* Tuition, fees, aid, and payment status.
+* Attendance, excused absences, missed work, and make-up procedures.
+* Coursework, table work, rehearsal, partners, readers, and showings.
+* Feedback, revisions, assessments, and academic standing.
+* Productions, role demands, preparation, and performance.
+* Advising, warnings, recovery opportunities, and consequences.
+* Term progression, completion requirements, and final records.
+
+Research the actual Yale program represented in the game. Distinguish verified institutional policy from SLATE’s simulation design. Do not present invented policy or simulated staff feedback as authentic.
+
+Close the specifically documented test gap: play through a term that includes missed assignments, missed revisions, and subsequent showings. Verify that warnings, forecasts, notifications, and faculty reviews count them consistently and trigger through normal gameplay.
+
+No dead-end warning should leave the player without an explanation of what happened and what legitimate options remain.
+
+7. Finish Money And Banking
+
+Audit and complete the banking and finance features currently established, including the authorized home-country account alongside a US account.
+
+Ensure coherent handling of:
+
+* Account opening, eligibility, required documents, and verification.
+* Existing account ownership and retention.
+* Switching banks without silently replacing existing accounts.
+* Account closure, remaining balances, pending activity, and obligations.
+* Available, pending, and posted funds.
+* Transfers, settlement times, fees, currencies, exchange rates, and rounding.
+* Rejections, failed transfers, reversals, and duplicate submissions.
+* Statements, transaction history, and explanations.
+* Existing interest, overdraft, card, loan, or other account features.
+* School payments and other retained financial obligations.
+* Holds or restrictions and legitimate recovery paths.
+
+Complete exposed products and necessary supporting flows. Do not invent unrelated financial products merely to expand scope.
+
+Use exact monetary representations and balanced ledger entries. Funds cannot duplicate, disappear without a recorded cause, or become spendable before the applicable settlement rule permits it.
+
+Research actual bank-specific requirements using authoritative sources. Record jurisdiction, source date, effective date when available, and uncertainty. Never label a guessed fee, eligibility rule, or exchange rate as verified or live.
+
+8. Finish Papers And Documents
+
+First inventory what “Papers” actually contains in the current build. Complete those document lifecycles and necessary school/banking connections.
+
+Where applicable, support:
+
+* Eligibility and prerequisites.
+* Application and supporting evidence.
+* Fees and processing time.
+* Issuance and validity.
+* Submission and verification.
+* Expiration, renewal, replacement, rejection, and correction.
+* Consequences of missing, expired, or mismatched documents.
+
+Documents must unlock, satisfy, restrict, or prove something meaningful. They cannot merely occupy a list.
+
+Use jurisdiction-appropriate rules and research. Distinguish real requirements from simulation assumptions. Do not restore excluded travel systems merely because an existing identity document can also be used for travel.
+
+9. Make Everything Read, Bite, And Connect
+
+For every gameplay control, statistic, selection, and status, trace:
+
+Player Action → Validation → State Change → Immediate Result → Scheduled Or Downstream Consequence → Visible Explanation → Persistent History.
+
+Check both directions: a feature must consume relevant state, and other appropriate systems must consume its results.
+
+Examples:
+
+* Rehearsal consumes time, changes readiness, affects fatigue where appropriate, and influences the showing.
+* Missed work affects evaluation and warnings consistently.
+* An unpaid school obligation affects the correct school process.
+* A required document affects the relevant banking or school action.
+* A transfer affects account balances, settlement, fees, and the ledger.
+* A genre or interpretation choice changes meaningful demands or outcomes.
+
+Do not manufacture arbitrary penalties or bonuses to claim everything has an effect. Identity, accessibility settings, help text, and presentation can serve legitimate purposes without artificial gameplay modifiers. Every functional feature must fulfill its stated purpose; nothing may pretend to be a functioning mechanic while only changing text.
+
+Prevent duplicate processing, circular effects, stale forecasts, contradictory statuses, and repeated event execution.
+
+10. Remove Artificial Limitations While Preserving Logic
+
+Replace placeholders, unexplained disabled controls, incomplete journeys, and arbitrary technical restrictions with working functionality wherever they are in scope.
+
+Distinguish these from valid constraints:
+
+* Eligibility.
+* Institutional rules.
+* Available funds.
+* Time and scheduling.
+* Document requirements.
+* Preparation.
+* Physical or logical feasibility.
+
+Explain valid constraints and show the next legitimate action. “Unlimited options” means extensible depth and meaningful possibilities—not bypassing the rules that make the simulation credible.
+
+11. Preserve Continuity And Freshness
+
+Use persistent history, previous choices, progress, relationships already in scope, current readiness, and changing circumstances to shape subsequent experiences.
+
+Prevent identical feedback or events from repeating without regard to state. Track what has been shown and what has changed. Provide varied relevant exercises and feedback rather than random wording alone.
+
+Necessary recurring activities may recur. Their context, progress, consequences, and feedback must remain coherent. Do not claim a finite system can guarantee endlessly unique content.
+
+12. Complete Explanations And Navigation
+
+Preserve established Title Case rules and the current visual design.
+
+Keep the Home screen readable and the Money, School, and Papers navigation aligned and usable on desktop and mobile.
+
+Provide contextual tutorials and drill-down explanations showing:
+
+* What a feature does.
+* What it requires.
+* What it reads.
+* What it changes.
+* What connects to it.
+* What happens later.
+* Why an option is unavailable.
+* What the player can do next.
+
+Generate factual calculations and status explanations from the same engine logic used by gameplay wherever practical. Do not maintain a separate simplified explanation that can contradict the actual outcome.
+
+13. Test, Debug, And Prove The Result
+
+Write regression tests that fail with each repaired defect restored.
+
+Cover:
+
+* Formula boundaries and monotonicity.
+* Attribute and genre interaction.
+* Specialist and generalist paths.
+* Mastery through actual preparation actions.
+* Scene variety and interpretation.
+* Full school progression.
+* Missed work, recovery, and academic consequences.
+* Banking and document lifecycles.
+* Ledger conservation and settlement.
+* Save/load, migration, reload, and interrupted operations.
+* Repeat clicks and duplicate submissions.
+* Large time advances versus equivalent smaller advances.
+* Invalid inputs and unavailable options.
+* Desktop and mobile navigation.
+* Long-run progression and event-history consistency.
+
+Use representative normal, excellent, struggling, and adverse-condition journeys across multiple seeds. Include fresh validation cases. Report denominators, seeds, assumptions, failures, and skipped coverage.
+
+Use targeted tests during development, then run the full required gate and production build on the final code. Run the built-app acceptance suite on regenerated scenarios.
+
+Investigate existing skipped tests. Implement missing prerequisites and enable them when in scope; otherwise state exactly why they remain skipped and what remains unverified.
+
+If a test fails, diagnose the cause. Fix the implementation or demonstrate that the test expectation contradicts the agreed requirement. Never delete a valid failing assertion to obtain a green result.
+
+Continue meaningful testing until all in-scope criteria pass. Hundreds of runs are appropriate when they resolve a concrete remaining risk, not as an arbitrary token-consuming ritual.
+
+14. Completion And Delivery
+
+Keep working through implementation, debugging, integration, and verification. Do not stop merely because one subsystem passes.
+
+Maintain durable checkpoints and a clear handoff so an interruption does not lose progress. If execution limits interrupt the work, record the precise remaining tasks and resume from them. Never report an interrupted task as complete.
+
+Deliver:
+
+* The completed coverage matrix with evidence links.
+* Before-and-after results for every previously failing criterion.
+* Formula and balance explanations.
+* Research sources and simulation assumptions.
+* Test commands, tested commit, exit codes, and results.
+* Full journey outcomes.
+* Crash, runtime-error, ledger, and invariant findings.
+* Any skipped tests, external blockers, or unresolved limitations.
+* Updated tutorials and handoff.
+* Reviewable implementation changes.
+
+Preserve deployment and merge rules already established for this repository.
+
+Do not claim “zero possible bugs,” “permanently crash-free,” or “10/10 proven.” Report the exact supported conclusion: all defined in-scope acceptance criteria passed, with no known unresolved in-scope defects, and no crashes observed in the stated tests—only if that is actually true.
+
+The required outcome is a fully implemented, deeply connected current SLATE experience: attributes, genres, school, money, papers, and their retained dependencies operating logically together, with meaningful consequences, accurate explanations, persistent continuity, and reproducible proof.

@@ -1,6 +1,9 @@
 # The Next Brief: "Implement SLATE's Complete Integration And Acceptance Pass"
 
-**Not yet given.** The owner said, on 2026-10-16, that this brief comes next and that they'll paste it into the new
+**Given on 2026-10-16, after this file was written:** its text is kept verbatim in `08-complete-integration-and-acceptance-pass.txt`, and it's worked in `../integration-2026-10-16/` and the work plan's
+section 11. What follows is kept as the record of what was known before it came.
+
+Until then this said it was not yet given. The owner said, on 2026-10-16, that this brief comes next and that they'll paste it into the new
 session. Its full text wasn't in the session that wrote this file, so what follows is only the scope the owner recorded
 for it, in their words ("Prepare A Complete, Verified SLATE Session Handoff", `07-session-handoff.txt`, part 3):
 
