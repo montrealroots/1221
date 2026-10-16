@@ -18,6 +18,7 @@ import { exerciseFor } from '../src/engine/content/practice';
 import { atFull, forecast } from '../src/engine/systems/briefs';
 import { matchedTier } from '../src/engine/systems/practice';
 import { CRAFT_ABILITY, abilityFull, attributesOf, isAbility, levelOf } from '../src/engine/systems/attributes';
+import { inHospital } from '../src/engine/systems/health';
 
 export const SESSIONS = 20;
 const NY = 'America/New_York';
@@ -186,10 +187,9 @@ export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simula
       const b = BRIEF_BY_ID[id]!;
       const last = takes.filter((t) => t.brief === id).at(-1)!;
       const reading = b.readings.find((x) => x.id !== last.reading)!.id;
-      go(sim, 'brief.choose', { brief: id, reading });
-      for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: id, step });
-      const t = go(sim, 'practice.self_tape', { genre: last.genre, brief: id });
-      if (!t.ok) throw new Error(`${seed} ${id} again: ${t.error}`);
+      const prepare = () => { go(sim, 'brief.choose', { brief: id, reading }); for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: id, step }); };
+      prepare();
+      tapeWaiting(sim, `${seed} ${id} again`, prepare, () => go(sim, 'practice.self_tape', { genre: last.genre, brief: id }));
       takes.push({ brief: id, genre: last.genre, reading, at: sim.now, again: true });
       continue;
     }
@@ -199,11 +199,13 @@ export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simula
     const reading = b.readings[Math.floor(r() * b.readings.length)]!.id;
     const rounds = 1 + Math.floor(r() * 3);
     const studies = Math.floor(r() * 3);
-    go(sim, 'brief.choose', { brief: b.id, reading });
-    for (let i = 0; i < rounds; i += 1) for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step });
-    for (let i = 0; i < studies; i += 1) go(sim, 'genre.study', { genre });
-    const t = go(sim, 'practice.self_tape', { genre, brief: b.id });
-    if (!t.ok) throw new Error(`${seed} ${b.id}: ${t.error}`);
+    const prepare = () => {
+      go(sim, 'brief.choose', { brief: b.id, reading });
+      for (let i = 0; i < rounds; i += 1) for (const step of ['read', 'lines', 'rehearse']) go(sim, 'brief.prepare', { brief: b.id, step });
+      for (let i = 0; i < studies; i += 1) go(sim, 'genre.study', { genre });
+    };
+    prepare();
+    tapeWaiting(sim, `${seed} ${b.id}`, prepare, () => go(sim, 'practice.self_tape', { genre, brief: b.id }));
     takes.push({ brief: b.id, genre, reading, at: sim.now, again: false });
   }
   rest(sim);
@@ -211,6 +213,22 @@ export function buildCase(seed: string, band: Band, stage: Stage): { sim: Simula
   // Every piece of work the case holds is one of its takes, in order: what the realized gain reads is what the advice reads.
   if ((sim.player.work ?? []).length !== takes.length) throw new Error(`${seed}: ${(sim.player.work ?? []).length} pieces of work for ${takes.length} takes`);
   return { sim, takes, full: [...full] };
+}
+
+/**
+ * A take, and where it's refused because she's in hospital (a stay the life's own health brought on), the stay waited
+ * out a day at a time as a player waits it, the take's preparation done again and the take taped then (from brief 10's
+ * held-out run, later on 2026-10-16, which met it on adv-h-10 and adv-h-57: until then the harness threw, and the case
+ * was never built). Only a refused take waits, so a case that never met a stay is built exactly as it was.
+ */
+function tapeWaiting(sim: Simulation, what: string, prepare: () => void, tape: () => { ok: boolean; error?: string }): void {
+  let t = tape();
+  if (!t.ok && inHospital(sim.player, sim.now)) {
+    for (let d = 0; d < 90 && inHospital(sim.player, sim.now) && sim.universe.meta.endedAt === undefined; d += 1) sim.advanceTo(nextDay(sim, 9));
+    prepare();
+    t = tape();
+  }
+  if (!t.ok) throw new Error(`${what}: ${t.error}`);
 }
 
 /** F2-A's case as takes: its three briefs, each at its first reading, as `setUp` taped them. */
