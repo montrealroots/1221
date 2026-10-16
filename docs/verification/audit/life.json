@@ -212,6 +212,64 @@
       }
     },
     {
+      "id": "life.look_after",
+      "kind": "command",
+      "entry": "The Look After Yourself menu (TimeControls.tsx:560, LookAfterMenu’s act, run('life.look_after', { action })); the command itself, apart from its five actions’ rows (life.look_after:eat and the rest)",
+      "reads": "the action, one of LOOKING_AFTER’s five (life.ts:438-441); alreadyApplied (an actionId sent twice); lookAfterRefusal (life.ts:610), each action’s own; a meal’s price (costFor)",
+      "changes": "a meal paid before its hour (spend; “The payment didn’t go through.” where it fails, reached by no play since lookAfterRefusal asks spendRefusal at the same moment, life.ts:446-461); the action’s minutes lived and charged as waking; applyLookingAfter; a workout’s fitness on the development history, its exertion and its injury draw; the action id marked; what each dial moved returned as changed, with the hour it was done",
+      "downstream": "each action’s readers, in its row; the menu’s toast (done at its hour)",
+      "persistent": "the dials, the ledger, the development history, the action ids applied",
+      "explanation": "The menu’s toast; each refusal in its words",
+      "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was…’ (the shower’s time and its move on each dial, against a twin who let the same twenty minutes pass); tests/remaining-09-coverage-guard.test.ts ‘GUARD: a meal whose payment fails after the menu offered it is refused…’ (FIXTURE: spend refused by a test double); tests/fitness.test.ts ‘is lived once with the same actionId, the time, the fitness and the history with it, and twice with two’; tests/evidence-g06-life.test.ts ‘a meal sent twice with one actionId is eaten and paid once, “That was already done.”, across a reload; and so is an order’; each action’s tests in its row",
+      "issue": "Added on 2026-10-16 (brief 09, section 5): the audit kept life.look_after by its five actions, and the command’s own part (an action not on the menu, the action id, the payment before the hour, what it returns) was in no row. The payment refused after the refusal passed is a defensive guard no play reaches, tested on a test double.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "life.look_after takes one of five actions: anything else is refused in its words with nothing changed; an action sent twice with one id is lived once; a meal is paid before its hour, and a payment that fails is refused with nothing changed; the hour is lived and what the action moved on each dial is returned.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/fitness.test.ts ‘is lived once with the same actionId, the time, the fitness and the history with it, and twice with two’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/evidence-g06-life.test.ts ‘a meal sent twice with one actionId is eaten and paid once…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "fixture",
+            "where": "tests/remaining-09-coverage-guard.test.ts ‘GUARD: a meal whose payment fails after the menu offered it is refused…’",
+            "reachesAction": false,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "spend refused by a test double: no play reaches it."
+          }
+        ],
+        "ui": "The menu is rendered and pressed in its actions’ rows (tests/evidence-g01-life.test.ts, the shower).",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
       "id": "life.look_after:eat",
       "kind": "command",
       "entry": "TimeControls.tsx:560 Look After menu (LookAfterMenu’s act, run('life.look_after', { action })). Until 2026-10-13 this said :490.",
@@ -3980,8 +4038,8 @@
       "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
       "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
       "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",
-      "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: approved from 1 February, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn)",
-      "issue": "Added on 2026-10-16, when the health area made the command, with no row. Partial: a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) is played by no test; the application’s is. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw.",
+      "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: approved from 1 February, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn); tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice…’ (a member’s renewal notice answered on Papers on 10 November: renewed to 1 May 2028, said once, the decision of 6 December passing it by, covered into January, across a reload, the same in one jump as day by day; the twin who doesn’t ask ended with December) and ‘PLAYER JOURNEY: with no stay in hospital from May to October 2027…’ (Papers says why in the engine’s words and draws no button; the command refused with nothing changed)",
+      "issue": "Added on 2026-10-16, when the health area made the command, with no row. Until brief 09 of the same day a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) was played by no test, and the row was partial for it; tests/remaining-09-hardship.test.ts plays it since. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw.",
       "added": "2026-10-16",
       "review": {
         "on": "2026-10-16",
@@ -4012,10 +4070,40 @@
           "A renewal’s notice answered by a hardship (grantPending’s renewal branch) is played by no test."
         ]
       },
-      "status": "partial",
+      "status": "verified",
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-hardship.test.ts",
+            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December",
+            "kind": "render",
+            "closes": "The notice of 1 November 2027 in its words (answered by 5 December, decided 6 December, ended with December where unanswered, all worked by hand); Papers’ line and the hardship drawn; pressed on 10 November: renewed to 1 May 2028, said once, September met by the stay; the decision passes; covered into January; once each across a reload; the same in one jump as a day at a time with two reloads; the twin who doesn’t ask ended with December.",
+            "round": "remaining-09-coverage"
+          },
+          {
+            "file": "remaining-09-hardship.test.ts",
+            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed",
+            "kind": "render",
+            "closes": "No stay: Papers says “No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.” and draws no button; the command is refused in those words with the save as it was.",
+            "round": "remaining-09-coverage"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified",
+        "afterCheck": "2026-10-16 (brief 09): verified on a played journey. The gap its review of that morning named, a renewal’s notice answered by a hardship, is played by tests/remaining-09-hardship.test.ts: the Comfortable family’s student withdrawn and enrolled in HUSKY D on Papers, a stay in hospital in September 2027 (TEST SETUP: that week’s draw forced), the renewal of 1 November 2027 sends its notice for May to October, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once with September met by the stay on her request; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December, and the twin with no stay is refused in the engine’s words with no button drawn. Three mutations, each in a copy (the renewal branch’s applyRenewal taken out, the stay’s month test made false, the request read without the hardship), were killed. Read by the coverage area, which wrote the test, and checked by no separate skeptic."
       }
     },
     {

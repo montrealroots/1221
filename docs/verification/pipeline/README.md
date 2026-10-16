@@ -20,7 +20,12 @@ node ../resolve-titles.cjs
 
 `remaining-fold.cjs` (from 2026-10-16) runs after `scope-fold.cjs`, whose row text it may correct again; until that day this
 pass's areas' results (`docs/verification/remaining/`) were in no input, and their hand edits of the audit were undone by
-every regeneration.
+every regeneration. Later that day (brief 09) it read `docs/verification/remaining-09/` too, after `remaining/`, its items
+keyed `09-<key>/<id>` in `inputs/remaining-rows.json`; it follows `inputs/renames.json` where a cited title was renamed
+since (until then such a title was listed as no test and left out); and a row added through `inputs/added-rows.json` takes
+evidence as any row does, its words kept in `added-rows.json` alone (row text an area writes for one is listed and left
+out). A test a row already cites, in its review or an earlier pass's round, isn't added again by that pass's results
+(listed as already cited); the last pass's records are folded as they were.
 
 Where `resolve-titles.cjs` says it fixed row text, run `merge-review.cjs` (and `resolve-titles.cjs`) once more: it corrects
 `doc-fields.json`, which the merge reads, after the merge has run (found on 2026-10-16, when a regeneration left two
@@ -53,13 +58,20 @@ Then, from the repository’s root, `node tools/coverage.mjs`, `node tools/cover
   area, the row it follows, its own words, the day it was added and a review of that day to the same standard;
   `merge-review.cjs` inserts one that's absent and writes its words from the input on every run. The first were
   health.apply and health.request_hardship, the health area's commands of 2026-10-16, which were in no row. Until then a
-  row could be added only by hand, and the merge threw on one without a review of 2026-10-13.
+  row could be added only by hand, and the merge threw on one without a review of 2026-10-13. Brief 09 (2026-10-16) added
+  the nine commands traced until then in `docs/verification/connected-journey/TRACE.md` alone (the brief, workbook and
+  way-of-playing commands, and `life.look_after` as a command, which the audit kept by its five actions), each reviewed
+  that day against `7e531122`.
 - `collect-checks.cjs` keeps `inputs/checks.json`, every row's latest skeptic check; `--add <file>` adds a new one.
   `inputs/final-checks/` holds each skeptic's file as written.
 - `scope-prep.cjs` puts the reruns of mutations in place (`mutations4-final.json`) and keys the current scope's fixes in
   `inputs/fixes.json`.
 - `resolve-titles.cjs` applies `inputs/renames.json` (a test title renamed since it was cited) and
   `inputs/doc-fields.json` (a row's own words corrected against the code as it stands).
+- `inputs/closes.json` (from 2026-10-16, brief 09): what a test a row cites closes, corrected where an area's later change
+  falsified its round's words, by the row and the test's last title. `remaining-fold.cjs` writes it from an area's
+  `rowText` key `after.tests[N].closes` (the Nth test of the row as the audit stands when it runs), and `merge-review.cjs`
+  applies it; an area's `acceptance.<part>` goes into `doc-fields.json`'s acceptance the same way.
 - `mut-parallel.cjs` runs mutations, each in its own copy of the tree in the system's temporary folder, never the working
   tree: `node mut-parallel.cjs <workers> <out.json> <groups.json>`. Delete old copies first (it reuses one that exists),
   removing each copy's `node_modules` junction on its own before the rest, so nothing follows it into the real one.

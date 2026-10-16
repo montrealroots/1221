@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 415 of 525 rows in scope Implemented And Verified (79.0%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 17 Not Implemented, 0 Blocked Externally, 7 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 415 of 509 rows in scope Implemented And Verified (81.5%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 7 Decision Required, 17 Explicitly Deferred.
 
 ## Totals
 
@@ -38,7 +38,6 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: banking | 16 | 6 | 8 |  |  |  | 2 |  |
 | Brief 09 Area: coverage | 12 | 10 | 1 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
-| Brief 09 Area: journeys | 16 |  |  |  | 16 |  |  |  |
 | Criteria: The Stage | 11 |  | 9 | 1 |  |  | 1 |  |
 | Criteria: Interpretation | 5 |  | 5 |  |  |  |  |  |
 | Criteria: The Attributes | 25 |  | 22 | 1 |  |  | 1 | 1 |
@@ -47,7 +46,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 3 | 2 |  | 1 |  | 1 |  |
-| **All** | **542** | **415** | **83** | **3** | **17** | **0** | **7** | **17** |
+| **All** | **526** | **415** | **83** | **3** | **1** | **0** | **7** | **17** |
 
 ## Life, Health And Time
 
@@ -572,27 +571,6 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
-## Brief 09 Area: journeys
-
-| Row | Goal | Status | Source's Word | Evidence |
-|---|---|---|---|---|
-| `journeys.known-graduated-school-page` | Known on the way in: a graduated student's School page still says “Only the terms to come stand between you and the degree” (found in the b… | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts DEFECT (clock, render, reload): a life played to the degree (new life, the coursework prepared each midnight, TEST SETUP) a… |
-| `journeys.x1-yale-payment-savings-hold-registration` | Across areas: a Yale payment drawing on savings, then the hold, then registration (banking.s7.school's change meeting school's hold) | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, twins): figures worked by hand from the Bulletin's figures and the rebate schedule;… |
-| `journeys.x2-leave-affiliate-bill` | Across areas: a leave and its Affiliate cover, then a bill | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, render). |
-| `journeys.x3-withdrawal-health-tax-papers` | Across areas: withdrawal, then health eligibility, then tax and Papers | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, twins, render). |
-| `journeys.x4-document-expiring` | Across areas: a document expiring under a payment or a registration | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, render). |
-| `journeys.played-school` | Played journey: school requirements, preparation, attendance, missed work, revisions, warnings, evaluations, progression | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts (x1's and the graduate's journeys); tests/remaining-school-term.test.ts and tests/remaining-school.test.ts, run again |
-| `journeys.played-money` | Played journey: payments, pending funds, fees, restrictions, closures, recovery | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts (x1, x4) |
-| `journeys.played-papers` | Played journey: required documents, applications, verification, expiry, correction, renewal where the game has them | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts (x3, x4) |
-| `journeys.played-health` | Played journey: health eligibility and billing where they reach school or money | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts (x2, x3) |
-| `journeys.actions` | Every exposed action met: validates, changes the right state, brings its consequence, says the result, survives a reload | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts, each journey |
-| `journeys.d-aid-past-balance` | Defect found on x1: a term's living scholarship is paid to the bank past a balance owed on the Yale account under a hold | Not Implemented | no result yet | Either a DEFECT test that fails before the fix, with the cited journey re-cast; or the item reported Decision Required with what's missing. |
-| `journeys.d-cover-ended-notice` | Defect found on x3: the cover-ended notice counts 60 days from a month after the loss and names only the marketplace | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts DEFECT (clock, command): a withdrawal on 15 February 2027, Yale Health out on 17 March; the notice of 1 April names 16 May;… |
-| `journeys.d-medicaid-start` | Found on x3: HUSKY D enrolled on 2 December starts on 1 January, and care on 3 December is billed uninsured | Not Implemented | no result yet | As the research settles: a test of the start date and the bill, or the item's status with its evidence. |
-| `journeys.d-expired-license-next-step` | Found on x4: a license run out says nothing of what comes next | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts DEFECT (render): the row's words; fails before the fix. |
-| `journeys.d-lapse-appointment` | Found on x2: an appointment booked in a leave's lapse stays outside Yale Health once its cover is back, and nothing says so until the bill | Not Implemented | no result yet | tests/remaining-09-journeys.test.ts DEFECT (command, clock, render, reload): the notice once; the Papers line; Call It Off then Book An Appointment books Yale … |
-| `journeys.d-lapse-prescription` | Found on x2: a prescription filled in a leave's lapse isn't billed again when Affiliate cover is bought back to the lapse's start | Not Implemented | no result yet | A test of the fill billed again, or the item's status with its evidence. |
-
 ## Criteria: The Stage
 
 | Row | Goal | Status | Source's Word | Evidence |
@@ -802,24 +780,8 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`H4`** (Criteria: The Attributes): 2 of 12 specialists ahead on 60% of their work; presence, discipline and stamina have no work of their own (h4.md); being worked under brief 09, section 2
 - **`L3`** (Criteria: Long-Term Continuity): As written, the specialist’s last month (64.1) is under its first (65.5) because it earned harder callbacks; the controlled measure rises on every take (l3.md); being worked under brief 09, section 2
 
-### Not Implemented (17)
+### Not Implemented (1)
 
-- **`journeys.known-graduated-school-page`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.x1-yale-payment-savings-hold-registration`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.x2-leave-affiliate-bill`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.x3-withdrawal-health-tax-papers`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.x4-document-expiring`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.played-school`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.played-money`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.played-papers`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.played-health`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.actions`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-aid-past-balance`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-cover-ended-notice`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-medicaid-start`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-expired-license-next-step`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-lapse-appointment`** (Brief 09 Area: journeys): the area has written no result for it
-- **`journeys.d-lapse-prescription`** (Brief 09 Area: journeys): the area has written no result for it
 - **`KS-degree-text`** (Known Shortfalls And Missing Tests): It still says "Only the terms to come stand between you and the degree" (found in the built app on 2026-10-16)
 
 ### Blocked Externally (0)

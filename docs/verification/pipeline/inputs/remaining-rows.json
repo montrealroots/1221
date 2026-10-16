@@ -295,6 +295,234 @@
   "coverage/coverage.7-overdraft-home-panel": {
    "rows": [],
    "why": "A finding reported, not a row’s evidence."
+  },
+  "09-coverage/coverage09.1-brief.prepare": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-brief.choose": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-brief.reader": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-school.choose_playing": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-school.choose_part_playing": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.identify": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.try": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.settle": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-life.look_after": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.2-hardship-renewal": {
+   "rows": [
+    "health.request_hardship"
+   ],
+   "why": "The renewal branch of the hardship, played (brief 09, 2026-10-16): the gap the row’s review of 2026-10-16 named."
+  },
+  "09-coverage/coverage09.3-unresolved": {
+   "rows": [
+    "tax.federal_lien_withdraw"
+   ],
+   "why": "The one of the 13 unresolved rows play reaches since the account kept at home and the families of 2026-10-16: an Inherited family’s student who files nothing, played to the lien and its withdrawal. The other twelve’s evidence is the probe’s, kept in the result, no test’s."
+  },
+  "09-coverage/coverage09.4-fold": {
+   "rows": [],
+   "why": "The coverage area’s own item, the pipeline’s: no test of it is a row’s evidence."
+  },
+  "09-banking/banking.1.pro-rata": {
+   "rows": [
+    "bank.close_current",
+    "bank.cancel_new"
+   ],
+   "why": "Germany’s month’s fee on a close charged to the day (BGB § 675h(3), from brief 09): Close It on a Berlin-raised student’s AktivKonto kept at home, played, and Cancel It on Berlin fixtures."
+  },
+  "09-banking/banking.1.pro-rata.month-end": {
+   "rows": [
+    "bank.close_current"
+   ],
+   "why": "A close at the month’s edges charges each month once, played on the account kept at home."
+  },
+  "09-banking/banking.1.pro-rata.opening-month": {
+   "rows": [
+    "bank.month_end"
+   ],
+   "why": "Deutsche Bank’s month of opening free: the month’s end and the quarter’s closing charge nothing for it (statements’ Germany’s quarterly closing)."
+  },
+  "09-banking/banking.3.homecloses": {
+   "rows": [],
+   "why": "A home bank’s own close of an account kept at home has no row in the audit (as banking/banking.s7.ownership’s of the last pass); its GUARD is the area’s record."
+  },
+  "09-banking/banking.2.scope": {
+   "rows": [],
+   "why": "The banking area’s probe of the eight bank rows on home-account lives, run outside the tree: no test, and the rows’ four parts carry its finding (the coverage area’s probe agrees, coverage09.3-unresolved)."
+  },
+  "09-banking/banking.2.arrange_overdraft": {
+   "rows": [
+    "bank.arrange_overdraft"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.switch": {
+   "rows": [
+    "bank.switch"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.switch_complete": {
+   "rows": [
+    "bank.switch_complete"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.cancel_switch": {
+   "rows": [
+    "bank.cancel_switch"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.stop_balance_transfer": {
+   "rows": [
+    "bank.stop_balance_transfer"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.take_overrun_loan": {
+   "rows": [
+    "bank.take_overrun_loan"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.money_transfer": {
+   "rows": [
+    "card.money_transfer"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.cancel_new": {
+   "rows": [
+    "bank.cancel_new"
+   ],
+   "why": "The row’s Berlin fixture of Cancel It charging the month’s fee to the day, and the banking area’s played test of six students keeping an account at home, refused it (brief 09)."
+  },
+  "09-banking/banking.4.sparkassen-card": {
+   "rows": [
+    "bank.close_current",
+    "bank.cancel_new"
+   ],
+   "why": "Berliner Sparkasse’s card year paid ahead, its days left given back on Close It (played on the account kept at home) and on Cancel It (a Berlin fixture), said before the press (brief 09’s follow-up)."
+  },
+  "09-banking/banking.5.arion-card": {
+   "rows": [],
+   "why": "A debit card’s yearly fee posts in the daily bank check (lending.ts), which has no row of its own in the audit (a fee by the month or the quarter is bank.month_end’s); the area’s record."
+  },
+  "09-banking/banking.6.fee-schedule": {
+   "rows": [
+    "bank.month_end"
+   ],
+   "why": "When each German bank posts its account fee (ING’s on the 1st of the month after, Commerzbank’s at each month’s end, the rest at the quarter’s closing): the month’s end, whose changes the area’s row text corrects."
+  },
+  "09-genres/genres.1-count": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.2-compare": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-animated": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-christmas": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-conspiracy_thriller": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-farce": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-film_noir": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-gothic_horror": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-jukebox_musical": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-new_wave": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-psychological_thriller": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-samurai": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-silent_film": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-sword_and_sorcery": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-tragicomedy": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-yakuza": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.4-kept": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.5-saves": {
+   "rows": [],
+   "why": "A save that prepared a brief the genres area retired keeps its record, and nothing offers it: older-save compatibility of the briefs’ content, which no audit row claims (the brief rows claim the commands, not which briefs there are)."
+  },
+  "09-genres/genres.6-table": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.7-measured": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.8-docs": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
   }
  },
  "fragments": {
@@ -303,6 +531,12 @@
    "replaces": "current account: on Close It’s refusals and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, fees charged, the limit cleared; in Canada fees refunded, from 2026-10-15: until then neither)",
    "with": "current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, overdraft interest and fees charged, the limit cleared; in Canada fees refunded, never the overdraft interest; from 2026-10-15: until then neither, and the overdraft interest from 2026-10-16: until then it was dropped)",
    "read": "2026-10-16, against accountlife.ts bank.cancel_new: cancelRefusal still asked, settleOverdraftInterest then settleFees, the limit still cleared (overdraftLimit = undefined); the area's fragment left out cancelRefusal, the limit and the date its settling began, which the coverage area kept"
+  },
+  "bank.cancel_new|tests": {
+   "fragment": "… Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: … (the rest as written). From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
+   "replaces": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s €4.90 refused on the panel and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated.",
+   "with": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated. From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
+   "read": "2026-10-16 (brief 09), against tests/scope-money.test.ts’s renamed Berlin title and tests/remaining-09-banking.test.ts: the banking area’s fragment named the Berlin fixture’s new words and the test it added; the field’s other words kept as they stood."
   }
  }
 }

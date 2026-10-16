@@ -7,7 +7,7 @@
     "id": "bank.standing_order",
     "testsAdded": [
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €13.80, January free as the month it opened, and nothing is dropped",
       "closes": "A German account its bank would close at zero isn’t closed while its fees would take it below zero; the quarter’s €20.70 posts at its closing and the account is pursued as overdrawn; no closed account below zero; breaches 0. Why play can’t reach it: only Citi and Capital One close an account at zero or unfunded.",
       "evidenceKind": "fixture"
      },
@@ -17,12 +17,12 @@
       "evidenceKind": "fixture"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
       "closes": "The overdraft’s set-off charges off €122.89, the overdraft €101.97 + 22¢ of interest built since 1 March + €20.70 of fees, all worked by hand; nothing posts to the closed account after; a twin played a day at a time with a reload each month comes to the same postings.",
       "evidenceKind": "fixture"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
       "closes": "Where the savings cover it, €122.89 is set off from the Flexgeld (its 41¢ of interest settled first), the AktivKonto closes, the Flexgeld stays open, the notice names both and the order ended.",
       "evidenceKind": "fixture"
      },
@@ -54,12 +54,12 @@
     "id": "bank.close_current",
     "testsAdded": [
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
       "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
       "evidenceKind": "fixture"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged",
       "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
       "evidenceKind": "fixture"
      },
@@ -74,7 +74,7 @@
       "evidenceKind": "command"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
       "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
       "evidenceKind": "fixture"
      },
@@ -91,12 +91,12 @@
     "id": "bank.cancel_new",
     "testsAdded": [
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
       "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
       "evidenceKind": "fixture"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged",
       "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
       "evidenceKind": "fixture"
      },
@@ -111,7 +111,7 @@
       "evidenceKind": "command"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
       "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
       "evidenceKind": "fixture"
      },
@@ -163,7 +163,7 @@
       "evidenceKind": "command"
      },
      {
-      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
       "closes": "An order from the account the set-off closes ends, said in “Closed An Account”.",
       "evidenceKind": "fixture"
      },
@@ -424,7 +424,7 @@
     "id": "bank.close_current",
     "testsAdded": [
      {
-      "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+      "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
       "closes": "The fee refusal, unchanged words where no overdraft interest is built.",
       "evidenceKind": "fixture"
      }
@@ -1761,6 +1761,397 @@
       "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
       "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
       "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/remaining-09-banking.test.ts",
+  "rows": [
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more",
+      "closes": "Played from creation (Before Yale keeping Deutsche Bank): the line under Close It says €3.12 ($3.39) and how it's made before the press; pressed, “Closing fees: AktivKonto” −€3.12 / −$3.39 against Bank Fees, the transaction balanced; everything that left the account at the close is what it held; closed at nothing; a second press refused with nothing posted; reloaded and run past October's end and the quarter's, nothing more on it; breaches 0.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+      "closes": "Month boundaries: the first day of a month (one day of 31, 22 cents, with the quarter's two months kept), the last day before 11 PM (the month whole), after the month's end (the month counted once, with the quarter's), after the quarter's closing (nothing at closing; the screen says why).",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th",
+      "closes": "Leap years (February of 28 and 29 days, and its 29th), and twins in one jump and day by day with a reload: identical postings on the account to the cent.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once",
+      "closes": "Insufficient funds: played down with Move Money (Deutsche Bank's €11.55 payment fee worked from its price list), refused on the screen and by the command with what to pay in, the figure under it; paid in from Chase as a payment abroad; closed six days later for that day's share, €5.79, once, across a reload; refused again after.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+      "closes": "Cancel It in the cooling-off period: the share counted from the day it opened, said under Cancel It, with the overdraft interest in one refusal; paid in and pressed, both charged once; refused after; the same after a reload. FIXTURE: no played life's German account is in its cooling-off (opened before Yale; every country's period ends by 21 August 2026, probed).",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back",
+      "closes": "€12.00 ($13.04) at midnight on 25 August 2026; before the press the line says €2.24 ($2.43) of fees (495 × 14 / 31 = 223.5) and €10.32 ($11.22) back (1,200 × 314 / 365 = 1,032.3, 51 days used); pressed, both posted once against Bank Fees, balanced, everything that left at the close what it held; a second press refused; reloaded to 1 September 2027, no second refund and no year's fee on the closed account; breaches 0.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days",
+      "closes": "The second year 365 days on, once; twins identical to the cent; the close's three parts (two months kept, one day of 30 at 17 cents, 357 days back at €11.74) said and posted.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank",
+      "closes": "An account opened in the life is charged ahead its first night; the refund counts in the refusal's figure (closingFeesOf nets it), so an empty account cancels; €10.49 sent on. FIXTURE: no played life opens a German account.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
+      "closes": "cardFeePaid set to nothing once given back: one refund.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_new",
+    "testsAdded": [
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more",
+      "closes": "Played from creation (Before Yale keeping Deutsche Bank): the line under Close It says €3.12 ($3.39) and how it's made before the press; pressed, “Closing fees: AktivKonto” −€3.12 / −$3.39 against Bank Fees, the transaction balanced; everything that left the account at the close is what it held; closed at nothing; a second press refused with nothing posted; reloaded and run past October's end and the quarter's, nothing more on it; breaches 0.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+      "closes": "Month boundaries: the first day of a month (one day of 31, 22 cents, with the quarter's two months kept), the last day before 11 PM (the month whole), after the month's end (the month counted once, with the quarter's), after the quarter's closing (nothing at closing; the screen says why).",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th",
+      "closes": "Leap years (February of 28 and 29 days, and its 29th), and twins in one jump and day by day with a reload: identical postings on the account to the cent.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once",
+      "closes": "Insufficient funds: played down with Move Money (Deutsche Bank's €11.55 payment fee worked from its price list), refused on the screen and by the command with what to pay in, the figure under it; paid in from Chase as a payment abroad; closed six days later for that day's share, €5.79, once, across a reload; refused again after.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+      "closes": "Cancel It in the cooling-off period: the share counted from the day it opened, said under Cancel It, with the overdraft interest in one refusal; paid in and pressed, both charged once; refused after; the same after a reload. FIXTURE: no played life's German account is in its cooling-off (opened before Yale; every country's period ends by 21 August 2026, probed).",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back",
+      "closes": "€12.00 ($13.04) at midnight on 25 August 2026; before the press the line says €2.24 ($2.43) of fees (495 × 14 / 31 = 223.5) and €10.32 ($11.22) back (1,200 × 314 / 365 = 1,032.3, 51 days used); pressed, both posted once against Bank Fees, balanced, everything that left at the close what it held; a second press refused; reloaded to 1 September 2027, no second refund and no year's fee on the closed account; breaches 0.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days",
+      "closes": "The second year 365 days on, once; twins identical to the cent; the close's three parts (two months kept, one day of 30 at 17 cents, 357 days back at €11.74) said and posted.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank",
+      "closes": "An account opened in the life is charged ahead its first night; the refund counts in the refusal's figure (closingFeesOf nets it), so an empty account cancels; €10.49 sent on. FIXTURE: no played life opens a German account.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
+      "closes": "cardFeePaid set to nothing once given back: one refund.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.month_end",
+    "testsAdded": [
+     {
+      "title": "banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, free > FIXTURE, Berlin: an AktivKonto opened beside Commerzbank on Monday 5 January is told on Your Banks that closing charges nothing, January being the month it opened; closed on 31 January at 10 PM nothing is charged; its twin kept is charged nothing at January’s end, and closed on 10 February €2.46, 10 of February’s 28 days",
+      "closes": "January free at its end and on a close; February accrued at its end; closed on 10 February for 10 of 28 days. FIXTURE: a played life's Deutsche Bank account was opened before Yale.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November",
+      "closes": "Five “Monthly fee: Girokonto” of €4.90 ($5.33), each at midnight on the 1st, totaling the €24.50 the quarterly closings took; no quarterly posting; the Accounts panel says “This month’s is charged November 1, 2026”; twins identical.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more",
+      "closes": "Between ING's month's end and the 1st the kept month is said and charged on the close, once; the 1st posts nothing on the closed account.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing",
+      "closes": "Five “Monthly fee: GiroKonto” at 11 PM on each month's last day; no quarterly posting; the panel says the day; Deutsche Bank's AktivKonto still posts €13.80 at 30 September's closing and no monthly fee.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.arrange_overdraft",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch_complete",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_switch",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.stop_balance_transfer",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.take_overrun_loan",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.money_transfer",
+    "testsAdded": [
+     {
+      "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+      "closes": "This command refused on six home-account lives, nothing posted.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/scope-money.test.ts",
+  "rows": [
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with 10 cents in it is refused for the 16 cents its €4.90 month comes to on its first day, on the panel, which says the figure; with €100, Cancel It charges the 16 cents, as Germany lets the bank, and sends €99.84 on",
+      "closes": "The audit's cited Cancel It test, renamed: one day of 31, 16 cents, and the figure said before the press.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
+      "closes": "The audit's cited Close It test, renamed: the same share, refused and charged.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_new",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.arrange_overdraft",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch_complete",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.money_transfer",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/accountlife.test.ts",
+  "rows": [
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "savings > settles a German current account’s quarter and this month’s fee to the day when it goes, and once",
+      "closes": "The audit's cited quarter test, renamed: €3.00 kept and 14 of February's 28 days, €3.45; a second settling charges nothing.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_new",
+    "testsAdded": [
+     {
+      "title": "savings > settles a German current account’s quarter and this month’s fee to the day when it goes, and once",
+      "closes": "The audit's cited quarter test, renamed: €3.00 kept and 14 of February's 28 days, €3.45; a second settling charges nothing.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/statements.test.ts",
+  "rows": [
+   {
+    "id": "bank.month_end",
+    "testsAdded": [
+     {
+      "title": "Germany’s quarterly closing > charges the quarter’s fees in one at the end of March, not month by month",
+      "closes": "The quarter's closing takes February's and March's, 2 × €6.90 (until 2026-10-16 three).",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "an account’s statement > adds up what came in and went out, and counts interest after tax and the fees",
+      "closes": "The statement's fees, 2 × €6.90.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/integration-home-lending.test.ts",
+  "rows": [
+   {
+    "id": "bank.arrange_overdraft",
+    "testsAdded": [
+     {
+      "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad, with no Arrange It and no loan form, as its primary account or not; the commands refuse in the same words",
+      "closes": "A home bank's Borrowing refuses in its words.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-coverage",
+  "testFile": "tests/remaining-09-hardship.test.ts",
+  "rows": [
+   {
+    "id": "health.request_hardship",
+    "testsAdded": [
+     {
+      "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December",
+      "closes": "The notice of 1 November 2027 in its words (answered by 5 December, decided 6 December, ended with December where unanswered, all worked by hand); Papers’ line and the hardship drawn; pressed on 10 November: renewed to 1 May 2028, said once, September met by the stay; the decision passes; covered into January; once each across a reload; the same in one jump as a day at a time with two reloads; the twin who doesn’t ask ended with December.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed",
+      "closes": "No stay: Papers says “No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.” and draws no button; the command is refused in those words with the save as it was.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-coverage",
+  "testFile": "tests/remaining-09-coverage.test.ts",
+  "rows": [
+   {
+    "id": "tax.federal_lien_withdraw",
+    "testsAdded": [
+     {
+      "title": "tax.federal_lien_withdraw: an Inherited family’s student who files nothing > PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien",
+      "closes": "The Inherited family’s student at Capital One files nothing: the 2027 substitute assessed 485 days after the 18 April 2028 due date, the LT11 140 days on files the notice of lien over $10,000; the levy pays it; released 30 days on; the withdrawal drawn shut and refused while 2028’s return is unfiled, pressed once it’s filed; withdrawn 30 days on, said once across a reload. The Wealthy family’s twin: an LT11 under $10,000, no lien.",
+      "evidenceKind": "render"
      }
     ],
     "gapsClosed": [],

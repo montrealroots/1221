@@ -1,0 +1,864 @@
+{
+ "key": "coverage",
+ "on": "2026-10-16",
+ "pass": "brief 09 (docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt), section 5",
+ "against": "7e531122, with the banking and journeys areas at work in the same tree",
+ "checklist": "docs/verification/remaining-09/coverage-checklist.json",
+ "totals": {
+  "countedBy": "docs/verification/audit/*.json counted by status and by verification.class, as node tools/coverage.mjs counts them for docs/GAMEPLAY-COVERAGE.md’s two tables (its --check exit 0 on each)",
+  "before": {
+   "at": "7e531122, node tools/coverage.mjs --check exit 0",
+   "rows": 330,
+   "statuses": {
+    "verified": 288,
+    "partial": 2,
+    "deferred": 16,
+    "unresolved": 13,
+    "legacy": 3,
+    "informational": 8
+   },
+   "verifiedOfWhatCanBe": "288 of 303, 95%",
+   "classes": {
+    "Player Journey": {
+     "rows": 289,
+     "verified": 287,
+     "partial": 2
+    },
+    "Deferred Scope": {
+     "rows": 16,
+     "deferred": 16
+    },
+    "Retained Engine, On Labelled Fixtures": {
+     "rows": 13,
+     "unresolved": 13
+    },
+    "Older Saves Only": {
+     "rows": 3,
+     "legacy": 3
+    },
+    "Said Back, Deciding Nothing": {
+     "rows": 8,
+     "informational": 8
+    },
+    "Documentation And Static Checks": {
+     "rows": 1,
+     "verified": 1
+    }
+   }
+  },
+  "after": {
+   "at": "the tree regenerated at 09:05 on 2026-10-16 over 280f1a55 (the banking and genres areas' results folded; the journeys area's not yet written), node tools/coverage.mjs and --check exit 0",
+   "rows": 339,
+   "statuses": {
+    "verified": 299,
+    "partial": 1,
+    "deferred": 16,
+    "unresolved": 12,
+    "legacy": 3,
+    "informational": 8
+   },
+   "verifiedOfWhatCanBe": "299 of 312, 96%",
+   "classes": {
+    "Player Journey": {
+     "rows": 299,
+     "verified": 298,
+     "partial": 1
+    },
+    "Deferred Scope": {
+     "rows": 16,
+     "deferred": 16
+    },
+    "Retained Engine, On Labelled Fixtures": {
+     "rows": 12,
+     "unresolved": 12
+    },
+    "Older Saves Only": {
+     "rows": 3,
+     "legacy": 3
+    },
+    "Said Back, Deciding Nothing": {
+     "rows": 8,
+     "informational": 8
+    },
+    "Documentation And Static Checks": {
+     "rows": 1,
+     "verified": 1
+    }
+   }
+  }
+ },
+ "tests": [
+  "tests/remaining-09-coverage.test.ts",
+  "tests/remaining-09-coverage-guard.test.ts",
+  "tests/remaining-09-hardship.test.ts"
+ ],
+ "checks": [
+  {
+   "check": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-hardship.test.ts",
+   "exit": 0,
+   "result": "2 passed"
+  },
+  {
+   "check": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-coverage.test.ts",
+   "exit": 0,
+   "result": "5 passed"
+  },
+  {
+   "check": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-coverage-guard.test.ts",
+   "exit": 0,
+   "result": "1 passed"
+  },
+  {
+   "check": "the cited tests, one file at a time: briefs (30), workbook (8), trace-commands (3), ensemble (11), defects-g8-15 (4), fitness (7), stage-interpretation (12), defects-g8-10 (7), evidence-g07-life (29), defects-g31-1 (3), evidence-g20-school (27), defects-g8-9 (7), defects-g8-13 (7), direction (3), guide-examples-coursework (9), evidence-g06-life (33), interpretation-journey (1), defects-g8-11 (7), scope-taxpapers (17), remaining-tax (20), liens-and-arrangements (15)",
+   "exit": 0,
+   "result": "every file passed"
+  },
+  {
+   "check": "npx tsc -b --noEmit",
+   "exit": 0
+  },
+  {
+   "check": "npx eslint tests/remaining-09-coverage.test.ts tests/remaining-09-coverage-guard.test.ts tests/remaining-09-hardship.test.ts",
+   "exit": 0
+  },
+  {
+   "check": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "check": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "check": "node tools/tics.mjs --check",
+   "exit": 0,
+   "note": "exit 1 at 08:00 on src/ui/components/CourseworkPane.tsx:69, the journeys area’s file, then 0 once that area changed it"
+  },
+  {
+   "check": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "check": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "check": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/deciders.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/devmap.mjs --check",
+   "exit": 1,
+   "note": "behind the new tests of three areas; not written (see foundOutside)"
+  },
+  {
+   "check": "node tools/traceability.mjs",
+   "exit": 1,
+   "note": "the same"
+  },
+  {
+   "check": "the pipeline in the README’s order, in the tree (scope-fold, remaining-fold, collect-checks, scope-prep, merge-review, resolve-titles, merge-review, resolve-titles)",
+   "exit": 0
+  },
+  {
+   "check": "node tools/coverage.mjs",
+   "exit": 0,
+   "result": "339 items, 299 verified, 1 partial, 12 unresolved, 16 deferred, 3 legacy, 8 informational"
+  },
+  {
+   "check": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "check": "node tools/capabilities.mjs --write",
+   "exit": 0
+  },
+  {
+   "check": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "result": "64 capabilities; 158 player commands, agreed on the 158 both name"
+  },
+  {
+   "check": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "note": "the launching session’s matrix (see foundOutside)"
+  }
+ ],
+ "items": [
+  {
+   "id": "coverage09.1-brief.prepare",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "brief.reader: a classmate who reads with you, rehearsed in > PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her, 5/9 of the way’s rehearsal at the first and half of each step’s gain on what’s left after; another classmate, or the same after the recording, starts from nothing; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together; across a reload",
+     "kind": "command+reload",
+     "proves": "Each rehearsal’s gain shared with the reader classmate at BRIEF.reader.rehearse, against the way’s PLAYING.gainShare, worked by hand (5/9 at the first)."
+    },
+    {
+     "file": "tests/briefs.test.ts",
+     "title": "a brief, played > is chosen, prepared and taped, kept with its purpose, and each step spends its time",
+     "kind": "command",
+     "proves": "A step lives its 30 minutes; the take after preparing is better than before."
+    },
+    {
+     "file": "tests/evidence-g07-life.test.ts",
+     "title": "plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much",
+     "kind": "command",
+     "proves": "The breakdown’s share by focus (1.1 against 0.52) and imagination’s growth, worked by hand."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/briefs.ts (copy)",
+     "find": "if (rec.reader) rec.reader.prep = r3(clamp(rec.reader.prep + BRIEF.reader.rehearse * gain * (1 - rec.reader.prep), 0, 1));",
+     "replace": "(deleted)",
+     "test": "tests/remaining-09-coverage.test.ts -t \"brief.reader\"",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s brief.prepare, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-brief.choose",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/briefs.test.ts",
+     "title": "a brief, played > is chosen, prepared and taped, kept with its purpose, and each step spends its time",
+     "kind": "command",
+     "proves": "A change of reading keeps half the breakdown; the take’s purpose is another reading."
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "brief.reader: a classmate who reads with you, rehearsed in > PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her, 5/9 of the way’s rehearsal at the first and half of each step’s gain on what’s left after; another classmate, or the same after the recording, starts from nothing; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together; across a reload",
+     "kind": "command",
+     "proves": "A way chosen through the command is rehearsed in at 0.9 of each step’s gain."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s brief.choose, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-brief.reader",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "brief.reader: a classmate who reads with you, rehearsed in > PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her, 5/9 of the way’s rehearsal at the first and half of each step’s gain on what’s left after; another classmate, or the same after the recording, starts from nothing; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together; across a reload",
+     "kind": "command+reload",
+     "proves": "Maya chosen first learns it at 5/9 of the way’s rehearsal, then half of each step’s gain on what’s left; another classmate and Maya after the recording start from nothing; the same chosen again keeps it, across a reload; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/briefs.ts (copy)",
+     "find": "if (rec.reader) rec.reader.prep = r3(clamp(rec.reader.prep + BRIEF.reader.rehearse * gain * (1 - rec.reader.prep), 0, 1));",
+     "replace": "(deleted)",
+     "test": "tests/remaining-09-coverage.test.ts -t \"brief.reader\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/briefs.ts (copy)",
+     "find": "if (rec.reader?.mate !== mate) rec.reader = { mate, prep: 0 };",
+     "replace": "if (rec.reader?.mate !== mate) rec.reader = { mate, prep: rec.reader?.prep ?? 0 };",
+     "test": "tests/remaining-09-coverage.test.ts -t \"brief.reader\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/briefs.ts (copy)",
+     "find": "return { name: mate.name, prep: rec.reader.prep, timing,",
+     "replace": "return { name: mate.name, prep: 1, timing,",
+     "test": "tests/remaining-09-coverage.test.ts -t \"brief.reader\"",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s brief.reader, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-school.choose_playing",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "a scene for class: its way of playing and a segment’s way kept, read by the showing the clock runs > PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet, a segment played its own way and kept: the showing, run by the clock after a reload, reads the way’s rehearsal and its lean, and plays that segment its own way; its twin who chose and kept nothing is shown with neither",
+     "kind": "command+clock+reload",
+     "proves": "Trifles, the scene study the clock sets on 30 August 2026 and shows on 8 September: Driven chosen and rehearsed in, reloaded, and the showing the clock runs keeps the way’s rehearsal as its approach preparation (at least what was rehearsed in before), a required mark and Driven’s lean on responsiveness, where the twin who chose nothing has none."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/coursework.ts (copy)",
+     "find": "const ctx = { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key };",
+     "replace": "const ctx = { ...workContext(a, parts, required, { chosenAt: 0, prep: 0 }), condition: conditionAt(sim, person, when), key };",
+     "test": "tests/remaining-09-coverage.test.ts -t \"scene for class\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/coursework.ts (copy)",
+     "find": "if (sidesOf(playing).length) { prep.approach = playing!.prep; req.approach = PLAYING.complete; }",
+     "replace": "if (sidesOf(playing).length) { req.approach = PLAYING.complete; }",
+     "test": "tests/remaining-09-coverage.test.ts -t \"scene for class\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/coursework.ts (copy)",
+     "find": "const ctx = { ...workContext(a, parts, required), condition: conditionAt(sim, person, when), key };",
+     "replace": "const ctx = { ...workContext(a, parts, required, undefined), condition: conditionAt(sim, person, when), key };",
+     "test": "tests/remaining-09-coverage.test.ts -t \"scene for class\"",
+     "killed": false,
+     "note": "Not a mutation: the default parameter takes undefined as a.playing, so the code was unchanged; it survived for that, and P1b and P1c were run in its place."
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s school.choose_playing, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-school.choose_part_playing",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "school.choose_part_playing: a part’s way, kept across a reload > PLAYER JOURNEY: the first spring’s part played Driven from the read-through, rehearsed in at two calls, saved and loaded, and rehearsed in at the third as far as the twin that wasn’t reloaded",
+     "kind": "command+clock+reload",
+     "proves": "The first spring’s part, Driven from the read-through: two calls rehearse it in, the save reloaded keeps it, and the third call rehearses it in as far as in the twin not reloaded."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/production.ts (copy)",
+     "find": "if (stage !== 'read') { rehearseChoice(p.playing, 0.3); rehearseWays(p.book, 0.3); }",
+     "replace": "if (stage !== 'read') { rehearseWays(p.book, 0.3); }",
+     "test": "tests/remaining-09-coverage.test.ts -t \"choose_part_playing\"",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s school.choose_part_playing, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-work.identify",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "a scene for class: its way of playing and a segment’s way kept, read by the showing the clock runs > PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet, a segment played its own way and kept: the showing, run by the clock after a reload, reads the way’s rehearsal and its lean, and plays that segment its own way; its twin who chose and kept nothing is shown with neither",
+     "kind": "command+clock",
+     "proves": "A problem the class scene’s forecast shows named through the command, deciding the ways offered."
+    },
+    {
+     "file": "tests/workbook.test.ts",
+     "title": "the loop, on a brief > names a problem, tries an adjustment it admits, and keeps the evidence",
+     "kind": "command",
+     "proves": "A way refused before a problem is named; named, the way it admits tried."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s work.identify, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-work.try",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "a scene for class: its way of playing and a segment’s way kept, read by the showing the clock runs > PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet, a segment played its own way and kept: the showing, run by the clock after a reload, reads the way’s rehearsal and its lean, and plays that segment its own way; its twin who chose and kept nothing is shown with neither",
+     "kind": "command+clock",
+     "proves": "A segment played its own way tried on a class scene set by the clock, waiting to be kept."
+    },
+    {
+     "file": "tests/workbook.test.ts",
+     "title": "the loop, on a brief > names a problem, tries an adjustment it admits, and keeps the evidence",
+     "kind": "command",
+     "proves": "Half an hour on the clock, the segment’s figure rising, the take’s forecast reading it."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s work.try, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-work.settle",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "a scene for class: its way of playing and a segment’s way kept, read by the showing the clock runs > PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet, a segment played its own way and kept: the showing, run by the clock after a reload, reads the way’s rehearsal and its lean, and plays that segment its own way; its twin who chose and kept nothing is shown with neither",
+     "kind": "command+clock+reload",
+     "proves": "The way kept, reloaded, and read by the showing the clock runs: the segment leaned as its side leans, rehearsed in at least as far as when it was kept; the twin’s showing plays no segment its own way."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/coursework.ts (copy)",
+     "find": "}, a.book);",
+     "replace": "}, undefined);",
+     "test": "tests/remaining-09-coverage.test.ts -t \"scene for class\"",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s work.settle, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.1-life.look_after",
+   "before": "No audit row: traced in docs/verification/connected-journey/TRACE.md and named by a live capability, Implemented in the completion matrix as its capability’s limits said.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "life.look_after, as a command > PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was; a shower returns its time and what it did to each dial, which is the twin’s who let the same twenty minutes pass, and no more",
+     "kind": "command",
+     "proves": "An action not on the menu, and none, refused in its words with the save byte for byte as it was; a shower’s time and what it returns as changed are the dials’ moves against the twin who let the same twenty minutes pass."
+    },
+    {
+     "file": "tests/remaining-09-coverage-guard.test.ts",
+     "title": "life.look_after’s payment > GUARD: a meal whose payment fails after the menu offered it is refused, “The payment didn’t go through.”, the clock, the dials and the ledger as they were; with the payment going through, the same meal is eaten and paid (FIXTURE: spend refused by a test double)",
+     "kind": "fixture (GUARD)",
+     "proves": "The payment refused after the refusal passed: “The payment didn’t go through.”, the save as it was; with the payment going through, eaten and paid once."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The coverage page’s standard (docs/GAMEPLAY-COVERAGE.md; tools/coverage.mjs): every command a live capability names is a row, read against its code and tests; brief 09, section 5",
+     "citation": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "src/engine/systems/life.ts (copy)",
+     "find": "const action = LOOKING_AFTER[p.action] ? p.action : undefined;",
+     "replace": "const action = (p.action ?? 'unwind') as LookAfter;",
+     "test": "tests/remaining-09-coverage.test.ts -t \"life.look_after\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/life.ts (copy)",
+     "find": "if (moved !== 0) changed[key] = moved;",
+     "replace": "changed[key] = moved;",
+     "test": "tests/remaining-09-coverage.test.ts -t \"life.look_after\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/life.ts (copy)",
+     "find": "if (action === 'eat' && !spend(s, person, cost, 'A meal', 'food')) throw new CommandError('The payment didn’t go through.');",
+     "replace": "if (action === 'eat') spend(s, person, cost, 'A meal', 'food');",
+     "test": "tests/remaining-09-coverage-guard.test.ts",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "row": "docs/verification/pipeline/inputs/added-rows.json’s life.look_after, read against 7e531122; verified (its review’s verdict), its class a player journey",
+   "tutorial": "",
+   "guide": "",
+   "classification": "required reachable behavior (the dispatch); necessary defensive guard (the payment refused after the refusal passed), kept and tested"
+  },
+  {
+   "id": "coverage09.2-hardship-renewal",
+   "before": "partial (its review of 2026-10-16): a renewal’s notice answered by a hardship (grantPending’s renewal branch) played by no test",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-hardship.test.ts",
+     "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December",
+     "kind": "render+command+clock+reload+jump",
+     "proves": "The notice of 1 November 2027 in its words (answered by 5 December, decided 6 December, ended with December where unanswered, all worked by hand); Papers’ line and the hardship drawn; pressed on 10 November: renewed to 1 May 2028, said once, September met by the stay; the decision passes; covered into January; once each across a reload; the same in one jump as a day at a time with two reloads; the twin who doesn’t ask ended with December."
+    },
+    {
+     "file": "tests/remaining-09-hardship.test.ts",
+     "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed",
+     "kind": "render+command",
+     "proves": "No stay: Papers says “No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.” and draws no button; the command is refused in those words with the save as it was."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "A short-term hardship, subject to a request, for a stay in hospital",
+     "citation": "42 CFR 435.555(d)(1) (CMS-2454-IFC of 3 June 2026), as systems/health.ts reads it",
+     "effective": "2027-01-01",
+     "read": "2026-10-16 (the code’s citation; not fetched again this pass)"
+    },
+    {
+     "rule": "A notice of noncompliance: received five days after its date, thirty days from receipt to answer, covered meanwhile",
+     "citation": "42 CFR 435.558, as systems/health.ts reads it",
+     "effective": "2027-01-01",
+     "read": "2026-10-16 (the code’s citation; not fetched again this pass)"
+    },
+    {
+     "rule": "Connecticut’s six-month look-back at renewal",
+     "citation": "The Connecticut Hospital Association’s HUSKY D materials of 25 August 2026 (PUBLIC_COVER.workLookBack)",
+     "effective": "2027-01-01",
+     "read": "2026-10-16 (the code’s citation)"
+    }
+   ],
+   "assumptions": [
+    "The stay is forced (TEST SETUP: the week of 13 September 2027’s first illness draw a “yes”, every other week’s a “no”), as tests/remaining-health-eligibility.test.ts forces the application’s; any played week can draw a stay."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/health.ts (copy)",
+     "find": "applyRenewal(sim, person, prog, { kind: 'medicaid', band: pend.band }, at, pend.renewAt!, met);",
+     "replace": "void met;",
+     "test": "tests/remaining-09-hardship.test.ts",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/health.ts (copy)",
+     "find": "e.care === 'stay' && pend.months.includes(monthKey(e.at)))) return",
+     "replace": "e.care === 'stay' && pend.months.includes(monthKey(e.at)) && false)) return",
+     "test": "tests/remaining-09-hardship.test.ts",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/health.ts (copy)",
+     "find": "const met = engagement(s, person, pend.months, saveCurrency(s.universe), true)!;",
+     "replace": "const met = engagement(s, person, pend.months, saveCurrency(s.universe), false)!;",
+     "test": "tests/remaining-09-hardship.test.ts",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "rowWords": "health.request_hardship’s tests and issue are written in inputs/added-rows.json, where the row’s words are kept; its verdict moved to verified by inputs/after-check.json.",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "before": "13 unresolved, each saying in four parts what a Yale player meets (2026-10-16, the last pass)",
+   "status": "Decision Required",
+   "disposition": "implemented (tax.federal_lien_withdraw, reached by play and verified); owner decision (the other twelve)",
+   "rows": [
+    {
+     "row": "tax.federal_lien_withdraw",
+     "status": "Implemented And Verified",
+     "found": "Reachable: the Inherited family’s student who files nothing owes the IRS over $10,000 on 2027 by its LT11; played to the withdrawal. Moved unresolved to verified on its played test (inputs/after-check.json)."
+    },
+    {
+     "row": "bank.cancel_new",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.arrange_overdraft",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.take_overrun_loan",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "card.money_transfer",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.switch",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.switch_complete",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.cancel_switch",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "bank.stop_balance_transfer",
+     "status": "Decision Required",
+     "found": "Out of every current life’s reach, probed across all 55 banks abroad SLATE has research on (bank-rows probe below); reached only on lives living abroad, which went with the travel (scope reset of 2026-10-09). Whether such a row stays Unresolved or is Deferred is the owner’s decision open since 2026-10-15 (CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), which brief 09 doesn’t settle."
+    },
+    {
+     "row": "tax.catch_up_state_plan",
+     "status": "Decision Required",
+     "found": "Out of reach: Connecticut, the only state a life files in, ends its plan at the first payment missed; reached only by a life filing in New York, which needs a life living there (removed with the travel). The same decision as the bank rows’."
+    },
+    {
+     "row": "tax.lien_dispute",
+     "status": "Decision Required",
+     "found": "Out of reach: Connecticut’s lien always secures tax owed; the probe’s Inherited student who files nothing has three Connecticut liens, none in error, since DRS’s assessment is the return’s own figure. Reached only by California’s on fixtures, a life living elsewhere. The same decision."
+    },
+    {
+     "row": "tax.request_waiver",
+     "status": "Decision Required",
+     "found": "Out of reach: Oregon’s three-year penalty alone, and every life files in Connecticut. The same decision."
+    },
+    {
+     "row": "tax.amend",
+     "status": "Decision Required",
+     "found": "Out of reach: no writer changes a filed year’s record; the command’s own refusal (nothing to amend) is played. Its processing is tested on fixtures with a corrected W-2 set by hand. Not a removed system: nothing in scope reports a year’s pay late or corrects it. The decision: add such an event (a corrected W-2 for a year’s work-study, say), or keep the row as the engine on fixtures."
+    }
+   ],
+   "evidence": [
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "tax.federal_lien_withdraw: an Inherited family’s student who files nothing > PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien",
+     "kind": "render+command+clock+reload",
+     "proves": "The Inherited family’s student at Capital One files nothing: the 2027 substitute assessed 485 days after the 18 April 2028 due date, the LT11 140 days on files the notice of lien over $10,000; the levy pays it; released 30 days on; the withdrawal drawn shut and refused while 2028’s return is unfiled, pressed once it’s filed; withdrawn 30 days on, said once across a reload. The Wealthy family’s twin: an LT11 under $10,000, no lien."
+    }
+   ],
+   "probes": {
+    "bankRows": {
+     "script": "probe/coverage09/bank-rows.ts (git-ignored; run as `npx vite-node probe/coverage09/bank-rows.ts`)",
+     "ran": "2026-10-16 at 7e531122 with the areas’ work in the tree",
+     "summary": "110 lives: the 55 banks abroad SLATE has research on (allHomeTerms), each with the account kept at home opened on 1 August 2026 and, for a life there from September 2008, on the day she reached the bank’s opening age; a Comfortable family at Chase. Japan Post Bank refused at creation (2 lives); on the other 108: no account in a cooling-off, Cancel It refused on each (“Its cooling-off period has passed, or there isn’t one here for it.”), the overdraft refused in each bank’s words, “Your bank has offered no loan for an overrun.”, the only card the Chase Freedom Unlimited (“doesn’t offer money transfers”), and a switch to the bank kept at home refused (“That isn’t a bank where you live.”). Not one of the six reached.",
+     "output": "kept in the scratchpad as bank-all.txt; its counts here"
+    },
+    "taxLien": {
+     "script": "probe/coverage09/tax-lien.ts inherited (and wealthy)",
+     "ran": "2026-10-16",
+     "output": [
+      "2029-04-19 The IRS Figured Your 2027 Return: $13,147.00",
+      "2029-08-17 The IRS Assessed Your 2027 Return: $13,631.09",
+      "2030-01-04 The IRS Filed A Notice Of Federal Tax Lien: $14,244.18 on your 2027 return",
+      "2030-02-03 The IRS Levied Your Accounts: $14,374.22 for your 2027 return, now paid",
+      "2030-03-05 Your Federal Tax Lien Is Released",
+      "Form 12277 refused (“2028’s isn’t”) until 2028’s substitute was assessed on 2030-08-16; asked then, withdrawn 2030-10-10",
+      "Connecticut: liens on 2026 ($413.14), 2027 ($4,680.26) and 2028 ($2,406.60), each levied 30 days on, none in error",
+      "The Wealthy family’s twin: the IRS’s 2027 substitute for $10.32, its LT11 without a lien"
+     ]
+    },
+    "taxInherited": {
+     "script": "probe/coverage09/tax-inherited.ts",
+     "output": [
+      "2026: income $29,428.94 ($27,772.94 of interest), the IRS owed $1,351.47, Connecticut $339.41",
+      "2027: income $83,640.65 ($80,190.65 of interest), the IRS owed $9,570.94, Connecticut $4,000.24"
+     ]
+    }
+   },
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The notice of federal tax lien filed where $10,000 or more is unpaid; withdrawal on Form 12277 after release with the last three years’ returns filed",
+     "citation": "IRM 5.12.2.6, 5.12.9.9; IRC 6320, 6323(j), 6325(a), as systems/taxreturn.ts reads them (FEDERAL_LIEN)",
+     "effective": "as the code records",
+     "read": "2026-10-16 (the code’s citation; not fetched again)"
+    }
+   ],
+   "assumptions": [
+    "A player who files nothing for years is a choice play allows (no File It is pressed), as tests/remaining-tax.test.ts’s non-filers are; the Inherited family and Capital One are the creation screen’s."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/taxreturn.ts (copy)",
+     "find": "if (unfiled) return `The IRS withdraws one after payment only",
+     "replace": "if (unfiled && false) return `The IRS withdraws one after payment only",
+     "test": "tests/remaining-09-coverage.test.ts -t \"federal_lien_withdraw\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts (copy)",
+     "find": "threshold: 10_000_00, atStep: 3,",
+     "replace": "threshold: 15_000_00, atStep: 3,",
+     "test": "tests/remaining-09-coverage.test.ts -t \"federal_lien_withdraw\"",
+     "killed": true
+    },
+    {
+     "file": "src/engine/systems/taxreturn.ts (copy)",
+     "find": "threshold: 10_000_00, atStep: 3,",
+     "replace": "threshold: 10_00, atStep: 3,",
+     "test": "tests/remaining-09-coverage.test.ts -t \"federal_lien_withdraw\"",
+     "killed": true
+    }
+   ],
+   "rowText": {
+    "tax.federal_lien_withdraw": {
+     "issue": "Until 2026-10-16 (brief 09) this said it was out of reach: a student’s year owed the IRS under two thousand dollars (her 2027 LT11 for $1,789.55, a Comfortable family’s). Read again that day, the creation screen’s Inherited family keeps $2.6 million, $80,190.65 of interest in 2027 at Capital One’s 3.00%, and a student who files nothing owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien: played from creation through the levy, the release, Form 12277 refused while 2028’s return is unfiled and pressed once it’s filed, to the withdrawal (tests/remaining-09-coverage.test.ts). A lien filed in error is still reached only on New York FIXTURE lives (tests/remaining-tax.test.ts), and paid, released and withdrawn on one given $150,000 of wages by hand (tests/liens-and-arrangements.test.ts). SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate."
+    }
+   },
+   "ownerDecision": {
+    "what": "Whether the twelve rows reached only through a life living abroad or in another state (the eight bank rows, tax.catch_up_state_plan, tax.lien_dispute, tax.request_waiver), and tax.amend, which nothing in scope reaches, stay Unresolved, counted against completion, or move to Deferred Scope.",
+    "evidence": "The bank-rows probe (110 lives, every bank abroad SLATE has research on) reached none of the six bank commands; Connecticut is the only state a life files in, and its plan, liens and penalties don’t reach the three state rows; no writer changes a filed year. Each row’s engine is tested on labelled fixtures (its acceptance.engine).",
+    "options": [
+     "Keep them Unresolved: the denominator holds 12 rows no current player reaches, and completion is reported short by them (the page’s 95% stays under 100% for them alone).",
+     "Move them to Deferred Scope, as health.prepay was: nothing that works is hidden, the engine and its fixture tests stay, and the rows leave the denominator with their four parts kept.",
+     "For tax.amend alone, add an in-scope event that changes a filed year (a corrected W-2 for a year’s work-study), which would make it reachable; a product choice, since no source says Yale issues one."
+    ],
+    "recommended": "Move the eleven reachable only through a removed system to Deferred Scope, since the owner removed the travel that reached them and brief 09 bars restoring it; keep tax.amend Unresolved until the owner says whether a corrected W-2 belongs in the game."
+   },
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage09.4-fold",
+   "before": "remaining-fold.cjs read docs/verification/remaining/ alone, and no row added since the review of 2026-10-13 took evidence",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "docs/verification/pipeline/remaining-fold.cjs",
+     "title": "reads remaining/ and then remaining-09/",
+     "kind": "static (tools)",
+     "proves": "Run in the README’s order, it folds both folders; an added row takes evidence, and row text for one is listed and left out."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  }
+ ],
+ "foundOutside": [
+  "health.request_hardship on a renewal whose program has an end set during its thirty days (prog.until, as endAhead sets it for status lost) clears the notice and is toasted as granted with nothing renewed: grantPending returns before applyRenewal (systems/health.ts:1027-1029 at 7e531122) and hardshipRefusal doesn’t ask the program. No played life was found to reach it (a citizen’s HUSKY D isn’t ended for status); not changed, the health systems being the journeys area’s this pass.",
+  "node tools/completion-matrix.mjs --check (in the gate from 1310bc94) exits 1 on the tree: on the banking area’s last-pass titles its own pass renamed (inputs/renames.json; the matrix doesn’t follow renames, as remaining-fold.cjs didn’t until this area taught it), on banking.2’s probes cited as evidence that aren’t files, on the handoff’s completion line, and on the matrix being behind its sources (this area’s regenerated audit among them). The matrix is the launching session’s; not changed.",
+  "node tools/devmap.mjs --check and node tools/traceability.mjs exit 1: docs/DEVMAP.md and docs/TRACEABILITY.md list the test files that issue each command, and the banking area’s, the journeys area’s and this area’s new tests are in neither (--write regenerates them). Generated files of the whole tree; left for the end.",
+  "The banking area gives the eight bank rows “Implemented, Verification Incomplete” (banking-result.json, banking.2.*) where this area gives them “Decision Required”: both read them as implemented on fixtures and out of every current player’s reach. This area’s reason: nothing in scope can verify them without restoring the travel the owner removed, so only the owner’s decision moves them.",
+  "docs/capabilities.json’s limits for look-after-yourself and tax-liens-and-waivers still said rows were partial or unresolved that have been verified since 2026-10-13 and 2026-10-15; the sentences this area’s rows and tests touched are dated and corrected, and what each limits says isn’t checked is otherwise as it stood (the coverage page’s rows are the current record).",
+  "The fold lists, as at 7e531122, two health-billing citations of describes rather than tests (tests/scope-health.test.ts ‘health.choose_clinic, New Haven’s two practices’ and ‘health.enroll and health.appointment: …’) and health-eligibility’s health.dental.why as no field; the last pass’s, left out as before."
+ ]
+}
