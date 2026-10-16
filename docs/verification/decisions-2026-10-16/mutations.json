@@ -42,6 +42,27 @@
   "figure": "o.ST3R.verdict.d.casesWithADefect"
  },
  {
+  "id": "st3-segments-twice",
+  "clause": "ST3-R (d)",
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st3",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/piece.ts",
+    "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+    "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+   }
+  ],
+  "verdict": "o.ST3R.verdict.d.met",
+  "figure": "o.ST3R.verdict.d.casesWithADefect"
+ },
+ {
   "id": "st3-leans",
   "clause": "ST3-R (b)",
   "cmd": "npx",

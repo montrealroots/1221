@@ -10,13 +10,13 @@
  */
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
 import { GRAIN } from '../src/engine/content/interpretation';
-import { PIECE } from '../src/engine/content/piece';
+import { PIECE, TONE_LEAN } from '../src/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '../src/engine/content/material';
 import { SCENES, templateById } from '../src/engine/content/coursework';
-import { TASK_PROFILES } from '../src/engine/content/tasks';
+import { EVALUATION, TASK_PROFILES, type Dimension } from '../src/engine/content/tasks';
 import { difficultyOf } from '../src/engine/systems/coursework';
-import { replay, replayAs, frozenPerformer, type EvalContext, type Evaluation, type Limit, type Performer, type WorkRecord } from '../src/engine/systems/evaluation';
-import { judgePiece, judgePieceExact, loadOf, unitSegments } from '../src/engine/systems/piece';
+import { leanedWeights, replay, replayAs, frozenPerformer, type EvalContext, type Evaluation, type Limit, type Performer, type WorkRecord } from '../src/engine/systems/evaluation';
+import { judgePiece, judgePieceExact, loadOf, unitSegments, type PieceSpec } from '../src/engine/systems/piece';
 import { materialContext, misfitOf } from '../src/engine/systems/material';
 import { sceneOfMaterial, suitabilityOf } from '../src/engine/systems/interpretation';
 import { createSave, loadSave } from '../src/engine';
@@ -47,6 +47,7 @@ function scenePieceOf(m: MaterialProfile, scale: Scale, o: { key?: string; prep?
 }
 const judgeOn = (m: MaterialProfile, p: Performer, scale: Scale, o: { key?: string; prep?: number } = {}): Evaluation => { const { ctx, spec } = scenePieceOf(m, scale, o); return judgePiece(SEED, p, ctx, spec); };
 const exactOn = (m: MaterialProfile, p: Performer, scale: Scale): number => judgeOn(m, p, scale).exact!;
+const defectsOf = (m: MaterialProfile, p: Performer, scale: Scale, shown: Evaluation): string[] => { const { ctx, spec } = scenePieceOf(m, scale); return roundingDefects(shown, judgePieceExact(SEED, p, ctx, spec), ctx, spec); };
 const withGrain = <T,>(strength: number, f: () => T): T => { const s0 = GRAIN.strength; Object.assign(GRAIN as Record<string, number>, { strength }); try { return f(); } finally { Object.assign(GRAIN as Record<string, number>, { strength: s0 }); } };
 
 /**
@@ -54,12 +55,27 @@ const withGrain = <T,>(strength: number, f: () => T): T => { const s0 = GRAIN.st
  * each limit's cost to its dimension and to the whole, the grain's points, and each segment's whole, dimensions and
  * named limits. Returns what didn't hold, empty where everything did.
  */
-export function roundingDefects(shown: Evaluation, exact: ReturnType<typeof judgePieceExact>): string[] {
+export function roundingDefects(shown: Evaluation, exact: ReturnType<typeof judgePieceExact>, ctx: EvalContext, spec: PieceSpec): string[] {
   const bad: string[] = [];
   const same = (what: string, s: number, x: number) => { if (s !== r1(x)) bad.push(`${what}: shown ${s}, exact ${x}`); };
   const ev = exact.evaluation;
   same('whole', shown.overall, ev.overall);
   if (shown.exact !== ev.overall) bad.push(`whole's exact kept ${shown.exact}, worked ${ev.overall}`);
+  // The exact values are worked from their parts' exact values, by hand from the rule, so a whole worked from rounded
+  // parts can't pass as exact: each segment's whole is `meanShare` of its dimensions' weighted mean and the rest their
+  // least (`EVALUATION`), its weights the task's leant by the piece's lean and the segment's tones (`TONE_LEAN`, each to
+  // the power of one over how many it holds), normalized; and the piece's whole is the segments' by their weights.
+  const W = spec.segments.reduce((t, x) => t + x.weight, 0);
+  const byHand = exact.segments.reduce((t, e, s) => t + e.overall * spec.segments[s]!.weight, 0) / W;
+  if (Math.abs(byHand - ev.overall) > 1e-9) bad.push(`whole ${ev.overall} isn't its segments' exact wholes by weight, ${byHand}`);
+  exact.segments.forEach((e, s) => {
+    const tones = spec.segments[s]!.tones;
+    const lean = Object.fromEntries(Object.keys(ctx.task.dims).map((d) => [d, (ctx.lean?.[d as Dimension] ?? 1) * tones.reduce((x, t) => x * (TONE_LEAN[t]?.[d as Dimension] ?? 1) ** (1 / tones.length), 1)]));
+    const w = leanedWeights(ctx.task, [], lean);
+    const qs = e.dimensions.map((d) => ({ q: d.quality, w: w[d.dimension] ?? 0 }));
+    const whole = EVALUATION.meanShare * (qs.reduce((t, x) => t + x.q * x.w, 0) / qs.reduce((t, x) => t + x.w, 0)) + (1 - EVALUATION.meanShare) * Math.min(...qs.map((x) => x.q));
+    if (Math.abs(whole - e.overall) > 1e-9) bad.push(`segment ${s + 1}'s whole ${e.overall} isn't worked from its dimensions' exact values, ${whole}`);
+  });
   const limitsAgree = (where: string, s: readonly Limit[], x: readonly Limit[]) => {
     const kept = x.filter((l) => r1(l.by) > 0);
     if (s.length !== kept.length) bad.push(`${where}: ${s.length} limits shown, ${kept.length} worth a tenth`);
@@ -123,10 +139,10 @@ export function measureST3R() {
       const exactApart = s.exact! - c.exact!, evenRead = diffOf(EVEN_READ), residual = diffOf(UNDRAINED);
       // (d) Every shown figure its own exact value rounded once, for the criterion's actor and the specialist, on both.
       const defects = [
-        ...roundingDefects(s, judgePieceExact(SEED, CRITERION, scenePieceOf(m, scale).ctx, scenePieceOf(m, scale).spec)).map((x) => `stage, criterion: ${x}`),
-        ...roundingDefects(c, judgePieceExact(SEED, CRITERION, scenePieceOf(cam, scale).ctx, scenePieceOf(cam, scale).spec)).map((x) => `close, criterion: ${x}`),
-        ...roundingDefects(judgeOn(m, VOICE_BODY, scale), judgePieceExact(SEED, VOICE_BODY, scenePieceOf(m, scale).ctx, scenePieceOf(m, scale).spec)).map((x) => `stage, specialist: ${x}`),
-        ...roundingDefects(judgeOn(cam, VOICE_BODY, scale), judgePieceExact(SEED, VOICE_BODY, scenePieceOf(cam, scale).ctx, scenePieceOf(cam, scale).spec)).map((x) => `close, specialist: ${x}`),
+        ...defectsOf(m, CRITERION, scale, s).map((x) => `stage, criterion: ${x}`),
+        ...defectsOf(cam, CRITERION, scale, c).map((x) => `close, criterion: ${x}`),
+        ...defectsOf(m, VOICE_BODY, scale, judgeOn(m, VOICE_BODY, scale)).map((x) => `stage, specialist: ${x}`),
+        ...defectsOf(cam, VOICE_BODY, scale, judgeOn(cam, VOICE_BODY, scale)).map((x) => `close, specialist: ${x}`),
       ];
       const units = scenePieceOf(m, scale).spec.segments.length;
       cases.push({
