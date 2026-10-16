@@ -1,0 +1,6 @@
+L3-R (a) Meets  {"met":true,"pieces":[24]}
+L3-R (b) Meets  {"met":true,"journeys":8,"profiles":{"beginner":2,"developing":2,"generalist":2,"specialist":2}}
+L3-R (c) Meets  {"met":true,"growth":{"beginner bj-0":3.193,"beginner bj-1":2.86,"developing bj-0":2.798,"developing bj-1":2.687,"generalist bj-0":1.555,"generalist bj-1":1.353,"specialist bj-0":3.13,"specialist bj-1":2.787},"least":1.353,"falls":35,"unexplained":0,"fellAbilities":["stamina"]}
+L3-R (d) Meets  {"met":true,"checks":362520,"pieces":795,"falls":0,"worst":0}
+L3-R (e) Meets  {"met":true,"l3AsWritten":{"beginner bj-0":"54 → 56.8: meets","beginner bj-1":"53.3 → 54.6: meets","developing bj-0":"55.8 → 59.6: meets","developing bj-1":"55.9 → 59.1: meets","generalist bj-0":"62.4 → 62.3: fails","generalist bj-1":"62.1 → 63.3: meets","specialist bj-0":"65.5 → 64.3: fails","specialist bj-1":"63.4 → 62.3: fails"}}
+L3-R Meets
