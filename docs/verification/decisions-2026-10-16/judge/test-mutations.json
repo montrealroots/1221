@@ -1,0 +1,179 @@
+[
+ {
+  "id": "t-restraint-draws",
+  "clause": "tests: restraint’s own craft pays",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "a restrained take can carry a scene that leans the other way, where the lean is ",
+   "restraint’s own craft pays: the restrained specialist’s lift over the even actor",
+   "success depends on the scene: every win against the grain is on a material where"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-whole-rounded",
+  "clause": "tests: every shown figure rounded once",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+    "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "an actor even in everything the formula reads, undrained, is 100 × n^(1 + diffic",
+   "every shown figure is its own exact value rounded once, and each whole is worked"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-solo-presence",
+  "clause": "tests: the meetings are presence’s own work",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 2 }] } },",
+    "replace": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 0 }] } },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "each specialist is on the even actor’s budget, and on its own work (the pieces w",
+   "the two public meetings are presence’s own work: its +10 effect the largest of t"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-discipline-lift",
+  "clause": "tests: discipline’s practice",
+  "edits": [
+   {
+    "file": "src/engine/content/abilities.ts",
+    "find": "  disciplineLift: 0.1,",
+    "replace": "  disciplineLift: 0.1 * 0 + 0.2,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-nerves",
+  "clause": "tests: composure’s nerves",
+  "edits": [
+   {
+    "file": "src/engine/systems/attributes.ts",
+    "find": "  const unsettled = 1 - a.composure / 100;",
+    "replace": "  const unsettled = 1 - a.composure / 200;"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-drain",
+  "clause": "tests: stamina at 55 costs on both media",
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.3,",
+    "replace": "  drain: 0,"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "the voice-and-body specialist is better on stage than at a close frame on every "
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-monotone",
+  "clause": "tests: more never makes it worse",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: input.ability === 'listening' ? Math.min(1, clamp(level(input.ability) / full(input.ability), 0, 1) * (1.5 - level(input.ability) / 200)) : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "an actor even in everything the formula reads, undrained, is 100 × n^(1 + diffic",
+   "the criterion’s even actor’s difference is its techniques’ part and its stamina’",
+   "where size is what the scene is built on, restraint has its limits: before Thebe"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-replay-inputs",
+  "clause": "tests: replayed after a save and a load",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {})",
+    "replace": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {})"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "the same scene judged twice, replayed from its own record, replayed with its dra"
+  ],
+  "killed": true
+ },
+ {
+  "id": "t-event-weight",
+  "clause": "tests: composure’s nerves",
+  "edits": [
+   {
+    "file": "src/engine/systems/attributes.ts",
+    "find": "  eventWeight: { performance: 6 },",
+    "replace": "  eventWeight: { performance: 7 },"
+   }
+  ],
+  "command": "npx vitest run tests/decisions-judge.test.ts --reporter=json --outputFile $OUT",
+  "exit": 1,
+  "verdictPath": "o.numFailedTests === 0",
+  "verdict": false,
+  "figure": [
+   "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+  ],
+  "killed": true
+ }
+]
