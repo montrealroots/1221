@@ -104,14 +104,14 @@ Each command the player can run: the engine file that handles it, the screens th
 | `documents.apply_opt` | `src/engine/systems/permission.ts` | `Documents.tsx` | `defects-g24-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g33-ui.test.ts` `evidence2-b12.test.ts` `guide-examples-papers.test.ts` `permission.test.ts` | Passports And ID |
 | `documents.apply_passport` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `defects-g25-1.test.ts` `documents.test.ts` `journey-life.test.ts` `remaining-banking.test.ts` `remaining-papers.test.ts` `scope-money.test.ts` | Passports And ID |
 | `documents.apply_ssn` | `src/engine/systems/taxid.ts` | `Documents.tsx` | `defects-g24-1.test.ts` `defects-r3d-1.test.ts` `defects-r7-1.test.ts` `defects3-50-70.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g17-papers.test.ts` `evidence2-b06.test.ts` `evidence3-lifepapers.test.ts` `papers-complete.test.ts` `papers-transitions.test.ts` `remaining-papers.test.ts` `remaining-tax.test.ts` `scope-taxpapers.test.ts` | Passports And ID |
-| `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
+| `documents.naturalize` | `src/engine/systems/citizenship.ts` | `Documents.tsx` | `commands-kept.test.ts` `remaining-09-journeys.test.ts` | Passports And ID |
 | `documents.police_report` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `evidence-g15-papers.test.ts` `guide-examples-papers.test.ts` `journey-life.test.ts` | Cover, Benefits And Returns |
-| `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `guide-examples-papers.test.ts` `residence.test.ts` | Passports And ID |
+| `documents.renew_residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `remaining-09-journeys.test.ts` `residence.test.ts` | Passports And ID |
 | `documents.replace_idcard` | `src/engine/systems/identity.ts` | `Documents.tsx` | `defects3-50-70.test.ts` `evidence-g15-papers.test.ts` `guide-examples-papers.test.ts` `idreplace.test.ts` | Passports And ID |
 | `documents.replace_license` | `src/engine/systems/identity.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `defects-g27-1.test.ts` `defects3-50-70.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` | Passports And ID |
 | `documents.report_lost` | `src/engine/systems/documents.ts` | `Documents.tsx` | `commands-kept.test.ts` `coverage-gaps-papers.test.ts` `defects-g27-1.test.ts` `defects3-50-70.test.ts` `documents.test.ts` `evidence-g15-papers.test.ts` `evidence-g16-papers.test.ts` `evidence-g17-papers.test.ts` `evidence2-b05.test.ts` `guide-examples-papers.test.ts` `idreplace.test.ts` `journey-life.test.ts` `papers-complete.test.ts` `papers-fixes.test.ts` `remaining-papers.test.ts` | Passports And ID |
-| `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `guide-examples-papers.test.ts` `naturalize.test.ts` `residence.test.ts` | Passports And ID |
-| `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` | Passports And ID |
+| `documents.residence` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `guide-examples-papers.test.ts` `naturalize.test.ts` `remaining-09-journeys.test.ts` `residence.test.ts` | Passports And ID |
+| `documents.settle` | `src/engine/systems/residence.ts` | `Documents.tsx` | `commands-kept.test.ts` `remaining-09-journeys.test.ts` `residence.test.ts` | Passports And ID |
 
 ## finance
 

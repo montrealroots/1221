@@ -91,6 +91,11 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
       gaps: r.gaps ?? [],
     };
     const recs = afterById[it.id];
+    // A row no round reaches now keeps no record of one (from 2026-10-16, brief 09's journeys' follow-up): until then its
+    // last `after` stood, so health.drop and school.return_notice, each reached only by a journeys test the follow-up
+    // renamed, kept the old title while no record named it, and tools/coverage.mjs failed both. Measured that day, once
+    // the renamed tests were mapped again: no row was in that state.
+    if (!recs) delete it.after;
     if (recs) {
       // The latest record that judged the row. A round of evidence alone (this pass's areas, folded by
       // remaining-fold.cjs from 2026-10-16) adds its tests and judges nothing: until then the last record was taken
@@ -150,8 +155,10 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
     if (cc && ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation'].includes(cc.field) && cc.now) it[cc.field] = cc.now;
     // The row's own words corrected last, against the code as it finally stands (doc-fields.json, from 2026-10-13's
     // reconciliation): line references moved by the day's changes, and claims its fixes falsified.
+    // A deferred row's `settled` too (from 2026-10-16, brief 09's journeys' follow-up: the Mexican residence rows' settlement,
+    // which until then no input could correct).
     const df = docFields[it.id];
-    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue'].includes(k)) it[k] = v;
+    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'settled'].includes(k)) it[k] = v;
     // The Note a re-audit of 2026-10-12 left (corrected.now), where what it cites moved or what it says went (from 2026-10-14).
     if (df?.['corrected.now'] !== undefined && it.corrected) it.corrected.now = df['corrected.now'];
     // A row out of a current player's reach says so in four parts (from 2026-10-16, the brief of that day's item 3):

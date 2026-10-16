@@ -2558,6 +2558,17 @@
  ],
  "overrides": [
   {
+   "id": "banking.1.pro-rata",
+   "status": "Implemented And Verified",
+   "why": "Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded",
+   "citations": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student…"
+    }
+   ]
+  },
+  {
    "id": "coverage.7-overdraft-home-panel",
    "status": "Implemented And Verified",
    "why": "Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls",

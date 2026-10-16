@@ -1269,6 +1269,548 @@
    },
    "tutorial": "",
    "guide": ""
+  },
+  {
+   "id": "coverage09.6-journeys-followup-fold",
+   "before": "At bcd75970 the audit hadn’t been regenerated since the journeys’ follow-up: tools/coverage.mjs --check exited 1 on 32 citations that didn’t hold. Run in the README’s order, four journeys items were unmapped (f-mexico-residence 5 tests, f-injury-space 1, f-ended-life-loops 4, d-f1-term-notice 1); d-aid-past-balance’s and d-medicaid-start’s new tests went to no row; three byTest titles no longer matched (renamed by the follow-up); seven fields named no field the fold took (school.term.tests (add), school.pay_balance.downstream (add), school.reregister.tests (add), and four residence rows’ settled), with the banking rounds’ three “(add)” listed and left out on every run since; d-medicaid-start’s words for the two added rows were listed and left out; and resolve-titles.cjs guessed renames by word overlap.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "folded": {
+    "result": "docs/verification/remaining-09/journeys-result.json",
+    "state": "the integration clone at bcd75970 (journeys-result.json blob 06f68ec31b0d, as committed there), its 21 items",
+    "items": [
+     {
+      "id": "journeys.d-aid-past-balance",
+      "status": "Implemented And Verified",
+      "mapped": "Aid applied to the Yale account at a term’s start, fixed by the follow-up: each test mapped by test (byTest), to the term the clock begins and the commands each presses; its row text placed in school.term’s, school.pay_balance’s and school.reregister’s fields, the two “(add)” as additions."
+     },
+     {
+      "id": "journeys.d-medicaid-start",
+      "status": "Implemented And Verified",
+      "mapped": "HUSKY D from the month of application and the months before it, fixed by the follow-up: each test mapped by test (byTest), to Enroll, the health week that fills in the lapse, and the month’s notice; its row text for health.enroll folded, and for health.apply and health.request_hardship written into inputs/added-rows.json, where those rows’ words are kept."
+     },
+     {
+      "id": "journeys.f-mexico-residence",
+      "status": "Implemented And Verified",
+      "mapped": "Mexico’s residence no longer sold: each test mapped by test (byTest) to the four residence rows it presses; its row text placed, `settled` among it."
+     },
+     {
+      "id": "journeys.f-injury-space",
+      "status": "Implemented And Verified",
+      "mapped": "The injury notice’s trailing space: its one test, evidence-g04-life’s, already cited by life.day_rollover and injuries (mapped by test, listed as already cited); no row’s words change."
+     },
+     {
+      "id": "journeys.f-ended-life-loops",
+      "status": "Implemented And Verified",
+      "mapped": "Loops on an ended life: the jl-17 guard to life.end (the clock stops); the attentiveHour guard, tests/setup/ended-life.ts, vitest.config.ts and personality.test.ts are the tests’ and tools’ own, no row’s."
+     },
+     {
+      "id": "journeys.d-f1-term-notice",
+      "status": "Implemented And Verified",
+      "mapped": "An F-1 student’s term notice naming what reached her account: its one test to school.term (mapped by test)."
+     }
+    ],
+    "byTest": {
+     "entries": 31,
+     "retitled": [
+      "PLAYER JOURNEY: back for Spring Term 2028 under the hold → DEFECT: back for Spring Term 2028 owing $7,875.25 (school.term and bank.transfer added: the term’s aid pays the account first; the twin’s transfer)",
+      "PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen → DEFECT: … (health.appointment added: the visit of 3 December HUSKY D’s)",
+      "DEFECT: HUSKY D dropped on Papers on 2 November 2027 → … 2 October 2027"
+     ],
+     "added": [
+      {
+       "test": "DEFECT: a student with need begins Spring Term 2027 under a hold",
+       "rows": [
+        "school.term"
+       ],
+       "read": "The term the clock begins on 4 January pays the $1,125.00 owed from its scholarship first, the hold lifted at nine, said once, no registration asked, the rest to the bank, the first class day counted. Owed by TEST SETUP; nothing pressed, so no command row takes it."
+      },
+      {
+       "test": "DEFECT: a London-born F-1 student’s Fall Term 2026 notice",
+       "rows": [
+        "school.term"
+       ],
+       "read": "The fall term the clock begins: the posting’s $11,356.54 to Chase after $1,961.96 withheld, and its notice saying so."
+      },
+      {
+       "test": "DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic",
+       "rows": [
+        "health.enroll",
+        "health.week"
+       ],
+       "read": "Three generics the health week fills uninsured in the lapse; Enroll on 22 October gives HUSKY D from 1 August and prices them again at $0, $125.37 back once, through a reload; the twin enrolled on 2 December from 1 September, the August fill left."
+      },
+      {
+       "test": "GUARD: an application made in January 2028 reaches one month back",
+       "rows": [
+        "health.enroll"
+       ],
+       "read": "FIXTURE (care and income set by hand): Enroll on 5 January 2028 gives HUSKY D from 1 December 2027 and prices December’s visit alone."
+      },
+      {
+       "test": "GUARD: the reach back stops at a month she wasn’t eligible in",
+       "rows": [
+        "health.enroll"
+       ],
+       "read": "FIXTURE: retroStart, which Enroll reads, stops at a month over the line or covered by another plan."
+      },
+      {
+       "test": "GUARD: jl-17’s life, ended by mortality’s draw",
+       "rows": [
+        "life.end"
+       ],
+       "read": "Mortality’s draw ends the life on 11 January 2027 (meta.endedAt), and a move of the clock returns from where it stopped, life.end’s downstream; the harness’s own failure (tests/setup/ended-life.ts) is the tests’, no row’s."
+      },
+      {
+       "test": "GUARD: tools/policy.ts’s attentiveHour",
+       "rows": [],
+       "read": "tools/policy.ts’s loop helper on an ended life (FIXTURE): the tools’ and tests’ own hour, which no player command or clock row is."
+      },
+      {
+       "test": "DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule",
+       "rows": [
+        "documents.residence",
+        "documents.renew_residence",
+        "documents.settle",
+        "documents.naturalize"
+       ],
+       "read": "Papers draws Mexico’s rule and Apply grayed; the route refused in its words with nothing moved; a held card (FIXTURE) shown to its end, Renew grayed and refused, settle and naturalize refused in their rules, through a reload; run out, the rule again."
+      },
+      {
+       "test": "PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel",
+       "rows": [
+        "school.pay_balance",
+        "school.term"
+       ],
+       "read": "Renamed by the follow-up (evidence-g26-school.test.ts:847). Pay From Your Bank refused and pressed; the unpaid twin’s return term pays the account from its scholarship first, the hold lifted at the term’s start."
+      },
+      {
+       "test": "PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid",
+       "rows": [
+        "school.reregister",
+        "school.term"
+       ],
+       "read": "Its figure recast (title unchanged): the return term’s $14,093.64 pays the $15,575.50 down to $1,481.86, so the hold stays and refuses Register in its words; paid, Register takes."
+      },
+      {
+       "test": "shows a term billed past six with the living aid the review kept",
+       "rows": [
+        "school.request_aid_review",
+        "school.term"
+       ],
+       "read": "Renamed by the follow-up (defects-g8-2.test.ts:182). The aid review asked and decided, the seventh term begun (moved an hour on, TEST SETUP): its living aid paid onto the Yale account, $6,625.41 owed, nothing to the bank, on Terms And Award."
+      },
+      {
+       "test": "names the Yale Health fee as on the account only where it was charged",
+       "rows": [
+        "school.request_extra_term",
+        "school.term"
+       ],
+       "read": "Its words recast (title unchanged): A Term Without Tuition Support says the aid pays $15,781.87 of what the account owes before any reaches the bank."
+      },
+      {
+       "test": "PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches",
+       "rows": [
+        "life.day_rollover",
+        "injuries"
+       ],
+       "read": "The notice’s words with nothing after them (its assertion recast, title unchanged); the two rows cite it already."
+      },
+      {
+       "test": "refuses Mexican temporary residence with Mexico’s rule",
+       "rows": [
+        "documents.residence",
+        "documents.renew_residence",
+        "documents.settle"
+       ],
+       "read": "Renamed by the follow-up (residence.test.ts:37). Refused on savings or income alike, a held card (FIXTURE) refused renewal and run to its end, settling saying its four years and then the reason."
+      },
+      {
+       "test": "is refused Mexican residence in Mexico’s rule",
+       "rows": [
+        "documents.residence",
+        "documents.settle",
+        "documents.naturalize"
+       ],
+       "read": "Renamed by the follow-up (commands-kept.test.ts:202). A life begun in Mexico City (TEST SETUP) refused the route; a card held past four years (FIXTURE) refused settling, past five naturalizing, nothing paid."
+      },
+      {
+       "test": "documents.residence: Mexico’s row says its rule",
+       "rows": [
+        "documents.residence"
+       ],
+       "read": "Renamed by the follow-up (guide-examples-papers.test.ts:939). The guide’s worked example: the row and the refusal at the savings threshold and short of it, Apply grayed, nothing moved."
+      },
+      {
+       "test": "counts from the grant after a lapse, not the first ever",
+       "rows": [
+        "documents.settle"
+       ],
+       "read": "Its assertion recast (title unchanged): settleRefusal’s continuity, and past the four years the reason SLATE grants none (FIXTURE)."
+      }
+     ]
+    }
+   },
+   "placed": {
+    "settled": "A deferred row’s `settled` is placed from 2026-10-16 (remaining-fold.cjs FIELDS, merge-review.cjs’s fields): documents.residence, documents.renew_residence, documents.settle and documents.naturalize take the journeys’ words. The old settlement (“Says before payment that no life moves to Mexico … Owner recommendation: withdraw the offer to new lives, keep it for saves that hold residence.”) was what the follow-up did; its history stays in the rows’ issue and explanation, which the area wrote in the past tense.",
+    "additions": [
+     "09-banking/banking.6.fee-schedule: bank.month_end.tests",
+     "09-journeys/journeys.d-aid-past-balance: school.term.tests",
+     "09-journeys/journeys.d-aid-past-balance: school.pay_balance.downstream",
+     "09-journeys/journeys.d-aid-past-balance: school.reregister.tests"
+    ],
+    "asEvidence": [
+     "09-banking/banking.1.pro-rata: bank.close_current.evidence (add): the item’s tests reach bank.close_current through remaining-rows.json",
+     "09-banking/banking.4.sparkassen-card: bank.close_current.evidence (add): the item’s tests reach bank.close_current through remaining-rows.json",
+     "09-banking/banking.4.sparkassen-card: bank.cancel_new.evidence (add): the item’s tests reach bank.cancel_new through remaining-rows.json"
+    ],
+    "asEvidenceWhy": "The banking rounds’ three “evidence (add)” each name a test the item’s own evidence brings, already folded to the row through remaining-rows.json (banking.1.pro-rata and banking.4.sparkassen-card to bank.close_current and bank.cancel_new); bank.month_end’s “tests (add)” is added to its tests.",
+    "addedRows": "d-medicaid-start’s words written into inputs/added-rows.json, dated: health.apply’s downstream (HUSKY D from the month of application, reaching back, the care priced again; until then the first of next month), and health.request_hardship’s changes and tests (approved from the month of application or the month before with care in it; the hardship tests renamed a month earlier, their old figures said); the line citations in both rows moved to the follow-up’s health.ts.",
+    "renamedInText": [
+     "health-eligibility/health-eligibility.3-notice-and-response: health.month.tests: tests/evidence-g05-life.test.ts ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2’ → ‘PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from’"
+    ]
+   },
+   "renames": {
+    "how": "Each title the audit cited that its file no longer held was read against the test files: every one is named by its test’s own dated note (“Renamed on 2026-10-16 … until then “…””, over the test it became) or by the journeys’ records in inputs/renames.json; the cited words, cut at an ellipsis, are the start of the old title, and the new title is one test in the file. No word overlap was used.",
+    "recorded": [
+     {
+      "old": "PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn’t given back, the line says why, and Enroll buys the marketplace in open enrollment",
+      "now": "PLAYER JOURNEY: HUSKY D enrolled on 1 October 2026, from 1 August, the month of a generic filled uninsured, comes to renewal on 1 October 2027 with no work; its notice ends it with November, and pressing Enroll on 2 December 2027, November the month before, doesn’t give it back, the line says why, and Enroll buys the marketplace in open enrollment",
+      "file": "tests/scope-cover.test.ts",
+      "how": "The note over the new test (scope-cover.test.ts, “Renamed later on 2026-10-16 … until then “PLAYER JOURNEY: ended at renewal on 1 November 2027 … in open enrollment, until 2026-10-16; since then …””) quotes the old title whole, of which the cited one is the start (its earlier tail kept the cited words, so they landed until the follow-up renamed it). The coordinator took this one out of bcd75970 as a wrong guess; read, it’s the test the note says, the same journey (ended at renewal for no work, Enroll the next day not giving HUSKY D back, the marketplace in open enrollment) a month earlier."
+     },
+     {
+      "old": "PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of it",
+      "now": "PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months",
+      "file": "tests/evidence-g05-life.test.ts",
+      "how": "The note over the new test (“Its title kept whole inside the new one, for what cites it … Renamed later on 2026-10-16 … until then “PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of it, until 2026-10-16; since then …””) records the rename; the same twins (no work, ended; 80 hours, renewed six months) a month earlier. Also taken out of bcd75970 as a guess; recorded as read."
+     }
+    ],
+    "followed": [
+     {
+      "row": "health.request_hardship",
+      "where": "added test (after.tests)",
+      "file": "remaining-09-journeys.test.ts",
+      "cited": "DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal's notice of 1 November waiting: the notice goes with i",
+      "became": "DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it,",
+      "via": "renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.enroll",
+      "where": "added test (after.tests)",
+      "file": "need-paths.test.ts",
+      "cited": "PLAYER JOURNEY: the Comfortable family's student, on HUSKY D from 1 November 2026, comes to its renewal on 1 November 20",
+      "became": "PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the m",
+      "via": "need-paths.test.ts:579, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.enroll",
+      "where": "added test (after.tests)",
+      "file": "need-paths.test.ts",
+      "cited": "PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September's $900.00, her October 2027 is $2,046.00, over HUSKY D's li",
+      "became": "PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s l",
+      "via": "need-paths.test.ts:748, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.enroll",
+      "where": "added test (after.tests)",
+      "file": "scope-cover.test.ts",
+      "cited": "PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn't g",
+      "became": "PLAYER JOURNEY: HUSKY D enrolled on 1 October 2026, from 1 August, the month of a generic filled uninsured, comes to ren",
+      "via": "scope-cover.test.ts:287, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.enroll",
+      "where": "added test (after.tests)",
+      "file": "scope-cover.test.ts",
+      "cited": "PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it sta",
+      "became": "PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it sta",
+      "via": "scope-cover.test.ts:465, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.enroll",
+      "where": "added test (after.tests)",
+      "file": "remaining-health-eligibility.test.ts",
+      "cited": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week's draw forced); on 4 January she buys the mark",
+      "became": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the mark",
+      "via": "remaining-health-eligibility.test.ts:317, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "added test (after.tests)",
+      "file": "remaining-health-eligibility.test.ts",
+      "cited": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; ",
+      "became": "PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notic",
+      "via": "remaining-health-eligibility.test.ts:415, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "added test (after.tests)",
+      "file": "defects4.test.ts",
+      "cited": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewa",
+      "became": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month, from 1 September, is",
+      "via": "defects4.test.ts:111, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "added test (after.tests)",
+      "file": "remaining-09-journeys.test.ts",
+      "cited": "PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that he",
+      "became": "DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ",
+      "via": "remaining-09-journeys.test.ts:493, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.request_hardship",
+      "where": "added test (after.tests)",
+      "file": "remaining-09-hardship.test.ts",
+      "cited": "PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exc",
+      "became": "PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice, Request A Hardship Exce",
+      "via": "remaining-09-hardship.test.ts:175, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.request_hardship",
+      "where": "row text",
+      "file": "remaining-09-hardship.test.ts",
+      "cited": "PLAYER JOURNEY: with no stay in hospital from May to October 2027…",
+      "became": "PLAYER JOURNEY: with no stay in hospital from April to September 2027, the renewal’s notice offers no hardship: Papers s",
+      "via": "remaining-09-hardship.test.ts:243, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.request_hardship",
+      "where": "added test (after.tests)",
+      "file": "remaining-09-hardship.test.ts",
+      "cited": "PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal's notice offers no hardship: Papers says ",
+      "became": "PLAYER JOURNEY: with no stay in hospital from April to September 2027, the renewal’s notice offers no hardship: Papers s",
+      "via": "remaining-09-hardship.test.ts:243, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "row text",
+      "file": "evidence-g05-life.test.ts",
+      "cited": "PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…",
+      "became": "PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August",
+      "via": "evidence-g05-life.test.ts:669, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "added test (after.tests)",
+      "file": "evidence-g05-life.test.ts",
+      "cited": "PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of i",
+      "became": "PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August",
+      "via": "evidence-g05-life.test.ts:669, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "health.month",
+      "where": "added test (after.tests)",
+      "file": "remaining-health-eligibility.test.ts",
+      "cited": "PLAYER JOURNEY: 80 hours' work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work",
+      "became": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same wor",
+      "via": "remaining-health-eligibility.test.ts:393, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "school.pay_balance",
+      "where": "added test (after.tests)",
+      "file": "remaining-09-journeys.test.ts",
+      "cited": "PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into",
+      "became": "DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-ex",
+      "via": "remaining-09-journeys.test.ts:308, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "school.pay_balance",
+      "where": "added test (after.tests)",
+      "file": "evidence-g26-school.test.ts",
+      "cited": "PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, holds registration on the r",
+      "became": "PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel b",
+      "via": "evidence-g26-school.test.ts:847, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "documents.settle",
+      "where": "row text",
+      "file": "commands-kept.test.ts",
+      "cited": "settles from temporary residence after four years, and naturalizes after five",
+      "became": "is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), sett",
+      "via": "commands-kept.test.ts:202, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "documents.renew_residence",
+      "where": "row text",
+      "file": "commands-kept.test.ts",
+      "cited": "settles from temporary residence...",
+      "became": "is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), sett",
+      "via": "commands-kept.test.ts:202, the test’s own dated note; renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "documents.renew_residence",
+      "where": "row text",
+      "file": "residence.test.ts",
+      "cited": "gives Mexican temporary residence on the solvency test, and permanent residence after four years",
+      "became": "refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an ",
+      "via": "renames.json (the journeys area’s, since c54474a1)"
+     },
+     {
+      "row": "documents.residence",
+      "where": "row text",
+      "file": "residence.test.ts",
+      "cited": "gives Mexican temporary residence on the solvency test...",
+      "became": "refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an ",
+      "via": "renames.json (the journeys area’s, since c54474a1)"
+     }
+    ],
+    "gone": "None: every title the audit cited at bcd75970 that didn’t land became a test still in its file."
+   },
+   "fixes": [
+    {
+     "summary": "resolve-titles.cjs takes no guess: it lists each title that doesn’t land, with the test whose own dated note names it as its old title and the nearest by word overlap, and writes neither renames.json nor doc-fields.json. Until then a nearest at 0.6 or more was written, which is what let a different test sharing the words through.",
+     "where": "docs/verification/pipeline/resolve-titles.cjs"
+    },
+    {
+     "summary": "remaining-fold.cjs places `settled`, `<field> (add)` (after the field once, so a second run changes nothing) and `evidence (add)` (as evidence where the item’s tests reach the row), and writes a title cited in folded row text under its last name where renames.json records the rename (health-eligibility’s health.month tests, cited under the old evidence-g05-life title).",
+     "where": "docs/verification/pipeline/remaining-fold.cjs"
+    },
+    {
+     "summary": "merge-review.cjs applies `settled` from doc-fields.json, and drops an `after` no round rebuilds: health.drop and school.return_notice, each reached only by a journeys test the follow-up renamed, kept the old title while no record named it. Once mapped again no row is in that state.",
+     "where": "docs/verification/pipeline/merge-review.cjs"
+    }
+   ],
+   "capabilities": [
+    "residence-and-citizenship: effects and limits say no route is open, Mexico’s refused in its rule and the reason SLATE grants none, a held card kept to its end; until 2026-10-16 the sale on the savings test, the measured savings, and the tests as they played the grant, in the past tense.",
+    "health-cover: effects and limits say HUSKY D begins in the month of application and reaches back (three months for a 2026 application, one from 2027), played and on fixtures; the dropped HUSKY D ends on 1 November where it said 1 December.",
+    "school-balance-and-aid: effects and limits say the term’s living aid pays what the Yale account owes first, a hold it clears lifted at the term’s start; until then the aid went to the bank whole."
+   ],
+   "totals": {
+    "countedBy": "docs/verification/audit/*.json counted by status and by verification.class, as node tools/coverage.mjs counts them for docs/GAMEPLAY-COVERAGE.md’s two tables, and the tests the rows’ after records cite",
+    "before": {
+     "at": "bcd75970 as committed in the integration clone (its audit not regenerated since the journeys’ follow-up: node tools/coverage.mjs --check exit 1 there, 32 citations that don’t hold)",
+     "rows": 339,
+     "statuses": {
+      "verified": 299,
+      "partial": 1,
+      "deferred": 16,
+      "unresolved": 12,
+      "legacy": 3,
+      "informational": 8
+     },
+     "verifiedOfWhatCanBe": "299 of 312, 96%",
+     "classes": {
+      "Player Journey": {
+       "rows": 299,
+       "verified": 298,
+       "partial": 1
+      },
+      "Deferred Scope": {
+       "rows": 16,
+       "deferred": 16
+      },
+      "Retained Engine, On Labelled Fixtures": {
+       "rows": 12,
+       "unresolved": 12
+      },
+      "Older Saves Only": {
+       "rows": 3,
+       "legacy": 3
+      },
+      "Said Back, Deciding Nothing": {
+       "rows": 8,
+       "informational": 8
+      },
+      "Documentation And Static Checks": {
+       "rows": 1,
+       "verified": 1
+      }
+     },
+     "testsCited": 1509
+    },
+    "after": {
+     "at": "the integration clone regenerated in the README’s order, twice, the second run changing nothing (node tools/coverage.mjs and --check, capabilities.mjs --write and --check, exit 0)",
+     "rows": 339,
+     "statuses": {
+      "verified": 299,
+      "partial": 1,
+      "deferred": 16,
+      "unresolved": 12,
+      "legacy": 3,
+      "informational": 8
+     },
+     "verifiedOfWhatCanBe": "299 of 312, 96%",
+     "classes": {
+      "Player Journey": {
+       "rows": 299,
+       "verified": 298,
+       "partial": 1
+      },
+      "Deferred Scope": {
+       "rows": 16,
+       "deferred": 16
+      },
+      "Retained Engine, On Labelled Fixtures": {
+       "rows": 12,
+       "unresolved": 12
+      },
+      "Older Saves Only": {
+       "rows": 3,
+       "legacy": 3
+      },
+      "Said Back, Deciding Nothing": {
+       "rows": 8,
+       "informational": 8
+      },
+      "Documentation And Static Checks": {
+       "rows": 1,
+       "verified": 1
+      }
+     },
+     "testsCited": 1537
+    },
+    "moved": "No row changed status or class; the rows’ after records cite 28 tests more."
+   },
+   "checks": [
+    {
+     "check": "the pipeline in the README’s order in the integration clone (scope-fold, remaining-fold, collect-checks, scope-prep, merge-review, resolve-titles, merge-review, resolve-titles), run twice, the second run changing no file",
+     "exit": 0,
+     "result": "11 results; 55 batches, 321 tests on 67 rows; 88 fields of row text; no item unmapped, no title to read"
+    },
+    {
+     "check": "node tools/coverage.mjs, and --check",
+     "exit": 0,
+     "result": "339 items, 299 verified, 1 partial, 12 unresolved, 16 deferred, 3 legacy, 8 informational"
+    },
+    {
+     "check": "node tools/capabilities.mjs --write, and --check",
+     "exit": 0,
+     "result": "64 capabilities; 158 player commands, agreed on the 158 both name"
+    },
+    {
+     "check": "title-case, spelling, typos, tics, voice-check, doc-refs, plural-check, label-sweep, wired --check, inventory --check, deciders --check, student-matrix --check",
+     "exit": 0
+    },
+    {
+     "check": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+     "exit": 0,
+     "result": "22 passed"
+    },
+    {
+     "check": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-hardship.test.ts",
+     "exit": 0,
+     "result": "2 passed"
+    },
+    {
+     "check": "node tools/completion-matrix.mjs --check",
+     "exit": 1,
+     "note": "As at bcd75970 before this fold (exit 1 there too): the handoff’s completion line and the matrix behind its sources. The launching session’s; not changed."
+    }
+   ],
+   "unsettled": [
+    "The coordinator named two of the five guesses it took out as wrong; read, both are the renames their tests’ own notes record, and are recorded as read. The other three weren’t named; with no guess taken, every citation now lands on a recorded rename.",
+    "The deferred rows’ `settled` is the journeys’ words, which replace the old settlement wholesale; its history is in the rows’ issue and explanation, not in `settled` itself.",
+    "f-ended-life-loops’ attentiveHour guard, tests/setup/ended-life.ts, vitest.config.ts and personality.test.ts are the tests’ and the tools’ own machinery: no row, by reading.",
+    "health.enroll stays partial (HUSKY D kept at renewal through work held on a FIXTURE): the follow-up’s tests are added to it and don’t play that."
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
   }
  ],
  "foundOutside": [

@@ -3242,9 +3242,9 @@
         "tests": [
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
             "kind": "command",
-            "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+            "closes": "Drop The Plan pressed on Papers: the end 1 November, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on November 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on November 1, 2027.”, nothing moved; reloaded, covered to 31 October and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment. Every date a month earlier from 2026-10-16’s journeys.d-medicaid-start, its renewal on 1 October 2027 (title renamed, inputs/renames.json).",
             "round": "remaining-09-journeys"
           }
         ],
@@ -3264,11 +3264,11 @@
       "kind": "command",
       "entry": "PapersWorkspace.tsx:548 (Enroll). Until 2026-10-13 this said :216.",
       "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:647-653), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May",
-      "changes": "program or marketplace from next month",
+      "changes": "the marketplace or Covered Connecticut from next month’s first; HUSKY D from the first of the month of application, reaching back to the first of an earlier month (three for an application in 2026, one from 2027) she was eligible in and had care in with nothing covering her, that care priced again (programStart, retroStart, repriceCare; from 2026-10-16, brief 09’s journeys: until then HUSKY D too began on next month’s first)",
       "downstream": "coverOn/planOf -> every share, on the clock's bill (careFor), with the plan's own part on the bill (covered.planPaid, Papers' Plan Paid, from 2026-10-15); healthMonth premium",
       "persistent": "cover",
       "explanation": "Papers",
-      "tests": "tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test passed on interest, the work test failed over May to October: a notice of noncompliance on 1 November, covered to 31 December, the end said on 6 December, across a reload; until 2026-10-16 it ended at the renewal’s hour). tests/scope-cover.test.ts 'health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027' (the leave journey: given on 1 February for January at the School, the work rules short on 1 March for February on the leave; and the January-then-withdrawn journey), and its Covered Connecticut renewal on a leave. tests/remaining-health-eligibility.test.ts (Apply For HUSKY D on a notice, decided after thirty days; the exceptions; Connecticut’s six months at renewal); tests/remaining-health-billing.test.ts 'FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027...' (HUSKY D kept at renewal through work, on a FIXTURE).",
+      "tests": "tests/need-paths.test.ts ‘PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload’ (from 1 August, the 31 August fill’s $41.79 back; renewal 1 October 2027 reading April to September; a notice on 1 October, covered to 30 November, the end said on 5 November, across a reload; renamed, inputs/renames.json); tests/remaining-09-journeys.test.ts journeys.d-medicaid-start and x3’s DEFECT; the rest as written",
       "status": "partial",
       "issue": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any).",
       "corrected": {
@@ -3402,7 +3402,7 @@
           },
           {
             "file": "need-paths.test.ts",
-            "title": "health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, on HUSKY D from 1 November 2026, comes to its renewal on 1 November 2027: October’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload",
+            "title": "health.enroll: a program’s renewal, reached by the clock > PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload",
             "kind": "render",
             "closes": "A played life with need reaches a program renewal with no wage posted by hand. She is withdrawn on 25 August and enrolled on Papers' Enroll on 1 October 2026. renewAt is 1 November 2027 (twelve months, enrolled in 2026). October 2027's income is the savings' interest alone, under 15,960 × 1.38 ÷ 12 = $1,835.40, so the income test passes. The work test fails, so the program ends at the 00:30 health month with “Medicaid now asks for 80 hours’ work or $580.00 of earnings a month, and last month had neither.” It fails under mutation r1 (work test always met)."
           },
@@ -3414,7 +3414,7 @@
           },
           {
             "file": "need-paths.test.ts",
-            "title": "health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked",
+            "title": "health.enroll: a renewal between HUSKY D and Covered Connecticut, reached by the clock > PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked",
             "kind": "command",
             "closes": ""
           },
@@ -3432,7 +3432,7 @@
           },
           {
             "file": "scope-cover.test.ts",
-            "title": "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn’t given back, the line says why, and Enroll buys the marketplace in open enrollment",
+            "title": "health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027 > PLAYER JOURNEY: HUSKY D enrolled on 1 October 2026, from 1 August, the month of a generic filled uninsured, comes to renewal on 1 October 2027 with no work; its notice ends it with November, and pressing Enroll on 2 December 2027, November the month before, doesn’t give it back, the line says why, and Enroll buys the marketplace in open enrollment",
             "kind": "command",
             "closes": ""
           },
@@ -3462,7 +3462,7 @@
           },
           {
             "file": "scope-cover.test.ts",
-            "title": "a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 March 2028 is met by her being at the School",
+            "title": "a program taken on a personal leave without Affiliate cover, and Yale Health back on the return > PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 February 2028 is met by her being at the School",
             "kind": "command",
             "closes": ""
           },
@@ -3515,7 +3515,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload",
+            "title": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay, which HUSKY D now pays where the hospital’s charity had, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload",
             "kind": "render",
             "closes": "A stay forced on 7 December; Enroll buys the marketplace; Apply For HUSKY D sends the notice; Request A Hardship Exception (drawn only with a stay in a month assessed) approves HUSKY D from 1 February, the marketplace ends as it begins and its premium is never taken; the decision of 8 February passes it by; one approval across a reload; a second request refused \"No notice of noncompliance waits on an answer.\"",
             "round": "remaining-health-eligibility"
@@ -3536,7 +3536,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
             "kind": "command",
             "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
             "round": "remaining-health-eligibility"
@@ -3557,7 +3557,7 @@
           },
           {
             "file": "defects4.test.ts",
-            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month, from 1 September, is told at its renewal on 1 September 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
             "kind": "command",
             "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
             "round": "remaining-health-eligibility"
@@ -3585,9 +3585,9 @@
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
             "kind": "command",
-            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
             "round": "remaining-09-journeys"
           },
           {
@@ -3595,6 +3595,27 @@
             "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
             "kind": "command",
             "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79)",
+            "kind": "command",
+            "closes": "jr-3 (searched jr-1 to jr-12 for fills in the lapse): Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled on 22 October, HUSKY D from 1 August (August and September each eligible and with uninsured care, July no care), renewed from the month of application, 1 October 2027; each fill priced again at HUSKY D’s $0, $125.37 back to Chase Total Checking, three refunds once through a reload; the twin who waits to 2 December reaches back three months to 1 September, the August fill left at $41.79.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: an application made in January 2028 reaches one month back, where one made in 2026 reached three (FIXTURE: an income of $600 a month from October 2027, the work rules met by it and under HUSKY D’s line, and a doctor’s visit through the game’s own care on the 15th of October, November and December 2027, all uninsured); enrolled on 5 January 2028, HUSKY D covers her from 1 December 2027 and prices again December’s visit alone",
+            "kind": "fixture",
+            "closes": "An application on 5 January 2028 reaches one month back: care on the 15th of October, November and December 2027 (through careFor at the clock’s time), income $600 a month (TEST SETUP: the work rules met and under the line); HUSKY D from 1 December 2027, December’s visit priced again, October’s and November’s left. No played life reaches a 2027 application with uninsured care two or three months back and the month before’s work rules met.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: the reach back stops at a month she wasn’t eligible in, or one another plan of hers covered, as SLATE keeps one stretch of cover (FIXTURE: her care one visit on 28 August 2026 with nothing covering her, an application on 5 November; then September’s income set over the line, then a Covered Connecticut plan set on September)",
+            "kind": "fixture",
+            "closes": "retroStart on a withdrawn life with one visit on 28 August 2026 (FIXTURE): from 1 August; with September’s income set over the line, the reach stops at October, giving the month of application’s first; with a Covered Connecticut plan set on September, the same.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -4054,9 +4075,9 @@
       "id": "health.apply",
       "kind": "command",
       "entry": "Papers, Health Cover: Apply For HUSKY D (PapersWorkspace.tsx:573), with the line saying what applying brings, drawn only where applyRefusal finds nothing (from 2026-10-16)",
-      "reads": "applyRefusal (health.ts:1059): public cover where she lives (BENEFIT_STATE), no application waiting on its notice, no program of her own, Yale Health not covering her, last month’s income and her status placing her in HUSKY D (programFor), and its work rules not met in the month before (engagement over lookBack)",
-      "changes": "HealthRecord.pending, an application with the months read, the band and the first it would begin; a notice of noncompliance (noticeOfNoncompliance, health.ts:1000), received five days after its date with thirty days from then to answer; WORK_DECIDED_KIND the day after (the command at health.ts:2098)",
-      "downstream": "the decision (WORK_DECIDED_KIND, health.ts:2128): the months read again as the records stand, met by then → grantPending gives HUSKY D from the month’s first, a marketplace plan bought meanwhile ending as it begins; short → Public Cover Denied, and she may apply again; health.request_hardship grants it on a stay in hospital in a month read; coverOn gives an applicant none while she answers; Papers says the notice, its day and the hardship (PapersWorkspace.tsx:577-583), and draws no Apply while it waits",
+      "reads": "applyRefusal (health.ts:1175; :1059 until the journeys’ follow-up): public cover where she lives (BENEFIT_STATE), no application waiting on its notice, no program of her own, Yale Health not covering her, last month’s income and her status placing her in HUSKY D (programFor), and its work rules not met in the month before (engagement over lookBack)",
+      "changes": "HealthRecord.pending, an application with the months read, the band and the first it would begin; a notice of noncompliance (noticeOfNoncompliance, health.ts:1102; :1000 until the journeys’ follow-up), received five days after its date with thirty days from then to answer; WORK_DECIDED_KIND the day after (the command at health.ts:2239; :2098 until then)",
+      "downstream": "the decision (WORK_DECIDED_KIND, health.ts:2270; :2128 until brief 09’s journeys’ follow-up of 2026-10-16): the months read again as the records stand, met by then → grantPending gives HUSKY D from the first of the month of application, reaching back as Enroll does to an earlier month she was eligible in and had care in with nothing covering her, the care since priced again (programStart, retroStart, repriceCare; from 2026-10-16, brief 09’s journeys: until then the first of next month, or of the month after the decision), a marketplace plan bought meanwhile ending as it begins; short → Public Cover Denied, and she may apply again; health.request_hardship grants it on a stay in hospital in a month read; coverOn gives an applicant none while she answers; Papers says the notice, its day and the hardship (PapersWorkspace.tsx:577-583), and draws no Apply while it waits",
       "persistent": "HealthRecord.pending; the scheduled decision; the notices",
       "explanation": "Papers’ line before applying (the notice, thirty days from its receipt, the month read, the hardship); A Notice Of Noncompliance; Public Cover Denied or Public Cover Approved",
       "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (pressed on Papers: the notice in its words, uncovered meanwhile, refused again in its words and not drawn, denied on 8 February, one jump against day by day with a reload, applied again in February for January), ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December…’ (drawn where December’s $465.00 of interest is short, Enroll given where $930.00 meets the rules) and ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (applied for, then granted on the hardship)",
@@ -4105,12 +4126,12 @@
       "id": "health.request_hardship",
       "kind": "command",
       "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:585 at 11933d55; :582 until then), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
-      "reads": "hardshipRefusal (health.ts:1086 at 11933d55; :1045 until then): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, for a renewal a program neither ended nor ending (:1094-1098, from 2026-10-16, brief 09’s journeys: until then a renewal’s hardship was taken on HUSKY D dropped, said granted, and nothing renewed; health.drop takes the notice since, so this is a guard for an end that comes some other way), and a stay in hospital (the care log’s stay) in a month it read",
-      "changes": "the notice answered and cleared by grantPending (health.ts:1065 at 11933d55; :1024 until then): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2183; :2115 until then)",
+      "reads": "hardshipRefusal (health.ts:1152 after brief 09’s journeys’ follow-up; :1086 at 11933d55, :1045 before): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, for a renewal a program neither ended nor ending (:1160-1164, from 2026-10-16, brief 09’s journeys: until then a renewal’s hardship was taken on HUSKY D dropped, said granted, and nothing renewed; health.drop takes the notice since, so this is a guard for an end that comes some other way), and a stay in hospital (the care log’s stay) in a month it read",
+      "changes": "the notice answered and cleared by grantPending (health.ts:1126 after the journeys’ follow-up; :1065 at 11933d55, :1024 before): an application approved, HUSKY D from the first of the month of application, or of the month before it with care in it (from 2026-10-16, brief 09’s journeys’ follow-up: until then from the first of the next month), a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2257; :2183 at 11933d55, :2115 before)",
       "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
       "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
       "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",
-      "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: approved from 1 February, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn); tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice…’ (a member’s renewal notice answered on Papers on 10 November: renewed to 1 May 2028, said once, the decision of 6 December passing it by, covered into January, across a reload, the same in one jump as day by day; the twin who doesn’t ask ended with December) and ‘PLAYER JOURNEY: with no stay in hospital from May to October 2027…’ (Papers says why in the engine’s words and draws no button; the command refused with nothing changed)",
+      "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay…’ (pressed on Papers: approved from 1 December, reaching back to the stay, which HUSKY D now pays, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words; renamed by brief 09’s journeys’ follow-up, as the note over it says: until then approved from 1 February) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn); tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice…’ (a member’s renewal notice answered on Papers on 10 October: renewed to 1 April 2028, said once, the decision of 5 November passing it by, covered into December, across a reload, the same in one jump as day by day; the twin who doesn’t ask ended with November) and ‘PLAYER JOURNEY: with no stay in hospital from April to September 2027…’ (Papers says why in the engine’s words and draws no button; the command refused with nothing changed). Renamed by brief 09’s journeys’ follow-up of 2026-10-16, a month earlier as HUSKY D came to begin in the month of application (as the note over each says): until then the renewal of 1 November, renewed to 1 May 2028, the decision of 6 December, covered into January, the twin ended with December, and May to October 2027",
       "issue": "Added on 2026-10-16, when the health area made the command, with no row. Until brief 09 of the same day a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) was played by no test, and the row was partial for it; tests/remaining-09-hardship.test.ts plays it since. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw.",
       "added": "2026-10-16",
       "review": {
@@ -4153,23 +4174,23 @@
         "tests": [
           {
             "file": "remaining-09-hardship.test.ts",
-            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December",
+            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice, Request A Hardship Exception pressed on Papers on 10 October renews HUSKY D to 1 April 2028, said once; the decision of 5 November passes it by and she’s covered into December; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with November",
             "kind": "render",
             "closes": "The notice of 1 November 2027 in its words (answered by 5 December, decided 6 December, ended with December where unanswered, all worked by hand); Papers’ line and the hardship drawn; pressed on 10 November: renewed to 1 May 2028, said once, September met by the stay; the decision passes; covered into January; once each across a reload; the same in one jump as a day at a time with two reloads; the twin who doesn’t ask ended with December.",
             "round": "remaining-09-coverage"
           },
           {
             "file": "remaining-09-hardship.test.ts",
-            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed",
+            "title": "health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: with no stay in hospital from April to September 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed",
             "kind": "render",
             "closes": "No stay: Papers says “No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.” and draws no button; the command is refused in those words with the save as it was.",
             "round": "remaining-09-coverage"
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
             "kind": "command",
-            "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+            "closes": "Drop The Plan pressed on Papers: the end 1 November, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on November 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on November 1, 2027.”, nothing moved; reloaded, covered to 31 October and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment. Every date a month earlier from 2026-10-16’s journeys.d-medicaid-start, its renewal on 1 October 2027 (title renamed, inputs/renames.json).",
             "round": "remaining-09-journeys"
           },
           {
@@ -5217,8 +5238,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g04-life.test.ts",
@@ -5355,8 +5376,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g04-life.test.ts",
@@ -5375,6 +5396,13 @@
             "title": "PLAYER JOURNEY: a student made at BMI 11.8 dies at her first midnight; the life opens onto LifeEnded and nothing else, and its slot says “Died At 24” and offers how it ended",
             "kind": "render",
             "closes": "UI: GameShell renders LifeEnded ('A Life, Ended Ada Cole June 14, 2002 – August 25, 2026 · Aged 24 · Actress'), with 'Back To The Slots' as its only button. refreshMeta's 'Actress, Yale Drama Year 1, Died At 24' goes through the real LocalSaveAdapter into SaveSlots, which offers 'See How It Ended' and not 'Continue'."
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-ended-life-loops: a loop waiting for the clock once a life has ended > GUARD: jl-17’s life, ended by mortality’s draw at 9:58 PM on 11 January 2027, tended by this file’s own six-hour loop to the 20th fails at once naming the death (tests/setup/ended-life.ts), where it hung before; a single move of the clock still returns where it stopped",
+            "kind": "fixture",
+            "closes": "jl-17 tended by the file’s own six-hour loop to 20 January throws “Ada Cole’s life ended on January 11, 2027 at 9:58 PM, at 24, and its clock stays there…”, in under a second, where it hung; a single advanceTo still returns from = to = the stopped clock.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -5951,7 +5979,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
             "kind": "command",
             "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
             "round": "remaining-health-billing"
@@ -5961,6 +5989,13 @@
             "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
             "kind": "render",
             "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
+            "kind": "command",
+            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -6197,7 +6232,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
             "kind": "command",
             "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
             "round": "remaining-health-billing"
@@ -6284,7 +6319,7 @@
       "downstream": "coverOn shares, keptUp tolls",
       "persistent": "health record, ledger",
       "explanation": "Papers, notices. From 2026-10-16 (brief 09’s journeys) ‘Your Health Cover Ended’ names the marketplace’s last day, 60 days from the loss (Yale Health’s own end, or a cover canceled back counted from when it was made, lapseKnown, 45 CFR 155.420(c)(5)), on the loss’s own day its 60 days, and, where mayEnroll finds HUSKY D, Covered Connecticut or the Essential Plan for her, that it takes her at any time (health.ts:895-912): until then it said ‘You have 60 days to enroll in the marketplace’ whenever it came, a month after the loss with 33 left, and nothing of HUSKY D.",
-      "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
+      "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
       "status": "verified",
       "issue": "Closed 2026-10-13: onsetMonth is played end to end through the clock’s month (tests/evidence-g05-life.test.ts ‘diagnoses high blood pressure on the 1st…’, tests/evidence-g07-life.test.ts chronic, tests/evidence2-b03.test.ts body), its draw forced or its seed chosen.",
       "review": {
@@ -6363,7 +6398,7 @@
           },
           {
             "file": "evidence-g05-life.test.ts",
-            "title": "health.month > PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of it",
+            "title": "health.month > PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months",
             "kind": "command",
             "closes": "Program renewal through the clock: HUSKY D enrolled through Papers' Enroll; at renewal with no work, 'Your Public Cover Ended At Renewal' (80 hours or $580.00) and 'Your Health Cover Ended' with 60 days, Papers 'This Month None' and a visit not free; the twin with 80 hours renewed to 1 March 2028 (six months from 2027), 'This Month HUSKY D', care at $0.00"
           },
@@ -6382,7 +6417,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
             "kind": "command",
             "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
             "round": "remaining-health-eligibility"
@@ -6396,7 +6431,7 @@
           },
           {
             "file": "remaining-health-eligibility.test.ts",
-            "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance",
+            "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same work in March, outside April to September, brings a notice of noncompliance",
             "kind": "command",
             "closes": "80 hours in June 2027 (TEST SETUP) renew her on 1 November 2027 to 1 May 2028, said once; the same work in April, outside May to October, brings the notice (months October back to May listed).",
             "round": "remaining-health-eligibility"
@@ -6410,7 +6445,7 @@
           },
           {
             "file": "defects4.test.ts",
-            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month, from 1 September, is told at its renewal on 1 September 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
             "kind": "command",
             "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
             "round": "remaining-health-eligibility"
@@ -6452,9 +6487,9 @@
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
             "kind": "command",
-            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
             "round": "remaining-09-journeys"
           },
           {
@@ -6801,6 +6836,13 @@
             "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
             "kind": "command",
             "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79)",
+            "kind": "command",
+            "closes": "jr-3 (searched jr-1 to jr-12 for fills in the lapse): Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled on 22 October, HUSKY D from 1 August (August and September each eligible and with uninsured care, July no care), renewed from the month of application, 1 October 2027; each fill priced again at HUSKY D’s $0, $125.37 back to Chase Total Checking, three refunds once through a reload; the twin who waits to 2 December reaches back three months to 1 September, the August fill left at $41.79.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -9052,8 +9094,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g07-life.test.ts",
@@ -9090,6 +9132,13 @@
             "title": "injuries > PLAYER JOURNEY: Canada’s EI, which a week laid up would draw on (`eiWeek`), is refused a New Haven student in its own words, nothing registered",
             "kind": "command",
             "closes": "Evidence for the eiWeek classification: benefits.ei_register refused with 'EI is for someone living in Canada.', person.ei undefined, the save byte-identical."
+          },
+          {
+            "file": "evidence-g04-life.test.ts",
+            "title": "life.day_rollover > PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches: on this student, a bad knock at midnight on 19 November, said once, five days to mend",
+            "kind": "command",
+            "closes": "The notice reads “5 days to mend.” with nothing after it (its assertion read “5 days to mend. ” until 2026-10-16, recast with a dated comment, title unchanged).",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [

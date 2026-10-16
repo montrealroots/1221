@@ -4023,11 +4023,11 @@
       "kind": "scheduled",
       "entry": "enroll (school.ts:1657) / previous term (school.ts:3027); TERM_KIND handler school.ts:2936",
       "reads": "term, need, account",
-      "changes": "termsBegun, fresh tally, workStudy reset at a fall (school.ts:2970: electiveHours 0, owedHours carried, assignedBooked dropped), scholarship/health plan, labs, cast() (a production’s rehearsal calls numbered and staged on the calls it keeps beside a Rep assignment, from 2026-10-12), evaluation scheduled",
+      "changes": "termsBegun, fresh tally, workStudy reset at a fall (electiveHours 0, owedHours carried, assignedBooked dropped); a term past six billed first, then the living-expense scholarship applied on the Yale account to what it owes before any reaches the bank, in its one posting (aidOnAccount), a hold it clears lifted and said, and only then a hold left asks registration (from 2026-10-16, brief 09’s journeys: until then the aid was paid out whole first and a hold it would have cleared stopped registration); labs, cast(), evaluation scheduled",
       "downstream": "cast -> calls; evaluation; tally",
       "persistent": "school record, ledger",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carried and paid with the first Saturday’s, 10 × $23, and the class weeks’ Saturdays booked again from 6 hours, the same across a save and a load’, ‘PLAYER JOURNEY: the second fall’s casting, reached in order by the clock, numbers every rehearsal call it books from 1 to the last, the read-through first and the technical and the dress last’; tests/evidence2-b07.test.ts ‘PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13’; tests/school.test.ts ‘pays a student in need the rest of the living scholarship each term, and takes nothing from the bank for the plan’; tests/production-staging.test.ts ‘numbers every rehearsal call it keeps, one to the last, with its technical and its dress’ (a term scheduled by hand, behind an early return). Until 2026-10-13 this also cited production-staging’s “runs six terms”, which checks termStart, a pure function",
+      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carried and paid with the first Saturday’s, 10 × $23, and the class weeks’ Saturdays booked again from 6 hours, the same across a save and a load’, ‘PLAYER JOURNEY: the second fall’s casting, reached in order by the clock, numbers every rehearsal call it books from 1 to the last, the read-through first and the technical and the dress last’; tests/evidence2-b07.test.ts ‘PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13’; tests/school.test.ts ‘pays a student in need the rest of the living scholarship each term, and takes nothing from the bank for the plan’; tests/production-staging.test.ts ‘numbers every rehearsal call it keeps, one to the last, with its technical and its dress’ (a term scheduled by hand, behind an early return). Until 2026-10-13 this also cited production-staging’s “runs six terms”, which checks termStart, a pure function; tests/remaining-09-journeys.test.ts ‘DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)’, ‘DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)’",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -4098,8 +4098,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g20-school.test.ts",
@@ -4118,6 +4118,55 @@
             "title": "school.term > PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13",
             "kind": "command",
             "closes": "The numbering beside a Rep assignment, reached in order by the clock on g20-term's second fall (term 2, 23 August 2027) with no guard. Ghosts in Directors' Thesis Production I has 20 rehearsal days, listed as literal dates (Tuesday to Friday for five weeks before 9 October). The Rep understudy's 11 Wednesday and Friday calls, 25 August to 29 September, drop the 7 that fall on those days. The 13 kept are numbered 1..13 of 13. Their stages are read, 4 blocking, 6 work, tech, dress, and the last five run 300 minutes for the nights on call. A twin out of good standing (no Rep) keeps all 20, numbered 1..20. Played by the clock to the dress, the process holds 13 calls of 13, lines 1−0.88^13 and blocking 1−0.75^5, equal to completeFor: complete."
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-aid-past-balance: a term begun under a hold its aid clears > DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)",
+            "kind": "command",
+            "closes": "A Modest student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed and its due date, as evidence-g25 sets them, with the month’s $125.00 fee): the term’s $13,318.50 pays the $1,125.00 first, $12,193.50 to Chase Total Checking, the hold lifted at nine on 4 January, said once, no registration asked, the first class day counting her.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-f1-term-notice: an F-1 student’s term notice and what reached her account > DEFECT: a London-born F-1 student’s Fall Term 2026 notice says $11,356.54 is in Chase Total Checking after $1,961.96 withheld for the IRS, as the posting has it (until 2026-10-16 it said the whole $13,318.50 was)",
+            "kind": "command",
+            "closes": "By hand: ($28,028 − $3,764 + $2,373 + $3,764) / 2 = $15,200.50, less the $1,882.00 plan, $13,318.50; the taxable part all but the $1,186.50 of books, $14,014.00, 14% withheld, $1,961.96; $11,356.54 posted to Chase Total Checking and the notice “… and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS.” Fails before the fix.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "evidence-g26-school.test.ts",
+            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted",
+            "kind": "render",
+            "closes": "Recast: a scholarship returned on a leave is refused in its words and moves nothing; paid from the drawn panel before the return, the hold lifts and the return term’s $14,093.64 is paid out whole; the unpaid twin’s return term pays the account first, its rest to the bank, the hold lifted at nine on 3 January in the aid’s words; registration asked again by the return, the registered student counted, the twin not registered not counted and told to register, not to pay.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+            "kind": "render",
+            "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+            "kind": "command",
+            "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "evidence-g25-school.test.ts",
+            "title": "school.reregister > PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts",
+            "kind": "render",
+            "closes": "Recast figure: back from a leave owing $15,575.50, the spring’s $14,093.64 pays it down to $1,481.86, so the hold stays and refuses Register in its words; the rest of the journey as it was.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9479,9 +9528,9 @@
         "tests": [
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
             "kind": "command",
-            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -9500,12 +9549,12 @@
       "id": "school.reregister",
       "kind": "command",
       "entry": "School, Standing And Craft: Register (StudyPlanPanels.tsx:110)",
-      "reads": "mustRegister (set at a return, leave.ts:426, and at a term begun under a hold, school.ts:2957); a financial hold (accountOwed, refused at leave.ts:1162)",
+      "reads": "mustRegister (set at a return, and at a term begun under a hold the term’s aid doesn’t clear, from 2026-10-16); a financial hold (accountOwed)",
       "changes": "deletes mustRegister; registeredAt (leave.ts:1164). Until 2026-10-13 this cited leave.ts:1124",
       "downstream": "registered(), which classes and shifts read",
       "persistent": "school.registeredAt",
       "explanation": "The Register line; the hold’s refusal; from 2026-10-16 the Not Registered notice under a hold names the sum and where to pay it.",
-      "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts’, ‘a term begun under a hold, with no leave behind it, asks for registration again: refused until paid, the first class day not counted, then registered and counted’; tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’ (the fall back’s courses attended once registered)",
+      "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts’, ‘a term begun under a hold, with no leave behind it, asks for registration again: refused until paid, the first class day not counted, then registered and counted’; tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’ (the fall back’s courses attended once registered); tests/remaining-09-journeys.test.ts ‘DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)’ (a hold the aid clears asks no registration)",
       "status": "verified",
       "issue": "",
       "traced": "2026-10-12",
@@ -9556,7 +9605,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9579,9 +9628,9 @@
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
             "kind": "command",
-            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -10806,7 +10855,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g26-school.test.ts",
@@ -10895,6 +10944,13 @@
             "kind": "command",
             "closes": "The Not Shown notice’s words and the course’s count.",
             "round": "remaining-school"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+            "kind": "command",
+            "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -10963,10 +11019,10 @@
       "entry": "Terms And Award: Owed On Your Yale Account, Pay From Your Bank (StudyPlanPanels.tsx:260); leave.ts:1235. Until 2026-10-13 this cited StudyPlanPanels.tsx:250",
       "reads": "payBalanceRefusal (leave.ts): accountOwed, something paid, no more than is owed, and from 2026-10-16 what the primary current account and the easy-access savings at its bank can pay together, whatever the link (fromBankToYale)",
       "changes": "pays the Yale account (payBalance, leave.ts:767). Until 2026-10-13 this cited leave.ts:1187",
-      "downstream": "the hold lifted once paid (registration, the diploma); conferIfReady, a degree held for it conferred",
+      "downstream": "the hold lifted once paid (registration, the diploma); conferIfReady, a degree held for it conferred. From 2026-10-16 a term’s living-expense scholarship pays the account first (aidOnAccount), so a balance it covers is paid at the term’s start and the hold lifted there (liftHold, shared with payBalance).",
       "persistent": "ledger, school.hold",
       "explanation": "‘The Financial Hold Is Lifted’; ‘Your MFA Is Conferred’",
-      "tests": "Add: tests/need-paths.test.ts ‘a leave taken with need: the aid returned, the balance, and paying it’; tests/evidence3-school.test.ts ‘school.pay_balance, for a balance a family chosen on the screen leaves’.",
+      "tests": "tests/evidence-g26-school.test.ts ‘PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted’ (renamed, inputs/renames.json)",
       "status": "verified",
       "issue": "Through the command and the drawn panel, a term billed past six is paid in parts, the hold lifting on the last, and a diploma held for the account is conferred once it’s paid. A scholarship returned on a leave (leave.ts:369-376) puts a balance on the account too, and late fees add to it (accountDue, leave.ts:783-791). Until 2026-10-13 this said a balance comes only from a term past the sixth. Until 2026-10-14 the returned scholarship reached only a life with need set by hand, as every new life’s family was ‘wealthy’; since then the family is chosen on creation’s Genres & Background, and a Scraping family’s student meets it (need-paths, evidence3-school).",
       "traced": "2026-10-12",
@@ -11024,11 +11080,11 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 5,
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g26-school.test.ts",
-            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, holds registration on the return, and paid from the drawn panel lifts the hold and lets the term count",
+            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted",
             "kind": "render",
             "closes": "Each refusal; registration after a hold is paid; the render and press; a balance from a leave"
           },
@@ -11080,9 +11136,9 @@
           },
           {
             "file": "remaining-09-journeys.test.ts",
-            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
             "kind": "command",
-            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
             "round": "remaining-09-journeys"
           }
         ],
@@ -11203,6 +11259,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+            "kind": "render",
+            "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {

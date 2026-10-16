@@ -3578,6 +3578,13 @@
             "kind": "command",
             "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
             "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -5984,7 +5991,7 @@
       "downstream": "balances -> spending; marks -> score",
       "persistent": "ledger",
       "explanation": "statementReady; fee waiver text",
-      "tests": "evidence-g13-money.test.ts ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end’; evidence-g11-money.test.ts ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’ (the statement notice); guide-examples-money.test.ts, the play of the bank.accounts entry; banking.test.ts:106-196, :200-252 (partly feeFor called directly); statements.test.ts:85-114 (Germany); bank-fees.test.ts",
+      "tests": "evidence-g13-money.test.ts ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end’; evidence-g11-money.test.ts ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’ (the statement notice); guide-examples-money.test.ts, the play of the bank.accounts entry; banking.test.ts:106-196, :200-252 (partly feeFor called directly); statements.test.ts:85-114 (Germany); bank-fees.test.ts; tests/remaining-09-banking.test.ts ‘banking.6.fee-schedule: …’ (ING on the 1st, Commerzbank at each month’s end, Deutsche Bank at the quarter’s closing)",
       "status": "verified",
       "issue": "",
       "review": {

@@ -586,7 +586,7 @@
   },
   "09-journeys/journeys.d-aid-past-balance": {
    "rows": [],
-   "why": "The owner’s decision on aid applied to the Yale account; its test is x1’s, mapped by test as there, and moves no row’s words."
+   "why": "Aid applied to the Yale account at a term’s start, fixed by the follow-up: each test mapped by test (byTest), to the term the clock begins and the commands each presses; its row text placed in school.term’s, school.pay_balance’s and school.reregister’s fields, the two “(add)” as additions."
   },
   "09-journeys/journeys.d-cover-ended-notice": {
    "rows": [],
@@ -594,7 +594,7 @@
   },
   "09-journeys/journeys.d-medicaid-start": {
    "rows": [],
-   "why": "Not implemented: HUSKY D’s start on its application’s month. Its test is x3’s, mapped by test as there; no row’s words change."
+   "why": "HUSKY D from the month of application and the months before it, fixed by the follow-up: each test mapped by test (byTest), to Enroll, the health week that fills in the lapse, and the month’s notice; its row text for health.enroll folded, and for health.apply and health.request_hardship written into inputs/added-rows.json, where those rows’ words are kept."
   },
   "09-journeys/journeys.d-hardship-ended-renewal": {
    "rows": [],
@@ -653,6 +653,22 @@
     "fitness"
    ],
    "why": "A class that trains the body as hard as a workout counts as one (from 2026-10-16): the spring’s combat classes attended through the clock, against a twin away, read on fitness each midnight."
+  },
+  "09-journeys/journeys.f-mexico-residence": {
+   "rows": [],
+   "why": "Mexico’s residence no longer sold: each test mapped by test (byTest) to the four residence rows it presses; its row text placed, `settled` among it."
+  },
+  "09-journeys/journeys.f-injury-space": {
+   "rows": [],
+   "why": "The injury notice’s trailing space: its one test, evidence-g04-life’s, already cited by life.day_rollover and injuries (mapped by test, listed as already cited); no row’s words change."
+  },
+  "09-journeys/journeys.f-ended-life-loops": {
+   "rows": [],
+   "why": "Loops on an ended life: the jl-17 guard to life.end (the clock stops); the attentiveHour guard, tests/setup/ended-life.ts, vitest.config.ts and personality.test.ts are the tests’ and tools’ own, no row’s."
+  },
+  "09-journeys/journeys.d-f1-term-notice": {
+   "rows": [],
+   "why": "An F-1 student’s term notice naming what reached her account: its one test to school.term (mapped by test)."
   }
  },
  "fragments": {
@@ -703,13 +719,15 @@
     "read": "The leave asked twice and granted, half the scholarship returned; her own transfer into savings; Affiliate cover refused unconfirmed, bought from both accounts, refused again; a part paid, over and nothing refused; the hold and $375 of late fees, one jump against six-hour steps."
    },
    {
-    "title": "PLAYER JOURNEY: back for Spring Term 2028 under the hold",
+    "title": "DEFECT: back for Spring Term 2028 owing $7,875.25",
     "rows": [
      "school.return_notice",
      "school.reregister",
-     "school.pay_balance"
+     "school.pay_balance",
+     "school.term",
+     "bank.transfer"
     ],
-    "read": "Notice given and refused twice; registration refused under the hold with nothing moved; paid from both accounts, the hold lifted once; registered, refused again; the first class day counted, through a reload."
+    "read": "Renamed by the follow-up (its note at remaining-09-journeys.test.ts:308). Notice given and refused again; the twin’s transfer from savings and its payment of the account from both, the hold lifted; the term’s aid paying the $7,875.25 first at nine on 3 January, the rest to the bank, its notice and Terms And Award; registration pressed, refused again, and the first class day counted, through a reload."
    },
    {
     "title": "DEFECT: a doctor’s visit booked at Fair Haven",
@@ -732,12 +750,13 @@
     "read": "The cover-ended notice of 1 April names 16 May; Enroll refused on 20 May with nothing moved, a twin enrolled on 10 May; the 2026 return filed and refused again."
    },
    {
-    "title": "PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen",
+    "title": "DEFECT: withdrawn in the first fall on 5 October 2026, a citizen",
     "rows": [
      "health.month",
-     "health.enroll"
+     "health.enroll",
+     "health.appointment"
     ],
-    "read": "The notice names the window’s last day and HUSKY D; Enroll from 1 January, refused again; one jump against six-hour steps."
+    "read": "Renamed by the follow-up (its note at :493). The notice names the window’s last day and HUSKY D; Enroll on 2 December from 1 December, refused again; the doctor’s visit the clock keeps on 3 December HUSKY D’s, nothing to pay; one jump against six-hour steps."
    },
    {
     "title": "PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026",
@@ -777,12 +796,12 @@
     "read": "The fill of 8 February had by the clock’s health week, paid uninsured; Affiliate cover bought back to the lapse’s start reprices the fill at Yale Health’s $10.00 copay, the rest paid back once on a line of its own, through a reload."
    },
    {
-    "title": "DEFECT: HUSKY D dropped on Papers on 2 November 2027",
+    "title": "DEFECT: HUSKY D dropped on Papers on 2 October 2027",
     "rows": [
      "health.drop",
      "health.request_hardship"
     ],
-    "read": "Drop The Plan pressed on Papers with a renewal’s notice waiting: the notice goes with it, the hardship refused in its words with nothing moved, a second Drop refused; ended on 1 December, nothing renewed, through a reload."
+    "read": "Renamed by the follow-up (its note at :711), a month earlier as HUSKY D’s start moved. Drop The Plan pressed on Papers with a renewal’s notice waiting: the notice goes with it, the hardship refused in its words with nothing moved, a second Drop refused; ended on 1 November, nothing renewed, through a reload."
    },
    {
     "title": "GUARD: a renewal’s notice waiting while its program has ended",
@@ -790,6 +809,136 @@
      "health.request_hardship"
     ],
     "read": "FIXTURE (the program’s end set by hand): the hardship refused in words that say so, nothing moved, Papers drawing no button."
+   },
+   {
+    "title": "DEFECT: a student with need begins Spring Term 2027 under a hold",
+    "rows": [
+     "school.term"
+    ],
+    "read": "The term the clock begins on 4 January pays the $1,125.00 owed from its scholarship first, the hold lifted at nine, said once, no registration asked, the rest to the bank, the first class day counted. Owed by TEST SETUP; nothing pressed, so no command row takes it."
+   },
+   {
+    "title": "DEFECT: a London-born F-1 student’s Fall Term 2026 notice",
+    "rows": [
+     "school.term"
+    ],
+    "read": "The fall term the clock begins: the posting’s $11,356.54 to Chase after $1,961.96 withheld, and its notice saying so."
+   },
+   {
+    "title": "DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic",
+    "rows": [
+     "health.enroll",
+     "health.week"
+    ],
+    "read": "Three generics the health week fills uninsured in the lapse; Enroll on 22 October gives HUSKY D from 1 August and prices them again at $0, $125.37 back once, through a reload; the twin enrolled on 2 December from 1 September, the August fill left."
+   },
+   {
+    "title": "GUARD: an application made in January 2028 reaches one month back",
+    "rows": [
+     "health.enroll"
+    ],
+    "read": "FIXTURE (care and income set by hand): Enroll on 5 January 2028 gives HUSKY D from 1 December 2027 and prices December’s visit alone."
+   },
+   {
+    "title": "GUARD: the reach back stops at a month she wasn’t eligible in",
+    "rows": [
+     "health.enroll"
+    ],
+    "read": "FIXTURE: retroStart, which Enroll reads, stops at a month over the line or covered by another plan."
+   },
+   {
+    "title": "GUARD: jl-17’s life, ended by mortality’s draw",
+    "rows": [
+     "life.end"
+    ],
+    "read": "Mortality’s draw ends the life on 11 January 2027 (meta.endedAt), and a move of the clock returns from where it stopped, life.end’s downstream; the harness’s own failure (tests/setup/ended-life.ts) is the tests’, no row’s."
+   },
+   {
+    "title": "GUARD: tools/policy.ts’s attentiveHour",
+    "rows": [],
+    "read": "tools/policy.ts’s loop helper on an ended life (FIXTURE): the tools’ and tests’ own hour, which no player command or clock row is."
+   },
+   {
+    "title": "DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.renew_residence",
+     "documents.settle",
+     "documents.naturalize"
+    ],
+    "read": "Papers draws Mexico’s rule and Apply grayed; the route refused in its words with nothing moved; a held card (FIXTURE) shown to its end, Renew grayed and refused, settle and naturalize refused in their rules, through a reload; run out, the rule again."
+   },
+   {
+    "title": "PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel",
+    "rows": [
+     "school.pay_balance",
+     "school.term"
+    ],
+    "read": "Renamed by the follow-up (evidence-g26-school.test.ts:847). Pay From Your Bank refused and pressed; the unpaid twin’s return term pays the account from its scholarship first, the hold lifted at the term’s start."
+   },
+   {
+    "title": "PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid",
+    "rows": [
+     "school.reregister",
+     "school.term"
+    ],
+    "read": "Its figure recast (title unchanged): the return term’s $14,093.64 pays the $15,575.50 down to $1,481.86, so the hold stays and refuses Register in its words; paid, Register takes."
+   },
+   {
+    "title": "shows a term billed past six with the living aid the review kept",
+    "rows": [
+     "school.request_aid_review",
+     "school.term"
+    ],
+    "read": "Renamed by the follow-up (defects-g8-2.test.ts:182). The aid review asked and decided, the seventh term begun (moved an hour on, TEST SETUP): its living aid paid onto the Yale account, $6,625.41 owed, nothing to the bank, on Terms And Award."
+   },
+   {
+    "title": "names the Yale Health fee as on the account only where it was charged",
+    "rows": [
+     "school.request_extra_term",
+     "school.term"
+    ],
+    "read": "Its words recast (title unchanged): A Term Without Tuition Support says the aid pays $15,781.87 of what the account owes before any reaches the bank."
+   },
+   {
+    "title": "PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches",
+    "rows": [
+     "life.day_rollover",
+     "injuries"
+    ],
+    "read": "The notice’s words with nothing after them (its assertion recast, title unchanged); the two rows cite it already."
+   },
+   {
+    "title": "refuses Mexican temporary residence with Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.renew_residence",
+     "documents.settle"
+    ],
+    "read": "Renamed by the follow-up (residence.test.ts:37). Refused on savings or income alike, a held card (FIXTURE) refused renewal and run to its end, settling saying its four years and then the reason."
+   },
+   {
+    "title": "is refused Mexican residence in Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.settle",
+     "documents.naturalize"
+    ],
+    "read": "Renamed by the follow-up (commands-kept.test.ts:202). A life begun in Mexico City (TEST SETUP) refused the route; a card held past four years (FIXTURE) refused settling, past five naturalizing, nothing paid."
+   },
+   {
+    "title": "documents.residence: Mexico’s row says its rule",
+    "rows": [
+     "documents.residence"
+    ],
+    "read": "Renamed by the follow-up (guide-examples-papers.test.ts:939). The guide’s worked example: the row and the refusal at the savings threshold and short of it, Apply grayed, nothing moved."
+   },
+   {
+    "title": "counts from the grant after a lapse, not the first ever",
+    "rows": [
+     "documents.settle"
+    ],
+    "read": "Its assertion recast (title unchanged): settleRefusal’s continuity, and past the four years the reason SLATE grants none (FIXTURE)."
    }
   ],
   "09-judge": [

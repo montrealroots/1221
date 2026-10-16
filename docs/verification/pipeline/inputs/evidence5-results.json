@@ -2536,8 +2536,8 @@
       "evidenceKind": "command"
      },
      {
-      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
-      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
       "evidenceKind": "command"
      }
     ],
@@ -2551,6 +2551,11 @@
       "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
       "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
       "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+      "evidenceKind": "command"
      }
     ],
     "gapsClosed": [],
@@ -2560,8 +2565,8 @@
     "id": "school.return_notice",
     "testsAdded": [
      {
-      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
-      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
       "evidenceKind": "command"
      }
     ],
@@ -2572,8 +2577,30 @@
     "id": "school.reregister",
     "testsAdded": [
      {
-      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
-      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.term",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-aid-past-balance: a term begun under a hold its aid clears > DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)",
+      "closes": "A Modest student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed and its due date, as evidence-g25 sets them, with the month’s $125.00 fee): the term’s $13,318.50 pays the $1,125.00 first, $12,193.50 to Chase Total Checking, the hold lifted at nine on 4 January, said once, no registration asked, the first class day counting her.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-f1-term-notice: an F-1 student’s term notice and what reached her account > DEFECT: a London-born F-1 student’s Fall Term 2026 notice says $11,356.54 is in Chase Total Checking after $1,961.96 withheld for the IRS, as the posting has it (until 2026-10-16 it said the whole $13,318.50 was)",
+      "closes": "By hand: ($28,028 − $3,764 + $2,373 + $3,764) / 2 = $15,200.50, less the $1,882.00 plan, $13,318.50; the taxable part all but the $1,186.50 of books, $14,014.00, 14% withheld, $1,961.96; $11,356.54 posted to Chase Total Checking and the notice “… and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS.” Fails before the fix.",
       "evidenceKind": "command"
      }
     ],
@@ -2587,6 +2614,11 @@
       "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
       "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
       "evidenceKind": "render"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
+      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
+      "evidenceKind": "command"
      }
     ],
     "gapsClosed": [],
@@ -2623,6 +2655,11 @@
       "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
       "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
       "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79)",
+      "closes": "jr-3 (searched jr-1 to jr-12 for fills in the lapse): Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled on 22 October, HUSKY D from 1 August (August and September each eligible and with uninsured care, July no care), renewed from the month of application, 1 October 2027; each fill priced again at HUSKY D’s $0, $125.37 back to Chase Total Checking, three refunds once through a reload; the twin who waits to 2 December reaches back three months to 1 September, the August fill left at $41.79.",
+      "evidenceKind": "command"
      }
     ],
     "gapsClosed": [],
@@ -2637,8 +2674,8 @@
       "evidenceKind": "command"
      },
      {
-      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
-      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
+      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
       "evidenceKind": "command"
      },
      {
@@ -2664,14 +2701,29 @@
       "evidenceKind": "command"
      },
      {
-      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
-      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)",
+      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 December 2026, the month she applied in, a second refused “You’re enrolled.”; the 3 December visit is HUSKY D’s, $0, “Nothing to pay.” Recast on 2026-10-16 (journeys.d-medicaid-start): until then from 1 January 2027, the visit billed $183.98.",
       "evidenceKind": "command"
      },
      {
       "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
       "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
       "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79)",
+      "closes": "jr-3 (searched jr-1 to jr-12 for fills in the lapse): Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled on 22 October, HUSKY D from 1 August (August and September each eligible and with uninsured care, July no care), renewed from the month of application, 1 October 2027; each fill priced again at HUSKY D’s $0, $125.37 back to Chase Total Checking, three refunds once through a reload; the twin who waits to 2 December reaches back three months to 1 September, the August fill left at $41.79.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: an application made in January 2028 reaches one month back, where one made in 2026 reached three (FIXTURE: an income of $600 a month from October 2027, the work rules met by it and under HUSKY D’s line, and a doctor’s visit through the game’s own care on the 15th of October, November and December 2027, all uninsured); enrolled on 5 January 2028, HUSKY D covers her from 1 December 2027 and prices again December’s visit alone",
+      "closes": "An application on 5 January 2028 reaches one month back: care on the 15th of October, November and December 2027 (through careFor at the clock’s time), income $600 a month (TEST SETUP: the work rules met and under the line); HUSKY D from 1 December 2027, December’s visit priced again, October’s and November’s left. No played life reaches a 2027 application with uninsured care two or three months back and the month before’s work rules met.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it > GUARD: the reach back stops at a month she wasn’t eligible in, or one another plan of hers covered, as SLATE keeps one stretch of cover (FIXTURE: her care one visit on 28 August 2026 with nothing covering her, an application on 5 November; then September’s income set over the line, then a Covered Connecticut plan set on September)",
+      "closes": "retroStart on a withdrawn life with one visit on 28 August 2026 (FIXTURE): from 1 August; with September’s income set over the line, the reach stops at October, giving the month of application’s first; with a Covered Connecticut plan set on September, the same.",
+      "evidenceKind": "fixture"
      }
     ],
     "gapsClosed": [],
@@ -2751,8 +2803,8 @@
     "id": "health.drop",
     "testsAdded": [
      {
-      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
-      "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+      "closes": "Drop The Plan pressed on Papers: the end 1 November, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on November 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on November 1, 2027.”, nothing moved; reloaded, covered to 31 October and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment. Every date a month earlier from 2026-10-16’s journeys.d-medicaid-start, its renewal on 1 October 2027 (title renamed, inputs/renames.json).",
       "evidenceKind": "command"
      }
     ],
@@ -2763,14 +2815,307 @@
     "id": "health.request_hardship",
     "testsAdded": [
      {
-      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
-      "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+      "closes": "Drop The Plan pressed on Papers: the end 1 November, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on November 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on November 1, 2027.”, nothing moved; reloaded, covered to 31 October and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment. Every date a month earlier from 2026-10-16’s journeys.d-medicaid-start, its renewal on 1 October 2027 (title renamed, inputs/renames.json).",
       "evidenceKind": "command"
      },
      {
       "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > GUARD: a renewal’s notice waiting while its program has ended some other way, which no played life reaches (TEST SETUP: HUSKY D’s end set on the record by hand, the notice left), refuses the hardship in words that say so, and nothing is renewed or moved",
       "closes": "A renewal’s notice with HUSKY D’s end on the record and the notice left (TEST SETUP): “HUSKY D has ended, so there’s no renewal left to answer.”, from the command and on Papers, no button, nothing moved.",
       "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.residence",
+    "testsAdded": [
+     {
+      "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+      "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.renew_residence",
+    "testsAdded": [
+     {
+      "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+      "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.settle",
+    "testsAdded": [
+     {
+      "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+      "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.naturalize",
+    "testsAdded": [
+     {
+      "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+      "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "life.end",
+    "testsAdded": [
+     {
+      "title": "journeys.f-ended-life-loops: a loop waiting for the clock once a life has ended > GUARD: jl-17’s life, ended by mortality’s draw at 9:58 PM on 11 January 2027, tended by this file’s own six-hour loop to the 20th fails at once naming the death (tests/setup/ended-life.ts), where it hung before; a single move of the clock still returns where it stopped",
+      "closes": "jl-17 tended by the file’s own six-hour loop to 20 January throws “Ada Cole’s life ended on January 11, 2027 at 9:58 PM, at 24, and its clock stays there…”, in under a second, where it hung; a single advanceTo still returns from = to = the stopped clock.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/evidence-g26-school.test.ts",
+  "rows": [
+   {
+    "id": "school.pay_balance",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.term",
+    "testsAdded": [
+     {
+      "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted",
+      "closes": "Recast: a scholarship returned on a leave is refused in its words and moves nothing; paid from the drawn panel before the return, the hold lifts and the return term’s $14,093.64 is paid out whole; the unpaid twin’s return term pays the account first, its rest to the bank, the hold lifted at nine on 3 January in the aid’s words; registration asked again by the return, the registered student counted, the twin not registered not counted and told to register, not to pay.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/defects-g8-2.test.ts",
+  "rows": [
+   {
+    "id": "school.request_aid_review",
+    "testsAdded": [
+     {
+      "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+      "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.term",
+    "testsAdded": [
+     {
+      "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+      "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+      "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_extra_term",
+    "testsAdded": [
+     {
+      "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+      "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/evidence-g25-school.test.ts",
+  "rows": [
+   {
+    "id": "school.reregister",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.term",
+    "testsAdded": [
+     {
+      "title": "school.reregister > PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts",
+      "closes": "Recast figure: back from a leave owing $15,575.50, the spring’s $14,093.64 pays it down to $1,481.86, so the hold stays and refuses Register in its words; the rest of the journey as it was.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/residence.test.ts",
+  "rows": [
+   {
+    "id": "documents.residence",
+    "testsAdded": [
+     {
+      "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+      "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.renew_residence",
+    "testsAdded": [
+     {
+      "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+      "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.settle",
+    "testsAdded": [
+     {
+      "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+      "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/commands-kept.test.ts",
+  "rows": [
+   {
+    "id": "documents.residence",
+    "testsAdded": [
+     {
+      "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+      "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.settle",
+    "testsAdded": [
+     {
+      "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+      "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.naturalize",
+    "testsAdded": [
+     {
+      "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+      "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/guide-examples-papers.test.ts",
+  "rows": [
+   {
+    "id": "documents.residence",
+    "testsAdded": [
+     {
+      "title": "the guide’s worked examples for Papers, played on throwaway saves > documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved",
+      "closes": "The guide’s worked example: the same row and refusal at the savings threshold and a hundred dollars short, Apply drawn grayed with the words, nothing moved. Recast and renamed.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/coverage-gaps-papers.test.ts",
+  "rows": [
+   {
+    "id": "documents.settle",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/evidence-g04-life.test.ts",
+  "rows": [
+   {
+    "id": "life.day_rollover",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "injuries",
+    "testsAdded": [
+     {
+      "title": "life.day_rollover > PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches: on this student, a bad knock at midnight on 19 November, said once, five days to mend",
+      "closes": "The notice reads “5 days to mend.” with nothing after it (its assertion read “5 days to mend. ” until 2026-10-16, recast with a dated comment, title unchanged).",
+      "evidenceKind": "command"
      }
     ],
     "gapsClosed": [],

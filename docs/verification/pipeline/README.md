@@ -27,11 +27,15 @@ evidence as any row does, its words kept in `added-rows.json` alone (row text an
 out). A test a row already cites, in its review or an earlier pass's round, isn't added again by that pass's results
 (listed as already cited); the last pass's records are folded as they were. From the journeys area's fold of the same day
 an area's tests can be mapped one by one (`byTest` in `remaining-rows.json`, by a title's start): each goes to the rows
-its own map names, where until then every test of an item went to every row of the item.
+its own map names, where until then every test of an item went to every row of the item. From the journeys' follow-up
+it also places a deferred row's `settled`, a field to add to (`tests (add)`, put after the field once) and an
+`evidence (add)` (as evidence, where the item's tests reach the row), which until then were listed as no field, and it
+writes a title cited in folded row text under its last name where `inputs/renames.json` records the rename.
 
-Where `resolve-titles.cjs` says it fixed row text, run `merge-review.cjs` (and `resolve-titles.cjs`) once more: it corrects
-`doc-fields.json`, which the merge reads, after the merge has run (found on 2026-10-16, when a regeneration left two
-renamed titles in the audit until the merge ran again).
+Where `resolve-titles.cjs` says it fixed row text, run `merge-review.cjs` (and `resolve-titles.cjs`) once more: it corrected
+`doc-fields.json`, which the merge reads, after the merge had run (found on 2026-10-16, when a regeneration left two
+renamed titles in the audit until the merge ran again). From the journeys' follow-up of the same day it fixes nothing (it
+lists each title that doesn't land, to be read), so the second run changes nothing; the order is kept as it was.
 
 Then, from the repository’s root, `node tools/coverage.mjs`, `node tools/coverage.mjs --check`, and
 `node tools/capabilities.mjs --write` and `--check`.
@@ -68,8 +72,10 @@ Then, from the repository’s root, `node tools/coverage.mjs`, `node tools/cover
   `inputs/final-checks/` holds each skeptic's file as written.
 - `scope-prep.cjs` puts the reruns of mutations in place (`mutations4-final.json`) and keys the current scope's fixes in
   `inputs/fixes.json`.
-- `resolve-titles.cjs` applies `inputs/renames.json` (a test title renamed since it was cited) and
-  `inputs/doc-fields.json` (a row's own words corrected against the code as it stands).
+- `resolve-titles.cjs` lists each test title the audit cites that its file doesn't hold, with the test whose own dated note
+  names it as its old title (where one does) and the file's nearest by word overlap, for a reader to record the rename in
+  `inputs/renames.json`. Until the journeys' follow-up of 2026-10-16 it took a nearest at 0.6 or more into `renames.json`
+  or `doc-fields.json`, and on that tree the coordinator took five such guesses out; it takes none since.
 - `inputs/closes.json` (from 2026-10-16, brief 09): what a test a row cites closes, corrected where an area's later change
   falsified its round's words, by the row and the test's last title. `remaining-fold.cjs` writes it from an area's
   `rowText` key `after.tests[N].closes` (the Nth test of the row as the audit stands when it runs), and `merge-review.cjs`

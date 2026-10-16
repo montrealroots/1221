@@ -20,6 +20,13 @@
 // `corrected.now`. A value that begins or ends with "…" is a fragment of the field, applied only where
 // inputs/remaining-rows.json says what it replaces; any other field is listed and left out. Two results writing one
 // row's field are listed; the later file, by name, wins.
+// From 2026-10-16 (brief 09's journeys' follow-up, folded by the coverage area) three more were placed, which until then
+// were listed as no field on every run: a deferred row's `settled`, which the coverage page's moved rows show (the
+// journeys' Mexican residence rows); a field to add to, `<field> (add)`, its value put after the field as it stands, once
+// (school.term's tests, school.pay_balance's downstream, bank.month_end's tests); and `evidence (add)`, a test the item's
+// own evidence brings, placed as evidence where its tests reach the row (listed as such) and listed as no field where they
+// don't. And a title cited in folded row text that a later rename moved is written under its last name where
+// inputs/renames.json records the rename (see citedAsNamed).
 //
 // From 2026-10-16 (brief 09) it reads docs/verification/remaining-09/ too, after remaining/, so that pass's results come
 // in the same way: an item keyed `09-<key>/<id>` in inputs/remaining-rows.json, its records `remaining-09-<key>`, its row
@@ -38,7 +45,7 @@ const S = path.join(__dirname, 'inputs') + '/';
 const ROOT = path.join(__dirname, '../../..') + '/';
 /** Each pass's results, in order, and the prefix its keys take. */
 const DIRS = [['docs/verification/remaining/', ''], ['docs/verification/remaining-09/', '09-']];
-const FIELDS = ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'corrected.now'];
+const FIELDS = ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'corrected.now', 'settled'];
 const added = new Set(Object.keys(fs.existsSync(S + 'added-rows.json') ? JSON.parse(fs.readFileSync(S + 'added-rows.json', 'utf8')).rows : {}));
 const ids = new Set([...JSON.parse(fs.readFileSync(S + 'row-review.json', 'utf8')).map((r) => r.id), ...added]);
 const map = JSON.parse(fs.readFileSync(S + 'remaining-rows.json', 'utf8'));
@@ -67,6 +74,26 @@ const landsAsNamed = (file, title) => {
   const now = [lastName(title), lastName(last)].find((t) => t !== title && t !== last);
   return now !== undefined && lands(file, now);
 };
+// A title cited in row text an area wrote before a later rename (health-eligibility's health.month tests, written before
+// the journeys' follow-up renamed evidence-g05-life's HUSKY D renewal): written under its last name where
+// inputs/renames.json records the rename, the cited words (cut at an ellipsis, 20 characters or more) the start of a
+// recorded old title and every such title leading to one test now in the cited file; left as written, for
+// tools/coverage.mjs to list, where none or more than one does. A citation that lands is never touched. Recorded renames
+// only: no word overlap (from 2026-10-16, brief 09's journeys' follow-up).
+const recorded = Object.keys(renames).filter((k) => typeof renames[k] === 'string');
+const citedAsNamed = (text, where) => {
+  let file;
+  return text.replace(/(?:tests\/)?[\w.-]+\.test\.ts|‘((?:[^’]|’(?=[A-Za-z]))*)’/g, (m, title) => {
+    if (title === undefined) { file = m.startsWith('tests/') ? m : `tests/${m}`; return m; }
+    if (!file || lands(file, title)) return m;
+    const head = plain(title).split(/\.\.\.|…/)[0].trim();
+    if (head.length < 20) return m;
+    const now = [...new Set(recorded.filter((k) => plain(k).startsWith(head)).map((k) => lastName(k)))].filter((t) => lands(file, t));
+    if (now.length !== 1) return m;
+    said.renamedInText.push(`${where}: ${file} ‘${title.slice(0, 60)}’ → ‘${now[0].slice(0, 60)}’`);
+    return `‘${now[0]}’`;
+  });
+};
 /** Whether a row already cites a test: in its review's evidence, or among the tests an earlier pass's round gave it. */
 const citedBefore = (row, title) => {
   const last = plain(lastName(title.split(' > ').pop()));
@@ -85,7 +112,7 @@ const kindOf = (kind, title) => {
   return 'fixture';
 };
 
-const said = { unmapped: [], notATest: [], notARow: [], notAField: [], fragments: [], twice: [], addedRow: [], alreadyCited: [] };
+const said = { unmapped: [], notATest: [], notARow: [], notAField: [], fragments: [], twice: [], addedRow: [], alreadyCited: [], asEvidence: [], added: [], renamedInText: [] };
 const closes = fs.existsSync(S + 'closes.json') ? JSON.parse(fs.readFileSync(S + 'closes.json', 'utf8')) : { about: 'What a test cited by a row closes, corrected where an area’s change falsified the words its round wrote (from 2026-10-16, brief 09): rows[rowId][the test’s last title] = its words now. Written by remaining-fold.cjs from an area’s rowText after.tests[N].closes, read by merge-review.cjs.', rows: {} };
 const wrote = {};
 let fields = 0;
@@ -94,6 +121,8 @@ const files = DIRS.flatMap(([dir, prefix]) => (fs.existsSync(ROOT + dir) ? fs.re
 for (const { resultFile, key } of files) {
   const result = JSON.parse(fs.readFileSync(resultFile, 'utf8'));
   for (const item of result.items ?? []) {
+    // The rows the item's tests reach, as its evidence is mapped below: an `evidence (add)` is placed where they reach it.
+    const reached = new Set([...(ids.has(item.id) ? [item.id] : []), ...(map.items?.[`${key}/${item.id}`]?.rows ?? []), ...(item.evidence ?? []).flatMap((e) => ((map.items?.[`${key}/${item.id}`]?.tests ?? map.byTest?.[key] ?? []).find((t) => plain(String(e.title ?? '').split(' > ').pop()).startsWith(plain(t.title)))?.rows ?? []))]);
     // Row text.
     for (const [row, text] of Object.entries(item.rowText ?? {})) {
       if (!ids.has(row)) { said.notARow.push(`${key}/${item.id}: rowText for ${row}`); continue; }
@@ -121,11 +150,28 @@ for (const { resultFile, key } of files) {
           fields += 1;
           continue;
         }
+        const adding = /^(.+) \(add\)$/.exec(field);
+        if (adding && typeof value === 'string') {
+          if (adding[1] === 'evidence') {
+            if (reached.has(row)) said.asEvidence.push(`${key}/${item.id}: ${row}.${field}: the item’s tests reach ${row} through remaining-rows.json`);
+            else said.notAField.push(`${key}/${item.id}: ${row}.${field} (the item’s tests reach no ${row})`);
+            continue;
+          }
+          if (!FIELDS.includes(adding[1])) { said.notAField.push(`${key}/${item.id}: ${row}.${field}`); continue; }
+          const f = adding[1];
+          const add = citedAsNamed(value.replace(/(?<=[A-Za-z])'(?=[a-z])/g, '’').trim(), `${key}/${item.id}: ${row}.${field}`);
+          const base = String(doc[row]?.[f] ?? baseOf(row, f) ?? '').trim();
+          const now = base.includes(add) ? base : !base ? add : f === 'tests' ? `${base.replace(/[;.]$/, '')}; ${add}` : `${base}${/[.)]$/.test(base) ? '' : '.'} ${add}`;
+          if (now !== base) said.added.push(`${key}/${item.id}: ${row}.${f}`);
+          (doc[row] ??= {})[f] = now;
+          fields += 1;
+          continue;
+        }
         if (!FIELDS.includes(field) || typeof value !== 'string') { said.notAField.push(`${key}/${item.id}: ${row}.${field}`); continue; }
         // A straight apostrophe inside a word curled, as the audit's words have it: tools/coverage.mjs reads a straight
         // one before a letter as a quote's inside, so health-eligibility's “renewal's hour” ran its citation of
         // scope-cover's describe on into the next and failed it (found on 2026-10-16).
-        let now = value.replace(/(?<=[A-Za-z])'(?=[a-z])/g, '’');
+        let now = citedAsNamed(value.replace(/(?<=[A-Za-z])'(?=[a-z])/g, '’'), `${key}/${item.id}: ${row}.${field}`);
         if (/^…|…$/.test(value.trim())) {
           const fix = map.fragments?.[`${row}|${field}`];
           const base = baseOf(row, field) ?? '';

@@ -533,16 +533,16 @@
       "id": "documents.naturalize",
       "kind": "command",
       "entry": "Permission To Work > ResidencePanel 'Naturalize' (Documents.tsx:294)",
-      "reads": "NATURALIZE (citizenship.ts:39-43), residenceIn, firstResidence, held without a break (continuousSince, from 2026-10-10) (naturalizeRefusal, citizenship.ts:48-73)",
+      "reads": "naturalizeRefusal: Mexico’s five years’ residence, then from 2026-10-16 the reason SLATE grants none; Britain’s and the US’s as before",
       "changes": "fee; person.naturalizing; CITIZENSHIP_KIND (citizenship.ts:76-90)",
       "downstream": "citizenOf('MX') is read by mexicanShareOf (health.ts:919-920) and appointments.ts:97, both only for somebody in Mexico. GB and US need routes that can no longer be granted (residence.ts:112-125)",
       "persistent": "person.naturalized",
       "explanation": "toast; notice 'A Citizen' (citizenship.ts:97)",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five' (the command, its five-years and being-decided refusals; the decision is never reached); tests/coverage-gaps-papers.test.ts 'a naturalization already applied for: decided, a citizen after' (the decision, the application put in by hand); tests/naturalize.test.ts names it but reaches only documents.residence’s US refusal",
+      "tests": "tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’ (its five-years refusal and, past them, the reason); tests/coverage-gaps-papers.test.ts ‘a naturalization already applied for: decided, a citizen after’",
       "status": "deferred",
       "issue": "Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven.",
       "previous": "unresolved",
-      "settled": "Continuity fixed; as documents.residence.",
+      "settled": "From 2026-10-16 Mexico’s is refused past its five years; an application made is still decided.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -579,6 +579,35 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
@@ -661,13 +690,13 @@
     {
       "id": "documents.renew_residence",
       "kind": "command",
-      "entry": "ResidencePanel 'Renew' (Documents.tsx:296)",
-      "reads": "an mx-temporary valid and in force, expiresAt within 30 days (residence.ts:204-209)",
-      "changes": "MXN fee; expiresAt += 1 year (residence.ts:210-213)",
+      "entry": "ResidencePanel’s Renew on a held Mexican card, grayed with the refusal’s words",
+      "reads": "Nothing: refused in MEXICO_RENEWAL’s words from 2026-10-16 (until then a card in force in its last 30 days)",
+      "changes": "Nothing (until 2026-10-16 an MXN fee and a year added)",
       "downstream": "Mexico residence chain only (settle and naturalize). No gameplay consumer",
       "persistent": "documents",
       "explanation": "toast 'Renewed for a year'",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence...'; tests/residence.test.ts 'gives Mexican temporary residence on the solvency test, and permanent residence after four years'; tests/guide-examples-papers.test.ts PLAYS['documents.residence'] (renewed in the card’s last 30 days, the fee and the year added)",
+      "tests": "tests/residence.test.ts ‘refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason’ (FIXTURE: a held card); tests/remaining-09-journeys.test.ts ‘DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)’",
       "status": "deferred",
       "issue": "Until 2026-10-10 it accepted an expired card, checking status 'valid' rather than inForce; it has checked inForce since (residence.ts:207).",
       "auditStatus": "unresolved",
@@ -709,6 +738,35 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
@@ -1177,17 +1235,17 @@
     {
       "id": "documents.residence",
       "kind": "command",
-      "entry": "ResidencePanel 'Apply' (Documents.tsx:293)",
-      "reads": "routeRefusal; mexicanSolvency on bank savings (residence.ts:94-133)",
-      "changes": "MXN 11,140.74 + US$56; a valid Residente Temporal for 1 year (residence.ts:180-190; grant, residence.ts:174-177)",
+      "entry": "ResidencePanel’s Apply on Mexico’s row, grayed with the refusal’s words (Documents.tsx); from 2026-10-16",
+      "reads": "routeRefusal: every route refused; Mexico’s says its rule and that SLATE grants none (MEXICO_RULE, MEXICO_UNREAD, residence.ts). Until 2026-10-16 mexicanSolvency on the bank’s savings opened it",
+      "changes": "Nothing: refused in routeRefusal’s words. Until 2026-10-16 MXN 11,140.74 + US$56 and a Residente Temporal for a year",
       "downstream": "residenceRefusal (documents.ts:239) has no caller outside documents.ts. settle and naturalize only. The document look’s 'It would let you into Mexico…' (looks/papers.tsx:121-122; until 2026-10-12 'It lets you into')",
       "persistent": "documents",
-      "explanation": "toast 'Temporary residence is granted'; ResidencePanel’s 'No life in SLATE moves to Mexico, so nothing but these papers reads it' (Documents.tsx:290); Fine 'lets you live there, not work' (Documents.tsx:305)",
-      "tests": "tests/residence.test.ts 'gives Mexican temporary residence on the solvency test...'; tests/guide-examples-papers.test.ts PLAYS['documents.residence'] (the savings threshold refused below it, the fee from the bank, the year granted); tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five'",
+      "explanation": "The row’s rule and reason, the grayed Apply’s title; until 2026-10-16 “Open to you: $674.93. No life in SLATE moves to Mexico, so nothing but these papers reads it” and the toast",
+      "tests": "tests/remaining-09-journeys.test.ts ‘DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)’; tests/residence.test.ts ‘refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason’; tests/guide-examples-papers.test.ts ‘documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved’; tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’ (renamed, inputs/renames.json)",
       "status": "deferred",
-      "issue": "A wealthy start passes the savings test on day one, but the player can never live in Mexico. See finding 3.",
+      "issue": "Until 2026-10-16 a wealthy start passed the savings test on day one and bought papers nothing read (finding 3). From then nothing is sold.",
       "previous": "unresolved",
-      "settled": "Says before payment that no life moves to Mexico and nothing but these papers reads it. Owner recommendation: withdraw the offer to new lives, keep it for saves that hold residence.",
+      "settled": "Settled 2026-10-16 (brief 09’s journeys, journeys.f-mexico-residence): the offer withdrawn, the rule said; a card a save holds kept to its end.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -1223,22 +1281,65 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 4,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "guide-examples-papers.test.ts",
+            "title": "the guide’s worked examples for Papers, played on throwaway saves > documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved",
+            "kind": "render",
+            "closes": "The guide’s worked example: the same row and refusal at the savings threshold and a hundred dollars short, Apply drawn grayed with the words, nothing moved. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
       "id": "documents.settle",
       "kind": "command",
       "entry": "ResidencePanel 'Settle' (Documents.tsx:295)",
-      "reads": "settleRefusal: years of residence held without a break (continuousSince, from 2026-10-10; until then since the first residence ever held) (residence.ts:145-172)",
-      "changes": "fee; temporary canceled; Residente Permanente granted (residence.ts:192-202)",
+      "reads": "settleRefusal: Britain’s five years and pay earned there; Mexico’s four years’ temporary held without a break (continuousSince), then from 2026-10-16 the reason SLATE grants none",
+      "changes": "Britain’s Indefinite Leave To Remain for its fee; Mexico’s nothing (until 2026-10-16 Residente Permanente for MXN 13,578.96)",
       "downstream": "naturalize MX only; GB settlement is unreachable",
       "persistent": "documents",
       "explanation": "toast 'Settled'",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five' (through the commands, renewed each year); tests/coverage-gaps-papers.test.ts 'counts from the grant after a lapse, not the first ever' (settleRefusal, the documents put in by hand); tests/residence.test.ts (settleRefusal only)",
+      "tests": "tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’; tests/coverage-gaps-papers.test.ts ‘counts from the grant after a lapse, not the first ever’; tests/residence.test.ts (settleRefusal)",
       "status": "deferred",
       "issue": "Until 2026-10-10 continuous residence wasn't checked: years were counted from the first grant, even across a lapse. Since then they count from the grant a lapse last broke (continuousSince, residence.ts:145-157).",
       "previous": "unresolved",
-      "settled": "Continuity fixed (continuousSince): a lapse restarts the count. Still read by nothing outside the Mexican chain, which no life can use.",
+      "settled": "Continuity fixed (continuousSince); from 2026-10-16 Mexico’s refused past its four years in the reason.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -1275,6 +1376,42 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 4,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {

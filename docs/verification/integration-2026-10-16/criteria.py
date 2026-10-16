@@ -203,6 +203,10 @@ known('KS-passport-fees', 'A passport renewed abroad costs its issuer’s publis
 # An area's item whose status its result doesn't give rightly, said here with why: only an item the area left reported or
 # open that was settled after, with the test that settles it.
 OVERRIDES = [
+  # The last pass's banking area left Germany's month's fee on a close to the owner; brief 09 implemented it from the
+  # statute and the banks' price lists (remaining-09/banking-result.json, banking.1.pro-rata), so the decision is settled.
+  {'id': 'banking.1.pro-rata', 'status': IAV, 'why': 'Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded',
+   'citations': [cite('tests/remaining-09-banking.test.ts', 'banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student…')]},
   {'id': 'coverage.7-overdraft-home-panel', 'status': IAV, 'why': 'Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls',
    'citations': [cite('tests/integration-home-lending.test.ts', 'borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad')]},
 ]
