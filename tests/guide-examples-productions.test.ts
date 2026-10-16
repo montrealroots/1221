@@ -401,7 +401,11 @@ const PLAY: Record<string, () => void> = {
     // Part By Part, as the screen works it out again from the night kept.
     const night = replay(record, TASK_PROFILES.performance!)!;
     const segs = night.piece!.segments;
-    expect(ex.setup).toContain(`it plays in ${word(segs.length)} movements, ${segs.map((s) => `${s.label.toLowerCase()}${s.tones.length ? ` (${s.tones.join(' and ')})` : ''}`).join(' and ')}`);
+    // Listed as English lists them, commas and a last "and": from evaluation-10 Woyzeck plays in four, its two tones each
+    // cut at its turn, where it played in its two tones and the list was one "and".
+    const movements = segs.map((s) => `${s.label.toLowerCase()}${s.tones.length ? ` (${s.tones.join(' and ')})` : ''}`);
+    expect(segs.map((s) => s.tones.join(' and '))).toEqual(['grotesque', 'grotesque', 'grave', 'grave']);
+    expect(ex.setup).toContain(`it plays in ${word(segs.length)} movements, ${movements.slice(0, -1).join(', ')} and ${movements.at(-1)}`);
     expect(ex.steps[0]).toContain(`${segs.at(-1)!.label} falls last: its Stamina reads “Tiring: ${pct(1 - segs.at(-1)!.drain)} off”`);
     // A hard evening on stamina: its load against a new play's, which stages no body's or voice's work.
     expect(ex.setup).toContain('a hard evening on stamina');

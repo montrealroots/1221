@@ -557,7 +557,8 @@ function asOlderBuild(sim: Simulation): Record<string, unknown> {
   const older = JSON.parse(serialise(sim.universe)) as { opened?: string[]; transactions: LedgerTransaction[]; accounts: Record<string, Account> };
   const terms = new Set(Object.values(older.accounts).filter((a) => a.category === 'term').map((a) => a.id));
   for (const t of older.transactions) if (t.category === 'interest' && t.memo.startsWith('Interest: ')) t.postings = t.postings.filter((q) => !(q.amount === 0 && terms.has(q.accountId)));
-  expect(older.opened).toEqual(['followTheCover', 'findTermInterest']);
+  // From later on 2026-10-16 a third step is named beside these, the judge area's `cutIntoUnits` (src/engine/index.ts).
+  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
   delete older.opened;
   return older as unknown as Record<string, unknown>;
 }
@@ -584,7 +585,7 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     const balances = Object.fromEntries(Object.values(written.accounts).map((a) => [a.id, a.balance]));
     const count = written.transactions.length;
     const older = loadSave(written as never);
-    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     // Opening it posts nothing and changes no balance or transaction: the step only finds.
     expect(older.universe.transactions).toHaveLength(count);
     expect(Object.fromEntries(Object.values(older.universe.accounts).filter((a) => a.id in balances).map((a) => [a.id, a.balance]))).toEqual(balances);
@@ -701,10 +702,10 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
       expect(u.opened, name).toBeUndefined();
       migrate(u);
       const sim = loadSave(u as never);
-      expect(sim.universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+      expect(sim.universe.opened, name).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
       expect(Object.values(sim.universe.accounts).filter((a) => a.category === 'term'), name).toEqual([]);
       expect(Object.values(sim.universe.accounts).filter((a) => a.untaggedTakes !== undefined), name).toEqual([]);
-      expect(reload(sim).universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+      expect(reload(sim).universe.opened, name).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     }
   }, 120_000);
 
@@ -714,11 +715,11 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     const term = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_term', { amount: 10_000_00, bankId: 'de-deutsche-bank' }).accountId]!;
     sim.advanceTo(berlin(2026, 1, 10, 12));
     ok(sim, 'bank.take_term_interest', { accountId: term.id });
-    expect(sim.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+    expect(sim.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     const once = reload(sim);
     const twice = reload(once);
     for (const s of [once, twice]) {
-      expect(s.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+      expect(s.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
       expect(s.universe.accounts[term.id]!.untaggedTakes).toBeUndefined();
     }
   }, 60_000);

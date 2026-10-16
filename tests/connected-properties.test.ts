@@ -16,7 +16,7 @@ import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile, type Tone } from '
 import { EVALUATION, TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
 import { leanedWeights, type EvalContext, type Performer } from '@/engine/systems/evaluation';
-import { judgePiece, pieceWeights, toneSegments, type PieceSpec } from '@/engine/systems/piece';
+import { judgePiece, pieceWeights, unitSegments, type PieceSpec } from '@/engine/systems/piece';
 import { materialContext } from '@/engine/systems/material';
 import { sharedOf, type PartnerRead } from '@/engine/systems/ensemble';
 
@@ -34,7 +34,8 @@ function setup(m: MaterialProfile, prep: number, over: Partial<EvalContext> = {}
   const task = TASK_PROFILES.performance!;
   const read = materialContext(task, m);
   const ctx: EvalContext = { task, techniques: { scene: 1 }, prep: { lines: prep, blocking: prep, notes: prep }, required: { lines: 0.9, blocking: 0.9, notes: 0.8 }, difficulty: 0, condition: { readiness: 90 }, lean: read.lean, inputs: read.inputs, key: `prop:${m.id}`, expected: true, ...over };
-  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work, part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: load ?? Math.min(1, 0.4 + (m.physical + m.vocal) * 0.1) };
+  // Its units, as a night is cut from evaluation-10 (`unitSegments`); its tones until then.
+  const spec: PieceSpec = { segments: unitSegments(m, 2), work, part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: load ?? Math.min(1, 0.4 + (m.physical + m.vocal) * 0.1) };
   return { ctx, spec };
 }
 
@@ -100,7 +101,7 @@ describe('the scene together’s mathematics', () => {
       const actor = randomActor(() => r.next());
       const read = materialContext(task, m);
       const ctx: EvalContext = { task, techniques: { scene: 1 }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 }, required: {}, difficulty: 0, condition: { readiness: 90 }, lean: read.lean, inputs: read.inputs, key: `shared:${n}`, expected: true };
-      const spec: PieceSpec = { segments: toneSegments(m.tones), work: [], part: 'rehearsal', perTurn: 0.05, perBlend: 0, most: 0.95, load: 0.3 };
+      const spec: PieceSpec = { segments: unitSegments(m), work: [], part: 'rehearsal', perTurn: 0.05, perBlend: 0, most: 0.95, load: 0.3 };
       const personal = judgePiece('p', actor, ctx, spec);
       const weights = pieceWeights(task, ctx.lean, spec);
       const partner = (prep: number): PartnerRead => ({ name: 'Ruth Banks', prep, timing: 0.5 + r.next() * 0.5, agree: 1, reliability: 1, level: m.partner });

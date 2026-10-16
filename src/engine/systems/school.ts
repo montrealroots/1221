@@ -97,7 +97,7 @@ import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
 import { bandOfQuality, countTogether, judge, leanedWeights, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
-import { evaluatePiece, judgePiece, loadOf, pieceWeights, toneSegments, withBook, type PieceSpec } from './piece';
+import { evaluatePiece, judgePiece, loadOf, pieceWeights, unitSegments, withBook, type PieceSpec } from './piece';
 import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
@@ -2254,12 +2254,13 @@ export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unk
  * A play as a piece in its movements (from 2026-10-12, `systems/piece.ts`): its tones in order, two at least, a first
  * half and a second where the play holds one; each movement's blocking refined by any work on it, and the evening's
  * load. A play with no profile, a festival's or a cabaret's new one, was judged whole until 2026-10-12; from then it's
- * its two halves with no tones assumed (`toneSegments` with two at least).
+ * its two halves with no tones assumed (`toneSegments` with two at least). From 2026-10-16 (evaluation-10) a play's movements
+ * are its units, each tone section cut again at its turns (`unitSegments`), where until then they were its tones only.
  */
 export function playPiece(holder: NightHolder): PieceSpec {
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
-  return withBook({ segments: toneSegments(material?.tones ?? [], 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
+  return withBook({ segments: unitSegments(material ?? { tones: [], turns: 0 }, 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
 }
 
 export function nightEvaluation(sim: Simulation, person: Person, key: string, holder: NightHolder, at: Instant, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school', expected = false): Evaluation {

@@ -59,7 +59,7 @@ import { ENSEMBLE } from '../../systems/ensemble';
 import { WORK } from '../../systems/coursework';
 import { PLAYREADING } from '../../systems/playreading';
 import { materialOf } from '../../systems/material';
-import { loadOf, toneSegments } from '../../systems/piece';
+import { loadOf, unitSegments } from '../../systems/piece';
 import { ATTRIBUTES, abilityDef } from '../../systems/attributes';
 import { SPENT } from '../../systems/life';
 import { WORKERS_COMP } from '../injury';
@@ -159,7 +159,8 @@ const PREP_STAYED = rehearsed(0, CARLOTTA_CALLS - 1);
 
 const WOYZECK = materialOf('Woyzeck');
 const W_TITLE = WOYZECK?.title ?? 'Woyzeck';
-const W_SEGMENTS = toneSegments(WOYZECK?.tones ?? [], 2);
+// Its units, each tone section cut again at its turns (from 2026-10-16, evaluation-10: its tones only until then).
+const W_SEGMENTS = unitSegments(WOYZECK ?? { tones: [], turns: 0 }, 2);
 const W_LOAD = loadOf(WOYZECK ?? { physical: 0, vocal: 0 }, 'night');
 const W_LATE = drainAt(W_LOAD, 1, 0.5);
 const W_SLIP = 6;
@@ -563,7 +564,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     questions: ['How is a night judged?', 'What makes a night off, solid, strong or remarkable?', 'Why did I tire in the second half?', 'What does the company do to my night?', 'What happens if I miss a performance?', 'What’s Looking Back?'],
     where: { route: ROUTE, tab: TAB.casting, label: 'School, Casting, Your Nights' },
     available: `${OPENED}, from the first performance of a part you’re cast in.`,
-    short: `Each performance is judged, the part as you play it that night, in the play’s movements: two at least, by its tones in order, and a new play’s two halves. Each movement reads its own blocking and any work on it, its tones lean what counts, stamina tells more the later it falls, and a slip carries into the next until composure and adaptability recover it. The night is the movements’ mean, in a band at LAMDA’s pass, merit and distinction: Off, Solid, Strong or Remarkable. With classmates in the cast, the night together, their contribution blended in, is what the night leaves you feeling; your own night is your result.`,
+    short: `Each performance is judged, the part as you play it that night, in the play’s movements: two at least, by its tones in order and each turn within them, and a new play’s two halves; more than three ask discipline to hold the score through them. Each movement reads its own blocking and any work on it, its tones lean what counts, stamina tells more the later it falls, and a slip carries into the next until composure and adaptability recover it. The night is the movements’ mean, in a band at LAMDA’s pass, merit and distinction: Off, Solid, Strong or Remarkable. With classmates in the cast, the night together, their contribution blended in, is what the night leaves you feeling; your own night is your result.`,
     steps: [
       'Be in New Haven, awake and well at the curtain: the performance is on your calendar, and the clock stops at it.',
       'Afterward, Casting shows Your nights by band under the production, and The Nights Together under its rehearsal process where classmates are in the cast.',

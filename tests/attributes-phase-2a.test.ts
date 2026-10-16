@@ -254,12 +254,15 @@ describe('growth from the work, through one path', () => {
 // ---------------------------------------------------------------------------------------------------------------
 
 describe('a scene’s stamina, read one way', () => {
-  it('judges a scene of one tone in segments, its two halves, as a scene of three is judged in its tones', () => {
+  it('judges a scene of one tone in segments, its units, as a scene of three is judged in its tones and turns', () => {
     const sim = life('p2a-tones');
     const one = scene(sim, 'dollhouse-3', { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 });
     const three = scene(sim, 'seagull-4', { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 });
-    expect(scenePiece(one)!.segments).toHaveLength(2);
-    expect(scenePiece(three)!.segments).toHaveLength(3);
+    // From evaluation-10 a scene is cut into its units, a section for each tone and each turn within it (`unitSegments`):
+    // A Doll's House's one tone and two turns make three, The Seagull's three tones and three turns six. Until then the
+    // first was judged in its two halves and the second in its three tones.
+    expect(scenePiece(one)!.segments).toHaveLength(1 + 2);
+    expect(scenePiece(three)!.segments).toHaveLength(3 + 3);
     sim.player.wellbeing.fitness = 20;
     rested(sim);
     for (const a of [one, three]) {

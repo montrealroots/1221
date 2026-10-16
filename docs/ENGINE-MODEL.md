@@ -1,7 +1,8 @@
 # The Attribute And Genre Engine: Its Model, Invariants And Balance
 
 Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset was `evaluation-3`, and §9
-says what changed. From 2026-10-16 it's `evaluation-9` (it said `evaluation-8` until the integration pass of that day), and §10 says where each change since `evaluation-3` is
+says what changed. From 2026-10-16 it's `evaluation-10` (it said `evaluation-8` until the integration pass of that day, and `evaluation-9`
+until brief 09's follow-up later that day), and §10 says where each change since `evaluation-3` is
 written. This document wasn't rewritten for them: where its §1 to §9 and §10's accounts disagree, the accounts hold, and
 the lines found false are marked in place. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
 which. The research gives directions and orderings much more often than sizes. Where a size is SLATE's, the balance
@@ -793,9 +794,11 @@ in `RULESET`'s comments (`content/tasks.ts`); each change has its account, with 
 | `evaluation-7` | The reader counts toward suitability at half weight, as a register's concern does (`GRAIN.reader`). | `docs/verification/genres-2026-10-16/g1-replacement.md` |
 | `evaluation-8` | A stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale; a stage voice's demand no longer counts as size; a scene's circumstances say what its scale asks (`CIRCUMSTANCE_AFFINITY`). | `docs/verification/stage-2026-10-16/` |
 | `evaluation-9` | A result is rounded once, from parts kept at full precision (`judgeExact`, `rounded`); until then a dimension and a piece's segment were rounded before a whole was worked out from them. Restrained draws on composure and focus as well as emotional depth (`APPROACH_EFFECT`). | `docs/verification/integration-2026-10-16/st3.md`, `st6.md` |
+| `evaluation-10` | A class scene and a play are judged in their units, each tone section cut again at each of its turns, as Stanislavski divides a role by its shifts of action (`unitSegments`); what a piece demands counts those units, so one of more than three reads discipline as a brief's beats do (`demandsOf`). A segment's place in the piece is read by the running of the segments before it (`SegmentSpec.length`; a brief's heart weighs more and takes no longer), and the whole and each dimension are the segments' weighted mean divided once. Work a save kept on a piece's segments moves to its units on its first opening (`cutIntoUnits`). | `docs/verification/integration-2026-10-16/h4.md` |
 
 Material added under a ruleset doesn't move it: no rule changes, so no kept result reads differently. Under `evaluation-9`
 the integration pass added four drama scenes (`content/scenes-public.ts`) and brief 09, later on 2026-10-16, four
 played out to a house (`content/scenes-house.ts`; `docs/verification/integration-2026-10-16/h4.md`). Brief 09 changed no
-rule of the judge: ST3, ST6 and L3 were traced and measured (`st3.md`, `st6.md`, `l3.md`), and none needed one.
+rule of the judge: ST3, ST6 and L3 were traced and measured (`st3.md`, `st6.md`, `l3.md`), and none needed one. Its
+follow-up, later the same day, did: `evaluation-10`, above.
 

@@ -86,7 +86,7 @@ import { SPENT } from '../../systems/life';
 import { abilityDef } from '../../systems/attributes';
 import { EXPERIENCE } from '../../systems/experience';
 import { materialOf } from '../../systems/material';
-import { segmentPart, segmentRequired, toneSegments, type PieceSpec } from '../../systems/piece';
+import { segmentPart, segmentRequired, unitSegments, type PieceSpec } from '../../systems/piece';
 import type { GuideEntry } from './types';
 
 // --- the screen -------------------------------------------------------------------------------------------------------
@@ -215,11 +215,11 @@ const T_LATE = T_MISSED + WORK.trust.lateCancel;
 const T_ACCEPTED = T_LATE + CLASS.boundary.respect;
 const T_AMENDED = T_ACCEPTED + CLASS.amends.missed.trust + CLASS.amends.lateCancel.trust;
 
-// Working it through: The Seagull's parts in its tones, the first a turn leads into, rehearsal at 36%, worked slowly.
+// Working it through: The Seagull's parts by its tones and its turns (from 2026-10-16, evaluation-10: its tones only until
+// then), the first a turn leads into, rehearsal at 36%, worked slowly.
 // At 40% until the verifier of the played examples (2026-10-12): its third try came to 92.5%, on the half percent. From
 // 36%, what's left is 64 points, and Work It Slowly halves it each time, so each try lands on a whole percent.
-const SEAGULL_TONES = materialOf(SEAGULL.id)?.tones ?? [];
-const SEAGULL_SPEC: PieceSpec = { segments: toneSegments(SEAGULL_TONES), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: PIECE.scene.perBlend, most: PIECE.scene.most, load: 0 };
+const SEAGULL_SPEC: PieceSpec = { segments: unitSegments(materialOf(SEAGULL.id) ?? { tones: [], turns: 0 }), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: PIECE.scene.perBlend, most: PIECE.scene.most, load: 0 };
 const TURN_AT = Math.max(0, SEAGULL_SPEC.segments.findIndex((s) => s.turnInto));
 const TURN = SEAGULL_SPEC.segments[TURN_AT] ?? { label: 'The Middle' };
 const TURN_ASKS = SEAGULL_SPEC.segments.length ? segmentRequired(SEAGULL_SPEC, EVALUATION.complete.coursework, TURN_AT) : EVALUATION.complete.coursework;
@@ -825,7 +825,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'The Forecast', value: 'The piece’s expected result now, with no draw: the same way tried on the same work and the same day shows the same figure' },
-      { label: 'A Problem', value: `A part of the piece short of the rehearsal it asks, or ${points(WORKBOOK.segmentGap)} under the whole; stamina, an ability or a part of the preparation costing half a point of the whole or more; a partner leaving the work together three points or more under your own. At most ${WORKBOOK.offered}, worst first` },
+      { label: 'A Problem', value: `A part of the piece short of the rehearsal it asks, or ${points(WORKBOOK.segmentGap)} under the whole; stamina, an ability or a part of the preparation costing half a point of the whole or more; a partner leaving the work together three points or more under your own. At most ${WORKBOOK.offered}, worst first, the one you’ve named among them while it’s still a problem` },
       { label: 'The Evidence', value: 'The problem’s own figure before and after: its part’s result, the whole, or the work together' },
       { label: ADJUSTMENTS['work-beat'].label, value: `That part’s own rehearsal, ${pct(WORKBOOK.workGain)} of what’s left at an ordinary focus`, estimate: true },
       { label: ADJUSTMENTS['run-into'].label, value: `This part ${pct(WORKBOOK.intoAfter)} and the one before it ${pct(WORKBOOK.intoBefore)}, of what’s left; practice in adaptability`, estimate: true },
@@ -879,7 +879,7 @@ export const COURSEWORK: readonly GuideEntry[] = [
       { to: 'craft.profile', kind: 'immediate', why: 'Working on an ability’s problem trains it a little, and running into a part trains adaptability.' },
     ],
     example: {
-      setup: `${SCENE_STUDY.title} on ${SEAGULL.play}, ${SEAGULL.where}: ${word(SEAGULL_SPEC.segments.length)} parts in its tones, ${partOf(SCENE_STUDY, 'rehearsal')} at ${pct(REHEARSED)} and the lines learned, at readiness 80 and an even nature.`,
+      setup: `${SCENE_STUDY.title} on ${SEAGULL.play}, ${SEAGULL.where}: ${word(SEAGULL_SPEC.segments.length)} parts by its tones and its turns, ${partOf(SCENE_STUDY, 'rehearsal')} at ${pct(REHEARSED)} and the lines learned, at readiness 80 and an even nature.`,
       steps: [`Work It Through shows “The Turn Into ${TURN.label}”: ${pct(REHEARSED)} of the ${pct(TURN_ASKS)} it asks. Name it.`, `${WORK_BEAT.label}, ${times(WORKED.length)}.`],
       result: `${TURN.label}’s own rehearsal reads ${WORKED.map(pct).join(', then ')}: past the ${pct(TURN_ASKS)} it asks after the ${ordinal(WORKED.length)}, ${span(WORKED.length * WORK_BEAT.minutes)} in all, and the problem leaves the list by itself. Each try is kept with the part’s result before and after, and the showing reads ${TURN.label.toLowerCase()} at ${pct(WORKED[WORKED.length - 1] ?? REHEARSED)}, the rest of the scene still at ${pct(REHEARSED)}.`,
     },

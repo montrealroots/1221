@@ -21,9 +21,17 @@
  * 2: presence 2 more on connection and its lean 0.5 more) reached none, and presence's specialist was ahead of an even
  * actor on none of the 60 scenes. Four scenes played out to a house were added (`content/scenes-house.ts`), each read
  * from its public-domain text and committed before it was measured. Held here: the rule reaches them, a presence
- * specialist comes out ahead where the scene is a speech to many with the partner barely there and behind where it's
- * played off a partner, a mastered actor reaches 100 on every way of playing that fits them, and a student meets them in
- * play once the scenes before them run short.
+ * specialist comes out ahead where the scene is a speech to many with the partner barely there (from evaluation-10, level
+ * on the Forum, whose turns give it a long score) and behind where it's played off a partner, a mastered actor reaches
+ * 100 on every way of playing that fits them, and a student meets them in play once the scenes before them run short.
+ *
+ * **A scene's units (evaluation-10, the follow-up).** Stanislavski divides a role by its action ("a new bit begins whenever
+ * an action or counteraction shifts in manner of execution or strategy"), not by its length; a profile's turns are those
+ * shifts beyond its changes of tone. From evaluation-10 a class scene and a play are cut into their units, each tone
+ * section again at each of its turns, each section keeping its weight, and what a piece demands counts those units, so a
+ * scene of more than three reads discipline's long score as a brief's beats do. Held here: the units by hand, the
+ * segment's place by the running before it (a brief's heart weighing more and taking no longer), discipline read by a
+ * scene's units and not without them, and a save's work on a piece's segments moved to its units once.
  *
  * Every performer is TEST SETUP (levels set directly), every scene judged as `tools/interpretation.ts --stage` (ST3) or
  * `tools/ag-baseline.ts` (H4) judges it, the grain held at nothing as ST3 holds it. Expected figures are worked from the
@@ -31,7 +39,7 @@
  * helpers.
  */
 import { describe, expect, it } from 'vitest';
-import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, toneSegments, unitSegments } from '@/engine/systems/piece';
 import { frozenPerformer, replayAs, type EvalContext, type Evaluation, type Performer } from '@/engine/systems/evaluation';
 import { TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
@@ -40,13 +48,20 @@ import { GRAIN } from '@/engine/content/interpretation';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '@/engine/content/material';
 import { templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
-import { materialContext, misfitOf, type Playing } from '@/engine/systems/material';
+import { demandsOf, materialContext, misfitOf, type Playing } from '@/engine/systems/material';
 import type { Axis, AxisValue } from '@/engine/content/material';
 
 type Sides = Omit<Playing, 'chosenAt' | 'prep'>;
 import { SCENES } from '@/engine/content/coursework';
 import { HOUSE_SCENES } from '@/engine/content/scenes-house';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
+import { createSave, cutIntoUnits, loadSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { instantFromZoned } from '@/engine/core/time';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
+import { courseworkOf } from '@/engine/systems/coursework';
+import type { SaveUniverse } from '@/engine/domain/model';
+import type { Simulation } from '@/engine/core/simulation';
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
 /** A seeded generator (mulberry32), so every run draws the same shares. */
@@ -64,7 +79,7 @@ describe('ST3 case by case: the stage and a close frame (brief 09)', () => {
     const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
     const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
-    return judgePiece('interpretation', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+    return judgePiece('interpretation', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
   };
   /** Every stage material and every scale side that fits it, the grain held at nothing, as ST3 measures. */
   const cases = (fn: (m: MaterialProfile, scale: 'restrained' | 'expansive') => void) => {
@@ -153,7 +168,7 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
     const read = materialContext(task, m, chosen ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
     const prep: Record<string, number> = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(chosen ? { approach: 1 } : {}) };
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `h4:${m.id}`, expected: true };
-    return judgePiece('h4', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+    return judgePiece('h4', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
   };
   // H4's actors: the even actor at 50, and a specialist at 85 in one ability with the other eleven lowered evenly to keep the
   // even actor's 600, every technique at 50 (`tools/ag-baseline.ts`).
@@ -177,11 +192,20 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
     expect(materialContext(task, byId('dream-5-1')).inputs.connection?.find((x) => x.ability === 'presence')).toBeUndefined();
   });
 
-  it('a specialist in presence comes out ahead of an even actor of the same budget on each speech to many with the partner barely there, and behind on every scene played off a partner', () => {
-    for (const id of ['caesar-3-2', 'henry5-4-3', 'oedipus-1']) {
+  it('a specialist in presence comes out ahead of an even actor of the same budget on the speeches to many of four units or fewer that hold no long score, level on the Forum, whose turns make one, and behind on every scene played off a partner', () => {
+    for (const id of ['henry5-4-3', 'oedipus-1']) {
       const m = byId(id);
-      expect(scene(m, PRESENCE).exact! - scene(m, EVEN).exact!, id).toBeGreaterThan(0);
+      expect(scene(m, PRESENCE).exact! - scene(m, EVEN).exact!, id).toBeGreaterThan(0.05);
     }
+    // Under evaluation-9 the Forum (one tone, three turns) was cut in two and presence's specialist led it by 0.12. From
+    // evaluation-10 its three turns make four units, one past three, so its long score reads discipline (`DEMAND_EFFECT.beats`)
+    // and presence's share of the scene falls: level, within 0.05. Without its turns the same speech is presence's again.
+    const forum = byId('caesar-3-2');
+    expect(demandsOf(forum).beats).toBe(1);
+    expect(Math.abs(scene(forum, PRESENCE).exact! - scene(forum, EVEN).exact!)).toBeLessThan(0.05);
+    const turnless = { ...forum, turns: 0 };
+    expect(demandsOf(turnless).beats).toBe(0);
+    expect(scene(turnless, PRESENCE).exact! - scene(turnless, EVEN).exact!).toBeGreaterThan(0.05);
     const partnered = SCENE_MATERIAL.filter((m) => m.partner >= 2);
     expect(partnered.length).toBeGreaterThanOrEqual(61);
     for (const m of partnered) expect(scene(m, PRESENCE).exact! - scene(m, EVEN).exact!, m.id).toBeLessThan(0.05);
@@ -217,5 +241,112 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
     const before = scenesFor(greek, 'DRAM 293b', [], 2).filter((x) => !NEW.includes(x.id));
     expect(scenesFor(greek, 'DRAM 293b', studied(greek.id, 'DRAM 293b', before.map((x) => x.id)), 2)[0]!.id).toBe('oedipus-1');
     expect(SCENES.filter((x) => NEW.includes(x.id)).map((x) => [x.id, x.language, x.tradition ?? '']).sort()).toEqual([['caesar-3-2', 'verse', ''], ['dream-5-1', 'verse', ''], ['henry5-4-3', 'verse', ''], ['oedipus-1', 'verse', 'greek']]);
+  });
+});
+
+describe('a scene’s units: its tone sections and its turns (evaluation-10, the follow-up)', () => {
+  const task = TASK_PROFILES.scene!;
+  const byId = (id: string) => [...SCENE_MATERIAL, ...PLAY_MATERIAL].find((m) => m.id === id)!;
+
+  it('a scene is cut at each change of tone and each turn, the turns going to its sections in order, each section keeping its weight', () => {
+    // The Seagull: grave, lyric, grave and three turns: one turn in each section, so six units of half a section each.
+    const seagull = unitSegments(byId('seagull-4'), 2);
+    expect(seagull.map((x) => x.tones[0])).toEqual(['grave', 'grave', 'lyric', 'lyric', 'grave', 'grave']);
+    expect(seagull.map((x) => x.weight)).toEqual([0.5, 0.5, 0.5, 0.5, 0.5, 0.5]);
+    expect(seagull.map((x) => x.turnInto)).toEqual([false, true, true, true, true, true]);
+    // Hamlet's 3.1: one tone, three turns: four units of a quarter.
+    const hamlet = unitSegments(byId('hamlet-3-1'), 2);
+    expect(hamlet.map((x) => x.weight)).toEqual([0.25, 0.25, 0.25, 0.25]);
+    expect(hamlet.map((x) => x.label)).toEqual(['Part 1', 'Part 2', 'Part 3', 'Part 4']);
+    // A profile with no turns is cut by its tones, as it was.
+    const none = { ...byId('hamlet-3-1'), turns: 0 };
+    expect(unitSegments(none, 2)).toEqual(toneSegments(none.tones, 2));
+  });
+
+  it('a segment’s place in the piece is the running before it over the running before the last, so the drain falls where the unit does, and a brief’s heart, weighing more, takes no longer', () => {
+    // TEST SETUP: three tones and one turn, so the first section is two units of half a section and the others whole.
+    const m = { ...byId('hamlet-3-1'), tones: ['comic', 'grave', 'lyric'] as const, turns: 1 };
+    const segments = unitSegments(m, 2);
+    expect(segments.map((x) => x.weight)).toEqual([0.5, 0.5, 1, 1]);
+    expect(segments.map((x) => x.length)).toEqual([0.5, 0.5, 1, 1]);
+    const STAMINA = 40, LOAD = 1;
+    const p: Performer = { ability: (id) => (id === 'stamina' ? STAMINA : 60), full: () => 100, technique: () => 50 };
+    const drains = (segs: typeof segments) => judgePiece('units', p, { task, techniques: { scene: 1 }, prep: {}, required: {}, difficulty: 0, condition: { readiness: 100 }, key: 'units', expected: true }, { segments: segs, work: [], part: 'rehearsal', perTurn: 0, perBlend: 0, most: 1, load: LOAD }).piece!.segments.map((x) => x.drain);
+    // Places 0, 0.5 / 2, 1 / 2 and 2 / 2 (the running before each over the 2 before the last), each drained by
+    // PIECE.drain (0.3) × load × place × (1 − stamina).
+    const byHand = (places: number[]) => places.map((place) => Math.round((1 - 0.3 * LOAD * place * (1 - STAMINA / 100)) * 1000) / 1000);
+    expect(drains(segments)).toEqual(byHand([0, 0.25, 0.5, 1]));
+    // A brief's four beats, its heart the second at `BRIEF.readingHeart`'s 1.6, no length given: each one long, so the
+    // places are a third apart, as they were before evaluation-10, whatever the heart weighs.
+    const beats = [1, 1.6, 1, 1].map((weight, i) => ({ label: `Beat ${i + 1}`, tones: ['grave'] as const, weight, turnInto: false, blend: false }));
+    expect(drains(beats)).toEqual(byHand([0, 1 / 3, 2 / 3, 1]));
+  });
+
+  it('a scene of more than three units reads discipline by the beats demand, and the same scene without its turns doesn’t', () => {
+    const hamlet = byId('hamlet-3-1');
+    // One tone and three turns: four units, one past three. The beats demand: discipline 2.5 a unit on consistency.
+    expect(demandsOf(hamlet).beats).toBe(1);
+    const turnless = { ...hamlet, turns: 0 };
+    expect(demandsOf(turnless).beats).toBe(0);
+    const disciplineOn = (m: MaterialProfile) => materialContext(task, m).inputs.consistency?.find((x) => x.ability === 'discipline')?.weight ?? 0;
+    expect(disciplineOn(hamlet) - disciplineOn(turnless)).toBeCloseTo(2.5, 12);
+    // So +10 discipline moves the scene of four units more than the same scene cut in two (judged as Scene Study pitches it).
+    const difficulty = difficultyOf(templateById('scene-study')!);
+    const EVEN: Performer = { ability: () => 50, full: () => 100, technique: () => 50 };
+    const MORE: Performer = { ability: (id) => (id === 'discipline' ? 60 : 50), full: () => 100, technique: () => 50 };
+    const whole = (m: MaterialProfile, p: Performer) => {
+      const read = materialContext(task, m);
+      const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 };
+      return judgePiece('units', p, { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'units', expected: true }, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).exact!;
+    };
+    expect(whole(hamlet, MORE) - whole(hamlet, EVEN)).toBeGreaterThan(whole(turnless, MORE) - whole(turnless, EVEN));
+  });
+});
+
+describe('a save from before evaluation-10: work kept on a piece’s segments moved to its units, once', () => {
+  const life = (seed: string): Simulation => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+  const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
+  const actingI = (sim: Simulation) => courseworkOf(sim, sim.player)!.assignments.find((a) => a.course === 'DRAM 103a/b' && a.status === 'open')!;
+
+  it('moves a scene’s work and its ways to the units of each tone section, a try to its section’s first unit, asks the problem again, and does it on one opening only', () => {
+    // g18-probe's life: Acting I sets The Cherry Orchard's Act Four at orientation's courses, Friday 28 August.
+    const sim = life('g18-probe');
+    sim.advanceTo(instantFromZoned({ year: 2026, month: 8, day: 28, hour: 14, minute: 0 }, 'America/New_York'));
+    const a = actingI(sim);
+    expect(a.sceneId).toBe('cherry-orchard-4');
+    // TEST SETUP: what a build before evaluation-10 kept on its two segments, comic and grave (`toneSegments`), and the
+    // save marked as one that build wrote (`SaveUniverse.opened` without the step).
+    const way = { axis: 'pace' as const, side: 'driven' as const, prep: 0.4 };
+    a.work = [0.5, 0.2];
+    a.book = { tries: [{ at: sim.now, problem: 'turn:1', label: 'The Turn Into The End', adjustment: 'work-beat', segment: 1, before: 40, after: 41, verdict: 'kept' }], ways: [null, way], problem: { id: 'turn:1', kind: 'turn', segment: 1, label: 'The Turn Into The End', why: '', measure: 40, at: sim.now } };
+    const made = reload(sim);
+    sim.universe.opened = sim.universe.opened!.filter((x) => x !== 'cutIntoUnits');
+    const opened = reload(sim);
+    // Its comic section is two units now, its turn the second, and its grave section one: each takes its section's.
+    const b = actingI(opened);
+    expect(b.work).toEqual([0.5, 0.5, 0.2]);
+    expect(b.book!.ways).toEqual([null, null, way]);
+    expect(b.book!.tries[0]).toMatchObject({ segment: 2, problem: 'turn:2' });
+    expect(b.book!.problem).toBeUndefined();
+    expect(opened.universe.opened).toContain('cutIntoUnits');
+    // Once: opened again, nothing moves.
+    expect(actingI(reload(opened)).work).toEqual([0.5, 0.5, 0.2]);
+    // A save the step was already taken on, a new life's, keeps what it holds as it is.
+    expect(actingI(made).work).toEqual([0.5, 0.2]);
+    expect(actingI(made).book!.problem?.id).toBe('turn:1');
+  }, 60_000);
+
+  it('moves a part’s work on a play’s movements the same way, wherever the school keeps the part, and leaves a piece with nothing kept alone', () => {
+    // TEST SETUP: a universe holding only what the step reads. Woyzeck's two tones and two turns are four units.
+    // A Doll's House's one tone was its two halves; its two turns make three units, whose middles fall at a sixth, a half
+    // and five sixths of it, so in the first half, the second (a half is the second's start) and the second.
+    const process = { work: [0.4, 0.8] };
+    const untouched = { play: 'Woyzeck', process: {} };
+    const halves = { sceneId: 'dollhouse-3', work: [0.3, 0.7] };
+    const universe = { people: { p: { school: { casting: { play: 'Woyzeck', process }, rep: untouched, coursework: { assignments: [{ sceneId: 'seagull-4' }, halves] } } } } } as unknown as SaveUniverse;
+    expect(cutIntoUnits(universe)).toBe(2);
+    expect(process.work).toEqual([0.4, 0.4, 0.8, 0.8]);
+    expect(halves.work).toEqual([0.3, 0.7, 0.7]);
+    expect(untouched.process).toEqual({});
   });
 });

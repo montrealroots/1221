@@ -12,7 +12,8 @@
  *   through, and done once it's caught up by hand; a part read past 97% refused as having nothing more to gain; Learn
  *   Lines on the development history under `coursework:learn` three times and not a fourth; and twin lives, one scene
  *   prepared less through the command than the other, shown at its meeting by the clock: the lesser lower, judged in the
- *   scene's two tones, its record holding exactly the preparation the commands left; the workbook's forecast rising
+ *   scene's units (its two tones, the first again at its turn, from evaluation-10; in its two tones until then), its
+ *   record holding exactly the preparation the commands left; the workbook's forecast rising
  *   with a step. The Coursework tab drawn: each step's button, grayed with its reason, and Read The Scene pressed.
  * - `school.approach`: Work On It With Your Partner moves the lines a fifth of what's left at the next rehearsal kept,
  *   once, through a reload, where a twin with no way chosen keeps its lines; Put It First, chosen through the command,
@@ -341,7 +342,7 @@ describe('school.prepare', () => {
     expect(developmentOf(sim.player).history.filter((e) => e.at > t0 && e.source === 'coursework:learn')).toHaveLength(3);
   });
 
-  it('shows the same toned scene prepared less through the command lower at its meeting, judged in its two tones, its record holding the preparation the commands left, once', () => {
+  it('shows the same toned scene prepared less through the command lower at its meeting, judged in its units, its record holding the preparation the commands left, once', () => {
     const base = life('g18-probe');
     base.advanceTo(at(8, 28, 14));
     const id = actingI(base).id;
@@ -364,9 +365,11 @@ describe('school.prepare', () => {
     for (const sim of [less, more]) toMeeting(sim, '2026-09-08');
     const [l] = shownRecords(less, work(less, id));
     const [m] = shownRecords(more, work(more, id));
-    // Judged in the scene's two tones.
-    expect(l!.inputs.piece?.segments).toHaveLength(2);
-    expect(m!.inputs.piece?.segments).toHaveLength(2);
+    // Judged in the scene's units: its two tones, comic and grave, and its one turn, which goes to the first of them
+    // (`unitSegments`, from evaluation-10), so three. Until then it was judged in its two tones.
+    expect(l!.inputs.piece?.segments).toHaveLength(3);
+    expect(m!.inputs.piece?.segments).toHaveLength(3);
+    expect(l!.inputs.piece?.segments.map((x) => x.weight)).toEqual([0.5, 0.5, 1]);
     // What the record was judged from is what the commands left: no answers at the table, no rehearsal with Theo.
     for (const [sim, rec] of [[less, l], [more, m]] as const) {
       const p = work(sim, id).prep;

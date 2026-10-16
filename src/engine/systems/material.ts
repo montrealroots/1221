@@ -80,13 +80,15 @@ export function misfitOf(axis: Axis, side: AxisValue, material?: MaterialProfile
 /**
  * How much a piece has of each thing `DEMAND_EFFECT` reads (from 2026-10-16): the partner levels under 2, the steps of
  * length past short, its stakes (1 where none is given), the segments past three (a brief's beats, or a scene's or a
- * play's tones, two at least, as `toneSegments` cuts it), and the shares of its beats or tones played grave, lyric or
- * grotesque, and comic.
+ * play's units, two at least, as `unitSegments` cuts it: its tone sections and its turns, from evaluation-10; its tones
+ * only until then), and the shares of its beats or tones played grave, lyric or grotesque, and comic.
  */
 export function demandsOf(m: MaterialProfile): Record<keyof typeof DEMAND_EFFECT, number> {
   const tones = m.beats ? m.beats.flatMap((b) => b.tones.map((t) => ({ t, w: 1 / b.tones.length }))) : m.tones.map((t) => ({ t, w: 1 }));
   const total = tones.reduce((a, x) => a + x.w, 0);
-  const segments = m.beats?.length ?? Math.max(2, m.tones.length);
+  // A scene's and a play's units are its tone sections and its turns (from 2026-10-16, evaluation-10, `unitSegments`); until
+  // then its tone sections only, so no scene or night reached the beats demand.
+  const segments = m.beats?.length ?? Math.max(2, m.tones.length + Math.max(0, Math.floor(m.turns)));
   const share = (t: string) => (total > 0 ? tones.filter((x) => x.t === t).reduce((a, x) => a + x.w, 0) / total : 0);
   return {
     solo: Math.max(0, 2 - m.partner),

@@ -28,7 +28,7 @@ import { HOUSE_SCENES } from '@/engine/content/scenes-house';
 import { CIRCUMSTANCE_AFFINITY } from '@/engine/content/interpretation';
 import { difficultyOf } from '@/engine/systems/coursework';
 import { materialContext, misfitOf } from '@/engine/systems/material';
-import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
 import { PIECE } from '@/engine/content/piece';
 import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
@@ -41,7 +41,7 @@ const judgeOn = (m: MaterialProfile, p: Performer, scale: 'restrained' | 'expans
   const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
   const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
-  return judgePiece('integration', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  return judgePiece('integration', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
 };
 const actor = (ab: Record<string, number>): Performer => ({ ability: (id) => ab[id] ?? 55, full: () => 100, technique: () => 50 });
 const suits = (m: MaterialProfile) => { const sc = sceneOfMaterial(m); return { r: suitabilityOf('restrained', m, sc), e: suitabilityOf('expansive', m, sc) }; };

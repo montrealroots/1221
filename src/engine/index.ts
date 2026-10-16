@@ -75,6 +75,8 @@ import { addPractice, playOfCredit, registerEngagement } from './systems/engagem
 import { registerBriefs } from './systems/briefs';
 import { registerWorkbook } from './systems/workbook';
 import { workPiece } from './systems/workpieces';
+import { unitsFromTones, type Workbook } from './systems/piece';
+import { materialOf } from './systems/material';
 import { genresOfPlay } from './content/plays';
 import { registerPlayReading } from './systems/playreading';
 import { followTheCover, registerAppointments } from './systems/appointments';
@@ -277,7 +279,51 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits'] as const;
+
+/**
+ * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
+ * into now (`unitsFromTones`, `systems/piece.ts`): each unit takes what its tone section had, the work on it and a way
+ * it's played its own way; a try keeps its place on the first unit of its section; the problem named is asked to be
+ * named again, since the list it was named from changed. Until then a scene was cut by its tones alone, and the work a
+ * save kept on its second tone would have been read on its second unit. Pieces with nothing kept on their segments, and
+ * a brief, cut by its beats as before, are left as they were. Returns how many pieces moved.
+ */
+export function cutIntoUnits(universe: SaveUniverse): number {
+  let moved = 0;
+  const remap = (target: { work?: number[]; book?: Workbook }, m: ReturnType<typeof materialOf>): void => {
+    if (!m || (!target.work?.length && !target.book)) return;
+    const map = unitsFromTones(m, 2);
+    if (map.every((old, u) => old === u)) return;
+    const first = (old: number) => map.indexOf(old);
+    if (target.work?.length) target.work = map.map((old) => target.work![old] ?? 0);
+    const book = target.book;
+    if (book) {
+      if (book.ways) book.ways = map.map((old) => book.ways![old] ?? null);
+      if (book.undo?.ways) book.undo.ways = map.map((old) => book.undo!.ways![old] ?? null);
+      for (const t of book.tries) {
+        if (t.segment !== undefined && first(t.segment) >= 0) t.segment = first(t.segment);
+        t.problem = t.problem.replace(/^(turn|segment):(\d+)$/, (whole, kind: string, i: string) => (first(Number(i)) >= 0 ? `${kind}:${first(Number(i))}` : whole));
+      }
+      delete book.problem;
+    }
+    moved += 1;
+  };
+  // A production's part keeps its process beside the play it's in, wherever the school record holds it.
+  const walk = (o: unknown, depth: number): void => {
+    if (!o || typeof o !== 'object' || depth > 6) return;
+    if (Array.isArray(o)) { for (const x of o) walk(x, depth + 1); return; }
+    const rec = o as { play?: unknown; process?: { work?: number[]; book?: Workbook } };
+    if (typeof rec.play === 'string' && rec.process && typeof rec.process === 'object') remap(rec.process, materialOf(rec.play));
+    for (const [k, x] of Object.entries(o)) if (k !== 'process' && k !== 'coursework') walk(x, depth + 1);
+  };
+  for (const person of Object.values(universe.people ?? {})) {
+    const school = person.school as ({ coursework?: { assignments?: { sceneId?: string; work?: number[]; book?: Workbook }[] } } & object) | undefined;
+    for (const a of school?.coursework?.assignments ?? []) remap(a, materialOf(a.sceneId));
+    walk(school, 0);
+  }
+  return moved;
+}
 
 /** Creates a brand new save universe with every system wired up. */
 export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): Simulation {
@@ -337,6 +383,11 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('findTermInterest')) {
     findTermInterest(sim);
     opened.push('findTermInterest');
+  }
+  // Work kept on a scene's or a play's segments before evaluation-10, moved to its units (`cutIntoUnits`), once.
+  if (!opened.includes('cutIntoUnits')) {
+    cutIntoUnits(universe);
+    opened.push('cutIntoUnits');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

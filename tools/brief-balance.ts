@@ -34,7 +34,7 @@ import { TASK_PROFILES } from '../src/engine/content/tasks';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, tapeReadsOf, type BriefRecord } from '../src/engine/systems/briefs';
 import { type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, toneSegments, type PieceSpec } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
 import { PIECE } from '../src/engine/content/piece';
 import { materialContext, misfitOf, type Playing } from '../src/engine/systems/material';
 
@@ -116,7 +116,7 @@ for (const [taskId, task] of Object.entries(TASK_PROFILES)) {
     return materials.map((m) => {
       const read = materialContext(task, m);
       const night = taskId === 'performance';
-      const spec: PieceSpec = { segments: toneSegments(m?.tones ?? [], night ? 2 : 1), work: [], part: night ? 'blocking' : 'rehearsal', perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: m ? loadOf(m, night ? 'night' : 'scene') : PIECE.load.scene };
+      const spec: PieceSpec = { segments: unitSegments(m ?? { tones: [], turns: 0 }, night ? 2 : 1), work: [], part: night ? 'blocking' : 'rehearsal', perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: m ? loadOf(m, night ? 'night' : 'scene') : PIECE.load.scene };
       return judgePiece('balance', evenTech(p), { task, techniques: { scene: 1 }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, revision: 1, genre: 1, lines: 1, blocking: 1, notes: 1 }, required: {}, difficulty: 0, lean: read.lean, inputs: read.inputs, condition: { readiness: 100 }, key: `kind:${taskId}`, expected: true }, spec).overall;
     });
   };

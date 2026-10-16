@@ -28,8 +28,8 @@
  * - fitness: a workout costs 13 energy at fitness 20 and 7 at 80, as the Fitness look says beforehand; rest mends an
  *   untrained body no further than 91, seventy and 0.6 of 35; a sprain the workout's own draw brings refuses the next
  *   in `trainingRefusal`'s words, "1 day" on its last morning; fitness is held three midnights after a New Haven workout
- *   and then falls 0.18 a day; Stamina is read by the scene shown in class, a piece in two halves, through its drain on
- *   every dimension tiredness reaches, consistency among them.
+ *   and then falls 0.18 a day; Stamina is read by the scene shown in class, a piece in its units (in two halves until
+ *   evaluation-10), through its drain on every dimension tiredness reaches, consistency among them.
  * - nourishment: both cards locked through `card.lock`, the day's groceries go unbought at midnight, "No Money For
  *   Food Today" says why, and the morning starts at exactly 40 against the fed twin's 76; the hungry hours from five
  *   cost 0.5 condition and 0.7 morale an hour against the fed twin, and Home and the look say so; unlocked, a meal is
@@ -596,7 +596,7 @@ describe('fitness', () => {
     for (const day of [25, 26, 27, 28, 29]) expect(read(idle, day)).toBeCloseTo(50 - 0.18 * (day - 24), 9);
   });
 
-  it('Stamina is read by the scene shown in class, a piece in two halves: at 35 every dimension tiredness reaches is lower than at 99.4, the age’s full, consistency among them, and interpretation, which it doesn’t reach, the same', () => {
+  it('Stamina is read by the scene shown in class, a piece in its units: at 35 every dimension tiredness reaches is lower than at 99.4, the age’s full, consistency among them, and interpretation, which it doesn’t reach, the same', () => {
     const morning = nh(9, 8, 7, 30);
     const [unfit, fit] = [lifeAt('g06-class', morning), lifeAt('g06-class', morning)];
     unfit.player.wellbeing.fitness = 35; // TEST SETUP
@@ -613,10 +613,11 @@ describe('fitness', () => {
     expect(t.inputs.abilities.composure).toBe(i.inputs.abilities.composure);
     expect(t.inputs.abilities.discipline).toBe(i.inputs.abilities.discipline);
     expect(t.inputs.condition).toEqual(i.inputs.condition);
-    // A piece in segments reads stamina through its drain (`systems/piece.ts`): nothing in the first half, and in the
-    // second 0.3 × the piece's load × (1 − stamina over its full), on each dimension tiredness reaches (`conditions` in
-    // content/tasks.ts: all of a scene's but interpretation). Full, it drains nothing.
-    expect(t.inputs.piece!.segments.map((s: { label: string }) => s.label)).toEqual(['The First Half', 'The Second Half']);
+    // A piece in segments reads stamina through its drain (`systems/piece.ts`): nothing in the first, and in each after it
+    // 0.3 × the piece's load × its place × (1 − stamina over its full), on each dimension tiredness reaches (`conditions` in
+    // content/tasks.ts: all of a scene's but interpretation). Full, it drains nothing. From evaluation-10 the scene is its
+    // units, its one tone cut at its two turns, three; until then it was its two halves.
+    expect(t.inputs.piece!.segments.map((s: { label: string }) => s.label)).toEqual(['The Opening', 'The Middle', 'The Close']);
     for (const d of ['believability', 'connection', 'execution', 'consistency', 'responsiveness'] as const) expect(t.dims[d]!, d).toBeGreaterThan(i.dims[d]!);
     expect(t.dims.interpretation).toBe(i.dims.interpretation);
   });

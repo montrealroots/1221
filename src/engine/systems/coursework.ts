@@ -54,7 +54,7 @@ import { COURSES, ORIENTATION_2026, SKILLS, WORK_STUDY, YALE_DRAMA, type Course,
 import { PREP_DIMS, QUESTIONS, SCENE_SIZE_MINUTES, sceneById, templateById, templateFor, type Activity, type Need, type Option, type PrepDim, type Question, type Template } from '../content/coursework';
 import { bondMove, classPeriod, classmatePerformer, conditionAt, ordinary, focusOf, focusAt, grewFrom, hasNeed, keyOf, termAccount, termOf, termStart, repProduction, type Classmate } from './school';
 import { bandOfQuality, chiefLimit, countTogether, evaluate, leanedWeights, performerOf, recordWork, type Evaluation } from './evaluation';
-import { evaluatePiece, judgePiece, loadOf, pieceWeights, rehearseWays, toneSegments, withBook, type PieceSpec, type Workbook } from './piece';
+import { evaluatePiece, judgePiece, loadOf, pieceWeights, rehearseWays, unitSegments, withBook, type PieceSpec, type Workbook } from './piece';
 import { ENSEMBLE, sharedOf, sharedWords, type PartnerRead, type SharedResult } from './ensemble';
 import { PIECE } from '../content/piece';
 import { UNPERFORMED } from './material';
@@ -769,14 +769,15 @@ export function partnerReadOf(sim: Simulation, person: Person, a: Assignment, on
  * one tone was judged whole, stamina an input of its consistency, and a scene of two tones in segments, stamina only the
  * drain: the same stamina counted for one scene by how many tones it listed (attributes-matrix.md, "inconsistent
  * reading"). Work with no scene (a voice sequence, a song, a movement score, a fight) is still judged whole, stamina an
- * input of its consistency, as its profile says.
+ * input of its consistency, as its profile says. From 2026-10-16 (evaluation-10) a scene is its units, each tone section cut
+ * again at its turns (`unitSegments`), where until then it was its tones only.
  */
 export function scenePiece(a: Assignment): PieceSpec | undefined {
   const task = TASK_PROFILES[TEMPLATE_TASK[a.template] ?? 'scene']!;
   const material = materialOf(a.sceneId);
   if (!material || UNPERFORMED.has(task.id)) return undefined;
   return withBook({
-    segments: toneSegments(material.tones, 2), work: a.work ?? [], part: 'rehearsal',
+    segments: unitSegments(material, 2), work: a.work ?? [], part: 'rehearsal',
     perTurn: PIECE.scene.perTurn, perBlend: PIECE.scene.perBlend, most: PIECE.scene.most, load: loadOf(material, 'scene'),
   }, a.book);
 }

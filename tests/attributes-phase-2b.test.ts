@@ -29,7 +29,7 @@ import { attributesOf } from '@/engine/systems/attributes';
 import { BRIEF, briefContext, briefPiece, practiceShare, prepareBrief, recordOf, requiredOf, prepareRefusal } from '@/engine/systems/briefs';
 import type { Performer } from '@/engine/systems/evaluation';
 import { materialContext } from '@/engine/systems/material';
-import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
 import { hasProcess, type Process } from '@/engine/systems/production';
 import { CALL_KIND, NIGHT_DIFFICULTY } from '@/engine/systems/school';
 import { PREP_DIMS } from '@/engine/content/coursework';
@@ -154,7 +154,7 @@ function work(m: MaterialProfile, night: boolean, p: Performer): number {
   return judgePiece('p2b', p, {
     task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(parts.map((k) => [k, 1])), required: Object.fromEntries(parts.map((k) => [k, 0.9])),
     difficulty: night ? NIGHT_DIFFICULTY.school.supporting : -0.3, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'p2b', expected: true,
-  }, { segments: toneSegments(m.tones, 2), work: [], part: night ? 'blocking' : 'rehearsal', perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: loadOf(m, night ? 'night' : 'scene') }).overall;
+  }, { segments: unitSegments(m, 2), work: [], part: night ? 'blocking' : 'rehearsal', perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: loadOf(m, night ? 'night' : 'scene') }).overall;
 }
 
 describe('what a piece demands decides which abilities count', () => {
