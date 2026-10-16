@@ -90,7 +90,7 @@ MA = [
  ('MA2', 'An ability it doesn’t read, raised by practice, moves it by nothing of that ability', 'tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a week of Circles Of Attention raises a comic brief’s forecast'),
  ('MA3', 'No dimension, segment or whole leaves 0 to 100 on any judged piece', 'tests/integration-mastery.test.ts', 'every brief and reading, every class scene and every play as a night'),
  ('MA4', 'An ability read twice by one dimension is counted once, at its summed weight', 'tests/integration-mastery.test.ts', 'a grave scene’s believability reads emotional depth from the task and from the material'),
- ('MA6', 'At mastery no draw moves a result off 100', 'tests/engine-properties.test.ts', None),
+ ('MA6', 'At mastery no draw moves a result off 100', 'tests/engine-properties.test.ts', 'keeps the mastery contract: every input full, preparation complete, a sufficient day and a fitting choice is 100, every time'),
  ('MA7', 'Each shortfall a take has is named in words', 'tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a brief taped with its lines barely begun names the lines'),
 ]
 for id, goal, f, t in MA:
@@ -127,4 +127,69 @@ integ('INT-navigation', 'Home readable; Money, School and Papers usable and alig
 integ('INT-long-runs', 'Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code', 'tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts, tools/freshness.ts', 'breaches 0, unbalanced 0, no errors; the figures each account set', 'Met', [f'{D}/runs/README.md', f'{D}/runs/lives.jsonl', f'{D}/runs/variety-v-0.json', f'{D}/runs/freshness.json'], [cite(f'{D}/runs/README.md'), cite(f'{D}/runs/lives.jsonl'), cite(f'{D}/runs/variety-v-0.json'), cite(f'{D}/runs/freshness.json')])
 integ('INT-gate', 'The gate and the build on the final revision', 'npm run gate (exit from a file); npm run build', 'exit 0', 'Met', [f'{D}/runs/gate.txt', f'{D}/runs/README.md'], [cite(f'{D}/runs/gate.txt')], failure='Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again')
 json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+print(len(rows))
+# ---- appended: the seven statuses (brief 09, section 1) ----
+# Until brief 09 each row carried the word its source gave it (Met, Not Met, Superseded), and the matrix read "none
+# open" while the handoff listed unfinished work. Each row now carries one of the seven statuses the owner named, and
+# what that status asks of it: the commit a measurement was made on and what it reads (a criterion measured before the
+# code it reads changed isn't current), what's missing, the gap, the decision with its evidence and recommendation, or
+# who deferred it. The source's own word stays beside it as `sourceStatus`.
+IAV, IVI, PI, NI, BE, DR, ED = ('Implemented And Verified', 'Implemented, Verification Incomplete', 'Partially Implemented',
+  'Not Implemented', 'Blocked Externally', 'Decision Required', 'Explicitly Deferred')
+# Where a measurement was made, and what it reads. The judge's criteria were measured again on 4a1b339f (the close-out),
+# and no file the judge reads has changed since (checked on 2026-10-16 with git log 4a1b339f..HEAD over those paths).
+CLOSEOUT = {'commit': '4a1b339f', 'watch': 'judge'}
+RUNS = {'commit': 'd1452195', 'watch': 'engine'}
+BUILT = {'commit': 'f68516b0', 'watch': 'app'}
+READ_ONLY = ['A4', 'A5', 'T1', 'O3', 'F1', 'F3']
+for r in rows:
+    r['sourceStatus'] = r['status']
+    g, i = r['group'], r['id']
+    if i in ('MA5', 'F2-A', 'INT-long-runs'):
+        r['status'], r['measured'] = IAV, RUNS
+    elif i in READ_ONLY:
+        r['status'], r['missing'] = IVI, 'Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding'
+    elif r['status'] == 'Met' and g in ('Criteria: The Stage', 'Criteria: Interpretation', 'Criteria: The Attributes', 'Criteria: The Genres', 'Criteria: Long-Term Continuity'):
+        r['status'], r['measured'] = IAV, CLOSEOUT
+    elif i in ('INT-navigation', 'INT-skipped', 'INT-gate'):
+        r['status'], r['measured'] = IAV, BUILT
+    elif r['status'] == 'Met':
+        r['status'] = IAV
+# The four shortfalls of the stage and the attributes, as measured, and what each awaits.
+for r in rows:
+    if r['id'] == 'ST3':
+        r['status'], r['decision'] = DR, {'question': 'ST3 asks an even actor to come out the same on stage and at a close frame, while the stage weighs execution and the actor’s stamina drains on it: equal results from unequal effective inputs. Is the amended ST3′ (identical effective inputs give identical results; every remaining difference is put down to a stage demand, stamina or execution weighting) the criterion?', 'evidence': f'{D}/st3.md: 157 of 171 as shown; every exact difference under 0.021, an actor even in what’s read and not draining identical to 3e-14', 'recommendation': 'Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met'}
+    elif r['id'] == 'ST6':
+        r['status'], r['gap'] = PI, 'The restrained specialist comes out ahead against the grain on 8 of 38, under 25% (st6.md); being worked under brief 09, section 2'
+    elif r['id'] == 'H4':
+        r['status'], r['gap'] = PI, '2 of 12 specialists ahead on 60% of their work; presence, discipline and stamina have no work of their own (h4.md); being worked under brief 09, section 2'
+    elif r['id'] == 'L3':
+        r['status'], r['gap'] = PI, 'As written, the specialist’s last month (64.1) is under its first (65.5) because it earned harder callbacks; the controlled measure rises on every take (l3.md); being worked under brief 09, section 2'
+    elif r['id'] == 'F2':
+        r['status'], r['decision'] = DR, {'question': 'F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?', 'evidence': 'docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json', 'recommendation': 'Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured'}
+    elif r['id'] == 'G1':
+        r['status'], r['deferredBy'] = ED, 'Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured'
+# Every known shortfall and missing test not already a row of its own: the handoff's open work, the areas' reports.
+def known(id, goal, status, field, text, evidence=None, citations=None):
+    r = {'id': id, 'group': 'Known Shortfalls And Missing Tests', 'kind': 'shortfall', 'goal': goal, 'entry': 'Not recorded',
+      'preconditions': 'Not recorded', 'reads': 'Not recorded', 'decisions': 'Not recorded', 'validation': 'Not recorded',
+      'changes': 'Not recorded', 'later': 'Not recorded', 'systems': 'Not recorded', 'sees': 'Not recorded', 'saveLoad': 'Not recorded',
+      'failure': text if isinstance(text, str) else text.get('question', ''), 'implementation': 'Not recorded',
+      'evidence': '; '.join(evidence or []) or 'Not recorded', 'status': status, 'sourceStatus': 'listed by the handoff or an area', 'citations': citations or []}
+    r[field] = text
+    rows.append(r)
+known('KS-matrix-gate', 'tools/completion-matrix.mjs --check runs in the required gate', IAV, 'note', 'In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)', ['package.json', 'CLAUDE.md'], [cite('tools/completion-matrix.mjs')])
+known('KS-degree-text', 'A graduated student’s School page says the degree is done', NI, 'gap', 'It still says "Only the terms to come stand between you and the degree" (found in the built app on 2026-10-16)')
+known('KS-genres-54', 'Each genre’s two briefs ask different things of the actor where its conventions allow', PI, 'gap', '54 genres’ two briefs suit the same sides on every axis (closeout/genre-audit.md); whether they’re the same work isn’t yet read (brief 09, section 3)')
+known('KS-bank-rows-scope', 'The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred', DR, 'decision', {'question': 'Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?', 'evidence': 'docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md', 'recommendation': 'Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read under brief 09, section 5)'})
+known('KS-homecloses', 'A home bank’s own close settles its fees once', NI, 'gap', '`homeCloses` (systems/abroad.ts) settles fees again on each daily retry at a bank with quarterly fees; unreachable when found (banking-result.json); being read under brief 09, section 4')
+known('KS-ct-idcard', 'A Connecticut ID card’s term and its mailing are the DMV’s', IVI, 'missing', 'The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)')
+known('KS-passport-fees', 'A passport renewed abroad costs its issuer’s published fee', IVI, 'missing', 'Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)')
+# An area's item whose status its result doesn't give rightly, said here with why: only an item the area left reported or
+# open that was settled after, with the test that settles it.
+OVERRIDES = [
+  {'id': 'coverage.7-overdraft-home-panel', 'status': IAV, 'why': 'Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls',
+   'citations': [cite('tests/integration-home-lending.test.ts', 'borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad')]},
+]
+json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

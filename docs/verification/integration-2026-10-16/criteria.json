@@ -18,7 +18,7 @@
    "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -28,7 +28,12 @@
     }
    ],
    "before": "restrained 50, expansive 33 of 85",
-   "after": "restrained 49, expansive 37 of 89"
+   "after": "restrained 49, expansive 37 of 89",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST2",
@@ -48,14 +53,19 @@
    "failure": "Before: 72 of 72; after: 75 of 75",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "72 of 72",
-   "after": "75 of 75"
+   "after": "75 of 75",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST3",
@@ -75,7 +85,7 @@
    "failure": "As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3.md"
@@ -90,7 +100,13 @@
     }
    ],
    "before": "specialist 171/171; even actor 159 of 171",
-   "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part"
+   "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "ST3 asks an even actor to come out the same on stage and at a close frame, while the stage weighs execution and the actor’s stamina drains on it: equal results from unequal effective inputs. Is the amended ST3′ (identical effective inputs give identical results; every remaining difference is put down to a stage demand, stamina or execution weighting) the criterion?",
+    "evidence": "docs/verification/integration-2026-10-16/st3.md: 157 of 171 as shown; every exact difference under 0.021, an actor even in what’s read and not draining identical to 3e-14",
+    "recommendation": "Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met"
+   }
   },
   {
    "id": "ST4",
@@ -110,7 +126,7 @@
    "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -121,7 +137,12 @@
     }
    ],
    "before": "drama 25 / 0",
-   "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16"
+   "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST5",
@@ -141,14 +162,19 @@
    "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "2,277 of 2,277",
-   "after": "2,385 of 2,385"
+   "after": "2,385 of 2,385",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST6",
@@ -168,7 +194,7 @@
    "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Not Met",
+   "status": "Partially Implemented",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -179,7 +205,9 @@
     }
    ],
    "before": "expansive 21 of 49; restrained 7 of 34",
-   "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)"
+   "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
+   "sourceStatus": "Not Met",
+   "gap": "The restrained specialist comes out ahead against the grain on 8 of 38, under 25% (st6.md); being worked under brief 09, section 2"
   },
   {
    "id": "ST7",
@@ -199,14 +227,19 @@
    "failure": "Before: 84 of 86; after: 88 of 90",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "84 of 86",
-   "after": "88 of 90"
+   "after": "88 of 90",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST8",
@@ -226,14 +259,19 @@
    "failure": "Before: 72 of 72; after: 75 of 75",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "72 of 72",
-   "after": "75 of 75"
+   "after": "75 of 75",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST9",
@@ -253,14 +291,19 @@
    "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "held",
-   "after": "see I1 to I5, S1 to S4 and G2"
+   "after": "see I1 to I5, S1 to S4 and G2",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "Stage F1",
@@ -280,14 +323,19 @@
    "failure": "Before: all hold; after: all hold",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "all hold",
-   "after": "all hold"
+   "after": "all hold",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "Stage F2",
@@ -307,14 +355,19 @@
    "failure": "Before: all hold; after: all hold",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     }
    ],
    "before": "all hold",
-   "after": "all hold"
+   "after": "all hold",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "I1",
@@ -334,7 +387,7 @@
    "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -344,7 +397,12 @@
     }
    ],
    "before": "8,010 and 9,117 at 100",
-   "after": "8,010, 9,117 and 2,385 at 100"
+   "after": "8,010, 9,117 and 2,385 at 100",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "I2",
@@ -364,7 +422,7 @@
    "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -374,7 +432,12 @@
     }
    ],
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
-   "after": "the same"
+   "after": "the same",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "I3",
@@ -394,7 +457,7 @@
    "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -404,7 +467,12 @@
     }
    ],
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
-   "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%"
+   "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "I4",
@@ -424,7 +492,7 @@
    "failure": "Before: 100%; after: 100% on every sample",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -434,7 +502,12 @@
     }
    ],
    "before": "100%",
-   "after": "100% on every sample"
+   "after": "100% on every sample",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "I5",
@@ -454,7 +527,7 @@
    "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
@@ -464,7 +537,12 @@
     }
    ],
    "before": "≥ 98.7%",
-   "after": "99.3%, 98.0%, 97.8%"
+   "after": "99.3%, 98.0%, 97.8%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "A1",
@@ -484,7 +562,7 @@
    "failure": "Before: met; after: met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -497,7 +575,12 @@
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "A2",
@@ -517,7 +600,7 @@
    "failure": "Before: highest 0.536; after: highest 0.527",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -530,7 +613,12 @@
     }
    ],
    "before": "highest 0.536",
-   "after": "highest 0.527"
+   "after": "highest 0.527",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "A3",
@@ -550,7 +638,7 @@
    "failure": "Before: met; after: met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -563,7 +651,12 @@
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "T2",
@@ -583,7 +676,7 @@
    "failure": "Before: 1.875 of 4; after: 1.875 of 4",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -596,7 +689,12 @@
     }
    ],
    "before": "1.875 of 4",
-   "after": "1.875 of 4"
+   "after": "1.875 of 4",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "T3",
@@ -616,7 +714,7 @@
    "failure": "Before: 36%; after: 36%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -629,7 +727,12 @@
     }
    ],
    "before": "36%",
-   "after": "36%"
+   "after": "36%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "G3",
@@ -649,7 +752,7 @@
    "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -662,7 +765,12 @@
     }
    ],
    "before": "53 of 149; 8 actors",
-   "after": "53 of 149; 8 actors"
+   "after": "53 of 149; 8 actors",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "G4",
@@ -682,7 +790,7 @@
    "failure": "Before: met; after: met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -695,7 +803,12 @@
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "G5",
@@ -715,7 +828,7 @@
    "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -728,7 +841,12 @@
     }
    ],
    "before": "51.23 → 53.86",
-   "after": "51.22 → 53.86"
+   "after": "51.22 → 53.86",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "M1",
@@ -748,7 +866,7 @@
    "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -761,7 +879,12 @@
     }
    ],
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
-   "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off"
+   "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "M3",
@@ -781,7 +904,7 @@
    "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -794,7 +917,12 @@
     }
    ],
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
-   "after": "own 100 on 60 scenes"
+   "after": "own 100 on 60 scenes",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "O1",
@@ -814,7 +942,7 @@
    "failure": "Before: sd 0; after: sd 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -827,7 +955,12 @@
     }
    ],
    "before": "sd 0",
-   "after": "sd 0"
+   "after": "sd 0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "O2",
@@ -847,7 +980,7 @@
    "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -860,7 +993,12 @@
     }
    ],
    "before": "93.1, 86.1, 100",
-   "after": "93.1, 86.1, 100"
+   "after": "93.1, 86.1, 100",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "H2",
@@ -880,7 +1018,7 @@
    "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -893,7 +1031,12 @@
     }
    ],
    "before": "briefs 96 of 298; scenes 20 of 56",
-   "after": "briefs 96 of 298; scenes 20 of 60"
+   "after": "briefs 96 of 298; scenes 20 of 60",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "H5",
@@ -913,7 +1056,7 @@
    "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -926,7 +1069,12 @@
     }
    ],
    "before": "427 of 427; 26.5%",
-   "after": "431 of 431; 26.9%"
+   "after": "431 of 431; 26.9%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "H7",
@@ -946,7 +1094,7 @@
    "failure": "Before: 0%; 2.61; after: 0%; 2.62",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7)",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -959,7 +1107,12 @@
     }
    ],
    "before": "0%; 2.61",
-   "after": "0%; 2.62"
+   "after": "0%; 2.62",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "H4",
@@ -979,7 +1132,7 @@
    "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
-   "status": "Not Met",
+   "status": "Partially Implemented",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/h4.md"
@@ -992,7 +1145,9 @@
     }
    ],
    "before": "1 of 12",
-   "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)"
+   "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
+   "sourceStatus": "Not Met",
+   "gap": "2 of 12 specialists ahead on 60% of their work; presence, discipline and stamina have no work of their own (h4.md); being worked under brief 09, section 2"
   },
   {
    "id": "F2",
@@ -1012,7 +1167,7 @@
    "failure": "As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -1022,7 +1177,13 @@
     }
    ],
    "before": "303 of 447 (67.8%)",
-   "after": "302 of 447 (67.6%)"
+   "after": "302 of 447 (67.6%)",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?",
+    "evidence": "docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json",
+    "recommendation": "Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured"
+   }
   },
   {
    "id": "F2-A",
@@ -1042,7 +1203,7 @@
    "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/advice-cases.json"
@@ -1052,7 +1213,12 @@
     }
    ],
    "before": "40 of 40; the exact best in 38",
-   "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894"
+   "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "d1452195",
+    "watch": "engine"
+   }
   },
   {
    "id": "G1",
@@ -1072,14 +1238,16 @@
    "failure": "Replaced by the genre signature S1 to S4 on 2026-10-16 (work plan section 5), defined before it ran",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Superseded",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
     }
    ],
    "before": "fails",
-   "after": "fails"
+   "after": "fails",
+   "sourceStatus": "Superseded",
+   "deferredBy": "Replaced under the owner’s authorization in brief 02, section 3 (\"I authorize replacing a demonstrably invalid metric…\"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured"
   },
   {
    "id": "A4",
@@ -1099,14 +1267,16 @@
    "failure": "Before: met by review; after: met by review; A4 brought to restraint’s new draw (composure, focus)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; A4 brought to restraint’s new draw (composure, focus)"
+   "after": "met by review; A4 brought to restraint’s new draw (composure, focus)",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "A5",
@@ -1126,14 +1296,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "T1",
@@ -1153,14 +1325,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T1)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "O3",
@@ -1180,14 +1354,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O3)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "F1",
@@ -1207,14 +1383,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F1)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "F3",
@@ -1234,14 +1412,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F3)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "L1",
@@ -1261,7 +1441,7 @@
    "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
@@ -1271,7 +1451,12 @@
     }
    ],
    "before": "specialist 4, beginner 3",
-   "after": "specialist 4, beginner 3"
+   "after": "specialist 4, beginner 3",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "L2",
@@ -1291,14 +1476,19 @@
    "failure": "Before: 0; after: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
     }
    ],
    "before": "0",
-   "after": "0"
+   "after": "0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "L3",
@@ -1318,7 +1508,7 @@
    "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
-   "status": "Not Met",
+   "status": "Partially Implemented",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/l3.md"
@@ -1328,7 +1518,9 @@
     }
    ],
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
-   "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19"
+   "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
+   "sourceStatus": "Not Met",
+   "gap": "As written, the specialist’s last month (64.1) is under its first (65.5) because it earned harder callbacks; the controlled measure rises on every take (l3.md); being worked under brief 09, section 2"
   },
   {
    "id": "MA1",
@@ -1348,7 +1540,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1356,7 +1548,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA2",
@@ -1376,7 +1569,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1384,7 +1577,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA3",
@@ -1404,7 +1598,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1412,7 +1606,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA4",
@@ -1432,7 +1627,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1440,7 +1635,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA6",
@@ -1460,14 +1656,16 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/engine-properties.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
-     "file": "tests/engine-properties.test.ts"
+     "file": "tests/engine-properties.test.ts",
+     "title": "keeps the mastery contract: every input full, preparation complete, a sufficient day and a fitting choice is 100, every time"
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA7",
@@ -1487,7 +1685,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1495,7 +1693,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA5",
@@ -1515,7 +1714,7 @@
    "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json"
@@ -1537,7 +1736,12 @@
     }
    ],
    "before": "all six plans (journeys-2026-10-16)",
-   "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0"
+   "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "d1452195",
+    "watch": "engine"
+   }
   },
   {
    "id": "MA8",
@@ -1557,7 +1761,7 @@
    "failure": "Before: not measured before; after: two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1565,7 +1769,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none"
+   "after": "two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none",
+   "sourceStatus": "Met"
   },
   {
    "id": "S1",
@@ -1585,7 +1790,7 @@
    "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1598,7 +1803,12 @@
     }
    ],
    "before": "0.90, 0.88, 0.90, 0.87",
-   "after": "0.901, 0.883, 0.904, 0.880"
+   "after": "0.901, 0.883, 0.904, 0.880",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "S2",
@@ -1618,7 +1828,7 @@
    "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1631,7 +1841,12 @@
     }
    ],
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
-   "after": "1.599, 1.612, 1.598, 1.613; 98.7%"
+   "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "S3",
@@ -1651,7 +1866,7 @@
    "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1664,7 +1879,12 @@
     }
    ],
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
-   "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)"
+   "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "S4",
@@ -1684,7 +1904,7 @@
    "failure": "Before: 0; after: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1697,7 +1917,12 @@
     }
    ],
    "before": "0",
-   "after": "0"
+   "after": "0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "Genre Audit",
@@ -1717,7 +1942,7 @@
    "failure": "The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/genre-audit.md"
@@ -1727,7 +1952,12 @@
     }
    ],
    "before": "149 of 149; 0; 56 to weigh",
-   "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)"
+   "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "4a1b339f",
+    "watch": "judge"
+   }
   },
   {
    "id": "INT-determinism",
@@ -1747,13 +1977,14 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/determinism-played.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/determinism-played.test.ts",
      "title": "is the same to the byte, straight through and reloaded halfway"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-time",
@@ -1773,13 +2004,14 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/simulation.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/simulation.test.ts",
      "title": "keeps the debt a short night left over sixty, and drains it the same by the minute as in one jump"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-duplicates",
@@ -1799,7 +2031,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/briefs.test.ts",
@@ -1813,7 +2045,8 @@
      "file": "tests/base44-contract.test.ts",
      "title": "writes once for a repeated idempotency key"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-migration",
@@ -1833,7 +2066,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/save-migration.test.ts; tests/migration-94.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/save-migration.test.ts",
@@ -1842,7 +2075,8 @@
     {
      "file": "tests/migration-94.test.ts"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-missed-term",
@@ -1862,7 +2096,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/remaining-school-term.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/remaining-school-term.test.ts",
@@ -1872,7 +2106,8 @@
      "file": "tests/remaining-school-term.test.ts",
      "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-skipped",
@@ -1892,7 +2127,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tools/acceptance-ui.mjs"
@@ -1903,7 +2138,12 @@
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "f68516b0",
+    "watch": "app"
+   }
   },
   {
    "id": "INT-navigation",
@@ -1923,7 +2163,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/1440.log"
@@ -1931,7 +2171,12 @@
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "f68516b0",
+    "watch": "app"
+   }
   },
   {
    "id": "INT-long-runs",
@@ -1951,7 +2196,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/README.md"
@@ -1965,7 +2210,12 @@
     {
      "file": "docs/verification/integration-2026-10-16/runs/freshness.json"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "d1452195",
+    "watch": "engine"
+   }
   },
   {
    "id": "INT-gate",
@@ -1985,10 +2235,197 @@
    "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/gate.txt"
+    }
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "f68516b0",
+    "watch": "app"
+   }
+  },
+  {
+   "id": "KS-matrix-gate",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "tools/completion-matrix.mjs --check runs in the required gate",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)",
+   "implementation": "Not recorded",
+   "evidence": "package.json; CLAUDE.md",
+   "status": "Implemented And Verified",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [
+    {
+     "file": "tools/completion-matrix.mjs"
+    }
+   ],
+   "note": "In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)"
+  },
+  {
+   "id": "KS-degree-text",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A graduated student’s School page says the degree is done",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "It still says \"Only the terms to come stand between you and the degree\" (found in the built app on 2026-10-16)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Not Implemented",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "gap": "It still says \"Only the terms to come stand between you and the degree\" (found in the built app on 2026-10-16)"
+  },
+  {
+   "id": "KS-genres-54",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "Each genre’s two briefs ask different things of the actor where its conventions allow",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "54 genres’ two briefs suit the same sides on every axis (closeout/genre-audit.md); whether they’re the same work isn’t yet read (brief 09, section 3)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Partially Implemented",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "gap": "54 genres’ two briefs suit the same sides on every axis (closeout/genre-audit.md); whether they’re the same work isn’t yet read (brief 09, section 3)"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Decision Required",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "decision": {
+    "question": "Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?",
+    "evidence": "docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md",
+    "recommendation": "Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read under brief 09, section 5)"
+   }
+  },
+  {
+   "id": "KS-homecloses",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A home bank’s own close settles its fees once",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "`homeCloses` (systems/abroad.ts) settles fees again on each daily retry at a bank with quarterly fees; unreachable when found (banking-result.json); being read under brief 09, section 4",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Not Implemented",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "gap": "`homeCloses` (systems/abroad.ts) settles fees again on each daily retry at a bank with quarterly fees; unreachable when found (banking-result.json); being read under brief 09, section 4"
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A Connecticut ID card’s term and its mailing are the DMV’s",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Implemented, Verification Incomplete",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A passport renewed abroad costs its issuer’s published fee",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Implemented, Verification Incomplete",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
+  }
+ ],
+ "overrides": [
+  {
+   "id": "coverage.7-overdraft-home-panel",
+   "status": "Implemented And Verified",
+   "why": "Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls",
+   "citations": [
+    {
+     "file": "tests/integration-home-lending.test.ts",
+     "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad"
     }
    ]
   }

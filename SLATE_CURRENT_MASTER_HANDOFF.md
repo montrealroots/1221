@@ -42,8 +42,15 @@ result changed, then "What The Pass Did, And What It Measured", written at the e
   what the commands refused; two new commands in no capability; the built app's two steps skipped since 2026-10-12.
 - **Coverage:** each audit row's evidence class, the `static` standard, the 14 (now 13) unresolved rows in four parts,
   the areas folded by `remaining-fold.cjs`, rows added through `inputs/added-rows.json`.
-- **The completion matrix** (`integration-2026-10-16/COMPLETION-MATRIX.md`, `tools/completion-matrix.mjs --check`): 467
-  rows, none open.
+- **The completion matrix** (`integration-2026-10-16/COMPLETION-MATRIX.md`, `tools/completion-matrix.mjs --check`). It
+  said "467 rows, none open" until brief 09 (2026-10-16), counting a row given to the owner, a proposed criterion or a
+  stale measurement as settled while this section listed unfinished work. Each row now carries one of the owner's seven
+  statuses, and only Implemented And Verified counts as done.
+
+**Completion, by the matrix:** 407 of 460 rows in scope Implemented And Verified (88.4%); 43 Implemented, Verification Incomplete, 4 Partially Implemented, 2 Not Implemented, 0 Blocked Externally, 4 Decision Required, 17 Explicitly Deferred.
+
+  Brief 09 is being worked as this is written (`docs/verification/briefs-2026-10-16/09-…`, work plan section 12): every
+  row below that isn't done is a row of the matrix, and its "What's Left" says what each needs.
 
 ## 3. What Isn't Done, And The Owner's Decisions
 
