@@ -312,19 +312,66 @@ await step('coursework: table work answered from its select', async () => {
  * tried now (a way on the feet waits for the energy and the hour); the way tried, its evidence said, and kept or put
  * back; the try in the record.
  */
+/**
+ * A way that's locked for a guided life whose chapter for it isn't read yet (from the integration pass of 2026-10-16): a
+ * player presses it, the guide opens at that chapter, and reading it opens the way. The guide's own step reads every
+ * chapter on the first day, but a scene's Work It Through appears only once a scene is set, and until 2026-10-16 its ways
+ * were taken for ways that couldn't be tried now, and the step was skipped on every run since 2026-10-12.
+ */
+async function unlockWay(wb) {
+  const locked = wb.locator('li button.is-locked', { hasText: /\(\d+ Min\)/ }).first();
+  if (!(await locked.count())) return false;
+  await locked.click(); await wait(600);
+  const read = page.locator('[role=dialog] button', { hasText: /^I’ve Read It/ }).first();
+  must(await read.count(), 'a locked way opened no chapter to read');
+  await read.click(); await wait(400);
+  await page.keyboard.press('Escape'); await wait(400);
+  return true;
+}
+/**
+ * A scene's ways wait on its lines, as its rehearsal does (`systems/workpieces.ts`: “Learn some of the lines first”). Until
+ * the integration pass of 2026-10-16 the step waited three mornings for them, which learns nothing, and was skipped; found
+ * by dumping the workbook on the built app, which said so under the ways. Now it does what the reason says, from the
+ * scene's own card: Read The Scene if Learn Lines asks for that first, then Learn Lines, until the reason goes.
+ */
+async function learnSomeLines(wb) {
+  const card = wb.locator('xpath=ancestor::section[contains(@class,"card")][1]');
+  const done = [];
+  for (let i = 0; i < 6 && /Learn some of the lines first/.test((await wb.locator('.why-not').allInnerTexts()).join(' ')); i += 1) {
+    let b = card.getByRole('button', { name: /^Learn Lines/ }).first();
+    must(await b.count(), 'told to learn some of the lines, and the scene offers no Learn Lines');
+    if (await b.isDisabled()) {
+      const read = card.getByRole('button', { name: /^Read The (Scene|Play)/ }).first();
+      if ((await read.count()) && !(await read.isDisabled())) b = read;
+      else skip(`Learn Lines grayed: ${await card.locator('.why-not').first().innerText().catch(() => '')}`);
+    }
+    const label = (await b.innerText()).split('\n')[0];
+    await b.click(); await wait(1200); await settleDialogs();
+    done.push(`${label}: ${(await toast()).slice(0, 80)}`);
+  }
+  must(!/Learn some of the lines first/.test((await wb.locator('.why-not').allInnerTexts()).join(' ')), `the lines still short after ${done.join('; ')}`);
+  return done;
+}
 async function workThrough(wb) {
   // Each problem in turn, until one has a way that can be tried now (a way on the feet waits for the energy and the hour).
   const tried = [];
+  const learned = [];
   let label = '';
+  await unlockWay(wb);
   let way = wb.locator('li button:not([disabled])', { hasText: /\(\d+ Min\)$/ }).first();
   for (let i = 0; i < 6; i += 1) {
-    const next = wb.locator('li button:not([disabled])').filter({ hasNotText: /\(\d+ Min\)$/ }).filter({ hasNotText: new RegExp(`^(${tried.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') || '\\u0000'})$`) }).first();
+    const next = wb.locator('li button:not([disabled]):not(.is-locked)').filter({ hasNotText: /\(\d+ Min\)/ }).filter({ hasNotText: new RegExp(`^(${tried.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') || '\\u0000'})$`) }).first();
     if (!(await next.count())) break;
     label = await next.innerText();
     tried.push(label);
     await next.click(); await wait(800);
     must(/Working On:/.test(await wb.innerText()), `"${label}" isn’t shown as worked on`);
+    if (await unlockWay(wb)) must(!(await wb.locator('li button.is-locked', { hasText: /\(\d+ Min\)/ }).count()), 'its ways still locked after their chapter was read');
     way = wb.locator('li button:not([disabled])', { hasText: /\(\d+ Min\)$/ }).first();
+    if (!(await way.count()) && /Learn some of the lines first/.test((await wb.locator('.why-not').allInnerTexts()).join(' '))) {
+      learned.push(...(await learnSomeLines(wb)));
+      way = wb.locator('li button:not([disabled])', { hasText: /\(\d+ Min\)$/ }).first();
+    }
     if (await way.count()) break;
   }
   if (!tried.length) skip(`nothing to work through: ${(await wb.innerText()).slice(0, 120)}`);
@@ -337,12 +384,25 @@ async function workThrough(wb) {
   const keep = wb.getByRole('button', { name: /^Keep It$/ }).first();
   if (await keep.count()) { await keep.click(); await wait(800); }
   must(await wb.locator('table[data-tries] tbody tr').count() >= 1, 'the try isn’t in the record');
-  return `"${label}" → ${wayLabel}, ${t0} → ${await clock()}: ${said}`;
+  return `${learned.length ? `told to learn some of the lines first: ${learned.join('; ')}; then ` : ''}"${label}" → ${wayLabel}, ${t0} → ${await clock()}: ${said}`;
 }
 await step('coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back', async () => {
-  const wb = page.locator('[data-workbook^="assignment:"]').first();
-  if (!(await wb.count())) skip('no scene open to work through');
-  return workThrough(wb);
+  // A way can wait for the hour and the energy, and the screen says so under it (`.why-not`). Until the integration pass
+  // of 2026-10-16 this step was skipped there on every run since 2026-10-12; now it does what a player told "not now"
+  // does: on to tomorrow morning, and the scene's work again, up to three mornings.
+  let waited = '';
+  for (let morning = 0; ; morning += 1) {
+    const wb = page.locator('[data-workbook^="assignment:"]').first();
+    try {
+      if (!(await wb.count())) skip('no scene open to work through');
+      const done = await workThrough(wb);
+      return waited ? `${waited}; then ${done}` : done;
+    } catch (e) {
+      if (!String(e.message).startsWith('SKIP') || morning >= 3) throw e;
+      waited = `${waited ? `${waited}; ` : ''}${String(e.message).replace(/^SKIP /, '').slice(0, 160)}: on to tomorrow morning`;
+      await advance('Tomorrow Morning'); await rail('School'); await tab('Coursework');
+    }
+  }
 });
 
 // The guide's reference, beside the features it explains (from 2026-10-12).
@@ -518,10 +578,20 @@ await step('navigation keeps context: School’s tab kept across Money and back'
   must(/Casting/.test(sel), `came back to ${sel}`);
   return sel;
 });
-await step('casting: the rehearsal controls, where a part has calls', async () => {
+await step('casting: with no part yet, the tab says when casting comes; with one, its rehearsal controls', async () => {
   await tab('Casting');
   const learn = page.getByRole('button', { name: /^Learn The Part$/ }).first();
-  if (!(await learn.count())) skip('no part with calls yet');
+  // A new life has no part in its first weeks: casting begins in the first spring. Until the integration pass of
+  // 2026-10-16 this was skipped ("no part with calls yet"), and the controls themselves are carried out from the
+  // rehearsal scenario's save below; on a new life the step checks what the brief's section 10 asks of a valid
+  // constraint, that the screen says why and what comes next.
+  if (!(await learn.count())) {
+    must(await page.getByText(/^Not Cast Yet$/).count(), 'no part, and nothing saying so');
+    const panel = page.getByText(/^Not Cast Yet$/).first().locator('xpath=ancestor::section[1]');
+    const said = (await panel.innerText()).replace(/\s+/g, ' ');
+    must(/casts every student each term from the first spring|A good evaluation puts you back/.test(said), `doesn’t say when casting comes: ${said.slice(0, 200)}`);
+    return said.slice(0, 200);
+  }
   await learn.click(); await wait(1200);
   return await toast();
 });
