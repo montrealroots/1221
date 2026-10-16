@@ -42,7 +42,11 @@
  *
  * From 2026-10-16 What To Work On Next is forecast (`systems/advice.ts`): what each input's hours of practice would be
  * worth on the recent work, so what held a take back most and what pays most to train are two things, and the entries
- * say so; the recurring weakness goes first only where it's about as useful as the top (`tied`).
+ * say so; the recurring weakness goes first only where it's about as useful as the top (`tied`). From brief 10, later
+ * that day (F2-A10), the recurring weakness is said where its forecast puts it; the hours are grown as the engine grows
+ * them, which is steady from three quarters of full, where the entry said "slower the nearer it is to full"; and the
+ * entry says what the advice names (the pieces it read, the discipline the days keep, a piece its preparation held back
+ * read as prepared, the genre as known today, everything at full).
  *
  * The Profile has no tabs, so no entry names one.
  *
@@ -319,7 +323,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { label: 'Classes Reach', value: 'Where classes and ordinary work level off for you: a technique’s own ceiling, an ability’s its kin’s in the craft. Practice goes past it to full' },
       { label: 'A Technique', value: `0 to 100, mastered at ${MASTERED}: work that reads it asks no more past that` },
       { label: 'Today', value: `Readiness under ${EVALUATION.sufficientReadiness}, the flu, an injury or a concussion, and the dimensions of work each one reaches` },
-      { label: 'What To Work On Next', value: `Each ability and technique your recent work read, forecast: ${ADVICE.sessions} hours of its exercise on the curve practice really follows, slower the nearer it is to full, and your recent work worked out again with you as you are now and with it where those hours would take it; the most worth it first, weighted to the latest. Two within a tenth of a point, or a tenth of the larger, are said to be about as useful. A short preparation, a day’s condition or a choice that didn’t fit says what to do differently. The weakness your work keeps coming back to says how many pieces it has held back for life, with “From your work for life:” and the day it last held one back, and goes first only where it’s about as useful as the top. An input at full drops out, as does one forecast under a tenth of a point` },
+      { label: 'What To Work On Next', value: `Each ability and technique your recent work read, forecast: ${ADVICE.sessions} hours of its exercise, a session a day at an ordinary day’s focus, grown as an hour of practice grows it, slower as it rises to three quarters of full and steady from there, and your recent work worked out again with you as you are now (knowing each genre as you know it today) and with it where those hours would take it; the most worth it first, weighted to the latest. It says how many of your last pieces read it and the one it gains most on, and how much of the figure is the discipline the days of practice keep, which any exercise kept up daily would bring. A piece whose own preparation held it back most is read as prepared, so the figure is what training is worth, and the preparation says what to do differently, as a day’s condition or a choice that didn’t fit does. Two within a tenth of a point, or a tenth of the larger, are said to be about as useful. The weakness your work keeps coming back to says how many pieces it has held back for life, with “From your work for life:” and the day it last held one back, where its forecast puts it. An input at full drops out, a technique at ${MASTERED}, as does one forecast under a tenth of a point; and where everything your recent work read that an exercise trains is at full, it says so` },
       { label: 'School Journey', value: `The latest ${WORK_KEPT} pieces of work in full, and every piece ever judged counted by half-year` },
       { label: 'Development History', value: `The latest ${DEVELOPMENT.historyKept} changes to an ability or a technique, each with what made it` },
     ],

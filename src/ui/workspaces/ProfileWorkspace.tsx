@@ -259,7 +259,10 @@ function PracticeControl({ exercise }: { exercise: string }) {
 /**
  * What to work on next, from what cost recent work, dropping a weakness once it's addressed (`recommendations`), and
  * from 2026-10-12 the weakness the work so far keeps coming back to (`Identity.recurring`), said with the pieces it has
- * held back for life and what that rests on, and first within half a point of the top.
+ * held back for life and what that rests on, and first within half a point of the top. From 2026-10-16 it's forecast
+ * (`adviceFor`, `systems/advice.ts`): what each input's hours of practice would be worth; from brief 10, later that day,
+ * the recurring weakness is said where its forecast puts it, and where everything the recent work read that an exercise
+ * trains is at full, the first line says so (`full:all`, no exercise).
  */
 function NextWork() {
   const { sim } = useGame();
