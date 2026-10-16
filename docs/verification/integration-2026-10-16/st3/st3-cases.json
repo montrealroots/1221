@@ -1,0 +1,3236 @@
+{
+ "cases": 179,
+ "sameAsShown": 165,
+ "aTenthApart": 14,
+ "roundingDefects": 0,
+ "largest": {
+  "exactApart": 0.020776483152957326,
+  "techniques": 0.0025817237612528743,
+  "stamina": 0.019432038062269896,
+  "residual": 2.842170943040401e-14
+ },
+ "list": [
+  {
+   "material": "seagull-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87788818441221
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87304683178346
+   },
+   "shownApart": 0,
+   "exactApart": 0.004841352628744744,
+   "techniques": 0.0009074728560705125,
+   "stamina": 0.0039338797726600205,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "seagull-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87992396498793
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.878050278063654
+   },
+   "shownApart": 0,
+   "exactApart": 0.0018736869242772514,
+   "techniques": 0.00038187296014058347,
+   "stamina": 0.001491813964136668,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "dollhouse-3",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.86727897195192
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86278649705683
+   },
+   "shownApart": 0,
+   "exactApart": 0.004492474895087639,
+   "techniques": 0.0008008806256256662,
+   "stamina": 0.003691594269461973,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "dollhouse-3",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.869676250557816
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86815465932304
+   },
+   "shownApart": 0,
+   "exactApart": 0.00152159123477702,
+   "techniques": 0.00011873683183694084,
+   "stamina": 0.0014028544029400791,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "earnest-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.5665306454554
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56950205217147
+   },
+   "shownApart": 0,
+   "exactApart": -0.002971406716071101,
+   "techniques": -0.0009648732521867487,
+   "stamina": -0.0020065334638559307,
+   "residual": -2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "earnest-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56689781111642
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.57218829650871
+   },
+   "shownApart": 0,
+   "exactApart": -0.005290485392293931,
+   "techniques": -0.0019393217197176682,
+   "stamina": -0.003351163672576263,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "vanya-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.26022008415342
+   },
+   "closeFrame": {
+    "shown": 65.3,
+    "exact": 65.25592434111067
+   },
+   "shownApart": 0,
+   "exactApart": 0.0042957430427463805,
+   "techniques": 0.0021283392717919014,
+   "stamina": 0.002167403770954479,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "vanya-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.2587769640486
+   },
+   "closeFrame": {
+    "shown": 65.3,
+    "exact": 65.25638220135423
+   },
+   "shownApart": 0,
+   "exactApart": 0.0023947626943652267,
+   "techniques": 0.0011117844021555356,
+   "stamina": 0.0012829782921812694,
+   "residual": 2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "trifles",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.879549810269474
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.8749272282555
+   },
+   "shownApart": 0,
+   "exactApart": 0.004622582013972476,
+   "techniques": 0.000595688860123289,
+   "stamina": 0.004026893153849187,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "trifles",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.88326791379357
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.88185527277435
+   },
+   "shownApart": 0,
+   "exactApart": 0.0014126410192147887,
+   "techniques": -0.00017050103430449326,
+   "stamina": 0.001583142053519282,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "julie",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.164280159988735
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.160724584842356
+   },
+   "shownApart": 0,
+   "exactApart": 0.003555575146378942,
+   "techniques": 0.0004269693077603165,
+   "stamina": 0.0031286058386044147,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "julie",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.16717156579073
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.16711918689719
+   },
+   "shownApart": 0,
+   "exactApart": 0.00005237889354248182,
+   "techniques": -0.00013061363580391117,
+   "stamina": 0.00018299252934639298,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "cherry-orchard-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55939102109596
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5571729140542
+   },
+   "shownApart": 0,
+   "exactApart": 0.0022181070417559567,
+   "techniques": 0.0004098237092335921,
+   "stamina": 0.0018082833325223646,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "cherry-orchard-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56112425307926
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56123425041565
+   },
+   "shownApart": 0,
+   "exactApart": -0.00010999733639494025,
+   "techniques": -0.0003847165831558641,
+   "stamina": 0.00027471924676092385,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "pygmalion-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87194718593989
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.871054320802074
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008928651378141694,
+   "techniques": -0.00004465477233139836,
+   "stamina": 0.0009375199101313569,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "pygmalion-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87290878178094
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87488435163994
+   },
+   "shownApart": 0,
+   "exactApart": -0.001975569858998938,
+   "techniques": -0.0005899586304138893,
+   "stamina": -0.0013856112285992594,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "playboy-3",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.92589689419882
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.92876757395847
+   },
+   "shownApart": 0,
+   "exactApart": -0.0028706797596456113,
+   "techniques": -0.000578947936134,
+   "stamina": -0.002291731823525822,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "playboy-3",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.923279000064376
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.929223932795374
+   },
+   "shownApart": 0,
+   "exactApart": -0.005944932730997721,
+   "techniques": -0.0012658508018859038,
+   "stamina": -0.004679081929097606,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "machinal-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56737336866142
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56493830030752
+   },
+   "shownApart": 0,
+   "exactApart": 0.0024350683539040574,
+   "techniques": 0.00031779506697660054,
+   "stamina": 0.002117273286927457,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "machinal-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56926559918914
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56919744132306
+   },
+   "shownApart": 0,
+   "exactApart": 0.00006815786608171948,
+   "techniques": -0.0003758624779237607,
+   "stamina": 0.0004440203440054802,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "muchado-4-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56139154281027
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55943638918711
+   },
+   "shownApart": 0,
+   "exactApart": 0.0019551536231574573,
+   "techniques": 0.000250205012804372,
+   "stamina": 0.0017049486103530853,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "muchado-4-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56257506572973
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56275913453051
+   },
+   "shownApart": 0,
+   "exactApart": -0.00018406880077748156,
+   "techniques": -0.00023364896060229512,
+   "stamina": 0.00004958015982481356,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "romeo-2-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.3,
+    "exact": 63.321003687478495
+   },
+   "closeFrame": {
+    "shown": 63.3,
+    "exact": 63.32782483477489
+   },
+   "shownApart": 0,
+   "exactApart": -0.0068211472963923825,
+   "techniques": -0.0010825203652586879,
+   "stamina": -0.005738626931133695,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "romeo-2-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.3,
+    "exact": 63.316232520245066
+   },
+   "closeFrame": {
+    "shown": 63.3,
+    "exact": 63.32739250812978
+   },
+   "shownApart": 0,
+   "exactApart": -0.011159987884717282,
+   "techniques": -0.0018402098095506858,
+   "stamina": -0.009319778075180807,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "macbeth-1-7",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56696611956794
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5639404157694
+   },
+   "shownApart": 0,
+   "exactApart": 0.0030257037985421675,
+   "techniques": 0.0002620157420238911,
+   "stamina": 0.0027636880565182764,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "macbeth-1-7",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56890368272819
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5681678332079
+   },
+   "shownApart": 0,
+   "exactApart": 0.0007358495202964832,
+   "techniques": -0.0002892740745892297,
+   "stamina": 0.001025123594885713,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "twelfth-1-5",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.60018923996293
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.60093653381041
+   },
+   "shownApart": 0,
+   "exactApart": -0.0007472938474819557,
+   "techniques": -0.00037614126335938636,
+   "stamina": -0.00037115258412256935,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "twelfth-1-5",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.59871956214457
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.60180835806456
+   },
+   "shownApart": 0,
+   "exactApart": -0.0030887959199930037,
+   "techniques": -0.0009498232846851806,
+   "stamina": -0.002138972635307823,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "shrew-2-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.160863935638716
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.172927127157024
+   },
+   "shownApart": 0,
+   "exactApart": -0.012063191518308258,
+   "techniques": -0.0016116137198878278,
+   "stamina": -0.01045157779842043,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "shrew-2-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.15744790204556
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.17197939908121
+   },
+   "shownApart": 0,
+   "exactApart": -0.014531497035648044,
+   "techniques": -0.0022877430263221754,
+   "stamina": -0.012243754009325869,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "scandal-2-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56164807612035
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56445534375342
+   },
+   "shownApart": 0,
+   "exactApart": -0.0028072676330737067,
+   "techniques": -0.000915983957725075,
+   "stamina": -0.0018912836753486317,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "scandal-2-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56123922008277
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5661989144643
+   },
+   "shownApart": 0,
+   "exactApart": -0.004959694381525992,
+   "techniques": -0.0018317570905281855,
+   "stamina": -0.0031279372909978065,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "richard3-1-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.238327645364635
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.2430221038266
+   },
+   "shownApart": 0,
+   "exactApart": -0.00469445846196237,
+   "techniques": -0.00031310437666576263,
+   "stamina": -0.004381354085310818,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "richard3-1-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.23712346423738
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.24564823049489
+   },
+   "shownApart": 0,
+   "exactApart": -0.008524766257515637,
+   "techniques": -0.0006884862944929182,
+   "stamina": -0.007836279963022719,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hamlet-3-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.885763884155786
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.882097270885694
+   },
+   "shownApart": 0,
+   "exactApart": 0.0036666132700915455,
+   "techniques": 0.00023985531766612667,
+   "stamina": 0.003426757952425419,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hamlet-3-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.88864282131507
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.88811444281174
+   },
+   "shownApart": 0,
+   "exactApart": 0.000528378503325655,
+   "techniques": -0.00025394885979324044,
+   "stamina": 0.0007823273631046845,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "othello-4-3",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.6,
+    "exact": 62.55967856688735
+   },
+   "closeFrame": {
+    "shown": 62.6,
+    "exact": 62.56401077607725
+   },
+   "shownApart": 0,
+   "exactApart": -0.004332209189897185,
+   "techniques": -0.000764482655547738,
+   "stamina": -0.003567726534335236,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "othello-4-3",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.6,
+    "exact": 62.561297286623216
+   },
+   "closeFrame": {
+    "shown": 62.6,
+    "exact": 62.57075316434682
+   },
+   "shownApart": 0,
+   "exactApart": -0.009455877723603123,
+   "techniques": -0.0012521447027822319,
+   "stamina": -0.00820373302080668,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "measure-2-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.875770673397504
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87357015503339
+   },
+   "shownApart": 0,
+   "exactApart": 0.0022005183641127246,
+   "techniques": 0.00006640095779886224,
+   "stamina": 0.0021341174062996515,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "measure-2-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.878053792470276
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87883468879216
+   },
+   "shownApart": 0,
+   "exactApart": -0.0007808963218849385,
+   "techniques": -0.0003937275882748281,
+   "stamina": -0.0003871687336101104,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "antigone-441",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.89970947927438
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.894796529702845
+   },
+   "shownApart": 0,
+   "exactApart": 0.0049129495715334315,
+   "techniques": 0.0004275019244275313,
+   "stamina": 0.0044854476471059,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "antigone-441",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.903806820139664
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.902324556630774
+   },
+   "shownApart": 0,
+   "exactApart": 0.001482263508890469,
+   "techniques": -0.00027969104328207095,
+   "stamina": 0.00176195455217254,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "oedipus-300",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.878619501447666
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87494136616162
+   },
+   "shownApart": 0,
+   "exactApart": 0.003678135286044437,
+   "techniques": 0.00031634626100185415,
+   "stamina": 0.003361789025042583,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "oedipus-300",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.88108652501711
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.880440338672166
+   },
+   "shownApart": 0,
+   "exactApart": 0.0006461863449445104,
+   "techniques": -0.00025177273659693356,
+   "stamina": 0.0008979590815130223,
+   "residual": 2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "electra-328",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.89970947927438
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.894796529702845
+   },
+   "shownApart": 0,
+   "exactApart": 0.0049129495715334315,
+   "techniques": 0.0004275019244275313,
+   "stamina": 0.0044854476471059,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "electra-328",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.903806820139664
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.902324556630774
+   },
+   "shownApart": 0,
+   "exactApart": 0.001482263508890469,
+   "techniques": -0.00027969104328207095,
+   "stamina": 0.00176195455217254,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "medea-446",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.89768524411458
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.89456900865031
+   },
+   "shownApart": 0,
+   "exactApart": 0.0031162354642688683,
+   "techniques": -0.00004975391324535394,
+   "stamina": 0.0031659893775000114,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "medea-446",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.90001860358679
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.900202113361544
+   },
+   "shownApart": 0,
+   "exactApart": -0.00018350977475733998,
+   "techniques": -0.0006434108997197541,
+   "stamina": 0.0004599011249624141,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "bacchae-451",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.24733982484692
+   },
+   "closeFrame": {
+    "shown": 63.3,
+    "exact": 63.25375684714526
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.006417022298343511,
+   "techniques": -0.0006587172454928236,
+   "stamina": -0.0057583050528364765,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of -0.0064 whose sides straddle 63.25"
+  },
+  {
+   "material": "bacchae-451",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.24517407430274
+   },
+   "closeFrame": {
+    "shown": 63.3,
+    "exact": 63.25541259283578
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.010238518533043361,
+   "techniques": -0.0011307928332726647,
+   "stamina": -0.009107725699770697,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of -0.0102 whose sides straddle 63.25"
+  },
+  {
+   "material": "agamemnon-855",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.18601902039918
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.18667035763573
+   },
+   "shownApart": 0,
+   "exactApart": -0.0006513372365475334,
+   "techniques": -0.0003533724324356058,
+   "stamina": -0.0002979648041119276,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "agamemnon-855",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.18751195393982
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.19182885449588
+   },
+   "shownApart": 0,
+   "exactApart": -0.004316900556062819,
+   "techniques": -0.0008093520397807197,
+   "stamina": -0.0035075485162820996,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hedda-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24311294279057
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23923607607682
+   },
+   "shownApart": 0,
+   "exactApart": 0.003876866713753202,
+   "techniques": 0.001848937288457364,
+   "stamina": 0.002027929425295838,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hedda-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24358465653162
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24130338743048
+   },
+   "shownApart": 0,
+   "exactApart": 0.002281269101146677,
+   "techniques": 0.000968710868463063,
+   "stamina": 0.0013125582326836138,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "arms-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87648560470237
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.880679249657845
+   },
+   "shownApart": 0,
+   "exactApart": -0.0041936449554782484,
+   "techniques": -0.0008578077103464921,
+   "stamina": -0.0033358372451317564,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "arms-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87486994969282
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.88166956018893
+   },
+   "shownApart": 0,
+   "exactApart": -0.006799610496109665,
+   "techniques": -0.0015697841516200128,
+   "stamina": -0.005229826344475441,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "proposal",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.421004656292666
+   },
+   "closeFrame": {
+    "shown": 62.4,
+    "exact": 62.434117783967096
+   },
+   "shownApart": 0,
+   "exactApart": -0.013113127674429848,
+   "techniques": -0.0016558726042390504,
+   "stamina": -0.011457255070190797,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "proposal",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.41721139506667
+   },
+   "closeFrame": {
+    "shown": 62.4,
+    "exact": 62.43276629783693
+   },
+   "shownApart": 0,
+   "exactApart": -0.015554902770254841,
+   "techniques": -0.002349890034828661,
+   "stamina": -0.013205012735440391,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "windermere-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24602315728652
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24427412188786
+   },
+   "shownApart": 0,
+   "exactApart": 0.0017490353986602258,
+   "techniques": 0.0004012934400066115,
+   "stamina": 0.0013477419586536143,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "windermere-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24725511675733
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24706073525638
+   },
+   "shownApart": 0,
+   "exactApart": 0.0001943815009468608,
+   "techniques": -0.0003478871524720262,
+   "stamina": 0.000542268653418887,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "suppressed-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24826962737578
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24819339707878
+   },
+   "shownApart": 0,
+   "exactApart": 0.00007623029699743711,
+   "techniques": -0.000029203986073866872,
+   "stamina": 0.00010543428307130398,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "suppressed-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24869371302431
+   },
+   "closeFrame": {
+    "shown": 65.3,
+    "exact": 65.25042900201905
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.001735288994737516,
+   "techniques": -0.0012099515886490053,
+   "stamina": -0.0005253374060885108,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of -0.0017 whose sides straddle 65.25"
+  },
+  {
+   "material": "rising-moon",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.218193293981074
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.21798633911462
+   },
+   "shownApart": 0,
+   "exactApart": 0.00020695486645649908,
+   "techniques": -0.00007868316352954707,
+   "stamina": 0.00028563802998604615,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "rising-moon",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.218423767045934
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.22206566917963
+   },
+   "shownApart": 0,
+   "exactApart": -0.003641902133693975,
+   "techniques": -0.0005427613319284319,
+   "stamina": -0.003099140801765543,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "creditors",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55025747665381
+   },
+   "closeFrame": {
+    "shown": 64.5,
+    "exact": 64.54589117681286
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.004366299840953047,
+   "techniques": 0.001157787472777727,
+   "stamina": 0.0032085123681753203,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of 0.0044 whose sides straddle 64.55"
+  },
+  {
+   "material": "creditors",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55216978443542
+   },
+   "closeFrame": {
+    "shown": 64.5,
+    "exact": 64.54992660658148
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.002243177853941347,
+   "techniques": 0.0004986835790532496,
+   "stamina": 0.0017444942748880976,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of 0.0022 whose sides straddle 64.55"
+  },
+  {
+   "material": "anna-christie-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.2544117234635
+   },
+   "closeFrame": {
+    "shown": 65.3,
+    "exact": 65.25139809824735
+   },
+   "shownApart": 0,
+   "exactApart": 0.0030136252161554467,
+   "techniques": 0.0017247918767253623,
+   "stamina": 0.0012888333394300844,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "anna-christie-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.25457015311565
+   },
+   "closeFrame": {
+    "shown": 65.3,
+    "exact": 65.25339921201986
+   },
+   "shownApart": 0,
+   "exactApart": 0.0011709410957934097,
+   "techniques": 0.0006458637288062619,
+   "stamina": 0.0005250773669871478,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hamlet-3-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.478213329548296
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.481516828945175
+   },
+   "shownApart": 0,
+   "exactApart": -0.003303499396878351,
+   "techniques": -0.0004629630005013041,
+   "stamina": -0.002840536396377047,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "hamlet-3-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.479375683806296
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.486805171507825
+   },
+   "shownApart": 0,
+   "exactApart": -0.0074294877015290695,
+   "techniques": -0.0008411857819083934,
+   "stamina": -0.006588301919620676,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "caesar-4-3",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.181527916355854
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.181476377585085
+   },
+   "shownApart": 0,
+   "exactApart": 0.00005153877076935487,
+   "techniques": -0.00020594276835339542,
+   "stamina": 0.0002574815391227503,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "caesar-4-3",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.1834999862882
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.18708387525586
+   },
+   "shownApart": 0,
+   "exactApart": -0.003583888967661153,
+   "techniques": -0.0006259417507266107,
+   "stamina": -0.0029579472169203314,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "caesar-2-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.94598739350575
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.94567257161786
+   },
+   "shownApart": 0,
+   "exactApart": 0.00031482188789055954,
+   "techniques": -0.00026733472963513805,
+   "stamina": 0.0005821566175256976,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "caesar-2-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.944702212618225
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.94785166219129
+   },
+   "shownApart": 0,
+   "exactApart": -0.0031494495730655103,
+   "techniques": -0.0008198267629708766,
+   "stamina": -0.0023296228100946337,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "lear-4-7",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.59470971300217
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.59148106729769
+   },
+   "shownApart": 0,
+   "exactApart": 0.0032286457044818917,
+   "techniques": 0.000023178244660471137,
+   "stamina": 0.0032054674598214206,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "lear-4-7",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.59626325476532
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.59564537434593
+   },
+   "shownApart": 0,
+   "exactApart": 0.0006178804193837095,
+   "techniques": -0.000584644116003119,
+   "stamina": 0.0012025245353868286,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "asyoulike-3-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.86513036480539
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.871346320384426
+   },
+   "shownApart": 0,
+   "exactApart": -0.006215955579037313,
+   "techniques": -0.0012284656980625641,
+   "stamina": -0.004987489880960538,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "asyoulike-3-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.863451735896014
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.872120894993
+   },
+   "shownApart": 0,
+   "exactApart": -0.008669159096989176,
+   "techniques": -0.0020525509945841236,
+   "stamina": -0.006616608102390842,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "dream-3-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.442942514959576
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.45870062515793
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.01575811019835527,
+   "techniques": -0.001470670462367707,
+   "stamina": -0.014287439735987562,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of -0.0158 whose sides straddle 62.45"
+  },
+  {
+   "material": "dream-3-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.43815560609165
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.45629756609277
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.01814196000112389,
+   "techniques": -0.0019360941468065107,
+   "stamina": -0.01620586585431738,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of -0.0181 whose sides straddle 62.45"
+  },
+  {
+   "material": "twelfth-2-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.59496073809854
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.59168676726351
+   },
+   "shownApart": 0,
+   "exactApart": 0.0032739708350248975,
+   "techniques": 0.00006850337520347693,
+   "stamina": 0.0032054674598214206,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "twelfth-2-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.59648904116534
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5958326809893
+   },
+   "shownApart": 0,
+   "exactApart": 0.0006563601760376514,
+   "techniques": -0.0005461643593775989,
+   "stamina": 0.0012025245354152503,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "faustus-3",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.20502113330977
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.20462292021058
+   },
+   "shownApart": 0,
+   "exactApart": 0.0003982130991886379,
+   "techniques": -0.00037749758728011784,
+   "stamina": 0.0007757106864687557,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "faustus-3",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.20672580921428
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.2102817461162
+   },
+   "shownApart": 0,
+   "exactApart": -0.0035559369019253495,
+   "techniques": -0.0009169453723458787,
+   "stamina": -0.0026389915295936817,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "malfi-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.90459679121627
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.90371591470204
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008808765142305219,
+   "techniques": -0.0002301311986130372,
+   "stamina": 0.0011110077128435591,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "malfi-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.905787327106005
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.90811098023503
+   },
+   "shownApart": 0,
+   "exactApart": -0.0023236531290251605,
+   "techniques": -0.0006827432247433762,
+   "stamina": -0.0016409099042959951,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "wayoftheworld-4",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56164807612035
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56445534375342
+   },
+   "shownApart": 0,
+   "exactApart": -0.0028072676330737067,
+   "techniques": -0.000915983957725075,
+   "stamina": -0.0018912836753486317,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "wayoftheworld-4",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56123922008277
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5661989144643
+   },
+   "shownApart": 0,
+   "exactApart": -0.004959694381525992,
+   "techniques": -0.0018317570905281855,
+   "stamina": -0.0031279372909978065,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "stoops-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56141199335218
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56425551090553
+   },
+   "shownApart": 0,
+   "exactApart": -0.0028435175533445545,
+   "techniques": -0.0009522338779959227,
+   "stamina": -0.0018912836753486317,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "stoops-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56102344485882
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5660143600602
+   },
+   "shownApart": 0,
+   "exactApart": -0.004990915201375401,
+   "techniques": -0.0018629779103775945,
+   "stamina": -0.0031279372909978065,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "ghosts-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56093051995444
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55565716882894
+   },
+   "shownApart": 0,
+   "exactApart": 0.005273351125495651,
+   "techniques": 0.001511110762052681,
+   "stamina": 0.00376224036344297,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "ghosts-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.5627243649493
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55980322099978
+   },
+   "shownApart": 0,
+   "exactApart": 0.0029211439495213654,
+   "techniques": 0.000699304309677018,
+   "stamina": 0.0022218396398443474,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "masterbuilder-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24186494695658
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23907080151074
+   },
+   "shownApart": 0,
+   "exactApart": 0.002794145445847107,
+   "techniques": 0.001262986729216209,
+   "stamina": 0.001531158716645109,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "masterbuilder-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24207388599572
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.2408029811498
+   },
+   "shownApart": 0,
+   "exactApart": 0.0012709048459242922,
+   "techniques": 0.00044826427831878846,
+   "stamina": 0.0008226405676055037,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "riders-sea",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.89696898918343
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.892612065199145
+   },
+   "shownApart": 0,
+   "exactApart": 0.004356923984282446,
+   "techniques": 0.00039879967527411964,
+   "stamina": 0.003958124309008326,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "riders-sea",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.900804103563615
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.899855397796046
+   },
+   "shownApart": 0,
+   "exactApart": 0.0009487057675698907,
+   "techniques": -0.00030437010495631966,
+   "stamina": 0.0012530758725262103,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-night-desk",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24212489532144
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23969633935113
+   },
+   "shownApart": 0,
+   "exactApart": 0.0024285559703116633,
+   "techniques": 0.0010402461577427857,
+   "stamina": 0.0013883098125688775,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-night-desk",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.2423587030822
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24147875400882
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008799490733792936,
+   "techniques": 0.00018075435829700837,
+   "stamina": 0.0006991947150964961,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-bed-fourteen",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24904396954356
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24409743056225
+   },
+   "shownApart": 0,
+   "exactApart": 0.0049465389813150296,
+   "techniques": 0.0025817237612528743,
+   "stamina": 0.002364815220090577,
+   "residual": -2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-bed-fourteen",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24899696110981
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24586790795912
+   },
+   "shownApart": 0,
+   "exactApart": 0.0031290531506869,
+   "techniques": 0.0015013658472611269,
+   "stamina": 0.0016276873034257733,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-what-we-keep",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55881273154554
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55525826779649
+   },
+   "shownApart": 0,
+   "exactApart": 0.0035544637490545483,
+   "techniques": 0.000907731805767753,
+   "stamina": 0.0026467319432867953,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-what-we-keep",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.5598711196919
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55858546551602
+   },
+   "shownApart": 0,
+   "exactApart": 0.0012856541758878848,
+   "techniques": 0.00015240972949470688,
+   "stamina": 0.001133244446393178,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-runway",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24212489532144
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23969633935113
+   },
+   "shownApart": 0,
+   "exactApart": 0.0024285559703116633,
+   "techniques": 0.0010402461577427857,
+   "stamina": 0.0013883098125688775,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-runway",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.2423587030822
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24147875400882
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008799490733792936,
+   "techniques": 0.00018075435829700837,
+   "stamina": 0.0006991947150964961,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-hundred-questions",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24212489532144
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23969633935113
+   },
+   "shownApart": 0,
+   "exactApart": 0.0024285559703116633,
+   "techniques": 0.0010402461577427857,
+   "stamina": 0.0013883098125688775,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-hundred-questions",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.2423587030822
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24147875400882
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008799490733792936,
+   "techniques": 0.00018075435829700837,
+   "stamina": 0.0006991947150964961,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-office-hours",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.25188230642853
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24714285523774
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.004739451190786781,
+   "techniques": 0.002447374989728246,
+   "stamina": 0.002292076201058535,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of 0.0047 whose sides straddle 65.25"
+  },
+  {
+   "material": "orig-office-hours",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.3,
+    "exact": 65.2517761047301
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24894521023006
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.002830894500036152,
+   "techniques": 0.0012918321098283059,
+   "stamina": 0.0015390623901936351,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of 0.0028 whose sides straddle 65.25"
+  },
+  {
+   "material": "orig-two-time-zones",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24186494695658
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.23907080151074
+   },
+   "shownApart": 0,
+   "exactApart": 0.002794145445847107,
+   "techniques": 0.001262986729216209,
+   "stamina": 0.001531158716645109,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-two-time-zones",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24207388599572
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.2408029811498
+   },
+   "shownApart": 0,
+   "exactApart": 0.0012709048459242922,
+   "techniques": 0.00044826427831878846,
+   "stamina": 0.0008226405676055037,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-the-reception",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24486271519885
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24068704411968
+   },
+   "shownApart": 0,
+   "exactApart": 0.004175671079167387,
+   "techniques": 0.002222146579626383,
+   "stamina": 0.001953524499555215,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "orig-the-reception",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24475283672932
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24220186428576
+   },
+   "shownApart": 0,
+   "exactApart": 0.002550972443557953,
+   "techniques": 0.0013168186552547922,
+   "stamina": 0.0012341537883031606,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "enemy-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.869537172431045
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86457435234259
+   },
+   "shownApart": 0,
+   "exactApart": 0.004962820088451281,
+   "techniques": 0.0008326522504376044,
+   "stamina": 0.004130167838013676,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "enemy-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.872133030097764
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87016256207608
+   },
+   "shownApart": 0,
+   "exactApart": 0.0019704680216818815,
+   "techniques": 0.00014581592927243037,
+   "stamina": 0.0018246520924094511,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "strife-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.16343738712463
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.162040586460556
+   },
+   "shownApart": 0,
+   "exactApart": 0.001396800664075215,
+   "techniques": 0.00010006822733288345,
+   "stamina": 0.0012967324367423316,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "strife-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.16652658899253
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.16868757006762
+   },
+   "shownApart": 0,
+   "exactApart": -0.0021609810750859992,
+   "techniques": -0.0004943130943431129,
+   "stamina": -0.0016666679807428864,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "justice-2",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55738881171601
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55362604560813
+   },
+   "shownApart": 0,
+   "exactApart": 0.0037627661078829533,
+   "techniques": 0.0009298599845237732,
+   "stamina": 0.002832906123373391,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "justice-2",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55887692293234
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55739959059575
+   },
+   "shownApart": 0,
+   "exactApart": 0.0014773323365915303,
+   "techniques": 0.00014710764349956662,
+   "stamina": 0.0013302246930919637,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "weavers-1",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.453913268327454
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.45620002758188
+   },
+   "shownApart": 0,
+   "exactApart": -0.002286759254424453,
+   "techniques": -0.0004586802486983288,
+   "stamina": -0.0018280790057261243,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "weavers-1",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.454593175362305
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.46070059417002
+   },
+   "shownApart": 0,
+   "exactApart": -0.006107418807715703,
+   "techniques": -0.001007427094506852,
+   "stamina": -0.005099991713223062,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Hedda Gabler",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.8580198450991
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.854932887916156
+   },
+   "shownApart": 0,
+   "exactApart": 0.003086957182944161,
+   "techniques": 0.0005116019986886045,
+   "stamina": 0.0025753551842555567,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Hedda Gabler",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.8599795367022
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.85970224455796
+   },
+   "shownApart": 0,
+   "exactApart": 0.0002772921442399934,
+   "techniques": -0.00011359142995104321,
+   "stamina": 0.0003908835741910366,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Importance Of Being Earnest",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.87074904933885
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.87731077246748
+   },
+   "shownApart": 0,
+   "exactApart": -0.006561723128633901,
+   "techniques": -0.0012965585573851968,
+   "stamina": -0.005265164571234493,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Importance Of Being Earnest",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.8699023675224
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.879122364234
+   },
+   "shownApart": 0,
+   "exactApart": -0.009219996711600231,
+   "techniques": -0.002173792734957658,
+   "stamina": -0.007046203976642573,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Woyzeck",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.50904277448346
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.509407785280715
+   },
+   "shownApart": 0,
+   "exactApart": -0.00036501079725326235,
+   "techniques": -0.00028910949951210796,
+   "stamina": -0.0000759012977411544,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Woyzeck",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.51185831116523
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.5168571165385
+   },
+   "shownApart": 0,
+   "exactApart": -0.004998805373276127,
+   "techniques": -0.0007956830142319404,
+   "stamina": -0.004203122359044187,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Three Sisters",
+   "scale": "restrained",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24487657507237
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.2417940285174
+   },
+   "shownApart": 0,
+   "exactApart": 0.003082546554963983,
+   "techniques": 0.001441493307211772,
+   "stamina": 0.001641053247752211,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Three Sisters",
+   "scale": "expansive",
+   "stage": {
+    "shown": 65.2,
+    "exact": 65.24442170562939
+   },
+   "closeFrame": {
+    "shown": 65.2,
+    "exact": 65.24280844382734
+   },
+   "shownApart": 0,
+   "exactApart": 0.0016132618020492373,
+   "techniques": 0.0007526797114536521,
+   "stamina": 0.0008605820905955852,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Blood Wedding",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.54266339258056
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.54374760908445
+   },
+   "shownApart": 0,
+   "exactApart": -0.0010842165038909002,
+   "techniques": -0.00036451969369011294,
+   "stamina": -0.0007196968102149981,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Blood Wedding",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.54549873564154
+   },
+   "closeFrame": {
+    "shown": 62.6,
+    "exact": 62.55159574557
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.006097009928460295,
+   "techniques": -0.0008352712686416908,
+   "stamina": -0.005261738659832815,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of -0.0061 whose sides straddle 62.55"
+  },
+  {
+   "material": "The Cherry Orchard",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.5560465185426
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55341467136373
+   },
+   "shownApart": 0,
+   "exactApart": 0.002631847178875546,
+   "techniques": 0.0006050137599231675,
+   "stamina": 0.0020268334189665893,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Cherry Orchard",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55785515602848
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55746354050474
+   },
+   "shownApart": 0,
+   "exactApart": 0.00039161552373911945,
+   "techniques": -0.0001139421272000618,
+   "stamina": 0.0005055576509391813,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Major Barbara",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.57112407306715
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56889588169345
+   },
+   "shownApart": 0,
+   "exactApart": 0.0022281913737032255,
+   "techniques": 0.00021360773246215103,
+   "stamina": 0.0020145836412410745,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Major Barbara",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.57310283898524
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.57331042355605
+   },
+   "shownApart": 0,
+   "exactApart": -0.00020758457081626602,
+   "techniques": -0.000513449485239903,
+   "stamina": 0.00030586491442363695,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Ghosts",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.86305670680154
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.8581193751256
+   },
+   "shownApart": 0,
+   "exactApart": 0.004937331675940015,
+   "techniques": 0.0009463907458808762,
+   "stamina": 0.003990940930059139,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Ghosts",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.86579935586075
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86375859228653
+   },
+   "shownApart": 0,
+   "exactApart": 0.002040763574221671,
+   "techniques": 0.0003122175694798557,
+   "stamina": 0.0017285460047418155,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Wild Duck",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55162917532951
+   },
+   "closeFrame": {
+    "shown": 64.5,
+    "exact": 64.54913983239523
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.00248934293428249,
+   "techniques": 0.0005723106660155963,
+   "stamina": 0.001917032268252683,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of 0.0025 whose sides straddle 64.55"
+  },
+  {
+   "material": "The Wild Duck",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55251775666345
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55215363936182
+   },
+   "shownApart": 0,
+   "exactApart": 0.0003641173016291077,
+   "techniques": -0.00010851628520924805,
+   "stamina": 0.00047263358683835577,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Spring Awakening",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.2159254598951
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.215061489880696
+   },
+   "shownApart": 0,
+   "exactApart": 0.0008639700144001949,
+   "techniques": 0.0002747896232122571,
+   "stamina": 0.0005891803911879379,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Spring Awakening",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.21644421087492
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.21940589185206
+   },
+   "shownApart": 0,
+   "exactApart": -0.002961680977143999,
+   "techniques": -0.0001687462186623634,
+   "stamina": -0.0027929347584816355,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Twelfth Night",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.208067205558464
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.21188160159463
+   },
+   "shownApart": 0,
+   "exactApart": -0.003814396036162293,
+   "techniques": -0.00047212430430221275,
+   "stamina": -0.003342271731874291,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Twelfth Night",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.20721048064355
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.21458793592848
+   },
+   "shownApart": 0,
+   "exactApart": -0.007377455284924395,
+   "techniques": -0.00085076485368063,
+   "stamina": -0.006526690431243765,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Measure For Measure",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56182526150589
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56150547380119
+   },
+   "shownApart": 0,
+   "exactApart": 0.0003197877046972053,
+   "techniques": 0.00010161271879383094,
+   "stamina": 0.00021817498590337436,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Measure For Measure",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.56186572654228
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5635941611915
+   },
+   "shownApart": 0,
+   "exactApart": -0.0017284346492232316,
+   "techniques": -0.0003887874802614988,
+   "stamina": -0.0013396471689759437,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Winter’s Tale",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.23661286686385
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.23979079815978
+   },
+   "shownApart": 0,
+   "exactApart": -0.0031779312959301365,
+   "techniques": -0.0002348029606693558,
+   "stamina": -0.0029431283352749915,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Winter’s Tale",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.236557359570696
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.24370852716599
+   },
+   "shownApart": 0,
+   "exactApart": -0.007151167595296215,
+   "techniques": -0.0006344837089926614,
+   "stamina": -0.006516683886303554,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Julius Caesar",
+   "scale": "restrained",
+   "stage": {
+    "shown": 61.8,
+    "exact": 61.781901084121266
+   },
+   "closeFrame": {
+    "shown": 61.8,
+    "exact": 61.79024401766512
+   },
+   "shownApart": 0,
+   "exactApart": -0.008342933543850961,
+   "techniques": -0.0008387816868875575,
+   "stamina": -0.007504151856934982,
+   "residual": -2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Julius Caesar",
+   "scale": "expansive",
+   "stage": {
+    "shown": 61.8,
+    "exact": 61.78278826280751
+   },
+   "closeFrame": {
+    "shown": 61.8,
+    "exact": 61.795904203796745
+   },
+   "shownApart": 0,
+   "exactApart": -0.013115940989237629,
+   "techniques": -0.0012356646682150085,
+   "stamina": -0.01188027632102262,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Midsummer Night’s Dream",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.23691316258679
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.24807452908229
+   },
+   "shownApart": 0,
+   "exactApart": -0.011161366495500147,
+   "techniques": -0.0011991631164178784,
+   "stamina": -0.009962203379082268,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Midsummer Night’s Dream",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.23336874316303
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.247905731463106
+   },
+   "shownApart": 0,
+   "exactApart": -0.014536988300079656,
+   "techniques": -0.0017596917110438426,
+   "stamina": -0.012777296589050025,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Macbeth",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.48970428822571
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.49405007530118
+   },
+   "shownApart": 0,
+   "exactApart": -0.004345787075472174,
+   "techniques": -0.0006333263285540625,
+   "stamina": -0.0037124607469181115,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Macbeth",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.5,
+    "exact": 62.491629003265935
+   },
+   "closeFrame": {
+    "shown": 62.5,
+    "exact": 62.50036778331649
+   },
+   "shownApart": 0,
+   "exactApart": -0.008738780050556727,
+   "techniques": -0.0010722144052550675,
+   "stamina": -0.0076665656453016595,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "As You Like It",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.92979826477458
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.93461390183241
+   },
+   "shownApart": 0,
+   "exactApart": -0.004815637057824063,
+   "techniques": -0.0008591154758263997,
+   "stamina": -0.003956521581997663,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "As You Like It",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.926820980173396
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.93463080827777
+   },
+   "shownApart": 0,
+   "exactApart": -0.007809828104370808,
+   "techniques": -0.001481047230520005,
+   "stamina": -0.006328780873850803,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Much Ado About Nothing",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.864673481029484
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86652334682618
+   },
+   "shownApart": 0,
+   "exactApart": -0.0018498657966929954,
+   "techniques": -0.0005036990229640992,
+   "stamina": -0.0013461667737288963,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Much Ado About Nothing",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.864887368134156
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86941081979405
+   },
+   "shownApart": 0,
+   "exactApart": -0.00452345165989243,
+   "techniques": -0.0009488248527347309,
+   "stamina": -0.0035746268071434883,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Doll’s House",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.862098160385514
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.858956016360224
+   },
+   "shownApart": 0,
+   "exactApart": 0.0031421440252898947,
+   "techniques": 0.0004648770849229322,
+   "stamina": 0.0026772669403669624,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Doll’s House",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.863776999289016
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.86344689349483
+   },
+   "shownApart": 0,
+   "exactApart": 0.0003301057941840213,
+   "techniques": -0.0001304750543766886,
+   "stamina": 0.00046058084854649906,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Uncle Vanya",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55162917532951
+   },
+   "closeFrame": {
+    "shown": 64.5,
+    "exact": 64.54913983239523
+   },
+   "shownApart": 0.1,
+   "exactApart": 0.00248934293428249,
+   "techniques": 0.0005723106660155963,
+   "stamina": 0.001917032268252683,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of 0.0025 whose sides straddle 64.55"
+  },
+  {
+   "material": "Uncle Vanya",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.55251775666345
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.55215363936182
+   },
+   "shownApart": 0,
+   "exactApart": 0.0003641173016291077,
+   "techniques": -0.00010851628520924805,
+   "stamina": 0.00047263358683835577,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Tartuffe",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.160863935638716
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.172927127157024
+   },
+   "shownApart": 0,
+   "exactApart": -0.012063191518308258,
+   "techniques": -0.0016116137198878278,
+   "stamina": -0.01045157779842043,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Tartuffe",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.15744790204556
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.17197939908121
+   },
+   "shownApart": 0,
+   "exactApart": -0.014531497035648044,
+   "techniques": -0.0022877430263221754,
+   "stamina": -0.012243754009325869,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "An Enemy Of The People",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.17576318584062
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.172597977412906
+   },
+   "shownApart": 0,
+   "exactApart": 0.003165208427716948,
+   "techniques": 0.00033817681420345025,
+   "stamina": 0.0028270316135134976,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "An Enemy Of The People",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.17964344862642
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.180240198729145
+   },
+   "shownApart": 0,
+   "exactApart": -0.000596750102722865,
+   "techniques": -0.00030172360344948856,
+   "stamina": -0.00029502649927337643,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Playboy Of The Western World",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.20180347265638
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.2038876773453
+   },
+   "shownApart": 0,
+   "exactApart": -0.0020842046889200105,
+   "techniques": -0.000249564753026732,
+   "stamina": -0.0018346399358790677,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Playboy Of The Western World",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.20172092768228
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.20739613718748
+   },
+   "shownApart": 0,
+   "exactApart": -0.005675209505199064,
+   "techniques": -0.0006773980315415429,
+   "stamina": -0.004997811473671732,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Mrs Warren’s Profession",
+   "scale": "restrained",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.57196417435051
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.56669205080696
+   },
+   "shownApart": 0,
+   "exactApart": 0.005272123543548446,
+   "techniques": 0.0010804188934514514,
+   "stamina": 0.0041917046500969946,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Mrs Warren’s Profession",
+   "scale": "expansive",
+   "stage": {
+    "shown": 64.6,
+    "exact": 64.57420688501288
+   },
+   "closeFrame": {
+    "shown": 64.6,
+    "exact": 64.5713591029982
+   },
+   "shownApart": 0,
+   "exactApart": 0.0028477820146832755,
+   "techniques": 0.00037435232661664486,
+   "stamina": 0.002473429688038209,
+   "residual": 2.842170943040401e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Miss Julie",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.164280159988735
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.160724584842356
+   },
+   "shownApart": 0,
+   "exactApart": 0.003555575146378942,
+   "techniques": 0.0004269693077603165,
+   "stamina": 0.0031286058386044147,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Miss Julie",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.2,
+    "exact": 63.16717156579073
+   },
+   "closeFrame": {
+    "shown": 63.2,
+    "exact": 63.16711918689719
+   },
+   "shownApart": 0,
+   "exactApart": 0.00005237889354248182,
+   "techniques": -0.00013061363580391117,
+   "stamina": 0.00018299252934639298,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Trifles",
+   "scale": "restrained",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.879549810269474
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.8749272282555
+   },
+   "shownApart": 0,
+   "exactApart": 0.004622582013972476,
+   "techniques": 0.000595688860123289,
+   "stamina": 0.004026893153849187,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Trifles",
+   "scale": "expansive",
+   "stage": {
+    "shown": 63.9,
+    "exact": 63.88326791379357
+   },
+   "closeFrame": {
+    "shown": 63.9,
+    "exact": 63.88185527277435
+   },
+   "shownApart": 0,
+   "exactApart": 0.0014126410192147887,
+   "techniques": -0.00017050103430449326,
+   "stamina": 0.001583142053519282,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Bear",
+   "scale": "restrained",
+   "stage": {
+    "shown": 61.7,
+    "exact": 61.69598659201158
+   },
+   "closeFrame": {
+    "shown": 61.7,
+    "exact": 61.712027767862565
+   },
+   "shownApart": 0,
+   "exactApart": -0.016041175850986633,
+   "techniques": -0.0015519629635392107,
+   "stamina": -0.014489212887447422,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "The Bear",
+   "scale": "expansive",
+   "stage": {
+    "shown": 61.7,
+    "exact": 61.69111502373015
+   },
+   "closeFrame": {
+    "shown": 61.7,
+    "exact": 61.70947763285625
+   },
+   "shownApart": 0,
+   "exactApart": -0.018362609126100438,
+   "techniques": -0.002034694324812847,
+   "stamina": -0.01632791480128759,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Marriage Proposal",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.421004656292666
+   },
+   "closeFrame": {
+    "shown": 62.4,
+    "exact": 62.434117783967096
+   },
+   "shownApart": 0,
+   "exactApart": -0.013113127674429848,
+   "techniques": -0.0016558726042390504,
+   "stamina": -0.011457255070190797,
+   "residual": 0,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "A Marriage Proposal",
+   "scale": "expansive",
+   "stage": {
+    "shown": 62.4,
+    "exact": 62.41721139506667
+   },
+   "closeFrame": {
+    "shown": 62.4,
+    "exact": 62.43276629783693
+   },
+   "shownApart": 0,
+   "exactApart": -0.015554902770254841,
+   "techniques": -0.002349890034828661,
+   "stamina": -0.013205012735440391,
+   "residual": 1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Riders To The Sea",
+   "scale": "restrained",
+   "stage": {
+    "shown": 62.6,
+    "exact": 62.59170163684465
+   },
+   "closeFrame": {
+    "shown": 62.6,
+    "exact": 62.59584625901827
+   },
+   "shownApart": 0,
+   "exactApart": -0.004144622173626544,
+   "techniques": -0.0005338725502284092,
+   "stamina": -0.0036107496233839242,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "the same as shown"
+  },
+  {
+   "material": "Salomé",
+   "scale": "restrained",
+   "stage": {
+    "shown": 61.9,
+    "exact": 61.935307633283365
+   },
+   "closeFrame": {
+    "shown": 62,
+    "exact": 61.95053929376148
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.015231660478114861,
+   "techniques": -0.0008686088144500559,
+   "stamina": -0.014363051663650594,
+   "residual": -1.4210854715202004e-14,
+   "verdict": "a tenth apart as shown: a real difference of -0.0152 whose sides straddle 61.95"
+  },
+  {
+   "material": "Salomé",
+   "scale": "expansive",
+   "stage": {
+    "shown": 61.9,
+    "exact": 61.931336906226036
+   },
+   "closeFrame": {
+    "shown": 62,
+    "exact": 61.952113389378994
+   },
+   "shownApart": -0.1,
+   "exactApart": -0.020776483152957326,
+   "techniques": -0.0013444450906874295,
+   "stamina": -0.019432038062269896,
+   "residual": 0,
+   "verdict": "a tenth apart as shown: a real difference of -0.0208 whose sides straddle 61.95"
+  }
+ ]
+}

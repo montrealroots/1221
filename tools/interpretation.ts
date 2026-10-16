@@ -227,7 +227,62 @@ function measureStage() {
   };
 }
 
+/**
+ * `--st3 <file>` (from 2026-10-16, brief 09): ST3's cases one by one, as `measureStage` judges them (the grain held at
+ * nothing), each with its stage and close-frame results as shown and at full precision, and the exact difference taken
+ * apart. The criterion's even actor is 55 in every ability and 50 in every technique, and its stamina, at 55, drains the
+ * later segment of the piece. Taken apart by changing one thing at a time:
+ * - `techniques`: the criterion's actor less one whose techniques are at 49.5 of 90, the same share of full (0.55) as its
+ *   abilities: what the techniques' 50 of 90 (0.556) adds;
+ * - `stamina`: that actor less the same with stamina at 100, which doesn't drain: what the drain adds;
+ * - `residual`: the actor even in everything the formula reads, undrained, stage less close frame. The tests hold it at
+ *   nothing.
+ * A case is a rounding defect where a shown result isn't its own exact result rounded once; a tenth apart as shown with
+ * less than half a tenth apart exact is the rounding of a real difference whose two sides straddle a rounding point.
+ */
+function measureST3Cases() {
+  const task = TASK_PROFILES.scene!;
+  const difficulty = difficultyOf(templateById('scene-study')!);
+  const judgeIt = (m: MaterialProfile, p: Performer, scale: 'restrained' | 'expansive'): Evaluation => {
+    const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
+    const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
+    return judgePiece(SEED, p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  };
+  const at = (tech: number, stamina: number): Performer => ({ ability: (id) => (id === 'stamina' ? stamina : 55), full: () => 100, technique: () => tech });
+  const CRITERION = at(50, 55), EVEN_READ = at(0.55 * MASTERED, 55), UNDRAINED = at(0.55 * MASTERED, 100);
+  const r1 = (x: number) => Math.round(x * 10) / 10;
+  const strength = GRAIN.strength;
+  Object.assign(GRAIN as Record<string, number>, { strength: 0 });
+  const cases: Record<string, unknown>[] = [];
+  try {
+    for (const m of [...SCENE_MATERIAL, ...PLAY_MATERIAL]) for (const scale of ['restrained', 'expansive'] as const) {
+      if (misfitOf('scale', scale, m)) continue;
+      const cam = { ...m, medium: 'camera' as const };
+      const diffOf = (p: Performer) => judgeIt(m, p, scale).exact! - judgeIt(cam, p, scale).exact!;
+      const s = judgeIt(m, CRITERION, scale), c = judgeIt(cam, CRITERION, scale);
+      const exact = s.exact! - c.exact!, evenRead = diffOf(EVEN_READ), residual = diffOf(UNDRAINED);
+      const shown = r1(s.overall - c.overall);
+      const roundedOnce = s.overall === r1(s.exact!) && c.overall === r1(c.exact!);
+      cases.push({
+        material: m.id, scale, stage: { shown: s.overall, exact: s.exact }, closeFrame: { shown: c.overall, exact: c.exact }, shownApart: shown, exactApart: exact,
+        techniques: exact - evenRead, stamina: evenRead - residual, residual,
+        verdict: !roundedOnce ? 'rounding defect' : shown === 0 ? 'the same as shown' : Math.abs(exact) < 0.05 ? `a tenth apart as shown: a real difference of ${exact.toFixed(4)} whose sides straddle ${(Math.round(Math.max(s.exact!, c.exact!) * 10) / 10 - 0.05).toFixed(2)}` : 'apart by more than a rounding step',
+      });
+    }
+  } finally { Object.assign(GRAIN as Record<string, number>, { strength }); }
+  const n = (f: (x: Record<string, unknown>) => boolean) => cases.filter(f).length;
+  const most = (k: string) => Math.max(...cases.map((x) => Math.abs(x[k] as number)));
+  return {
+    cases: cases.length, sameAsShown: n((x) => x.shownApart === 0), aTenthApart: n((x) => x.shownApart !== 0), roundingDefects: n((x) => x.verdict === 'rounding defect'),
+    largest: { exactApart: most('exactApart'), techniques: most('techniques'), stamina: most('stamina'), residual: most('residual') },
+    list: cases,
+  };
+}
+
 const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}), ...(flag('stage') ? { stage: measureStage() } : {}) };
+const st3 = arg('st3', '');
+if (st3) writeFileSync(st3, `${JSON.stringify(measureST3Cases(), null, 1)}\n`);
 console.log(JSON.stringify(out, null, 1));
 const o = arg('out', '');
 if (o) writeFileSync(o, `${JSON.stringify(out, null, 1)}\n`);

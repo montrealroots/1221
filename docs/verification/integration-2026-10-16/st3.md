@@ -90,3 +90,55 @@ ST3′, for the owner to accept or not. Each part is measured and held by a test
   - ST3′ (b) and (c), on every stage material and fitting side.
 - **Mutations, each killed:** the dimensions rounded before the whole (`wholeOf` reading `r1(…)`), and the segments
   rounded before the piece's whole (`judgePiece` reading `r1(r.overall)`), each failed two of the four tests.
+
+## Brief 09: Every Case Taken Apart (2026-10-16, Later)
+
+The owner's brief 09, section 2: "Separate rounding defects from legitimate differences caused by stage demands,
+stamina, or execution weighting. Test identical effective inputs for identical results. Demonstrate why any remaining
+stage/camera difference exists." The account above gave the causes in aggregate; this gives them case by case. Nothing
+in the judge changed for it.
+
+**The cases are 179, not 171.** The four drama scenes of `content/scenes-public.ts` (`st6.md`) added eight, each the same
+on stage and at a close frame. Reproduced first on `d7127819` (`baseline-09/stage.json`): the specialist better on stage
+on 179 of 179, the criterion's even actor the same as shown on **165 of 179**, a tenth apart on 14.
+
+**Case by case** (`st3/st3-cases.json`, `npx vite-node tools/interpretation.ts -- --st3 <file>`, added for this): each
+case's stage and close-frame results, as shown and exact, and the exact difference taken apart by changing one input at a
+time:
+
+| What | Cases | The Largest |
+|---|---|---|
+| A shown result that isn't its own exact result rounded once (a rounding defect) | **0 of 179** | |
+| The same as shown | 165 | exact apart 0.0184 |
+| A tenth apart as shown, each a real difference whose two exact results straddle a rounding point (x.x5) | 14 | exact apart 0.0017 to 0.0208 |
+| The techniques' part: 50 of 90 (0.556) against the abilities' 55 of 100 | 179 | 0.0026 |
+| Stamina's part: 55 drains the later half on every dimension that names fatigue, which the stage and the close frame weigh differently | 179, the larger part on 163 (12 of the 14) | 0.0194 |
+| What's left: an actor even in everything the formula reads, undrained | 179 | 3×10⁻¹⁴ (floating point) |
+
+The 14 a tenth apart are `bacchae-451` (both sides), `suppressed-2` expansive, `creditors` (both), `dream-3-2` (both),
+`orig-office-hours` (both), Blood Wedding expansive, The Wild Duck and Uncle Vanya restrained, and Salomé (both), with
+their exact differences and rounding points in the file. On `suppressed-2` and `orig-office-hours` restrained the
+techniques' part is the larger. Whether a case shows a tenth is decided by where its two results fall against a rounding
+point, not by how far apart they are: a case 0.018 apart shows the same, and one 0.0017 apart shows a tenth.
+
+**Why the difference exists, from the rule.** Stamina's drain (`PIECE.drain` × load × place × (1 − stamina)) reaches the
+dimensions whose conditions name fatigue, every dimension of a scene but interpretation. The stage leans execution 1.2
+(`STAGE_LEAN`) and a close frame believability 1.2 (`CAMERA_LEAN`); after normalizing, the two give interpretation a
+different share of the whole, so the same drain moves the two wholes by different amounts. With every dimension at the
+same value, which an actor even in everything read and undrained has, the weights don't matter: the whole is
+100 × n^(1 + difficulty) on both.
+
+**ST3 as written: not met** (165 of 179 as shown). Not counted as passed.
+
+**ST3′, proposed again, measured on the 179 cases** (not counted): (a) the voice-and-body specialist better on stage on
+every case: 179 of 179; (b) an actor even in everything the formula reads, undrained, the same on both at full precision
+and as shown: 179 of 179, the largest difference 3×10⁻¹⁴; (c) the criterion's even actor under half a rounding step
+apart at full precision: 179 of 179, the largest 0.021.
+
+**Proof** (`tests/remaining-judge.test.ts`, the ST3 block): identical effective inputs give identical results, an actor
+at a drawn share of full in everything read coming out on stage, at a close frame and replayed from its own record at
+100 × n^(1 + difficulty), worked by hand from Scene Study's par; every shown result its exact result rounded once, and
+every case a tenth apart a real difference under half a tenth whose sides straddle a rounding point; each difference its
+techniques' part and its stamina's part and nothing else. Mutations, each run in a copy of the clone and each killed:
+the grain leaking into ST3's comparison (`GRAIN.strength || 0.3`) failed all three; the whole shown by `Math.floor`
+rather than rounded once failed two; the drain reaching every dimension, not only those naming fatigue, failed the third.
