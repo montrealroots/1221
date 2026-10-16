@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Brief 10's acting criteria measured, one part at a time, each command's exit recorded (from 2026-10-16).
 # Usage: docs/verification/decisions-2026-10-16/measure.sh <out dir> <part>
-#   parts: stage, ag, indirect, journeys-a, journeys-b, mono-0..mono-3, mono-merge, l3r, mutations, genres
+#   parts: stage, ag, indirect, journeys-a, journeys-b, mono-0..mono-3, mono-merge, l3r, mutations, test-mutations,
+#   genres-a, genres-b
 # Run from the repository's root. Each part writes its own files, so a container restart costs one part.
 set -u
 OUT="$1"; PART="$2"
@@ -23,9 +24,11 @@ case "$PART" in
   mono-merge) run mono-merge npx vite-node tools/monotonicity.ts -- --merge "$OUT/mono-0.json,$OUT/mono-1.json,$OUT/mono-2.json,$OUT/mono-3.json" --out "$OUT/monotonicity.json" ;;
   l3r) run l3r node tools/l3r.mjs "$OUT" ;;
   mutations) run mutations node tools/judge-mutations.mjs --list docs/verification/decisions-2026-10-16/mutations.json --work "${MUT_WORK:-/tmp/judge-mutations}" --out "$OUT/mutations.json" ;;
-  genres)
+  test-mutations) VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 run test-mutations node tools/judge-mutations.mjs --list docs/verification/decisions-2026-10-16/test-mutations.json --work "${MUT_WORK:-/tmp/judge-mutations}" --out "$OUT/test-mutations.json" ;;
+  genres-a)
     run signature npx vite-node tools/genre-signature.ts -- --out "$OUT/signature.json"
-    run signature-fresh npx vite-node tools/genre-signature.ts -- --fresh --out "$OUT/signature-fresh.json"
+    run signature-fresh npx vite-node tools/genre-signature.ts -- --fresh --out "$OUT/signature-fresh.json" ;;
+  genres-b)
     run signature-validate npx vite-node tools/genre-signature.ts -- --validate --out "$OUT/signature-validate.json"
     run identity npx vite-node tools/genre-identity.ts -- --out "$OUT/genre-identity.json"
     run audit npx vite-node tools/genre-audit.ts -- --out "$OUT/genre-audit.md" ;;
