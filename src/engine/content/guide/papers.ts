@@ -330,7 +330,8 @@ export const PAPERS: readonly GuideEntry[] = [
       '“You have no plan of your own to drop.”',
       `“That claim wasn’t denied.”, “It’s been appealed.” or “An appeal is filed within ${DENIALS.appealDays} days of the denial.”: Appeal It doesn’t show.`,
       '“Only a Connecticut hospital’s bill.”, “It’s settled or past due.”, “The hospital’s charity is off it already.” or “It’s been put to the hospital’s charity.”, for a bill applied for or screened over the limit at billing: Apply For Assistance doesn’t show.',
-      '“You owe nothing for care.”, or “… can’t cover it.” when your current account holds less than the debt.',
+      // Until 2026-10-16 the last was “… can’t cover it.”, which said nothing of what to do.
+      '“You owe nothing for care.”, or, when your current account holds less than the debt, “… holds … of the …: move money into it first, on your bank’s Move Money.” (“… has nothing to pay it with: …” where it holds nothing).',
       'A Dental Plan shows only while Yale Health covers you or a Yale plan you bought runs: once Yale Health ends, New Haven sells none. Pressed, Buy Dental says “The year is …, which the bank can’t cover.” when the bank can’t pay the year.',
       `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “It’s England’s, for its prescription charge.” A life in New Haven never sees them.`,
     ],

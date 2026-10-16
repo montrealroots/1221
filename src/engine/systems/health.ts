@@ -2249,7 +2249,16 @@ export function registerHealth(sim: Simulation): void {
     // An account named that can't pay it is refused, not swapped for the primary one (from 2026-10-13: until then their own
     // credit card named paid from the current account; found by the review of that day).
     if (p.fromId && current !== named) throw new CommandError(`${named?.name ?? 'That account'} can’t pay a medical debt.`);
-    if (!current || current.balance < amount) throw new CommandError(`${current?.name ?? 'That account'} can’t cover it.`);
+    // Short, it says what the account holds and what to do (from 2026-10-16: until then “… can’t cover it.” and nothing
+    // more, found by the banking area; Papers' Pay It Off pays the whole debt from the current account, so the step is to
+    // move money into it).
+    if (!current) throw new CommandError('You have no current account to pay it from.');
+    if (current.balance < amount) {
+      const cur = saveCurrency(s.universe);
+      throw new CommandError(current.balance > 0
+        ? `${current.name} holds ${formatMoney(current.balance, cur)} of the ${formatMoney(amount, cur)}: move money into it first, on your bank’s Move Money.`
+        : `${current.name} has nothing to pay it with: move money into it first, on your bank’s Move Money.`);
+    }
     s.post({ memo: 'Paid toward medical debt', category: 'health', postings: [{ accountId: current.id, amount: -amount }, { accountId: debt.id, amount }] });
     // The debt cleared, every bill that had gone to it is settled.
     if (debt.balance >= 0) {
