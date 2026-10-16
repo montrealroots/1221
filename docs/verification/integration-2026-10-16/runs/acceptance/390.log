@@ -6,9 +6,9 @@ ok   advance: One Hour moves the clock an hour: 7:30 AM → 8:30 AM
 ok   look after yourself: an item from its menu, and what it says: "Eat A MealMost Worth It": Eat A Meal: done at 9:10 AM.
 ok   advance: Next Monday, to term, until coursework is set: August 31, 2026 3:00 PM; dialogs: On The Way, Registration And Your Account, Meeting Your Class, Meeting The Acting Faculty, The Building, The Studios And The L
 ok   school: registration and orientation are findable, and say what they ask: orientation panel shown; Register button absent (registered)
-ok   coursework: a step of preparation done from its button, the clock moved and the step counted: grayed first (Read The Scene: Owen asked to rehearse: answer first. Learn Lines: Owen asked to rehearse: answer first. Rehearse Alone: Owen asked to rehearse: a
-ok   coursework: a way of playing it chosen and rehearsed in: On your calendar. | Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen: rehearsed in to 0%.
-ok   coursework: table work answered from its select: 4 options, “departure” taken; Read The Scene: 40 minutes, Knows The Scene up 38%. | Chosen: rehearsed in to 0%. | Decided at the table.
+ok   coursework: a step of preparation done from its button, the clock moved and the step counted: grayed first (Read The Scene: Jordan asked to rehearse: answer first. Learn Lines: Jordan asked to rehearse: answer first. Rehearse Alone: Jordan asked to rehea
+ok   coursework: a way of playing it chosen and rehearsed in: On your calendar. | Read The Scene: 40 minutes, Knows The Scene up 39%. | Chosen: rehearsed in to 0%.
+ok   coursework: table work answered from its select: 4 options, “dusk” taken; Read The Scene: 40 minutes, Knows The Scene up 39%. | Chosen: rehearsed in to 0%. | Decided at the table.
 ok   coursework: Work It Through: a problem named, a way tried, its evidence shown, then kept or put back: told to learn some of the lines first: Learn Lines: Chosen: rehearsed in to 0%. | Decided at the table. | Learn Lines: 45 minutes, L; Learn Lines: Learn Lines: 
 ok   help: How This Works beside Coursework opens its entry, a connected system followed, Back, Escape keeps the tab and the focus: Orientation Week → Your Standing And Classes → Back; the tab and the focus kept; August 31, 2026 8:50 PM
 ok   help: the keyboard: ? opens the contents, / goes to the search, a word finds entries: 8 entries for "partner"
@@ -18,8 +18,8 @@ ok   help: opened from the Advance and Look After Yourself menus, closed with Cl
 ok   navigation keeps context: School’s tab kept across Money and back: Casting
 ok   casting: with no part yet, the tab says when casting comes; with one, its rehearsal controls: Not Cast Yet How This Works The chair casts every student each term from the first spring: the Carlotta Festival then; a thesis or the Hughes Festival in a seco
 ok   practice: an exercise opened, its tier and focus set, an hour practised, and the hour explained: 8:50 PM → 9:50 PM: Sense Memory: +0.09. | Sense Memory. Real feeling from imagined detail, not from pushing. Tier Foundation Developing (Your Level) Advanced A 
-ok   profile: the development history shows the hour: August 31, 2026: Emotional Depth +0.093, Sense Memory
-ok   money: a transfer refused for more than the account holds, in the engine’s words, then made: Chase Total Checking holds $90,424. / Chase Total Checking holds $90,424. | Moved $1.
+ok   profile: the development history shows the hour: August 31, 2026: Emotional Depth +0.090, Sense Memory
+ok   money: a transfer refused for more than the account holds, in the engine’s words, then made: Chase Total Checking holds $90,434. / Chase Total Checking holds $90,434. | Moved $1.
 ok   papers: its five tabs open: all five
 ok   save and exit, then Continue: the same day and hour: August 31, 2026 9:50 PM
 ok   address: School’s Coursework loaded by its address opens School at Coursework, not Home; an entry it names opens over School: #/workspace/school at Coursework; #/workspace/school?help=school.repeat, then #/workspace/school
@@ -72,4 +72,3 @@ ok   home account: a London-raised F-1 keeps HSBC UK through Before Yale, moves 
 ok   phone: the drawer opens and closes, and Home is reachable from it: ok
 
 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows
-exit=0
