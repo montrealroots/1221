@@ -1,0 +1,55 @@
+ur-1 (tests/remaining-school.test.ts's graduate journey), standing at each mark and the performance nights kept, printed by a diagnostic test added to a copy of the tree (never this one):
+
+== 39380191, before this phase
+MARK term 0 begins good
+MARK term 0 evaluated good
+MARK term 1 begins good
+MARK term 1 evaluated concern
+MARK term 2 begins concern
+MARK term 2 evaluated good
+MARK term 3 begins good
+MARK term 3 evaluated good
+MARK may 2028 good
+MARK term 4 begins good
+MARK term 4 evaluated concern
+MARK term 5 begins concern
+MARK term 5 evaluated good
+MARK before commencement good
+MARK after graduated
+NIGHTS {"2028-10 An Enemy Of The People":["39.6"],"2028-11 Ghosts":["46.8","47.1","47.7","47.8","47.8","47.4","47.5"],"2029-01 You Are The Creator":["56.2"],"2029-02 As You Like It":["52.5","52.6"]}
+
+== PIECE.drain 0.4 with WORKLOAD.full as it was, no part text or night stakes
+MARK term 0 begins good
+MARK term 0 evaluated good
+MARK term 1 begins good
+MARK term 1 evaluated concern
+MARK term 2 begins concern
+MARK term 2 evaluated warning
+MARK term 3 begins warning
+MARK term 3 evaluated dismissed
+MARK may 2028 dismissed
+MARK term 4 begins dismissed
+MARK term 4 evaluated dismissed
+MARK term 5 begins dismissed
+MARK term 5 evaluated dismissed
+MARK before commencement dismissed
+MARK after dismissed
+NIGHTS {"2027-03 The Seagull":["45.4"],"2027-05 Carlotta Festival Of New Plays":["53.0","53.4","52.6","51.7"],"2027-10 The Wild Duck":["49.7","49.8","49.6","49.7","47.3","48.5","49.6","49.9"],"2028-01 Major Barbara":["48.5","48.1","48.8","49.2","47.5","49.5","49.2"]}
+
+== this phase's code: 0.4 at 4/3 of the anchor, part text, night stakes
+MARK term 0 begins good
+MARK term 0 evaluated good
+MARK term 1 begins good
+MARK term 1 evaluated concern
+MARK term 2 begins concern
+MARK term 2 evaluated good
+MARK term 3 begins good
+MARK term 3 evaluated concern
+MARK may 2028 concern
+MARK term 4 begins concern
+MARK term 4 evaluated warning
+MARK term 5 begins warning
+MARK term 5 evaluated good
+MARK before commencement good
+MARK after graduated
+NIGHTS {"2028-11 Ghosts":["46.6","46.8","47.5","47.6","47.6","47.2","47.3"],"2029-01 You Are The Creator":["56.1"],"2029-02 As You Like It":["52.1","52.5"]}

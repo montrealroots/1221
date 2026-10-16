@@ -1,0 +1,24 @@
+// Stamina's mean +10 effect on the 30 nights at each part's size, as tools/ag-baseline.ts judges a night (a supporting part
+// there): the tool's reading and the parts a night is cast in. Run from a tree's root: npx vite-node <this file>.
+import { PLAY_MATERIAL } from './src/engine/content/material';
+import { TASK_PROFILES } from './src/engine/content/tasks';
+import { nightPiece, judgePiece } from './src/engine/systems/piece';
+import { materialContext } from './src/engine/systems/material';
+import * as workload from './src/engine/systems/workload';
+import { NIGHT_DIFFICULTY } from './src/engine/systems/school';
+import type { Performer } from './src/engine/systems/evaluation';
+const withPart = (workload as unknown as { withPart?: (m: object, n: object) => object }).withPart ?? ((m: object) => m);
+const actor = (st: number): Performer => ({ ability: (id) => (id === 'stamina' ? st : 50), full: () => 100, technique: () => 50 });
+const task = TASK_PROFILES.performance!;
+const out: Record<string, number> = {};
+for (const size of ['lead', 'supporting', 'featured'] as const) {
+  let t = 0;
+  for (const m of PLAY_MATERIAL) {
+    const spec = nightPiece(m, workload.runningOf({ play: m.id }), size);
+    const read = materialContext(task, withPart(m, spec.night!) as typeof m);
+    const j = (p: Performer) => judgePiece('ag-baseline', p, { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { lines: 1, blocking: 1, notes: 1 }, required: { lines: 0.9, blocking: 0.9, notes: 0.9 }, difficulty: NIGHT_DIFFICULTY.school[size], condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true }, spec).exact!;
+    t += j(actor(60)) - j(actor(50));
+  }
+  out[size] = +(t / PLAY_MATERIAL.length).toFixed(3);
+}
+console.log(JSON.stringify(out));

@@ -1,0 +1,37 @@
+import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
+import { HOUSE_STAKES, PART_TEXT } from '../src/engine/content/approaches';
+import type { Performer } from '../src/engine/systems/evaluation';
+const from = Number(process.argv[2]), most = Number(process.argv[3]), perHour = Number(process.argv[4] ?? 1);
+Object.assign(PART_TEXT as unknown as Record<string, number>, { from, most, perHour });
+const stakes = Number(process.argv[5] ?? 1);
+Object.assign(HOUSE_STAKES, { night: stakes });
+const { ALL_PIECES } = await import('../tools/pieces');
+const AB = ABILITY_DEFS.map((d) => d.id);
+const actor = (f: (id: AbilityId) => number): Performer => ({ ability: f, full: () => 100, technique: () => 50 });
+const EVEN = actor(() => 50);
+const P = ALL_PIECES;
+const ev = P.map((pc) => pc.judge(EVEN).exact!);
+const eff = Object.fromEntries(AB.map((a) => [a, P.map((pc, i) => pc.judge(actor((id) => (id === a ? 60 : 50))).exact! - ev[i]!)]));
+const spec = Object.fromEntries(AB.map((a) => [a, P.map((pc, i) => pc.judge(actor((id) => (id === a ? 85 : 515 / 11))).exact! - ev[i]!)]));
+const res: Record<string, string> = {};
+let aOk = 0, bOk = 0;
+for (const a of AB) {
+  const own = P.map((_, i) => i).filter((i) => eff[a]![i]! >= 0.05 && AB.every((b) => b === a || eff[b]![i]! < eff[a]![i]!));
+  const kinds = [...new Set(own.map((i) => P[i]!.kind))];
+  const adv = own.map((i) => spec[a]![i]!).sort((x, y) => x - y);
+  const med = adv.length ? (adv.length % 2 ? adv[(adv.length - 1) / 2]! : (adv[adv.length / 2 - 1]! + adv[adv.length / 2]!) / 2) : NaN;
+  const ahead = adv.filter((x) => x > 0.05).length;
+  if (own.length >= 5 && kinds.length >= 2) aOk += 1;
+  if (adv.length && ahead >= 0.6 * adv.length && med >= 0.3) bOk += 1;
+  res[a] = `${own.length} in ${kinds.map((k) => `${k}:${own.filter((i) => P[i]!.kind === k).length}`).join('/')} ahead ${ahead} med ${med.toFixed(2)}`;
+}
+const best: Record<string, Record<string, number>> = {};
+P.forEach((pc, i) => { let top = 'even', s = ev[i]!; for (const a of AB) if (ev[i]! + spec[a]![i]! > s + 1e-9) { s = ev[i]! + spec[a]![i]!; top = a; } (best[pc.kind] ??= {})[top] = (best[pc.kind]![top] ?? 0) + 1; });
+const h2 = Object.entries(best).map(([k, m]) => { const n = Object.values(m).reduce((t, x) => t + x, 0); const t = Object.entries(m).sort((x, y) => y[1] - x[1])[0]!; return `${k} ${t[0]} ${t[1]}/${n}${t[1] > n / 2 && n >= 30 ? ' FAIL' : ''}`; }).join('; ');
+const memBest = Object.fromEntries(Object.entries(best).map(([k, m]) => [k, m.memory ?? 0]));
+const kinds = ['brief', 'scene', 'night', 'casting', 'coursework'];
+const meanEff = (a: string) => Object.fromEntries(kinds.map((k) => { const ix = P.map((pc, i) => [pc, i] as const).filter(([pc]) => pc.kind === k).map(([, i]) => i); return [k, +(ix.reduce((t, i) => t + eff[a]![i]!, 0) / ix.length).toFixed(3)]; }));
+const ownerOf = (i: number) => { const s = AB.filter((a) => eff[a]![i]! >= 0.05).sort((a, b) => eff[b]![i]! - eff[a]![i]!); return s.length ? `${s[0]} ${eff[s[0]!]![i]!.toFixed(2)} > ${s[1]} ${eff[s[1]!]![i]!.toFixed(2)}` : '-'; };
+const memNights = P.map((pc, i) => [pc, i] as const).filter(([pc]) => pc.kind === 'night' || pc.kind === 'casting').map(([pc, i]) => `${pc.kind[0]}:${pc.id}: ${ownerOf(i)}; mem ${eff.memory![i]!.toFixed(2)} pres ${eff.presence![i]!.toFixed(2)}`);
+const h5 = P.filter((_, i) => { const xs = AB.map((a) => spec[a]![i]!); const best = Math.max(...xs); return xs.filter((x) => x < 0).length <= 6; }).length;
+console.log(JSON.stringify({ stakes, from, most, perHour, h5check: h5, aOk, bOk, res, h2, memoryBestOn: memBest, memoryMeanEffect: meanEff('memory'), staminaMeanEffect: meanEff('stamina'), memoryOnNightsAndCastings: memNights }));

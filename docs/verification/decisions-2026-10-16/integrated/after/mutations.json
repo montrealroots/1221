@@ -1,0 +1,267 @@
+[
+ {
+  "id": "st3-floor",
+  "clause": "ST3-R (d)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+    "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.d.met",
+  "verdict": false,
+  "figure": 193,
+  "killed": true
+ },
+ {
+  "id": "st3-twice",
+  "clause": "ST3-R (d)",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+    "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.d.met",
+  "verdict": false,
+  "figure": 193,
+  "killed": true
+ },
+ {
+  "id": "st3-segments-twice",
+  "clause": "ST3-R (d)",
+  "edits": [
+   {
+    "file": "src/engine/systems/piece.ts",
+    "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+    "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.d.met",
+  "verdict": false,
+  "figure": 193,
+  "killed": true
+ },
+ {
+  "id": "st3-leans",
+  "clause": "ST3-R (b)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };",
+    "replace": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1 };"
+   },
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };",
+    "replace": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1 };"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.b.met",
+  "verdict": false,
+  "figure": 0,
+  "killed": true
+ },
+ {
+  "id": "st3-drain",
+  "clause": "ST3-R (b)",
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0,"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.b.met",
+  "verdict": false,
+  "figure": 0,
+  "killed": true
+ },
+ {
+  "id": "st3-grain-leak",
+  "clause": "ST3-R (a)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+    "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st3 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST3R.verdict.a.met",
+  "verdict": false,
+  "figure": 0.9861423476289986,
+  "killed": true
+ },
+ {
+  "id": "st6-no-draws",
+  "clause": "ST6-R (b)",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st6 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST6R.verdict.b.met",
+  "verdict": true,
+  "figure": 96,
+  "killed": false
+ },
+ {
+  "id": "st6-least",
+  "clause": "ST6-R (a) or (c)",
+  "edits": [
+   {
+    "file": "src/engine/systems/interpretation.ts",
+    "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+    "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st6 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST6R.verdict.a.met && o.ST6R.verdict.c.met",
+  "verdict": false,
+  "figure": 22,
+  "killed": true
+ },
+ {
+  "id": "st6-no-grain",
+  "clause": "ST6-R (c) or (d)",
+  "edits": [
+   {
+    "file": "src/engine/content/interpretation.ts",
+    "find": "export const GRAIN = { strength: 0.3,",
+    "replace": "export const GRAIN = { strength: 0,"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st6 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST6R.verdict.c.met && o.ST6R.verdict.d.met",
+  "verdict": false,
+  "figure": 32,
+  "killed": true
+ },
+ {
+  "id": "h4-tenth",
+  "clause": "H4-R (a) or (b), for the ability cut",
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight,",
+    "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight * (input.ability === 'listening' ? 0.1 : 1),"
+   }
+  ],
+  "command": "npx vite-node tools/ag-baseline.ts -- --out $OUT",
+  "exit": 0,
+  "verdictPath": "o.h4r.abilities.listening.own.n >= 5 && Object.keys(o.h4r.abilities.listening.own.kinds).length >= 2 && o.h4r.abilities.listening.own.ahead >= 0.6 * o.h4r.abilities.listening.own.n && o.h4r.abilities.listening.own.median >= 0.3",
+  "verdict": false,
+  "figure": "listening: 0 own pieces in 0 kinds, ahead on 0, median null",
+  "killed": true
+ },
+ {
+  "id": "h4-budget",
+  "clause": "H4-R budgets",
+  "edits": [
+   {
+    "file": "tools/ag-baseline.ts",
+    "find": "const specialist = (a: Ab, budget = 600, at = 85): Performer => actor({ [a]: at }, (budget - at) / (ABILITIES.length - 1));",
+    "replace": "const specialist = (a: Ab, budget = 600, at = 85): Performer => actor({ [a]: at }, (budget - at) / (ABILITIES.length));"
+   }
+  ],
+  "command": "npx vite-node tools/ag-baseline.ts -- --out $OUT",
+  "exit": 0,
+  "verdictPath": "Object.values(o.h4r.budgets.specialists).every((b) => Math.abs(b - o.h4r.budgets.even) < 1e-9)",
+  "verdict": false,
+  "figure": "even 600, a specialist 557.0833333333334",
+  "killed": true
+ },
+ {
+  "id": "st6-no-draws-proposed",
+  "clause": "ST6-R (b′), proposed and not counted",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "command": "npx vite-node tools/interpretation.ts -- --st6 $OUT",
+  "exit": 0,
+  "verdictPath": "o.ST6R.proposedB.met",
+  "verdict": false,
+  "figure": 0,
+  "killed": true
+ },
+ {
+  "id": "h4-drain-back",
+  "clause": "H4-R (a) and (b), stamina",
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0.3,"
+   },
+   {
+    "file": "src/engine/content/workload.ts",
+    "find": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2) * (4 / 3),",
+    "replace": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2),"
+   }
+  ],
+  "command": "npx vite-node tools/ag-baseline.ts -- --out $OUT",
+  "exit": 0,
+  "verdictPath": "o.h4r.abilities.stamina.own.n >= 5 && Object.keys(o.h4r.abilities.stamina.own.kinds).length >= 2 && o.h4r.abilities.stamina.own.ahead >= 0.6 * o.h4r.abilities.stamina.own.n && o.h4r.abilities.stamina.own.median >= 0.3",
+  "verdict": false,
+  "figure": "1 in {\"scene\":1}",
+  "killed": true
+ },
+ {
+  "id": "h4-no-part-text",
+  "clause": "H4-R (a), memory",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const PART_TEXT = { from: 1, perHour: 0.5, most: 2 } as const;",
+    "replace": "export const PART_TEXT = { from: 1, perHour: 0, most: 2 } as const;"
+   }
+  ],
+  "command": "npx vite-node tools/ag-baseline.ts -- --out $OUT",
+  "exit": 0,
+  "verdictPath": "o.h4r.abilities.memory.own.n >= 5 && Object.keys(o.h4r.abilities.memory.own.kinds).length >= 2 && o.h4r.abilities.memory.own.ahead >= 0.6 * o.h4r.abilities.memory.own.n && o.h4r.abilities.memory.own.median >= 0.3",
+  "verdict": false,
+  "figure": "111 in {\"brief\":111}",
+  "killed": true
+ },
+ {
+  "id": "h4-no-night-stakes",
+  "clause": "H4-R (a), composure",
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const NIGHT_STAKES = 1.5;",
+    "replace": "export const NIGHT_STAKES = 1;"
+   }
+  ],
+  "command": "npx vite-node tools/ag-baseline.ts -- --out $OUT",
+  "exit": 0,
+  "verdictPath": "o.h4r.abilities.composure.own.n >= 5 && Object.keys(o.h4r.abilities.composure.own.kinds).length >= 2 && o.h4r.abilities.composure.own.ahead >= 0.6 * o.h4r.abilities.composure.own.n && o.h4r.abilities.composure.own.median >= 0.3",
+  "verdict": false,
+  "figure": "92 in {\"brief\":92}",
+  "killed": true
+ }
+]
