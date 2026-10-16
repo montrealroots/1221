@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 496 of 568 rows in scope Implemented And Verified (87.3%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 18 Explicitly Deferred.
+**Completion, by the matrix:** 461 of 591 rows in scope Implemented And Verified (78.0%); 113 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 9 Decision Required, 26 Explicitly Deferred.
 
 ## Totals
 
@@ -39,18 +39,19 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: coverage | 14 | 10 | 3 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
-| Brief 09 Area: judge | 10 | 3 | 2 |  | 1 |  | 4 |  |
+| Brief 09 Area: judge | 10 | 3 | 2 |  | 1 |  |  | 4 |
 | Brief 10 Area: advice | 14 | 5 | 7 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
-| Criteria: The Stage | 11 | 9 |  |  |  |  | 2 |  |
-| Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 15 | 7 |  |  |  | 1 | 2 |
-| Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  | 1 |  |
+| Brief 10 Area: judge | 31 | 1 | 19 | 3 | 4 |  | 4 |  |
+| Criteria: The Stage | 11 |  | 9 |  |  |  |  | 2 |
+| Criteria: Interpretation | 5 |  | 5 |  |  |  |  |  |
+| Criteria: The Attributes | 25 |  | 22 |  |  |  |  | 3 |
+| Criteria: Long-Term Continuity | 3 |  | 2 |  |  |  |  | 1 |
 | Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
-| Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
+| Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **586** | **496** | **58** | **0** | **1** | **0** | **13** | **18** |
+| **All** | **617** | **461** | **113** | **3** | **5** | **0** | **9** | **26** |
 
 ## Life, Health And Time
 
@@ -610,10 +611,10 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `judge.baseline` | Reproduce ST3, ST6, H4 and L3 on the current code before changing them, and every criterion that holds. Preserve the original results and c… | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/baseline-09/README.md ‘every command, seed, file and exit code’ (measurement (seeded, no draw)); docs/verification/int… |
-| `judge.ST3` | ST3, consistent evaluation: keep full-precision calculation and final-boundary rounding; separate rounding defects from legitimate differen… | Decision Required | verified as it stands | tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > identical effective inputs give identical results: an actor even in e… |
-| `judge.ST6` | ST6, restrained specialists: investigate why 8 of 38; trace failing cases through abilities, material, suitability, preparation and scoring… | Decision Required | verified as it stands | docs/verification/integration-2026-10-16/st6-09.json ‘tools/interpretation.ts -- --st6’ (measurement); docs/verification/integration-2026-10-16/st6-09.json ‘co… |
-| `judge.H4` | H4, all twelve specialist profiles: missing opportunities, benchmark assignments that don't fit, actual scoring weaknesses; add in-scope ma… | Decision Required | implemented | tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level un… |
-| `judge.L3` | L3, long-term progress: compare the same work, interpretation, preparation and conditions at earlier and later levels; report apart the cha… | Decision Required | implemented | docs/verification/integration-2026-10-16/l3-09/l3-trace-specialist-bj-0.json ‘tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --trace’ (… |
+| `judge.ST3` | ST3, consistent evaluation: keep full-precision calculation and final-boundary rounding; separate rounding defects from legitimate differen… | Explicitly Deferred | verified as it stands | tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > identical effective inputs give identical results: an actor even in e… |
+| `judge.ST6` | ST6, restrained specialists: investigate why 8 of 38; trace failing cases through abilities, material, suitability, preparation and scoring… | Explicitly Deferred | verified as it stands | docs/verification/integration-2026-10-16/st6-09.json ‘tools/interpretation.ts -- --st6’ (measurement); docs/verification/integration-2026-10-16/st6-09.json ‘co… |
+| `judge.H4` | H4, all twelve specialist profiles: missing opportunities, benchmark assignments that don't fit, actual scoring weaknesses; add in-scope ma… | Explicitly Deferred | implemented | tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level un… |
+| `judge.L3` | L3, long-term progress: compare the same work, interpretation, preparation and conditions at earlier and later levels; report apart the cha… | Explicitly Deferred | implemented | docs/verification/integration-2026-10-16/l3-09/l3-trace-specialist-bj-0.json ‘tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --trace’ (… |
 | `judge.remeasure` | Everything measured again after the changes: ST1 to ST9, F1, F2, I1 to I5, every attribute criterion, M1, S1 to S4 on all four samples, G2,… | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/final-09/README.md ‘every criterion before and after, with each command's exit’ (measurement); tests/genre-coverage.te… |
 | `judge.length` | Length: is there a sourced basis for a long piece being judged in more parts by its length as well as its tone, so sustaining precision ove… | Implemented And Verified | implemented for a scene's shifts of act… | tests/remaining-judge.test.ts ‘a scene’s units: its tone sections and its turns (evaluation-10, the follow-up) > a scene is cut at each change of tone and each… |
 | `judge.stamina-load` | Stamina: is load's clamp at 1 justified, or does a sourced account of physical demand (a play's length, its physical score) support a heavi… | Not Implemented | not implemented: no sourced account siz… | docs/verification/integration-2026-10-16/h4.md ‘Brief 09's Follow-Up, 2. The Load: Why It Stays At 1’ (account) |
@@ -655,52 +656,88 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `arion.AR7.older-save` | AR7: a save from before brief 10 opens with its card year as it was charged. | Implemented And Verified | older-save compatibility kept and tested | tests/decisions-arion.test.ts ‘arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP): the Reykjavík-raise… |
 | `arion.AR8.verified-as-specified` | AR8: the lifecycle verified against the rule as specified, the real-world uncertainty kept. | Implemented And Verified | verified (against the simulation specif… | tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing t… |
 
+## Brief 10 Area: judge
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `judge.baseline` | The measurements, exactly as the criteria say, before anything in the judge changes | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/baseline/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>’ (measurement) |
+| `judge.budget` | Profiles and budgets: equal budgets, printed with the results | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/baseline/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R and ST6RAtTheBudgetBefore)’ (measurement)… |
+| `ST3-R.a` | ST3-R (a) Identical inputs, identical results | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record,… |
+| `ST3-R.b` | ST3-R (b) Legitimate demands kept | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better… |
+| `ST3-R.c` | ST3-R (c) Every difference attributed | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference… |
+| `ST3-R.d` | ST3-R (d) Rounded once, at the end | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact val… |
+| `ST3-R.e` | ST3-R (e) It catches what it should | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement) |
+| `ST3.asWritten` | ST3 as written, kept as the record | Not Implemented | superseded by ST3-R (the owner's approv… | docs/verification/decisions-2026-10-16/judge/st3.json ‘tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)’ (measurement) |
+| `ST6-R.a` | ST6-R (a) Viable | Decision Required | owner decision | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that l… |
+| `ST6-R.b` | ST6-R (b) Restraint's own craft pays | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained… |
+| `ST6-R.c` | ST6-R (c) Success depends on what it should | Decision Required | owner decision | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win ag… |
+| `ST6-R.d` | ST6-R (d) Limits kept | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, … |
+| `ST6-R.e` | ST6-R (e) Diverse, independent examples | Decision Required | owner decision | docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement) |
+| `ST6-R.f` | ST6-R (f) The other half kept | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive spec… |
+| `ST6-R.g` | ST6-R (g) It catches what it should | Decision Required | owner decision | docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement) |
+| `ST6.asWritten` | ST6 as written, kept as the record | Not Implemented | superseded by ST6-R; kept as the record… | docs/verification/decisions-2026-10-16/judge/stage.json ‘tools/interpretation.ts -- --stage (ST6)’ (measurement) |
+| `H4-R.a` | H4-R (a) Opportunities | Partially Implemented | implemented (presence), owner decision … | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect … |
+| `H4-R.b` | H4-R (b) Advantage where the work is about it | Partially Implemented | verified as it stands; stamina's waits … | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and on its own wo… |
+| `H4-R.c` | H4-R (c) No erased weakness | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carri… |
+| `H4-R.d` | H4-R (d) Direct and indirect apart | Partially Implemented | verified as it stands; stamina's waits … | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > PLAYER JOURNEY: what an ability does outside the piece shows in … |
+| `H4-R.e` | H4-R (e) It catches what it should | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement) |
+| `H4.asWritten` | H4 as written and H5 beside H4-R | Not Implemented | superseded by H4-R; kept as the record,… | docs/verification/decisions-2026-10-16/judge/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement) |
+| `L3-R.a` | L3-R (a) A fixed set, controlled | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace… |
+| `L3-R.b` | L3-R (b) Enough journeys | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace… |
+| `L3-R.c` | L3-R (c) Growth | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the f… |
+| `L3-R.d` | L3-R (d) More never makes it worse | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers… |
+| `L3-R.e` | L3-R (e) The journey kept in view | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace… |
+| `L3.asWritten` | L3 as written, kept as the record | Not Implemented | superseded by L3-R; kept as the record,… | docs/verification/decisions-2026-10-16/judge/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement) |
+| `M1` | Mastery is kept | Implemented, Verification Incomplete | verified as it stands | tests/decisions-judge.test.ts ‘M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day,… |
+| `judge.together` | Every criterion section 5 lists, after the change | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <judge> <part>’ (measurement) |
+| `judge.tests` | The tests of section 1 | Implemented, Verification Incomplete | implemented | tests/decisions-judge.test.ts (test file) |
+
 ## Criteria: The Stage
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `ST1` | No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-1… |
-| `ST2` | The house moves no scale; the better side rests on the scene | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `ST3` | Projection is a demand: the voice-and-body specialist better on stage; the even actor the same on both | Decision Required | Not Met | docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts |
-| `ST4` | Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/… |
-| `ST5` | Mastery: a mastered, prepared actor reaches 100 on every fitting combination | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `ST6` | Strength carries the harder side: specialists ahead against the grain on at least 25% | Decision Required | Not Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts |
-| `ST7` | More than one good way: two or more interpretations within a point of the best | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `ST8` | The even actor follows the scene where the sides are a band apart | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `ST9` | Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/int… |
-| `Stage F1` | Fresh validation: the plays as a night (ST1, ST5, ST7, ST8) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `Stage F2` | Fresh validation: even actors at 40 and 75 (ST1, ST8) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `ST1` | No universal best: each scale side ahead on at least 25% of materials where both fit, for an even actor | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-1… |
+| `ST2` | The house moves no scale; the better side rests on the scene | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `ST3` | Projection is a demand: the voice-and-body specialist better on stage; the even actor the same on both | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts |
+| `ST4` | Scenes within a genre differ: drama, comedy and tragedy each suit both sides somewhere | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/… |
+| `ST5` | Mastery: a mastered, prepared actor reaches 100 on every fitting combination | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `ST6` | Strength carries the harder side: specialists ahead against the grain on at least 25% | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts |
+| `ST7` | More than one good way: two or more interpretations within a point of the best | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `ST8` | The even actor follows the scene where the sides are a band apart | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `ST9` | Nothing else lost: I1 to I5, the signature, the camera and microphone briefs, G2 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/int… |
+| `Stage F1` | Fresh validation: the plays as a night (ST1, ST5, ST7, ST8) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `Stage F2` | Fresh validation: even actors at 40 and 75 (ST1, ST8) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
 
 ## Criteria: Interpretation
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `I1` | A mastered actor reaches 100 on every fitting combination of briefs and readings | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I2` | The better-suited side differs within a genre on each axis | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I3` | Suitability spreads results and neither scale side dominates | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I4` | The even actor follows suitability where the sides are a band apart | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
-| `I5` | Two or more ways within a point of the best | Implemented And Verified | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I1` | A mastered actor reaches 100 on every fitting combination of briefs and readings | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I2` | The better-suited side differs within a genre on each axis | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I3` | Suitability spreads results and neither scale side dominates | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I4` | The even actor follows suitability where the sides are a band apart | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
+| `I5` | Two or more ways within a point of the best | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-… |
 
 ## Criteria: The Attributes
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `A1` | Every ability is causal somewhere | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `A2` | No two abilities do the same job | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `A3` | No ability is a universal bonus | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `T2` | Training resists exploits (a): four hours of one exercise at most half four different ones | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `T3` | Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G3` | Different genres reward different actors | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G4` | Every genre offers enough to play | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `G5` | Genre proficiency progresses across its range | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `M1` | Maximum work quality under the qualifying conditions is 100 on every judged piece | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `M3` | Nobody else can hold a mastered player’s own result under 100 | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `O1` | Your own result is invariant to the reader | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `O2` | The take together moves with the reader | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H2` | No universally dominant allocation | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H5` | Generalists are useful | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
-| `H4` | Specialists are advantaged on suitable work | Decision Required | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
+| `A1` | Every ability is causal somewhere | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `A2` | No two abilities do the same job | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `A3` | No ability is a universal bonus | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `T2` | Training resists exploits (a): four hours of one exercise at most half four different ones | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `T3` | Caps don’t erase progression early (a): the gain an hour at 90 at least 25% of that at 30 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G3` | Different genres reward different actors | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G4` | Every genre offers enough to play | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `G5` | Genre proficiency progresses across its range | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `M1` | Maximum work quality under the qualifying conditions is 100 on every judged piece | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `M3` | Nobody else can hold a mastered player’s own result under 100 | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `O1` | Your own result is invariant to the reader | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `O2` | The take together moves with the reader | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H2` | No universally dominant allocation | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H5` | Generalists are useful | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
+| `H4` | Specialists are advantaged on suitable work | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
 | `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
@@ -715,9 +752,9 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `L1` | Repeated feedback changes or is acted on | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; d… |
-| `L2` | No mindless repetition | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
-| `L3` | A learning student’s work improves over a term (as written: the last month’s mean at or over the first’s) | Decision Required | Not Met | docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-… |
+| `L1` | Repeated feedback changes or is acted on | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; d… |
+| `L2` | No mindless repetition | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `L3` | A learning student’s work improves over a term (as written: the last month’s mean at or over the first’s) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-… |
 
 ## Criteria: Mastery Through Play
 
@@ -736,11 +773,11 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `S1` | A genre’s conventions are recognizable across very different scenes | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
-| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md |
+| `S1` | A genre’s conventions are recognizable across very different scenes | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S2` | Contrasting genres differ and related ones overlap (revised) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S3` | Contrasting genres change outcomes on the same scene (revised), on all four samples | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `S4` | No two briefs of different genres identical in every number a take reads (G2) | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
+| `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md |
 
 ## Integration
 
@@ -772,7 +809,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (58)
+### Implemented, Verification Incomplete (113)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -818,50 +855,107 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`advice.tests`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
 - **`advice.heldout`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
 - **`advice.harness-hospital`** (Brief 10 Area: advice): the area called it fixed and cites no gate test that holds it
-- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`judge.baseline`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
+- **`ST3-R.a`** (Brief 10 Area: judge): verified as it stands
+- **`ST3-R.b`** (Brief 10 Area: judge): verified as it stands
+- **`ST3-R.c`** (Brief 10 Area: judge): verified as it stands
+- **`ST3-R.d`** (Brief 10 Area: judge): verified as it stands
+- **`ST3-R.e`** (Brief 10 Area: judge): verified as it stands
+- **`ST6-R.b`** (Brief 10 Area: judge): verified as it stands
+- **`ST6-R.d`** (Brief 10 Area: judge): verified as it stands
+- **`ST6-R.f`** (Brief 10 Area: judge): verified as it stands
+- **`H4-R.c`** (Brief 10 Area: judge): verified as it stands
+- **`H4-R.e`** (Brief 10 Area: judge): verified as it stands
+- **`L3-R.a`** (Brief 10 Area: judge): verified as it stands
+- **`L3-R.b`** (Brief 10 Area: judge): verified as it stands
+- **`L3-R.c`** (Brief 10 Area: judge): verified as it stands
+- **`L3-R.d`** (Brief 10 Area: judge): verified as it stands
+- **`L3-R.e`** (Brief 10 Area: judge): verified as it stands
+- **`M1`** (Brief 10 Area: judge): verified as it stands
+- **`judge.together`** (Brief 10 Area: judge): verified as it stands
+- **`judge.tests`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
+- **`ST1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST4`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST5`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST7`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST8`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`ST9`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`Stage F1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`Stage F2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`I1`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`I2`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`I3`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`I4`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`I5`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`A1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`A2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`A3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`T2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`T3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`G3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`G4`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`G5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`M1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`M3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`O1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`O2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`H2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`H5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`H7`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
-- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
-- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`L1`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`L2`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`S1`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`S2`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`S3`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`S4`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`Genre Audit`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
 - **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
 - **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
 
-### Partially Implemented (0)
+### Partially Implemented (3)
 
-None.
+- **`H4-R.a`** (Brief 10 Area: judge): implemented (presence), owner decision (memory, composure), waits on the stamina model (stamina)
+- **`H4-R.b`** (Brief 10 Area: judge): verified as it stands; stamina's waits on the stamina model
+- **`H4-R.d`** (Brief 10 Area: judge): verified as it stands; stamina's waits on the stamina model
 
-### Not Implemented (1)
+### Not Implemented (5)
 
 - **`judge.stamina-load`** (Brief 09 Area: judge): not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)
+- **`ST3.asWritten`** (Brief 10 Area: judge): superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met
+- **`ST6.asWritten`** (Brief 10 Area: judge): superseded by ST6-R; kept as the record, not counted met
+- **`H4.asWritten`** (Brief 10 Area: judge): superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)
+- **`L3.asWritten`** (Brief 10 Area: judge): superseded by L3-R; kept as the record, its figures in L3-R (e)
 
 ### Blocked Externally (0)
 
 None.
 
-### Decision Required (13)
+### Decision Required (9)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
-- **`judge.ST3`** (Brief 09 Area: judge): Accept ST3′ (st3.md) in place of ST3's second clause, or keep ST3 as the record. The clause asks two results that differ by up to 0.021 (the drain the stage weighs differently, which ST3's own first clause and the piece's continuity read) to show the same tenth; no boundary of rounding can, and removing the difference would remove the stage's execution weight or stamina's drain. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
-- **`judge.ST6`** (Brief 09 Area: judge): ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
-- **`judge.H4`** (Brief 09 Area: judge): H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units …
-- **`judge.L3`** (Brief 09 Area: judge): L3 as written measures what was taped as much as how well; a student who earns callbacks fails it. Recommended: adopt L3′ (l3.md) beside the journey metric, both kept. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
 - **`advice.F2A10-f`** (Brief 10 Area: advice): Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommende…
 - **`advice.F2A10-h`** (Brief 10 Area: advice): The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Op…
-- **`ST3`** (Criteria: The Stage): ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record? Evidence: docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, b…
-- **`ST6`** (Criteria: The Stage): ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first? Evidence: docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s …
-- **`H4`** (Criteria: The Attributes): H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record? Evidence: docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before …
-- **`L3`** (Criteria: Long-Term Continuity): L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept? Evidence: docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out). Recommended: Adopt L3′ beside the journey metric; L3 as written isn’t cou…
+- **`ST6-R.a`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
+- **`ST6-R.c`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
+- **`ST6-R.e`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
+- **`ST6-R.g`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 
-### Explicitly Deferred (18)
+### Explicitly Deferred (26)
 
 - `health.prepay` (Life, Health And Time): Deferred: England’s certificate, which the New Haven student is refused. A prescription free while it runs is shown on a London fixture (tests/coverage-gaps-life.test.ts ‘makes prescriptions free while it runs…’, rxShareOf read, not a fill…
 - `documents.naturalize` (Papers): Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
@@ -879,5 +973,13 @@ None.
 - `benefits.uc_period` (Papers): Can't live in Britain. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment` (Papers): Each is unreachable, as its command is. Until 2026-10-10 recordPension had no caller, so none of these was taxed; since then each records its payment (earnings.ts:251). / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `trait-receipts` (Creation, Profile, Home And The Looks): the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
+- `judge.ST3` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
+- `judge.ST6` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
+- `judge.H4` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
+- `judge.L3` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
+- `ST3` (Criteria: The Stage): ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json)…
+- `ST6` (Criteria: The Stage): ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's …
+- `H4` (Criteria: The Attributes): H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the reco…
 - `F2` (Criteria: The Attributes): Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported
 - `G1` (Criteria: The Attributes): Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, …
+- `L3` (Criteria: Long-Term Continuity): L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remain…

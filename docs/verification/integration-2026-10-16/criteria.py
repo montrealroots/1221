@@ -185,14 +185,18 @@ for r in rows:
     # ST3, ST6, H4 and L3 after brief 09, section 2 (remaining-09/judge-result.json, followup-09/README.md): each reproduced,
     # traced case by case, and not met as written; each a decision with its proposal, none counted met. Until later on
     # 2026-10-16 ST6, H4 and L3 were Partially Implemented, being worked.
-    if r['id'] == 'ST3':
-        r['status'], r['decision'] = DR, {'question': 'ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?', 'evidence': f'{D}/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met'}
-    elif r['id'] == 'ST6':
-        r['status'], r['decision'] = DR, {'question': 'ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?', 'evidence': f'{D}/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met'}
-    elif r['id'] == 'H4':
-        r['status'], r['decision'] = DR, {'question': 'H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?', 'evidence': f'{D}/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10'}
-    elif r['id'] == 'L3':
-        r['status'], r['decision'] = DR, {'question': 'L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?', 'evidence': f'{D}/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist'}
+    # The owner's brief 10 (decision 1) approved replacing ST3, ST6, H4 and L3 with criteria that measure what was intended,
+    # and ST3-R, ST6-R, H4-R and L3-R were written before any change (decisions-2026-10-16/criteria.md). Each original stays
+    # in the record as measured, not met, and is superseded; its replacement is the judge area's rows of brief 10
+    # (remaining-10/judge-result.json), counted in its place. Until then each was Decision Required with its proposal.
+    SUPERSEDED = {
+        'ST3': 'ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R',
+        'ST6': 'ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R',
+        'H4': 'H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R',
+        'L3': 'L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R',
+    }
+    if r['id'] in SUPERSEDED:
+        r['status'], r['deferredBy'] = ED, f"{SUPERSEDED[r['id']]}, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
     elif r['id'] == 'F2':
         # The owner's brief 10 approved F2-A as the advice's measure (decision 2). F2 as written stays in the record as
         # measured, not met; until then this row was Decision Required.
@@ -218,6 +222,10 @@ known('KS-passport-fees', 'A passport renewed abroad costs its issuer’s publis
 # An area's item whose status its result doesn't give rightly, said here with why: only an item the area left reported or
 # open that was settled after, with the test that settles it.
 OVERRIDES = [
+  {'id': 'judge.ST3', 'status': ED, 'deferredBy': 'The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)', 'why': 'Decided by the owner in brief 10', 'citations': []},
+  {'id': 'judge.ST6', 'status': ED, 'deferredBy': 'The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)', 'why': 'Decided by the owner in brief 10', 'citations': []},
+  {'id': 'judge.H4', 'status': ED, 'deferredBy': 'The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)', 'why': 'Decided by the owner in brief 10', 'citations': []},
+  {'id': 'judge.L3', 'status': ED, 'deferredBy': 'The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)', 'why': 'Decided by the owner in brief 10', 'citations': []},
   # Brief 09 left Arion's card year to the owner; brief 10 approved a labelled simulation where no source settles the
   # timing, and Iceland's Act 114/2021 art. 57(4) settles what a close owes (remaining-10/arion-result.json).
   {'id': 'banking.5.arion-card', 'status': IAV, 'why': 'Settled under brief 10, section 3: the amount and age from Arion’s price list, a close’s refund in proportion from Act 114/2021 art. 57(4), the year paid ahead as SLATE’s labelled, configurable simulation (`ARION_CARD_YEAR`), verified as specified; Arion’s real timing stays unverified',

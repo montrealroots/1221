@@ -41,7 +41,7 @@ the owner's decisions. In short:
 - **Journeys:** a finished School's page; the cover-ended window from the loss; a lapse's visit and prescription; the
   term's aid paying Yale first; HUSKY D from the application's month, reaching back; Mexico's residence no longer sold.
 
-**Completion, by the matrix:** 496 of 568 rows in scope Implemented And Verified (87.3%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 18 Explicitly Deferred.
+**Completion, by the matrix:** 461 of 591 rows in scope Implemented And Verified (78.0%); 113 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 9 Decision Required, 26 Explicitly Deferred.
 
 ## 3. The Owner's Decisions
 

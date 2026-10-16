@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 496 of 568 rows in scope Implemented And Verified (87.3%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 18 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 461 of 591 rows in scope Implemented And Verified (78.0%); 113 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 9 Decision Required, 26 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -10801,13 +10801,10 @@
    "implementation": "Not recorded",
    "evidence": "tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > identical effective inputs give identical results: an actor even in everything the formula reads, its stamina undrained, comes out on stage, at a close frame and replayed at 100 × n^(1 + difficulty), whatever the weights’ (static (TEST SETUP performers, every stage material)); tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > every case’s shown result is its exact result rounded once, and every case a tenth apart is a real difference under half a tenth whose two sides straddle a rounding point’ (static); tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > each case’s difference is its techniques’ part and its stamina’s part and nothing else: even in everything read and undrained it’s nothing, and each uneven input alone makes its own part’ (static); docs/verification/integration-2026-10-16/st3/st3-cases.json ‘tools/interpretation.ts -- --st3’ (measurement)",
    "sourceStatus": "verified as it stands",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "verified as it stands",
-   "decision": {
-    "question": "Accept ST3′ (st3.md) in place of ST3's second clause, or keep ST3 as the record. The clause asks two results that differ by up to 0.021 (the drain the stage weighs differently, which ST3's own first clause and the piece's continuity read) to show the same tenth; no boundary of rounding can, and removing the difference would remove the stage's execution weight or stamina's drain.",
-    "evidence": "docs/verification/remaining-09/judge-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Decided by the owner in brief 10",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
   },
   {
    "id": "judge.ST6",
@@ -10829,13 +10826,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/st6-09.json ‘tools/interpretation.ts -- --st6’ (measurement); docs/verification/integration-2026-10-16/st6-09.json ‘considered’ (measurement (in-process alternatives, put back))",
    "sourceStatus": "verified as it stands",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "verified as it stands",
-   "decision": {
-    "question": "ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept.",
-    "evidence": "docs/verification/remaining-09/judge-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Decided by the owner in brief 10",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
   },
   {
    "id": "judge.H4",
@@ -10857,13 +10851,10 @@
    "implementation": "src/engine/content/scenes-house.ts (new), src/engine/content/material.ts (four profiles appended), src/engine/content/coursework.ts (appended to SCENES)",
    "evidence": "tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level under 2; the speeches to a crowd have 1, and the rule reaches them: presence 2 more on connection and its lean half again, by each level under 2’ (static); tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > a specialist in presence comes out ahead of an even actor of the same budget on the speeches to many of four units or fewer that hold no long score, level on the Forum, whose turns make one, and behind on every scene played off a partner’ (static (TEST SETUP performers)); tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > a mastered, prepared actor reaches 100 on each of the four, on every way of playing that fits’ (static); tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > a student meets them in play: once every earlier verse scene is studied, the Heightened Text course sets one of the three, and once every earlier Greek scene is, The Greeks sets the speech before the suppliants’ (static (the course's own draw, scenesFor)); tests/integration-stage.test.ts ‘ST4: drama suits each side somewhere, from what its scenes are > the catalog’s drama has scenes where restraint suits better and scenes where size does, and every one of the 25 before 2026-10-16 still suits restraint’ (static); docs/verification/integration-2026-10-16/h4-09/ ‘ag-before-house-scenes.json, ag-after-house-scenes.json, criteria-*.txt, stage-after-house-scenes.json’ (measurement)",
    "sourceStatus": "implemented",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "implemented",
-   "decision": {
-    "question": "H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units as a brief's beats are, each a new mechanic or a weight to be argued with a source first.",
-    "evidence": "docs/verification/remaining-09/judge-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Decided by the owner in brief 10",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
   },
   {
    "id": "judge.L3",
@@ -10885,13 +10876,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/l3-09/l3-trace-specialist-bj-0.json ‘tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --trace’ (played (public commands, seed bj-0)); docs/verification/integration-2026-10-16/l3-09/l3-trace-beginner-bj-0.json ‘the same, --profile beginner’ (played (seed bj-0)); tests/defects-g3-1.test.ts ‘a brief’s What To Work On > is the same weakness the journeys tool suggests a brief for’ (static (reads the tool's source))",
    "sourceStatus": "implemented",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "disposition": "implemented",
-   "decision": {
-    "question": "L3 as written measures what was taped as much as how well; a student who earns callbacks fails it. Recommended: adopt L3′ (l3.md) beside the journey metric, both kept.",
-    "evidence": "docs/verification/remaining-09/judge-result.json",
-    "recommendation": "Not recorded"
-   }
+   "override": "Decided by the owner in brief 10",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)"
   },
   {
    "id": "judge.remeasure",
@@ -11603,6 +11591,765 @@
    "disposition": "verified (against the simulation specification; the real-world timing still unverified)"
   },
   {
+   "id": "judge.baseline",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "The measurements, exactly as the criteria say, before anything in the judge changes",
+   "entry": "tools/interpretation.ts; tools/ag-baseline.ts; tools/ag-criteria.mjs; tools/brief-journeys.ts; tools/monotonicity.ts (new); docs/verification/decisions-2026-10-16/baseline/",
+   "preconditions": "judge.md, The Order, 1; docs/verification/decisions-2026-10-16/criteria.md section 1; brief 10 section 1 (\"Write the new criteria and justify their thresholds before tuning the implementation\").",
+   "reads": "The tools measure ST3, ST6, H4 and L3 as written and the proposals ST3′, ST6′, H4′, L3′ (brief 09). None measures ST3-R, ST6-R, H4-R or L3-R as written; tools/brief-journeys.ts has no generalist profile and no fixed set; there is no monotonicity sweep; no mutation runner for the \"it catches what it should\" clauses.",
+   "decisions": "Extend the tools to measure every clause as the criteria write it (below), commit them, then measure on the engine as 2e8e4db3 left it into docs/verification/decisions-2026-10-16/baseline/, with every command, seed and exit in its README. Mutations run in copies of the clone (node_modules linked), never in the tree.",
+   "validation": "required reachable behavior",
+   "changes": "tools/acting-criteria.ts (ST3-R, ST6-R), tools/pieces.ts (the pieces), the H4-R section of tools/ag-baseline.ts and its verdicts in tools/ag-criteria.mjs, tools/h4-indirect.ts (H4-R (d)), the generalist and the fixed set in tools/brief-journeys.ts, tools/monotonicity.ts, tools/l3r.mjs, tools/judge-mutations.mjs",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts; tools/ag-baseline.ts; tools/ag-criteria.mjs; tools/brief-journeys.ts; tools/monotonicity.ts (new); docs/verification/decisions-2026-10-16/baseline/",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/baseline/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>’ (measurement)",
+   "sourceStatus": "implemented",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "implemented",
+   "missing": "the area called it implemented and cites no gate test that holds it"
+  },
+  {
+   "id": "judge.budget",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "Profiles and budgets: equal budgets, printed with the results",
+   "entry": "tools/interpretation.ts",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md: ST6-R \"its other abilities lowered evenly to the even actor's budget\"; H4-R \"its total equals the even actor's ... the budgets are printed with the results\"; judge.md, The Order, 2.",
+   "reads": "tools/interpretation.ts builds both ST6 specialists as actor({…three at 85/75/75…}, fill(235)) with fill = (600 − n) / 8, and actor() reads every ability not named at fill: 9 abilities are left, not 8, so each specialist's total is 235 + 9 × 45.625 = 645.6 against the even actor's 600 (12 × 50), 45.6 over. ST6 as written compares a specialist with itself, so its budget moves little; ST6′'s 26 of 42 (brief 09) compared a 645.6 budget with a 600 one. ST3's voice-and-body specialist ((600 − 170) / 10 over 10 left) and ag-baseline's specialists ((600 − 85) / 11 over 11 left) total 600.",
+   "decisions": "Print each profile's budget with every result; fix fill to (600 − n) / 9 with a dated comment saying what it did; measure ST6 as written and ST6′ both ways (old fill and corrected) so what the defect changed is a figure.",
+   "validation": "required reachable behavior",
+   "changes": "tools/interpretation.ts: fill (600 − n) / 9 in --stage's ST6 and in --st6, each with a dated comment",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/baseline/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R and ST6RAtTheBudgetBefore)’ (measurement); tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the profiles are on one budget: 600 each, the nine abilities left at 40.56, where until brief 10 the tool gave each specialist 645.6’ (static (TEST SETUP profiles))",
+   "sourceStatus": "fixed",
+   "status": "Implemented And Verified",
+   "disposition": "fixed"
+  },
+  {
+   "id": "ST3-R.a",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3-R (a) Identical inputs, identical results",
+   "entry": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (a); brief 10 section 1, ST3.",
+   "reads": "Brief 09's tests held the even-undrained clause at 3e-14 on 179 cases and the replay by `replayAs`; no save-and-load round trip; nothing on a judged-twice or drawn replay.",
+   "decisions": "Each case (every class scene and play as a class scene, every scale side that fits, the grain held at nothing) judged twice, its record serialised and deserialised through the save adapter and replayed, and replayed with the draw under `replay`: 0 apart or under 1e-12. An actor even in everything the formula reads (abilities 55 of 100, techniques 49.5 of 90), stamina 100 (undrained), on stage and at a close frame: under 1e-9 exact and the same as shown.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record, replayed with its draw, and replayed after a save and a load comes to the same exact result on every case’ (played save and load (TEST SETUP records in a created save)); tests/decisions-judge.test.ts ‘ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown’ (static, worked by hand); docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST3-R.b",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3-R (b) Legitimate demands kept",
+   "entry": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (b); brief 10 section 1, ST3.",
+   "reads": "Brief 09: specialist 189 of 189; stamina's part up to 0.0170; its least not reported.",
+   "decisions": "The voice-and-body specialist (vocal 85, physical 85, the other ten (600 − 170) / 10) better on stage than at a close frame at full precision on every case. An actor whose stamina is 55 shows a stamina part above 1e-9 on every case with a unit after its first: measured as the drain's cost on each medium (its result at stamina 100 less at 55, the rest even) and as the drain's part of the stage-less-close difference; both reported, the clause read as both.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600’ (static); docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST3-R.c",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3-R (c) Every difference attributed",
+   "entry": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (c); brief 10 section 1, ST3.",
+   "reads": "Brief 09: residual 3e-14 on 189; techniques ≤ 0.0026, stamina ≤ 0.0170.",
+   "decisions": "The criterion's even actor (abilities 55, techniques 50, stamina 55): stage less close at full precision equals techniques' part + stamina's part + what's left, each by changing one input at a time; what's left (the actor even in everything read, undrained) under 1e-9 on every case.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point’ (static); docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST3-R.d",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3-R (d) Rounded once, at the end",
+   "entry": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (d); brief 10 section 1, ST3.",
+   "reads": "Brief 09: 0 rounding defects on the whole; dimensions, segments and limits not checked case by case.",
+   "decisions": "Every shown figure of each case (the whole, each dimension, each segment's whole and dimensions, each limit's cost to its dimension and to the whole, the grain's points) equals its own exact value rounded once to a tenth. The exact values are read from a piece judged at full precision (`judgePieceExact`, exported for this from `judgePiece` without changing any figure).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values’ (static, worked by hand); docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST3-R.e",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3-R (e) It catches what it should",
+   "entry": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (e); brief 10 section 1, ST3.",
+   "reads": "Brief 09 killed three related mutations in its tests; none run against these clauses.",
+   "decisions": "In copies of the clone, each fails the clause named: the whole rounded by floor, and a whole worked from rounded dimensions (d); STAGE_LEAN and CAMERA_LEAN both 1 (b); PIECE.drain 0 (b); the grain leaking into ST3's comparison, `GRAIN.strength || 0.3` in `grainOf` (a).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st3); src/engine/systems/piece.ts (judgePieceExact, (d) only)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST3 as written, kept as the record",
+   "entry": "tools/interpretation.ts (--stage)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R: \"ST3's own clause, the even actor the same as shown, is still measured and reported beside it, as the record.\"",
+   "reads": "Last measured 178 of 189 the same as shown (integrated-09): not met.",
+   "decisions": "Measured and reported beside ST3-R, marked superseded, never counted met.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--stage)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/st3.json ‘tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)’ (measurement)",
+   "sourceStatus": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met",
+   "status": "Not Implemented",
+   "disposition": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met",
+   "gap": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met"
+  },
+  {
+   "id": "ST6-R.a",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (a) Viable",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (a); brief 10 section 1, ST6.",
+   "reads": "ST6′ (brief 09, unequal budget): 26 of 42.",
+   "decisions": "Restrained specialist (emotional depth 85, composure 75, focus 75, the other nine (600 − 235) / 9) playing restrained on every material where expansive suits better (and both fit), ahead (by more than 0.05 at full precision) of the even actor (every ability 50, techniques 50) playing expansive, on at least 25%. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in’ (static); docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "owner decision",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "decision": {
+    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+    "evidence": "docs/verification/remaining-10/judge-result.json",
+    "recommendation": "Not recorded"
+   }
+  },
+  {
+   "id": "ST6-R.b",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (b) Restraint's own craft pays",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (b); brief 10 section 1, ST6.",
+   "reads": "Not measured.",
+   "decisions": "On every material where both sides fit: (RS restrained − even restrained) > (RS expansive − even expansive) + 1e-9 on at least 90%; the materials where it isn't are named. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one’ (static); docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST6-R.c",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (c) Success depends on what it should",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (c); brief 10 section 1, ST6.",
+   "reads": "Not measured.",
+   "decisions": "Abilities: the even actor restrained ahead of itself expansive (by > 0.05) on at least 10 points fewer of the against-grain materials than (a). Preparation: the specialist's restrained choice half rehearsed in (Playing.prep and prep.approach 0.5), its (a) count lower. Circumstances: the against-grain materials sorted by gap (expansive less restrained suitability, ties by id); the first ⌊n/2⌋ the smaller half, the last ⌊n/2⌋ the larger (a middle one in neither); (a)'s rate on the smaller at least 20 points above on the larger. Interpretation: every win in (a) on a material whose `allows` takes restrained. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits’ (static); docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "owner decision",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "decision": {
+    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+    "evidence": "docs/verification/remaining-10/judge-result.json",
+    "recommendation": "Not recorded"
+   }
+  },
+  {
+   "id": "ST6-R.d",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (d) Limits kept",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (d); brief 10 section 1, ST6.",
+   "reads": "Not measured.",
+   "decisions": "On at least 25% of the against-grain materials the specialist's restrained take is behind (by more than 0.05) the even actor's expansive one; on at least half of those the expansive specialist (presence 85, vocal 75, physical 75, the other nine (600 − 235) / 9) playing expansive is ahead (by > 0.05) of the restrained specialist playing restrained. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it’ (static); docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST6-R.e",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (e) Diverse, independent examples",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (e); brief 10 section 1, ST6.",
+   "reads": "Not measured.",
+   "decisions": "The wins in (a) from at least 6 source works (a class scene's `SCENES[].play`, a play's title) and at least 3 register families (the genre whose register the material is read in, `sceneOfMaterial`), no work giving more than a quarter of the wins; the limits in (d) from at least 4 works. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "owner decision",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "decision": {
+    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+    "evidence": "docs/verification/remaining-10/judge-result.json",
+    "recommendation": "Not recorded"
+   }
+  },
+  {
+   "id": "ST6-R.f",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (f) The other half kept",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (f); brief 10 section 1, ST6.",
+   "reads": "ST6 as written, expansive half: 22 of 50 (brief 09, unequal budget).",
+   "decisions": "The expansive specialist (equal budget, as (d)) playing expansive ahead (by > 0.05 at full precision) of itself playing restrained on at least 25% of the materials where restrained suits better; the as-shown count reported beside it. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better’ (static); docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "ST6-R.g",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6-R (g) It catches what it should",
+   "entry": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (g); brief 10 section 1, ST6.",
+   "reads": "Not run.",
+   "decisions": "In copies: restraint's draws removed (APPROACH_EFFECT.restrained.inputs {}) fails (b); restrained suitability forced to −1 on every material fails (a) or (c); GRAIN.strength 0 fails (c) or (d). Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--st6); src/engine/content/approaches.ts (only if (b) fails, from a source)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)’ (measurement)",
+   "sourceStatus": "owner decision",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "decision": {
+    "question": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+    "evidence": "docs/verification/remaining-10/judge-result.json",
+    "recommendation": "Not recorded"
+   }
+  },
+  {
+   "id": "ST6.asWritten",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "ST6 as written, kept as the record",
+   "entry": "tools/interpretation.ts (--stage)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, ST6 → ST6-R: originals stay in the record with every result.",
+   "reads": "Last measured restrained 9 of 42, expansive 22 of 50 (integrated-09): not met.",
+   "decisions": "Measured and reported beside ST6-R, marked superseded.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/interpretation.ts (--stage)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/stage.json ‘tools/interpretation.ts -- --stage (ST6)’ (measurement)",
+   "sourceStatus": "superseded by ST6-R; kept as the record, not counted met",
+   "status": "Not Implemented",
+   "disposition": "superseded by ST6-R; kept as the record, not counted met",
+   "gap": "superseded by ST6-R; kept as the record, not counted met"
+  },
+  {
+   "id": "H4-R.a",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4-R (a) Opportunities",
+   "entry": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (a); brief 10 section 1, H4.",
+   "reads": "H4′ (brief 09, briefs as the mean of their readings): presence 3 own pieces, stamina 1; composure's and memory's own work all briefs.",
+   "decisions": "Pieces: every brief in each of its readings (each reading a piece), every class scene (Scene Study's task and difficulty), every play as a supporting part at the School (a night), casting's read of every play, every coursework template not judged as a scene; fully prepared, every axis of the way of playing left open (a way that fits every piece; read as the criteria's \"its fitting way\"), readiness 100, no draw. An ability's own work: the pieces where its +10 effect from the even actor is at least 0.05 and larger than each other ability's at full precision (brief 09's own work). Each of the twelve: at least 5 own pieces in at least 2 kinds.",
+   "validation": "required reachable behavior",
+   "changes": "Two public meetings for scene study, read from Sharp's An Enemy of the People (1911) and Galsworthy's Strife (1909), committed before they were measured (src/engine/content/scenes-meeting.ts, their profiles in content/material.ts, appended last in SCENES)",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect the largest of the twelve on each, played to the meeting with the partner barely there, and its specialist ahead of the even actor’ (static); tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > a student meets them in play: Scene Study in Acting I sets Strife’s meeting, a play from 1909, once the prose scenes before it are studied, and Acting III’s sets the Enemy’s, from 1882, which Acting I’s never does’ (static (the course's own draw)); docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement)",
+   "sourceStatus": "implemented (presence), owner decision (memory, composure), waits on the stamina model (stamina)",
+   "status": "Partially Implemented",
+   "disposition": "implemented (presence), owner decision (memory, composure), waits on the stamina model (stamina)",
+   "gap": "implemented (presence), owner decision (memory, composure), waits on the stamina model (stamina)"
+  },
+  {
+   "id": "H4-R.b",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4-R (b) Advantage where the work is about it",
+   "entry": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (b); brief 10 section 1, H4.",
+   "reads": "H4′: 11 of 12 abilities at 60%; medians not measured.",
+   "decisions": "Each specialist (85 on its ability, the other eleven (600 − 85) / 11, techniques 50) ahead of the even actor (every ability 50, techniques 50) by more than 0.05 on at least 60% of its own work, and its median advantage there at least 0.3; all twelve.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and on its own work (the pieces where its ability’s +10 effect is the largest of the twelve) eleven of the twelve are ahead on at least 60% by a median of 0.3 or more; stamina’s waits on the stamina model’ (static); docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement)",
+   "sourceStatus": "verified as it stands; stamina's waits on the stamina model",
+   "status": "Partially Implemented",
+   "disposition": "verified as it stands; stamina's waits on the stamina model",
+   "gap": "verified as it stands; stamina's waits on the stamina model"
+  },
+  {
+   "id": "H4-R.c",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4-R (c) No erased weakness",
+   "entry": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (c); brief 10 section 1, H4.",
+   "reads": "Brief 09: 0 of 3,463 ahead; H2 holds.",
+   "decisions": "Over every (ability, piece) where the ability's share of the piece's positive +10 effects is under 0.1, its specialist ahead on at most 1%; H2 holds on ag-baseline's pieces as written and on this set.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor’ (static); docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "H4-R.d",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4-R (d) Direct and indirect apart",
+   "entry": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (d); brief 10 section 1, H4.",
+   "reads": "Covered piecemeal by earlier tests (guide-examples-*, attributes-phase-2a/2b, evidence-*); never measured as one account.",
+   "decisions": "Each benefit outside the judged piece that `ABILITY_DEFS[].affects` claims, measured by twin lives through the game's commands and reported on its own line: listening (an evening with a partner or reader, a brief rehearsed on its feet), imagination (table work, a brief's breakdown), focus (getting to know coursework's material), memory (learning lines), adaptability (a revision after a note; a director's note on the blocking), composure (the stress nerves add before a performance), discipline (the pace of growth), stamina (the condition after the work and across a run: waits on the stamina area's model). None added into (b).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > PLAYER JOURNEY: what an ability does outside the piece shows in twin lives through the commands: nerves before a performance add less stress with more composure, by the rule, and an hour of practice grows more with more discipline’ (played (twin lives through the commands and the clock)); docs/verification/decisions-2026-10-16/judge/h4-indirect.json ‘npx vite-node tools/h4-indirect.ts -- --out <file>’ (measurement); docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement)",
+   "sourceStatus": "verified as it stands; stamina's waits on the stamina model",
+   "status": "Partially Implemented",
+   "disposition": "verified as it stands; stamina's waits on the stamina model",
+   "gap": "verified as it stands; stamina's waits on the stamina model"
+  },
+  {
+   "id": "H4-R.e",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4-R (e) It catches what it should",
+   "entry": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (e); brief 10 section 1, H4.",
+   "reads": "Not run.",
+   "decisions": "In copies: one ability's every input weight cut to a tenth in `termsOf` fails (a) or (b); a specialist built over 12 abilities instead of 11 fails the printed budgets.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (h4r section); tools/ag-criteria.mjs; tools/h4-indirect.ts (new, (d)); content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "H4.asWritten",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "H4 as written and H5 beside H4-R",
+   "entry": "tools/ag-criteria.mjs",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, H4-R: \"H5 must hold beside it\"; originals kept.",
+   "reads": "H4 as written 1 of 12 (integrated-09): not met. H5 holds (436 of 436, 28.9%).",
+   "decisions": "Both printed beside H4-R, H4 marked superseded.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-criteria.mjs",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement)",
+   "sourceStatus": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)",
+   "status": "Not Implemented",
+   "disposition": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)",
+   "gap": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)"
+  },
+  {
+   "id": "L3-R.a",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3-R (a) A fixed set, controlled",
+   "entry": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (a); brief 10 section 1, L3.",
+   "reads": "L3′ (brief 09): each journey's own takes only, two journeys of one seed.",
+   "decisions": "The 24, chosen here before any measurement by kind and spread, not by outcome: briefs (each at its first reading) brief-art_house (restraint), brief-comedy (rhythm), brief-drama (sincerity), brief-musical (heightened), brief-horror (extremity), brief-legal_drama (exactness), brief-thriller (tension), brief-social_realism (spontaneity); class scenes seagull-4, earnest-2, hamlet-3-1, antigone-441, dream-3-2, scapin-3-2, henry5-4-3, orig-office-hours; nights (a supporting part at the School) The Bear, Three Sisters, Macbeth, Hedda Gabler; castings Twelfth Night, Julius Caesar, Trifles, Tartuffe. Each fully prepared, every axis left open, readiness 100, no draw, judged at the levels of the start, each month's start and the end of each journey; beside them each journey's own takes replayed (L3′).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "L3-R.b",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3-R (b) Enough journeys",
+   "entry": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (b); brief 10 section 1, L3.",
+   "reads": "Two profiles on bj-0.",
+   "decisions": "Beginner (as made), developing (abilities and techniques raised to 55), specialist (the feeling abilities at 90, the rest 49), generalist (new: the eleven abilities the specialist sets, each at their mean, 703 / 11 = 63.9, techniques as made), each on bj-0 and bj-1, 120 days, through the commands (`tools/brief-journeys.ts`).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "L3-R.c",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3-R (c) Growth",
+   "entry": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (c); brief 10 section 1, L3.",
+   "reads": "L3′: 0 falls in 68 and 76 steps, two journeys; stamina fell 50 → 35 on both (no workouts).",
+   "decisions": "Per non-mastered journey: the fixed set's mean at the end's levels less at the start's at least 1.0. Between consecutive months, no fixed-set piece and no replayed take falls by more than 1e-9 where no ability it reads fell; where one fell, the piece judged again with each fallen ability held at the month before's level comes out at or over its month-before figure (the fall disappears).",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell’ (played (the attentive policy through the clock, a month)); docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "L3-R.d",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3-R (d) More never makes it worse",
+   "entry": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (d); brief 10 section 1, L3.",
+   "reads": "tests/engine-properties.test.ts holds a sampled monotonicity; no catalog-wide sweep.",
+   "decisions": "Every piece of H4-R's set; from the even actor (50), the twelve specialists, a beginner (35 everywhere, techniques 30), a near-master (92, techniques 85) and four drawn actors (seeded, abilities 25 to 95, techniques 20 to 90): each ability +10 (held at full) and to full, everything else held: never lower by more than 1e-9.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master’ (static); docs/verification/decisions-2026-10-16/judge/monotonicity.json ‘npx vite-node tools/monotonicity.ts -- --part k --of 4; --merge’ (measurement); docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "L3-R.e",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3-R (e) The journey kept in view",
+   "entry": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (e); brief 10 section 1, L3.",
+   "reads": "Brief 09's trace gives most of it for two journeys.",
+   "decisions": "Per journey and month: the takes, their purposes, difficulty (mean and range), stakes and genres; L3 as written (the last month's mean of takes against the first's) beside the controlled measure.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts; tools/monotonicity.ts (new, (d))",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "L3.asWritten",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "L3 as written, kept as the record",
+   "entry": "tools/brief-journeys.ts",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (e).",
+   "reads": "Last measured: the specialist 65.5 → 64.3, not met; the beginner 54.0 → 56.8, met (integrated-09).",
+   "decisions": "Reported per journey beside L3-R.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/brief-journeys.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement)",
+   "sourceStatus": "superseded by L3-R; kept as the record, its figures in L3-R (e)",
+   "status": "Not Implemented",
+   "disposition": "superseded by L3-R; kept as the record, its figures in L3-R (e)",
+   "gap": "superseded by L3-R; kept as the record, its figures in L3-R (e)"
+  },
+  {
+   "id": "M1",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "Mastery is kept",
+   "entry": "tools/ag-baseline.ts (mastery); tools/interpretation.ts (ST5, F1)",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md, Mastery Is Kept; brief 10 section 1, last paragraph.",
+   "reads": "M1 holds (integrated-09): briefs 4,560 of 4,560, scenes 65, nights 30, casting 30, coursework 13 at 100, 0 drawn off; ST5 2,520 of 2,520 and F1's ST5 every fitting way at 100.",
+   "decisions": "Measured on every judged piece and reading, every fitting way of playing, with no draw and with three drawn keys, before and after; final figure after the stamina model is integrated.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tools/ag-baseline.ts (mastery); tools/interpretation.ts (ST5, F1)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts ‘M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits’ (static); docs/verification/decisions-2026-10-16/judge/criteria.txt ‘node tools/ag-criteria.mjs (M1, M1 on H4-R's set)’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "judge.together",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "Every criterion section 5 lists, after the change",
+   "entry": "docs/verification/decisions-2026-10-16/judge/",
+   "preconditions": "docs/verification/decisions-2026-10-16/criteria.md section 5; judge.md, The Order, 5.",
+   "reads": "Integrated-09: every criterion that held holds (ST1, ST2, ST4, ST5, ST7, ST8, F1, F2, I1 to I5, A1 to A3, T2, T3, G3 to G5, M1, M3, O1, O2, H2, H5, H7, S1 to S4, G2, the audit's isolation).",
+   "decisions": "Measure all of them after the change (and again once the stamina model is in); a criterion that held and fails is a regression fixed or reported with its cause.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "docs/verification/decisions-2026-10-16/judge/",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/judge/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <judge> <part>’ (measurement)",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "missing": "verified as it stands"
+  },
+  {
+   "id": "judge.tests",
+   "group": "Brief 10 Area: judge",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/judge-checklist.json",
+   "goal": "The tests of section 1",
+   "entry": "tests/decisions-judge.test.ts",
+   "preconditions": "judge.md, The Order, 4; brief 10 section 5.",
+   "reads": "None in tests/decisions-judge.test.ts (new).",
+   "decisions": "Identical-input consistency; the stage and the close frame differing where they should; restrained and expansive interpretations, wins and limits; every ability's contribution on its own work; a specialist's and a generalist's development; controlled improvement over time; mastery at 100. Figures worked from the rule; mutations in copies.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "tests/decisions-judge.test.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-judge.test.ts (test file)",
+   "sourceStatus": "implemented",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "implemented",
+   "missing": "the area called it implemented and cites no gate test that holds it"
+  },
+  {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
    "id": "ST1",
    "group": "Criteria: The Stage",
@@ -11621,14 +12368,15 @@
    "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11649,14 +12397,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11677,15 +12426,11 @@
    "failure": "As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "before": "specialist 171/171; even actor 159 of 171",
    "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?",
-    "evidence": "docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met"
-   }
+   "deferredBy": "ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11706,14 +12451,15 @@
    "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11734,14 +12480,15 @@
    "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11762,15 +12509,11 @@
    "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "before": "expansive 21 of 49; restrained 7 of 34",
    "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?",
-    "evidence": "docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met"
-   }
+   "deferredBy": "ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11791,14 +12534,15 @@
    "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11819,14 +12563,15 @@
    "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11847,14 +12592,15 @@
    "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11875,14 +12621,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11903,14 +12650,15 @@
    "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11931,14 +12679,15 @@
    "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11959,14 +12708,15 @@
    "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11987,14 +12737,15 @@
    "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12015,14 +12766,15 @@
    "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12043,14 +12795,15 @@
    "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12071,14 +12824,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12099,14 +12853,15 @@
    "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12127,14 +12882,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12155,14 +12911,15 @@
    "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12183,14 +12940,15 @@
    "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12211,14 +12969,15 @@
    "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12239,14 +12998,15 @@
    "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12267,14 +13027,15 @@
    "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12295,14 +13056,15 @@
    "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12323,14 +13085,15 @@
    "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12351,14 +13114,15 @@
    "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12379,14 +13143,15 @@
    "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12407,14 +13172,15 @@
    "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12435,14 +13201,15 @@
    "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12463,14 +13230,15 @@
    "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12491,15 +13259,11 @@
    "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "before": "1 of 12",
    "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?",
-    "evidence": "docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10"
-   }
+   "deferredBy": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12553,7 +13317,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12749,14 +13513,15 @@
    "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12777,14 +13542,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12805,15 +13571,11 @@
    "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
    "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?",
-    "evidence": "docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist"
-   }
+   "deferredBy": "L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12986,7 +13748,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13031,14 +13793,15 @@
    "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13059,14 +13822,15 @@
    "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13087,14 +13851,15 @@
    "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13115,14 +13880,15 @@
    "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13143,14 +13909,15 @@
    "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "status": "Implemented, Verification Incomplete",
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
    "sourceStatus": "Met",
    "measured": {
     "commit": "c9cba9c8",
     "watch": "judge"
-   }
+   },
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13287,7 +14054,7 @@
     "commit": "bcd75970",
     "watch": "app"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13314,7 +14081,7 @@
     "commit": "bcd75970",
     "watch": "app"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13341,7 +14108,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13368,7 +14135,7 @@
     "commit": "7c1198a2",
     "watch": "app"
    },
-   "missing": "It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again"
+   "missing": "It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

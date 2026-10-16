@@ -282,7 +282,8 @@ for (const { key, dir, item, result } of areas()) {
     ...(status === PI || status === NI ? { gap: clean(join(result?.gap, result ? why : 'the area has written no result for it')) } : {}),
     ...(status === DR ? { decision: result?.decision ?? (result?.ownerDecision ? { question: result.ownerDecision, evidence: `${dir}/${key}-result.json`, recommendation: result?.recommendation ?? NONE } : undefined) } : {}),
     ...(status === BE ? { blocker: result?.blocker } : {}),
-    ...(status === ED ? { deferredBy: result?.deferredBy } : {}),
+    // An override can supersede an item, saying by what (from brief 10, 2026-10-16: until then only an area's result could).
+    ...(status === ED ? { deferredBy: override?.deferredBy ?? result?.deferredBy } : {}),
   });
 }
 

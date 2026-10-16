@@ -91,7 +91,7 @@
    "failure": "As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3.md"
@@ -108,11 +108,7 @@
    "before": "specialist 171/171; even actor 159 of 171",
    "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?",
-    "evidence": "docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met"
-   }
+   "deferredBy": "ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "ST4",
@@ -206,7 +202,7 @@
    "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -219,11 +215,7 @@
    "before": "expansive 21 of 49; restrained 7 of 34",
    "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?",
-    "evidence": "docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met"
-   }
+   "deferredBy": "ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "ST7",
@@ -1223,7 +1215,7 @@
    "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/h4.md"
@@ -1238,11 +1230,7 @@
    "before": "1 of 12",
    "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?",
-    "evidence": "docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10"
-   }
+   "deferredBy": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "F2",
@@ -1608,7 +1596,7 @@
    "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/l3.md"
@@ -1620,11 +1608,7 @@
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
    "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?",
-    "evidence": "docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
-    "recommendation": "Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist"
-   }
+   "deferredBy": "L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "MA1",
@@ -2574,6 +2558,34 @@
   }
  ],
  "overrides": [
+  {
+   "id": "judge.ST3",
+   "status": "Explicitly Deferred",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)",
+   "why": "Decided by the owner in brief 10",
+   "citations": []
+  },
+  {
+   "id": "judge.ST6",
+   "status": "Explicitly Deferred",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)",
+   "why": "Decided by the owner in brief 10",
+   "citations": []
+  },
+  {
+   "id": "judge.H4",
+   "status": "Explicitly Deferred",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)",
+   "why": "Decided by the owner in brief 10",
+   "citations": []
+  },
+  {
+   "id": "judge.L3",
+   "status": "Explicitly Deferred",
+   "deferredBy": "The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)",
+   "why": "Decided by the owner in brief 10",
+   "citations": []
+  },
   {
    "id": "banking.5.arion-card",
    "status": "Implemented And Verified",
