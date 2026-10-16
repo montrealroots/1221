@@ -1,0 +1,60 @@
+diff --git a/src/engine/systems/evaluation.ts b/src/engine/systems/evaluation.ts
+index 9e515660..37253d58 100644
+--- a/src/engine/systems/evaluation.ts
++++ b/src/engine/systems/evaluation.ts
+@@ -490,6 +490,11 @@ export function wholeOf(dims: readonly (Pick<DimensionResult, 'dimension' | 'qua
+   const wTotal = dims.reduce((s, x) => s + (weights[x.dimension] ?? 0), 0);
+   const weighted = wTotal > 0 ? dims.reduce((s, x) => s + q(x) * (weights[x.dimension] ?? 0), 0) / wTotal : 0;
+   const weakest = dims.length ? Math.min(...dims.map(q)) : 0;
++  if (process.env.WEIGHTED_WEAK && wTotal > 0) {
++    const avg = wTotal / dims.length;
++    const short = dims.reduce((m, x) => Math.max(m, Math.min(1, (weights[x.dimension] ?? 0) / avg) * (weighted - q(x))), 0);
++    return weighted - (1 - E.meanShare) * short;
++  }
+   return E.meanShare * weighted + (1 - E.meanShare) * weakest;
+ }
+ 
+diff --git a/src/engine/systems/material.ts b/src/engine/systems/material.ts
+index 254e8b3b..6910763d 100644
+--- a/src/engine/systems/material.ts
++++ b/src/engine/systems/material.ts
+@@ -99,6 +99,7 @@ export function demandsOf(m: MaterialProfile): Record<keyof typeof DEMAND_EFFECT
+   };
+ }
+ 
++const KAPPA = Number(process.env.KAPPA ?? 1);
+ const add = (to: Record<string, { ability: AbilityId; weight: number }[]>, d: Dimension, xs: readonly { ability: AbilityId; weight: number }[] | undefined, times = 1) => {
+   if (!xs || times <= 0) return;
+   const list = (to[d] ??= []);
+@@ -132,26 +133,26 @@ export function materialContext(task: TaskProfile, material: MaterialProfile | u
+       if (!level) continue;
+       const e = FEATURE_EFFECT[f];
+       for (const [d, per] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * level);
+-      for (const [d, xs] of Object.entries(e.inputs) as [Dimension, { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, level);
++      for (const [d, xs] of Object.entries(e.inputs) as [Dimension, { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, level * KAPPA);
+     }
+     const t = transitionsOf(material);
+     for (const [d, per] of Object.entries(TRANSITION_EFFECT.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * t);
+-    for (const [d, xs] of Object.entries(TRANSITION_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, t);
++    for (const [d, xs] of Object.entries(TRANSITION_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, t * KAPPA);
+     // Beats held two ways at once (from 2026-10-12), each.
+     const bl = blendsOf(material);
+     for (const [d, per] of Object.entries(BLEND_EFFECT.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * bl);
+-    for (const [d, xs] of Object.entries(BLEND_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, bl);
++    for (const [d, xs] of Object.entries(BLEND_EFFECT.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, bl * KAPPA);
+     if (material.language !== 'everyday') {
+       const e = LANGUAGE_EFFECT[material.language];
+       for (const [d, x] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
+-      for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs);
++      for (const [d, xs] of Object.entries(e.inputs) as unknown as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, KAPPA);
+     }
+     // What the piece demands of the abilities its task reads little of (from 2026-10-16, `DEMAND_EFFECT`).
+     const units = demandsOf(material);
+     for (const k of Object.keys(DEMAND_EFFECT) as (keyof typeof DEMAND_EFFECT)[]) {
+       const e = DEMAND_EFFECT[k];
+       for (const [d, per] of Object.entries(e.lean) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * (1 + per * units[k]);
+-      for (const [d, xs] of Object.entries(e.inputs) as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, units[k]);
++      for (const [d, xs] of Object.entries(e.inputs) as [Dimension, readonly { ability: AbilityId; weight: number }[]][]) if (has(d)) add(inputs, d, xs, units[k] * KAPPA);
+     }
+     if (material.medium === 'camera') for (const [d, x] of Object.entries(CAMERA_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;
+     if (material.medium === 'voice') for (const [d, x] of Object.entries(VOICE_LEAN) as [Dimension, number][]) if (has(d)) lean[d] = lean[d]! * x;

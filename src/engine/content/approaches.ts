@@ -41,10 +41,26 @@ export interface ApproachEffect {
   inputs: Inputs;
 }
 
+/**
+ * Restrained draws on composure and focus as well as emotional depth (from 2026-10-16, the integration pass): the feeling
+ * held under the surface is the feeling and the control that holds it. Stanislavski's "Internal and External Control and
+ * the Finishing Touches" (An Actor's Work, tr. Benedetti, 2008, pp. 536-542) puts excess down to "nerves, embarrassment,
+ * stagefright… lost self-control", has the actor "gain the necessary control" over what was felt before telling it, and
+ * makes inner control the inner line kept clear through the pauses, "in each inner Bit"; "the more control and finish
+ * acting has, the calmer the actor is, the more clearly the shape and form of the character comes across and the more it
+ * affects the audience". So the calm (composure) goes on believability, where what was felt is read, and the line held
+ * (focus) on consistency, the dimension restraint leans second; each where the task doesn't read it already, since a
+ * draw at the share a dimension already gives it would change nothing (a first placing of both on consistency, which
+ * reads composure at half, made a restrained take reward composure no more than an expansive one, and was caught by
+ * tests/integration-stage.test.ts). The sizes are SLATE's, half each, so restraint draws as much in all as expansive
+ * does. Until then it drew emotional depth alone, where the stage criteria (ST6) named its specialist strong
+ * "in what restrained draws on (emotional depth, then composure and focus)". It moved ST6 by nothing: what holds a
+ * restrained specialist back against a scene built on size is the grain itself (docs/verification/integration-2026-10-16/st6.md).
+ */
 export const APPROACH_EFFECT: Readonly<Record<AxisValue, ApproachEffect>> = {
   measured: { label: 'Measured', words: 'Taking the time each thought needs: the choices specific, the pauses earned.', lean: { interpretation: 1.2, believability: 1.1 }, inputs: { interpretation: [{ ability: 'focus', weight: 1 }] } },
   driven: { label: 'Driven', words: 'Picking up cues and pressing on: the scene played at the speed of what the characters want.', lean: { responsiveness: 1.2, execution: 1.1 }, inputs: { responsiveness: [{ ability: 'adaptability', weight: 1 }], consistency: [{ ability: 'stamina', weight: 0.5 }] } },
-  restrained: { label: 'Restrained', words: 'Less shown than felt: the feeling held under the surface.', lean: { believability: 1.25, consistency: 1.05 }, inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }] } },
+  restrained: { label: 'Restrained', words: 'Less shown than felt: the feeling held under the surface.', lean: { believability: 1.25, consistency: 1.05 }, inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },
   expansive: { label: 'Expansive', words: 'Sized to the room: voice, body and feeling played out to the house.', lean: { connection: 1.25, execution: 1.05 }, inputs: { connection: [{ ability: 'presence', weight: 1 }], execution: [{ ability: 'vocal', weight: 0.5 }, { ability: 'physical', weight: 0.5 }] } },
   set: { label: 'Set', words: 'Fixed and repeatable: every beat placed, the same each time.', lean: { consistency: 1.25, execution: 1.05 }, inputs: { consistency: [{ ability: 'discipline', weight: 1 }], execution: [{ ability: 'memory', weight: 0.5 }] } },
   open: { label: 'Open', words: 'Live each time: taking the next moment from what the partner gives.', lean: { responsiveness: 1.25, connection: 1.05 }, inputs: { responsiveness: [{ ability: 'listening', weight: 1 }] } },

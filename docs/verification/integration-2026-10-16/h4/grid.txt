@@ -1,0 +1,50 @@
+== KAPPA=1 WEIGHTED_WEAK=
+meanShare 0.75; H4 met 2 of 12
+emotionalDepth 88.9% | presence 10.9% | listening 66.4% | imagination 48.9% | focus 56.9% | memory 50.6% | adaptability 54.1% | composure 54.4% | vocal 55.7% | physical 44.6% | discipline 13.2% | stamina 4.7% | H5 aheadOfHalf 431/431 (100.0%) within1 116 (26.9%); H2 brief max 96/298, scene max 20/60, night max 7/30, casting max 7/30, coursework max 3/13
+G3 {"physical":12,"focus":14,"emotionalDepth":53,"memory":16,"vocal":11,"composure":15,"imagination":16,"adaptability":10,"listening":2} (max 53 of 149; actors best on >= 10: 8)
+
+== KAPPA=1 WEIGHTED_WEAK=1
+meanShare 0.75; H4 met 4 of 12
+emotionalDepth 96.4% | presence 16.6% | listening 76.6% | imagination 51.9% | focus 64.4% | memory 70.6% | adaptability 59.6% | composure 54.4% | vocal 56.7% | physical 49.4% | discipline 18.1% | stamina 5.2% | H5 aheadOfHalf 431/431 (100.0%) within1 93 (21.6%); H2 brief max 93/298, scene max 32/60 FAIL, night max 7/30, casting max 8/30, coursework max 3/13
+G3 {"physical":14,"focus":16,"emotionalDepth":48,"memory":15,"vocal":12,"composure":17,"imagination":15,"adaptability":10,"listening":2} (max 48 of 149; actors best on >= 10: 8)
+
+== KAPPA=1.25 WEIGHTED_WEAK=
+meanShare 0.75; H4 met 3 of 12
+emotionalDepth 93.5% | presence 5.4% | listening 66.5% | imagination 46.5% | focus 59.2% | memory 66.7% | adaptability 58.0% | composure 50.6% | vocal 55.4% | physical 45.9% | discipline 12.3% | stamina 4.2% | H5 aheadOfHalf 431/431 (100.0%) within1 103 (23.9%); H2 brief max 95/298, scene max 25/60, night max 7/30, casting max 7/30, coursework max 3/13
+G3 {"physical":12,"focus":14,"emotionalDepth":51,"memory":17,"vocal":11,"composure":17,"imagination":15,"adaptability":10,"listening":2} (max 51 of 149; actors best on >= 10: 8)
+
+== KAPPA=1.25 WEIGHTED_WEAK=1
+meanShare 0.75; H4 met 5 of 12
+emotionalDepth 93.2% | presence 12.8% | listening 80.6% | imagination 51.1% | focus 70.6% | memory 63.4% | adaptability 57.3% | composure 68.1% | vocal 54.6% | physical 52.9% | discipline 17.3% | stamina 5.2% | H5 aheadOfHalf 431/431 (100.0%) within1 83 (19.3%); H2 brief max 92/298, scene max 40/60 FAIL, night max 7/30, casting max 8/30, coursework max 3/13
+G3 {"physical":13,"focus":15,"emotionalDepth":47,"memory":17,"vocal":11,"composure":20,"imagination":14,"adaptability":10,"listening":2} (max 47 of 149; actors best on >= 10: 8)
+
+== KAPPA=1.5 WEIGHTED_WEAK=
+meanShare 0.75; H4 met 4 of 12
+emotionalDepth 95.8% | presence 2.2% | listening 77.2% | imagination 44.3% | focus 61.5% | memory 67.8% | adaptability 56.8% | composure 48.7% | vocal 53.9% | physical 44.8% | discipline 13.6% | stamina 4.2% | H5 aheadOfHalf 431/431 (100.0%) within1 90 (20.9%); H2 brief max 92/298, scene max 33/60 FAIL, night max 7/30, casting max 10/30, coursework max 3/13
+G3 {"physical":12,"focus":15,"emotionalDepth":51,"memory":19,"vocal":10,"composure":18,"imagination":12,"adaptability":10,"listening":2} (max 51 of 149; actors best on >= 10: 8)
+
+== KAPPA=1.5 WEIGHTED_WEAK=1
+meanShare 0.75; H4 met 6 of 12
+emotionalDepth 96.3% | presence 7.4% | listening 79.3% | imagination 47.2% | focus 70.9% | memory 74.9% | adaptability 66.8% | composure 68.8% | vocal 52.9% | physical 52.5% | discipline 17.7% | stamina 5.2% | H5 aheadOfHalf 431/431 (100.0%) within1 69 (16.0%); H2 brief max 88/298, scene max 40/60 FAIL, night max 7/30, casting max 7/30, coursework max 3/13
+G3 {"physical":13,"focus":17,"emotionalDepth":43,"memory":19,"vocal":10,"composure":21,"imagination":12,"adaptability":11,"listening":3} (max 43 of 149; actors best on >= 10: 8)
+
+== KAPPA=2 WEIGHTED_WEAK=
+meanShare 0.75; H4 met 6 of 12
+emotionalDepth 92.5% | presence 1.2% | listening 78.3% | imagination 45.6% | focus 60.8% | memory 71.5% | adaptability 64.8% | composure 67.1% | vocal 52.7% | physical 49.1% | discipline 13.1% | stamina 2.8% | H5 aheadOfHalf 431/431 (100.0%) within1 71 (16.5%); H2 brief max 90/298, scene max 40/60 FAIL, night max 8/30, casting max 11/30, coursework max 3/13
+G3 {"physical":13,"focus":15,"emotionalDepth":40,"memory":19,"vocal":11,"composure":23,"imagination":11,"adaptability":14,"listening":3} (max 40 of 149; actors best on >= 10: 8)
+
+== KAPPA=2 WEIGHTED_WEAK=1
+meanShare 0.75; H4 met 7 of 12
+emotionalDepth 91.4% | presence 1.8% | listening 89.2% | imagination 45.7% | focus 70.6% | memory 76.0% | adaptability 71.6% | composure 70.4% | vocal 66.2% | physical 52.7% | discipline 17.5% | stamina 4.2% | H5 aheadOfHalf 431/431 (100.0%) within1 60 (13.9%); H2 brief max 85/298, scene max 42/60 FAIL, night max 9/30, casting max 10/30, coursework max 3/13
+G3 {"physical":14,"focus":15,"emotionalDepth":38,"memory":18,"vocal":11,"composure":25,"imagination":11,"adaptability":14,"listening":3} (max 38 of 149; actors best on >= 10: 8)
+
+== KAPPA=3 WEIGHTED_WEAK=
+meanShare 0.75; H4 met 7 of 12
+emotionalDepth 86.3% | presence 1.2% | listening 96.7% | imagination 44.6% | focus 70.1% | memory 78.3% | adaptability 72.2% | composure 70.6% | vocal 68.3% | physical 46.7% | discipline 15.8% | stamina 2.3% | H5 aheadOfHalf 431/431 (100.0%) within1 51 (11.8%); H2 brief max 81/298, scene max 46/60 FAIL, night max 14/30, casting max 16/30 FAIL, coursework max 3/13
+G3 {"physical":14,"focus":15,"emotionalDepth":35,"memory":21,"vocal":11,"composure":24,"imagination":11,"adaptability":15,"listening":3} (max 35 of 149; actors best on >= 10: 8)
+
+== KAPPA=3 WEIGHTED_WEAK=1
+meanShare 0.75; H4 met 8 of 12
+emotionalDepth 89.9% | presence 1.4% | listening 98.6% | imagination 47.5% | focus 75.7% | memory 79.2% | adaptability 73.9% | composure 68.1% | vocal 66.7% | physical 62.8% | discipline 18.2% | stamina 3.3% | H5 aheadOfHalf 431/431 (100.0%) within1 41 (9.5%); H2 brief max 79/298, scene max 47/60 FAIL, night max 15/30, casting max 16/30 FAIL, coursework max 3/13
+G3 {"physical":14,"focus":15,"emotionalDepth":34,"memory":21,"vocal":11,"composure":26,"imagination":10,"adaptability":15,"listening":3} (max 34 of 149; actors best on >= 10: 8)
+

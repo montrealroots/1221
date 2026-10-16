@@ -1,0 +1,209 @@
+/**
+ * SLATE — the attributes-and-genres baseline (from 2026-10-16; phase 1 of the owner's brief "Perfect The Attributes,
+ * Genres, And Their Integration Through Demonstrable Gameplay"). A read-only harness: it imports the engine's own
+ * evaluation (`judge`, `judgePiece`, `briefContext`, `materialContext`, `abilityGain`, `sharedOf`), sets no save, plays
+ * no command and writes nothing but its own JSON. Every figure in
+ * docs/verification/attributes-genres-2026-10-16/baseline.md comes from here or from a played tool named there.
+ *
+ *   npx vite-node tools/ag-baseline.ts -- --out docs/verification/attributes-genres-2026-10-16/baseline.json
+ *
+ * The actors are TEST SETUP, levels set directly, as `tools/specialists.ts` sets them: twelve abilities summing 600
+ * (even, 50 each) and seventeen techniques at 50; a specialist at 85 on one ability, the other eleven lowered evenly
+ * to keep the sum. Every piece is fully prepared, on a sufficient day (readiness 100), with no draw (`expected`),
+ * unless the section says otherwise. The draw sections key the evaluation's own bounded draw by `ag-<n>`.
+ *
+ * The pieces: every practice brief (judged in its beats, each reading, no way of playing), every scene a course can set
+ * (`SCENE_MATERIAL`, as Scene Study pitches it), every play as a supporting part at the School (`PLAY_MATERIAL`),
+ * casting's read of every play, and each coursework template not judged as a scene (its task anything but `scene`), as `judgeWork`
+ * judges one with its template's reads and par.
+ */
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { dirname } from 'node:path';
+import { BRIEFS, briefsOf, type Brief } from '../src/engine/content/briefs';
+import { ABILITY_DEFS, MASTERED, TECHNIQUES, DEVELOPMENT } from '../src/engine/content/abilities';
+import { AXES } from '../src/engine/content/approaches';
+import { PLAY_MATERIAL, SCENE_MATERIAL, type Axis, type AxisValue, type MaterialProfile } from '../src/engine/content/material';
+import { TASK_PROFILES, TEMPLATE_TASK, type Dimension } from '../src/engine/content/tasks';
+import { TEMPLATES, templateById } from '../src/engine/content/coursework';
+import { PIECE } from '../src/engine/content/piece';
+import { GENRE_DEFS } from '../src/engine/content/genres';
+import { ENGAGEMENT } from '../src/engine/content/engagement';
+import { TIER } from '../src/engine/content/practice';
+import type { Person } from '../src/engine/domain/model';
+import { briefContext, briefPiece, tapeReadsOf, BRIEF, type BriefRecord } from '../src/engine/systems/briefs';
+import { judge, type EvalContext, type Evaluation, type Performer } from '../src/engine/systems/evaluation';
+import { judgePiece, loadOf, pieceWeights, toneSegments, type PieceSpec } from '../src/engine/systems/piece';
+import { materialContext, misfitOf, type Playing } from '../src/engine/systems/material';
+import { castingPerformer, NIGHT_DIFFICULTY } from '../src/engine/systems/school';
+import { difficultyOf, partnerPart as ownPartnerPart, READER, type Assignment } from '../src/engine/systems/coursework';
+import { abilityGain } from '../src/engine/systems/attributes';
+import { sharedOf } from '../src/engine/systems/ensemble';
+
+const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i >= 0 ? process.argv[i + 1]! : d; };
+const OUT = arg('out', 'docs/verification/attributes-genres-2026-10-16/baseline.json');
+const DRAWS = Number(arg('draws', '60'));
+
+const ABILITIES = ABILITY_DEFS.map((d) => d.id);
+type Ab = (typeof ABILITIES)[number];
+const nobody = { engagement: { byGenre: {} } } as unknown as Person;
+const SEED = 'ag-baseline';
+const r2 = (x: number) => Math.round(x * 100) / 100;
+const r3 = (x: number) => Math.round(x * 1000) / 1000;
+const mean = (xs: number[]) => (xs.length ? xs.reduce((a, x) => a + x, 0) / xs.length : 0);
+const sd = (xs: number[]) => { const m = mean(xs); return Math.sqrt(xs.reduce((a, x) => a + (x - m) ** 2, 0) / Math.max(1, xs.length - 1)); };
+const stats = (xs: number[]) => ({ n: xs.length, mean: r2(mean(xs)), sd: r2(sd(xs)), min: r2(xs.length ? Math.min(...xs) : 0), max: r2(xs.length ? Math.max(...xs) : 0) });
+
+/** An actor: abilities by id (others at `fill`), techniques by skill (others at `tFill`). */
+const actor = (ab: Partial<Record<Ab, number>>, fill: number, te: Partial<Record<string, number>> = {}, tFill = 50): Performer => ({ ability: (id) => ab[id as Ab] ?? fill, full: () => 100, technique: (s) => te[s] ?? tFill });
+const EVEN = actor({}, 50);
+const MASTER: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
+const specialist = (a: Ab, budget = 600, at = 85): Performer => actor({ [a]: at }, (budget - at) / (ABILITIES.length - 1));
+const bump = (p: Performer, a: Ab, by: number): Performer => ({ ...p, ability: (id) => (id === a ? Math.min(100, p.ability(id) + by) : p.ability(id)) });
+const bumpT = (p: Performer, s: string, by: number): Performer => ({ ...p, technique: (k) => (k === s ? Math.min(100, p.technique(k) + by) : p.technique(k)) });
+
+// ---------------------------------------------------------------------------------------------------------------
+// The pieces
+// ---------------------------------------------------------------------------------------------------------------
+type Kind = 'brief' | 'scene' | 'night' | 'casting' | 'coursework';
+interface Piece { kind: Kind; id: string; genre?: string; judge: (p: Performer, o?: { key?: string; prep?: number; genre?: number; reading?: string }) => Evaluation; material?: MaterialProfile }
+
+const rec = (p: number): BriefRecord => ({ prep: { interpretation: p, memorization: p, rehearsal: p }, takes: [] });
+function briefScore(b: Brief, p: Performer, o: { key?: string; prep?: number; genre?: number; reading?: string; sides?: Omit<Playing, 'chosenAt' | 'prep'> } = {}): Evaluation {
+  const prep = o.prep ?? 1;
+  const reading = o.reading ?? b.readings[0]!.id;
+  const sides = o.sides ?? {};
+  const ctx = briefContext(nobody, b, rec(prep), { reading, ...(Object.keys(sides).length ? { playing: { ...sides, chosenAt: 0, prep } } : {}), prep: { genre: o.genre ?? prep, ...(Object.keys(sides).length ? { approach: prep } : {}) } });
+  return judgePiece(SEED, p, { ...ctx, condition: { readiness: 100 }, key: o.key ?? `ag:${b.id}`, ...(o.key ? {} : { expected: true }) }, briefPiece(b, { ...rec(prep), reading }));
+}
+/** Every reading's mean: what a random choice of reading would come to (the effect matrix reads this). */
+const briefMean = (b: Brief, p: Performer, o: { key?: string; prep?: number; genre?: number } = {}): Evaluation => {
+  const es = b.readings.map((r) => briefScore(b, p, { ...o, reading: r.id }));
+  return { ...es[0]!, overall: r2(mean(es.map((e) => e.overall))) };
+};
+
+function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Piece {
+  const task = kind === 'scene' ? TASK_PROFILES.scene! : TASK_PROFILES.performance!;
+  const read = materialContext(task, m);
+  const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
+  const difficulty = kind === 'scene' ? difficultyOf(templateById('scene-study')!) : kind === 'night' ? NIGHT_DIFFICULTY.school.supporting : 0;
+  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  return {
+    kind, id: m.id, material: m,
+    judge: (p, o = {}) => {
+      const pr = o.prep ?? 1;
+      const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(Object.keys(prep).map((k) => [k, pr])), required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: o.key ?? `ag:${kind}:${m.id}`, ...(o.key ? {} : { expected: true }) };
+      // Until 2026-10-16 a class scene of fewer than two tones was judged whole here, as `scenePiece` judged it; from then
+      // every scene is its tones, or two halves, as a play is.
+      return judgePiece(SEED, kind === 'casting' ? castingPerformer(p) : p, ctx, spec);
+    },
+  };
+}
+
+function courseworkPiece(id: string): Piece {
+  const t = templateById(id)!;
+  const task = TASK_PROFILES[TEMPLATE_TASK[id] ?? 'scene']!;
+  const parts = [...new Set(Object.values(task.dims).flatMap((d) => d!.prep ?? []))];
+  return {
+    kind: 'coursework', id,
+    judge: (p, o = {}) => {
+      const pr = o.prep ?? 1;
+      return judge(SEED, p, { task, techniques: { ...t.reads }, prep: Object.fromEntries(parts.map((k) => [k, pr])), required: Object.fromEntries(parts.map((k) => [k, 0.9])), difficulty: difficultyOf(t), condition: { readiness: 100 }, key: o.key ?? `ag:cw:${id}`, ...(o.key ? {} : { expected: true }) });
+    },
+  };
+}
+
+const PIECES: Piece[] = [
+  ...BRIEFS.map((b): Piece => ({ kind: 'brief', id: b.id, genre: b.kinds[0], judge: (p, o) => briefMean(b, p, o) })),
+  ...SCENE_MATERIAL.map((m) => workPiece(m, 'scene')),
+  ...PLAY_MATERIAL.map((m) => workPiece(m, 'night')),
+  ...PLAY_MATERIAL.map((m) => workPiece(m, 'casting')),
+  ...TEMPLATES.filter((t) => (TEMPLATE_TASK[t.id] ?? 'scene') !== 'scene').map((t) => courseworkPiece(t.id)),
+];
+
+const KINDS: Kind[] = ['brief', 'scene', 'night', 'casting', 'coursework'];
+import { EVALUATION } from '../src/engine/content/tasks';
+const MS = Number(process.env.MEANSHARE ?? EVALUATION.meanShare);
+Object.assign(EVALUATION as unknown as Record<string, number>, { meanShare: MS });
+const evenS = PIECES.map((pc) => pc.judge(EVEN).overall);
+const effect: Record<string, number[]> = {};
+for (const a of ABILITIES) effect[a] = PIECES.map((pc, i) => pc.judge(bump(EVEN, a, 10)).overall - evenS[i]!);
+const total = PIECES.map((_, i) => ABILITIES.reduce((s, a) => s + Math.max(0, effect[a]![i]!), 0));
+const suitable = (a: Ab) => { const d = effect[a]!; const nz = d.filter((x) => x >= 0.05).sort((x, y) => x - y); const med = nz.length ? nz[Math.floor(nz.length / 2)]! : Infinity; return d.map((x) => x >= med && x >= 0.05); };
+const fill = (600 - 85) / 11;
+const rows: string[] = [];
+let met = 0;
+for (const a of ABILITIES) {
+  const suit = suitable(a);
+  const idx = PIECES.map((_, i) => i).filter((i) => suit[i]);
+  const spec = specialist(a);
+  const onlyUp = actor({ [a]: 85 }, 50);
+  const onlyDown = actor({ [a]: 50 }, fill);
+  let ahead = 0; const share: number[] = [], gain: number[] = [], loss: number[] = [], d: number[] = [];
+  const kinds: Record<string, [number, number]> = {};
+  for (const i of idx) {
+    const pc = PIECES[i]!;
+    const x = pc.judge(spec).overall - evenS[i]!;
+    d.push(x); if (x > 0.05) ahead += 1;
+    const k = (kinds[pc.kind] ??= [0, 0]); k[1] += 1; if (x > 0.05) k[0] += 1;
+    share.push(effect[a]![i]! / Math.max(1e-9, total[i]!));
+    gain.push(pc.judge(onlyUp).overall - evenS[i]!);
+    loss.push(pc.judge(onlyDown).overall - evenS[i]!);
+  }
+  const pct = (100 * ahead) / idx.length; if (pct >= 60) met += 1;
+  rows.push(`${a.padEnd(15)} ${String(ahead).padStart(3)}/${String(idx.length).padEnd(3)} ${pct.toFixed(1).padStart(5)}%  share ${(100 * mean(share)).toFixed(1)}%  gain +${mean(gain).toFixed(2)} loss ${mean(loss).toFixed(2)} net ${mean(d).toFixed(2)}  ${Object.entries(kinds).map(([k, [h, n]]) => `${k} ${h}/${n}`).join(', ')}`);
+}
+console.log(`meanShare ${MS}; H4 met ${met} of 12`);
+console.log(rows.join('\n'));
+// Which dimension is the weakest for the even actor and the specialists, and its weight's share of the whole.
+import { leanedWeights as lw } from '../src/engine/systems/evaluation';
+if (process.env.WEAK) {
+  const tally: Record<string, number> = {}; const shares: number[] = []; const gaps: number[] = [];
+  for (const pc of PIECES) {
+    const e = pc.judge(EVEN);
+    const w = e.inputs.piece ? pieceWeights(TASK_PROFILES[e.task]!, e.inputs.lean, e.inputs.piece) : lw(TASK_PROFILES[e.task]!, e.inputs.families, e.inputs.lean);
+    const tot = Object.values(w).reduce((s, x) => s + (x ?? 0), 0);
+    const q = (d: (typeof e.dimensions)[number]) => d.exact ?? d.quality;
+    const weakest = e.dimensions.reduce((m, d) => (q(d) < q(m) ? d : m));
+    const meanW = e.dimensions.reduce((s, d) => s + q(d) * (w[d.dimension] ?? 0), 0) / tot;
+    tally[weakest.dimension] = (tally[weakest.dimension] ?? 0) + 1;
+    shares.push((w[weakest.dimension] ?? 0) / tot); gaps.push(meanW - q(weakest));
+  }
+  const sorted = [...shares].sort((a, b) => a - b);
+  console.log('even actor: weakest dimension', JSON.stringify(tally), 'its weight share: median', sorted[Math.floor(sorted.length / 2)]!.toFixed(3), 'p10', sorted[Math.floor(sorted.length * 0.1)]!.toFixed(3), 'p90', sorted[Math.floor(sorted.length * 0.9)]!.toFixed(3), '; mean − weakest: median', [...gaps].sort((a, b) => a - b)[Math.floor(gaps.length / 2)]!.toFixed(2), 'max', Math.max(...gaps).toFixed(2));
+}
+if (process.env.DIMS) {
+  for (const id of (process.env.DIMS as string).split(',')) {
+    const pc = PIECES.find((p) => p.id === id)!;
+    const e = pc.judge(EVEN);
+    const w = e.inputs.piece ? pieceWeights(TASK_PROFILES[e.task]!, e.inputs.lean, e.inputs.piece) : lw(TASK_PROFILES[e.task]!, e.inputs.families, e.inputs.lean);
+    console.log(pc.kind, id, 'overall', e.overall, e.dimensions.map((d) => `${d.dimension.slice(0, 5)} q=${(d.exact ?? d.quality).toFixed(2)} cap=${d.capacity.toFixed(3)} prep=${d.prepared.toFixed(2)} cond=${d.condition.toFixed(3)} w=${(w[d.dimension] ?? 0).toFixed(2)}`).join(' | '));
+  }
+}
+if (process.env.BAL) {
+  // H5: the even actor ahead of at least half the specialists on >= 50% of pieces; within a point of the best on >= 10%.
+  const specs = ABILITIES.map((a) => PIECES.map((pc) => pc.judge(specialist(a)).overall));
+  let aheadHalf = 0, within1 = 0;
+  const best: Record<string, Record<string, number>> = {};
+  PIECES.forEach((pc, i) => {
+    const sc = specs.map((x) => x[i]!);
+    if (sc.filter((x) => evenS[i]! > x).length >= 6) aheadHalf += 1;
+    const top = Math.max(evenS[i]!, ...sc);
+    if (top - evenS[i]! <= 1) within1 += 1;
+    const who = sc.reduce((b, x, j) => (x > (b < 0 ? evenS[i]! : sc[b]!) + 1e-9 ? j : b), -1);
+    const name = who < 0 ? 'even' : ABILITIES[who]!;
+    ((best[pc.kind] ??= {})[name] = (best[pc.kind]![name] ?? 0) + 1);
+  });
+  const h2 = Object.entries(best).map(([k, m]) => { const n = PIECES.filter((p) => p.kind === k).length; const mx = Math.max(...Object.values(m)); return `${k} max ${mx}/${n}${n >= 30 && mx > n / 2 ? ' FAIL' : ''}`; });
+  console.log(`H5 aheadOfHalf ${aheadHalf}/${PIECES.length} (${(100 * aheadHalf / PIECES.length).toFixed(1)}%) within1 ${within1} (${(100 * within1 / PIECES.length).toFixed(1)}%); H2 ${h2.join(', ')}`);
+  // G3 over genres: the best of 13 actors on each genre's briefs (their mean).
+  const genres = [...new Set(PIECES.filter((p) => p.kind === 'brief').map((p) => p.genre!))];
+  const gBest: Record<string, number> = {};
+  for (const g of genres) {
+    const idx = PIECES.map((p, i) => (p.kind === 'brief' && p.genre === g ? i : -1)).filter((i) => i >= 0);
+    const m = (xs: number[]) => idx.reduce((s, i) => s + xs[i]!, 0) / idx.length;
+    const all = [['even', m(evenS)] as const, ...ABILITIES.map((a, j) => [a, m(specs[j]!)] as const)];
+    const top = all.reduce((b, x) => (x[1] > b[1] ? x : b));
+    gBest[top[0]] = (gBest[top[0]] ?? 0) + 1;
+  }
+  console.log(`G3 ${JSON.stringify(gBest)} (max ${Math.max(...Object.values(gBest))} of ${genres.length}; actors best on >= 10: ${Object.values(gBest).filter((x) => x >= 10).length})`);
+}

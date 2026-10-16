@@ -37,7 +37,8 @@ import type { AbilityId } from './abilities';
 // voice's demand no longer counts as size, and a scene's circumstances say what its scale asks.
 // evaluation-9 from 2026-10-16, the integration pass: a result is rounded once, from parts kept at full precision
 // (`judgeExact`, `rounded`, systems/evaluation.ts); until then a dimension and a piece's segment were rounded before a
-// whole was worked out from them, so a result kept under evaluation-8 can differ from today's by a tenth.
+// whole was worked out from them, so a result kept under evaluation-8 can differ from today's by a tenth. Restrained
+// draws on composure and focus too (`APPROACH_EFFECT`), so a take played restrained reads them.
 export const RULESET = 'evaluation-9 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';

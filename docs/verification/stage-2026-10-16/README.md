@@ -96,6 +96,12 @@ For example, the suitability of restrained and expansive:
   `APPROACH_EFFECT` as it was before this brief, and it wasn't changed here. Seven scenes show strength carrying the
   harder side; the bar was a quarter.
 
+**Later on 2026-10-16, the integration pass** (`../integration-2026-10-16/`): ST3's twelve cases a tenth apart were the
+rounding's, and its even-actor clause can't be met by any rounding (`st3.md`, which proposes ST3′); ST4 was met with four
+drama scenes of public or open conflict from public-domain plays; and restraint came to draw on composure and focus as
+the criterion said it did, which moved ST6 by nothing: the grain's size is what holds the restrained specialist back
+(`st6.md`). The paragraphs above are as they were written.
+
 ## Fresh Validation, Defined Before Any Measurement
 
 | | Result | Holds |
