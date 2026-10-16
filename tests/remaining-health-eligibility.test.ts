@@ -32,11 +32,17 @@
  *   the credit's floor, 2025's $15,650 ÷ 12 = $1,304.17;
  * - a Capital One 360 Performance Savings account pays 3.00% a year, a 365th a day on the day's balance, at the month's
  *   end: $365,000 for December's 31 days is 365,000 × 0.03 × 31 ÷ 365 = $930.00; $182,500 is $465.00;
+ * - (until later on 2026-10-16, brief 09's journeys, HUSKY D began on the first of next month, and every date of the
+ *   renewal below was a month later: dated 1 November, decided 6 December, ending with December)
  * - a notice dated on a day is received five days on, and answered by the thirtieth day from then, the 34th day after
  *   its date; decided the next day at midnight: dated 4 January 2027, received 9 January, answered by 7 February,
- *   decided 8 February; dated 1 November 2027, answered by 5 December, decided 6 December;
- * - decided on 6 December 2027, ten days on is 16 December, and the cover ends with December (until 1 January 2028);
- * - HUSKY D renewed in 2027 renews six months on; enrolled in 2026, twelve;
+ *   decided 8 February; dated 1 October 2027, answered by 4 November, decided 5 November;
+ * - decided on 5 November 2027, ten days on is 15 November, and the cover ends with November (until 1 December 2027);
+ * - HUSKY D begins on the first of the month of application, and reaches back to the first of a month before it she was
+ *   eligible in and had care in with nothing covering her: three months for an application in 2026, one from 2027
+ *   (Connecticut's UPM § 1560.10; 42 USC 1396a(a)(34) as Pub. L. 119-21 § 71112 amends it). Enrolled on 1 October 2026
+ *   it begins on 1 October, and applied for on 4 January 2027, on 1 January, or 1 December with December's care;
+ * - HUSKY D renewed in 2027 renews six months on; enrolled in 2026, twelve, from the month of application;
  * - the return's credit: a month's premium less the applicable percentage of income over twelve, the percentage at
  *   under 133% of the year before's line 2.10% in 2026 (Rev. Proc. 2025-25): $20,000 of income is 20,000 ÷ 15,650 =
  *   127.8% of 2025's line, and 0.021 × 20,000 ÷ 12 = $35.00 a month, so each $706.00 premium comes back as $671.00.
@@ -190,7 +196,8 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(text).toContain(`${REFUSED} The marketplace is open to you: open enrollment.`);
     expect(text).toContain(APPLY_LINE);
     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied: a notice says what’s needed, decided February 8, 2027.']);
-    expect(healthOf(sim.player).pending).toEqual({ kind: 'application', state: 'ct', noticeAt: at(2027, 1, 4, 9), decideAt: at(2027, 2, 8, 0), months: ['2026-12'], band: 'low', from: at(2027, 2, 1, 0) });
+    // Approved, it would begin on the first of the month of application, 1 January (from 2026-10-16; until then 1 February).
+    expect(healthOf(sim.player).pending).toEqual({ kind: 'application', state: 'ct', noticeAt: at(2027, 1, 4, 9), decideAt: at(2027, 2, 8, 0), months: ['2026-12'], band: 'low', from: at(2027, 1, 1, 0) });
     expect(titled(sim, 'A Notice Of Noncompliance').map((n) => n.body)).toEqual([APPLIED_NOTICE]);
     // An applicant isn't covered while she answers.
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
@@ -241,8 +248,10 @@ describe('health.apply: HUSKY D applied for on its notice, the month before read
     expect(workedBetween(high, high.player, at(2026, 12, 1, 0), at(2027, 1, 1, 0))).toEqual({ pay: 0, hours: 0 });
     expect(monthEngagement(high, high.player, '2026-12', 'USD')).toBe('income');
     expect(papers(high)).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
-    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
-    expect(healthOf(high.player).program).toMatchObject({ kind: 'medicaid', from: at(2027, 2, 1, 0), renewAt: at(2027, 8, 1, 0) });
+    // From the first of the month of application, 1 January, renewed six months on (from 2026-10-16; until then 1 February
+    // and 1 August). December, the one month a 2027 application reaches back, had no care with nothing covering her.
+    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from January 1, 2027.']);
+    expect(healthOf(high.player).program).toMatchObject({ kind: 'medicaid', from: at(2027, 1, 1, 0), renewAt: at(2027, 7, 1, 0) });
 
     const low = twin('rhe-income-lo', 182_500_00);
     expect(interest(low, 2026, 12)).toEqual([465_00]);
@@ -266,7 +275,8 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(earningsOf(old.player).months['2026-12'] ?? 0).toBeLessThan(580_00);
     expect(monthEngagement(old, old.player, '2026-12', 'USD')).toBe('age');
     expect(papers(old)).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
-    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
+    // From the month of application's first (from 2026-10-16; until then 1 February).
+    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from January 1, 2027.']);
     const young = withdrawn(life('rhe-age-young', 'comfortable'));
     young.advanceTo(at(2027, 1, 4, 9));
     expect(monthEngagement(young, young.player, '2026-12', 'USD')).toBeUndefined();
@@ -287,7 +297,16 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(workedBetween(sim, sim.player, at(2026, 12, 1, 0), at(2027, 1, 1, 0))).toEqual({ pay: 0, hours: 0 });
     expect(monthEngagement(sim, sim.player, '2026-12', 'USD')).toBe('snap');
     expect(papers(sim)).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
-    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
+    // From 2026-10-16 (until then from 1 February, and the December care stayed hers): applied in January 2027, HUSKY D
+    // reaches back one month, to December, which she was eligible in, its work rules not asked before 2027, and had care
+    // in with nothing covering her: a generic filled on 28 December, $41.79 paid, and a doctor's visit on the 31st, its
+    // $183.98 bill not yet due. HUSKY D asks no copay: the fill's $41.79 comes back, and the visit's bill is credited whole.
+    expect((healthOf(sim.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0)).map((e) => [e.at, e.care, e.share])).toEqual([[at(2026, 12, 31, 10), 'visit', 183_98]]);
+    expect((healthOf(sim.player).fills ?? []).filter((f) => f.at >= at(2026, 12, 1, 0)).map((f) => [f.at, f.share])).toEqual([[at(2026, 12, 28, 9), 41_79]]);
+    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from December 1, 2026.']);
+    expect((healthOf(sim.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0)).map((e) => [e.at, e.care, e.share])).toEqual([[at(2026, 12, 31, 10), 'visit', 0]]);
+    expect((healthOf(sim.player).fills ?? []).filter((f) => f.at >= at(2026, 12, 1, 0)).map((f) => [f.at, f.share])).toEqual([[at(2026, 12, 28, 9), 0]]);
+    expect(healthOf(sim.player).bills.filter((b) => b.at === at(2026, 12, 31, 10)).map((b) => [b.amount, b.credited, b.paid])).toEqual([[0, 183_98, true]]);
     // The twin who didn't apply for SNAP: the same month, the rules short.
     const twin = withdrawn(life('rhe-snap', 'comfortable'));
     twin.advanceTo(at(2027, 1, 4, 9));
@@ -295,7 +314,12 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(papers(twin)).toContain(REFUSED);
   }, 300_000);
 
-  it('PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload”): approved, HUSKY D begins on
+  // the first of the month of application, 1 January, and reaches back the one month a 2027 application does to
+  // December, which she was eligible in and had the stay in with nothing covering her (UPM § 1560.10; Pub. L. 119-21
+  // § 71112). The stay, free under Yale New Haven's charity, is HUSKY D's now, its price paid by the plan; renewed six
+  // months from the month of application, 1 July 2027.
+  it('PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay, which HUSKY D now pays where the hospital’s charity had, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload', () => {
     const sim = withdrawn(life('rhe-stay', 'comfortable'));
     const force = forcing(sim);
     force('health.illness', null, []); // TEST SETUP: every week's illness a "no"
@@ -312,8 +336,11 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
     expect(press('health.apply', 'Apply For HUSKY D')).toEqual(['Applied: a notice says what’s needed, decided February 8, 2027.']);
     expect(papers(sim)).toContain('A stay in hospital in a month it assessed counts if you ask for it.');
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']);
-    expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D is yours from February 1, 2027, with no premium: December 2026 met its work rules by a stay in hospital, on your request, and your marketplace plan ends as it begins.']);
-    expect(healthOf(sim.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2027, 2, 1, 0), band: 'low', renewAt: at(2027, 8, 1, 0) });
+    expect(titled(sim, 'Public Cover Approved').map((n) => n.body)).toEqual(['HUSKY D is yours from December 1, 2026, with no premium: December 2026 met its work rules by a stay in hospital, on your request, and your marketplace plan ends as it begins.']);
+    expect(healthOf(sim.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 12, 1, 0), band: 'low', renewAt: at(2027, 7, 1, 0) });
+    const stay = healthOf(sim.player).careLog!.find((e) => e.care === 'stay')!;
+    expect([stay.share, stay.planPaid! > 0]).toEqual([0, true]);
+    expect(coverOn(sim.player, stay.at)).toBe('medicaid');
     expect(healthOf(sim.player).marketplace).toEqual({ from: at(2027, 2, 1, 0), state: 'ct', until: at(2027, 2, 1, 0) });
     expect(healthOf(sim.player).pending).toBeUndefined();
     // Asked again: nothing waits on an answer.
@@ -342,7 +369,11 @@ describe('HUSKY D’s work rules: the exceptions SLATE reads, applied before a d
 // ---------------------------------------------------------------------------
 
 describe('HUSKY D’s renewal: the six months before read, then a notice and thirty days, then the end said ten days ahead', () => {
-  /** The Comfortable family's student withdrawn on 25 August 2026 and enrolled on Papers on 1 October: HUSKY D from 1 November, renewed on 1 November 2027. */
+  /**
+   * The Comfortable family's student withdrawn on 25 August 2026 and enrolled on Papers on 1 October: HUSKY D from 1 October,
+   * the month of application, renewed on 1 October 2027 (from 2026-10-16; until then from 1 November, renewed on
+   * 1 November 2027, and played from 1 April, where now from 1 March so a month's work can fall before the six read).
+   */
   const enrolled = (() => {
     let snap: string | undefined;
     return () => {
@@ -350,61 +381,65 @@ describe('HUSKY D’s renewal: the six months before read, then a notice and thi
         const sim = withdrawn(life('rhe-renew', 'comfortable'));
         sim.advanceTo(at(2026, 10, 1, 9));
         papers(sim);
-        expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
-        expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 11, 1, 0));
-        sim.advanceTo(at(2027, 4, 1, 9));
+        expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from October 1, 2026.']);
+        expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 10, 1, 0));
+        sim.advanceTo(at(2027, 3, 1, 9));
         snap = freeze(sim);
       }
       return thaw(snap);
     };
   })();
 
-  it('PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance”): renewed on 1 October 2027,
+  // a month earlier, the six months read are April to September, so the twin's month outside them is March.
+  it('PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same work in March, outside April to September, brings a notice of noncompliance', () => {
     const june = enrolled();
     wagesPosted(june, at(2027, 6, 25, 17), 600_00, 80); // TEST SETUP: June's work, which no withdrawn life has
-    june.advanceTo(at(2027, 11, 1, 9));
-    expect(healthOf(june.player).program).toMatchObject({ kind: 'medicaid', from: at(2026, 11, 1, 0), renewAt: at(2028, 5, 1, 0) });
+    june.advanceTo(at(2027, 10, 1, 9));
+    expect(healthOf(june.player).program).toMatchObject({ kind: 'medicaid', from: at(2026, 10, 1, 0), renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(june.player).program!.until).toBeUndefined();
-    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 1, 0, 30), 'HUSKY D is renewed to its next renewal, May 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by 80 hours’ work.']]);
+    expect(titled(june, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and June 2027 met its work rules by 80 hours’ work.']]);
     expect(titled(june, 'A Notice Of Noncompliance')).toEqual([]);
     const reloaded = thaw(freeze(june));
-    reloaded.advanceTo(at(2027, 12, 2, 9));
+    reloaded.advanceTo(at(2027, 11, 2, 9));
     expect(titled(reloaded, 'Your Public Cover Is Renewed')).toHaveLength(1);
 
-    const april = enrolled();
-    wagesPosted(april, at(2027, 4, 23, 17), 600_00, 80); // TEST SETUP: April's work, a month before the six
-    april.advanceTo(at(2027, 11, 1, 9));
-    expect(titled(april, 'Your Public Cover Is Renewed')).toEqual([]);
-    expect(healthOf(april.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-10', '2027-09', '2027-08', '2027-07', '2027-06', '2027-05'] });
-    expect(coverOn(april.player, april.now)).toBe('medicaid');
+    const march = enrolled();
+    wagesPosted(march, at(2027, 3, 26, 17), 600_00, 80); // TEST SETUP: March's work, a month before the six
+    march.advanceTo(at(2027, 10, 1, 9));
+    expect(titled(march, 'Your Public Cover Is Renewed')).toEqual([]);
+    expect(healthOf(march.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-09', '2027-08', '2027-07', '2027-06', '2027-05', '2027-04'] });
+    expect(coverOn(march.player, march.now)).toBe('medicaid');
   }, 300_000);
 
-  it('PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days”): every date a month earlier,
+  // the renewal on 1 October 2027, worked from the rules above. The clocks go back on 7 November inside the days played now.
+  it('PLAYER JOURNEY: with no work and under $580 of income in April to September 2027, the renewal of 1 October sends a notice; covered to 30 November, decided on 5 November, ended with November, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days', () => {
     const sim = enrolled();
-    sim.advanceTo(at(2027, 10, 31, 12));
-    for (const m of ['2027-05', '2027-06', '2027-07', '2027-08', '2027-09', '2027-10']) expect(earningsOf(sim.player).months[m] ?? 0).toBeLessThan(580_00);
-    expect(workedBetween(sim, sim.player, at(2027, 5, 1, 0), at(2027, 11, 1, 0))).toEqual({ pay: 0, hours: 0 });
+    sim.advanceTo(at(2027, 9, 30, 12));
+    for (const m of ['2027-04', '2027-05', '2027-06', '2027-07', '2027-08', '2027-09']) expect(earningsOf(sim.player).months[m] ?? 0).toBeLessThan(580_00);
+    expect(workedBetween(sim, sim.player, at(2027, 4, 1, 0), at(2027, 10, 1, 0))).toEqual({ pay: 0, hours: 0 });
     const snap = freeze(sim);
     const jump = thaw(snap);
-    jump.advanceTo(at(2028, 1, 2, 9));
+    jump.advanceTo(at(2027, 12, 2, 9));
     let steps = thaw(snap);
     let reloaded = false;
     // A day at a time (the clocks go back on 7 November, so the hour moves by one; the days don't).
-    for (let t = at(2027, 11, 1, 9); t <= at(2028, 1, 2, 9); t += MS_DAY) {
+    for (let t = at(2027, 10, 1, 9); t <= at(2027, 12, 2, 9); t += MS_DAY) {
       steps.advanceTo(t);
-      if (!reloaded && t >= at(2027, 11, 20, 0)) { steps = thaw(freeze(steps)); reloaded = true; }
-      // Notice, the thirty days and the decision in order: covered every day to 31 December.
-      if (t <= at(2027, 12, 31, 9)) expect(coverOn(steps.player, t)).toBe('medicaid');
-      if (t >= at(2027, 11, 1, 9) && t < at(2027, 12, 6, 0)) { expect(titled(steps, 'A Notice Of Noncompliance')).toHaveLength(1); expect(titled(steps, 'Your Public Cover Ends')).toEqual([]); }
+      if (!reloaded && t >= at(2027, 10, 20, 0)) { steps = thaw(freeze(steps)); reloaded = true; }
+      // Notice, the thirty days and the decision in order: covered every day to 30 November.
+      if (t <= at(2027, 11, 30, 9)) expect(coverOn(steps.player, t)).toBe('medicaid');
+      if (t >= at(2027, 10, 1, 9) && t < at(2027, 11, 5, 0)) { expect(titled(steps, 'A Notice Of Noncompliance')).toHaveLength(1); expect(titled(steps, 'Your Public Cover Ends')).toEqual([]); }
     }
     expect(health(steps)).toEqual(health(jump));
     expect(healthOf(steps.player)).toEqual(healthOf(jump.player));
-    expect(titled(jump, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 11, 1, 0, 30)]);
-    expect(titled(jump, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 12, 6, 0)]);
-    expect(healthOf(jump.player).program!.until).toBe(at(2028, 1, 1, 0));
-    expect(coverOn(jump.player, at(2027, 12, 31, 23))).toBe('medicaid');
-    expect(coverOn(jump.player, at(2028, 1, 1, 9))).toBeUndefined();
-    expect(titled(jump, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 11, 1, 0)).map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 1, 0, 30), 'You’re uncovered from January 1, 2028. You have 60 days to enroll in the marketplace.']]);
+    expect(titled(jump, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 10, 1, 0, 30)]);
+    expect(titled(jump, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
+    expect(healthOf(jump.player).program!.until).toBe(at(2027, 12, 1, 0));
+    expect(coverOn(jump.player, at(2027, 11, 30, 23))).toBe('medicaid');
+    expect(coverOn(jump.player, at(2027, 12, 1, 9))).toBeUndefined();
+    expect(titled(jump, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => [n.at, n.body])).toEqual([[at(2027, 12, 1, 0, 30), 'You’re uncovered from December 1, 2027. You have 60 days to enroll in the marketplace.']]);
     expect(healthOf(jump.player).pending).toBeUndefined();
     // No premium for HUSKY D, ever: nothing health took from her bank but care.
     expect(jump.universe.transactions.filter((t) => /premium/i.test(t.memo))).toEqual([]);

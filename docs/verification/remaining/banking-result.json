@@ -13,7 +13,7 @@
    "evidence": [
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €13.80, January free as the month it opened, and nothing is dropped",
      "kind": "clock (FIXTURE, TEST SETUP rule)",
      "proves": "A German account its bank would close at zero isn’t closed while its fees would take it below zero; the quarter’s €20.70 posts at its closing and the account is pursued as overdrawn; no closed account below zero; breaches 0. Why play can’t reach it: only Citi and Capital One close an account at zero or unfunded."
     },
@@ -25,13 +25,13 @@
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
      "kind": "clock (FIXTURE)",
      "proves": "The overdraft’s set-off charges off €122.89, the overdraft €101.97 + 22¢ of interest built since 1 March + €20.70 of fees, all worked by hand; nothing posts to the closed account after; a twin played a day at a time with a reload each month comes to the same postings."
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
      "kind": "clock (FIXTURE)",
      "proves": "Where the savings cover it, €122.89 is set off from the Flexgeld (its 41¢ of interest settled first), the AktivKonto closes, the Flexgeld stays open, the notice names both and the order ended."
     },
@@ -52,12 +52,12 @@
     {
      "summary": "closedByBank works out what closing settles first: owed more than it holds it isn’t closed (the charges post when due, and the overdrawn path pursues them); what it leaves goes to the primary by the bank’s own payment; a standing order from it ends, said in the notice",
      "where": "src/engine/systems/bankmoves.ts closedByBank",
-     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing (TEST SETUP: $2.50 built, which Citi Access Checking doesn’t pay) goes to Chase, the primary, by Citi’s own payment, nothing left in the closed account"
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €13.80, January free as the month it opened, and nothing is dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing (TEST SETUP: $2.50 built, which Citi Access Checking doesn’t pay) goes to Chase, the primary, by Citi’s own payment, nothing left in the closed account"
     },
     {
      "summary": "closeForOverdraft settles the overdraft interest built since the 1st on every account at the bank and the fees of each account it closes before the set-off, and every account’s fees on a charge-off, so the debt is all of it to the day; completeSwitch’s quiet re-banking after a charge-off doesn’t settle the fees again",
      "where": "src/engine/systems/lending.ts closeForOverdraft, completeSwitch",
-     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld empty, is charged off on 7 March and banked again elsewhere: the closing fees charged once, and nothing of them carried to the new bank as an overdraft"
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld empty, is charged off on 7 March and banked again elsewhere: the closing fees charged once, and nothing of them carried to the new bank as an overdraft"
     }
    ],
    "sources": [
@@ -153,13 +153,13 @@
    "evidence": [
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
      "kind": "command+clock (FIXTURE)",
      "proves": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again."
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged",
      "kind": "command+clock (FIXTURE)",
      "proves": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both."
     },
@@ -177,7 +177,7 @@
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
      "kind": "clock (FIXTURE)",
      "proves": "The set-off charges the 22¢ built since 1 March before taking what’s owed."
     },
@@ -192,7 +192,7 @@
     {
      "summary": "settleOverdraftInterest charges the overdraft interest built since the 1st (whole cents, the fraction left as the 1st leaves it) in every closing path: closeNow, bank.cancel_new, homeCloses, completeSwitch, closeForOverdraft; closeRefusal counts it with the fees in the bank’s words",
      "where": "src/engine/systems/lending.ts settleOverdraftInterest, overdraftInterestOf; bankmoves.ts closeNow, closeRefusal; accountlife.ts bank.cancel_new; abroad.ts homeCloses; banking.ts owingWords",
-     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free"
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free"
     }
    ],
    "sources": [
@@ -296,7 +296,7 @@
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
      "kind": "clock (FIXTURE)",
      "proves": "An order from the account the set-off closes ends, said in “Closed An Account”."
     },
@@ -323,7 +323,7 @@
     {
      "summary": "endOrdersOf ends the standing orders paying from or into an account its bank closes of its own accord, cancels their calendar entries and returns them for the closing notice (endedWords); called by closedByBank, closeForOverdraft and homeCloses",
      "where": "src/engine/systems/banking.ts endOrdersOf, endedWords; bankmoves.ts closedByBank; lending.ts closeForOverdraft; abroad.ts homeCloses; routing.ts redirectAway’s comment",
-     "failingTest": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March"
+     "failingTest": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March"
     }
    ],
    "sources": [],
@@ -719,13 +719,13 @@
    "evidence": [
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
      "kind": "command+clock",
      "proves": "Close It refuses a balance below its closing charges and settles them all."
     },
     {
      "file": "tests/scope-money.test.ts",
-     "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+     "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
      "kind": "render+command",
      "proves": "The fee refusal, unchanged words where no overdraft interest is built."
     },
@@ -901,7 +901,7 @@
     },
     {
      "file": "tests/remaining-banking.test.ts",
-     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
      "kind": "clock (FIXTURE)",
      "proves": "Overdraft interest by hand at 13.05%: 96¢ on 1 February, 101¢ on 1 March, 22¢ on the close."
     },
@@ -1054,5 +1054,6 @@
   ],
   "how": "each applied alone to the working tree, tests/remaining-banking.test.ts run (tests/scope-money.test.ts for the refusal words), the mutated region restored by its surrounding text and compared byte for byte with a copy taken before; the first run’s five empty replacements weren’t restored by the runner, and those two files were restored from their copies and the round run again whole",
   "survivorsDealtWith": "cancelRefusal’s overdraft interest and findTermInterest’s filters removed as redundant; Affiliate cover’s first survivor killed by a test added for it"
- }
+ },
+ "renamed": "From brief 09 (2026-10-16): eight titles this result cites were renamed when Germany's month's fee began to be owed to the day and Deutsche Bank's opening month free (docs/verification/remaining-09/banking-result.json); the titles here follow docs/verification/pipeline/inputs/renames.json, and what each test proved then is as written."
 }

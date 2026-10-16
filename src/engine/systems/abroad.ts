@@ -505,7 +505,10 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.bankId === bank.id && (a.kind === 'checking' || a.kind === 'savings'));
   if (mine.length === 0) return;
   // The overdraft interest built since the 1st with them, from 2026-10-16 (`settleOverdraftInterest`): until then it was
-  // dropped when the account closed.
+  // dropped when the account closed. Each try settles them, and a try again the next day settles only what's built
+  // since, the fees none: the first try ended them (`feesEndedAt`, later on 2026-10-16), where until then each morning's
+  // try charged a German account's month's fee again (docs/verification/remaining-09/banking-checklist.json, banking.3;
+  // no German bank closes a home account, so only a fixture reaches it).
   for (const account of mine) { settleInterest(sim, account, `Interest: ${account.name}, on closing`); settleOverdraftInterest(sim, account); settleFees(sim, account); }
   const current = mine.find((a) => a.kind === 'checking') ?? mine[0]!;
   for (const account of mine) {

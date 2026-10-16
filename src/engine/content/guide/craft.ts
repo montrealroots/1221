@@ -92,6 +92,7 @@ import { KNOB_LIMITS } from '../../systems/personality';
 import { SELF_TAPE } from '../../systems/engagement';
 import type { GuideEntry } from './types';
 import { ceilingAt } from '../lifespan';
+import { TRAINING_CLASS_NAMES } from '../body';
 import { CONCERNS, CONCERN_IDS } from '../concerns';
 
 // --- where it is ------------------------------------------------------------------------------------------------------
@@ -328,7 +329,7 @@ export const CRAFT: readonly GuideEntry[] = [
     ],
     later: [
       'Each figure moves as the life does: a class, a step of preparation, an hour of practice, a take, a showing or a night grows what it trains, and Development History lists it.',
-      `Stamina is the one that falls without use: ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS} once ${plural(FITNESS.heldDays, 'day')} have passed since a workout.`,
+      `Stamina is the one that falls without use: ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS} once ${plural(FITNESS.heldDays, 'day')} have passed since a workout or a class that trains the body as hard (${andList(TRAINING_CLASS_NAMES)}).`,
     ],
     interpret: [
       'Now against Full is how far an ability has to go. Classes Reach is where classes stop taking it; practice carries it the rest of the way.',
@@ -440,7 +441,7 @@ export const CRAFT: readonly GuideEntry[] = [
       { to: 'craft.work', kind: 'evaluation', why: 'Every piece of work judged afterward reads what practice grew at its new level.' },
       { to: 'craft.brief-prepare', kind: 'immediate', why: 'An exercise is practice in the material it names, and a brief built on that material prepares faster.' },
       { to: 'craft.identity', kind: 'history', why: 'The material an exercise practices is kept in the record that Material You Know reads.' },
-      { to: 'body.look-after', kind: 'optional', why: 'Stamina has no exercise: a workout under Look After Yourself builds it.' },
+      { to: 'body.look-after', kind: 'optional', why: 'Stamina has no exercise: a workout under Look After Yourself builds it, and so does a class that trains the body as hard, attended.' },
       { to: 'body.sleep', kind: 'optional', why: `A rested hour counts for more: the day’s focus scales every hour, and ${FOCUS.precision.label} most.` },
     ],
     example: {

@@ -11,7 +11,7 @@ import { READER, WORK, askRefusal, courseworkOf, partnerPart, prepareRefusal, qu
 import { EVALUATION } from '../src/engine/content/tasks';
 import { CHOICES, momentsOf } from '../src/engine/systems/classmates';
 import { lookAfterOptions, lookAfterRefusal, occupiedAt, suggestedSleep } from '../src/engine/systems/life';
-import { MS_HOUR, instantFromZoned, zonedParts } from '../src/engine/core/time';
+import { MS_HOUR, formatDateTime, instantFromZoned, zonedParts } from '../src/engine/core/time';
 import { WHICH, hasProcess, holderFor, ownWorkRefusal } from '../src/engine/systems/production';
 import { coverOn, mayEnroll } from '../src/engine/systems/health';
 
@@ -161,6 +161,9 @@ export function lookAfter(sim: Simulation) {
  * one; it returns true when it spent the hour.
  */
 export function attentiveHour(sim: Simulation, extra?: (hour: number, weekend: boolean) => boolean): void {
+  // An ended life's clock stays where it stopped, so a tool looping on this to a later time would never return (from
+  // 2026-10-16, brief 09's journeys: seed jl-17's life ended on 11 January 2027, and a loop on it spun until killed).
+  if (sim.universe.meta.endedAt !== undefined) throw new Error(`${sim.player.displayName}’s life ended on ${formatDateTime(sim.universe.meta.endedAt, sim.zone)}, at ${sim.universe.meta.endedAge ?? 'an unknown age'}: its clock stays there, and an hour can’t be played.`);
   const p = zonedParts(sim.now, sim.zone);
   const weekend = [0, 6].includes(new Date(Date.UTC(p.year, p.month - 1, p.day)).getUTCDay());
   const awake = (sim.player.awakeSince ?? 0) <= sim.now;

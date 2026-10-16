@@ -1,6 +1,108 @@
-# Read First: The Integration And Acceptance Pass, 2026-10-16
+# Read First: The Remaining Integration Gaps, Brief 09, 2026-10-16
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
+at the end of the owner's "Finish SLATE’s Remaining Integration Gaps And Reconcile The Completion Evidence"
+(`docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt`, kept verbatim), worked
+on `claude/peaceful-hamilton-59zdbb` from `main` at `64b69fc7` (#35's merge). **Not merged, not deployed.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `64b69fc7`.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 09's commits on `64b69fc7`
+  (`git log --oneline 64b69fc7..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #36
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged. **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
+  runs' records.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees. Two
+  local refs in this container's clone only (`refs/scratch/judge-2026-10-16`, `refs/scratch/integ-judge-2026-10-16`)
+  held the clones' commits through two container restarts; both are in the branch now.
+- **How it was worked.** Five areas from instructions written first
+  (`docs/verification/integration-2026-10-16/prompts-09/`): the judge and the genres in their own clones, banking,
+  coverage and journeys in the shared tree. The genre clone's commits were cherry-picked first, the judge clone's 24 next
+  (`c9cba9c8`), the journeys' follow-up after them by a three-way merge (`bcd75970`).
+
+## 2. What Brief 09 Did, And Where It's Written
+
+`docs/verification/integration-2026-10-16/brief-09.md` is the account: every requirement's status, ST3, ST6, H4 and L3
+before and after, the genres, the banking proration's evidence, the coverage, the journeys, the final verification and
+the owner's decisions. In short:
+
+- **Completion reporting** in the owner's seven statuses, every shortfall a row, `tools/completion-matrix.mjs --check`
+  in the gate (CLAUDE.md counts eighteen checks).
+- **The judge:** evaluation-10, a scene judged in its units; four scenes played out to a house; Scapin's sack scene; a
+  class that trains the body as a workout. ST3, ST6, H4 and L3 not met as written, each a decision with its proposal; H4
+  fell from 2 of 12 to 1 of 12. Every criterion that held holds, measured with the genres' changes on `c9cba9c8`
+  (`integrated-09/`).
+- **The genres:** 55, not 54; fourteen genres' second situations replaced; none of the 55 the same in three of six parts.
+- **Banking:** Germany's closing fee to the day under BGB § 675h(3); the Sparkassen-Card; ING's and Commerzbank's
+  posting days; Arion's 950 kr; `homeCloses` settling once; Close It's wages day.
+- **Coverage:** the nine commands' rows; the hardship's renewal played; the federal lien reached; the pipeline guessing
+  no renamed title.
+- **Journeys:** a finished School's page; the cover-ended window from the loss; a lapse's visit and prescription; the
+  term's aid paying Yale first; HUSKY D from the application's month, reaching back; Mexico's residence no longer sold.
+
+**Completion, by the matrix:** 485 of 544 rows in scope Implemented And Verified (89.1%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 17 Explicitly Deferred.
+
+## 3. The Owner's Decisions
+
+Not counted met, and not changed without the owner's word (`brief-09.md`, For The Owner):
+
+1. **ST3′, ST6′, H4′, L3′**, each proposed beside its criterion, kept as the record.
+2. **F2-A** as the measure of the advice (40 of 40), F2 as written kept (67.6%).
+3. **Arion's debit-card year**, ahead or behind, which its price list and terms don't say.
+4. **The 12 rows out of a player's reach:** keep them Unresolved, or move them to Explicitly Deferred (recommended for
+   the 11 only removed systems reach).
+5. **Stamina's load**, clamped at 1: whether a night's load reads its running time.
+
+Open, not the owner's: the matrix's Implemented, Verification Incomplete rows, each with what it lacks;
+`tests/personality.test.ts`'s year on autopilot, whose life ends 16 days in; a credit that clears a held Yale account
+leaving the hold.
+
+## 4. The Rules, The Schema And The Model
+
+CLAUDE.md now counts **eighteen** checks: completion-matrix joined the gate on 2026-10-16. The scope (`docs/REQUIREMENTS.md`)
+and the save schema are unchanged: **94** in both `SAVE_SCHEMA_VERSION` (`src/engine/domain/model.ts`) and
+`SUPPORTED_SCHEMA_VERSION` (`base44/shared/guard.js`). The older-save work runs as one-time steps on opening: a piece's
+work moved to its units (`cutIntoUnits`), a retired brief's record kept. The judge's ruleset is **evaluation-10
+(2026-10-16)**. The test suite runs `tests/setup/ended-life.ts` before every file: an ended life's clock asked forward a
+million times in a row throws, naming the death; nothing is skipped or retried by it.
+
+## 5. What Was Tested, On What
+
+| Check | Result |
+|---|---|
+| `npm run gate` on `7c1198a2`, exit from a file | **exit 0**: 368 files, 4,401 tests, none skipped; all eighteen checks |
+| `npm run build` | exit 0 |
+| `tools/scenario-saves.mjs` | 14 of 14, each breaches 0, unbalanced 0 |
+| The built app, 1440 and 390 | 72 passed, 0 failed, 0 skipped, 0 errors, 0 overflows at each width |
+| Lives to graduation (24) | 20 graduated; the 4 dismissed the autopilot control's; breaches, unbalanced and errors 0 |
+| Mastery plans (6), F2-A (40), workload (8), variety (3 years), freshness (8) | 6 at 100, 40 of 40, 7 in good standing and the control dismissed, graduated, no repeat; breaches 0 throughout |
+| The criteria, the judge's and the genres' together on `c9cba9c8` | every one that held holds |
+
+The build, the saves, the built app and the long runs were played on `bcd75970`, which differs from `7c1198a2` in no file
+they read. Every output is in `docs/verification/integration-2026-10-16/runs-09/` and `integrated-09/`.
+
+## 6. The Environment
+
+As the sections below say: Node 22, npm 10, Playwright with Chromium, PowerShell 7 on the owner's machine, the gate read
+from a file. This container restarted twice during the pass; each time the background processes were lost and the
+files kept, and every lost run was played again in the foreground.
+
+## 7. Deployment
+
+Not deployed. Base44 deployment happens on the owner's word, after the gate passes (rule 14).
+
+## 8. Next, In Order
+
+1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
+   work plan (section 12), the briefs. Preserve the stash, worktrees and local files.
+2. **The owner's decisions** in section 3, each with what it would change written beside it in `brief-09.md`.
+3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+4. **The matrix's What's Left**, row by row.
+
+# Earlier: The Integration And Acceptance Pass, 2026-10-16
+
+**This section was the current status until brief 09's close-out, later on 2026-10-16** (the section above). It was written
 at the end of the owner's "Implement SLATE’s Complete Integration And Acceptance Pass"
 (`docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt`, kept verbatim), worked on
 `claude/peaceful-hamilton-59zdbb` from `main` at `ef784ccd` (#34's merge), and merged to `main` with a merge commit at the
@@ -42,8 +144,15 @@ result changed, then "What The Pass Did, And What It Measured", written at the e
   what the commands refused; two new commands in no capability; the built app's two steps skipped since 2026-10-12.
 - **Coverage:** each audit row's evidence class, the `static` standard, the 14 (now 13) unresolved rows in four parts,
   the areas folded by `remaining-fold.cjs`, rows added through `inputs/added-rows.json`.
-- **The completion matrix** (`integration-2026-10-16/COMPLETION-MATRIX.md`, `tools/completion-matrix.mjs --check`): 467
-  rows, none open.
+- **The completion matrix** (`integration-2026-10-16/COMPLETION-MATRIX.md`, `tools/completion-matrix.mjs --check`). It
+  said "467 rows, none open" until brief 09 (2026-10-16), counting a row given to the owner, a proposed criterion or a
+  stale measurement as settled while this section listed unfinished work. Each row now carries one of the owner's seven
+  statuses, and only Implemented And Verified counts as done.
+
+The matrix's completion line stood here while brief 09 was worked; it's in the section above now.
+
+  Brief 09 is being worked as this is written (`docs/verification/briefs-2026-10-16/09-…`, work plan section 12): every
+  row below that isn't done is a row of the matrix, and its "What's Left" says what each needs.
 
 ## 3. What Isn't Done, And The Owner's Decisions
 

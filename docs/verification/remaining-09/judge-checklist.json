@@ -1,0 +1,156 @@
+{
+ "key": "judge",
+ "on": "2026-10-16",
+ "against": "d7127819 (the shared branch with brief 09 added; the engine as 64b69fc7 left it), in the judge area's own clone, read and measured before any code of this area changed",
+ "brief": "docs/verification/integration-2026-10-16/prompts-09/judge.md and common.md; the owner's section 2 (\"Resolve The Original Stage And Attribute Shortfalls\") of docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt; CLAUDE.md",
+ "baseline": "docs/verification/integration-2026-10-16/baseline-09/ (README.md says each command, seed and file)",
+ "items": [
+  {
+   "id": "judge.baseline",
+   "item": "Reproduce ST3, ST6, H4 and L3 on the current code before changing them, and every criterion that holds. Preserve the original results and criteria.",
+   "requirement": "Brief 09 section 2, first paragraph; judge.md, The Order, 1.",
+   "currentBehavior": "Measured on d7127819: ST3 165 of 179 (the specialist 179 of 179); ST6 restrained 8 of 38, expansive 21 of 49; H4 2 of 12; L3 the specialist 65.5 -> 64.1, the beginner 54.0 -> 56.6. Every other criterion as the last close-out had it; the signature, identity and audit files are byte-identical to closeout/'s.",
+   "affectedSystems": [
+    "docs/verification/integration-2026-10-16/baseline-09/"
+   ],
+   "plan": "Keep baseline-09/ as measured, beside st3.md, st6.md, h4.md, l3.md and closeout/, none of which is rewritten; each account gets a dated section.",
+   "acceptance": "baseline-09/README.md names each command, seed, file and exit code; the files are committed before any code change.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.ST3",
+   "item": "ST3, consistent evaluation: keep full-precision calculation and final-boundary rounding; separate rounding defects from legitimate differences (stage demands, stamina, execution weighting) case by case; test identical effective inputs for identical results; show why each remaining stage and close-frame difference exists; document the criterion's conflict and propose an amended criterion, not counted.",
+   "requirement": "Brief 09 section 2, ST3; criterion ST3 (docs/verification/stage-2026-10-16/criteria.md): the voice-and-body specialist better on stage than at a close frame, and the even actor's result the same on both. The project's rule that a whole is worked from exact parts and rounded once (systems/evaluation.ts:68-74, evaluation-9).",
+   "currentBehavior": "judge rounds once (evaluation.ts:364-380, rounded); judgeExact keeps every part exact (389-481); wholeOf reads exact values (487-494); judgePiece works the piece's whole from the segments' exact wholes (piece.ts:289-347). Measured (baseline-09/stage.json, tools/interpretation.ts:185-200): 179 cases, the specialist better on stage on 179, the even actor (abilities 55, techniques 50, stamina 55) the same as shown on 165, a tenth apart on 14. st3.md explained the 171 cases of evaluation-9 in aggregate; no case-by-case account exists, and no tool writes one.",
+   "affectedSystems": [
+    "tools/interpretation.ts (a per-case ST3 output)",
+    "tests/remaining-judge.test.ts",
+    "docs/verification/integration-2026-10-16/st3.md"
+   ],
+   "plan": "Add a case-by-case output to tools/interpretation.ts: each of the 179 cases with its stage and close-frame results shown and exact, the exact difference taken apart into the techniques' part (50 of 90 against 55 of 100), stamina's drain (55 against undrained) and the residual, and whether the shown tenth is the rounding of a real difference that straddles a rounding point or a rounding defect (a shown figure that isn't its exact value rounded once). Tests: identical effective inputs give identical results on stage and at a close frame (drawn performers even in everything the formula reads, stamina undrained, every stage material and fitting side, and the same piece judged twice and replayed); each case's shown result is its exact result rounded once; each case's difference is the techniques' part and stamina's part and nothing else. Keep ST3 as written reported as measured; propose ST3' again on the 179 cases, not counted.",
+   "acceptance": "tests/remaining-judge.test.ts (ST3 describe block) passes, each expected figure worked from the rule; a mutation (the dimensions rounded before the whole) killed in a copy; st3.md's dated section gives every case's cause.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "judge.ST6",
+   "item": "ST6, restrained specialists: investigate why 8 of 38; trace failing cases through abilities, material, suitability, preparation and scoring; implement justified balance or content corrections; keep expansive acting and scene demands meaningful; no restraint bonus, no difficult case removed, no manufactured split.",
+   "requirement": "Brief 09 section 2, ST6; criterion ST6 (stage criteria): a restrained specialist (emotional depth 85, composure 75, focus 75) ahead playing restrained on at least 25% of the materials where expansive suits better.",
+   "currentBehavior": "8 of 38 shown (9 of 38 exact: caesar-4-3 +0.06 shows as a tie). APPROACH_EFFECT (approaches.ts:60-67): restrained draws emotional depth 1 and composure 0.5 on believability and focus 0.5 on consistency; expansive presence 1 on connection, vocal and physical 0.5 on execution. GRAIN (content/interpretation.ts:143). A first probe (probe/st6*.ts, not committed) found the restrained specialist's lift from its own side, the grain held at nothing, 1.15 against the expansive specialist's 1.57, and the difference in the draws (0.52 against 0.94), not the leans (0.56 against 0.51); and 29 of the 38 cases a suitability gap of 0.57 or more.",
+   "affectedSystems": [
+    "tools/interpretation.ts (a per-case ST6 trace)",
+    "src/engine/content/approaches.ts and content/material.ts only if a source and the evidence justify a change",
+    "docs/verification/integration-2026-10-16/st6.md"
+   ],
+   "plan": "Write the per-case trace into the tool (suitability and its signals, the specialist's two sides exact, the grain's cost to each, the lift and its parts by lean and by draw). Review each case's circumstances against its text for misreadings; test each candidate correction against its source and against what it does (I1 to I5, ST1 to ST8, F1, F2 measured with it); adopt only what a source supports and the measures don't contradict. If none is justified, report ST6 as measured, the evidence for why, and a proposed criterion, not counted.",
+   "acceptance": "st6.md's dated section: the trace of all 38, each candidate correction with its source and measured effect, the decision and its reason; tests for any change adopted, each with a mutation killed in a copy.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.H4",
+   "item": "H4, all twelve specialist profiles: missing opportunities, benchmark assignments that don't fit, actual scoring weaknesses; add in-scope material and development paths where an ability is underrepresented (presence, discipline and stamina above all), researched and read from public-domain texts or original exercises, each committed before it's measured; specialists advantaged on fitting work without every ability equally strong everywhere; H2 and H5 measured after every change; keep the original H4 beside any replacement proposed.",
+   "requirement": "Brief 09 section 2, H4; criterion H4 (attributes-genres-2026-10-16/acceptance-criteria.md): each specialist ahead of the even actor on 60% of the pieces where its ability reads most (the top half of its nonzero +10 effects), for 10 of 12. H2 and H5 as written.",
+   "currentBehavior": "2 of 12 (baseline-09/criteria.txt). A first probe (probe/h4*.ts) found: a specialist is ahead on 0 of 3,424 (ability, piece) pairs where its ability carries under a tenth of what the piece's abilities move, and on every one of 575 where it carries 15% or more; H4's set gives presence, discipline and stamina pieces where they carry a median 8%; no class scene or play has a partner level under 2 or four or more tones, so DEMAND_EFFECT.solo (presence) and .beats (discipline) (approaches.ts:172-175, demandsOf material.ts:86) reach no scene or night; stamina is read only as the drain through a piece (piece.ts:276, PIECE.drain content/piece.ts:43), and its specialist holds the last segment of 29 of 30 nights better and is behind on every night's whole.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (the per-ability account at full precision)",
+    "new scene files (content/scenes-*.ts, new) and their profiles (content/material.ts)",
+    "docs/verification/integration-2026-10-16/h4.md"
+   ],
+   "plan": "Measure, for each of the twelve, its share of each piece it reads, where it's the piece's largest input, and its specialist's result there and on H4's own set, at full precision; classify each ability's shortfall. Add class scenes where the catalog has none for an ability (an address to many with a partner barely there, for presence; a long set score, for discipline), each read from a public-domain text and committed before it's measured, appended last so no seeded life's scenes move, reachable by the courses that set scenes. Measure H4, H2, H5 and the rest after each. Stamina: measure it on the work it's named for and say whether any content can reach it under the judge as built. Propose H4' beside H4, not counted.",
+   "acceptance": "Each new scene reachable in play (a test reaches it through the course's own draw), its profile's reasons from its text, mastery at 100 on it; H4, H2, H5 measured after each commit; h4.md's dated section with the twelve profiles' account.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.L3",
+   "item": "L3, long-term progress: compare the same work, interpretation, preparation and conditions at earlier and later levels; report apart the changing mix and difficulty of work attempted; fix unintended regression; don't force rising means by keeping students from harder material; keep the journey metric and the controlled measure side by side.",
+   "requirement": "Brief 09 section 2, L3; criterion L3 (acceptance-criteria.md): the last month's mean of takes at or over the first's for every non-mastered profile, on tools/brief-journeys.ts seed bj-0, 120 days.",
+   "currentBehavior": "The trace (brief-journeys.ts:158-242) replays each take at the levels of the run's start and its end only. The specialist's 17 takes all rise start to end (+3.0 to +4.2); its month means 65.5 (2), 62.3 (1), 64.1 (14) with 6 callbacks in the last month. Stamina falls 50 to 35 on both journeys (the policy never works out; FITNESS, systems/life.ts:83-103).",
+   "affectedSystems": [
+    "tools/brief-journeys.ts (levels at each month, the work's mix)",
+    "docs/verification/integration-2026-10-16/l3.md"
+   ],
+   "plan": "Snapshot the levels at each month's start and replay every take at each, so the controlled measure is a curve and not two points; report each month's mix (first takes, callbacks, other readings; difficulty; length; stakes) apart from it. Look for any take whose controlled result falls between months and trace its cause; fix what's unintended, and say why what remains is legitimate. Keep L3 as written as measured, beside the controlled measure.",
+   "acceptance": "l3.md's dated section; the trace files for both profiles; any regression fixed with a test that fails when it's restored.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "judge.remeasure",
+   "item": "Everything measured again after the changes: ST1 to ST9, F1, F2, I1 to I5, every attribute criterion, M1, S1 to S4 on all four samples, G2, the genre audit's isolation, the suite's judge tests. A criterion that held and fails is a regression fixed or reported with its cause.",
+   "requirement": "judge.md, The Order, 6.",
+   "currentBehavior": "Baseline in baseline-09/; the judge's 51 test files (those importing systems/evaluation, piece, material, interpretation or content/approaches, interpretation, tasks, material) run one at a time.",
+   "affectedSystems": [
+    "docs/verification/integration-2026-10-16/final-09/"
+   ],
+   "plan": "The same commands into final-09/; the same 51 test files and any test file a change touches, one at a time, with exit codes.",
+   "acceptance": "final-09/README.md with before and after for every criterion.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.length",
+   "item": "Length: is there a sourced basis for a long piece being judged in more parts by its length as well as its tone, so sustaining precision over length reads discipline? If yes, implement (RULESET, ENGINE-MODEL row, every criterion measured again) and add the long scored material it opens (Scapin's sack scene and what else fits, read from its text before measuring); if no, say exactly what the literature doesn't support.",
+   "requirement": "The coordinator's follow-up, item 1; brief 09 section 2 (H4: development paths and fitting work for discipline 'where appropriate'). The judge's own basis for a piece's units: DEMAND_EFFECT.beats cites Stanislavski's units and objectives (content/approaches.ts).",
+   "currentBehavior": "A class scene and a play are cut by their tones only (toneSegments, systems/piece.ts:107; scenePiece systems/coursework.ts:779; a night systems/school.ts:2262), at least two parts; demandsOf counts a piece's units as its beats or its tones (systems/material.ts:86-99). A scene's turns (MaterialProfile.turns, 'the emotional reversals within it, beyond its tone changes') are read only as transitions (adaptability, composure), never as units. Researched before this checklist: Stanislavski's bits are divided by the action ('a new bit begins whenever an action or counteraction shifts in manner of execution or strategy'), not by length; the vigilance decrement is a time-on-task loss of attention over 20 to 30 minutes and more.",
+   "affectedSystems": [
+    "systems/piece.ts",
+    "systems/material.ts (demandsOf)",
+    "systems/coursework.ts, systems/school.ts (the game's pieces)",
+    "content/guide (the pieces' examples)",
+    "the tools and the tests that judge a scene as the game does",
+    "content/tasks.ts RULESET, docs/ENGINE-MODEL.md"
+   ],
+   "plan": "Answer the length question from the sources. Where they support dividing a piece by its shifts of action, which the profiles already carry as turns, cut a scene and a play into its units (each tone section and each turn), keeping each tone section's weight, so a long score of units reads discipline as a brief's beats do; RULESET to evaluation-10 with its row. Read Scapin's sack scene and profile it from its text, committed before it's measured. Measure every criterion again.",
+   "acceptance": "Tests: a scene's units are its tone sections and its turns, each section's weight kept; a scene of more than three units reads discipline by the beats demand, worked by hand; mastery at 100 on the new scene; the scene reached through its course. Every criterion measured, before and after, in final-09.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.stamina-load",
+   "item": "Stamina: is load's clamp at 1 justified, or does a sourced account of physical demand (a play's length, its physical score) support a heavier load on the nights that are? Implement if justified, measured the same way; otherwise say why not.",
+   "requirement": "The coordinator's follow-up, item 2.",
+   "currentBehavior": "loadOf (systems/piece.ts:115-120): a night 0.6 + 0.12 a level of the body's and the voice's work, held to 1; eight nights are at 1, among them one-acts (The Bear, A Marriage Proposal, Riders To The Sea, Salomé). The drain at load 1 is PIECE.drain, 0.3, SLATE's estimate (content/piece.ts:43).",
+   "affectedSystems": [
+    "systems/piece.ts (loadOf)",
+    "content/piece.ts (PIECE.load, PIECE.drain)"
+   ],
+   "plan": "Look for a source that sizes the late-piece decrement of a long, physical performance beyond what the drain's estimate gives; implement a heavier load only on one. Report what the night's load reads and doesn't (a play's length), with the evidence.",
+   "acceptance": "A written answer with its sources in h4.md; any change tested and measured as item judge.length's.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.classes-fitness",
+   "item": "Movement classes and fitness: a student who attends every movement class still falls to an everyday fitness of 35, since only a workout holds fitness. Read what a movement, voice-and-body or combat class demands physically and, if the evidence supports it, let attending them count toward fitness as the workout does, at the intensity the source gives, with a test through play and the guide's and tutorial's words.",
+   "requirement": "The coordinator's follow-up, item 3. The workout's own figures: an hour of weight training at 3.5 METs (2024 Adult Compendium of Physical Activities, BODY.met.workout, content/body.ts:85) builds fitness (workoutBuilds, systems/life.ts) and holds it FITNESS.heldDays (systems/life.ts:83-103).",
+   "currentBehavior": "A class day (CLASSES_KIND, systems/school.ts:3111-3168) grows the courses' skills and abilities and tires (ESTIMATE.energy.classes); nothing in it touches fitness or the body's energy spent. Only Work Out sets development.workout, which settleTheBody reads to hold fitness (systems/life.ts:974-986). A first-year's week has The Body As Source I twice, Alexander Technique I twice and Acting Intimacy And Combat once (content/school.ts:190-194).",
+   "affectedSystems": [
+    "systems/school.ts (the class day)",
+    "systems/life.ts (what holds and builds fitness)",
+    "content/school.ts or content/body.ts (each class's intensity, with its source)",
+    "content/guide/body.ts, content/tutorial.ts"
+   ],
+   "plan": "Read each movement-type class's intensity in the Compendium (a dance class, stage combat as martial arts practice, physical training; Alexander and voice as light), with what the course is. Count a class at the workout's intensity or more as a training session: it holds fitness as a workout does and builds by its MET against the workout's, with the workout's same-day repeat rule, and spends its energy as the workout does. Test through play: a first-year term attended against a twin who misses the movement classes. Guide and tutorial words.",
+   "acceptance": "tests/remaining-judge.test.ts: the attended student's fitness held and built by the rule, the twin's fallen toward 35; Alexander and voice don't count; a class and a workout the same day build as the repeat rule says; save and load keep it; guide and tutorial say it.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.coverage-row",
+   "item": "docs/COVERAGE-MATRIX.md line 77 says 56 scenes: correct it.",
+   "requirement": "The coordinator's follow-up, item 4; rule 12 (the tree wins, the document is corrected) and the house's past tense.",
+   "currentBehavior": "'Enlarged, still finite: 56 scenes, 30 plays, 27 exercises'; the catalog has 64 scenes on this clone.",
+   "affectedSystems": [
+    "docs/COVERAGE-MATRIX.md"
+   ],
+   "plan": "Say the count now and what it was, in the past tense.",
+   "acceptance": "The row matches SCENES' length; doc-refs passes.",
+   "classification": "a stale document (not code)",
+   "statusBefore": "Not Implemented"
+  }
+ ],
+ "followUp": "The coordinator's follow-up of 2026-10-16 (later), appended before any of its code changed: items judge.length, judge.stamina-load, judge.classes-fitness and judge.coverage-row. Figures are on d7127819 plus this area's commits; the genre area's briefs (280f1a55 on the shared branch) aren't in this clone."
+}

@@ -9,7 +9,7 @@
       "downstream": "judgeWork reads the preparation at the due meeting (from 2026-10-12 a scene of more than one tone is judged in its tones, scenePiece) -> its band (see showing/night bands); noteCandidates; the workbook’s forecast (forecastWork)",
       "persistent": "assignment in school.coursework; craft/attrs",
       "explanation": "CourseworkPane.tsx",
-      "tests": "tests/evidence-g18-school.test.ts ‘shows the same toned scene prepared less through the command lower at its meeting, judged in its two tones...’ (the twin shown by the clock at its own meeting, lower overall and only on the dimensions that read the rehearsal; the segments counted, not compared; forecastWork called directly, as a direction), ‘puts three Learn Lines on the development history under coursework:learn and not a fourth...’, ‘is refused in the moment’s own words while the partner’s other reading waits...’, ‘is refused a studio and the library before the building’s tour...’, ‘is refused as having nothing more to gain once a part is read past 97%...’, ‘draws each step as a button on the Coursework tab...’; tests/mastery-integration.test.ts ‘comes out at 100 on every dimension, the top band, in the record and the journey’; tests/guide-examples-coursework.test.ts ‘takes the time it says, moves each part to the figure it says...’; tests/approaches.test.ts ‘a drill is a step of the work...’; tests/traits-connected.test.ts ‘moves each part further for the trait...’ (its ratio from the personality table prepLean reads); checking less: tests/mastery-contract.test.ts ‘preparation short on one part lowers exactly the dimensions that read it’ (judge(), the preparation given); tests/feedback.test.ts ‘is new, then the same again...’ (the preparation set by hand); tests/coursework-objective.test.ts ‘changes the result: the same preparation...’ (the preparation held fixed). Until 2026-10-13 this said no test varied the preparation through the command and checked the showing.",
+      "tests": "tests/evidence-g18-school.test.ts ‘shows the same toned scene prepared less through the command lower at its meeting, judged in its units, its record holding the preparation the commands left, once’ (the twin shown by the clock at its own meeting, lower overall and only on the dimensions that read the rehearsal; the segments counted, not compared; forecastWork called directly, as a direction), ‘puts three Learn Lines on the development history under coursework:learn and not a fourth...’, ‘is refused in the moment’s own words while the partner’s other reading waits...’, ‘is refused a studio and the library before the building’s tour...’, ‘is refused as having nothing more to gain once a part is read past 97%...’, ‘draws each step as a button on the Coursework tab...’; tests/mastery-integration.test.ts ‘comes out at 100 on every dimension, the top band, in the record and the journey’; tests/guide-examples-coursework.test.ts ‘takes the time it says, moves each part to the figure it says...’; tests/approaches.test.ts ‘a drill is a step of the work...’; tests/traits-connected.test.ts ‘moves each part further for the trait...’ (its ratio from the personality table prepLean reads); checking less: tests/mastery-contract.test.ts ‘preparation short on one part lowers exactly the dimensions that read it’ (judge(), the preparation given); tests/feedback.test.ts ‘is new, then the same again...’ (the preparation set by hand); tests/coursework-objective.test.ts ‘changes the result: the same preparation...’ (the preparation held fixed). Until 2026-10-13 this said no test varied the preparation through the command and checked the showing.",
       "status": "verified",
       "issue": "Until 2026-10-13 this said grow(act.trains) at coursework.ts:487 wasn’t recorded on the development history. It has been since 2026-10-10, under coursework:<step> (grewFrom, coursework.ts:603), which tests/evidence-g18-school.test.ts reads.",
       "corrected": {
@@ -165,7 +165,7 @@
           },
           {
             "file": "evidence-g18-school.test.ts",
-            "title": "school.prepare > shows the same toned scene prepared less through the command lower at its meeting, judged in its two tones, its record holding the preparation the commands left, once",
+            "title": "school.prepare > shows the same toned scene prepared less through the command lower at its meeting, judged in its units, its record holding the preparation the commands left, once",
             "kind": "command",
             "closes": "Toned scene (scenePiece) judged in segments from preparation made through school.prepare; forecastWork rises after a Rehearse Alone step; the twin prepared less, shown by the clock at its own meeting on 8 September, is lower overall and lower only on dimensions that read the rehearsal; rec.inputs.prep equals what the commands left; one showing record after a reload"
           },
@@ -552,6 +552,65 @@
           "now": "Until 2026-10-13 this said no test makes a choice through the command and checks what reads it. guide-examples-coursework.test.ts (Table Work) and defects-g8-9.test.ts did so up to the part the showing reads and the workbook's problem. tests/evidence-g18-school.test.ts answers against the text through the command and has the showing at the meeting, by the clock, give the choice note; the next scene answered as supported takes it, and the third answered against the text gives it again."
         }
       },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "school.choose_playing",
+      "kind": "command",
+      "entry": "School, Coursework, How You’ll Play It (CourseworkPane.tsx:167, the PlayingChooser) on a piece with a scene; registered by coursework.ts:1678 (from 2026-10-10)",
+      "reads": "playingRefusal (coursework.ts:1022): no such work, shown (not open or revising), a template with no scene; the piece’s way of playing",
+      "changes": "Assignment.playing by choose() (material.ts:182): the same sides keep their rehearsal, a change keeps PLAYING.keptOnChange of it, no side clears it; the sides newly chosen noted for the habits",
+      "downstream": "the steps on the feet, a rehearsal kept with a partner and a targeted drill rehearse it in (rehearseChoice, coursework.ts:652, 678, 1531); the showing the clock runs reads it (judgeWork, coursework.ts:937, through workContext, coursework.ts:971-977: its rehearsal as the approach’s preparation against its mark, and its lean); the forecast and the chooser’s preview; the workbook’s segment ways, on an axis it leaves open; the habits",
+      "persistent": "Assignment.playing; the material record’s approaches",
+      "explanation": "The toast (rehearsed in to N%); the chooser’s forecast of each side against the scene’s own demands (MaterialDemands)",
+      "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (Trifles, set by the clock on 30 August 2026 and shown on 8 September: the showing reads the way’s rehearsal and its lean, after a reload, against a twin who chose nothing); tests/trace-commands.test.ts ‘chooses a way to play a scene; work on its feet rehearses it in; a change keeps part of it; the showing’s forecast reads it’; tests/defects-g8-10.test.ts ‘rehearses the chosen way of playing in, as the steps on your feet do; with none chosen there’s nothing to rehearse’; tests/stage-interpretation.test.ts ‘PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload’; tests/guide-examples-coursework.test.ts ‘rehearses a choice in by its share, keeps half of it on a change, and completes it in the steps it says’; tests/remaining-school.test.ts ‘GUARD: commands the coursework screen never sends…’ (no such work, a shown piece, a piece with no scene, refused in their words)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day no showing was run with a way chosen (tests/trace-commands.test.ts read the showing’s forecast in its place, and its shown refusal on a status set by hand); tests/remaining-09-coverage.test.ts plays the showing by the clock since, and tests/remaining-school.test.ts refuses a piece shown by the clock.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "How You’ll Play It sets a scene’s way of playing; work on the feet rehearses it in, a change keeps half; the showing the clock runs reads its rehearsal against its mark and its lean; refused for a piece shown, or one with no scene.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/trace-commands.test.ts ‘chooses a way to play a scene; work on its feet rehearses it in; a change keeps part of it; the showing’s forecast reads it’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "The assignment is written onto the coursework by hand, and the showing’s forecast read in place of a showing."
+          },
+          {
+            "kind": "command",
+            "where": "tests/stage-interpretation.test.ts ‘PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/defects-g8-10.test.ts ‘rehearses the chosen way of playing in, as the steps on your feet do; with none chosen there’s nothing to rehearse’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "An assignment written by hand."
+          }
+        ],
+        "ui": "None rendered for the chooser’s press; the guide’s worked example plays it through the command (tests/guide-examples-coursework.test.ts).",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
       "verification": {
         "class": "journey",
         "label": "Player Journey"
@@ -1718,6 +1777,65 @@
       }
     },
     {
+      "id": "school.choose_part_playing",
+      "kind": "command",
+      "entry": "School, Casting, How You’ll Play It (RehearsalProcess.tsx:132), while a part you’re cast in has calls to come; registered by production.ts:573 (from 2026-10-10)",
+      "reads": "partPlayingRefusal (production.ts:184): not cast there, the run over; the process’s way of playing",
+      "changes": "Process.playing by choose() (material.ts:182), as a scene’s; the sides newly chosen noted for the habits",
+      "downstream": "each call past the read-through rehearses it in (callAnswered, production.ts:438); a night reads it (materialContext, its preparation against its mark, and its lean); a director’s note on the request is taken when the playing changes to it; the workbook’s segment ways on an axis it leaves open",
+      "persistent": "Process.playing (casting, a Cabaret show, a Summer Cabaret show)",
+      "explanation": "The toast (rehearsed in to N%); the chooser’s forecast of each side",
+      "tests": "tests/trace-commands.test.ts ‘chooses a way to play a part once cast, refused when not; the calls rehearse it in’; tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: the first spring’s part played Driven from the read-through…’ (rehearsed in at two calls, saved and loaded, rehearsed in at the third as far as the twin not reloaded); tests/guide-examples-productions.test.ts (its productions.playing example: every night of the run reads the way’s preparation against its mark, a change keeping half); tests/defects-g8-11.test.ts ‘spends no hour on it, says what answers it, and the changed playing does’; tests/defects-g8-15.test.ts ‘counts the side newly chosen, not the one kept’",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. The run over (The run is over.) is refused by no test through the command.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "How You’ll Play It on a part sets its way once cast; each call rehearses it in; the nights read it; a director’s request is answered by changing to it; refused when not cast.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/trace-commands.test.ts ‘chooses a way to play a part once cast, refused when not; the calls rehearse it in’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: the first spring’s part played Driven from the read-through…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/defects-g8-11.test.ts ‘spends no hour on it, says what answers it, and the changed playing does’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/defects-g8-15.test.ts ‘counts the side newly chosen, not the one kept’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          }
+        ],
+        "ui": "The chooser rendered with a part’s forecast (tests/defects-g8-12.test.ts); not pressed in a gate test.",
+        "verdict": "verified",
+        "gaps": [
+          "The run over isn’t refused through the command by any test."
+        ]
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
       "id": "school.review_blocking",
       "kind": "command",
       "entry": "RehearsalProcess.tsx:113 (Catch Up The Blocking); production.ts:532",
@@ -1976,6 +2094,186 @@
           "weakTests": []
         }
       },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "work.identify",
+      "kind": "command",
+      "entry": "Work It Through (WorkThrough.tsx:109, a problem’s button), under a practice brief once a reading is chosen, a scene for class while it’s open and a part with calls to come; registered by workbook.ts:338 (from 2026-10-12)",
+      "reads": "identifyRefusal (workbook.ts:204): no such work in progress (workPiece: brief:, assignment:, part:), a change waiting to be kept or put back, a problem the forecast doesn’t show now (problemsOf)",
+      "changes": "identify (workbook.ts:211): the problem kept on the piece’s workbook as the one being worked, with its figure",
+      "downstream": "optionsOf and tryRefusal: the ways offered and allowed are the ones that answer it; Work It Through lists them; a problem solved leaves by itself (tryAdjustment, settle)",
+      "persistent": "the piece’s workbook (Person.briefs[id].book, Assignment.book, Process.book).problem",
+      "explanation": "Work It Through: the problem’s label and why (its figure against the whole’s)",
+      "tests": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’ (a way refused before a problem is named), ‘refuses with its reason: no reading, no lines, asleep, spent’ (a problem the work doesn’t show, no such work), ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’ (refused while a change waits); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (named on a class scene set by the clock)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "A problem the forecast shows is named as the one being worked, which decides the ways offered; refused for a problem the work doesn’t show, no such work, or while a change waits to be kept or put back.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘refuses with its reason: no reading, no lines, asleep, spent’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          }
+        ],
+        "ui": "Work It Through isn’t rendered in a gate test with its problem pressed; the built app works one (tools/acceptance-ui.mjs, a way at a problem), outside the gate.",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "work.try",
+      "kind": "command",
+      "entry": "Work It Through (WorkThrough.tsx:69, a way’s button) under the problem named; registered by workbook.ts:345 (from 2026-10-12)",
+      "reads": "alreadyApplied; tryRefusal (workbook.ts:218): no problem named, a change waiting, not a way, a way that doesn’t answer it or was put back for it; wayRefusal (workbook.ts:236): a hospital bed, asleep, too tired or hurt for the feet, the piece’s own refusal (no lines, away), the way’s minutes before a commitment",
+      "changes": "tryAdjustment (workbook.ts:249): the way’s minutes lived and exerted; the segment’s own work moved (work-beat, run-into), the objective’s part, a reader’s preparation (with-partner); a segment played its own way (beat-way) or places to breathe set, waiting to be kept or put back; the problem’s figure before and after kept on the try; the limit worked on trained a little; a problem solved leaves",
+      "downstream": "the forecast, the take, the showing and the night read the work and what’s kept (withBook, piece.ts:167); the director’s notes on the craft read a way worked (school.work_note); discoveriesOf",
+      "persistent": "the piece’s work and workbook (tries, ways, breathe, undo)",
+      "explanation": "Work It Through: the try’s before and after; the toast; Discoveries Kept",
+      "tests": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’ (half an hour on the clock, the segment’s figure rising, the take’s forecast reading it), ‘closes a problem once the work has solved it’, ‘finds places to breathe, which lighten the load the piece puts on stamina’, ‘gives the same evidence for the same work, and keeps the workbook through a save’, ‘refuses with its reason: no reading, no lines, asleep, spent’; tests/guide-examples-coursework.test.ts ‘names the turn, works it slowly until it’s secure, and the problem leaves the list by itself’ (on a class scene); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (a segment played its own way on a class scene, waiting)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. A way’s minutes before a commitment are refused through school.work_note’s door in tests/defects-g8-11.test.ts, not this one’s.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "A way at the problem named is tried: its minutes lived, the work moved or a way of playing set to wait, its figure before and after kept; what’s worked is read by the forecast and the take; refused with its reason.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘closes a problem once the work has solved it’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘finds places to breathe, which lighten the load the piece puts on stamina’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘gives the same evidence for the same work, and keeps the workbook through a save’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          }
+        ],
+        "ui": "Not rendered in a gate test; the built app tries a way at a problem (tools/acceptance-ui.mjs), outside the gate.",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "work.settle",
+      "kind": "command",
+      "entry": "Work It Through (WorkThrough.tsx:78-79, Keep It and Put It Back) under a change tried; registered by workbook.ts:352 (from 2026-10-12)",
+      "reads": "settleRefusal (workbook.ts:298): no such work in progress, no change waiting",
+      "changes": "settle (workbook.ts:305): the change kept, a discovery, or put back, its ways or breath restored from undo and not offered for that problem again; a problem the forecast no longer shows leaves",
+      "downstream": "the forecast, the take, the showing the clock runs and the night read a way kept (withBook, piece.ts:167: the segment leaned as its side leans and read against its own rehearsal, rehearsed in further at the calls and on the feet); optionsOf (a way put back isn’t offered again); a director’s note taken or not",
+      "persistent": "the piece’s workbook (tries’ verdicts, ways, breathe)",
+      "explanation": "The toasts (Kept: everything after reads it; Put back as it was); Discoveries Kept",
+      "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (a segment’s way kept on a class scene, read by the showing the clock runs after a reload, against a twin who kept nothing); tests/workbook.test.ts ‘kept, is read by every later forecast and take, and by the piece as the take judges it’, ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’, ‘refuses with its reason: no reading, no lines, asleep, spent’ (no change waiting); tests/defects-g8-13.test.ts ‘shows The Ways At It again, the way put back gone from it, so the next is chosen’ (a part); tests/direction.test.ts ‘names what the part’s forecast shows, where, with several ways at it; worked, it keeps its way and its evidence’",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day a way kept on a class scene was read by no showing (tests/workbook.test.ts reads one on a take); tests/remaining-09-coverage.test.ts plays the showing since. A night after a way kept is read through the same withBook (playPiece), and no test reads a night’s piece for it: tests/evidence-g19-school.test.ts keeps ways through the festival and plays its nights without reading the book.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "A change tried is kept, a discovery every later forecast, take, showing and night reads, or put back, restored and not offered for that problem again; refused with no change waiting.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘kept, is read by every later forecast and take, and by the piece as the take judges it’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/workbook.test.ts ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "render",
+            "where": "tests/defects-g8-13.test.ts ‘shows The Ways At It again, the way put back gone from it, so the next is chosen’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          }
+        ],
+        "ui": "The note’s ways rendered again after one put back (tests/defects-g8-13.test.ts); Keep It and Put It Back aren’t pressed in a gate test.",
+        "verdict": "verified",
+        "gaps": [
+          "No test reads a night’s piece after a way kept on a part."
+        ]
+      },
+      "status": "verified",
       "verification": {
         "class": "journey",
         "label": "Player Journey"
@@ -3357,6 +3655,218 @@
       }
     },
     {
+      "id": "brief.prepare",
+      "kind": "command",
+      "entry": "A brief’s pane (BriefPane.tsx:134, Read It Through, Learn The Lines and Rehearse It), opened from the Profile’s Genres panel by Open Its Brief; registered by briefs.ts:815 (from 2026-10-11)",
+      "reads": "alreadyApplied (an actionId sent twice); prepareRefusal (briefs.ts:447): no such brief or step, the part at 97% unless a way of playing chosen is still short of its scene’s mark, rehearsal before BRIEF.rehearseNeeds of the lines, too tired or hurt for the feet, a hospital bed, asleep, a commitment inside the step’s minutes; focusAt, the day’s repeats of the step, prepLean, prepSpeed, and the ability the step reads (stepSpeed: imagination for the breakdown, memory for the lines, listening for a rehearsal played off a reader)",
+      "changes": "prepareBrief (briefs.ts:478): the step’s minutes lived and exerted; its part (interpretation, memorization or rehearsal) moved by a share of what’s left, half again for each repeat the same day; a rehearsal rehearses in the way of playing chosen (rehearseChoice, PLAYING.gainShare of the gain), each segment’s own way (rehearseWays) and the reader classmate’s preparation (BRIEF.reader.rehearse of the gain, briefs.ts:498), and notes the material practised; the step trains its ability, a rehearsal the body or the voice where the brief is built on it (rehearseTrains)",
+      "downstream": "the forecast and the take (briefContext’s prep, and the way’s against its required mark); a take’s genre practice (practiceShare); the workbook’s problems (a segment short of its rehearsal); the take together with a reader classmate (readerRead reads their preparation); the abilities it trains, on the development history",
+      "persistent": "Person.briefs[id].prep, .playing.prep, .book.ways, .reader.prep; the development history; the action ids applied",
+      "explanation": "The pane’s toast (the step, its minutes and how much further); each part’s line (partWords: “N% of M%”); the take’s forecast beside it",
+      "tests": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (30 minutes a step, the take improved by the preparation), ‘goes half as far with a step done again the same day’, ‘lives an action sent twice once, and the same take again the same day keeps half its practice’, ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’, ‘rehearses in a way of playing chosen after rehearsal was complete, where it was refused’, ‘PLAYER JOURNEY: a mastered actor, prepared a day at a time, reaches 100 on a side against the grain that asks 97%’; tests/evidence-g07-life.test.ts ‘plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much’ (focus’s 1.1 against 0.52, worked by hand); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (each rehearsal’s gain shared with the reader); checking less: tests/attributes-phase-2b.test.ts ‘rehearses a brief on its feet further with more listening…’ (prepareBrief called directly)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Not checked through this command: the refusals from a hospital bed, asleep and for a commitment inside the step’s minutes (hourRefusal, which a take asks too).",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "Read It Through, Learn The Lines and Rehearse It each live their minutes and move their part of the brief’s preparation by a share of what’s left, half again when repeated the same day, sped by the ability the step reads; a rehearsal also rehearses in the way of playing, each segment’s way and the reader classmate’s preparation; the forecast and the take read it. Refused with its reason: rehearsal before the lines, too tired for the feet, nothing more to gain, an action sent twice.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘goes half as far with a step done again the same day’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "Bounds of 0.35 to 0.65 of the first step’s share, not the rule’s half to the place."
+          },
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘lives an action sent twice once, and the same take again the same day keeps half its practice’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/evidence-g07-life.test.ts ‘plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "fixture",
+            "where": "tests/attributes-phase-2b.test.ts ‘rehearses a brief on its feet further with more listening…’",
+            "reachesAction": false,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "prepareBrief called in place of the command."
+          }
+        ],
+        "ui": "None rendered for the step’s button; the pane’s toast reads the command’s own return. The built app presses Rehearse It in its brief scenario (tools/acceptance-ui.mjs), outside the gate.",
+        "verdict": "verified",
+        "gaps": [
+          "The hospital, asleep and commitment refusals aren’t sent through this command (a take asks the same hourRefusal)."
+        ]
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "brief.choose",
+      "kind": "command",
+      "entry": "A brief’s pane: Your Reading’s Choose It (BriefPane.tsx:224) and How You’ll Play It (PlayingChooser, BriefPane.tsx:231); registered by briefs.ts:822 (from 2026-10-11)",
+      "reads": "chooseRefusal (briefs.ts:508): no such brief, a reading the brief doesn’t support; the record’s reading and way of playing",
+      "changes": "chooseBrief (briefs.ts:515): the reading set, a different one keeping BRIEF.readingKept (half) of the breakdown; the way of playing by choose() (material.ts:182): the same sides keep their rehearsal, a change keeps PLAYING.keptOnChange of it, no side clears it; the sides newly chosen noted for the habits (noteMaterial)",
+      "downstream": "tapeRefusal (a take needs a reading); briefContext: the reading’s lean and draws, the way’s lean and its required mark, read by the forecast, the preview and the take; purposeOf (another reading, another way); the habits (How You Tend To Play It, and a brief suggested the other way); the workbook’s ways for a segment, on an axis the whole leaves open",
+      "persistent": "Person.briefs[id].reading, .playing, .prep.interpretation; the material record’s approaches",
+      "explanation": "The pane’s toast; the reading’s fine print (it keeps half the breakdown); the chooser’s forecast of each side (preview)",
+      "tests": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (a change of reading keeps half the breakdown, the take’s purpose another reading), ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’ (a reading the brief doesn’t support); tests/interpretation-journey.test.ts ‘PLAYER JOURNEY: with the grain and against it, said on the take, kept through a reload, and the advice moving once it’s trained’; tests/defects-g8-15.test.ts ‘counts a side once as it’s chosen, never again for Change The Reading, the same press, or another axis changed’; tests/evidence2-b11.test.ts ‘PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5…’; tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (a way chosen, rehearsed in at 0.9 of each step’s gain)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. A brief that doesn’t exist is refused in chooseRefusal’s words, sent by no screen and by no test.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "Choose It sets the reading a take is of, a change keeping half the breakdown; How You’ll Play It sets the way, a change keeping half its rehearsal; the forecast, the take, its purpose and the habits read them. A reading the brief doesn’t support is refused.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/briefs.test.ts ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/interpretation-journey.test.ts ‘PLAYER JOURNEY: with the grain and against it, said on the take, kept through a reload…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/defects-g8-15.test.ts ‘counts a side once as it’s chosen, never again for Change The Reading, the same press, or another axis changed’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "render",
+            "where": "tests/evidence2-b11.test.ts ‘PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          }
+        ],
+        "ui": "The Profile’s How You Tend To Play It rendered after choices made through the command (tests/evidence2-b11.test.ts); the chooser itself isn’t pressed in a gate test.",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
+      "id": "brief.reader",
+      "kind": "command",
+      "entry": "A brief’s pane, Read With (BriefPane.tsx:60, the ReaderChoice: a classmate or A Recording), drawn for a brief not recorded alone at a microphone; registered by briefs.ts:829 (from 2026-10-12)",
+      "reads": "readerRefusal (briefs.ts:567): no such brief, a voice brief alone at a microphone, not one of the classmates, a classmate wary of you (trust under WORK.trust.wary)",
+      "changes": "chooseReader (briefs.ts:579): a classmate new to it starts from nothing prepared, the same one chosen again keeps what they have; A Recording clears the reader. A rehearsal with them raises their preparation by BRIEF.reader.rehearse (0.5) of the step’s gain on what they have left (briefs.ts:498)",
+      "downstream": "readerRead (briefs.ts:547): a classmate by their preparation, timing (listening and focus) and reliability, the recording at its fixed timing; takeTogether: the take together beside your own, which it never moves; afterTogether: a classmate’s bond by how it went together and their trust for a slip covered; a callback earned on the take together; the workbook’s partner problem, which Run It With Your Partner answers on a brief by raising the reader’s preparation (workpieces.ts:65)",
+      "persistent": "Person.briefs[id].reader {mate, prep}; the classmate’s bond and trust; the take’s together",
+      "explanation": "The pane’s toast (who reads); the take’s words with its reader (sharedWords), the recording named as itself",
+      "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (5/9 of the way’s rehearsal at the first, half of each step’s gain after, worked by hand; another classmate and Maya after the recording from nothing; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together; across a reload); tests/ensemble.test.ts ‘is refused for a voice alone at a microphone, and by a classmate who doesn’t trust you’ (trust set by hand); tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: a classmate reading a camera brief with her, the take together Strong, her bond rises by 1…’ and ‘PLAYER JOURNEY: taped unprepared on Sunday morning with Maya reading…’; tests/defects-g31-1.test.ts ‘names the recording by the thing itself wherever the words name the reader’; checking less: tests/ensemble.test.ts ‘reads a classmate prepared with you as more than the recording…’ (the classmate’s preparation set by hand)",
+      "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day no test rehearsed with a classmate to raise their preparation (tests/evidence-g20-school.test.ts read it only above nothing), and the take together was compared with their preparation set by hand; tests/remaining-09-coverage.test.ts plays both since. A classmate wary of you is refused only on trust set by hand.",
+      "added": "2026-10-16",
+      "review": {
+        "on": "2026-10-16",
+        "against": "7e531122",
+        "before": "not a row",
+        "claim": "Read With chooses who reads the other lines: a classmate starts from nothing and learns it at your rehearsals, half of each step’s gain; the same classmate keeps it, another or the recording doesn’t; the take together reads their preparation, timing and reliability and leaves your own take alone; the classmate’s bond and trust move with how it went. Refused for a voice brief, someone not a classmate, a classmate wary of you.",
+        "evidence": [
+          {
+            "kind": "command",
+            "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: a classmate reading a camera brief with her, the take together Strong, her bond rises by 1…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: taped unprepared on Sunday morning with Maya reading…’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true
+          },
+          {
+            "kind": "command",
+            "where": "tests/ensemble.test.ts ‘is refused for a voice alone at a microphone, and by a classmate who doesn’t trust you’",
+            "reachesAction": true,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "The wary classmate’s trust is set by hand."
+          },
+          {
+            "kind": "fixture",
+            "where": "tests/ensemble.test.ts ‘reads a classmate prepared with you as more than the recording…’",
+            "reachesAction": false,
+            "checksConsequence": true,
+            "independent": true,
+            "problem": "The classmate’s preparation set by hand, readerRead and takeTogether called directly."
+          }
+        ],
+        "ui": "None rendered for Read With; the take’s words naming the reader are rendered (tests/defects-g31-1.test.ts).",
+        "verdict": "verified",
+        "gaps": []
+      },
+      "status": "verified",
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
+      }
+    },
+    {
       "id": "genre.study",
       "kind": "command",
       "entry": "Study It on the Profile’s Genres panel (ProfileWorkspace.tsx:444) and Study The Genre in a brief’s pane (BriefPane.tsx:195); engagement.ts:123. Until 2026-10-13 this said ProfileWorkspace.tsx:407, BriefPane.tsx:187 and engagement.ts:126.",
@@ -3513,11 +4023,11 @@
       "kind": "scheduled",
       "entry": "enroll (school.ts:1657) / previous term (school.ts:3027); TERM_KIND handler school.ts:2936",
       "reads": "term, need, account",
-      "changes": "termsBegun, fresh tally, workStudy reset at a fall (school.ts:2970: electiveHours 0, owedHours carried, assignedBooked dropped), scholarship/health plan, labs, cast() (a production’s rehearsal calls numbered and staged on the calls it keeps beside a Rep assignment, from 2026-10-12), evaluation scheduled",
+      "changes": "termsBegun, fresh tally, workStudy reset at a fall (electiveHours 0, owedHours carried, assignedBooked dropped); a term past six billed first, then the living-expense scholarship applied on the Yale account to what it owes before any reaches the bank, in its one posting (aidOnAccount), a hold it clears lifted and said, and only then a hold left asks registration (from 2026-10-16, brief 09’s journeys: until then the aid was paid out whole first and a hold it would have cleared stopped registration); labs, cast(), evaluation scheduled",
       "downstream": "cast -> calls; evaluation; tally",
       "persistent": "school record, ledger",
       "explanation": "SchoolWorkspace.tsx",
-      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carried and paid with the first Saturday’s, 10 × $23, and the class weeks’ Saturdays booked again from 6 hours, the same across a save and a load’, ‘PLAYER JOURNEY: the second fall’s casting, reached in order by the clock, numbers every rehearsal call it books from 1 to the last, the read-through first and the technical and the dress last’; tests/evidence2-b07.test.ts ‘PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13’; tests/school.test.ts ‘pays a student in need the rest of the living scholarship each term, and takes nothing from the bank for the plan’; tests/production-staging.test.ts ‘numbers every rehearsal call it keeps, one to the last, with its technical and its dress’ (a term scheduled by hand, behind an early return). Until 2026-10-13 this also cited production-staging’s “runs six terms”, which checks termStart, a pure function",
+      "tests": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: the second fall’s start begins the year’s work-study again: elective hours to nothing, the hours owed carried and paid with the first Saturday’s, 10 × $23, and the class weeks’ Saturdays booked again from 6 hours, the same across a save and a load’, ‘PLAYER JOURNEY: the second fall’s casting, reached in order by the clock, numbers every rehearsal call it books from 1 to the last, the read-through first and the technical and the dress last’; tests/evidence2-b07.test.ts ‘PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13’; tests/school.test.ts ‘pays a student in need the rest of the living scholarship each term, and takes nothing from the bank for the plan’; tests/production-staging.test.ts ‘numbers every rehearsal call it keeps, one to the last, with its technical and its dress’ (a term scheduled by hand, behind an early return). Until 2026-10-13 this also cited production-staging’s “runs six terms”, which checks termStart, a pure function; tests/remaining-09-journeys.test.ts ‘DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)’, ‘DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)’",
       "status": "verified",
       "issue": "",
       "corrected": {
@@ -3588,8 +4098,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g20-school.test.ts",
@@ -3608,6 +4118,55 @@
             "title": "school.term > PLAYER JOURNEY: the second fall’s casting beside a Rep understudy, reached in order by the clock, numbers the thirteen rehearsals it keeps 1 to 13, read-through first and the technical and dress last, where a twin with no Rep keeps all twenty; every call kept, the process is complete at 13 of 13",
             "kind": "command",
             "closes": "The numbering beside a Rep assignment, reached in order by the clock on g20-term's second fall (term 2, 23 August 2027) with no guard. Ghosts in Directors' Thesis Production I has 20 rehearsal days, listed as literal dates (Tuesday to Friday for five weeks before 9 October). The Rep understudy's 11 Wednesday and Friday calls, 25 August to 29 September, drop the 7 that fall on those days. The 13 kept are numbered 1..13 of 13. Their stages are read, 4 blocking, 6 work, tech, dress, and the last five run 300 minutes for the nights on call. A twin out of good standing (no Rep) keeps all 20, numbered 1..20. Played by the clock to the dress, the process holds 13 calls of 13, lines 1−0.88^13 and blocking 1−0.75^5, equal to completeFor: complete."
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-aid-past-balance: a term begun under a hold its aid clears > DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)",
+            "kind": "command",
+            "closes": "A Modest student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed and its due date, as evidence-g25 sets them, with the month’s $125.00 fee): the term’s $13,318.50 pays the $1,125.00 first, $12,193.50 to Chase Total Checking, the hold lifted at nine on 4 January, said once, no registration asked, the first class day counting her.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-f1-term-notice: an F-1 student’s term notice and what reached her account > DEFECT: a London-born F-1 student’s Fall Term 2026 notice says $11,356.54 is in Chase Total Checking after $1,961.96 withheld for the IRS, as the posting has it (until 2026-10-16 it said the whole $13,318.50 was)",
+            "kind": "command",
+            "closes": "By hand: ($28,028 − $3,764 + $2,373 + $3,764) / 2 = $15,200.50, less the $1,882.00 plan, $13,318.50; the taxable part all but the $1,186.50 of books, $14,014.00, 14% withheld, $1,961.96; $11,356.54 posted to Chase Total Checking and the notice “… and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS.” Fails before the fix.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "evidence-g26-school.test.ts",
+            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted",
+            "kind": "render",
+            "closes": "Recast: a scholarship returned on a leave is refused in its words and moves nothing; paid from the drawn panel before the return, the hold lifts and the return term’s $14,093.64 is paid out whole; the unpaid twin’s return term pays the account first, its rest to the bank, the hold lifted at nine on 3 January in the aid’s words; registration asked again by the return, the registered student counted, the twin not registered not counted and told to register, not to pay.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+            "kind": "render",
+            "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+            "kind": "command",
+            "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "evidence-g25-school.test.ts",
+            "title": "school.reregister > PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts",
+            "kind": "render",
+            "closes": "Recast figure: back from a leave owing $15,575.50, the spring’s $14,093.64 pays it down to $1,481.86, so the hold stays and refuses Register in its words; the rest of the journey as it was.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -4585,7 +5144,7 @@
       "changes": "standing graduated (or withheld; or awaitingDegree with ‘The Diploma Is Held’ / ‘Not At Commencement’); through setStanding (school.ts:1813): endedAt, the last runs’ credits (keepCredit), every pending school.* item called off, the US status looked at again. Until 2026-10-13 this listed ‘filmed’, which went on 2026-10-10",
       "downstream": "Yale Health to 1 August (yaleUntil, health.ts:226-234); copyAt (playreading.ts:62: no library copy after school). Until 2026-10-13 this put the health plan’s end at health.ts:187",
       "persistent": "school",
-      "explanation": "SchoolWorkspace.tsx / Home.tsx",
+      "explanation": "SchoolWorkspace.tsx / Home.tsx. From 2026-10-16 (brief 09’s journeys) the Standing tab’s Courses And The Degree says the degree was conferred and its day, its three figures read Last Term with their floors in the past and ‘In the casting pool.’ goes (SchoolWorkspace.tsx:149, :593), Casting draws No Casting Ahead (:473) and Coursework says no course sets work now (CourseworkPane.tsx:69): until then a graduate read ‘Only the terms to come stand between you and the degree.’, ‘so far’, each floor ahead, Not Cast Yet and Nothing set yet.",
       "tests": "tests/evidence-g21-school.test.ts ‘school.commencement’: ‘graduates a student with nothing outstanding at Commencement: the degree, its end, the calendar let go, the last run’s credit, Yale Health to 31 July, no library copy after’ (Yale Health on a September graduation, the month ≥ 8 branch; a May graduate’s only on fixtures), ‘withholds the degree at Commencement from a student whose last-term Incomplete ran out its month before it’; school.test.ts ‘holds no Commencement for a student dismissed at the last evaluation’",
       "status": "verified",
       "issue": "Until 2026-10-10 school.filmed was set at the degree and read nowhere; it went that day (school.ts:3024).",
@@ -4660,7 +5219,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g21-school.test.ts",
@@ -4687,6 +5246,13 @@
             "kind": "command",
             "closes": "g26-l3: both attempts of Movement Invention III kept against program term 4; withheld once, no Commencement, nothing left on the calendar; twins equal.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)",
+            "kind": "render",
+            "closes": "At school on 1 October 2026 the page keeps “so far. Only the terms to come …”, “This Term”, “is the floor”, “In the casting pool.”; graduated at Commencement, Monday 21 May 2029 at ten (the Monday before Memorial Day), before and after a reload: “N of N courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.”, Last Term with “was the floor”, No Casting Ahead, “Nothing is set: your degree is conferred, and no course sets work now.”, none of the seven stale phrases.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -7463,7 +8029,7 @@
       "changes": "standing, castable, history",
       "downstream": "cabaret/summer/rep eligibility, dismissal, commencement",
       "persistent": "school",
-      "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term",
+      "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term. From 2026-10-16 (brief 09’s journeys), once a dismissal ends the School, Courses And The Degree says she was dismissed, with what wasn’t passed and no way back, the three figures read Last Term, and Casting and Coursework say none comes (SchoolWorkspace.tsx:149, :593-597; CourseworkPane.tsx:69): until then the tab read This Term with each floor ahead, as for a student still at the School.",
       "tests": "tests/evidence3-school.test.ts ‘standing/term evaluation’ (the two PLAYER JOURNEYs above); tests/evidence2-b08.test.ts ‘standing/term evaluation’; tests/evidence-g24-school.test.ts (the six cited); tools/acceptance-ui.mjs:707 (outside the gate). Until 2026-10-13 this cited school.test.ts standing, casting.test.ts’s run off, school-fixes.test.ts and term-growth.test.ts, which set bands, runs and growth by hand.",
       "status": "verified",
       "issue": "Until 2026-10-13 this said coursework quality was absent and the Carlotta excluded; evaluate reads both (school.ts:2851-2860, :2842), through the clock in evidence-g24. Until 2026-10-14 no test worked the ‘behind’ verdict from termGrowth’s room-relative pace (school.ts:2812-2827); evidence2-b08 supported it with raw class growth over twice the player’s, which the rule doesn’t read. evidence3-school works it from the rule on two played falls where raw points and the pace disagree, each way.",
@@ -7542,7 +8108,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 4,
+        "rounds": 5,
         "tests": [
           {
             "file": "evidence-g24-school.test.ts",
@@ -7639,6 +8205,13 @@
             "kind": "render",
             "closes": "The missed revision is said.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: a dismissal > PLAYER JOURNEY: a student who never prepares her coursework (jd-1, the dials tended and no work done) is dismissed at Fall Term 2027’s evaluation, concern then warning before it; the page says so, with no way back, no casting and no work, through a reload",
+            "kind": "render",
+            "closes": "jd-1, no work done: concern, warning, dismissed on 10 December 2027; “You were dismissed… Once dismissed, a student isn’t eligible to come back.”, no casting, no work, none of the stale phrases.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -8510,7 +9083,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -8562,6 +9135,13 @@
             "kind": "fixture",
             "closes": "Where the branch decides: on a three-term leave it counts 8 and offers the year’s end; the other path counts 10 and doesn’t.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -8941,18 +9521,40 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
       "id": "school.reregister",
       "kind": "command",
       "entry": "School, Standing And Craft: Register (StudyPlanPanels.tsx:110)",
-      "reads": "mustRegister (set at a return, leave.ts:426, and at a term begun under a hold, school.ts:2957); a financial hold (accountOwed, refused at leave.ts:1162)",
+      "reads": "mustRegister (set at a return, and at a term begun under a hold the term’s aid doesn’t clear, from 2026-10-16); a financial hold (accountOwed)",
       "changes": "deletes mustRegister; registeredAt (leave.ts:1164). Until 2026-10-13 this cited leave.ts:1124",
       "downstream": "registered(), which classes and shifts read",
       "persistent": "school.registeredAt",
       "explanation": "The Register line; the hold’s refusal; from 2026-10-16 the Not Registered notice under a hold names the sum and where to pay it.",
-      "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts’, ‘a term begun under a hold, with no leave behind it, asks for registration again: refused until paid, the first class day not counted, then registered and counted’; tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’ (the fall back’s courses attended once registered)",
+      "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid: the hold refuses Register in its words and grays it, a class day and a Saturday don’t count the student; paid, Register takes, once, and the next class counts’, ‘a term begun under a hold, with no leave behind it, asks for registration again: refused until paid, the first class day not counted, then registered and counted’; tests/leave.test.ts ‘asks, waits, leaves the term, keeps Yale Health...’; tests/journey-second-year-return.test.ts ‘asks in the summer after year one...’ (the fall back’s courses attended once registered); tests/remaining-09-journeys.test.ts ‘DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)’ (a hold the aid clears asks no registration)",
       "status": "verified",
       "issue": "",
       "traced": "2026-10-12",
@@ -9003,7 +9605,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9023,6 +9625,13 @@
             "kind": "command",
             "closes": "$49,944.30 owed (two terms past six at $24,784.65, worked in scope-school from the Bulletin’s figures, and the first’s late fees to their $375 cap) named in the notice; paid and registered, the next class counts.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9070,10 +9679,10 @@
       "kind": "command",
       "entry": "The leave panel’s Buy It (StudyPlanPanels.tsx:87)",
       "reads": "a leave on, no Affiliate cover, by affiliateBy; affiliateQuote; from 2026-10-16 the primary current account and the easy-access savings at its bank (fromBankToYale)",
-      "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1154). Until 2026-10-13 this cited leave.ts:1104.",
+      "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1227 at 11933d55), which from 2026-10-16 prices again a prescription filled at the counter in the lapse too (HealthRecord.fills, health.ts:1923), paying back the difference on a line of its own; tellOutsideTheCover (leave.ts:177). The row cited leave.ts:1154 until 2026-10-16 and :1104 until 2026-10-13. Until 2026-10-16 (brief 09’s journeys) a fill in the lapse kept the pharmacy’s cash price ($42.26 for a generic, where Yale Health’s copay is $10.00), and an appointment booked in it was said to be outside Yale Health only by its bill.",
       "downstream": "coverOn back to the day student cover ended; care had in the lapse billed again as Yale Health’s",
       "persistent": "school.leave.affiliate, ledger",
-      "explanation": "The quote in the confirmation; ‘Care Credited’",
+      "explanation": "The quote in the confirmation; ‘Care Credited’, a prescription filled in the lapse among what it credits (from 2026-10-16); ‘Your Appointment Is Outside Yale Health’ for an appointment booked in the lapse at a practice Yale Health doesn’t pay for, with the way to be seen at its Health Center (from 2026-10-16, brief 09’s journeys)",
       "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice’ (Buy It pressed, the lapse closed and its bill repriced to $0, “You have it.” after a reload), ‘past its deadline it’s refused in its words, with the money there...’, ‘on a medical leave the School pays for it...’; tests/leave.test.ts ‘PLAYER JOURNEY: asked on the third day of spring classes...’; tests/defects-g8-2.test.ts ‘shows and charges the leave’s own three terms, the same figure’ (money put in by hand)",
       "status": "verified",
       "issue": "Through the command, Affiliate cover is bought for both terms less the fee paid, Yale Health covers back to the lapse, and a bill had in it is brought down.",
@@ -9124,7 +9733,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9164,6 +9773,27 @@
             "kind": "render",
             "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+            "kind": "render",
+            "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
+            "kind": "command",
+            "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9209,7 +9839,7 @@
       "changes": "standing withdrawn (setStanding, school.ts:1813); the place given up; a leave ended with it (:1824); a Summer Cabaret week under way paid for its days worked (from 2026-10-13, :1832-1840); an early withdrawal cancels Yale Health to the insurance term’s start and reprices the care had since (school.ts:3807-3811), refunding the premium paid or owed",
       "downstream": "TERM_KIND called off; coverOn; care in a canceled term billed again; the F-1 grace and OPT (permission.ts)",
       "persistent": "school.standing, withdrewEarly",
-      "explanation": "The confirmation; ‘Care Billed Again’",
+      "explanation": "The confirmation; ‘Care Billed Again’. From 2026-10-16 (brief 09’s journeys) the Standing tab says she withdrew, with what wasn’t passed and that SLATE doesn’t model a return, a course left in the middle reads Not Finished and isn’t listed with the term’s meetings, and Casting and Coursework say none comes (SchoolWorkspace.tsx:584-600, :473; CourseworkPane.tsx:69): until then such a course read In Progress with its meetings, and a year with a course failed ‘can be repeated, below’, which nothing offered.",
       "tests": "tests/leave.test.ts ‘ends the leave with the place’, ‘cancels Yale Health back to the insurance term’s start...’; tests/student-experience.test.ts ‘PLAYER JOURNEY: a withdrawal by the fifteenth day of classes cancels Yale Health back to the term...’, ‘a withdrawal later in the term keeps Yale Health thirty days, with nothing refunded’; tests/defects-g8-4.test.ts ‘PLAYER JOURNEY: in a fall it goes back to 1 August...’; tests/journey-class-left-behind.test.ts (the New Haven student, born in New York)",
       "status": "verified",
       "issue": "Through the command, withdrawal ends the place and a leave with it, calls off the next term, and by the fifteenth day of classes cancels Yale Health back to the term’s start, bills the care had in it again and refunds the premium; later, cover runs thirty days.",
@@ -9297,7 +9927,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "remaining-health-billing.test.ts",
@@ -9340,6 +9970,34 @@
             "kind": "command",
             "closes": "“Care Billed Again” once.",
             "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: the School page once the School has ended > PLAYER JOURNEY: a withdrawal in the first fall says how it ended, offers no repeat, no casting and no work, and keeps saying so through a reload; the course record stays as it was",
+            "kind": "render",
+            "closes": "Withdraw refused unconfirmed and again after; the record unchanged; “You withdrew. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.”; the fall’s courses Not Finished, not In Progress, not listed with their meetings; no casting, no work.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump",
+            "kind": "command",
+            "closes": "A cover canceled back to 1 August by a withdrawal in orientation’s week: the notice of 1 September counts from the withdrawal, “until October 24, 2026, 60 days from when it was canceled back”, in one jump as in steps; Enroll open on 22 October.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -10197,7 +10855,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g26-school.test.ts",
@@ -10286,6 +10944,13 @@
             "kind": "command",
             "closes": "The Not Shown notice’s words and the course’s count.",
             "round": "remaining-school"
+          },
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "A Term Without Tuition Support > names the Yale Health fee as on the account only where it was charged",
+            "kind": "command",
+            "closes": "A Term Without Tuition Support says the aid “meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by …”; without need, tuition and the fee on the account, as before.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -10354,10 +11019,10 @@
       "entry": "Terms And Award: Owed On Your Yale Account, Pay From Your Bank (StudyPlanPanels.tsx:260); leave.ts:1235. Until 2026-10-13 this cited StudyPlanPanels.tsx:250",
       "reads": "payBalanceRefusal (leave.ts): accountOwed, something paid, no more than is owed, and from 2026-10-16 what the primary current account and the easy-access savings at its bank can pay together, whatever the link (fromBankToYale)",
       "changes": "pays the Yale account (payBalance, leave.ts:767). Until 2026-10-13 this cited leave.ts:1187",
-      "downstream": "the hold lifted once paid (registration, the diploma); conferIfReady, a degree held for it conferred",
+      "downstream": "the hold lifted once paid (registration, the diploma); conferIfReady, a degree held for it conferred. From 2026-10-16 a term’s living-expense scholarship pays the account first (aidOnAccount), so a balance it covers is paid at the term’s start and the hold lifted there (liftHold, shared with payBalance).",
       "persistent": "ledger, school.hold",
       "explanation": "‘The Financial Hold Is Lifted’; ‘Your MFA Is Conferred’",
-      "tests": "Add: tests/need-paths.test.ts ‘a leave taken with need: the aid returned, the balance, and paying it’; tests/evidence3-school.test.ts ‘school.pay_balance, for a balance a family chosen on the screen leaves’.",
+      "tests": "tests/evidence-g26-school.test.ts ‘PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted’ (renamed, inputs/renames.json)",
       "status": "verified",
       "issue": "Through the command and the drawn panel, a term billed past six is paid in parts, the hold lifting on the last, and a diploma held for the account is conferred once it’s paid. A scholarship returned on a leave (leave.ts:369-376) puts a balance on the account too, and late fees add to it (accountDue, leave.ts:783-791). Until 2026-10-13 this said a balance comes only from a term past the sixth. Until 2026-10-14 the returned scholarship reached only a life with need set by hand, as every new life’s family was ‘wealthy’; since then the family is chosen on creation’s Genres & Background, and a Scraping family’s student meets it (need-paths, evidence3-school).",
       "traced": "2026-10-12",
@@ -10415,11 +11080,11 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 4,
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g26-school.test.ts",
-            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, holds registration on the return, and paid from the drawn panel lifts the hold and lets the term count",
+            "title": "school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted",
             "kind": "render",
             "closes": "Each refusal; registration after a hold is paid; the render and press; a balance from a leave"
           },
@@ -10461,6 +11126,20 @@
             "kind": "render",
             "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -10580,6 +11259,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "defects-g8-2.test.ts",
+            "title": "Terms And Award, for a term past six the aid office reviewed > shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it",
+            "kind": "render",
+            "closes": "Spring Term 2030, three years of the Bulletin’s growth, by hand: $22,407.28 tuition on the Yale account, the kept living aid’s $15,781.87 paid onto it, $6,625.41 owed, Paid To Your Bank $0.00; the posting’s one leg is the Yale account’s.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {

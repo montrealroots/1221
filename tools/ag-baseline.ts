@@ -32,7 +32,7 @@ import { TIER } from '../src/engine/content/practice';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefPiece, tapeReadsOf, BRIEF, type BriefRecord } from '../src/engine/systems/briefs';
 import { judge, type EvalContext, type Evaluation, type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, pieceWeights, toneSegments, type PieceSpec } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
 import { materialContext, misfitOf, type Playing } from '../src/engine/systems/material';
 import { castingPerformer, NIGHT_DIFFICULTY } from '../src/engine/systems/school';
 import { difficultyOf, partnerPart as ownPartnerPart, READER, type Assignment } from '../src/engine/systems/coursework';
@@ -78,7 +78,8 @@ function briefScore(b: Brief, p: Performer, o: { key?: string; prep?: number; ge
 /** Every reading's mean: what a random choice of reading would come to (the effect matrix reads this). */
 const briefMean = (b: Brief, p: Performer, o: { key?: string; prep?: number; genre?: number } = {}): Evaluation => {
   const es = b.readings.map((r) => briefScore(b, p, { ...o, reading: r.id }));
-  return { ...es[0]!, overall: r2(mean(es.map((e) => e.overall))) };
+  // The mean at full precision beside it (from 2026-10-16, brief 09), for the account of H4 that reads exact effects.
+  return { ...es[0]!, overall: r2(mean(es.map((e) => e.overall))), exact: mean(es.map((e) => e.exact ?? e.overall)) };
 };
 
 function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Piece {
@@ -86,7 +87,7 @@ function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Pie
   const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const difficulty = kind === 'scene' ? difficultyOf(templateById('scene-study')!) : kind === 'night' ? NIGHT_DIFFICULTY.school.supporting : 0;
-  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  const spec: PieceSpec = { segments: unitSegments(m, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
   return {
     kind, id: m.id, material: m,
     judge: (p, o = {}) => {
@@ -277,7 +278,7 @@ const partnered = BRIEFS.filter((b) => b.medium !== 'voice' && b.partner > 0);
 const togetherRows = readers.map((rd) => { const own: number[] = []; const tog: number[] = []; for (const b of partnered) { const e = briefScore(b, MASTER); const ctx = briefContext(nobody, b, rec(1), { reading: b.readings[0]!.id }); const s = sharedOf(e, { ...rd, level: b.partner }, SEED, `ag:${b.id}`, 1, pieceWeights(ctx.task, ctx.lean, briefPiece(b, { ...rec(1), reading: b.readings[0]!.id }))); own.push(e.overall); tog.push(s.overall); } return { reader: rd.name, own: stats(own), together: stats(tog) }; });
 // A class scene whose partner never came to rehearse: your own result with the partner part of preparation at 0.
 // Every scene in its tones or two halves from 2026-10-16 (`scenePiece`); until then one of a single tone was judged whole here.
-const partnerPart = SCENE_MATERIAL.map((m) => { const task = TASK_PROFILES.scene!; const read = materialContext(task, m); const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }; const ctx = (partner: number): EvalContext => ({ task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true }); const j = (c: EvalContext) => judgePiece(SEED, MASTER, c, spec).overall; return { none: j(ctx(0)), half: j(ctx(0.45)) }; });
+const partnerPart = SCENE_MATERIAL.map((m) => { const task = TASK_PROFILES.scene!; const read = materialContext(task, m); const spec: PieceSpec = { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }; const ctx = (partner: number): EvalContext => ({ task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true }); const j = (c: EvalContext) => judgePiece(SEED, MASTER, c, spec).overall; return { none: j(ctx(0)), half: j(ctx(0.45)) }; });
 // From 2026-10-16 (phase 2a): the same partner never coming, with your own side worked with a reader (`READER`,
 // `partnerPart`): the evenings a reader takes to complete the part at a day's focus of 1, your own result then, and the
 // scene together with that partner absent from every rehearsal (their preparation only what they did alone, here 0)
@@ -285,7 +286,7 @@ const partnerPart = SCENE_MATERIAL.map((m) => { const task = TASK_PROFILES.scene
 const readerEvenings = (() => { let r = 0, n = 0; while (r < 0.9 && n < 50) { r += READER.gain * (1 - r); n += 1; } return { n, reader: r }; })();
 const readerRoute = SCENE_MATERIAL.map((m) => {
   const task = TASK_PROFILES.scene!; const read = materialContext(task, m);
-  const spec: PieceSpec = { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') };
+  const spec: PieceSpec = { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') };
   const own = ownPartnerPart({ prep: { partner: 0 }, reader: readerEvenings.reader } as unknown as Assignment);
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: own }, required: { familiarity: 0.9, memorization: 0.9, interpretation: 0.9, rehearsal: 0.9, partner: 0.9 }, difficulty: difficultyOf(templateById('scene-study')!), condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'ag', expected: true };
   const e = judgePiece(SEED, MASTER, ctx, spec);
@@ -391,6 +392,48 @@ const cond = (kind: Kind, c: { readiness: number; ill?: boolean; injured?: boole
 out.condition = { masteredBriefs: { sufficient: cond('brief', { readiness: 100 }), tired30: cond('brief', { readiness: 30 }), ill: cond('brief', { readiness: 100, ill: true }), injured: cond('brief', { readiness: 100, injured: true }) } };
 const staminaEffect = Object.fromEntries(KINDS.map((k) => { const xs = PIECES.map((pc, i) => [pc, effect.stamina![i]!] as const).filter(([pc]) => pc.kind === k).map(([, x]) => x); return [k, stats(xs)]; }));
 out.staminaPlus10 = staminaEffect;
+
+// ---------------------------------------------------------------------------------------------------------------
+// 10. H4 taken apart, at full precision (from 2026-10-16, brief 09; docs/verification/integration-2026-10-16/h4.md)
+// ---------------------------------------------------------------------------------------------------------------
+// For each ability: its share of what a piece's abilities move (its +10 effect over the twelve's positive effects), on
+// H4's own set of its pieces and everywhere; the pieces where it's the largest of the twelve (its own work), and whether
+// its specialist is ahead there; and the share above which specialists come out ahead. Stamina, read only as the drain
+// through a piece, is also measured on what it's named for: the last segment of a night. H4' (proposed, not counted)
+// reads `ownWork` and `staminaLastSegment`; H4 as written is section 2's, unchanged.
+log('10. H4 taken apart');
+{
+  const exactOf = (e: Evaluation) => e.exact ?? e.overall;
+  const evenX = PIECES.map((pc) => exactOf(pc.judge(EVEN)));
+  const effX = Object.fromEntries(ABILITIES.map((a) => [a, PIECES.map((pc, i) => exactOf(pc.judge(bump(EVEN, a, 10))) - evenX[i]!)]));
+  const total = PIECES.map((_, i) => ABILITIES.reduce((t, a) => t + Math.max(0, effX[a]![i]!), 0));
+  const shareOf = (a: Ab, i: number) => (total[i]! > 0 ? Math.max(0, effX[a]![i]!) / total[i]! : 0);
+  const specX = Object.fromEntries(ABILITIES.map((a) => [a, PIECES.map((pc, i) => exactOf(pc.judge(specialist(a))) - evenX[i]!)]));
+  const bandEdges = [0, 0.1, 0.125, 0.15, 0.2, 0.3, 1.01];
+  const bands = bandEdges.slice(0, -1).map((lo, k) => ({ from: lo, to: bandEdges[k + 1]!, pairs: 0, ahead: 0 }));
+  const q = (xs: number[], p: number) => (xs.length ? [...xs].sort((x, y) => x - y)[Math.min(xs.length - 1, Math.floor(p * xs.length))]! : 0);
+  const kindsOf = (idx: number[]) => idx.reduce((m, i) => { m[PIECES[i]!.kind] = (m[PIECES[i]!.kind] ?? 0) + 1; return m; }, {} as Record<string, number>);
+  const abilities = Object.fromEntries(ABILITIES.map((a) => {
+    PIECES.forEach((_, i) => { const b = bands.find((x) => shareOf(a, i) >= x.from && shareOf(a, i) < x.to)!; b.pairs += 1; if (specX[a]![i]! > 0.05) b.ahead += 1; });
+    const suit = suitable(a);
+    const h4 = PIECES.map((_, i) => i).filter((i) => suit[i]);
+    const own = PIECES.map((_, i) => i).filter((i) => effX[a]![i]! >= 0.05 && ABILITIES.every((b) => b === a || effX[b]![i]! < effX[a]![i]!));
+    return [a, {
+      h4Set: { n: h4.length, shareMedian: r3(q(h4.map((i) => shareOf(a, i)), 0.5)), shareP90: r3(q(h4.map((i) => shareOf(a, i)), 0.9)), underATenth: h4.filter((i) => shareOf(a, i) < 0.1).length, kinds: kindsOf(h4) },
+      ownWork: { n: own.length, ahead: own.filter((i) => specX[a]![i]! > 0.05).length, kinds: kindsOf(own), pieces: own.map((i) => `${PIECES[i]!.kind}:${PIECES[i]!.id} share ${r3(shareOf(a, i))} specialist ${r2(specX[a]![i]!)}`) },
+      shareAQuarterOrMore: PIECES.filter((_, i) => shareOf(a, i) >= 0.25).length,
+    }];
+  }));
+  const S = specialist('stamina');
+  const nights = PIECES.filter((pc) => pc.kind === 'night');
+  const last = nights.map((pc) => { const s = pc.judge(S), e = pc.judge(EVEN); return { id: pc.id, lastSegment: r2(s.piece!.segments.at(-1)!.overall - e.piece!.segments.at(-1)!.overall), whole: r2(exactOf(s) - exactOf(e)) }; });
+  out.h4Account = {
+    note: 'At full precision. A specialist is ahead where its result is more than 0.05 over the even actor’s. Own work: the pieces where the ability’s +10 effect is the largest of the twelve.',
+    aheadByShare: bands.map((b) => ({ ...b, share: b.pairs ? r3(b.ahead / b.pairs) : null })),
+    abilities,
+    staminaLastSegment: { nights: last.length, aheadOnTheLast: last.filter((x) => x.lastSegment > 0.05).length, aheadOnTheWhole: last.filter((x) => x.whole > 0.05).length, rows: last },
+  };
+}
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, `${JSON.stringify(out, null, 1)}\n`);

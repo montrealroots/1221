@@ -628,7 +628,8 @@ describe('Working A Problem Through, played', () => {
   it('names the turn, works it slowly until it’s secure, and the problem leaves the list by itself', () => {
     const r = playWorkbook();
     const { setup, steps, result } = example('coursework.workbook');
-    expect(r.segments).toHaveLength(wordNum(said(setup, /: (\w+) parts in its tones/)[0]!));
+    // From evaluation-10 the setup counts the parts by its tones and its turns, where it counted them in its tones.
+    expect(r.segments).toHaveLength(wordNum(said(setup, /: (\w+) parts by its tones and its turns/)[0]!));
     const [label, from, asks] = said(steps[0]!, /shows “(.+?)”: (\d+)% of the (\d+)% it asks/);
     expect(r.turn.label).toBe(label);
     expect(r.turn.why).toContain(`${from}% of the ${asks}% it asks`);

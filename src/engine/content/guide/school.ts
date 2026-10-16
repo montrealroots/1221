@@ -260,6 +260,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       `Your Place counts the classmates above you, 1 to ${YALE_DRAMA.classSize}. Overall is the mean of all ${SKILLS.length} skills, and Acting is scene study twice with character work and emotional depth.`,
       'A line below the stats says whether you’re in the casting pool, or out of it after missed calls, until a good evaluation.',
       `Coursework This Term counts this term’s pieces due, shown or missed unexcused, and of them those Unready or not shown, as the review will count them; it shows a warning at half of ${ESTIMATE.coursework.shown} or more.`,
+      // From 2026-10-16 (brief 09's journeys): until then a graduate's tab read each figure “This Term” with its floor
+      // ahead, “In the casting pool.”, and “Only the terms to come stand between you and the degree.”
+      'Once the School has ended, with the degree, a withdrawal, a dismissal or the degree not recommended, the three read Last Term, each with the floor it was held to, the casting pool’s line goes, and Courses And The Degree says how it ended: every course passed and the day the degree was conferred, or the way you left and what wasn’t passed, with nothing more to ask. A course the School ended in the middle of reads Not Finished.',
       'Each Evaluations row has the term’s attendance, your growth and the class’s, its coursework as the review counted it, and why the standing came out as it did.',
       'Whose rules these are: the four standings, the faculty’s majority vote on the degree and no readmission after a dismissal are the Bulletin’s (2026–27 pp.151, 154, 157); one evaluation a term at the end of its classes, its floors and marks, and a standing stepped one at a time are SLATE’s reading of a Bulletin that has the faculty evaluate regularly and act at any time. The notices that tell a standing are SLATE’s words for the faculty’s decision, not the School’s or its staff’s.',
       `The school’s own look gives the year you’re in and Terms Begun, how many of the program’s ${YALE_DRAMA.terms} terms have begun: the calendar’s less those a leave or a repeated year took, which its note counts apart, as it does an additional term. On a leave it counts the terms before the one the leave began in, since that one is taken again when you’re back, and the year you’re in is read from the same count.`,
@@ -276,7 +279,8 @@ export const SCHOOL: readonly GuideEntry[] = [
       `A rehearsal, a run-through or a lab missed unexcused, when the term’s missed calls reach ${ESTIMATE.missedCallsOut}, takes you out of the casting pool until a good evaluation, and a notice says so. A missed performance counts among them, and is a grave breach besides.`,
       'A dismissal is final: the Bulletin readmits nobody it dismissed. Its notice, and a withheld degree’s, says what stands: every course and its result on your record, the productions you played on your Profile, hours worked paid, and practice and the practice briefs going on outside the School.',
       // Said from 2026-10-16: until then the Not Registered notice told a student under a hold to register, which the hold refused.
-      'A term that begins under a financial hold doesn’t count your classes until you register, and the hold stops registering: pay the Yale account on Terms And Award first, then Register, or the term’s meetings go by unexcused. The Not Registered notice says what’s owed.',
+      // And from 2026-10-16 (brief 09's journeys) a term's living-expense scholarship pays the account first, lifting a hold it clears.
+      'A term that begins under a financial hold doesn’t count your classes until you register, and the hold stops registering: pay the Yale account on Terms And Award first, then Register, or the term’s meetings go by unexcused. A term’s living-expense scholarship pays what the account owes before any of it reaches your bank, and a hold it clears lifts as the term begins. The Not Registered notice says what’s owed.',
     ],
     related: ['school.sick', 'school.repeat', 'school.leave', 'craft.profile', 'productions.casting', 'coursework.feedback'],
     connections: [
@@ -699,7 +703,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     later: [
       `Still owed ${EXTENDED_STUDY.dueDays} days after a term is billed, or after a leave returns a scholarship to it, the account goes on a financial hold with a ${usd(EXTENDED_STUDY.lateFee)} late fee, then another each month while it’s owed, to ${usd(EXTENDED_STUDY.lateFeeTermCap)} a term.`,
-      'Held at a term’s start, you must register again once it’s paid; until then classes don’t count you and shifts can’t be worked.',
+      'Held at a term’s start, you must register again once it’s paid; until then classes don’t count you and shifts can’t be worked. With need found, the term’s living-expense scholarship pays the account first, and only what’s left reaches your bank: a hold it clears lifts then, said in “The Financial Hold Is Lifted”.',
       'Held at Commencement, the diploma waits until it’s paid.',
       `The aid review’s answer is read when the next term begins. With an exception, its tuition isn’t billed and the term runs as one of the first ${SIX}; with need found, living aid goes on either way and meets the term’s Yale Health fee. A term billed before the answer isn’t credited back.`,
       `Converted hours are paid into your bank as grant aid on the processing day; for a nonresident on an F-1, ${pct(NONRESIDENT_SCHOLARSHIP_RATE)} is withheld for tax.`,
@@ -709,7 +713,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Owed On Your Yale Account shows a warning when anything is owed; Financial Hold gives the day it began.',
       'The table lists the account’s last twelve lines, each charged, or paid or credited.',
       'Convertible To Grant Aid reads Not On Aid where no need was found; otherwise the hours, and what they’d come to.',
-      `Each Term ends Paid To Your Bank where need was found and Paid From Your Bank where it wasn’t, a term past ${SIX} included where the aid office granted an exception. A term past ${SIX} without one shows On Your Yale Account: its tuition, and its Yale Health fee too unless the review kept your living aid, which then meets the fee, and the term ends Paid To Your Bank as well.`,
+      `Each Term ends Paid To Your Bank where need was found and Paid From Your Bank where it wasn’t, a term past ${SIX} included where the aid office granted an exception. A term past ${SIX} without one shows On Your Yale Account: its tuition, and its Yale Health fee too unless the review kept your living aid, which then meets the fee and pays the tuition before any reaches your bank, as Applied To Your Yale Account shows, and the term ends Paid To Your Bank with what’s left, if anything.`,
       `Terms Enrolled counts the terms you’ve been enrolled in, the figure the degree’s ${EXTENDED_STUDY.maxSemesters} semesters are read against; a leave’s terms aren’t among them.`,
       'A hold’s notice, and a held diploma’s, says to pay on the Terms And Award tab, where Your Yale Account and Pay From Your Bank are.',
       `A scholarship returned on a leave is due ${EXTENDED_STUDY.dueDays} days after the leave begins, as a term’s bill is, and the “Your Leave Has Begun” notice gives the date. Unpaid by then, it brings the hold and the late fee.`,

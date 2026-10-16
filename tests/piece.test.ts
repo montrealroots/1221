@@ -19,7 +19,7 @@ import { PIECE } from '@/engine/content/piece';
 import { RULESET, TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
 import { judge, replay, type EvalContext, type Performer } from '@/engine/systems/evaluation';
-import { judgePiece, loadOf, segmentPart, segmentRequired, toneSegments, type PieceSpec } from '@/engine/systems/piece';
+import { judgePiece, loadOf, segmentPart, segmentRequired, unitSegments, type PieceSpec } from '@/engine/systems/piece';
 import { materialContext } from '@/engine/systems/material';
 
 const FULL: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
@@ -31,7 +31,8 @@ function ctxOf(m: MaterialProfile, night: boolean, prep: Record<string, number>,
   return { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty: 0, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: `t:${m.id}`, expected: true, ...over };
 }
 const specOf = (m: MaterialProfile, night: boolean, work: number[] = []): PieceSpec => ({
-  segments: toneSegments(m.tones, night ? 2 : 1), work, part: night ? 'blocking' : 'rehearsal',
+  // Its units, as the engine cuts a scene and a night from evaluation-10 (`unitSegments`); its tones until then.
+  segments: unitSegments(m, night ? 2 : 1), work, part: night ? 'blocking' : 'rehearsal',
   perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: loadOf(m, night ? 'night' : 'scene'),
 });
 const SCENE_PREP = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 };
@@ -130,10 +131,19 @@ describe('a slip, and the next segment', () => {
 
 describe('the whole, from its segments', () => {
   const m = PLAY_MATERIAL.find((x) => x.tones.length >= 3)!;
-  it('is the segments’ mean; continuity is read from them and not added', () => {
-    const e = judgePiece('seed', actor({ emotionalDepth: 30 }, 40), ctxOf(m, true, { lines: 0.7, blocking: 0.8, notes: 0.5 }, { expected: false }), specOf(m, true, [0.9]));
-    const mean = e.piece!.segments.reduce((a, s) => a + s.overall, 0) / e.piece!.segments.length;
-    expect(e.overall).toBeCloseTo(Math.round(mean * 10) / 10, 1);
+  it('is the segments’ mean by their weights; continuity is read from them and not added', () => {
+    const spec = specOf(m, true, [0.9]);
+    const e = judgePiece('seed', actor({ emotionalDepth: 30 }, 40), ctxOf(m, true, { lines: 0.7, blocking: 0.8, notes: 0.5 }, { expected: false }), spec);
+    // By their weights: from evaluation-10 a tone section cut at its turns shares its weight among its units (Three
+    // Sisters' three tones and three turns are six units of half a section each). The whole is the segments' exact wholes'
+    // mean, rounded once, and each segment shows its own rounded once, so the mean of what they show is within half a
+    // tenth of the whole's exact figure. Until then this asked the whole to be the mean of the shown figures rounded,
+    // which three segments met and six, a tenth apart (35.1 against 35.2), didn't: that was the rounding, not the mean.
+    const W = spec.segments.reduce((a, s) => a + s.weight, 0);
+    expect(spec.segments).toHaveLength(6);
+    const mean = e.piece!.segments.reduce((a, s, i) => a + s.overall * spec.segments[i]!.weight, 0) / W;
+    expect(Math.abs(e.exact! - mean)).toBeLessThanOrEqual(0.05 + 1e-9);
+    expect(e.overall).toBe(Math.round(e.exact! * 10) / 10);
     expect(e.piece!.continuity).toBeLessThanOrEqual(100);
     expect(e.piece!.lowest).toBe(Math.min(...e.piece!.segments.map((s) => s.overall)));
   });

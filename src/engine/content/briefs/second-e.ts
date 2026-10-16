@@ -8,31 +8,38 @@
 import type { Brief } from './types';
 
 export const SECOND_E: readonly Brief[] = [
+  // `brief-psychological_thriller-2`, The Overnight Study (2026-10-12), went on 2026-10-16. On camera with The Rehung
+  // Frames' features within two and no technique, and the composure specialist rewarded most with the consistency named
+  // the limit on both, it asked of the actor what the first did in three of the six parts `tools/genre-pairs.ts` reads
+  // (docs/verification/integration-2026-10-16/genres-09.md). Its id isn't reused: a save that prepared it keeps its
+  // record, and this scene starts fresh (`RETIRED_BRIEFS`).
   {
-    id: 'brief-psychological_thriller-2', title: 'The Overnight Study', kinds: ['psychological_thriller'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'withholding',
-    logline: 'A sleep-lab technician on the night shift hears the patient she’s monitoring describe, over the intercom, a kitchen that sounds exactly like her own.',
-    circumstances: 'The control room of a hospital sleep clinic, a little after three in the morning, a wall of monitors and a microphone for the intercom. The man in Room Two came in for a routine study of his snoring. For an hour he’s been talking calmly in the dark about a kitchen with a yellow kettle, a calendar left on the wrong month and a window that sticks, and Priya’s kettle is yellow. For the tape she sits at the desk, the monitors played just below the lens, and his voice comes from beside it.',
-    relationship: 'Strangers. She wired him up at nine and had never met him before tonight; to him she’s a voice in the dark that tells him when to turn over.',
-    you: 'Priya Raman, thirty-one, a sleep technologist six weeks into a run of night shifts, who reads brainwaves for a living and likes how little happens on her watch.',
-    reader: 'Edwin Hale, the patient in Room Two, lying in the dark, speaking slowly toward the ceiling microphone.',
-    objective: 'Keep him talking until she understands how he knows, without letting him hear that she’s frightened.',
-    obstacle: 'The monitors insist he’s in deep sleep, he answers her questions after long silences, and the supervisor’s phone goes unanswered every time she tries it.',
+    id: 'brief-psychological_thriller-3', title: 'The Third Telling', kinds: ['psychological_thriller'], medium: 'camera', size: 'long', stakes: 3, readerPlays: 'pressing',
+    logline: 'Asked by a detective to tell the night her husband disappeared for the third time, a woman tells it in exactly the same words, and the detective wants to know why.',
+    circumstances: 'An interview room at a county sheriff’s office, a Tuesday afternoon, three days after her husband walked out of their lake house and didn’t come back. She has told the story twice already, and both times it was word for word the same, down to the time on the stove clock. The detective has noticed. She isn’t under arrest and can leave whenever she likes. For the tape she sits at the table, and the detective is read off camera across it.',
+    relationship: 'Strangers until Saturday: he’s polite and patient and doesn’t believe a word.',
+    you: 'Dana Whitlock, forty-three, a court stenographer, who remembers everything she hears exactly and always has.',
+    reader: 'Detective Ray Corso, who asks the same questions in a different order every time.',
+    objective: 'Get through the third telling without giving him anything new, and leave.',
+    obstacle: 'He changes the order of everything, her exactness, only the way her memory has always worked, sounds rehearsed, and there’s one detail she has left out all three times.',
     beats: [
-      { what: 'She answers him the way she answers every patient, kindly and by the protocol, and asks him to try to settle.', tones: ['grave'] },
-      { what: 'He describes the calendar and the sticking window; she checks his traces, and they show deep sleep.', tones: ['grotesque'] },
-      { what: 'She tests him with a detail she invents, a blue rug by the sink, half as a joke, and he gently corrects the color.', tones: ['comic', 'grave'] },
-      { what: 'She switches off the intercom, writes the time in the log in a steady hand, and switches it back on to ask him one more question.', tones: ['grave'] },
+      { what: 'She begins the story again, with the same first sentence and the stove clock at ten past nine.', tones: ['grave'] },
+      { what: 'He starts her in the middle; she goes back to the beginning, politely, and goes on.', tones: ['grave', 'comic'] },
+      { what: 'He reads her own words back from the first interview, and she corrects him on one word.', tones: ['grave'] },
+      { what: 'He asks why her story never changes; she explains her work, exactly and at length.', tones: ['grave'] },
+      { what: 'He asks about the boat, and for the first time she uses a word she hasn’t used before.', tones: ['grotesque', 'grave'] },
+      { what: 'She stands, says she’d like to leave now, and does, without hurrying.', tones: ['grave'] },
     ],
-    language: 'everyday', timing: 2, physical: 0, partner: 2, vocal: 1, improvisation: 0,
+    language: 'everyday', timing: 3, physical: 0, partner: 2, vocal: 1, improvisation: 0,
     why: {
-      timing: 'Each question has to be placed in the gaps of his slow talk, and the pause before the invented detail is held.',
-      partner: 'He gives her very little, and every question she asks is built from the last thing he said.',
-      beats: 'Routine kindness, a detail that shouldn’t be possible, a test that turns on her, then the decision to keep going.',
+      timing: 'The telling is word for word each time, and every interruption has to be met and the story taken up again exactly where it was left.',
+      partner: 'He asks the same questions in a different order every time, and each answer is shaped to where he has jumped.',
+      beats: 'The same beginning, an interruption refused, a correction, an explanation, the one new word, then leaving.',
     },
     readings: [
-      { id: 'watched', label: 'Someone Was There', reading: 'Someone has been in her apartment, and every question is her trying to learn what else he’s seen.', rests: 'He knows the kettle, the calendar and the window, and he corrects the detail she invents.', lean: { responsiveness: 1.2, believability: 1.1 }, draws: [{ dim: 'responsiveness', ability: 'listening', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
-      { id: 'fishing', label: 'He’s Fishing', reading: 'He’s guessing and she’s feeding him, and the scene is a professional catching herself handing over the answers.', rests: 'A yellow kettle, a stale calendar and a sticking window could describe a thousand kitchens, and the rug is a detail she gives him herself.', lean: { interpretation: 1.2, consistency: 1.1 }, draws: [{ dim: 'interpretation', ability: 'focus', weight: 0.5 }, { dim: 'consistency', ability: 'composure', weight: 0.5 }] },
-      { id: 'tired', label: 'Six Weeks Of Nights', reading: 'She’s too tired to trust herself, and she can’t be certain which of the two of them is asleep.', rests: 'She’s six weeks into night shifts, and his traces show deep sleep while he talks.', lean: { believability: 1.25, connection: 0.9 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'connection', ability: 'imagination', weight: 0.3 }] },
+      { id: 'exact', label: 'Word For Word', reading: 'She remembers exactly because she always has, and the scene is a truthful woman whose truth sounds rehearsed.', rests: 'She’s a court stenographer who remembers everything she hears exactly.', lean: { execution: 1.2, consistency: 1.15 }, draws: [{ dim: 'execution', ability: 'memory', weight: 0.7 }, { dim: 'consistency', ability: 'focus', weight: 0.4 }] },
+      { id: 'detail', label: 'The Detail She Left Out', reading: 'She’s hiding one thing and guarding it with everything else, and the new word about the boat is a crack she didn’t plan.', rests: 'There’s one detail she has left out all three times, and she uses a new word about the boat.', lean: { believability: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'believability', ability: 'composure', weight: 0.5 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.5 }] },
+      { id: 'studying', label: 'Who’s Interviewing Whom', reading: 'She’s studying him as closely as he studies her, and every answer tests what he knows.', rests: 'He changes the order of everything, and she corrects him on one word.', lean: { interpretation: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'interpretation', ability: 'focus', weight: 0.5 }, { dim: 'responsiveness', ability: 'listening', weight: 0.5 }] },
     ],
   },
   {
@@ -221,34 +228,41 @@ export const SECOND_E: readonly Brief[] = [
       { id: 'plan', label: 'The Plan Breaking', reading: 'He believed in the plan, and the scene is the plan breaking in a silence longer than the delay.', rests: 'They planned the house and the family together, and her answer to his news is a silence.', lean: { believability: 1.25, consistency: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.7 }, { dim: 'consistency', ability: 'composure', weight: 0.3 }] },
     ],
   },
+  // `brief-samurai-2`, The First Form (2026-10-12), went on 2026-10-16. On camera, medium, heightened, with combat and the
+  // features within two of The Crossing At Dawn's, the body trained by rehearsing it, and its two readings the first's
+  // two in what they lean and draw on (Being Judged as Duty First: consistency and execution by discipline and the body;
+  // A Debt Owed as The Old Debt: belief and interpretation by emotional depth and imagination), it asked of the actor what
+  // the first did in three of the six parts `tools/genre-pairs.ts` reads (docs/verification/integration-2026-10-16/
+  // genres-09.md). Its id isn't reused: a save that prepared it keeps its record, and this scene starts fresh
+  // (`RETIRED_BRIEFS`).
   {
-    id: 'brief-samurai-2', title: 'The First Form', kinds: ['samurai'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'withholding',
-    logline: 'Two years after he killed a fellow retainer in a duel their lord allowed, a samurai is asked by the dead man’s widow to teach her son the sword.',
-    circumstances: 'The small practice hall beside a lower retainer’s house in a provincial castle town, late in the Edo period, a winter morning. Two years ago, with their lord’s permission, Jinbei fought Nozaki Hachirō over an insult given at a banquet and killed him. This morning the widow came to his gate in her most formal dress, carrying her son’s wooden practice sword wrapped in cloth, and made her request in a form that leaves him no proper way to refuse it. For the tape he kneels formally, the wrapped sword on the floor before him and his own replica practice sword at his side, and rises with it to show the form alone.',
-    relationship: 'They had never spoken before today. She knows him as the man her husband quarreled with and the man who killed him, lawfully, in a duel he didn’t seek.',
-    you: 'Mizutani Jinbei, thirty-eight, a retainer of low rank and a patient teacher, unmarried, who has visited the dead man’s grave every month since.',
-    reader: 'Nozaki Tae, the widow, kneeling across the hall, who speaks little and watches everything.',
-    objective: 'Learn why she has chosen him, and answer her honestly, before he accepts the boy or refuses him.',
-    obstacle: 'She gives away almost nothing, and whatever her reason, teaching the boy means one day telling him how his father died.',
+    id: 'brief-samurai-3', title: 'Two Bowls Of Rice A Day', kinds: ['samurai'], medium: 'camera', size: 'short', stakes: 2, readerPlays: 'pressing',
+    logline: 'A masterless samurai with an empty stomach haggles with a rice merchant over what it costs to guard his warehouse, until the bandits they’re both waiting for arrive early.',
+    circumstances: 'The yard of a rice warehouse in a post town on the highway, late in the Edo period, an autumn evening. Bandits have robbed two warehouses on the road this month. The merchant needs a guard tonight and has found only this ronin, who hasn’t eaten in two days and won’t say so. They’re arguing over the fee when a shout comes from the gate. For the tape the fight is two short exchanges marked solo with a replica sword to the reader’s called cues.',
+    relationship: 'Strangers: the merchant has watched a dozen ronin pass through this year and trusted none of them.',
+    you: 'Kuroda Hyōe, thirty-five, a samurai without a lord for three years, proud, funny and very hungry.',
+    reader: 'Densuke, the rice merchant, sharp, stingy and talking the whole time.',
+    objective: 'Get a fee that keeps his pride whole and feeds him tonight.',
+    obstacle: 'The merchant haggles over every grain, the ronin can’t let him see how hungry he is, and the bandits don’t wait for the bargain.',
     beats: [
-      { what: 'He receives her with full courtesy, hears the request through, and asks, as formally as he can, why she has come to him.', tones: ['grave'] },
-      { what: 'She asks to see how he’d begin; he rises and performs the first form alone, slowly, as he’d show a boy of twelve.', tones: ['lyric'] },
-      { what: 'He kneels again and tells her plainly which cut ended her husband’s life, so she can decide knowing it.', tones: ['grave'] },
-      { what: 'She bows and leaves the wrapped sword where it lies; he returns the bow and tells her the hour the lessons begin.', tones: ['grave', 'lyric'] },
+      { what: 'The merchant offers one bowl of rice a day; Kuroda names a price in gold, as if he were still in a lord’s service.', tones: ['comic'] },
+      { what: 'They haggle down to two bowls a day, and his stomach gives him away.', tones: ['comic'] },
+      { what: 'A shout at the gate: two short exchanges, marked solo, and the first bandit runs.', tones: ['grave'] },
+      { what: 'Sheathing his sword, he tells the merchant the price is three bowls now, and sits down on the step to wait for the rest.', tones: ['comic', 'lyric'] },
     ],
-    language: 'heightened', timing: 2, physical: 2, partner: 2, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 2, physical: 2, partner: 3, vocal: 1, improvisation: 0,
     techniques: { combat: 1 },
     why: {
-      language: 'They speak in the formal register of retainers of the period, a request made in set courtesies that can’t honorably be refused, and he keeps to that formality even as he tells her the hardest thing.',
-      timing: 'The bows, the rise, the form and the silence after each answer are placed exactly, as the etiquette of the hall requires.',
-      physical: 'Formal kneeling and bowing throughout, and a solo sword form performed slowly, every step and cut held to its pattern.',
-      partner: 'She gives him almost nothing, and he has to read her purpose from a bow, a pause and one request.',
-      techniques: 'The first form is staged as a solo kata in the manner of film sword-work, with his own replica practice sword at teaching speed, cutting toward an empty corner of the hall away from the lens and the reader; it asks a swordsman’s footwork, posture and control though no blow is exchanged.',
-      beats: 'A formal hearing, a form shown as a teacher shows it, a hard truth told plainly, then an answer given in a bow.',
+      timing: 'The haggle runs at the merchant’s pace, offer and counter-offer, and the fight’s two exchanges come on the reader’s called cues.',
+      physical: 'A swordsman’s carriage kept up through hunger, a fast draw and two short exchanges, then a sheathing done with ceremony while he’s still out of breath.',
+      partner: 'Every offer the merchant makes is answered, and the price Kuroda names is always shaped by the last insult.',
+      techniques: 'Two short exchanges with a replica sword, marked solo at reduced speed on the reader’s called cues toward an off-camera eyeline, never at the lens or the reader.',
+      beats: 'A grand price, a bargain lost to his stomach, a fight over fast, then a joke that names a new price.',
     },
     readings: [
-      { id: 'debt', label: 'A Debt Owed', reading: 'He takes the boy as a debt owed to the dead man, and teaches the first form like an apology.', rests: 'He’s visited the dead man’s grave every month, and he tells her plainly which cut killed her husband.', lean: { believability: 1.15, interpretation: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.5 }] },
-      { id: 'judged', label: 'Being Judged', reading: 'She has come to judge the man who killed her husband, and he knows from the first bow that the form is his examination.', rests: 'She asks to see how he’d begin, speaks little and watches everything.', lean: { consistency: 1.2, execution: 1.15 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
+      { id: 'pride', label: 'A Samurai’s Price', reading: 'His pride is the comedy: he haggles over rice like a lord, and he’d starve before he let the merchant win.', rests: 'He names a price in gold as if he were still in a lord’s service.', lean: { connection: 1.2, execution: 1.1 }, draws: [{ dim: 'execution', ability: 'presence', weight: 0.6 }, { dim: 'connection', ability: 'composure', weight: 0.4 }] },
+      { id: 'hunger', label: 'Two Days Hungry', reading: 'He’s weak with hunger and hiding it, and the fight costs him everything he has left.', rests: 'He hasn’t eaten in two days, and his stomach gives him away.', lean: { believability: 1.2, consistency: 1.1 }, draws: [{ dim: 'consistency', ability: 'stamina', weight: 0.6 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.4 }] },
+      { id: 'haggle', label: 'Playing The Merchant', reading: 'It’s a game between two sharp men, and he enjoys every round of it, the bandits included.', rests: 'They haggle down to two bowls a day, and he raises the price again after the fight.', lean: { responsiveness: 1.2, interpretation: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.6 }, { dim: 'interpretation', ability: 'focus', weight: 0.4 }] },
     ],
   },
   {
@@ -390,30 +404,38 @@ export const SECOND_E: readonly Brief[] = [
       { id: 'shipmate', label: 'One Of Them', reading: 'He’s as thirsty as any man aboard and on their side, and the key is a weight he’s been waiting to share.', rests: 'The bosun taught him his knots, and he gives the sick his own share and asks the bosun to stand watch beside him.', lean: { connection: 1.2, believability: 1.15 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
     ],
   },
+  // `brief-silent_film-2`, Her First Sitting Alone (2026-10-12), went on 2026-10-16. On camera, short, a steady reader,
+  // the same features as The Telegram For Miss Avery (timing 2, physical 3, partner 1) and both its readings the first's
+  // in the numbers, it asked of the actor what the first did in five of the six parts `tools/genre-pairs.ts` reads
+  // (docs/verification/integration-2026-10-16/genres-09.md). Its id isn't reused: a save that prepared it keeps its
+  // record, and this scene starts fresh (`RETIRED_BRIEFS`).
   {
-    id: 'brief-silent_film-2', title: 'Her First Sitting Alone', kinds: ['silent_film'], medium: 'camera', size: 'short', stakes: 0, readerPlays: 'steady',
-    logline: 'Without a word, a farmer’s widow sits for her first portrait alone in 1923, and finds a way to bring her husband into the picture.',
-    circumstances: 'A portrait studio above a hardware store in a prairie town, 1923, a painted garden for a backdrop and a chair with a fringed cushion. Adelaide has never been photographed without her husband; he died in the winter, and her daughter has paid for this sitting so there’ll be a picture of her mother. The photographer is under his black cloth, signaling with one raised hand. For the tape she faces the lens as if it’s his camera, and his signals come silently from beside it.',
-    relationship: 'A sitter and a photographer who have nodded to each other in church for twenty years and never exchanged more than a greeting.',
-    you: 'Adelaide Ingersoll, sixty-one, a farmer’s widow in her best black dress, who doesn’t know what to do with her hands.',
-    reader: 'Mr. Pruitt, the photographer, under his black cloth beside the camera, signaling with his hand and never speaking.',
-    objective: 'Sit for a portrait her daughter will want to keep.',
-    obstacle: 'She’s never been photographed alone, every pose she tries looks to her like someone else’s, and she can’t say any of it aloud.',
+    id: 'brief-silent_film-3', title: 'Forty Feet Left', kinds: ['silent_film'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
+    logline: 'On a silent picture’s set in 1924, a young actress plays the big scene of her first lead while the director, calling through a megaphone, changes his mind about how she should play it before the camera runs out of film.',
+    circumstances: 'A glass-roofed studio stage in 1924, a cottage parlor built against one wall. In the picture Ruth reads that her sweetheart’s ship has gone down, and the title card is already written. The camera is cranked by hand and holds forty feet of film for this take, under a minute, and the director talks her through it as silent directors did, calling moods and business through a megaphone while the camera turns. For the tape she plays to the lens with a letter in her hand, and his calls come from beside it.',
+    relationship: 'He found her in a dance-hall chorus six months ago and has never once let her finish a scene the way they rehearsed it.',
+    you: 'Nell Garvey, nineteen, in her first lead, with no line to say and every thought to show.',
+    reader: 'Mr. Ambrose, the director, off camera with his megaphone, who has three ideas a minute and calls every one of them.',
+    objective: 'Get Ruth’s grief onto the film, all of it, before the forty feet run out.',
+    obstacle: 'He changes the scene while it’s turning, she can’t stop or speak, and every call costs film she doesn’t have.',
     beats: [
-      { what: 'She arranges herself in the chair and tries her hands three ways and a smile two ways, each worse than the last.', tones: ['comic'] },
-      { what: 'He signals her to hold still; she holds so still she forgets to breathe, and has to let it all out.', tones: ['comic'] },
-      { what: 'She takes her husband’s pocket watch from her bag, looks at it, and begins to put it away.', tones: ['grave'] },
-      { what: 'She sets the watch in her lap where the lens can see it, lifts her chin, and gives the camera the face she wore at her wedding.', tones: ['lyric'] },
+      { what: 'She reads the letter as they rehearsed it, large and clear, the hand going to the heart.', tones: ['grave'] },
+      { what: 'He calls for slower, the whole house is weeping, then for faster, she can’t believe it, and she gives him both inside four seconds.', tones: ['comic', 'grave'] },
+      { what: 'He calls the close-up and the camera comes in; she brings all of it down into her eyes.', tones: ['lyric'] },
+      { what: 'He calls ten feet; she finds an ending of her own, folds the letter into her apron and looks out toward the sea as the cranking stops.', tones: ['grave', 'lyric'] },
     ],
-    language: 'everyday', timing: 2, physical: 3, partner: 1, vocal: 0, improvisation: 0,
+    language: 'everyday', timing: 3, physical: 3, partner: 2, vocal: 0, improvisation: 2,
     why: {
-      timing: 'Each change of pose and the held breath have to read to a camera without words, and the photographer’s raised hand sets when each one lands.',
-      physical: 'With no spoken lines, everything is in her face, hands and posture, played in mime to the lens.',
-      beats: 'Two comic beats of a woman at war with her own pose, a grave moment with the watch, then the portrait she chooses.',
+      timing: 'The take is forty feet of film cranked by hand, under a minute, and every change he calls has to land before the next foot runs through.',
+      physical: 'There are no spoken lines: Ruth’s grief is in the face, the hands and the body, sized for a silent picture, then brought down for the close-up.',
+      partner: 'His calls come while the camera turns, each one changing what she’s doing, and what she gives him is her answer to the last of them.',
+      improvisation: 'His calls are in no script: she finds the business for each on the spot, and the ending is hers.',
+      beats: 'The rehearsed version, two calls pulling opposite ways, the close-up, then an ending she makes up as the film runs out.',
     },
     readings: [
-      { id: 'fuss', label: 'Her Own Worst Sitter', reading: 'She’s a comic figure, fussing and fretting in the old broad style, and the last beat lands because at last she’s still.', rests: 'She tries her hands three ways and a smile two, and holds still so long she forgets to breathe.', lean: { execution: 1.25, connection: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.7 }, { dim: 'connection', ability: 'presence', weight: 0.3 }] },
-      { id: 'grief', label: 'Bringing Him In', reading: 'Every fuss is grief she can’t show, and putting the watch in the picture is what she came to do.', rests: 'She’s never been photographed without him, and she brought his watch in her bag.', lean: { believability: 1.2, interpretation: 1.15 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'imagination', weight: 0.4 }] },
+      { id: 'calls', label: 'Every Call Taken', reading: 'She’s a working actress and the scene is the director’s: she gives him everything he calls, as fast as he calls it.', rests: 'He calls moods and business through the megaphone, and she gives him both inside four seconds.', lean: { responsiveness: 1.25, execution: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
+      { id: 'own', label: 'Her Own Ruth', reading: 'She has her own idea of Ruth and keeps hold of it through every call, so the ending she finds was there all along.', rests: 'He has never let her finish a scene the way they rehearsed it, and the ending is hers.', lean: { interpretation: 1.2, consistency: 1.1 }, draws: [{ dim: 'interpretation', ability: 'imagination', weight: 0.6 }, { dim: 'consistency', ability: 'focus', weight: 0.4 }] },
+      { id: 'eyes', label: 'Into The Close-Up', reading: 'Everything large is preparation for the close-up, where the grief is at last real and small enough for the lens.', rests: 'The camera comes in and she brings all of it down into her eyes.', lean: { believability: 1.2, connection: 1.05 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'connection', ability: 'presence', weight: 0.5 }] },
     ],
   },
   {

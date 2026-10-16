@@ -39,7 +39,14 @@ import type { AbilityId } from './abilities';
 // (`judgeExact`, `rounded`, systems/evaluation.ts); until then a dimension and a piece's segment were rounded before a
 // whole was worked out from them, so a result kept under evaluation-8 can differ from today's by a tenth. Restrained
 // draws on composure and focus too (`APPROACH_EFFECT`), so a take played restrained reads them.
-export const RULESET = 'evaluation-9 (2026-10-16)';
+// evaluation-10 from later on 2026-10-16, brief 09's follow-up: a class scene and a play are judged in their units, each tone
+// section cut again at each of its turns (`unitSegments`, systems/piece.ts), and what a piece demands counts those units
+// (`demandsOf`), so a scene or a night of more than three reads discipline's long score as a brief's beats do; a segment's
+// place in the piece is read by the running of the segments before it (`SegmentSpec.length`), and the whole is their
+// weighted mean divided once. A result kept
+// under evaluation-9 is shown as it was; work a save kept on a piece's segments moves to its units on its first opening
+// (`cutIntoUnits`, engine/index.ts).
+export const RULESET = 'evaluation-10 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 

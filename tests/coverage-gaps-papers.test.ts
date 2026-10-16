@@ -111,7 +111,9 @@ describe('residence held without a break (FIXTURE: Mexican residence documents)'
     // Without the lapse, the earlier grant reaches the later one, and four years are held.
     docs.find((d) => d.id === 'r1')!.expiresAt = t - 2 * YEAR;
     expect(continuousSince(sim.player, 'MX', t)).toBe(t - 5 * YEAR);
-    expect(settleRefusal(sim, sim.player, 'MX')).toBeUndefined();
+    // Past the four years settling was allowed (undefined) until 2026-10-16, when Mexico's papers stopped being granted
+    // (brief 09's journeys): from then the rule's step gives way to the reason, which a lapse still keeps back.
+    expect(settleRefusal(sim, sim.player, 'MX')).toBe('Mexico grants permanent residence after four years’ temporary, for MXN 13,578.96. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.');
   });
 });
 

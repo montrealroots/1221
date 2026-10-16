@@ -218,24 +218,32 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
   const kept = opening['de-deutsche-bank'];
   afterEach(() => { if (kept) opening['de-deutsche-bank'] = kept; else delete opening['de-deutsche-bank']; });
 
-  it('GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped', () => {
+  /**
+   * Until 2026-10-16's brief 09 this was “… they post at the quarter’s closing, €20.70, and nothing is dropped”: January,
+   * the month the AktivKonto opened, was charged. Deutsche Bank's price list leaves it free (read that day), so the
+   * quarter's closing takes February's and March's, €13.80, and closing on 5 February would have charged February's to
+   * the day. The renamed title is in docs/verification/pipeline/inputs/renames.json.
+   */
+  it('GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €13.80, January free as the month it opened, and nothing is dropped', () => {
     // Why play can't reach it: only Citi and Capital One close an account at zero or unfunded (`OPENING`), and neither
     // charges fees at closing. TEST SETUP: Deutsche Bank given Citi's kind of rule, at thirty days.
     opening['de-deutsche-bank'] = { closesAtZeroAfterDays: 30, source: 'TEST SETUP' };
     const sim = inBerlin('de-commerzbank', 'rb-zero-de');
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
     expect([db.name, db.balance]).toEqual(['AktivKonto', 0]);
-    // At zero from the first day's end, 6 January; thirty days on is 5 February. January's €6.90 waits for the quarter's
-    // closing (AGB-Banken no. 7), and February's is this month's: closing would charge €13.80 with nothing to take it from.
+    // At zero from the first day's end, 6 January; thirty days on is 5 February. January, the month it opened, is free
+    // (Deutsche Bank's price list), so nothing waits for the quarter's closing (AGB-Banken no. 7), and February's €6.90
+    // to the day is this month's: on the 5th, 690 × 5 / 28 = 123.2, €1.23, with nothing to take it from. Until 2026-10-16
+    // January's €6.90 was kept, and February's whole.
     sim.advanceTo(berlin(2026, 2, 6, 12));
     expect(db.closedAt).toBeUndefined();
-    expect(db.feesDue).toBe(6_90);
+    expect(db.feesDue).toBe(0);
     expect(sim.universe.notifications.filter((n) => n.title.endsWith('Closed AktivKonto'))).toEqual([]);
-    // The quarter's closing on 31 March takes January's, February's and March's €6.90: €20.70, the debt the bank holds.
+    // The quarter's closing on 31 March takes February's and March's €6.90: €13.80, the debt the bank holds.
     sim.advanceTo(berlin(2026, 4, 1, 12));
-    expect(postedTo(sim, 'Quarterly closing, fees: AktivKonto', db.id)).toEqual([-20_70]);
+    expect(postedTo(sim, 'Quarterly closing, fees: AktivKonto', db.id)).toEqual([-13_80]);
     expect(db.closedAt).toBeUndefined();
-    expect(db.balance).toBe(-20_70);
+    expect(db.balance).toBe(-13_80);
     expect(db.negativeSince).toBe(berlin(2026, 4, 1, 0));
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
@@ -266,7 +274,13 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
 
-  it('FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account', () => {
+  /**
+   * Until 2026-10-16's brief 09 this was “… charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn,
+   * 22 cents of interest built since 1 March, and €20.70 of fees, …”: January, the month the AktivKonto opened, was
+   * charged, and March whole. That day January became free (Deutsche Bank's price list) and the closing month's fee due
+   * only to the day (BGB § 675h(3), `closingFeesDue`). The renamed title is in docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account', () => {
     const sim = inBerlin('de-commerzbank', 'rb-setoff-de');
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
     setTo(sim, db, -100_00); // TEST SETUP
@@ -277,13 +291,14 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     // €101.97: 10,197 × 0.1305 / 365 = 3.645777¢; 0.605 + 6 × that, 2 to 7 March, 22.480¢, 22¢ on the close.
     expect(postedTo(sim, 'Overdraft interest', db.id)).toEqual([-96, -101]);
     expect(postedTo(sim, 'Overdraft interest, on closing', db.id)).toEqual([-22]);
-    // Its €6.90 for January and February, kept for the quarter's closing, and March's, charged on the close.
-    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-20_70]);
+    // February's €6.90, kept for the quarter's closing (January, the month it opened, free), and March's to the day it
+    // closed, the 7th: 690 × 7 / 31 = 155.8, €1.56; €8.46 charged on the close. €101.97 + €0.22 + €8.46 = €110.65.
+    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-8_46]);
     const debt = byName(sim, 'Owed To Deutsche Bank, In Collections');
-    expect(postedTo(sim, 'Charged off by Deutsche Bank', db.id)).toEqual([122_89]);
-    expect(debt.balance).toBe(-122_89);
+    expect(postedTo(sim, 'Charged off by Deutsche Bank', db.id)).toEqual([110_65]);
+    expect(debt.balance).toBe(-110_65);
     expect([db.closedAt, db.balance, db.feesDue, Math.floor(db.odAccrued ?? 0)]).toEqual([berlin(2026, 3, 7, 0), 0, 0, 0]);
-    expect(titled(sim, 'Deutsche Bank Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. €122.89 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Commerzbank now.']);
+    expect(titled(sim, 'Deutsche Bank Closed Your Account').map((n) => n.body)).toEqual(['It was overdrawn for 60 days. €110.65 it couldn’t recover went to collections and onto your record; pay it from Your Bank. Your money is at Commerzbank now.']);
     // Nothing more on the closed account, its month's end or its quarter's.
     sim.advanceTo(berlin(2026, 4, 2, 12));
     expect(touched(sim, db.id, berlin(2026, 3, 7, 1))).toEqual([]);
@@ -298,10 +313,17 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     }
     const memos = (x: Simulation) => x.universe.transactions.filter((t) => t.postings.some((q) => q.accountId === db.id)).map((t) => [t.memo, t.postings.find((q) => q.accountId === db.id)!.amount]);
     expect(memos(twin)).toEqual(memos(sim));
-    expect(byName(twin, 'Owed To Deutsche Bank, In Collections').balance).toBe(-122_89);
+    expect(byName(twin, 'Owed To Deutsche Bank, In Collections').balance).toBe(-110_65);
   }, 60_000);
 
-  it('FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again', () => {
+  /**
+   * Until 2026-10-16's brief 09 this was “… is refused Close It for its 53 cents of overdraft interest and €6.90 month,
+   * “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, …”: the month it opened was charged whole.
+   * Deutsche Bank's price list leaves that month free (read that day), so only the interest is owed; the interest and the
+   * fees named together are tests/remaining-09-banking.test.ts's. The renamed title is in
+   * docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again', () => {
     const sim = inBerlin('de-commerzbank', 'rb-close-od');
     const giro = primary(sim);
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
@@ -310,13 +332,14 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 100_00 });
     expect(db.balance).toBe(0);
     // Fifteen day ends overdrawn, 6 to 20 January, at 3.575342¢ (13.05% on €100): 53.630¢, 53 cents.
-    const words = 'Its overdraft interest, €0.53, and its fees, €6.90, are more than it holds. Pay in €7.43 first.';
+    // January, the month it opened, is free (Deutsche Bank's price list; until 2026-10-16 €6.90, “Pay in €7.43 first”).
+    const words = 'Its overdraft interest, €0.53, is more than it holds. Pay in €0.53 first.';
     expect(refusal(sim, 'bank.close_current', { accountId: db.id, remainderTo: giro.id })).toBe(words);
     expect(db.closedAt).toBeUndefined();
-    ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 7_43 });
+    ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 53 });
     ok(sim, 'bank.close_current', { accountId: db.id, remainderTo: giro.id });
     expect(postedTo(sim, 'Overdraft interest, on closing', db.id)).toEqual([-53]);
-    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-6_90]);
+    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([]);
     expect([db.closedAt, db.balance]).toEqual([sim.now, 0]);
     const again = reload(sim);
     again.advanceTo(berlin(2026, 2, 2, 12));
@@ -327,7 +350,12 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(breaches(again.universe)).toEqual([]);
   }, 60_000);
 
-  it('FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first', () => {
+  /**
+   * Until 2026-10-16's brief 09 this was “… on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, …”:
+   * the fees were January's, February's and March's whole, where January, the month it opened, is free and March is owed to
+   * the 7th (the test above). The renamed title is in docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first', () => {
     const sim = inBerlin('de-commerzbank', 'rb-setoff-covered');
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
     const flex = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_savings', { bankId: 'de-deutsche-bank' }).accountId]!;
@@ -337,14 +365,14 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     const order = ok<{ id: string }>(sim, 'bank.add_standing_order', { toId: flex.id, amount: 10_00, day: 20 });
     ok(sim, 'bank.set_order_source', { orderId: order.id, accountId: db.id });
     sim.advanceTo(berlin(2026, 3, 21, 12));
-    // What the AktivKonto owed, as the charge-off above works it: €101.97, 22 cents of interest, €20.70 of fees.
+    // What the AktivKonto owed, as the charge-off above works it: €101.97, 22 cents of interest, €8.46 of fees.
     expect(postedTo(sim, 'Overdraft interest, on closing', db.id)).toEqual([-22]);
-    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-20_70]);
-    expect(postedTo(sim, 'Set off against the overdraft', flex.id)).toEqual([-122_89]);
+    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-8_46]);
+    expect(postedTo(sim, 'Set off against the overdraft', flex.id)).toEqual([-110_65]);
     // The Flexgeld's 0.50% on €500, 0.684932¢ a day's end from 6 January, 60 or 61 of them by the set-off: 41 cents,
     // under the allowance, settled before it, as Germany pays at the quarter's end.
     expect(postedTo(sim, 'Interest: Flexgeld, before the set-off', flex.id)).toEqual([41]);
-    expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 122_89]);
+    expect([db.closedAt, db.balance, flex.closedAt, flex.balance]).toEqual([berlin(2026, 3, 7, 0), 0, undefined, 500_00 + 41 - 110_65]);
     expect(titled(sim, 'Deutsche Bank Closed An Account').map((n) => n.body)).toEqual(['It had been below zero for 60 days, so the bank took what it was owed from your other money there. It closed AktivKonto. Flexgeld stays open. Its standing order of €10.00 into Flexgeld on the 20 ended with it: set one up again on How You Pay.']);
     // It failed on 20 January and 20 February, said once and brought up to the later day; not on 20 March.
     expect(titled(sim, 'A Standing Order Didn’t Go').map((n) => n.at)).toEqual([berlin(2026, 2, 20, 9)]);
@@ -388,7 +416,12 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
 
-  it('FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged', () => {
+  /**
+   * Until 2026-10-16's brief 09 this was “… is refused Cancel It in its fourteen days for its 25 cents of overdraft interest
+   * and €6.90 month; with €7.15 paid in, canceled, both charged”: the month it opened was charged whole, which Deutsche
+   * Bank's price list leaves free (read that day). The renamed title is in docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged', () => {
     const sim = inBerlin('de-commerzbank', 'rb-cancel-od');
     const giro = primary(sim);
     const db = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-deutsche-bank' }).accountId]!;
@@ -396,11 +429,12 @@ describe('banking.1: a bank’s own close settles what it owes and leaves nothin
     sim.advanceTo(berlin(2026, 1, 12, 12));
     ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 100_00 });
     // Seven day ends, 6 to 12 January, at 3.575342¢: 25.027¢, 25 cents.
-    expect(refusal(sim, 'bank.cancel_new', { accountId: db.id })).toBe('Its overdraft interest, €0.25, and its fees, €6.90, are more than it holds. Pay in €7.15 first.');
-    ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 7_15 });
+    // January free, the month it opened (until 2026-10-16 €6.90, “Pay in €7.15 first”).
+    expect(refusal(sim, 'bank.cancel_new', { accountId: db.id })).toBe('Its overdraft interest, €0.25, is more than it holds. Pay in €0.25 first.');
+    ok(sim, 'bank.transfer', { fromId: giro.id, toId: db.id, amount: 25 });
     ok(sim, 'bank.cancel_new', { accountId: db.id });
     expect(postedTo(sim, 'Overdraft interest, on closing', db.id)).toEqual([-25]);
-    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([-6_90]);
+    expect(postedTo(sim, 'Closing fees: AktivKonto', db.id)).toEqual([]);
     expect([db.closedAt, db.balance]).toEqual([sim.now, 0]);
     expect(breaches(sim.universe)).toEqual([]);
   }, 60_000);
@@ -523,7 +557,8 @@ function asOlderBuild(sim: Simulation): Record<string, unknown> {
   const older = JSON.parse(serialise(sim.universe)) as { opened?: string[]; transactions: LedgerTransaction[]; accounts: Record<string, Account> };
   const terms = new Set(Object.values(older.accounts).filter((a) => a.category === 'term').map((a) => a.id));
   for (const t of older.transactions) if (t.category === 'interest' && t.memo.startsWith('Interest: ')) t.postings = t.postings.filter((q) => !(q.amount === 0 && terms.has(q.accountId)));
-  expect(older.opened).toEqual(['followTheCover', 'findTermInterest']);
+  // From later on 2026-10-16 a third step is named beside these, the judge area's `cutIntoUnits` (src/engine/index.ts).
+  expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
   delete older.opened;
   return older as unknown as Record<string, unknown>;
 }
@@ -550,7 +585,7 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     const balances = Object.fromEntries(Object.values(written.accounts).map((a) => [a.id, a.balance]));
     const count = written.transactions.length;
     const older = loadSave(written as never);
-    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+    expect(older.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     // Opening it posts nothing and changes no balance or transaction: the step only finds.
     expect(older.universe.transactions).toHaveLength(count);
     expect(Object.fromEntries(Object.values(older.universe.accounts).filter((a) => a.id in balances).map((a) => [a.id, a.balance]))).toEqual(balances);
@@ -667,10 +702,10 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
       expect(u.opened, name).toBeUndefined();
       migrate(u);
       const sim = loadSave(u as never);
-      expect(sim.universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+      expect(sim.universe.opened, name).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
       expect(Object.values(sim.universe.accounts).filter((a) => a.category === 'term'), name).toEqual([]);
       expect(Object.values(sim.universe.accounts).filter((a) => a.untaggedTakes !== undefined), name).toEqual([]);
-      expect(reload(sim).universe.opened, name).toEqual(['followTheCover', 'findTermInterest']);
+      expect(reload(sim).universe.opened, name).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     }
   }, 120_000);
 
@@ -680,11 +715,11 @@ describe('banking.2: a term’s interest taken before 2026-10-15 is found in an 
     const term = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_term', { amount: 10_000_00, bankId: 'de-deutsche-bank' }).accountId]!;
     sim.advanceTo(berlin(2026, 1, 10, 12));
     ok(sim, 'bank.take_term_interest', { accountId: term.id });
-    expect(sim.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+    expect(sim.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
     const once = reload(sim);
     const twice = reload(once);
     for (const s of [once, twice]) {
-      expect(s.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
+      expect(s.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits']);
       expect(s.universe.accounts[term.id]!.untaggedTakes).toBeUndefined();
     }
   }, 60_000);

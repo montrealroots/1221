@@ -27,8 +27,13 @@ import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { judgeExact, leanedWeights, performerOf, rounded, type DimensionResult, type EvalContext, type Evaluation, type Limit, type Performer } from './evaluation';
 
-/** One segment: what it's called on screen, its tones, its share of the piece, and whether a turn leads into it or it's held two ways. */
-export interface SegmentSpec { label: string; tones: readonly Tone[]; weight: number; turnInto: boolean; blend: boolean }
+/**
+ * One segment: what it's called on screen, its tones, its share of the piece, and whether a turn leads into it or it's
+ * held two ways. `length` (from 2026-10-16, evaluation-10) is how much of the piece's running it takes, for where the
+ * ones after it fall, one where it isn't given: a unit of a tone section cut at its turns takes its share of the section
+ * (`unitSegments`). A brief's heart weighs more in the whole (`BRIEF.readingHeart`) and takes no longer.
+ */
+export interface SegmentSpec { label: string; tones: readonly Tone[]; weight: number; turnInto: boolean; blend: boolean; length?: number }
 
 /** What a segment played its own way adds to it (a discovery kept, `systems/workbook.ts`): leaned, drawn on, rehearsed in, fitting or not. */
 export interface SegmentOwn {
@@ -109,6 +114,59 @@ export function toneSegments(tones: readonly Tone[], least = 1): SegmentSpec[] {
   const list = tones.length >= least ? [...tones] : Array.from({ length: least }, (_, i) => tones[Math.min(i, tones.length - 1)]!);
   const names = segmentNames(list.length);
   return list.map((t, i) => ({ label: names[i]!, tones: [t], weight: 1, turnInto: i > 0 && t !== list[i - 1], blend: false }));
+}
+
+/**
+ * A scene's or a play's units (from 2026-10-16, evaluation-10, brief 09's follow-up): its tones in order, each section of
+ * a tone cut again at each of its turns, so the piece is judged in as many parts as its action shifts. Stanislavski
+ * divides a role into bits by its action, in Sharon Marie Carnicke's glossary "a new 'bit' begins whenever an action or
+ * counteraction shifts in manner of execution or strategy" (Stanislavsky in Focus, 2009, p. 214, as Wikipedia's "Unit of
+ * action" cites it, read 2026-10-16; this put the words to An Actor Prepares until a check later that day), and his own
+ * example cuts a walk home where the doing changes (An Actor's Work, tr. Benedetti, 2008, ch. 7), not by its length; a profile's turns are those shifts beyond its changes of tone
+ * (`MaterialProfile.turns`), as a brief's are its beats. Until then a scene and a play were cut only where the tone
+ * changed (`toneSegments`), so a scene of one tone with three reversals was two halves, and the long score of units a
+ * brief's beats ask discipline for (`DEMAND_EFFECT.beats`) reached no scene and no night.
+ *
+ * Where in a section a turn falls the profile doesn't say, so the turns go to the sections in order, one a round, and each
+ * section keeps the weight it had, shared among its units: the tones' mix is as it was, and what changes is how many parts
+ * the piece is held through. A unit after the first starts with a shift, a turn or a change of tone. A piece with no turns
+ * or no tones is cut as `toneSegments` cuts it.
+ */
+export function unitSegments(m: { tones: readonly Tone[]; turns: number }, least = 1): SegmentSpec[] {
+  const counts = unitCounts(m);
+  if (!counts) return toneSegments(m.tones, least);
+  const names = segmentNames(counts.reduce((a, b) => a + b, 0));
+  const out: SegmentSpec[] = [];
+  m.tones.forEach((t, i) => {
+    for (let u = 0; u < counts[i]!; u += 1) out.push({ label: names[out.length]!, tones: [t], weight: 1 / counts[i]!, length: 1 / counts[i]!, turnInto: u > 0 || (i > 0 && t !== m.tones[i - 1]), blend: false });
+  });
+  return out;
+}
+
+/** How much of a piece's running a segment takes (`SegmentSpec.length`): one where it isn't given. */
+const lengthOf = (x: SegmentSpec): number => x.length ?? 1;
+
+/** How many units each tone section is cut into (`unitSegments`), or none where the piece is cut as its tones are. */
+function unitCounts(m: { tones: readonly Tone[]; turns: number }): number[] | undefined {
+  const turns = Math.max(0, Math.floor(m.turns));
+  if (!m.tones.length || !turns) return undefined;
+  const counts = m.tones.map(() => 1);
+  for (let k = 0; k < turns; k += 1) counts[k % counts.length]! += 1;
+  return counts;
+}
+
+/**
+ * For each of a piece's units, the segment `toneSegments` cut it into until evaluation-10: where a save's work on a
+ * segment, written under that cut, goes once the piece is its units (`cutIntoUnits`, `engine/index.ts`). A unit of a tone
+ * section takes its section's; where a piece of one tone was its two halves, a unit takes the half its middle falls in.
+ */
+export function unitsFromTones(m: { tones: readonly Tone[]; turns: number }, least = 1): number[] {
+  const counts = unitCounts(m);
+  if (!counts) return toneSegments(m.tones, least).map((_, s) => s);
+  const n = counts.reduce((a, b) => a + b, 0);
+  const halves = Math.max(least, m.tones.length);
+  if (m.tones.length >= least) return counts.flatMap((c, i) => Array.from({ length: c }, () => i));
+  return Array.from({ length: n }, (_, u) => Math.min(halves - 1, Math.floor(((u + 0.5) / n) * halves)));
 }
 
 /** How hard a piece is on stamina (`PIECE.load`), from the body's and the voice's work it stages. */
@@ -265,7 +323,14 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   for (let s = 0; s < n; s += 1) {
     const seg = spec.segments[s]!;
     const own = spec.own?.[s];
-    const position = n > 1 ? s / (n - 1) : 0;
+    // Where it falls in the piece, by its segments' lengths (from 2026-10-16, evaluation-10): the running before it over the
+    // running before the last. With every segment one long, as a brief's beats and a piece cut by its tones are, it's
+    // s / (n − 1), as it was; a tone section cut by its turns (`unitSegments`) keeps its units where they fall in it. A
+    // first try placed segments by their weights, which moved a brief's beats after its heart later (measured on the
+    // designed briefs, I3's even actor restrained-ahead 70.3% to 68.9%): a heart counts for more and takes no longer.
+    const before = spec.segments.slice(0, s).reduce((t, x) => t + lengthOf(x), 0);
+    const span = spec.segments.reduce((t, x) => t + lengthOf(x), 0) - lengthOf(spec.segments[n - 1]!);
+    const position = n > 1 && span > 0 ? before / span : 0;
     const prep = { ...ctx.prep, ...(own?.prep ?? {}) };
     const required = { ...ctx.required, ...(own?.required ?? {}) };
     const base = ctx.prep[spec.part];
@@ -314,7 +379,9 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       }
     });
     const limits = [...merged.values()].filter((l) => l.by > 0).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
-    const mean = (pick: (x: DimensionResult) => number) => at.reduce((s, x, i) => s + pick(x) * w(i), 0);
+    // By the segments' weights, divided once (from evaluation-10): until then each segment's share was divided first,
+    // and six units of half a section each, the Seagull's, summed a full preparation to 0.9999999999999999.
+    const mean = (pick: (x: DimensionResult) => number) => at.reduce((s, x, i) => s + pick(x) * spec.segments[i]!.weight, 0) / W;
     const fits = at.map((x) => x.fit).filter((x): x is number => x !== undefined);
     // The way it's played against the scene (from 2026-10-16): each segment's points, by its weight.
     const grains = at.map((x, i) => ({ g: x.grain, w: w(i) })).filter((x) => x.g);
@@ -323,7 +390,7 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       ...(fits.length ? { fit: Math.min(...fits) } : {}), ...(grains.length ? { grain: { d: grains[0]!.g!.d, label: grains[0]!.g!.label, points: grains.reduce((t, x) => t + x.g!.points * x.w, 0) } } : {}), variation: mean((x) => x.variation), ...(d0.strongest ? { strongest: d0.strongest } : {}), limits,
     };
   });
-  const overall = results.reduce((s, r, i) => s + r.overall * w(i), 0);
+  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;
   const exactDim = (r: Evaluation, d: Dimension) => r.dimensions.find((x) => x.dimension === d)?.quality ?? r.overall;
   const held = results.map((r) => (exactDim(r, 'believability') + exactDim(r, 'interpretation')) / 2);
   const continuity = r1(100 - (Math.max(...held) - Math.min(...held)));

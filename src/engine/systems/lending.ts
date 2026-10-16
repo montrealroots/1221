@@ -282,7 +282,7 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   }
   if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
     current.closingNoticed = true;
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it's back within it.`, importance: 85 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it’s back within it.`, importance: 85 });
   }
 }
 
@@ -759,8 +759,9 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     }
     // The balance goes across, and anything built up on it is paid first, and any fees it owes, and any overdraft interest
     // built since the 1st (from 2026-10-16, `settleOverdraftInterest`). Re-banked after a charge-off (`quietly`), the
-    // overdraft's set-off has settled the fees already (`closeForOverdraft`), and a second settling would charge the
-    // month's fee again and carry it to the new bank as an overdraft.
+    // overdraft's set-off has settled the fees already (`closeForOverdraft`), and until later on 2026-10-16 a second
+    // settling charged the month's fee again and carried it to the new bank as an overdraft; it charges nothing since, the
+    // first having ended them (`feesEndedAt`), and `quietly` still passes it by.
     settleInterest(sim, from, `Interest: ${from.name}, on closing`);
     settleOverdraftInterest(sim, from);
     if (!quietly) settleFees(sim, from);
@@ -901,7 +902,7 @@ function refundInterestTax(sim: Simulation, person: Person, current: Account, ba
     { accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: -back },
   ]);
   if (person.id === sim.universe.playerId) {
-    sim.notify({ category: 'bank', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year's interest.`, importance: 50 });
+    sim.notify({ category: 'bank', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year’s interest.`, importance: 50 });
   }
 }
 
@@ -1006,7 +1007,9 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   // closed account: Deutsche Bank's own close of an AktivKonto overdrawn from 5 January 2026 charged off €101.97 on 7
   // March and dropped January's and February's €6.90, March's, and the interest built since 1 March
   // (docs/verification/remaining/banking-checklist.json, banking.1). A fee is settled once (`feesSettled`), as a second
-  // settling in the month charges the month again.
+  // settling in the month charged the month again until later on 2026-10-16, when the first began to end the fees
+  // (`feesEndedAt`, `settleFees`) and a second to charge nothing; the set still decides which accounts the charge-off's
+  // loop below passes over.
   for (const account of mine) settleOverdraftInterest(sim, account, `Overdraft interest, ${closes(account) ? 'on closing' : 'before the set-off'}`);
   const feesSettled = new Set<string>();
   const settleFeesOf = (account: Account) => { if (!feesSettled.has(account.id)) { feesSettled.add(account.id); settleFees(sim, account); } };
@@ -1200,11 +1203,18 @@ export function registerLending(sim: Simulation): void {
           closeForOverdraft(s, person, bank);
           continue;
         }
-        if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
+        // The debit card's yearly fee: on each anniversary of the account's opening or its last charge; or, where the bank
+        // charges it for the year ahead (`Bank.card.ahead`, Berliner Sparkasse's, from 2026-10-16), on the account's first
+        // night and each 365 days after, kept for its refund on a close (`cardFeePaid`, `cardRefundDue`). In the bank's
+        // own figure from 2026-10-16: until then it went in dollars, converted back, and Arion's 950 kr took 949 kr from
+        // an account kept in krónur (docs/verification/remaining-09/banking-checklist.json, banking.5.arion-card).
+        const card = bank?.card;
+        const since = current?.cardFeeAt ?? (card?.ahead ? undefined : current?.openedAt);
+        if (current && bank && card?.yearly !== undefined && (since === undefined || s.now - since >= 365 * MS_DAY)) {
           current.cardFeeAt = s.now;
-          if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
-            charge(s, current, inSaveMoney(s, bank.card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees');
-          }
+          const free = card.freeUnder !== undefined && ageOn(s, person, s.now) < card.freeUnder;
+          if (card.ahead) current.cardFeePaid = free ? 0 : card.yearly;
+          if (!free) charge(s, current, inSaveMoney(s, card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', card.yearly);
         }
         if (current && bank) refundInterestTax(s, person, current, bank);
       }

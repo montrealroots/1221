@@ -83,7 +83,7 @@ import {
   CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, REQUIRED_PPE, SEAGULL_2027, SKILLS, SKILL_FROM, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_LIMITS, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
-import { readiness } from './life';
+import { classTrains, readiness } from './life';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, owe, payFromCurrent, spend } from './spending';
@@ -97,7 +97,7 @@ import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
 import { bandOfQuality, countTogether, judge, leanedWeights, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
-import { evaluatePiece, judgePiece, loadOf, pieceWeights, toneSegments, withBook, type PieceSpec } from './piece';
+import { evaluatePiece, judgePiece, loadOf, pieceWeights, unitSegments, withBook, type PieceSpec } from './piece';
 import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
@@ -115,7 +115,7 @@ import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
 import { endCoursework } from './coursework';
 import { LAB_CODES, degreeShortfall, noteMeeting, registerCourseRecord, settleCourses, tellFails, type CourseRecord } from './courserecord';
-import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, billUnsupportedTerm, closeLeave, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
+import { withRepeat, considerWelfare, facultyReview, followFormerClasses, FORMER_KIND, joinCohort, leaveClassBehind, insuranceStart, accountOwed, aidOnAccount, billUnsupportedTerm, closeLeave, liftHold, yaleAccount, enrolledTerms, offerRepeat, returnFromLeave, startLeave } from './leave';
 import { hasProcess, STAGE_LABEL, cabaretStages, callAnswered, callMissed, completeFor, nightFactor, prepOf, processOf, reflect, stagesOf, type Stage } from './production';
 
 export type Craft = Record<Skill, number>;
@@ -2254,12 +2254,13 @@ export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unk
  * A play as a piece in its movements (from 2026-10-12, `systems/piece.ts`): its tones in order, two at least, a first
  * half and a second where the play holds one; each movement's blocking refined by any work on it, and the evening's
  * load. A play with no profile, a festival's or a cabaret's new one, was judged whole until 2026-10-12; from then it's
- * its two halves with no tones assumed (`toneSegments` with two at least).
+ * its two halves with no tones assumed (`toneSegments` with two at least). From 2026-10-16 (evaluation-10) a play's movements
+ * are its units, each tone section cut again at its turns (`unitSegments`), where until then they were its tones only.
  */
 export function playPiece(holder: NightHolder): PieceSpec {
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
-  return withBook({ segments: toneSegments(material?.tones ?? [], 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
+  return withBook({ segments: unitSegments(material ?? { tones: [], turns: 0 }, 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
 }
 
 export function nightEvaluation(sim: Simulation, person: Person, key: string, holder: NightHolder, at: Instant, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school', expected = false): Evaluation {
@@ -3029,8 +3030,6 @@ export function registerSchool(sim: Simulation): void {
     const academic = academicTerm(school, term);
     school.termsBegun = term + 1;
     school.enrolled = [...enrolledTerms(school).filter((x) => x < term), term];
-    // A hold on the Yale account at a term's start: registration again once it's paid (Bulletin p.184).
-    if (school.hold !== undefined) school.mustRegister = true;
     // Past the six terms the tuition scholarship supports, no aid: tuition and the health fee billed (`EXTENDED_STUDY`).
     // Living aid past six terms where the aid review keeps it (`AidReview.living`), as tuition support where it grants
     // an exception: `termSupport`, which Terms And Award reads too.
@@ -3048,24 +3047,31 @@ export function registerSchool(sim: Simulation): void {
     const account = termAccount(cur, need, term);
     // Paid where their payments are paid (`payeeAccount`, from 2026-10-10: until then into whichever account was primary).
     const current = payeeAccount(s, person);
-    if (need && current && !current.closedAt) {
-      // A nonresident alien's taxable scholarship has 14% withheld at source, reported on Form 1042-S (IRC 1441(b);
-      // research-student-status.json), from 2026-10-10: until then nothing was, and the 1040-NR found it all owed.
-      const year = zonedParts(item.at, zone()).year;
-      const withheld = nonresidentFor(person, year) ? Math.min(account.refund, Math.round(NONRESIDENT_SCHOLARSHIP_RATE * account.taxable)) : 0;
+    const paid = need && current && !current.closedAt ? current : undefined;
+    // A nonresident alien's taxable scholarship has 14% withheld at source, reported on Form 1042-S (IRC 1441(b);
+    // research-student-status.json), from 2026-10-10: until then nothing was, and the 1040-NR found it all owed.
+    const year = zonedParts(item.at, zone()).year;
+    const withheld = paid && nonresidentFor(person, year) ? Math.min(account.refund, Math.round(NONRESIDENT_SCHOLARSHIP_RATE * account.taxable)) : 0;
+    // This term's charges first, then the aid on what the Yale account owes before any is paid out (`aidOnAccount`), then
+    // the hold's registration. From 2026-10-16: until then the aid was paid out first, whatever the account owed, the
+    // term billed after it, and a hold the aid would have cleared stopped registration.
+    if (unsupported) billUnsupportedTerm(s, person, term, need, paid ? account.refund - withheld : 0);
+    const applied = paid ? aidOnAccount(s, person, account.refund - withheld) : 0;
+    if (paid) {
       s.post({
         memo: `Living-expense scholarship, ${termWords(term)}: ${YALE_DRAMA.name}`,
         category: 'scholarship',
-        postings: [{ accountId: current.id, amount: account.refund - withheld }, { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])],
+        postings: [...(account.refund - withheld - applied ? [{ accountId: paid.id, amount: account.refund - withheld - applied }] : []), ...(applied ? [{ accountId: yaleAccount(s, person)!.id, amount: applied }] : []), { accountId: s.nominalAccount('income', 'Scholarship').id, amount: -account.refund }, ...(withheld ? [{ accountId: s.nominalAccount('expense', 'Tax Withheld').id, amount: withheld }] : [])],
       });
       recordScholarship(person, item.at, zone(), account.taxable);
       // Form 1042-S's withholding is the IRS's.
       if (withheld) { yearOf(person, year).withheld += withheld; addWithheld(yearOf(person, year), withheld); }
     }
+    if (applied) liftHold(s, person, `This term’s living-expense scholarship paid the ${formatMoney(applied, cur)} it owed.`);
+    // A hold on the Yale account at a term's start: registration again once it's paid (Bulletin p.184).
+    if (school.hold !== undefined) school.mustRegister = true;
     let planPaid = true;
-    if (unsupported) {
-      billUnsupportedTerm(s, person, term, need);
-    } else if (!need) {
+    if (!unsupported && !need) {
       // No need found: the health plan is billed to the Yale account and paid from the bank. Where the bank can’t pay it
       // (its money moved to savings not linked to checking, say), it’s owed, as a bill the bank can’t pay is (`owe`), and
       // paid back the first day there’s money (`settleArrears`, `systems/spending.ts`). Until 2026-10-13 it was dropped:
@@ -3077,7 +3083,9 @@ export function registerSchool(sim: Simulation): void {
       s.notify({
         category: 'school', title: `${termLabel(term)} Begins`,
         body: need
-          ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, and ${formatMoney(account.refund, cur)} is in your ${current?.name ?? 'account'}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
+          // What reached the account, less what was withheld for the IRS and what the Yale account took (from 2026-10-16:
+          // until then the whole refund, so an F-1 student was told $13,318.50 was in her account where $11,356.54 was).
+          ? `Your living-expense scholarship of ${formatMoney(account.livingScholarship, cur)} met this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${!applied ? `and ${formatMoney(account.refund - withheld, cur)} is` : account.refund - withheld - applied > 0 ? `and the ${formatMoney(applied, cur)} your Yale account owed; ${formatMoney(account.refund - withheld - applied, cur)} is` : `and ${formatMoney(applied, cur)} of what your Yale account owed${accountOwed(s, person) > 0 ? `, which still owes ${formatMoney(accountOwed(s, person), cur)}` : ''}; none of it is`} in your ${current?.name ?? 'account'}${withheld ? `, after ${formatMoney(withheld, cur)} withheld for the IRS` : ''}. Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship.`
           : `Tuition, ${formatMoney(account.tuition, cur)} a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, ${formatMoney(account.healthPlan, cur)}, ${planPaid ? 'was paid from your bank, and living costs are yours.' : 'and living costs are yours. Your bank couldn’t cover the plan: it’s owed, and comes out of your bank the first day there’s money for it.'}`,
         importance: 55, route: '/workspace/school',
       });
@@ -3160,6 +3168,8 @@ export function registerSchool(sim: Simulation): void {
         // reads discipline and halves the same growth again the same day as every other growth does.
         for (const skill of course.skills) ordinary(s, person, skill, focus, weights[i]!, `class:${course.code}`);
         for (const ability of classAbilities(course.skills)) ordinary(s, person, ability, focus, weights[i]! * CLASS_ABILITY_SHARE, `class:${course.code}`);
+        // A class that trains the body as hard as a workout counts as one (`classTrains`, from 2026-10-16).
+        classTrains(s, person, course.code, termStart(termOf(day)).fall ? 'fall' : 'spring');
       });
       // The class, met in the room if not before.
       for (const mate of school.classmates) mateRecord(mate).met ??= item.at;

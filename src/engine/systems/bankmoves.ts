@@ -38,7 +38,7 @@ import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, OPENING, TRANSFERS, type Openin
 import { SECURITY } from '../content/security';
 import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, openOne, owingWords, settleFees, settleInterest } from './banking';
 import { checkingAt, checkingsOf, collectionsOf, declines, overdraftInterestOf, settleOverdraftInterest, CHEX } from './lending';
-import { changeDeposits, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
+import { changeDeposits, closeHold, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
 import { autopaySource, cardsOf } from './credit';
 import { paymentsOf } from './payments';
 import { pendingOn } from './pending';
@@ -287,15 +287,16 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   // A fee for a customer abroad owed where the account can't go below zero is the same debt (from 2026-10-16).
   if (account.feeOwedHeld) return `Its fee for a customer abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}, is owed. The bank closes it only once that’s paid.`;
   if (transfersOf(sim, person).some((t) => t.fromId === account.id || t.toId === account.id)) return 'Money is on its way into or out of it. Wait until it arrives.';
-  const links = linkedTo(sim, person, account.id);
-  if (links.length > 0) return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;
+  const held = closeHold(sim, person, account.id);
+  if (held) return held;
   const savings = bankAccountsOf(sim, person).find((a) => a.kind === 'savings' && a.bankId === account.bankId);
   if (savings) return `${savings.name} is open beside it. Close it first.`;
   const bank = account.bankId ? bankById(account.bankId) : undefined;
   // A pending card payment is a debit, negative in the ledger's sense (`pendingOn`): until 2026-10-10 this asked for
   // more than nothing, and neither this refusal nor Citi's restricted close ever happened.
   if (pendingOn(sim, account) !== 0 && openingOf(bank)?.closeWithPendingDays === undefined) return `Card payments are still pending on it. ${bank?.name ?? 'The bank'} closes it once they’ve posted.`;
-  // The fees closing charges (`settleFees`, Germany's quarter so far) past what it holds with its interest would leave it
+  // The fees closing charges (`settleFees`, Germany's quarter so far and, from later on 2026-10-16, this month's only to
+  // the day, `closingFeesDue`, where until then the whole month) past what it holds with its interest would leave it
   // overdrawn, and the bank closes an overdrawn account only once that's paid, as above. Until 2026-10-15 Close It closed a
   // German account with €3 in it and €4.90 owed at -€1.90, its debt closed with it, where Cancel It refused the same
   // account from that morning (found by that day's skeptic). The overdraft interest built since the 1st counts with them

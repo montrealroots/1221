@@ -63,6 +63,7 @@ const classes = fs.existsSync(S + 'classes.json') ? JSON.parse(fs.readFileSync(S
 // and its words written from the input on every run, so the input, not the audit, is where the row is kept. Until then
 // a row could be added only by hand, and the merge threw on a row with no review of 2026-10-13.
 const added = fs.existsSync(S + 'added-rows.json') ? JSON.parse(fs.readFileSync(S + 'added-rows.json', 'utf8')).rows : {};
+const closes = fs.existsSync(S + 'closes.json') ? JSON.parse(fs.readFileSync(S + 'closes.json', 'utf8')) : { rows: {} };
 for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
   const f = `${ROOT}docs/verification/audit/${area}.json`;
   const raw = fs.readFileSync(f, 'utf8');
@@ -90,6 +91,11 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
       gaps: r.gaps ?? [],
     };
     const recs = afterById[it.id];
+    // A row no round reaches now keeps no record of one (from 2026-10-16, brief 09's journeys' follow-up): until then its
+    // last `after` stood, so health.drop and school.return_notice, each reached only by a journeys test the follow-up
+    // renamed, kept the old title while no record named it, and tools/coverage.mjs failed both. Measured that day, once
+    // the renamed tests were mapped again: no row was in that state.
+    if (!recs) delete it.after;
     if (recs) {
       // The latest record that judged the row. A round of evidence alone (this pass's areas, folded by
       // remaining-fold.cjs from 2026-10-16) adds its tests and judges nothing: until then the last record was taken
@@ -127,6 +133,10 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
         ...((a.claimCorrection ?? recs.find((x) => x.claimCorrection)?.claimCorrection) ? { claimCorrection: a.claimCorrection ?? recs.find((x) => x.claimCorrection).claimCorrection } : {}),
       };
     }
+    // What a test closes, corrected where an area's later change falsified the words its round wrote (inputs/closes.json,
+    // from 2026-10-16, brief 09: the banking area's German closing fees charged to the day, where a round's words said the
+    // whole month). Until then a test's closes was its round's for good.
+    for (const t of it.after?.tests ?? []) { const now = closes.rows?.[it.id]?.[t.title.split(' > ').pop()]; if (now) t.closes = now; }
     // A claim the evidence pass corrected, in the field it names, where that's one of the row's own (entry, reads,
     // changes, downstream, persistent, explanation); anything else stays in the Note.
     // A gap the skeptic named and closed after its check, by a test added since: its verdict, its note and its test.
@@ -145,8 +155,10 @@ for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
     if (cc && ['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation'].includes(cc.field) && cc.now) it[cc.field] = cc.now;
     // The row's own words corrected last, against the code as it finally stands (doc-fields.json, from 2026-10-13's
     // reconciliation): line references moved by the day's changes, and claims its fixes falsified.
+    // A deferred row's `settled` too (from 2026-10-16, brief 09's journeys' follow-up: the Mexican residence rows' settlement,
+    // which until then no input could correct).
     const df = docFields[it.id];
-    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue'].includes(k)) it[k] = v;
+    if (df) for (const [k, v] of Object.entries(df)) if (['entry', 'reads', 'changes', 'downstream', 'persistent', 'explanation', 'tests', 'issue', 'settled'].includes(k)) it[k] = v;
     // The Note a re-audit of 2026-10-12 left (corrected.now), where what it cites moved or what it says went (from 2026-10-14).
     if (df?.['corrected.now'] !== undefined && it.corrected) it.corrected.now = df['corrected.now'];
     // A row out of a current player's reach says so in four parts (from 2026-10-16, the brief of that day's item 3):

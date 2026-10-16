@@ -46,8 +46,10 @@
  *   that stands meanwhile, and a bank's refusal without one;
  * - documents.work: OPT applied for on its window's second day, decided, begun, and ended by its days without work, and
  *   the status's end without it;
- * - documents.residence: Mexico's savings test at its threshold, the card granted for a year, and renewed in its last 30
- *   days.
+ * - documents.residence: Mexico's row read on Papers by a student whose savings meet its test and by one a hundred dollars
+ *   short, the same words for both, and the route refused in them with nothing moved. Until 2026-10-16 (brief 09's
+ *   journeys) it played the savings test at its threshold, the card bought for a year and renewed in its last 30 days,
+ *   which nothing outside these papers read; from then the card isn't sold.
  *
  * Not run, and why:
  * - papers.overview's "back from Home, the screen is on Health Cover, where you left it": the tab is kept in the
@@ -113,7 +115,7 @@ import { documentsOf, photoIdOf } from '@/engine/systems/documents';
 import { banksFor } from '@/engine/systems/banking';
 import { openRefusal } from '@/engine/systems/bankmoves';
 import { programEnd, usStatusEnds } from '@/engine/systems/permission';
-import { MEXICAN_RESIDENCE, residenceFee, residenceIn, routeRefusal } from '@/engine/systems/residence';
+import { MEXICAN_RESIDENCE, residenceIn, routeRefusal } from '@/engine/systems/residence';
 import { tabKey } from '@/ui/shell/sections';
 
 const drawing = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, tabs: {} as Record<string, string> }));
@@ -878,35 +880,37 @@ PLAYS['documents.residence'] = () => {
   const ex = example('documents.residence');
   const mx = MEXICAN_RESIDENCE;
   const threshold = Math.round(mx.savingsUma * mx.uma);
+  const income = Math.round(mx.incomeUma * mx.uma);
   const pesos = (units: number) => `MXN ${units.toLocaleString('en-US', { minimumFractionDigits: units % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
-  expect(ex.setup).toContain(`with ${pesos(threshold)}, about ${usd(Math.round(exchange(threshold * 100, 'MXN', 'USD')! / 100) * 100)}, in the bank.`);
-  // The savings test at the example's figure: TEST SETUP, the bank holding it, then a hundred dollars less.
-  const held = student('guide-papers-mx-threshold');
-  broke(held);
-  fund(held, Math.ceil(exchange(threshold * 100, 'MXN', 'USD')!));
-  expect(routeRefusal(held, held.player, 'MX')).toBeUndefined();
-  const less = student('guide-papers-mx-threshold');
-  broke(less);
-  fund(less, Math.ceil(exchange(threshold * 100, 'MXN', 'USD')!) - 100_00);
-  expect(routeRefusal(less, less.player, 'MX')).toContain(`savings of ${pesos(threshold)}`);
-  // A wealthy student applies, and renews in the card's last 30 days.
-  const sim = student('guide-papers-mx');
-  const applied = sim.now;
-  const v = sim.must<{ paid: number }>({ kind: 'documents.residence', payload: { country: 'MX' } });
-  expect(v.paid).toBe(residenceFee(sim));
-  expect(memos(sim, /^Mexican temporary residence, the card/, applied).map((t) => taken(sim, t))).toEqual([v.paid]);
-  const card = residenceIn(sim.player, 'MX', sim.now)!;
-  expect(card.name).toBe('Residente Temporal');
-  expect(card.issuedAt).toBe(applied);
-  const year = card.expiresAt! - applied;
-  expect(Math.round(year / MS_DAY)).toBe(365);
-  tended(sim, card.expiresAt! - 29 * MS_DAY);
-  const renewed = sim.must<{ paid: number }>({ kind: 'documents.renew_residence', payload: { country: 'MX' } });
-  expect(renewed.paid).toBe(exchange(Math.round(mx.temporary * 100), 'MXN', 'USD'));
-  expect(card.expiresAt! - applied).toBe(2 * year);
-  expect(ex.result).toBe(`About ${usd(v.paid)} leaves the bank and Residente Temporal is granted at once for a year; the renewal adds a year for ${pesos(mx.temporary)}. Your days in New Haven go on as before, since no screen but this tab reads it.`);
-  // Nothing moved them.
-  expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
+  expect(ex.setup).toContain(`with ${pesos(threshold)}, about ${usd(Math.round(exchange(threshold * 100, 'MXN', 'USD')! / 100) * 100)}, in the bank: Mexico’s savings test met.`);
+  // The row's words by hand: 11,460 UMA and 680 at MXN 117.31, MXN 1,344,372.6 and 79,770.8, rounded to the peso; the
+  // card's MXN 11,140.74 and the visa's US$56 as the guidelines and the Ley Federal de Derechos give them.
+  const words = 'Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+  expect([pesos(threshold), pesos(income)]).toEqual(['MXN 1,344,373', 'MXN 79,771']);
+  // TEST SETUP: the bank holding the savings test's figure, and a twin a hundred dollars short of it. Until 2026-10-16
+  // the first was offered the card and the second refused; from then both read Mexico's rule and the same reason.
+  const met = student('guide-papers-mx-threshold');
+  broke(met);
+  fund(met, Math.ceil(exchange(threshold * 100, 'MXN', 'USD')!));
+  const short = student('guide-papers-mx-threshold');
+  broke(short);
+  fund(short, Math.ceil(exchange(threshold * 100, 'MXN', 'USD')!) - 100_00);
+  for (const sim of [met, short]) {
+    expect(routeRefusal(sim, sim.player, 'MX')).toBe(words);
+    const drawn = papersDrawn(sim, 'work');
+    expect(drawn.text).toContain(` Mexico ${words} `);
+    // Apply drawn grayed, its title the same words (until 2026-10-16 it was live, and sold the card).
+    expect(drawn.html).toContain(`<button type="button" class="btn btn-sm" title="${words}" disabled="">Apply</button>`);
+    const before = serialise(sim.universe);
+    const r = sim.execute({ kind: 'documents.residence', payload: { country: 'MX' } });
+    expect(r.ok).toBe(false);
+    expect(r.error).toBe(words);
+    expect(serialise(sim.universe)).toBe(before);
+    expect(residenceIn(sim.player, 'MX', sim.now)).toBeUndefined();
+    expect(memos(sim, /Mexican/)).toEqual([]);
+    expect(sim.player.currentLocationId).toBe('us-ct-newhaven');
+  }
+  expect(ex.result).toBe(`Mexico’s row says its rule, savings of ${pesos(threshold)} or an income of ${pesos(income)} a month over six months, and that SLATE grants none, living there having gone with moving. Apply is grayed with those words, nothing leaves the bank, and a student short of the savings reads the same row.`);
 };
 
 // ---------------------------------------------------------------------------
@@ -932,7 +936,8 @@ describe('the guide’s worked examples for Papers, played on throwaway saves', 
   it('taxes.lien: Connecticut’s lien is filed at its notice of intent, paid, and released when asked', () => play('taxes.lien'));
   it('documents.passport-id: a stolen ID card reported and replaced, and the photo ID that stands meanwhile', () => play('documents.passport-id'));
   it('documents.work: OPT applied for, decided, begun, and ended by its days without work', () => play('documents.work'));
-  it('documents.residence: Mexico’s savings test at its threshold, the card for a year, and its renewal', () => play('documents.residence'));
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json): it played the card bought and renewed until then.
+  it('documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved', () => play('documents.residence'));
 });
 
 describe('isolation', () => {

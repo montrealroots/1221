@@ -506,7 +506,10 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
     const twin = withdrawnAtCapitalOne('need-m2', 'comfortable');
     expect(earningsOf(twin.player).months['2026-09']).toBe(112_63);
     drawn(twin, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
-    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
+    // From the first of the month she enrolls in, 1 October (Connecticut's UPM § 1560.10(B)), from 2026-10-16 (brief 09's
+    // journeys): until then from 1 November, the marketplace's rule. August and September had no care with nothing
+    // covering her, so it reaches back to neither (§ 1560.10(A)).
+    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from October 1, 2026.']);
   }, 120_000);
 
   it('PLAYER JOURNEY: that marketplace’s claim denied and appealed on Papers; paid when due, then overturned, gives back the $138.98 paid over the $45 share', () => {
@@ -566,42 +569,60 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
  * days from then: to 5 December), it's decided on 6 December, and said ten days or more ahead her HUSKY D ends with
  * December (42 USC 1396a(xx)(6); 42 CFR 435.558, 431.211). Until then it ended at the renewal's own hour, 00:30 on
  * 1 November 2027, with “Your Public Cover Ended At Renewal”.
+ *
+ * Later on 2026-10-16 (brief 09's journeys) HUSKY D came to begin on the first of the month of application, and to reach
+ * back to a month before it with care in it (Connecticut's UPM § 1560.10): enrolled on 1 October, she is renewed on
+ * 1 October 2027, so the dates above came a month earlier, each worked again in the test: answered by 4 November,
+ * decided on 5 November, ending with November.
  */
 describe('health.enroll: a program’s renewal, reached by the clock', () => {
-  it('PLAYER JOURNEY: the Comfortable family’s student, on HUSKY D from 1 November 2026, comes to its renewal on 1 November 2027: October’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: the Comfortable family’s student, on HUSKY D from 1 November 2026, comes to its renewal on 1 November 2027: October’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload”). HUSKY D begins on the first
+  // of the month of application, 1 October, and reaches back to the first of each of the three months before it that she
+  // was eligible in and had care in with nothing covering her (Connecticut's UPM § 1560.10(A), (B)): Yale Health canceled
+  // back to 1 August by the withdrawal, her generic filled on 31 August at $41.79 is HUSKY D's, its $0, and the $41.79
+  // comes back. Renewed twelve months from the month of application, 1 October 2027, reading April to September; the
+  // notice received on 6 October, answered by the thirtieth day from then, 4 November, decided on 5 November, and ten
+  // days on, 15 November, it ends with November. Every date here was a month later until then, worked the same way.
+  it('PLAYER JOURNEY: the Comfortable family’s student, enrolled in HUSKY D on 1 October 2026 and covered from 1 August, the month of the generic she filled uninsured, comes to its renewal on 1 October 2027: September’s interest is under the line, but no work was done, and HUSKY D ends, said, across a reload', () => {
     const sim = withdrawnAtCapitalOne('need-r1', 'comfortable');
+    const fill = (healthOf(sim.player).fills ?? []).map((f) => [f.at, f.share]);
+    expect(fill).toEqual([[at(2026, 8, 31, 9), 41_79]]);
+    expect(coverOn(sim.player, at(2026, 8, 31, 9))).toBeUndefined();
+    const bank = checking(sim).balance;
     drawn(sim, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
-    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
+    expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from August 1, 2026.']);
+    expect((healthOf(sim.player).fills ?? []).map((f) => [f.at, f.share])).toEqual([[at(2026, 8, 31, 9), 0]]);
+    expect(checking(sim).balance - bank).toBe(41_79);
     sim.advanceTo(at(2026, 11, 1, 8));
     expect(coverOn(sim.player, sim.now)).toBe('medicaid');
-    // Enrolled in 2026: renewed twelve months from its 1 November start.
-    expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 11, 1, 0));
+    // Enrolled in 2026: renewed twelve months from the month of application's first, 1 October.
+    expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 10, 1, 0));
     sim.advanceTo(at(2027, 5, 1, 12));
     const back = thaw(freeze(sim));
-    // To the first of November, the month's last interest paid at 11 at night, the renewal not yet run at half past midnight.
-    back.advanceTo(at(2027, 11, 1, 0, 10));
+    // To the first of October, the month's last interest paid at 11 at night, the renewal not yet run at half past midnight.
+    back.advanceTo(at(2027, 10, 1, 0, 10));
     expect(coverOn(back.player, back.now)).toBe('medicaid');
     expect(titled(back, 'A Notice Of Noncompliance')).toEqual([]);
-    // October 2027's income: the savings' interest alone, under the line's $1,835.40 (15,960 × 1.38 ÷ 12 = 1,835.40).
+    // September 2027's income: the savings' interest alone, under the line's $1,835.40 (15,960 × 1.38 ÷ 12 = 1,835.40).
     expect(Math.round(15_960_00 * 1.38 / 12)).toBe(1_835_40);
-    const october = earningsOf(back.player).months['2027-10'] ?? 0;
-    expect(october).toBeGreaterThan(0);
-    expect(october).toBeLessThan(1_835_40);
-    expect(memos(back, /^Interest: 360 Performance Savings$/).filter((t) => t.at >= at(2027, 10, 1, 0) && t.at < at(2027, 11, 1, 0)).map((t) => into(t, mine(back, 'savings')[0]!.id))).toEqual([october]);
-    // And May to October, the six months a renewal reads: under $580 of income each, and no work.
-    for (const m of ['2027-05', '2027-06', '2027-07', '2027-08', '2027-09', '2027-10']) expect(earningsOf(back.player).months[m] ?? 0).toBeLessThan(580_00);
-    back.advanceTo(at(2027, 11, 1, 9));
+    const september = earningsOf(back.player).months['2027-09'] ?? 0;
+    expect(september).toBeGreaterThan(0);
+    expect(september).toBeLessThan(1_835_40);
+    expect(memos(back, /^Interest: 360 Performance Savings$/).filter((t) => t.at >= at(2027, 9, 1, 0) && t.at < at(2027, 10, 1, 0)).map((t) => into(t, mine(back, 'savings')[0]!.id))).toEqual([september]);
+    // And April to September, the six months a renewal reads: under $580 of income each, and no work.
+    for (const m of ['2027-04', '2027-05', '2027-06', '2027-07', '2027-08', '2027-09']) expect(earningsOf(back.player).months[m] ?? 0).toBeLessThan(580_00);
+    back.advanceTo(at(2027, 10, 1, 9));
     // The notice, and her HUSKY D kept while she answers.
     expect(healthOf(back.player).program!.until).toBeUndefined();
     expect(coverOn(back.player, back.now)).toBe('medicaid');
-    expect(titled(back, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 11, 1, 0, 30)]);
+    expect(titled(back, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 10, 1, 0, 30)]);
     const later = thaw(freeze(back));
-    later.advanceTo(at(2027, 12, 31, 12));
+    later.advanceTo(at(2027, 11, 30, 12));
     expect(coverOn(later.player, later.now)).toBe('medicaid');
-    later.advanceTo(at(2028, 1, 1, 9));
-    expect(healthOf(later.player).program!.until).toBe(at(2028, 1, 1, 0));
+    later.advanceTo(at(2027, 12, 1, 9));
+    expect(healthOf(later.player).program!.until).toBe(at(2027, 12, 1, 0));
     expect(coverOn(later.player, later.now)).toBeUndefined();
-    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 12, 6, 0), 'No month from May to October 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by December 5, 2027: HUSKY D ends on December 31, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    expect(titled(later, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 5, 0), 'No month from April to September 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by November 4, 2027: HUSKY D ends on November 30, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
   }, 180_000);
 });
 
@@ -646,7 +667,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(savings.balance).toBe(balance);
   };
   /** The Inherited family's student, withdrawn on 25 August 2026, her savings set for September, enrolled on 1 October. */
-  const enrolled = (seed: string, september: number, toast: string) => {
+  const enrolled = (seed: string, september: number, toast: string, renewAt = at(2027, 11, 1, 0)) => {
     const sim = life(seed, { ...chosen('inherited'), bankId: 'us-capital-one' });
     sim.advanceTo(at(2026, 8, 25, 12));
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
@@ -655,7 +676,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     sim.advanceTo(at(2026, 10, 1, 9));
     drawn(sim, PapersWorkspace, { 'tab:/workspace/papers': 'health' });
     expect(press('health.enroll')).toEqual([toast]);
-    expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 11, 1, 0));
+    expect(healthOf(sim.player).program!.renewAt).toBe(renewAt);
     return sim;
   };
   /** TEST SETUP: a month's work posted as wages, as tests/evidence-g05-life.test.ts posts it. */
@@ -724,21 +745,26 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
     expect(titled(low, 'Your Public Cover Ends').map((n) => n.body)).toEqual(['No month from May to October 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by December 5, 2027: Covered Connecticut ends on December 31, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']);
   }, 900_000);
 
-  it('PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked', () => {
-    const sim = enrolled('need-r4', 365_000_00, 'Enrolled in HUSKY D, from November 1, 2026.');
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: on HUSKY D from 1 November 2026 on September’s $900.00, her October 2027 is $2,046.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 November 2027 with no gap, and no work is asked”): HUSKY D begins on the first
+  // of the month of application, 1 October 2026 (Connecticut's UPM § 1560.10(B); no care before it with nothing covering
+  // her), so it renews on 1 October 2027, reading September: her savings set to $803,000 at half past eleven on 31 August
+  // earn 803,000 × 0.03 × 30 ÷ 365 = $1,980.00 in September's thirty days, over HUSKY D's $1,835.40 and within Covered
+  // Connecticut's $2,327.50, renewed six months, to 1 April 2028. Until then her October earned 31 days' $2,046.00.
+  it('PLAYER JOURNEY: on HUSKY D from 1 October 2026 on September’s $900.00, her September 2027 is $1,980.00, over HUSKY D’s line and within Covered Connecticut’s: she is renewed into Covered Connecticut from 1 October 2027 with no gap, and no work is asked', () => {
+    const sim = enrolled('need-r4', 365_000_00, 'Enrolled in HUSKY D, from October 1, 2026.', at(2027, 10, 1, 0));
     expect(interest(sim, 2026, 9)).toEqual([900_00]);
-    sim.advanceTo(at(2027, 9, 30, 23, 30));
+    sim.advanceTo(at(2027, 8, 31, 23, 30));
     expect(coverOn(sim.player, sim.now)).toBe('medicaid');
     setSavings(sim, 803_000_00);
     const back = thaw(freeze(sim));
-    back.advanceTo(at(2027, 11, 1, 0, 10));
+    back.advanceTo(at(2027, 10, 1, 0, 10));
     expect(coverOn(back.player, back.now)).toBe('medicaid');
-    back.advanceTo(at(2027, 11, 1, 9));
-    expect(interest(back, 2027, 10)).toEqual([2_046_00]);
-    expect(earningsOf(back.player).months['2027-10']).toBe(2_046_00);
-    expect(healthOf(back.player).program).toEqual({ kind: 'essential', state: 'ct', from: at(2027, 11, 1, 0, 30), band: 'low', renewAt: at(2028, 5, 1, 0) });
+    back.advanceTo(at(2027, 10, 1, 9));
+    expect(interest(back, 2027, 9)).toEqual([1_980_00]);
+    expect(earningsOf(back.player).months['2027-09']).toBe(1_980_00);
+    expect(healthOf(back.player).program).toEqual({ kind: 'essential', state: 'ct', from: at(2027, 10, 1, 0, 30), band: 'low', renewAt: at(2028, 4, 1, 0) });
     expect(coverOn(back.player, back.now)).toBe('essential');
-    expect(titled(back, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is over what HUSKY D allows and within what Covered Connecticut does: you’re renewed into Covered Connecticut from November 1, 2027, with no gap and no premium.']);
+    expect(titled(back, 'Your Public Cover Changed At Renewal').map((n) => n.body)).toEqual(['Last month’s income is over what HUSKY D allows and within what Covered Connecticut does: you’re renewed into Covered Connecticut from October 1, 2027, with no gap and no premium.']);
     expect(titled(back, 'Your Public Cover Ends')).toEqual([]);
     expect(titled(back, 'Your Health Cover Ended').filter((n) => n.at >= at(2026, 11, 1, 0))).toEqual([]);
   }, 300_000);

@@ -115,7 +115,9 @@ export function mayHurt(sim: Simulation, person: Person, source: InjurySource, c
     const weekly = rules && work ? compWeekly(sim, rules, work.weeklyWage, at, work.noFica) : 0;
     sim.notify({
       category: 'health', title: spec.label,
-      body: `${days} days to mend${spec.offWork ? ', and off work for them' : ''}. ${work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''}`,
+      // The second sentence only where it has words (from 2026-10-16: until then a care of nothing left the notice ending
+      // in a space, “19 days to mend. ”; found playing a withdrawal, brief 09's journeys).
+      body: [`${days} days to mend${spec.offWork ? ', and off work for them' : ''}.`, work ? 'It happened at work, so workers’ compensation pays the care' + (spec.offWork && rules ? ` and ${shareWords(rules, weekly, work.weeklyWage)} while you’re off.` : '.') : care > 0 ? `Its care comes to ${formatMoney(care, cur)}, due in 30 days.` : ''].filter(Boolean).join(' '),
       importance: 80, route: '/workspace/papers',
     });
   }

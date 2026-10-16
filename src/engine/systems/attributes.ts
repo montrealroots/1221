@@ -186,7 +186,11 @@ export interface DevelopmentLedger {
   applied?: string[];
   /** Deliberate practice: today's hours, the days practised, and the last (`systems/practice.ts`). */
   practice?: { day: string; hours: number; days: number; last: string };
-  /** The last workout (from 2026-10-10): fitness holds for `FITNESS.heldDays` after it (`settleTheBody`). A save from before has none, and detrains as it did until its first. */
+  /**
+   * The last workout (from 2026-10-10), or from 2026-10-16 the last class that trains the body as hard (`classTrains`,
+   * systems/life.ts): fitness holds for `FITNESS.heldDays` after it (`settleTheBody`). A save from before has none, and
+   * detrains as it did until its first.
+   */
   workout?: { at: number };
 }
 

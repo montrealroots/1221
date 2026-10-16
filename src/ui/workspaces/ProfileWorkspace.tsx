@@ -350,7 +350,7 @@ function AbilitiesPanel() {
           </table>
         </LookRegion>
         <p className="small" style={{ margin: 0 }}>
-          <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it, and holds it for {FITNESS.heldDays} days: two a week keep it (Hickson &amp; Rosenkoetter, 1981). Past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); the rate is SLATE’s. A second workout the same day builds half. It’s the one ability that fades without use: the others keep what they’ve earned.
+          <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it, and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (Movement Invention, stage combat): two a week keep it (Hickson &amp; Rosenkoetter, 1981). Past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); the rate is SLATE’s. A second workout the same day builds half. It’s the one ability that fades without use: the others keep what they’ve earned.
         </p>
         <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
       </div>

@@ -85,7 +85,7 @@ function abilityHolding(p: WorkPiece, seg: { top?: { kind: string; what: string 
   return c && (c.kind === 'ability' || c.kind === 'technique') ? c.what : undefined;
 }
 
-/** The problems a piece's forecast shows, worst first, at most `WORKBOOK.offered`. */
+/** The problems a piece's forecast shows, worst first, at most `WORKBOOK.offered`, the one being worked among them while it's still one. */
 export function problemsOf(p: WorkPiece): Problem[] {
   const e = p.forecast();
   const spec = p.spec();
@@ -136,7 +136,17 @@ export function problemsOf(p: WorkPiece): Problem[] {
     const first = p.partner.name.split(' ')[0];
     if (t !== undefined && e.overall - t >= 3) out.push({ id: 'partner', kind: 'partner', label: `${first} Isn’t There Yet`, why: `Together it would come to ${t} against your own ${e.overall}: ${first}’s preparation is at ${pct(p.partner.get())}.${p.partner.set ? '' : ` Ask ${first} to rehearse it with you.`}`, measure: t, gap: e.overall - t });
   }
-  return out.sort((a, b) => b.gap - a.gap || a.id.localeCompare(b.id)).slice(0, WORKBOOK.offered).map(({ gap: _gap, ...x }) => x);
+  const sorted = out.sort((a, b) => b.gap - a.gap || a.id.localeCompare(b.id));
+  const shown = sorted.slice(0, WORKBOOK.offered);
+  // The problem being worked stays on the list while it's still a problem, in the last place if it has fallen below it
+  // (from 2026-10-16, evaluation-10's follow-up). Once a scene was judged in its units, the Seagull's five turns were five
+  // problems, and the turn into its second part, worked slowly to 92% of the 95% it asks, fell under the others past the
+  // eighth place and left the list, so a kept try took it for answered (`tryAdjustment`) and Work It Slowly was refused
+  // for it as no problem the work showed (tests/guide-examples-coursework.test.ts, the workbook's played example).
+  const named = p.peek()?.problem?.id;
+  const kept = named !== undefined && !shown.some((x) => x.id === named) ? sorted.find((x) => x.id === named) : undefined;
+  if (kept) shown.splice(Math.max(0, shown.length - 1), 1, kept);
+  return shown.map(({ gap: _gap, ...x }) => x);
 }
 
 /** A problem's figure in a forecast: its segment's result, the whole, or the work together. */

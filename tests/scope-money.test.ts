@@ -568,28 +568,37 @@ describe('bank.cancel_new', () => {
     expect(landed(sim, rbc, td)).toEqual([50_00]);
   });
 
-  it('FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with €3 in it is refused for its €4.90 month on the panel; with €100, Cancel It charges the €4.90, as Germany lets the bank, and sends €95.10 on', () => {
+  /**
+   * Until 2026-10-16 this was “… with €3 in it is refused for its €4.90 month on the panel; with €100, Cancel It charges
+   * the €4.90, as Germany lets the bank, and sends €95.10 on”: canceling charged the whole month on the day the account
+   * opened. That day the share became the days to the cancellation (Wertersatz for the service given up to it, BGB §
+   * 357b(2), as § 675h(3) has a close; `closingFeesDue`), one day of January's 31, so €3 covers it, and the refusal is
+   * played with 10 cents in it. The renamed title is in docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with 10 cents in it is refused for the 16 cents its €4.90 month comes to on its first day, on the panel, which says the figure; with €100, Cancel It charges the 16 cents, as Germany lets the bank, and sends €99.84 on', () => {
     const sim = abroad('de-be-berlin', 'de-deutsche-bank', 'scope-cancel-de');
     const db = primary(sim);
     const giro = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-commerzbank' }).accountId]!;
-    setTo(sim, giro, 3_00); // TEST SETUP
-    // Commerzbank's GiroKonto: €4.90 a month, free only at €50,000; Germany's fees are settled at closing (`settleFees`).
-    const words = 'Its fees, €4.90, are more than it holds. Pay in €1.90 first.';
+    setTo(sim, giro, 10); // TEST SETUP
+    // Commerzbank's GiroKonto: €4.90 a month, free only at €50,000; Germany's fees are settled at closing (`settleFees`),
+    // this month's to the day: opened and canceled on Monday 5 January, one day of 31, 490 / 31 = 15.8, 16 cents.
+    const words = 'Its fees, €0.16, are more than it holds. Pay in €0.06 first.';
+    const said = 'Canceling it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16. German law charges a month’s fee only to the day an account closes.';
     const text = drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }));
     expect(text).toContain(`${giro.name} is new enough to cancel, until`);
     // Until 2026-10-15's later pass this said “with its interest”: Germany's rule returns it (`KEEPS_INTEREST`).
-    expect(text).toContain(`its money back without the interest it earned, less the fees it owes. ${words}`);
+    expect(text).toContain(`its money back without the interest it earned, less the fees it owes. ${said} ${words}`);
     expect([buttonAfter(giro.name, 'Cancel It').disabled, buttonAfter(giro.name, 'Cancel It').title]).toEqual([true, words]);
     expect(refusal(sim, 'bank.cancel_new', { accountId: giro.id })).toBe(words);
-    expect([giro.closedAt, giro.balance]).toEqual([undefined, 3_00]);
+    expect([giro.closedAt, giro.balance]).toEqual([undefined, 10]);
     setTo(sim, giro, 100_00); // TEST SETUP
     drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }));
     pressAfter(giro.name, 'Cancel It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.cancel_new', ok: true });
-    expect(postedTo(sim, `Closing fees: ${giro.name}`, giro.id)).toEqual([-4_90]);
+    expect(postedTo(sim, `Closing fees: ${giro.name}`, giro.id)).toEqual([-16]);
     expect([giro.closedAt, giro.balance]).toEqual([sim.now, 0]);
     sim.advanceTo(sim.now + 7 * MS_DAY);
-    expect(landed(sim, giro, db)).toEqual([95_10]);
+    expect(landed(sim, giro, db)).toEqual([99_84]);
   });
 
   /**
@@ -910,26 +919,35 @@ describe('bank.cancel_new', () => {
 // ---------------------------------------------------------------------------
 
 describe('bank.close_current', () => {
-  it('FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on', () => {
+  /**
+   * Until 2026-10-16 this was “… with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is;
+   * with €100, Close It charges the €4.90 and sends €95.10 on”: Close It charged the whole month on the day the account
+   * opened. That day the share became the days to the close (BGB § 675h(3), `closingFeesDue`), one day of January's 31,
+   * so €3 covers it, and the refusal is played with 10 cents in it. The renamed title is in
+   * docs/verification/pipeline/inputs/renames.json.
+   */
+  it('FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on', () => {
     const sim = abroad('de-be-berlin', 'de-deutsche-bank', 'scope-close-de-fees');
     const db = primary(sim);
     const giro = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-commerzbank' }).accountId]!;
-    setTo(sim, giro, 3_00); // TEST SETUP
-    // Commerzbank's GiroKonto: €4.90 a month, charged at closing (`settleFees`); €4.90 − €3.00 = €1.90 short. Until
-    // 2026-10-15 Close It closed it at −€1.90, its debt closed with it.
-    const words = 'Its fees, €4.90, are more than it holds. Pay in €1.90 first.';
-    drawn(sim, createElement(BankMoves));
+    setTo(sim, giro, 10); // TEST SETUP
+    // Commerzbank's GiroKonto: €4.90 a month, charged at closing (`settleFees`) to the day: one day of January's 31,
+    // 490 / 31 = 15.8, 16 cents; 16 − 10 = 6 cents short. Until 2026-10-15 Close It closed such an account overdrawn, its
+    // debt closed with it.
+    const words = 'Its fees, €0.16, are more than it holds. Pay in €0.06 first.';
+    const text = drawn(sim, createElement(BankMoves));
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, words]]);
+    expect(text).toContain(`To close it: ${words} Closing it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.`);
     expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: db.id })).toBe(words);
-    expect([giro.closedAt, giro.balance]).toEqual([undefined, 3_00]);
+    expect([giro.closedAt, giro.balance]).toEqual([undefined, 10]);
     setTo(sim, giro, 100_00); // TEST SETUP
     drawn(sim, createElement(BankMoves));
     press('Close It');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.close_current', ok: true });
-    expect(postedTo(sim, `Closing fees: ${giro.name}`, giro.id)).toEqual([-4_90]);
+    expect(postedTo(sim, `Closing fees: ${giro.name}`, giro.id)).toEqual([-16]);
     expect([giro.closedAt, giro.balance]).toEqual([sim.now, 0]);
     sim.advanceTo(sim.now + 7 * MS_DAY);
-    expect(landed(sim, giro, db)).toEqual([95_10]);
+    expect(landed(sim, giro, db)).toEqual([99_84]);
   });
 });
 

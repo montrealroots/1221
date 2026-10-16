@@ -165,6 +165,14 @@ const snap = (): Performer => {
 };
 const atStart = TRACE ? snap() : undefined;
 const traced: { day: number; brief: string; purpose: string; record: WorkRecord }[] = [];
+/**
+ * The levels at the start of each month of the run (from 2026-10-16, brief 09): every take is judged again at each, so
+ * the controlled measure is a curve, the same work at each month's levels, and not two points.
+ */
+const monthLevels: { month: number; day: number; levels: Performer; abilities: Record<string, number> }[] = [];
+const levelsNow = () => Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, Math.round(abilityOf(sim, sim.player, d.id) * 10) / 10]));
+const startAbilities = TRACE ? levelsNow() : {};
+let snapped = 0;
 const end = sim.now + DAYS * MS_DAY;
 let lastReload = sim.now;
 let reloads = 0;
@@ -180,6 +188,7 @@ while (sim.now < end && sim.universe.meta.endedAt === undefined) {
   });
   if (dayOf() !== lastRecDay && dayOf() % 7 === 0) { lastRecDay = dayOf(); const w = weakness(); if (w) log.recs.push({ day: dayOf(), target: w.target, level: Math.round(w.level) }); }
   if (sim.now - lastReload >= 30 * MS_DAY) { sim = loadSave(deserialise(serialise(sim.universe)) as never); reloads += 1; lastReload = sim.now; }
+  if (TRACE && Math.floor(dayOf() / 30) > snapped) { snapped = Math.floor(dayOf() / 30); monthLevels.push({ month: snapped, day: dayOf(), levels: snap(), abilities: levelsNow() }); }
 }
 
 const t = log.takes;
@@ -228,6 +237,9 @@ if (TRACE) {
       day, month: Math.floor(day / 30), brief, purpose, task: w.task, overall: w.overall,
       noDraw: r1(replayAs(w, profile, { ability: (id) => w.inputs.abilities[id] ?? 0, full: (id) => w.inputs.fulls?.[id] ?? 100, technique: (k) => w.inputs.levels?.[k] ?? 0 })?.overall),
       atStartLevels: r1(replayAs(w, profile, atStart!)?.overall), atEndLevels: r1(replayAs(w, profile, atEnd)?.overall),
+      atMonthLevels: Object.fromEntries(monthLevels.map((m) => [`m${m.month}`, replayAs(w, profile, m.levels)?.exact])),
+      startExact: replayAs(w, profile, atStart!)?.exact, endExact: replayAs(w, profile, atEnd)?.exact,
+      size: BRIEF_BY_ID[brief]?.size, stakes: BRIEF_BY_ID[brief]?.stakes ?? 1, beats: BRIEF_BY_ID[brief]?.beats.length,
       difficulty: w.inputs.difficulty, readiness: Math.round(w.inputs.condition.readiness), prep: w.inputs.prep, required: w.inputs.required,
       limits: w.limits.map((l) => `${l.label} (${l.kind}, ${l.dimension}) ${l.whole ?? l.by}`),
     };
@@ -238,5 +250,17 @@ if (TRACE) {
     const mean = (f: (x: (typeof rows)[number]) => number | undefined) => Math.round((xs.reduce((a, x) => a + (f(x) ?? 0), 0) / xs.length) * 100) / 100;
     byMonth[`m${m}`] = { n: xs.length, overall: mean((x) => x.overall), noDraw: mean((x) => x.noDraw), atStartLevels: mean((x) => x.atStartLevels), atEndLevels: mean((x) => x.atEndLevels), difficulty: mean((x) => x.difficulty), readiness: mean((x) => x.readiness), callbacks: xs.filter((x) => x.purpose === 'callback').length };
   }
-  writeFileSync(TRACE, JSON.stringify({ profile: PROFILE, seed: SEED, days: DAYS, byMonth, takes: rows }, null, 1));
+  // The controlled measure (from 2026-10-16, brief 09): every take of the run, the same work, interpretation,
+  // preparation and day, judged at the levels of the run's start, of each month's start and of its end. Apart from it,
+  // the mix of what was taped each month: what for, how hard, how long and how much rode on it.
+  const points = [{ at: 'start', day: 0, abilities: startAbilities, of: (x: (typeof rows)[number]) => x.startExact }, ...monthLevels.map((m) => ({ at: `m${m.month}`, day: m.day, abilities: m.abilities, of: (x: (typeof rows)[number]) => x.atMonthLevels[`m${m.month}`] })), { at: 'end', day: DAYS, abilities: levelsNow(), of: (x: (typeof rows)[number]) => x.endExact }];
+  const r2 = (x: number) => Math.round(x * 100) / 100;
+  const controlled = points.map((pt) => ({ at: pt.at, day: pt.day, meanOfEveryTake: r2(rows.reduce((a, x) => a + (pt.of(x) ?? 0), 0) / Math.max(1, rows.length)), abilities: pt.abilities }));
+  const falls = rows.flatMap((x) => points.slice(1).map((pt, i) => ({ take: `${x.brief} day ${x.day}`, from: points[i]!.at, to: pt.at, by: (pt.of(x) ?? 0) - (points[i]!.of(x) ?? 0) })).filter((f) => f.by < -1e-9));
+  const mix = Object.fromEntries([...new Set(rows.map((x) => x.month))].map((m) => {
+    const xs = rows.filter((x) => x.month === m);
+    const count = (f: (x: (typeof rows)[number]) => string) => xs.reduce((o, x) => { const k = f(x); o[k] = (o[k] ?? 0) + 1; return o; }, {} as Record<string, number>);
+    return [`m${m}`, { takes: xs.length, purposes: count((x) => x.purpose), difficulty: count((x) => String(x.difficulty)), size: count((x) => String(x.size)), stakes: count((x) => String(x.stakes)), beats: count((x) => String(x.beats)), genres: new Set(xs.map((x) => x.brief.replace(/^brief-/, '').replace(/-\d+$/, ''))).size }];
+  }));
+  writeFileSync(TRACE, JSON.stringify({ profile: PROFILE, seed: SEED, days: DAYS, byMonth, controlled, falls, mix, takes: rows }, null, 1));
 }

@@ -5,11 +5,13 @@
  * (`tests/briefs-content.test.ts`).
  *
  * Written across the 25 to vary what the firsts held still: every first left stakes and the reader's playing unset, so
- * each of these sets its stakes, and each on camera sets how the reader plays; five are recorded at a microphone; eight
- * are long, with five or six beats; and the tones, the features and what's staged move with the scene. A genre with
- * applied demands (`content/demands.ts`) stages them here too: action, action_comedy and adventure a fight, chanbara a
- * sword school's forms, backstage_musical a song and a dance, biographical a transformation from a research pack,
- * comedy its timing, and animated and anime are voice briefs.
+ * each of these sets its stakes, and each on camera sets how the reader plays; five were recorded at a microphone, and
+ * four are from 2026-10-16; eight are long, with five or six beats; and the tones, the features and what's staged move
+ * with the scene. A genre with applied demands (`content/demands.ts`) stages them here too: action, action_comedy and
+ * adventure a fight, chanbara a sword school's forms, backstage_musical a song and a dance, biographical a transformation
+ * from a research pack, comedy its timing, and anime is a voice brief. Animated was one too until 2026-10-16, when its
+ * second situation, a second short voice brief with no reader, went for a scene filmed as live-action reference, its
+ * voice-led work staged (`brief-animated-3`); christmas's went the same day (`RETIRED_BRIEFS`, `content/briefs/index.ts`).
  *
  * The adversarial review of 2026-10-12 changed the situation of seven of the author's drafts. Action_comedy's scuffle in a food truck's
  * kitchen was the first brief's scuffle in a hotel kitchen; adventure's guide blocking a hut door was the first's
@@ -167,31 +169,40 @@ export const SECOND_A: readonly Brief[] = [
       { id: 'names', label: 'Every Name For The Record', reading: 'The figures are the surface; what she cares about is the people, and the roll call at the end is the reason for the scene.', rests: 'She knows most of the two hundred by their handwriting, and she reads out every desk leader’s name.', lean: { connection: 1.2, believability: 1.05 }, draws: [{ dim: 'connection', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'believability', ability: 'stamina', weight: 0.3 }] },
     ],
   },
+  // `brief-animated-2`, The Puddle On Larch Street (2026-10-12), went on 2026-10-16. A short voice brief with no reader,
+  // as High Wind is, the voice trained by rehearsing it, the voice specialist rewarded most on every reading and the
+  // execution named the limit, it asked of the actor what the first did in four of the six parts `tools/genre-pairs.ts`
+  // reads (docs/verification/integration-2026-10-16/genres-09.md). Its id isn't reused: a save that prepared it keeps its
+  // record, and this scene starts fresh (`RETIRED_BRIEFS`).
   {
-    id: 'brief-animated-2', title: 'The Puddle On Larch Street', kinds: ['animated'], medium: 'voice', size: 'short', stakes: 0,
-    logline: 'A pair of rain boots, both voiced by one actor, argue about whether to jump into the biggest puddle on the street while the girl wearing them waits to see which way her feet will go.',
-    circumstances: 'A wet sidewalk after a spring storm, in an animated short. To a boot the puddle is the size of a pond. The girl has stopped at its edge, and in this film her boots decide. Recorded alone in a booth before any of it is drawn: one actor plays both boots, and the animators will time the argument to the take.',
-    relationship: 'Left and right of the same pair, bought together in the fall, who have never once agreed about a puddle.',
-    you: 'Both boots: Lefty, brave and loud, who wants the splash, and Righty, careful, who worries about the cold getting in.',
-    reader: 'No reader: the voice speaks as each boot to the other, and now and then to Juniper, the girl wearing them, who says nothing in the scene.',
-    objective: 'As Lefty, get both boots into the puddle before Juniper gives up and walks around it; as Righty, keep them dry.',
-    obstacle: 'The same voice has to win and lose the argument, and the two boots have to sound like two people the animators can draw.',
+    id: 'brief-animated-3', title: 'The Lamp On Gull Rock', kinds: ['animated'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'pressing',
+    logline: 'Filmed as reference for the animators, voice and body together, an old walrus who keeps a lighthouse has to teach the puffin chick pestering him to light the lamp, because his flippers shake too much to do it himself.',
+    circumstances: 'An animated feature: the lamp room of a lighthouse on a rock, in a storm. Barnaby the walrus has kept the lamp for fifty years, and tonight his flippers shake too badly to strike the flint; nobody’s there but Tuck, a puffin chick who climbed the stairs to watch. The scene is filmed on a bare stage as live-action reference, as animated features use it: the animators take the walrus’s weight, his breath and every gesture from the footage, and the voice from the same take. The director reads Tuck’s lines off camera.',
+    relationship: 'Tuck has followed him for a week, and Barnaby has told the chick to go home every day of it.',
+    you: 'Barnaby, the walrus, old, enormous, slow on land and proud of the lamp.',
+    reader: 'Tuck, the puffin chick, read by the director off camera, full of questions and never still.',
+    objective: 'Get the lamp lit before the fishing boats reach the rocks.',
+    obstacle: 'His flippers won’t do it, he hates asking, and Tuck won’t stop asking questions long enough to listen.',
     beats: [
-      { what: 'Lefty dares and Righty refuses, back and forth, faster and faster.', tones: ['comic'] },
-      { what: 'Righty admits the deep middle frightens him, and Lefty, quiet for once, promises to go first.', tones: ['lyric'] },
-      { what: 'They jump together, and both voices shout the splash at once, on one breath.', tones: ['comic'] },
+      { what: 'He hauls his weight up the last stairs, puffing, and tells Tuck to go home.', tones: ['comic'] },
+      { what: 'He tries the flint and his flippers shake; he blames the damp, loudly.', tones: ['comic', 'grave'] },
+      { what: 'He sits down heavily and teaches Tuck the strike one step at a time, his voice gone low.', tones: ['lyric'] },
+      { what: 'The lamp catches; he turns the chick to see the boats coming round the rock, and doesn’t say thank you.', tones: ['lyric', 'comic'] },
     ],
-    language: 'everyday', timing: 3, physical: 0, partner: 0, vocal: 3, improvisation: 1,
-    techniques: { voiceover: 2, character: 1 },
+    language: 'everyday', timing: 2, physical: 3, partner: 2, vocal: 2, improvisation: 0,
+    techniques: { voiceover: 2, character: 2 },
     why: {
-      timing: 'Two characters trade lines in one voice: each switch has to land as quickly as a second actor would answer, and the drawings are timed to it.',
-      vocal: 'Two distinct voices are kept apart through a quickening argument, then joined in one shout that has to sound like both of them.',
-      techniques: 'Recorded alone at a microphone before the animation exists, so the voice is the performance; building two separate boots out of one voice, each with its own pitch and pace, is character work.',
-      beats: 'A quarrel played fast, a quiet admission, then the leap.',
+      timing: 'The animators cut the scene to the take: each gesture and line has to land where a drawing can use it.',
+      physical: 'A walrus’s weight, breath and slowness, played full size on a bare stage for the animators to draw from: the stairs, the heavy sitting down, the shaking flippers.',
+      partner: 'Tuck’s questions come at every pause, and Barnaby’s patience is played against each one.',
+      vocal: 'The voice is recorded in the same take as the body: an old, enormous voice, out of breath, kept the same throughout so it fits what’s drawn.',
+      techniques: 'Voice-led, since the take’s sound is the film’s voice; and character work, since the walrus is built from the actor’s own body and voice with no costume, every gesture sized so the drawing can follow it.',
+      beats: 'A grumbling arrival, a failure blamed on the weather, a lesson given low, then a lamp lit and no thanks said.',
     },
     readings: [
-      { id: 'pair', label: 'Two Different Boots', reading: 'The fun is in how unlike each other the two boots sound, and the cleaner the switch, the funnier the argument.', rests: 'One actor plays both boots, and they have never once agreed about a puddle.', lean: { execution: 1.25, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.7 }, { dim: 'consistency', ability: 'discipline', weight: 0.4 }] },
-      { id: 'friends', label: 'Best Friends In A Pair', reading: 'Under the bickering the boots love each other, and Lefty’s promise to go first is the center of the scene.', rests: 'Righty admits the deep middle frightens him, and Lefty promises to go first.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.6 }] },
+      { id: 'weight', label: 'All That Weight', reading: 'Barnaby is his body: the scene is a huge old creature moving through it, and the animators should be able to draw every pound.', rests: 'He hauls his weight up the stairs and sits down heavily to teach.', lean: { execution: 1.25, consistency: 1.05 }, draws: [{ dim: 'execution', ability: 'physical', weight: 0.7 }, { dim: 'consistency', ability: 'stamina', weight: 0.3 }] },
+      { id: 'teacher', label: 'Teaching The Chick', reading: 'Under the grumbling he’s handing on the lamp, and the lesson is the heart of the scene.', rests: 'He teaches Tuck the strike one step at a time, his voice gone low.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
+      { id: 'proud', label: 'Too Proud To Ask', reading: 'He’d sooner the boats hit the rocks than say he needs help, and every line is pride holding on.', rests: 'He blames the damp, loudly, and doesn’t say thank you.', lean: { consistency: 1.2, believability: 1.1 }, draws: [{ dim: 'consistency', ability: 'discipline', weight: 0.5 }, { dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }] },
     ],
   },
   {
@@ -675,29 +686,40 @@ export const SECOND_A: readonly Brief[] = [
       { id: 'friend', label: 'Best Friends First', reading: 'She knows from the start the friendship matters more, and the scene is her finding a way to show it.', rests: 'They’ve been best friends since kindergarten, and she gives away her best line.', lean: { connection: 1.2, responsiveness: 1.1 }, draws: [{ dim: 'connection', ability: 'listening', weight: 0.6 }, { dim: 'responsiveness', ability: 'adaptability', weight: 0.4 }] },
     ],
   },
+  // `brief-christmas-2`, The Box With His Name On It (2026-10-12), went on 2026-10-16. On camera with The Christmas Eve
+  // Loaf's features within one and no technique, and both its readings the first's two in what they lean and draw on
+  // (Waiting Him Out as Trying To Leave: consistency by composure; No Promises as With Her Whole Heart: belief by
+  // emotional depth), it asked of the actor what the first did in three of the six parts `tools/genre-pairs.ts` reads
+  // (docs/verification/integration-2026-10-16/genres-09.md). Its id isn't reused: a save that prepared it keeps its
+  // record, and this scene starts fresh (`RETIRED_BRIEFS`).
   {
-    id: 'brief-christmas-2', title: 'The Box With His Name On It', kinds: ['christmas'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'withholding',
-    logline: 'On Christmas morning, a foster mother tries to get the eleven-year-old who came to live with her three weeks ago to open the one present under the tree with his name on it.',
-    circumstances: 'The living room of a small house at seven on Christmas morning, the tree lit and the floor deep in paper from her own two children, who have run next door to show the neighbors. He has sat on the bottom stair through all of it. One box, on the floor beside her, has his name on it. He has lived in four homes in two years, and in none of them did he stay for Christmas.',
-    relationship: 'Foster mother and foster son of three weeks. He’s polite and careful and calls her by her first name; she has learned not to ask him for more than that yet.',
-    you: 'Bridget Lund, forty-three, a school bus dispatcher and a foster parent for six years, sitting on the floor in her robe.',
-    reader: 'Owen, eleven, on the bottom stair in a coat he hasn’t taken off, saying as little as he can.',
-    objective: 'Get him to open the present before her own children come back and the moment goes.',
-    obstacle: 'Every present he has been given went back in a bag at the next move, so he’d rather not want this one, and she can’t promise him he’ll stay.',
+    id: 'brief-christmas-3', title: 'The Last Hour In The Grotto', kinds: ['christmas'], medium: 'camera', size: 'medium', stakes: 2, readerPlays: 'unpredictable',
+    logline: 'In the last hour of Christmas Eve, a department store Santa who took the job for the rent gets a seven-year-old who asks him for something he can’t promise, and has to answer her as Santa.',
+    circumstances: 'The Santa’s grotto on the top floor of a department store, half past five on Christmas Eve, the store closing at six. He’s an actor out of work who took the job for December’s rent. The girl came up alone while her grandmother paid downstairs, and she has asked him to bring her father home from overseas for Christmas morning. He has no idea where her father is or whether he’s coming. For the tape he sits in the big chair, and the child is read off camera at the eyeline of a child beside him.',
+    relationship: 'Strangers, though she has written him three letters this month and expects him to remember every one.',
+    you: 'Gil Abernathy, forty-four, an actor between jobs, three weeks into being Santa and very good at it.',
+    reader: 'Rosie, seven, who changes the subject every few seconds and comes back each time to the one thing.',
+    objective: 'Give her something true to hold on to without promising what he can’t keep.',
+    obstacle: 'She believes every word Santa says, she won’t be put off, and he can’t step out of the suit to tell her the truth.',
     beats: [
-      { what: 'She talks about the mess, the paper and her son’s terrible new sweater, and doesn’t look at the box once.', tones: ['comic'] },
-      { what: 'He asks, very politely, whether he has to give it back when he goes.', tones: ['grave'] },
-      { what: 'She tells him the truth: she can’t promise he’ll stay, and the present was made so it can’t be given to anyone else.', tones: ['grave', 'lyric'] },
-      { what: 'He asks her to open it for him; she does, slowly, and holds up a jersey for the town’s spring soccer league with his name on the back, and when he says nothing she talks about pancakes.', tones: ['lyric', 'comic'] },
+      { what: 'He does the routine he has done two hundred times, the laugh, the list and the candy cane, and she corrects his list.', tones: ['comic'] },
+      { what: 'She asks for her father; he stalls in character, asking which reindeer she’d most like to meet.', tones: ['comic', 'grave'] },
+      { what: 'She asks again, and he tells her, as Santa, the one thing he can promise.', tones: ['grave', 'lyric'] },
+      { what: 'Her grandmother calls from the stairs; Rosie hugs him, and he holds the Santa laugh until she has gone.', tones: ['lyric'] },
     ],
-    language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 0, improvisation: 1,
+    language: 'everyday', timing: 1, physical: 1, partner: 3, vocal: 2, improvisation: 2,
+    techniques: { improv: 1, character: 1 },
     why: {
-      partner: 'He gives her almost nothing, and she has to read every question he doesn’t ask in the few he does.',
-      beats: 'Chatter that leaves him room, one polite question that carries everything, the truth told as kindly as it can be, and a present opened for him with his name on it.',
+      partner: 'Everything he says is an answer to her, and she takes every word as Santa’s.',
+      vocal: 'Santa’s voice, big, warm and practiced, kept up through the whole scene, even when what he says under it is his own.',
+      improvisation: 'Her questions change every few seconds, and he has to answer each as Santa, live, without leaving the routine.',
+      techniques: 'Improvisation, since nothing she asks is in his patter; and character work, since Santa is a part he plays in a suit, with a voice and a laugh that aren’t his own.',
+      beats: 'The practiced routine, a stall in character, a promise he can keep, then a laugh held until she’s gone.',
     },
     readings: [
-      { id: 'room', label: 'Waiting Him Out', reading: 'She leaves him room all morning, and the scene lives in what she doesn’t say or ask.', rests: 'She talks about the mess and doesn’t look at the box once, and she has learned not to ask him for more yet.', lean: { consistency: 1.2, connection: 1.1 }, draws: [{ dim: 'consistency', ability: 'composure', weight: 0.6 }, { dim: 'connection', ability: 'listening', weight: 0.4 }] },
-      { id: 'truth', label: 'No Promises', reading: 'The heart of the scene is a truth she won’t soften, and the jersey is the only promise she can make.', rests: 'She can’t promise he’ll stay, and the jersey is for the spring league.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.6 }, { dim: 'interpretation', ability: 'focus', weight: 0.4 }] },
+      { id: 'live', label: 'Answering Her Live', reading: 'The scene is a quick-witted man keeping up with a child, and every answer is found on the spot.', rests: 'She changes the subject every few seconds and comes back each time to the one thing.', lean: { responsiveness: 1.25, connection: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'connection', ability: 'listening', weight: 0.3 }] },
+      { id: 'suit', label: 'Never Out Of The Suit', reading: 'He never lets Santa slip, not once, and the feeling is all in what the part lets him say.', rests: 'He can’t step out of the suit to tell her the truth, and holds the laugh until she has gone.', lean: { consistency: 1.2, execution: 1.1 }, draws: [{ dim: 'execution', ability: 'vocal', weight: 0.5 }, { dim: 'consistency', ability: 'discipline', weight: 0.5 }] },
+      { id: 'promise', label: 'One True Thing', reading: 'He means the promise as himself, and the scene is a man finding one true thing to say from inside a costume.', rests: 'He tells her, as Santa, the one thing he can promise.', lean: { believability: 1.2, interpretation: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'interpretation', ability: 'imagination', weight: 0.5 }] },
     ],
   },
   {

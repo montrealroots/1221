@@ -1,5 +1,5 @@
 {
- "about": "The audit rows each item of docs/verification/remaining/<key>-result.json is evidence for, read on 2026-10-16 by the coverage area (remaining-fold.cjs reads it). An item whose id is an audit row's maps to that row without an entry here. rows [] means its tests are evidence for no single row's claim, with why. `fragments`: a row-text value an area wrote as a fragment of the field, with what in the field it replaces.",
+ "about": "The audit rows each item of docs/verification/remaining/<key>-result.json is evidence for, read on 2026-10-16 by the coverage area (remaining-fold.cjs reads it). An item whose id is an audit row's maps to that row without an entry here. rows [] means its tests are evidence for no single row's claim, with why. `fragments`: a row-text value an area wrote as a fragment of the field, with what in the field it replaces. `byTest` (from 2026-10-16, brief 09): an area’s tests by a title’s start, each with the rows it reaches, read with what each was read to reach, for an area whose items share tests that reach different rows.",
  "items": {
   "banking/banking.1": {
    "rows": [
@@ -295,6 +295,380 @@
   "coverage/coverage.7-overdraft-home-panel": {
    "rows": [],
    "why": "A finding reported, not a row’s evidence."
+  },
+  "09-coverage/coverage09.1-brief.prepare": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-brief.choose": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-brief.reader": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-school.choose_playing": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-school.choose_part_playing": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.identify": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.try": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-work.settle": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.1-life.look_after": {
+   "rows": [],
+   "why": "A row added on 2026-10-16 (brief 09) through inputs/added-rows.json: its review of that day cites these tests, so the fold adds none of them again."
+  },
+  "09-coverage/coverage09.2-hardship-renewal": {
+   "rows": [
+    "health.request_hardship"
+   ],
+   "why": "The renewal branch of the hardship, played (brief 09, 2026-10-16): the gap the row’s review of 2026-10-16 named."
+  },
+  "09-coverage/coverage09.3-unresolved": {
+   "rows": [
+    "tax.federal_lien_withdraw"
+   ],
+   "why": "The one of the 13 unresolved rows play reaches since the account kept at home and the families of 2026-10-16: an Inherited family’s student who files nothing, played to the lien and its withdrawal. The other twelve’s evidence is the probe’s, kept in the result, no test’s."
+  },
+  "09-coverage/coverage09.4-fold": {
+   "rows": [],
+   "why": "The coverage area’s own item, the pipeline’s: no test of it is a row’s evidence."
+  },
+  "09-coverage/coverage09.5-journeys-fold": {
+   "rows": [],
+   "why": "The coverage area’s fold of the journeys’ result: the pipeline and its reading of the journeys’ tests, which reach their rows through the 09-journeys entries; its row text is folded, and no test of it is a row’s evidence."
+  },
+  "09-banking/banking.1.pro-rata": {
+   "rows": [
+    "bank.close_current",
+    "bank.cancel_new"
+   ],
+   "why": "Germany’s month’s fee on a close charged to the day (BGB § 675h(3), from brief 09): Close It on a Berlin-raised student’s AktivKonto kept at home, played, and Cancel It on Berlin fixtures."
+  },
+  "09-banking/banking.1.pro-rata.month-end": {
+   "rows": [
+    "bank.close_current"
+   ],
+   "why": "A close at the month’s edges charges each month once, played on the account kept at home."
+  },
+  "09-banking/banking.1.pro-rata.opening-month": {
+   "rows": [
+    "bank.month_end"
+   ],
+   "why": "Deutsche Bank’s month of opening free: the month’s end and the quarter’s closing charge nothing for it (statements’ Germany’s quarterly closing)."
+  },
+  "09-banking/banking.3.homecloses": {
+   "rows": [],
+   "why": "A home bank’s own close of an account kept at home has no row in the audit (as banking/banking.s7.ownership’s of the last pass); its GUARD is the area’s record."
+  },
+  "09-banking/banking.2.scope": {
+   "rows": [],
+   "why": "The banking area’s probe of the eight bank rows on home-account lives, run outside the tree: no test, and the rows’ four parts carry its finding (the coverage area’s probe agrees, coverage09.3-unresolved)."
+  },
+  "09-banking/banking.2.arrange_overdraft": {
+   "rows": [
+    "bank.arrange_overdraft"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.switch": {
+   "rows": [
+    "bank.switch"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.switch_complete": {
+   "rows": [
+    "bank.switch_complete"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.cancel_switch": {
+   "rows": [
+    "bank.cancel_switch"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.stop_balance_transfer": {
+   "rows": [
+    "bank.stop_balance_transfer"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.take_overrun_loan": {
+   "rows": [
+    "bank.take_overrun_loan"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.money_transfer": {
+   "rows": [
+    "card.money_transfer"
+   ],
+   "why": "The banking area’s reading of the row, out of a player’s reach: its played test of six students keeping an account at home, each refused (tests/remaining-09-banking.test.ts, banking.2), which the fold adds; the rest it cites are the row’s own already and the merge keeps them once."
+  },
+  "09-banking/banking.2.cancel_new": {
+   "rows": [
+    "bank.cancel_new"
+   ],
+   "why": "The row’s Berlin fixture of Cancel It charging the month’s fee to the day, and the banking area’s played test of six students keeping an account at home, refused it (brief 09)."
+  },
+  "09-banking/banking.4.sparkassen-card": {
+   "rows": [
+    "bank.close_current",
+    "bank.cancel_new"
+   ],
+   "why": "Berliner Sparkasse’s card year paid ahead, its days left given back on Close It (played on the account kept at home) and on Cancel It (a Berlin fixture), said before the press (brief 09’s follow-up)."
+  },
+  "09-banking/banking.5.arion-card": {
+   "rows": [],
+   "why": "A debit card’s yearly fee posts in the daily bank check (lending.ts), which has no row of its own in the audit (a fee by the month or the quarter is bank.month_end’s); the area’s record."
+  },
+  "09-banking/banking.6.fee-schedule": {
+   "rows": [
+    "bank.month_end"
+   ],
+   "why": "When each German bank posts its account fee (ING’s on the 1st of the month after, Commerzbank’s at each month’s end, the rest at the quarter’s closing): the month’s end, whose changes the area’s row text corrects."
+  },
+  "09-banking/banking.7.redirect-close": {
+   "rows": [
+    "bank.close_current",
+    "bank.redirect_deposits"
+   ],
+   "why": "Close It on the old account after Have Wages Paid Here says the days each payer moves and the day it can close (from 2026-10-16, `closeHold`): played from the press on 24 September 2026 to the close on 8 October, across a reload."
+  },
+  "09-banking/banking.8.apostrophes": {
+   "rows": [
+    "card.statement",
+    "finance.pay_card",
+    "card.request_hardship",
+    "h-needs"
+   ],
+   "why": "Eleven lines of bank text written with a straight apostrophe, curly from 2026-10-16; the tests the rows cite now read the curly form, their titles unchanged."
+  },
+  "09-genres/genres.1-count": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.2-compare": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-animated": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-christmas": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-conspiracy_thriller": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-farce": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-film_noir": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-gothic_horror": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-jukebox_musical": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-new_wave": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-psychological_thriller": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-samurai": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-silent_film": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-sword_and_sorcery": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-tragicomedy": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.3-yakuza": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.4-kept": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.5-saves": {
+   "rows": [],
+   "why": "A save that prepared a brief the genres area retired keeps its record, and nothing offers it: older-save compatibility of the briefs’ content, which no audit row claims (the brief rows claim the commands, not which briefs there are)."
+  },
+  "09-genres/genres.6-table": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.7-measured": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-genres/genres.8-docs": {
+   "rows": [],
+   "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-journeys/journeys.known-graduated-school-page": {
+   "rows": [],
+   "why": "The School page once the School has ended, played to the degree, a withdrawal and a dismissal: each test to the row whose end it plays (Commencement, the withdrawal, the evaluation that dismisses)."
+  },
+  "09-journeys/journeys.x1-yale-payment-savings-hold-registration": {
+   "rows": [],
+   "why": "A leave’s returned aid paid from savings, the hold and its fees, and registration under it: each test to the commands it presses and checks."
+  },
+  "09-journeys/journeys.x2-leave-affiliate-bill": {
+   "rows": [],
+   "why": "A leave’s lapse, Affiliate cover, an appointment and a prescription in the lapse: each test to the commands and the appointment it plays."
+  },
+  "09-journeys/journeys.x3-withdrawal-health-tax-papers": {
+   "rows": [],
+   "why": "A withdrawal, then health cover, status and the return: each test to what it presses and what the clock brings (the month’s look, the US status, the refund)."
+  },
+  "09-journeys/journeys.x4-document-expiring": {
+   "rows": [],
+   "why": "A license run out under a bank’s opening: the Papers row, the ID card, the account."
+  },
+  "09-journeys/journeys.played-school": {
+   "rows": [],
+   "why": "The area’s summary of school journeys: its tests are x1’s and the School page’s, mapped by test as there; remaining-school-term.test.ts and remaining-school.test.ts are cited by file alone, run again, and add no title."
+  },
+  "09-journeys/journeys.played-money": {
+   "rows": [],
+   "why": "The area’s summary of money journeys: x1’s and x4’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.played-papers": {
+   "rows": [],
+   "why": "The area’s summary of papers journeys: x3’s and x4’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.played-health": {
+   "rows": [],
+   "why": "The area’s summary of health journeys: x2’s and x3’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.actions": {
+   "rows": [],
+   "why": "Every action the journeys pressed, with its refusals: each test mapped as in the item it belongs to."
+  },
+  "09-journeys/journeys.d-aid-past-balance": {
+   "rows": [],
+   "why": "Aid applied to the Yale account at a term’s start, fixed by the follow-up: each test mapped by test (byTest), to the term the clock begins and the commands each presses; its row text placed in school.term’s, school.pay_balance’s and school.reregister’s fields, the two “(add)” as additions."
+  },
+  "09-journeys/journeys.d-cover-ended-notice": {
+   "rows": [],
+   "why": "The cover-ended notice’s window, from the loss: health.month’s notice, and the commands the tests press (the withdrawal, Enroll, File It); the four other files cited by file alone add no title."
+  },
+  "09-journeys/journeys.d-medicaid-start": {
+   "rows": [],
+   "why": "HUSKY D from the month of application and the months before it, fixed by the follow-up: each test mapped by test (byTest), to Enroll, the health week that fills in the lapse, and the month’s notice; its row text for health.enroll folded, and for health.apply and health.request_hardship written into inputs/added-rows.json, where those rows’ words are kept."
+  },
+  "09-journeys/journeys.d-hardship-ended-renewal": {
+   "rows": [],
+   "why": "A renewal’s notice once its program is dropped or ending: health.drop and health.request_hardship; the hardship test cited by file alone adds no title."
+  },
+  "09-journeys/journeys.d-expired-license-next-step": {
+   "rows": [],
+   "why": "The run-out line on a document’s Papers row (DocumentList), with the commands its test presses: the ID card it points to and the bank that takes it. Not documents.report_lost or documents.replace_license, which the test doesn’t press."
+  },
+  "09-journeys/journeys.d-lapse-appointment": {
+   "rows": [],
+   "why": "An appointment outside the cover said when Affiliate cover is bought: school.buy_affiliate, the appointment, and what the test presses to be seen at Yale Health."
+  },
+  "09-journeys/journeys.d-lapse-prescription": {
+   "rows": [],
+   "why": "A fill in the lapse repriced when Affiliate cover is bought back to its start: school.buy_affiliate’s repricing, and the health week that fills it (its log, HealthRecord.fills)."
+  },
+  "09-judge/judge.baseline": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.ST3": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.ST6": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.H4": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.L3": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.remeasure": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.stamina-load": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.coverage-row": {
+   "rows": [],
+   "why": "The judge area’s measurement of the stage and the attributes, through its tools and tests that call the judging functions on a piece, not a command: no row’s claim rests on it (its criteria are the completion matrix’s rows)."
+  },
+  "09-judge/judge.length": {
+   "rows": [],
+   "why": "A scene and a play judged in their units (evaluation-10): its own tests call the judging functions on a piece; the one played test it changed is the casting it moved, mapped by test."
+  },
+  "09-judge/judge.classes-fitness": {
+   "rows": [
+    "fitness"
+   ],
+   "why": "A class that trains the body as hard as a workout counts as one (from 2026-10-16): the spring’s combat classes attended through the clock, against a twin away, read on fitness each midnight."
+  },
+  "09-journeys/journeys.f-mexico-residence": {
+   "rows": [],
+   "why": "Mexico’s residence no longer sold: each test mapped by test (byTest) to the four residence rows it presses; its row text placed, `settled` among it."
+  },
+  "09-journeys/journeys.f-injury-space": {
+   "rows": [],
+   "why": "The injury notice’s trailing space: its one test, evidence-g04-life’s, already cited by life.day_rollover and injuries (mapped by test, listed as already cited); no row’s words change."
+  },
+  "09-journeys/journeys.f-ended-life-loops": {
+   "rows": [],
+   "why": "Loops on an ended life: the jl-17 guard to life.end (the clock stops); the attentiveHour guard, tests/setup/ended-life.ts, vitest.config.ts and personality.test.ts are the tests’ and tools’ own, no row’s."
+  },
+  "09-journeys/journeys.d-f1-term-notice": {
+   "rows": [],
+   "why": "An F-1 student’s term notice naming what reached her account: its one test to school.term (mapped by test)."
   }
  },
  "fragments": {
@@ -303,6 +677,278 @@
    "replaces": "current account: on Close It’s refusals and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, fees charged, the limit cleared; in Canada fees refunded, from 2026-10-15: until then neither)",
    "with": "current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, overdraft interest and fees charged, the limit cleared; in Canada fees refunded, never the overdraft interest; from 2026-10-15: until then neither, and the overdraft interest from 2026-10-16: until then it was dropped)",
    "read": "2026-10-16, against accountlife.ts bank.cancel_new: cancelRefusal still asked, settleOverdraftInterest then settleFees, the limit still cleared (overdraftLimit = undefined); the area's fragment left out cancelRefusal, the limit and the date its settling began, which the coverage area kept"
+  },
+  "bank.cancel_new|tests": {
+   "fragment": "… Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: … (the rest as written). From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
+   "replaces": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s €4.90 refused on the panel and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated.",
+   "with": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated. From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
+   "read": "2026-10-16 (brief 09), against tests/scope-money.test.ts’s renamed Berlin title and tests/remaining-09-banking.test.ts: the banking area’s fragment named the Berlin fixture’s new words and the test it added; the field’s other words kept as they stood."
   }
+ },
+ "byTest": {
+  "09-journeys": [
+   {
+    "title": "DEFECT: a life played to the degree",
+    "rows": [
+     "school.commencement"
+    ],
+    "read": "Played to Commencement on 21 May 2029: the Standing, Casting and Coursework tabs rendered after the degree, before and after a reload."
+   },
+   {
+    "title": "PLAYER JOURNEY: a withdrawal in the first fall says how it ended",
+    "rows": [
+     "school.withdraw"
+    ],
+    "read": "school.withdraw refused unconfirmed and again, the course record kept, the three tabs after it."
+   },
+   {
+    "title": "PLAYER JOURNEY: a student who never prepares her coursework",
+    "rows": [
+     "standing/term evaluation"
+    ],
+    "read": "Concern, warning, dismissed at Fall Term 2027’s evaluation by the clock; the tabs after it."
+   },
+   {
+    "title": "PLAYER JOURNEY: a Modest student’s personal leave sends half",
+    "rows": [
+     "school.request_leave",
+     "school.buy_affiliate",
+     "school.pay_balance",
+     "bank.transfer"
+    ],
+    "read": "The leave asked twice and granted, half the scholarship returned; her own transfer into savings; Affiliate cover refused unconfirmed, bought from both accounts, refused again; a part paid, over and nothing refused; the hold and $375 of late fees, one jump against six-hour steps."
+   },
+   {
+    "title": "DEFECT: back for Spring Term 2028 owing $7,875.25",
+    "rows": [
+     "school.return_notice",
+     "school.reregister",
+     "school.pay_balance",
+     "school.term",
+     "bank.transfer"
+    ],
+    "read": "Renamed by the follow-up (its note at remaining-09-journeys.test.ts:308). Notice given and refused again; the twin’s transfer from savings and its payment of the account from both, the hold lifted; the term’s aid paying the $7,875.25 first at nine on 3 January, the rest to the bank, its notice and Terms And Award; registration pressed, refused again, and the first class day counted, through a reload."
+   },
+   {
+    "title": "DEFECT: a doctor’s visit booked at Fair Haven",
+    "rows": [
+     "school.buy_affiliate",
+     "health.appointment",
+     "health.cancel_appointment",
+     "health.book"
+    ],
+    "read": "Affiliate cover bought in the lapse says the Fair Haven visit is outside Yale Health; a twin keeps it and is billed as the uninsured; the visit called off and booked again at Yale Health, seen for nothing."
+   },
+   {
+    "title": "DEFECT: withdrawn on 15 February 2027",
+    "rows": [
+     "school.withdraw",
+     "health.month",
+     "health.enroll",
+     "tax.file"
+    ],
+    "read": "The cover-ended notice of 1 April names 16 May; Enroll refused on 20 May with nothing moved, a twin enrolled on 10 May; the 2026 return filed and refused again."
+   },
+   {
+    "title": "DEFECT: withdrawn in the first fall on 5 October 2026, a citizen",
+    "rows": [
+     "health.month",
+     "health.enroll",
+     "health.appointment"
+    ],
+    "read": "Renamed by the follow-up (its note at :493). The notice names the window’s last day and HUSKY D; Enroll on 2 December from 1 December, refused again; the doctor’s visit the clock keeps on 3 December HUSKY D’s, nothing to pay; one jump against six-hour steps."
+   },
+   {
+    "title": "PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026",
+    "rows": [
+     "school.withdraw",
+     "health.month"
+    ],
+    "read": "An early withdrawal cancels Yale Health back to 1 August; the notice counts the 60 days from the withdrawal; one jump."
+   },
+   {
+    "title": "PLAYER JOURNEY: an F-1 student from London withdraws",
+    "rows": [
+     "school.withdraw",
+     "documents.us_status",
+     "health.month",
+     "health.enroll",
+     "documents.apply_idcard",
+     "tax.file",
+     "tax.refund"
+    ],
+    "read": "Fifteen days’ grace, Out Of Status on 20 October, the notice saying neither the marketplace nor Covered Connecticut takes her; Enroll and the DMV refused in their words; the 1040-NR’s refund once, seventy days on, through a reload."
+   },
+   {
+    "title": "DEFECT: a New Yorker whose one photo ID is her license",
+    "rows": [
+     "documents.apply_idcard",
+     "bank.open_current"
+    ],
+    "read": "The license run out says on its Papers row what replaces it (DocumentList; Report Lost isn’t pressed, so documents.report_lost takes nothing); Citi refuses without a photo ID, nothing moved; the Connecticut ID card for $28.00, refused again; the account opened, its $100.00 in transit until it lands, through a reload."
+   },
+   {
+    "title": "DEFECT: a generic filled uninsured on 8 February 2027",
+    "rows": [
+     "school.buy_affiliate",
+     "health.week"
+    ],
+    "read": "The fill of 8 February had by the clock’s health week, paid uninsured; Affiliate cover bought back to the lapse’s start reprices the fill at Yale Health’s $10.00 copay, the rest paid back once on a line of its own, through a reload."
+   },
+   {
+    "title": "DEFECT: HUSKY D dropped on Papers on 2 October 2027",
+    "rows": [
+     "health.drop",
+     "health.request_hardship"
+    ],
+    "read": "Renamed by the follow-up (its note at :711), a month earlier as HUSKY D’s start moved. Drop The Plan pressed on Papers with a renewal’s notice waiting: the notice goes with it, the hardship refused in its words with nothing moved, a second Drop refused; ended on 1 November, nothing renewed, through a reload."
+   },
+   {
+    "title": "GUARD: a renewal’s notice waiting while its program has ended",
+    "rows": [
+     "health.request_hardship"
+    ],
+    "read": "FIXTURE (the program’s end set by hand): the hardship refused in words that say so, nothing moved, Papers drawing no button."
+   },
+   {
+    "title": "DEFECT: a student with need begins Spring Term 2027 under a hold",
+    "rows": [
+     "school.term"
+    ],
+    "read": "The term the clock begins on 4 January pays the $1,125.00 owed from its scholarship first, the hold lifted at nine, said once, no registration asked, the rest to the bank, the first class day counted. Owed by TEST SETUP; nothing pressed, so no command row takes it."
+   },
+   {
+    "title": "DEFECT: a London-born F-1 student’s Fall Term 2026 notice",
+    "rows": [
+     "school.term"
+    ],
+    "read": "The fall term the clock begins: the posting’s $11,356.54 to Chase after $1,961.96 withheld, and its notice saying so."
+   },
+   {
+    "title": "DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic",
+    "rows": [
+     "health.enroll",
+     "health.week"
+    ],
+    "read": "Three generics the health week fills uninsured in the lapse; Enroll on 22 October gives HUSKY D from 1 August and prices them again at $0, $125.37 back once, through a reload; the twin enrolled on 2 December from 1 September, the August fill left."
+   },
+   {
+    "title": "GUARD: an application made in January 2028 reaches one month back",
+    "rows": [
+     "health.enroll"
+    ],
+    "read": "FIXTURE (care and income set by hand): Enroll on 5 January 2028 gives HUSKY D from 1 December 2027 and prices December’s visit alone."
+   },
+   {
+    "title": "GUARD: the reach back stops at a month she wasn’t eligible in",
+    "rows": [
+     "health.enroll"
+    ],
+    "read": "FIXTURE: retroStart, which Enroll reads, stops at a month over the line or covered by another plan."
+   },
+   {
+    "title": "GUARD: jl-17’s life, ended by mortality’s draw",
+    "rows": [
+     "life.end"
+    ],
+    "read": "Mortality’s draw ends the life on 11 January 2027 (meta.endedAt), and a move of the clock returns from where it stopped, life.end’s downstream; the harness’s own failure (tests/setup/ended-life.ts) is the tests’, no row’s."
+   },
+   {
+    "title": "GUARD: tools/policy.ts’s attentiveHour",
+    "rows": [],
+    "read": "tools/policy.ts’s loop helper on an ended life (FIXTURE): the tools’ and tests’ own hour, which no player command or clock row is."
+   },
+   {
+    "title": "DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.renew_residence",
+     "documents.settle",
+     "documents.naturalize"
+    ],
+    "read": "Papers draws Mexico’s rule and Apply grayed; the route refused in its words with nothing moved; a held card (FIXTURE) shown to its end, Renew grayed and refused, settle and naturalize refused in their rules, through a reload; run out, the rule again."
+   },
+   {
+    "title": "PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel",
+    "rows": [
+     "school.pay_balance",
+     "school.term"
+    ],
+    "read": "Renamed by the follow-up (evidence-g26-school.test.ts:847). Pay From Your Bank refused and pressed; the unpaid twin’s return term pays the account from its scholarship first, the hold lifted at the term’s start."
+   },
+   {
+    "title": "PLAYER JOURNEY: back from a leave whose returned scholarship went unpaid",
+    "rows": [
+     "school.reregister",
+     "school.term"
+    ],
+    "read": "Its figure recast (title unchanged): the return term’s $14,093.64 pays the $15,575.50 down to $1,481.86, so the hold stays and refuses Register in its words; paid, Register takes."
+   },
+   {
+    "title": "shows a term billed past six with the living aid the review kept",
+    "rows": [
+     "school.request_aid_review",
+     "school.term"
+    ],
+    "read": "Renamed by the follow-up (defects-g8-2.test.ts:182). The aid review asked and decided, the seventh term begun (moved an hour on, TEST SETUP): its living aid paid onto the Yale account, $6,625.41 owed, nothing to the bank, on Terms And Award."
+   },
+   {
+    "title": "names the Yale Health fee as on the account only where it was charged",
+    "rows": [
+     "school.request_extra_term",
+     "school.term"
+    ],
+    "read": "Its words recast (title unchanged): A Term Without Tuition Support says the aid pays $15,781.87 of what the account owes before any reaches the bank."
+   },
+   {
+    "title": "PLAYER JOURNEY: everyday life’s injury is drawn by a midnight the clock reaches",
+    "rows": [
+     "life.day_rollover",
+     "injuries"
+    ],
+    "read": "The notice’s words with nothing after them (its assertion recast, title unchanged); the two rows cite it already."
+   },
+   {
+    "title": "refuses Mexican temporary residence with Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.renew_residence",
+     "documents.settle"
+    ],
+    "read": "Renamed by the follow-up (residence.test.ts:37). Refused on savings or income alike, a held card (FIXTURE) refused renewal and run to its end, settling saying its four years and then the reason."
+   },
+   {
+    "title": "is refused Mexican residence in Mexico’s rule",
+    "rows": [
+     "documents.residence",
+     "documents.settle",
+     "documents.naturalize"
+    ],
+    "read": "Renamed by the follow-up (commands-kept.test.ts:202). A life begun in Mexico City (TEST SETUP) refused the route; a card held past four years (FIXTURE) refused settling, past five naturalizing, nothing paid."
+   },
+   {
+    "title": "documents.residence: Mexico’s row says its rule",
+    "rows": [
+     "documents.residence"
+    ],
+    "read": "Renamed by the follow-up (guide-examples-papers.test.ts:939). The guide’s worked example: the row and the refusal at the savings threshold and short of it, Apply grayed, nothing moved."
+   },
+   {
+    "title": "counts from the grant after a lapse, not the first ever",
+    "rows": [
+     "documents.settle"
+    ],
+    "read": "Its assertion recast (title unchanged): settleRefusal’s continuity, and past the four years the reason SLATE grants none (FIXTURE)."
+   }
+  ],
+  "09-judge": [
+   {
+    "title": "PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow",
+    "rows": [
+     "c-performerTitle"
+    ],
+    "read": "The second fall’s casting played across a save and a load: Spring Awakening’s night read by its long score casts Frau Gabor and Hänschen Rilow (evaluation-10), where it cast Frau Bergmann and Ernst Röbel."
+   }
+  ]
  }
 }

@@ -19,7 +19,7 @@
  * - **Mexico, temporary residence** by economic solvency: savings of 11,460
  *   UMA over the last twelve months or an income of 680 UMA a month over
  *   six (the guidelines of 25 July 2025), MXN 1,344,373 or MXN 79,771 at
- *   2026's UMA of MXN 117.31; SLATE reads the savings as held now. The card,
+ *   2026's UMA of MXN 117.31; SLATE read the savings as held on the day. The card,
  *   MXN 11,140.74 a year (Ley Federal de Derechos, 2026), and the consulate's
  *   visa, US$56. It lets its holder live there, not work. Permanent residence,
  *   MXN 13,578.96, after four years' temporary.
@@ -55,6 +55,15 @@
  * Global Talent visa is granted the day its biometrics are enrolled, and the
  * green card's decision waits on the I-485's biometrics, either ended if
  * they're missed. Until then the visa was granted the day it was paid for.
+ *
+ * From 2026-10-16 (brief 09's journeys) Mexico's residence isn't sold either:
+ * Papers' Residence Abroad sold the card and its visa to a New Haven student
+ * on the solvency test, $674.93, then its renewal, permanent residence and a
+ * Mexican citizenship (`systems/citizenship.ts`), and nothing outside those
+ * papers read any of it, living in Mexico having gone with moving on
+ * 2026-10-09. Its rule is said, as Going Abroad says a country's, and each
+ * step refused with the reason; a card a save holds is kept until it runs
+ * out, and a naturalization applied for is still decided.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -63,7 +72,7 @@ import type { Person } from '../domain/model';
 import { MS_DAY, type Instant } from '../core/time';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
-import { payFromBank, inTheBank } from './spending';
+import { payFromBank } from './spending';
 import { citizenOf, documentsOf, inForce, isoOfCountry, numberFor, type PersonDocument } from './documents';
 import { CITIES } from '../content/geography';
 import { homeOf } from './earnings';
@@ -90,21 +99,19 @@ export const nhsByRoute = (person: Person, at: Instant): boolean => {
   return r === 'global-talent' || r === 'uk-settled';
 };
 
-/** Six months' income, a month's worth, in pesos, and savings in the bank, against Mexico's solvency tests. */
-export function mexicanSolvency(sim: Simulation, person: Person): { savings: Money; monthly: Money; meets: boolean } {
-  const cur = saveCurrency(sim.universe);
-  const pesos = (c: Money) => (cur === 'MXN' ? c : exchange(c, cur, 'MXN') ?? c);
-  const months = earningsOf(person).months;
-  const now = new Date(sim.now);
-  let six = 0;
-  for (let i = 1; i <= 6; i += 1) { const d = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - i, 1)); six += months[`${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, '0')}`] ?? 0; }
-  const savings = pesos(inTheBank(sim, person));
-  const monthly = pesos(Math.round(six / 6));
-  const r = MEXICAN_RESIDENCE;
-  return { savings, monthly, meets: savings >= Math.round(r.savingsUma * r.uma * 100) || monthly >= Math.round(r.incomeUma * r.uma * 100) };
-}
+// Mexico's solvency test, savings in the bank or six months' income against its UMA (`mexicanSolvency`), opened the
+// route until 2026-10-16, and went when the route stopped being sold: it read the bank for a sale nothing reads.
 
-export function routeRefusal(sim: Simulation, person: Person, iso: string): string | undefined {
+const pesosOf = (units: number) => `MXN ${units.toLocaleString('en-US', { minimumFractionDigits: units % 1 ? 2 : 0, maximumFractionDigits: 2 })}`;
+/** Why SLATE grants none of Mexico's papers, said after each of its rules (from 2026-10-16). */
+export const MEXICO_UNREAD = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+/** Mexico's rule for temporary residence by solvency, in its own figures. */
+export const MEXICO_RULE = `Mexico grants temporary residence on savings of ${pesosOf(Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma))} or an income of ${pesosOf(Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma))} a month over six months, the card ${pesosOf(MEXICAN_RESIDENCE.temporary)} a year and the consulate’s visa US$${MEXICAN_RESIDENCE.consularVisaUsd}.`;
+/** Why a Mexican card isn't renewed (from 2026-10-16), its rule and the reason. */
+export const MEXICO_RENEWAL = `Mexico renews temporary residence a year at a time, in the card’s last 30 days, for ${pesosOf(MEXICAN_RESIDENCE.temporary)}. ${MEXICO_UNREAD}`;
+
+/** Why a route to residence is refused: every one is, since 2026-10-16 (until then Mexico's opened on its solvency test). */
+export function routeRefusal(sim: Simulation, person: Person, iso: string): string {
   const own = isoOfCountry(person.citizenshipId);
   if (citizenOf(person, iso)) return 'You’re a citizen there.';
   if (iso === 'CA') return 'Canada has no route for a freelance actor: its Self-Employed Persons Program is paused until further notice, and Express Entry has no category for the arts.';
@@ -125,17 +132,13 @@ export function routeRefusal(sim: Simulation, person: Person, iso: string): stri
   }
   if (iso === 'MX') {
     if (residenceIn(person, 'MX', sim.now)) return 'You hold residence there.';
-    const s = mexicanSolvency(sim, person);
-    if (!s.meets) return `Mexico asks savings of MXN ${Math.round(MEXICAN_RESIDENCE.savingsUma * MEXICAN_RESIDENCE.uma).toLocaleString('en-US')} or an income of MXN ${Math.round(MEXICAN_RESIDENCE.incomeUma * MEXICAN_RESIDENCE.uma).toLocaleString('en-US')} a month over six months.`;
-    return undefined;
+    // Until 2026-10-16 one meeting the solvency test was refused nothing here, and Papers sold the card for $674.93.
+    return `${MEXICO_RULE} ${MEXICO_UNREAD}`;
   }
   return 'SLATE keeps routes to residence in Britain, Mexico and the United States.';
 }
 
-/** What applying costs, in the save's money: Mexico's, the only route a student can take. */
-export function residenceFee(sim: Simulation): Money {
-  return inSave(sim, MEXICAN_RESIDENCE.temporary, 'MXN') + inSave(sim, MEXICAN_RESIDENCE.consularVisaUsd, 'USD');
-}
+// What applying cost in the save's money, the card and the visa (`residenceFee`), went with the sale on 2026-10-16.
 
 /**
  * Since when residence in a country has been held without a break, back from the one in force (from 2026-10-10):
@@ -167,26 +170,22 @@ export function settleRefusal(sim: Simulation, person: Person, iso: string): str
     if (!(Object.values(earningsOf(person).years).some((y) => (y.bySource?.uk ?? 0) > 0))) return 'Settlement asks that you’ve earned money in Britain in your field.';
     return undefined;
   }
-  if (iso === 'MX') return sim.now - first < MEXICAN_RESIDENCE.permanentAfter * YEAR_MS - MS_DAY ? 'Permanent residence comes after four years’ temporary.' : undefined;
+  // Granted past the four years until 2026-10-16, for MXN 13,578.96; from then the rule, and past it the reason.
+  if (iso === 'MX') return sim.now - first < MEXICAN_RESIDENCE.permanentAfter * YEAR_MS - MS_DAY ? 'Permanent residence comes after four years’ temporary.' : `Mexico grants permanent residence after four years’ temporary, for ${pesosOf(MEXICAN_RESIDENCE.permanent)}. ${MEXICO_UNREAD}`;
   return 'SLATE keeps settlement in Britain and Mexico.';
 }
 
-function grant(sim: Simulation, person: Person, iso: string, route: Route, name: string, years?: number): void {
+/** Britain's settlement, the one grant left (from 2026-10-16: Mexico's cards, a visa a year or for good, were granted here until then). */
+function grant(sim: Simulation, person: Person, iso: string, route: Route, name: string): void {
   const id = sim.nextId('document');
-  documentsOf(person).push({ id, kind: route === 'mx-temporary' || route === 'mx-permanent' ? 'visa' : 'permit', issuer: iso, name, number: numberFor('R', id), status: 'valid', issuedAt: sim.now, ...(years ? { expiresAt: sim.now + years * YEAR_MS } : {}), destination: iso, route });
+  documentsOf(person).push({ id, kind: 'permit', issuer: iso, name, number: numberFor('R', id), status: 'valid', issuedAt: sim.now, destination: iso, route });
 }
 
 export function registerResidence(sim: Simulation): void {
+  // Every route is refused since 2026-10-16. The US and British branches went with the career's record they read on
+  // 2026-10-09; Mexico's card was paid for from the bank and granted for a year until 2026-10-16, read by nothing.
   sim.onCommand<{ country: string }, { paid: Money }>('documents.residence', (p, { sim: s }) => {
-    const person = s.player;
-    const iso = String(p?.country ?? '').toUpperCase();
-    const no = routeRefusal(s, person, iso);
-    if (no) throw new CommandError(no);
-    // Only Mexico's is applied for since 2026-10-09: the US and British branches went with the career's record they read.
-    const fee = residenceFee(s);
-    if (!payFromBank(s, person, fee, 'Mexican temporary residence, the card and the visa', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    grant(s, person, 'MX', 'mx-temporary', 'Residente Temporal', 1);
-    return { paid: fee };
+    throw new CommandError(routeRefusal(s, s.player, String(p?.country ?? '').toUpperCase()));
   });
 
   sim.onCommand<{ country: string }, { paid: Money }>('documents.settle', (p, { sim: s }) => {
@@ -194,22 +193,17 @@ export function registerResidence(sim: Simulation): void {
     const iso = String(p?.country ?? '').toUpperCase();
     const no = settleRefusal(s, person, iso);
     if (no) throw new CommandError(no);
-    const fee = iso === 'GB' ? inSave(s, GLOBAL_TALENT.ilr, 'GBP') : inSave(s, MEXICAN_RESIDENCE.permanent, 'MXN');
-    if (!payFromBank(s, person, fee, iso === 'GB' ? 'Indefinite leave to remain' : 'Mexican permanent residence', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    // Britain's alone since 2026-10-16: Mexico's permanent residence, MXN 13,578.96, was granted until then.
+    const fee = inSave(s, GLOBAL_TALENT.ilr, 'GBP');
+    if (!payFromBank(s, person, fee, 'Indefinite leave to remain', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
     for (const d of documentsOf(person)) if (d.destination === iso && d.route !== undefined && d.status === 'valid') d.status = 'cancelled';
-    grant(s, person, iso, iso === 'GB' ? 'uk-settled' : 'mx-permanent', iso === 'GB' ? 'Indefinite Leave To Remain' : 'Residente Permanente');
+    grant(s, person, iso, 'uk-settled', 'Indefinite Leave To Remain');
     return { paid: fee };
   });
 
-  sim.onCommand<{ country: string }, { paid: Money }>('documents.renew_residence', (p, { sim: s }) => {
-    const person = s.player;
-    // In force, not only valid (from 2026-10-10: until then a card run out was renewed as if it hadn't).
-    const held = documentsOf(person).filter((d) => d.destination === 'MX' && d.route === 'mx-temporary' && d.status === 'valid' && inForce(d, s.now)).sort((a, b) => (b.expiresAt ?? 0) - (a.expiresAt ?? 0))[0];
-    if (String(p?.country ?? '').toUpperCase() !== 'MX' || !held) throw new CommandError('Only Mexican temporary residence is renewed, a year at a time.');
-    if ((held.expiresAt ?? 0) - s.now > 30 * MS_DAY) throw new CommandError('It’s renewed within its last 30 days.');
-    const fee = inSave(s, MEXICAN_RESIDENCE.temporary, 'MXN');
-    if (!payFromBank(s, person, fee, 'Mexican temporary residence, renewed', 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    held.expiresAt = Math.max(held.expiresAt ?? s.now, s.now) + YEAR_MS;
-    return { paid: fee };
+  // Mexico's card, in force and in its last 30 days, was renewed a year for MXN 11,140.74 until 2026-10-16; from then
+  // the rule and the reason, the card a save holds running out at its end.
+  sim.onCommand<{ country: string }, { paid: Money }>('documents.renew_residence', () => {
+    throw new CommandError(MEXICO_RENEWAL);
   });
 }

@@ -179,8 +179,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 4,
         "tests": [
           {
             "file": "scope-money.test.ts",
@@ -199,6 +199,20 @@
             "title": "bank.arrange_overdraft > FIXTURE, London: Arrange It pressed with £1,000 typed on Barclays’ panel; lowered to £100 while £300 under, refused; Close The Overdraft refused until it’s paid back, then closed, across a reload",
             "kind": "fixture",
             "closes": "The panel's offer ('up to £2,000 at 35%'), Arrange It through its typed field, the limit and rate kept across a reload, 'You’re overdrawn by more than that already.', Close The Overdraft refused 'Pay the overdraft back before closing it.' then closing it, 'None arranged.' after a reload."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "integration-home-lending.test.ts",
+            "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad, with no Arrange It and no loan form, as its primary account or not; the commands refuse in the same words",
+            "kind": "render",
+            "closes": "A home bank's Borrowing refuses in its words.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -234,9 +248,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad opens nothing new for a customer abroad, an overdraft among them, and refuses it in its words (abroadRefusal, systems/abroad.ts; bank.arrange_overdraft, lending.ts).",
+        "player": "Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad opens nothing new for a customer abroad, an overdraft among them, and refuses it in its words (abroadRefusal, systems/abroad.ts; bank.arrange_overdraft, lending.ts). Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): the overdraft was refused on every account kept at home, in the bank’s own words (abroadRefusal).",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: twins £500 overdrawn at Barclays for 61 days…’ (the limit read by leftOverdrawn: the arranged twin kept open, the other charged off) and ‘FIXTURE, London: Arrange It pressed with £1,000 typed on Barclays’ panel…’ (the panel, its refusals, Close The Overdraft), on lives living in London; tests/lending.test.ts, tests/bank-fees.test.ts and tests/bank-lifecycle.test.ts on lives abroad.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None. Found on 2026-10-16 by the coverage area’s probe on a played save (docs/verification/remaining/coverage-result.json, coverage.7-overdraft-home-panel), and fixed the same day outside this row (d31f0a94): Borrowing at a bank kept at home (HSBC UK, chosen in Borrow At or made primary) drew “It would arrange up to $414 at 39.9%” and Arrange It, since overdraftOffer read no rule for a bank abroad, and the command refused in the bank’s words; the Personal Loan panel beside it drew Borrow It, refused the same way. overdraftOffer and loanOffer ask abroadRefusal first since, and both panels say it in place of their controls (tests/integration-home-lending.test.ts ‘PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing…’)."
       },
       "verification": {
@@ -557,7 +571,7 @@
       "downstream": "current balance; card closing -> cardRoom 0",
       "persistent": "account closed",
       "explanation": "Cancel It button + country rules source",
-      "tests": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s €4.90 refused on the panel and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated.",
+      "tests": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated. From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
       "status": "unresolved",
       "issue": "Fixed 2026-10-09 (9685b7d2): until then, unlike close_savings, it called off no standing orders or scheduled payments into the canceled savings (an order kept failing monthly with 'is closed'); it now calls dropPaymentsFor, held by money-fixes.test.ts ‘takes its standing orders with it’. Fixed on 2026-10-13: a canceled savings account or term deposit paid into the primary at once whatever bank it was at; it goes now to a current account at its own bank, else to the primary in the bank’s days, as a term broken early does (accountlife.ts:341-347)",
       "auditStatus": "partial",
@@ -622,7 +636,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 4,
+        "rounds": 7,
         "tests": [
           {
             "file": "scope-money.test.ts",
@@ -650,9 +664,9 @@
           },
           {
             "file": "scope-money.test.ts",
-            "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with €3 in it is refused for its €4.90 month on the panel; with €100, Cancel It charges the €4.90, as Germany lets the bank, and sends €95.10 on",
+            "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with 10 cents in it is refused for the 16 cents its €4.90 month comes to on its first day, on the panel, which says the figure; with €100, Cancel It charges the 16 cents, as Germany lets the bank, and sends €99.84 on",
             "kind": "fixture",
-            "closes": "The panel drawn while the fee refusal holds: “Its fees, €4.90, are more than it holds. Pay in €1.90 first.” under it and as the grayed Cancel It’s title, the command refused in the same words, nothing moved; then “Closing fees: GiroKonto” −4_90 and 95_10 landed at Deutsche Bank. Fails without settleFees, and with the refusal’s threshold raised."
+            "closes": "The panel drawn while the fee refusal holds: “Its fees, €0.16, are more than it holds. Pay in €0.06 first.” under it and as the grayed Cancel It’s title, with “Canceling it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.” before it; the command refused in the same words, nothing moved; then “Closing fees: GiroKonto” −16 and 99_84 landed at Deutsche Bank. Until 2026-10-16’s brief 09 the whole €4.90 (title renamed, inputs/renames.json)."
           },
           {
             "file": "scope-money.test.ts",
@@ -686,7 +700,7 @@
           },
           {
             "file": "scope-money.test.ts",
-            "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+            "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
             "kind": "fixture",
             "closes": "Close It refuses what Cancel It refuses: fees past what the account holds."
           },
@@ -734,16 +748,16 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
             "kind": "fixture",
-            "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
+            "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand), no fee owed for January, the month the AktivKonto opened (Deutsche Bank’s price list); paid in, it closes charging the interest; a reload charges nothing again. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
             "round": "remaining-banking"
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged",
             "kind": "fixture",
-            "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
+            "closes": "Cancel It in the cooling-off period refused for 25¢, no fee owed for the month it opened, then charges it. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
             "round": "remaining-banking"
           },
           {
@@ -762,7 +776,7 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
             "kind": "fixture",
             "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
             "round": "remaining-banking"
@@ -822,6 +836,83 @@
             "kind": "command",
             "closes": "Updated 2026-10-16: the set-off now takes the debt and the interest built since 1 December (89 euro cents), bounded by hand from the rate, the days and the debt.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more",
+            "kind": "render",
+            "closes": "Played from creation (Before Yale keeping Deutsche Bank): the line under Close It says €3.12 ($3.39) and how it's made before the press; pressed, “Closing fees: AktivKonto” −€3.12 / −$3.39 against Bank Fees, the transaction balanced; everything that left the account at the close is what it held; closed at nothing; a second press refused with nothing posted; reloaded and run past October's end and the quarter's, nothing more on it; breaches 0.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+            "kind": "render",
+            "closes": "Month boundaries: the first day of a month (one day of 31, 22 cents, with the quarter's two months kept), the last day before 11 PM (the month whole), after the month's end (the month counted once, with the quarter's), after the quarter's closing (nothing at closing; the screen says why).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th",
+            "kind": "render",
+            "closes": "Leap years (February of 28 and 29 days, and its 29th), and twins in one jump and day by day with a reload: identical postings on the account to the cent.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once",
+            "kind": "render",
+            "closes": "Insufficient funds: played down with Move Money (Deutsche Bank's €11.55 payment fee worked from its price list), refused on the screen and by the command with what to pay in, the figure under it; paid in from Chase as a payment abroad; closed six days later for that day's share, €5.79, once, across a reload; refused again after.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+            "kind": "fixture",
+            "closes": "Cancel It in the cooling-off period: the share counted from the day it opened, said under Cancel It, with the overdraft interest in one refusal; paid in and pressed, both charged once; refused after; the same after a reload. FIXTURE: no played life's German account is in its cooling-off (opened before Yale; every country's period ends by 21 August 2026, probed).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back",
+            "kind": "render",
+            "closes": "€12.00 ($13.04) at midnight on 25 August 2026; before the press the line says €2.24 ($2.43) of fees (495 × 14 / 31 = 223.5) and €10.32 ($11.22) back (1,200 × 314 / 365 = 1,032.3, 51 days used); pressed, both posted once against Bank Fees, balanced, everything that left at the close what it held; a second press refused; reloaded to 1 September 2027, no second refund and no year's fee on the closed account; breaches 0.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days",
+            "kind": "render",
+            "closes": "The second year 365 days on, once; twins identical to the cent; the close's three parts (two months kept, one day of 30 at 17 cents, 357 days back at €11.74) said and posted.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank",
+            "kind": "fixture",
+            "closes": "An account opened in the life is charged ahead its first night; the refund counts in the refusal's figure (closingFeesOf nets it), so an empty account cancels; €10.49 sent on. FIXTURE: no played life opens a German account.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
+            "kind": "fixture",
+            "closes": "cardFeePaid set to nothing once given back: one refund.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "accountlife.test.ts",
+            "title": "savings > settles a German current account’s quarter and this month’s fee to the day when it goes, and once",
+            "kind": "fixture",
+            "closes": "The audit's cited quarter test, renamed: €3.00 kept and 14 of February's 28 days, €3.45; a second settling charges nothing.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -1135,10 +1226,10 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 August 2026 at the latest, and every country’s cooling-off (fourteen days, or fourteen and ten business days) has ended by 24 August; nothing new can be opened at a bank abroad (abroadRefusal).",
+        "player": "Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 August 2026 at the latest, and every country’s cooling-off (fourteen days, or fourteen and ten business days) has ended by 24 August; nothing new can be opened at a bank abroad (abroadRefusal). Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): on the first day no account kept at home was in its cooling-off, and Cancel It was refused on each, “Its cooling-off period has passed, or there isn’t one here for it.”",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: a Barclays card applied for and canceled the day it comes…’, ‘FIXTURE, Toronto: an RBC chequing account opened beside TD shows Cancel It…’, ‘FIXTURE, Reykjavík: a Landsbankinn Einkareikningur…’ and ‘FIXTURE, Toronto and Berlin: a savings account opened on Monday 5 January can be canceled at 11:30 PM…’, with the rest of its Toronto, Berlin, Mexico City and Seoul fixtures; tests/remaining-banking.test.ts ‘FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day…’ (its overdraft interest charged on canceling, from 2026-10-16); tests/accountlife.test.ts, tests/defects5.test.ts and tests/money-fixes.test.ts.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
-        "unfinished": "None found. The month’s fee a German close owes pro rata (BGB § 675h(3)), charged whole, is the owner’s decision (docs/verification/remaining/banking-result.json, banking.1.pro-rata); canceling reaches it only on a fixture."
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
+        "unfinished": "None found. The month’s fee a German close owes only to the day (BGB § 675h(3)) is charged so from 2026-10-16 (brief 09, docs/verification/remaining-09/banking-result.json, banking.1.pro-rata), on canceling as on closing, where until then the whole month; canceling reaches it only on a fixture."
       },
       "verification": {
         "class": "engine",
@@ -2967,7 +3058,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 5,
         "tests": [
           {
             "file": "scope-money.test.ts",
@@ -3001,6 +3092,13 @@
             "kind": "command",
             "closes": "Each step its own; the old account closes only when the player closes it.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [],
@@ -3026,9 +3124,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable as a switch. The US has no switching service, so a switch is refused, first for a photo ID where she holds none, then with the steps to take, nothing scheduled across a reload, and Your Banks draws those steps and no Switch Bank panel (tests/scope-money.test.ts ‘PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a switch is to a bank where she lives, by its country’s service (banksFor and SWITCHING, read for where she lives), and she lives in America.",
+        "player": "Unreachable as a switch. The US has no switching service, so a switch is refused, first for a photo ID where she holds none, then with the steps to take, nothing scheduled across a reload, and Your Banks draws those steps and no Switch Bank panel (tests/scope-money.test.ts ‘PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a switch is to a bank where she lives, by its country’s service (banksFor and SWITCHING, read for where she lives), and she lives in America. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): a switch to the bank kept at home was refused on every one, “That isn’t a bank where you live.”",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026…’; tests/lending.test.ts (Iceland, Britain), tests/bank-moves.test.ts and tests/payments.test.ts (Britain, the orders re-pointed), on lives living abroad.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {
@@ -3083,14 +3181,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-money.test.ts",
             "title": "bank.take_overrun_loan > FIXTURE, Paris: €2,000 overdrawn at BNP Paribas, the loan offered by the clock three months on; Take The Loan pressed on its panel pays the overrun into the account, its €179.78 a month due a month on, and the days counted toward closing start again: a month later the account is open, where its twin that left the offer is closed and charged off",
             "kind": "fixture",
             "closes": "The offer equal to the overrun at 6.07% over 12 months; the panel drawn and pressed; the loan at -€2,087.96 with €179.78 a month (worked by hand); LOAN_DUE a calendar month on; the offer gone; negativeSince cleared; 125 days on the taker's account is open and the twin's closed ('BNP Paribas Closed Your Account')."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -3126,9 +3231,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable. Only a French bank offers a loan for an overrun, and no New Haven bank is French. From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad makes no such offer to a customer abroad (lending.ts, the offer’s abroadRefusal) and refuses the loan in its words (bank.take_overrun_loan), so a student’s BNP Paribas account kept from Paris has none to take.",
+        "player": "Unreachable. Only a French bank offers a loan for an overrun, and no New Haven bank is French. From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad makes no such offer to a customer abroad (lending.ts, the offer’s abroadRefusal) and refuses the loan in its words (bank.take_overrun_loan), so a student’s BNP Paribas account kept from Paris has none to take. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no bank offered a loan for an overrun (“Your bank has offered no loan for an overrun.”), and none can to a customer abroad (lending.ts:278 asks abroadRefusal first).",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, Paris: €2,000 overdrawn at BNP Paribas, the loan offered by the clock three months on…’ (Take The Loan pressed, €179.78 a month, LOAN_DUE a month on, the closing count started again, against a twin closed); tests/commands-kept.test.ts ‘offers a loan for an overrun three months past the overdraft…’, on lives living in Paris.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {
@@ -3402,7 +3507,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "remaining-banking.test.ts",
@@ -3466,6 +3571,20 @@
             "kind": "fixture",
             "closes": "Integer minor units and exact emptying in two currencies.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 owing $7,875.25 under the hold, the term’s scholarship pays it first: Chase Total Checking $6,218.39 and the Yale account $7,875.25 on the term’s one posting; the hold lifted at nine, said once (“This term’s living-expense scholarship paid the $7,875.25 it owed.”); the term’s notice and Terms And Award (Applied To Your Yale Account $7,875.25, Paid To Your Bank $6,218.39) say it; registered, a second refused; reloaded, Monday 10 January counts her; a twin who paid on 1 October from both accounts ($1,000.00 from checking, $6,875.25 from savings) gets the $14,093.64 whole. Recast on 2026-10-16 (journeys.d-aid-past-balance): until then registration was refused for the hold and she paid it from both accounts on the return.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -3990,8 +4109,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 3,
         "tests": [
           {
             "file": "scope-money.test.ts",
@@ -4004,6 +4123,13 @@
             "title": "card.money_transfer > FIXTURE, London: Move It (3% Fee) pressed with £500 typed on NatWest’s card: £500 into the current account, £515 on the card as a money transfer at 12.9%; refused for nothing and past the card’s room; across a reload, a £300 payment goes to the dearer purchases first and £100 to the transfer",
             "kind": "fixture",
             "closes": "£500 in, £515 on the card, the £15 fee posting; 'Say how much.'; the room refusal in its words; the transfer bucket kept across a reload; a £300 payment to the dearer purchases (£200) first and £100 to the transfer, which owes £415 across a reload (allocatePayment through finance.pay_card)."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [],
@@ -4027,9 +4153,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable. No American card offers a money transfer, so a student’s Chase card draws no Move It and the command is refused with nothing moved (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad issues no card to a customer abroad (abroadRefusal), so no British card with a transfer offer is hers.",
+        "player": "Unreachable. No American card offers a money transfer, so a student’s Chase card draws no Move It and the command is refused with nothing moved (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad issues no card to a customer abroad (abroadRefusal), so no British card with a transfer offer is hers. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): the only card any of them held was the American bank’s, the Chase Freedom Unlimited, which “doesn’t offer money transfers”.",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: Move It (3% Fee) pressed with £500 typed on NatWest’s card…’ (the fee, two refusals, a payment split by the rates across a reload); tests/cardoffers.test.ts ‘pays NatWest’s card into the current account for 3%…’, on lives living in London.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {
@@ -4448,8 +4574,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g12-money.test.ts",
@@ -4510,6 +4636,34 @@
             "title": "card.request_hardship > is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48",
             "kind": "render",
             "closes": "The check's finding that the Statements page on a plan still said the card's minimum (credit.ts:789 → statements.ts:275 → BankStatements.tsx). Rendered, the 20 October statement reads 'The least to pay is $101.00, the plan’s payment, by November 10, 2026.', with $30 of fees and no interest on $4,830. The 20 September statement, whose due date came before the plan began, still reads the card's 'The least to pay is $48.00, by October 11, 2026.'"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+            "kind": "command",
+            "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+            "kind": "command",
+            "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -5451,8 +5605,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g13-money.test.ts",
@@ -5495,6 +5649,41 @@
             "title": "finance.pay_card > on the bank’s screen: the button says what can be paid, pays it, and can’t be pressed with nothing to pay",
             "kind": "render",
             "closes": "Interface evidence, rendered: 'Pay Card In Full ($0)' disabled, 'Pay Card In Full ($2,000)', 'Pay What You Can ($100)'. Running the button's own command makes Owed read $1,900 and the button read 'Pay What You Can ($0)', disabled"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+            "kind": "command",
+            "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g12-money.test.ts",
+            "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b04.test.ts",
+            "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -5798,11 +5987,11 @@
       "kind": "scheduled",
       "entry": "armBanking",
       "reads": "accrued, bonus, feeFor waivers",
-      "changes": "interest, bonus, monthly/quarterly fee, the current account’s statement notice (banking.ts:567), resets month trackers; marksFallOff (banking.ts:528)",
+      "changes": "interest, bonus, the monthly fee or, at Deutsche Bank, Postbank and Berliner Sparkasse, the quarter’s at its closing, ING’s kept for the 1st of the month after and posted then (from 2026-10-16, feesPostAt; until then every German bank’s at the quarter’s closing), the current account’s statement notice, resets month trackers; marksFallOff",
       "downstream": "balances -> spending; marks -> score",
       "persistent": "ledger",
       "explanation": "statementReady; fee waiver text",
-      "tests": "evidence-g13-money.test.ts ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end’; evidence-g11-money.test.ts ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’ (the statement notice); guide-examples-money.test.ts, the play of the bank.accounts entry; banking.test.ts:106-196, :200-252 (partly feeFor called directly); statements.test.ts:85-114 (Germany); bank-fees.test.ts",
+      "tests": "evidence-g13-money.test.ts ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the card’s screen reprices; one not yet seven years old waits for its own month’s end’; evidence-g11-money.test.ts ‘tells of a statement ready only while Statement Ready is pressed On on the Alerts form, and of a card’s statement with a payment due whatever it is’ (the statement notice); guide-examples-money.test.ts, the play of the bank.accounts entry; banking.test.ts:106-196, :200-252 (partly feeFor called directly); statements.test.ts:85-114 (Germany); bank-fees.test.ts; tests/remaining-09-banking.test.ts ‘banking.6.fee-schedule: …’ (ING on the 1st, Commerzbank at each month’s end, Deutsche Bank at the quarter’s closing)",
       "status": "verified",
       "issue": "",
       "review": {
@@ -5872,6 +6061,63 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, free > FIXTURE, Berlin: an AktivKonto opened beside Commerzbank on Monday 5 January is told on Your Banks that closing charges nothing, January being the month it opened; closed on 31 January at 10 PM nothing is charged; its twin kept is charged nothing at January’s end, and closed on 10 February €2.46, 10 of February’s 28 days",
+            "kind": "fixture",
+            "closes": "January free at its end and on a close; February accrued at its end; closed on 10 February for 10 of 28 days. FIXTURE: a played life's Deutsche Bank account was opened before Yale.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November",
+            "kind": "render",
+            "closes": "Five “Monthly fee: Girokonto” of €4.90 ($5.33), each at midnight on the 1st, totaling the €24.50 the quarterly closings took; no quarterly posting; the Accounts panel says “This month’s is charged November 1, 2026”; twins identical.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more",
+            "kind": "render",
+            "closes": "Between ING's month's end and the 1st the kept month is said and charged on the close, once; the 1st posts nothing on the closed account.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing",
+            "kind": "render",
+            "closes": "Five “Monthly fee: GiroKonto” at 11 PM on each month's last day; no quarterly posting; the panel says the day; Deutsche Bank's AktivKonto still posts €13.80 at 30 September's closing and no monthly fee.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "statements.test.ts",
+            "title": "Germany’s quarterly closing > charges the quarter’s fees in one at the end of March, not month by month",
+            "kind": "fixture",
+            "closes": "The quarter's closing takes February's and March's, 2 × €6.90 (until 2026-10-16 three).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "statements.test.ts",
+            "title": "an account’s statement > adds up what came in and went out, and counts interest after tax and the fees",
+            "kind": "fixture",
+            "closes": "The statement's fees, 2 × €6.90.",
+            "round": "remaining-09-banking"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -6095,7 +6341,7 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
             "kind": "fixture",
             "closes": "An order from the account the set-off closes ends, said in “Closed An Account”.",
             "round": "remaining-banking"
@@ -6255,7 +6501,7 @@
         "tests": [
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €13.80, January free as the month it opened, and nothing is dropped",
             "kind": "fixture",
             "closes": "A German account its bank would close at zero isn’t closed while its fees would take it below zero; the quarter’s €20.70 posts at its closing and the account is pursued as overdrawn; no closed account below zero; breaches 0. Why play can’t reach it: only Citi and Capital One close an account at zero or unfunded.",
             "round": "remaining-banking"
@@ -6269,14 +6515,14 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
             "kind": "fixture",
             "closes": "The overdraft’s set-off charges off €122.89, the overdraft €101.97 + 22¢ of interest built since 1 March + €20.70 of fees, all worked by hand; nothing posts to the closed account after; a twin played a day at a time with a reload each month comes to the same postings.",
             "round": "remaining-banking"
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €110.65 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
             "kind": "fixture",
             "closes": "Where the savings cover it, €122.89 is set off from the Flexgeld (its 41¢ of interest settled first), the AktivKonto closes, the Flexgeld stays open, the notice names both and the order ended.",
             "round": "remaining-banking"
@@ -6402,14 +6648,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 3,
         "tests": [
           {
             "file": "scope-money.test.ts",
             "title": "bank.switch_complete > FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026, across a reload: the savings moved to the penny with its closing interest, the current account less the £20 of groceries still pending, held back until they post and then closed with the rest sent across, the standing order into savings re-pointed and paid there on the 15th",
             "kind": "fixture",
             "closes": "The date; the savings moved to the penny with its closing interest; the current account less the £20 of the 13th's and 14th's groceries still pending (each £10, posting the 15th and 16th); the held notice word for word; closingAt the 17th and closed then with nothing left; the history 'held'; the standing order re-pointed and paid into HSBC savings on the 15th."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [],
@@ -6433,9 +6686,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: it completes a switch, and no current life can start one (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives.",
+        "player": "Unreachable: it completes a switch, and no current life can start one (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so none completes.",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026…’ (the savings moved to the penny, the account held back for pending groceries, the order re-pointed), tests/lending.test.ts, tests/bank-lifecycle.test.ts, tests/payments.test.ts and tests/finance-paths.test.ts, on lives living in Iceland and Britain.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {
@@ -6793,20 +7046,55 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g13-money.test.ts",
             "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
             "kind": "command",
-            "closes": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and 'It's $78,260.00 now, for a clean record.' The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between"
+            "closes": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and “It’s $78,260.00 now, for a clean record.” The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between. Until 2026-10-16’s brief 09 the notice’s apostrophe was a straight one."
           },
           {
             "file": "evidence-g13-money.test.ts",
             "title": "card.statement > charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee)",
             "kind": "command",
             "closes": "The feeAt once-in-its-month guard. Statements on 1 October (08:00 UTC, Irish Summer Time) and 28 October 2026 (09:00 UTC, after the clocks went back), with exactly one €30.00 'Yearly fee' on 1 October"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+            "kind": "command",
+            "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g12-money.test.ts",
+            "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b04.test.ts",
+            "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -7395,7 +7683,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 5,
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g14-money.test.ts",
@@ -7484,6 +7772,13 @@
             "kind": "command",
             "closes": "Review days and the opening deposit as the bank publishes them.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+            "kind": "render",
+            "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -7707,7 +8002,7 @@
       "changes": "depositTo from fourteen days on, Yale’s payroll from seven (changeDeposits routing.ts:69, from bankmoves.ts:425)",
       "downstream": "payeeAccount and depositAccount, where wages and a scholarship are paid",
       "persistent": "person.payments.depositTo",
-      "explanation": "The date it starts",
+      "explanation": "The date it starts; under both accounts, from 2026-10-16, the day each payer moves (Yale’s payroll and the rest), and under the old account’s Close It the day it can close",
       "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders...’; tests/cross-journeys.test.ts ‘opens and funds Capital One, has Yale pay there after its pay cycle...’; tests/papers-complete.test.ts ‘moves to the new account after one weekly pay cycle, other payers after the fourteen days’ (the New Haven student, born in New York)",
       "status": "verified",
       "issue": "Through the command and the clock, pay goes on to the old account until the lead has run and to the new one after, and Yale’s pay follows after its cycle.",
@@ -7766,6 +8061,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+            "kind": "render",
+            "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
+            "round": "remaining-09-banking"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -8103,7 +8420,7 @@
       "id": "bank.close_current",
       "kind": "command",
       "entry": "Your Banks: Close It (BankMoves.tsx:148). Until 2026-10-13 this said Close at BankMoves.tsx:136",
-      "reads": "closeRefusal (bankmoves.ts:268) and linkedTo (routing.ts:91): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
+      "reads": "closeRefusal (bankmoves.ts:282) and linkedTo (routing.ts:91), through closeHold (routing.ts:160, from 2026-10-16): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Wages already on their way elsewhere hold it until the day the last payer moves, and the refusal says that day and each payer’s (from 2026-10-16; until then it said “Move it first.” of a move already asked for, and this cited closeRefusal at bankmoves.ts:268). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
       "changes": "closedAt; interest, the overdraft interest built since the 1st (from 2026-10-16, settleOverdraftInterest) and fees settled; what it holds sent to the account named (bankmoves.ts closeNow)",
       "downstream": "the remainder arriving in the transfer’s days; the account’s history kept; a closed account’s statements ending at its closing, at nothing, with what posted at the closing in them (statements.ts:77; until 2026-10-13 the last statement closed at the balance before those postings)",
       "persistent": "accounts, ledger",
@@ -8173,7 +8490,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 9,
         "tests": [
           {
             "file": "evidence-g14-money.test.ts",
@@ -8213,16 +8530,16 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest, “Pay in €0.53 first”, no fee owed for the month it opened; with 53 cents paid in, it closes and charges the interest, nothing left; a reload doesn’t charge it again",
             "kind": "fixture",
-            "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
+            "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand), no fee owed for January, the month the AktivKonto opened; paid in, it closes charging the interest; a reload charges nothing again. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
             "round": "remaining-banking"
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest, no fee owed for the month it opened; with 25 cents paid in, canceled, the interest charged",
             "kind": "fixture",
-            "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
+            "closes": "Cancel It in the cooling-off period refused for 25¢, no fee owed for the month it opened, then charges it. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
             "round": "remaining-banking"
           },
           {
@@ -8241,7 +8558,7 @@
           },
           {
             "file": "remaining-banking.test.ts",
-            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+            "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €110.65: €101.97 overdrawn, 22 cents of interest built since 1 March, and €8.46 of fees, February’s €6.90 and March’s to the 7th, nothing left on the closed account",
             "kind": "fixture",
             "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
             "round": "remaining-banking"
@@ -8262,7 +8579,7 @@
           },
           {
             "file": "scope-money.test.ts",
-            "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+            "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
             "kind": "fixture",
             "closes": "The fee refusal, unchanged words where no overdraft interest is built.",
             "round": "remaining-banking"
@@ -8273,6 +8590,97 @@
             "kind": "command",
             "closes": "Money sent to an account that isn’t open comes back.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more",
+            "kind": "render",
+            "closes": "Played from creation (Before Yale keeping Deutsche Bank): the line under Close It says €3.12 ($3.39) and how it's made before the press; pressed, “Closing fees: AktivKonto” −€3.12 / −$3.39 against Bank Fees, the transaction balanced; everything that left the account at the close is what it held; closed at nothing; a second press refused with nothing posted; reloaded and run past October's end and the quarter's, nothing more on it; breaches 0.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+            "kind": "render",
+            "closes": "Month boundaries: the first day of a month (one day of 31, 22 cents, with the quarter's two months kept), the last day before 11 PM (the month whole), after the month's end (the month counted once, with the quarter's), after the quarter's closing (nothing at closing; the screen says why).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th",
+            "kind": "render",
+            "closes": "Leap years (February of 28 and 29 days, and its 29th), and twins in one jump and day by day with a reload: identical postings on the account to the cent.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once",
+            "kind": "render",
+            "closes": "Insufficient funds: played down with Move Money (Deutsche Bank's €11.55 payment fee worked from its price list), refused on the screen and by the command with what to pay in, the figure under it; paid in from Chase as a payment abroad; closed six days later for that day's share, €5.79, once, across a reload; refused again after.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+            "kind": "fixture",
+            "closes": "Cancel It in the cooling-off period: the share counted from the day it opened, said under Cancel It, with the overdraft interest in one refusal; paid in and pressed, both charged once; refused after; the same after a reload. FIXTURE: no played life's German account is in its cooling-off (opened before Yale; every country's period ends by 21 August 2026, probed).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back",
+            "kind": "render",
+            "closes": "€12.00 ($13.04) at midnight on 25 August 2026; before the press the line says €2.24 ($2.43) of fees (495 × 14 / 31 = 223.5) and €10.32 ($11.22) back (1,200 × 314 / 365 = 1,032.3, 51 days used); pressed, both posted once against Bank Fees, balanced, everything that left at the close what it held; a second press refused; reloaded to 1 September 2027, no second refund and no year's fee on the closed account; breaches 0.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days",
+            "kind": "render",
+            "closes": "The second year 365 days on, once; twins identical to the cent; the close's three parts (two months kept, one day of 30 at 17 cents, 357 days back at €11.74) said and posted.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank",
+            "kind": "fixture",
+            "closes": "An account opened in the life is charged ahead its first night; the refund counts in the refusal's figure (closingFeesOf nets it), so an empty account cancels; €10.49 sent on. FIXTURE: no played life opens a German account.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
+            "kind": "fixture",
+            "closes": "cardFeePaid set to nothing once given back: one refund.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+            "kind": "render",
+            "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "scope-money.test.ts",
+            "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with 10 cents in it is refused for the 16 cents its €4.90 month comes to on its first day, on the panel, which says the figure; with €100, Cancel It charges the 16 cents, as Germany lets the bank, and sends €99.84 on",
+            "kind": "fixture",
+            "closes": "The audit's cited Cancel It test, renamed: one day of 31, 16 cents, and the figure said before the press.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "scope-money.test.ts",
+            "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
+            "kind": "fixture",
+            "closes": "The audit's cited Close It test, renamed: the same share, refused and charged.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "accountlife.test.ts",
+            "title": "savings > settles a German current account’s quarter and this month’s fee to the day when it goes, and once",
+            "kind": "fixture",
+            "closes": "The audit's cited quarter test, renamed: €3.00 kept and 14 of February's 28 days, €3.45; a second settling charges nothing.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -8412,14 +8820,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-money.test.ts",
             "title": "bank.cancel_switch > FIXTURE, London: Call Off The Switch…, then Call It Off, pressed on the panel: the switch and its review canceled, its history “called off”, and on its date nothing moves; a partial switch is refused, having no right to call off",
             "kind": "fixture",
             "closes": "The stage words with the dates; both presses; SWITCH_KIND and its review gone; the history 'canceled' and the panel's 'HSBC UK, called off.' after a reload; on the date no HSBC account, the primary and savings at Barclays, the order still into Barclays savings and paid; a partial switch's refusal word for word."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [],
@@ -8443,9 +8858,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives.",
+        "player": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so none can be called off.",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: Call Off The Switch…’ (pressed on the panel, the review canceled, the history, nothing moved on the date, a partial switch refused); tests/bank-lifecycle.test.ts ‘can be called off until seven working days before its date…’ and tests/finance-paths.test.ts, on lives living in London.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {
@@ -8504,14 +8919,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-money.test.ts",
             "title": "bank.stop_balance_transfer > FIXTURE, London: past its window, Stop The Balance Transfer…, then Keep The Balance There, pressed: on 14 January the payment set for a date moves to HSBC and Barclays keeps its money, open; again refused as stopped; a partial switch has no such step; past close of business on the 13th it’s refused",
             "kind": "fixture",
             "closes": "Both presses; the panel's stopped words; 'Its balance transfer is stopped already.'; across a reload, on 14 January the payment set for the 20th re-pointed to HSBC, Barclays open with its balance to the penny, HSBC at nothing, history 'balance-kept'; a partial switch's 'publishes no such step.'; at 17:01 on the 13th 'The transfer could be stopped until close of business January 13, 2026.' with keepBalance unset."
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+            "kind": "command",
+            "closes": "This command refused on six home-account lives, nothing posted.",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [],
@@ -8535,9 +8957,9 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives.",
+        "player": "Unreachable: no switch can be under way for a current life (bank.switch). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: the switch is by the service where she lives. Read again on 2026-10-16 (brief 09): the coverage area’s probe of brief 09 (probe/coverage09/bank-rows.ts, its output in docs/verification/remaining-09/coverage-result.json, coverage09.3-unresolved) made a Yale life for each of the 55 banks abroad SLATE has research on, the account kept at home opened on 1 August 2026, or for a life there from 2008 on the day she reached the bank’s opening age, a Comfortable family at Chase (54 of them kept; Japan Post Bank is refused at creation): no switch could be started (bank.switch), so no balance transfer is under way.",
         "engine": "tests/scope-money.test.ts ‘FIXTURE, London: past its window, Stop The Balance Transfer…’ (pressed, its three refusals, a payment set for a date moved to HSBC and Barclays keeping its money); tests/finance-paths.test.ts ‘PLAYER JOURNEY: past its window, the balance transfer alone is stopped…’, on a life living in London.",
-        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "deferred": "Not deferred: the owner hasn’t decided whether the nine bank rows stay Unresolved or move to Deferred (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2), and until then it counts against completion. What would reach it, a life living abroad, went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md). Brief 09 of 2026-10-16 didn’t settle it either, and asked that removed systems not be restored; the rows are eight since bank.savings_notice was verified on 2026-10-16.",
         "unfinished": "None found."
       },
       "verification": {

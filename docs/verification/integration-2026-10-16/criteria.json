@@ -15,20 +15,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89",
+   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/stage-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "restrained 50, expansive 33 of 85",
-   "after": "restrained 49, expansive 37 of 89"
+   "after": "restrained 49, expansive 37 of 89",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST2",
@@ -45,17 +53,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "72 of 72",
-   "after": "75 of 75"
+   "after": "75 of 75",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST3",
@@ -75,7 +91,7 @@
    "failure": "As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st3.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/rounding-once.test.ts",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3.md"
@@ -90,7 +106,13 @@
     }
    ],
    "before": "specialist 171/171; even actor 159 of 171",
-   "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part"
+   "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?",
+    "evidence": "docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met"
+   }
   },
   {
    "id": "ST4",
@@ -107,10 +129,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
+   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -118,10 +140,18 @@
     {
      "file": "tests/integration-stage.test.ts",
      "title": "the catalog’s drama has scenes where restraint suits better and scenes where size does"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "drama 25 / 0",
-   "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16"
+   "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST5",
@@ -138,17 +168,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385",
+   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "2,277 of 2,277",
-   "after": "2,385 of 2,385"
+   "after": "2,385 of 2,385",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST6",
@@ -168,7 +206,7 @@
    "failure": "The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st6.md"
@@ -179,7 +217,13 @@
     }
    ],
    "before": "expansive 21 of 49; restrained 7 of 34",
-   "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)"
+   "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?",
+    "evidence": "docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met"
+   }
   },
   {
    "id": "ST7",
@@ -196,17 +240,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 84 of 86; after: 88 of 90",
+   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "84 of 86",
-   "after": "88 of 90"
+   "after": "88 of 90",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST8",
@@ -223,17 +275,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "72 of 72",
-   "after": "75 of 75"
+   "after": "75 of 75",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "ST9",
@@ -250,17 +310,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2",
+   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "held",
-   "after": "see I1 to I5, S1 to S4 and G2"
+   "after": "see I1 to I5, S1 to S4 and G2",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "Stage F1",
@@ -277,17 +345,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "all hold",
-   "after": "all hold"
+   "after": "all hold",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "Stage F2",
@@ -304,17 +380,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "all hold",
-   "after": "all hold"
+   "after": "all hold",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "I1",
@@ -331,20 +415,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100",
+   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "8,010 and 9,117 at 100",
-   "after": "8,010, 9,117 and 2,385 at 100"
+   "after": "8,010, 9,117 and 2,385 at 100",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "I2",
@@ -361,20 +453,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same",
+   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
-   "after": "the same"
+   "after": "the same",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "I3",
@@ -391,20 +491,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
+   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
-   "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%"
+   "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "I4",
@@ -421,20 +529,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 100%; after: 100% on every sample",
+   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "100%",
-   "after": "100% on every sample"
+   "after": "100% on every sample",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "I5",
@@ -451,20 +567,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%",
+   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json"
     },
     {
      "file": "docs/verification/interpretation-2026-10-16/criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "≥ 98.7%",
-   "after": "99.3%, 98.0%, 97.8%"
+   "after": "99.3%, 98.0%, 97.8%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "A1",
@@ -481,10 +605,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -494,10 +618,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "A2",
@@ -514,10 +646,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: highest 0.536; after: highest 0.527",
+   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -527,10 +659,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "highest 0.536",
-   "after": "highest 0.527"
+   "after": "highest 0.527",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "A3",
@@ -547,10 +687,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -560,10 +700,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "T2",
@@ -580,10 +728,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.875 of 4; after: 1.875 of 4",
+   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -593,10 +741,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "1.875 of 4",
-   "after": "1.875 of 4"
+   "after": "1.875 of 4",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "T3",
@@ -613,10 +769,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 36%; after: 36%",
+   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -626,10 +782,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "36%",
-   "after": "36%"
+   "after": "36%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "G3",
@@ -646,10 +810,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors",
+   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -659,10 +823,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "53 of 149; 8 actors",
-   "after": "53 of 149; 8 actors"
+   "after": "53 of 149; 8 actors",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "G4",
@@ -679,10 +851,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -692,10 +864,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "met",
-   "after": "met"
+   "after": "met",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "G5",
@@ -712,10 +892,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86",
+   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -725,10 +905,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "51.23 → 53.86",
-   "after": "51.22 → 53.86"
+   "after": "51.22 → 53.86",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "M1",
@@ -745,10 +933,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -758,10 +946,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
-   "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off"
+   "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "M3",
@@ -778,10 +974,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes",
+   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -791,10 +987,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
-   "after": "own 100 on 60 scenes"
+   "after": "own 100 on 60 scenes",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "O1",
@@ -811,10 +1015,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: sd 0; after: sd 0",
+   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -824,10 +1028,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "sd 0",
-   "after": "sd 0"
+   "after": "sd 0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "O2",
@@ -844,10 +1056,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100",
+   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -857,10 +1069,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "93.1, 86.1, 100",
-   "after": "93.1, 86.1, 100"
+   "after": "93.1, 86.1, 100",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "H2",
@@ -877,10 +1097,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60",
+   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -890,10 +1110,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "briefs 96 of 298; scenes 20 of 56",
-   "after": "briefs 96 of 298; scenes 20 of 60"
+   "after": "briefs 96 of 298; scenes 20 of 60",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "H5",
@@ -910,10 +1138,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%",
+   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -923,10 +1151,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "427 of 427; 26.5%",
-   "after": "431 of 431; 26.9%"
+   "after": "431 of 431; 26.9%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "H7",
@@ -943,10 +1179,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0%; 2.61; after: 0%; 2.62",
+   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7)",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -956,10 +1192,18 @@
     },
     {
      "file": "docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "0%; 2.61",
-   "after": "0%; 2.62"
+   "after": "0%; 2.62",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "H4",
@@ -979,7 +1223,7 @@
    "failure": "Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4/grid.txt",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/h4.md"
@@ -992,7 +1236,13 @@
     }
    ],
    "before": "1 of 12",
-   "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)"
+   "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?",
+    "evidence": "docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10"
+   }
   },
   {
    "id": "F2",
@@ -1012,7 +1262,7 @@
    "failure": "As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -1022,7 +1272,13 @@
     }
    ],
    "before": "303 of 447 (67.8%)",
-   "after": "302 of 447 (67.6%)"
+   "after": "302 of 447 (67.6%)",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?",
+    "evidence": "docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json",
+    "recommendation": "Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured"
+   }
   },
   {
    "id": "F2-A",
@@ -1039,20 +1295,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/advice-cases.json"
     },
     {
      "file": "docs/verification/advice-2026-10-16/README.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "before": "40 of 40; the exact best in 38",
-   "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894"
+   "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "bcd75970",
+    "watch": "engine"
+   }
   },
   {
    "id": "G1",
@@ -1072,14 +1336,16 @@
    "failure": "Replaced by the genre signature S1 to S4 on 2026-10-16 (work plan section 5), defined before it ran",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Superseded",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
     }
    ],
    "before": "fails",
-   "after": "fails"
+   "after": "fails",
+   "sourceStatus": "Superseded",
+   "deferredBy": "Replaced under the owner’s authorization in brief 02, section 3 (\"I authorize replacing a demonstrably invalid metric…\"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured"
   },
   {
    "id": "A4",
@@ -1099,14 +1365,16 @@
    "failure": "Before: met by review; after: met by review; A4 brought to restraint’s new draw (composure, focus)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; A4 brought to restraint’s new draw (composure, focus)"
+   "after": "met by review; A4 brought to restraint’s new draw (composure, focus)",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "A5",
@@ -1126,14 +1394,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "T1",
@@ -1153,14 +1423,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T1)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "O3",
@@ -1180,14 +1452,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O3)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "F1",
@@ -1207,14 +1481,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F1)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "F3",
@@ -1234,14 +1510,16 @@
    "failure": "Before: met by review; after: met by review; unchanged code",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (F3)",
-   "status": "Met",
+   "status": "Implemented, Verification Incomplete",
    "citations": [
     {
      "file": "docs/verification/attributes-genres-2026-10-16/phase-2b.md"
     }
    ],
    "before": "met by review",
-   "after": "met by review; unchanged code"
+   "after": "met by review; unchanged code",
+   "sourceStatus": "Met",
+   "missing": "Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding"
   },
   {
    "id": "L1",
@@ -1258,20 +1536,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3",
+   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
     },
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "specialist 4, beginner 3",
-   "after": "specialist 4, beginner 3"
+   "after": "specialist 4, beginner 3",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "L2",
@@ -1288,17 +1574,25 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "0",
-   "after": "0"
+   "after": "0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "L3",
@@ -1318,7 +1612,7 @@
    "failure": "Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/l3.md; docs/verification/integration-2026-10-16/closeout/l3-trace-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/l3-trace-beginner-bj-0.json",
-   "status": "Not Met",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/l3.md"
@@ -1328,7 +1622,13 @@
     }
    ],
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
-   "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19"
+   "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
+   "sourceStatus": "Not Met",
+   "decision": {
+    "question": "L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?",
+    "evidence": "docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)",
+    "recommendation": "Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist"
+   }
   },
   {
    "id": "MA1",
@@ -1348,7 +1648,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1356,7 +1656,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA2",
@@ -1376,7 +1677,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1384,7 +1685,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA3",
@@ -1404,7 +1706,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1412,7 +1714,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA4",
@@ -1432,7 +1735,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1440,7 +1743,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA6",
@@ -1460,14 +1764,16 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/engine-properties.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
-     "file": "tests/engine-properties.test.ts"
+     "file": "tests/engine-properties.test.ts",
+     "title": "keeps the mastery contract: every input full, preparation complete, a sufficient day and a fitting choice is 100, every time"
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA7",
@@ -1487,7 +1793,7 @@
    "failure": "Before: not measured before; after: holds",
    "implementation": "systems/evaluation.ts (specWith, dimensionQuality), systems/practice.ts, systems/briefs.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1495,7 +1801,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "holds"
+   "after": "holds",
+   "sourceStatus": "Met"
   },
   {
    "id": "MA5",
@@ -1512,10 +1819,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json"
@@ -1534,10 +1841,18 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "before": "all six plans (journeys-2026-10-16)",
-   "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0"
+   "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "bcd75970",
+    "watch": "engine"
+   }
   },
   {
    "id": "MA8",
@@ -1557,7 +1872,7 @@
    "failure": "Before: not measured before; after: two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "tests/integration-mastery.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/integration-mastery.test.ts",
@@ -1565,7 +1880,8 @@
     }
    ],
    "before": "not measured before",
-   "after": "two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none"
+   "after": "two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none",
+   "sourceStatus": "Met"
   },
   {
    "id": "S1",
@@ -1582,10 +1898,10 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880",
+   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1595,10 +1911,18 @@
     },
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "0.90, 0.88, 0.90, 0.87",
-   "after": "0.901, 0.883, 0.904, 0.880"
+   "after": "0.901, 0.883, 0.904, 0.880",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "S2",
@@ -1615,10 +1939,10 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%",
+   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1628,10 +1952,18 @@
     },
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
-   "after": "1.599, 1.612, 1.598, 1.613; 98.7%"
+   "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "S3",
@@ -1648,10 +1980,10 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
+   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1661,10 +1993,18 @@
     },
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
-   "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)"
+   "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "S4",
@@ -1681,10 +2021,10 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/signature.json"
@@ -1694,10 +2034,18 @@
     },
     {
      "file": "docs/verification/genres-2026-10-16/g1-replacement.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "0",
-   "after": "0"
+   "after": "0",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "Genre Audit",
@@ -1714,20 +2062,28 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)",
+   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/genre-audit.md"
     },
     {
      "file": "tests/genre-identity.test.ts"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
     }
    ],
    "before": "149 of 149; 0; 56 to weigh",
-   "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)"
+   "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "c9cba9c8",
+    "watch": "judge"
+   }
   },
   {
    "id": "INT-determinism",
@@ -1747,13 +2103,14 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/determinism-played.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/determinism-played.test.ts",
      "title": "is the same to the byte, straight through and reloaded halfway"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-time",
@@ -1773,13 +2130,14 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/simulation.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/simulation.test.ts",
      "title": "keeps the debt a short night left over sixty, and drains it the same by the minute as in one jump"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-duplicates",
@@ -1799,7 +2157,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/briefs.test.ts",
@@ -1813,7 +2171,8 @@
      "file": "tests/base44-contract.test.ts",
      "title": "writes once for a repeated idempotency key"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-migration",
@@ -1833,7 +2192,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/save-migration.test.ts; tests/migration-94.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/save-migration.test.ts",
@@ -1842,7 +2201,8 @@
     {
      "file": "tests/migration-94.test.ts"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-missed-term",
@@ -1862,7 +2222,7 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/remaining-school-term.test.ts",
-   "status": "Met",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tests/remaining-school-term.test.ts",
@@ -1872,7 +2232,8 @@
      "file": "tests/remaining-school-term.test.ts",
      "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review"
     }
-   ]
+   ],
+   "sourceStatus": "Met"
   },
   {
    "id": "INT-skipped",
@@ -1889,10 +2250,10 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
-   "status": "Met",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "tools/acceptance-ui.mjs"
@@ -1902,8 +2263,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "bcd75970",
+    "watch": "app"
+   }
   },
   {
    "id": "INT-navigation",
@@ -1920,18 +2289,26 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
-   "status": "Met",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/1440.log"
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "bcd75970",
+    "watch": "app"
+   }
   },
   {
    "id": "INT-long-runs",
@@ -1948,10 +2325,10 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/README.md"
@@ -1964,8 +2341,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/freshness.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
-   ]
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "bcd75970",
+    "watch": "engine"
+   }
   },
   {
    "id": "INT-gate",
@@ -1982,13 +2367,236 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again",
+   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md",
-   "status": "Met",
+   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/gate.txt"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/gate.txt"
+    }
+   ],
+   "sourceStatus": "Met",
+   "measured": {
+    "commit": "7c1198a2",
+    "watch": "app"
+   }
+  },
+  {
+   "id": "KS-matrix-gate",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "tools/completion-matrix.mjs --check runs in the required gate",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)",
+   "implementation": "Not recorded",
+   "evidence": "package.json; CLAUDE.md",
+   "status": "Implemented And Verified",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [
+    {
+     "file": "tools/completion-matrix.mjs"
+    }
+   ],
+   "note": "In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)"
+  },
+  {
+   "id": "KS-degree-text",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A graduated student’s School page says the degree is done",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Fixed under brief 09, section 6 (journeys-result.json, journeys.known-graduated-school-page): once the School has ended the page says how, the degree conferred and its day, with the last term’s figures and their floors in the past and no casting ahead; a withdrawal and a dismissal say theirs. Until 2026-10-16 this row was Not Implemented: the page said “Only the terms to come stand between you and the degree” (found in the built app that day)",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/remaining-09/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs…"
+    }
+   ],
+   "note": "Fixed under brief 09, section 6 (journeys-result.json, journeys.known-graduated-school-page): once the School has ended the page says how, the degree conferred and its day, with the last term’s figures and their floors in the past and no casting ahead; a withdrawal and a dismissal say theirs. Until 2026-10-16 this row was Not Implemented: the page said “Only the terms to come stand between you and the degree” (found in the built app that day)"
+  },
+  {
+   "id": "KS-genres-54",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "Each genre’s two briefs ask different things of the actor where its conventions allow",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Settled under brief 09, section 3 (genres-09.md): the genres were 55, not the 54 the close-out counted, drama’s stage scenes taken off twice. Read in six parts as the engine reads them (tools/genre-pairs.ts), 14 were the same in three or more; each had its second situation replaced by a new scene under a new id, and none of the 55 is the same in three or more now. Until 2026-10-16 this row was Partially Implemented: whether the 54 were the same work wasn’t read",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/integration-2026-10-16/genres-09.md; docs/verification/remaining-09/genres-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > none of the 55 genres whose briefs suited the same sides on 2026-10-16 is the same in three of the six parts or more"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > a brief against itself renamed is the same in all six parts: a renamed description is caught, never passed"
+    }
+   ],
+   "note": "Settled under brief 09, section 3 (genres-09.md): the genres were 55, not the 54 the close-out counted, drama’s stage scenes taken off twice. Read in six parts as the engine reads them (tools/genre-pairs.ts), 14 were the same in three or more; each had its second situation replaced by a new scene under a new id, and none of the 55 is the same in three or more now. Until 2026-10-16 this row was Partially Implemented: whether the 54 were the same work wasn’t read"
+  },
+  {
+   "id": "KS-bank-rows-scope",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Decision Required",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "decision": {
+    "question": "Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?",
+    "evidence": "docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md",
+    "recommendation": "Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read under brief 09, section 5)"
+   }
+  },
+  {
+   "id": "KS-homecloses",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A home bank’s own close settles its fees once",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/remaining-09/banking-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule…"
+    }
+   ],
+   "note": "Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented"
+  },
+  {
+   "id": "KS-ct-idcard",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A Connecticut ID card’s term and its mailing are the DMV’s",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Implemented, Verification Incomplete",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "missing": "The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)"
+  },
+  {
+   "id": "KS-passport-fees",
+   "group": "Known Shortfalls And Missing Tests",
+   "kind": "shortfall",
+   "goal": "A passport renewed abroad costs its issuer’s published fee",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "Not recorded",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)",
+   "implementation": "Not recorded",
+   "evidence": "Not recorded",
+   "status": "Implemented, Verification Incomplete",
+   "sourceStatus": "listed by the handoff or an area",
+   "citations": [],
+   "missing": "Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)"
+  }
+ ],
+ "overrides": [
+  {
+   "id": "banking.1.pro-rata",
+   "status": "Implemented And Verified",
+   "why": "Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded",
+   "citations": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student…"
+    }
+   ]
+  },
+  {
+   "id": "coverage.7-overdraft-home-panel",
+   "status": "Implemented And Verified",
+   "why": "Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls",
+   "citations": [
+    {
+     "file": "tests/integration-home-lending.test.ts",
+     "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad"
     }
    ]
   }

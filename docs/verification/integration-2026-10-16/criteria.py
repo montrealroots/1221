@@ -90,7 +90,7 @@ MA = [
  ('MA2', 'An ability it doesn’t read, raised by practice, moves it by nothing of that ability', 'tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a week of Circles Of Attention raises a comic brief’s forecast'),
  ('MA3', 'No dimension, segment or whole leaves 0 to 100 on any judged piece', 'tests/integration-mastery.test.ts', 'every brief and reading, every class scene and every play as a night'),
  ('MA4', 'An ability read twice by one dimension is counted once, at its summed weight', 'tests/integration-mastery.test.ts', 'a grave scene’s believability reads emotional depth from the task and from the material'),
- ('MA6', 'At mastery no draw moves a result off 100', 'tests/engine-properties.test.ts', None),
+ ('MA6', 'At mastery no draw moves a result off 100', 'tests/engine-properties.test.ts', 'keeps the mastery contract: every input full, preparation complete, a sufficient day and a fitting choice is 100, every time'),
  ('MA7', 'Each shortfall a take has is named in words', 'tests/integration-mastery.test.ts', 'PLAYER JOURNEY: a brief taped with its lines barely begun names the lines'),
 ]
 for id, goal, f, t in MA:
@@ -107,7 +107,7 @@ for id, goal, th, b, a in [
   ('S3', 'Contrasting genres change outcomes on the same scene (revised), on all four samples', '80% on each', '12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413', '12,744, 11,890, 24,838, 23,304 (82.0% the lowest)'),
   ('S4', 'No two briefs of different genres identical in every number a take reads (G2)', '0 pairs', '0', '0')]:
     row(id, 'Criteria: The Genres', goal, 'npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts', th, b, a, 'Met', [SIG, SIGF, f'{D}/closeout/genre-identity.json', G1R], [cite(SIG), cite(SIGF), cite(G1R)], systems='Every take of a brief, a class scene and a play, read in its genre’s register', sees='The Genre Asks on a brief; the take’s note; the genre’s look')
-row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)')
+row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md)')
 json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: integration rows (the brief's sections 6, 9 to 13) ----
@@ -127,4 +127,101 @@ integ('INT-navigation', 'Home readable; Money, School and Papers usable and alig
 integ('INT-long-runs', 'Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code', 'tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts, tools/freshness.ts', 'breaches 0, unbalanced 0, no errors; the figures each account set', 'Met', [f'{D}/runs/README.md', f'{D}/runs/lives.jsonl', f'{D}/runs/variety-v-0.json', f'{D}/runs/freshness.json'], [cite(f'{D}/runs/README.md'), cite(f'{D}/runs/lives.jsonl'), cite(f'{D}/runs/variety-v-0.json'), cite(f'{D}/runs/freshness.json')])
 integ('INT-gate', 'The gate and the build on the final revision', 'npm run gate (exit from a file); npm run build', 'exit 0', 'Met', [f'{D}/runs/gate.txt', f'{D}/runs/README.md'], [cite(f'{D}/runs/gate.txt')], failure='Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again')
 json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
+print(len(rows))
+# ---- appended: the seven statuses (brief 09, section 1) ----
+# Until brief 09 each row carried the word its source gave it (Met, Not Met, Superseded), and the matrix read "none
+# open" while the handoff listed unfinished work. Each row now carries one of the seven statuses the owner named, and
+# what that status asks of it: the commit a measurement was made on and what it reads (a criterion measured before the
+# code it reads changed isn't current), what's missing, the gap, the decision with its evidence and recommendation, or
+# who deferred it. The source's own word stays beside it as `sourceStatus`.
+IAV, IVI, PI, NI, BE, DR, ED = ('Implemented And Verified', 'Implemented, Verification Incomplete', 'Partially Implemented',
+  'Not Implemented', 'Blocked Externally', 'Decision Required', 'Explicitly Deferred')
+# Where a measurement was made, and what it reads. The judge's criteria were measured again on 4a1b339f (the close-out),
+# and no file the judge reads has changed since (checked on 2026-10-16 with git log 4a1b339f..HEAD over those paths).
+CLOSEOUT = {'commit': '4a1b339f', 'watch': 'judge'}
+RUNS = {'commit': 'd1452195', 'watch': 'engine'}
+BUILT = {'commit': 'f68516b0', 'watch': 'app'}
+READ_ONLY = ['A4', 'A5', 'T1', 'O3', 'F1', 'F3']
+for r in rows:
+    r['sourceStatus'] = r['status']
+    g, i = r['group'], r['id']
+    if i in ('MA5', 'F2-A', 'INT-long-runs'):
+        r['status'], r['measured'] = IAV, RUNS
+    elif i in READ_ONLY:
+        r['status'], r['missing'] = IVI, 'Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding'
+    elif r['status'] == 'Met' and g in ('Criteria: The Stage', 'Criteria: Interpretation', 'Criteria: The Attributes', 'Criteria: The Genres', 'Criteria: Long-Term Continuity'):
+        r['status'], r['measured'] = IAV, CLOSEOUT
+    elif i in ('INT-navigation', 'INT-skipped', 'INT-gate'):
+        r['status'], r['measured'] = IAV, BUILT
+    elif r['status'] == 'Met':
+        r['status'] = IAV
+# Measured again on the integrated tree (brief 09, section 7): the judge's and the genre area's changes together, on
+# c9cba9c8, each figure read from the tools' outputs into integrated-09/figures.json, none typed. Until then these rows
+# were the close-out's of 4a1b339f, which the judge's evaluation-10 left behind, and the matrix called them unverified.
+INTEGRATED = {'commit': 'c9cba9c8', 'watch': 'judge'}
+FIG = json.load(open(f'{D}/integrated-09/figures.json', encoding='utf-8'))
+for r in rows:
+    if r.get('measured') == CLOSEOUT:
+        assert r['id'] in FIG, r['id']
+        r['measured'] = INTEGRATED
+        r['failure'] = f"{r['failure']}; on the integrated tree, brief 09 (c9cba9c8): {FIG[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {D}/integrated-09/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{D}/integrated-09/figures.json'}]
+# Brief 09's final runs (runs-09/, figures.json read from their outputs, none typed): the long runs and the built app on
+# bcd75970's code (7c1198a2 differs from it in no file they read), the gate on 7c1198a2. Until then these rows were the
+# last pass's, on d1452195 and f68516b0, which brief 09's code left behind.
+RUNS09, BUILT09, GATE09 = {'commit': 'bcd75970', 'watch': 'engine'}, {'commit': 'bcd75970', 'watch': 'app'}, {'commit': '7c1198a2', 'watch': 'app'}
+FIG09 = json.load(open(f'{D}/runs-09/figures.json', encoding='utf-8'))
+for r in rows:
+    m = r.get('measured')
+    if m in (RUNS, BUILT):
+        assert r['id'] in FIG09, r['id']
+        r['measured'] = GATE09 if r['id'] == 'INT-gate' else (RUNS09 if m == RUNS else BUILT09)
+        r['failure'] = f"{r['failure']}; brief 09 ({r['measured']['commit']}): {FIG09[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {D}/runs-09/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{D}/runs-09/figures.json'}] + ([{'file': f'{D}/runs-09/gate.txt'}] if r['id'] == 'INT-gate' else [])
+# The four shortfalls of the stage and the attributes, as measured, and what each awaits.
+for r in rows:
+    # ST3, ST6, H4 and L3 after brief 09, section 2 (remaining-09/judge-result.json, followup-09/README.md): each reproduced,
+    # traced case by case, and not met as written; each a decision with its proposal, none counted met. Until later on
+    # 2026-10-16 ST6, H4 and L3 were Partially Implemented, being worked.
+    if r['id'] == 'ST3':
+        r['status'], r['decision'] = DR, {'question': 'ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record?', 'evidence': f'{D}/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt ST3′ beside ST3 as measured; ST3 as written isn’t counted met'}
+    elif r['id'] == 'ST6':
+        r['status'], r['decision'] = DR, {'question': 'ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first?', 'evidence': f'{D}/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt ST6′ for that half and keep the judge; ST6 as written isn’t counted met'}
+    elif r['id'] == 'H4':
+        r['status'], r['decision'] = DR, {'question': 'H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record?', 'evidence': f'{D}/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt H4′ beside H4; H4 as written isn’t counted met, and fell by one with evaluation-10'}
+    elif r['id'] == 'L3':
+        r['status'], r['decision'] = DR, {'question': 'L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?', 'evidence': f'{D}/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist'}
+    elif r['id'] == 'F2':
+        r['status'], r['decision'] = DR, {'question': 'F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?', 'evidence': 'docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json', 'recommendation': 'Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured'}
+    elif r['id'] == 'G1':
+        r['status'], r['deferredBy'] = ED, 'Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured'
+# Every known shortfall and missing test not already a row of its own: the handoff's open work, the areas' reports.
+def known(id, goal, status, field, text, evidence=None, citations=None):
+    r = {'id': id, 'group': 'Known Shortfalls And Missing Tests', 'kind': 'shortfall', 'goal': goal, 'entry': 'Not recorded',
+      'preconditions': 'Not recorded', 'reads': 'Not recorded', 'decisions': 'Not recorded', 'validation': 'Not recorded',
+      'changes': 'Not recorded', 'later': 'Not recorded', 'systems': 'Not recorded', 'sees': 'Not recorded', 'saveLoad': 'Not recorded',
+      'failure': text if isinstance(text, str) else text.get('question', ''), 'implementation': 'Not recorded',
+      'evidence': '; '.join(evidence or []) or 'Not recorded', 'status': status, 'sourceStatus': 'listed by the handoff or an area', 'citations': citations or []}
+    r[field] = text
+    rows.append(r)
+known('KS-matrix-gate', 'tools/completion-matrix.mjs --check runs in the required gate', IAV, 'note', 'In `npm run gate` from 2026-10-16 at the owner’s brief 09, section 5, and CLAUDE.md counts eighteen checks; until then it ran by hand. Its checks were each broken in a copy and caught (a status outside the seven, a decision without its question, a verified row with no titled test, a cited title not there, the handoff’s line altered, a measurement made before the engine changed)', ['package.json', 'CLAUDE.md'], [cite('tools/completion-matrix.mjs')])
+known('KS-degree-text', 'A graduated student’s School page says the degree is done', IAV, 'note', 'Fixed under brief 09, section 6 (journeys-result.json, journeys.known-graduated-school-page): once the School has ended the page says how, the degree conferred and its day, with the last term’s figures and their floors in the past and no casting ahead; a withdrawal and a dismissal say theirs. Until 2026-10-16 this row was Not Implemented: the page said “Only the terms to come stand between you and the degree” (found in the built app that day)', ['docs/verification/remaining-09/journeys-result.json'], [cite('tests/remaining-09-journeys.test.ts', 'journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs…')])
+known('KS-genres-54', 'Each genre’s two briefs ask different things of the actor where its conventions allow', IAV, 'note', 'Settled under brief 09, section 3 (genres-09.md): the genres were 55, not the 54 the close-out counted, drama’s stage scenes taken off twice. Read in six parts as the engine reads them (tools/genre-pairs.ts), 14 were the same in three or more; each had its second situation replaced by a new scene under a new id, and none of the 55 is the same in three or more now. Until 2026-10-16 this row was Partially Implemented: whether the 54 were the same work wasn’t read', ['docs/verification/integration-2026-10-16/genres-09.md', 'docs/verification/remaining-09/genres-result.json'], [cite('tests/remaining-genres.test.ts', 'a genre’s two briefs, read as the engine reads them > none of the 55 genres whose briefs suited the same sides on 2026-10-16 is the same in three of the six parts or more'), cite('tests/remaining-genres.test.ts', 'a genre’s two briefs, read as the engine reads them > a brief against itself renamed is the same in all six parts: a renamed description is caught, never passed')])
+known('KS-bank-rows-scope', 'The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred', DR, 'decision', {'question': 'Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred?', 'evidence': 'docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md', 'recommendation': 'Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read under brief 09, section 5)'})
+known('KS-homecloses', 'A home bank’s own close settles its fees once', IAV, 'note', 'Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented', ['docs/verification/remaining-09/banking-result.json'], [cite('tests/remaining-09-banking.test.ts', 'banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule…')])
+known('KS-ct-idcard', 'A Connecticut ID card’s term and its mailing are the DMV’s', IVI, 'missing', 'The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)')
+known('KS-passport-fees', 'A passport renewed abroad costs its issuer’s published fee', IVI, 'missing', 'Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)')
+# An area's item whose status its result doesn't give rightly, said here with why: only an item the area left reported or
+# open that was settled after, with the test that settles it.
+OVERRIDES = [
+  # The last pass's banking area left Germany's month's fee on a close to the owner; brief 09 implemented it from the
+  # statute and the banks' price lists (remaining-09/banking-result.json, banking.1.pro-rata), so the decision is settled.
+  {'id': 'banking.1.pro-rata', 'status': IAV, 'why': 'Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded',
+   'citations': [cite('tests/remaining-09-banking.test.ts', 'banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student…')]},
+  {'id': 'coverage.7-overdraft-home-panel', 'status': IAV, 'why': 'Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls',
+   'citations': [cite('tests/integration-home-lending.test.ts', 'borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad')]},
+]
+json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

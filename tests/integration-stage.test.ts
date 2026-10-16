@@ -24,10 +24,11 @@ import { TASK_PROFILES } from '@/engine/content/tasks';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '@/engine/content/material';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { PUBLIC_SCENES } from '@/engine/content/scenes-public';
+import { HOUSE_SCENES } from '@/engine/content/scenes-house';
 import { CIRCUMSTANCE_AFFINITY } from '@/engine/content/interpretation';
 import { difficultyOf } from '@/engine/systems/coursework';
 import { materialContext, misfitOf } from '@/engine/systems/material';
-import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
 import { PIECE } from '@/engine/content/piece';
 import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
@@ -40,7 +41,7 @@ const judgeOn = (m: MaterialProfile, p: Performer, scale: 'restrained' | 'expans
   const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
   const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
-  return judgePiece('integration', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  return judgePiece('integration', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
 };
 const actor = (ab: Record<string, number>): Performer => ({ ability: (id) => ab[id] ?? 55, full: () => 100, technique: () => 50 });
 const suits = (m: MaterialProfile) => { const sc = sceneOfMaterial(m); return { r: suitabilityOf('restrained', m, sc), e: suitabilityOf('expansive', m, sc) }; };
@@ -49,7 +50,9 @@ const drama = [...SCENE_MATERIAL, ...PLAY_MATERIAL].filter((m) => sceneOfMateria
 
 describe('ST4: drama suits each side somewhere, from what its scenes are', () => {
   it('the catalog’s drama has scenes where restraint suits better and scenes where size does, and every one of the 25 before 2026-10-16 still suits restraint', () => {
-    const before = drama.filter((m) => !NEW.includes(m.id));
+    // The 25 are the drama there was before 2026-10-16's additions: from brief 09 the scenes played out to a house
+    // (`content/scenes-house.ts`) add Henry V's 4.3, filed as drama, which isn't one of them.
+    const before = drama.filter((m) => !NEW.includes(m.id) && !HOUSE_SCENES.some((s) => s.id === m.id));
     expect(before).toHaveLength(25);
     for (const m of before) { const { r, e } = suits(m); expect(r.s, m.id).toBeGreaterThan(e.s); }
     const added = drama.filter((m) => NEW.includes(m.id));

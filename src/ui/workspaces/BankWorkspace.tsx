@@ -36,7 +36,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { bankById, bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
-import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, savingsNotice, tierRate, earningBalance } from '@/engine/systems/banking';
+import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, feesPostAt, savingsNotice, tierRate, earningBalance } from '@/engine/systems/banking';
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
@@ -77,6 +77,12 @@ export function BankWorkspace() {
   const toId = to || accounts.find((a) => a.id !== fromId)?.id || '';
   const monthStart = monthStartOf(sim, sim.now);
   const monthEnd = monthEndAfter(sim, sim.now);
+  // When this month's fee comes off, by the bank's own schedule (`feesPostAt`, from 2026-10-16: until then every German
+  // bank's was said to go to the quarter's closing, ING's and Commerzbank's among them).
+  const dueWords = (account: import('@/engine/core/ledger').Account) => {
+    const posts = feesPostAt(account);
+    return posts === 'quarter' ? 'for the quarter’s closing' : posts === 'next' ? `charged ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}` : `due ${formatDate(monthEnd, sim.zone)}`;
+  };
 
   // What a move out of savings costs, and what Germany's month still lets out, before it's made.
   const moving = accounts.find((a) => a.id === fromId);
@@ -143,9 +149,9 @@ export function BankWorkspace() {
                     {fee.fee === 0
                       ? `This month is waived so far${fee.waivedBy === 'deposits' ? `: ${money(paidIn)} paid in` : ''}.`
                       : fee.waivedBy
-                        ? `This month’s is lowered to ${home && fee.native !== undefined ? formatMoney(fee.native, own.currency) : formatMoney(fee.fee, cur)} so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, ${closesQuarterly(account) ? 'for the quarter’s closing' : `due ${formatDate(monthEnd, sim.zone)}`}.`
-                        : closesQuarterly(account) ? 'This month’s goes to the quarter’s closing unless that changes.' : `This month’s is due ${formatDate(monthEnd, sim.zone)} unless that changes.`}
-                    {closesQuarterly(account) && (account.feesDue ?? 0) > 0 ? ` The quarter’s fees so far, ${home ? formatMoney(account.feesDueHeld ?? 0, own.currency) : money(account.feesDue ?? 0)}, come off at its closing.` : ''}
+                        ? `This month’s is lowered to ${home && fee.native !== undefined ? formatMoney(fee.native, own.currency) : formatMoney(fee.fee, cur)} so far${fee.waivedBy === 'deposits' ? `, with ${money(paidIn)} paid in` : ''}, ${dueWords(account)}.`
+                        : feesPostAt(account) === 'quarter' ? 'This month’s goes to the quarter’s closing unless that changes.' : `This month’s is ${dueWords(account)} unless that changes.`}
+                    {(account.feesDue ?? 0) > 0 ? ` ${feesPostAt(account) === 'quarter' ? 'The quarter’s fees so far' : 'Last month’s'}, ${home ? formatMoney(account.feesDueHeld ?? 0, own.currency) : money(account.feesDue ?? 0)}, ${feesPostAt(account) === 'quarter' ? 'come off at its closing' : `come off ${formatDate(monthStartOf(sim, monthEnd + 2 * 3_600_000), sim.zone)}`}.` : ''}
                   </p>
                 ) : (
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
@@ -440,7 +446,8 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
   const refund = bankingIn(bank.iso)?.interestTax;
   const lines: string[] = [];
   if (bank.card) {
-    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}. Source: ${bank.card.source}.`);
+    // Paid for the year ahead, and its days left given back on a close (`Bank.card.ahead`, from 2026-10-16).
+    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}${bank.card.ahead ? ', paid for the year ahead, and what’s left of the year is refunded when the account closes' : ''}. Source: ${bank.card.source}.`);
   }
   if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}${bank.returned.ifShortAtLeast !== undefined ? `, none on a payment under ${money(bank.returned.ifShortAtLeast)}` : ''}${bank.returned.gapDays > 1 ? `, at most once every ${bank.returned.gapDays} business days` : ''}. Source: ${bank.returned.source}.`);
   if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);

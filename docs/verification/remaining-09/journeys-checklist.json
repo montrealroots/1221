@@ -1,0 +1,356 @@
+{
+  "key": "journeys",
+  "on": "2026-10-16",
+  "against": "7e531122 (claude/peaceful-hamilton-59zdbb: main at 64b69fc7, #35's merge, plus brief 09 and its instructions)",
+  "brief": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt, section 6; docs/verification/integration-2026-10-16/prompts-09/journeys.md",
+  "items": [
+    {
+      "id": "journeys.known-graduated-school-page",
+      "item": "Known on the way in: a graduated student's School page still says “Only the terms to come stand between you and the degree” (found in the built app on 2026-10-16)",
+      "requirement": "No stale forecast and no placeholder on a screen (brief 09 §6: “Remove placeholders, misleading controls, stale forecasts, and dead ends”); a sentence says what is so of the record it reads (CLAUDE.md, THE ONE RULE). Once the School has ended (graduated, the degree withheld, dismissed, withdrawn: `schoolEnded`, systems/school.ts:183) no term is to come, no casting, no work set and no evaluation's floor ahead.",
+      "currentBehavior": "SchoolWorkspace.tsx:576-577 (CoursesPanel) says “{passed} of {all} courses passed so far.” and, with nothing failed or incomplete, “Only the terms to come stand between you and the degree.” whatever the standing; with something failed it says a year “can be repeated, below” to a student who has left. Reproduced 2026-10-16 (probe screens.probe.ts, seed js-g1, Ada Cole born in New York, wealthy family, the coursework prepared each midnight (TEST SETUP), played to 2 June 2029): Standing Graduated, and the tab says “58 of 58 courses passed so far. Only the terms to come stand between you and the degree.”, “In the casting pool.” (SchoolWorkspace.tsx:165), and Attendance, Growth and Coursework “This Term” with “90% is the floor”, “half its pace is the floor”, “half of 3 or more is short” (SchoolWorkspace.tsx:158-160), an evaluation that won't come. Its Casting tab draws “Not Cast Yet: The chair casts every student each term from the first spring…” (SchoolWorkspace.tsx:466-472) and its Coursework tab “Work Set: Nothing set yet: each course sets its work at a meeting…” (CourseworkPane.tsx:66).",
+      "affectedSystems": [
+        "src/ui/workspaces/SchoolWorkspace.tsx StandingPane, CoursesPanel, CastingPane",
+        "src/ui/components/CourseworkPane.tsx",
+        "tests/evidence-g26-school.test.ts:537 (asserts the sentence for a student still at school, which stays)"
+      ],
+      "plan": "Say, once the School has ended, what is so: the degree conferred on its date with every course passed; or the way it ended and what was left unpassed, with no repeat offered. Drop “so far” and “In the casting pool.” for a student who has left; the term's three figures read as the last term's, their floors in the past tense; Not Cast Yet and Nothing Set Yet give way to what's so (no more casting; no work set, the School over). A student still at school keeps every sentence as it was.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (clock, render, reload): a life played to the degree (new life, the coursework prepared each midnight, TEST SETUP) and rendered on its Standing, Casting and Coursework tabs, before and after a reload: no “Only the terms to come”, no “so far”, no “In the casting pool.”, no “is the floor”, no “Not Cast Yet”, no “Nothing set yet”; the conferral date said. Fails before the fix.",
+        "The same for a withdrawal (render): the way it ended said, no repeat offered.",
+        "tests/evidence-g26-school.test.ts's assertion for a student at school still passes (the sentence kept where it's true)."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.x1-yale-payment-savings-hold-registration",
+      "item": "Across areas: a Yale payment drawing on savings, then the hold, then registration (banking.s7.school's change meeting school's hold)",
+      "requirement": "A payment to Yale draws on the primary current account and then the easy-access savings at its bank (banking.s7.school, leave.ts:772, Yale Student Accounts' payment options); unpaid by its due date, a financial hold and $125 a month to $375 a term (Bulletin; leave.ts:809); the hold stops registration (Bulletin p.184; leave.ts:1215-1222); paid, it lifts (leave.ts:793-806). Each step validated, said, and kept through a reload, one jump against small steps alike.",
+      "currentBehavior": "Played 2026-10-16 (probes p1-leave-hold.ts and p1b-return.ts, seed jy-1, Modest family, born in New York): a personal leave from 27 January 2027 returns $7,600.25 of the spring's living scholarship to the Yale account, due 26 February; Affiliate cover, $8,950.00, is bought from Chase Total Checking; $100.00 paid; the hold comes on 26 February with $125.00 and grows to the $375.00 cap; the return term, Spring Term 2028, begins with the hold and registration is refused in its words; paid from the bank, the hold lifts and registration is taken. Under it, the term's living scholarship is paid to the bank in full (“$14,093.64 is in your Chase Total Checking”) while $7,875.25 stays owed on the Yale account and the hold stands: see journeys.d-aid-past-balance. The savings branch was tested only on a charge put on the account by hand (tests/remaining-banking.test.ts banking.s7.school, TEST SETUP).",
+      "affectedSystems": [
+        "systems/leave.ts (startLeave, accountDue, payBalance, school.reregister, school.buy_affiliate)",
+        "systems/school.ts TERM_KIND",
+        "systems/spending.ts drawFromBank",
+        "systems/banking.ts bank.transfer (read only)"
+      ],
+      "plan": "Play it with no hand-set charge: the aid returned on a played leave, the player's own move of most of the current account into savings (bank.transfer), Affiliate cover bought drawing on both, the hold and its fees by the clock, the return, the refusal, the payment, registration, the term's classes counting; twins in one jump and in six-hour steps across the leave; reloads at each boundary.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, twins): figures worked by hand from the Bulletin's figures and the rebate schedule; the two twins equal on the Yale account's postings, the hold's date, the late fees, the bank's balances and the notices."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.x2-leave-affiliate-bill",
+      "item": "Across areas: a leave and its Affiliate cover, then a bill",
+      "requirement": "A personal leave ends Yale Health's student cover that day; Affiliate cover bought by its deadline is continuous from that day, and care had in the lapse is billed again as Yale Health pays it (repriceCare, health.ts:1806; leave.ts:1191-1212); a bill as issued stands, the change on a line of its own (health-billing.1).",
+      "currentBehavior": "To be played: the leave's lapse, care billed uninsured in it by the draw, Affiliate cover bought, the care credited, the bill paid; reloads. Played so far only with the care put on by hand (tests/remaining-health-billing.test.ts, tests/leave.test.ts).",
+      "affectedSystems": [
+        "systems/leave.ts school.buy_affiliate",
+        "systems/health.ts repriceCare, careFor, health.pay_bill",
+        "systems/spending.ts"
+      ],
+      "plan": "Find a seed whose draw brings care in a leave's lapse (searched, recorded), play it through the commands, and assert the bill, the credit, what's paid and the Papers screen's lines; a reload between the care and the purchase.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, render)."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.x3-withdrawal-health-tax-papers",
+      "item": "Across areas: withdrawal, then health eligibility, then tax and Papers",
+      "requirement": "A withdrawal after the fifteenth day of classes keeps Yale Health thirty days (Bulletin 2026–27 p.174; health.ts:263); enrollment opens 60 days before an expected loss and 60 days after it (45 CFR 155.420(c)); Medicaid (HUSKY D) at any time on a month's income; an F-1 student has fifteen days' grace and then no marketplace (45 CFR 155.305(a)(1)); the year's return reads what was paid and covered.",
+      "currentBehavior": "Played 2026-10-16 (probe p2-withdraw.ts): seed jw-1, Modest, born in New York, withdrew 5 October 2026 at noon: “Yale Health covers you for thirty days more.”; Enroll offers HUSKY D at once; uncovered from 4 November; on 1 December “Your Health Cover Ended: You’re uncovered from November 4, 2026. You have 60 days to enroll in the marketplace.” (journeys.d-cover-ended-notice); HUSKY D enrolled 2 December starts 1 January 2027, and a doctor's visit on 3 December is billed $183.98 uninsured (journeys.d-medicaid-start). Seed jw-2, born in London, F-1: out of status on 20 October, the marketplace refused in its words, the cover-ended notice says so, the 2026 return late with a refund waiting.",
+      "affectedSystems": [
+        "systems/school.ts school.withdraw",
+        "systems/health.ts yaleUntil, mayEnroll, enrollStart, healthMonth (the cover-ended notice), health.enroll",
+        "systems/permission.ts",
+        "systems/taxreturn.ts (read only)",
+        "ui/workspaces/PapersWorkspace.tsx"
+      ],
+      "plan": "Play both lives through the clock, with reloads at the withdrawal, the loss of cover and the enrollment; assert each notice's words and each refusal; one jump against six-hour steps from the withdrawal to February.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, twins, render)."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.x4-document-expiring",
+      "item": "Across areas: a document expiring under a payment or a registration",
+      "requirement": "A new bank identifies a new customer with a photo ID in force (31 CFR 1020.220; bankmoves.ts:102, lending.ts:131); a refusal says why and what comes next (common.md); Papers offers what replaces the document (identity.ts idCardRefusal).",
+      "currentBehavior": "Played 2026-10-16 (probes p4-expire.ts, p4b-license.ts): seed je-5, Modest, born in New York, holds only a New York license, issued on her 18th birthday and out on 14 June 2028, mid-program. Nothing says it ran out (no notice); Papers lists it “Run Out” with an empty action cell (Documents.tsx:74); Citi's account is refused “Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.”; a Connecticut non-driver ID applied for on Papers ($28.00) comes 20 June and the account opens. No registration reads a document; an F-1 student's I-20 is extended by a leave, a repeat or an additional term (leave.ts:400, 958-963), and is read by permission.ts.",
+      "affectedSystems": [
+        "systems/documents.ts photoIdOf",
+        "systems/identity.ts documents.apply_idcard",
+        "systems/bankmoves.ts bank.open_current (read only)",
+        "ui/papers/Documents.tsx"
+      ],
+      "plan": "Play it through the clock and the commands; see journeys.d-expired-license-next-step for the run-out row.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts PLAYER JOURNEY (command, clock, reload, render)."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.played-school",
+      "item": "Played journey: school requirements, preparation, attendance, missed work, revisions, warnings, evaluations, progression",
+      "requirement": "Each step through the commands and the clock on a life creation offers, through save and load, one jump against day by day.",
+      "currentBehavior": "Played by earlier passes (tests/remaining-school-term.test.ts: the missed-work term with twins and reloads; tests/remaining-school.test.ts: continuity A and B; tests/scope-school.test.ts). This pass plays the term's end into the next term across the leave and the degree, and the School page at each end (journeys.known-graduated-school-page).",
+      "affectedSystems": [
+        "systems/school.ts",
+        "systems/coursework.ts",
+        "systems/leave.ts",
+        "ui/workspaces/SchoolWorkspace.tsx"
+      ],
+      "plan": "Carried by x1 (a term, the leave, the return, registration and the term counting) and the graduate's page; earlier journeys cited where they already prove a step.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts (x1's and the graduate's journeys)",
+        "tests/remaining-school-term.test.ts and tests/remaining-school.test.ts, run again"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.played-money",
+      "item": "Played journey: payments, pending funds, fees, restrictions, closures, recovery",
+      "requirement": "As common.md; the bank's own files are the banking agent's: a defect there is reported with its reproduction, not fixed here.",
+      "currentBehavior": "Played 2026-10-16 (probe p5-money.ts, seed je-1, Modest): Citi Access Checking opened funded $1,000.00 from Chase, made primary and paid into; Chase Savings closed; Close It on Chase Total Checking refused “Your wages and other payments are paid into it. Your everyday card’s autopay pays from it. Move them first.” on the day bank.redirect_deposits was accepted (its date 9 October); the spring's scholarship paid into Citi on 4 January 2027.",
+      "affectedSystems": [
+        "systems/bankmoves.ts (the banking agent's)",
+        "systems/school.ts (scholarship to the payee account)",
+        "systems/leave.ts (payments to Yale)"
+      ],
+      "plan": "Played inside x1 (a transfer between the player's own accounts, a payment drawing on both, the hold's fees, the recovery by payment) and x4 (an account opened at a new bank after a refusal, the money in transit); the Close It wording reported to the banking agent's area with its reproduction.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts (x1, x4)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.played-papers",
+      "item": "Played journey: required documents, applications, verification, expiry, correction, renewal where the game has them",
+      "requirement": "As common.md.",
+      "currentBehavior": "x4 (expiry, an application paid, its arrival); x3 (status ending on a withdrawal, the marketplace refusing out of status). Renewal of a license isn't in the game (identity.ts:132-141: nothing in SLATE renews one since the cars went).",
+      "affectedSystems": [
+        "systems/documents.ts",
+        "systems/identity.ts",
+        "systems/permission.ts",
+        "ui/papers/Documents.tsx"
+      ],
+      "plan": "Carried by x3 and x4.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts (x3, x4)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.played-health",
+      "item": "Played journey: health eligibility and billing where they reach school or money",
+      "requirement": "As common.md.",
+      "currentBehavior": "x2 (the leave's lapse and Affiliate cover); x3 (the withdrawal's thirty days, Enroll, the cover-ended notice, the start of HUSKY D, care billed in the gap).",
+      "affectedSystems": [
+        "systems/health.ts",
+        "systems/leave.ts",
+        "systems/school.ts"
+      ],
+      "plan": "Carried by x2 and x3.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts (x2, x3)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.actions",
+      "item": "Every exposed action met: validates, changes the right state, brings its consequence, says the result, survives a reload",
+      "requirement": "Brief 09 §6; common.md's trace: Player Action → Validation → State Change → Immediate Result → Scheduled Or Downstream Consequence → Visible Explanation → Persistent History; no duplicate notices, bills, aid, credits or settlements on a repeat or a reload.",
+      "currentBehavior": "Met on the journeys: school.request_leave, school.buy_affiliate (quote, confirm, repeat), school.pay_balance (partial, more than owed, nothing owed), school.return_notice (twice), school.reregister (held, free, twice), school.withdraw (unconfirmed, confirmed, again), health.enroll (open, enrolled, again), bank.transfer, bank.open_current (no photo ID, with one), documents.apply_idcard (once, again).",
+      "affectedSystems": [
+        "as the journeys"
+      ],
+      "plan": "Each pressed in the journeys' tests with its refusal, its state, its notice and its reload asserted; a repeat refused and nothing moved.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts, each journey"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.d-aid-past-balance",
+      "item": "Defect found on x1: a term's living scholarship is paid to the bank past a balance owed on the Yale account under a hold",
+      "requirement": "Yale applies a credit on the student account to charges before any refund (Yale Student Accounts, Refunds, https://student-accounts.yale.edu/refunds, read 2026-10-16: “the payment will be applied towards those charges before any refund can be issued … The only exception to this is if the credit is a result of disbursement of federal funds”); the term bill is figured net of Yale-administered scholarships (Yale Bulletin, Student Accounts and Billing). The living-expense scholarship is Yale's own, not federal.",
+      "currentBehavior": "school.ts:3050-3061 posts the term's living scholarship less the health plan to the payee account whatever the Yale account owes; leave.ts:737-750 refunds a credit balance but lifts no hold (only payBalance does, leave.ts:800-804). Reproduced 2026-10-16 (probe p1b-return.ts, seed jy-1): Spring Term 2028 begins with $7,875.25 owed and a hold since 26 February 2027; “$14,093.64 is in your Chase Total Checking”; registration refused for the hold. tests/evidence-g26-school.test.ts “school.pay_balance > PLAYER JOURNEY: a scholarship returned on a leave … holds registration on the return …” asserts this behavior, and the audit cites it.",
+      "affectedSystems": [
+        "systems/school.ts TERM_KIND (the block's order: this term's charges, then the aid, then the hold's registration)",
+        "systems/leave.ts aidOnAccount (new), liftHold (new, from payBalance), billUnsupportedTerm's notice",
+        "ui/workspaces/SchoolWorkspace.tsx TermsPane's Each Term rows (what the term's scholarship put on the Yale account and paid to the bank)",
+        "tests/evidence-g26-school.test.ts (another area's test, cited by the audit)",
+        "tests/defects-g8-2.test.ts (the living aid the review kept)",
+        "tests/remaining-09-journeys.test.ts journeys.x1's second test (this area's, cited in its result)"
+      ],
+      "plan": "(Follow-up of 2026-10-16, the coordinator: implement, not a decision.) At a term's start, this term's charges first (a term past six billed), then the living-expense scholarship applied on the Yale account to what it owes, and only what's left paid to the bank, in the one transaction it was (its bank leg smaller, a Yale leg beside it); a hold the aid clears lifts, said once, before registration is asked; the term's notice and A Term Without Tuition Support say what was applied and what's left due. A credit that leaves nothing owed (a rebate, a fee refunded, aid restored on appeal) was planned to lift the hold too; written, no test reached it (its mutation survived) and no played life was found to, so it was taken out again and is recorded in the result. The change in systems/school.ts kept to the block's order and its postings (the judge agent changes school.ts in its own clone); the rest in systems/leave.ts. tests/evidence-g26-school.test.ts's journey that asserts the opposite recast with a dated comment and renamed, the rename in docs/verification/pipeline/inputs/renames.json; defects-g8-2's living-aid figures worked again by hand from the Bulletin's figures; this area's x1 journey's second test recast and renamed likewise.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (command, clock, render, reload): back for Spring Term 2028 owing $7,875.25 under a hold, the term's $16,128.08 scholarship less its $2,034.44 plan, $14,093.64, pays the $7,875.25 first: the hold lifted at the term's start, said once; registration asked only as the return asks it, and taken; $6,218.39 reaches Chase Total Checking; the Yale account at nothing; Terms And Award says it. Fails before the fix.",
+        "tests/evidence-g26-school.test.ts's journey recast and renamed: paid on the drawn panel before the return, the hold lifts and the return term's scholarship arrives whole; its unpaid twin's return term pays the account from the scholarship.",
+        "tests/defects-g8-2.test.ts: an additional term with the living aid the review kept: the tuition less the term's refund owed, nothing paid to the bank, its notice saying so; figures by hand.",
+        "tests/remaining-09-journeys.test.ts DEFECT (TEST SETUP: a balance and its due date, as tests/evidence-g25-school.test.ts sets them): a student with need begins a term under a hold her term's aid clears; the hold lifts at the term's start and registration isn't asked."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.d-cover-ended-notice",
+      "item": "Defect found on x3: the cover-ended notice counts 60 days from a month after the loss and names only the marketplace",
+      "requirement": "The 60 days run from the loss itself (45 CFR 155.420(c)(1); health.ts:637-647 counts them so); Medicaid takes an applicant at any time (mayEnroll, health.ts:610). A notice says what's so and what comes next (common.md).",
+      "currentBehavior": "health.ts:851-877: the monthly look on the 1st finds her uncovered and says “You have 60 days to enroll in the marketplace”, whenever the loss was. Reproduced 2026-10-16 (probe p2-withdraw.ts, seed jw-1): withdrawn 5 October, uncovered from 4 November, told on 1 December “You have 60 days to enroll in the marketplace.” with 33 left (to 3 January 2027) and nothing of HUSKY D, which Enroll offered her that day. Read further on 2026-10-16: the look keeps its own hour as the loss (`h.lostAt = at`, health.ts:858) and `marketplaceOpen` takes the later of it and Yale Health's end (health.ts:643), so the window itself ran 60 days from the look, to 30 January 2027, not from the loss, contrary to the comment beside it (health.ts:637-641).",
+      "affectedSystems": [
+        "systems/health.ts healthMonth's cover-ended notice",
+        "the guide's health entry if its words change"
+      ],
+      "plan": "Count Yale Health's loss from its own hour (keep the look's hour only for a plan's end, at a month's end, as tests/defects-g8-5.test.ts reads it); say the window's last day where the notice comes a day or more after the loss, and its 60 days where it's the day; and, where mayEnroll finds a program for her, that it takes her at any time.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (clock, command): a withdrawal on 15 February 2027, Yale Health out on 17 March; the notice of 1 April names 16 May; on 20 May Enroll refuses the marketplace (HUSKY D asks for March's work, which she hasn't), where before the fix it sold to her until 31 May. Fails before the fix.",
+        "The existing notices for a loss on the look's own day keep “You have 60 days to enroll in the marketplace.” (tests/scope-cover.test.ts, remaining-health-eligibility, evidence-g05-life, run again)."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.d-medicaid-start",
+      "item": "Found on x3: HUSKY D enrolled on 2 December starts on 1 January, and care on 3 December is billed uninsured",
+      "requirement": "Connecticut's Uniform Policy Manual § 1560.10: “The beginning date of assistance for Medicaid may be one of the following: A. the first day of the first, second or third month immediately preceding the month in which the Department receives a signed application when all non-procedural eligibility requirements are met and covered medical services are received at any time during that particular month; or B. the first day of the month of application when all non-procedural eligibility requirements are met during that month” (as quoted in a DSS Office of Legal Counsel hearing decision, portal.ct.gov omel_2016_765192.pdf, read 2026-10-16; 42 CFR 435.915(a), (b)). From 1 January 2027 the retroactive months are one for expansion adults: 42 USC 1396a(a)(34) as Pub. L. 119-21 § 71112(a) amends it, “(A) in the case of an individual who is eligible for medical assistance … described in subclause (VIII) of section 1902(a)(10)(A)(i), in or after the month before the month in which the individual made application … if such individual was (or upon application would have been) eligible for such assistance at the time such care and services were furnished”, (B) the second month before for any other; § 71112(d), applications “made (or deemed to be made) on or after the first day of the first quarter beginning after December 31, 2026” (govinfo.gov, PLAW-119publ21, the statute's own text, read 2026-10-16).",
+      "currentBehavior": "health.enroll (health.ts:2076-2093) starts a program at enrollStart (health.ts:576-581): the first of next month, the marketplace's rule (45 CFR 155.420(b)(2)(iv)). Reproduced 2026-10-16 (probe p2-withdraw.ts, seed jw-1).",
+      "affectedSystems": [
+        "systems/health.ts programStart (new), retroStart (new), health.enroll, health.apply, grantPending, repriceCare (read)",
+        "content/guide/papers.ts papers.health-cover (now, mistakes); content/tutorial.ts the cover chapter's sentence",
+        "Every test whose hand-worked HUSKY D start, renewal or notice dates the change moves, tests/remaining-09-hardship.test.ts (the coverage area's) included"
+      ],
+      "plan": "(Follow-up of 2026-10-16, the coordinator: implement.) HUSKY D enrolled or approved starts on the first day of the month of application (UPM § 1560.10(B)), care billed since priced again (repriceCare). Then the retroactive months (§ 1560.10(A)): the first, second or third month before the application month where she was eligible then and covered care was received in it; for an application on or after 1 January 2027, the month before only for HUSKY D's group (Pub. L. 119-21 § 71112(a), (d): 42 USC 1396a(a)(34)(A), 'furnished in or after the month before the month in which the individual made application', read in the statute's own text at govinfo.gov). Every hand-worked date the change moves worked again from the rule, with dated comments and renames (renames.json), tests/remaining-09-hardship.test.ts included. What SLATE can't read for a retroactive month recorded exactly.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT: jw-1's HUSKY D enrolled on 2 December 2026 starts 1 December, and the 3 December visit, billed $183.98 uninsured before the fix, is HUSKY D's; with care in November and her November eligible, from 1 November (retroactive); an application in 2027 reaches one month back, not three. Fails before the fix.",
+        "Each test the change moves passes with its dates worked again, renamed where its title named the old date."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.d-expired-license-next-step",
+      "item": "Found on x4: a license run out says nothing of what comes next",
+      "requirement": "A legitimate restriction says why and what comes next (brief 09 §6). Nothing in SLATE renews a license (identity.ts:132-141); the state ID card serves as a photo ID (photoIdOf), applied for on the same tab.",
+      "currentBehavior": "Documents.tsx:74 shows “Run Out” and nothing in the action cell for a license past its date; no notice when it runs out. Reproduced 2026-10-16 (probe p4b-license.ts, seed je-5).",
+      "affectedSystems": [
+        "src/ui/papers/Documents.tsx DocumentList"
+      ],
+      "plan": "Under a license run out, say that SLATE renews none and that the state's ID card above serves as photo ID where it's offered; a passport run out points to Renew It above.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (render): the row's words; fails before the fix."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.d-lapse-appointment",
+      "item": "Found on x2: an appointment booked in a leave's lapse stays outside Yale Health once its cover is back, and nothing says so until the bill",
+      "requirement": "A consequence comes with its explanation and the next step (brief 09 §6). Yale Health pays a member's visit only at its own Health Center (clinics.ts:78-87, outsideItsPractice); an appointment is had where it was booked (appointments.ts followTheCover's comment), and called off and booked again it's had at Yale Health.",
+      "currentBehavior": "Reproduced 2026-10-16 (probe p9-appt.ts, seed jl-1, Modest, born in New York): a personal leave from 27 January 2027; on 8 February a doctor's visit is booked at Fair Haven Community Health Care for 4 March (uncovered, the town's first practice); Affiliate cover bought on 10 February ($8,950.00); nothing is said of the appointment (leave.ts:1191-1212 school.buy_affiliate; PapersWorkspace.tsx:960-966 lists it with Call It Off and no word of the cover); on 4 March the visit is billed “Yale Health pays for a visit at its own Health Center, not here. Your share is $187.20”.",
+      "affectedSystems": [
+        "systems/appointments.ts",
+        "systems/leave.ts school.buy_affiliate, returnFromLeave",
+        "ui/workspaces/PapersWorkspace.tsx YourDoctor"
+      ],
+      "plan": "Find such appointments (`outsideTheCover`); say so when Yale Health's cover comes back (Affiliate cover bought, the leave over) in a notice naming the way to be seen at Yale Health, and on Papers' appointment line. The appointment stays where it was booked, as the earlier pass decided.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (command, clock, render, reload): the notice once; the Papers line; Call It Off then Book An Appointment books Yale Health's Student Health, and the visit is billed nothing. Fails before the fix."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.d-lapse-prescription",
+      "item": "Found on x2: a prescription filled in a leave's lapse isn't billed again when Affiliate cover is bought back to the lapse's start",
+      "requirement": "Affiliate cover bought is continuous from the day student cover ended, and care had in the lapse is billed again as Yale Health pays it (leave.ts header; repriceCare, health.ts:1806).",
+      "currentBehavior": "Reproduced 2026-10-16 (probe p8-reprice.ts, seed jl-12): a generic filled on 4 February 2027 in the lapse, $42.26 uninsured; Affiliate cover bought on 18 February; the fill stays at $42.26 (repriceCare reads the care log of visits, urgent care, emergencies and stays only; a fill is billed by fillMedicine, health.ts:1200, and isn't logged there), where Yale Health's generic is $10.00 (the graduate's bills on Papers).",
+      "affectedSystems": [
+        "systems/health.ts fillMedicine, repriceCare"
+      ],
+      "plan": "Assess whether the fill can be billed again from what's kept; implement if it can be done from the engine's own figures, else record it with its evidence.",
+      "acceptance": [
+        "A test of the fill billed again, or the item's status with its evidence."
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "journeys.d-hardship-ended-renewal",
+      "item": "Sent by the coordinator from the coverage area (2026-10-16): on a renewal whose program ended within the thirty days, `health.request_hardship` clears the notice and says the exception was granted, though nothing is renewed",
+      "requirement": "The player is never told something was granted when nothing changed (the coordinator; common.md: a refusal says why and what the player can do next). A renewal's notice of noncompliance asks the member to show the work rules met so the program is renewed (42 CFR 435.558); with the program ended there is nothing to renew.",
+      "currentBehavior": "health.ts grantPending's renewal branch returns without a word where the program isn't active or has an end (around line 1027 at 7e531122), and health.request_hardship returns ok, so Papers toasts “The hardship is granted, and the work rules met.” Reproduced 2026-10-16 by play (probe p17-hardship.ts, the coverage area's member, seed r09-hardship): HUSKY D's renewal notice of 1 November 2027; Drop The Plan on 2 November sets its end to 1 December; Request A Hardship Exception on 10 November is taken ({ month: '2027-09' }), the notice cleared, nothing renewed, the program still ending 1 December. Drop The Plan also stayed on the panel, and a second press set the same day again.",
+      "affectedSystems": [
+        "systems/health.ts hardshipRefusal, health.drop, grantPending",
+        "ui/workspaces/PapersWorkspace.tsx The Marketplace",
+        "the guide's health cover entry"
+      ],
+      "plan": "Dropping the program takes a renewal's notice and its decision with it; a second drop is refused and Papers says the plan is dropped in place of the button; hardshipRefusal refuses a renewal's hardship where the program has ended or is ending some other way, in words that say so (a guard: no played life ends HUSKY D within the thirty days but the drop).",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (command, clock, render, reload): the drop on Papers; no notice, no hardship button, the hardship and a second drop refused with nothing moved; HUSKY D ends 1 December, nothing renewed or decided. Fails before the fix.",
+        "tests/remaining-09-journeys.test.ts GUARD: a renewal's notice with the program ended on the record by hand refuses the hardship in its words. Fails before the fix.",
+        "tests/remaining-09-hardship.test.ts still passes."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.f-mexico-residence",
+      "item": "Follow-up (the coordinator, 2026-10-16): Papers' Residence Abroad sells Mexico's temporary residence for $674.93, and nothing reads it",
+      "requirement": "THE ONE RULE (CLAUDE.md): a declared word with nothing that reads it is worse than none; brief 09 §6: no advertised functionality only as decorative text. Lives abroad left in the owner's scope reset (docs/REQUIREMENTS.md): nothing is restored.",
+      "currentBehavior": "documents.residence (residence.ts:180-190) sells Mexican temporary residence (MXN 11,140.74 and the US$56 visa) to anyone meeting the solvency test; documents.settle and documents.renew_residence (residence.ts:192-214) sell permanent residence and its renewal, and documents.naturalize (citizenship.ts:52-73) a Mexican citizenship after five years’ residence; Papers' row says “Open to you: $674.93. No life in SLATE moves to Mexico, so nothing but these papers reads it” with Apply (Documents.tsx:297-300). Read by: settleRefusal and naturalizeRefusal (papers reading papers), residenceRefusal (documents.ts:241, called by nothing), and a Mexican citizenship read only by a life living in Mexico (appointments.ts:115 IMSS, health.ts:1446), which no life creation offers reaches. Tested as a sale by tests/residence.test.ts, tests/commands-kept.test.ts ('a life in Mexico', TEST SETUP: a life begun in Mexico City), tests/guide-examples-papers.test.ts (documents.residence's worked example).",
+      "affectedSystems": [
+        "systems/residence.ts routeRefusal, settleRefusal, documents.residence, documents.renew_residence, mexicanSolvency, residenceFee",
+        "systems/citizenship.ts naturalizeRefusal (Mexico)",
+        "ui/papers/Documents.tsx ResidencePanel",
+        "content/guide/documents.ts documents.residence and its worked example",
+        "tests/residence.test.ts, tests/commands-kept.test.ts, tests/guide-examples-papers.test.ts, tests/coverage-gaps-papers.test.ts (its Mexican fixture's settleRefusal)",
+        "docs/UNBITTEN.md (the Mexican residence chain)"
+      ],
+      "plan": "Stop selling it: routeRefusal for Mexico says the country's rule (savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year, the consulate's visa US$56) and that SLATE grants none, living there having gone with moving on 2026-10-09; renewal refused in the same reason; settlement and naturalization say their own rule (four years' temporary, five years' residence) to a save holding a card, and past it the same reason; the row reads the rule, with no Apply and no Renew. A residence an older save holds is kept and shown until it runs out, and a naturalization already applied for is still decided (CITIZENSHIP_KIND), as the Global Talent visa and the green card are kept. The solvency test and the fee, read by nothing once nothing is sold, go, with dated comments. Tests that bought it recast as refusals on a FIXTURE of the held card and renamed (renames.json); the guide's entry and worked example rewritten; docs/UNBITTEN.md's entry settled in the past tense.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (command, render): the row's words, no Apply, the command refused in them with nothing paid; a held card (FIXTURE) refused renewal, settlement and naturalization in their words; fails before the fix.",
+        "The recast tests pass under their new titles, recorded in docs/verification/pipeline/inputs/renames.json."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.f-injury-space",
+      "item": "Follow-up (the coordinator, 2026-10-16): an injury's notice ends with a space where its care costs nothing",
+      "requirement": "A notice's words as written, nothing dangling (house style).",
+      "currentBehavior": "injury.ts:118 builds “${days} days to mend. ${…}” and the clause after the full stop is empty where the care is $0 and not at work: “A Pulled Muscle: 19 days to mend. ” (seed jw-2, 29 October 2026).",
+      "affectedSystems": [
+        "systems/injury.ts injure's notice"
+      ],
+      "plan": "Join the two sentences with a space only where the second has words.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT: an injury with no care's notice ends “19 days to mend.” with nothing after; fails before the fix."
+      ],
+      "classification": "misleading player-facing control"
+    },
+    {
+      "id": "journeys.f-ended-life-loops",
+      "item": "Follow-up (the coordinator, 2026-10-16): helpers that loop to a time never return once a life ends by mortality",
+      "requirement": "A test can't hang: a helper stops with a clear failure naming the death; no test's assertions change (the coordinator).",
+      "currentBehavior": "A life ended (mortality.ts registerMortality: meta.endedAt, endedAge) keeps its clock (simulation.ts:385-388, advanceTo returns at once). 160 loops in 116 test files (`while (sim.now < until) … sim.advanceTo(…)`) and tools/policy.ts's attentiveHour, which tools/condition.ts, freshness.ts and mastery.ts loop on, then spin for good. Reproduced 2026-10-16: probe p7-hang.ts, seed jl-17, the clock at January 11, 2027 at 9:58 PM.",
+      "affectedSystems": [
+        "vitest.config.ts (a setup file)",
+        "tests/setup/ (new)",
+        "tools/policy.ts attentiveHour"
+      ],
+      "plan": "A vitest setup file wraps Simulation.prototype.advanceTo: asked to move an ended life's clock forward again and again (a loop, not a single look), it throws, naming the death's day and age and that the clock stays there. attentiveHour throws the same for the tools. No test's code or assertion changes.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts GUARD: jl-17's life, tended to its end by a loop of the tests' own shape, fails at once with the death's words instead of hanging; a single advanceTo on an ended life still returns where it stopped (simulation's own rule kept)."
+      ],
+      "classification": "necessary defensive guard"
+    },
+    {
+      "id": "journeys.d-f1-term-notice",
+      "item": "Found on item 1 (journeys.d-aid-past-balance), 2026-10-16: an F-1 student's term notice says the whole refund is in her account, where 14% of its taxable part was withheld",
+      "requirement": "A notice says what is so (brief 09 §6: no stale or false statement on a screen); the withholding is the engine's own (school.ts TERM_KIND, IRC 1441(b), Form 1042-S, from 2026-10-10).",
+      "currentBehavior": "school.ts TERM_KIND's “… Begins” notice says “… and $13,318.50 is in your Chase Total Checking” whatever was withheld. Reproduced 2026-10-16 (probe p18-f1notice.ts, the save of p2-withdraw.ts, seed jw-2, born in London): the posting put $11,356.54 in Chase Total Checking and $1,961.96 to Tax Withheld.",
+      "affectedSystems": [
+        "systems/school.ts TERM_KIND's notice (the judge agent changes school.ts in its own clone: the words alone)"
+      ],
+      "plan": "The notice names what reached the account, the refund less what was withheld and what the Yale account took, and says what was withheld for the IRS.",
+      "acceptance": [
+        "tests/remaining-09-journeys.test.ts DEFECT (clock): a London-born F-1 student's Fall Term 2026 notice says $11,356.54 is in her account after $1,961.96 withheld for the IRS, as the posting has it, worked by hand; fails before the fix."
+      ],
+      "classification": "misleading player-facing text"
+    }
+  ]
+}

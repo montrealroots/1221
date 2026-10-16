@@ -11,13 +11,13 @@
 import { writeFileSync } from 'node:fs';
 import { BRIEFS, type Brief } from '../src/engine/content/briefs';
 import { ABILITY_DEFS, MASTERED } from '../src/engine/content/abilities';
-import { AXES } from '../src/engine/content/approaches';
+import { APPROACH_EFFECT, AXES } from '../src/engine/content/approaches';
 import { GRAIN } from '../src/engine/content/interpretation';
 import type { Axis, AxisValue } from '../src/engine/content/material';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, sceneOf, readingOf, type BriefRecord } from '../src/engine/systems/briefs';
 import type { EvalContext, Evaluation, Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, toneSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, unitSegments } from '../src/engine/systems/piece';
 import { PIECE } from '../src/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '../src/engine/content/material';
 import { TASK_PROFILES } from '../src/engine/content/tasks';
@@ -120,7 +120,7 @@ function measureFresh() {
     const read = materialContext(task, m, Object.keys(sides).length ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
     const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(Object.keys(sides).length ? { approach: 1 } : {}) };
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `fresh:${m.id}`, expected: true };
-    return judgePiece(SEED, p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+    return judgePiece(SEED, p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
   };
   let i1n = 0, i1ok = 0;
   const diffs: number[] = [];
@@ -153,7 +153,7 @@ function measureStage() {
     const read = materialContext(task, m, Object.keys(sides).length ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
     const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(Object.keys(sides).length ? { approach: 1 } : {}) };
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
-    return judgePiece(SEED, p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).overall;
+    return judgePiece(SEED, p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).overall;
   };
   const both = (m: MaterialProfile) => !misfitOf('scale', 'restrained', m) && !misfitOf('scale', 'expansive', m);
   const suit = (m: MaterialProfile) => { const sc = sceneOfMaterial(m); return { r: suitabilityOf('restrained', m, sc), e: suitabilityOf('expansive', m, sc) }; };
@@ -227,7 +227,134 @@ function measureStage() {
   };
 }
 
+/**
+ * `--st3 <file>` (from 2026-10-16, brief 09): ST3's cases one by one, as `measureStage` judges them (the grain held at
+ * nothing), each with its stage and close-frame results as shown and at full precision, and the exact difference taken
+ * apart. The criterion's even actor is 55 in every ability and 50 in every technique, and its stamina, at 55, drains the
+ * later segment of the piece. Taken apart by changing one thing at a time:
+ * - `techniques`: the criterion's actor less one whose techniques are at 49.5 of 90, the same share of full (0.55) as its
+ *   abilities: what the techniques' 50 of 90 (0.556) adds;
+ * - `stamina`: that actor less the same with stamina at 100, which doesn't drain: what the drain adds;
+ * - `residual`: the actor even in everything the formula reads, undrained, stage less close frame. The tests hold it at
+ *   nothing.
+ * A case is a rounding defect where a shown result isn't its own exact result rounded once; a tenth apart as shown with
+ * less than half a tenth apart exact is the rounding of a real difference whose two sides straddle a rounding point.
+ */
+function measureST3Cases() {
+  const task = TASK_PROFILES.scene!;
+  const difficulty = difficultyOf(templateById('scene-study')!);
+  const judgeIt = (m: MaterialProfile, p: Performer, scale: 'restrained' | 'expansive'): Evaluation => {
+    const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
+    const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
+    return judgePiece(SEED, p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  };
+  const at = (tech: number, stamina: number): Performer => ({ ability: (id) => (id === 'stamina' ? stamina : 55), full: () => 100, technique: () => tech });
+  const CRITERION = at(50, 55), EVEN_READ = at(0.55 * MASTERED, 55), UNDRAINED = at(0.55 * MASTERED, 100);
+  const r1 = (x: number) => Math.round(x * 10) / 10;
+  const strength = GRAIN.strength;
+  Object.assign(GRAIN as Record<string, number>, { strength: 0 });
+  const cases: Record<string, unknown>[] = [];
+  try {
+    for (const m of [...SCENE_MATERIAL, ...PLAY_MATERIAL]) for (const scale of ['restrained', 'expansive'] as const) {
+      if (misfitOf('scale', scale, m)) continue;
+      const cam = { ...m, medium: 'camera' as const };
+      const diffOf = (p: Performer) => judgeIt(m, p, scale).exact! - judgeIt(cam, p, scale).exact!;
+      const s = judgeIt(m, CRITERION, scale), c = judgeIt(cam, CRITERION, scale);
+      const exact = s.exact! - c.exact!, evenRead = diffOf(EVEN_READ), residual = diffOf(UNDRAINED);
+      const shown = r1(s.overall - c.overall);
+      const roundedOnce = s.overall === r1(s.exact!) && c.overall === r1(c.exact!);
+      cases.push({
+        material: m.id, scale, stage: { shown: s.overall, exact: s.exact }, closeFrame: { shown: c.overall, exact: c.exact }, shownApart: shown, exactApart: exact,
+        techniques: exact - evenRead, stamina: evenRead - residual, residual,
+        verdict: !roundedOnce ? 'rounding defect' : shown === 0 ? 'the same as shown' : Math.abs(exact) < 0.05 ? `a tenth apart as shown: a real difference of ${exact.toFixed(4)} whose sides straddle ${(Math.round(Math.max(s.exact!, c.exact!) * 10) / 10 - 0.05).toFixed(2)}` : 'apart by more than a rounding step',
+      });
+    }
+  } finally { Object.assign(GRAIN as Record<string, number>, { strength }); }
+  const n = (f: (x: Record<string, unknown>) => boolean) => cases.filter(f).length;
+  const most = (k: string) => Math.max(...cases.map((x) => Math.abs(x[k] as number)));
+  return {
+    cases: cases.length, sameAsShown: n((x) => x.shownApart === 0), aTenthApart: n((x) => x.shownApart !== 0), roundingDefects: n((x) => x.verdict === 'rounding defect'),
+    largest: { exactApart: most('exactApart'), techniques: most('techniques'), stamina: most('stamina'), residual: most('residual') },
+    list: cases,
+  };
+}
+
+/**
+ * `--st6 <file>` (from 2026-10-16, brief 09): ST6's cases one by one, for both specialists, as `measureStage` judges them,
+ * and what decides each. For every material where the other side suits better: the suitability of each side and the
+ * signals it rests on, the specialist's own side less the other at full precision, what the grain gave or cost each
+ * side (the same take with `GRAIN.strength` at nothing), and the specialist's lift: its own side less the other with the
+ * grain at nothing, less the even actor's. The lift is taken apart by the side's leans and by its draws (each removed in
+ * turn, in this process only), and set beside an equal-budget even actor (50 in everything) playing the better-suited
+ * side. Then the alternatives considered for restraint's draws, each counted on ST6 as the criterion counts it. Nothing
+ * here changes what the game judges: every change is made in this process and put back in a `finally`.
+ */
+function measureST6Cases() {
+  const task = TASK_PROFILES.scene!;
+  const difficulty = difficultyOf(templateById('scene-study')!);
+  const judgeIt = (m: MaterialProfile, p: Performer, scale: 'restrained' | 'expansive'): number => {
+    const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
+    const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
+    return judgePiece(SEED, p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).exact!;
+  };
+  const fill = (n: number) => (600 - n) / 8;
+  const EXP = actor({ presence: 85, vocal: 75, physical: 75 }, fill(235));
+  const RES = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, fill(235));
+  const EVEN50 = actor({}, 50);
+  const mats = [...SCENE_MATERIAL, ...PLAY_MATERIAL].filter((m) => !misfitOf('scale', 'restrained', m) && !misfitOf('scale', 'expansive', m));
+  const r3 = (x: number) => Math.round(x * 1000) / 1000;
+  const withStrength = <T,>(x: number, f: () => T): T => { const s0 = GRAIN.strength; Object.assign(GRAIN as Record<string, number>, { strength: x }); try { return f(); } finally { Object.assign(GRAIN as Record<string, number>, { strength: s0 }); } };
+  const orig = { restrained: { ...APPROACH_EFFECT.restrained }, expansive: { ...APPROACH_EFFECT.expansive } };
+  const withEffect = <T,>(side: 'restrained' | 'expansive', part: Partial<(typeof orig)['restrained']>, f: () => T): T => { Object.assign(APPROACH_EFFECT[side] as object, part); try { return f(); } finally { Object.assign(APPROACH_EFFECT[side] as object, orig[side]); } };
+  const caseOf = (m: MaterialProfile, P: Performer, mine: 'restrained' | 'expansive') => {
+    const other = mine === 'restrained' ? 'expansive' : 'restrained';
+    const sc = sceneOfMaterial(m);
+    const sm = suitabilityOf(mine, m, sc), so = suitabilityOf(other, m, sc);
+    const A = judgeIt(m, P, mine), B = judgeIt(m, P, other);
+    const [A0, B0, eA0, eB0] = withStrength(0, () => [judgeIt(m, P, mine), judgeIt(m, P, other), judgeIt(m, EVEN, mine), judgeIt(m, EVEN, other)]);
+    const evenBest = Math.max(judgeIt(m, EVEN50, 'restrained'), judgeIt(m, EVEN50, 'expansive'));
+    return { material: m.id, genre: sc.genre, gap: r3(so.s - sm.s), ownSide: { s: sm.s, signals: sm.signals.map((g) => `${g.source}: ${g.v}`) }, otherSide: { s: so.s, signals: so.signals.map((g) => `${g.source}: ${g.v}`) },
+      ownLessOther: r3(A - B), ahead: A - B > 0, grainOnOwn: r3(A - A0), grainOnOther: r3(B - B0), lift: r3((A0 - B0) - (eA0 - eB0)), ownSideLessEqualBudgetEvenBest: r3(A - evenBest) };
+  };
+  // As the criterion counts it: the two results as shown, each its exact one rounded once to a tenth.
+  const st6 = () => {
+    let a = 0, an = 0, b = 0, bn = 0;
+    for (const m of mats) { const sc = sceneOfMaterial(m); const r = suitabilityOf('restrained', m, sc).s, e = suitabilityOf('expansive', m, sc).s;
+      if (r > e) { an += 1; if (Math.round(judgeIt(m, EXP, 'expansive') * 10) > Math.round(judgeIt(m, EXP, 'restrained') * 10)) a += 1; }
+      if (e > r) { bn += 1; if (Math.round(judgeIt(m, RES, 'restrained') * 10) > Math.round(judgeIt(m, RES, 'expansive') * 10)) b += 1; } }
+    return { expansive: `${a} of ${an}`, restrained: `${b} of ${bn}` };
+  };
+  const mean = (xs: number[]) => r3(xs.reduce((t, x) => t + x, 0) / Math.max(1, xs.length));
+  const liftOf = (P: Performer, mine: 'restrained' | 'expansive') => withStrength(0, () => mean(mats.filter((m) => { const sc = sceneOfMaterial(m); const r = suitabilityOf('restrained', m, sc).s, e = suitabilityOf('expansive', m, sc).s; return mine === 'restrained' ? e > r : r > e; }).map((m) => { const other = mine === 'restrained' ? 'expansive' : 'restrained'; return (judgeIt(m, P, mine) - judgeIt(m, P, other)) - (judgeIt(m, EVEN, mine) - judgeIt(m, EVEN, other)); })));
+  const lifts = () => ({ restrained: liftOf(RES, 'restrained'), expansive: liftOf(EXP, 'expansive') });
+  const restrainedCases = mats.filter((m) => { const sc = sceneOfMaterial(m); return suitabilityOf('expansive', m, sc).s > suitabilityOf('restrained', m, sc).s; }).map((m) => caseOf(m, RES, 'restrained')).sort((x, y) => x.gap - y.gap);
+  const expansiveCases = mats.filter((m) => { const sc = sceneOfMaterial(m); return suitabilityOf('restrained', m, sc).s > suitabilityOf('expansive', m, sc).s; }).map((m) => caseOf(m, EXP, 'expansive')).sort((x, y) => x.gap - y.gap);
+  const D = (inputs: (typeof orig)['restrained']['inputs']) => withEffect('restrained', { inputs }, () => ({ st6: st6(), lifts: lifts() }));
+  return {
+    st6AsShown: st6(),
+    restrained: { cases: restrainedCases.length, aheadExact: restrainedCases.filter((x) => x.ahead).length, meanGap: mean(restrainedCases.map((x) => x.gap)), gapOver057: restrainedCases.filter((x) => x.gap >= 0.57).length, aheadOfEqualBudgetEvenBest: restrainedCases.filter((x) => x.ownSideLessEqualBudgetEvenBest > 0).length, list: restrainedCases },
+    expansive: { cases: expansiveCases.length, aheadExact: expansiveCases.filter((x) => x.ahead).length, meanGap: mean(expansiveCases.map((x) => x.gap)), gapOver057: expansiveCases.filter((x) => x.gap >= 0.57).length, aheadOfEqualBudgetEvenBest: expansiveCases.filter((x) => x.ownSideLessEqualBudgetEvenBest > 0).length, list: expansiveCases },
+    lift: {
+      asBuilt: lifts(),
+      leansOnly: withEffect('restrained', { inputs: {} }, () => withEffect('expansive', { inputs: {} }, lifts)),
+      drawsOnly: withEffect('restrained', { lean: {} }, () => withEffect('expansive', { lean: {} }, lifts)),
+    },
+    considered: {
+      'emotional depth 1 on connection, composure 0.5 on believability, focus 0.5 on consistency': D({ connection: [{ ability: 'emotionalDepth', weight: 1 }], believability: [{ ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] }),
+      'composure 0.5 on connection in place of believability': D({ believability: [{ ability: 'emotionalDepth', weight: 1 }], connection: [{ ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] }),
+      'the control doubled: composure 1, focus 1': D({ believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 1 }], consistency: [{ ability: 'focus', weight: 1 }] }),
+      'the control in place of emotional depth: composure 1, focus 1': D({ believability: [{ ability: 'composure', weight: 1 }], consistency: [{ ability: 'focus', weight: 1 }] }),
+    },
+  };
+}
+
 const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}), ...(flag('stage') ? { stage: measureStage() } : {}) };
+const st3 = arg('st3', '');
+if (st3) writeFileSync(st3, `${JSON.stringify(measureST3Cases(), null, 1)}\n`);
+const st6 = arg('st6', '');
+if (st6) writeFileSync(st6, `${JSON.stringify(measureST6Cases(), null, 1)}\n`);
 console.log(JSON.stringify(out, null, 1));
 const o = arg('out', '');
 if (o) writeFileSync(o, `${JSON.stringify(out, null, 1)}\n`);

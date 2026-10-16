@@ -1,0 +1,13 @@
+# Run from the clone's root, one at a time; <out> is this folder. The tree: 488fe999, the briefs as they're committed.
+audit exit=0 secs=12 cmd: npx vite-node tools/genre-audit.ts -- --out <out>/genre-audit.md
+signature exit=0 secs=134 cmd: npx vite-node tools/genre-signature.ts -- --out <out>/signature.json
+signature-fresh exit=0 secs=302 cmd: npx vite-node tools/genre-signature.ts -- --fresh --out <out>/signature-fresh.json
+validate exit=0 secs=160 cmd: npx vite-node tools/genre-signature.ts -- --validate --out <out>/signature-validate.json
+identity exit=0 secs=8 cmd: npx vite-node tools/genre-identity.ts -- --out <out>/genre-identity.json
+interpretation exit=0 secs=16 cmd: npx vite-node tools/interpretation.ts -- --fresh --stage --out <out>/interpretation.json
+ag-baseline exit=0 secs=45 cmd: npx vite-node tools/ag-baseline.ts -- --out <out>/ag-baseline.json
+ag-criteria exit=0 secs=0 cmd: node tools/ag-criteria.mjs <out>/ag-baseline.json
+genre-pairs exit=0 cmd: npx vite-node tools/genre-pairs.ts -- --genres <the 55 of ../before/genre-pairs.json> --json <out>/genre-pairs.json --md <out>/genre-pairs.md
+genre-pairs-all exit=0 cmd: npx vite-node tools/genre-pairs.ts -- --json <out>/genre-pairs-all.json
+diagnose exit=0 cmd: npx vite-node probe/sig-all.ts -- --diagnose --out <out>/sig-diagnose.json  (probe/: tools/genre-signature.ts with every scene's misses listed, not fifteen)
+diagnose-fresh exit=0 cmd: npx vite-node probe/sig-all.ts -- --fresh --diagnose --out <out>/sig-fresh-diagnose.json

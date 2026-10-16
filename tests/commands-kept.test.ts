@@ -199,28 +199,30 @@ describe('papers', () => {
 });
 
 describe('a life in Mexico', () => {
-  it('settles from temporary residence after four years, and naturalizes after five', () => {
+  // Recast and renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json): until then “settles from temporary
+  // residence after four years, and naturalizes after five”, the card bought, renewed four times and settled, and
+  // citizenship applied for. Mexico's residence went unsold that day, nothing outside its own papers reading it.
+  it('is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid', () => {
     // TEST SETUP: a life begun in Mexico City by somebody born in New York, wealthy enough for the solvency test.
     const sim = quickSave({ startLocationId: 'mx-cmx-mexicocity', homeRegionId: 'us-ny-newyork', livesWhereBorn: false, wealth: 'wealthy' }, 'mx-settle');
+    const why = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+    const balance = () => sim.universe.accounts[sim.player.primaryAccountId!]!.balance;
+    const held = balance();
     expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe('You hold no residence there to settle from.');
-    sim.must({ kind: 'documents.residence', payload: { country: 'MX' } });
+    expect(sim.execute({ kind: 'documents.residence', payload: { country: 'MX' } }).error).toBe(`Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. ${why}`);
+    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It asks residence there first.');
+    // FIXTURE: Residente Temporal held without a break for four years and a day, its card in force.
+    const year = 365.2425 * MS_DAY;
+    documentsOf(sim.player).push({ id: 'mx-card', kind: 'visa', issuer: 'MX', name: 'Residente Temporal', number: 'R1', status: 'valid', issuedAt: sim.now - 4 * year - MS_DAY, expiresAt: sim.now + 100 * MS_DAY, destination: 'MX', route: 'mx-temporary' });
+    expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe(`Mexico grants permanent residence after four years’ temporary, for MXN 13,578.96. ${why}`);
     expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('It asks five years’ residence in Mexico.');
-    for (let y = 0; y < 4; y += 1) {
-      sim.advanceBy(340 * MS_DAY);
-      sim.must({ kind: 'documents.renew_residence', payload: { country: 'MX' } });
-      sim.advanceBy(26 * MS_DAY);
-    }
-    sim.advanceBy(5 * MS_DAY);
-    const settled = sim.execute<{ paid: number }>({ kind: 'documents.settle', payload: { country: 'MX' } });
-    expect(settled.ok, settled.error).toBe(true);
-    expect(documentsOf(sim.player).some((d) => d.route === 'mx-permanent' && d.status === 'valid')).toBe(true);
-    expect(sim.execute({ kind: 'documents.settle', payload: { country: 'MX' } }).error).toBe('You’re settled there.');
-    sim.advanceBy(370 * MS_DAY);
-    const nat = sim.execute<{ paid: number; readyAt: number }>({ kind: 'documents.naturalize', payload: { country: 'MX' } });
-    expect(nat.ok, nat.error).toBe(true);
-    expect(nat.value!.readyAt).toBeGreaterThan(sim.now);
-    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe('An application is being decided.');
-  }, 240_000);
+    // A year more held: five years and a day.
+    documentsOf(sim.player).find((d) => d.id === 'mx-card')!.issuedAt! -= year;
+    expect(sim.execute({ kind: 'documents.naturalize', payload: { country: 'MX' } }).error).toBe(`Mexico naturalizes after five years’ residence, for MXN 9,502.01. ${why}`);
+    expect(sim.player.naturalizing).toBeUndefined();
+    expect(documentsOf(sim.player).some((d) => d.route === 'mx-permanent')).toBe(false);
+    expect(balance()).toBe(held);
+  });
 
   it('pays the Pensión para el Bienestar every two months to a Mexican of 65 living there, and nobody younger', () => {
     expect(lifeIn('mx-cmx-mexicocity', 'bienestar-young').execute({ kind: 'pension.bienestar', payload: {} }).error).toBe('From 65.');

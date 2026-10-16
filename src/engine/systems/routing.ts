@@ -19,7 +19,7 @@
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import type { Account } from '../core/ledger';
-import { MS_DAY, type Instant } from '../core/time';
+import { MS_DAY, formatDate, type Instant } from '../core/time';
 import { paymentsOf, type PaymentSettings } from './payments';
 
 /**
@@ -92,8 +92,8 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   const out: string[] = [];
   const pay = settingsOf(person);
   depositAccount(sim, person);
-  if (pay.depositTo === accountId) out.push('Your wages and other payments are paid into it');
-  if (pay.depositChange?.to === accountId) out.push('Your wages and other payments are being moved to it');
+  if (pay.depositTo === accountId) out.push(paidInto(sim, pay, accountId));
+  if (pay.depositChange?.to === accountId) out.push(`Your wages and other payments are being moved to it${movingDays(sim, pay.depositChange, 'from')}`);
   for (const o of pay.standingOrders) {
     if (orderSource(sim, person, o)?.id === accountId) out.push(`A standing order pays from it on the ${o.day}`);
   }
@@ -114,6 +114,55 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
     if (i.payload.fromId === accountId || i.payload.toId === accountId) out.push('A payment set for a date uses it');
   }
   return out;
+}
+
+/** The payers a change of deposit names apart from the rest, in the words for them. */
+const PAYER_NAMES: Readonly<Record<string, string>> = { 'yale-payroll': 'Yale’s payroll' };
+
+/**
+ * When a change of deposit reaches each payer: “: Yale’s payroll from …, and the rest from …”, or “ from …” (“ on …”)
+ * where it’s one day.
+ */
+function movingDays(sim: Simulation, change: NonNullable<PaymentSettings['depositChange']>, one: 'from' | 'on'): string {
+  const day = (at: Instant) => formatDate(at, sim.zone);
+  const early = Object.entries(change.from ?? {}).filter(([, at]) => day(at) !== day(change.at));
+  if (early.length === 0) return ` ${one} ${day(change.at)}`;
+  return `: ${early.map(([payer, at]) => `${PAYER_NAMES[payer] ?? 'one payer'} from ${day(at)}`).join(', ')}, and the rest from ${day(change.at)}`;
+}
+
+/**
+ * `linkedTo`'s line for the account the wages are paid into: with a change on its way, until when, payer by payer, as the
+ * new account's line says it. From 2026-10-16: until then it said only that they were paid into it, and Close It's
+ * refusal said to move them, which was done already (found by the journeys area of brief 09 on its life je-1).
+ */
+function paidInto(sim: Simulation, pay: PaymentSettings, accountId: string): string {
+  const change = pay.depositChange;
+  if (!change || change.to === accountId) return 'Your wages and other payments are paid into it';
+  return `Your wages and other payments are paid into it until they move to ${sim.universe.accounts[change.to]?.name ?? 'your other account'}${movingDays(sim, change, 'on')}`;
+}
+
+/**
+ * The day the last payer stops paying into this account, where a change has been asked to move them elsewhere: from then
+ * nothing pays into it (from 2026-10-16, for Close It's refusal to say when it can close).
+ */
+function depositsLeave(sim: Simulation, person: Person, accountId: string): Instant | undefined {
+  const pay = settingsOf(person);
+  depositAccount(sim, person);
+  return pay.depositTo === accountId && pay.depositChange && pay.depositChange.to !== accountId ? pay.depositChange.at : undefined;
+}
+
+/**
+ * Close It's refusal for what still uses the account (`closeRefusal`): what `linkedTo` names, and “Move it first.” Where
+ * the wages are already on their way elsewhere they aren't the player's to move again, and it says the day it can close.
+ * From 2026-10-16, moved here from `closeRefusal`: until then it said “Move it first.” of a change already asked for (the
+ * journeys area of brief 09, life je-1).
+ */
+export function closeHold(sim: Simulation, person: Person, accountId: string): string | undefined {
+  const links = linkedTo(sim, person, accountId);
+  if (links.length === 0) return undefined;
+  const leaves = depositsLeave(sim, person, accountId);
+  if (leaves !== undefined) return `${links.join('. ')}. ${links.length === 1 ? 'Close it' : 'Move the others first, and close it'} from ${formatDate(leaves, sim.zone)}.`;
+  return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;
 }
 
 /**

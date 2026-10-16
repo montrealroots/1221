@@ -9,8 +9,13 @@ import { quickSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { FITNESS, EVERYDAY_FITNESS } from '@/engine/systems/life';
-import { abilityFull, developmentOf } from '@/engine/systems/attributes';
+import { FITNESS, EVERYDAY_FITNESS, TRAINING, lookAfterOptions, workoutBuilds } from '@/engine/systems/life';
+import { abilityFull, developmentOf, repeatsSoFar } from '@/engine/systems/attributes';
+import { createSave } from '@/engine';
+import { newLifeConfig } from '@/engine/world/bootstrap';
+import { instantFromZoned } from '@/engine/core/time';
+import { CLASSES_KIND, coursesOn } from '@/engine/systems/school';
+import { TRAINING_CLASSES } from '@/engine/content/body';
 
 /** Test setup: nothing on the calendar in the way, rested, and the body at a fitness. */
 function body(seed: string, fitness: number): Simulation {
@@ -125,4 +130,71 @@ describe('a workout sent twice', () => {
     again.player.wellbeing.energy = 90;
     expect(again.execute({ kind: 'life.look_after', payload: { action: 'exercise', actionId: 'w-1' } }).error).toBe('That was already done.');
   });
+});
+
+/**
+ * A class that trains the body as hard as a workout does (`TRAINING_CLASSES`, content/body.ts; `classTrains`,
+ * systems/life.ts; from 2026-10-16, brief 09's follow-up). PLAYER JOURNEY with TEST SETUP: a first year at Yale played by
+ * the clock through the fall, kept rested and fed (the dials topped up every six hours, as tests/evidence-g25-school.test.ts
+ * keeps them), and from Sunday 10 January 2027 at fitness 70 (TEST SETUP), twins: one in New Haven for the spring's first
+ * four weeks, the other away in Houston (TEST SETUP), so it misses every class. Neither works out. The first-year spring's
+ * one class that trains the body is Acting Intimacy And Combat For The Stage, whose spring is combat.
+ */
+describe('a class that trains the body as hard as a workout, attended', () => {
+  const ZONE = 'America/New_York';
+  const nh = (y: number, m: number, d: number, h: number) => instantFromZoned({ year: y, month: m, day: d, hour: h, minute: 0 }, ZONE);
+  const student = (seed: string): Simulation => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+  const tended = (sim: Simulation, until: number) => { while (sim.now < until) { Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 }); sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now); sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR)); } };
+  const fromClass = (sim: Simulation) => developmentOf(sim.player).history.filter((e) => e.id === 'stamina' && e.source.startsWith('class:'));
+  const dayOf = (key: string) => { const [year, month, day] = key.split('-').map(Number); return { year: year!, month: month!, day: day! }; };
+  const met0 = (sim: Simulation, after: number) => combat(sim).find((i) => i.at > after)!;
+  const combat = (sim: Simulation) => sim.universe.scheduled.filter((i) => i.kind === CLASSES_KIND && i.status === 'done' && i.payload.personId === sim.player.id && coursesOn(dayOf(String(i.payload.day))).some((c) => c.code === 'DRAM 403a/b'));
+
+  it('holds and builds fitness at each combat class of the spring as a workout indoors does, where the twin who misses them falls 0.18 every midnight; the fall’s classes count none', () => {
+    expect(TRAINING_CLASSES['DRAM 403a/b']).toBe('spring');
+    const base = student('fit-class');
+    tended(base, nh(2027, 1, 10, 20));
+    // The fall: no first-year fall course trains the body as hard (The Body As Source, the Alexander Technique, the
+    // consent and intimacy practice), so no class built or held fitness.
+    expect(fromClass(base)).toHaveLength(0);
+    base.player.wellbeing.fitness = 70; // TEST SETUP
+    const attend = reload(base);
+    const away = reload(base);
+    away.player.currentLocationId = 'us-tx-houston'; // TEST SETUP
+    const from = attend.now;
+    tended(attend, nh(2027, 2, 7, 20));
+    tended(away, nh(2027, 2, 7, 20));
+    // Every combat meeting of the spring attended counted once, and nothing else did (the fall's meetings of the same
+    // course were its consent and intimacy practice, and counted none, above).
+    expect(combat(base).length).toBeGreaterThan(0);
+    const met = combat(attend).filter((i) => i.at > from);
+    expect(met.length).toBeGreaterThanOrEqual(3);
+    expect(fromClass(attend).map((e) => e.source)).toEqual(met.map(() => 'class:DRAM 403a/b'));
+    for (const e of fromClass(attend)) expect(e.delta).toBeGreaterThan(0);
+    // What the first built is what a workout indoors would have, at the readiness of the minute before the class: a
+    // twin from the same save, played to then (`workoutBuilds`, 0.6 by readiness from 0.4 to 1.2 times).
+    const before = reload(base);
+    tended(before, met0(attend, from).at - 60_000);
+    expect(fromClass(attend)[0]!.delta).toBeCloseTo(workoutBuilds(before.player) * TRAINING.indoors, 2);
+    expect(fromClass(away)).toHaveLength(0);
+    // The twin who missed them fell 0.18 at each of the 28 midnights.
+    expect(away.player.wellbeing.fitness).toBeCloseTo(70 - FITNESS.perDay * 28, 9);
+    // The one who went: 70, what each class built, less 0.18 at each midnight more than three days after the class before
+    // it (`settleTheBody`), worked from the meetings' times.
+    const midnights = Array.from({ length: 28 }, (_, k) => nh(2027, 1, 11, 0) + k * MS_DAY).filter((t) => t > from);
+    expect(midnights).toHaveLength(28);
+    const held = midnights.filter((t) => met.some((i) => i.at <= t && t - i.at <= FITNESS.heldDays * MS_DAY)).length;
+    expect(held).toBeGreaterThanOrEqual(FITNESS.heldDays * (met.length - 1));
+    const built = fromClass(attend).reduce((a, e) => a + e.delta, 0);
+    expect(attend.player.wellbeing.fitness).toBeCloseTo(70 + built - FITNESS.perDay * (28 - held), 2);
+    // The hold is kept on the save: the last meeting, as a workout's end is.
+    expect(developmentOf(reload(attend).player).workout?.at).toBe(met.at(-1)!.at);
+    // And the class is the day's first workout: on the next combat day, after it, a workout would be the second.
+    const next = attend.universe.scheduled.find((i) => i.kind === CLASSES_KIND && i.status === 'pending' && i.payload.personId === attend.player.id && coursesOn(dayOf(String(i.payload.day))).some((c) => c.code === 'DRAM 403a/b'))!;
+    expect(next).toBeDefined();
+    tended(attend, next.at + 3 * MS_HOUR);
+    expect(repeatsSoFar(attend, attend.player, 'stamina<workout')).toBe(1);
+    // And Look After Yourself's Work Out line says so: the second, a class having counted as the first.
+    expect(lookAfterOptions(attend).find((o) => o.action === 'exercise')!.why).toContain('It’s workout 2 today, a class that trained the body counting as one, so it builds 50% of a first.');
+  }, 240_000);
 });

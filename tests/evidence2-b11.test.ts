@@ -661,7 +661,7 @@ describe('h-needs', () => {
     expect(needs(sim)).toBe(`What Needs You No decision is waiting on you. How This Works No Decisions Waiting Your card is a payment behind, owing $${48 * 10 + 30}.`);
     const second = toDue();
     expect(written(second)).toBe('November 10, 2026');
-    expect(needs(sim)).toContain('Your Card Is Suspended 2 payments missed in a row. Chase has stopped the Chase Freedom Unlimited until it\'s brought up to date.');
+    expect(needs(sim)).toContain('Your Card Is Suspended 2 payments missed in a row. Chase has stopped the Chase Freedom Unlimited until it’s brought up to date.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     markRead(sim);
     // 78 days of groceries to 10 November, the first fee and a repeat within six cycles: the safe harbor's $41, held to
     // the $40 minimum.

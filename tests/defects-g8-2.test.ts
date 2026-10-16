@@ -179,16 +179,28 @@ describe('Terms And Award, for a term past six the aid office reviewed', () => {
     expect(text).not.toMatch(/so its tuition and health fee are billed to your Yale account/);
   }, 60_000);
 
-  it('shows a term billed past six with the living aid the review kept: tuition alone on the Yale account, as the engine charged it', () => {
-    const { sim, account } = additionalTermBegun('g8-2-living', onAid);
+  // Recast and renamed on 2026-10-16 (brief 09's journeys, journeys.d-aid-past-balance; inputs/renames.json): until then
+  // “shows a term billed past six with the living aid the review kept: tuition alone on the Yale account, as the engine
+  // charged it”, the whole tuition owed and the living aid's refund paid to the bank beside it. From then the aid pays
+  // the account first, as Yale applies a credit to the charges before any refund (Yale Student Accounts, Refunds).
+  it('shows a term billed past six with the living aid the review kept: Spring Term 2030’s $22,407.28 tuition on the Yale account, the aid’s $15,781.87 paid onto it, $6,625.41 owed and nothing paid to the bank, as the engine charged it', () => {
+    const { sim, term } = additionalTermBegun('g8-2-living', onAid);
     expect(sim.player.school!.aidReview).toMatchObject({ tuition: false, living: true });
-    const money = moneyIn(sim);
-    expect(accountOwed(sim, sim.player)).toBe(account.tuition);
+    // By hand: Spring Term 2030 is in 2029–30, three years of the Bulletins' growth on 2026–27's figures. Tuition, $40,750 at 3.22%,
+    // $44,814.56 a year, $22,407.28 a term; the plan, $3,764 at 8.10%, $4,754.74, $2,377.37 a term; living expenses less
+    // the plan, and books, $26,637 at 5.82%, $31,563.75, with the plan $36,318.49, a term's scholarship $18,159.24. Less
+    // the plan it meets, $15,781.87 is paid onto the account, which owes $22,407.28 − $15,781.87 = $6,625.41.
+    expect(term).toBe(7);
+    expect(accountOwed(sim, sim.player)).toBe(6_625_41);
+    const scholarship = sim.universe.transactions.filter((t) => t.memo.startsWith('Living-expense scholarship, the spring term of 2030:'));
+    expect(scholarship.map((t) => t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).map((p) => [sim.universe.accounts[p.accountId]!.category, p.amount]))).toEqual([[['yale-account', 15_781_87]]]);
     const { html } = drawn(sim, SchoolWorkspace);
-    expect(rowBilled(html, 'On Your Yale Account')).toBe(money(accountOwed(sim, sim.player)));
+    expect(rowBilled(html, 'Tuition')).toBe('$22,407.28');
+    expect(rowCredited(html, 'Applied To Your Yale Account')).toBe('$15,781.87');
+    expect(rowBilled(html, 'On Your Yale Account')).toBe('$6,625.41');
     expect(html).not.toContain('<td>Tuition Scholarship</td>');
     expect(html).toContain('<td>Living-Expense Scholarship</td>');
-    expect(rowCredited(html, 'Paid To Your Bank')).toBe(money(account.refund));
+    expect(rowCredited(html, 'Paid To Your Bank')).toBe('$0.00');
   }, 60_000);
 
   it('without need, shows tuition and the health fee on the Yale account, as the engine charged them', () => {
@@ -207,7 +219,10 @@ describe('A Term Without Tuition Support', () => {
     const met = additionalTermBegun('g8-2-living', onAid);
     const money = moneyIn(met.sim);
     const said = titled(met.sim, 'A Term Without Tuition Support')[0]!.body;
-    expect(accountOwed(met.sim, met.sim.player)).toBe(met.account.tuition);
+    // The tuition less the living aid paid onto it, by hand $22,407.28 − $15,781.87 (the test above), from 2026-10-16 (brief
+    // 09's journeys); until then the tuition whole, the aid paid to the bank beside it.
+    expect(accountOwed(met.sim, met.sim.player)).toBe(6_625_41);
+    expect(said).toContain('the term’s living scholarship meets its $2,377.37 Yale Health fee and pays $15,781.87 of what the account owes before any reaches your bank, so $6,625.41 is due by');
     expect(said).not.toMatch(/for Yale Health are on your Yale account/);
     expect(said).toContain(`${money(met.account.tuition)} tuition is on your Yale account`);
     expect(said).toContain(`the term’s living scholarship meets its ${money(met.account.healthPlan)} Yale Health fee`);

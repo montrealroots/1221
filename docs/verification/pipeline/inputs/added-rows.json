@@ -8,9 +8,9 @@
    "row": {
     "kind": "command",
     "entry": "Papers, Health Cover: Apply For HUSKY D (PapersWorkspace.tsx:573), with the line saying what applying brings, drawn only where applyRefusal finds nothing (from 2026-10-16)",
-    "reads": "applyRefusal (health.ts:1059): public cover where she lives (BENEFIT_STATE), no application waiting on its notice, no program of her own, Yale Health not covering her, last month’s income and her status placing her in HUSKY D (programFor), and its work rules not met in the month before (engagement over lookBack)",
-    "changes": "HealthRecord.pending, an application with the months read, the band and the first it would begin; a notice of noncompliance (noticeOfNoncompliance, health.ts:1000), received five days after its date with thirty days from then to answer; WORK_DECIDED_KIND the day after (the command at health.ts:2098)",
-    "downstream": "the decision (WORK_DECIDED_KIND, health.ts:2128): the months read again as the records stand, met by then → grantPending gives HUSKY D from the month’s first, a marketplace plan bought meanwhile ending as it begins; short → Public Cover Denied, and she may apply again; health.request_hardship grants it on a stay in hospital in a month read; coverOn gives an applicant none while she answers; Papers says the notice, its day and the hardship (PapersWorkspace.tsx:577-583), and draws no Apply while it waits",
+    "reads": "applyRefusal (health.ts:1175; :1059 until the journeys’ follow-up): public cover where she lives (BENEFIT_STATE), no application waiting on its notice, no program of her own, Yale Health not covering her, last month’s income and her status placing her in HUSKY D (programFor), and its work rules not met in the month before (engagement over lookBack)",
+    "changes": "HealthRecord.pending, an application with the months read, the band and the first it would begin; a notice of noncompliance (noticeOfNoncompliance, health.ts:1102; :1000 until the journeys’ follow-up), received five days after its date with thirty days from then to answer; WORK_DECIDED_KIND the day after (the command at health.ts:2239; :2098 until then)",
+    "downstream": "the decision (WORK_DECIDED_KIND, health.ts:2270; :2128 until brief 09’s journeys’ follow-up of 2026-10-16): the months read again as the records stand, met by then → grantPending gives HUSKY D from the first of the month of application, reaching back as Enroll does to an earlier month she was eligible in and had care in with nothing covering her, the care since priced again (programStart, retroStart, repriceCare; from 2026-10-16, brief 09’s journeys: until then the first of next month, or of the month after the decision), a marketplace plan bought meanwhile ending as it begins; short → Public Cover Denied, and she may apply again; health.request_hardship grants it on a stay in hospital in a month read; coverOn gives an applicant none while she answers; Papers says the notice, its day and the hardship (PapersWorkspace.tsx:577-583), and draws no Apply while it waits",
     "persistent": "HealthRecord.pending; the scheduled decision; the notices",
     "explanation": "Papers’ line before applying (the notice, thirty days from its receipt, the month read, the hardship); A Notice Of Noncompliance; Public Cover Denied or Public Cover Approved",
     "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (pressed on Papers: the notice in its words, uncovered meanwhile, refused again in its words and not drawn, denied on 8 February, one jump against day by day with a reload, applied again in February for January), ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December…’ (drawn where December’s $465.00 of interest is short, Enroll given where $930.00 meets the rules) and ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (applied for, then granted on the hardship)",
@@ -36,14 +36,14 @@
    "added": "2026-10-16",
    "row": {
     "kind": "command",
-    "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:582), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
-    "reads": "hardshipRefusal (health.ts:1045): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, and a stay in hospital (the care log’s stay) in a month it read",
-    "changes": "the notice answered and cleared by grantPending (health.ts:1024): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2115)",
+    "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:585 at 11933d55; :582 until then), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
+    "reads": "hardshipRefusal (health.ts:1152 after brief 09’s journeys’ follow-up; :1086 at 11933d55, :1045 before): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, for a renewal a program neither ended nor ending (:1160-1164, from 2026-10-16, brief 09’s journeys: until then a renewal’s hardship was taken on HUSKY D dropped, said granted, and nothing renewed; health.drop takes the notice since, so this is a guard for an end that comes some other way), and a stay in hospital (the care log’s stay) in a month it read",
+    "changes": "the notice answered and cleared by grantPending (health.ts:1126 after the journeys’ follow-up; :1065 at 11933d55, :1024 before): an application approved, HUSKY D from the first of the month of application, or of the month before it with care in it (from 2026-10-16, brief 09’s journeys’ follow-up: until then from the first of the next month), a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2257; :2183 at 11933d55, :2115 before)",
     "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
     "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
     "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",
-    "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: approved from 1 February, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn)",
-    "issue": "Added on 2026-10-16, when the health area made the command, with no row. Partial: a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) is played by no test; the application’s is. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw."
+    "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 December, reaching back to the stay…’ (pressed on Papers: approved from 1 December, reaching back to the stay, which HUSKY D now pays, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words; renamed by brief 09’s journeys’ follow-up, as the note over it says: until then approved from 1 February) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn); tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice…’ (a member’s renewal notice answered on Papers on 10 October: renewed to 1 April 2028, said once, the decision of 5 November passing it by, covered into December, across a reload, the same in one jump as day by day; the twin who doesn’t ask ended with November) and ‘PLAYER JOURNEY: with no stay in hospital from April to September 2027…’ (Papers says why in the engine’s words and draws no button; the command refused with nothing changed). Renamed by brief 09’s journeys’ follow-up of 2026-10-16, a month earlier as HUSKY D came to begin in the month of application (as the note over each says): until then the renewal of 1 November, renewed to 1 May 2028, the decision of 6 December, covered into January, the twin ended with December, and May to October 2027",
+    "issue": "Added on 2026-10-16, when the health area made the command, with no row. Until brief 09 of the same day a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) was played by no test, and the row was partial for it; tests/remaining-09-hardship.test.ts plays it since. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw."
    },
    "review": {
     "against": "22c59eba",
@@ -56,6 +56,547 @@
     "verdict": "partial",
     "partialClass": "missing-evidence",
     "gaps": ["A renewal’s notice answered by a hardship (grantPending’s renewal branch) is played by no test."]
+   }
+  },
+  "brief.prepare": {
+   "area": "school",
+   "follows": "practice.self_tape",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "A brief’s pane (BriefPane.tsx:134, Read It Through, Learn The Lines and Rehearse It), opened from the Profile’s Genres panel by Open Its Brief; registered by briefs.ts:815 (from 2026-10-11)",
+    "reads": "alreadyApplied (an actionId sent twice); prepareRefusal (briefs.ts:447): no such brief or step, the part at 97% unless a way of playing chosen is still short of its scene’s mark, rehearsal before BRIEF.rehearseNeeds of the lines, too tired or hurt for the feet, a hospital bed, asleep, a commitment inside the step’s minutes; focusAt, the day’s repeats of the step, prepLean, prepSpeed, and the ability the step reads (stepSpeed: imagination for the breakdown, memory for the lines, listening for a rehearsal played off a reader)",
+    "changes": "prepareBrief (briefs.ts:478): the step’s minutes lived and exerted; its part (interpretation, memorization or rehearsal) moved by a share of what’s left, half again for each repeat the same day; a rehearsal rehearses in the way of playing chosen (rehearseChoice, PLAYING.gainShare of the gain), each segment’s own way (rehearseWays) and the reader classmate’s preparation (BRIEF.reader.rehearse of the gain, briefs.ts:498), and notes the material practised; the step trains its ability, a rehearsal the body or the voice where the brief is built on it (rehearseTrains)",
+    "downstream": "the forecast and the take (briefContext’s prep, and the way’s against its required mark); a take’s genre practice (practiceShare); the workbook’s problems (a segment short of its rehearsal); the take together with a reader classmate (readerRead reads their preparation); the abilities it trains, on the development history",
+    "persistent": "Person.briefs[id].prep, .playing.prep, .book.ways, .reader.prep; the development history; the action ids applied",
+    "explanation": "The pane’s toast (the step, its minutes and how much further); each part’s line (partWords: “N% of M%”); the take’s forecast beside it",
+    "tests": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (30 minutes a step, the take improved by the preparation), ‘goes half as far with a step done again the same day’, ‘lives an action sent twice once, and the same take again the same day keeps half its practice’, ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’, ‘rehearses in a way of playing chosen after rehearsal was complete, where it was refused’, ‘PLAYER JOURNEY: a mastered actor, prepared a day at a time, reaches 100 on a side against the grain that asks 97%’; tests/evidence-g07-life.test.ts ‘plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much’ (focus’s 1.1 against 0.52, worked by hand); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (each rehearsal’s gain shared with the reader); checking less: tests/attributes-phase-2b.test.ts ‘rehearses a brief on its feet further with more listening…’ (prepareBrief called directly)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Not checked through this command: the refusals from a hospital bed, asleep and for a commitment inside the step’s minutes (hourRefusal, which a take asks too)."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "Read It Through, Learn The Lines and Rehearse It each live their minutes and move their part of the brief’s preparation by a share of what’s left, half again when repeated the same day, sped by the ability the step reads; a rehearsal also rehearses in the way of playing, each segment’s way and the reader classmate’s preparation; the forecast and the take read it. Refused with its reason: rehearsal before the lines, too tired for the feet, nothing more to gain, an action sent twice.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘goes half as far with a step done again the same day’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "Bounds of 0.35 to 0.65 of the first step’s share, not the rule’s half to the place."
+     },
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘lives an action sent twice once, and the same take again the same day keeps half its practice’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/evidence-g07-life.test.ts ‘plays.read and brief.prepare: Proof read and a brief broken down grow the script and Imagination 27/13 as much’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/attributes-phase-2b.test.ts ‘rehearses a brief on its feet further with more listening…’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "prepareBrief called in place of the command."
+     }
+    ],
+    "uiEvidence": "None rendered for the step’s button; the pane’s toast reads the command’s own return. The built app presses Rehearse It in its brief scenario (tools/acceptance-ui.mjs), outside the gate.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "The hospital, asleep and commitment refusals aren’t sent through this command (a take asks the same hourRefusal)."
+    ]
+   }
+  },
+  "brief.choose": {
+   "area": "school",
+   "follows": "brief.prepare",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "A brief’s pane: Your Reading’s Choose It (BriefPane.tsx:224) and How You’ll Play It (PlayingChooser, BriefPane.tsx:231); registered by briefs.ts:822 (from 2026-10-11)",
+    "reads": "chooseRefusal (briefs.ts:508): no such brief, a reading the brief doesn’t support; the record’s reading and way of playing",
+    "changes": "chooseBrief (briefs.ts:515): the reading set, a different one keeping BRIEF.readingKept (half) of the breakdown; the way of playing by choose() (material.ts:182): the same sides keep their rehearsal, a change keeps PLAYING.keptOnChange of it, no side clears it; the sides newly chosen noted for the habits (noteMaterial)",
+    "downstream": "tapeRefusal (a take needs a reading); briefContext: the reading’s lean and draws, the way’s lean and its required mark, read by the forecast, the preview and the take; purposeOf (another reading, another way); the habits (How You Tend To Play It, and a brief suggested the other way); the workbook’s ways for a segment, on an axis the whole leaves open",
+    "persistent": "Person.briefs[id].reading, .playing, .prep.interpretation; the material record’s approaches",
+    "explanation": "The pane’s toast; the reading’s fine print (it keeps half the breakdown); the chooser’s forecast of each side (preview)",
+    "tests": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’ (a change of reading keeps half the breakdown, the take’s purpose another reading), ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’ (a reading the brief doesn’t support); tests/interpretation-journey.test.ts ‘PLAYER JOURNEY: with the grain and against it, said on the take, kept through a reload, and the advice moving once it’s trained’; tests/defects-g8-15.test.ts ‘counts a side once as it’s chosen, never again for Change The Reading, the same press, or another axis changed’; tests/evidence2-b11.test.ts ‘PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5…’; tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (a way chosen, rehearsed in at 0.9 of each step’s gain)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. A brief that doesn’t exist is refused in chooseRefusal’s words, sent by no screen and by no test."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "Choose It sets the reading a take is of, a change keeping half the breakdown; How You’ll Play It sets the way, a change keeping half its rehearsal; the forecast, the take, its purpose and the habits read them. A reading the brief doesn’t support is refused.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘is chosen, prepared and taped, kept with its purpose, and each step spends its time’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/briefs.test.ts ‘refuses a take before a reading is chosen and a rehearsal before any lines, each with its reason’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/interpretation-journey.test.ts ‘PLAYER JOURNEY: with the grain and against it, said on the take, kept through a reload…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/defects-g8-15.test.ts ‘counts a side once as it’s chosen, never again for Change The Reading, the same press, or another axis changed’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/evidence2-b11.test.ts ‘PLAYER JOURNEY: How You Tend To Play It names a way chosen 5 times of 5, or 4 of 5…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     }
+    ],
+    "uiEvidence": "The Profile’s How You Tend To Play It rendered after choices made through the command (tests/evidence2-b11.test.ts); the chooser itself isn’t pressed in a gate test.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "brief.reader": {
+   "area": "school",
+   "follows": "brief.choose",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "A brief’s pane, Read With (BriefPane.tsx:60, the ReaderChoice: a classmate or A Recording), drawn for a brief not recorded alone at a microphone; registered by briefs.ts:829 (from 2026-10-12)",
+    "reads": "readerRefusal (briefs.ts:567): no such brief, a voice brief alone at a microphone, not one of the classmates, a classmate wary of you (trust under WORK.trust.wary)",
+    "changes": "chooseReader (briefs.ts:579): a classmate new to it starts from nothing prepared, the same one chosen again keeps what they have; A Recording clears the reader. A rehearsal with them raises their preparation by BRIEF.reader.rehearse (0.5) of the step’s gain on what they have left (briefs.ts:498)",
+    "downstream": "readerRead (briefs.ts:547): a classmate by their preparation, timing (listening and focus) and reliability, the recording at its fixed timing; takeTogether: the take together beside your own, which it never moves; afterTogether: a classmate’s bond by how it went together and their trust for a slip covered; a callback earned on the take together; the workbook’s partner problem, which Run It With Your Partner answers on a brief by raising the reader’s preparation (workpieces.ts:65)",
+    "persistent": "Person.briefs[id].reader {mate, prep}; the classmate’s bond and trust; the take’s together",
+    "explanation": "The pane’s toast (who reads); the take’s words with its reader (sharedWords), the recording named as itself",
+    "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (5/9 of the way’s rehearsal at the first, half of each step’s gain after, worked by hand; another classmate and Maya after the recording from nothing; the twin who chose her after the rehearsals tapes the same take of her own and a lower take together; across a reload); tests/ensemble.test.ts ‘is refused for a voice alone at a microphone, and by a classmate who doesn’t trust you’ (trust set by hand); tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: a classmate reading a camera brief with her, the take together Strong, her bond rises by 1…’ and ‘PLAYER JOURNEY: taped unprepared on Sunday morning with Maya reading…’; tests/defects-g31-1.test.ts ‘names the recording by the thing itself wherever the words name the reader’; checking less: tests/ensemble.test.ts ‘reads a classmate prepared with you as more than the recording…’ (the classmate’s preparation set by hand)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day no test rehearsed with a classmate to raise their preparation (tests/evidence-g20-school.test.ts read it only above nothing), and the take together was compared with their preparation set by hand; tests/remaining-09-coverage.test.ts plays both since. A classmate wary of you is refused only on trust set by hand."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "Read With chooses who reads the other lines: a classmate starts from nothing and learns it at your rehearsals, half of each step’s gain; the same classmate keeps it, another or the recording doesn’t; the take together reads their preparation, timing and reliability and leaves your own take alone; the classmate’s bond and trust move with how it went. Refused for a voice brief, someone not a classmate, a classmate wary of you.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: a classmate reading a camera brief with her, the take together Strong, her bond rises by 1…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/evidence-g20-school.test.ts ‘PLAYER JOURNEY: taped unprepared on Sunday morning with Maya reading…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/ensemble.test.ts ‘is refused for a voice alone at a microphone, and by a classmate who doesn’t trust you’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The wary classmate’s trust is set by hand."
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/ensemble.test.ts ‘reads a classmate prepared with you as more than the recording…’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The classmate’s preparation set by hand, readerRead and takeTogether called directly."
+     }
+    ],
+    "uiEvidence": "None rendered for Read With; the take’s words naming the reader are rendered (tests/defects-g31-1.test.ts).",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "school.choose_playing": {
+   "area": "school",
+   "follows": "school.choose",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "School, Coursework, How You’ll Play It (CourseworkPane.tsx:167, the PlayingChooser) on a piece with a scene; registered by coursework.ts:1678 (from 2026-10-10)",
+    "reads": "playingRefusal (coursework.ts:1022): no such work, shown (not open or revising), a template with no scene; the piece’s way of playing",
+    "changes": "Assignment.playing by choose() (material.ts:182): the same sides keep their rehearsal, a change keeps PLAYING.keptOnChange of it, no side clears it; the sides newly chosen noted for the habits",
+    "downstream": "the steps on the feet, a rehearsal kept with a partner and a targeted drill rehearse it in (rehearseChoice, coursework.ts:652, 678, 1531); the showing the clock runs reads it (judgeWork, coursework.ts:937, through workContext, coursework.ts:971-977: its rehearsal as the approach’s preparation against its mark, and its lean); the forecast and the chooser’s preview; the workbook’s segment ways, on an axis it leaves open; the habits",
+    "persistent": "Assignment.playing; the material record’s approaches",
+    "explanation": "The toast (rehearsed in to N%); the chooser’s forecast of each side against the scene’s own demands (MaterialDemands)",
+    "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (Trifles, set by the clock on 30 August 2026 and shown on 8 September: the showing reads the way’s rehearsal and its lean, after a reload, against a twin who chose nothing); tests/trace-commands.test.ts ‘chooses a way to play a scene; work on its feet rehearses it in; a change keeps part of it; the showing’s forecast reads it’; tests/defects-g8-10.test.ts ‘rehearses the chosen way of playing in, as the steps on your feet do; with none chosen there’s nothing to rehearse’; tests/stage-interpretation.test.ts ‘PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload’; tests/guide-examples-coursework.test.ts ‘rehearses a choice in by its share, keeps half of it on a change, and completes it in the steps it says’; tests/remaining-school.test.ts ‘GUARD: commands the coursework screen never sends…’ (no such work, a shown piece, a piece with no scene, refused in their words)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day no showing was run with a way chosen (tests/trace-commands.test.ts read the showing’s forecast in its place, and its shown refusal on a status set by hand); tests/remaining-09-coverage.test.ts plays the showing by the clock since, and tests/remaining-school.test.ts refuses a piece shown by the clock."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "How You’ll Play It sets a scene’s way of playing; work on the feet rehearses it in, a change keeps half; the showing the clock runs reads its rehearsal against its mark and its lean; refused for a piece shown, or one with no scene.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/trace-commands.test.ts ‘chooses a way to play a scene; work on its feet rehearses it in; a change keeps part of it; the showing’s forecast reads it’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "The assignment is written onto the coursework by hand, and the showing’s forecast read in place of a showing."
+     },
+     {
+      "kind": "command",
+      "where": "tests/stage-interpretation.test.ts ‘PLAYER JOURNEY: a class scene chosen restrained and expansive, its forecast following the scene’s circumstances, the choice kept through a reload’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/defects-g8-10.test.ts ‘rehearses the chosen way of playing in, as the steps on your feet do; with none chosen there’s nothing to rehearse’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "An assignment written by hand."
+     }
+    ],
+    "uiEvidence": "None rendered for the chooser’s press; the guide’s worked example plays it through the command (tests/guide-examples-coursework.test.ts).",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "school.choose_part_playing": {
+   "area": "school",
+   "follows": "school.learn_part",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "School, Casting, How You’ll Play It (RehearsalProcess.tsx:132), while a part you’re cast in has calls to come; registered by production.ts:573 (from 2026-10-10)",
+    "reads": "partPlayingRefusal (production.ts:184): not cast there, the run over; the process’s way of playing",
+    "changes": "Process.playing by choose() (material.ts:182), as a scene’s; the sides newly chosen noted for the habits",
+    "downstream": "each call past the read-through rehearses it in (callAnswered, production.ts:438); a night reads it (materialContext, its preparation against its mark, and its lean); a director’s note on the request is taken when the playing changes to it; the workbook’s segment ways on an axis it leaves open",
+    "persistent": "Process.playing (casting, a Cabaret show, a Summer Cabaret show)",
+    "explanation": "The toast (rehearsed in to N%); the chooser’s forecast of each side",
+    "tests": "tests/trace-commands.test.ts ‘chooses a way to play a part once cast, refused when not; the calls rehearse it in’; tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: the first spring’s part played Driven from the read-through…’ (rehearsed in at two calls, saved and loaded, rehearsed in at the third as far as the twin not reloaded); tests/guide-examples-productions.test.ts (its productions.playing example: every night of the run reads the way’s preparation against its mark, a change keeping half); tests/defects-g8-11.test.ts ‘spends no hour on it, says what answers it, and the changed playing does’; tests/defects-g8-15.test.ts ‘counts the side newly chosen, not the one kept’",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. The run over (The run is over.) is refused by no test through the command."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "How You’ll Play It on a part sets its way once cast; each call rehearses it in; the nights read it; a director’s request is answered by changing to it; refused when not cast.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/trace-commands.test.ts ‘chooses a way to play a part once cast, refused when not; the calls rehearse it in’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: the first spring’s part played Driven from the read-through…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/defects-g8-11.test.ts ‘spends no hour on it, says what answers it, and the changed playing does’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/defects-g8-15.test.ts ‘counts the side newly chosen, not the one kept’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     }
+    ],
+    "uiEvidence": "The chooser rendered with a part’s forecast (tests/defects-g8-12.test.ts); not pressed in a gate test.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "The run over isn’t refused through the command by any test."
+    ]
+   }
+  },
+  "work.identify": {
+   "area": "school",
+   "follows": "school.work_note",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "Work It Through (WorkThrough.tsx:109, a problem’s button), under a practice brief once a reading is chosen, a scene for class while it’s open and a part with calls to come; registered by workbook.ts:338 (from 2026-10-12)",
+    "reads": "identifyRefusal (workbook.ts:204): no such work in progress (workPiece: brief:, assignment:, part:), a change waiting to be kept or put back, a problem the forecast doesn’t show now (problemsOf)",
+    "changes": "identify (workbook.ts:211): the problem kept on the piece’s workbook as the one being worked, with its figure",
+    "downstream": "optionsOf and tryRefusal: the ways offered and allowed are the ones that answer it; Work It Through lists them; a problem solved leaves by itself (tryAdjustment, settle)",
+    "persistent": "the piece’s workbook (Person.briefs[id].book, Assignment.book, Process.book).problem",
+    "explanation": "Work It Through: the problem’s label and why (its figure against the whole’s)",
+    "tests": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’ (a way refused before a problem is named), ‘refuses with its reason: no reading, no lines, asleep, spent’ (a problem the work doesn’t show, no such work), ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’ (refused while a change waits); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (named on a class scene set by the clock)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "A problem the forecast shows is named as the one being worked, which decides the ways offered; refused for a problem the work doesn’t show, no such work, or while a change waits to be kept or put back.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘refuses with its reason: no reading, no lines, asleep, spent’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     }
+    ],
+    "uiEvidence": "Work It Through isn’t rendered in a gate test with its problem pressed; the built app works one (tools/acceptance-ui.mjs, a way at a problem), outside the gate.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "work.try": {
+   "area": "school",
+   "follows": "work.identify",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "Work It Through (WorkThrough.tsx:69, a way’s button) under the problem named; registered by workbook.ts:345 (from 2026-10-12)",
+    "reads": "alreadyApplied; tryRefusal (workbook.ts:218): no problem named, a change waiting, not a way, a way that doesn’t answer it or was put back for it; wayRefusal (workbook.ts:236): a hospital bed, asleep, too tired or hurt for the feet, the piece’s own refusal (no lines, away), the way’s minutes before a commitment",
+    "changes": "tryAdjustment (workbook.ts:249): the way’s minutes lived and exerted; the segment’s own work moved (work-beat, run-into), the objective’s part, a reader’s preparation (with-partner); a segment played its own way (beat-way) or places to breathe set, waiting to be kept or put back; the problem’s figure before and after kept on the try; the limit worked on trained a little; a problem solved leaves",
+    "downstream": "the forecast, the take, the showing and the night read the work and what’s kept (withBook, piece.ts:167); the director’s notes on the craft read a way worked (school.work_note); discoveriesOf",
+    "persistent": "the piece’s work and workbook (tries, ways, breathe, undo)",
+    "explanation": "Work It Through: the try’s before and after; the toast; Discoveries Kept",
+    "tests": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’ (half an hour on the clock, the segment’s figure rising, the take’s forecast reading it), ‘closes a problem once the work has solved it’, ‘finds places to breathe, which lighten the load the piece puts on stamina’, ‘gives the same evidence for the same work, and keeps the workbook through a save’, ‘refuses with its reason: no reading, no lines, asleep, spent’; tests/guide-examples-coursework.test.ts ‘names the turn, works it slowly until it’s secure, and the problem leaves the list by itself’ (on a class scene); tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (a segment played its own way on a class scene, waiting)",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. A way’s minutes before a commitment are refused through school.work_note’s door in tests/defects-g8-11.test.ts, not this one’s."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "A way at the problem named is tried: its minutes lived, the work moved or a way of playing set to wait, its figure before and after kept; what’s worked is read by the forecast and the take; refused with its reason.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘names a problem, tries an adjustment it admits, and keeps the evidence’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘closes a problem once the work has solved it’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘finds places to breathe, which lighten the load the piece puts on stamina’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘gives the same evidence for the same work, and keeps the workbook through a save’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     }
+    ],
+    "uiEvidence": "Not rendered in a gate test; the built app tries a way at a problem (tools/acceptance-ui.mjs), outside the gate.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "work.settle": {
+   "area": "school",
+   "follows": "work.try",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "Work It Through (WorkThrough.tsx:78-79, Keep It and Put It Back) under a change tried; registered by workbook.ts:352 (from 2026-10-12)",
+    "reads": "settleRefusal (workbook.ts:298): no such work in progress, no change waiting",
+    "changes": "settle (workbook.ts:305): the change kept, a discovery, or put back, its ways or breath restored from undo and not offered for that problem again; a problem the forecast no longer shows leaves",
+    "downstream": "the forecast, the take, the showing the clock runs and the night read a way kept (withBook, piece.ts:167: the segment leaned as its side leans and read against its own rehearsal, rehearsed in further at the calls and on the feet); optionsOf (a way put back isn’t offered again); a director’s note taken or not",
+    "persistent": "the piece’s workbook (tries’ verdicts, ways, breathe)",
+    "explanation": "The toasts (Kept: everything after reads it; Put back as it was); Discoveries Kept",
+    "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’ (a segment’s way kept on a class scene, read by the showing the clock runs after a reload, against a twin who kept nothing); tests/workbook.test.ts ‘kept, is read by every later forecast and take, and by the piece as the take judges it’, ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’, ‘refuses with its reason: no reading, no lines, asleep, spent’ (no change waiting); tests/defects-g8-13.test.ts ‘shows The Ways At It again, the way put back gone from it, so the next is chosen’ (a part); tests/direction.test.ts ‘names what the part’s forecast shows, where, with several ways at it; worked, it keeps its way and its evidence’",
+    "issue": "Added on 2026-10-16 (brief 09, section 5), traced until then in docs/verification/connected-journey/TRACE.md alone. Until that day a way kept on a class scene was read by no showing (tests/workbook.test.ts reads one on a take); tests/remaining-09-coverage.test.ts plays the showing since. A night after a way kept is read through the same withBook (playPiece), and no test reads a night’s piece for it: tests/evidence-g19-school.test.ts keeps ways through the festival and plays its nights without reading the book."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "A change tried is kept, a discovery every later forecast, take, showing and night reads, or put back, restored and not offered for that problem again; refused with no change waiting.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in on its feet…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘kept, is read by every later forecast and take, and by the piece as the take judges it’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/workbook.test.ts ‘waits to be kept or put back; put back, it’s restored and not offered again for that problem’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "render",
+      "where": "tests/defects-g8-13.test.ts ‘shows The Ways At It again, the way put back gone from it, so the next is chosen’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     }
+    ],
+    "uiEvidence": "The note’s ways rendered again after one put back (tests/defects-g8-13.test.ts); Keep It and Put It Back aren’t pressed in a gate test.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": [
+     "No test reads a night’s piece after a way kept on a part."
+    ]
+   }
+  },
+  "life.look_after": {
+   "area": "life",
+   "follows": "life.sleep",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "The Look After Yourself menu (TimeControls.tsx:560, LookAfterMenu’s act, run('life.look_after', { action })); the command itself, apart from its five actions’ rows (life.look_after:eat and the rest)",
+    "reads": "the action, one of LOOKING_AFTER’s five (life.ts:438-441); alreadyApplied (an actionId sent twice); lookAfterRefusal (life.ts:610), each action’s own; a meal’s price (costFor)",
+    "changes": "a meal paid before its hour (spend; “The payment didn’t go through.” where it fails, reached by no play since lookAfterRefusal asks spendRefusal at the same moment, life.ts:446-461); the action’s minutes lived and charged as waking; applyLookingAfter; a workout’s fitness on the development history, its exertion and its injury draw; the action id marked; what each dial moved returned as changed, with the hour it was done",
+    "downstream": "each action’s readers, in its row; the menu’s toast (done at its hour)",
+    "persistent": "the dials, the ledger, the development history, the action ids applied",
+    "explanation": "The menu’s toast; each refusal in its words",
+    "tests": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was…’ (the shower’s time and its move on each dial, against a twin who let the same twenty minutes pass); tests/remaining-09-coverage-guard.test.ts ‘GUARD: a meal whose payment fails after the menu offered it is refused…’ (FIXTURE: spend refused by a test double); tests/fitness.test.ts ‘is lived once with the same actionId, the time, the fitness and the history with it, and twice with two’; tests/evidence-g06-life.test.ts ‘a meal sent twice with one actionId is eaten and paid once, “That was already done.”, across a reload; and so is an order’; each action’s tests in its row",
+    "issue": "Added on 2026-10-16 (brief 09, section 5): the audit kept life.look_after by its five actions, and the command’s own part (an action not on the menu, the action id, the payment before the hour, what it returns) was in no row. The payment refused after the refusal passed is a defensive guard no play reaches, tested on a test double."
+   },
+   "review": {
+    "against": "7e531122",
+    "claim": "life.look_after takes one of five actions: anything else is refused in its words with nothing changed; an action sent twice with one id is lived once; a meal is paid before its hour, and a payment that fails is refused with nothing changed; the hour is lived and what the action moved on each dial is returned.",
+    "evidence": [
+     {
+      "kind": "command",
+      "where": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: an action not on the menu is refused in its words with the save as it was…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/fitness.test.ts ‘is lived once with the same actionId, the time, the fitness and the history with it, and twice with two’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "command",
+      "where": "tests/evidence-g06-life.test.ts ‘a meal sent twice with one actionId is eaten and paid once…’",
+      "reachesAction": true,
+      "checksConsequence": true,
+      "independent": true
+     },
+     {
+      "kind": "fixture",
+      "where": "tests/remaining-09-coverage-guard.test.ts ‘GUARD: a meal whose payment fails after the menu offered it is refused…’",
+      "reachesAction": false,
+      "checksConsequence": true,
+      "independent": true,
+      "problem": "spend refused by a test double: no play reaches it."
+     }
+    ],
+    "uiEvidence": "The menu is rendered and pressed in its actions’ rows (tests/evidence-g01-life.test.ts, the shower).",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
    }
   }
  }

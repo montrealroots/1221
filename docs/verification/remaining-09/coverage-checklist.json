@@ -1,0 +1,141 @@
+{
+ "key": "coverage",
+ "on": "2026-10-16",
+ "brief": "docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt, section 5 (the completion matrix aside, which the launching session owns), with docs/verification/integration-2026-10-16/prompts-09/coverage.md and common.md",
+ "against": "7e531122 (claude/peaceful-hamilton-59zdbb: main at 64b69fc7, #35's merge, with brief 09 and its instructions); the tree clean when this was written, the banking and journeys areas at work beside it",
+ "written": "Before any change of this area's: read in the code and the tests, and reproduced by probes outside the gate where a row's reach is the question (probe/coverage09/, git-ignored; their output kept in coverage-result.json).",
+ "baseline": {
+  "countedBy": "node tools/coverage.mjs --check, exit 0 at 7e531122 (docs/GAMEPLAY-COVERAGE.md matches the audit: 330 items; docs/capabilities.json agrees on the 150 commands both name)",
+  "statuses": { "rows": 330, "verified": 288, "partial": 2, "unresolved": 13, "deferred": 16, "legacy": 3, "informational": 8, "verifiedOfWhatCanBe": "288 of 303, 95%" },
+  "classes": {
+   "Player Journey": { "rows": 289, "verified": 287, "partial": 2 },
+   "Retained Engine, On Labelled Fixtures": { "rows": 13, "unresolved": 13 },
+   "Documentation And Static Checks": { "rows": 1, "verified": 1 },
+   "Deferred Scope": { "rows": 16, "deferred": 16 },
+   "Older Saves Only": { "rows": 3, "legacy": 3 },
+   "Said Back, Deciding Nothing": { "rows": 8, "informational": 8 }
+  }
+ },
+ "items": [
+  {
+   "id": "coverage09.1-brief.prepare",
+   "item": "An audit row for brief.prepare, traced until now in docs/verification/connected-journey/TRACE.md alone",
+   "requirement": "The coverage page's standard (docs/GAMEPLAY-COVERAGE.md, tools/coverage.mjs): every command a live capability names is a row, read against the code and its tests, with entry, reads, changes, downstream, explanation, tests, status and issue; a row is verified only on a gate test that reaches the action as a player does, checks the consequence and expects independently. The brief, section 5: complete audit entries for the nine commands, by their command ids.",
+   "currentBehavior": "BriefPane.tsx:134 (Read It Through, Learn The Lines, Rehearse It) sends brief.prepare {brief, step, actionId?} (briefs.ts:815). Refused by alreadyApplied and prepareRefusal (briefs.ts:447): no brief, not a step, nothing more to gain at 97% unless a way chosen is still short of its scene's mark, rehearsal before the lines, too tired or hurt for the feet, hospital, asleep, a commitment. prepareBrief (briefs.ts:478) lives the step's minutes, exerts the body, moves the part by a share of what's left (focus, the day's repeats at half, prepLean, prepSpeed, stepSpeed or listening for a rehearsal with a reader), and a rehearsal rehearses in the way of playing, the segment ways and the reader's own preparation, and notes the material practised; the step trains its ability. Read by the forecast and the take (briefContext's prep), practiceShare (a take's genre practice), the workbook's problems, the reader's take together. Tested through the command in tests/briefs.test.ts, tests/evidence-g07-life.test.ts, tests/attributes-phase-2b.test.ts, tests/evidence-g20-school.test.ts.",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "docs/verification/audit/school.json (generated)"],
+   "plan": "Add the row through inputs/added-rows.json after practice.self_tape's row's neighbours (school area), its words read from the code at 7e531122 and its review of 2026-10-16 citing each test by its title; give it the verdict its tests earn.",
+   "acceptance": "tools/coverage.mjs --check exits 0 with the row: its titles land, a test file it names issues brief.prepare, and (if verified) one of its tests reaches the action, checks the consequence and expects independently.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-brief.choose",
+   "item": "An audit row for brief.choose",
+   "requirement": "As coverage09.1-brief.prepare.",
+   "currentBehavior": "BriefPane.tsx:224 (Your Reading's Choose It) and :231 (PlayingChooser, How You’ll Play It) send brief.choose {brief, reading, pace?, scale?, structure?} (briefs.ts:822); refused by chooseRefusal (briefs.ts:508): no brief, a reading the brief doesn't support. chooseBrief (briefs.ts:515): a different reading keeps BRIEF.readingKept (0.5) of the breakdown, the way chosen by choose() (material.ts:182, a change keeps PLAYING.keptOnChange of its rehearsal), the sides newly chosen noted for the habits. Read by tapeRefusal (a take needs a reading), briefContext (the reading's lean and draws, the way's lean and its required mark), purposeOf (another reading, another way), the habits (How You Tend To Play It), the workbook's ways. Tested in tests/briefs.test.ts, tests/interpretation-journey.test.ts, tests/evidence2-b11.test.ts, tests/defects-g8-15.test.ts.",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json"],
+   "plan": "As coverage09.1-brief.prepare.",
+   "acceptance": "As coverage09.1-brief.prepare, for brief.choose.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-brief.reader",
+   "item": "An audit row for brief.reader",
+   "requirement": "As coverage09.1-brief.prepare. The capability practice-briefs' limits say no test rehearses with a classmate to raise what they've prepared with you, and that the take together is compared with the classmate's preparation set by hand (tests/ensemble.test.ts sets rec.reader.prep = 1).",
+   "currentBehavior": "BriefPane.tsx:60 (Read With) sends brief.reader {brief, mate: index | 'alone'} (briefs.ts:829); refused by readerRefusal (briefs.ts:567): no brief, a voice brief alone at a microphone, not a classmate, a classmate wary of you. chooseReader (briefs.ts:579): a new classmate starts at nothing prepared, the same one keeps theirs, 'alone' is the recording. A rehearsal with them raises the reader's preparation by BRIEF.reader.rehearse (0.5) of the step's gain on what's left (briefs.ts:493); readerRead (briefs.ts:547) reads it with their timing and reliability, takeTogether and the take's together, afterTogether the bond and trust. Gap reproduced by reading: tests/evidence-g20-school.test.ts asserts only rec.reader.prep > 0 after six rehearsals; no gate test compares the take together with a classmate who rehearsed against one who didn't.",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "tests/remaining-09-coverage.test.ts (new)"],
+   "plan": "A played test: Maya chosen before the rehearsals learns it at 5/9 of the way's rehearsal (0.5 of the gain against PLAYING.gainShare's 0.9, worked by hand), a second classmate starts at nothing, Maya chosen again after 'alone' starts at nothing; twins taped at the same moment, one with Maya rehearsed in and one with Maya chosen after the rehearsals: the same own take, the take together higher with the classmate who rehearsed; across a reload. Then the row, verified if the test holds.",
+   "acceptance": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a classmate chosen to read before the rehearsals learns it with her…’ (command, reload); a mutation of briefs.ts's reader rehearsal (BRIEF.reader.rehearse taken out) killed.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-school.choose_playing",
+   "item": "An audit row for school.choose_playing",
+   "requirement": "As coverage09.1-brief.prepare. The capability how-you-play's limits say no showing is run with a way chosen: that the showing reads the way is checked on its forecast (tests/trace-commands.test.ts), and a shown scene's refusal on a status set by hand.",
+   "currentBehavior": "CourseworkPane.tsx:167 (How You’ll Play It's PlayingChooser) sends school.choose_playing {assignmentId, pace?, scale?, structure?} (coursework.ts:1678); refused by playingRefusal (coursework.ts:1022): no such work, shown, a template with no scene. choose() keeps the rehearsal on the same choice and PLAYING.keptOnChange on a change; the steps on the feet and a rehearsal kept with a partner rehearse it in; workContext reads its lean and its required mark at the showing. Played since: tests/stage-interpretation.test.ts (a scene set by the clock, chosen through the command, the save reloaded, the preview kept); tests/remaining-school.test.ts (the three refusals through the command, the shown one on a scene shown by the clock).",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "tests/remaining-09-coverage.test.ts (new)"],
+   "plan": "A played test: a scene study set by the clock, Driven chosen and rehearsed in on the feet, the showing played by the clock; the showing's record keeps the way's rehearsal as its approach preparation and leans responsiveness above its twin who chose nothing, across a reload before the showing. Then the row.",
+   "acceptance": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: a scene study set by the clock, played Driven and rehearsed in…’ (command, clock, reload); a mutation of the way's read at the showing killed.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-school.choose_part_playing",
+   "item": "An audit row for school.choose_part_playing",
+   "requirement": "As coverage09.1-brief.prepare. The capability how-you-play's limits said no test reloads a save with a choice rehearsed in, and no test checks that a night reads a part's way (since played in tests/guide-examples-productions.test.ts's productions.playing).",
+   "currentBehavior": "RehearsalProcess.tsx:132 sends school.choose_part_playing {which?, pace?, scale?, structure?} (production.ts:573); refused before casting, for a part with no calls to come, a play with no material. The calls rehearse it in; a night reads it (materialContext). Tested: tests/trace-commands.test.ts, tests/guide-examples-productions.test.ts (the nights read its preparation and required mark), tests/defects-g8-11.test.ts (a director's request answered by a change), tests/defects-g8-15.test.ts.",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "tests/remaining-09-coverage.test.ts (new)"],
+   "plan": "Read its refusals in production.ts; add a reload of a part with a choice rehearsed in, played through its calls against its twin that wasn't reloaded, if no test has one. Then the row.",
+   "acceptance": "tests/remaining-09-coverage.test.ts's part journey (command, clock, reload), or the row's issue naming what isn't checked.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-work.identify",
+   "item": "An audit row for work.identify (the workbook)",
+   "requirement": "As coverage09.1-brief.prepare.",
+   "currentBehavior": "WorkThrough.tsx:109 (Work It Through's problems) sends work.identify {piece, problem} (workbook.ts:338); identifyRefusal (workbook.ts:204): no such work, a change waiting to be kept or put back, a problem the forecast doesn't show. identify keeps the problem on the piece's book. Read by optionsOf and tryRefusal (an adjustment answers the problem named). Tested on a brief (tests/workbook.test.ts), a class scene (tests/defects-g8-9.test.ts) and a part (tests/guide-examples-productions.test.ts).",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json"],
+   "plan": "As coverage09.1-brief.prepare.",
+   "acceptance": "As coverage09.1-brief.prepare, for work.identify.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-work.try",
+   "item": "An audit row for work.try",
+   "requirement": "As coverage09.1-brief.prepare.",
+   "currentBehavior": "WorkThrough.tsx:69 sends work.try {piece, adjustment, option?, actionId?} (workbook.ts:345); tryRefusal (workbook.ts:218) and wayRefusal (workbook.ts:236): no problem named, a change waiting, not a way, a way put back, hospital, asleep, too tired or hurt for the feet, the piece's own refusal, the minutes before a commitment. tryAdjustment lives the minutes and moves the segment's work, a turn's, the objective, the reader's part; a way of playing a segment or places to breathe wait to be kept or put back; the evidence kept on the try. Read by the forecast, the take, the showing and the night (withBook), the director's notes. Tested in tests/workbook.test.ts, tests/defects-g8-9.test.ts, tests/guide-examples-coursework.test.ts, tests/guide-examples-productions.test.ts.",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json"],
+   "plan": "As coverage09.1-brief.prepare.",
+   "acceptance": "As coverage09.1-brief.prepare, for work.try.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-work.settle",
+   "item": "An audit row for work.settle",
+   "requirement": "As coverage09.1-brief.prepare. The capability working-it-through's limits say that on a class scene nothing is kept or put back, and that no test plays a night after a way is kept.",
+   "currentBehavior": "WorkThrough.tsx:78-79 (Keep It, Put It Back) send work.settle {piece, keep} (workbook.ts:352); settleRefusal (workbook.ts:298): no such work, no change waiting. settle (workbook.ts:305) keeps the way (a discovery) or puts it back (restored, and not offered for that problem again). Read by the forecast, the take, the showing and the night (withBook, piece.ts:167); discoveriesOf. Tested: tests/workbook.test.ts (kept, read by a take's piece), tests/defects-g8-13.test.ts (put back on a part), tests/direction.test.ts and tests/evidence-g19-school.test.ts (kept on a part through the festival, which plays its nights without reading the book).",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "tests/remaining-09-coverage.test.ts (new)"],
+   "plan": "A played test: a way of playing a segment of a class scene set by the clock tried and kept, and the showing by the clock reads it (its record's piece plays that segment its own way), against a twin who put it back; and the part's nights after a way kept, if the run allows. Then the row.",
+   "acceptance": "tests/remaining-09-coverage.test.ts's workbook journey (command, clock); a mutation of withBook's read of the ways killed.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.1-life.look_after",
+   "item": "An audit row for life.look_after as a command (the audit keys it by its five actions)",
+   "requirement": "As coverage09.1-brief.prepare: the command's own part, which no action's row holds: an unknown action refused in its words, an action sent twice with one actionId lived once, the payment taken before the hour, the hour lived and what it changed returned, and a payment that fails after the refusal passed refused with nothing changed.",
+   "currentBehavior": "TimeControls.tsx:560 (the Look After Yourself menu) sends life.look_after {action, actionId?} (life.ts:438-500). An action not in LOOKING_AFTER: “That isn’t something you can do for yourself here.”; alreadyApplied; lookAfterRefusal (life.ts:610); a meal paid by spend before its hour, “The payment didn’t go through.” where spend fails (reached by no play: lookAfterRefusal asks spendRefusal at the same moment, life.ts:440-455's comment); the hour advanced and charged; applyLookingAfter; a workout's development, exertion and injury draw; the dials' moves returned as changed. Tested: the five actions' rows; tests/fitness.test.ts and tests/evidence-g06-life.test.ts (an actionId sent twice, a workout and a meal). The unknown action's refusal and the payment's failure are tested by none (grep of tests/, 7e531122).",
+   "affectedSystems": ["docs/verification/pipeline/inputs/added-rows.json", "tests/remaining-09-coverage.test.ts (new)"],
+   "plan": "A played test: an action not on the menu refused in its words with the save as it was; what the command returns as changed is each dial's move, worked against the dials before and after. A GUARD test for the payment refused after the refusal passed, with spend made to fail by a test double (FIXTURE: no play reaches it), the clock, the dials and the ledger as they were. Then the row.",
+   "acceptance": "tests/remaining-09-coverage.test.ts ‘life.look_after …’ (command) and ‘GUARD: …’ (fixture).",
+   "classification": "required reachable behavior (the dispatch); necessary defensive guard (the payment's failure)"
+  },
+  {
+   "id": "coverage09.2-hardship-renewal",
+   "item": "health.request_hardship's renewal branch played: a member's renewal notice answered by a hardship (the notice, the command as Papers issues it, the decision, persistence across a reload, one jump against day by day), in tests/remaining-09-hardship.test.ts; then the row's status from its evidence",
+   "requirement": "42 CFR 435.555(d)(1) (a short-term hardship, subject to a request, for a stay in hospital), 435.558 (a notice of noncompliance, thirty days from its receipt, covered meanwhile), 435.916 (a renewal's notice of its basis), as SLATE implements them (health.ts:1000-1050, 2113-2140); Connecticut's six-month look-back at renewal (PUBLIC_COVER.workLookBack). The row health.request_hardship says partial: 'A renewal’s notice answered by a hardship (grantPending’s renewal branch) is played by no test.'",
+   "currentBehavior": "renewProgram (health.ts:911) sends a renewal's notice of noncompliance where no month of the six before meets the work rules; hardshipRefusal (health.ts:1045) lets a stay in hospital in a month assessed answer it; health.request_hardship (health.ts:2116) calls grantPending's renewal branch (health.ts:1027): applyRenewal kept, renewAt the renewal's own next date, 'Your Public Cover Is Renewed' with the month met by a stay in hospital, on your request; the decision of WORK_DECIDED_KIND finds nothing pending and passes. Played by no test (grep of tests/, 7e531122: every request_hardship call is on an application).",
+   "affectedSystems": ["tests/remaining-09-hardship.test.ts (new)", "docs/verification/pipeline/inputs/after-check.json (the row's verdict, if the test holds)", "docs/verification/remaining-09/coverage-result.json (rowText for health.request_hardship)"],
+   "plan": "Played from creation (newLifeFrom, Comfortable, Capital One), withdrawn by 25 August 2026, enrolled in HUSKY D on Papers on 1 October; a stay in hospital in September 2027 (TEST SETUP: that week's illness draw forced, every other week's a no, as tests/remaining-health-eligibility.test.ts forces it); the renewal of 1 November 2027 sends its notice; Request A Hardship Exception pressed on Papers on 10 November; renewed to 1 May 2028 and said once; the decision of 6 December passes it by; covered on 1 January 2028; across a reload; the same in one jump as day by day; a twin who doesn't ask is ended with December. Figures worked by hand: the notice dated 1 November is answered by 5 December and decided 6 December; HUSKY D renewed in 2027 renews six months on.",
+   "acceptance": "tests/remaining-09-hardship.test.ts ‘PLAYER JOURNEY: …’ (render, command, clock, reload, jump against steps); mutations of grantPending's renewal branch and of hardshipRefusal's month test killed.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "coverage09.3-unresolved",
+   "item": "The 13 unresolved rows, each read again: what a Yale player meets now, what can be implemented in scope, and what's unreachable because the owner removed the systems that reached it",
+   "requirement": "The brief, section 5: review all 13 and resolve every implementable in-scope requirement (a played test where play now reaches it, a fix where it's broken), deferrals kept apart, removed systems not restored (docs/REQUIREMENTS.md, the scope reset of 2026-10-09).",
+   "currentBehavior": "Probed at 7e531122 (probe/coverage09/bank-rows.ts, every one of the 54 home banks with research, the prior residence begun 2026-08 and 2008-09, a Comfortable family at Chase): no home account is in a cooling-off at the start (opened by 1 August 2026), arrange_overdraft is refused in each bank's words, no overrun loan is offered, the only card is Chase's with no money transfer, a switch is refused ('That isn’t a bank where you live'); Japan Post Bank is refused at creation. So bank.cancel_new, bank.arrange_overdraft, bank.take_overrun_loan, card.money_transfer, bank.switch, bank.switch_complete, bank.cancel_switch and bank.stop_balance_transfer stay out of reach. Tax: probe/coverage09/tax-lien.ts, an Inherited family's student at Capital One (3.00% on $2.6 million) who files nothing: the IRS's substitute for 2027 assessed for $13,631.09 on 17 August 2029, its LT11 of 4 January 2030 at $14,244.18 files the notice of federal tax lien, the levy pays it on 3 February, it's released on 5 March, and Form 12277 is refused while 2028's return is unfiled and granted once it is: tax.federal_lien_withdraw is reachable by a current Yale player. tax.amend (no writer changes a filed year's record), tax.catch_up_state_plan (Connecticut ends a plan at its first payment missed), tax.lien_dispute (Connecticut's assessment is the return's own figure, so its lien is never in error) and tax.request_waiver (Oregon's alone) read again in the code, out of reach.",
+   "affectedSystems": ["tests/remaining-09-coverage.test.ts (new)", "docs/verification/pipeline/inputs/after-check.json", "docs/verification/pipeline/inputs/doc-fields.json (acceptance and row text, through coverage-result.json's rowText where the fold places it)"],
+   "plan": "tax.federal_lien_withdraw: a played journey (the creation screen's Inherited family at Capital One, the clock alone to the lien, the release, 2028's return filed on Papers, Withdraw pressed, withdrawn 30 days on, once across a reload, the lien and its twin: a Comfortable family's student gets no lien), its row moved by after-check.json on its evidence, its acceptance's player part corrected. The other twelve: the probe's output recorded, each row's acceptance read again and corrected where it's falsified, and each given its status from the seven (the eight bank rows and the three state-tax rows: the owner's open decision, CURRENT-SCOPE-2026-10-15.md's Owner's Decisions 2, whether rows reachable only through a removed system are Deferred; tax.amend: the same question for a path nothing in scope reaches).",
+   "acceptance": "tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: an Inherited family’s student at Capital One who files nothing …’ (render, command, clock, reload); its mutation of federalLienWithdrawRefusal's three-year rule killed; tools/coverage.mjs --check exit 0 with the row verified and its class a player journey.",
+   "classification": "required reachable behavior (tax.federal_lien_withdraw after payment); retained engine on fixtures (the other twelve, and the lien's filed-in-error branch)"
+  },
+  {
+   "id": "coverage09.4-fold",
+   "item": "The banking area's result (docs/verification/remaining-09/banking-result.json) and the others in remaining-09/ folded in: remaining-fold.cjs extended to read that folder, the renames it records followed, and the audit regenerated at the end",
+   "requirement": "The pipeline's rule (docs/verification/pipeline/README.md): the audit is generated, never edited by hand; an area's rowText and evidence come in through the fold.",
+   "currentBehavior": "remaining-fold.cjs reads docs/verification/remaining/*-result.json alone (its DIR); a result in remaining-09/ goes nowhere.",
+   "affectedSystems": ["docs/verification/pipeline/remaining-fold.cjs", "docs/verification/pipeline/inputs/remaining-rows.json", "docs/verification/pipeline/README.md"],
+   "plan": "Read every *-result.json in remaining/ and then remaining-09/ (the later pass's rowText winning, said as twice); evidence keyed remaining-09-<key>; map each item of this pass to its rows in remaining-rows.json. Regenerate in the README's order when the areas' results are in; coverage.mjs, --check, capabilities.mjs --write and --check.",
+   "acceptance": "The fold lists no item unmapped and no title that isn't a test; the regeneration's coverage.mjs --check and capabilities.mjs --check exit 0.",
+   "classification": "required reachable behavior (of the pipeline)"
+  }
+ ]
+}

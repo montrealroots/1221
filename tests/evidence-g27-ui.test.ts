@@ -11,8 +11,9 @@
  * - `c-performerTitle`: twin lives, she/her and he/him on one seed, no title set by hand. The first spring's Yale Rep
  *   understudy is Nina for her and Konstantin for him; the Summer Cabaret, joined by its command that day, gives her
  *   Natalya Stepanovna, Maurya and Mrs Hale and him Ivan Lomov, Bartley and Sheriff Peters, each a part its play writes
- *   for their title. The second fall's casting, across a save and a load, gives her Frau Bergmann in Spring Awakening
- *   and him Hänschen Rilow, and the Rep's understudy Elmire and Tartuffe; the lead-taken bond reads the title (the
+ *   for their title. The second fall's casting, across a save and a load, gives her Frau Gabor in Spring Awakening (Frau
+ *   Bergmann until evaluation-10)
+ *   and him Hänschen Rilow (Ernst Röbel until then), and the Rep's understudy Elmire and Tartuffe; the lead-taken bond reads the title (the
  *   weeks shared 10 of bond, a lead written for your title taken while you're not a lead 12 off it): her bond with the
  *   classmate who took Wendla moves −2 and his +10, with the two who took Melchior and Moritz hers +10 and his −2. A
  *   play read through `plays.read` says there's a part in Fleabag for her and none for him. On the
@@ -239,7 +240,7 @@ describe('c-performerTitle', () => {
     expect(shows(kept)).toEqual(shows(her));
   });
 
-  it('PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Bergmann and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title', () => {
+  it('PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title', () => {
     const casts = (['she/her', 'he/him'] as const).map((pronouns) => {
       let sim = working(ada('g27-cast-2', { pronouns }));
       sim.advanceTo(ET(2027, 8, 1, 12));
@@ -261,13 +262,16 @@ describe('c-performerTitle', () => {
     // Directors' Thesis Production I is Spring Awakening for this class; her part is written for an actress, his for an actor.
     // Frau Bergmann and Hänschen Rilow, and Aaliyah Kim as Wendla, until 2026-10-16, when casting's read of a night came
     // to weigh each ability as the play demands (`BASE_INPUTS`); her part was Frau Gabor from then until later that day,
-    // when a stage's house came to weigh the voice and the body (`STAGE_LEAN`), and Frau Bergmann again since. The parts
+    // when a stage's house came to weigh the voice and the body (`STAGE_LEAN`), and Frau Bergmann again until later still,
+    // when evaluation-10 gave the play's night a long score by its six units (three tones, three turns; `demandsOf`), which
+    // casting reads as the play demands, and Frau Gabor since, his Hänschen Rilow where it was Ernst Röbel: with the turns
+    // left out of the demand they're Frau Bergmann and Ernst Röbel again (a mutation run in a copy, 2026-10-16). The parts
     // are still each written for the title cast, and neither is a lead.
-    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Frau Bergmann', size: 'supporting' });
+    expect(school(her.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Frau Gabor', size: 'featured' });
     expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Frau Bergmann').for).toBe('actress');
-    expect(school(him.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Ernst Röbel', size: 'featured' });
+    expect(school(him.sim).casting).toMatchObject({ play: 'Spring Awakening', role: 'Hänschen Rilow', size: 'featured' });
     expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Frau Gabor').for).toBe('actress');
-    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Ernst Röbel').for).toBe('actor');
+    expect(partOf(THESIS_PLAYS, 'Spring Awakening', 'Hänschen Rilow').for).toBe('actor');
     const castOf = (sim: Simulation) => Object.fromEntries((school(sim).casting!.cast ?? []).map((c) => [c.name, c.part]));
     // Who takes each lead is casting's read of the class; until later on 2026-10-16 (`STAGE_LEAN`) Grace Patel took
     // Wendla in both lives, as Daniel Walsh and Theo Rivera took Melchior and Moritz. The same classmates take them in

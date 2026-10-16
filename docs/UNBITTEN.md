@@ -188,6 +188,10 @@ farm, a status reported lost, and a dozen more, each in its commit. What it left
   1.2 million doesn’t (`mexicanSolvency`, `routeRefusal`). Settlement counted years from the first grant, not
   continuous residence. Settled on 2026-10-10: settlement and naturalization count residence held without a break,
   and a lapse restarts the count (`continuousSince`).
+  Settled on 2026-10-16 (brief 09's journeys): none of it is granted. It was reachable and read by nothing outside
+  itself until then, the card sold for $674.93 to a student whose savings met the test; from then Papers says Mexico’s
+  rule and why SLATE grants none, each step is refused in those words, a card an older save holds is kept to its end,
+  and `mexicanSolvency` went with the sale (`routeRefusal`, `MEXICO_UNREAD` in `systems/residence.ts`).
 - **A police report in New Haven.** Read only by New York's free replacement of a stolen license.
 - **IMSS contributions, EI premiums, pensions taxed.** `contribute` and `eiOnCheck` have no caller, and the pensions
   they’d feed are unreachable. This said `recordPension` had none either, which was so until 2026-10-10: from that

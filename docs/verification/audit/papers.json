@@ -9,7 +9,7 @@
       "changes": "pays the fee; a citizen’s card in force at once and REAL ID; somebody not a citizen’s Limited Term card waiting on SAVE’s ten federal workdays, to the end of their lawful presence, non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID)",
       "downstream": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one",
       "persistent": "person.documents",
-      "explanation": "toast with fee and expiry; DocumentList row; document look",
+      "explanation": "toast with fee and expiry; DocumentList row, where from 2026-10-16 a license or an ID card run out says what replaces it (an ID card applied for under Your ID; for a license, that nothing in SLATE renews one, Documents.tsx:76-81): until then the row said nothing past Run Out, and a New Yorker whose license ran out mid-program met it first as a new bank’s refusal (brief 09’s journeys); document look",
       "tests": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once…, and Citi then opens her account’ (bank.open_current takes the card), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th, Veterans Day not among them’ and its 9 PM twin; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card",
       "status": "verified",
       "issue": "A CT-born holder of a CT license is refused ('It serves as your ID'), which is correct.",
@@ -107,7 +107,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g15-papers.test.ts",
@@ -178,6 +178,20 @@
             "kind": "command",
             "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
             "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+            "kind": "render",
+            "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -519,16 +533,16 @@
       "id": "documents.naturalize",
       "kind": "command",
       "entry": "Permission To Work > ResidencePanel 'Naturalize' (Documents.tsx:294)",
-      "reads": "NATURALIZE (citizenship.ts:39-43), residenceIn, firstResidence, held without a break (continuousSince, from 2026-10-10) (naturalizeRefusal, citizenship.ts:48-73)",
+      "reads": "naturalizeRefusal: Mexico’s five years’ residence, then from 2026-10-16 the reason SLATE grants none; Britain’s and the US’s as before",
       "changes": "fee; person.naturalizing; CITIZENSHIP_KIND (citizenship.ts:76-90)",
       "downstream": "citizenOf('MX') is read by mexicanShareOf (health.ts:919-920) and appointments.ts:97, both only for somebody in Mexico. GB and US need routes that can no longer be granted (residence.ts:112-125)",
       "persistent": "person.naturalized",
       "explanation": "toast; notice 'A Citizen' (citizenship.ts:97)",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five' (the command, its five-years and being-decided refusals; the decision is never reached); tests/coverage-gaps-papers.test.ts 'a naturalization already applied for: decided, a citizen after' (the decision, the application put in by hand); tests/naturalize.test.ts names it but reaches only documents.residence’s US refusal",
+      "tests": "tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’ (its five-years refusal and, past them, the reason); tests/coverage-gaps-papers.test.ts ‘a naturalization already applied for: decided, a citizen after’",
       "status": "deferred",
       "issue": "Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven.",
       "previous": "unresolved",
-      "settled": "Continuity fixed; as documents.residence.",
+      "settled": "From 2026-10-16 Mexico’s is refused past its five years; an application made is still decided.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -565,6 +579,35 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
@@ -647,13 +690,13 @@
     {
       "id": "documents.renew_residence",
       "kind": "command",
-      "entry": "ResidencePanel 'Renew' (Documents.tsx:296)",
-      "reads": "an mx-temporary valid and in force, expiresAt within 30 days (residence.ts:204-209)",
-      "changes": "MXN fee; expiresAt += 1 year (residence.ts:210-213)",
+      "entry": "ResidencePanel’s Renew on a held Mexican card, grayed with the refusal’s words",
+      "reads": "Nothing: refused in MEXICO_RENEWAL’s words from 2026-10-16 (until then a card in force in its last 30 days)",
+      "changes": "Nothing (until 2026-10-16 an MXN fee and a year added)",
       "downstream": "Mexico residence chain only (settle and naturalize). No gameplay consumer",
       "persistent": "documents",
       "explanation": "toast 'Renewed for a year'",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence...'; tests/residence.test.ts 'gives Mexican temporary residence on the solvency test, and permanent residence after four years'; tests/guide-examples-papers.test.ts PLAYS['documents.residence'] (renewed in the card’s last 30 days, the fee and the year added)",
+      "tests": "tests/residence.test.ts ‘refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason’ (FIXTURE: a held card); tests/remaining-09-journeys.test.ts ‘DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)’",
       "status": "deferred",
       "issue": "Until 2026-10-10 it accepted an expired card, checking status 'valid' rather than inForce; it has checked inForce since (residence.ts:207).",
       "auditStatus": "unresolved",
@@ -695,6 +738,35 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
@@ -1163,17 +1235,17 @@
     {
       "id": "documents.residence",
       "kind": "command",
-      "entry": "ResidencePanel 'Apply' (Documents.tsx:293)",
-      "reads": "routeRefusal; mexicanSolvency on bank savings (residence.ts:94-133)",
-      "changes": "MXN 11,140.74 + US$56; a valid Residente Temporal for 1 year (residence.ts:180-190; grant, residence.ts:174-177)",
+      "entry": "ResidencePanel’s Apply on Mexico’s row, grayed with the refusal’s words (Documents.tsx); from 2026-10-16",
+      "reads": "routeRefusal: every route refused; Mexico’s says its rule and that SLATE grants none (MEXICO_RULE, MEXICO_UNREAD, residence.ts). Until 2026-10-16 mexicanSolvency on the bank’s savings opened it",
+      "changes": "Nothing: refused in routeRefusal’s words. Until 2026-10-16 MXN 11,140.74 + US$56 and a Residente Temporal for a year",
       "downstream": "residenceRefusal (documents.ts:239) has no caller outside documents.ts. settle and naturalize only. The document look’s 'It would let you into Mexico…' (looks/papers.tsx:121-122; until 2026-10-12 'It lets you into')",
       "persistent": "documents",
-      "explanation": "toast 'Temporary residence is granted'; ResidencePanel’s 'No life in SLATE moves to Mexico, so nothing but these papers reads it' (Documents.tsx:290); Fine 'lets you live there, not work' (Documents.tsx:305)",
-      "tests": "tests/residence.test.ts 'gives Mexican temporary residence on the solvency test...'; tests/guide-examples-papers.test.ts PLAYS['documents.residence'] (the savings threshold refused below it, the fee from the bank, the year granted); tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five'",
+      "explanation": "The row’s rule and reason, the grayed Apply’s title; until 2026-10-16 “Open to you: $674.93. No life in SLATE moves to Mexico, so nothing but these papers reads it” and the toast",
+      "tests": "tests/remaining-09-journeys.test.ts ‘DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)’; tests/residence.test.ts ‘refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason’; tests/guide-examples-papers.test.ts ‘documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved’; tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’ (renamed, inputs/renames.json)",
       "status": "deferred",
-      "issue": "A wealthy start passes the savings test on day one, but the player can never live in Mexico. See finding 3.",
+      "issue": "Until 2026-10-16 a wealthy start passed the savings test on day one and bought papers nothing read (finding 3). From then nothing is sold.",
       "previous": "unresolved",
-      "settled": "Says before payment that no life moves to Mexico and nothing but these papers reads it. Owner recommendation: withdraw the offer to new lives, keep it for saves that hold residence.",
+      "settled": "Settled 2026-10-16 (brief 09’s journeys, journeys.f-mexico-residence): the offer withdrawn, the rule said; a card a save holds kept to its end.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -1209,22 +1281,65 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 4,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "guide-examples-papers.test.ts",
+            "title": "the guide’s worked examples for Papers, played on throwaway saves > documents.residence: Mexico’s row says its rule and why SLATE grants none, the same at its savings threshold and a hundred dollars short, and the route is refused in those words with nothing moved",
+            "kind": "render",
+            "closes": "The guide’s worked example: the same row and refusal at the savings threshold and a hundred dollars short, Apply drawn grayed with the words, nothing moved. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
       "id": "documents.settle",
       "kind": "command",
       "entry": "ResidencePanel 'Settle' (Documents.tsx:295)",
-      "reads": "settleRefusal: years of residence held without a break (continuousSince, from 2026-10-10; until then since the first residence ever held) (residence.ts:145-172)",
-      "changes": "fee; temporary canceled; Residente Permanente granted (residence.ts:192-202)",
+      "reads": "settleRefusal: Britain’s five years and pay earned there; Mexico’s four years’ temporary held without a break (continuousSince), then from 2026-10-16 the reason SLATE grants none",
+      "changes": "Britain’s Indefinite Leave To Remain for its fee; Mexico’s nothing (until 2026-10-16 Residente Permanente for MXN 13,578.96)",
       "downstream": "naturalize MX only; GB settlement is unreachable",
       "persistent": "documents",
       "explanation": "toast 'Settled'",
-      "tests": "tests/commands-kept.test.ts 'settles from temporary residence after four years, and naturalizes after five' (through the commands, renewed each year); tests/coverage-gaps-papers.test.ts 'counts from the grant after a lapse, not the first ever' (settleRefusal, the documents put in by hand); tests/residence.test.ts (settleRefusal only)",
+      "tests": "tests/commands-kept.test.ts ‘is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid’; tests/coverage-gaps-papers.test.ts ‘counts from the grant after a lapse, not the first ever’; tests/residence.test.ts (settleRefusal)",
       "status": "deferred",
       "issue": "Until 2026-10-10 continuous residence wasn't checked: years were counted from the first grant, even across a lapse. Since then they count from the grant a lapse last broke (continuousSince, residence.ts:145-157).",
       "previous": "unresolved",
-      "settled": "Continuity fixed (continuousSince): a lapse restarts the count. Still read by nothing outside the Mexican chain, which no life can use.",
+      "settled": "Continuity fixed (continuousSince); from 2026-10-16 Mexico’s refused past its four years in the reason.",
       "review": {
         "on": "2026-10-13",
         "against": "fca00d8f",
@@ -1261,6 +1376,42 @@
       "verification": {
         "class": "deferred",
         "label": "Deferred Scope"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 4,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read > DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)",
+            "kind": "fixture",
+            "closes": "A wealthy New Yorker’s first day: the row reads “Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.”, no “Open to you” and no $674.93; Apply grayed with those words as its title; the command refused in them, nothing moved; a card an older save holds (FIXTURE) shown to its end, “Residente Temporal, to September 3, 2026.” with the renewal’s rule, Renew grayed and refused in its words, settle and naturalize in their rules; run out, the row reads the rule again. Fails before the fix (the copy, residence.ts, citizenship.ts, Documents.tsx and the guide at 11933d55).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "residence.test.ts",
+            "title": "a route to residence > refuses Mexican temporary residence with Mexico’s rule and why SLATE grants none, on savings or income alike; a card an older save holds (FIXTURE) isn’t renewed and runs to its end, and settling says its four years, then the same reason",
+            "kind": "fixture",
+            "closes": "Refused on savings or six months’ income alike, nothing paid; a held card (FIXTURE) refused renewal in MEXICO_RENEWAL’s words, in force to its end and not after; settling says its four years, then the reason. Recast and renamed (inputs/renames.json).",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "commands-kept.test.ts",
+            "title": "a life in Mexico > is refused Mexican residence in Mexico’s rule and why SLATE grants none; with a card an older save holds (FIXTURE), settling past four years and naturalizing past five are refused in their rules and the same reason, nothing paid",
+            "kind": "fixture",
+            "closes": "A life begun in Mexico City (TEST SETUP) refused the route in its words; with a card held four years and a day (FIXTURE), settling refused in its rule and reason; past five, naturalizing too; nothing paid. Recast and renamed.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "deferred"
       }
     },
     {
@@ -1999,7 +2150,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 8,
+        "rounds": 9,
         "tests": [
           {
             "file": "remaining-health-eligibility.test.ts",
@@ -2091,6 +2242,20 @@
             "kind": "command",
             "closes": "the LT11 reached from the due date",
             "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -2830,8 +2995,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 3,
+        "on": "2026-10-16",
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g16-papers.test.ts",
@@ -2874,6 +3039,13 @@
             "title": "PLAYER JOURNEY: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended; with Yale Health still covering her that morning, her cover isn’t counted lost",
             "kind": "command",
             "closes": "Nothing open. It is a new defect: the notice’s words for a plan that never began. It FAILS on the tree."
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -4335,6 +4507,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -4641,7 +4835,7 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: every writer to a year’s record writes at the moment it pays, into that moment’s year, and a year’s return is raised the February after, so a filed year’s figures never change and a played student is told there’s nothing to amend (tests/scope-taxpapers.test.ts ‘tax.amend: her filed 2026 and 2027 match the record…’).",
+        "player": "Unreachable: every writer to a year’s record writes at the moment it pays, into that moment’s year, and a year’s return is raised the February after, so a filed year’s figures never change and a played student is told there’s nothing to amend (tests/scope-taxpapers.test.ts ‘tax.amend: her filed 2026 and 2027 match the record…’). Read again on 2026-10-16 (brief 09), with the account kept at home and the families of that day: unchanged. Interest from a bank abroad is written to its year as it’s paid, as an American bank’s is, and nothing in the game reports a filed year’s pay late or corrects it.",
         "engine": "tests/remaining-tax.test.ts ‘FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027…’, ‘FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended…’ and ‘FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force…’ (New Haven quick-saves with a corrected W-2 set by hand); tests/tax-lifecycle.test.ts and tests/finance-paths.test.ts on New York lives.",
         "deferred": "Not deferred by the owner. Nothing in the game reports a year’s pay late or corrects it (no late or corrected W-2), so nothing a player does gives a filed year something to amend.",
         "unfinished": "None found. The three parts of its processing the row called untested on 2026-10-15 (Connecticut’s refund posted, the interest worked by hand, new tax joining a plan) are tested on fixtures since 2026-10-16 (the tax area’s result)."
@@ -5282,7 +5476,7 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’).",
+        "player": "Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone.",
         "engine": "tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed…’ (a New York plan kept past the day it would have ended, its next payment taken, across a reload, against a twin that ends); tests/state-tax.test.ts on a New York life.",
         "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
         "unfinished": "None found. Connecticut’s cure “none” is SLATE’s reading of its plan, recorded as such."
@@ -5499,7 +5693,7 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’).",
+        "player": "Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Read again on 2026-10-16 (brief 09): unchanged. An Inherited family’s student who files nothing has Connecticut liens filed by the clock on 2026, 2027 and 2028, each securing tax still owed and each paid by DRS’s levy 30 days on (probe/coverage09/tax-lien.ts), none of them in error: DRS’s assessment of a return never filed is the return’s own figure (assessStateNonFiler), so her own in its place owes the same.",
         "engine": "tests/remaining-tax.test.ts ‘FIXTURE: a Connecticut lien on DRS’s assessment that her own return, in its place, showed she didn’t owe…’ (the button pressed, decided 30 days on, withdrawn with one notice across a reload); tests/liens-and-arrangements.test.ts on California’s, by calling the engine’s functions.",
         "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
         "unfinished": "None found. Connecticut’s 30 days to withdraw a lien filed in error are SLATE’s assumption (the tax area’s result)."
@@ -5519,8 +5713,8 @@
       "persistent": "returns[].federalLien",
       "explanation": "The lien panel",
       "tests": "tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277’ (a New York life given $150,000 of wages by hand)",
-      "status": "unresolved",
-      "issue": "Unreachable: a student’s year owes the IRS under two thousand dollars (her 2027 LT11, from 2026-10-16 on 5 September 2028 for $1,789.55, was on 20 June for $1,746.41 while the letters ran from filing), against the notice’s $10,000 (tests/scope-taxpapers.test.ts). Tested on New York FIXTURE lives: paid, released and withdrawn on Form 12277 (tests/liens-and-arrangements.test.ts:141), and filed in error, released as erroneous in 14 days through the panel’s button (tests/remaining-tax.test.ts). SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate.",
+      "status": "verified",
+      "issue": "Until 2026-10-16 (brief 09) this said it was out of reach: a student’s year owed the IRS under two thousand dollars (her 2027 LT11 for $1,789.55, a Comfortable family’s). Read again that day, the creation screen’s Inherited family keeps $2.6 million, $80,190.65 of interest in 2027 at Capital One’s 3.00%, and a student who files nothing owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien: played from creation through the levy, the release, Form 12277 refused while 2028’s return is unfiled and pressed once it’s filed, to the withdrawal (tests/remaining-09-coverage.test.ts). A lien filed in error is still reached only on New York FIXTURE lives (tests/remaining-tax.test.ts), and paid, released and withdrawn on one given $150,000 of wages by hand (tests/liens-and-arrangements.test.ts). SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate.",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -5561,7 +5755,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
@@ -5575,12 +5769,19 @@
             "kind": "fixture",
             "closes": "a substitute assessed on $150,000 of wages (FIXTURE), its lien filed at the LT11; her own return, the withholding set by hand, owes nothing: the button reads Ask For Its Release As Erroneous and is enabled at once, pressed, decided in 14 days, withdrawn with its notice ', as filed in error', across a reload, not turned back by the release after payment; GUARDs: asked twice refused; the IRS's own return not amended",
             "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-09-coverage.test.ts",
+            "title": "tax.federal_lien_withdraw: an Inherited family’s student who files nothing > PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released 30 days on, Form 12277 is refused while 2028’s return is unfiled and pressed on the lien panel once it’s filed, and the lien is withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien",
+            "kind": "render",
+            "closes": "The Inherited family’s student at Capital One files nothing: the 2027 substitute assessed 485 days after the 18 April 2028 due date, the LT11 140 days on files the notice of lien over $10,000; the levy pays it; released 30 days on; the withdrawal drawn shut and refused while 2028’s return is unfiled, pressed once it’s filed; withdrawn 30 days on, said once across a reload. The Wealthy family’s twin: an LT11 under $10,000, no lien.",
+            "round": "remaining-09-coverage"
           }
         ],
-        "gapsClosed": [],
-        "gapsOpen": [
-          "unresolved: genuinely unreachable. The IRS files its notice only on $10,000 or more at the LT11; a played student's year owes it under two thousand dollars ($1,746.41 at her LT11 on 20 June 2028), so no lien and no panel"
+        "gapsClosed": [
+          "Settled after the check: unresolved: genuinely unreachable. The IRS files its notice only on $10,000 or more at the LT11; a played student's year owes it under two thousand dollars ($1,746.41 at her LT11 on 20 June 2028), so no lien and no panel"
         ],
+        "gapsOpen": [],
         "disposition": "Still unreachable: the LT11 is for $1,746.41 against the $10,000 threshold. The guide's new line ('A student’s year never owes the IRS $10,000 …') agrees.",
         "defects": [],
         "mutations": {
@@ -5588,24 +5789,25 @@
           "killed": 1,
           "survived": []
         },
-        "verdict": "unresolved",
+        "verdict": "verified",
         "claimed": "unresolved",
         "check": {
           "holds": true,
           "verdict": "unresolved",
           "problems": [],
           "weakTests": []
-        }
+        },
+        "afterCheck": "2026-10-16 (brief 09): verified on a played journey. Until that day no current life was found to owe the IRS $10,000 on a year, and the row was unresolved; read again, the creation screen’s Inherited family keeps $2.6 million, at Capital One’s 3.00% $80,190.65 of interest in 2027, and a student who files nothing owes the IRS $9,570.94 of tax on it, with the late penalties and interest over $10,000 by the LT11. The coverage area’s probe found it (probe/coverage09/tax-lien.ts, its output in docs/verification/remaining-09/coverage-result.json), and tests/remaining-09-coverage.test.ts plays it: the substitute assessed 485 days after the 18 April 2028 due date, the LT11 140 days on files the notice of lien, the levy 30 days on pays it, it’s released 30 days after, Form 12277 is refused while 2028’s return is unfiled, in the engine’s words, and pressed on the lien panel once it’s filed, the lien withdrawn 30 days on, said once across a reload; the Wealthy family’s twin, its LT11 under $10,000, has no lien. Three mutations, each in a copy (the three years’ rule made false, the threshold at $15,000 and at $10), were killed. A lien filed in error stays reached only by a fixture: the IRS’s figures leave out only the foreign tax credit and the premium tax credit. Read by the coverage area, which wrote the test, and checked by no separate skeptic."
       },
       "acceptance": {
-        "player": "Unreachable: the IRS files its notice only on $10,000 or more at the LT11, and a played student’s year owes it under two thousand dollars, her 2027 LT11 on 5 September 2028 for $1,789.55, so there’s no lien and no panel (tests/scope-taxpapers.test.ts ‘tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55…’).",
+        "player": "Reached by play from 2026-10-16 (brief 09), after payment. Until that day it was read as out of reach, a played student’s year owing the IRS under two thousand dollars (her 2027 LT11 on 5 September 2028 for $1,789.55, tests/scope-taxpapers.test.ts ‘tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55…’, a Comfortable family’s). Read again, the creation screen’s Inherited family keeps $2.6 million, and at Capital One’s 3.00% a student who files nothing owes the IRS over $10,000 on 2027 by its LT11, which files the notice of lien; the levy pays it, it’s released, and Form 12277 is refused while 2028’s return is unfiled and granted once it’s filed (tests/remaining-09-coverage.test.ts ‘PLAYER JOURNEY: at Capital One’s 3.00% on the family’s $2.6 million she owes the IRS over $10,000 on 2027 by its LT11…’). The Wealthy family’s twin has an LT11 under $10,000 and no lien. A lien filed in error is still out of a player’s reach: the IRS’s own figures leave out only the foreign tax credit and the premium tax credit, which no played life claims anywhere near the balance.",
         "engine": "tests/remaining-tax.test.ts ‘FIXTURE: the IRS’s own return assessed for a year never filed…’ (filed in error, released as erroneous 14 days on through the panel, across a reload); tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it…’ on a New York life given $150,000 of wages by hand.",
-        "deferred": "Not deferred by the owner. A balance of $10,000 owed to the IRS needs income no current life earns, and no income is invented to reach it.",
-        "unfinished": "None found. SLATE reads the $10,000 on one year’s balance where IRM 5.12.2 reads the aggregate; her years together stay far under it either way."
+        "deferred": "Not deferred by the owner, and since 2026-10-16 reached in play after payment; the release as erroneous is reached only on the fixture above.",
+        "unfinished": "None found. SLATE reads the $10,000 on one year’s balance where IRM 5.12.2 reads the aggregate (the Inherited student’s 2027 is over it alone)."
       },
       "verification": {
-        "class": "engine",
-        "label": "Retained Engine, On Labelled Fixtures"
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5703,7 +5905,7 @@
         }
       },
       "acceptance": {
-        "player": "Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’).",
+        "player": "Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’). Read again on 2026-10-16 (brief 09): unchanged; every life still files in Connecticut alone.",
         "engine": "tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…’ (25%, the part paid credited) on Portland quick-saves; tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own…’.",
         "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
         "unfinished": "None found: the excess the row called dropped on 2026-10-15 was a defect, fixed on 2026-10-16 (credited to the year and refunded). That a penalty paid and then waived is refunded is SLATE’s reading of ORS 314.415, not read (the tax area’s assumption)."

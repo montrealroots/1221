@@ -29,7 +29,7 @@ import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '@/engine/co
 import { templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
 import { materialContext, misfitOf } from '@/engine/systems/material';
-import { judgePiece, loadOf, toneSegments, type SegmentSpec } from '@/engine/systems/piece';
+import { judgePiece, loadOf, type SegmentSpec, unitSegments } from '@/engine/systems/piece';
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
 /** A seeded generator (mulberry32), so every run draws the same cases. */
@@ -88,7 +88,9 @@ describe('a result rounded once, from parts at full precision', () => {
       const ab = draw(r), tech = 20 + Math.round(r() * 7000) / 100, load = Math.round(r() * 100) / 100;
       const e = judgePiece('rounding', performer(ab, tech), { task, techniques: { scene: 1 }, prep: {}, required: {}, difficulty: 0, condition: { readiness: 100 }, key: `p:${k}`, expected: true }, { segments, work: [], part: 'rehearsal', perTurn: 0, perBlend: 0, most: 1, load });
       // Each segment: the dimensions that name fatigue (all but interpretation on a scene) by 1 − drain × load × its
-      // place × (1 − stamina); stamina is read as that drain and not as an input.
+      // place × (1 − stamina); stamina is read as that drain and not as an input. Its place is its index over n − 1: a
+      // segment's weight is its share of the whole, and from evaluation-10 its place is read by its length, which these
+      // don't give, so each is one long and The Middle, twice the others' weight, sits at a half.
       const exact = segments.map((_, s) => {
         const f = 1 - PIECE.drain * load * (s / (segments.length - 1)) * (1 - ab.stamina! / 100);
         const q = Object.fromEntries((Object.keys(task.dims) as Dimension[]).map((d) => [d, byHand(d, ab, tech, 0, task, true) * (task.dims[d]!.conditions?.includes('fatigue') ? f : 1)])) as Record<Dimension, number>;
@@ -110,7 +112,7 @@ describe('ST3 at full precision (the stage materials, as tools/interpretation.ts
     const read = materialContext(task, m, { scale, chosenAt: 0, prep: 1 });
     const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, approach: 1 };
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
-    return judgePiece('interpretation', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+    return judgePiece('interpretation', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
   };
   const both = (fn: (m: MaterialProfile, scale: 'restrained' | 'expansive') => void) => {
     const strength = GRAIN.strength;

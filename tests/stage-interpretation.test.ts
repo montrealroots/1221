@@ -25,7 +25,7 @@ import { courseworkOf, difficultyOf, playingPreview } from '@/engine/systems/cou
 import { materialContext, misfitOf } from '@/engine/systems/material';
 import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation';
 import { replay, type EvalContext, type Performer } from '@/engine/systems/evaluation';
-import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
 import { PIECE } from '@/engine/content/piece';
 
 const ALL = [...SCENE_MATERIAL, ...PLAY_MATERIAL];
@@ -39,7 +39,7 @@ function judgeEval(m: MaterialProfile, p: Performer, side?: 'restrained' | 'expa
   const read = materialContext(task, m, side ? { scale: side, chosenAt: 0, prep: 1 } : undefined);
   const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(side ? { approach: 1 } : {}) };
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage-test:${m.id}`, expected };
-  return judgePiece('stage-test', p, ctx, { segments: toneSegments(m.tones, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  return judgePiece('stage-test', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
 }
 const actor = (ab: Partial<Record<string, number>>, fill: number): Performer => ({ ability: (id) => ab[id] ?? fill, full: () => 100, technique: () => 50 });
 const EVEN = actor({}, 55);
@@ -132,12 +132,14 @@ describe('the stage reads the scene, not the house', () => {
   });
 
   it('a result kept under the rules before this change isn’t judged again by today’s', () => {
-    // evaluation-9 from the integration pass of 2026-10-16 (a result rounded once); this read evaluation-8 until then,
-    // and a result kept under evaluation-8 is now the one not judged again.
-    expect(RULESET).toBe('evaluation-9 (2026-10-16)');
+    // evaluation-10 from brief 09's follow-up, later on 2026-10-16 (a scene and a play judged in their units); this read
+    // evaluation-9 until then, and evaluation-8 before the integration pass of that day, and a result kept under either is
+    // one not judged again.
+    expect(RULESET).toBe('evaluation-10 (2026-10-16)');
     // Judged as play judges it, with the day's draw, which the record's seed reproduces.
     const now = judgeEval(byId('hedda-2'), EVEN, 'restrained', false);
     expect(replay(now, task)!.overall).toBe(now.overall);
+    expect(replay({ ...now, ruleset: 'evaluation-9 (2026-10-16)' }, task)).toBeUndefined();
     expect(replay({ ...now, ruleset: 'evaluation-8 (2026-10-16)' }, task)).toBeUndefined();
     expect(replay({ ...now, ruleset: 'evaluation-7 (2026-10-16)' }, task)).toBeUndefined();
   });

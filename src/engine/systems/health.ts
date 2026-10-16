@@ -184,6 +184,13 @@ export interface HealthRecord {
    * without it a cancellation back to a term's start had nothing to reckon.
    */
   careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string; adjusted?: { at: Instant; why: string; change: Money; plan?: Money }[]; /** Where a visit was had, so a change of cover reads it there again (from 2026-10-15). */ clinicId?: string; /** What the plan paid of it (from 2026-10-16): its price less the share where the cover paid, and no bill is made for a share of $0, so this is where HUSKY D's or Yale Health's part of a $0 visit is kept. `repriceCare` moves it. Absent on a log written before, and read then from its bill, or as none. */ planPaid?: Money }[];
+  /**
+   * Prescriptions filled at the counter, what was paid and its bill (from 2026-10-16): a change of cover back in time bills
+   * each again as the cover then was (`repriceCare`), as the care log's care is. Until then a fill wasn't kept, and a
+   * generic filled uninsured in a leave's lapse stayed at the pharmacy's cash price after Affiliate cover was bought back
+   * to the lapse's start (found playing seed jl-12, brief 09's journeys). Kept as long as the care log keeps its care.
+   */
+  fills?: { at: Instant; care: 'rx-generic' | 'rx-brand'; what: string; share: Money; billId: string; adjusted?: { at: Instant; why: string; change: Money }[] }[];
   /** A determination waiting on the person: HUSKY D's work rules unverified (from 2026-10-16). */
   pending?: PendingDetermination;
   /**
@@ -575,10 +582,71 @@ export const lawfullyPresent = (person: Person): boolean => person.usOutOfStatus
  */
 export function enrollStart(person: Person, at: Instant): Instant {
   const p = zonedParts(at, HOME);
+  return Math.max(firstOf(p.year, p.month + 1), afterYale(person, at));
+}
+
+/** The first of the month on or after Yale Health's end, where it still covers her and its end is in sight; else nothing. */
+function afterYale(person: Person, at: Instant): Instant {
   const ends = yaleEndsAhead(person, at);
   const e = ends === undefined ? undefined : zonedParts(ends, HOME);
-  const onOrAfterEnd = e === undefined ? 0 : firstOf(e.year, e.month) >= ends! ? firstOf(e.year, e.month) : firstOf(e.year, e.month + 1);
-  return Math.max(firstOf(p.year, p.month + 1), onOrAfterEnd);
+  return e === undefined ? 0 : firstOf(e.year, e.month) >= ends! ? firstOf(e.year, e.month) : firstOf(e.year, e.month + 1);
+}
+
+/**
+ * When HUSKY D begins for an application made at an instant (from 2026-10-16, brief 09's journeys): the first day of
+ * the month of application, Connecticut's Uniform Policy Manual § 1560.10(B), “the first day of the month of
+ * application when all non-procedural eligibility requirements are met during that month” (as a DSS Office of Legal
+ * Counsel hearing decision quotes it, portal.ct.gov omel_2016_765192.pdf, read 2026-10-16; 42 CFR 435.915(b)); or,
+ * applied for while Yale Health still covers her, the first on or after its end, as `enrollStart` has it. Until then it
+ * began on the first of next month, the marketplace's rule (45 CFR 155.420(b)(2)(iv)), and care had in the month of
+ * application was billed uninsured. New York's Medicaid, Medi-Cal and Covered Connecticut keep next month's first:
+ * their own rules weren't read.
+ */
+export function programStart(person: Person, at: Instant, kind: 'medicaid' | 'essential', state: BenefitState): Instant {
+  if (kind !== 'medicaid' || state !== 'ct') return enrollStart(person, at);
+  const p = zonedParts(at, HOME);
+  return Math.max(firstOf(p.year, p.month), afterYale(person, at));
+}
+
+/** The months HUSKY D reaches back before the month of application: three, or one for an application from 2027. */
+export const retroMonths = (appliedAt: Instant): number => (appliedAt >= firstOf(2027, 1) ? 1 : 3);
+
+/**
+ * The first of the earliest month before the application HUSKY D covers, or `start` where none (from 2026-10-16).
+ * Connecticut's UPM § 1560.10(A): “the first day of the first, second or third month immediately preceding the month in
+ * which the Department receives a signed application when all non-procedural eligibility requirements are met and
+ * covered medical services are received at any time during that particular month”. For an application made on or
+ * after 1 January 2027, one month: 42 USC 1396a(a)(34) as Pub. L. 119-21 § 71112(a) amends it, for an individual
+ * “described in subclause (VIII) of section 1902(a)(10)(A)(i)”, HUSKY D's adults, care “furnished in or after the month
+ * before the month in which the individual made application … if such individual was (or upon application would have
+ * been) eligible … at the time such care and services were furnished”; § 71112(d), “applications for medical assistance
+ * … made (or deemed to be made) on or after the first day of the first quarter beginning after December 31, 2026”
+ * (govinfo.gov, PLAW-119publ21, the statute's own text, read 2026-10-16).
+ *
+ * SLATE reaches back a month at a time while each month is one she was eligible in, read as its own income and status
+ * then (`programFor` at the next month's first), and while no other plan of hers covered it; it begins on the earliest
+ * of those months in which she had care, or a prescription filled, with nothing covering her (care Yale Health paid for
+ * isn't care HUSKY D would pay again). A month she wasn't eligible in ends the reach: SLATE keeps one stretch of cover,
+ * so a retroactive month beyond a gap isn't covered (Connecticut would cover it alone). The work rules aren't read
+ * again here: from 2027 the one month reached is the month before the application, the month its work rules are read
+ * in (`lookBack`), so an application granted has them met there, by a stay in hospital on request among the rest; a
+ * check of them here was written first, and taking it out changed no test's outcome.
+ */
+export function retroStart(person: Person, appliedAt: Instant, start: Instant, into: string): Instant {
+  const h = healthOf(person);
+  const p = zonedParts(appliedAt, HOME);
+  let from = start;
+  for (let k = 1; k <= retroMonths(appliedAt); k += 1) {
+    const m0 = firstOf(p.year, p.month - k);
+    const m1 = firstOf(p.year, p.month - k + 1);
+    if (m1 > start) continue;
+    const then = programFor(person, m1, into, m0);
+    if (then?.kind !== 'medicaid' || then.scope !== undefined) break;
+    if ([h.program, h.marketplace].some((c) => c !== undefined && c.from < m1 && (c.until === undefined || c.until > m0) && (c.until ?? Number.POSITIVE_INFINITY) > c.from)) break;
+    const uninsured = (t: Instant) => t >= m0 && t < m1 && coverOn(person, t) === undefined;
+    if ((h.careLog ?? []).some((e) => uninsured(e.at)) || (h.fills ?? []).some((f) => uninsured(f.at))) from = m0;
+  }
+  return from;
 }
 
 /**
@@ -639,10 +707,26 @@ function marketplaceOpen(person: Person, at: Instant, state: BenefitState, endsA
   // 60 days of losing cover until 1 February.
   const lapse = (person.school?.uncovered ?? []).find((g) => at >= g.from && (g.until === undefined || at < g.until));
   const yale = yaleUntil(person);
-  const yaleLost = lapse ? lapse.from : yale !== undefined && Number.isFinite(yale) && yale <= at ? yale : undefined;
+  // A lapse that reaches back (a withdrawal in the first fifteen days of classes, a leave begun before them) counts from
+  // when it was made, the day she learned of it (45 CFR 155.420(c)(5)), as `lapseKnown` says (from 2026-10-16).
+  const yaleLost = lapse ? lapseKnown(person, lapse.from) : yale !== undefined && Number.isFinite(yale) && yale <= at ? yale : undefined;
   const lost = Math.max(h.lostAt ?? Number.NEGATIVE_INFINITY, yaleLost ?? Number.NEGATIVE_INFINITY);
   if (at - lost <= ENROLLMENT.specialDays * MS_DAY) return { ok: true, why: `Within ${ENROLLMENT.specialDays} days of losing cover.` };
   return { ok: false, why: `Outside open enrollment, ${window.openFrom[1]} ${MONTH_NAMES[window.openFrom[0] - 1]} to ${window.openUntil[1]} ${MONTH_NAMES[window.openUntil[0] - 1]}, and not within ${ENROLLMENT.specialDays} days of losing cover.` };
+}
+
+/**
+ * When Yale Health's lapse from a moment was made, which a cover canceled back in time is learned of: the leave that began
+ * it, or a withdrawal by the fifteenth day of classes; the lapse's own start where neither made it (from 2026-10-16). A
+ * qualified individual who didn't learn of a loss in time has the 60 days from when she did (45 CFR 155.420(c)(5)), so
+ * the window to enroll counts from this, not from the cover's end back at the insurance term's start.
+ */
+export function lapseKnown(person: Person, from: Instant): Instant {
+  const school = person.school;
+  const leave = [school?.leave, ...(school?.leaves ?? [])].find((l) => l?.coverEnds === from && l.startedAt !== undefined);
+  if (leave) return Math.max(from, leave.startedAt!);
+  if (school?.withdrewEarly && school.endedAt !== undefined) return Math.max(from, school.endedAt);
+  return from;
 }
 
 /** The benchmark plan's premium a month, where they live, in a year. */
@@ -855,15 +939,9 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const own = [h.program, h.marketplace].filter((r) => r?.until !== undefined && r.until > since && r.until <= at).sort((a, b) => b!.until! - a!.until!)[0];
     const yale = yaleUntil(person);
     const chose = own?.ended !== undefined && !(yale !== undefined && yale <= at && yale > own.until!);
-    if (!chose) h.lostAt = at;
     const state = BENEFIT_STATE[home];
     const back = !state ? 'open enrollment' : `open enrollment, or a month’s income that qualifies you for ${PROGRAM_NAMES[state].medicaid}${state === 'ca' ? '' : ` or ${PROGRAM_NAMES[state].essential}`},`;
     const penalty = inCalifornia(home) ? ', and every month uncovered in California costs its penalty on your return' : '';
-    // Out of status there’s no way back to name: the marketplace and the state’s plan for the lawfully present refuse
-    // you (`mayEnroll`). Until 2026-10-13 the notice offered the marketplace’s 60 days to somebody it refused.
-    const way = chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back`
-      : !lawfullyPresent(person) && state ? `Out of status, neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
-        : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
     // Uncovered from when the last cover in force ended, which can be after last month’s look and before this one’s:
     // Yale Health ends at the hour its days run out. Until 2026-10-14 the notice gave this look’s day, so an F-1 who
     // withdrew on 2 October, Yale Health ended at eight on 1 November, was told on 1 December that she was uncovered
@@ -874,6 +952,30 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     const ends = [yaleEnd !== undefined && Number.isFinite(yaleEnd) ? yaleEnd : undefined, ...[h.program, h.marketplace].map((r) => (r?.until !== undefined && r.from < r.until ? r.until : undefined))];
     const uncoveredFrom = Math.max(...ends.filter((e): e is Instant => e !== undefined && e <= at), Number.NEGATIVE_INFINITY);
     const from = Number.isFinite(uncoveredFrom) ? uncoveredFrom : at;
+    // The 60 days run from the loss itself (45 CFR 155.420(c)(1)). Yale Health's end, or its lapse on a leave, is counted
+    // from its own hour by `marketplaceOpen`, or a lapse reaching back from when it was made (`lapseKnown`), so the look's
+    // hour isn't kept as the loss for it; a plan's end, at a month's end, is this look's. From 2026-10-16: until then the
+    // look's hour was kept for Yale Health's too, and `marketplaceOpen` took the later of the two, so a student who withdrew
+    // on 5 October 2026, uncovered from 4 November, had the marketplace until 30 January, 60 days from the look of
+    // 1 December, and was told that day “You have 60 days to enroll in the marketplace”, the 60 days from the loss ending
+    // 3 January (found playing the withdrawal, brief 09's journeys).
+    const byYale = yaleEnd !== undefined && from === yaleEnd;
+    if (!chose && !byYale) h.lostAt = at;
+    // Counted as `marketplaceOpen` counts them: a lapse reaching back, from when it was made (`lapseKnown`).
+    const knew = byYale && lapse ? lapseKnown(person, lapse.from) : from;
+    const opens = byYale ? knew : at;
+    const closes = opens + ENROLLMENT.specialDays * MS_DAY;
+    // Told a day or more after the window opened, its last day; on the day, its 60 days.
+    const window = at - opens >= MS_DAY ? `You can enroll in the marketplace until ${formatDate(closes, HOME)}, ${ENROLLMENT.specialDays} days from ${knew > from ? 'when it was canceled back' : 'losing cover'}` : `You have ${ENROLLMENT.specialDays} days to enroll in the marketplace`;
+    // And the state's program where it takes her now, at any time (`mayEnroll`), which until 2026-10-16 the notice left out:
+    // a student who withdrew was told only of the marketplace's days while HUSKY D would have taken her that morning.
+    const may = state && !chose && lawfullyPresent(person) ? mayEnroll(person, at, cur, sim) : undefined;
+    const program = may?.ok && may.program && state ? `; ${PROGRAM_NAMES[state][may.program]} takes you at any time on last month’s income, with no premium` : '';
+    // Out of status there’s no way back to name: the marketplace and the state’s plan for the lawfully present refuse
+    // you (`mayEnroll`). Until 2026-10-13 the notice offered the marketplace’s 60 days to somebody it refused.
+    const way = chose ? `A plan dropped or left unpaid opens no special enrollment: ${back} is the way back`
+      : !lawfullyPresent(person) && state ? `Out of status, neither the marketplace nor ${PROGRAM_NAMES[state].essential} will take you`
+        : `${window}${program}`;
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Health Cover Ended', body: `You’re uncovered from ${formatDate(from, HOME)}. ${way}${penalty}.`, importance: 80, route: '/workspace/papers' });
   }
   h.covered = cover !== undefined;
@@ -1030,13 +1132,18 @@ function grantPending(sim: Simulation, person: Person, pend: PendingDeterminatio
     applyRenewal(sim, person, prog, { kind: 'medicaid', band: pend.band }, at, pend.renewAt!, met);
     return;
   }
-  const from = Math.max(pend.from ?? at, enrollStart(person, at));
-  const f = zonedParts(from, HOME);
+  // From the month of application's first, and back to a month before it with care in it, decided now: the care since
+  // priced again as HUSKY D's (from 2026-10-16: until then the first of the month it would have begun when made, next
+  // month's, or of the month after the decision where that had passed, the care between billed uninsured).
+  const start = pend.from ?? programStart(person, pend.noticeAt, 'medicaid', pend.state);
+  const from = pend.state === 'ct' ? retroStart(person, pend.noticeAt, start, saveCurrency(sim.universe)) : Math.max(start, enrollStart(person, at));
+  const f = zonedParts(Math.max(start, from), HOME);
   h.program = { kind: 'medicaid', state: pend.state, from, band: pend.band, renewAt: firstOf(f.year, f.month + renewMonths(at, pend.state)) };
   const m = h.marketplace;
   const ended = m !== undefined && (m.until === undefined || m.until > from);
   if (m && ended) m.until = Math.max(m.from, from);
   armHealth(sim, person);
+  if (from < at) repriceCare(sim, person, from, at, `${PROGRAM_NAMES[pend.state].medicaid}, from ${formatDate(from, HOME)}`);
   const names = PROGRAM_NAMES[pend.state];
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Public Cover Approved', body: `${capital(names.medicaid)} is yours from ${formatDate(from, HOME)}, with no premium: ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}${ended ? ', and your marketplace plan ends as it begins' : ''}.`, importance: 80, route: '/workspace/papers' });
 }
@@ -1046,6 +1153,15 @@ export function hardshipRefusal(_sim: Simulation, person: Person, at: Instant): 
   const pend = person.health?.pending;
   if (!pend) return 'No notice of noncompliance waits on an answer.';
   if (at >= pend.decideAt) return `The thirty days to answer ended on ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
+  // A renewal's notice with nothing left to renew: the program ended or ending (from 2026-10-16: until then the hardship
+  // was taken, `grantPending` passed it by, and Papers said “The hardship is granted, and the work rules met.” while
+  // nothing was renewed; found by the coverage area, reproduced by play in tests/remaining-09-journeys.test.ts). Dropping
+  // the program takes its notice with it (`health.drop`), so this is a guard for an end that comes some other way.
+  const prog = person.health?.program;
+  if (pend.kind === 'renewal' && (!prog || !active(prog, at) || prog.until !== undefined)) {
+    const name = prog ? PROGRAM_NAMES[prog.state][prog.kind] : PROGRAM_NAMES[pend.state].medicaid;
+    return `${name} ${prog?.until !== undefined && prog.until > at ? `ends on ${formatDate(prog.until, HOME)}` : 'has ended'}, so there’s no renewal left to answer.`;
+  }
   if (!(person.health?.careLog ?? []).some((e) => e.care === 'stay' && pend.months.includes(monthKey(e.at)))) return `No month it assessed, ${monthsWords(pend.months)}, had a stay in hospital, the hardship SLATE keeps.`;
   return undefined;
 }
@@ -1716,6 +1832,7 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     const paid: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount, dueAt: at, paid: true };
     h.bills.push(paid);
     h.bills = keptBills(h.bills);
+    h.fills = [...(h.fills ?? []).filter((f) => f.at >= at - CARE_LOG.keepDays * MS_DAY), { at, care: event.care as 'rx-generic' | 'rx-brand', what: event.what, share: amount, billId: paid.id }];
     return undefined;
   }
   if (!MEDICAL.includes(event.care)) {
@@ -1866,6 +1983,23 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
       if (debt.balance >= 0) { delete h.debtSince; for (const b of h.bills) if (b.inDebt) { b.paid = true; delete b.inDebt; } }
     }
     if (credit > 0) sim.post({ memo: `Refund: ${e.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: credit }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: -credit }] });
+  }
+  // A prescription filled at the counter, priced again as the cover then was: more is billed on a line of its own, less is
+  // paid back to the bank, the fill having been paid in full when it was had.
+  for (const f of h.fills ?? []) {
+    if (f.at < from || f.at > to) continue;
+    const now = shareOf(person, f.care, f.at, cur);
+    const diff = now - f.share;
+    if (diff === 0) continue;
+    net += diff;
+    f.share = now;
+    (f.adjusted ??= []).push({ at: sim.now, why, change: diff });
+    h.seq = (h.seq ?? 0) + 1;
+    const line: MedicalBill = { id: `m${h.seq}`, at: sim.now, what: `${f.what}: ${why}`, amount: Math.max(0, diff), dueAt: sim.now + MEDICAL_DEBT.dueDays * MS_DAY, adjusts: f.billId, ...(diff <= 0 ? { paid: true } : {}), ...(diff < 0 ? { credit: -diff } : {}) };
+    h.bills.push(line);
+    h.bills = keptBills(h.bills);
+    if (diff > 0) { sim.schedule({ at: line.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${line.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: line.id } }); continue; }
+    sim.post({ memo: `Refund: ${f.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: -diff }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: diff }] });
   }
   if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${why}: care you had from ${formatDate(from, HOME)} is billed as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, off what was open or owed and the rest back to your bank`}.`, importance: 75, route: '/workspace/papers' });
   return net;
@@ -2079,17 +2213,24 @@ export function registerHealth(sim: Simulation): void {
     const may = mayEnroll(person, s.now, cur, s);
     if (!may.ok) throw new CommandError(may.why);
     const state = BENEFIT_STATE[homeOf(person)]!;
-    // The first of next month, or the first on or after Yale Health's end (`enrollStart`).
-    const from = enrollStart(person, s.now);
+    // The first of next month, or the first on or after Yale Health's end (`enrollStart`); HUSKY D, the first of this
+    // month, and back to a month before it with care in it (`programStart`, `retroStart`, from 2026-10-16).
     const h = healthOf(person);
     if (may.program) {
-      const { band, scope } = programFor(person, s.now, cur, from)!;
-      // Renewed so many months from its start, which is next month's first unless it waits for Yale Health's end.
-      const f = zonedParts(from, HOME);
+      const start = programStart(person, s.now, may.program, state);
+      const { band, scope } = programFor(person, s.now, cur, start)!;
+      const from = may.program === 'medicaid' && state === 'ct' && scope === undefined ? retroStart(person, s.now, start, cur) : start;
+      // Renewed so many months from the month of application's start, not a retroactive month's.
+      const f = zonedParts(start, HOME);
       h.program = { kind: may.program, state, from, band, renewAt: firstOf(f.year, f.month + renewMonths(s.now, state)), ...(scope ? { scope } : {}) };
-    } else h.marketplace = { from, state };
+      armHealth(s, person);
+      if (from < s.now) repriceCare(s, person, from, s.now, `${PROGRAM_NAMES[state].medicaid}, from ${formatDate(from, HOME)}`);
+      return { from, kind: may.program };
+    }
+    const from = enrollStart(person, s.now);
+    h.marketplace = { from, state };
     armHealth(s, person);
-    return { from, kind: may.program ?? 'marketplace' };
+    return { from, kind: 'marketplace' };
   });
 
   // HUSKY D applied for where Enroll can't verify its work rules (from 2026-10-16): the application is taken, a notice
@@ -2101,7 +2242,8 @@ export function registerHealth(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const cur = saveCurrency(s.universe);
     const state = BENEFIT_STATE[homeOf(person)]!;
-    const from = enrollStart(person, s.now);
+    // The month of application's first (`programStart`, from 2026-10-16: until then next month's).
+    const from = programStart(person, s.now, 'medicaid', state);
     const { band } = programFor(person, s.now, cur, from)!;
     const months = lookBack(s.now, state, 'apply');
     noticeOfNoncompliance(s, person, { kind: 'application', state, noticeAt: s.now, decideAt: decisionAt(s.now), months, band, from });
@@ -2152,9 +2294,18 @@ export function registerHealth(sim: Simulation): void {
     const until = firstOf(p.year, p.month + 1);
     const plan = [h.marketplace, h.program].find((r) => r && (r.until === undefined || r.until > s.now));
     if (!plan) throw new CommandError('You have no plan of your own to drop.');
+    // Dropped once is dropped (from 2026-10-16: until then a second press set the same day again and said so again).
+    if (plan.ended === 'voluntary' && plan.until !== undefined) throw new CommandError(`It’s dropped: it ends on ${formatDate(plan.until, HOME)}.`);
     plan.until = until;
     // Dropped, it opens no special enrollment (`HealthRecord.lostAt`, from 2026-10-12).
     plan.ended = 'voluntary';
+    // A renewal's notice waiting on an answer goes with the program it would renew, and its decision with it (from
+    // 2026-10-16: until then it stayed, Papers said she was covered until its decision, and its hardship was taken and
+    // said granted while nothing was renewed).
+    if (plan === h.program && h.pending?.kind === 'renewal') {
+      for (const i of s.universe.scheduled) if (i.status === 'pending' && i.kind === WORK_DECIDED_KIND && i.payload.personId === s.player.id) s.timeline.cancel(i.id, s.now);
+      delete h.pending;
+    }
     return { until };
   });
 

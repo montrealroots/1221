@@ -1,0 +1,609 @@
+{
+ "profile": "beginner",
+ "seed": "bj-0",
+ "days": 120,
+ "byMonth": {
+  "m0": {
+   "n": 1,
+   "overall": 54,
+   "noDraw": 54.7,
+   "atStartLevels": 54.6,
+   "atEndLevels": 57.7,
+   "difficulty": -0.2,
+   "readiness": 65,
+   "callbacks": 0
+  },
+  "m2": {
+   "n": 2,
+   "overall": 56.65,
+   "noDraw": 56.8,
+   "atStartLevels": 55.55,
+   "atEndLevels": 58.65,
+   "difficulty": -0.2,
+   "readiness": 80.5,
+   "callbacks": 0
+  },
+  "m3": {
+   "n": 16,
+   "overall": 56.56,
+   "noDraw": 56.71,
+   "atStartLevels": 54.29,
+   "atEndLevels": 57.27,
+   "difficulty": -0.18,
+   "readiness": 70.88,
+   "callbacks": 0
+  }
+ },
+ "takes": [
+  {
+   "day": 2,
+   "month": 0,
+   "brief": "brief-absurdist",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 54,
+   "noDraw": 54.7,
+   "atStartLevels": 54.6,
+   "atEndLevels": 57.7,
+   "difficulty": -0.2,
+   "readiness": 65,
+   "prep": {
+    "interpretation": 0.908,
+    "memorization": 0.905,
+    "rehearsal": 0.589,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.7",
+    "Focus (ability, execution) 4.2",
+    "Imagination (ability, interpretation) 3.4"
+   ]
+  },
+  {
+   "day": 61,
+   "month": 2,
+   "brief": "brief-coming_of_age",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 58.1,
+   "noDraw": 58.2,
+   "atStartLevels": 56.8,
+   "atEndLevels": 59.9,
+   "difficulty": -0.2,
+   "readiness": 75,
+   "prep": {
+    "interpretation": 0.846,
+    "memorization": 0.864,
+    "rehearsal": 0.719,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 6.6",
+    "Imagination (ability, interpretation) 3.1",
+    "Composure (ability, consistency) 2.8"
+   ]
+  },
+  {
+   "day": 62,
+   "month": 2,
+   "brief": "brief-absurdist",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 55.2,
+   "noDraw": 55.4,
+   "atStartLevels": 54.3,
+   "atEndLevels": 57.4,
+   "difficulty": -0.2,
+   "readiness": 86,
+   "prep": {
+    "interpretation": 0.947,
+    "memorization": 0.905,
+    "rehearsal": 0.589,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 5.8",
+    "Composure (ability, consistency) 3.1",
+    "Imagination (ability, interpretation) 2.8"
+   ]
+  },
+  {
+   "day": 91,
+   "month": 3,
+   "brief": "brief-concert_film",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 58.9,
+   "noDraw": 58.6,
+   "atStartLevels": 56.6,
+   "atEndLevels": 59.5,
+   "difficulty": -0.2,
+   "readiness": 73,
+   "prep": {
+    "interpretation": 0.81,
+    "memorization": 0.859,
+    "rehearsal": 0.765,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 5.2",
+    "Focus (ability, execution) 2.8",
+    "Composure (ability, consistency) 2.5"
+   ]
+  },
+  {
+   "day": 97,
+   "month": 3,
+   "brief": "brief-animated",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 57.1,
+   "noDraw": 57.6,
+   "atStartLevels": 56,
+   "atEndLevels": 58.6,
+   "difficulty": -0.2,
+   "readiness": 73,
+   "prep": {
+    "interpretation": 0.94,
+    "memorization": 0.93,
+    "rehearsal": 0.794,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Vocal Expression (ability, execution) 8.7",
+    "Focus (ability, execution) 2.9",
+    "Composure (ability, consistency) 2.8"
+   ]
+  },
+  {
+   "day": 97,
+   "month": 3,
+   "brief": "brief-coming_of_age",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 59.7,
+   "noDraw": 59.4,
+   "atStartLevels": 57.2,
+   "atEndLevels": 60.1,
+   "difficulty": -0.2,
+   "readiness": 63,
+   "prep": {
+    "interpretation": 0.831,
+    "memorization": 0.864,
+    "rehearsal": 0.719,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.8",
+    "Adaptability (ability, responsiveness) 3.3",
+    "Composure (ability, consistency) 2.8"
+   ]
+  },
+  {
+   "day": 103,
+   "month": 3,
+   "brief": "brief-anime",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 56.9,
+   "noDraw": 56.7,
+   "atStartLevels": 54.9,
+   "atEndLevels": 57.7,
+   "difficulty": -0.2,
+   "readiness": 74,
+   "prep": {
+    "interpretation": 0.824,
+    "memorization": 0.839,
+    "rehearsal": 0.592,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 6.6",
+    "Vocal Expression (ability, execution) 5.4",
+    "Imagination (ability, interpretation) 1.7"
+   ]
+  },
+  {
+   "day": 104,
+   "month": 3,
+   "brief": "brief-prison_film",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 57.2,
+   "noDraw": 58.3,
+   "atStartLevels": 56,
+   "atEndLevels": 59.2,
+   "difficulty": -0.2,
+   "readiness": 69,
+   "prep": {
+    "interpretation": 0.873,
+    "memorization": 0.822,
+    "rehearsal": 0.579,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Composure (ability, consistency) 3.6",
+    "Emotional Depth (ability, believability) 3.3",
+    "Listening And Responsiveness (ability, responsiveness) 3.1"
+   ]
+  },
+  {
+   "day": 105,
+   "month": 3,
+   "brief": "brief-concert_film",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 57.5,
+   "noDraw": 58.6,
+   "atStartLevels": 56.2,
+   "atEndLevels": 59.2,
+   "difficulty": -0.2,
+   "readiness": 70,
+   "prep": {
+    "interpretation": 0.897,
+    "memorization": 0.859,
+    "rehearsal": 0.765,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Composure (ability, consistency) 4.7",
+    "Focus (ability, execution) 3.9",
+    "Emotional Depth (ability, believability) 3.2"
+   ]
+  },
+  {
+   "day": 108,
+   "month": 3,
+   "brief": "brief-sea_adventure",
+   "purpose": "first",
+   "task": "tapeOnFeet",
+   "overall": 55.7,
+   "noDraw": 55.9,
+   "atStartLevels": 54.3,
+   "atEndLevels": 56.5,
+   "difficulty": -0.2,
+   "readiness": 58,
+   "prep": {
+    "interpretation": 0.869,
+    "memorization": 0.892,
+    "rehearsal": 0.723,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 5.5",
+    "Physical Expression (ability, execution) 2.8",
+    "Vocal Expression (ability, execution) 2.6"
+   ]
+  },
+  {
+   "day": 110,
+   "month": 3,
+   "brief": "brief-espionage",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 54.3,
+   "noDraw": 54.6,
+   "atStartLevels": 51.9,
+   "atEndLevels": 55.5,
+   "difficulty": -0.1,
+   "readiness": 79,
+   "prep": {
+    "interpretation": 0.89,
+    "memorization": 0.886,
+    "rehearsal": 0.659,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Composure (ability, consistency) 6.9",
+    "Emotional Depth (ability, believability) 5.9",
+    "Composure (ability, believability) 2"
+   ]
+  },
+  {
+   "day": 110,
+   "month": 3,
+   "brief": "brief-animated",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 58,
+   "noDraw": 57.6,
+   "atStartLevels": 55.8,
+   "atEndLevels": 58.1,
+   "difficulty": -0.2,
+   "readiness": 70,
+   "prep": {
+    "interpretation": 0.811,
+    "memorization": 0.93,
+    "rehearsal": 0.794,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Vocal Expression (ability, execution) 5.9",
+    "Composure (ability, consistency) 2.5",
+    "Focus (ability, execution) 2.2"
+   ]
+  },
+  {
+   "day": 111,
+   "month": 3,
+   "brief": "brief-gangster-2",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 55.2,
+   "noDraw": 55.6,
+   "atStartLevels": 52.7,
+   "atEndLevels": 56.2,
+   "difficulty": -0.1,
+   "readiness": 72,
+   "prep": {
+    "interpretation": 0.868,
+    "memorization": 0.855,
+    "rehearsal": 0.64,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 6.7",
+    "Composure (ability, consistency) 4.9",
+    "Composure (ability, believability) 2.3"
+   ]
+  },
+  {
+   "day": 113,
+   "month": 3,
+   "brief": "brief-spy",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 55.9,
+   "noDraw": 56,
+   "atStartLevels": 53.2,
+   "atEndLevels": 56.4,
+   "difficulty": -0.2,
+   "readiness": 68,
+   "prep": {
+    "interpretation": 0.922,
+    "memorization": 0.918,
+    "rehearsal": 0.51,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.4",
+    "Composure (ability, consistency) 3",
+    "Focus (ability, execution) 2.3"
+   ]
+  },
+  {
+   "day": 114,
+   "month": 3,
+   "brief": "brief-anime",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 55.6,
+   "noDraw": 56.1,
+   "atStartLevels": 53.7,
+   "atEndLevels": 56.5,
+   "difficulty": -0.2,
+   "readiness": 75,
+   "prep": {
+    "interpretation": 0.806,
+    "memorization": 0.839,
+    "rehearsal": 0.592,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Focus (ability, execution) 4.5",
+    "Vocal Expression (ability, execution) 4.5",
+    "Emotional Depth (ability, believability) 2.5"
+   ]
+  },
+  {
+   "day": 116,
+   "month": 3,
+   "brief": "brief-war",
+   "purpose": "first",
+   "task": "tapeOnFeet",
+   "overall": 54.5,
+   "noDraw": 54.4,
+   "atStartLevels": 52.1,
+   "atEndLevels": 54.5,
+   "difficulty": -0.2,
+   "readiness": 68,
+   "prep": {
+    "interpretation": 0.923,
+    "memorization": 0.927,
+    "rehearsal": 0.507,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Physical Expression (ability, execution) 4",
+    "Emotional Depth (ability, believability) 3.8",
+    "Composure (ability, consistency) 2.3"
+   ]
+  },
+  {
+   "day": 117,
+   "month": 3,
+   "brief": "brief-film_noir-2",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 51.4,
+   "noDraw": 52.3,
+   "atStartLevels": 49.2,
+   "atEndLevels": 52.5,
+   "difficulty": -0.1,
+   "readiness": 67,
+   "prep": {
+    "interpretation": 0.86,
+    "memorization": 0.845,
+    "rehearsal": 0.585,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Composure (ability, consistency) 5.9",
+    "Vocal Expression (ability, execution) 3.2",
+    "Focus (ability, execution) 3"
+   ]
+  },
+  {
+   "day": 118,
+   "month": 3,
+   "brief": "brief-prison_film",
+   "purpose": "another-reading",
+   "task": "tape",
+   "overall": 59.6,
+   "noDraw": 58.9,
+   "atStartLevels": 55.6,
+   "atEndLevels": 59,
+   "difficulty": -0.2,
+   "readiness": 93,
+   "prep": {
+    "interpretation": 0.81,
+    "memorization": 0.822,
+    "rehearsal": 0.579,
+    "genre": 0.1536
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 4.9",
+    "Composure (ability, consistency) 3.2",
+    "Listening And Responsiveness (ability, connection) 2.1"
+   ]
+  },
+  {
+   "day": 119,
+   "month": 3,
+   "brief": "brief-drama-2",
+   "purpose": "first",
+   "task": "tape",
+   "overall": 57.5,
+   "noDraw": 56.8,
+   "atStartLevels": 53.2,
+   "atEndLevels": 56.8,
+   "difficulty": -0.1,
+   "readiness": 62,
+   "prep": {
+    "interpretation": 0.911,
+    "memorization": 0.915,
+    "rehearsal": 0.741,
+    "genre": 0.1168
+   },
+   "required": {
+    "interpretation": 0.8,
+    "memorization": 0.8,
+    "rehearsal": 0.5,
+    "genre": 0.9
+   },
+   "limits": [
+    "Emotional Depth (ability, believability) 7.6",
+    "Composure (ability, consistency) 4.3",
+    "Focus (ability, execution) 2.1"
+   ]
+  }
+ ]
+}

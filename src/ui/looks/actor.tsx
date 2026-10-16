@@ -29,7 +29,7 @@ import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine
 import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
 import { Segments } from '@/ui/components/WorkThrough';
-import { BRIEF_BY_ID } from '@/engine/content/briefs';
+import { briefKinds } from '@/engine/content/briefs';
 import { TEMPLATES } from '@/engine/content/coursework';
 import { defineLook, type Way } from './registry';
 import { at } from './subject';
@@ -127,14 +127,14 @@ defineLook<TheAbility>('ability', {
         <>
           <div className="grid grid-3">
             <Stat label="Now" value={one(level)} note={level >= full ? 'Full: work that reads it asks nothing more' : `${one(full - level)} to full`} />
-            <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Where ordinary work levels off; practice goes past it' : id === 'stamina' ? 'Classes don’t build it; workouts do' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; work in front of people does'} />
+            <Stat label="Classes Reach" value={classesGrow(id) ? one(reach) : '—'} note={classesGrow(id) ? 'Where ordinary work levels off; practice goes past it' : id === 'stamina' ? 'No reach: workouts build it, and the classes that train the body as hard' : id === 'discipline' ? 'Classes don’t build it; practice kept up does' : 'Classes don’t build it; work in front of people does'} />
             <Stat label="Last Change" value={recent[0] ? `+${recent[0].delta.toFixed(2)}` : 'None Yet'} note={recent[0] ? `${sourceWords(recent[0].source)}, ${formatDate(recent[0].at, zoneOf(sim))}` : `None in the latest ${DEVELOPMENT.historyKept} changes kept`} />
           </div>
           <p className="small"><strong>What develops it.</strong> {def.develops}</p>
           <p className="small"><strong>Where it began.</strong> {def.derivedFrom}</p>
           <p className="small"><strong>What it does.</strong> {readers.length ? readers.map((r) => `${r.label}: ${r.dims.map((d) => DIMENSION_LABEL[d].toLowerCase()).join(', ')}`).join('; ') : def.affects}.</p>
           {exercise && <p className="small"><strong>To practice it.</strong> {exercise.label}: {exercise.how} {exercise.kind === 'slate' ? '(SLATE’s own exercise.)' : exercise.kind === 'named' ? '(A named exercise of real pedagogy.)' : '(A composite of real practice.)'}</p>}
-          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it and holds it for {FITNESS.heldDays} days; past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout the same day builds half.</p>}
+          {id === 'stamina' && <p className="small"><strong>Its scale.</strong> Stamina is your fitness, full at the most a body your age can be brought to ({one(full)} now): at full fitness it counts as full. A workout builds it and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (from 2026-10-16: Movement Invention, stage combat); past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, as an untrained body’s does. A second workout the same day builds half.</p>}
           {recent.length > 0 && (
             <ul className="small">
               {recent.map((h, i) => <li key={i}>{formatDate(h.at, zoneOf(sim))}: +{h.delta.toFixed(3)}, {sourceWords(h.source)}</li>)}
@@ -168,7 +168,8 @@ defineLook<TheGenre>('genre', {
     const speed = genreSpeed(person, [id]);
     const play = playOfGenre(id);
     // Its briefs' takes (from 2026-10-12: until then this looked for keys a self-tape stopped writing when briefs came, and listed nothing).
-    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && (BRIEF_BY_ID[w.inputs.key.split(':')[2] ?? '']?.kinds ?? []).includes(id)).slice(-3).reverse();
+    // A take of a brief retired on 2026-10-16 is still the genre’s (`briefKinds`): until then only a brief offered now was looked up.
+    const tapes = (person.work ?? []).filter((w) => w.inputs.key.startsWith(`brief:${person.id}:`) && briefKinds(w.inputs.key.split(':')[2] ?? '').includes(id)).slice(-3).reverse();
     const demand = GENRE_DEMANDS[id];
     return {
       name: GENRE_BY_ID[id]!.label,

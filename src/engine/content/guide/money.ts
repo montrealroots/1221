@@ -131,6 +131,7 @@ const OWED = -MODEST.cardBalance;
 const HOME_BANKS = allHomeTerms().filter((t) => !t.unusable).length;
 const HOME_COUNTRIES = new Set(allHomeTerms().map((t) => bankById(t.bankId)?.iso)).size;
 const BARCLAYS = bankById('gb-barclays')!;
+const SPARKASSE = bankById('de-berliner-sparkasse')!;
 const LONDON_SPLIT = splitOf(MODEST, 'USD', BARCLAYS, true);
 const WORTH = MODEST.checking + MODEST.savings - OWED;
 const CHASE_RATE = priceWithin(CHASE_CARD.aprFrom ?? 0, CHASE_CARD.aprTo ?? 0, RECORD);
@@ -264,7 +265,9 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Interest', value: 'Built each day on the day’s closing balance, past any floor, up to any cap, at the tier the balance reaches; paid on the month’s last day or in the bank’s own months, less any tax the country has the bank take first' },
-      { label: 'The Monthly Fee', value: 'Charged at 11 PM on the month’s last day unless the month met a waiver: deposits paid in, the month’s lowest balance, its average, an average across your accounts at the bank, your age, card purchases, or the first months after opening. Short of a waiver, a bank that sets a lower fee charges that where the month met its condition' },
+      // The month an account opens, from 2026-10-16 (Deutsche Bank's price list, `Product.waiver.openingMonth`); and each
+      // German bank's own day for it later that day (`feesPostAt`): until then every German bank's went to the quarter's closing.
+      { label: 'The Monthly Fee', value: 'Charged at 11 PM on the month’s last day unless the month met a waiver: deposits paid in, the month’s lowest balance, its average, an average across your accounts at the bank, your age, card purchases, the first months after opening, or at Deutsche Bank the month the account opens. Short of a waiver, a bank that sets a lower fee charges that where the month met its condition. Deutsche Bank, Postbank and Berliner Sparkasse take it at the quarter’s closing, and ING on the 1st of the month after' },
       { label: 'The Primary Account', value: `${PRIMARY_DOES.join('. ')}.` },
       { label: 'A Statement', value: 'Every entry on each account you’ve held, month by month (by the quarter in Germany), with the balance after each' },
     ],
@@ -274,7 +277,9 @@ export const MONEY: readonly GuideEntry[] = [
       'Make Primary: your debit purchases, cash from a machine, bills you pay by hand and anything new you set up use it from now, and the screen is headed by its bank. Wages, standing orders, card autopay and loan payments stay where they were set up.',
     ],
     later: [
-      'At 11 PM on the month’s last day: interest paid, the fee charged or waived, and the current account’s statement written. Germany’s banks settle at each quarter’s end.',
+      // Until 2026-10-16 this said Germany's banks settled the fee too at each quarter's end; Commerzbank's and ING's
+      // don't since (`feesPostAt`).
+      'At 11 PM on the month’s last day: interest paid, the fee charged or waived, and the current account’s statement written. Germany’s banks settle the interest at each quarter’s end, and Deutsche Bank, Postbank and Berliner Sparkasse the fee with it; ING takes the month’s fee on the 1st of the next.',
       // “… Closed” named the primary account wherever the money went until 2026-10-15 (`systems/banking.ts`).
       `In Germany, savings holding more than the ${GERMAN_MONTH} a month lets out takes three months’ notice to close, and closes then, its money to the current account at its bank, or with none there to your primary account; “… Closed” names the account it went to, and where it was sent in the bank’s days, the day it arrives.`,
     ],
@@ -525,7 +530,7 @@ export const MONEY: readonly GuideEntry[] = [
       // From 2026-10-16: the overdraft interest built since the 1st charged (`settleOverdraftInterest`), and a term's interest
       // taken before 2026-10-15 found in an older save (`findTermInterest`); until then canceling dropped the one and missed
       // the other.
-      'Cancel It: a savings account, term deposit or current account closes without penalty, into the current account at its bank, or with none there sent to your primary account in the bank’s days. In Britain and Canada its interest is paid, as the rule leaves you what it earned; elsewhere, Europe and Mexico, the interest goes back, any already paid into it with the rest, as their rules return what each side received. In Canada and Mexico the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee; elsewhere a current account is charged the fees it owes, as Close It charges them. A current account is charged the overdraft interest built since the 1st everywhere, never refunded. A term deposit’s interest taken during its term in a save from before 2026-10-15 is found once when the save is opened, from the term’s own interest built and what it has left, and goes back the same way; where the save’s records can’t say which term paid it, it stays paid, as it was. A card closes to anything new, with what was spent on it still to repay.',
+      'Cancel It: a savings account, term deposit or current account closes without penalty, into the current account at its bank, or with none there sent to your primary account in the bank’s days. In Britain and Canada its interest is paid, as the rule leaves you what it earned; elsewhere, Europe and Mexico, the interest goes back, any already paid into it with the rest, as their rules return what each side received. In Canada and Mexico the bank’s fees charged while it was open are refunded, but not overdraft interest or a machine owner’s fee; elsewhere a current account is charged the fees it owes, as Close It charges them, in Germany this month’s only to the day, said under Cancel It. A current account is charged the overdraft interest built since the 1st everywhere, never refunded. A term deposit’s interest taken during its term in a save from before 2026-10-15 is found once when the save is opened, from the term’s own interest built and what it has left, and goes back the same way; where the save’s records can’t say which term paid it, it stays paid, as it was. A card closes to anything new, with what was spent on it still to repay.',
       'Claim It Back: all of it comes back into your primary current account.',
       'Save Alerts: the lines are kept, and checked from the day’s end on.',
     ],
@@ -540,6 +545,7 @@ export const MONEY: readonly GuideEntry[] = [
       '“… is inactive, untouched for months” is a warning: using it wakes it.',
       '“… is dormant, blocked until it’s used again.” Reactivate unblocks it.',
       '“… went to … after years untouched.” says where the money is; Claim It Back brings it home.',
+      '“Canceling it now charges its fees to the day, …” under a German current account is what canceling would charge now, as Close It would.',
       'Short For A Payment names the account, the payment, its date and what the account holds, with what to do.',
     ],
     unavailable: [
@@ -1243,7 +1249,8 @@ export const MONEY: readonly GuideEntry[] = [
     now: [
       'Apply, decided at once: the account opens at nothing and its card is on its way. Under review, the bank decides on its day. Any opening deposit leaves your account now.',
       // From 2026-10-16 the overdraft interest built since the 1st is settled with them (`settleOverdraftInterest`).
-      `Close It: interest, any overdraft interest built since the 1st and fees settled, what it holds sent to the account you named, at once at the same bank or otherwise in the bank’s days, and the account closed with its history kept. Citi keeps one open, restricted, while card payments post, up to ${CITI_OPEN.closeWithPendingDays} days.`,
+      // Germany's month to the day from 2026-10-16 (`closingFeesDue`): until then the whole month on any day of it.
+      `Close It: interest, any overdraft interest built since the 1st and fees settled, what it holds sent to the account you named, at once at the same bank or otherwise in the bank’s days, and the account closed with its history kept. In Germany the fees are the months kept for the quarter’s closing and this month’s fee only for the days it’s been open, as German law owes it to the day an account closes; the line under Close It says the figure before you press it. Citi keeps one open, restricted, while card payments post, up to ${CITI_OPEN.closeWithPendingDays} days.`,
       'Switch: set for its date, and the new bank looks at the application the next day.',
       'Call It Off: the switch is canceled, and your accounts and payments stay where they are.',
       'Keep The Balance There: the switch goes ahead on its date and your payments move, but the balance stays in the old account, which stays open.',
@@ -1257,7 +1264,9 @@ export const MONEY: readonly GuideEntry[] = [
     interpret: [
       '“Applied: … decides by ….” is a review under way; “Opened at ….” is an account open now, with its card’s day.',
       '“Waiting for its opening deposit” means money is still on its way to it.',
-      '“To close it: …” lists what still uses the old account.',
+      // The day from 2026-10-16 (`closeHold`): until then it said only that the wages were paid in, and to move them.
+      '“To close it: …” lists what still uses the old account; with its wages already on their way elsewhere, the days each payer moves and the day it can close.',
+      '“Closing it now charges its fees to the day, …” is what closing a German account would charge now: the months kept for the quarter’s closing, and this month’s fee for the days of it the account has been open, rounded to the cent. After 11 PM on a month’s last day that month is counted with the quarter’s already.',
       'Past Switches lists each switch and how it ended.',
     ],
     unavailable: [
@@ -1340,7 +1349,12 @@ export const MONEY: readonly GuideEntry[] = [
       // From 2026-10-16: until then a Japanese bank's fee overdrew the empty current account (`chargeAbroadFee`).
       'A Japanese bank’s current account can’t go below zero: SMBC and MUFG take their fee from whichever of your accounts there holds it, and where neither does it’s owed, taken the first night one does, and the bank sends nothing abroad meanwhile.',
       `Its country takes its tax on a customer abroad from the interest: nothing in Britain, Germany or France, ${percentOf(NON_RESIDENT_TAX.JP!.rate)} in Japan.`,
-      `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
+      // From 2026-10-16: a German account closed with Close It owes this month's fee to the day (`closingFeesDue`), and a
+      // close tried again after its notice charges no more fees (`feesEndedAt`).
+      `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad, and its fees end there. Overdrawn then, it tries again each day until it’s paid. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
+      'Close It on its current account, once its savings there are closed, closes it as Another Bank says: at a German bank it charges the months kept for the quarter’s closing and this month’s fee only for the days it’s been open, the figure said under Close It first.',
+      // From 2026-10-16 (brief 09's follow-up, `Bank.card.ahead`): until then SLATE charged nothing for the card.
+      `Berliner Sparkasse’s Giro Digital comes without its Sparkassen-Card, which costs ${formatMoney(SPARKASSE.card?.yearly ?? 0, 'EUR')} a year, paid ahead: on the first night and each year after, and on a close the days of that year left are refunded, said under Close It first.`,
       `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
       'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
       // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).

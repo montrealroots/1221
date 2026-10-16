@@ -185,7 +185,7 @@
       "changes": "Person.performerTitle (bootstrap.ts:303-305 decided, :345 stored); meta.careerLabel (bootstrap.ts:316; refreshMeta, index.ts:259)",
       "downstream": "systems/school.ts:2586, the casting pool’s title, read by partsFor (:2549-2559); :2632-2641, the lead-taken bond; :2699-2701, the Yale Rep role (Nina or Konstantin in 2027, then a part written for the title); companyPart :2187-2198 (title at :2192), the Summer Cabaret’s parts, from 2026-10-14 never a lead for a student outside the four the play reads best; systems/playreading.ts:77-82 partFor, a read’s part for you; index.ts:259, refreshMeta’s careerLabel; labels at Home.tsx:113, shell/GameShell.tsx:162, shell/LifeEnded.tsx:45 and ProfileWorkspace.tsx:171. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from.",
       "explanation": "UI says 'at school you're cast in the parts a play writes for it' - engine does this.",
-      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Bergmann and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
+      "tests": "tests/evidence-g27-ui.test.ts c-performerTitle: 'PLAYER JOURNEY: casts her as Nina and him as Konstantin at Yale Rep on 4 January 2027, and the Summer Cabaret gives each the parts its plays write for them', 'PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title', 'PLAYER JOURNEY: Fleabag… has a part for her and none for him', 'PLAYER JOURNEY: Billed As is settled by she/her, open under they/them with Continue refused…'; tests/creation.test.ts 'names the slot by the title it stored…'",
       "status": "verified",
       "issue": "",
       "review": {
@@ -272,8 +272,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g27-ui.test.ts",
@@ -283,7 +283,7 @@
           },
           {
             "file": "evidence-g27-ui.test.ts",
-            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Bergmann and him as Ernst Röbel, and the lead taken costs the bond of whoever took the lead written for their title",
+            "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title",
             "kind": "command",
             "closes": "The School production casting (the pool's title) and the lead-taken bond had no title test. The second fall's Rep is checked too: Elmire and Tartuffe."
           },
@@ -6401,8 +6401,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 3,
+        "on": "2026-10-16",
+        "rounds": 8,
         "tests": [
           {
             "file": "evidence-g32-ui.test.ts",
@@ -6517,6 +6517,41 @@
             "title": "h-needs > PLAYER JOURNEY: at Capital One, chosen on creation, a bone broken on the first morning’s run, Yale Health’s $50 for the emergency room billed due in thirty days, the checking moved to savings the hour before: “You owe $50 for medical care.”, across a reload; her twin who kept it is All Clear, and at Chase, which pays an item past zero, she’s $50 overdrawn instead",
             "kind": "command",
             "closes": "'You owe $X for medical care.' with the bill itself raised by play (life.look_after exercise, seed g09-run-1668), not billCare by hand; $50 = Yale Health's emergency copay + 6 therapy visits at $0; the overdrawn sentence reached by play too (Chase's per-item cover)"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+            "kind": "command",
+            "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+            "kind": "command",
+            "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g12-money.test.ts",
+            "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b04.test.ts",
+            "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [

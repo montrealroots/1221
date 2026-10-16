@@ -28,7 +28,7 @@ import { PIECE } from '../src/engine/content/piece';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefPiece, type BriefRecord } from '../src/engine/systems/briefs';
 import { type Evaluation, type EvalContext, type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, pieceWeights, toneSegments, type PieceSpec } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
 import { materialContext } from '../src/engine/systems/material';
 import { castingPerformer } from '../src/engine/systems/school';
 
@@ -80,7 +80,7 @@ function workJudge(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Pie
   const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty: 0, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: `sp:${m.id}`, expected: true };
-  const spec: PieceSpec = { segments: toneSegments(m.tones, kind === 'scene' ? 1 : 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  const spec: PieceSpec = { segments: unitSegments(m, kind === 'scene' ? 1 : 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
   return { kind, id: m.id, material: m, judge: (p) => judgePiece('specialists', kind === 'casting' ? castingPerformer(p) : p, ctx, spec), weights: pieceWeights(task, read.lean, spec) };
 }
 

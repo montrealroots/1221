@@ -90,6 +90,17 @@ if (a.genres.winners) {
   const met = s.filter((x) => x.share >= 0.6);
   put('H4', met.length >= 10, `${met.length} of 12: ${s.map((x) => `${x.id} ${(100 * x.share).toFixed(1)}%`).join(', ')}`, '60% for 10 of 12');
 }
+// H4′, proposed on 2026-10-16 (brief 09, docs/verification/integration-2026-10-16/h4.md) and not counted: on its own
+// work (the pieces where its +10 effect is the largest of the twelve, at full precision), each specialist ahead on 60% or
+// more, for every ability that has own work; and stamina, read only as the drain through a piece, ahead on the last
+// segment of 60% of nights. Printed beside H4 as written, which is judged above as it was written.
+if (a.h4Account) {
+  const ab = Object.entries(a.h4Account.abilities);
+  const own = ab.filter(([, x]) => x.ownWork.n > 0);
+  const ok = own.filter(([, x]) => x.ownWork.ahead >= 0.6 * x.ownWork.n);
+  const st = a.h4Account.staminaLastSegment;
+  put('H4′ (proposed, not counted)', ok.length === own.length && st.aheadOnTheLast >= 0.6 * st.nights, `own work: ${ab.map(([id, x]) => `${id} ${x.ownWork.ahead}/${x.ownWork.n}`).join(', ')}; ${ok.length} of the ${own.length} with own work at 60%; stamina ahead on the last segment of ${st.aheadOnTheLast} of ${st.nights} nights (on the whole of ${st.aheadOnTheWhole})`, 'ahead on 60% of own work, every ability that has any; stamina on 60% of nights’ last segments');
+}
 // H5: the even actor ahead of half the specialists on 50% of pieces; within a point of the best on 10%.
 {
   const g = a.generalist;

@@ -16,7 +16,7 @@ import { Panel, Stat, Fine, WhyNot } from '@/ui/components/primitives';
 import { Gated, useFeature } from '@/ui/guide/Guide';
 import { HowItWorks } from '@/ui/guide/HowItWorks';
 import { DOCTOR_KINDS, clinicById, clinicFor, clinicRefusal, clinicsIn } from '@/engine/systems/clinics';
-import { practiceWait } from '@/engine/systems/appointments';
+import { outsideTheCover, practiceWait } from '@/engine/systems/appointments';
 import type { Clinic } from '@/engine/content/clinics';
 import { formatMoney, saveCurrency } from '@/engine/core/money';
 import { dateKey, formatDate } from '@/engine/core/time';
@@ -554,7 +554,10 @@ function HealthPane() {
         title="The Marketplace"
         subtitle={state ? `${formatMoney(benchmarkFor(state, year, cur), cur)} a month for the benchmark silver plan` : 'In New York, Los Angeles or New Haven'}
         actions={enrolled
-          ? <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end, and opens no special enrollment.', 'positive'); }}>Drop The Plan</Gated>
+          // Dropped, it says so in place of the button (from 2026-10-16: until then Drop The Plan stayed, and a second press
+          // said the same again).
+          ? ownPlan!.ended === 'voluntary' && ownPlan!.until !== undefined ? <span className="small">Dropped: it ends on {formatDate(ownPlan!.until, sim.zone)}.</span>
+            : <Gated feature="health.drop" onClick={() => { if (run('health.drop').ok) toast('It ends at the month’s end, and opens no special enrollment.', 'positive'); }}>Drop The Plan</Gated>
           : !may.ok ? undefined : <Gated feature="health.enroll" onClick={() => { const a = run<{ kind: string; from: number }>('health.enroll'); if (a.ok) toast(`Enrolled in ${a.value!.kind === 'marketplace' ? 'the marketplace' : state ? PROGRAM_NAMES[state][a.value!.kind as 'medicaid' | 'essential'] : 'Medicaid'}, from ${formatDate(a.value!.from, sim.zone)}.`, 'positive'); }}>Enroll</Gated>}
         help="papers.health-cover"
       >
@@ -956,10 +959,12 @@ function YourDoctor() {
         </div>}
         <div className="small">{[doctor && `A doctor’s visit: ${doctor.name}`, urgent && `Urgent care: ${urgent.name}`, emergency && `An emergency: ${emergency.name}`].filter(Boolean).join(' · ')}</div>
         <div className="small">{`What it would cost you here now: a doctor’s visit ${formatMoney(careQuote(sim, person, 'visit'), cur)}, urgent care ${formatMoney(careQuote(sim, person, 'urgent'), cur)}, an emergency ${formatMoney(careQuote(sim, person, 'emergency'), cur)}`}</div>
+        {/* An appointment booked while the cover didn't pay there, the cover back before its day, says so where it's called
+            off (from 2026-10-16, `outsideTheCover`: until then only its bill did). */}
         {(person.health?.appointments ?? []).map((ap) => (
           <div key={ap.id} className="col gap-1">
             <div className="row gap-2" style={{ alignItems: 'baseline' }}>
-              <span className="small">{`${ap.what}: an appointment ${formatDate(ap.at, sim.zone)}${ap.clinicId ? `, ${clinicById(ap.clinicId)?.name ?? ''}` : ''}`}</span>
+              <span className="small">{`${ap.what}: an appointment ${formatDate(ap.at, sim.zone)}${ap.clinicId ? `, ${clinicById(ap.clinicId)?.name ?? ''}` : ''}${outsideTheCover(person).includes(ap) ? '. Yale Health pays for a visit only at its own Health Center: call this off, then Book An Appointment, to be seen there' : ''}`}</span>
               <button type="button" className="btn btn-sm btn-ghost" disabled={!cancelAppt.open} title={cancelAppt.reason} onClick={() => run('health.cancel_appointment', { appointmentId: ap.id })}>Call It Off</button>
             </div>
             <WhyNot reasons={[['Call It Off', cancelAppt.reason]]} />

@@ -73,6 +73,14 @@ for (const [i, g] of genres.entries()) {
   rows.push(`| ${g} | ${reg.concerns.map((c) => CONCERNS[c].label).join(', ')} (${reg.basis}) | ${related} / ${contrasting} | ${genreTags(g).map((t) => DEMAND_LABEL[t]).join(', ') || '—'} | ${draws.join(', ')} | ${parts.join(', ')} | ${sides.join(' · ')} | ${stage.length ? `${stage.filter((x) => x === 'restrained').length} restrained, ${stage.filter((x) => x === 'expansive').length} expansive${stage.includes('either') ? `, ${stage.filter((x) => x === 'either').length} either` : ''}` : '—'} | +${gain.toFixed(1)} / ${leak.toFixed(1)} |`);
 }
 
+// Criterion I2 measured here as `tools/interpretation.ts` measures it (each brief's first reading, a tie its own side),
+// from 2026-10-16: until then the figures below were typed in from that day's run (pace 24.2%, scale 20.8%, structure
+// 32.9%), and the fourteen genres revised later that day (genres-09.md) moved them without the sentence knowing.
+const AXIS_SIDES = [['measured', 'driven'], ['restrained', 'expansive'], ['set', 'open']] as const;
+const sideOn = (b: Brief, i: number) => { const scene = sceneOf(b, readingOf(b, b.readings[0]!.id)); const [x, y] = AXIS_SIDES[i]!.map((v) => suitabilityOf(v, briefMaterial(b), scene).s); return x! > y! ? 0 : y! > x! ? 1 : 2; };
+const withTwo = genres.map((g) => BRIEFS.filter((b) => b.kinds[0] === g)).filter((bs) => bs.length > 1);
+const i2 = AXIS_SIDES.map((_, i) => (100 * withTwo.filter((bs) => new Set(bs.map((b) => sideOn(b, i))).size > 1).length) / withTwo.length);
+
 const md = `# Every Genre, Audited, 2026-10-16
 
 Written by \`tools/genre-audit.ts\` from the tables. The owner's brief "Finish Genre Acceptance And Correct The
@@ -85,8 +93,9 @@ are in \`docs/GENRE-COVERAGE.md\`, which \`tests/genre-coverage.test.ts\` holds 
 
 **Found by the figures, to weigh** (${weak.length}). A genre whose two briefs suit the same sides on every axis isn't
 necessarily wrong: they share a register, and its conventions may agree. Variation across the catalog is criterion
-I2's, which holds (\`docs/verification/interpretation-2026-10-16/\`): pace 24.2%, scale 20.8%, structure 32.9% of
+I2's (\`docs/verification/interpretation-2026-10-16/\`, 20% on each axis): pace ${i2[0]!.toFixed(1)}%, scale ${i2[1]!.toFixed(1)}%, structure ${i2[2]!.toFixed(1)}% of
 genres with two briefs differ. A genre whose stage scenes all suit one side is reported against ST4 in \`README.md\`.
+Whether two briefs that agree are the same work is read in \`tools/genre-pairs.ts\`, in the six parts the engine reads.
 ${weak.length ? weak.map((w) => `- ${w}`).join('\n') : '- none'}
 
 | Genre | Conventions (Register, Basis) | Related / Contrasting Genres | Techniques Its Scenes Stage | Abilities Its Register Draws | Preparation It Rewards | Better Sides, Its Briefs (Pace, Scale, Structure) | Its Stage Scenes, Better Scale | Knowing It: Own Brief / Another's |

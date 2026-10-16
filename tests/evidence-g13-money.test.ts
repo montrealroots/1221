@@ -198,9 +198,9 @@ describe('finance.pay_card', () => {
     expect(stateOf(again.player, card(again)).missed).toBe(0);
     expect(again.player.credit!.score).toBe(798);
     // Unpaid: autopay asks $40 of an empty bank; the US safe harbor's first late fee, $30, under Chase's $40, is the
-    // one fee for it (Reg Z §1026.52(b)(2)(ii)); a first miss isn't reported until it's thirty days past due.
-    // (The engine's own words, a straight apostrophe in "couldn't" beside a curly one in "It’s".)
-    expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $40.00 and the current account couldn\'t cover it. It’s late now, and the late fee is the one fee for it.']);
+    // one fee for it (Reg Z §1026.52(b)(2)(ii)); a first miss isn't reported until it's thirty days past due. Until
+    // 2026-10-16 (brief 09's banking follow-up) this asserted the engine's straight apostrophe in "couldn't" (\').
+    expect(notes(unpaid, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $40.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.']);
     expect(txns(unpaid, 'Late fee').map((t) => on(t, card(unpaid)))).toEqual([-30_00]);
     expect(txns(unpaid, 'Returned payment fee')).toEqual([]);
     expect(notes(unpaid, 'A Late Card Payment').map((n) => n.body)).toEqual(['The minimum was $40.00 and only $0.00 went in. A $30.00 fee, and it goes on your record if it’s still short at the next due date, thirty days past due.']);
@@ -536,7 +536,7 @@ describe('card.statement', () => {
     // $65,217 and a fifth, $78,260.40, to the dollar.
     expect(card(again).creditLimit).toBe(78_260_00);
     expect(cardRoom(again.player, card(again))).toBe(78_260_00);
-    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['It\'s $78,260.00 now, for a clean record.']);
+    expect(notes(again, 'Your Card Limit Went Up').map((n) => n.body)).toEqual(['It’s $78,260.00 now, for a clean record.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted 'It\'s …', with the notice's straight apostrophe.
     expect(card(never).creditLimit).toBe(65_217_00);
     expect(notes(never, 'Your Card Limit Went Up')).toEqual([]);
   });

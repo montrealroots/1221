@@ -1,0 +1,349 @@
+{
+ "blind": false,
+ "designed": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.901,
+   "least": 0.842,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.208,
+    "1": 4.213,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.474,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.735,
+   "one": 4.213,
+   "opposedOverOne": 1.599,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 14350,
+   "differing": 12744,
+   "differ": 0.888,
+   "holds": true,
+   "missesByMediumAndReader": {
+    "camera, steady reader": [
+     1344,
+     13489
+    ],
+    "voice, no reader": [
+     207,
+     574
+    ],
+    "camera, pressing reader": [
+     55,
+     287
+    ]
+   },
+   "missesByScene": {
+    "brief-anime": 199,
+    "brief-drama": 138,
+    "brief-romance": 129,
+    "brief-grindhouse": 74,
+    "brief-psychological_horror": 66,
+    "brief-spaghetti_western": 66,
+    "brief-silent_film": 64,
+    "brief-biker": 55,
+    "brief-historical_drama": 55,
+    "brief-sword_and_sorcery": 51,
+    "brief-comedy": 44,
+    "brief-political_thriller": 43,
+    "brief-superhero": 42,
+    "brief-vampire": 42,
+    "brief-family": 40,
+    "brief-tragedy": 37,
+    "brief-buddy_cop": 35,
+    "brief-docufiction": 35,
+    "brief-mystery": 33,
+    "brief-picaresque": 31,
+    "brief-samurai": 29,
+    "brief-melodrama": 23,
+    "brief-neorealism": 23,
+    "brief-occult": 21,
+    "brief-revenge": 21,
+    "brief-survival": 20,
+    "brief-action": 17,
+    "brief-gangster": 17,
+    "brief-yakuza": 15,
+    "brief-hood_film": 13,
+    "brief-chase": 12,
+    "brief-epic": 12,
+    "brief-experimental": 12,
+    "brief-conspiracy_thriller": 11,
+    "brief-detective": 11,
+    "brief-art_house": 10,
+    "brief-cyberpunk": 8,
+    "brief-isekai": 8,
+    "brief-western": 8,
+    "brief-adventure": 7,
+    "brief-film_noir": 6,
+    "brief-courtroom_drama": 4,
+    "brief-magical_realism": 4,
+    "brief-spy": 4,
+    "brief-kaiju": 3,
+    "brief-science_fiction": 3,
+    "brief-slice_of_life": 2,
+    "brief-thriller": 2,
+    "brief-monster_movie": 1
+   }
+  },
+  "S3": {
+   "cases": 29250,
+   "differing": 24061,
+   "differ": 0.823,
+   "holds": true,
+   "missesByKinship": {
+    "-0.5": [
+     759,
+     7800
+    ],
+    "1.0": [
+     499,
+     1350
+    ],
+    "0.0": [
+     1989,
+     12200
+    ],
+    "0.5": [
+     1887,
+     7050
+    ],
+    "-1.0": [
+     55,
+     850
+    ]
+   },
+   "missedSides": {
+    "100": 807,
+    "101": 648,
+    "110": 590,
+    "111": 105,
+    "001": 1326,
+    "000": 1314,
+    "010": 336,
+    "011": 63
+   },
+   "missesByScene": {
+    "brief-anime": 446,
+    "brief-drama": 325,
+    "brief-romance": 278,
+    "brief-psychological_horror": 229,
+    "brief-silent_film": 215,
+    "brief-grindhouse": 192,
+    "brief-political_thriller": 177,
+    "brief-spaghetti_western": 165,
+    "brief-sword_and_sorcery": 165,
+    "brief-vampire": 164,
+    "brief-historical_drama": 159,
+    "brief-biker": 154
+   },
+   "missesByPair": {
+    "docufiction/romance": 38,
+    "adventure/costume_drama": 36,
+    "adventure/historical_fiction": 36,
+    "gangster/historical_drama": 36,
+    "biker/cosmic_horror": 33,
+    "hood_film/period_drama": 31,
+    "biker/biographical": 30,
+    "biker/historical_drama": 30,
+    "adventure/caper": 29,
+    "art_house/thriller": 28,
+    "blaxploitation/erotic_thriller": 28,
+    "film_noir/thriller": 28
+   }
+  }
+ },
+ "heldOut": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.883,
+   "least": 0.809,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.087,
+    "1": 4.153,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.466,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.695,
+   "one": 4.153,
+   "opposedOverOne": 1.612,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 14350,
+   "differing": 11890,
+   "differ": 0.829,
+   "holds": true,
+   "missesByMediumAndReader": {
+    "camera, pressing reader": [
+     485,
+     4879
+    ],
+    "camera, withholding reader": [
+     626,
+     2583
+    ],
+    "voice, no reader": [
+     630,
+     2870
+    ],
+    "camera, steady reader": [
+     350,
+     2296
+    ],
+    "camera, unpredictable reader": [
+     369,
+     1722
+    ]
+   },
+   "missesByScene": {
+    "brief-magical_realism-2": 186,
+    "brief-picaresque-2": 126,
+    "brief-film_noir-2": 123,
+    "brief-melodrama-2": 114,
+    "brief-gangster-2": 105,
+    "brief-thriller-2": 103,
+    "brief-comedy-2": 98,
+    "brief-buddy_cop-2": 93,
+    "brief-neorealism-2": 87,
+    "brief-adventure-2": 82,
+    "brief-psychological_horror-2": 79,
+    "brief-docufiction-2": 75,
+    "brief-romance-2": 74,
+    "brief-detective-2": 71,
+    "brief-isekai-2": 68,
+    "brief-political_thriller-2": 67,
+    "brief-grindhouse-2": 64,
+    "brief-silent_film-2": 64,
+    "brief-kaiju-2": 61,
+    "brief-historical_drama-2": 58,
+    "brief-spy-2": 58,
+    "brief-epic-2": 52,
+    "brief-biker-2": 49,
+    "brief-revenge-2": 49,
+    "brief-slice_of_life-2": 49,
+    "brief-spaghetti_western-2": 48,
+    "brief-courtroom_drama-2": 43,
+    "brief-superhero-2": 37,
+    "brief-western-2": 36,
+    "brief-samurai-2": 31,
+    "brief-experimental-2": 29,
+    "brief-family-2": 22,
+    "brief-anime-2": 20,
+    "brief-vampire-2": 17,
+    "brief-chase-2": 15,
+    "brief-action-2": 14,
+    "brief-tragedy-2": 12,
+    "brief-drama-2": 11,
+    "brief-science_fiction-2": 11,
+    "brief-cyberpunk-2": 10,
+    "brief-conspiracy_thriller-2": 9,
+    "brief-blaxploitation-2": 8,
+    "brief-yakuza-2": 8,
+    "brief-hood_film-2": 7,
+    "brief-art_house-2": 6,
+    "brief-occult-2": 6,
+    "brief-survival-2": 5
+   }
+  },
+  "S3": {
+   "cases": 29250,
+   "differing": 21459,
+   "differ": 0.734,
+   "holds": false,
+   "missesByKinship": {
+    "-0.5": [
+     1234,
+     7800
+    ],
+    "1.0": [
+     661,
+     1350
+    ],
+    "0.0": [
+     3093,
+     12200
+    ],
+    "0.5": [
+     2747,
+     7050
+    ],
+    "-1.0": [
+     56,
+     850
+    ]
+   },
+   "missedSides": {
+    "100": 1371,
+    "101": 840,
+    "110": 1507,
+    "111": 824,
+    "001": 2001,
+    "000": 718,
+    "010": 477,
+    "011": 53
+   },
+   "missesByScene": {
+    "brief-magical_realism-2": 420,
+    "brief-melodrama-2": 288,
+    "brief-gangster-2": 277,
+    "brief-thriller-2": 277,
+    "brief-buddy_cop-2": 272,
+    "brief-film_noir-2": 270,
+    "brief-picaresque-2": 264,
+    "brief-comedy-2": 261,
+    "brief-isekai-2": 261,
+    "brief-neorealism-2": 227,
+    "brief-detective-2": 218,
+    "brief-grindhouse-2": 217
+   },
+   "missesByPair": {
+    "biker/cosmic_horror": 39,
+    "blaxploitation/domestic_drama": 36,
+    "blaxploitation/queer_cinema": 36,
+    "film_noir/thriller": 36,
+    "adventure/costume_drama": 36,
+    "adventure/historical_fiction": 36,
+    "gangster/historical_drama": 36,
+    "experimental/military": 35,
+    "revenge/surrealist": 35,
+    "magical_realism/martial_arts": 34,
+    "comedy/courtroom_drama": 33,
+    "kaiju/musical": 33
+   }
+  }
+ }
+}
