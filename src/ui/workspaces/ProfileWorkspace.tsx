@@ -70,7 +70,7 @@ import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attribut
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practicePreview, practiceRefusal } from '@/engine/systems/practice';
 import { studyRefusal } from '@/engine/systems/engagement';
-import { BRIEF, genreMastered } from '@/engine/systems/briefs';
+import { BRIEF, atFull, genreMastered } from '@/engine/systems/briefs';
 import { DEVELOPMENT } from '@/engine/content/abilities';
 import { BAND_WORD } from '@/ui/looks/actor';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
@@ -336,9 +336,12 @@ function AbilitiesPanel() {
                 const full = abilityFull(sim, person, d.id);
                 const today = todayFor(sim, person, d.id);
                 const h = last(d.id);
+                // At its full, by the game's own rule (`atFull`), as the Techniques panel marks a technique at MASTERED (from
+                // 2026-10-16, at the owner's word): until then the row said only its two figures, side by side.
+                const mastered = atFull(now, d.id, full);
                 return (
                   <tr key={d.id}>
-                    <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open></td>
+                    <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open>{mastered && <>{' '}<span className="chip chip-positive" title={d.id === 'stamina' ? `At full fitness for your age, ${one(full)}: it falls again without workouts` : `At its full, ${one(full)}: work that reads it asks nothing more of it`}>Mastered</span></>}</td>
                     <td className="num mono">{one(now)}</td>
                     <td className="num mono">{one(full)}</td>
                     <td className="num mono" title={classesGrow(d.id) ? undefined : 'Classes don’t build it'}>{classesGrow(d.id) ? one(Math.min(full, reachOf(person, d.id))) : '—'}</td>
@@ -355,7 +358,7 @@ function AbilitiesPanel() {
         <p className="small" style={{ margin: 0 }}>
           <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it, and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (Movement Invention, stage combat): two a week keep it (Hickson &amp; Rosenkoetter, 1981). Past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); the rate is SLATE’s. A second workout the same day builds half. It’s the one ability that fades without use: the others keep what they’ve earned.
         </p>
-        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
+        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered; stamina’s mark goes when its fitness falls, and the others keep what they’ve earned.</Fine>
       </div>
     </Panel>
   );
