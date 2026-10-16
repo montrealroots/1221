@@ -1,34 +1,38 @@
 {
  "key": "judge",
  "on": "2026-10-16",
- "against": "d7127819 (baseline-09/), measured again at the final commit of this area (final-09/README.md names it)",
+ "against": "d7127819 (baseline-09/), measured again at the area's close-out (final-09/, e48f0b68's engine) and after the follow-up (followup-09/, edbdfc40)",
  "checklist": "docs/verification/remaining-09/judge-checklist.json",
  "testFile": "tests/remaining-judge.test.ts",
- "tests": 7,
+ "tests": 16,
  "criteria": [
   {
    "id": "ST3",
    "asWritten": "Not met: the even actor the same on 165 of 179 before, 173 of 187 after (the eight new cases each the same)",
    "proposed": "ST3′ (st3.md): (a) 187 of 187, (b) 187 of 187 at 3×10⁻¹⁴, (c) 187 of 187, the largest 0.021. Proposed, not counted",
-   "status": "Decision Required"
+   "status": "Decision Required",
+   "afterFollowUp": "Not met: the even actor the same on 178 of 189 (11 a tenth apart, 0 rounding defects, the largest 0.0184); ST3′ as proposed"
   },
   {
    "id": "ST6",
    "asWritten": "Not met: restrained 8 of 38 before, 8 of 42 after (four new expansive-suited scenes); expansive 21 of 49 both",
    "proposed": "ST6′ (st6.md): against the grain, ahead of an equal-budget even actor playing the better-suited side: restrained 26 of 42, expansive 21 of 49. Proposed, not counted",
-   "status": "Decision Required"
+   "status": "Decision Required",
+   "afterFollowUp": "Not met: restrained 9 of 42, expansive 22 of 50; ST6′ as proposed"
   },
   {
    "id": "H4",
    "asWritten": "Not met: 2 of 12 before and after (presence 9.5% → 10.5%, vocal 49.7% → 56.2%)",
    "proposed": "H4′ (h4.md): 10 of 12 before, 11 of 12 after on own work; stamina 29 of 30 nights' last segments; not met on stamina's one own piece. Proposed, not counted",
-   "status": "Decision Required"
+   "status": "Decision Required",
+   "afterFollowUp": "Not met, one fewer: 1 of 12 (listening 65.7% → 53.7%, vocal 56.2% → 51.4%, discipline 13.1% → 19.5%), evaluation-10's long score reaching 37 more pieces; H4′ (proposed) 11 of 12 as before, discipline 14 of 15 own pieces led where it had 2"
   },
   {
    "id": "L3",
    "asWritten": "Not met for the specialist (65.5 → 64.1), met for the beginner (54.0 → 56.6), before and after",
    "proposed": "L3′ (l3.md): the same work at each later month's levels at or over the month before's: 0 falls in 68 and 76 steps. Proposed, not counted",
-   "status": "Decision Required"
+   "status": "Decision Required",
+   "afterFollowUp": "Not met for the specialist (65.5 → 64.0), met for the beginner (54.0 → 56.6); L3′ (proposed) 61.62 → 65.17 and 54.42 → 57.46, 0 falls"
   }
  ],
  "items": [
@@ -172,9 +176,9 @@
     },
     {
      "file": "tests/remaining-judge.test.ts",
-     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > a specialist in presence comes out ahead of an even actor of the same budget on each speech to many with the partner barely there, and behind on every scene played off a partner",
+     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > a specialist in presence comes out ahead of an even actor of the same budget on the speeches to many of four units or fewer that hold no long score, level on the Forum, whose turns make one, and behind on every scene played off a partner",
      "kind": "static (TEST SETUP performers)",
-     "proves": "presence's specialist has real advantages on fitting work and not everywhere"
+     "proves": "presence's specialist has real advantages on fitting work and not everywhere; from evaluation-10 the Forum (caesar-3-2), whose three turns make four units and a long score, is level (−0.04, where it led by 0.12), and without its turns it's presence's again"
     },
     {
      "file": "tests/remaining-judge.test.ts",
@@ -257,7 +261,8 @@
    "rowText": {},
    "tutorial": "unchanged (no mechanic changed; the scenes show their own demands and reasons on the screen, MaterialDemands)",
    "guide": "unchanged (no mechanic changed); docs/ENGINE-MODEL.md counts 64 scenes and says why the ruleset stayed",
-   "ownerDecision": "H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units as a brief's beats are, each a new mechanic or a weight to be argued with a source first."
+   "ownerDecision": "H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units as a brief's beats are, each a new mechanic or a weight to be argued with a source first.",
+   "afterFollowUp": "H4 as written 1 of 12 after evaluation-10 (followup-09/criteria.txt); the presence specialist ahead on oedipus-1 (+0.97) and henry5-4-3 (+0.58), level on caesar-3-2"
   },
   {
    "id": "judge.L3",
@@ -323,6 +328,12 @@
      "title": "57 test files one at a time",
      "kind": "suite (one file at a time)",
      "proves": "56 exit 0 at once, genre-coverage 0 after its record was regenerated; 1,074 passed, 0 failed"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/followup-09/README.md",
+     "title": "every criterion measured again after the follow-up, at edbdfc40, before and after against final-09/",
+     "kind": "measurement (seeded, no draw; exits.txt every tool 0)",
+     "proves": "no criterion that held fails; H4 as written 2 → 1 of 12; ST3 178 of 189, ST6 9 of 42, L3 64.0 for the specialist; S1 to S4 and G2 byte-identical"
     }
    ],
    "fixes": [
@@ -338,16 +349,394 @@
    "rowText": {},
    "tutorial": "unchanged",
    "guide": "unchanged"
+  },
+  {
+   "id": "judge.length",
+   "before": "A scene or a play was cut by its tones alone (toneSegments), at most four parts; the long score of units a brief's beats ask discipline for (DEMAND_EFFECT.beats) reached one class scene and no play; Scapin's sack scene left out for it",
+   "status": "Implemented And Verified",
+   "disposition": "implemented for a scene's shifts of action (its turns), which the sources support; not by length, which they don't (h4.md, the follow-up's section 1)",
+   "evidence": [
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "a scene’s units: its tone sections and its turns (evaluation-10, the follow-up) > a scene is cut at each change of tone and each turn, the turns going to its sections in order, each section keeping its weight",
+     "kind": "static",
+     "proves": "the units by hand: the Seagull six of half a section, Hamlet 3.1 four of a quarter, a turnless scene cut as before"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "a scene’s units: its tone sections and its turns (evaluation-10, the follow-up) > a segment’s place in the piece is the running before it over the running before the last, so the drain falls where the unit does, and a brief’s heart, weighing more, takes no longer",
+     "kind": "static",
+     "proves": "the drain at places 0, 0.25, 0.5, 1 worked from PIECE.drain; a brief's heart at 1.6 leaves its beats a third apart"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "a scene’s units: its tone sections and its turns (evaluation-10, the follow-up) > a scene of more than three units reads discipline by the beats demand, and the same scene without its turns doesn’t",
+     "kind": "static",
+     "proves": "discipline 2.5 a unit past three, and +10 discipline moving the scene of four units more than the same scene in two"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "Scapin’s sack scene: a scene of six units, discipline’s long score (the follow-up) > is six units of a sixth, three past three, so its long score asks discipline 2.5 a unit more on consistency than the same scene without its turns",
+     "kind": "static",
+     "proves": "the new scene's units and demand, worked from the rule"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "Scapin’s sack scene: a scene of six units, discipline’s long score (the follow-up) > a specialist in discipline comes out ahead of an even actor of the same budget on it, by more than on the same scene without its turns",
+     "kind": "static (TEST SETUP performers)",
+     "proves": "discipline's specialist leads on the long score (+0.63)"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "Scapin’s sack scene: a scene of six units, discipline’s long score (the follow-up) > a mastered, prepared actor reaches 100 on every way of playing that fits it",
+     "kind": "static",
+     "proves": "the mastery guarantee on the new scene, 27 ways"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "Scapin’s sack scene: a scene of six units, discipline’s long score (the follow-up) > a student meets it in Acting III’s Scene Study once every earlier prose scene is studied, and never in Acting I’s, which sets plays from 1900",
+     "kind": "static (the course's own draw, scenesFor)",
+     "proves": "the development path to the new scene"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "a save from before evaluation-10: work kept on a piece’s segments moved to its units, once > moves a scene’s work and its ways to the units of each tone section, a try to its section’s first unit, asks the problem again, and does it on one opening only",
+     "kind": "player journey (a g18-probe life, TEST SETUP for the older build's work)",
+     "proves": "a save's per-segment work moves to the units once, through loadSave"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "a save from before evaluation-10: work kept on a piece’s segments moved to its units, once > moves a part’s work on a play’s movements the same way, wherever the school keeps the part, and leaves a piece with nothing kept alone",
+     "kind": "static (a universe holding only what the step reads)",
+     "proves": "a play's process and a one-tone scene's halves moved by the rule"
+    },
+    {
+     "file": "tests/guide-examples-coursework.test.ts",
+     "title": "Working A Problem Through, played > names the turn, works it slowly until it’s secure, and the problem leaves the list by itself",
+     "kind": "player journey",
+     "proves": "the named problem stays listed while it's one (four tries, as the guide says, where it left the list after three)"
+    },
+    {
+     "file": "tests/guide-examples-coursework.test.ts",
+     "title": "How You’ll Play A Scene, played > rehearses a choice in by its share, keeps half of it on a change, and completes it in the steps it says",
+     "kind": "player journey",
+     "proves": "a full preparation reads 1 on every dimension of a scene of six units: the mean divided once"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/followup-09/",
+     "title": "every criterion measured again (README.md, exits.txt)",
+     "kind": "measurement",
+     "proves": "no criterion that held fails; H4 as written 2 → 1 of 12, discipline's own work 2 → 15"
+    },
+    {
+     "file": "tests/evidence-g27-ui.test.ts",
+     "title": "c-performerTitle > PLAYER JOURNEY: in the second fall, across a save and a load, casts her as Frau Gabor and him as Hänschen Rilow, and the lead taken costs the bond of whoever took the lead written for their title",
+     "kind": "player journey",
+     "proves": "evaluation-10 reaches casting through a night's demands; the turnless demand gives the old parts (probe in a copy)"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "evaluation-10: each tone section cut again at its turns (unitSegments), what a piece demands counts the units (demandsOf), a segment's place read by the running before it (SegmentSpec.length), RULESET moved, its ENGINE-MODEL row",
+     "where": "src/engine/systems/piece.ts, systems/material.ts, systems/coursework.ts (scenePiece), systems/school.ts (playPiece), content/tasks.ts, docs/ENGINE-MODEL.md §10",
+     "commit": "17374e6c"
+    },
+    {
+     "summary": "A piece's mean divided once by its total weight (six units of half a section summed a full preparation to 0.9999999999999999)",
+     "where": "src/engine/systems/piece.ts (judgePiece)",
+     "commit": "17374e6c"
+    },
+    {
+     "summary": "The workbook's named problem stays on the list while it's still one (the Seagull's five turn problems pushed it past the eighth place at 92% of 95%, and a kept try took it for answered)",
+     "where": "src/engine/systems/workbook.ts (problemsOf)",
+     "commit": "17374e6c"
+    },
+    {
+     "summary": "A save's work on a piece's segments moves to its units on its first opening (cutIntoUnits, named in SaveUniverse.opened)",
+     "where": "src/engine/index.ts, systems/piece.ts (unitsFromTones)",
+     "commit": "17374e6c"
+    },
+    {
+     "summary": "Scapin's sack scene added, read from Wall's text, its levels written before any measurement",
+     "where": "src/engine/content/scenes-scored.ts (new), content/material.ts, content/coursework.ts",
+     "commit": "857d57af"
+    },
+    {
+     "summary": "Casting reads a night as the play demands, so Spring Awakening's long score moved the second fall's parts (Frau Gabor and Hänschen Rilow, where they were Frau Bergmann and Ernst Röbel); with the turns left out of the demand, as they were",
+     "where": "tests/evidence-g27-ui.test.ts (the claim corrected and renamed), the audit through its pipeline",
+     "commit": "d7c83220"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "A unit (bit) begins where an action shifts, not by length; large bits in performance",
+     "citation": "Stanislavski, An Actor's Work, tr. Jean Benedetti (Routledge 2008), chapter 7, \"Bits and Tasks\", pp. 139–141; Sharon Marie Carnicke, Stanislavsky in Focus (2009), p. 214, as Wikipedia's \"Unit of action\" cites it: \"a new 'bit' begins whenever an action or counteraction shifts in manner of execution or strategy\"",
+     "effective": "n/a",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "A longer score of units, set in rehearsal and kept the same, is discipline's",
+     "citation": "DEMAND_EFFECT.beats, after Sawoski's summary of Stanislavski's units and objectives (docs/research/attributes/research-acting-engine.json)",
+     "effective": "n/a",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "The sack scene",
+     "citation": "Molière, The Impostures of Scapin 3.2, tr. Charles Heron Wall, Project Gutenberg #8776",
+     "effective": "public domain",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Where in a tone section a turn falls the profile doesn't say: the turns go to the sections in order, one a round (unitSegments).",
+    "Scapin's levels are SLATE's reading of the text, each reason in its why.",
+    "A unit straddling the middle of a one-tone piece cut in halves before takes the half its middle falls in (unitsFromTones)."
+   ],
+   "mutations": [
+    {
+     "label": "u1",
+     "file": "src/engine/systems/material.ts",
+     "change": "demandsOf counts tones only",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "label": "u2",
+     "file": "src/engine/systems/piece.ts",
+     "change": "a segment placed by its index",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u2b",
+     "file": "src/engine/systems/piece.ts",
+     "change": "a segment placed by its weight",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u3",
+     "file": "src/engine/systems/piece.ts",
+     "change": "every unit weighs one",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "label": "u4",
+     "file": "src/engine/systems/piece.ts",
+     "change": "every turn to the first section",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "label": "u5",
+     "file": "src/engine/systems/piece.ts",
+     "change": "the mean divided segment by segment",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u6",
+     "file": "src/engine/systems/workbook.ts",
+     "change": "the named problem dropped past the eighth place",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u7",
+     "file": "src/engine/index.ts",
+     "change": "the named problem kept on opening",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u8",
+     "file": "src/engine/systems/piece.ts",
+     "change": "a unit takes the half its start falls in",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "u9",
+     "file": "src/engine/index.ts",
+     "change": "the opening step taken on every opening",
+     "killed": true,
+     "failed": 1
+    }
+   ],
+   "rowText": {
+    "fitness and school.prepare audit rows": "two cited test titles renamed through the pipeline (resolve-titles.cjs)"
+   },
+   "tutorial": "unchanged for the units (the profile chapter already says many beats ask discipline)",
+   "guide": "Working A Problem Through's example (parts by its tones and its turns; the named problem kept), the productions guide's nights (each turn within the tones, more than three asking discipline)"
+  },
+  {
+   "id": "judge.stamina-load",
+   "before": "A night's load clamped at 1 (PIECE.load, loadOf); eight plays at 1",
+   "status": "Not Implemented",
+   "disposition": "not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/h4.md",
+     "title": "Brief 09's Follow-Up, 2. The Load: Why It Stays At 1",
+     "kind": "account",
+     "proves": "going past 1 is a larger drain, PIECE.drain is SLATE's estimate with no figure; nothing measures a rehearsed actor's fall across a running time"
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "What an hour on stage costs the body",
+     "citation": "2024 Adult Compendium of Physical Activities: theater actor 3.0 METs (11870), musical theater 10.3 (03080)",
+     "effective": "n/a",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged",
+   "ownerDecision": "Found reading it: the load reads a night's body and voice, not its length, so four one-acts among the eight at 1 (The Bear, A Marriage Proposal, Riders To The Sea, Salomé) are loaded as whole evenings; the catalog keeps no running time. Whether a night's load should read its length, and each play's length read from its text, is for the owner."
+  },
+  {
+   "id": "judge.classes-fitness",
+   "before": "No class counted toward fitness: only a workout held and built it (FITNESS, settleTheBody)",
+   "status": "Implemented And Verified",
+   "disposition": "implemented where the Compendium puts a class at a workout's 3.5 METs or above: Movement Invention II and III (03010, 5.0) and stage combat, Advanced Principles and the spring of Intimacy And Combat (15425, 5.3); one workout's worth",
+   "evidence": [
+    {
+     "file": "tests/fitness.test.ts",
+     "title": "a class that trains the body as hard as a workout, attended > holds and builds fitness at each combat class of the spring as a workout indoors does, where the twin who misses them falls 0.18 every midnight; the fall’s classes count none",
+     "kind": "player journey (a first year by the clock, TEST SETUP fitness 70 and a twin away)",
+     "proves": "four Friday combat classes, each building 0.667 (a workout indoors at that readiness) and holding three midnights: 69.61 against the away twin's 64.96; the fall's classes none; the hold on the save; the class the day's first workout; the Work Out line after the class says it is the second, a class having counted as one"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "TRAINING_CLASSES and classTrains: an attended class at a workout's intensity holds fitness for FITNESS.heldDays and builds what a workout indoors builds, counted among the day's workouts",
+     "where": "src/engine/content/body.ts, systems/life.ts, systems/school.ts (the class day), systems/attributes.ts (development.workout's doc)",
+     "commit": "f9574908"
+    },
+    {
+     "summary": "The Work Out line says a class counted as the day's earlier workout; the Player Profile's stamina words name the classes",
+     "where": "src/engine/systems/life.ts (lookAfterOptions, whyNow), src/ui/looks/actor.tsx, src/ui/workspaces/ProfileWorkspace.tsx",
+     "commit": "149bfc28"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "A workout indoors; a dance class; stage combat",
+     "citation": "2024 Adult Compendium of Physical Activities: resistance training, multiple exercises 02054 3.5; ballet, modern or jazz, rehearsal or class 03010 5.0; martial arts, slower pace, novice, practice 15425 5.3; fencing 15200 6.0",
+     "effective": "n/a",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "A dance class, built to develop technique, asks significantly less of the heart and lungs than a performance",
+     "citation": "Rodrigues-Krause J, Krause M, Reischak-Oliveira Á. Cardiorespiratory Considerations in Dance: From Classes to Performances. J Dance Med Sci 2015;19(3):91–102 (its abstract as indexed; the full text wasn't read)",
+     "effective": "n/a",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "The courses' descriptions",
+     "citation": "DGSD Bulletin 2026–2027 (docs/research/world/research-yale-coursework.json); research-citations-review.json on The Body As Source",
+     "effective": "2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "One class counts as one workout indoors whatever its METs, as a run at 9.3 builds only a tenth more than the workout's 3.5 (TRAINING).",
+    "Intimacy And Combat counts in its spring only, when its work is combat (the templates' own split)."
+   ],
+   "mutations": [
+    {
+     "label": "f1",
+     "change": "a class holds nothing",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "f2",
+     "change": "the combat course's fall counted",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "f3",
+     "change": "not among the day's workouts",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "f4",
+     "change": "the classes never count",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "f5",
+     "change": "twice a workout's build",
+     "killed": false,
+     "note": "survived while the test worked the build from the history's own figures; the test then compared the build with a workout's at the same readiness"
+    },
+    {
+     "label": "f5b",
+     "change": "a build 1.1 times a workout's",
+     "killed": true,
+     "failed": 1
+    },
+    {
+     "label": "f6",
+     "change": "the Work Out line silent on a class counted",
+     "killed": true,
+     "failed": 1
+    }
+   ],
+   "rowText": {
+    "fitness": "entry: Work Out; from 2026-10-16 a class that trains the body as hard (doc-fields.json, regenerated)"
+   },
+   "tutorial": "the profile chapter: stamina built by a workout and by a class that trains the body as hard",
+   "guide": "body (what holds fitness, the day's workouts), craft (Stamina's fall and how it's built)"
+  },
+  {
+   "id": "judge.coverage-row",
+   "before": "docs/COVERAGE-MATRIX.md line 77 said 56 scenes",
+   "status": "Implemented And Verified",
+   "disposition": "corrected to 65, read from SCENES, with what 2026-10-16 added",
+   "evidence": [
+    {
+     "file": "docs/COVERAGE-MATRIX.md",
+     "title": "the scene bank row",
+     "kind": "documentation",
+     "proves": "65 scenes, 30 plays, 27 exercises, each counted from the tables"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "the count and its history",
+     "where": "docs/COVERAGE-MATRIX.md",
+     "commit": "c6d94849"
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged"
   }
  ],
- "mutationsRun": 6,
+ "mutationsRun": 23,
  "outsideThisArea": [
-  "A movement class at the School doesn't hold fitness; only a workout does (systems/life.ts FITNESS, fitnessHeldUntil), so a student who attends every movement class still falls to an everyday 35 over a term. Whether a movement class should count is the body and school areas' question, with research on its intensity.",
-  "docs/COVERAGE-MATRIX.md line 77 says 56 scenes; the catalog had 60 after the integration pass and 64 now.",
-  "tests/defects-g3-1.test.ts reads tools/brief-journeys.ts's source to find its weakness filter: an edit to that function's text breaks the test without changing behavior."
+  "tests/defects-g3-1.test.ts reads tools/brief-journeys.ts's source to find its weakness filter: an edit to that function's text breaks the test without changing behavior.",
+  "A night's load reads its body and voice and not its length: four one-acts (The Bear, A Marriage Proposal, Riders To The Sea, Salomé) are loaded as whole evenings, and the catalog keeps no running time (judge.stamina-load's ownerDecision).",
+  "What a class burns isn't counted: a class day is charged as any waking day (exerts is never called for a class), though two kinds of class now count as a workout for fitness. The body area's.",
+  "Look After Yourself's Work Out line says \"It's workout 2 today\" after a class that trains the body, which the day's count now includes: true of the count, worded for a workout.",
+  "docs/ATTRIBUTES-MATRIX.md was stale from e4c271ed (the four house scenes) until this area's follow-up regenerated it; brief 09's close-out didn't run tests/attributes-matrix.test.ts, which wasn't among the judge's 57 files.",
+  "The genre area's 280f1a55 isn't merged here; the coordinator measures the integrated tree."
  ],
  "checks": {
-  "npx tsc -b --noEmit": "0 (2 before tests/remaining-judge.test.ts's types were corrected)",
+  "npx tsc -b --noEmit": 0,
   "npm run lint": 0,
   "node tools/title-case.mjs --check": 0,
   "node tools/label-sweep.mjs": 0,
@@ -357,23 +746,28 @@
   "node tools/doc-refs.mjs --check": 0,
   "node tools/wired.mjs --check": 0,
   "node tools/deciders.mjs --check": 0,
-  "node tools/spelling.mjs": "0 (after --write Americanized seven quoted spellings in scenes-house.ts)",
+  "node tools/spelling.mjs": 0,
   "node tools/typos.mjs": 0,
   "npx vite-node tools/geo-check.mjs": 0,
   "node tools/inventory.mjs --check": 0,
   "node tools/devmap.mjs --check": 0,
-  "node tools/traceability.mjs": 0,
+  "node tools/traceability.mjs": "0 (after --write: two more tests read the class-day kind)",
   "node tools/capabilities.mjs --check": 0,
-  "node tools/coverage.mjs --check": 0,
+  "node tools/coverage.mjs --check": "0 (after the pipeline took three renamed test titles)",
   "node tools/student-matrix.mjs --check": 0,
-  "the measurements": "final-09/exits.txt: every tool 0"
+  "node tools/completion-matrix.mjs --check": "0 after regenerating (1 before: the renames had left it behind; 0 at d7127819). Not in this clone's package.json gate; run because CLAUDE.md names it",
+  "the suite": "one file at a time: 362 files at edbdfc40, 360 exit 0, 4,331 tests passed, 2 failed (tests/attributes-matrix.test.ts, the matrix stale since e4c271ed; tests/evidence-g27-ui.test.ts, casting moved by evaluation-10); both corrected (dd38bacd, d7c83220) and passing, and the 62 files the post-suite edits reach run again, every one exit 0",
+  "the measurements": "followup-09/exits.txt: every tool 0 at edbdfc40; the commits after it change no figure those tools read",
+  "npm run gate": "not run as one command, by the pass's rule (one test file at a time); its parts are above"
  },
  "seeds": {
   "journeys": "bj-0 (120 days, specialist and beginner)",
   "attribute baseline": "ag-baseline (draws ag-a-<k>, ag-b-<k>, ag-m-<k>, --draws 60)",
   "stage and interpretation": "interpretation (no draw)",
   "H4 tests": "h4 (no draw)",
-  "ST3 tests": "rng 9_2026_10_16 for the drawn shares; interpretation (no draw)"
+  "ST3 tests": "rng 9_2026_10_16 for the drawn shares; interpretation (no draw)",
+  "fitness journey": "fit-class (a first year by the clock), no draw",
+  "units save test": "g18-probe (a first year by the clock)"
  },
  "filesChanged": [
   "src/engine/content/scenes-house.ts (new)",
@@ -389,6 +783,72 @@
   "docs/ENGINE-MODEL.md",
   "docs/verification/integration-2026-10-16/{st3.md, st6.md, h4.md, l3.md}",
   "docs/verification/integration-2026-10-16/{baseline-09, h4-09, l3-09, final-09}/, st3/st3-cases.json, st6-09.json",
-  "docs/verification/remaining-09/judge-checklist.json, judge-result.json"
+  "docs/verification/remaining-09/judge-checklist.json, judge-result.json",
+  "src/engine/systems/piece.ts (unitSegments, unitsFromTones, SegmentSpec.length, the mean divided once)",
+  "src/engine/systems/material.ts (demandsOf)",
+  "src/engine/systems/coursework.ts (scenePiece)",
+  "src/engine/systems/school.ts (playPiece; the class day calls classTrains)",
+  "src/engine/systems/workbook.ts (problemsOf)",
+  "src/engine/index.ts (cutIntoUnits, ONCE_ON_OPENING)",
+  "src/engine/content/tasks.ts (RULESET evaluation-10)",
+  "src/engine/content/scenes-scored.ts (new)",
+  "src/engine/content/scenes-house.ts (its note on Scapin)",
+  "src/engine/content/body.ts (TRAINING_CLASSES, TRAINING_CLASS_NAMES)",
+  "src/engine/systems/life.ts (classTrains, the Work Out line)",
+  "src/engine/systems/attributes.ts (development.workout's doc)",
+  "src/engine/content/guide/{coursework,productions,body,craft}.ts",
+  "src/engine/content/tutorial.ts",
+  "src/engine/content/attributes-matrix.ts",
+  "src/ui/looks/actor.tsx",
+  "src/ui/workspaces/ProfileWorkspace.tsx",
+  "tools/{interpretation,ag-baseline,specialists,brief-balance}.ts (unitSegments)",
+  "tests/remaining-judge.test.ts, tests/fitness.test.ts, and the claims evaluation-10 moved in tests/{attributes-phase-2a,attributes-phase-2b,connected-properties,evidence-g06-life,evidence-g18-school,evidence-g27-ui,guide-examples-coursework,guide-examples-productions,integration-mastery,integration-stage,piece,remaining-banking,rounding-once,scope-health,stage-interpretation}.test.ts",
+  "docs/ENGINE-MODEL.md, docs/COVERAGE-MATRIX.md, docs/ATTRIBUTES-MATRIX.md, docs/GAMEPLAY-COVERAGE.md, docs/TRACEABILITY.md (regenerated)",
+  "docs/verification/audit/{life,school,ui}.json and docs/verification/pipeline/inputs/{doc-fields,renames}.json (regenerated through the pipeline)",
+  "docs/verification/integration-2026-10-16/{h4,st3,st6,l3}.md, followup-09/, COMPLETION-MATRIX.md, completion-matrix.json"
+ ],
+ "figuresOn": "d7127819 plus this area's commits. The genre area's commits on the shared branch (280f1a55: fourteen genres' second briefs replaced) weren't merged into this clone and change the briefs the I, S, G, H and L figures read; the coordinator measures the integrated tree.",
+ "testFiles": [
+  "tests/remaining-judge.test.ts (16 tests)",
+  "tests/fitness.test.ts (one new test, 8 in the file)"
+ ],
+ "criteriaAfterFollowUp": {
+  "file": "docs/verification/integration-2026-10-16/followup-09/README.md",
+  "stage": "ST1 50 / 42 of 94; ST2 80 of 80; ST3 178 of 189 (not met); ST4 holds (drama 25 / 5, comedy 14 / 16, tragedy 4 / 18); ST5 2,520 of 2,520; ST6 9 of 42 (not met); ST7 95 of 95; ST8 80 of 80; F1 holds (ST7 30 of 30); F2 holds (at 40 50 / 42, at 75 51 / 41); ST9 holds",
+  "interpretation": "I1 8,010, 9,117, 2,520 at 100; I2 24.2%, 20.8%, 32.9%; I3 sd 1.28, 1.19, 3.40; I4 54.3%, 47.3%, the even actor 100%; I5 99.3%, 98%, 100%: all hold",
+  "attributes": "A1 to A3, T2 (a), T3 (a), past 90, G3, G4, G5, M1 (65 of 65 scenes), M3, O1, O2, H2 (scene: emotional depth 17 of 65), H5 (436 of 436, within a point 28.9%), H7: met. H4 1 of 12: not met (2 before). F2 as written 67.6%: not met as before, not this area's",
+  "longTerm": "L1 4 and 3 weeks, L2 0 and 0: hold; L3 as above",
+  "genre": "S1 to S4 on all four samples byte-identical (signature.json, signature-fresh.json); G2 0 (genre-identity.json byte-identical); the audit's isolation 149 of 149 own, 0 another's; breaches and unbalanced entries 0 on both journeys",
+  "noneThatHeldFails": true
+ },
+ "deviations": [
+  "One probe (probe-g27-no-classes) ran a test file in a copy while the full suite was running in the clone: two test processes at once, against the one-at-a-time rule; its result (the failure stays without the classes) was confirmed by the turnless-demand probe run alone.",
+  "The container restarted with the full suite at 272 of 362 files; the other 90 were run in the foreground after it."
+ ],
+ "commits": [
+  "ad2efbe0 The stage and the attributes measured again before brief 09 changes them",
+  "02b91772 ST3 taken apart case by case: no rounding defect, and the drain is why",
+  "e4c271ed Four scenes played out to a house, read from their texts before measuring",
+  "b8ac3f4b L3's controlled measure is a curve: the same work at every month's levels",
+  "0f3d35a9 L3's account says what the empty second month was",
+  "1d13ee5c H4 taken apart: a specialist leads where its ability carries the piece",
+  "5937102d H4's account for brief 09: the benchmark, the opportunities, and the drain",
+  "1c383639 ST6 traced case by case: restraint's strength shows on both its sides",
+  "7e559b3e The engine model counts 64 scenes, and says why the ruleset stayed",
+  "e48f0b68 The long set score read for discipline, and why it wasn't added",
+  "4c11195d The genre coverage record counts the scenes played out to a house",
+  "d5227acf The judge's brief 09 tests typecheck: ways of playing written as literals",
+  "4555a1b0 Brief 09's stage and attributes measured again, and the area's result",
+  "28baa484 The checklist takes the follow-up's four items before their code changes",
+  "17374e6c evaluation-10: a scene and a play judged in their units, by its tones and its turns",
+  "857d57af Scapin's sack scene, six units of discipline's long score, read from Wall's text",
+  "f9574908 A class that trains the body as hard as a workout counts as one",
+  "c6d94849 The coverage matrix counts 65 scenes, and says what 2026-10-16 added",
+  "edbdfc40 The audit follows the follow-up: two tests renamed for their units, and fitness's second entry",
+  "dff3f6e5 Brief 09's follow-up measured again, and its four answers in the H4 account",
+  "d7c83220 Casting reads Spring Awakening's long score: the second fall's parts move, and the audit follows",
+  "dd38bacd The attributes matrix counts what brief 09 and its follow-up added, and how stamina is built",
+  "149bfc28 The Work Out line and the profile say a class counts, and two sources are quoted as they say it",
+  "(this file's commit)"
  ]
 }
