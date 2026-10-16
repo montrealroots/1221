@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 461 of 591 rows in scope Implemented And Verified (78.0%); 113 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 9 Decision Required, 26 Explicitly Deferred.
+**Completion, by the matrix:** 472 of 604 rows in scope Implemented And Verified (78.1%); 114 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 10 Decision Required, 26 Explicitly Deferred.
 
 ## Totals
 
@@ -43,6 +43,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 10 Area: advice | 14 | 5 | 7 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
 | Brief 10 Area: judge | 31 | 1 | 19 | 3 | 4 |  | 4 |  |
+| Brief 10 Area: stamina | 13 | 11 | 1 |  |  |  | 1 |  |
 | Criteria: The Stage | 11 |  | 9 |  |  |  |  | 2 |
 | Criteria: Interpretation | 5 |  | 5 |  |  |  |  |  |
 | Criteria: The Attributes | 25 |  | 22 |  |  |  |  | 3 |
@@ -51,7 +52,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **617** | **461** | **113** | **3** | **5** | **0** | **9** | **26** |
+| **All** | **630** | **472** | **114** | **3** | **5** | **0** | **10** | **26** |
 
 ## Life, Health And Time
 
@@ -692,6 +693,24 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `judge.together` | Every criterion section 5 lists, after the change | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/judge/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <judge> <part>’ (measurement) |
 | `judge.tests` | The tests of section 1 | Implemented, Verification Incomplete | implemented | tests/decisions-judge.test.ts (test file) |
 
+## Brief 10 Area: stamina
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `stamina.W1` | W1 Running times, with their basis: every play in the catalog has one, labelled with its basis (a cited production's published running time… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W1: every play has a running time, with its basis > gives every play the catalog stages a running time, its breaks and its bas… |
+| `stamina.W2` | W2 Longer costs more: holding every other input, longer participation gives a greater workload and drain, never less. | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and ener… |
+| `stamina.W3` | W3 Intensity counts: holding the duration, more physical or vocal intensity gives a greater workload; a short, intense performance can be a… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, … |
+| `stamina.W4` | W4 Stamina protects, and has limits: more stamina gives less drain within and less fatigue after, never more; at stamina 100 the drain with… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in s… |
+| `stamina.W5` | W5 Breaks recover, once: an interval recovers a bounded share of the drain for what follows it; that recovery isn't credited again (the clo… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in pr… |
+| `stamina.W6` | W6 Elapsed time and fatigue applied once: the call holds the clock for the running time and its calls, once; its fatigue is applied once; a… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and take… |
+| `stamina.W7` | W7 Segments sum to the whole: the drain and fatigue of a performance judged in its units equal the same performance processed whole, under … | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and … |
+| `stamina.W8` | W8 Starting condition: a lower condition at the curtain gives a greater effect, never less, within bounds. | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they ca… |
+| `stamina.W9` | W9 Bounded, and said: the workload a number between 0 and a stated cap by a stated formula; the forecast before the performance and the res… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time’ (test (static)); t… |
+| `stamina.W10` | W10 History kept: a result kept under an earlier ruleset is shown as it was, under its ruleset's name; a save from before the change opens … | Implemented And Verified | older-save compatibility kept and tested | tests/decisions-stamina.test.ts ‘W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged u… |
+| `stamina.M1` | M1 must hold after the change: maximum relevant abilities (stamina included), genre mastery, complete preparation, a valid interpretation a… | Implemented And Verified | verified as it stands | tests/decisions-stamina.test.ts ‘M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient r… |
+| `stamina.measure` | Measure what moves, before and after, as a first look for the judge area: M1, H4 (tools/ag-criteria.mjs), ST3 (tools/interpretation.ts -- -… | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/stamina/README.md ‘every command, file and exit’ (measurement); docs/verification/decisions-2026-10-16/stamina/before-ag… |
+| `stamina.A1` | A1 met: stamina’s +10 effect 0.63 on the mean of the 30 nights, as tools/ag-baseline.ts judges every night, a supporting part; it met A1 th… | Decision Required | owner decision | docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘A1 FAILS none at 0.5 for stamina’ (measurement (no draw)); tests/attributes-phase-2b.test… |
+
 ## Criteria: The Stage
 
 | Row | Goal | Status | Source's Word | Evidence |
@@ -809,7 +828,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (113)
+### Implemented, Verification Incomplete (114)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -874,54 +893,55 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`M1`** (Brief 10 Area: judge): verified as it stands
 - **`judge.together`** (Brief 10 Area: judge): verified as it stands
 - **`judge.tests`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
-- **`ST1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST4`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST5`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST7`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST8`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`ST9`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`Stage F1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`Stage F2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`I1`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`I2`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`I3`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`I4`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`I5`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`A1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`A2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`A3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`T2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`T3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`G3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`G4`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`G5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`M1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`M3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`O1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`O2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`H2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`H5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`H7`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`stamina.measure`** (Brief 10 Area: stamina): the area called it implemented and cites no gate test that holds it
+- **`ST1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST4`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST5`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST7`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST8`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`ST9`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`Stage F1`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`Stage F2`** (Criteria: The Stage): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`I1`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`I2`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`I3`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`I4`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`I5`** (Criteria: Interpretation): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`A1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`A2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`A3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`T2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`T3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`G3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`G4`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`G5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`M1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`M3`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`O1`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`O2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`H2`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`H5`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`H7`** (Criteria: The Attributes): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
-- **`L1`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`L2`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
-- **`S1`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`S2`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`S3`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`S4`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`Genre Audit`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again
-- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
-- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again
+- **`L1`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`L2`** (Criteria: Long-Term Continuity): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
+- **`S1`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`S2`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`S3`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`S4`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`Genre Audit`** (Criteria: The Genres): It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again
 - **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
 - **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
 
@@ -943,7 +963,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 
 None.
 
-### Decision Required (9)
+### Decision Required (10)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
@@ -953,6 +973,7 @@ None.
 - **`ST6-R.c`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
 - **`ST6-R.e`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
 - **`ST6-R.g`** (Brief 10 Area: judge): ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (l…
+- **`stamina.A1`** (Brief 10 Area: stamina): [object Object] Evidence: docs/verification/remaining-10/stamina-result.json. Recommended: Not recorded
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 
 ### Explicitly Deferred (26)

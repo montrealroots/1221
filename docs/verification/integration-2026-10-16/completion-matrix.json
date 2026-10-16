@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 461 of 591 rows in scope Implemented And Verified (78.0%); 113 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 9 Decision Required, 26 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 472 of 604 rows in scope Implemented And Verified (78.1%); 114 Implemented, Verification Incomplete, 3 Partially Implemented, 5 Not Implemented, 0 Blocked Externally, 10 Decision Required, 26 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -12350,6 +12350,319 @@
    "missing": "the area called it implemented and cites no gate test that holds it"
   },
   {
+   "id": "stamina.W1",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W1 Running times, with their basis: every play in the catalog has one, labelled with its basis (a cited production's published running time, or an estimate from its text at a stated rate, said as an estimate); a one-act runs shorter than a full-length play; nothing is loaded as a whole evening without a whole evening's running time.",
+   "entry": "src/engine/content/workload.ts (new); src/engine/content/plays.ts; src/engine/systems/school.ts",
+   "preconditions": "Brief 10 section 4 (\"Use production-specific running times where supported. A play does not have one universally exact runtime; label estimates and make their basis clear.\"); criteria.md W1.",
+   "reads": "No play has a running time: content/plays.ts keeps no length, and content/material.ts:69-72 says a play's night is read as a whole evening by its own task. A night's load is 0.6 + 0.12 a level of the body's and the voice's work, clamped at 1 (content/piece.ts:61, systems/piece.ts:172-178), so The Bear, A Marriage Proposal, Riders To The Sea and Salome (one-acts) sit at 1 with the full-length plays. The School's performance call holds 150 minutes (systems/school.ts:2713), the Rep's 180 (2740, 3437, 2749, and 1586 for a night on call), the Cabaret's 90 (3607) and the Summer Cabaret's 150 (3685), whatever the play.",
+   "decisions": "A running-time table for the 30 plays PLAY_MATERIAL profiles, The Seagull of the Rep's 2026-27 season, the festivals' new plays, a Yale Cabaret piece and the third year's solo showing: each its total minutes, its breaks and their minutes, and its basis (the production, the theatre, the year, the URL, read 2026-10-16), or SLATE's estimate where nothing is published, said so. Where a listing gives no interval's length, 20 minutes, the RSC's and the Globe's, said as SLATE's reading.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/content/workload.ts (new); src/engine/content/plays.ts; src/engine/systems/school.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W1: every play has a running time, with its basis > gives every play the catalog stages a running time, its breaks and its basis, a cited production’s figure read on 2026-10-16 or SLATE’s estimate said so’ (test (static)); tests/decisions-stamina.test.ts ‘W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity’ (test (static)); tests/decisions-stamina.test.ts ‘W1: every play has a running time, with its basis > PLAYER JOURNEY: books the Carlotta’s performances for its new play’s running time and the curtain call, where every School performance held two and a half hours’ (test (played)); docs/verification/decisions-2026-10-16/stamina/workload-table.tsv ‘the catalog’s running times, bases and workloads’ (measurement (no draw))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W2",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W2 Longer costs more: holding every other input, longer participation gives a greater workload and drain, never less.",
+   "entry": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "preconditions": "Brief 10 section 4 (\"Gives longer or more demanding participation greater workload when other inputs are equal\"); criteria.md W2.",
+   "reads": "The load reads no length (systems/piece.ts:175), and the drain no part size: a featured part in Hedda Gabler drains as Hedda does.",
+   "decisions": "W rises with the playing minutes and the participation; the drain reads the accumulated workload over the running.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input’ (test (static)); tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand’ (test (played))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W3",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W3 Intensity counts: holding the duration, more physical or vocal intensity gives a greater workload; a short, intense performance can be at least as demanding as a long, light one, shown on a pair the catalog or a test holds.",
+   "entry": "src/engine/systems/workload.ts (new)",
+   "preconditions": "Brief 10 section 4 (\"Allows a short intense performance to be demanding\"); criteria.md W3.",
+   "reads": "The night's load reads the body's and the voice's levels (systems/piece.ts:175) but not the length, so an intense one-act is as heavy as an intense full-length play.",
+   "decisions": "Intensity 1 + 2/9 a level of the body's and the voice's work, from the Compendium's acting and dance figures; a catalog pair, a one-act lead against a long light part, worked by hand.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters’ (test (static))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W4",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W4 Stamina protects, and has limits: more stamina gives less drain within and less fatigue after, never more; at stamina 100 the drain within is 0 (mastery kept), but the performance still costs energy afterward in proportion to its workload.",
+   "entry": "src/engine/systems/workload.ts (new); src/engine/systems/school.ts",
+   "preconditions": "Brief 10 section 4 (\"Gives stamina meaningful protective value without making it unlimited energy\"); criteria.md W4.",
+   "reads": "The drain is (1 - stamina) (systems/piece.ts:341), 0 at 100; the energy afterward is ESTIMATE.energy.performance, 10 flat, whatever the stamina and the play (systems/school.ts:584, and 3457, 3475, 3500, 3648, 3768, 3811).",
+   "decisions": "The energy after is E_unit x W x (1 - S_E x stamina) x g: half at stamina 100, never 0 while W is above 0.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new); src/engine/systems/school.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent’ (test (played))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W5",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W5 Breaks recover, once: an interval recovers a bounded share of the drain for what follows it; that recovery isn't credited again (the clock's rest during the interval, the night's sleep).",
+   "entry": "src/engine/systems/workload.ts (new); src/engine/content/workload.ts (new)",
+   "preconditions": "Brief 10 section 4 (\"Accounts for recovery without double-counting it\"); criteria.md W5.",
+   "reads": "No night has a break: the drain grows by position alone (systems/piece.ts:331-341).",
+   "decisions": "At each break A is multiplied by 1 - R x min(1, minutes / 20); the energy after reads W, the work done, not A, so the break isn't credited there; the clock charges waking hours through the interval as it does any (it never recovers energy awake, systems/life.ts applyElapsedWellbeing), and sleep is untouched.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new); src/engine/content/workload.ts (new)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was’ (test (engine, FIXTURE)); tests/decisions-stamina.test.ts ‘W5: a break recovers, once > PLAYER JOURNEY: holds the interval on the clock as waking time charged as any, and a night’s sleep after restores from the dials by its own rule, whatever the interval gave back’ (test (played))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W6",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W6 Elapsed time and fatigue applied once: the call holds the clock for the running time and its calls, once; its fatigue is applied once; a save and a load during or after the evening applies neither again.",
+   "entry": "src/engine/systems/school.ts; src/engine/index.ts (ONCE_ON_OPENING)",
+   "preconditions": "Brief 10 section 4 (\"Applies elapsed time and fatigue once\"); criteria.md W6.",
+   "reads": "The calls hold 150, 180, 90 or 150 minutes whatever the play (above); the fatigue is taken once at the curtain by the call's handler (systems/school.ts:3500 and the others); the waking hours of the call are charged by the clock (systems/life.ts chargeWakingHours).",
+   "decisions": "Each performance call booked for its production's running time plus the curtain call; the on-call hold and the run-through likewise; the energy taken once in the call's handler from the night's own workload; a save from before has its pending performance calls re-timed once on opening where nothing else the player must attend overlaps the new span.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/school.ts; src/engine/index.ts (ONCE_ON_OPENING)",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand’ (test (played)); tests/decisions-stamina.test.ts ‘W6: the evening’s time and fatigue, once > PLAYER JOURNEY: a save and a load in the middle of the evening and after it take neither the time nor the energy again’ (test (played)); tests/decisions-stamina.test.ts ‘W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)’ (test (older save, FIXTURE))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W7",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W7 Segments sum to the whole: the drain and fatigue of a performance judged in its units equal the same performance processed whole, under 1e-9.",
+   "entry": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "preconditions": "Brief 10 section 4 (\"Handles segmented performances consistently with the same performance processed as a whole\"); criteria.md W7.",
+   "reads": "The drain is sampled at each segment's start by position (systems/piece.ts:331-341): a piece processed whole, one segment, has no drain at all, while its units do.",
+   "decisions": "Each segment's drain is the mean of the drain over its span of the running, integrated exactly (A is piecewise linear; the bound's min integrated in closed form); the energy's per-segment shares are each segment's share of the workload.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath’ (test (static))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W8",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W8 Starting condition: a lower condition at the curtain gives a greater effect, never less, within bounds.",
+   "entry": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "preconditions": "Brief 10 section 4 (\"Starting condition and stamina\"); criteria.md W8.",
+   "reads": "The day's condition at the curtain reaches the night only through the evaluation's fatigue cause under readiness 60 (systems/evaluation.ts:426); the drain and the energy afterward don't read it.",
+   "decisions": "g = 1 + G x (1 - readiness / 100), in [1, 1.5], on the drain and on the energy after; at stamina 100 the drain is still 0.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/workload.ts (new); src/engine/systems/piece.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again’ (test (played))",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W9",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W9 Bounded, and said: the workload a number between 0 and a stated cap by a stated formula; the forecast before the performance and the result after it say the running time, the participation, the intensity, the breaks, the workload and what it does (the drain at the end, the energy it costs).",
+   "entry": "src/ui/components/RehearsalProcess.tsx; src/ui/looks/actor.tsx; src/engine/content/guide/productions.ts; src/engine/content/tutorial.ts; src/engine/content/abilities.ts",
+   "preconditions": "Brief 10 section 4 (\"Explains the workload and consequences to the player\"; \"Update forecasts, tutorials\"); criteria.md W9.",
+   "reads": "The forecast (A Night Now, ui/components/RehearsalProcess.tsx:70) and the work record's look (ui/looks/actor.tsx:240-272) say nothing of a night's workload; the guide's nights entry says a drain by the evening's load (content/guide/productions.ts:581, 588) and 10 energy.",
+   "decisions": "One function says the workload in words from the night's own figures (workloadWords); the forecast and the work look show it; the guide's nights entry and the tutorial's performance lines follow, dated, past tense for what changed.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/ui/components/RehearsalProcess.tsx; src/ui/looks/actor.tsx; src/engine/content/guide/productions.ts; src/engine/content/tutorial.ts; src/engine/content/abilities.ts",
+   "sees": "src/engine/content/guide/productions.ts: the nights entry’s Time, The Body and Stamina lines and a mistake; its Woyzeck example (a lead, rested, the drain in its first and last movements, the workload and the energy); the notes entry’s breathing example (a lead, rested). Each figure from the engine’s functions. | src/engine/content/tutorial.ts, the School chapter: a performance holds the clock for its play’s running time and tires by its workload; stamina holds the late movements and spares up to half the energy; The Evening’s Workload says it.",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time’ (test (static)); tests/decisions-stamina.test.ts ‘W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures’ (test (render)); tests/guide-examples-productions.test.ts; tests/tutorial.test.ts",
+   "sourceStatus": "implemented",
+   "status": "Implemented And Verified",
+   "disposition": "implemented"
+  },
+  {
+   "id": "stamina.W10",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "W10 History kept: a result kept under an earlier ruleset is shown as it was, under its ruleset's name; a save from before the change opens with its nights as they were judged, and plays the new model from then on.",
+   "entry": "src/engine/content/tasks.ts; docs/ENGINE-MODEL.md; src/engine/index.ts",
+   "preconditions": "Brief 10 section 4 (\"Preserve historical outcomes under their original ruleset\"; \"Update ... saved results, and migrations as necessary\"); criteria.md W10; common.md (RULESET and its ENGINE-MODEL row).",
+   "reads": "RULESET is evaluation-10 (src/engine/content/tasks.ts:49); a kept result under another ruleset isn't replayed (systems/evaluation.ts:344, 358) and its look says the ruleset it was judged under (ui/looks/actor.tsx:271).",
+   "decisions": "RULESET moves (evaluation-11, the night's workload) with its ENGINE-MODEL row; a save made before opens with its nights' records untouched, read as judged; its pending calls re-timed once; its next night judged and costed by the new model.",
+   "validation": "older-save compatibility",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/content/tasks.ts; docs/ENGINE-MODEL.md; src/engine/index.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged under evaluation-10, replays none, names the ruleset, and judges the next by its workload’ (test (older save, FIXTURE)); tests/stage-interpretation.test.ts ‘the stage reads the scene, not the house > a result kept under the rules before this change isn’t judged again by today’s’ (test (static))",
+   "sourceStatus": "older-save compatibility kept and tested",
+   "status": "Implemented And Verified",
+   "disposition": "older-save compatibility kept and tested"
+  },
+  {
+   "id": "stamina.M1",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "M1 must hold after the change: maximum relevant abilities (stamina included), genre mastery, complete preparation, a valid interpretation and a sufficient day give 100 on every judged piece and reading.",
+   "entry": "src/engine/systems/piece.ts",
+   "preconditions": "criteria.md, Mastery Is Kept; stamina.md, The Work 6.",
+   "reads": "Holds on f17ae369 (tools/ag-baseline.ts's mastery section, before-ag-baseline.json).",
+   "decisions": "The drain is (1 - stamina) x ..., 0 at stamina 100 whatever the workload and the condition.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "src/engine/systems/piece.ts",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "tests/decisions-stamina.test.ts ‘M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding’ (test (static)); docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘M1 Meets’ (measurement (no draw)); tests/integration-mastery.test.ts",
+   "sourceStatus": "verified as it stands",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands"
+  },
+  {
+   "id": "stamina.measure",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "Measure what moves, before and after, as a first look for the judge area: M1, H4 (tools/ag-criteria.mjs), ST3 (tools/interpretation.ts -- --st3) and L3 (tools/brief-journeys.ts).",
+   "entry": "docs/verification/decisions-2026-10-16/stamina/",
+   "preconditions": "stamina.md, The Work 6; brief 10 section 5 (\"Validate the combined engine after integration, particularly stamina's effects on specialist balance, stage scoring, and long-term progression\").",
+   "reads": "Not measured on this pass's code.",
+   "decisions": "Each tool before (f17ae369) and after (the area's last commit), into docs/verification/decisions-2026-10-16/stamina/, the commands in its README.md; tools that build a night's piece by hand (ag-baseline, specialists, brief-balance) build it through the workload, so they measure what the game judges.",
+   "validation": "required reachable behavior",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "docs/verification/decisions-2026-10-16/stamina/",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/stamina/README.md ‘every command, file and exit’ (measurement); docs/verification/decisions-2026-10-16/stamina/before-ag-criteria.txt ‘before’ (measurement (no draw)); docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘after’ (measurement (no draw))",
+   "sourceStatus": "implemented",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "implemented",
+   "missing": "the area called it implemented and cites no gate test that holds it"
+  },
+  {
+   "id": "stamina.A1",
+   "group": "Brief 10 Area: stamina",
+   "kind": "area item",
+   "source": "docs/verification/remaining-10/stamina-checklist.json",
+   "goal": "A1 met: stamina’s +10 effect 0.63 on the mean of the 30 nights, as tools/ag-baseline.ts judges every night, a supporting part; it met A1 there alone (briefs 0.39, scenes 0.40, coursework 0.43).",
+   "entry": "Not recorded",
+   "preconditions": "Not recorded",
+   "reads": "A1 met: stamina’s +10 effect 0.63 on the mean of the 30 nights, as tools/ag-baseline.ts judges every night, a supporting part; it met A1 there alone (briefs 0.39, scenes 0.40, coursework 0.43).",
+   "decisions": "Not recorded",
+   "validation": "Not recorded",
+   "changes": "Not recorded",
+   "later": "Not recorded",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘A1 FAILS none at 0.5 for stamina’ (measurement (no draw)); tests/attributes-phase-2b.test.ts ‘stamina counts by how long and how hard a piece is > gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief’ (test (static))",
+   "sourceStatus": "owner decision",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "decision": {
+    "question": {
+     "missing": "Whether A1’s night kind should read the part where the workload puts stamina’s work (a lead, 0.50, at the threshold) or stay a supporting part’s (0.32, not met).",
+     "options": [
+      "Read A1’s, H4’s and H4-R’s nights at a lead’s part, or at each size, in tools/ag-baseline.ts (the judge area’s measurement): stamina meets A1 at 0.50 exactly; other criteria move and must be re-measured.",
+      "Keep the supporting part and record A1 as not met for stamina, its causal role being a lead’s long evening and the energy after.",
+      "Raise the drain’s size or a part’s share to lift it: a weight with no figure behind it, not recommended."
+     ],
+     "recommended": "The first: the measurement chose a supporting part when a part’s size didn’t matter to stamina; it does now."
+    },
+    "evidence": "docs/verification/remaining-10/stamina-result.json",
+    "recommendation": "Not recorded"
+   }
+  },
+  {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
    "id": "ST1",
    "group": "Criteria: The Stage",
@@ -12376,7 +12689,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12405,7 +12718,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12459,7 +12772,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12488,7 +12801,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12542,7 +12855,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12571,7 +12884,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12600,7 +12913,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12629,7 +12942,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12658,7 +12971,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12687,7 +13000,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12716,7 +13029,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12745,7 +13058,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12774,7 +13087,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12803,7 +13116,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12832,7 +13145,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12861,7 +13174,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12890,7 +13203,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12919,7 +13232,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12948,7 +13261,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12977,7 +13290,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13006,7 +13319,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13035,7 +13348,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13064,7 +13377,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13093,7 +13406,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13122,7 +13435,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13151,7 +13464,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13180,7 +13493,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13209,7 +13522,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13238,7 +13551,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13317,7 +13630,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13521,7 +13834,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13550,7 +13863,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13748,7 +14061,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13801,7 +14114,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13830,7 +14143,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13859,7 +14172,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13888,7 +14201,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -13917,7 +14230,7 @@
     "commit": "c9cba9c8",
     "watch": "judge"
    },
-   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/coursework.ts, src/engine/content/material.ts, src/engine/content/scenes-meeting.ts, …): measure it again"
+   "missing": "It was measured on c9cba9c8, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/coursework.ts, src/engine/content/material.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14054,7 +14367,7 @@
     "commit": "bcd75970",
     "watch": "app"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14081,7 +14394,7 @@
     "commit": "bcd75970",
     "watch": "app"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14108,7 +14421,7 @@
     "commit": "bcd75970",
     "watch": "engine"
    },
-   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on bcd75970, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14135,7 +14448,7 @@
     "commit": "7c1198a2",
     "watch": "app"
    },
-   "missing": "It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/coursework.ts, …): measure it again"
+   "missing": "It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

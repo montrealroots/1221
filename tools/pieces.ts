@@ -18,7 +18,8 @@ import { PIECE } from '../src/engine/content/piece';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefPiece, type BriefRecord } from '../src/engine/systems/briefs';
 import { judge, type EvalContext, type Evaluation, type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { runningOf } from '../src/engine/systems/workload';
 import { materialContext } from '../src/engine/systems/material';
 import { castingPerformer, NIGHT_DIFFICULTY } from '../src/engine/systems/school';
 import { difficultyOf } from '../src/engine/systems/coursework';
@@ -51,7 +52,10 @@ export function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting
   const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const difficulty = kind === 'scene' ? difficultyOf(templateById('scene-study')!) : kind === 'night' ? NIGHT_DIFFICULTY.school.supporting : 0;
-  const spec: PieceSpec = { segments: unitSegments(m, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  // A night, and casting's read of a play, as the game judges a night from brief 10's stamina model (2026-10-16): a
+  // supporting part's workload over the play's running time (`nightPiece`), as `tools/ag-baseline.ts` builds it. Until its
+  // integration this read `loadOf`'s night, 0.6 and 0.12 a level, which the model removed.
+  const spec: PieceSpec = kind === 'scene' ? { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') } : nightPiece(m, runningOf({ play: m.id }), 'supporting');
   return {
     kind, id: m.id, material: m,
     judge: (p, o = {}) => {
