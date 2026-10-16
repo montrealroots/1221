@@ -373,7 +373,8 @@ Two places read the moment alone and ignored the history behind it.
 
 The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
 
-- **Material:** 56 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11),
+- **Material:** 64 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11,
+  56 scenes until 2026-10-16, when the integration pass added four drama scenes and brief 09 four played out to a house),
   and from 2026-10-12 149 practice briefs, one written for each genre, with 302 readings among them (§8).
 - **Practice:** 27 exercises, each with three tiers and five focuses.
 - **Choices:** three axes of choice and two sides each. A director asks for a side half the time.
@@ -768,8 +769,8 @@ Each piece counts once now (`limitsOnce`), and the backfill a save gets on openi
 
 ### Limits
 
-- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 56 scenes for class; 30 plays with
-  profiles.
+- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 64 scenes for class (56 until 2026-10-16);
+  30 plays with profiles.
 - **Every size in this section is SLATE's estimate.** That covers the drain, the slip and its recovery, the tones' leans,
   a partner's shares and slip, the workbook's gains, the direction note's rule for addressed, and the identity's
   thresholds. The shapes are from the rehearsal room and the acting texts the research files cite. No size is measured
@@ -792,4 +793,9 @@ in `RULESET`'s comments (`content/tasks.ts`); each change has its account, with 
 | `evaluation-7` | The reader counts toward suitability at half weight, as a register's concern does (`GRAIN.reader`). | `docs/verification/genres-2026-10-16/g1-replacement.md` |
 | `evaluation-8` | A stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale; a stage voice's demand no longer counts as size; a scene's circumstances say what its scale asks (`CIRCUMSTANCE_AFFINITY`). | `docs/verification/stage-2026-10-16/` |
 | `evaluation-9` | A result is rounded once, from parts kept at full precision (`judgeExact`, `rounded`); until then a dimension and a piece's segment were rounded before a whole was worked out from them. Restrained draws on composure and focus as well as emotional depth (`APPROACH_EFFECT`). | `docs/verification/integration-2026-10-16/st3.md`, `st6.md` |
+
+Material added under a ruleset doesn't move it: no rule changes, so no kept result reads differently. Under `evaluation-9`
+the integration pass added four drama scenes (`content/scenes-public.ts`) and brief 09, later on 2026-10-16, four
+played out to a house (`content/scenes-house.ts`; `docs/verification/integration-2026-10-16/h4.md`). Brief 09 changed no
+rule of the judge: ST3, ST6 and L3 were traced and measured (`st3.md`, `st6.md`, `l3.md`), and none needed one.
 
