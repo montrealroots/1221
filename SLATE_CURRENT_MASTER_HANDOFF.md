@@ -3,14 +3,16 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Implement The Approved Acting, Advice, Banking, And Stamina Decisions"
 (`docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt`, kept verbatim),
-worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge). **Not merged, not deployed.**
+worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge), and merged to `main` in #37 (`0e7ff7c2`)
+at the owner's word ("Merge it.", 2026-10-16). **Merged isn't deployed: nothing is.**
 
 ## 1. The Repository
 
-- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `44dcd973`.
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `0e7ff7c2`, #37's merge.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
   (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
-  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), which the owner hasn't merged. **The tested code is `9c40be73`'s.**
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), merged with a merge commit at the owner's word (until then this
+  said the owner hadn't merged it). **The tested code is `9c40be73`'s.**
   - The gate passed on `d9b631ba`, the same code.
   - The build, the saves and the built app ran on `9c40be73`.
   - The long runs and the advice's held-out set ran on `57b64401`, whose engine is the same.
@@ -109,7 +111,8 @@ Not deployed. Base44 deployment happens on the owner's word, after the gate pass
 1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
    work plan (section 13), the briefs. Preserve the stash, worktrees and local files.
 2. **The owner's decisions** in section 3, each with its evidence in `brief-10.md` and the matrix's rows.
-3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+3. **A follow-up starts a fresh branch from `main`,** as this section's correction after #37's merge did; a pull request
+   is merged only at the owner's word.
 4. **The matrix's What's Left**, row by row.
 
 # Earlier: The Remaining Integration Gaps, Brief 09, 2026-10-16

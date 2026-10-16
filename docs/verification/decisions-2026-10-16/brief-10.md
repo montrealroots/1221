@@ -19,7 +19,8 @@ holds a fix the built app's acceptance run found on the way (section 8).
 - **The long runs and the advice's held-out set** ran on `57b64401`, whose engine is the same.
 - **The criteria** were measured on `567d27dd` (`final/`), and no file they read differs.
 
-The runs are in `../integration-2026-10-16/runs-10/`. Nothing is merged or deployed.
+The runs are in `../integration-2026-10-16/runs-10/`. Nothing was merged or deployed at the close-out. The owner merged it
+later that day in #37 (`0e7ff7c2`, "Merge it."), and nothing is deployed.
 
 ## Every Decision, And Its Status
 
