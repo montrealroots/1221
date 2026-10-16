@@ -1,0 +1,146 @@
+{
+ "key": "stamina",
+ "on": "2026-10-16",
+ "against": "f17ae369 (the four areas' instructions for brief 10, on 2e8e4db3's criteria), in the stamina area's own clone, branch stamina, read before any code of this area changed",
+ "brief": "docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt, section 4 in full; docs/verification/decisions-2026-10-16/criteria.md, section 4 (W1 to W10) and M1; docs/verification/decisions-2026-10-16/prompts/common.md and stamina.md; docs/verification/integration-2026-10-16/prompts-09/common.md; CLAUDE.md",
+ "baseline": "docs/verification/decisions-2026-10-16/stamina/ (before-*.json and before-*.txt, measured on f17ae369 before any change; README.md names each command)",
+ "design": {
+  "summary": "A night's workload, in one place (content/workload.ts, systems/workload.ts): the production's running time (each play's from a cited production, or SLATE's estimate where none is published, said as such), the part's share of the stage time by its size, the body's and the voice's intensity, the breaks, the actor's stamina and the condition at the curtain. Within the piece it is the drain, read through each segment's span of the running and integrated exactly, so a performance judged in its units comes to what the whole does; after it, the energy the evening costs, once; and the call holds the clock for the running time and the curtain call, once.",
+  "formula": "stage hours h = playing minutes / 60 x participation(size); intensity i = 1 + (2/9) x (physical + vocal); workload W = min(cap, h x i). Accumulated A(t) rises with the running at W per playing time; a break of m minutes leaves A x (1 - R x min(1, m / 20)). The drain at t is D x min(1, b x A(t) / W_full) x (1 - stamina) x g, g = 1 + G x (1 - readiness / 100); a segment's factor is 1 - the mean of the drain over its span. The energy after is E_unit x W x (1 - S_E x stamina) x g.",
+  "coefficients": "D 0.3 (PIECE.drain, kept); 2/9 a level from the 2024 Adult Compendium's 3.0 METs for acting to 5.0 for a dance performance or rehearsal over the body's three levels, the voice's step the same (SLATE's); participation lead 0.75, supporting 0.45, featured 0.2, solo 1 (SLATE's); R 0.25 for a break of 20 minutes or more (SLATE's); W_full 3.5 and the cap 8 (SLATE's); G 0.5 (SLATE's); E_unit 5 and S_E 0.5 (SLATE's); the curtain call 5 minutes (SLATE's). Each is to be balanced by the tests and the played runs, and the first figures above are the design's starting point, not measured truths."
+ },
+ "items": [
+  {
+   "id": "stamina.W1",
+   "item": "W1 Running times, with their basis: every play in the catalog has one, labelled with its basis (a cited production's published running time, or an estimate from its text at a stated rate, said as an estimate); a one-act runs shorter than a full-length play; nothing is loaded as a whole evening without a whole evening's running time.",
+   "requirement": "Brief 10 section 4 (\"Use production-specific running times where supported. A play does not have one universally exact runtime; label estimates and make their basis clear.\"); criteria.md W1.",
+   "currentBehavior": "No play has a running time: content/plays.ts keeps no length, and content/material.ts:69-72 says a play's night is read as a whole evening by its own task. A night's load is 0.6 + 0.12 a level of the body's and the voice's work, clamped at 1 (content/piece.ts:61, systems/piece.ts:172-178), so The Bear, A Marriage Proposal, Riders To The Sea and Salome (one-acts) sit at 1 with the full-length plays. The School's performance call holds 150 minutes (systems/school.ts:2713), the Rep's 180 (2740, 3437, 2749, and 1586 for a night on call), the Cabaret's 90 (3607) and the Summer Cabaret's 150 (3685), whatever the play.",
+   "affectedSystems": ["src/engine/content/workload.ts (new)", "src/engine/content/plays.ts", "src/engine/systems/school.ts"],
+   "plan": "A running-time table for the 30 plays PLAY_MATERIAL profiles, The Seagull of the Rep's 2026-27 season, the festivals' new plays, a Yale Cabaret piece and the third year's solo showing: each its total minutes, its breaks and their minutes, and its basis (the production, the theatre, the year, the URL, read 2026-10-16), or SLATE's estimate where nothing is published, said so. Where a listing gives no interval's length, 20 minutes, the RSC's and the Globe's, said as SLATE's reading.",
+   "acceptance": "tests/decisions-stamina.test.ts: every play the catalog stages (THESIS_PLAYS, SHAKESPEARE_PLAYS, REP_PLAYS, SUMMER_PLAYS) has a running time with a basis and a source or an estimate's note; every one-act runs shorter than every full-length play; no one-act's workload reaches a full-length lead's of the same size and intensity. Static and played.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W2",
+   "item": "W2 Longer costs more: holding every other input, longer participation gives a greater workload and drain, never less.",
+   "requirement": "Brief 10 section 4 (\"Gives longer or more demanding participation greater workload when other inputs are equal\"); criteria.md W2.",
+   "currentBehavior": "The load reads no length (systems/piece.ts:175), and the drain no part size: a featured part in Hedda Gabler drains as Hedda does.",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)", "src/engine/systems/piece.ts"],
+   "plan": "W rises with the playing minutes and the participation; the drain reads the accumulated workload over the running.",
+   "acceptance": "A short and a long night played through the clock, and a sweep over every play and size holding the rest: the workload, the mean and end drain and the energy each at or over the shorter's, strictly where under the bound. Mutation: the running time's term removed from the workload; the test fails.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W3",
+   "item": "W3 Intensity counts: holding the duration, more physical or vocal intensity gives a greater workload; a short, intense performance can be at least as demanding as a long, light one, shown on a pair the catalog or a test holds.",
+   "requirement": "Brief 10 section 4 (\"Allows a short intense performance to be demanding\"); criteria.md W3.",
+   "currentBehavior": "The night's load reads the body's and the voice's levels (systems/piece.ts:175) but not the length, so an intense one-act is as heavy as an intense full-length play.",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)"],
+   "plan": "Intensity 1 + 2/9 a level of the body's and the voice's work, from the Compendium's acting and dance figures; a catalog pair, a one-act lead against a long light part, worked by hand.",
+   "acceptance": "Played: an intense one-act lead against a light full-length play's part, the one-act's workload at or over the other's, each figure worked by hand; a sweep holding the duration, intensity raising the workload. Mutation: the intensity's step set to 0; the test fails.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "stamina.W4",
+   "item": "W4 Stamina protects, and has limits: more stamina gives less drain within and less fatigue after, never more; at stamina 100 the drain within is 0 (mastery kept), but the performance still costs energy afterward in proportion to its workload.",
+   "requirement": "Brief 10 section 4 (\"Gives stamina meaningful protective value without making it unlimited energy\"); criteria.md W4.",
+   "currentBehavior": "The drain is (1 - stamina) (systems/piece.ts:341), 0 at 100; the energy afterward is ESTIMATE.energy.performance, 10 flat, whatever the stamina and the play (systems/school.ts:584, and 3457, 3475, 3500, 3648, 3768, 3811).",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)", "src/engine/systems/school.ts"],
+   "plan": "The energy after is E_unit x W x (1 - S_E x stamina) x g: half at stamina 100, never 0 while W is above 0.",
+   "acceptance": "Twins differing only in stamina, played through a night: less drain and less energy spent for the higher, each figure worked by hand; at stamina 100 the drain 0 and the energy E_unit x W x 0.5 x g. Mutations: S_E set to 1 (unlimited energy) and the drain's (1 - stamina) removed; each fails a test.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "stamina.W5",
+   "item": "W5 Breaks recover, once: an interval recovers a bounded share of the drain for what follows it; that recovery isn't credited again (the clock's rest during the interval, the night's sleep).",
+   "requirement": "Brief 10 section 4 (\"Accounts for recovery without double-counting it\"); criteria.md W5.",
+   "currentBehavior": "No night has a break: the drain grows by position alone (systems/piece.ts:331-341).",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)", "src/engine/content/workload.ts (new)"],
+   "plan": "At each break A is multiplied by 1 - R x min(1, minutes / 20); the energy after reads W, the work done, not A, so the break isn't credited there; the clock charges waking hours through the interval as it does any (it never recovers energy awake, systems/life.ts applyElapsedWellbeing), and sleep is untouched.",
+   "acceptance": "Played: the same night with an interval and without, the drain after the interval lower by the share worked by hand, the energy spent the same, and a night's sleep after each restoring by the same rule from where each stood. Mutation: the energy computed on A instead of W (recovery credited twice); the test fails.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W6",
+   "item": "W6 Elapsed time and fatigue applied once: the call holds the clock for the running time and its calls, once; its fatigue is applied once; a save and a load during or after the evening applies neither again.",
+   "requirement": "Brief 10 section 4 (\"Applies elapsed time and fatigue once\"); criteria.md W6.",
+   "currentBehavior": "The calls hold 150, 180, 90 or 150 minutes whatever the play (above); the fatigue is taken once at the curtain by the call's handler (systems/school.ts:3500 and the others); the waking hours of the call are charged by the clock (systems/life.ts chargeWakingHours).",
+   "affectedSystems": ["src/engine/systems/school.ts", "src/engine/index.ts (ONCE_ON_OPENING)"],
+   "plan": "Each performance call booked for its production's running time plus the curtain call; the on-call hold and the run-through likewise; the energy taken once in the call's handler from the night's own workload; a save from before has its pending performance calls re-timed once on opening where nothing else the player must attend overlaps the new span.",
+   "acceptance": "Played: a night's call held exactly the running time plus the curtain call (occupiedAt); a save and a load in the middle of the evening and after it: the energy taken once, one work record, the clock's charge the same as the evening played through. GUARD and older-save tests for the re-timing step.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "stamina.W7",
+   "item": "W7 Segments sum to the whole: the drain and fatigue of a performance judged in its units equal the same performance processed whole, under 1e-9.",
+   "requirement": "Brief 10 section 4 (\"Handles segmented performances consistently with the same performance processed as a whole\"); criteria.md W7.",
+   "currentBehavior": "The drain is sampled at each segment's start by position (systems/piece.ts:331-341): a piece processed whole, one segment, has no drain at all, while its units do.",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)", "src/engine/systems/piece.ts"],
+   "plan": "Each segment's drain is the mean of the drain over its span of the running, integrated exactly (A is piecewise linear; the bound's min integrated in closed form); the energy's per-segment shares are each segment's share of the workload.",
+   "acceptance": "For every play in the catalog, every size, with and without breaks and places to breathe, judged in its units and as one segment: the length-weighted mean of the units' drains equals the whole's, and the units' shares of the fatigue sum to the whole's, under 1e-9. Mutation: the segment's drain sampled at its start; the test fails.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W8",
+   "item": "W8 Starting condition: a lower condition at the curtain gives a greater effect, never less, within bounds.",
+   "requirement": "Brief 10 section 4 (\"Starting condition and stamina\"); criteria.md W8.",
+   "currentBehavior": "The day's condition at the curtain reaches the night only through the evaluation's fatigue cause under readiness 60 (systems/evaluation.ts:426); the drain and the energy afterward don't read it.",
+   "affectedSystems": ["src/engine/systems/workload.ts (new)", "src/engine/systems/piece.ts"],
+   "plan": "g = 1 + G x (1 - readiness / 100), in [1, 1.5], on the drain and on the energy after; at stamina 100 the drain is still 0.",
+   "acceptance": "Twins differing only in the condition at the curtain (played: one rested, one short of sleep), the lower's drain and energy at or over the other's, by g worked by hand; g bounded at 1.5 at readiness 0. Mutation: g inverted; the test fails.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W9",
+   "item": "W9 Bounded, and said: the workload a number between 0 and a stated cap by a stated formula; the forecast before the performance and the result after it say the running time, the participation, the intensity, the breaks, the workload and what it does (the drain at the end, the energy it costs).",
+   "requirement": "Brief 10 section 4 (\"Explains the workload and consequences to the player\"; \"Update forecasts, tutorials\"); criteria.md W9.",
+   "currentBehavior": "The forecast (A Night Now, ui/components/RehearsalProcess.tsx:70) and the work record's look (ui/looks/actor.tsx:240-272) say nothing of a night's workload; the guide's nights entry says a drain by the evening's load (content/guide/productions.ts:581, 588) and 10 energy.",
+   "affectedSystems": ["src/ui/components/RehearsalProcess.tsx", "src/ui/looks/actor.tsx", "src/engine/content/guide/productions.ts", "src/engine/content/tutorial.ts", "src/engine/content/abilities.ts"],
+   "plan": "One function says the workload in words from the night's own figures (workloadWords); the forecast and the work look show it; the guide's nights entry and the tutorial's performance lines follow, dated, past tense for what changed.",
+   "acceptance": "Rendered: the part's forecast and a night's record each show the running time, the share, the intensity, the breaks, the workload of the cap, the drain at the end and the energy, the figures equal to the engine's. Static: the cap clamps a workload past it.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.W10",
+   "item": "W10 History kept: a result kept under an earlier ruleset is shown as it was, under its ruleset's name; a save from before the change opens with its nights as they were judged, and plays the new model from then on.",
+   "requirement": "Brief 10 section 4 (\"Preserve historical outcomes under their original ruleset\"; \"Update ... saved results, and migrations as necessary\"); criteria.md W10; common.md (RULESET and its ENGINE-MODEL row).",
+   "currentBehavior": "RULESET is evaluation-10 (src/engine/content/tasks.ts:49); a kept result under another ruleset isn't replayed (systems/evaluation.ts:344, 358) and its look says the ruleset it was judged under (ui/looks/actor.tsx:271).",
+   "affectedSystems": ["src/engine/content/tasks.ts", "docs/ENGINE-MODEL.md", "src/engine/index.ts"],
+   "plan": "RULESET moves (evaluation-11, the night's workload) with its ENGINE-MODEL row; a save made before opens with its nights' records untouched, read as judged; its pending calls re-timed once; its next night judged and costed by the new model.",
+   "acceptance": "Played: a save made on the old rules with nights kept (the night record's ruleset set to evaluation-10 as a FIXTURE where play can't make the old build), opened: each night's overall, band and ruleset unchanged, replay refuses it, the look names its ruleset; the next night judged under the new ruleset with a workload. The schema stays 94: no field changes meaning.",
+   "classification": "older-save compatibility",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "stamina.M1",
+   "item": "M1 must hold after the change: maximum relevant abilities (stamina included), genre mastery, complete preparation, a valid interpretation and a sufficient day give 100 on every judged piece and reading.",
+   "requirement": "criteria.md, Mastery Is Kept; stamina.md, The Work 6.",
+   "currentBehavior": "Holds on f17ae369 (tools/ag-baseline.ts's mastery section, before-ag-baseline.json).",
+   "affectedSystems": ["src/engine/systems/piece.ts"],
+   "plan": "The drain is (1 - stamina) x ..., 0 at stamina 100 whatever the workload and the condition.",
+   "acceptance": "tools/ag-baseline.ts's mastery section after the change: every case at 100; tests/decisions-stamina.test.ts: a mastered actor on the heaviest night in the catalog, at the lowest condition the evaluation still calls sufficient, at 100.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Implemented And Verified"
+  },
+  {
+   "id": "stamina.measure",
+   "item": "Measure what moves, before and after, as a first look for the judge area: M1, H4 (tools/ag-criteria.mjs), ST3 (tools/interpretation.ts -- --st3) and L3 (tools/brief-journeys.ts).",
+   "requirement": "stamina.md, The Work 6; brief 10 section 5 (\"Validate the combined engine after integration, particularly stamina's effects on specialist balance, stage scoring, and long-term progression\").",
+   "currentBehavior": "Not measured on this pass's code.",
+   "affectedSystems": ["docs/verification/decisions-2026-10-16/stamina/"],
+   "plan": "Each tool before (f17ae369) and after (the area's last commit), into docs/verification/decisions-2026-10-16/stamina/, the commands in its README.md; tools that build a night's piece by hand (ag-baseline, specialists, brief-balance) build it through the workload, so they measure what the game judges.",
+   "acceptance": "before-* and after-* files committed, with their commands and exit codes; what moved said with its cause.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  }
+ ]
+}
