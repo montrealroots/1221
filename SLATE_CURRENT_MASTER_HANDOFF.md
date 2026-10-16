@@ -9,7 +9,8 @@ worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's mer
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `44dcd973`.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
-  (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in a pull request the owner hasn't merged. **The tested commit is `fdf4bf1d`**: the gate passed on it, and the build,
+  (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), which the owner hasn't merged. **The tested commit is `fdf4bf1d`**: the gate passed on it, and the build,
   the saves, the built app, the long runs and the advice's held-out set ran on `57b64401`, whose `src`, `tools`,
   `index.html` and `vite.config.ts` are its own, and the criteria on `567d27dd`, no file they read different. What came
   after is the gate's record, this handoff and the matrix.
