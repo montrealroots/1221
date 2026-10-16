@@ -618,6 +618,34 @@
   ]
  },
  {
+  "key": "remaining-coverage",
+  "testFile": "tests/integration-savings-notice.test.ts",
+  "rows": [
+   {
+    "id": "bank.savings_notice",
+    "testsAdded": [
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: Close It pressed on 1 September 2026 gives three months’ notice; on 1 December 2026 the Flexgeld closes whole into her AktivKonto, its interest paid first, the order into it ended, said once, across a reload",
+      "closes": "Close It pressed on the Bank screen gives notice to 1 December 2026 at 9 AM (three calendar months, by hand); refused again in its words; across a reload, closed on its day, the AktivKonto up by exactly the Flexgeld’s €6,264.00 and more held the minute before plus its closing interest, nothing else of hers moved, the $10 order into it ended and no payment or Didn’t Go after, ‘Flexgeld Closed’ once in its words, no invariant breached.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > the same close, on the same day, for the same sums, whether the clock jumps from the notice to 20 December at once or a day at a time with a reload between",
+      "closes": "One jump and day-by-day steps with a reload on 30 November give the same postings on the Flexgeld, the same close and one notice.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: the scraping family’s student, her Flexgeld at €64.00, presses Close It on 1 September 2026 and it closes at once into the AktivKonto, with no notice and nothing on the clock",
+      "closes": "Change the input, the savings held: under the €2,000 the month lets out, the Flexgeld closes at once, nothing scheduled, the AktivKonto up by what it held and its interest.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
   "key": "remaining-health-billing",
   "testFile": "tests/remaining-health-billing.test.ts",
   "rows": [

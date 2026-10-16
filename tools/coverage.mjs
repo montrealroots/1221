@@ -86,7 +86,10 @@
  * own text. It verifies a row only where the row's claim is that text, and only where it meets the standard
  * player-journey tests are held to, written into the row as read (`standard`: what it reaches, examples it must catch and
  * must accept, each quoted as it stands in the test's file, which is checked here). Until then such a test was recorded
- * as a fixture, and i-stale-claims, whose claim is the tree's prose, stood partial for want of a command.
+ * as a fixture, and i-stale-claims, whose claim is the tree's prose, stood partial for want of a command. Later the
+ * same day the audit could gain a row after the review (`added`, from the pipeline's inputs/added-rows.json): its review
+ * is of the day it was added, its place at fca00d8f "not a row", and the page lists it under Added Since The Review.
+ * Until then a command that came in later could be in no row, as health.apply and health.request_hardship were.
  *
  *   node tools/coverage.mjs           writes docs/GAMEPLAY-COVERAGE.md
  *   node tools/coverage.mjs --check   fails when the page is behind the JSON
@@ -104,7 +107,7 @@ const AREAS = [
 ];
 const ORDER = ['verified', 'partial', 'unresolved', 'deferred', 'legacy', 'informational'];
 /** Where a row stood at `fca00d8f`, before the review of 2026-10-13, in the order the page lists them. */
-const BEFORE = ['verified, read', 'verified, not read', 'partial', 'unresolved', 'legacy', 'informational'];
+const BEFORE = ['verified, read', 'verified, not read', 'partial', 'unresolved', 'legacy', 'informational', 'not a row'];
 /** Evidence kinds, as the review records them: what can make a row verified, and what supports one. */
 const HOLDS = new Set(['command', 'render']);
 const KINDS = ['command', 'render', 'static', 'fixture', 'inspection', 'built-app', 'long-run'];
@@ -165,6 +168,8 @@ const reviewed = [];
 const everyItem = [];
 /** Every item with its area's title, for the totals by evidence class (from 2026-10-16). */
 const classed = [];
+/** Rows added since the review of 2026-10-13, each read on the day it was added (from 2026-10-16). */
+const addedRows = [];
 /** The status the open-items revisit left, before any correction of 2026-10-12. */
 const revisited = (i) => i.corrected?.status ?? i.status;
 const statusCell = (i) => {
@@ -277,9 +282,9 @@ function classMissed(i) {
     if (i.status !== 'unresolved') out.push(`the retained engine on fixtures, and ${i.status}: a row no current player reaches is unresolved`);
     if (!kinds.has('fixture')) out.push('the retained engine on fixtures, and no evidence on a labelled fixture');
     for (const [part, says] of Object.entries(PARTS)) if (!String(i.acceptance?.[part] ?? '').trim()) out.push(`the retained engine on fixtures, and its acceptance doesn’t say ${says} (acceptance.${part})`);
-    for (const miss of landing(i.acceptance?.engine, true)) out.push(`acceptance.engine: ${miss}`);
-    for (const miss of landing(i.acceptance?.player, true)) out.push(`acceptance.player: ${miss}`);
   }
+  // The tests a row's acceptance names land, whatever its class: a row reached since keeps its four parts (from 2026-10-16).
+  for (const part of ['player', 'engine']) for (const miss of landing(i.acceptance?.[part], true)) out.push(`acceptance.${part}: ${miss}`);
   if (c === 'static') {
     if (!['verified', 'partial'].includes(i.status)) out.push(`a static check, and ${i.status}`);
     if (!(i.after?.tests ?? []).some(staticHolds)) out.push('a static check, and no static test meets the standard: what it reaches, examples it must catch and examples it must accept');
@@ -310,8 +315,12 @@ for (const [area, title] of AREAS) {
     if (i.corrected) corrected.push({ title, i });
     if (i.traced) traced.push({ title, i });
     for (const miss of citationsMissed(i)) stale.push(`${area} ${i.id}: ${miss}`);
-    if (i.review?.on !== '2026-10-13') stale.push(`${area} ${i.id}: no review of 2026-10-13`);
+    // A row added since (from 2026-10-16, `added`) is read on the day it was added, and wasn't a row at fca00d8f; every
+    // other row has the review of 2026-10-13. Until then a row added after the review couldn't be carried at all.
+    if (i.review?.on !== (i.added ?? '2026-10-13')) stale.push(`${area} ${i.id}: no review of ${i.added ?? '2026-10-13'}`);
     else if (!BEFORE.includes(i.review.before)) stale.push(`${area} ${i.id}: review.before is ${JSON.stringify(i.review.before)}, not one of ${BEFORE.join(', ')}`);
+    else if ((i.review.before === 'not a row') !== Boolean(i.added)) stale.push(`${area} ${i.id}: review.before is ${JSON.stringify(i.review.before)}, and it was ${i.added ? `added on ${i.added}` : 'a row at fca00d8f'}`);
+    if (i.added) addedRows.push({ title, i });
     if (i.status === 'verified' && !holding(i).length) stale.push(`${area} ${i.id}: verified, and no test in the gate reaches the action, checks the consequence and expects independently`);
     for (const miss of classMissed(i)) stale.push(`${area} ${i.id}: ${miss}`);
     classed.push({ title, i });
@@ -438,6 +447,14 @@ function reviewSection() {
     `|---|---|${ORDER.map(() => '---').join('|')}|`,
     ...cross.map(([b, ...n]) => `| ${b} | ${n.reduce((x, y) => x + y, 0)} | ${n.join(' | ')} |`),
     '',
+    '### Added Since The Review',
+    '',
+    `${addedRows.length} rows weren't rows at \`fca00d8f\` (“not a row” above): commands that came in later and were in no row until one was added through the pipeline (\`inputs/added-rows.json\`, from 2026-10-16), each read on the day it was added, against the commit it names, to the same standard, by a reader who wrote neither the code nor its tests.`,
+    '',
+    '| Area | Item | Added | Read Against | The Reading Found | Now |',
+    '|---|---|---|---|---|---|',
+    ...addedRows.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.added} | \`${cell(i.review.against)}\` | ${i.review.verdict}${i.review.gaps.length ? `: ${cell(i.review.gaps.join(' '))}` : ''} | ${nowOf(i)} |`),
+    '',
     '### The Rows Called Verified And Not Read',
     '',
     `${unreadRows.length} rows were called verified at \`fca00d8f\` without being read. The review found ${unreadRows.filter(({ i }) => i.review.verdict === 'verified').length} of them verified, ${unreadRows.filter(({ i }) => i.review.verdict === 'partial').length} partial, and ${unreadRows.filter(({ i }) => !['verified', 'partial'].includes(i.review.verdict)).length} otherwise; now ${unreadRows.filter(({ i }) => nowOf(i) === 'verified').length} are verified.`,
@@ -528,7 +545,7 @@ const page = [
   ...rows.map((r) => `| ${r.join(' | ')} |`),
   `| **All** | **${all}** | ${ORDER.map((s) => `**${totals[s]}**`).join(' | ')} | **${percent(totals.verified, canBe)}** |`,
   '',
-  `**What the numbers are:** each row is counted once, by its status now, and every one of the ${all} has been read against the standard by the review of 2026-10-13 (below). Verified: ${totals.verified} of the ${all} rows (${percent(totals.verified, all)}), and of the ${canBe} that can be verified (${percent(totals.verified, canBe)}): the ${totals.deferred} deferred are the owner’s, out of this build, the ${totals.legacy} legacy are paths only a save from before reaches, and the ${totals.informational} informational decide nothing, so those ${totals.deferred + totals.legacy + totals.informational} are left out of what can be. Partial: works, with a gap named in the row. Unresolved: reached only by a fixture or a removed system. Until 2026-10-13 this table counted ${134} rows as called verified and not read, apart from the verified; none is now. How each row is verified is counted apart, by its evidence class (below).`,
+  `**What the numbers are:** each row is counted once, by its status now, and every one of the ${all} has been read against the standard: by the review of 2026-10-13 (below), or, for the ${addedRows.length} added since, on the day each was added (Added Since The Review, below). Verified: ${totals.verified} of the ${all} rows (${percent(totals.verified, all)}), and of the ${canBe} that can be verified (${percent(totals.verified, canBe)}): the ${totals.deferred} deferred are the owner’s, out of this build, the ${totals.legacy} legacy are paths only a save from before reaches, and the ${totals.informational} informational decide nothing, so those ${totals.deferred + totals.legacy + totals.informational} are left out of what can be. Partial: works, with a gap named in the row. Unresolved: reached only by a fixture or a removed system. Until 2026-10-13 this table counted ${134} rows as called verified and not read, apart from the verified; none is now. How each row is verified is counted apart, by its evidence class (below).`,
   '',
   ...classSections(),
   '',

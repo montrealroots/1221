@@ -57,17 +57,30 @@ const CLASS = {
 };
 // A row the class rule doesn't place by its status, and a static test's standard as read (inputs/classes.json).
 const classes = fs.existsSync(S + 'classes.json') ? JSON.parse(fs.readFileSync(S + 'classes.json', 'utf8')) : { rows: {} };
+// Rows the audit gains after the review of 2026-10-13 (from 2026-10-16: health.apply and health.request_hardship, the
+// health area's commands of that day, which were in no row): each declared in inputs/added-rows.json with its area, the
+// row it follows, its own words and a review of the day it was added, read to the same standard. Inserted where absent
+// and its words written from the input on every run, so the input, not the audit, is where the row is kept. Until then
+// a row could be added only by hand, and the merge threw on a row with no review of 2026-10-13.
+const added = fs.existsSync(S + 'added-rows.json') ? JSON.parse(fs.readFileSync(S + 'added-rows.json', 'utf8')).rows : {};
 for (const area of ['life', 'money', 'papers', 'school', 'ui']) {
   const f = `${ROOT}docs/verification/audit/${area}.json`;
   const raw = fs.readFileSync(f, 'utf8');
   const doc = JSON.parse(raw);
+  for (const [id, a] of Object.entries(added)) {
+    if (a.area !== area || doc.items.some((x) => x.id === id)) continue;
+    const k = doc.items.findIndex((x) => x.id === a.follows);
+    doc.items.splice(k < 0 ? doc.items.length : k + 1, 0, { id });
+  }
   for (const it of doc.items) {
-    const r = byId[it.id];
+    const add = added[it.id];
+    if (add) { Object.assign(it, add.row, { id: it.id }); it.added = add.added; }
+    const r = byId[it.id] ?? add?.review;
     if (!r) throw new Error(`no review for ${it.id}`);
-    const before = it.review?.before ?? (it.status === 'verified' ? (it.read === true ? 'verified, read' : 'verified, not read') : it.status);
+    const before = add ? 'not a row' : it.review?.before ?? (it.status === 'verified' ? (it.read === true ? 'verified, read' : 'verified, not read') : it.status);
     it.review = {
-      on: '2026-10-13',
-      against: 'fca00d8f',
+      on: add ? add.added : '2026-10-13',
+      against: add ? add.review.against : 'fca00d8f',
       before,
       claim: r.claim,
       evidence: (r.evidence ?? []).map((e) => ({ kind: e.kind === 'long-run' && e.where.startsWith('tests/') ? 'command' : KIND[e.kind] ?? e.kind, where: e.where, reachesAction: e.reachesAction, checksConsequence: e.checksConsequence, independent: e.independent, ...(e.problem ? { problem: e.problem } : {}) })),

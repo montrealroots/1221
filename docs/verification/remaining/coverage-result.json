@@ -63,6 +63,47 @@
     "after": "command 319 (307 hold), render 184 (184), static 1 (1), fixture 219, inspection 63, built-app 43, long-run 24"
    },
    "statusMoved": "i-stale-claims, partial to verified, on static evidence (item 2); no other row’s status moved (compared row by row against a908bded)"
+  },
+  "afterFollowUp": {
+   "at": "the tree regenerated after the launching session’s follow-up of 2026-10-16 (exit 0 for `node tools/coverage.mjs` and `--check`)",
+   "rows": 330,
+   "statuses": {
+    "verified": 288,
+    "partial": 2,
+    "unresolved": 13,
+    "deferred": 16,
+    "legacy": 3,
+    "informational": 8
+   },
+   "verifiedOfWhatCanBe": "288 of 303, 95%",
+   "classes": {
+    "Player Journey": {
+     "rows": 289,
+     "verified": 287,
+     "partial": 2
+    },
+    "Retained Engine, On Labelled Fixtures": {
+     "rows": 13,
+     "unresolved": 13
+    },
+    "Documentation And Static Checks": {
+     "rows": 1,
+     "verified": 1
+    },
+    "Deferred Scope": {
+     "rows": 16,
+     "deferred": 16
+    },
+    "Older Saves Only": {
+     "rows": 3,
+     "legacy": 3
+    },
+    "Said Back, Deciding Nothing": {
+     "rows": 8,
+     "informational": 8
+    }
+   },
+   "moved": "Two rows added (health.apply, verified; health.request_hardship, partial); bank.savings_notice unresolved to verified on its played test; every other row as before."
   }
  },
  "items": [
@@ -491,6 +532,134 @@
    },
    "tutorial": "",
    "guide": ""
+  },
+  {
+   "id": "coverage.5-added-rows",
+   "before": "health.apply and health.request_hardship, the health area’s commands of 2026-10-16, were in no audit row, no TRACE.md entry and no capability; capabilities --check failed",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days > PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…",
+     "kind": "render (read)",
+     "proves": "health.apply verified on the standard: Apply For HUSKY D pressed on Papers by its own handler, the notice in its words, uncovered meanwhile, refused again and not drawn, denied on 8 February by the clock, one jump against day by day with a reload, applied again; dates worked by hand in the file’s header."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "HUSKY D’s work rules: the exceptions SLATE reads, applied before a denial > PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…",
+     "kind": "render (read)",
+     "proves": "health.request_hardship’s application branch: pressed on Papers, approved from 1 February, the marketplace ending as it begins, no premium taken, the decision passing it by, across a reload; refused when asked again. Its renewal branch is played by no test: partial."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": "",
+   "note": "The two rows are added through the pipeline’s new input, docs/verification/pipeline/inputs/added-rows.json (merge-review.cjs inserts a row that’s absent, after the row it follows, and writes its words and its review of the day it was added on every run); the page lists them under Added Since The Review. health-cover in docs/capabilities.json names both commands, with tests/remaining-health-eligibility.test.ts, and its limits give health.request_hardship its word, partial."
+  },
+  {
+   "id": "coverage.6-savings-notice-played",
+   "before": "unresolved; reachable since 2026-10-16 and played by no gate test",
+   "disposition": "implemented (a played gate test; the row verified on it)",
+   "evidence": [
+    {
+     "file": "tests/integration-savings-notice.test.ts",
+     "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: Close It pressed on 1 September 2026 gives three months’ notice; on 1 December 2026 the Flexgeld closes whole into her AktivKonto, its interest paid first, the order into it ended, said once, across a reload",
+     "kind": "command+clock+render+reload",
+     "proves": "Close It pressed on the Bank screen gives notice to 1 December 2026 at 9 AM (three calendar months, by hand); refused again in its words; across a reload, closed on its day, the AktivKonto up by exactly the Flexgeld’s €6,264.00 and more held the minute before plus its closing interest, nothing else of hers moved, the $10 order into it ended and no payment or Didn’t Go after, ‘Flexgeld Closed’ once in its words, no invariant breached."
+    },
+    {
+     "file": "tests/integration-savings-notice.test.ts",
+     "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > the same close, on the same day, for the same sums, whether the clock jumps from the notice to 20 December at once or a day at a time with a reload between",
+     "kind": "clock+reload+jump-vs-steps",
+     "proves": "One jump and day-by-day steps with a reload on 30 November give the same postings on the Flexgeld, the same close and one notice."
+    },
+    {
+     "file": "tests/integration-savings-notice.test.ts",
+     "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: the scraping family’s student, her Flexgeld at €64.00, presses Close It on 1 September 2026 and it closes at once into the AktivKonto, with no notice and nothing on the clock",
+     "kind": "command+render",
+     "proves": "Change the input, the savings held: under the €2,000 the month lets out, the Flexgeld closes at once, nothing scheduled, the AktivKonto up by what it held and its interest."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Deutsche Bank’s monthly free withdrawal from savings, €2,000 (its price list, as content/cash.ts keeps it); three months’ notice past it (SLATE’s reading of the German savings-deposit notice, as banking.ts keeps it)",
+     "citation": "src/engine/content/cash.ts (de-deutsche-bank savingsMonthly); src/engine/systems/banking.ts bank.close_savings",
+     "effective": "as kept on 2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "The interest paid on closing is read from its posting, not worked by hand: the claim held is that the whole moves, nothing made or lost, which the ledger’s sum shows independently of the engine’s figure."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts (copy)",
+     "find": "const on = addMonths(s.now, 3, s.homeZone);",
+     "replace": "const on = addMonths(s.now, 2, s.homeZone);",
+     "killed": true,
+     "note": "2 of 3 tests failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts (copy)",
+     "find": "const current = checkingAt(sim, person, account.bankId) ?? primary;",
+     "replace": "const current = primary;",
+     "killed": true,
+     "note": "3 of 3 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts (copy)",
+     "find": "dropPaymentsFor(sim, person, account); (in closeSavings)",
+     "replace": "(deleted)",
+     "killed": true,
+     "note": "1 failed: the order kept"
+    },
+    {
+     "file": "src/engine/systems/banking.ts (copy)",
+     "find": "payInterest(sim, account, `Interest: ${account.name}, on closing`);",
+     "replace": "(deleted)",
+     "killed": true,
+     "note": "1 failed: no interest on closing"
+    }
+   ],
+   "rowText": {
+    "bank.savings_notice": {
+     "tests": "tests/integration-savings-notice.test.ts ‘PLAYER JOURNEY: Close It pressed on 1 September 2026 gives three months’ notice…’ (from 2026-10-16: a Berlin-raised student’s €6,264.00 kept in Deutsche Bank’s Flexgeld, Close It pressed on the Bank screen, the notice, the close on 1 December into her AktivKonto with its interest, the order into it ended, said once, across a reload), ‘the same close, on the same day, for the same sums…’ (one jump against day by day) and ‘PLAYER JOURNEY: the scraping family’s student, her Flexgeld at €64.00…’ (closed at once, no notice). tests/scope-money.test.ts ‘bank.savings_notice’ (Berlin FIXTURES: Postbank savings on notice into the Postbank account beside it, the notice and the order checked; Deutsche Bank’s savings left on notice by a switch to Commerzbank); accountlife.test.ts:261 (Berlin).",
+     "issue": "Reachable since 2026-10-16, through the account kept at home, and played since that day (tests/integration-savings-notice.test.ts); until then no current life banked in Germany, and it was unreachable. The notice’s money on its way to another bank, which only a switch leaves, is held on FIXTURE lives alone. The Bank screen’s lines for a savings at a bank other than the primary’s name the primary as where the money goes, where the engine moves it into the account at the savings’ own bank (reported 2026-10-16; bank.close_savings’s screen, not this row’s notice, which says it right)."
+    }
+   },
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.7-overdraft-home-panel",
+   "before": "read in the code only: overdraftOffer reads no rule for a bank abroad",
+   "disposition": "reported (src not changed)",
+   "evidence": [
+    {
+     "file": "probe/coverage/overdraft-home.probe.test.ts (git-ignored; the script is below)",
+     "title": "is Arrange It drawn for an account kept at home, where the command refuses?",
+     "kind": "render+command (a probe outside the gate)",
+     "proves": "Yes. A London-raised student of the modest family who kept HSBC UK, played to 2 October 2026 (September’s work-study, $414.00, paid into Chase), sees on Borrowing at HSBC UK, chosen in Borrow At or made primary: “It would arrange up to $414 at 39.9%”, an Overdraft Limit field and Arrange It; pressed, the command refuses “HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.” The Personal Loan panel beside it draws Borrow It, refused in the same words."
+    }
+   ],
+   "probe": {
+    "script": "// Probe (coverage agent, 2026-10-16): is Arrange It drawn for an account kept at home, where the command refuses?\nimport { readFileSync } from 'node:fs';\nimport { expect, it, vi } from 'vitest';\nimport { createElement } from 'react';\nimport { renderToStaticMarkup } from 'react-dom/server';\nimport { createSave, loadPlacesFor } from '@/engine';\nimport type { Simulation } from '@/engine/core/simulation';\nimport { instantFromZoned } from '@/engine/core/time';\nimport { newLifeFrom, type NewSaveConfig } from '@/engine/world/bootstrap';\nimport { addCountryHolidays } from '@/engine/content/holidays';\nimport { bankById } from '@/engine/content/banks';\n\nconst h = vi.hoisted(() => ({ sim: undefined as unknown as import('@/engine/core/simulation').Simulation, clicks: [] as { feature: string; label: string; onClick?: () => void }[], toasts: [] as string[] }));\nvi.mock('@/ui/kept', async (orig) => { const real = await orig<typeof import('@/ui/kept')>(); return { ...real, useKept: <T,>(_key: string, initial: T) => [initial, () => undefined] as const }; });\nvi.mock('@/app/game-context', () => {\n  const noop = () => undefined;\n  const game = () => new Proxy({ get sim() { return h.sim; }, version: 0, run: (kind: string, payload: Record<string, unknown> = {}) => h.sim.execute({ kind, payload }), toast: (m: string) => { h.toasts.push(m); }, navigate: noop, standingAt: null } as Record<string, unknown>, { get: (t, k) => (k in t ? t[k as string] : noop) });\n  return { useGame: () => game(), useWorld: <T,>(read: (s: Simulation) => T) => read(h.sim) };\n});\nvi.mock('@/ui/guide/Guide', async (orig) => {\n  const real = await orig<typeof import('@/ui/guide/Guide')>();\n  const { createElement: ce } = await import('react');\n  const words = (c: unknown): string => (Array.isArray(c) ? c.map(words).join('') : typeof c === 'string' || typeof c === 'number' ? String(c) : '');\n  return { ...real, Gated: (props: Parameters<typeof real.Gated>[0]) => { h.clicks.push({ feature: props.feature, label: words(props.children).trim(), onClick: props.onClick as never }); return ce(real.Gated, props); } };\n});\nconst { BankLending } = await import('@/ui/bank/BankLending');\naddCountryHolidays('uk', readFileSync('public/holidays/uk.tsv', 'utf8'));\nconst at = (y: number, m: number, d: number, hr = 9) => instantFromZoned({ year: y, month: m, day: d, hour: hr, minute: 0 }, 'America/New_York');\nconst onScreen = (html: string) => html.replace(/\\stitle=\"[^\"]*\"/g, '').replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/&#x27;/g, '\\'').replace(/&amp;/g, '&').replace(/\\s+/g, ' ');\n\nit('probe', async () => {\n  const config = newLifeFrom({ homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'modest', bankId: 'us-chase', priorResidence: { cityId: 'uk-eng-london', fromYear: 2008, fromMonth: 9 }, homeBankId: 'gb-hsbc' } as Partial<NewSaveConfig>);\n  const sim = createSave(1, 'cov-od-hsbc', config);\n  await loadPlacesFor(sim.universe);\n  const home = Object.values(sim.universe.accounts).find((a) => a.ownerId === sim.player.id && a.bankId === 'gb-hsbc' && a.kind === 'checking')!;\n  sim.advanceTo(at(2026, 10, 2, 9));\n  const out: string[] = [];\n  for (const primary of [false, true]) {\n    if (primary) expect(sim.execute({ kind: 'bank.set_primary', payload: { accountId: home.id } }).ok).toBe(true);\n    h.sim = sim; h.clicks = [];\n    const text = onScreen(renderToStaticMarkup(createElement(BankLending, { bank: bankById('gb-hsbc')!, account: home, show: ['borrowing'] })));\n    const i = text.indexOf('Overdraft');\n    out.push(`primary=${primary} screen: ${text.slice(Math.max(0, i - 20), i + 700)}`);\n    const arrange = h.clicks.filter((c) => c.feature === 'bank.arrange_overdraft');\n    out.push(`  arrange drawn: ${JSON.stringify(arrange.map((c) => c.label))}`);\n    const r = sim.execute({ kind: 'bank.arrange_overdraft', payload: { limit: 100_00, accountId: home.id } });\n    out.push(`  command: ${r.ok ? 'ARRANGED' : r.error}`);\n    out.push(`  other gated: ${JSON.stringify(h.clicks.filter((c) => c.feature !== 'bank.arrange_overdraft').map((c) => `${c.feature}:${c.label}`))}`);\n    const b = sim.execute({ kind: 'bank.borrow', payload: { amount: 1000_00, months: 12, bankId: 'gb-hsbc' } });\n    out.push(`  borrow: ${b.ok ? 'LENT' : b.error}`);\n    const lt = text.indexOf('Personal Loan'); out.push(`  loan panel: ${text.slice(lt, lt + 900)}`);\n  }\n  console.error(out.join('\\n'));\n}, 600_000);\n",
+    "config": "// A probe's config (coverage agent, 2026-10-16): the repository's alias, over the coverage probes alone.\nimport { defineConfig } from 'vitest/config';\nimport { fileURLToPath, URL } from 'node:url';\nexport default defineConfig({\n  resolve: { alias: { '@': fileURLToPath(new URL('../../src', import.meta.url)) } },\n  test: { environment: 'node', include: ['probe/coverage/*.probe.test.ts'], testTimeout: 600_000 },\n});\n",
+    "run": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run --config probe/coverage/vitest.probe.config.ts probe/coverage/overdraft-home.probe.test.ts"
+   },
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": "",
+   "classification": "misleading player-facing control (banking area’s: BankLending.tsx draws Arrange It and Borrow It from overdraftOffer and loanOffer, which read no abroad rule, where bank.arrange_overdraft and bank.borrow refuse by abroadRefusal)"
   }
  ],
  "checks": [
@@ -605,5 +774,69 @@
   "Not played: the overdraft panel (BankLending.tsx) may draw Arrange It for an account kept at home made primary, where overdraftOffer (lending.ts) reads no abroad rule and the command refuses it in the bank’s words (read in the code only).",
   "health-billing-result.json cites two describes as test titles (tests/scope-health.test.ts ‘health.choose_clinic, New Haven’s two practices’ and ‘health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock…’); the fold leaves them out.",
   "health-eligibility-result.json’s rowText for health.dental carries `why`, saying the review’s evidence lines (row-review.json, against fca00d8f) move by 30; the review is the record of 2026-10-13 at that commit, so its lines were left as they were read."
+ ],
+ "followUpChecks": [
+  {
+   "command": "the pipeline in the README’s order, then merge and resolve again (in the tree; a third run changed nothing)",
+   "exit": 0
+  },
+  {
+   "command": "node tools/coverage.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/capabilities.mjs --write",
+   "exit": 0
+  },
+  {
+   "command": "node tools/capabilities.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/integration-savings-notice.test.ts",
+   "exit": 0,
+   "result": "3 passed"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-person.test.ts -t i-stale-claims",
+   "exit": 0,
+   "result": "4 passed (after the new test header was reworded: it first failed on “that interest”)"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b13.test.ts -t i-stale-claims",
+   "exit": 0,
+   "result": "3 passed"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g34-ui.test.ts -t i-stale-claims",
+   "exit": 0,
+   "result": "3 passed"
+  },
+  {
+   "command": "npx tsc -b --noEmit",
+   "exit": 0
+  },
+  {
+   "command": "npx eslint tools/coverage.mjs tests/integration-savings-notice.test.ts",
+   "exit": 0
+  },
+  {
+   "command": "node tools/devmap.mjs --write, then --check",
+   "exit": 0,
+   "why": "the new test file issues bank.add_standing_order and bank.close_savings"
+  },
+  {
+   "command": "node tools/traceability.mjs --write, then node tools/traceability.mjs",
+   "exit": 0,
+   "why": "bank.savings_notice’s tests counted 1 to 3"
+  },
+  {
+   "command": "title-case --check, spelling, typos, tics --check, voice-check --check, wired --check, plural-check, label-sweep, doc-refs --check, inventory --check, student-matrix --check, deciders --check",
+   "exit": 0
+  }
  ]
 }

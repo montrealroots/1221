@@ -281,6 +281,20 @@
   "coverage/coverage.d-stale-claims-walk": {
    "rows": [],
    "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.5-added-rows": {
+   "rows": [],
+   "why": "The coverage area’s own item: the two rows are added through inputs/added-rows.json, with their reviews."
+  },
+  "coverage/coverage.6-savings-notice-played": {
+   "rows": [
+    "bank.savings_notice"
+   ],
+   "why": "The played test of the savings notice the coverage area wrote on 2026-10-16."
+  },
+  "coverage/coverage.7-overdraft-home-panel": {
+   "rows": [],
+   "why": "A finding reported, not a row’s evidence."
   }
  },
  "fragments": {

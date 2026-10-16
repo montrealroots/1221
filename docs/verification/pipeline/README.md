@@ -49,6 +49,11 @@ Then, from the repository’s root, `node tools/coverage.mjs`, `node tools/cover
   from `doc-fields.json`, a field of its own so an area's corrected `issue` can't overwrite it. It records a test whose
   title is labelled FIXTURE, GUARD, OLDER SAVE or LEGACY STATE as a fixture whatever its round said, and follows a test
   renamed more than once to its last name (until then one step, so c-performerTitle's stood at its middle name).
+- `inputs/added-rows.json` (from 2026-10-16) holds the rows the audit gained after the review of 2026-10-13, each with its
+  area, the row it follows, its own words, the day it was added and a review of that day to the same standard;
+  `merge-review.cjs` inserts one that's absent and writes its words from the input on every run. The first were
+  health.apply and health.request_hardship, the health area's commands of 2026-10-16, which were in no row. Until then a
+  row could be added only by hand, and the merge threw on one without a review of 2026-10-13.
 - `collect-checks.cjs` keeps `inputs/checks.json`, every row's latest skeptic check; `--add <file>` adds a new one.
   `inputs/final-checks/` holds each skeptic's file as written.
 - `scope-prep.cjs` puts the reruns of mutations in place (`mutations4-final.json`) and keys the current scope's fixes in
