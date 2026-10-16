@@ -28,7 +28,7 @@ const ORDINARY: Readonly<Partial<Record<AbilityId, string>>> = {
   emotionalDepth: 'classes (Acting I, Play), nights', presence: 'nights, a remarkable night', listening: 'classes, partner rehearsals, nights',
   imagination: 'classes, coursework interpretation, reading plays', focus: 'classes, coursework familiarity', memory: 'classes, coursework lines, learning a part, the blocking book',
   adaptability: 'classes (Play), a revision, a director’s note worked', composure: 'every performance’s nerves', vocal: 'voice classes', physical: 'movement classes',
-  discipline: 'a call answered, a day practiced', stamina: 'a workout, a run',
+  discipline: 'a call answered, a day practiced', stamina: 'a workout, a run, a class that trains the body as hard (from 2026-10-16)',
 };
 
 const readers = (id: AbilityId) => Object.values(TASK_PROFILES).flatMap((t) => (Object.entries(t.dims) as [Dimension, NonNullable<(typeof t.dims)[Dimension]>][]).filter(([, s]) => s.inputs.some((i) => 'ability' in i && i.ability === id)).map(([d]) => `${t.label}: ${DIMENSION_LABEL[d]}`));
