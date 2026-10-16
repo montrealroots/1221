@@ -50,7 +50,7 @@ after, the regression, the final verification and the owner's decisions. In shor
 - **Found on the way:** Table Work's select took an answer it then refused when the text wasn't read; grayed with the
   reason now (`tableWorkRefusal`, `tests/table-work-unread.test.ts`).
 
-**Completion, by the matrix:** 530 of 608 rows in scope Implemented And Verified (87.1%); 63 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
+**Completion, by the matrix:** 527 of 608 rows in scope Implemented And Verified (86.6%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
 
 ## 3. The Owner's Decisions
 
