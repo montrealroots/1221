@@ -180,18 +180,19 @@ for r in rows:
         r['failure'] = f"{r['failure']}; brief 09 ({r['measured']['commit']}): {FIG09[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {D}/runs-09/README.md"
         r['citations'] = r['citations'] + [{'file': f'{D}/runs-09/figures.json'}] + ([{'file': f'{D}/runs-09/gate.txt'}] if r['id'] == 'INT-gate' else [])
-# Measured again on brief 10's integrated code (its criteria, section 5): the four areas together on 167f996b, whose src
-# and tools are the close-out's, by the judge area's second phase (decisions-2026-10-16/integrated/after/, every exit 0),
-# each figure read by integrated-09/figures.py from those outputs into after/figures.json, none typed. Until then these
-# rows were brief 09's of c9cba9c8, which brief 10's rules left behind.
-INTEGRATED10 = {'commit': '167f996b', 'watch': 'judge'}
-A10 = 'docs/verification/decisions-2026-10-16/integrated/after'
+# Measured again on brief 10's tested commit (its criteria, section 5): the four areas and the genre row's Mastered on
+# 567d27dd (decisions-2026-10-16/final/, every exit 0), every output byte for byte the judge area's on 167f996b
+# (integrated/after/), each figure read by integrated-09/figures.py from those outputs into final/figures.json, none
+# typed. Until then these rows were brief 09's of c9cba9c8, which brief 10's rules left behind; for a while that day,
+# 167f996b's, which the Mastered's two engine files left behind.
+INTEGRATED10 = {'commit': '567d27dd', 'watch': 'judge'}
+A10 = 'docs/verification/decisions-2026-10-16/final'
 FIG10 = json.load(open(f'{A10}/figures.json', encoding='utf-8'))
 for r in rows:
     if r.get('measured') == INTEGRATED:
         assert r['id'] in FIG10, r['id']
         r['measured'] = INTEGRATED10
-        r['failure'] = f"{r['failure']}; on brief 10's integrated code (167f996b): {FIG10[r['id']]}"
+        r['failure'] = f"{r['failure']}; on brief 10's tested commit (567d27dd): {FIG10[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {A10}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{A10}/figures.json'}]
 # Brief 10's final runs (runs-10/, figures.json read from their outputs, none typed): the long runs, the built app and the

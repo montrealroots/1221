@@ -25,7 +25,7 @@ The longest run of one target, then the weekly sequence (day: target @ its level
 | `84db36b7` | beginner | **6** | 7:imagination@57, 14:imagination@57, 21:focus@54, 28:focus@54, 35:vocal@52, 42:focus@54, 49:vocal@52, 56:focus@55, 63:imagination@60, 70:focus@55, 77:focus@55, 84:focus@56, 91:focus@56, 98:focus@57, 105:focus@58, 112:composure@47, 119:composure@50 |
 | `39380191`, the four areas together (`../integrated/before/`) | specialist | 8 | as `84db36b7`, week for week |
 | `39380191` | beginner | 6 | as `84db36b7`, week for week |
-| `167f996b`, the final code (`../integrated/after/`) | specialist | 8 | as `84db36b7` to day 105; then 112:adaptability@52, 119:adaptability@55 |
+| `167f996b`, the judge's final code (`../integrated/after/`), and `567d27dd`, the tested commit (`../final/`), byte for byte the same | specialist | 8 | as `84db36b7` to day 105; then 112:adaptability@52, 119:adaptability@55 |
 | `167f996b` | beginner | 6 | 7:imagination@57, 14:imagination@57, 21:focus@54, 28:focus@54, 35:vocal@52, 42:focus@54, 49:vocal@52, 56:focus@55, 63:focus@55, 70:focus@55, 77:focus@55, 84:focus@56, 91:focus@56, 98:composure@46, 105:composure@47, 112:composure@49, 119:composure@52 |
 
 The specialist's eight weeks of focus, days 56 to 105, saw it rise from 51 to 55. The beginner's six, days 56 to 91,

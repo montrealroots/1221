@@ -1,0 +1,195 @@
+{
+ "profile": "developing",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 76.8,
+  "training": 83,
+  "study": 42
+ },
+ "takes": 19,
+ "briefs": 13,
+ "readings": 19,
+ "genres": 13,
+ "purposes": {
+  "first": 13,
+  "another-reading": 6
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 55.4,
+   "min": 55.4,
+   "max": 55.4
+  },
+  "m2": {
+   "n": 3,
+   "mean": 58.3,
+   "min": 57.2,
+   "max": 60.1
+  },
+  "m3": {
+   "n": 15,
+   "mean": 59.3,
+   "min": 53.9,
+   "max": 61.8
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 13,
+  "mean": 0.32,
+  "max": 0.9,
+  "over1": 0
+ },
+ "notes": {
+  "takes": 19,
+  "distinct": 5,
+  "longestSame": 2,
+  "sameAgainInAnotherGenre": 1,
+  "withConcern": 15,
+  "concerns": [
+   "sincerity",
+   "rhythm",
+   "exactness",
+   "partnership",
+   "extremity",
+   "invention",
+   "heightened"
+  ],
+  "asShown": {
+   "distinct": 14,
+   "longestSame": 1,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 55.4: Emotional Depth held back the believability",
+   "d61 coming_of_age first 60.1: Emotional Depth held back the believability: coming_of_age’s sincerity",
+   "d62 absurdist another-reading 57.2: Focus held back the execution: absurdist’s rhythm",
+   "d78 concert_film first 57.6: Emotional Depth held back the believability",
+   "d96 anime first 58.9: Focus held back the execution: anime’s exactness",
+   "d96 coming_of_age another-reading 61.3: Emotional Depth held back the believability: coming_of_age’s sincerity",
+   "d98 comedy first 59.8: Focus held back the execution: comedy’s rhythm",
+   "d104 prison_film first 59.3: Emotional Depth held back the believability: prison_film’s partnership",
+   "d104 concert_film another-reading 56.9: Composure held back the consistency",
+   "d107 sea_adventure first 53.9: Emotional Depth held back the believability: sea_adventure’s extremity",
+   "d109 fairy_tale first 60.7: Imagination held back the interpretation: fairy_tale’s invention",
+   "d110 anime another-reading 59.6: Vocal Expression held back the execution: anime’s heightened",
+   "d111 cyberpunk first 60.3: Imagination held back the interpretation: cyberpunk’s invention",
+   "d112 spy first 61.8: Emotional Depth held back the believability",
+   "d113 comedy another-reading 60.8: Focus held back the execution: comedy’s rhythm",
+   "d115 war first 54.9: Emotional Depth held back the believability: war’s extremity",
+   "d117 kaiju first 61.2: Imagination held back the interpretation: kaiju’s invention",
+   "d117 prison_film another-reading 60.6: Emotional Depth held back the believability: prison_film’s partnership",
+   "d118 steampunk first 59.4: Imagination held back the interpretation: steampunk’s invention"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 6,
+  "sequence": [
+   "7:imagination@57",
+   "14:imagination@58",
+   "21:focus@56",
+   "28:focus@56",
+   "35:vocal@56",
+   "42:focus@57",
+   "49:vocal@57",
+   "56:focus@57",
+   "63:imagination@60",
+   "70:focus@57",
+   "77:focus@57",
+   "84:focus@58",
+   "91:focus@58",
+   "98:focus@59",
+   "105:focus@60",
+   "112:imagination@63",
+   "119:imagination@65"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 60,
+  "presence": 68,
+  "listening": 62,
+  "imagination": 66,
+  "focus": 61,
+  "memory": 58,
+  "adaptability": 56,
+  "composure": 55,
+  "vocal": 58,
+  "physical": 60,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 112,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "marriage",
+   "sides": "",
+   "purpose": "first",
+   "overall": 61.8,
+   "chief": "Emotional Depth held back the believability by 17.5 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-comedy",
+   "genre": "comedy",
+   "reading": "timing",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 60.8,
+   "chief": "Focus held back the execution by 20.6 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 115,
+   "brief": "brief-war",
+   "genre": "war",
+   "reading": "medic",
+   "sides": "",
+   "purpose": "first",
+   "overall": 54.9,
+   "chief": "Emotional Depth held back the believability by 17.5 points",
+   "concern": "extremity"
+  },
+  {
+   "day": 117,
+   "brief": "brief-kaiju-2",
+   "genre": "kaiju",
+   "reading": "waiting",
+   "sides": "",
+   "purpose": "first",
+   "overall": 61.2,
+   "chief": "Imagination held back the interpretation by 18.3 points",
+   "concern": "invention"
+  },
+  {
+   "day": 117,
+   "brief": "brief-prison_film",
+   "genre": "prison_film",
+   "reading": "dignity",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 60.6,
+   "chief": "Emotional Depth held back the believability by 17.8 points",
+   "concern": "partnership"
+  },
+  {
+   "day": 118,
+   "brief": "brief-steampunk",
+   "genre": "steampunk",
+   "reading": "bluff",
+   "sides": "",
+   "purpose": "first",
+   "overall": 59.4,
+   "chief": "Imagination held back the interpretation by 17.7 points",
+   "concern": "invention"
+  }
+ ]
+}
