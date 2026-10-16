@@ -1002,7 +1002,7 @@
    "status": "Implemented And Verified",
    "disposition": "implemented",
    "before": "Nothing said a night’s workload.",
-   "after": "The workload capped at 8 (a 2,000-minute FIXTURE clamps, every catalog part under it), the drain at most 45% off; The Evening’s Workload under A Night Now and the night’s record (its look) say the running time and its basis, the breaks, the part’s share, the intensity, the workload of at most 8, the drain at the curtain’s fall and the energy, rendered and checked against the rule by hand; the guide’s nights and notes entries and the tutorial follow, dated.",
+   "after": "The workload capped at 8 (a 2,000-minute FIXTURE clamps, every catalog part under it), the drain at most 45% off (60% from later on 2026-10-16, when the judge area’s second phase raised the full drain to 0.4: 0.4 × 1.5, where it was 0.3 × 1.5; the test renamed, renames.json); The Evening’s Workload under A Night Now and the night’s record (its look) say the running time and its basis, the breaks, the part’s share, the intensity, the workload of at most 8, the drain at the curtain’s fall and the energy, rendered and checked against the rule by hand; the guide’s nights and notes entries and the tutorial follow, dated.",
    "evidence": [
     {
      "file": "tests/decisions-stamina.test.ts",
@@ -1192,5 +1192,6 @@
     "gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief"
    ]
   ]
- }
+ },
+ "laterChanged": "Later on 2026-10-16, before evaluation-11 left its branch, the judge area’s second phase moved two of this model’s coefficients to give stamina work of its own (judge-2.md, The Work, 2): the full drain 0.3 to 0.4 (content/piece.ts, PIECE.drain) and WORKLOAD.full to 4/3 of the anchor’s work (content/workload.ts), so the anchor’s lead still drains 0.3 at its curtain. The figures here are this area’s, on its commits. tests/decisions-stamina.test.ts worked W4’s, W7’s, W8’s and W9’s figures again by hand at the new values, each with a dated comment, and W1 to W10 hold (remaining-10/judge-result.json, coefficients; docs/verification/decisions-2026-10-16/integrated/after/README.md). A1, which this area put to the owner, was met by that phase on briefs and scenes, nights still read at a supporting part (the matrix’s stamina.A1 row)."
 }
