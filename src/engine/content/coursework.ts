@@ -28,6 +28,7 @@ import { ORIGINAL_SCENES } from './scenes-original';
 import { PUBLIC_SCENES } from './scenes-public';
 import { HOUSE_SCENES } from './scenes-house';
 import { SCORED_SCENES } from './scenes-scored';
+import { MEETING_SCENES } from './scenes-meeting';
 
 /** The parts of a preparation SLATE keeps, each 0 to 1. */
 export type PrepDim = 'familiarity' | 'memorization' | 'interpretation' | 'rehearsal' | 'partner' | 'revision';
@@ -814,6 +815,8 @@ export const SCENES: readonly Scene[] = [
   ...HOUSE_SCENES,
   // A scene of many units (from 2026-10-16, brief 09's follow-up; `content/scenes-scored.ts`), last, for the same reason.
   ...SCORED_SCENES,
+  // Two public meetings (from 2026-10-16, brief 10; `content/scenes-meeting.ts`), last, for the same reason.
+  ...MEETING_SCENES,
 ];
 
 export const sceneById = (id: string): Scene | undefined => SCENES.find((s) => s.id === id);

@@ -34,6 +34,9 @@
  *   Bernick before the townspeople. A confession to a procession, with seven others speaking.
  * - Frome's speech to the jury in Justice, and Roberts's to the strikers at the works in Strife's second act: speeches
  *   to many, with no second part.
+ * Two of these were cast after all on 2026-10-16, in brief 10 (`content/scenes-meeting.ts`), as brief 09's house scenes
+ * cast a speech to many: the meeting in An Enemy of the People between the Mayor and the doctor, and Strife's between
+ * Harness and Roberts, each crowd's lines the room's. The second parts above were said to be missing until then.
  *
  * Only the types come from `coursework.ts`: it imports this file, so a value import back would be circular. The two
  * helpers are local copies of its own.

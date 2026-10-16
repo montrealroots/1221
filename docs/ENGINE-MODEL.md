@@ -374,7 +374,7 @@ Two places read the moment alone and ignored the history behind it.
 
 The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
 
-- **Material:** 65 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11,
+- **Material:** 67 scenes and 30 plays (65 until brief 10 added two public meetings, `content/scenes-meeting.ts`), each with its structured profile (42 and 26 until the limitations pass of 2026-10-11,
   56 scenes until 2026-10-16, when the integration pass added four drama scenes, brief 09 four played out to a house and
   its follow-up Scapin's sack scene),
   and from 2026-10-12 149 practice briefs, one written for each genre, with 302 readings among them (§8).
@@ -771,7 +771,7 @@ Each piece counts once now (`limitsOnce`), and the backfill a save gets on openi
 
 ### Limits
 
-- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 65 scenes for class (56 until 2026-10-16);
+- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 67 scenes for class (56 until 2026-10-16, 65 until brief 10's two public meetings);
   30 plays with profiles.
 - **Every size in this section is SLATE's estimate.** That covers the drain, the slip and its recovery, the tones' leans,
   a partner's shares and slip, the workbook's gains, the direction note's rule for addressed, and the identity's
