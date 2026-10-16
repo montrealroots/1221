@@ -153,5 +153,35 @@
    "classification": "required reachable behavior",
    "statusBefore": "Not Implemented"
   }
+ ],
+ "amendments": [
+  {
+   "on": "2026-10-16, on the tuning cases, before the held-out run",
+   "id": "advice.F2A10-f",
+   "what": "The preparation clause measured three ways, not one. The checklist's acceptance read \"a take with a preparation limit\" (any part, anywhere among its limits); the criterion's words are \"where a take's preparation, not an ability, held it back\", which the game names as the take's chief limit (limits[0], chiefLimit). Measured on the tuning cases, the readings gave different advice: every take read as prepared named the best input in 18 of 30, a take whose chief limit is any preparation in 27 of 30 (two of the five near mastery missed), the takes as they stood in 28. The harness (eec2770a) reports all three: chief (any part), steps (a step of the take's own preparation, which the advice implements, knowing the genre as known today), and any (the checklist's first reading). The criterion is unchanged; which reading it means is put to the owner in the result.",
+   "commit": "eec2770a"
+  },
+  {
+   "on": "2026-10-16, on the tuning cases",
+   "id": "advice.harness",
+   "what": "A harness defect: the near-mastery ladder was compared after rounding to a thousandth, so three equal thousandths read as not falling. Compared at full precision from eec2770a, the least fall written beside it.",
+   "commit": "eec2770a"
+  },
+  {
+   "on": "2026-10-16, on the tuning cases",
+   "id": "advice.F2A10-e",
+   "what": "Found: the advice replayed knowing the genre as it was at the take, where a take is practice in its genre and the realized forecast reads it as known now (tuning case adv-t-14: listening realized 0.46 against a forecast of 0.25). Fixed in 3b505cff (genreNow)."
+  },
+  {
+   "on": "2026-10-16, on the tuning cases",
+   "id": "advice.F2A10-h",
+   "what": "Found: the recurring weakness put first when about as useful stayed first after twenty sessions of it while another input's forecast had come to lead (tuning case adv-t-10). Fixed in 3b505cff: a forecast's order is the forecast's."
+  },
+  {
+   "on": "2026-10-16, on the held-out run, added when met; its fix (a2fcbf8b) was committed before this entry was written",
+   "id": "advice.harness-hospital",
+   "what": "A harness defect: a take that came due while the student was in hospital (\"Not from a hospital bed.\") threw, so adv-h-10 and adv-h-57 were never built and no advice was read for them. Fixed in a2fcbf8b on the refused path only: the stay waited out a day at a time, the take prepared again and taped. Acceptance: the 30 tuning cases built and measured again byte-identical; no src/ or tests/ file differs from 5c06fd7a; both cases built.",
+   "commit": "a2fcbf8b"
+  }
  ]
 }

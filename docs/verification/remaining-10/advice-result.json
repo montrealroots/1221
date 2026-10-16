@@ -1,0 +1,762 @@
+{
+ "key": "advice",
+ "on": "2026-10-16",
+ "against": "f17ae369 (the four areas’ instructions for brief 10, on 2e8e4db3, the owner’s brief and its criteria), in the advice area’s own clone, branch advice; measured on 974785af before any advice change (tuning-before.json), on 5c06fd7a after it (tuning-after.json), and the held-out set once on 5c06fd7a and a2fcbf8b, which differ in no file under src/ or tests/ (held-out-runs.txt)",
+ "checklist": "docs/verification/remaining-10/advice-checklist.json",
+ "testFile": "tests/decisions-advice.test.ts",
+ "tests": 10,
+ "seeds": {
+  "tuning": "adv-0 to adv-9 (F2-A’s set-up) and adv-t-0 to adv-t-19 (band n mod 4, stage floor(n/4) mod 3)",
+  "heldOut": "adv-10 to adv-39 (F2-A’s set-up) and adv-h-0 to adv-h-119 (band floor(n/30), stage floor((n mod 30)/10), ten seeds a stratum)",
+  "rule": "tools/advice.ts refuses a held-out seed without --held-out; the held-out set was run once, after the last advice commit; the tests play tuning seeds only"
+ },
+ "commits": [
+  {
+   "commit": "1a2110fb",
+   "what": "the checklist, before any code changed"
+  },
+  {
+   "commit": "974785af",
+   "what": "the harness (tools/advice.ts, tools/advice-harness.ts), before any case was run"
+  },
+  {
+   "commit": "6dea6a85",
+   "what": "the tuning set on the advice as it stood (tuning-before.json)"
+  },
+  {
+   "commit": "eec2770a",
+   "what": "the harness: the ladder compared at full precision; the preparation clause measured three ways"
+  },
+  {
+   "commit": "3b505cff",
+   "what": "the advice: the engine’s growth with discipline kept, exact replays, the genre as known now, a take its own steps held back read prepared, the forecast’s order, everything at full said; the guide entry; defects-r8-1’s assertion"
+  },
+  {
+   "commit": "0afc7914",
+   "what": "the days’ discipline worked once over every recent piece (a call from 169 to 99 ms)"
+  },
+  {
+   "commit": "b16e19cb",
+   "what": "tests/decisions-advice.test.ts and the ten mutations"
+  },
+  {
+   "commit": "5c06fd7a",
+   "what": "DEVMAP and TRACEABILITY regenerated for the new test file"
+  },
+  {
+   "commit": "a2fcbf8b",
+   "what": "the harness waits out a hospital stay before a refused take"
+  },
+  {
+   "commit": "edf3049c",
+   "what": "the held-out run, its summary, tuning-after.json, F2 as written"
+  }
+ ],
+ "criteria": [
+  {
+   "id": "F2",
+   "asWritten": "Not met: 302 of 447 (67.6%) on this area’s final code, as on 7c1198a2; it reads the take’s chief limit with +20, not the advice (f2-as-written.txt)",
+   "status": "Superseded for advice by F2-A, as the owner approved; kept and reported",
+   "note": "This area changed no file F2 reads."
+  },
+  {
+   "id": "F2-A",
+   "asWritten": "Its forty cases, its pass as defined: tuning adv-0 to 9 10 of 10 (100.0%) after (10 of 10 (100.0%) before); held out adv-10 to 39 30 of 30 (100.0%) on the final code",
+   "status": "Implemented And Verified"
+  },
+  {
+   "id": "F2-A10",
+   "asWritten": "Clauses (a) to (i), docs/verification/decisions-2026-10-16/criteria.md section 2, unchanged",
+   "status": "7 of 9 Implemented And Verified; (f) and (h) Decision Required (items below)"
+  }
+ ],
+ "items": [
+  {
+   "id": "advice.harness",
+   "before": "40 cases of one design (F2-A), no bands, stages, voice briefs or held-out guard; the realized gain read the shown tenth of three briefs",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/tuning-before.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out tuning-before.json (on 974785af, before any advice change)",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "the harness ran the 30 tuning cases before the advice changed"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "150 held-out cases built and measured, 30 a band and 40 a stage; 292 distinct briefs taped; every genre of the 149 reached by a single-genre brief; takes per stage 1–3, 6–10, 15–20; at least 10 distinct genres in every later case"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The near-mastery ladder compared at full precision (it had been rounded to a thousandth first)",
+     "where": "tools/advice.ts",
+     "failingTest": "tuning-3: adv-t-11 [0.289, 0.289, 0.289] read as not falling"
+    },
+    {
+     "summary": "A take refused in hospital waits the stay out (adv-h-10, adv-h-57 had thrown)",
+     "where": "tools/advice-harness.ts (tapeWaiting)",
+     "failingTest": "held-out batches 04 and 08 exited 1 on 5c06fd7a; the 30 tuning cases rebuilt byte-identical after the fix"
+    }
+   ],
+   "sources": [],
+   "assumptions": [
+    "TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does",
+    "F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)"
+   ],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.F2",
+   "before": "302 of 447 (67.6%), not met",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "after": "302 of 447 (67.6%), not met, kept in the record and reported; superseded for advice by F2-A",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/f2-as-written.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2-ag-baseline.json",
+     "kind": "measurement (no draw)",
+     "proves": "F2 as written 302 of 447 on this area’s final code"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "before": "Partially Implemented: 40 cases of one design",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "tuning": "30 cases: adv-0 to 9 and adv-t-0 to 19 (all twelve strata)",
+   "heldOut": "150 cases: adv-10 to 39 and adv-h-0 to 119; each run once; commits 5c06fd7a and a2fcbf8b recorded in every file",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "every held-out case with its band, stage, takes, genres, commit and clean tree; 30 a band, 40 a stage"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt",
+     "title": "the batches in the order they ran, with exit codes",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "each batch once; the two that stopped and why"
+    }
+   ],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.F2A10-b",
+   "before": "tuning 29 of 30 (96.7%) (F2-A 10 of 10 (100.0%), new 19 of 20 (95.0%)); held out not run before (by design)",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "tuning": "30 of 30 (100.0%) (F2-A 10 of 10 (100.0%), new 20 of 20 (100.0%))",
+   "heldOut": "120 fresh 118 of 120 (98.3%) (target 80%); adv-10 to 39 30 of 30 (100.0%); the exact best 115 of 120, a near-tie said 36",
+   "strata": {
+    "beginner": "30 of 30 (100.0%)",
+    "developing": "30 of 30 (100.0%)",
+    "advanced": "28 of 30 (93.3%)",
+    "nearMastery": "30 of 30 (100.0%)",
+    "firstWeek": "39 of 40 (97.5%)",
+    "midTerm": "39 of 40 (97.5%)",
+    "later": "40 of 40 (100.0%)"
+   },
+   "misses": [
+    "adv-h-65 (advanced, firstWeek): imagination realized 0.276, presence 0.583",
+    "adv-h-75 (advanced, midTerm): imagination realized 0.385, adaptability 0.547"
+   ],
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "118 of 120 fresh; every band 28 or more of 30 and every stage 39 or more of 40 (floor 70%)"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/tuning-after.json",
+     "title": "npx vite-node tools/advice.ts -- --cases tuning --out tuning-after.json",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "30 of 30 tuning"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+     "kind": "played, 3 tuning cases",
+     "proves": "the advised input’s twenty sessions bring what it forecast and more than nothing"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "return e ? e.exact ?? e.overall : undefined;",
+     "replace": "return e ? e.overall : undefined;",
+     "killed": true,
+     "by": "near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    p.development = { day: '', counts: {}, history: [] };\n    develop(",
+     "replace": "    develop(",
+     "killed": true,
+     "by": "PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery"
+    }
+   ],
+   "tutorial": "unchanged: its sentence on What To Work On stays true",
+   "guide": "craft.ts, What To Work On Next’s entry rewritten (3b505cff)"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "before": "tuning 30 of 30 (100.0%) at or over the median, 1.959× random",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "tuning": "30 of 30 (100.0%), 1.99× random",
+   "heldOut": "150: 150 of 150 (100.0%), mean advised 0.826 against random 0.405 (2.037×); 120 fresh: 120 of 120 (100.0%), 1.984× (targets 95%, 1.5×)",
+   "strata": {
+    "beginner": "30 of 30, 1.895×",
+    "developing": "30 of 30, 2.069×",
+    "advanced": "30 of 30, 1.983×",
+    "nearMastery": "30 of 30, 2.053×",
+    "firstWeek": "40 of 40, 1.985×",
+    "midTerm": "40 of 40, 1.857×",
+    "later": "40 of 40, 2.13×"
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "the median and the random input on the same twenty sessions, every held-out case"
+    }
+   ],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.F2A10-d",
+   "before": "0 cases naming an input at full; nothing said where every read input is at full (0 of 5 tuning near mastery); an empty forecast fell back to the costs, which can name stamina with no exercise",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "tuning": "0 violations; everything at full said 5 of 5 near mastery (and in all 30 cases read again with every input at full)",
+   "heldOut": "0 violations in 150; everything at full said 30 of 30 near mastery, and in 150 of 150 read again with every input at full",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains",
+     "kind": "played tuning case, TEST SETUP levels",
+     "proves": "nothing at full named; the statement first where everything an exercise trains is at full, a technique counted full at MASTERED, stamina said with workouts; an input brought back under full named again"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "0 of 150 name an input at full or with no exercise"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A forecast passed is the forecast even when empty; adviceFor says everything at full first (full:all) with what no exercise trains",
+     "where": "systems/experience.ts recommendations; systems/next-steps.ts adviceFor, allFull; systems/advice.ts atFullRead",
+     "failingTest": "tuning-before: 0 of 5"
+    },
+    {
+     "summary": "A technique counts at full at MASTERED in the forecast",
+     "where": "systems/advice.ts workFull",
+     "failingTest": "M5"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/next-steps.ts",
+     "find": "return full?.all ? [allFull(full.short), ...recs].slice(0, 5) : recs;",
+     "replace": "return recs;",
+     "killed": true,
+     "by": "names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : MASTERED);",
+     "replace": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : 100);",
+     "killed": true,
+     "by": "names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+    }
+   ],
+   "tutorial": "unchanged",
+   "guide": "craft.ts entry: “where everything your recent work read that an exercise trains is at full, it says so”"
+  },
+  {
+   "id": "advice.F2A10-e",
+   "before": "tuning 20 of 30 (66.7%) within 0.3 or a quarter; realized 0.282 above forecast on average",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "tuning": "29 of 30 (96.7%); mean realized − forecast 0.101",
+   "heldOut": "150: 147 of 150 (98.0%); 120 fresh 117 of 120 (97.5%) (target 80%); mean realized − forecast 0.099",
+   "strata": {
+    "beginner": "28 of 30, mean error 0.056",
+    "developing": "30 of 30, mean error 0.053",
+    "advanced": "29 of 30, mean error 0.144",
+    "nearMastery": "30 of 30, mean error 0.158",
+    "firstWeek": "40 of 40, mean error 0.117",
+    "midTerm": "38 of 40, mean error 0.08",
+    "later": "39 of 40, mean error 0.11"
+   },
+   "misses": [
+    "adv-h-15 (beginner): composure forecast 1.92, realized 1.515",
+    "adv-h-18 (beginner): composure forecast 1.848, realized 1.423",
+    "adv-h-84 (advanced): listening forecast 0.403, realized 0.704"
+   ],
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery",
+     "kind": "played, 3 tuning cases",
+     "proves": "forecast within 0.3 or a quarter of twenty played sessions, beginner to near mastery"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline",
+     "kind": "played tuning case",
+     "proves": "the discipline twenty played days keep equals the forecast’s scratch copy’s exactly"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "147 of 150"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The twenty sessions grown through develop on a scratch copy, discipline kept once a day (trained)",
+     "where": "systems/advice.ts",
+     "failingTest": "tuning-before: 20 of 30, realized 0.28 above"
+    },
+    {
+     "summary": "Each replay’s exact whole",
+     "where": "systems/advice.ts forecastFor",
+     "failingTest": "M1"
+    },
+    {
+     "summary": "Knowing the genre as known now (genreNow)",
+     "where": "systems/advice.ts",
+     "failingTest": "tuning adv-t-14: listening realized 0.46 against 0.25"
+    },
+    {
+     "summary": "The days’ discipline worked once over every recent piece",
+     "where": "systems/advice.ts forecastFor",
+     "failingTest": "the forecast counted it only on pieces reading the input"
+    }
+   ],
+   "assumptions": [
+    "ADVICE.focus 1, an ordinary day’s focus (readiness 80): the harness rests the student (readiness about 89), so realized runs about 5 to 8% over forecast for beginners and developing players; SLATE’s choice, so the advice doesn’t change with the hour it’s read at",
+    "Advanced and near-mastery players realize 25 to 40% over forecast: their Strong takes earned callbacks, which the measure’s forecast of each brief as it stands now reads as a harder pitch, where the advice replays the take as taped (tuning adv-t-6, per piece: a callback brief realized 0.80 against a replay of 0.42, the brief without one 0.88 and 0.88). Kept: reading the measure’s own context would make the measure circular"
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "return e ? e.exact ?? e.overall : undefined;",
+     "replace": "return e ? e.overall : undefined;",
+     "killed": true,
+     "by": "near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    develop(sim, p, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' });\n",
+     "replace": "",
+     "killed": true,
+     "by": "grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "work.map(genreNow(person))",
+     "replace": "work",
+     "killed": true,
+     "by": "reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    p.development = { day: '', counts: {}, history: [] };\n    develop(",
+     "replace": "    develop(",
+     "killed": true,
+     "by": "PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery"
+    }
+   ],
+   "tutorial": "unchanged",
+   "guide": "craft.ts entry"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "before": "not measured; the ladder flat in tenths (each replay a shown tenth); no take read as prepared",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "tuning": "diminishing returns: 5 of 5 near mastery, every candidate 44 of 44; preparation, the criterion’s words (a chief limit of any preparation, read complete): 2 of 9; as implemented (a step of the take’s own preparation): 0 of 0",
+   "heldOut": "diminishing returns: the first-named input’s ladder falls at full precision on 30 of 30 near mastery, by as little as 0.00006 and a median 0.0010 points a third of the way to full; every candidate 277 of 287. Preparation: a take whose chief limit is a step of its own preparation, read as prepared: 0 of 0 (no held-out case had one; every chief limit of preparation was knowing the genre); the criterion’s words read as any preparation, the genre’s included: 16 of 57; the checklist’s first reading, any take with a preparation limit: 13 of 83",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level rises, at full precision",
+     "kind": "played tuning case",
+     "proves": "near mastery, the forecast falls as the level rises, at full precision"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today",
+     "kind": "played tuning cases, a brief taped cold",
+     "proves": "a take its own rehearsal held back most is read with its steps complete; the genre is read as known today; a take an ability held back most is read as it was"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "the ladder 30 of 30; the preparation clause under three readings"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A take whose chief limit is a step of its own preparation read with those steps complete (heldByPreparation, asPrepared); knowing the genre as known today (genreNow)",
+     "where": "systems/advice.ts",
+     "failingTest": "M7, M6"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "return e ? e.exact ?? e.overall : undefined;",
+     "replace": "return e ? e.overall : undefined;",
+     "killed": true,
+     "by": "near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "work.map(genreNow(person))",
+     "replace": "work",
+     "killed": true,
+     "by": "reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "const latest = kept.map((w) => (heldByPreparation(w) ? asPrepared(w) : w));",
+     "replace": "const latest = kept;",
+     "killed": true,
+     "by": "reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    }
+   ],
+   "ownerDecision": "Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommended: accept the implemented reading, since F2-A’s realized gain reads each take as its record stands and the next take is short of the genre again. And the diminishing returns: they hold at full precision, but near mastery they’re a thousandth of a point (median), because the engine’s practice grows at a constant rate from three quarters of full (DEVELOPMENT.floor, systems/attributes.ts abilityGain): a finding for growth, outside this area.",
+   "tutorial": "unchanged",
+   "guide": "craft.ts entry: “A piece whose own preparation held it back most is read as prepared … knowing each genre as you know it today”; “slower as it rises to three quarters of full and steady from there”"
+  },
+  {
+   "id": "advice.F2A10-g",
+   "before": "0 of 137 reasons naming a piece",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "tuning": "137 of 137",
+   "heldOut": "671 of 671 recommendations (fresh 524 of 524): each says its figure, how many of the last pieces read it, and the piece it gains most on",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of the last pieces read it, and the piece it gains most on, by the records",
+     "kind": "played tuning case",
+     "proves": "each reason’s figure, its count of pieces worked from the records, and the named piece one of those that read it"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "100%"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The reason names the count of the last pieces that read it and the piece it gains most on, and what of it is the days’ discipline",
+     "where": "systems/experience.ts; Forecast.of, most, days",
+     "failingTest": "tuning-before 0 of 137"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    p.development = { day: '', counts: {}, history: [] };\n    develop(",
+     "replace": "    develop(",
+     "killed": true,
+     "by": "PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery"
+    }
+   ],
+   "tutorial": "unchanged",
+   "guide": "craft.ts entry"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "before": "tuning: the trained input’s forecast fell 24 of 30; another named where another led 7 of 9",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "tuning": "fell 28 of 30; another named where another led 10 of 10",
+   "heldOut": "fell 141 of 150 (fresh 111 of 120; F2-A 30 of 30); another named wherever another now led: 62 of 62 (41 of them within a tie)",
+   "strata": {
+    "beginner": "fell 30 of 30, moved on 19 of 19",
+    "developing": "fell 30 of 30, moved on 18 of 18",
+    "advanced": "fell 30 of 30, moved on 11 of 11",
+    "nearMastery": "fell 21 of 30, moved on 3 of 3",
+    "firstWeek": "fell 38 of 40, moved on 16 of 16",
+    "midTerm": "fell 35 of 40, moved on 18 of 18",
+    "later": "fell 38 of 40, moved on 17 of 17"
+   },
+   "misses": [
+    "adv-h-91 imagination: 0.408 → 0.408",
+    "adv-h-98 emotionalDepth: 0.316 → 0.316",
+    "adv-h-100 imagination: 0.412 → 0.413",
+    "adv-h-103 imagination: 0.466 → 0.467",
+    "adv-h-106 imagination: 0.414 → 0.415",
+    "adv-h-107 imagination: 0.433 → 0.433",
+    "adv-h-108 imagination: 0.385 → 0.385",
+    "adv-h-110 imagination: 0.452 → 0.453",
+    "adv-h-118 imagination: 0.455 → 0.455"
+   ],
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the trained input’s forecast falls, and with another’s now ahead, another is named first",
+     "kind": "played tuning case",
+     "proves": "after twenty sessions through the commands the trained input’s forecast falls and another is named first"
+    },
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one",
+     "kind": "FIXTURE forecasts",
+     "proves": "the recurring weakness no longer jumps a higher forecast"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "141 of 150 fell; 62 of 62 moved on"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A forecast’s order is the forecast’s: the recurring weakness is said where it stands",
+     "where": "systems/experience.ts recommendations",
+     "failingTest": "tuning adv-t-10, adv-t-0 (7 of 9 before); M3"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/experience.ts",
+     "find": "if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+     "replace": "if (forecasting ? Boolean(mine.forecast) && tied(ownOf(mine.forecast!), ownOf(out.find((r) => r.forecast)!.forecast!)) : mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+     "killed": true,
+     "by": "keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+    }
+   ],
+   "ownerDecision": "The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Options: growth makes deliberate practice past three quarters of full slow (outside this area); or the criterion takes a rise under a hundredth where the days’ discipline lifts the next hours. Recommended: the second, with growth’s floor reported as a finding; not a forecast that holds discipline where it was, which would say less than the engine does.",
+   "tutorial": "unchanged",
+   "guide": "craft.ts entry: the recurring weakness “where its forecast puts it”"
+  },
+  {
+   "id": "advice.F2A10-i",
+   "before": "by reading only",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "tuning": "30 of 30 renamed the same",
+   "heldOut": "150 of 150 renamed the same; by grep, systems/advice.ts, systems/next-steps.ts and recommendations read no meta.seed, case name, band or stage; a piece's own seed is read only for whether it's there (forecastWork: a piece without one can't be replayed) and handed to the judge's replay, which takes no draw with expected set (evaluation.ts judgeExact, piece.ts judgePiece)",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "title": "F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice",
+     "kind": "played tuning case",
+     "proves": "a renamed save and every piece’s seed renamed give deep-equal advice"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "150 of 150"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/next-steps.ts",
+     "find": "  const full = read ? atFullRead(sim, person) : undefined;",
+     "replace": "  if (sim.universe.meta.seed.length % 2) recs.reverse();\n  const full = read ? atFullRead(sim, person) : undefined;",
+     "killed": true,
+     "by": "reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice"
+    }
+   ],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.tests",
+   "before": "tests/advice.test.ts (5) and tests/interpretation-journey.test.ts",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "after": "tests/decisions-advice.test.ts, 10 tests, tuning cases only; 10 mutations each failed by a test (mutations.json)",
+   "evidence": [
+    {
+     "file": "tests/decisions-advice.test.ts",
+     "ran": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-advice.test.ts: 10 passed, exit 0"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/mutations.json",
+     "title": "ten mutations in a copy of the clone at 0afc7914",
+     "kind": "mutations",
+     "proves": "each killed"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "return e ? e.exact ?? e.overall : undefined;",
+     "replace": "return e ? e.overall : undefined;",
+     "killed": true,
+     "by": "near mastery, an input’s forecast falls as its level rises, at full precision"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    develop(sim, p, 'discipline', { weight: PRACTICE.disciplineDay, focus: 1, deliberate: true, source: 'practice-day' });\n",
+     "replace": "",
+     "killed": true,
+     "by": "grows the twenty sessions as the engine grows them: the discipline a played copy keeps is the forecast’s to the last digit, and what the days bring is said apart, nothing at full discipline"
+    },
+    {
+     "file": "src/engine/systems/experience.ts",
+     "find": "if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+     "replace": "if (forecasting ? Boolean(mine.forecast) && tied(ownOf(mine.forecast!), ownOf(out.find((r) => r.forecast)!.forecast!)) : mine.points >= out[0]!.points - RECOMMEND.recurringWithin)",
+     "killed": true,
+     "by": "keeps the forecast’s order: the weakness the work keeps coming back to is said where its forecast puts it, never ahead of a higher one"
+    },
+    {
+     "file": "src/engine/systems/next-steps.ts",
+     "find": "return full?.all ? [allFull(full.short), ...recs].slice(0, 5) : recs;",
+     "replace": "return recs;",
+     "killed": true,
+     "by": "names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : MASTERED);",
+     "replace": "const workFull = (now: Performer, id: string) => (isAbility(id as never) ? now.full(id as AbilityId) : 100);",
+     "killed": true,
+     "by": "names no input at full, and where everything an exercise trains is at full, says so first, with what no exercise trains"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "work.map(genreNow(person))",
+     "replace": "work",
+     "killed": true,
+     "by": "reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "const latest = kept.map((w) => (heldByPreparation(w) ? asPrepared(w) : w));",
+     "replace": "const latest = kept;",
+     "killed": true,
+     "by": "reads a take its own preparation held back most as prepared, and knowing the genre as it’s known today"
+    },
+    {
+     "file": "src/engine/systems/next-steps.ts",
+     "find": "  const full = read ? atFullRead(sim, person) : undefined;",
+     "replace": "  if (sim.universe.meta.seed.length % 2) recs.reverse();\n  const full = read ? atFullRead(sim, person) : undefined;",
+     "killed": true,
+     "by": "reads no seed: the case renamed, its save’s seed and every piece’s, gets the same advice"
+    },
+    {
+     "file": "src/engine/systems/experience.ts",
+     "find": "if (ownOf(f) < ADVICE_FLOOR) continue;",
+     "replace": "if (f.points < ADVICE_FLOOR) continue;",
+     "killed": true,
+     "by": "passes the floor on the input’s own share: the discipline twenty days keep isn’t advice to train what moves nothing"
+    },
+    {
+     "file": "src/engine/systems/advice.ts",
+     "find": "    p.development = { day: '', counts: {}, history: [] };\n    develop(",
+     "replace": "    develop(",
+     "killed": true,
+     "by": "PLAYER JOURNEY: followed for twenty sessions through practice.exercise, the advised input brings what it forecast, within 0.3 points or a quarter, from a beginner to near mastery"
+    }
+   ],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.heldout",
+   "before": "not run",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "after": "run once on the final advice (5c06fd7a; a2fcbf8b for batches 04, 08b and 09 to 14, no src/ or tests/ file different), into docs/verification/decisions-2026-10-16/advice/",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-runs.txt",
+     "title": "each batch and its exit",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "once; why 04 and 08 stopped"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+     "title": "npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fifteen batches (held-out-runs.txt), then --summarize",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "every stratum"
+    }
+   ],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "advice.harness-hospital",
+   "before": "adv-h-10 and adv-h-57 threw “Not from a hospital bed.” and were never built",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "after": "both built; the 30 tuning cases rebuilt and measured byte-identical",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-04.json",
+     "title": "npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "adv-h-10 built and measured on a2fcbf8b"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/advice/held-out-08b.json",
+     "title": "npx vite-node tools/advice.ts -- --cases adv-h-57..59 --held-out",
+     "kind": "measurement (seeded, played through the commands)",
+     "proves": "adv-h-57 built and measured"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "tapeWaiting: a take refused in hospital waits the stay out, prepares again and tapes",
+     "where": "tools/advice-harness.ts",
+     "failingTest": "held-out batch 04 exit 1, batch 08 exit 1"
+    }
+   ],
+   "mutations": [],
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  }
+ ],
+ "findingsOutsideTheArea": [
+  "Growth (DEVELOPMENT, systems/attributes.ts abilityGain): deliberate practice grows at a constant rate from 75 to full (floor 0.25), so near mastery an input’s next twenty hours are worth almost the same at every level (a median fall of 0.001 points a third of the way to full), and discipline’s lift can outweigh it (F2-A10 (h), 9 of 150).",
+  "The policy-driven tools follow adviceFor (tools/policy.ts, tools/brief-journeys.ts, tools/freshness.ts, tools/variety.ts, tools/brief-strategies.ts): the lives and journeys they play (L3-R’s, the lives to graduation) practise what the new advice names, so their figures move on the integrated code. Every test file that plays them passed on this area’s code.",
+  "F2-A’s own set-up (tools/advice-harness.ts setUp, kept as it was so its forty cases stay the same) never drew emotional depth, memory, vocal or physical expression: it wrote them into attrs, where nothing reads them, so those four stood at createSave’s values in all forty cases.",
+  "tools/advice.ts isn’t in tsconfig.app.json (it imports node:child_process and node:fs, which the app config has no types for), which is how its duplicate import of writeFileSync went unnoticed until this brief; it was typechecked here with a temporary config extending the app’s.",
+  "node tools/completion-matrix.mjs --check exits 1 on f17ae369 as on this branch: the matrix and the handoff’s completion line need regenerating (rows measured on bcd75970 that watch the engine go stale once it changes); not this area’s to regenerate.",
+  "Stamina has no exercise, and discipline grows only from days of practice, so What To Improve Next never names either as training; it names them only in the everything-at-full statement. With the stamina area’s workload, stamina may matter more to long work than the advice says.",
+  "An exercise on the feet is refused while an injury mends (trainingRefusal), and the advice doesn’t say so when it names one."
+ ],
+ "rowText": {
+  "F2-A": {
+   "after": "40 of 40 as defined (tuning adv-0 to 9 10 of 10; held out adv-10 to 39 30 of 30) on the advice of brief 10; F2-A10 (docs/verification/remaining-10/advice-result.json): 120 fresh held-out cases 118 of 120",
+   "evidence": "docs/verification/decisions-2026-10-16/advice/held-out-summary.json; docs/verification/remaining-10/advice-result.json"
+  }
+ }
+}
