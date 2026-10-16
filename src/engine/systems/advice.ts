@@ -76,7 +76,7 @@ export interface Forecast {
   exact?: number;
   /** The input's own share (from brief 10): the recent work worked out again with that input alone at the level it would reach. */
   own?: number;
-  /** What the days of practice bring beside it (from brief 10): discipline, grown once for each day kept. */
+  /** What the days of practice bring beside it (from brief 10): discipline, grown once for each day kept, on every recent piece, the input's own share added to it. */
   days?: number;
   /** The level now, and what the hours would bring it to. */
   from: number;
@@ -195,17 +195,26 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
   const exact = (w: WorkRecord, p: Performer) => { const e = replayAs(w, TASK_PROFILES[w.task]!, p); return e ? e.exact ?? e.overall : undefined; };
   const base = latest.map((w) => exact(w, now));
   const growth: Grow = grow ?? ((id, from, full) => ({ to: levelAfter(from, full, ADVICE.sessions, now.ability('discipline'), id === 'discipline'), discipline: now.ability('discipline') }));
+  const set = (p: Performer, x: string, v: number): Performer => (isAbility(x as never) ? { ...p, ability: (y) => (y === x ? v : p.ability(y)) } : { ...p, technique: (y) => (y === x ? v : p.technique(y)) });
+  // What the days' discipline brings, on every recent piece, whatever is trained (a day kept grows it the same for any
+  // exercise): worked once for each level it reaches, and added to each input's own share.
+  const daysAt = new Map<number, number>();
+  const daysOf = (discipline: number): number => {
+    if (discipline === now.ability('discipline')) return 0;
+    if (!daysAt.has(discipline)) {
+      const p = set(now, 'discipline', discipline);
+      daysAt.set(discipline, latest.reduce((t, w, i) => { const b = base[i]; const e = b === undefined ? undefined : exact(w, p); return e === undefined ? t : t + ((e - b!) * weights[i]!) / W; }, 0));
+    }
+    return daysAt.get(discipline)!;
+  };
   for (const id of readOf(latest).sort()) {
     if (!exerciseFor(id as AbilityId | Skill)) continue;
     const ability = isAbility(id as never);
     const from = ability ? now.ability(id as AbilityId) : now.technique(id as Skill);
     if (from >= workFull(now, id)) continue;
     const { to, discipline } = growth(id, from, ability ? now.full(id as AbilityId) : 100);
-    const set = (p: Performer, x: string, v: number): Performer => (isAbility(x as never) ? { ...p, ability: (y) => (y === x ? v : p.ability(y)) } : { ...p, technique: (y) => (y === x ? v : p.technique(y)) });
     const alone = set(now, id, to);
-    const withDays = discipline !== now.ability('discipline') ? set(alone, 'discipline', discipline) : alone;
     let own = 0;
-    let all = 0;
     let pieces = 0;
     let most: Forecast['most'];
     latest.forEach((w, i) => {
@@ -214,14 +223,14 @@ export function forecastFor(now: Performer, work: readonly WorkRecord[], grow?: 
       const reads = ability ? w.inputs.abilities[id as AbilityId] !== undefined : (w.inputs.techniques[id as Skill] ?? 0) > 0;
       if (!reads) return;
       const a = exact(w, alone);
-      const t = withDays === alone ? a : exact(w, withDays);
-      if (a === undefined || t === undefined) return;
+      if (a === undefined) return;
       own += ((a - b) * weights[i]!) / W;
-      all += ((t - b) * weights[i]!) / W;
       pieces += 1;
       if (!most || a - b > most.points) most = { what: w.what, points: a - b };
     });
-    out.set(id, { points: Math.round(all * 100) / 100, exact: all, own, days: all - own, from, to: Math.round(to * 10) / 10, hours: ADVICE.sessions, pieces, of: latest.length, ...(most ? { most: { what: most.what, points: Math.round(most.points * 100) / 100 } } : {}), prepared });
+    const days = daysOf(discipline);
+    const all = own + days;
+    out.set(id, { points: Math.round(all * 100) / 100, exact: all, own, days, from, to: Math.round(to * 10) / 10, hours: ADVICE.sessions, pieces, of: latest.length, ...(most ? { most: { what: most.what, points: Math.round(most.points * 100) / 100 } } : {}), prepared });
   }
   return out;
 }
