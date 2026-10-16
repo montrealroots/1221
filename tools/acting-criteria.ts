@@ -9,6 +9,7 @@
  * SETUP (levels set directly), and every budget is printed beside the figures it gives.
  */
 import { ABILITY_DEFS, MASTERED, type AbilityId } from '../src/engine/content/abilities';
+import { APPROACH_EFFECT } from '../src/engine/content/approaches';
 import { GRAIN } from '../src/engine/content/interpretation';
 import { PIECE, TONE_LEAN } from '../src/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '../src/engine/content/material';
@@ -251,8 +252,24 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
     e: { met: Object.keys(winWorks).length >= 6 && families.length >= 3 && mostFromOne <= 0.25 * wins.length && Object.keys(limitWorks).length >= 4, winWorks, winFamilies: families, mostFromOneWork: mostFromOne, limitWorks },
     f: { met: pct(expWins.length, withIt.length) >= 0.25, wins: expWins.length, of: withIt.length, rate: r4(pct(expWins.length, withIt.length)), asShown: expWinsShown.length },
   };
+  // Beside the verdicts, not part of them: where restraint suits better, whether the restrained specialist is ahead of the
+  // even actor at all with both playing restrained; and how much of its restrained lift is restraint's own draws (the
+  // lift with `APPROACH_EFFECT.restrained.inputs` as built, less with them taken out in this process and put back).
+  const withItAhead = withIt.filter((m) => x(m, 'RES', 'restrained') - x(m, 'EVEN', 'restrained') > 0.05);
+  const R = APPROACH_EFFECT.restrained as unknown as { inputs: unknown };
+  const asBuilt = R.inputs;
+  const liftR = (m: MaterialProfile) => judgeOn(m, RES, 'restrained').exact! - judgeOn(m, EVEN, 'restrained').exact!;
+  const withDraws = both.map(liftR);
+  R.inputs = {};
+  let withoutDraws: number[];
+  try { withoutDraws = both.map(liftR); } finally { R.inputs = asBuilt; }
+  const drawsPart = withDraws.map((v, i) => v - withoutDraws[i]!);
+  const diagnostics = {
+    restraintSuitsAndRestrainedSpecialistAhead: { ahead: withItAhead.length, of: withIt.length, note: 'both playing restrained, where restrained suits better: the specialist against the even actor at the criteria’s budget' },
+    restraintsOwnDrawsPartOfTheLift: { mean: r4(drawsPart.reduce((t, v) => t + v, 0) / drawsPart.length), least: r4(Math.min(...drawsPart)), most: r4(Math.max(...drawsPart)), note: 'the restrained specialist’s lift over the even actor, both restrained, with restraint’s draws less without them' },
+  };
   return {
-    criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)',
+    criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)', diagnostics,
     budgets: { restrainedSpecialist: budgetOf(RES), expansiveSpecialist: budgetOf(EXP), evenActor: budgetOf(EVEN) },
     verdict, met: Object.values(verdict).every((v) => v.met),
     st6AsWritten: { restrained: `${resWinsShown.length} of ${against.length}`, expansive: `${expWinsShown.length} of ${withIt.length}`, met: resWinsShown.length >= 0.25 * against.length && expWinsShown.length >= 0.25 * withIt.length, note: 'ST6 as written, superseded by ST6-R and kept as the record: each specialist’s own side against its other, as shown, on these budgets' },

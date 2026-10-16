@@ -1,0 +1,200 @@
+[
+ {
+  "id": "t-restraint-draws",
+  "clause": "tests: restraint’s own craft pays",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-whole-rounded",
+  "clause": "tests: every shown figure rounded once",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+    "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-solo-presence",
+  "clause": "tests: the meetings are presence’s own work",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 2 }] } },",
+    "replace": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 0 }] } },"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-discipline-lift",
+  "clause": "tests: discipline’s practice",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/abilities.ts",
+    "find": "  disciplineLift: 0.1,",
+    "replace": "  disciplineLift: 0.1 * 0 + 0.2,"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-nerves",
+  "clause": "tests: composure’s nerves",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/attributes.ts",
+    "find": "  const unsettled = 1 - a.composure / 100;",
+    "replace": "  const unsettled = 1 - a.composure / 200;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-drain",
+  "clause": "tests: stamina at 55 costs on both media",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.3,",
+    "replace": "  drain: 0,"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-monotone",
+  "clause": "tests: more never makes it worse",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+    "replace": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: input.ability === 'listening' ? Math.min(1, clamp(level(input.ability) / full(input.ability), 0, 1) * (1.5 - level(input.ability) / 200)) : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-replay-inputs",
+  "clause": "tests: replayed after a save and a load",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/evaluation.ts",
+    "find": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {})",
+    "replace": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {})"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-event-weight",
+  "clause": "tests: composure’s nerves",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))",
+  "edits": [
+   {
+    "file": "src/engine/systems/attributes.ts",
+    "find": "  eventWeight: { performance: 6 },",
+    "replace": "  eventWeight: { performance: 7 },"
+   }
+  ]
+ }
+]

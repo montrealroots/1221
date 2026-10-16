@@ -25,7 +25,7 @@ for (const m of list) {
   const dir = join(work, `mut-${m.id}`);
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
-  for (const x of ['src', 'tools', 'package.json', 'tsconfig.json', 'tsconfig.app.json', 'tsconfig.node.json', 'vite.config.ts', 'vitest.config.ts']) cpSync(join(root, x), join(dir, x), { recursive: true });
+  for (const x of ['src', 'tools', 'tests', 'package.json', 'tsconfig.json', 'tsconfig.app.json', 'tsconfig.node.json', 'vite.config.ts', 'vitest.config.ts']) cpSync(join(root, x), join(dir, x), { recursive: true });
   symlinkSync(join(root, 'node_modules'), join(dir, 'node_modules'));
   // Each edit's text must occur exactly once in its file, or the mutation isn't run.
   const edits = m.edits ?? [{ file: m.file, find: m.find, replace: m.replace }];
