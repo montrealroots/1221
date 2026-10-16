@@ -420,8 +420,9 @@ const PLAY: Record<string, () => void> = {
     expect(ex.steps[2]).toContain(`they bring ${pct(clean.contribution)}`);
     expect(Math.abs(draws.filter((t) => t.slip).length / draws.length - likely)).toBeLessThan(0.015);
     // Played off a partner at the play's level: the share of connection theirs, and your 70 together (TEST SETUP: your
-    // own connection at the example's 70, and at nothing to read the share alone).
-    const connection = (q: number) => nightTogether(sim, sim.player, run, { ...night, inputs: { ...night.inputs, key: `draw-${draws.indexOf(clean)}` }, dimensions: night.dimensions.map((d) => (d.dimension === 'connection' ? { ...d, quality: q } : d)) })!.dims.connection!;
+    // own connection at the example's 70, and at nothing to read the share alone). Its exact value too, from the
+    // integration pass of 2026-10-16 (evaluation-9), which the night together reads before the rounded one.
+    const connection = (q: number) => nightTogether(sim, sim.player, run, { ...night, inputs: { ...night.inputs, key: `draw-${draws.indexOf(clean)}` }, dimensions: night.dimensions.map((d) => (d.dimension === 'connection' ? { ...d, quality: q, exact: q } : d)) })!.dims.connection!;
     const yours = stated(ex.result, /at your own (\d+) it comes to/);
     expect(ex.result).toContain(`played off a partner at ${read.level} of 3, so ${pct(connection(0) / (100 * clean.contribution))} of the connection is theirs: at your own ${yours} it comes to ${one(connection(yours))} together`);
 

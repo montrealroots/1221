@@ -132,10 +132,13 @@ describe('the stage reads the scene, not the house', () => {
   });
 
   it('a result kept under the rules before this change isn’t judged again by today’s', () => {
-    expect(RULESET).toBe('evaluation-8 (2026-10-16)');
+    // evaluation-9 from the integration pass of 2026-10-16 (a result rounded once); this read evaluation-8 until then,
+    // and a result kept under evaluation-8 is now the one not judged again.
+    expect(RULESET).toBe('evaluation-9 (2026-10-16)');
     // Judged as play judges it, with the day's draw, which the record's seed reproduces.
     const now = judgeEval(byId('hedda-2'), EVEN, 'restrained', false);
     expect(replay(now, task)!.overall).toBe(now.overall);
+    expect(replay({ ...now, ruleset: 'evaluation-8 (2026-10-16)' }, task)).toBeUndefined();
     expect(replay({ ...now, ruleset: 'evaluation-7 (2026-10-16)' }, task)).toBeUndefined();
   });
 });

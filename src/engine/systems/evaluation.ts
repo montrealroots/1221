@@ -65,6 +65,14 @@
  * Fit is known before the work, shown with the choice, and 1 for a choice that fits, so the guarantee is the same
  * with "the choice fits" added to what it asks.
  *
+ * Rounded once (from 2026-10-16, evaluation-9): a result is kept to a tenth, and it's rounded once, where `judge` and
+ * `judgePiece` hand it out. Every part of it (a dimension, a segment, a limit, the scene together) is worked out at full
+ * precision, and a whole is worked out from its parts' exact values (`exact`), never from their rounded ones. Until
+ * then each dimension was rounded before the whole was taken from it, and a piece's segments before the piece's whole
+ * was: the same work came out a tenth apart where nothing but the rounding differed. Measured on the stage's 171 cases
+ * (docs/verification/integration-2026-10-16/st3.md), an even actor's stage and close-frame results differed by 0.1 on
+ * 12, where they differed at full precision by at most 0.021.
+ *
  * What's returned says why. Each limit is what one input cost its
  * dimension, in points: the dimension worked out again with that one input
  * made whole and everything else held. The words a screen shows are built
@@ -177,7 +185,14 @@ export interface Limit {
 export interface DimensionResult {
   dimension: Dimension;
   label: string;
+  /** What it came to, to a tenth: `exact` rounded once. */
   quality: number;
+  /**
+   * What it came to at full precision (from 2026-10-16, evaluation-9): what a whole is worked out from (`wholeOf`), so a
+   * whole is rounded once and never from its parts' rounded values. A result from before keeps none, and is read by
+   * `quality`.
+   */
+  exact?: number;
   capacity: number;
   prepared: number;
   condition: number;
@@ -193,7 +208,7 @@ export interface DimensionResult {
    * (with the grain, positive) or cost (against it, negative), the dimension worked out again without it. Apart from what
    * the actor's abilities cost, which the limits say.
    */
-  grain?: { d: number; points: number; label: string };
+  grain?: { d: number; points: number; label: string; exact?: number };
   variation: number;
   strongest?: { what: string; label: string };
   limits: Limit[];
@@ -204,7 +219,10 @@ export interface Evaluation {
   task: string;
   taskLabel: string;
   dimensions: DimensionResult[];
+  /** The whole, to a tenth: `exact` rounded once. What every band, standing and screen reads. */
   overall: number;
+  /** The whole at full precision (from 2026-10-16, evaluation-9): what a piece's whole is worked out from, its segments' exact wholes by their weights. */
+  exact?: number;
   /** Whether everything the guarantee asks was met: every input at mastery, preparation complete, condition sufficient. */
   mastery: boolean;
   /** Every dimension's limits, the costliest first. */
@@ -342,8 +360,33 @@ export function replayAs(record: { inputs: Evaluation['inputs']; task: string; r
   return i.piece ? judgePiece(i.seed, performer, ctx, i.piece) : judge(i.seed, performer, ctx);
 }
 
-/** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. */
+/** Judges a piece of work by any performer: each dimension, then the whole, with what carried it and what held it back. Rounded once, here. */
 export function judge(seed: string, performer: Performer, ctx: EvalContext): Evaluation {
+  return rounded(judgeExact(seed, performer, ctx));
+}
+
+/**
+ * A result kept to a tenth (from 2026-10-16, evaluation-9): each figure rounded once from its exact value, the exact
+ * value kept beside the dimensions' and the whole's for what's worked out from them.
+ */
+export function rounded(e: Evaluation): Evaluation {
+  const lim = (l: Limit): Limit => ({ ...l, by: r1(l.by), ...(l.whole !== undefined ? { whole: r1(l.whole) } : {}) });
+  const dimensions = e.dimensions.map((d) => ({
+    ...d, quality: r1(d.quality), exact: d.quality,
+    ...(d.grain ? { grain: { ...d.grain, points: r1(d.grain.points), exact: d.grain.points } } : {}),
+    limits: d.limits.map(lim).filter((l) => l.by > 0),
+  }));
+  return { ...e, dimensions, overall: r1(e.overall), exact: e.overall, limits: dimensions.flatMap((d) => d.limits).sort(byCost) };
+}
+
+/** Limits, the costliest to the whole first, then to its dimension. */
+const byCost = (a: Limit, b: Limit) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by;
+
+/**
+ * The judge at full precision (from 2026-10-16, evaluation-9): every figure as worked out, none rounded. `judge` rounds it
+ * once; a piece judged in segments (`systems/piece.ts`) takes its segments from here and rounds its own whole once.
+ */
+export function judgeExact(seed: string, performer: Performer, ctx: EvalContext): Evaluation {
   const E = EVALUATION;
   const abilities: Partial<Record<AbilityId, number>> = {};
   const fulls: Partial<Record<AbilityId, number>> = {};
@@ -395,7 +438,7 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
 
     const now = dimensionQuality(terms, diff, prepared, condition, dr, f, spread);
     const limits: Limit[] = [];
-    const cost = (q: number) => r1(Math.max(0, q - now.quality));
+    const cost = (q: number) => Math.max(0, q - now.quality);
     for (const [i, t] of terms.entries()) {
       if (t.n >= 1) continue;
       mastery = false;
@@ -421,28 +464,32 @@ export function judge(seed: string, performer: Performer, ctx: EvalContext): Eva
       limits.push({ kind: 'fit', what: 'fit', label: fit!.label, dimension: d, by: cost(dimensionQuality(terms, diff, prepared, condition, dr, 1, spread).quality) });
     }
     const strongest = terms.reduce<Term | undefined>((b, t) => (!b || t.n > b.n ? t : b), undefined);
-    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: r1(now.quality), capacity: now.capacity, prepared, condition, day, ...(f < 1 ? { fit: f } : {}), ...(g ? { grain: { d: g.d, points: r1(now.quality - without), label: g.label } } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
+    dims.push({ dimension: d, label: DIMENSION_LABEL[d], quality: now.quality, capacity: now.capacity, prepared, condition, day, ...(f < 1 ? { fit: f } : {}), ...(g ? { grain: { d: g.d, points: now.quality - without, label: g.label } } : {}), variation: now.variation, ...(strongest ? { strongest: { what: strongest.what, label: strongest.label } } : {}), limits: limits.filter((l) => l.by > 0).sort((a, b) => b.by - a.by) });
   }
 
-  const overall = r1(wholeOf(dims, weights));
+  const overall = wholeOf(dims, weights);
   // Each limit's cost to the whole: the whole again with its dimension at what the limit made whole would leave it.
   for (const x of dims) {
-    for (const l of x.limits) l.whole = r1(Math.max(0, wholeOf(dims.map((y) => (y === x ? { ...y, quality: Math.min(100, y.quality + l.by) } : y)), weights) - wholeOf(dims, weights)));
-    x.limits.sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
+    for (const l of x.limits) l.whole = Math.max(0, wholeOf(dims.map((y) => (y === x ? { ...y, quality: Math.min(100, y.quality + l.by) } : y)), weights) - overall);
+    x.limits.sort(byCost);
   }
   return {
-    ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, mastery,
-    limits: dims.flatMap((x) => x.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
+    ruleset: RULESET, task: ctx.task.id, taskLabel: ctx.task.label, dimensions: dims, overall, exact: overall, mastery,
+    limits: dims.flatMap((x) => x.limits).sort(byCost),
     inputs: { abilities: { ...abilities }, techniques, prep: { ...ctx.prep }, required: { ...ctx.required }, difficulty: ctx.difficulty, condition: { ...ctx.condition }, families: ctx.families ?? [], key: ctx.key, levels: { ...levels }, fulls: { ...fulls }, seed, ...(ctx.lean ? { lean: ctx.lean } : {}), ...(ctx.inputs ? { inputs: ctx.inputs } : {}), ...(ctx.extraPrep ? { extraPrep: ctx.extraPrep } : {}), ...(ctx.fit && Object.keys(ctx.fit).length ? { fit: ctx.fit } : {}), ...(ctx.grain && Object.keys(ctx.grain).length ? { grain: ctx.grain } : {}) },
   };
 }
 
-/** The whole of a set of dimensions: their weighted mean for `meanShare` of it, the weakest for the rest. */
-export function wholeOf(dims: readonly Pick<DimensionResult, 'dimension' | 'quality'>[], weights: Partial<Record<Dimension, number>>): number {
+/**
+ * The whole of a set of dimensions: their weighted mean for `meanShare` of it, the weakest for the rest. It reads each
+ * dimension's exact value where it has one (from 2026-10-16, evaluation-9), its rounded one only on a result from before.
+ */
+export function wholeOf(dims: readonly (Pick<DimensionResult, 'dimension' | 'quality'> & { exact?: number })[], weights: Partial<Record<Dimension, number>>): number {
   const E = EVALUATION;
+  const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;
   const wTotal = dims.reduce((s, x) => s + (weights[x.dimension] ?? 0), 0);
-  const weighted = wTotal > 0 ? dims.reduce((s, x) => s + x.quality * (weights[x.dimension] ?? 0), 0) / wTotal : 0;
-  const weakest = dims.length ? Math.min(...dims.map((x) => x.quality)) : 0;
+  const weighted = wTotal > 0 ? dims.reduce((s, x) => s + q(x) * (weights[x.dimension] ?? 0), 0) / wTotal : 0;
+  const weakest = dims.length ? Math.min(...dims.map(q)) : 0;
   return E.meanShare * weighted + (1 - E.meanShare) * weakest;
 }
 

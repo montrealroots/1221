@@ -35,7 +35,10 @@ import type { AbilityId } from './abilities';
 // suitability as a register's concern does (`GRAIN.reader`), so a take played opposite a reader may come out otherwise.
 // evaluation-8 from later still: a stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale, a stage
 // voice's demand no longer counts as size, and a scene's circumstances say what its scale asks.
-export const RULESET = 'evaluation-8 (2026-10-16)';
+// evaluation-9 from 2026-10-16, the integration pass: a result is rounded once, from parts kept at full precision
+// (`judgeExact`, `rounded`, systems/evaluation.ts); until then a dimension and a piece's segment were rounded before a
+// whole was worked out from them, so a result kept under evaluation-8 can differ from today's by a tenth.
+export const RULESET = 'evaluation-9 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 

@@ -28,7 +28,8 @@ export function grainRead(e: Pick<Evaluation, 'task' | 'dimensions' | 'limits' |
   if (!task) return undefined;
   const weights = e.inputs.piece ? pieceWeights(task, e.inputs.lean, e.inputs.piece) : leanedWeights(task, e.inputs.families, e.inputs.lean);
   const as = wholeOf(e.dimensions, weights);
-  const without = wholeOf(e.dimensions.map((d) => (d.grain ? { ...d, quality: Math.max(0, Math.min(100, d.quality - d.grain.points)) } : d)), weights);
+  // Each dimension's exact value and its grain's exact points where the result keeps them (from 2026-10-16, evaluation-9).
+  const without = wholeOf(e.dimensions.map((d) => (d.grain ? { ...d, exact: Math.max(0, Math.min(100, (d.exact ?? d.quality) - (d.grain.exact ?? d.grain.points))) } : d)), weights);
   let ability = 0;
   for (const l of e.limits) {
     if (l.kind !== 'ability' && l.kind !== 'technique') continue;

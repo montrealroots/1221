@@ -125,8 +125,10 @@ describe('companyPart', () => {
       return 1 + sim.player.school!.classmates.filter((_m, i) => castFit(sim, classmatePerformer(sim, sim.player, i), play.reads, [], `company:${i}`, play.title) > mine).length;
     };
     // Sixth, eighth and eighth until later on 2026-10-16, when a stage's house came to weigh the voice and the body
-    // (`STAGE_LEAN`): below the four leads in each, then and now.
-    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 6], ['A Marriage Proposal', 6], ['The Bear', 7]]);
+    // (`STAGE_LEAN`); sixth, sixth and seventh until the integration pass of 2026-10-16, when a result came to be rounded
+    // once (evaluation-9) and classmates read within a tenth of her fell either side: below the four leads in each, then
+    // and now.
+    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 6], ['A Marriage Proposal', 8], ['The Bear', 7]]);
     // Riders to the Sea writes three parts for a woman below its lead; the other two write her a lead and nothing else.
     // Until 2026-10-14 she was given Natalya Stepanovna and Yelena Popova, leads she hadn't earned.
     expect(shows.map((s) => [s.role, s.size])).toEqual([['Cathleen', 'supporting'], ['In The Company', 'featured'], ['In The Company', 'featured']]);

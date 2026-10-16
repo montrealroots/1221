@@ -96,7 +96,9 @@ export function sharedOf(personal: Evaluation, read: PartnerRead, seed: string, 
   const dims: Partial<Record<Dimension, number>> = {};
   const blended: Pick<DimensionResult, 'dimension' | 'quality'>[] = personal.dimensions.map((d) => {
     const s = (E.share[d.dimension] ?? 0) * clamp(read.level, 0, 3) / 3;
-    const q = (1 - s) * d.quality + s * 100 * contribution;
+    // The personal dimension at full precision where the result keeps it (from 2026-10-16, evaluation-9), so the scene
+    // together is rounded once.
+    const q = (1 - s) * (d.exact ?? d.quality) + s * 100 * contribution;
     dims[d.dimension] = r1(q);
     return { dimension: d.dimension, quality: q };
   });

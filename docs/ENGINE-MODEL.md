@@ -1,7 +1,7 @@
 # The Attribute And Genre Engine: Its Model, Invariants And Balance
 
 Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset was `evaluation-3`, and §9
-says what changed. From 2026-10-16 it's `evaluation-8`, and §10 says where each change since `evaluation-3` is
+says what changed. From 2026-10-16 it's `evaluation-9` (it said `evaluation-8` until the integration pass of that day), and §10 says where each change since `evaluation-3` is
 written. This document wasn't rewritten for them: where its §1 to §9 and §10's accounts disagree, the accounts hold, and
 the lines found false are marked in place. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
 which. The research gives directions and orderings much more often than sizes. Where a size is SLATE's, the balance
@@ -117,7 +117,8 @@ levels, preparation, readiness, illness and injury); the others are named beside
 
 1. **Bounds.** Every dimension and the whole stay in [0, 100]. Every limit's cost is positive and no more than what
    the dimension lost.
-2. **Monotonicity.** Raising any one input never lowers a dimension or the whole, beyond a 0.05 rounding allowance.
+2. **Monotonicity.** Raising any one input never lowers a dimension or the whole. Until 2026-10-16's integration pass
+   it allowed 0.05 for rounding; a result is rounded once since (evaluation-9), from an exact value that never falls.
    The inputs are an ability, a technique, a part of preparation, readiness, or removing a misfit.
    - This includes the corner where every factor is at its floor (about 0.09) and the draw is above 0.95.
    - That corner has its own test, because random cases miss it. The draw is scaled by the factors so that it can
@@ -790,4 +791,5 @@ in `RULESET`'s comments (`content/tasks.ts`); each change has its account, with 
 | `evaluation-6` | Suitability reaches every dimension a side leans on, in proportion; a class scene and a play are read in their genre's register (`sceneOfMaterial`); the stage leant a quarter each way. | `docs/verification/interpretation-2026-10-16/i3-review.md` |
 | `evaluation-7` | The reader counts toward suitability at half weight, as a register's concern does (`GRAIN.reader`). | `docs/verification/genres-2026-10-16/g1-replacement.md` |
 | `evaluation-8` | A stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale; a stage voice's demand no longer counts as size; a scene's circumstances say what its scale asks (`CIRCUMSTANCE_AFFINITY`). | `docs/verification/stage-2026-10-16/` |
+| `evaluation-9` | A result is rounded once, from parts kept at full precision (`judgeExact`, `rounded`); until then a dimension and a piece's segment were rounded before a whole was worked out from them. | `docs/verification/integration-2026-10-16/st3.md` |
 
