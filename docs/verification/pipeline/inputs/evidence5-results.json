@@ -1819,6 +1819,11 @@
       "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
       "closes": "cardFeePaid set to nothing once given back: one refund.",
       "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+      "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
+      "evidenceKind": "render"
      }
     ],
     "gapsClosed": [],
@@ -1991,6 +1996,18 @@
     ],
     "gapsClosed": [],
     "defects": []
+   },
+   {
+    "id": "bank.redirect_deposits",
+    "testsAdded": [
+     {
+      "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+      "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
    }
   ]
  },
@@ -2111,6 +2128,268 @@
       "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad, with no Arrange It and no loan form, as its primary account or not; the commands refuse in the same words",
       "closes": "A home bank's Borrowing refuses in its words.",
       "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/evidence-g13-money.test.ts",
+  "rows": [
+   {
+    "id": "card.statement",
+    "testsAdded": [
+     {
+      "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+      "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "finance.pay_card",
+    "testsAdded": [
+     {
+      "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+      "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.request_hardship",
+    "testsAdded": [
+     {
+      "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+      "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+      "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "h-needs",
+    "testsAdded": [
+     {
+      "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+      "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+      "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/evidence-g12-money.test.ts",
+  "rows": [
+   {
+    "id": "card.statement",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "finance.pay_card",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.request_hardship",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "h-needs",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/evidence2-b04.test.ts",
+  "rows": [
+   {
+    "id": "card.statement",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "finance.pay_card",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.request_hardship",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "h-needs",
+    "testsAdded": [
+     {
+      "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+      "closes": "The same notice’s “couldn’t” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/evidence2-b11.test.ts",
+  "rows": [
+   {
+    "id": "card.statement",
+    "testsAdded": [
+     {
+      "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+      "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "finance.pay_card",
+    "testsAdded": [
+     {
+      "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+      "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.request_hardship",
+    "testsAdded": [
+     {
+      "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+      "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "h-needs",
+    "testsAdded": [],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-09-banking",
+  "testFile": "tests/home-account-setoff.test.ts",
+  "rows": [
+   {
+    "id": "card.statement",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "finance.pay_card",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "card.request_hardship",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "h-needs",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+      "evidenceKind": "command"
      }
     ],
     "gapsClosed": [],

@@ -282,7 +282,7 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   }
   if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
     current.closingNoticed = true;
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it's back within it.`, importance: 85 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it’s back within it.`, importance: 85 });
   }
 }
 
@@ -902,7 +902,7 @@ function refundInterestTax(sim: Simulation, person: Person, current: Account, ba
     { accountId: sim.nominalAccount('expense', 'Tax On Interest').id, amount: -back },
   ]);
   if (person.id === sim.universe.playerId) {
-    sim.notify({ category: 'bank', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year's interest.`, importance: 50 });
+    sim.notify({ category: 'bank', title: 'Tax On Interest Refunded', body: `The assessment gave back ${formatMoney(back, saveCurrency(sim.universe), { cents: false })} of the tax taken on last year’s interest.`, importance: 50 });
   }
 }
 

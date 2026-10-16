@@ -1264,7 +1264,8 @@ export const MONEY: readonly GuideEntry[] = [
     interpret: [
       '“Applied: … decides by ….” is a review under way; “Opened at ….” is an account open now, with its card’s day.',
       '“Waiting for its opening deposit” means money is still on its way to it.',
-      '“To close it: …” lists what still uses the old account.',
+      // The day from 2026-10-16 (`closeHold`): until then it said only that the wages were paid in, and to move them.
+      '“To close it: …” lists what still uses the old account; with its wages already on their way elsewhere, the days each payer moves and the day it can close.',
       '“Closing it now charges its fees to the day, …” is what closing a German account would charge now: the months kept for the quarter’s closing, and this month’s fee for the days of it the account has been open, rounded to the cent. After 11 PM on a month’s last day that month is counted with the quarter’s already.',
       'Past Switches lists each switch and how it ended.',
     ],

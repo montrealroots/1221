@@ -4567,8 +4567,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g12-money.test.ts",
@@ -4629,6 +4629,34 @@
             "title": "card.request_hardship > is what the Statements page asks on a plan: the 20 October statement the plan’s $101, and the 20 September one, due before the plan began, the card’s $48",
             "kind": "render",
             "closes": "The check's finding that the Statements page on a plan still said the card's minimum (credit.ts:789 → statements.ts:275 → BankStatements.tsx). Rendered, the 20 October statement reads 'The least to pay is $101.00, the plan’s payment, by November 10, 2026.', with $30 of fees and no interest on $4,830. The 20 September statement, whose due date came before the plan began, still reads the card's 'The least to pay is $48.00, by October 11, 2026.'"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+            "kind": "command",
+            "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+            "kind": "command",
+            "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -5570,8 +5598,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g13-money.test.ts",
@@ -5614,6 +5642,41 @@
             "title": "finance.pay_card > on the bank’s screen: the button says what can be paid, pays it, and can’t be pressed with nothing to pay",
             "kind": "render",
             "closes": "Interface evidence, rendered: 'Pay Card In Full ($0)' disabled, 'Pay Card In Full ($2,000)', 'Pay What You Can ($100)'. Running the button's own command makes Owed read $1,900 and the button read 'Pay What You Can ($0)', disabled"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+            "kind": "command",
+            "closes": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g12-money.test.ts",
+            "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b04.test.ts",
+            "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -6976,20 +7039,55 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g13-money.test.ts",
             "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
             "kind": "command",
-            "closes": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and 'It's $78,260.00 now, for a clean record.' The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between"
+            "closes": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and “It’s $78,260.00 now, for a clean record.” The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between. Until 2026-10-16’s brief 09 the notice’s apostrophe was a straight one."
           },
           {
             "file": "evidence-g13-money.test.ts",
             "title": "card.statement > charges the yearly fee once in its month, though a day moved from the 1st to the 28th gives October two statements (Dublin, Bank of Ireland: no US card in SLATE has a yearly fee)",
             "kind": "command",
             "closes": "The feeAt once-in-its-month guard. Statements on 1 October (08:00 UTC, Irish Summer Time) and 28 October 2026 (09:00 UTC, after the clocks went back), with exactly one €30.00 'Yearly fee' on 1 October"
+          },
+          {
+            "file": "evidence-g13-money.test.ts",
+            "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+            "kind": "command",
+            "closes": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence-g12-money.test.ts",
+            "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b04.test.ts",
+            "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+            "kind": "command",
+            "closes": "The same notice’s “couldn’t” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "evidence2-b11.test.ts",
+            "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+            "kind": "render",
+            "closes": "What Needs You: “…until it’s brought up to date.” (dated comment).",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "home-account-setoff.test.ts",
+            "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+            "kind": "command",
+            "closes": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment).",
+            "round": "remaining-09-banking"
           }
         ],
         "gapsClosed": [
@@ -7897,7 +7995,7 @@
       "changes": "depositTo from fourteen days on, Yale’s payroll from seven (changeDeposits routing.ts:69, from bankmoves.ts:425)",
       "downstream": "payeeAccount and depositAccount, where wages and a scholarship are paid",
       "persistent": "person.payments.depositTo",
-      "explanation": "The date it starts",
+      "explanation": "The date it starts; under both accounts, from 2026-10-16, the day each payer moves (Yale’s payroll and the rest), and under the old account’s Close It the day it can close",
       "tests": "tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders...’; tests/cross-journeys.test.ts ‘opens and funds Capital One, has Yale pay there after its pay cycle...’; tests/papers-complete.test.ts ‘moves to the new account after one weekly pay cycle, other payers after the fourteen days’ (the New Haven student, born in New York)",
       "status": "verified",
       "issue": "Through the command and the clock, pay goes on to the old account until the lead has run and to the new one after, and Yale’s pay follows after its cycle.",
@@ -7956,6 +8054,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+            "kind": "render",
+            "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
+            "round": "remaining-09-banking"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -8293,7 +8413,7 @@
       "id": "bank.close_current",
       "kind": "command",
       "entry": "Your Banks: Close It (BankMoves.tsx:148). Until 2026-10-13 this said Close at BankMoves.tsx:136",
-      "reads": "closeRefusal (bankmoves.ts:268) and linkedTo (routing.ts:91): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
+      "reads": "closeRefusal (bankmoves.ts:282) and linkedTo (routing.ts:91), through closeHold (routing.ts:160, from 2026-10-16): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Wages already on their way elsewhere hold it until the day the last payer moves, and the refusal says that day and each payer’s (from 2026-10-16; until then it said “Move it first.” of a move already asked for, and this cited closeRefusal at bankmoves.ts:268). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
       "changes": "closedAt; interest, the overdraft interest built since the 1st (from 2026-10-16, settleOverdraftInterest) and fees settled; what it holds sent to the account named (bankmoves.ts closeNow)",
       "downstream": "the remainder arriving in the transfer’s days; the account’s history kept; a closed account’s statements ending at its closing, at nothing, with what posted at the closing in them (statements.ts:77; until 2026-10-13 the last statement closed at the balance before those postings)",
       "persistent": "accounts, ledger",
@@ -8525,6 +8645,13 @@
             "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
             "kind": "fixture",
             "closes": "cardFeePaid set to nothing once given back: one refund.",
+            "round": "remaining-09-banking"
+          },
+          {
+            "file": "remaining-09-banking.test.ts",
+            "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+            "kind": "render",
+            "closes": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach.",
             "round": "remaining-09-banking"
           },
           {

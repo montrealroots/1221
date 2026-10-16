@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 431 of 527 rows in scope Implemented And Verified (81.7%); 84 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 433 of 529 rows in scope Implemented And Verified (81.8%); 84 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
 
 ## Totals
 
@@ -35,7 +35,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: health-eligibility | 7 | 7 |  |  |  |  |  |  |
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
 | Remaining Area: tax | 18 | 11 | 7 |  |  |  |  |  |
-| Brief 09 Area: banking | 16 | 6 | 8 |  |  |  | 2 |  |
+| Brief 09 Area: banking | 18 | 8 | 8 |  |  |  | 2 |  |
 | Brief 09 Area: coverage | 13 | 10 | 2 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 17 | 15 |  |  | 1 |  | 1 |  |
@@ -47,7 +47,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **544** | **431** | **84** | **3** | **1** | **0** | **8** | **17** |
+| **All** | **546** | **433** | **84** | **3** | **1** | **0** | **8** | **17** |
 
 ## Life, Health And Time
 
@@ -528,6 +528,8 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `banking.4.sparkassen-card` | Follow-up 1: Berliner Sparkasse's Giro Digital debit card, €12 a year, paid ahead, refunded pro rata on closing (its footnote 45). | Implemented And Verified | implemented | tests/remaining-09-banking.test.ts ‘banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a clos… |
 | `banking.5.arion-card` | Follow-up 2: Arion's (Iceland) yearly debit-card fee: charged ahead or behind, and what happens on closing. | Decision Required | fixed (the figure); owner decision (the… | tests/remaining-09-banking.test.ts ‘banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 ke… |
 | `banking.6.fee-schedule` | Follow-up 3: ING (“im Folgemonat”) and Commerzbank (“monatlich”) post the month's fee monthly where SLATE posts every German bank's at the … | Implemented And Verified | fixed | tests/remaining-09-banking.test.ts ‘banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-… |
+| `banking.7.redirect-close` | Follow-up 2, 1: Close It right after Have Wages Paid Here (bank.redirect_deposits) says the wages are paid into the old account, without th… | Implemented And Verified | fixed | tests/remaining-09-banking.test.ts ‘banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capi… |
+| `banking.8.apostrophes` | Follow-up 2, 2: credit.ts:809's “It's $…” in player-facing text, a straight apostrophe where the house writes curly ones; tests/evidence-g1… | Implemented And Verified | fixed | tests/evidence-g13-money.test.ts ‘card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said … |
 
 ## Brief 09 Area: coverage
 

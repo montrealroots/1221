@@ -444,6 +444,22 @@
    ],
    "why": "When each German bank posts its account fee (ING’s on the 1st of the month after, Commerzbank’s at each month’s end, the rest at the quarter’s closing): the month’s end, whose changes the area’s row text corrects."
   },
+  "09-banking/banking.7.redirect-close": {
+   "rows": [
+    "bank.close_current",
+    "bank.redirect_deposits"
+   ],
+   "why": "Close It on the old account after Have Wages Paid Here says the days each payer moves and the day it can close (from 2026-10-16, `closeHold`): played from the press on 24 September 2026 to the close on 8 October, across a reload."
+  },
+  "09-banking/banking.8.apostrophes": {
+   "rows": [
+    "card.statement",
+    "finance.pay_card",
+    "card.request_hardship",
+    "h-needs"
+   ],
+   "why": "Eleven lines of bank text written with a straight apostrophe, curly from 2026-10-16; the tests the rows cite now read the curly form, their titles unchanged."
+  },
   "09-genres/genres.1-count": {
    "rows": [],
    "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."

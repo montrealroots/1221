@@ -1,12 +1,12 @@
 {
  "key": "banking",
  "on": "2026-10-16",
- "against": "7e531122 and the working tree after it (this area's changes, beside the coverage and journeys areas' own)",
+ "against": "7e531122 and the working tree after it (this area's changes, beside the coverage and journeys areas' own); the second follow-up (banking.7 and banking.8) against 11933d55 and the tree after it",
  "checklist": "docs/verification/remaining-09/banking-checklist.json",
  "testFile": "tests/remaining-09-banking.test.ts",
- "tests": "tests/remaining-09-banking.test.ts: 16 tests, all passing (7 for items 1 to 3; 8 for the follow-up’s 4 to 6; 1 for the eight rows, from the probe). Changed beside it, each with a dated comment saying what it asserted and why it changed, and each renamed title recorded in docs/verification/pipeline/inputs/renames.json: tests/scope-money.test.ts (the Berlin Cancel It and Close It, both renamed), tests/accountlife.test.ts (the German quarter-and-month test, renamed), tests/remaining-banking.test.ts (five of the last pass's German tests, renamed: Deutsche Bank's opening month free, and March to the day), tests/statements.test.ts (two figures, titles unchanged: Deutsche Bank's opening month free).",
+ "tests": "tests/remaining-09-banking.test.ts: 17 tests, all passing (7 for items 1 to 3; 8 for the follow-up’s 4 to 6; 1 for the eight rows, from the probe; 1 for the second follow-up’s banking.7). Changed beside it, each with a dated comment saying what it asserted and why it changed, and each renamed title recorded in docs/verification/pipeline/inputs/renames.json: tests/scope-money.test.ts (the Berlin Cancel It and Close It, both renamed), tests/accountlife.test.ts (the German quarter-and-month test, renamed), tests/remaining-banking.test.ts (five of the last pass's German tests, renamed: Deutsche Bank's opening month free, and March to the day), tests/statements.test.ts (two figures, titles unchanged: Deutsche Bank's opening month free). For banking.8, titles unchanged, each assertion’s straight apostrophe made curly with a dated comment: tests/evidence-g13-money.test.ts (two), tests/evidence-g12-money.test.ts, tests/evidence2-b04.test.ts, tests/evidence2-b11.test.ts, tests/home-account-setoff.test.ts.",
  "statusTotals": {
-  "Implemented And Verified": 6,
+  "Implemented And Verified": 8,
   "Implemented, Verification Incomplete": 8,
   "Decision Required": 2
  },
@@ -754,6 +754,135 @@
    ],
    "tutorial": "src/engine/content/tutorial.ts, the bank chapter's monthly fee sentence (dated comment above it): Deutsche Bank, Postbank and Berliner Sparkasse at the quarter's closing, ING on the 1st of the month after.",
    "guide": "src/engine/content/guide/money.ts, Your Bank: The Monthly Fee's reads and the month's end's later line say each German bank's day."
+  },
+  {
+   "id": "banking.7.redirect-close",
+   "status": "Implemented And Verified",
+   "before": "defect (reachable): right after Have Wages Paid Here, the old account’s line and Close It’s refusal said “Your wages and other payments are paid into it. Move it first.”, of a move already asked for, without the day; the new account’s said “are being moved to it” with no day. Reproduced by the journeys area on life je-1 (24 September 2026, moving 9 October) and here by the test below, which failed before the fix with “To close it: Your wages and other payments are paid into it. Move it first.”",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it",
+     "kind": "render, command, clock",
+     "proves": "A New York-born student at Chase opens Capital One, makes it primary, moves the card’s autopay, closes Chase Savings and on 24 September at 9 AM presses Have Wages Paid Here (the toast: “Wages and other payments go to 360 Checking from October 8, 2026.”). Under Chase, and as the grayed Close It’s title: “Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.” (Yale’s seven days and every other payer’s fourteen, by hand from 24 September); under Capital One: “…being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.” The command refused in the same words, before and after a reload; on 8 October Close It pressed closes Chase at that minute, and the ledger has no breach."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "linkedTo’s line for the account the wages are paid into says, with a change on its way, until when, payer by payer (paidInto, movingDays); the new account’s says the same days. Close It’s refusal for what still uses the account moved from closeRefusal to closeHold beside linkedTo: where the wages are already on their way elsewhere it says “Close it from <the day the last payer moves>.” (“Move the others first, and close it from …” beside anything else), and “Move it first.” otherwise, as before. Placed so no line the audit cites in routing.ts or bankmoves.ts moved.",
+     "where": "src/engine/systems/routing.ts (linkedTo’s two deposit lines; movingDays, paidInto, depositsLeave and closeHold after it), src/engine/systems/bankmoves.ts (closeRefusal: closeHold in place of its two lines), src/engine/content/guide/money.ts (Your Banks’ “To close it: …” read)",
+     "failingTest": "the PLAYER JOURNEY above, before the fix; see mutations M22 to M25"
+    }
+   ],
+   "assumptions": [
+    "The day the old account can close is the change’s own (DEPOSIT_LEAD, fourteen days), the last payer’s: Yale’s payroll moves at seven (PAYER_LEAD), and every other payer pays the old account until the fourteenth day.",
+    "The coordinator’s 9 October was je-1’s day; this test’s press at 9 AM on 24 September makes it 8 October. The days are the press’s plus the leads, so either is the same rule."
+   ],
+   "rowText": {
+    "bank.close_current": {
+     "reads": "closeRefusal (bankmoves.ts:282) and linkedTo (routing.ts:91), through closeHold (routing.ts:160, from 2026-10-16): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Wages already on their way elsewhere hold it until the day the last payer moves, and the refusal says that day and each payer’s (from 2026-10-16; until then it said “Move it first.” of a move already asked for, and this cited closeRefusal at bankmoves.ts:268). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be"
+    },
+    "bank.redirect_deposits": {
+     "explanation": "The date it starts; under both accounts, from 2026-10-16, the day each payer moves (Yale’s payroll and the rest), and under the old account’s Close It the day it can close"
+    }
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/routing.ts",
+     "find": "  if (leaves !== undefined) return",
+     "replace": "  if (false && leaves !== undefined) return",
+     "killed": true,
+     "note": "M22: Close It says “Move it first.” of the move already asked for; 1 failed"
+    },
+    {
+     "file": "src/engine/systems/routing.ts",
+     "find": "  if (!change || change.to === accountId) return 'Your wages and other payments are paid into it';",
+     "replace": "  if (true) return 'Your wages and other payments are paid into it';",
+     "killed": true,
+     "note": "M23: the old account’s line without the days; 1 failed"
+    },
+    {
+     "file": "src/engine/systems/routing.ts",
+     "find": ".filter(([, at]) => day(at) !== day(change.at));",
+     "replace": ".filter(() => false);",
+     "killed": true,
+     "note": "M24: Yale’s payroll’s earlier day left out, one day for every payer; 1 failed"
+    },
+    {
+     "file": "src/engine/systems/routing.ts",
+     "find": "out.push(`Your wages and other payments are being moved to it${movingDays(sim, pay.depositChange, 'from')}`);",
+     "replace": "out.push('Your wages and other payments are being moved to it');",
+     "killed": true,
+     "note": "M25: the new account’s line without the days; 1 failed"
+    }
+   ]
+  },
+  {
+   "id": "banking.8.apostrophes",
+   "status": "Implemented And Verified",
+   "before": "defect (reachable, the text’s form): credit.ts:809’s card-limit notice “It's $… now, for a clean record.” with a straight apostrophe, where the house writes the curly one, and ten more in the bank’s player text found by a search: credit.ts:876 (couldn't), :939 (what's), :1158 (it's), :1184 (It's), :1222 (can't); lending.ts:285 (it's), :905 (year's); ui/bank/BankCard.tsx:170 (course's, what's), :193 (it's), :208 (card's). Five tests asserted them as they were.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/evidence-g13-money.test.ts",
+     "title": "card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said never keeps it",
+     "kind": "command, clock",
+     "proves": "“Your Card Limit Went Up”: “It’s $78,260.00 now, for a clean record.” (line 539, with a dated comment saying it asserted the straight apostrophe until 2026-10-16)."
+    },
+    {
+     "file": "tests/evidence-g13-money.test.ts",
+     "title": "finance.pay_card > paid by hand to the minimum before its due date: autopay asks nothing, so a bank emptied the minute before bounces nothing, charges no late fee and reports the month, across a save and a load; unpaid, the twin bounces, is late and pays $30",
+     "kind": "command, clock",
+     "proves": "“A Card Payment Bounced”: “…the current account couldn’t cover it. …” (dated comment)."
+    },
+    {
+     "file": "tests/evidence-g12-money.test.ts",
+     "title": "card.request_hardship > is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee",
+     "kind": "command, clock",
+     "proves": "The same notice’s “couldn’t” (dated comment)."
+    },
+    {
+     "file": "tests/evidence2-b04.test.ts",
+     "title": "card.request_hardship > puts a missed payment back to none once the plan’s $101 is met at the next due date, and the month counts on time; its twin, emptied before that due date, misses a second and goes on the record",
+     "kind": "command, clock",
+     "proves": "The same notice’s “couldn’t” (dated comment)."
+    },
+    {
+     "file": "tests/evidence2-b11.test.ts",
+     "title": "h-needs > PLAYER JOURNEY: her everyday spending put on the card and the current account moved into savings an hour before each due date, the autopay bounces: a payment behind owing $510, then suspended owing $850, said once the notices are read, across a reload",
+     "kind": "render, clock",
+     "proves": "What Needs You: “…until it’s brought up to date.” (dated comment)."
+    },
+    {
+     "file": "tests/home-account-setoff.test.ts",
+     "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+     "kind": "command, clock",
+     "proves": "“BNP Paribas Gave Notice To Close”: “…unless it’s back within it.” (dated comment)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The typographic apostrophe on each of the eleven lines (twelve apostrophes); each test that asserted a straight one asserts the curly one, with a dated comment on a line already there or the assertion’s own, so no line the audit cites moved. The seven lines no test asserts (credit.ts:939, :1184, :1222; lending.ts:905; BankCard.tsx:170, :193, :208) were read after the change, each curly.",
+     "where": "src/engine/systems/credit.ts, src/engine/systems/lending.ts, src/ui/bank/BankCard.tsx; tests/evidence-g13-money.test.ts, tests/evidence-g12-money.test.ts, tests/evidence2-b04.test.ts, tests/evidence2-b11.test.ts, tests/home-account-setoff.test.ts",
+     "failingTest": "see mutation M26"
+    }
+   ],
+   "toolFinding": "Neither tool claims to catch it, so neither was widened. tools/voice-check.mjs finds the places a person would have contracted and the text didn’t (“do not” and the like) and a few stiff shapes; its --fix writes the typographic apostrophe, but nothing it checks reads an apostrophe in a contraction already made. tools/tics.mjs counts rhetorical habits (the aphorism, the em-dash restate, the triad) in shown text. Run after the change: voice-check --check 0, tics --check 0.",
+   "rowText": {
+    "card.statement": {
+     "after.tests[0].closes": "A positive test of the six-monthly raise, with its control, played to the date: the limit is unchanged at the 20 February 2027 statement (180 days). At the 20 March statement it goes from $65,217 to $78,260 (a fifth, rounded to the dollar), cardRoom reads $78,260, and “It’s $78,260.00 now, for a clean record.” The card.set_auto_raise off twin keeps $65,217 with no notice. A reload sits in between. Until 2026-10-16’s brief 09 the notice’s apostrophe was a straight one."
+    }
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/credit.ts",
+     "find": "body: `It’s ${formatMoney(card.creditLimit",
+     "replace": "body: `It's ${formatMoney(card.creditLimit",
+     "killed": true,
+     "note": "M26: the card-limit notice’s straight apostrophe back; tests/evidence-g13-money.test.ts card.statement’s raise, 1 failed"
+    }
+   ]
   }
  ],
  "foundOutside": [
@@ -762,7 +891,7 @@
   "An Arion debit card's yearly fee (Iceland) is charged on each anniversary of the account (lending.ts) and nothing is refunded when the account closes; Iceland carries Directive (EU) 2015/2366 art. 55(4). Whether Arion charges it ahead isn't in what SLATE read. A Reykjavík-raised student keeping Arion reaches it. Not changed: outside Germany's item, and the bank's practice unread."
  ],
  "checks": {
-  "tests (one file at a time, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1)": "After the follow-up: tests/remaining-09-banking 16/16, and the 48 files rendering the bank's screens or a German, Icelandic or home account, or reading the guide and the tutorial (scope-money, remaining-banking, accountlife, statements, bank-fees, banking, cash, roundups, lending, home-account-abroad/creation/idle/screens/setoff/tax/transfers/ledger, integration-home-lending, integration-savings-notice, guide, guide-examples-money, help-mechanics, bank-moves-card-line, defects-g14-1, defects-g20-1, defects-g22-1, defects-g4-2, defects-r5-1, evidence-g10/11/13/14-money, evidence-g29-ui, evidence2-b04, defects-g1-1, defects-g12-1, defects-g27-1, defects-g3-1, defects-r8-1, evidence-g02-life, evidence-g31-ui, evidence-g33-ui, defects-g21-1, defects-g7-1, defects3-unread, evidence-g34-ui, evidence2-b13, evidence3-home): each exit 0, none failed",
+  "tests (one file at a time, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1)": "After the follow-up: tests/remaining-09-banking 16/16, and the 48 files rendering the bank's screens or a German, Icelandic or home account, or reading the guide and the tutorial (scope-money, remaining-banking, accountlife, statements, bank-fees, banking, cash, roundups, lending, home-account-abroad/creation/idle/screens/setoff/tax/transfers/ledger, integration-home-lending, integration-savings-notice, guide, guide-examples-money, help-mechanics, bank-moves-card-line, defects-g14-1, defects-g20-1, defects-g22-1, defects-g4-2, defects-r5-1, evidence-g10/11/13/14-money, evidence-g29-ui, evidence2-b04, defects-g1-1, defects-g12-1, defects-g27-1, defects-g3-1, defects-r8-1, evidence-g02-life, evidence-g31-ui, evidence-g33-ui, defects-g21-1, defects-g7-1, defects3-unread, evidence-g34-ui, evidence2-b13, evidence3-home): each exit 0, none failed. After the second follow-up, on the final code: tests/remaining-09-banking 17/17 (banking.7’s PLAYER JOURNEY failed before the fix), and remaining-09-banking, evidence-g12-money, evidence-g13-money, evidence2-b04, evidence2-b11, home-account-setoff, bank-moves, evidence-g14-money, evidence-g10-money, evidence-g11-money, cross-journeys, evidence2-b05, cardlife, defects-r3b-1, money-fixes, interest, revolving, evidence-g21-school, bank-moves-card-line, evidence3-home, guide, guide-examples-money, help-mechanics, accountlife, scope-money, remaining-banking: 26 files, each exit 0, none failed",
   "npx tsc -b --noEmit": 0,
   "npx eslint (this area's 17 files)": 0,
   "node tools/title-case.mjs --check": 0,
@@ -775,7 +904,10 @@
   "node tools/label-sweep.mjs": 0,
   "node tools/doc-refs.mjs --check": 0,
   "devmap, traceability": "not run: no command or scheduled kind added or removed",
-  "node tools/completion-matrix.mjs --check": "1 at the time of writing, for what this area's files caused fixed here (the last pass's banking-result.json citing eight renamed titles, now followed; the scratchpad probe cited, now a test in the tree), and beside it two lines the coverage area and the launching session own: the handoff's completion line and the matrix to regenerate (node tools/completion-matrix.mjs)"
+  "node tools/completion-matrix.mjs --check": "1 after the second follow-up, for two lines the coverage area and the launching session own: the handoff’s completion line and the matrix to regenerate (node tools/completion-matrix.mjs); nothing of this area’s. Before: 1 at the time of writing, for what this area's files caused fixed here (the last pass's banking-result.json citing eight renamed titles, now followed; the scratchpad probe cited, now a test in the tree), and beside it two lines the coverage area and the launching session own: the handoff's completion line and the matrix to regenerate (node tools/completion-matrix.mjs)",
+  "npx eslint (the second follow-up's 12 files)": 0,
+  "node tools/coverage.mjs --check": "0 after this area’s second follow-up; 1 at the end, for six papers rows (documents.naturalize, renew_residence, residence, settle) citing titles in tests/commands-kept.test.ts and tests/residence.test.ts, which the journeys area was changing beside it; none of this area’s",
+  "the second follow-up (2026-10-16)": "npx tsc -b --noEmit 0; title-case --check 0, spelling 0, typos 0, tics --check 0, voice-check --check 0, wired --check 0, plural-check 0, label-sweep 0, doc-refs --check 0, coverage --check 0 (1 at the end, above), completion-matrix --check 1 (above). No line the audit cites in routing.ts, bankmoves.ts or the five changed test files moved: each change there is line for line, and the new functions in routing.ts sit after linkedTo, past the last line cited (116)."
  },
- "mutationsRun": "21, each in a copy of the tree's src in the scratchpad (banking/mut), never in the tree; all killed (M1 to M11 for items 1 to 3, M12 to M21 for the follow-up's 4 to 6)."
+ "mutationsRun": "26, each in a copy of the tree’s src in the scratchpad (banking/mut), never in the tree; all killed (M1 to M11 for items 1 to 3, M12 to M21 for the follow-up’s 4 to 6, M22 to M26 for the second follow-up’s 7 and 8)."
 }

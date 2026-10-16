@@ -167,7 +167,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   const plan = state.hardship;
   const thisOne = state.statementBalance > 0 && !plan;
   if (!charge) {
-    if (terms.course) lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is the revolving course's: ${terms.course.shareByScore ? 'a share of it by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what's owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
+    if (terms.course) lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is the revolving course’s: ${terms.course.shareByScore ? 'a share of it by your credit grade' : terms.course.every ? `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} for each ${money(inSaveMoney(sim, terms.course.every, bankById(card.bankId ?? '')!.currency))} owed` : `${money(inSaveMoney(sim, terms.course.pay ?? 0, bankById(card.bankId ?? '')!.currency))} of what’s owed`}${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
     else lines.push(`The least a statement asks${plan ? ' once the plan ends' : ''} is ${pct(terms.minimumShare)} of it${terms.minimumPlusInterest ? ' plus the month’s interest' : ''}${terms.minimumFloor > 0 ? `, or ${money(terms.minimumFloor)} if that’s more` : ''}${terms.minimumOfLimit ? `, and never under ${money(terms.minimumOfLimit)}, 1.25% of the limit, as Mexico’s central bank sets it` : ''}${thisOne ? `: ${money(minimumDue(sim, state.statementBalance, terms, state.statementInterest ?? 0))} on this one` : ''}.`);
   }
   // As the engine takes it, by country: until 2026-09-27 every card read as America's rule of the day before.
@@ -190,7 +190,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
   if (bankIso === 'GB' && state.persistentNoticeAt !== undefined && !state.hardship) {
     lines.push(`Persistent debt: over eighteen months more went to interest and fees than to the card (the bank wrote on ${formatDate(state.persistentNoticeAt, sim.zone)}). At thirty-six the bank freezes the interest, sets ${money(Math.ceil(owed / 48 / 100) * 100)} a month, and suspends the card.`);
   }
-  if (state.suspended === 'late') lines.push(`Suspended: ${state.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it's charged off to collections.`);
+  if (state.suspended === 'late') lines.push(`Suspended: ${state.missed ?? 0} payments missed in a row. It works again once a payment is made on time; six in a row and it’s charged off to collections.`);
   // Until 2026-10-13 this said the card couldn’t be used until it was cleared. A plan ends, and its suspension with it,
   // only at the first statement or due date after it’s paid off (`systems/credit.ts`), as the guide says.
   if (plan) lines.push(`${state.suspended === 'persistent' ? 'Three years of persistent debt, and the bank put it on a plan' : 'On a plan'} since ${formatDate(plan.since, sim.zone)}: no interest, and each statement asks the plan’s ${money(plan.payment)} in the minimum’s place${state.statementBalance > 0 ? `: ${money(Math.min(state.statementBalance, plan.payment))} on this one` : ''}. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.`);
@@ -205,7 +205,7 @@ function CardPanel({ card, bankId, everyday, many }: { card: Account; bankId: st
     lines.push(`${terms.capped.law} caps ${caps}, and holds the card to it. Source: ${terms.capped.source}.`);
   }
   const estimated = terms.estimated.includes('card')
-    ? `${terms.issuer ?? 'The bank'}’s own card wasn’t found, so its terms are SLATE’s estimate of a typical American card's.`
+    ? `${terms.issuer ?? 'The bank'}’s own card wasn’t found, so its terms are SLATE’s estimate of a typical American card’s.`
     : terms.estimated.length > 0
       ? `${terms.estimated.map((one) => TERM_WORDS[one]).join(', ').replace(/^./, (c) => c.toUpperCase())} ${terms.estimated.length === 1 ? 'is' : 'are'} SLATE’s estimate; the rest is ${terms.issuer}’s.`
       : '';

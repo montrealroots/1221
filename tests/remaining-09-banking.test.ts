@@ -52,6 +52,7 @@ import { addHomeTerms, homeTerms, resetHomeTerms } from '@/engine/content/homeac
 import { breaches } from '@/engine/core/invariants';
 import { HOME_CLOSES_KIND } from '@/engine/systems/abroad';
 import { settleFees } from '@/engine/systems/banking';
+import { cardsOf } from '@/engine/systems/credit';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -728,5 +729,45 @@ describe('banking.2: what a student keeping an account at home meets at the eigh
       expect(sim.universe.transactions.length).toBe(lines);
       expect(sim.universe.scheduled.filter((i) => i.kind === 'bank.switch_complete' && i.status === 'pending')).toEqual([]);
     }
+  }, 300_000);
+});
+
+// ---------------------------------------------------------------------------
+// banking.7: Close It while the wages are on their way to another account
+// ---------------------------------------------------------------------------
+
+describe('banking.7.redirect-close: Close It says when the wages stop arriving', () => {
+  it('PLAYER JOURNEY: Have Wages Paid Here pressed on Capital One on Thursday 24 September 2026: under Chase’s Close It, shut, the wages are paid in until they move, Yale’s payroll from 1 October and the rest from 8 October, and to close it from 8 October; on 8 October Close It closes it', async () => {
+    const sim = createSave(1, 'rb9-redirect', newLifeFrom({ homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'modest', bankId: 'us-chase' } as Partial<NewSaveConfig>));
+    await loadPlacesFor(sim.universe);
+    const chase = primary(sim);
+    const cap = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'us-capital-one' }).accountId]!;
+    ok(sim, 'bank.set_primary', { accountId: cap.id });
+    for (const c of cardsOf(sim, sim.player)) ok(sim, 'card.set_autopay_from', { cardId: c.id, accountId: cap.id });
+    const saver = mine(sim).find((a) => a.bankId === 'us-chase' && a.kind === 'savings');
+    if (saver) ok(sim, 'bank.close_savings', { accountId: saver.id });
+    ok(sim, 'bank.transfer', { fromId: chase.id, toId: cap.id, amount: 100_00 });
+    sim.advanceTo(at(2026, 9, 24, 9));
+    drawn(sim, createElement(BankMoves));
+    // Shown only on the account the wages aren't paid into: Capital One's.
+    press('Have Wages Paid Here');
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.redirect_deposits', ok: true });
+    // Yale's payroll in one pay cycle, seven days; every other payer in SLATE's fourteen (routing.ts): 1 and 8 October.
+    expect(h.toasts.at(-1)).toBe('Wages and other payments go to 360 Checking from October 8, 2026.');
+    const shut = 'Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.';
+    const text = drawn(sim, createElement(BankMoves));
+    expect(text).toContain(`To close it: ${shut}`);
+    expect(text).toContain('Your wages and other payments are being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.');
+    expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, shut]]);
+    expect(refusal(sim, 'bank.close_current', { accountId: chase.id, remainderTo: cap.id })).toBe(shut);
+    // Reloaded, the same; on 8 October nothing holds it, and Close It closes it.
+    const back = reload(sim);
+    expect(refusal(back, 'bank.close_current', { accountId: chase.id, remainderTo: cap.id })).toBe(shut);
+    back.advanceTo(at(2026, 10, 8, 9));
+    drawn(back, createElement(BankMoves));
+    press('Close It');
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.close_current', ok: true });
+    expect(back.universe.accounts[chase.id]!.closedAt).toBe(back.now);
+    expect(breaches(back.universe)).toEqual([]);
   }, 300_000);
 });

@@ -71,7 +71,7 @@ describe('the set-off against an overdraft', () => {
     current.creditOffered = { amount: 4_970, apr: 0.0607, months: 12 };
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('The research found no way to open anything new at BNP Paribas from America, so SLATE takes it there’s none.');
     delete current.creditOffered;
-    expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it\'s back within it.']);
+    expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it’s back within it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     const owedHeld = -current.held!;
     expect(owedHeld).toBeGreaterThan(0);
     const owedThen = -current.balance;

@@ -38,7 +38,7 @@ import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, OPENING, TRANSFERS, type Openin
 import { SECURITY } from '../content/security';
 import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, openOne, owingWords, settleFees, settleInterest } from './banking';
 import { checkingAt, checkingsOf, collectionsOf, declines, overdraftInterestOf, settleOverdraftInterest, CHEX } from './lending';
-import { changeDeposits, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
+import { changeDeposits, closeHold, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
 import { autopaySource, cardsOf } from './credit';
 import { paymentsOf } from './payments';
 import { pendingOn } from './pending';
@@ -287,8 +287,8 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   // A fee for a customer abroad owed where the account can't go below zero is the same debt (from 2026-10-16).
   if (account.feeOwedHeld) return `Its fee for a customer abroad, ${formatMoney(account.feeOwedHeld, bankById(account.bankId!)!.currency)}, is owed. The bank closes it only once that’s paid.`;
   if (transfersOf(sim, person).some((t) => t.fromId === account.id || t.toId === account.id)) return 'Money is on its way into or out of it. Wait until it arrives.';
-  const links = linkedTo(sim, person, account.id);
-  if (links.length > 0) return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;
+  const held = closeHold(sim, person, account.id);
+  if (held) return held;
   const savings = bankAccountsOf(sim, person).find((a) => a.kind === 'savings' && a.bankId === account.bankId);
   if (savings) return `${savings.name} is open beside it. Close it first.`;
   const bank = account.bankId ? bankById(account.bankId) : undefined;

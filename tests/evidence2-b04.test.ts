@@ -464,7 +464,7 @@ describe('card.request_hardship', () => {
 
     // The twin: the plan's $101 bounced, a second miss, thirty days past due, on the record. A repeat within six cycles
     // may be the safe harbor's $41, and Chase's card agreement says "up to $40": $40.
-    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('Autopay asked for $101.00 and the current account couldn\'t cover it. It’s late now, and the late fee is the one fee for it.');
+    expect(notes(short.sim, 'A Card Payment Bounced').at(-1)!.body).toBe('Autopay asked for $101.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.'); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     expect(stateOf(short.sim.player, short.card).missed).toBe(2);
     expect(moved(short.sim, short.card, 'Late fee')).toEqual([-30_00, -40_00]);
     // The record’s mark is that due date’s: 10 November, at its noon. Until the third round of 2026-10-13 this was held

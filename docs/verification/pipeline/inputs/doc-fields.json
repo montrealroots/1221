@@ -663,7 +663,8 @@
  "bank.redirect_deposits": {
   "entry": "Your Banks: Have Wages Paid Here (BankMoves.tsx:135)",
   "reads": "an open current or savings account of yours, not closing; DEPOSIT_LEAD (routing.ts:31) and Yale’s PAYER_LEAD (:38)",
-  "changes": "depositTo from fourteen days on, Yale’s payroll from seven (changeDeposits routing.ts:69, from bankmoves.ts:425)"
+  "changes": "depositTo from fourteen days on, Yale’s payroll from seven (changeDeposits routing.ts:69, from bankmoves.ts:425)",
+  "explanation": "The date it starts; under both accounts, from 2026-10-16, the day each payer moves (Yale’s payroll and the rest), and under the old account’s Close It the day it can close"
  },
  "bank.set_order_source": {
   "entry": "What Pays From Where: a standing order’s Pay From There (BankMoves.tsx:184). Until 2026-10-13 this said Your Banks, at BankMoves.tsx:172",
@@ -684,7 +685,7 @@
  },
  "bank.close_current": {
   "entry": "Your Banks: Close It (BankMoves.tsx:148). Until 2026-10-13 this said Close at BankMoves.tsx:136",
-  "reads": "closeRefusal (bankmoves.ts:268) and linkedTo (routing.ts:91): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
+  "reads": "closeRefusal (bankmoves.ts:282) and linkedTo (routing.ts:91), through closeHold (routing.ts:160, from 2026-10-16): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Wages already on their way elsewhere hold it until the day the last payer moves, and the refusal says that day and each payer’s (from 2026-10-16; until then it said “Move it first.” of a move already asked for, and this cited closeRefusal at bankmoves.ts:268). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
   "changes": "closedAt; interest, the overdraft interest built since the 1st (from 2026-10-16, settleOverdraftInterest) and fees settled; what it holds sent to the account named (bankmoves.ts closeNow)",
   "downstream": "the remainder arriving in the transfer’s days; the account’s history kept; a closed account’s statements ending at its closing, at nothing, with what posted at the closing in them (statements.ts:77; until 2026-10-13 the last statement closed at the balance before those postings)",
   "tests": "tests/evidence2-b05.test.ts:458 ‘PLAYER JOURNEY: refuses Chase for the groceries pending on it, then for $100 on its way, then for a payment set for a date into it; then it closes…’, :498 ‘ends Chase’s last statement at $0.00 with what it held sent to Capital One at the closing’; tests/evidence-g14-money.test.ts:644 ‘refuses Chase as her only current account, then as her primary, then overdrawn by $15.00…’, :669 ‘names a payment set for a date and then the savings beside it…’, :716 ‘keeps Citi open while its groceries are pending… a Didn’t Close notice…’, :750 ‘shows what keeps Chase open under it with Close It shut…’; tests/bank-moves.test.ts ‘moves the primary account, then wages, then orders, then closes Chase, with nothing lost’, ‘can’t send money it doesn’t have, can’t close an account with money on its way...’; tests/banking-complete.test.ts ‘is refused at Chase until they post...’; tests/papers-complete.test.ts ‘a closed account’s statements end at its closing...’ (the New Haven student, born in New York)"
