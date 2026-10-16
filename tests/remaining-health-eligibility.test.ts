@@ -179,7 +179,7 @@ const APPLIED_NOTICE = 'HUSKY D couldn’t find 80 hours’ work, $580.00 of inc
 
 describe('health.apply: HUSKY D applied for on its notice, the month before read, decided after thirty days', () => {
   // Until 2026-10-16 Papers' refusal was the end of it: no notice, no time to answer, and nothing to apply with.
-  it('PLAYER JOURNEY: withdrawn, with no work and $580 of nothing in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again', () => {
+  it('PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again', () => {
     const sim = withdrawn(life('rhe-apply', 'comfortable'));
     sim.advanceTo(at(2027, 1, 4, 9));
     // December: no work, and the interest a family with need earns, under $580 and under HUSKY D's $1,835.40.

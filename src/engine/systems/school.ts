@@ -2961,7 +2961,7 @@ export function conferIfReady(sim: Simulation, person: Person, why: string): voi
  * program has 8, and offers nothing that `repeatRefusal` would grant (tests/remaining-school.test.ts, GUARD).
  */
 const programNext = (school: SchoolRecord): number => {
-  const away = undefined as typeof school.leave;
+  const away = school.leave?.status === 'on' ? school.leave : undefined;
   return away ? away.firstTerm - ((school.offset ?? 0) - (away.returnTerm - away.firstTerm)) : academicTerm(school, Math.max(0, school.termsBegun - 1)) + 1;
 };
 

@@ -1,0 +1,1142 @@
+{
+ "key": "school",
+ "on": "2026-10-16",
+ "against": "the working tree on claude/peaceful-hamilton-59zdbb after 64e3f82d (the checkpoint), school’s changes uncommitted",
+ "checks": [
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-school.test.ts",
+   "exit": 0,
+   "result": "29 passed"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-school-term.test.ts",
+   "exit": 0,
+   "result": "6 passed"
+  },
+  {
+   "command": "the same, one file at a time: scope-school, evidence2-b09, evidence2-b08, evidence-g21-school, evidence-g24-school, evidence-g26-school, evidence-g25-school, leave, workload, guide-examples-school, school-journey-gaps, whynot-school, evidence-g18-school",
+   "exit": 0,
+   "result": "20, 15, 11, 24, 29, 24, 20, 15, 10, 8, 9, 4, 32 passed"
+  },
+  {
+   "command": "earlier the same day, one file at a time: evidence2-b11, papers-complete, defects-g8-12, school-paths, evidence-g33-ui, evidence-g20-school, evidence-g22-school, evidence-g23-school, school, journey-school-year, classmate-moments, evidence2-b12, evidence-g16-papers, defects-g9-1",
+   "exit": 0,
+   "result": "all passed"
+  },
+  {
+   "command": "npx tsc -b --noEmit",
+   "exit": 0
+  },
+  {
+   "command": "npx eslint --max-warnings=0 <the school files and tests changed>",
+   "exit": 0
+  },
+  {
+   "command": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "result": "40 of a budget of 40, after two sentences of the school guide were rewritten to contract"
+  },
+  {
+   "command": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  }
+ ],
+ "items": [
+  {
+   "id": "school.repeat-room-leave",
+   "before": "Unplayed and untested: the leave branch of `repeatRoom` (school.ts) was reached by no test.",
+   "disposition": "guard kept and tested",
+   "classification": "necessary defensive guard (reached by play; decides nothing a two-term leave reaches)",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: Incompletes extended past a medical leave’s start run out on 9 February 2027 during it, each Permanent Incomplete’s notice offers the year’s end, once through a reload, and back in Spring Term 2028 the year’s end grants the repeat for them",
+     "kind": "command, clock, render, reload",
+     "proves": "The branch is reached by play: rr-lv1 (Scraping) has Acting I called in sick eleven times (TEST SETUP: the flu), four Incompletes due 10 January 2027 at five, a two-term medical leave from Spring Term 2027 asked 14 December, each Incomplete extended to 9 February 2027 at five; on that day, on the leave, each becomes Permanent and its notice offers the year’s end (count by hand 1 + 2 + 4 + 1 = 8 ≤ 9), once through a reload; back for Spring Term 2028, RepeatPanel draws Ask To Repeat The Year…, the request is decided Friday 5 May 2028 at six and granted for exactly those four courses, offset 4, repeatedYears [1]."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: the Bulletin lets a student on leave complete work whose deadline was extended (2026–27 p.158): a twin makes Acting I’s session up on the leave, and it passes, with no Permanent Incomplete for it and nothing left on the calendar",
+     "kind": "command, clock",
+     "proves": "SLATE matches the Bulletin’s p.158 item 5: an extended Incomplete is made up on the leave (school.make_up on 20 January 2027), passes, its deadline items called off, no Permanent notice."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > GUARD: on a three-term leave, which the Bulletin allows (2026–27 p.158) and `leaveLengths` refuses while every year has year-long courses (TEST SETUP: the granted leave’s length set to three before it begins), the Permanent Incomplete offers the year’s end, counted 8 as the year’s end will count it; without the leave branch the count is 10",
+     "kind": "guard (TEST SETUP)",
+     "proves": "Where the branch decides: on a three-term leave it counts 8 and offers the year’s end; the other path counts 10 and doesn’t."
+    }
+   ],
+   "analysis": "`programNext` (school.ts, extracted 2026-10-16 from `repeatRoom` and shared with `extraLater`) on a leave counts the leave’s first program term (firstTerm − offset before the leave). Without the branch, `academicTerm(termsBegun − 1) + 1` on a leave subtracts the whole leave from the term it began in, so it is n − 1 lower for a leave of n terms. `leaveLengths` grants only n = 2 while every year has year-long courses (checked against COURSES: years 1, 2 and 3 all have a/b courses), so the two paths count 8 vs 9 (no repeat) and 10 vs 11 (after one): the same side of nine in every reachable state. Only the Permanent Incomplete’s notice reads it on a leave (evaluations are called off with the leave).",
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Leave of one, two or three terms; on leave a student may complete outstanding work in courses for which extensions have been granted",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.157–158",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Degree requirements within nine semesters; an approved leave not over three semesters",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.194",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "An Incomplete completed within one month of the end of the term, extensible on petition to the instructor, else a Permanent Incomplete without credit",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.152",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Whether an Incomplete not extended is \"a course for which an extension has been granted\" (p.158 item 5) is uncertain: SLATE lets any Incomplete be made up on a leave (makeUpRefusal has no leave check), reading the Incomplete itself as the grant of time past the term. Not changed.",
+    "The repeat of a year is SLATE’s faculty model: the Bulletin has no rule for it (searched the 2026–27 Bulletin for repeat/additional term on 2026-10-16: none for acting)."
+   ],
+   "mutations": [
+    {
+     "id": "m1-leave-branch-played",
+     "file": "src/engine/systems/school.ts",
+     "find": "const away = school.leave?.status === 'on' ? school.leave : undefined;",
+     "replace": "const away = undefined as typeof school.leave;",
+     "test": "tests/remaining-school.test.ts -t \"Incompletes extended past a medical leave\"",
+     "killed": false,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff",
+     "note": "Survived, as the analysis predicts: the played journey can’t tell the branch from the other path. Recorded, not hidden."
+    },
+    {
+     "id": "m1-leave-branch-guard",
+     "file": "src/engine/systems/school.ts",
+     "find": "const away = school.leave?.status === 'on' ? school.leave : undefined;",
+     "replace": "const away = undefined as typeof school.leave;",
+     "test": "tests/remaining-school.test.ts -t \"three-term leave\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m2-permanent-offer",
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "const ask = person.school!.awaitingDegree ? '.' : remedy(r, (a) => room(person, a), () => later(person));",
+     "replace": "const ask = '.';",
+     "test": "tests/remaining-school.test.ts -t \"Incompletes extended past a medical leave\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {},
+   "tutorial": "Not changed for this item.",
+   "guide": "school.repeat later and interpret lines updated (the additional term named where no repeat is left; see school.s6.dead-ends)."
+  },
+  {
+   "id": "school.unreached-refusals",
+   "before": "47 of the 159 refusal strings in school.ts, leave.ts, courserecord.ts, coursework.ts and classmates.ts were found in no test by their words (scan of 2026-10-16); two were wrong.",
+   "disposition": "guard kept and tested (with two controls corrected: school.d-appeal-before-begun)",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.unreached-refusals: each refusal no test reached, reached (16 tests)",
+     "kind": "command, clock, render, guard",
+     "proves": "Each row of the inventory reached and its exact words asserted; each refusal checked to move nothing (clock, ledger length, calendar length, the school record)."
+    }
+   ],
+   "inventory": [
+    {
+     "id": "sick.nothing-today",
+     "classification": "necessary defensive guard",
+     "note": "Classified on play as a guard: the Classes tab doesn’t draw Call In Sick on a day with nothing at school (SchoolWorkspace.tsx offerSick), so only a command by hand reaches it.",
+     "test": "GUARD: Call In Sick on a Sunday, which the screen doesn’t offer (nothing at school that day), refused by the command in its words"
+    },
+    {
+     "id": "ppe.ended",
+     "classification": "necessary defensive guard",
+     "note": "The screen draws no Buy after the School ends (SchoolWorkspace.tsx `!ppeRefusal(person)`); the command is refused.",
+     "test": "PLAYER JOURNEY: between the last spring’s evaluation, every course passed, and Commencement, a leave and a repeat are refused as done; after the degree, the Cabaret says so on its panel, and the protective equipment, which the screen no longer offers, is refused by the command"
+    },
+    {
+     "id": "cabaret.ended",
+     "classification": "required reachable behavior",
+     "note": "Said on the Cabaret panel where its button would be, and by the command.",
+     "test": "the same"
+    },
+    {
+     "id": "cabaret.before-term",
+     "classification": "required reachable behavior",
+     "note": "A new life at 7:30 on 24 August 2026, before term 0 begins at nine.",
+     "test": "PLAYER JOURNEY: at 7:30 on 24 August 2026, before the fall term begins at nine, a leave and a Cabaret show are refused in their words, and nothing moves"
+    },
+    {
+     "id": "cabaret.no-week",
+     "classification": "required reachable behavior",
+     "note": "1 December 2026: panel and command.",
+     "test": "PLAYER JOURNEY: the fall’s last weeks have no Cabaret week three weeks off, said on its panel and by the command"
+    },
+    {
+     "id": "cabaret.double-cast",
+     "classification": "required reachable behavior (not found in play)",
+     "note": "No played life of eight seeds (dc-1 to dc-8) was double-cast in a Cabaret window over its second year; tested with the two castings’ calls put on the calendar by hand (TEST SETUP), panel and command.",
+     "test": "PLAYER JOURNEY with TEST SETUP: cast at the Rep and in a School production with calls in the weeks a Cabaret show would rehearse and play, the show is refused in the Bulletin’s words, on its panel and by the command (no played life was double-cast there in the second years of eight seeds searched on 2026-10-16, dc-1 to dc-8, so the two castings’ calls are put on the calendar by hand)"
+    },
+    {
+     "id": "conversion.may-none",
+     "classification": "required reachable behavior",
+     "note": "Reached in May 2028 (2027–28 has 25 assigned Saturdays, 150 hours); in May 2027 (24 Saturdays, 144 hours) six never-assigned hours are converted, so the refusal isn’t reached there.",
+     "test": "PLAYER JOURNEY: in May of the second year, every assigned hour booked and none missed ill, a conversion is refused in May’s words, and nothing is booked (2027–28 has 25 assigned Saturdays, six hours each to the 150; 2026–27’s 24 leave six never assigned, which May converts)"
+    },
+    {
+     "id": "leave.cap",
+     "classification": "required reachable behavior",
+     "note": "Back from a two-term leave: command and the Leave form’s Two terms line.",
+     "test": "PLAYER JOURNEY: on journey A’s leave, granted and not begun it can’t be asked again; on it, Give Notice Of Return is refused while she’s ill in each of the clearance’s words (TEST SETUP: in hospital, laid up, the flu, unwell), grayed with them on the panel; given, it’s refused a second time; and back, another leave is refused at the Bulletin’s three terms"
+    },
+    {
+     "id": "leave.clear.hospital",
+     "classification": "required reachable behavior",
+     "note": "TEST SETUP the stay.",
+     "test": "the same"
+    },
+    {
+     "id": "leave.clear.laid-up",
+     "classification": "required reachable behavior",
+     "note": "TEST SETUP a fracture laid up to 18 January 2027.",
+     "test": "the same"
+    },
+    {
+     "id": "leave.clear.flu",
+     "classification": "required reachable behavior",
+     "note": "TEST SETUP the flu; Give Notice Of Return grayed with the words.",
+     "test": "the same"
+    },
+    {
+     "id": "leave.clear.unwell",
+     "classification": "required reachable behavior",
+     "note": "TEST SETUP condition 10.",
+     "test": "the same"
+    },
+    {
+     "id": "leave.before-term",
+     "classification": "required reachable behavior",
+     "note": "7:30 on 24 August 2026.",
+     "test": "PLAYER JOURNEY: at 7:30 on 24 August 2026, before the fall term begins at nine, a leave and a Cabaret show are refused in their words, and nothing moves"
+    },
+    {
+     "id": "leave.granted",
+     "classification": "necessary defensive guard",
+     "note": "Classified on play as a guard: the Leave form isn’t drawn while a leave is granted (StudyPlanPanels.tsx), so only a command by hand reaches it; tested by the command.",
+     "test": "PLAYER JOURNEY: on journey A’s leave, …"
+    },
+    {
+     "id": "leave.terms-done-degree",
+     "classification": "required reachable behavior",
+     "note": "The last year’s thirty days (journey B).",
+     "test": "PLAYER JOURNEY: in a last year’s thirty days, a leave is refused: what’s left is the degree"
+    },
+    {
+     "id": "leave.reason-kind",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: a leave asked by a command the form never sends (a reason of the other kind, four terms, no reason) is refused in its words"
+    },
+    {
+     "id": "leave.professional",
+     "classification": "required reachable behavior",
+     "note": "The form offers A Professional Commitment under Personal; the command refuses (Bulletin p.158).",
+     "test": "PLAYER JOURNEY: in the first fall, a leave is refused in each of the Bulletin’s words (a personal one before a term is completed, one for a professional commitment, a medical one with nothing to recommend it), on the Leave form and by the command alike"
+    },
+    {
+     "id": "leave.terms-done",
+     "classification": "required reachable behavior",
+     "note": "Between the last evaluation and Commencement, a student with no leave used (ur-1).",
+     "test": "PLAYER JOURNEY: between the last spring’s evaluation, every course passed, and Commencement, …"
+    },
+    {
+     "id": "leave.personal-first-term",
+     "classification": "required reachable behavior",
+     "note": "",
+     "test": "PLAYER JOURNEY: in the first fall, a leave is refused …"
+    },
+    {
+     "id": "leave.medical-no-recommendation",
+     "classification": "required reachable behavior",
+     "note": "The form’s default; Ask For A Leave… grayed with the words.",
+     "test": "the same"
+    },
+    {
+     "id": "leave.length",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: a leave asked by a command the form never sends …"
+    },
+    {
+     "id": "appeal.not-cleared",
+     "classification": "required reachable behavior",
+     "note": "",
+     "test": "PLAYER JOURNEY: appealed and down with the flu at its decision (TEST SETUP), the appeal is turned down in the clearance’s words, and the leave begins with Spring Term 2027"
+    },
+    {
+     "id": "appeal.term-over",
+     "classification": "misleading player-facing control: fixed",
+     "note": "Now reached only by a leave on whose term has ended, which `rescindable`’s share check answers first; kept.",
+     "test": "DEFECT: its panel draws Appeal To The Dean and no Call Off The Leave…, …"
+    },
+    {
+     "id": "aid.pending",
+     "classification": "necessary defensive guard",
+     "note": "Classified on play as a guard: Your Yale Account says the review is with the office and draws no Ask while it is (StudyPlanPanels.tsx reviewNo).",
+     "test": "PLAYER JOURNEY: the aid office’s review asked twice is refused while it’s with the office and once it has decided"
+    },
+    {
+     "id": "aid.decided",
+     "classification": "necessary defensive guard",
+     "note": "As above, the decision’s words in its place.",
+     "test": "the same"
+    },
+    {
+     "id": "repeat.last-past",
+     "classification": "necessary defensive guard",
+     "note": "Classified on play as a guard: RepeatPanel draws nothing after a last year with every course passed.",
+     "test": "PLAYER JOURNEY: between the last spring’s evaluation, every course passed, and Commencement, …"
+    },
+    {
+     "id": "leave.no-reason",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: a leave asked by a command the form never sends …"
+    },
+    {
+     "id": "notice.again",
+     "classification": "necessary defensive guard",
+     "note": "Classified on play as a guard: the panel draws no Give Notice Of Return after notice.",
+     "test": "PLAYER JOURNEY: on journey A’s leave, …"
+    },
+    {
+     "id": "notice.late",
+     "classification": "necessary defensive guard",
+     "note": "LEAVE_NOTICE_KIND dismisses at noticeBy exactly; tested with that item called off by hand (TEST SETUP).",
+     "test": "GUARD: a notice of return after its deadline, which no save reaches (the deadline’s own item dismisses at its hour; TEST SETUP: that item called off by hand), is refused “Its deadline has passed.”"
+    },
+    {
+     "id": "prepare.partner",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: commands the coursework screen never sends (…)"
+    },
+    {
+     "id": "assignment.none",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "the same"
+    },
+    {
+     "id": "approach.no-partner",
+     "classification": "required reachable behavior (state) / guard (control)",
+     "note": "A persistent note on a solo piece is reached by play (ur-1, 5 October 2026); AnotherWay draws only the ways approachRefusal allows, so the partner way is sent by hand. askRefusal’s is tested on a solo piece the same way.",
+     "test": "PLAYER JOURNEY: a persistent note on a solo piece, its partner way asked by a command the screen doesn’t offer for it, is refused: the work has no partner; and asking a partner for an evening that clashes with something on the calendar is refused naming it"
+    },
+    {
+     "id": "approach.partner-dim",
+     "classification": "necessary defensive guard",
+     "note": "TEST SETUP a note on the partner part given nine times.",
+     "test": "GUARD: the partner way chosen where the note that keeps coming back is the partner part itself (…)"
+    },
+    {
+     "id": "prepare.step",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: commands the coursework screen never sends (…)"
+    },
+    {
+     "id": "playing.shown",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "the same"
+    },
+    {
+     "id": "orientation.done",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "the same"
+    },
+    {
+     "id": "ask.clash",
+     "classification": "required reachable behavior",
+     "note": "Asked for an evening on something she’s expected at, before the piece is due: refused naming it.",
+     "test": "PLAYER JOURNEY: a persistent note on a solo piece, …"
+    },
+    {
+     "id": "feedback.none",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: commands the coursework screen never sends (…)"
+    },
+    {
+     "id": "moment.none",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: commands … and GUARD: a classmate’s invitation answered with an answer it doesn’t have, or with a scene she doesn’t share, by commands the moment’s buttons never send, is refused in its words"
+    },
+    {
+     "id": "study.not-shared",
+     "classification": "necessary defensive guard",
+     "note": "",
+     "test": "GUARD: a classmate’s invitation answered …"
+    },
+    {
+     "id": "cancel.mandatory",
+     "classification": "misleading player-facing control: fixed",
+     "note": "",
+     "test": "DEFECT: its panel draws Appeal To The Dean and no Call Off The Leave…, …"
+    }
+   ],
+   "removedAsRedundant": "None: every guard has a caller and stands between a command sent by hand and a state the engine doesn’t expect.",
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Personal leave after one term completed, current with requirements, not normally for a professional commitment; medical leave on a Yale Health physician’s written recommendation; one, two or three terms",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.157–159",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Six refusals were planned as reachable in the checklist and reclassified as guards on play, because the screen hides the control in that state (each said in the inventory): Call In Sick on a day with nothing at school, the protective equipment after the School, a leave granted, a second notice, the aid review asked again, a repeat after a last year passed."
+   ],
+   "mutations": [
+    {
+     "id": "m6-appeal-clearance",
+     "file": "src/engine/systems/leave.ts",
+     "find": "  if (clearedToReturn(person, sim.now)) return `You weren’t cleared: ${clearedToReturn(person, sim.now)}`;",
+     "replace": "  if (false) return `You weren’t cleared: ${clearedToReturn(person, sim.now)}`;",
+     "test": "tests/remaining-school.test.ts -t \"appealed and down with the flu\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m7-leave-length-guard",
+     "file": "src/engine/systems/leave.ts",
+     "find": "  if (!length) throw new CommandError('A leave is one, two or three terms.');\n",
+     "replace": "  /*MUT m7-leave-length-guard*/\n",
+     "test": "tests/remaining-school.test.ts -t \"a leave asked by a command the form never sends\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {},
+   "tutorial": "Not changed for this item.",
+   "guide": "school.leave unavailable: the dean’s leave’s refusal added."
+  },
+  {
+   "id": "school.d-appeal-before-begun",
+   "before": "Reproduced 2026-10-16 (probe ap-late): a dean’s leave decided Monday 14 December 2026, after the fall’s evaluation, granted from Spring Term 2027; the panel drew Call Off The Leave… and the cancel was taken; no Appeal To The Dean was drawn while it was granted; the appeal by command, decided 22 December, was turned down “The term it began in is over.”",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.d-appeal-before-begun: a dean’s leave granted from the next term > DEFECT: its panel draws Appeal To The Dean and no Call Off The Leave…, the cancel is refused in words that name the appeal, and the appeal, the student cleared, overturns it before it begins: Spring Term 2027 begins and enrolls her, once through a reload (until 2026-10-16 the cancel was taken and the appeal turned down “The term it began in is over.”)",
+     "kind": "command, clock, render, reload",
+     "proves": "Appeal To The Dean pressed on the drawn panel; decided Monday 21 December at noon (five Yale working days); overturned: leave rescinded, offset 0, Spring Term 2027 begun and enrolled [0, 1]; ‘Your Leave Is Overturned’ once; no ‘Your Leave Has Begun’."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "… PLAYER JOURNEY: appealed and down with the flu at its decision (TEST SETUP), the appeal is turned down in the clearance’s words, and the leave begins with Spring Term 2027",
+     "kind": "command, clock",
+     "proves": "The clearance still decides it."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "`school.cancel_leave` refuses a leave the dean imposed, naming the appeal and its date; LeavePanel draws the dean’s block (`DeanLeave`) with Appeal To The Dean for a dean’s leave granted and not begun, and no Call Off for it; `rescindable` decides a leave not begun on the clearance alone, and APPEAL_KIND overturns it by calling it off before it begins (nothing of `startLeave` to undo).",
+     "where": "src/engine/systems/leave.ts rescindable, APPEAL_KIND, school.cancel_leave; src/ui/components/StudyPlanPanels.tsx DeanLeave, LeavePanel",
+     "failingTest": "tests/remaining-school.test.ts > school.d-appeal-before-begun … DEFECT: … (fails with each part of the fix taken back: m3, m4, m5)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "A mandatory medical leave: the dean decides on Yale Health’s recommendation; an appeal in writing to the dean within seven days of its effective date",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.159",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "SLATE counts the seven days from the dean’s decision, not from the leave’s first day; for a leave granted from the next term the Bulletin’s “effective date” may be the later day. Not changed; recorded."
+   ],
+   "mutations": [
+    {
+     "id": "m3-appeal-not-begun",
+     "file": "src/engine/systems/leave.ts",
+     "find": "  if (l.status === 'granted') return undefined;\n",
+     "replace": "  /*MUT m3-appeal-not-begun*/\n",
+     "test": "tests/remaining-school.test.ts -t \"DEFECT: its panel draws Appeal\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m4-cancel-mandatory",
+     "file": "src/engine/systems/leave.ts",
+     "find": "    if (l.mandatory) throw new CommandError(",
+     "replace": "    if (l.mandatory && false) throw new CommandError(",
+     "test": "tests/remaining-school.test.ts -t \"DEFECT: its panel draws Appeal\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m5-panel-call-off",
+     "file": "src/ui/components/StudyPlanPanels.tsx",
+     "find": "{(l.status === 'pending' || (l.status === 'granted' && !l.mandatory)) && (",
+     "replace": "{(l.status === 'pending' || l.status === 'granted') && (",
+     "test": "tests/remaining-school.test.ts -t \"DEFECT: its panel draws Appeal\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {
+    "school.cancel_leave": {
+     "downstream": "no decision comes; offset and enrolledTerms as they were. A leave the dean imposed isn’t the student’s to call off (from 2026-10-16): refused naming the appeal, and the panel draws no Call Off for it (tests/remaining-school.test.ts)."
+    },
+    "school.appeal_leave": {
+     "entry": "The leave panel’s Appeal To The Dean, on a leave the dean imposed, on it or granted from the next term (StudyPlanPanels.tsx DeanLeave, from 2026-10-16)",
+     "downstream": "the appeal’s decision (APPEAL_KIND): rescindable (cleared, and half the term left; a leave not begun on the clearance alone) → rescind for a leave on: the term’s courses restored, offset and classOf undone, the term enrolled again, the returned living aid credited back, the I-20’s extension reversed, the evaluation and the next term on the calendar again; a leave not begun is called off, and its term begins as any does; else upheld"
+    }
+   },
+   "tutorial": "Not changed.",
+   "guide": "school.leave: steps (no Call Off on a dean’s leave; the appeal from the decision), interpret (a leave not begun decided on the clearance; whose the appeal’s rules are), unavailable (the cancel’s refusal)."
+  },
+  {
+   "id": "school.continuity",
+   "before": "No journey from creation through a leave, a repeat and the degree, or through a withheld degree, compared a reloaded life with one played straight at every boundary.",
+   "disposition": "verified as it stands (with the twins’ comparison finding one reload divergence outside the school’s area, reported)",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads > PLAYER JOURNEY (A): from creation through Incompletes, a medical leave, the year repeated, the aid office and a conversion to the degree at Commencement 2031, what each boundary settled stands at every later one, and reloaded at every boundary the life is its twin’s played straight, every notice once",
+     "kind": "command, clock, reload",
+     "proves": "rr-lv1 (Scraping), 38 boundaries: every settled course record, review, credit, conversion, leave and repeat unchanged at every later boundary but by rule (an Incomplete to a pass or a Permanent Incomplete); the reloaded twin equal to the straight one at every boundary and at the end in the course record, reviews, credits, work-study, conversions, enrolled terms, leaves, repeat, aid review, hold, the coursework (pieces, moments, notes, warnings), the classmates, the ledger and the notices (all but the tax system’s); eight living scholarships for eight terms enrolled; $138.00 converted once (six hours at $23.00); the aid office’s exception, nothing owed; the degree at Commencement 2031 once; each term’s beginning told once."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.continuity: … > PLAYER JOURNEY (B): from creation through a third year’s Fail, the last spring’s thirty days, an additional term and its retake failed, to the degree withheld, what each boundary settled stands, and reloaded at every boundary the life is its twin’s, every notice once",
+     "kind": "command, clock, reload",
+     "proves": "g26-l3: both attempts of Movement Invention III kept against program term 4; withheld once, no Commencement, nothing left on the calendar; twins equal."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "The save keeps its latest 500 notices (`settleNotices`), so ‘once’ is read as the notices come (every step), not from the save at the end."
+   ],
+   "outsideArea": "Found by journey A’s twins and not fixed (tax/papers area): `armCollection` (src/engine/systems/taxreturn.ts:1209), run on every load, puts the IRS’s substitute return on the calendar when the return’s whole balance is owed (Connecticut’s part with it), where play schedules it at the due date only when the IRS’s own part is owed (taxreturn.ts:1335). A Scraping student owing Connecticut alone, reloaded between May and December 2027, is told on 14 April 2028 “The IRS Figured Your 2026 Return … $0.00” and assessed $0.00 in August; played straight, never. Bisected by single reloads: from the reload at the spring 2027 evaluation through December 2027. The test compares every notice but the tax system’s, and says why.",
+   "mutations": [
+    {
+     "id": "m18-stranded-on-load",
+     "file": "src/engine/systems/classmates.ts",
+     "find": "      if (sim.universe.scheduled.some((i) => i.status === 'pending' && i.kind === MOMENT_KIND && i.payload.momentId === m.id)) continue;\n      n += 1;\n      if (m.until <= sim.now) lapse(sim, person, m);",
+     "replace": "      n += 1;\n      if (m.until <= sim.now || n > 0) lapse(sim, person, m);",
+     "test": "tests/remaining-school.test.ts -t \"PLAYER JOURNEY \\(A\\)\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff",
+     "note": "First run survived, with the comparison reading the record and the ledger only; the comparison was widened to the coursework and the classmates, and the mutation (open moments lapsed on load) is then killed."
+    },
+    {
+     "id": "m19-incomplete-kept-on-leave",
+     "file": "src/engine/systems/leave.ts",
+     "find": "const kept = () => new Set([LEAVE_DECIDE_KIND, LEAVE_NOTICE_KIND, ACCOUNT_DUE_KIND, INCOMPLETE_DUE_KIND, PAYDAY_KIND,",
+     "replace": "const kept = () => new Set([LEAVE_DECIDE_KIND, LEAVE_NOTICE_KIND, ACCOUNT_DUE_KIND, PAYDAY_KIND,",
+     "test": "tests/remaining-school.test.ts -t \"PLAYER JOURNEY \\(A\\)\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m20-extra-retake-record",
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "  const retake = school.extra?.term === term ? school.extra.courses.find((c) => c.code === code)?.academic : undefined;",
+     "replace": "  const retake = undefined as number | undefined;",
+     "test": "tests/remaining-school.test.ts -t \"PLAYER JOURNEY \\(B\\)\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {},
+   "tutorial": "Not changed.",
+   "guide": "Not changed."
+  },
+  {
+   "id": "school.s6.missed-term",
+   "before": "No played term missed a piece (sweep-2026-10-16 “Left Open”); tests/workload.test.ts set the misses by hand and called termWarning.",
+   "disposition": "verified as it stands (the warning, the review and the course), with the screen’s defects fixed (school.d-coursework-shown) and the Not Shown notice’s words completed",
+   "evidence": [
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, played > PLAYER JOURNEY: two pieces missed unexcused, a revision missed and the pieces after shown: A Word On Your Coursework comes once, at the sixth piece due, with the counts the term’s own pieces give; at five the share was over the mark already",
+     "kind": "command, clock",
+     "proves": "mt-1: The Body As Source I and Voice I missed asleep, Acting I’s revision missed; the warning at nine on the day the count reaches six, its counts worked by `countedAt` from the pieces in the order the day’s courses meet, not from termTally; at five pieces the Unready share already passed 0.35."
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; the piece called in sick for moves to its course’s next meeting and isn’t counted on the day it left; the one due at its course’s last meeting is excused and never counted",
+     "kind": "command, clock",
+     "proves": "Not Shown twice, Not Shown Again once, Excused once; the excused cases count as the rule says."
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, played > PLAYER JOURNEY: the faculty’s review on 11 December counts the misses as due and Unready, as the warning did; its record and the Evaluations table say the term’s count, and its words say it where the mark is reached",
+     "kind": "command, clock, render",
+     "proves": "history[0].coursework equals the count worked from the pieces (the misses among the due and the Unready); the review’s words follow the mark from the same count."
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review, the term is its twin’s played straight: the same pieces, bands and statuses, the same notices once each, the same review",
+     "kind": "reload",
+     "proves": "Twins equal; the warning once."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Not Shown notice says how the miss counts: due and Unready at the review, and toward the course’s pass, with the course’s count so far.",
+     "where": "src/engine/systems/coursework.ts meetingWeight",
+     "failingTest": "tests/remaining-school-term.test.ts > … each miss is told once … (failed before the change, run 2026-10-16; m14)"
+    }
+   ],
+   "judgeIndependence": "Every Unready, Strong or overall count asserted is derived from the played assignments (each piece’s band, rounds, revision and status); the misses are placed so the warning comes at the sixth piece due whatever the judge makes of the pieces shown.",
+   "sources": [],
+   "assumptions": [
+    "The warning’s mark (six due, 0.35) and the review’s (half of three or more) are SLATE’s design (TERM_CHECK, ESTIMATE.coursework), not Yale’s."
+   ],
+   "mutations": [
+    {
+     "id": "m11-term-check-after",
+     "file": "src/engine/systems/coursework.ts",
+     "find": "export const TERM_CHECK = { after: 6, margin: 0.15 } as const;",
+     "replace": "export const TERM_CHECK = { after: 5, margin: 0.15 } as const;",
+     "test": "tests/remaining-school-term.test.ts -t \"comes once, at the sixth piece due\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m12-tally-misses",
+     "file": "src/engine/systems/coursework.ts",
+     "find": "  const notShown = work.filter((a) => a.status === 'missed' && !a.shown).length;",
+     "replace": "  const notShown = 0 * work.length;",
+     "test": "tests/remaining-school-term.test.ts",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m13-warned-once",
+     "file": "src/engine/systems/coursework.ts",
+     "find": "  if (!cw || person.id !== sim.universe.playerId || cw.warned?.includes(a.term)) return;",
+     "replace": "  if (!cw || person.id !== sim.universe.playerId) return;",
+     "test": "tests/remaining-school-term.test.ts -t \"comes once, at the sixth piece due\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m14-not-shown-count",
+     "file": "src/engine/systems/coursework.ts",
+     "find": "${so.filter((x) => !x.shown).length} of ${so.length} so far.",
+     "replace": "${0 * so.length} of ${so.length} so far.",
+     "test": "tests/remaining-school-term.test.ts -t \"each miss is told once\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {},
+   "tutorial": "The school chapter: a piece missed counts as due and unready and toward its course; Coursework This Term named.",
+   "guide": "coursework.prepare later (the course’s pass, the notice’s count) and interpret (Not Shown Again, Coursework This Term)."
+  },
+  {
+   "id": "school.d-coursework-shown",
+   "before": "Work Shown never said a revision was missed (CourseworkPane.tsx read the revision only where `applied` was set); `TermReview.coursework` was written and read by nothing; the Standing tab had no figure for the coursework measure.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, on the screen > DEFECT: after the first miss, every Shown Today line is an open piece’s, the missed one is in Work Shown as Not Shown, and the Standing tab’s Coursework This Term says the term’s count (until 2026-10-16 no tile said it)",
+     "kind": "render",
+     "proves": "Shown Today lines only on open pieces; the miss in Work Shown; the tile’s count worked from the pieces."
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, on the screen > DEFECT: a revision missed reads Not Shown Again in Work Shown, where until 2026-10-16 the piece stood at its first band with nothing said",
+     "kind": "render",
+     "proves": "The missed revision is said."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Work Shown says “Not Shown Again, Counted Unready”; Standing gains Coursework This Term (termTally of the term, warning tone at the review’s mark); the Evaluations table gains a Coursework column from the review’s own count.",
+     "where": "src/ui/components/CourseworkPane.tsx Shown; src/ui/workspaces/SchoolWorkspace.tsx StandingPane, Evaluations",
+     "failingTest": "tests/remaining-school-term.test.ts > the missed-work term, on the screen > both DEFECT tests and the review’s test (failed before the fix, run 2026-10-16: four failures, the Not Shown words, the Evaluations column, the Standing tile and Not Shown Again; and with each fix taken back: m15, m16, m17)"
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [
+    {
+     "id": "m15-work-shown-missed",
+     "file": "src/ui/components/CourseworkPane.tsx",
+     "find": "{(a.revision?.applied !== undefined || a.revision?.missed) && ",
+     "replace": "{(a.revision?.applied !== undefined) && ",
+     "test": "tests/remaining-school-term.test.ts -t \"Not Shown Again in Work Shown\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m16-standing-tile-term",
+     "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+     "find": "const work = termTally(courseworkOf(sim, person)?.assignments ?? [], Math.max(0, school.termsBegun - 1));",
+     "replace": "const work = termTally(courseworkOf(sim, person)?.assignments ?? [], school.termsBegun);",
+     "test": "tests/remaining-school-term.test.ts -t \"Coursework This Term says\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m17-evaluations-column",
+     "file": "src/ui/workspaces/SchoolWorkspace.tsx",
+     "find": "<td className=\"small\">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} unready or not shown` : 'None counted'}</td>",
+     "replace": "<td className=\"small\">{r.coursework ? `${r.coursework.unready}` : 'None counted'}</td>",
+     "test": "tests/remaining-school-term.test.ts -t \"the faculty’s review on 11 December\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "existingTestsUpdated": [
+    "tests/evidence2-b08.test.ts, tests/evidence-g21-school.test.ts, tests/evidence-g24-school.test.ts: the Evaluations row’s text now holds the Coursework cell, derived in each from the review’s own record (each with a dated comment)."
+   ],
+   "rowText": {
+    "standing/term evaluation": {
+     "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term"
+    }
+   },
+   "tutorial": "See school.s6.missed-term.",
+   "guide": "school.standing steps and interpret (Coursework This Term, the Evaluations column)."
+  },
+  {
+   "id": "school.s6.journey",
+   "before": "Implemented and tested in pieces; no single map from creation to the degree.",
+   "disposition": "verified as it stands, with four missing connections closed (school.d-coursework-shown, school.s6.dead-ends, school.d-appeal-before-begun, school.d-not-registered-hold)",
+   "map": [
+    {
+     "system": "Enrollment and required records",
+     "implemented": "enroll (school.ts), orientation (coursework.ts ORIENTATION, scheduleOrientation), registration (registered, school.reregister), the course record (courserecord.ts noteMeeting, settleCourses)",
+     "tested": "evidence-g18..g26, scope-school, remaining-school journeys A and B (every record kept at every boundary)"
+    },
+    {
+     "system": "Curriculum, prerequisites, schedules and deadlines",
+     "implemented": "COURSES and the calendar (content/school.ts), timetable, coursesFor, classPeriod (school.ts); the year-long sequence read as the leave’s prerequisite (leaveLengths); Incomplete deadlines (courserecord.ts)",
+     "tested": "school.test.ts, remaining-school (leave lengths, deadlines through a leave)"
+    },
+    {
+     "system": "Tuition, fees, aid and payment status",
+     "implemented": "termAccount, termSupport, billUnsupportedTerm, the Yale account (yaleAccount, payBalance, accountDue: hold and late fee), the aid review (AID_DECIDE_KIND), the living scholarship (TERM_KIND), conversion (CONVERT_KIND)",
+     "tested": "scope-school (bills worked), remaining-school A (eight scholarships, $138.00 converted once, the aid exception), the hold test"
+    },
+    {
+     "system": "Attendance, excused absences, missed work and make-up",
+     "implemented": "CLASSES_KIND, sickRefusal and school.call_in_sick, meetingWeight (missed and excused pieces), school.make_up and school.extend_incomplete",
+     "tested": "remaining-school-term, remaining-school (a make-up on a leave), evidence tests"
+    },
+    {
+     "system": "Coursework, table work, rehearsal, partners, readers and showings",
+     "implemented": "coursework.ts (prepare, choose, ask_partner, READER, show, reshow), classmates.ts",
+     "tested": "coursework tests, workload, remaining-school-term, the coursework guards"
+    },
+    {
+     "system": "Feedback, revisions, assessments and standing",
+     "implemented": "show()’s note, revisions, evaluate(), termTally, termWarning",
+     "tested": "workload, remaining-school-term"
+    },
+    {
+     "system": "Productions, role demands, preparation and performance",
+     "implemented": "cast() (school.ts), production.ts, nightEvaluation",
+     "tested": "journey-school-production and the evidence tests; not changed here"
+    },
+    {
+     "system": "Advising, warnings, recovery opportunities and consequences",
+     "implemented": "setStanding’s notices, termWarning, facultyReview, offerRepeat, tellFails and remedy (from 2026-10-16), the Not Registered notice under a hold, the welfare assessment and appeal",
+     "tested": "remaining-school dead-ends, hold and appeal tests; scope-school"
+    },
+    {
+     "system": "Term progression, completion requirements and final records",
+     "implemented": "TERM_KIND, evaluate, degreeShortfall, COMMENCEMENT_KIND, CONFERRAL_KIND, the repeat and the additional term (leave.ts)",
+     "tested": "remaining-school A (the degree), B (withheld), scope-school"
+    }
+   ],
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.continuity (A) and (B)",
+     "kind": "command, clock, reload",
+     "proves": "Creation to the degree and to a withheld degree, played."
+    }
+   ],
+   "notAdded": "Advising meetings (the Bulletin’s chair consulting a struggling student, p.194) aren’t modeled as meetings: the term’s warning and the review’s notice stand for them. No institutional machinery was added.",
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "school.s6.policy",
+   "before": "Most rules labeled in content/school.ts; the guide presented a course failed and a grave breach stepping the standing, the Incomplete’s giving and its one extension as unattributed; the standing and casting notices put the simulated decisions in the real chair’s name.",
+   "disposition": "control corrected (words)",
+   "rules": [
+    {
+     "rule": "The nine semesters",
+     "published": "Published: “students must complete the degree requirements within nine semesters. Any approved leave of absence cannot exceed three semesters.”",
+     "page": "p.194",
+     "slate": "SLATE counts semesters enrolled and leaves a leave’s terms out (its reading; the Bulletin doesn’t say whether leave semesters count toward the nine)."
+    },
+    {
+     "rule": "Disqualification",
+     "published": "Published: two Failures in a semester, three by the end of the second term, four by the third, five by the fourth, six by the fifth, seven in all; students “may be” disqualified.",
+     "page": "p.194",
+     "slate": "SLATE’s faculty review of it (warning the first time, the year to repeat; dismissal on warning, after a review or with no room) is SLATE’s model, said so in the guide from 2026-10-16."
+    },
+    {
+     "rule": "The repeated year",
+     "published": "Not published: no rule for repeating a failed acting course (searched 2026-10-16).",
+     "page": "—",
+     "slate": "SLATE’s faculty model, under p.148’s “may vary specific requirements on an individual basis with the approval of the dean”; said so on the screen, the notice and the guide."
+    },
+    {
+     "rule": "The additional term",
+     "published": "Not published.",
+     "page": "—",
+     "slate": "SLATE’s faculty model; said so in the grant notice and the guide."
+    },
+    {
+     "rule": "The faculty’s review and its mark",
+     "published": "Published: the faculty evaluate regularly; concern, warning and dismissal may come at any time; concern informal, warning in a formal meeting with the chair and an associate dean.",
+     "page": "pp.151, 154, 157",
+     "slate": "One review a term at the classes’ end, its floors (attendance 90%, growth half the class’s pace, coursework half of three or more, a course failed, a run mostly off) and a step at a time are SLATE’s reading; said so on the Standing tab, the guide and the tutorial (2026-10-16)."
+    },
+    {
+     "rule": "Leaves",
+     "published": "Published: personal, medical or parental; one, two or three terms; personal after one term completed, current, normally by the tenth day, not for a professional commitment; medical on a Yale Health physician’s written recommendation; mandatory leave by the dean with an appeal within seven days; notice of return eight weeks before; dismissal for not returning; Affiliate cover.",
+     "page": "pp.157–160",
+     "slate": "SLATE’s: the season rule on a leave’s length, five working days to decide, the physician’s view read from care in thirty days, the welfare triggers and the appeal’s test; said so on the panel’s Fine line and the guide. Parental leave isn’t modeled."
+    },
+    {
+     "rule": "Incompletes",
+     "published": "Published: requested by the student and granted by the instructor; completed within one month of the term’s end; an extension by petition; else a Permanent Incomplete without credit. The SAP section (p.195) has Incompletes resolved by the next term’s registration day.",
+     "page": "pp.152, 195",
+     "slate": "SLATE gives the Incomplete for meetings missed ill (not requested), owes make-up sessions (two hours, a week’s meetings each) and allows one extension of a month: SLATE’s, said so in the guide and on the screen from 2026-10-16. The Bulletin’s two deadlines disagree; SLATE keeps p.152’s month (uncertainty recorded)."
+    },
+    {
+     "rule": "Attendance",
+     "published": "Published: attendance at classes, rehearsals, calls, work-study is required; unexcused absences are subject to disciplinary action; ill students email their professors and make up work on the professor’s schedule.",
+     "page": "p.149",
+     "slate": "The three quarters of a course’s meetings that pass it is SLATE’s estimate (said so); the sick day is SLATE’s form of the email."
+    },
+    {
+     "rule": "Tuition, aid, fees, hold",
+     "published": "Published: $40,750 tuition with 100% tuition support, ordinarily six terms, exceptions extremely rare; need-based living aid; late fees of $125 a month to $375 a term; Financial Hold withholding registration and the diploma.",
+     "page": "pp.182, 184, 187, 190",
+     "slate": "SLATE’s aid office’s exception (a medical leave made the extra terms) is SLATE’s model, said so in its notice."
+    },
+    {
+     "rule": "The calendar",
+     "published": "Published: fall term from 24 August 2026, classes 31 August to 11 December; spring term 4 January 2027, classes 11 January to 23 April; University Commencement 24 May 2027.",
+     "page": "pp.5–6",
+     "slate": "The evaluation at five on the classes’ last day, and later years’ dates, are SLATE’s."
+    },
+    {
+     "rule": "Simulated staff",
+     "published": "—",
+     "page": "—",
+     "slate": "Coursework notes and teachers’ notes were already marked simulated. From 2026-10-16 the standing and casting notices no longer put the decision in the chair of Acting’s name (they said “The chair, Tamilla Woodard, has raised a concern.”); Your Faculty keeps the dean and the chair by name, as the Bulletin gives them."
+    }
+   ],
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.s6.policy: SLATE’s design not presented as Yale’s policy, nor its simulated staff as real > the guide says whose each rule is: …",
+     "kind": "static (the guide’s and tutorial’s own data)",
+     "proves": "The corrected sentences."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.s6.policy: … > PLAYER JOURNEY: the notices of a standing and of a casting are SLATE’s words for the decision and name nobody as having said them; the Standing tab keeps the chair and the dean by name, as the Bulletin gives them",
+     "kind": "clock, render",
+     "proves": "No standing or casting notice of journey B names the chair; Your Faculty still does; the Courses And The Degree note says the Incomplete’s giving is SLATE’s."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Standing and casting notices name nobody as having made the simulated decision; the guide’s Course Failed, Grave Breach, Incomplete and faculty review say whose rule each is; the standing entry says the Bulletin’s and SLATE’s parts; the screen’s Courses And The Degree note and the tutorial say the same.",
+     "where": "src/engine/systems/school.ts setStanding, cast; src/engine/content/guide/school.ts; src/ui/workspaces/SchoolWorkspace.tsx; src/engine/content/tutorial.ts",
+     "failingTest": "tests/remaining-school.test.ts > school.s6.policy (both tests; the words they assert didn’t exist before)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Calendar 2026–2027",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.5–6",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Acting program, plan of study, attendance expected",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.23–26",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Casting by the chair of Acting, understudy breach, rehearsal hours",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.146",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Yale Cabaret, no student on academic warning",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.148",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Attendance",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.149",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Evaluation and Support; Pass/Fail grading; degree by majority vote of the faculty",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.151",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Incomplete within a month, extension on petition, Permanent Incomplete",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.152",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Notice of academic concern and academic warning",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.154",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Grounds for dismissal; no readmission",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.157",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Leaves of absence, mandatory medical leave, withdrawal",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.157–160",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Tuition $40,750, 100% tuition support, six terms ordinarily",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), pp.182, 190",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Late fees $125 a month to $375 a term; Financial Hold",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.184",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Time frame nine semesters; leave not over three; disqualification counts",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.194",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Incompletes resolved by registration day of the following term (financial aid SAP)",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.195",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Whether naming the real chair in a simulated notice presents simulated staff feedback as authentic is a judgment; the name was taken out of the notices and kept in the Bulletin-cited Your Faculty panel and the orientation session’s factual introduction."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "The school chapter: whose the review’s floors are; the note is the game’s words.",
+   "guide": "school.standing reads and interpret; school.repeat short, reads and later."
+  },
+  {
+   "id": "school.s6.dead-ends",
+   "before": "A Fail or a Permanent Incomplete with no repeat left said only that the degree needs every course passed, though an additional term remained; a dismissal and a withheld degree said nothing of what stands; Not Shown said nothing of how it counts.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.s6.dead-ends: … > PLAYER JOURNEY: a second fall’s Fail after the first year’s repeat can’t be repeated for, and its notice names the additional term instead; at the last spring’s end the Standing tab offers it, Ask For An Additional Term is pressed, and it’s granted, counted nine semesters (until 2026-10-16 the notice said only that the degree needs every course passed)",
+     "kind": "command, clock, render, reload",
+     "proves": "sc-x3: the notice names the additional term; at the evaluation of 26 April 2030 the Standing tab draws Ask For An Additional Term (no repeat), pressed, granted for Fall Term 2030; eight enrolled and the term make nine."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "… PLAYER JOURNEY: the degree withheld says so and what still stands, each clause true of the record: …",
+     "kind": "clock, command",
+     "proves": "Each clause checked: passes kept, credits on the Profile, owed hours 0, practice.exercise taken after."
+    },
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "… PLAYER JOURNEY: a dismissal says so and what still stands, and the practice it names is taken: sc-dq, …",
+     "kind": "clock, command",
+     "proves": "The same for a dismissal."
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; …",
+     "kind": "clock",
+     "proves": "The Not Shown notice’s words and the course’s count."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "`remedy` (courserecord.ts) names the year’s end, else the additional term after the last year’s evaluation (`extraLater`, school.ts), else says nothing is left; `setStanding` says what stands on a dismissal and a withheld degree.",
+     "where": "src/engine/systems/courserecord.ts tellFails, remedy, INCOMPLETE_DUE_KIND; src/engine/systems/school.ts extraLater, setStanding",
+     "failingTest": "tests/remaining-school.test.ts > school.s6.dead-ends (the Clown and withheld tests fail with m8 and m9)"
+    }
+   ],
+   "noticesRead": "Read and left as they were, each already naming what follows and what to do: A Word On Your Coursework; Incomplete; A Week Left; Your Degree Isn’t Complete; Out Of The Casting Pool; A Financial Hold; A Term Without Tuition Support; Your Leave Is Refused; A Faculty Review: On Warning; the leave’s notices; You Withdrew From The School (says hours are paid and a return isn’t modeled).",
+   "existingTestsUpdated": [
+    "tests/scope-school.test.ts (the repeated fall’s Permanent Incomplete and the second fall’s Clown: the additional term named), tests/evidence2-b09.test.ts, tests/evidence-g21-school.test.ts, tests/evidence-g26-school.test.ts, tests/scope-school.test.ts (each withheld notice: what stands appended), each with a dated comment; no assertion loosened."
+   ],
+   "sources": [
+    {
+     "rule": "Once dismissed, not eligible for readmission",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.157",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Financial Hold withholds registration and the diploma",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.184",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "“Practice and the practice briefs go on outside the School” reads practiceRefusal and tapeRefusal, which ask a craft and not the School (checked 2026-10-16)."
+   ],
+   "mutations": [
+    {
+     "id": "m8-extra-later",
+     "file": "src/engine/systems/courserecord.ts",
+     "find": "  if (later()) return '. Its year",
+     "replace": "  if (false) return '. Its year",
+     "test": "tests/remaining-school.test.ts -t \"a second fall’s Fail after the first year’s repeat\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m9-stands-withheld",
+     "file": "src/engine/systems/school.ts",
+     "find": "and your terms at the School are over. ${stands}`],",
+     "replace": "and your terms at the School are over.`],",
+     "test": "tests/remaining-school.test.ts -t \"the degree withheld says so\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    },
+    {
+     "id": "m14-not-shown-count",
+     "file": "src/engine/systems/coursework.ts",
+     "find": "${so.filter((x) => !x.shown).length} of ${so.length} so far.",
+     "replace": "${0 * so.length} of ${so.length} so far.",
+     "test": "tests/remaining-school-term.test.ts -t \"each miss is told once\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {
+    "school.request_repeat": {
+     "explanation": "‘You’ll Repeat The Year’ (SLATE’s faculty model). From 2026-10-16 a Fail or a Permanent Incomplete whose year can’t be repeated names the additional term after the last year’s evaluation (`remedy`, courserecord.ts)."
+    }
+   },
+   "tutorial": "Not changed for this item.",
+   "guide": "school.repeat later and interpret; school.standing mistakes (what stands)."
+  },
+  {
+   "id": "school.d-not-registered-hold",
+   "before": "Reproduced 2026-10-16 (sc-x3 with nothing paid): every class of Spring Term 2030 told “Register on the School screen”, which the hold refused; nine courses failed at 0 of their meetings; dismissed.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-school.test.ts",
+     "title": "school.d-not-registered-hold: a term begun under a financial hold > DEFECT: the Not Registered notice names the hold, the sum owed and where to pay it, and once it’s paid and registered the classes count her again (until 2026-10-16 it said “Register on the School screen”, which the hold refused, every class day)",
+     "kind": "clock, command",
+     "proves": "$49,944.30 owed (two terms past six at $24,784.65, worked in scope-school from the Bulletin’s figures, and the first’s late fees to their $375 cap) named in the notice; paid and registered, the next class counts."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Under a hold the Not Registered notice says the hold stops registration, the sum, and to pay on Terms And Award then register on the Standing tab.",
+     "where": "src/engine/systems/school.ts CLASSES_KIND",
+     "failingTest": "tests/remaining-school.test.ts > school.d-not-registered-hold … DEFECT (fails with m10)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Financial Hold: the university will not provide diplomas and reserves the right to withhold registration",
+     "citation": "Yale Bulletin, David Geffen School of Drama 2026–2027, https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf (PDF created 11 August 2026), p.184",
+     "effective": "academic year 2026–2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "That a hold leaves a whole term’s classes uncounted until paid is SLATE’s design (registered() reads mustRegister); the notice now says how to end it. The consequence wasn’t changed."
+   ],
+   "mutations": [
+    {
+     "id": "m10-hold-notice",
+     "file": "src/engine/systems/school.ts",
+     "find": "const held = school.hold !== undefined ? ` A financial hold",
+     "replace": "const held = false ? ` A financial hold",
+     "test": "tests/remaining-school.test.ts -t \"Not Registered notice names the hold\"",
+     "killed": true,
+     "run": "2026-10-16, applied in the tree one at a time, the test run, the replacement reversed and the file checked against git diff"
+    }
+   ],
+   "rowText": {
+    "school.reregister": {
+     "explanation": "The Register line; the hold’s refusal; from 2026-10-16 the Not Registered notice under a hold names the sum and where to pay it."
+    }
+   },
+   "tutorial": "Not changed.",
+   "guide": "school.standing mistakes: a term begun under a hold."
+  }
+ ],
+ "commandsOrKindsAdded": "None: devmap and traceability not regenerated."
+}

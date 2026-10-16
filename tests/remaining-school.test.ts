@@ -290,6 +290,9 @@ function lifeOf(sim: Simulation) {
     standing: s.standing, endedAt: s.endedAt, classOf: s.classOf, offset: s.offset, courses: s.courses, history: s.history, credits: s.credits,
     workStudy: s.workStudy, converted: s.convertedHours, excused: s.excusedHours, enrolled: enrolledTerms(s), leaves: s.leaves, repeat: s.repeat,
     extra: s.extra, aidReview: s.aidReview, hold: s.hold, lateFees: s.lateFees,
+    // The coursework (its pieces, the classmates' moments, the notes, the term's warnings) and the class as the student
+    // has them, trust and bond: what a reload could touch beside the record.
+    coursework: (s as typeof s & { coursework?: unknown }).coursework, classmates: s.classmates,
     ledger: sim.universe.transactions.map((t) => `${t.at} ${t.memo} ${t.postings.map((p) => `${p.accountId}:${p.amount}`).join(',')}`),
     notices: sim.universe.notifications.filter((n) => n.category !== 'tax').map((n) => `${n.at} ${n.category} ${n.title}: ${n.body}`),
   };
@@ -543,7 +546,10 @@ describe('school.continuity: earned results across leave, return, a repeat, an a
     // Eight terms enrolled: Fall Term 2026, Spring Term 2028, the repeated year, the second and the third.
     expect(enrolledTerms(school)).toEqual([0, 3, 4, 5, 6, 7, 8, 9]);
     expect(school.history.map((r) => r.term)).toEqual([0, 3, 4, 5, 6, 7, 8, 9]);
-    // Every attempt kept: the Permanent Incompletes beside their passes in the repeated year.
+    // Every attempt kept: each of the fall's Incompletes Permanent beside its pass in the repeated year.
+    const owed = Object.values(a.settled.find((x) => x.label === 'term 0 evaluated')!.was.courses).filter((r) => r.result === 'incomplete');
+    expect(owed.length).toBeGreaterThan(0);
+    expect(Object.values(school.courses!).filter((x) => x.term === 0 && x.result === 'permanent').map((r) => r.code).sort()).toEqual(owed.map((r) => r.code).sort());
     for (const r of Object.values(school.courses!).filter((x) => x.term === 0 && x.result === 'permanent')) {
       expect(Object.values(school.courses!).find((x) => x.code === r.code && x.term === 4)).toMatchObject({ result: 'pass', academic: 0 });
     }

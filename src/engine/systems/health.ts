@@ -438,7 +438,7 @@ export function monthEngagement(sim: Simulation, person: Person, key: string, cu
   const kinds = earningsOf(person).kinds?.[key];
   const recordedPay = kinds ? kinds.wages + kinds.workStudy : 0;
   const income = (earningsOf(person).months[key] ?? 0) + Math.max(0, work.pay - recordedPay);
-  if (false && income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';
+  if (income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';
   const snap = sim.universe.transactions.some((t) => t.at >= from && t.at < until && t.memo === 'SNAP, the month, onto the EBT card' && t.postings.some((q) => sim.universe.accounts[q.accountId]?.ownerId === person.id));
   const claims = [person.unemployment?.claim, ...(person.unemployment?.past ?? [])].filter((c) => c !== undefined);
   const onUi = claims.some((c) => c.filedAt < until && (c.closedAt ?? c.endsAt) > from);
