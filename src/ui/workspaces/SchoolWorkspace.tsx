@@ -143,6 +143,10 @@ function StandingPane() {
   // pieces in (found by tests/remaining-school-term.test.ts).
   const work = termTally(courseworkOf(sim, person)?.assignments ?? [], Math.max(0, school.termsBegun - 1));
   const workShort = work.shown >= ESTIMATE.coursework.shown && work.unready >= ESTIMATE.coursework.unready * work.shown;
+  // Once the School has ended no evaluation is to come: the three figures are the last term's, their floors what that
+  // term was held to, and nothing casts them (from 2026-10-16: until then a graduate's tab read “This Term” with each floor
+  // ahead of them and “In the casting pool.”, found playing a life to the degree, brief 09's journeys).
+  const ended = schoolEnded(school.standing);
   const skills: { id?: Skill; label: string; mine: number; reach: number; theirs: number[] }[] = [
     ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], reach: ceilingOf(craft, s.id), theirs: school.classmates.map((m) => m.craft[s.id]) })),
     { label: 'Acting', mine: actingOf(craft), reach: reach ? actingOf(reach) : 100, theirs: school.classmates.map((m) => actingOf(m.craft)) },
@@ -155,14 +159,14 @@ function StandingPane() {
           <div className="col gap-3">
             <div className="grid grid-4">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
-              <Stat label="Attendance This Term" value={attendance === undefined ? 'None Yet' : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} is the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
-              <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each has, ${pace} it, and half its pace is the floor`} tone={grewTooLittle ? 'warning' : undefined} />
-              <Stat label="Coursework This Term" value={work.shown ? `${work.unready} of ${work.shown}` : 'None Yet'} note={`Unready or not shown, of the pieces due; half of ${ESTIMATE.coursework.shown} or more is short`} tone={workShort ? 'warning' : undefined} />
+              <Stat label={ended ? 'Attendance Last Term' : 'Attendance This Term'} value={attendance === undefined ? (ended ? 'None' : 'None Yet') : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} ${ended ? 'was' : 'is'} the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
+              <Stat label={ended ? 'Growth Last Term' : 'Growth This Term'} value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each ${ended ? 'had' : 'has'}, ${pace} it, and half its pace ${ended ? 'was' : 'is'} the floor`} tone={grewTooLittle ? 'warning' : undefined} />
+              <Stat label={ended ? 'Coursework Last Term' : 'Coursework This Term'} value={work.shown ? `${work.unready} of ${work.shown}` : ended ? 'None' : 'None Yet'} note={`Unready or not shown, of the pieces due; half of ${ESTIMATE.coursework.shown} or more ${ended ? 'was' : 'is'} short`} tone={workShort ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
             </p>
-            <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed calls, until a good evaluation.'}</p>
+            {!ended && <p className="small" style={{ margin: 0 }}>{school.castable ? 'In the casting pool.' : 'Out of the casting pool after missed calls, until a good evaluation.'}</p>}
             <WithdrawControl />
             <LeavePanel />
             <CoursesPanel />
@@ -462,7 +466,15 @@ function CastingPane() {
         </Panel>
         );
       })}
-      {castings.length === 0 && (
+      {/* Once the School has ended nothing is cast (from 2026-10-16: until then a graduate's tab said Not Cast Yet and when
+          the chair casts, a casting that would never come; found playing a life to the degree). What was played stays on the
+          Profile (`keepCredit`), as the end's notice says. */}
+      {castings.length === 0 && !enrolled && (
+        <Panel title="No Casting Ahead" help="productions.casting">
+          <p className="small" style={{ margin: 0 }}>The chair casts students at the School, and {school.standing === 'graduated' ? 'your degree is conferred' : 'you’ve left it'}: no casting comes now. The productions you played stay on your Profile.</p>
+        </Panel>
+      )}
+      {castings.length === 0 && enrolled && (
         <Panel title="Not Cast Yet" help="productions.casting">
           <p className="small" style={{ margin: 0 }}>
             {school.castable
@@ -567,14 +579,28 @@ function CoursesPanel() {
   const { failed, incomplete } = degreeShortfall(school);
   const term = Math.max(0, school.termsBegun - 1);
   const now = all.filter(([, r]) => r.term === term && r.result === undefined);
-  const word = (r: CourseRecord) => r.result === 'pass' ? 'Passed' : r.result === 'incomplete' ? 'Incomplete' : r.result === 'fail' ? 'Not Passed' : r.result === 'permanent' ? 'Permanent Incomplete' : r.result === 'withdrawn' ? 'Left On Leave' : 'In Progress';
+  // A course the School ended in the middle of, by a withdrawal or a dismissal, keeps no result: Not Finished, not In
+  // Progress, and not listed with this term's meetings (from 2026-10-16, found playing a withdrawal, brief 09's journeys).
+  const ended = schoolEnded(school.standing);
+  const word = (r: CourseRecord) => r.result === 'pass' ? 'Passed' : r.result === 'incomplete' ? 'Incomplete' : r.result === 'fail' ? 'Not Passed' : r.result === 'permanent' ? 'Permanent Incomplete' : r.result === 'withdrawn' ? 'Left On Leave' : ended ? 'Not Finished' : 'In Progress';
   const passed = all.filter(([, r]) => r.result === 'pass').length;
+  // Once the School has ended, what the record came to and no way on (from 2026-10-16: until then a graduate read “Only
+  // the terms to come stand between you and the degree.”, found in the built app that day, and a student who had left
+  // with a course failed was told a year “can be repeated, below”, which nothing then offered). Each clause is what
+  // `setStanding` says of the end.
+  const unpassed = [...failed, ...incomplete].map((r) => r.name);
+  const notPassed = unpassed.length ? `, with ${unpassed.join(', ')} not passed` : '';
+  const endedWords = school.standing === 'graduated'
+    ? `Every course the degree needs was passed, and it was conferred${school.endedAt !== undefined ? ` on ${formatDate(school.endedAt, zone())}` : ''}.`
+    : school.standing === 'withdrawn' ? `You withdrew${notPassed}. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.`
+      : school.standing === 'dismissed' ? `You were dismissed${notPassed}. Once dismissed, a student isn’t eligible to come back.`
+        : `The degree wasn’t recommended${notPassed}, and nothing more can be asked for it.`;
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Courses And The Degree</div><HowItWorks help="school.repeat" /></div>
       <p className="small" style={{ margin: 0 }}>
-        {passed} of {all.length} courses passed so far.{' '}
-        {failed.length ? `The degree needs ${failed.map((r) => r.name).join(', ')}, not passed yet: a course left on a leave is taken on return, and a year with a course failed can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
+        {passed} of {all.length} courses passed{ended ? '' : ' so far'}.{' '}
+        {ended ? endedWords : failed.length ? `The degree needs ${failed.map((r) => r.name).join(', ')}, not passed yet: a course left on a leave is taken on return, and a year with a course failed can be repeated, below.` : incomplete.length ? 'An Incomplete stands between you and the degree until it’s made up.' : 'Only the terms to come stand between you and the degree.'}
       </p>
       {incomplete.map((r) => {
         const key = `${r.term}:${r.code}`;
@@ -592,7 +618,7 @@ function CoursesPanel() {
         );
       })}
       {failed.map((r) => <p key={`${r.term}:${r.code}`} className="small" style={{ margin: 0 }}><strong>{r.name}</strong>, {word(r)}: {r.why}.</p>)}
-      {now.length > 0 && (
+      {now.length > 0 && !ended && (
         <ul className="small" style={{ margin: 0 }}>
           {now.map(([key, r]) => <li key={key}>{r.name}: at {r.attended} of {r.meetings} meetings{r.excused ? `, ${r.excused} excused` : ''}.</li>)}
         </ul>

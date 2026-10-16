@@ -73,6 +73,12 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
                 <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
                 <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
                 <td>
+                  {/* What replaces a document run out, said on its row (from 2026-10-16: until then its action cell was empty,
+                      and a New Yorker whose license ran out mid-program met it first as a new bank's refusal; found playing
+                      seed je-5, brief 09's journeys). Nothing renews a license since the cars went (`licenseReplaceRefusal`). */}
+                  {expired && d.kind === 'license' && <span className="xs dim">Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID.</span>}
+                  {expired && d.kind === 'passport' && <span className="xs dim">Apply for a new one under Your Passport, above.</span>}
+                  {expired && d.kind === 'idcard' && <span className="xs dim">Apply for a new one under Your ID, above.</span>}
                   {d.status === 'valid' && !expired && LOSABLE.has(d.kind) && (
                     confirming?.id === d.id ? (
                       <span className="col gap-1"><span className="xs">Reported {confirming.stolen ? 'stolen' : 'lost'}, it’s canceled for good, even if it turns up{d.kind === 'passport' ? ', with any visa or authorization issued on it (the F-1 status holds)' : ''}.</span>

@@ -47,7 +47,7 @@ result changed, then "What The Pass Did, And What It Measured", written at the e
   stale measurement as settled while this section listed unfinished work. Each row now carries one of the owner's seven
   statuses, and only Implemented And Verified counts as done.
 
-**Completion, by the matrix:** 415 of 509 rows in scope Implemented And Verified (81.5%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 7 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 431 of 526 rows in scope Implemented And Verified (81.9%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
 
   Brief 09 is being worked as this is written (`docs/verification/briefs-2026-10-16/09-…`, work plan section 12): every
   row below that isn't done is a row of the matrix, and its "What's Left" says what each needs.

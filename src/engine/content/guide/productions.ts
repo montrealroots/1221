@@ -272,7 +272,8 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       '“Not Cast Yet”, out of the pool: “Out of the casting pool after missed calls. A good evaluation puts you back.”',
       'Not Cast Yet, in the first fall: the chair casts from the first spring.',
       'No Rep part: a term with no Rep production for your year, or a standing below good.',
-      'On a leave, after a withdrawal or a dismissal, or after the degree, the chair casts you in no production.',
+      // The panel's own words once the School has ended, from 2026-10-16: until then it said Not Cast Yet and when the chair casts.
+      'On a leave, after a withdrawal or a dismissal, or after the degree, the chair casts you in no production. Once the School has ended, No Casting Ahead says so in place of Not Cast Yet, and that the productions you played stay on your Profile.',
     ],
     mistakes: [
       `Missing calls: ${word(ESTIMATE.missedCallsOut)} in a term and you’re out of the pool for every casting until a good evaluation. Unwell, Call In Sick before the call: an excused call isn’t a missed one.`,

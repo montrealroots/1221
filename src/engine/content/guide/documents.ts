@@ -165,6 +165,8 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     ],
     interpret: [
       'Standing in a row reads In Force, Being Decided, Reported Lost, Canceled or Run Out.',
+      // From 2026-10-16 (brief 09's journeys): until then a row run out said nothing past Run Out.
+      'A license run out says beside it that nothing in SLATE renews a license since the cars went, and that a passport or an ID card in force is your photo ID; a passport or an ID card run out says to apply for a new one in its panel. A new bank asks for one in force.',
       'A passport’s own page counts the countries that would let you in on it for a week’s visit. That’s a reading: SLATE has no travel, so no border is crossed.',
       'A card’s own page says “It meets REAL ID.” on a US state ID card issued to a citizen, and “It’s marked Not For Federal Identification: it isn’t REAL ID.” on one issued to someone who isn’t, as Connecticut issues it; and “It meets REAL ID.” on a license you began with where it was drawn as one: at its state’s published share of REAL ID licenses, or, for a state with none published, the mean of the shares that are. With no flights in SLATE, no airport check reads it.',
       'Going Abroad lists what a country asks of your citizenship for a short visit, to read: visas and travel authorizations aren’t applied for here.',

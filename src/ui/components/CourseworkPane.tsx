@@ -27,6 +27,7 @@ import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
 import { bandFor, playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, urgentWork } from '@/engine/systems/coursework';
 import { chiefLimit } from '@/engine/systems/evaluation';
+import { schoolEnded } from '@/engine/systems/school';
 import { EVALUATION } from '@/engine/content/tasks';
 import { materialOf } from '@/engine/systems/material';
 import { at } from '@/ui/looks/subject';
@@ -62,8 +63,10 @@ export function CourseworkPane() {
           </ul>
         </Panel>
       )}
+      {/* Once the School has ended no course sets work (from 2026-10-16: until then a graduate read “Nothing set yet: each
+          course sets its work at a meeting”, found playing a life to the degree). */}
       {open.length === 0
-        ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.</p></Panel>
+        ? <Panel title="Work Set" help="school.prepare"><p className="small muted" style={{ margin: 0 }}>{!person.school || !schoolEnded(person.school.standing) ? 'Nothing set yet: each course sets its work at a meeting, or at orientation’s session on the courses.' : `${person.school.standing === 'graduated' ? 'Your degree is conferred' : 'You’ve left the School'}: no course sets work now.`}</p></Panel>
         : open.map((a) => <AssignmentCard key={a.id} a={a} />)}
       {past.length > 0 && <Shown list={past} />}
       <NotesLedger />

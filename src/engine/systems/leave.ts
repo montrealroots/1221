@@ -54,6 +54,8 @@ import { injuryOf, laidUp } from './injury';
 import { inSaveMoney } from './banking';
 import { drawFromBank, expenseFor } from './spending';
 import { payeeAccount } from './cash';
+import { outsideTheCover } from './appointments';
+import { clinicById } from './clinics';
 
 export type LeaveKind = 'personal' | 'medical';
 export type LeaveReason = 'illness' | 'injury' | 'mental-health' | 'family' | 'financial' | 'personal' | 'professional';
@@ -165,6 +167,19 @@ const notify = (sim: Simulation, person: Person, title: string, body: string, im
   if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title, body, importance, route: '/workspace/school' });
 };
 const money = (sim: Simulation, cents: Money) => formatMoney(cents, saveCurrency(sim.universe));
+
+/**
+ * Yale Health back before an appointment booked while it didn't cover them (`outsideTheCover`): said once, with the way
+ * to be seen at its Health Center (from 2026-10-16, brief 09's journeys: until then a student who bought Affiliate cover
+ * on 10 February 2027 kept her 4 March visit at Fair Haven, booked in the lapse, and learned only from its $187.20 bill
+ * that Yale Health pays for a visit at its own Health Center alone).
+ */
+function tellOutsideTheCover(sim: Simulation, person: Person): void {
+  const outside = outsideTheCover(person);
+  if (!outside.length) return;
+  const list = outside.map((a) => `${a.what} on ${formatDate(a.at, zone())} at ${clinicById(a.clinicId!)?.name ?? 'another practice'}`).join('; ');
+  notify(sim, person, 'Your Appointment Is Outside Yale Health', `${list}: booked while Yale Health didn’t cover you, it stays where it was booked, and Yale Health pays for a visit only at its own Health Center. Call it off under Your Doctor on Papers, then Book An Appointment, and you’re seen there.`, 75);
+}
 const usd = (sim: Simulation, cents: Money) => inSaveMoney(sim, cents, 'USD');
 
 /** The calendar terms they've been enrolled in: begun and not left on leave. A save from before has every term begun. */
@@ -426,6 +441,7 @@ export function returnFromLeave(sim: Simulation, person: Person): void {
   school.mustRegister = true;
   planWeek(sim, person, sim.now);
   notify(sim, person, 'Back From Your Leave', `Welcome back for ${termLabel(l.returnTerm)}. Register on the Standing tab before classes: until you do, they don’t count you. You’re in year ${yearOfTerm(academicTerm(school, l.returnTerm))} again, with the courses you left, in the class of ${school.classOf}.`, 85);
+  tellOutsideTheCover(sim, person);
 }
 
 /**
@@ -1209,6 +1225,7 @@ export function registerLeave(sim: Simulation): void {
     const from = l.coverEnds!;
     school.uncovered = (school.uncovered ?? []).filter((g) => !(g.from === from && g.until === undefined));
     repriceCare(s, person, from, s.now, 'Yale Health Affiliate cover, back to the day student cover ended');
+    tellOutsideTheCover(s, person);
     return { cost, credit };
   });
 

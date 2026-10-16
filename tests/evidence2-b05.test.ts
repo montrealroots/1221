@@ -591,7 +591,9 @@ describe('documents.report_lost', () => {
     expect(refused(sim, 'bank.open_current', { bankId: 'us-citi' })).toBe(CITI_REFUSES);
     h.held.clear();
     const shown = papers(sim, 'passport');
-    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out$/);
+    // From 2026-10-16 the row says what replaces it after Run Out (brief 09's journeys, tests/remaining-09-journeys.test.ts):
+    // until then nothing came after it, and this read the row's end there.
+    expect(rowOf(shown, license)).toMatch(/June 14, 2028 Run Out Nothing in SLATE renews a license since the cars went: a passport or an ID card in force is your photo ID, under Your Passport and Your ID\.$/);
     expect([named(shown, 'Report Lost…'), named(shown, 'Report Stolen…')]).toEqual([[], []]);
   }, 60_000);
 

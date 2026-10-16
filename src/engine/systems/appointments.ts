@@ -47,7 +47,7 @@ import type { Clinic } from '../content/clinics';
 import { holidaysOn } from '../content/holidays';
 import { CANADA_NEXT_DAY, CANADA_OTHERWISE_DAYS, CONSULT_HOUR, CONSULT_MINUTES, ENGLAND_BANDS, IMSS_DAYS, US_DAYS, US_METRO_AVERAGE_DAYS } from '../content/appointments';
 import { careFor, healthOf, renewPrescriptions, reviewed } from './health';
-import { DOCTOR_KINDS, MEMBERS_ONLY, clinicById, clinicFor, clinicsIn, seesThem } from './clinics';
+import { DOCTOR_KINDS, MEMBERS_ONLY, clinicById, clinicFor, clinicsIn, outsideItsPractice, seesThem } from './clinics';
 import { citizenOf } from './documents';
 import { presentForCare } from './health';
 
@@ -83,6 +83,17 @@ export function mayRefer(sim: Simulation, person: Person, a: Appointment, odds?:
 
 export interface Appointment { id: string; at: Instant; what: string; clinicId?: string }
 export const appointmentsOf = (person: Person): Appointment[] => (healthOf(person).appointments ??= []);
+
+/**
+ * The appointments booked at a practice whose visit their cover won't pay for on the day (`outsideItsPractice`): one
+ * booked at Fair Haven while uncovered on a leave, Yale Health's cover back before it (Affiliate cover bought, or the
+ * leave over). Kept where it was booked, as `followTheCover` says an appointment is, and billed there as the uninsured's;
+ * called off and booked again, it's had at Yale Health. From 2026-10-16: until then nothing said so until the visit's
+ * own bill, $187.20 (found playing a personal leave, brief 09's journeys).
+ */
+export function outsideTheCover(person: Person): Appointment[] {
+  return (person.health?.appointments ?? []).filter((a) => a.clinicId !== undefined && outsideItsPractice(person, clinicById(a.clinicId), a.at));
+}
 
 const homeCity = (person: Person) => person.currentLocationId;
 

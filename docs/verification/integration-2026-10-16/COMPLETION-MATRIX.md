@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 415 of 509 rows in scope Implemented And Verified (81.5%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 7 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 431 of 526 rows in scope Implemented And Verified (81.9%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
 
 ## Totals
 
@@ -38,6 +38,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: banking | 16 | 6 | 8 |  |  |  | 2 |  |
 | Brief 09 Area: coverage | 12 | 10 | 1 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
+| Brief 09 Area: journeys | 17 | 15 |  |  | 1 |  | 1 |  |
 | Criteria: The Stage | 11 |  | 9 | 1 |  |  | 1 |  |
 | Criteria: Interpretation | 5 |  | 5 |  |  |  |  |  |
 | Criteria: The Attributes | 25 |  | 22 | 1 |  |  | 1 | 1 |
@@ -45,8 +46,8 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
-| Known Shortfalls And Missing Tests | 7 | 3 | 2 |  | 1 |  | 1 |  |
-| **All** | **526** | **415** | **83** | **3** | **1** | **0** | **7** | **17** |
+| Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
+| **All** | **543** | **431** | **83** | **3** | **1** | **0** | **8** | **17** |
 
 ## Life, Health And Time
 
@@ -571,6 +572,28 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `genres.7-measured` | Measured again after the changes | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/genres-09/after/signature.json ‘npx vite-node tools/genre-signature.ts -- --out …’ (static); docs/verification/integra… |
 | `genres.8-docs` | docs/GENRE-COVERAGE.md and guide text that names a brief’s scene | Implemented And Verified | verified as it stands | tests/genre-coverage.test.ts ‘the coverage record > is what the tables say, and accounts for every genre once’ (static) |
 
+## Brief 09 Area: journeys
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `journeys.known-graduated-school-page` | Known on the way in: a graduated student's School page still says “Only the terms to come stand between you and the degree” (found in the b… | Implemented And Verified | fixed | tests/remaining-09-journeys.test.ts ‘journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree read… |
+| `journeys.x1-yale-payment-savings-hold-registration` | Across areas: a Yale payment drawing on savings, then the hold, then registration (banking.s7.school's change meeting school's hold) | Implemented And Verified | verified as it stands (one finding repo… | tests/remaining-09-journeys.test.ts ‘journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s pers… |
+| `journeys.x2-leave-affiliate-bill` | Across areas: a leave and its Affiliate cover, then a bill | Implemented And Verified | verified, with two defects fixed (journ… | tests/remaining-09-journeys.test.ts ‘journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal le… |
+| `journeys.x3-withdrawal-health-tax-papers` | Across areas: withdrawal, then health eligibility, then tax and Papers | Implemented And Verified | verified, with one defect fixed (journe… | tests/remaining-09-journeys.test.ts ‘journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Heal… |
+| `journeys.x4-document-expiring` | Across areas: a document expiring under a payment or a registration | Implemented And Verified | verified, with one control corrected (j… | tests/remaining-09-journeys.test.ts ‘journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run o… |
+| `journeys.played-school` | Played journey: school requirements, preparation, attendance, missed work, revisions, warnings, evaluations, progression | Implemented And Verified | verified as it stands | tests/remaining-09-journeys.test.ts ‘journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 20… |
+| `journeys.played-money` | Played journey: payments, pending funds, fees, restrictions, closures, recovery | Implemented And Verified | verified as it stands | tests/remaining-09-journeys.test.ts ‘journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s pers… |
+| `journeys.played-papers` | Played journey: required documents, applications, verification, expiry, correction, renewal where the game has them | Implemented And Verified | verified as it stands | tests/remaining-09-journeys.test.ts ‘journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withd… |
+| `journeys.played-health` | Played journey: health eligibility and billing where they reach school or money | Implemented And Verified | verified as it stands | tests/remaining-09-journeys.test.ts ‘journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal le… |
+| `journeys.actions` | Every exposed action met: validates, changes the right state, brings its consequence, says the result, survives a reload | Implemented And Verified | verified as it stands | tests/remaining-09-journeys.test.ts ‘journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree read… |
+| `journeys.d-aid-past-balance` | Defect found on x1: a term's living scholarship is paid to the bank past a balance owed on the Yale account under a hold | Decision Required | owner decision | tests/remaining-09-journeys.test.ts ‘journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 20… |
+| `journeys.d-cover-ended-notice` | Defect found on x3: the cover-ended notice counts 60 days from a month after the loss and names only the marketplace | Implemented And Verified | fixed | tests/remaining-09-journeys.test.ts ‘journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Heal… |
+| `journeys.d-medicaid-start` | Found on x3: HUSKY D enrolled on 2 December starts on 1 January, and care on 3 December is billed uninsured | Not Implemented | uncertainty recorded | tests/remaining-09-journeys.test.ts ‘journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5… |
+| `journeys.d-expired-license-next-step` | Found on x4: a license run out says nothing of what comes next | Implemented And Verified | control corrected | tests/remaining-09-journeys.test.ts ‘journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run o… |
+| `journeys.d-lapse-appointment` | Found on x2: an appointment booked in a leave's lapse stays outside Yale Health once its cover is back, and nothing says so until the bill | Implemented And Verified | fixed | tests/remaining-09-journeys.test.ts ‘journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal le… |
+| `journeys.d-lapse-prescription` | Found on x2: a prescription filled in a leave's lapse isn't billed again when Affiliate cover is bought back to the lapse's start | Implemented And Verified | fixed | tests/remaining-09-journeys.test.ts ‘journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DE… |
+| `journeys.d-hardship-ended-renewal` | Sent by the coordinator from the coverage area (2026-10-16): on a renewal whose program ended within the thirty days, `health.request_hards… | Implemented And Verified | fixed (by a PLAYER JOURNEY test: play r… | tests/remaining-09-journeys.test.ts ‘journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped … |
+
 ## Criteria: The Stage
 
 | Row | Goal | Status | Source's Word | Evidence |
@@ -677,7 +700,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
 | `KS-matrix-gate` | tools/completion-matrix.mjs --check runs in the required gate | Implemented And Verified | listed by the handoff or an area | package.json; CLAUDE.md |
-| `KS-degree-text` | A graduated student’s School page says the degree is done | Not Implemented | listed by the handoff or an area | Not recorded |
+| `KS-degree-text` | A graduated student’s School page says the degree is done | Implemented And Verified | listed by the handoff or an area | docs/verification/remaining-09/journeys-result.json |
 | `KS-genres-54` | Each genre’s two briefs ask different things of the actor where its conventions allow | Implemented And Verified | listed by the handoff or an area | docs/verification/integration-2026-10-16/genres-09.md; docs/verification/remaining-09/genres-result.json |
 | `KS-bank-rows-scope` | The nine bank rows no Yale player reaches: kept as unresolved or moved to deferred | Decision Required | listed by the handoff or an area | Not recorded |
 | `KS-homecloses` | A home bank’s own close settles its fees once | Implemented And Verified | listed by the handoff or an area | docs/verification/remaining-09/banking-result.json |
@@ -782,18 +805,19 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 
 ### Not Implemented (1)
 
-- **`KS-degree-text`** (Known Shortfalls And Missing Tests): It still says "Only the terms to come stand between you and the degree" (found in the built app on 2026-10-16)
+- **`journeys.d-medicaid-start`** (Brief 09 Area: journeys): uncertainty recorded
 
 ### Blocked Externally (0)
 
 None.
 
-### Decision Required (7)
+### Decision Required (8)
 
 - **`banking.1.pro-rata`** (Remaining Area: banking): Germany’s month’s fee is charged whole on any closing (banking.ts settleFees, closingFeesOf), where BGB § 675h(3) owes it pro rata to the end. (a) Charge the closing month pro rata: every German close charges less, and three tests whose titles the audit cites (tests/scope-money.test.ts’s Berlin Cancel It and Close It, “refused … for its €4.90 month”, and tests/accountlife.test.ts’s quarter-fee test) assert the whole month on an account opened and closed the same day; their titles would have to change, with the audit pipeline’s inputs, which these instructions forbid an area agent to do. (b) K…
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`banking.5.arion-card`** (Brief 09 Area: banking): What's missing: whether Arion charges the year's 950 kr for the year ahead or the year past. Its price list gives only the amount and the age; its terms say card fees follow the price list and come from the account, and that on its own close fees owed are taken first; the one proportional clause (4.2) is about agreed recurring payments collected after a termination. Iceland's statute couldn't be read (althingi.is refused every request). Either way the rule it carries from Directive (EU) 2015/2366 art. 55(4) gives the holder the card only to the close, but in opposite directions: paid ahead, t…
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
+- **`journeys.d-aid-past-balance`** (Brief 09 Area: journeys): [object Object] Evidence: docs/verification/remaining-09/journeys-result.json. Recommended: Not recorded
 - **`ST3`** (Criteria: The Stage): ST3 asks an even actor to come out the same on stage and at a close frame, while the stage weighs execution and the actor’s stamina drains on it: equal results from unequal effective inputs. Is the amended ST3′ (identical effective inputs give identical results; every remaining difference is put down to a stage demand, stamina or execution weighting) the criterion? Evidence: docs/verification/integration-2026-10-16/st3.md: 157 of 171 as shown; every exact difference under 0.021, an actor even in what’s read and not draining identical to 3e-14. Recommended: Adopt ST3′ beside ST3 as measured; S…
 - **`F2`** (Criteria: The Attributes): F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice? Evidence: docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json. Recommended: Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…

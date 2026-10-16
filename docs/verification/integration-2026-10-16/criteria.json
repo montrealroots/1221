@@ -2289,13 +2289,18 @@
    "systems": "Not recorded",
    "sees": "Not recorded",
    "saveLoad": "Not recorded",
-   "failure": "It still says \"Only the terms to come stand between you and the degree\" (found in the built app on 2026-10-16)",
+   "failure": "Fixed under brief 09, section 6 (journeys-result.json, journeys.known-graduated-school-page): once the School has ended the page says how, the degree conferred and its day, with the last term’s figures and their floors in the past and no casting ahead; a withdrawal and a dismissal say theirs. Until 2026-10-16 this row was Not Implemented: the page said “Only the terms to come stand between you and the degree” (found in the built app that day)",
    "implementation": "Not recorded",
-   "evidence": "Not recorded",
-   "status": "Not Implemented",
+   "evidence": "docs/verification/remaining-09/journeys-result.json",
+   "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area",
-   "citations": [],
-   "gap": "It still says \"Only the terms to come stand between you and the degree\" (found in the built app on 2026-10-16)"
+   "citations": [
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "title": "journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs…"
+    }
+   ],
+   "note": "Fixed under brief 09, section 6 (journeys-result.json, journeys.known-graduated-school-page): once the School has ended the page says how, the degree conferred and its day, with the last term’s figures and their floors in the past and no casting ahead; a withdrawal and a dismissal say theirs. Until 2026-10-16 this row was Not Implemented: the page said “Only the terms to come stand between you and the degree” (found in the built app that day)"
   },
   {
    "id": "KS-genres-54",
@@ -2379,7 +2384,7 @@
    "citations": [
     {
      "file": "tests/remaining-09-banking.test.ts",
-     "title": "banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule"
+     "title": "banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule…"
     }
    ],
    "note": "Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented"
