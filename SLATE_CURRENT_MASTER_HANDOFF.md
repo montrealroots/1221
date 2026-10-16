@@ -3,14 +3,20 @@
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
 at the end of the owner's "Implement SLATE’s Complete Integration And Acceptance Pass"
 (`docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt`, kept verbatim), worked on
-`claude/peaceful-hamilton-59zdbb` from `main` at `ef784ccd` (#34's merge). **Not merged and not deployed.**
+`claude/peaceful-hamilton-59zdbb` from `main` at `ef784ccd` (#34's merge), and merged to `main` with a merge commit at the
+owner's word ("Merge it all.", 2026-10-16). **Merged isn't deployed: nothing is.**
 
 ## 1. The Repository
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`.
-- **`main`:** `ef784ccd`, unchanged by this pass.
-- **The working branch,** `claude/peaceful-hamilton-59zdbb`, pushed; every commit of the pass is on it, none in `main`.
-  `git log --oneline ef784ccd..origin/claude/peaceful-hamilton-59zdbb` lists them. No pull request was opened.
+- **`main`:** this branch's pull request's merge commit, the first on `main` after `ef784ccd`. A file can't name the commit
+  that merges it: `git log origin/main -1` shows it. Its tree is the tree of the branch's head, which the gate passed on
+  (section 5), with the documents written after it.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, is wholly in `main`: every commit of the pass, listed by
+  `git log --oneline ef784ccd..origin/claude/peaceful-hamilton-59zdbb`. One pull request carried them, opened and merged
+  at the owner's word. The branches the section below names as left as they are (the `base44/setup-*` branches,
+  `claude/scope-reset`, `fix-main-cbc9a69be967`, `fix-save-error`) are still unmerged and still left: none is this
+  pass's, and `claude/scope-reset` never compiled.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree, and the pass left nothing
   uncommitted in the tree. The owner's machine's stash, worktrees and untracked root files, as the work plan's Resume Here
   records them, are untouched: never apply, pop or drop the stash; never merge the worktrees.
@@ -97,7 +103,8 @@ Not deployed. Base44 deployment happens on the owner's word, after the gate pass
 1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
    work plan (section 11), the briefs. Preserve the stash, worktrees and local files.
 2. **The owner's decisions** in section 3, each with what it would change written beside it in the account.
-3. **A pull request for the owner,** when asked: this branch into `main`. Not merged without the owner.
+3. **Merged** at the owner's word, in the pull request that carried this branch. A follow-up starts a fresh branch from
+   `main`; the merged pull request isn't reused.
 4. **The open work** in section 3: audit rows for the nine commands; the hardship's renewal branch played.
 
 # Earlier: The Session Handoff, 2026-10-16

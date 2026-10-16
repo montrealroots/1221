@@ -241,4 +241,4 @@ None of these is counted met, and none is changed without your word:
 6. **The 54 genres whose two briefs suit the same sides on every axis** (`closeout/genre-audit.md`): their registers agree,
    which the audit doesn't count a fault; variation across the catalog is I2's, which holds.
 
-Nothing here is merged or deployed.
+Merged to `main` at the owner's word ("Merge it all.", 2026-10-16), after this section was first written; not deployed. Until then this said nothing here was merged.
