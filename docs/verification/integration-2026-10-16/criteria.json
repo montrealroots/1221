@@ -1262,7 +1262,7 @@
    "failure": "As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
    "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md",
-   "status": "Decision Required",
+   "status": "Explicitly Deferred",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json"
@@ -1274,11 +1274,7 @@
    "before": "303 of 447 (67.8%)",
    "after": "302 of 447 (67.6%)",
    "sourceStatus": "Not Met",
-   "decision": {
-    "question": "F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?",
-    "evidence": "docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json",
-    "recommendation": "Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured"
-   }
+   "deferredBy": "Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported"
   },
   {
    "id": "F2-A",

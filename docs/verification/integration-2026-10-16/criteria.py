@@ -194,7 +194,9 @@ for r in rows:
     elif r['id'] == 'L3':
         r['status'], r['decision'] = DR, {'question': 'L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept?', 'evidence': f'{D}/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out)', 'recommendation': 'Adopt L3′ beside the journey metric; L3 as written isn’t counted met for the specialist'}
     elif r['id'] == 'F2':
-        r['status'], r['decision'] = DR, {'question': 'F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice?', 'evidence': 'docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json', 'recommendation': 'Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured'}
+        # The owner's brief 10 approved F2-A as the advice's measure (decision 2). F2 as written stays in the record as
+        # measured, not met; until then this row was Decision Required.
+        r['status'], r['deferredBy'] = ED, 'Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported'
     elif r['id'] == 'G1':
         r['status'], r['deferredBy'] = ED, 'Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured'
 # Every known shortfall and missing test not already a row of its own: the handoff's open work, the areas' reports.

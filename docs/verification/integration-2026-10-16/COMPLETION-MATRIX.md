@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 491 of 555 rows in scope Implemented And Verified (88.4%); 51 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 12 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 496 of 568 rows in scope Implemented And Verified (87.3%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 18 Explicitly Deferred.
 
 ## Totals
 
@@ -40,16 +40,17 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 3 | 2 |  | 1 |  | 4 |  |
+| Brief 10 Area: advice | 14 | 5 | 7 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
 | Criteria: The Stage | 11 | 9 |  |  |  |  | 2 |  |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 15 | 7 |  |  |  | 2 | 1 |
+| Criteria: The Attributes | 25 | 15 | 7 |  |  |  | 1 | 2 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  | 1 |  |
 | Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **572** | **491** | **51** | **0** | **1** | **0** | **12** | **17** |
+| **All** | **586** | **496** | **58** | **0** | **1** | **0** | **13** | **18** |
 
 ## Life, Health And Time
 
@@ -619,6 +620,25 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `judge.classes-fitness` | Movement classes and fitness: a student who attends every movement class still falls to an everyday fitness of 35, since only a workout hol… | Implemented And Verified | implemented where the Compendium puts a… | tests/fitness.test.ts ‘a class that trains the body as hard as a workout, attended > holds and builds fitness at each combat class of the spring as a workout i… |
 | `judge.coverage-row` | docs/COVERAGE-MATRIX.md line 77 says 56 scenes: correct it. | Implemented, Verification Incomplete | corrected to 65, read from SCENES, with… | docs/COVERAGE-MATRIX.md ‘the scene bank row’ (documentation) |
 
+## Brief 10 Area: advice
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `advice.harness` | The harness, before any held-out case is run: the tuning and held-out seeds apart; four bands and three stages built through the game's com… | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/advice/tuning-before.json ‘npx vite-node tools/advice.ts -- --cases tuning --out tuning-before.json (on 974785af, before… |
+| `advice.F2` | F2 as written, kept in the record and still reported. | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/f2-as-written.txt ‘npx vite-node tools/ag-baseline.ts -- --out f2-ag-baseline.json; node tools/ag-criteria.mjs f2… |
+| `advice.F2A10-a` | F2-A10 (a): cases, tuning apart from held out; 120 fresh held-out cases stratified as four bands, three stages and ten seeds each, their ge… | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
+| `advice.F2A10-b` | F2-A10 (b): right often enough: at least 80% of the 120 fresh held-out cases pass F2-A, and at least 70% of each band and of each stage. | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
+| `advice.F2A10-c` | F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs'… | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/advice/held-out-summary.json ‘npx vite-node tools/advice.ts -- --cases <batch> --held-out --out held-out-<id>.json, fift… |
+| `advice.F2A10-d` | F2-A10 (d): improvable: the advice names no input at full and none the player has no way to train (0 cases); where every read input is at f… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > names no input at full, and where everything an exerci… |
+| `advice.F2A10-e` | F2-A10 (e): the real curve: the predicted gain for the first input within 0.3 points, or a quarter, of the realized gain in at least 80% of… | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: followed for twenty sessions through p… |
+| `advice.F2A10-f` | F2-A10 (f): mastery and preparation: near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; … | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > near mastery, an input’s forecast falls as its level r… |
+| `advice.F2A10-g` | F2-A10 (g): it says why: every recommendation states the work it read and the gain it expects: 100%. | Implemented And Verified | fixed | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > says why: each recommendation’s figure, how many of th… |
+| `advice.F2A10-h` | F2-A10 (h): it updates: after twenty sessions of the advised exercise through the commands, the advice read again: the trained input's pred… | Decision Required | owner decision | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > PLAYER JOURNEY: once followed, it moves on: the traine… |
+| `advice.F2A10-i` | F2-A10 (i): no hardcoding: the advice reads no seed, profile or case name, and a case renamed gets the same advice. | Implemented And Verified | verified as it stands | tests/decisions-advice.test.ts ‘F2-A10: What To Improve Next, followed through the commands (brief 10) > reads no seed: the case renamed, its save’s seed and e… |
+| `advice.tests` | Tests in tests/decisions-advice.test.ts: advice followed through the actual commands (twenty sessions of the advised exercise) gives the ga… | Implemented, Verification Incomplete | implemented | tests/decisions-advice.test.ts; docs/verification/decisions-2026-10-16/advice/mutations.json ‘ten mutations in a copy of the clone at 0afc7914’ (mutations) |
+| `advice.heldout` | The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported. | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/advice/held-out-runs.txt ‘each batch and its exit’ (measurement (seeded, played through the commands)); docs/verificatio… |
+| `advice.harness-hospital` | adv-h-10 and adv-h-57 threw “Not from a hospital bed.” and were never built | Implemented, Verification Incomplete | fixed | docs/verification/decisions-2026-10-16/advice/held-out-04.json ‘npx vite-node tools/advice.ts -- --cases adv-h-10..19 --held-out’ (measurement (seeded, played … |
+
 ## Brief 10 Area: arion
 
 | Row | Goal | Status | Source's Word | Evidence |
@@ -681,7 +701,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H5` | Generalists are useful | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Decision Required | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
-| `F2` | Acting on the first-named weakness pays more than training at random (as written) | Decision Required | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
+| `F2` | Acting on the first-named weakness pays more than training at random (as written) | Explicitly Deferred | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
 | `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Implemented, Verification Incomplete | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4) |
@@ -752,7 +772,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (51)
+### Implemented, Verification Incomplete (58)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -791,18 +811,25 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
 - **`judge.baseline`** (Brief 09 Area: judge): the area called it verified as it stands and cites no gate test that holds it
 - **`judge.coverage-row`** (Brief 09 Area: judge): the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it
-- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`advice.harness`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)
+- **`advice.F2`** (Brief 10 Area: advice): the area called it verified as it stands and cites no gate test that holds it
+- **`advice.F2A10-a`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
+- **`advice.F2A10-c`** (Brief 10 Area: advice): the area called it verified as it stands and cites no gate test that holds it
+- **`advice.tests`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
+- **`advice.heldout`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
+- **`advice.harness-hospital`** (Brief 10 Area: advice): the area called it fixed and cites no gate test that holds it
+- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
-- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
-- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/craft.ts, …): measure it again
 - **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
 - **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
 
@@ -818,7 +845,7 @@ None.
 
 None.
 
-### Decision Required (12)
+### Decision Required (13)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
@@ -826,14 +853,15 @@ None.
 - **`judge.ST6`** (Brief 09 Area: judge): ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
 - **`judge.H4`** (Brief 09 Area: judge): H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units …
 - **`judge.L3`** (Brief 09 Area: judge): L3 as written measures what was taped as much as how well; a student who earns callbacks fails it. Recommended: adopt L3′ (l3.md) beside the journey metric, both kept. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
+- **`advice.F2A10-f`** (Brief 10 Area: advice): Which preparation the criterion means. As implemented, a take held back most by its own preparation (lines, breakdown, rehearsal, the way of playing rehearsed in) is read as prepared, and knowing the genre is read as it is known today, since familiarity carries from piece to piece and isn’t prepared for one. Read with the genre’s shortfall completed too (the criterion’s words, any preparation): measured on the tuning cases, the advice named the best input in 27 of 30, two of the five near mastery missed (held out unmeasured: the set is run once); every take read complete: 18 of 30. Recommende…
+- **`advice.F2A10-h`** (Brief 10 Area: advice): The nine held-out cases whose trained input’s forecast didn’t fall are all near mastery, each within a thousandth (the largest rise 0.001). Played on tuning case adv-t-19: imagination alone raised to the level twenty sessions reach lowers its forecast (0.547 to 0.546); discipline alone raised to what the twenty days keep raises it (to 0.549), because discipline’s lift (DEVELOPMENT.disciplineLift) makes the next twenty hours grow more, and near mastery the engine’s practice grows at a constant rate (DEVELOPMENT.floor), so the input’s own fall is the smaller. The advice reads both correctly. Op…
 - **`ST3`** (Criteria: The Stage): ST3’s second clause asks results that differ by up to 0.021 (the drain the stage weighs differently, which ST3’s first clause and the piece’s continuity read) to show the same tenth. Is ST3′ (identical effective inputs give identical results; every remaining difference put down to a stage demand, stamina or execution weighting) the criterion, with ST3 kept as the record? Evidence: docs/verification/integration-2026-10-16/st3.md; 178 of 189 as shown, 11 a tenth apart, no rounding defect, the largest gap 0.0184; ST3′ 189 of 189 (measured on the judge area’s clone (d7127819 and its 24 commits, b…
 - **`ST6`** (Criteria: The Stage): ST6’s second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it’s strong in on both sides. Is ST6′ the criterion for that half, or is there a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), measured against I1 to I5 and the stage criteria first? Evidence: docs/verification/integration-2026-10-16/st6.md; 9 of 42 against the grain as written, ST6′ 26 of 42; no correction the evidence and a source justified (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s …
 - **`H4`** (Criteria: The Attributes): H4 as written counts as an ability’s own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Is H4′ the criterion beside H4 kept as the record? Evidence: docs/verification/integration-2026-10-16/h4.md; H4 as written 1 of 12 after evaluation-10 (2 of 12 before it: discipline’s long score reached 21 more class scenes and 16 plays, and listening’s and vocal’s shares fell under 60%); H4′ 11 of 12, discipline ahead on 14 of its 15 own pieces where it had 2 (measured on the judge area’s clone (d7127819 and its 24 commits, before …
-- **`F2`** (Criteria: The Attributes): F2 as written measures the chief limit with +20 (67.6%); the advice is measured by F2-A at the same 80% target (40 of 40). Brief 02 allowed revising a measure for a documented defect. Is F2-A the approved measure for advice? Evidence: docs/verification/advice-2026-10-16/README.md; runs/advice-cases.json. Recommended: Approve F2-A for advice and keep F2 as written as the chief limit’s record, reported as measured
 - **`L3`** (Criteria: Long-Term Continuity): L3 as written measures what was taped as much as how well, so a student who earns harder callbacks fails it. Is L3′ (the same work at each month’s levels) the criterion beside the journey metric, both kept? Evidence: docs/verification/integration-2026-10-16/l3.md; as written the specialist 65.5 → 64.0, the beginner 54.0 → 56.6; L3′ 61.62 → 65.17 and 54.42 → 57.46, no fall (measured on the judge area’s clone (d7127819 and its 24 commits, before the genre area’s came in) and again on the integrated tree at the close-out). Recommended: Adopt L3′ beside the journey metric; L3 as written isn’t cou…
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 
-### Explicitly Deferred (17)
+### Explicitly Deferred (18)
 
 - `health.prepay` (Life, Health And Time): Deferred: England’s certificate, which the New Haven student is refused. A prescription free while it runs is shown on a London fixture (tests/coverage-gaps-life.test.ts ‘makes prescriptions free while it runs…’, rxShareOf read, not a fill…
 - `documents.naturalize` (Papers): Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
@@ -851,4 +879,5 @@ None.
 - `benefits.uc_period` (Papers): Can't live in Britain. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment` (Papers): Each is unreachable, as its command is. Until 2026-10-10 recordPension had no caller, so none of these was taxed; since then each records its payment (earnings.ts:251). / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `trait-receipts` (Creation, Profile, Home And The Looks): the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
+- `F2` (Criteria: The Attributes): Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported
 - `G1` (Criteria: The Attributes): Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, …

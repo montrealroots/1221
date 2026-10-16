@@ -234,7 +234,10 @@ function groups(cases: readonly CaseOut[]) {
 
 const git = (cmd: string) => { try { return execSync(`git ${cmd}`, { encoding: 'utf8' }).trim(); } catch { return undefined; } };
 const out = arg('out');
-const at = { commit: git('rev-parse HEAD'), clean: git('status --porcelain --untracked-files=no') === '', command: `npx vite-node tools/advice.ts -- ${argv.join(' ')}`, at: new Date().toISOString() };
+// A run is said by its commit, whether the tree was clean, and its command. Until its integration on 2026-10-16 it said
+// the wall clock's time too, which the house's lint forbids outside the world clock; the held-out runs of brief 10 keep
+// that field as they were written.
+const at = { commit: git('rev-parse HEAD'), clean: git('status --porcelain --untracked-files=no') === '', command: `npx vite-node tools/advice.ts -- ${argv.join(' ')}` };
 
 if (argv.includes('--summarize')) {
   const files = argv.slice(argv.indexOf('--summarize') + 1).filter((x) => !x.startsWith('--') && x !== out);
