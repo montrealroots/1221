@@ -112,3 +112,71 @@ I3 spread 1.28, 1.19 and 3.43; I4 the even actor follows suitability on 100%; I5
 | The Playboy, electra-328, medea-446, Major Barbara, An Enemy Of The People | 1.16–1.37 | −3.51 to −4.95 | −1.40 to −1.71 |
 | richard3-1-2, Woyzeck, Salomé, Blood Wedding | 1.44–1.75 | −4.76 to −5.60 | −1.92 to −2.54 |
 | antigone-441, oedipus-300, Julius Caesar | 2.00 | −6.37 to −7.45 | −2.54 to −3.09 |
+
+## Brief 09: Every Case Traced, And Why Nothing Was Changed (2026-10-16, Later)
+
+The owner's brief 09, section 2: "Investigate why the measured result remains 8/38 rather than meeting the stated target.
+Trace individual failing cases through abilities, material, suitability, preparation, and scoring. Implement justified
+balance or content corrections. Preserve meaningful expansive acting and scene-specific demands. Do not add an arbitrary
+restraint bonus, remove difficult cases, or manufacture a 50/50 split."
+
+**Reproduced first** on `d7127819` (`baseline-09/stage.json`): restrained **8 of 38**, expansive 21 of 49. With the four
+scenes played out to a house (`h4.md`, `content/scenes-house.ts`), each suiting size by its circumstances (spoken to
+many), the restrained half is **8 of 42** (19.0%); none of the four is a restrained win, and none was taken out.
+
+**The trace** (`st6-09.json`, `npx vite-node tools/interpretation.ts -- --st6 <file>`, added for this): every case of both
+halves with each side's suitability and the signals it rests on, the specialist's own side less the other at full
+precision, what the grain gave or cost each side, and the specialist's lift (its own side less the other with the grain
+at nothing, less the even actor's).
+
+**Preparation** is the same on every case: every part complete, the choice rehearsed in, so it decides none. What does:
+
+1. **The grain isn't what holds the restrained half back.** On its cases the restrained side against the grain loses up
+   to 1.74 points and the expansive side with it gains up to 2.64; per unit of suitability gap the swing between them is
+   2.04 points on average (1.70 to 2.45, cases a band apart or more), against 2.40 (1.71 to 3.20) on the expansive half's.
+   The grain costs the restrained specialist less per unit of gap, not more.
+2. **The restrained half's cases are harder: 32 of 42 have a gap of 0.57 or more** (mean 0.93), against 30 of 49 (mean
+   0.75) for the expansive half: Antigone's, Oedipus's and Julius Caesar's public defiance and orations, the farces'
+   shouting matches, Strife's boardroom, the new speeches to a crowd. Read again against their texts (each `why` in
+   `content/material.ts`), none was misread; the tragedies carry their register's Played Large and States At The Limit
+   (−0.75 for restraint before the scene says anything), which is what Greek and Shakespearean tragedy asks, and the
+   brief rules out changing a genre's register to move a criterion.
+3. **The restrained specialist's lift is smaller: 1.15 against 1.57.** Taken apart: the leans give 0.56 and 0.51, the
+   same; the draws give **0.52 against 0.94**. Restraint's draw of emotional depth lands on believability, which reads
+   emotional depth already as its largest input on every side (1, and 2.5 more for each share of grave), so it adds
+   little; expansive's presence lands on connection, which on a partnered scene reads listening as much as presence, so
+   it adds much. Composure (0.5) and focus (0.5) add 0.10 and 0.04.
+4. **So the restrained specialist's strength shows whichever way it plays.** On every material its better side is ahead
+   of an equal-budget even actor's (everything at 50) better side on 91 of 93 as shown (mean +2.03; the expansive
+   specialist 73 of 93, +1.02); and playing restrained against the grain, it's ahead of that even actor playing the
+   better-suited side on **26 of 42** at full precision (the expansive specialist playing expansive against the grain:
+   21 of 49). Its strength carries the harder
+   side; what it doesn't do is change which of its own two sides is better, because the feeling it's strong in is read
+   on both.
+
+**What was considered, and why none was adopted** (each counted on ST6 as the criterion counts it, in the trace):
+
+| Change To Restraint's Draws | ST6, Restrained | ST6, Expansive | Why Not |
+|---|---|---|---|
+| As built | 8 of 42 | 21 of 49 | |
+| The control doubled (composure 1, focus 1) | 10 of 42 | 22 of 49 | a bonus with no size behind it: Stanislavski's chapter names the control, not how much |
+| The control in place of emotional depth | 8 of 42 | 21 of 49 | moves nothing |
+| Emotional depth on connection instead | 16 of 42 | 30 of 49 | works only through the weakest-dimension term (connection is the restrained specialist's weakest), and makes the scale choice a specialist's on both halves, the grain less; no source puts restraint's feeling on connection |
+| Composure on connection instead | 16 of 42 | 28 of 49 | the same: any draw on connection lifts this specialist's weakest dimension |
+
+No circumstance read wrongly was found, no demand that the evidence shows misweighed against restraint (the grain's
+cost per unit gap is lower for it), and no source for drawing restraint's craft larger or elsewhere. So nothing in the judge
+changed for ST6, and the difficult cases stay.
+
+**ST6 as written: not met**, 8 of 42 (and 8 of 38 on the catalog before the new scenes). Not counted as met.
+
+**ST6′, proposed (not counted):** *strength can carry the harder side* read as the criterion's title says it: each
+specialist, playing its own side where the other suits better, comes out ahead of an equal-budget even actor playing the
+better-suited side on at least 25% of those materials. Measured: restrained 26 of 42 (61.9%), expansive 21 of 49 (42.9%).
+
+**For the owner.** ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads
+the feeling it's strong in on both sides (believability, the heaviest dimension, reads emotional depth whichever way a
+scene is played), so its side choice moves less than an expansive specialist's. Recommended: keep the judge as it is,
+which the interpretation criteria and ST1, ST7 and ST8 hold, and adopt ST6′ in place of ST6's second half; or, if a
+restrained specialist should gain more from its own side, say which reading of restraint to adopt (its feeling read on
+the connection, its control drawn larger), and it will be measured against I1 to I5 and the stage criteria first.
