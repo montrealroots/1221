@@ -128,9 +128,9 @@ export const SECOND_C: readonly Brief[] = [
       beats: 'Three lies at three doors, a fourth beat where the lies meet, one quiet confession, then a way out.',
     },
     readings: [
-      { id: 'ledger', label: 'He Keeps The Ledger', reading: 'He’s a professional with three stories in his head, and the comedy is how perfectly he keeps them apart until he can’t.', rests: 'He has told each guest a different story about who the others are.', lean: { execution: 1.2, consistency: 1.1 }, draws: [{ dim: 'execution', ability: 'memory', weight: 0.6 }, { dim: 'consistency', ability: 'focus', weight: 0.4 }] },
+      { id: 'ledger', label: 'He Keeps The Ledger', reading: 'He’s a professional with three stories in his head and three doors to run between, and the comedy is how perfectly he keeps them apart until he can’t.', rests: 'He has told each guest a different story about who the others are, and his runs between the doors are set to the inch.', lean: { consistency: 1.2, execution: 1.05 }, draws: [{ dim: 'consistency', ability: 'memory', weight: 0.6 }, { dim: 'execution', ability: 'physical', weight: 0.4 }] },
       { id: 'doors', label: 'Whatever Opens Next', reading: 'He has no plan, only reflexes, and the scene is a man inventing faster than the doors can open.', rests: 'Three doors that open without warning, each on a guest with a new demand.', lean: { responsiveness: 1.25, execution: 1.05 }, draws: [{ dim: 'responsiveness', ability: 'adaptability', weight: 0.7 }, { dim: 'execution', ability: 'physical', weight: 0.3 }] },
-      { id: 'believer', label: 'He Believes Every Word', reading: 'He believes each lie while he’s telling it, and the quiet beat against the wall is the only time he hears himself.', rests: 'He has never once been caught, and admits to the corridor that he has lost track.', lean: { believability: 1.2, connection: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'connection', ability: 'presence', weight: 0.4 }] },
+      { id: 'believer', label: 'He Believes Every Word', reading: 'He believes each lie while he’s telling it, his whole body behind it, and the quiet beat against the wall is the only time he hears himself.', rests: 'He has never once been caught, and admits to the corridor that he has lost track.', lean: { believability: 1.2, connection: 1.1 }, draws: [{ dim: 'believability', ability: 'emotionalDepth', weight: 0.5 }, { dim: 'execution', ability: 'physical', weight: 0.3 }] },
     ],
   },
   // `brief-film_noir-2`, The Number He Left (2026-10-12), went on 2026-10-16. Voice-led as The Night Line is, with its
@@ -650,11 +650,11 @@ export const SECOND_C: readonly Brief[] = [
       { what: 'The second song, slower, the one their father sang to their mother; he sings it to the empty chair.', tones: ['lyric', 'grave'] },
       { what: 'The doors open on the first bars of the third; Tom keeps singing, and doesn’t let himself look until the chorus.', tones: ['lyric', 'comic'] },
     ],
-    language: 'everyday', timing: 2, physical: 3, partner: 2, vocal: 3, improvisation: 1,
+    language: 'everyday', timing: 2, physical: 2, partner: 2, vocal: 3, improvisation: 1,
     techniques: { singing: 2, dance: 2 },
     why: {
       timing: 'Three songs with their own tempos, and every turn of the scene placed on a bar the audience already knows.',
-      physical: 'He leads a dance floor through three numbers, the steps set and danced solo, and keeps it up the length of the medley.',
+      physical: 'He leads a dance floor through three numbers, a few steps set and danced solo, and keeps them up the length of the medley: the songs carry the scene, and the body keeps time with them.',
       partner: 'His uncle pushes in at every chorus, and each time Tom has to turn him without dropping the song.',
       vocal: 'Three songs sung live as the character, a man who can sing a bit, never as an impression of the records.',
       techniques: 'Singing for the medley, sung as the character and never as an impression of whoever made the songs famous; dance for the steps he leads, set and danced solo with the reader well clear.',
