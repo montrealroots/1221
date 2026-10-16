@@ -1,0 +1,7620 @@
+{
+ "summary": {
+  "genres": 55,
+  "sameSides": 55,
+  "byPartsTheSame": {
+   "0": 7,
+   "1": 15,
+   "2": 19,
+   "3": 9,
+   "4": 3,
+   "5": 2,
+   "6": 0
+  },
+  "repetitive": [
+   "animated",
+   "christmas",
+   "conspiracy_thriller",
+   "farce",
+   "film_noir",
+   "gothic_horror",
+   "jukebox_musical",
+   "new_wave",
+   "psychological_thriller",
+   "samurai",
+   "silent_film",
+   "sword_and_sorcery",
+   "tragicomedy",
+   "yakuza"
+  ],
+  "repetitiveAmongSameSides": [
+   "animated",
+   "christmas",
+   "conspiracy_thriller",
+   "farce",
+   "film_noir",
+   "gothic_horror",
+   "jukebox_musical",
+   "new_wave",
+   "psychological_thriller",
+   "samurai",
+   "silent_film",
+   "sword_and_sorcery",
+   "tragicomedy",
+   "yakuza"
+  ],
+  "sameSidesOnlyWithRegister": [
+   "blaxploitation",
+   "chanbara",
+   "domestic_drama",
+   "drama",
+   "erotic_thriller",
+   "film_noir",
+   "gothic_horror",
+   "occult",
+   "political_thriller",
+   "samurai",
+   "satire",
+   "science_fantasy",
+   "splatter",
+   "stoner_comedy",
+   "swashbuckler",
+   "sword_and_sorcery",
+   "techno_thriller",
+   "true_crime",
+   "whodunit",
+   "yakuza",
+   "zombie"
+  ]
+ },
+ "pairs": [
+  {
+   "genre": "animated",
+   "concerns": [
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-animated",
+    "title": "High Wind",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     1,
+     3,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "brag",
+      "label": "All Bluster",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 4.9,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 20.9 points"
+     },
+     {
+      "id": "brave",
+      "label": "Brave For Her",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "vocal",
+      "gain": 2.7,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 19.4 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.16 (Its Comic Beats 0.63; Its Timing 0.25)",
+     "expansive by 0.99 (Animated’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.3 (Animated’s Played Large 0.25; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-animated-2",
+    "title": "The Puddle On Larch Street",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "character, voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1,
+     "character": 2
+    },
+    "features": [
+     3,
+     0,
+     0,
+     3,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "pair",
+      "label": "Two Different Boots",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 4.5,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 16.7 points"
+     },
+     {
+      "id": "friends",
+      "label": "Best Friends In A Pair",
+      "lean": "believability",
+      "draw": "imagination",
+      "rewards": "vocal",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 15.6 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.66 (Its Comic Beats 0.83; Its Timing 0.75)",
+     "expansive by 0.99 (Animated’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.15 (Its Timing 0.75; Your Reading, Two Different Boots 0.29)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": false,
+    "preparation": true,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 4,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "anime",
+   "concerns": [
+    "heightened",
+    "exactness"
+   ],
+   "a": {
+    "id": "brief-anime",
+    "title": "Last Launch From The Roof",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     3,
+     0,
+     1,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "sync",
+      "label": "Inside The Lines",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 4.2,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 15.5 points"
+     },
+     {
+      "id": "laugh",
+      "label": "Laughing It Off",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "focus",
+      "gain": 2.1,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 13.8 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.65 (Its Timing 0.75; Its Comic Beats 0.63)",
+     "expansive by 0.85 (Anime’s Played Large 1; Its Voice Work 0.5)",
+     "set by 1.02 (Its Timing 0.75; Anime’s Dense Text, Exact 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-anime-2",
+    "title": "The Spillway Walk",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "none",
+    "transitions": 3,
+    "blends": 3,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 6,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     1,
+     3,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "strain",
+      "label": "Holding The Wheel",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 3.9,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 13.8 points"
+     },
+     {
+      "id": "sister",
+      "label": "Only For Him",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "vocal",
+      "gain": 2.2,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 12.6 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.23 (Its Timing 0.5; Its Comic Beats 0.31)",
+     "expansive by 0.95 (Anime’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.85 (Anime’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "apocalyptic",
+   "concerns": [
+    "extremity"
+   ],
+   "a": {
+    "id": "brief-apocalyptic",
+    "title": "The Seed Corn",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     0,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "keeper",
+      "label": "The Keeper",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 3.2,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.9 points"
+     },
+     {
+      "id": "debt",
+      "label": "What She Owes Him",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.25 (Its Grave Beats 0.42; Its Turn 0.15)",
+     "restrained by 0.16 (A Close Frame 0.5; Your Reading, The Keeper 0.32)",
+     "open by 0.47 (Its Partner 1.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-apocalyptic-2",
+    "title": "One More School Night",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "ordinary",
+      "label": "An Ordinary Night",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 3.8,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 39.5 points"
+     },
+     {
+      "id": "promise",
+      "label": "The Promise Kept",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 2.9,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.2 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.08 (A Withholding Reader 0.5; Its 2 Turns 0.3)",
+     "restrained by 0.06 (A Close Frame 0.5; A Withholding Reader 0.13)",
+     "open by 0.87 (Its Partner 1.5; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "blaxploitation",
+   "concerns": [
+    "command"
+   ],
+   "a": {
+    "id": "brief-blaxploitation",
+    "title": "Sundown On Calloway Street",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     2,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "block",
+      "label": "Her Block",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "memory",
+      "gain": 0.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.4 points"
+     },
+     {
+      "id": "known",
+      "label": "She Knew Him First",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.6 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.22 (Its Grave Beats 0.42; Blaxploitation’s Command Of The Frame 0.25)",
+     "restrained by 0.11 (A Close Frame 0.5; Blaxploitation’s Command Of The Frame 0.25)",
+     "set by 0.41 (Your Reading, Her Block 0.32; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-blaxploitation-2",
+    "title": "The Garland Avenue Ledger",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "cool",
+      "label": "Ice Cold",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 1.8,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 36.8 points"
+     },
+     {
+      "id": "garland",
+      "label": "For Garland Avenue",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.03 (A Withholding Reader 0.5; Its 2 Turns 0.3)",
+     "restrained by 0.39 (A Close Frame 0.5; Blaxploitation’s Command Of The Frame 0.25)",
+     "set by 0.55 (Its Timing 0.5; Your Reading, Ice Cold 0.48)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "buddy_comedy",
+   "concerns": [
+    "partnership",
+    "rhythm"
+   ],
+   "a": {
+    "id": "brief-buddy_comedy",
+    "title": "Three States For A Cake",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 2
+    },
+    "features": [
+     2,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "friction",
+      "label": "Pure Friction",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "focus",
+      "gain": 1.5,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 19.9 points"
+     },
+     {
+      "id": "scared",
+      "label": "The Frightened Groom",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.06 (Its Comic Beats 0.83; Buddy Comedy’s Comic Rhythm 0.75)",
+     "restrained by 0.14 (A Close Frame 0.5)",
+     "open by 0.66 (Its Partner 1.5; Buddy Comedy’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-buddy_comedy-2",
+    "title": "The Tent At Site Forty",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "clown, comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "clown": 4,
+     "comedy": 2
+    },
+    "features": [
+     2,
+     3,
+     2,
+     1,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "poles",
+      "label": "Man Versus Tent",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 2.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 10.7 points"
+     },
+     {
+      "id": "laugh",
+      "label": "The First Real Laugh",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "physical",
+      "gain": 0.9,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 9.5 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.11 (Its Comic Beats 1.1; Buddy Comedy’s Comic Rhythm 0.75)",
+     "restrained by 0.1 (A Close Frame 0.5)",
+     "open by 0.52 (An Unpredictable Reader 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "caper",
+   "concerns": [
+    "rhythm",
+    "tension"
+   ],
+   "a": {
+    "id": "brief-caper",
+    "title": "Forty Seconds In Gallery Nine",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     0,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "pro",
+      "label": "The Professional",
+      "lean": "execution",
+      "draw": "memory",
+      "rewards": "focus",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 13.1 points"
+     },
+     {
+      "id": "student",
+      "label": "Meeting Her Match",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "focus",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 14 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.64 (Its Comic Beats 1.05; Caper’s Comic Rhythm 0.75)",
+     "restrained by 0.22 (A Close Frame 0.5; Caper’s Suspense Held 0.25)",
+     "open by 0.01 (What It Leaves To Be Found 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-caper-2",
+    "title": "One Signature Short",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "withholding",
+    "transitions": 4,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     3,
+     0,
+     1
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "bait",
+      "label": "The Long Con",
+      "lean": "execution",
+      "draw": "imagination",
+      "rewards": "memory",
+      "gain": 2.6,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.9 points"
+     },
+     {
+      "id": "hero",
+      "label": "Meeting His Hero",
+      "lean": "believability",
+      "draw": "adaptability",
+      "rewards": "memory",
+      "gain": 1.5,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 16.6 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.19 (Its Comic Beats 0.93; Caper’s Comic Rhythm 0.75)",
+     "restrained by 0.3 (A Close Frame 0.5; Caper’s Suspense Held 0.25)",
+     "open by 0.83 (Its Partner 1.5; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "chanbara",
+   "concerns": [
+    "period",
+    "command"
+   ],
+   "a": {
+    "id": "brief-chanbara",
+    "title": "The Checkpoint At Usui",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     2,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "form",
+      "label": "The Old Forms",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 2.4,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.3 points"
+     },
+     {
+      "id": "teacher",
+      "label": "Last Lesson",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "physical",
+      "gain": 1.1,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.7 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.31 (Its Grave Beats 0.42; Its 2 Turns 0.3)",
+     "restrained by 0.11 (A Close Frame 0.5; Chanbara’s Command Of The Frame 0.25)",
+     "set by 1.12 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-chanbara-2",
+    "title": "Eleven Forms For The Scroll",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 3,
+    "reader": "steady",
+    "transitions": 4,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 6
+    },
+    "features": [
+     2,
+     3,
+     1,
+     1,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "line",
+      "label": "The Last Of The Line",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "memory",
+      "gain": 2.3,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.6 points"
+     },
+     {
+      "id": "teacher",
+      "label": "Who She’s Painting",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "memory",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.9 points"
+     },
+     {
+      "id": "painter",
+      "label": "Teaching Her To See",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "memory",
+      "gain": 1.3,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.8 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "measured by 0.12 (Its 3 Turns 0.45; Chanbara’s Another Age’s Manners 0.25)",
+     "restrained by 0.07 (A Close Frame 0.5; Chanbara’s Command Of The Frame 0.25)",
+     "set by 1.12 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "christmas",
+   "concerns": [
+    "sincerity",
+    "partnership"
+   ],
+   "a": {
+    "id": "brief-christmas",
+    "title": "The Christmas Eve Loaf",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "sincere",
+      "label": "With Her Whole Heart",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.5 points"
+     },
+     {
+      "id": "brisk",
+      "label": "Trying To Leave",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 1.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 16.3 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.2 (Its 2 Turns 0.3; Christmas’s Played Straight 0.25)",
+     "restrained by 0.45 (A Close Frame 0.5; Christmas’s Played Straight 0.38)",
+     "open by 0.93 (Its Partner 1.5; Christmas’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-christmas-2",
+    "title": "The Box With His Name On It",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "room",
+      "label": "Waiting Him Out",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 1.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 26 points"
+     },
+     {
+      "id": "truth",
+      "label": "No Promises",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.1 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.4 (A Withholding Reader 0.5; Its 3 Turns 0.45)",
+     "restrained by 0.39 (A Close Frame 0.5; Christmas’s Played Straight 0.38)",
+     "open by 1.04 (Its Partner 1.5; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "comedy",
+   "concerns": [
+    "rhythm"
+   ],
+   "a": {
+    "id": "brief-comedy",
+    "title": "The Best Man’s Draft",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4
+    },
+    "features": [
+     3,
+     0,
+     2,
+     1,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "timing",
+      "label": "Saving Every Joke",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 3.8,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 22.5 points"
+     },
+     {
+      "id": "truth",
+      "label": "The True Thing",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "focus",
+      "gain": 2,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 21.5 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.22 (Its Comic Beats 1.05; Its Timing 0.75)",
+     "restrained by 0.11 (A Close Frame 0.5)",
+     "open by 0.01 (What It Leaves To Be Found 1; Your Reading, Saving Every Joke 0.14)"
+    ]
+   },
+   "b": {
+    "id": "brief-comedy-2",
+    "title": "Out The Door By Seven",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "unpredictable",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "comedy, improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4,
+     "improv": 2
+    },
+    "features": [
+     3,
+     2,
+     2,
+     0,
+     2
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "list",
+      "label": "The List Is The Love",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "memory",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 13.9 points"
+     },
+     {
+      "id": "horn",
+      "label": "Against The Horn",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "memory",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 13.4 points"
+     },
+     {
+      "id": "tess",
+      "label": "She’s Got This",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "memory",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 14 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.73 (Its Comic Beats 1; Its Timing 0.75)",
+     "restrained by 0.26 (A Close Frame 0.5; Your Reading, The List Is The Love 0.23)",
+     "open by 0.75 (What It Leaves To Be Found 2; An Unpredictable Reader 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "coming_of_age",
+   "concerns": [
+    "spontaneity",
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-coming_of_age",
+    "title": "Last Week’s Pay",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "growing",
+      "label": "The Hand Held Out",
+      "lean": "interpretation",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21.2 points"
+     },
+     {
+      "id": "loyal",
+      "label": "Still Her Right Hand",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "adaptability",
+      "gain": 2.1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.6 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.36 (Your Reading, The Hand Held Out 0.5; Its 2 Turns 0.3)",
+     "restrained by 0.58 (A Close Frame 0.5; Coming Of Age’s Played Straight 0.38)",
+     "open by 1.37 (Coming Of Age’s Caught Live 1; An Unpredictable Reader 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-coming_of_age-2",
+    "title": "Saturday At Ten",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "free",
+      "label": "Her Saturdays Back",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "emotionalDepth",
+      "gain": 0.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17 points"
+     },
+     {
+      "id": "losing",
+      "label": "Losing Mr. Varga",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 2.1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.2 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.47 (A Withholding Reader 0.5; Its 3 Turns 0.45)",
+     "restrained by 0.55 (A Close Frame 0.5; Coming Of Age’s Played Straight 0.38)",
+     "open by 0.88 (Its Partner 1.5; Coming Of Age’s Caught Live 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "conspiracy_thriller",
+   "concerns": [
+    "restraint",
+    "tension"
+   ],
+   "a": {
+    "id": "brief-conspiracy_thriller",
+    "title": "The Amended Minutes",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "hunter",
+      "label": "Setting The Trap",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 1.5,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 30.6 points"
+     },
+     {
+      "id": "hunted",
+      "label": "Who’s Watching Whom",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 2.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.4 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.58 (Conspiracy Thriller’s Suspense Held 0.75; Conspiracy Thriller’s Feeling Held In 0.5)",
+     "restrained by 0.81 (Conspiracy Thriller’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.52 (Its Timing 0.5; Your Reading, Setting The Trap 0.42)"
+    ]
+   },
+   "b": {
+    "id": "brief-conspiracy_thriller-2",
+    "title": "The Revised Forecast",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     3,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "words",
+      "label": "Follow The Words",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 2.4,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 31.8 points"
+     },
+     {
+      "id": "friend",
+      "label": "Twelve Years With Rafe",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "composure",
+      "gain": 2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 32.3 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.39 (Conspiracy Thriller’s Suspense Held 0.75; Conspiracy Thriller’s Feeling Held In 0.5)",
+     "restrained by 0.75 (Conspiracy Thriller’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.29 (Its Timing 0.75; Your Reading, Follow The Words 0.08)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "costume_drama",
+   "concerns": [
+    "period"
+   ],
+   "a": {
+    "id": "brief-costume_drama",
+    "title": "Quarter Day",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "form",
+      "label": "Within The Form",
+      "lean": "execution",
+      "draw": "discipline",
+      "rewards": "physical",
+      "gain": 0.9,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 8.9 points"
+     },
+     {
+      "id": "pride",
+      "label": "Nine Months Of Pride",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.1 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.15 (Its Grave Beats 0.42; Its 2 Turns 0.3)",
+     "expansive by 0.04 (Its Heightened Language 0.5; Its Comic Beats 0.04)",
+     "set by 0.79 (Its Physical Score 0.5; Costume Drama’s Another Age’s Manners 0.37)"
+    ]
+   },
+   "b": {
+    "id": "brief-costume_drama-2",
+    "title": "The Second Fitting",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 2,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "robe",
+      "label": "Since Her Christening Robe",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 0.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.6 points"
+     },
+     {
+      "id": "caution",
+      "label": "A Tradeswoman’s Caution",
+      "lean": "execution",
+      "draw": "discipline",
+      "rewards": "composure",
+      "gain": 1.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 24.4 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.2 (Its 3 Turns 0.45; Its Grave Beats 0.31)",
+     "expansive by 0.14 (Its Heightened Language 0.5; Your Reading, Since Her Christening Robe 0.2)",
+     "set by 0.33 (Costume Drama’s Another Age’s Manners 0.37; Its Timing 0.25)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "creature_feature",
+   "concerns": [
+    "extremity",
+    "invention"
+   ],
+   "a": {
+    "id": "brief-creature_feature",
+    "title": "The Boat Shed",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "expert",
+      "label": "The Expert In Charge",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 2.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.3 points"
+     },
+     {
+      "id": "afraid",
+      "label": "Frightened For Two",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 4.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.19 (Its Timing 0.5; Creature Feature’s States At The Limit 0.25)",
+     "expansive by 0.12 (Creature Feature’s States At The Limit 0.5; Creature Feature’s Belief In What Isn’t There 0.25)",
+     "set by 0.55 (Its Timing 0.5; Your Reading, The Expert In Charge 0.48)"
+    ]
+   },
+   "b": {
+    "id": "brief-creature_feature-2",
+    "title": "The Dispensary Door",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "pressing",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "measure",
+      "label": "Measure Twice",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "composure",
+      "gain": 1.2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 27.3 points"
+     },
+     {
+      "id": "stubborn",
+      "label": "Eight Years Of His Stubbornness",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "composure",
+      "gain": 0.8,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 26.2 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.36 (Its Timing 0.5; A Pressing Reader 0.37)",
+     "expansive by 0.27 (Creature Feature’s States At The Limit 0.5; Creature Feature’s Belief In What Isn’t There 0.25)",
+     "set by 0.56 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "dance",
+   "concerns": [
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-dance",
+    "title": "The Phrase",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "dance",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "dance": 4
+    },
+    "features": [
+     2,
+     3,
+     1,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "legacy",
+      "label": "Passing It On",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 2.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.3 points"
+     },
+     {
+      "id": "farewell",
+      "label": "The Last Time",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "physical",
+      "gain": 1.9,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.5 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.1 (Its Timing 0.5; Its Comic Beats 0.21)",
+     "expansive by 0.29 (Dance’s Played Large 1; Its Comic Beats 0.04)",
+     "set by 0.98 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-dance-2",
+    "title": "The Box Step",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "steady",
+    "transitions": 4,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "dance",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "dance": 4
+    },
+    "features": [
+     2,
+     3,
+     2,
+     0,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "promise",
+      "label": "Keeping The Promise",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "memory",
+      "gain": 2.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 12.3 points"
+     },
+     {
+      "id": "two",
+      "label": "Two Men Who Miss Her",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "memory",
+      "gain": 2,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 12.8 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.14 (Its Timing 0.5; Its Comic Beats 0.38)",
+     "expansive by 0.31 (Dance’s Played Large 1; Its Comic Beats 0.08)",
+     "set by 0.98 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "domestic_drama",
+   "concerns": [
+    "partnership",
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-domestic_drama",
+    "title": "The Thermostat",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "tired",
+      "label": "Too Tired To Pretend",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 5.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 24 points"
+     },
+     {
+      "id": "partners",
+      "label": "Eighteen Years Of Care",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 3.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.1 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.35 (Its Grave Beats 0.42; Your Reading, Too Tired To Pretend 0.34)",
+     "restrained by 0.66 (A Close Frame 0.5; Your Reading, Too Tired To Pretend 0.47)",
+     "open by 0.18 (Domestic Drama’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-domestic_drama-2",
+    "title": "The Boxes In The Hall",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "unpredictable",
+    "transitions": 4,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "sewing",
+      "label": "The Sewing Room",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "memory",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 19.3 points"
+     },
+     {
+      "id": "son",
+      "label": "Whatever He Needs",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "memory",
+      "gain": 1.1,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 19.3 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.32 (Its 3 Turns 0.45; Your Reading, The Sewing Room 0.39)",
+     "restrained by 0.42 (A Close Frame 0.5; Domestic Drama’s Played Straight 0.38)",
+     "open by 1.13 (Its Partner 1.5; An Unpredictable Reader 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "drama",
+   "concerns": [
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-drama",
+    "title": "The Spare Key",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "guarded",
+      "label": "Guarded To The Last",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.4 points"
+     },
+     {
+      "id": "listening",
+      "label": "Hearing Him Out",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 2.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.4 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.36 (Its Grave Beats 0.42; Its 2 Turns 0.3)",
+     "restrained by 0.66 (A Close Frame 0.5; Your Reading, Guarded To The Last 0.48)",
+     "open by 0.44 (Its Partner 1.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-drama-2",
+    "title": "Last Thursday’s Refill",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "own",
+      "label": "No Excuses",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 4,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 38.9 points"
+     },
+     {
+      "id": "boy",
+      "label": "The Boy Who Stole Candy",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 4.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21.9 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "measured by 0.07 (Its Grave Beats 0.33; Its 2 Turns 0.3)",
+     "restrained by 0.44 (A Close Frame 0.5; Drama’s Played Straight 0.38)",
+     "open by 0.2 (Its Partner 1.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": true,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "dystopian",
+   "concerns": [
+    "invention",
+    "restraint"
+   ],
+   "a": {
+    "id": "brief-dystopian",
+    "title": "The Household Count",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "liar",
+      "label": "The Steady Lie",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 3.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 39.7 points"
+     },
+     {
+      "id": "pleader",
+      "label": "Begging Without Words",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "composure",
+      "gain": 2.3,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 39.2 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.52 (Dystopian’s Feeling Held In 0.5; A Withholding Reader 0.5)",
+     "restrained by 0.69 (Dystopian’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.49 (Its Timing 0.5; Your Reading, The Steady Lie 0.48)"
+    ]
+   },
+   "b": {
+    "id": "brief-dystopian-2",
+    "title": "The Approved Lesson",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "spelling",
+      "label": "The Spelling Test",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "memory",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 16.7 points"
+     },
+     {
+      "id": "sent",
+      "label": "Sent Or Curious",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 1.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 23 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.66 (Dystopian’s Feeling Held In 0.5; A Withholding Reader 0.5)",
+     "restrained by 0.55 (Dystopian’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.3 (Its Timing 0.5; Your Reading, The Spelling Test 0.09)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "erotic_thriller",
+   "concerns": [
+    "tension",
+    "partnership"
+   ],
+   "a": {
+    "id": "brief-erotic_thriller",
+    "title": "The Second Key",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "intimacy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "intimacy": 4
+    },
+    "features": [
+     2,
+     2,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "control",
+      "label": "She’s In Control",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "memory",
+      "gain": 0.4,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 10.7 points"
+     },
+     {
+      "id": "danger",
+      "label": "Too Close",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.4 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "either, restrained, open",
+    "why": [
+     "measured by 0.38 (Erotic Thriller’s Suspense Held 0.75; Its Grave Beats 0.33)",
+     "restrained by 0.29 (A Close Frame 0.5; Erotic Thriller’s Suspense Held 0.25)",
+     "open by 0.4 (Its Partner 1.5; Erotic Thriller’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-erotic_thriller-2",
+    "title": "Checkout At Noon",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 3,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "intimacy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "intimacy": 4
+    },
+    "features": [
+     1,
+     2,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "vote",
+      "label": "Her Vote, Her Own",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.9,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.2 points"
+     },
+     {
+      "id": "want",
+      "label": "The Last Thursday",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 1.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.77 (Erotic Thriller’s Suspense Held 0.75; A Withholding Reader 0.5)",
+     "restrained by 0.4 (A Close Frame 0.5; Erotic Thriller’s Suspense Held 0.25)",
+     "open by 0.52 (Its Partner 1.5; Erotic Thriller’s Played Between Two 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": true,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "family",
+   "concerns": [
+    "partnership",
+    "rhythm"
+   ],
+   "a": {
+    "id": "brief-family",
+    "title": "The Treehouse Treaty",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "deal",
+      "label": "The Negotiation",
+      "lean": "execution",
+      "draw": "adaptability",
+      "rewards": "focus",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 19.3 points"
+     },
+     {
+      "id": "scared",
+      "label": "Scared Too",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.9,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.3 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.88 (Family’s Comic Rhythm 0.75; Its Comic Beats 0.63)",
+     "restrained by 0.14 (A Close Frame 0.5)",
+     "open by 0.64 (Its Partner 1.5; Family’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-family-2",
+    "title": "Career Day In Room Twelve",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     2
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "pro",
+      "label": "Sixteen Years On The Route",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "focus",
+      "gain": 0.7,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 8.6 points"
+     },
+     {
+      "id": "son",
+      "label": "For Her Son",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "adaptability",
+      "gain": 0.6,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 9.3 points"
+     },
+     {
+      "id": "spotter",
+      "label": "Win Over The Questioner",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 1.7,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 29.1 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.09 (Its Comic Beats 0.78; Family’s Comic Rhythm 0.75)",
+     "restrained by 0.06 (A Close Frame 0.5)",
+     "open by 0.89 (What It Leaves To Be Found 2; Family’s Played Between Two 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "farce",
+   "concerns": [
+    "rhythm",
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-farce",
+    "title": "The Second Cake",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 0,
+    "blends": 0,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "clown, comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4,
+     "clown": 4
+    },
+    "features": [
+     3,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "calm",
+      "label": "Never Let Them See",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "physical",
+      "gain": 2.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.4 points"
+     },
+     {
+      "id": "panic",
+      "label": "Visible Panic",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 3.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.6 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 1.37 (Its Comic Beats 1.25; Its Timing 0.75)",
+     "expansive by 0.36 (Farce’s Played Large 1; Its Comic Beats 0.25)",
+     "set by 1 (Its Timing 0.75; Its Physical Score 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-farce-2",
+    "title": "The Sideways Presentation",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "clown, comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4,
+     "clown": 6
+    },
+    "features": [
+     3,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "dignity",
+      "label": "Dignity At All Costs",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "physical",
+      "gain": 2.1,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 10.6 points"
+     },
+     {
+      "id": "spiral",
+      "label": "Every Cover Bigger",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "physical",
+      "gain": 2.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 10.6 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 1.3 (Its Comic Beats 1.1; Its Timing 0.75)",
+     "expansive by 0.41 (Farce’s Played Large 1; Its Comic Beats 0.22)",
+     "set by 0.87 (Its Timing 0.75; Its Physical Score 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "film_noir",
+   "concerns": [
+    "command",
+    "restraint"
+   ],
+   "a": {
+    "id": "brief-film_noir",
+    "title": "The Night Line",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "voiceover": 4
+    },
+    "features": [
+     2,
+     0,
+     2,
+     2,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "cool",
+      "label": "Cool Under The Lamp",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 0.9,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 23.6 points"
+     },
+     {
+      "id": "liked",
+      "label": "She Liked Him",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 16.8 points"
+     },
+     {
+      "id": "two",
+      "label": "Two Women",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "vocal",
+      "gain": 0.4,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 12.3 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.53 (Film Noir’s Feeling Held In 0.5; Its 3 Turns 0.45)",
+     "restrained by 0.73 (Film Noir’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.61 (Its Timing 0.5; Your Reading, Cool Under The Lamp 0.47)"
+    ]
+   },
+   "b": {
+    "id": "brief-film_noir-2",
+    "title": "The Number He Left",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     3,
+     0,
+     2,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "cold",
+      "label": "Ice On The Line",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 3.8,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 37.9 points"
+     },
+     {
+      "id": "love",
+      "label": "A Little In Love",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 2.3,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 37.5 points"
+     },
+     {
+      "id": "fated",
+      "label": "She Knew",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "composure",
+      "gain": 2.3,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 33.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "measured by 0.19 (Film Noir’s Feeling Held In 0.5; Its Grave Beats 0.33)",
+     "restrained by 0.37 (Film Noir’s Feeling Held In 1; Film Noir’s Command Of The Frame 0.25)",
+     "set by 0.68 (Its Timing 0.75; Your Reading, Ice On The Line 0.48)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": true,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 3,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "gangster",
+   "concerns": [
+    "command"
+   ],
+   "a": {
+    "id": "brief-gangster",
+    "title": "The Back Of The Bakery",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "king",
+      "label": "The King Abdicates",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "emotionalDepth",
+      "gain": 0.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.5 points"
+     },
+     {
+      "id": "lesson",
+      "label": "The Last Lesson",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.9 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.19 (Its Grave Beats 0.38; Its 2 Turns 0.3)",
+     "restrained by 0.16 (A Close Frame 0.5; Gangster’s Command Of The Frame 0.25)",
+     "open by 0.43 (Its Partner 1.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-gangster-2",
+    "title": "Terms For The Widow",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "business",
+      "label": "All Business",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 4.4,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 40.2 points"
+     },
+     {
+      "id": "fear",
+      "label": "Her Boys At Home",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.45 (A Withholding Reader 0.5; Its Grave Beats 0.42)",
+     "restrained by 0.44 (A Close Frame 0.5; Gangster’s Command Of The Frame 0.25)",
+     "open by 0.32 (Its Partner 1.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "gothic_horror",
+   "concerns": [
+    "heightened",
+    "period"
+   ],
+   "a": {
+    "id": "brief-gothic_horror",
+    "title": "The Steward’s Ledger",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "inquiry",
+      "label": "The Clerk’s Inquiry",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "memory",
+      "gain": 1,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 16.2 points"
+     },
+     {
+      "id": "longing",
+      "label": "The Boy Who Wanted Parents",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.27 (Its Grave Beats 0.33; Its 2 Turns 0.3)",
+     "expansive by 0.28 (Gothic Horror’s Played Large 1; Its Grotesque Beats 0.13)",
+     "set by 0.74 (Your Reading, The Clerk’s Inquiry 0.47; Gothic Horror’s Another Age’s Manners 0.37)"
+    ]
+   },
+   "b": {
+    "id": "brief-gothic_horror-2",
+    "title": "The Locked Organ",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 3,
+    "reader": "steady",
+    "transitions": 4,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "sane",
+      "label": "Not Mad",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "memory",
+      "gain": 1.6,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.9 points"
+     },
+     {
+      "id": "wife",
+      "label": "She Plays For Him",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "memory",
+      "gain": 1.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.9 points"
+     },
+     {
+      "id": "host",
+      "label": "The Last Host",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "memory",
+      "gain": 2.6,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.3 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.33 (Its 3 Turns 0.45; Gothic Horror’s Another Age’s Manners 0.25)",
+     "expansive by 0.51 (Gothic Horror’s Played Large 1; Its Heightened Language 0.5)",
+     "set by 0.74 (Your Reading, Not Mad 0.47; Gothic Horror’s Another Age’s Manners 0.37)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": true,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "grindhouse",
+   "concerns": [
+    "heightened",
+    "extremity"
+   ],
+   "a": {
+    "id": "brief-grindhouse",
+    "title": "Last Gas For Ninety Miles",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     3,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "nerve",
+      "label": "A Contest Of Nerve",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 1.8,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 14.7 points"
+     },
+     {
+      "id": "terror",
+      "label": "Shaking Hands",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 4.2,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 23.4 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.57 (Its Timing 0.75; Its Comic Beats 0.42)",
+     "expansive by 0.56 (Grindhouse’s Played Large 1; Grindhouse’s States At The Limit 0.5)",
+     "set by 0.73 (Its Timing 0.75; Your Reading, A Contest Of Nerve 0.32)"
+    ]
+   },
+   "b": {
+    "id": "brief-grindhouse-2",
+    "title": "Paid In Quarters",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 3,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     3,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "calm",
+      "label": "The Calm Teacher",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "physical",
+      "gain": 2.1,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.8 points"
+     },
+     {
+      "id": "stunt",
+      "label": "Still Got It",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 2.8,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.9 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.84 (Its Comic Beats 0.78; Its Timing 0.75)",
+     "expansive by 0.67 (Grindhouse’s Played Large 1; Grindhouse’s States At The Limit 0.5)",
+     "set by 0.87 (Its Timing 0.75; Its Physical Score 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "historical_fiction",
+   "concerns": [
+    "period"
+   ],
+   "a": {
+    "id": "brief-historical_fiction",
+    "title": "Proof Of Birth",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "true",
+      "label": "His Own Memory",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.8 points"
+     },
+     {
+      "id": "learned",
+      "label": "A Life Learned By Heart",
+      "lean": "execution",
+      "draw": "memory",
+      "rewards": "memory",
+      "gain": 1.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 19.6 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.48 (Its 3 Turns 0.45; Its Grave Beats 0.38)",
+     "restrained by 0.48 (A Close Frame 0.5; Your Reading, His Own Memory 0.48)",
+     "set by 0.49 (Historical Fiction’s Another Age’s Manners 0.37; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-historical_fiction-2",
+    "title": "One Book From The Fire",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "withholding",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "guilt",
+      "label": "His Fault",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.1 points"
+     },
+     {
+      "id": "gift",
+      "label": "A Son’s Gift",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "imagination",
+      "gain": 1.7,
+      "limit": "interpretation",
+      "chief": "Imagination held back the interpretation by 26.7 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.69 (A Withholding Reader 0.5; Its Grave Beats 0.38)",
+     "restrained by 0.31 (Your Reading, His Fault 0.5; A Close Frame 0.5)",
+     "set by 0.38 (Historical Fiction’s Another Age’s Manners 0.37; Its Timing 0.25)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "isekai",
+   "concerns": [
+    "heightened",
+    "invention"
+   ],
+   "a": {
+    "id": "brief-isekai",
+    "title": "Level One, Again",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     1,
+     3,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "audit",
+      "label": "The Audit",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "vocal",
+      "gain": 2.1,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 19 points"
+     },
+     {
+      "id": "nobody",
+      "label": "Nobody Waiting",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "vocal",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 19.9 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.01 (Its Comic Beats 0.78; Its Timing 0.25)",
+     "expansive by 1.05 (Isekai’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.37 (Isekai’s Played Large 0.25; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-isekai-2",
+    "title": "Dialogue Option Three",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "none",
+    "transitions": 3,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 6,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     2,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "fan",
+      "label": "Inside Her Own Work",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "memory",
+      "gain": 2.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 14.8 points"
+     },
+     {
+      "id": "author",
+      "label": "What She Wrote",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "memory",
+      "gain": 2.2,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.4 points"
+     },
+     {
+      "id": "word",
+      "label": "One New Word",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "memory",
+      "gain": 2.4,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.3 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.42 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 1 (Isekai’s Played Large 1; Its Voice Work 0.5)",
+     "set by 0.18 (Its Timing 0.5; Isekai’s Played Large 0.25)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "jukebox_musical",
+   "concerns": [
+    "heightened",
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-jukebox_musical",
+    "title": "The Reunion Set",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "singing",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "singing": 4
+    },
+    "features": [
+     2,
+     1,
+     2,
+     3,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "dare",
+      "label": "Half A Joke",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "vocal",
+      "gain": 1.8,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 12.1 points"
+     },
+     {
+      "id": "apology",
+      "label": "The Apology In It",
+      "lean": "believability",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 12.9 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.28 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.7 (Jukebox Musical’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.26 (Its Timing 0.5; Jukebox Musical’s Played Large 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-jukebox_musical-2",
+    "title": "The Resignation Number",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "dance, singing",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "singing": 4,
+     "dance": 2
+    },
+    "features": [
+     2,
+     2,
+     1,
+     3,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "out",
+      "label": "Eleven Years Out",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 2.6,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 11.4 points"
+     },
+     {
+      "id": "blink",
+      "label": "Make Him Blink",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "vocal",
+      "gain": 1.4,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 10.4 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.05 (Its Comic Beats 0.93; Its Timing 0.5)",
+     "expansive by 0.51 (Jukebox Musical’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.67 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": true,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "melodrama",
+   "concerns": [
+    "heightened",
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-melodrama",
+    "title": "The Sewing Box",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     2,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "full",
+      "label": "Full Out",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 1.4,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 11.8 points"
+     },
+     {
+      "id": "held",
+      "label": "Held Back",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21.4 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.26 (Its Grave Beats 0.33; Its 2 Turns 0.3)",
+     "expansive by 0.81 (Melodrama’s Played Large 1; Its Voice Work 0.5)",
+     "set by 0.33 (Melodrama’s Played Large 0.25; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-melodrama-2",
+    "title": "The Housekeeper’s Keys",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 3,
+    "reader": "steady",
+    "transitions": 4,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     2,
+     2,
+     3,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "storm",
+      "label": "All Weather",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "memory",
+      "gain": 1.9,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.6 points"
+     },
+     {
+      "id": "child",
+      "label": "The Child Underneath",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "memory",
+      "gain": 0.9,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 12 points"
+     },
+     {
+      "id": "pride",
+      "label": "Pride Before The Fall",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "memory",
+      "gain": 1.1,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 12 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, expansive, set",
+    "sidesWithoutRegister": "measured, expansive, set",
+    "why": [
+     "measured by 0.34 (Its 3 Turns 0.45; Its Grave Beats 0.3)",
+     "expansive by 0.89 (Melodrama’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.58 (Its Physical Score 0.5; Melodrama’s Played Large 0.25)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "mockumentary",
+   "concerns": [
+    "spontaneity",
+    "rhythm"
+   ],
+   "a": {
+    "id": "brief-mockumentary",
+    "title": "Pool Manager Of The Year",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "improv": 4
+    },
+    "features": [
+     2,
+     0,
+     2,
+     1,
+     3
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "believes",
+      "label": "Every Word True",
+      "lean": "believability",
+      "draw": "imagination",
+      "rewards": "adaptability",
+      "gain": 2.5,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 34.1 points"
+     },
+     {
+      "id": "lens",
+      "label": "Playing To The Lens",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 4.9,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 36.1 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.93 (Its Comic Beats 1.05; Mockumentary’s Comic Rhythm 0.75)",
+     "restrained by 0.45 (A Close Frame 0.5; Your Reading, Every Word True 0.48)",
+     "open by 1.44 (What It Leaves To Be Found 3; Mockumentary’s Caught Live 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-mockumentary-2",
+    "title": "Room Three Opens At Seven",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "improv": 2
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     2
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "sell",
+      "label": "The Show Must Open",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "focus",
+      "gain": 1.4,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 11.6 points"
+     },
+     {
+      "id": "invent",
+      "label": "Making It Up",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 2.3,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 32.7 points"
+     },
+     {
+      "id": "dream",
+      "label": "Six Months Of Her Life",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "adaptability",
+      "gain": 1,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 34 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.19 (Its Comic Beats 0.93; Mockumentary’s Comic Rhythm 0.75)",
+     "restrained by 0.09 (A Close Frame 0.5; Mockumentary’s Caught Live 0.13)",
+     "open by 1.09 (What It Leaves To Be Found 2; Mockumentary’s Caught Live 1)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "monster_movie",
+   "concerns": [
+    "extremity",
+    "invention"
+   ],
+   "a": {
+    "id": "brief-monster_movie",
+    "title": "The Pump House",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "dread",
+      "label": "Listening To The Water",
+      "lean": "consistency",
+      "draw": "focus",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.9 points"
+     },
+     {
+      "id": "sister",
+      "label": "Holding On To Him",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 3.1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.4 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.07 (Its Timing 0.5; Monster Movie’s States At The Limit 0.25)",
+     "expansive by 0.37 (Its Voice Work 0.5; Monster Movie’s States At The Limit 0.5)",
+     "set by 0.55 (Its Timing 0.5; Your Reading, Listening To The Water 0.48)"
+    ]
+   },
+   "b": {
+    "id": "brief-monster_movie-2",
+    "title": "Aisle Eleven",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "leader",
+      "label": "Field Commander",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "physical",
+      "gain": 0.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.1 points"
+     },
+     {
+      "id": "terror",
+      "label": "Barely Holding",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.9 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.15 (Its Timing 0.5; Monster Movie’s States At The Limit 0.25)",
+     "expansive by 0.16 (Monster Movie’s States At The Limit 0.5; Monster Movie’s Belief In What Isn’t There 0.25)",
+     "set by 0.16 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "mumblecore",
+   "concerns": [
+    "spontaneity"
+   ],
+   "a": {
+    "id": "brief-mumblecore",
+    "title": "The Second Bedroom",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "small",
+      "label": "Barely There",
+      "lean": "believability",
+      "draw": "composure",
+      "rewards": "adaptability",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 13.9 points"
+     },
+     {
+      "id": "friends",
+      "label": "Two People Talking",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "adaptability",
+      "gain": 2.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 16.3 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.05 (Its Comic Beats 0.63; Its Timing 0.25)",
+     "restrained by 0.5 (Your Reading, Barely There 0.5; A Close Frame 0.5)",
+     "open by 1.26 (Its Partner 1.5; Mumblecore’s Caught Live 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-mumblecore-2",
+    "title": "Allen Key",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "withholding",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "improv": 2
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     2
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "cool",
+      "label": "Playing It Cool",
+      "lean": "believability",
+      "draw": "composure",
+      "rewards": "adaptability",
+      "gain": 1.4,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 30.8 points"
+     },
+     {
+      "id": "hoping",
+      "label": "She Wants To Go",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "listening",
+      "gain": 1.7,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 26.2 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.09 (Its Comic Beats 0.93; Its Timing 0.25)",
+     "restrained by 0.53 (A Close Frame 0.5; Your Reading, Playing It Cool 0.48)",
+     "open by 1.51 (What It Leaves To Be Found 2; Its Partner 1.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": true,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "neorealism",
+   "concerns": [
+    "spontaneity"
+   ],
+   "a": {
+    "id": "brief-neorealism",
+    "title": "The Sewing Machine",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "plain",
+      "label": "Just The Errand",
+      "lean": "believability",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.1 points"
+     },
+     {
+      "id": "pride",
+      "label": "What It Costs",
+      "lean": "interpretation",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.3 (Its Grave Beats 0.42; Your Reading, Just The Errand 0.21)",
+     "restrained by 0.56 (A Close Frame 0.5; Your Reading, Just The Errand 0.49)",
+     "open by 0.72 (Neorealism’s Caught Live 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-neorealism-2",
+    "title": "The Bricks Of Number Nine",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     2,
+     2,
+     1,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "plain",
+      "label": "Just Work",
+      "lean": "believability",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 23.9 points"
+     },
+     {
+      "id": "house",
+      "label": "The House Again",
+      "lean": "interpretation",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 1.2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.9 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.6 (A Withholding Reader 0.5; Its 3 Turns 0.45)",
+     "restrained by 0.62 (Your Reading, Just Work 0.5; A Close Frame 0.5)",
+     "open by 0.57 (Neorealism’s Caught Live 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "new_wave",
+   "concerns": [
+    "spontaneity",
+    "stylized"
+   ],
+   "a": {
+    "id": "brief-new_wave",
+    "title": "The Night Train South",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "improv": 2
+    },
+    "features": [
+     1,
+     1,
+     2,
+     0,
+     2
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "whim",
+      "label": "Pure Impulse",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 2.8,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 34.9 points"
+     },
+     {
+      "id": "hope",
+      "label": "More Than A Game",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.3 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.41 (Its Comic Beats 0.63; Your Reading, Pure Impulse 0.5)",
+     "restrained by 0.1 (A Close Frame 0.5; New Wave’s Caught Live 0.13)",
+     "open by 1.12 (What It Leaves To Be Found 2; New Wave’s Caught Live 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-new_wave-2",
+    "title": "Five Minutes Before The Lights",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "improv": 4
+    },
+    "features": [
+     2,
+     0,
+     2,
+     1,
+     3
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "game",
+      "label": "All A Game",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 3.9,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 33.7 points"
+     },
+     {
+      "id": "devotion",
+      "label": "The Eleventh Time",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "adaptability",
+      "gain": 2.3,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 32.6 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.64 (Its Comic Beats 0.78; Its Timing 0.5)",
+     "restrained by 0.09 (A Close Frame 0.5; New Wave’s Caught Live 0.13)",
+     "open by 1.73 (What It Leaves To Be Found 3; New Wave’s Caught Live 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": true,
+    "readings": true,
+    "feedback": true
+   },
+   "n": 4,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "occult",
+   "concerns": [
+    "extremity",
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-occult",
+    "title": "The Locked Room At Aunt Bea’s",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "skeptic",
+      "label": "The Skeptic Shaken",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 1.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.6 points"
+     },
+     {
+      "id": "family",
+      "label": "The Family Secret",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.4 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.42 (Its Timing 0.5; Its Comic Beats 0.42)",
+     "expansive by 0.54 (Occult’s Played Large 1; Occult’s States At The Limit 0.5)",
+     "set by 0.65 (Its Timing 0.5; Your Reading, The Skeptic Shaken 0.42)"
+    ]
+   },
+   "b": {
+    "id": "brief-occult-2",
+    "title": "Lot Two Hundred And Six",
+    "medium": "camera",
+    "language": "verse",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 3,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     2,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "business",
+      "label": "Strictly Business",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "memory",
+      "gain": 0.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.6 points"
+     },
+     {
+      "id": "pulled",
+      "label": "The Book Reads Her",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "memory",
+      "gain": 1.6,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 11.2 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "either, expansive, set",
+    "why": [
+     "driven by 0.13 (Its Timing 0.5; A Pressing Reader 0.37)",
+     "expansive by 0.77 (Occult’s Played Large 1; Its Voice Work 0.5)",
+     "set by 0.73 (Its Timing 0.5; Its Verse 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "parody",
+   "concerns": [
+    "sincerity",
+    "rhythm"
+   ],
+   "a": {
+    "id": "brief-parody",
+    "title": "The Big Speech",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4
+    },
+    "features": [
+     3,
+     1,
+     2,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "deadpan",
+      "label": "Never Winking",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "focus",
+      "gain": 1.5,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 15.7 points"
+     },
+     {
+      "id": "size",
+      "label": "Full Sports Film",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "focus",
+      "gain": 2.6,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 15 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.98 (Its Comic Beats 1.05; Its Timing 0.75)",
+     "expansive by 0.01 (Its Voice Work 0.5; Its Heightened Language 0.5)",
+     "set by 0.78 (Its Timing 0.75; Your Reading, Never Winking 0.43)"
+    ]
+   },
+   "b": {
+    "id": "brief-parody-2",
+    "title": "Trash Day: The Trailer",
+    "medium": "voice",
+    "language": "heightened",
+    "stakes": 0,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "comedy, voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1,
+     "comedy": 4
+    },
+    "features": [
+     3,
+     0,
+     0,
+     3,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "straight",
+      "label": "Dead Straight",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "focus",
+      "gain": 2,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 15.6 points"
+     },
+     {
+      "id": "epic",
+      "label": "Bigger Than Big",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 3.3,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 15 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.95 (Its Comic Beats 1.1; Its Timing 0.75)",
+     "expansive by 0.38 (Its Voice Work 0.75; Its Heightened Language 0.5)",
+     "set by 0.72 (Its Timing 0.75; Your Reading, Dead Straight 0.43)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": true,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "political_thriller",
+   "concerns": [
+    "restraint",
+    "tension"
+   ],
+   "a": {
+    "id": "brief-political_thriller",
+    "title": "Who Had A Copy",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 0,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "still",
+      "label": "Invisible",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "focus",
+      "gain": 2.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.5 points"
+     },
+     {
+      "id": "betrayal",
+      "label": "Mentor And Protégée",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.8 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.67 (Political Thriller’s Suspense Held 0.75; Its Grave Beats 0.5)",
+     "restrained by 1.02 (Political Thriller’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.54 (Its Timing 0.5; Your Reading, Invisible 0.45)"
+    ]
+   },
+   "b": {
+    "id": "brief-political_thriller-2",
+    "title": "Booth C",
+    "medium": "voice",
+    "language": "heightened",
+    "stakes": 3,
+    "reader": "none",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "voiceover": 2,
+     "scene": 1
+    },
+    "features": [
+     3,
+     0,
+     1,
+     2,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "neutral",
+      "label": "The Neutral Voice",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "composure",
+      "gain": 2.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 24.6 points"
+     },
+     {
+      "id": "defiance",
+      "label": "Her Own Act",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "composure",
+      "gain": 1.9,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 27.5 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "measured by 0.43 (Political Thriller’s Suspense Held 0.75; Political Thriller’s Feeling Held In 0.5)",
+     "restrained by 0.14 (Political Thriller’s Feeling Held In 1; Political Thriller’s Suspense Held 0.25)",
+     "set by 0.62 (Its Timing 0.75; Your Reading, The Neutral Voice 0.49)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "psychological_thriller",
+   "concerns": [
+    "restraint",
+    "exactness"
+   ],
+   "a": {
+    "id": "brief-psychological_thriller",
+    "title": "The Rehung Frames",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "right",
+      "label": "She’s Right",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 36.3 points"
+     },
+     {
+      "id": "slipping",
+      "label": "Slipping",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.8 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.36 (Psychological Thriller’s Feeling Held In 0.5; Its Grave Beats 0.42)",
+     "restrained by 0.77 (Psychological Thriller’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.78 (Psychological Thriller’s Dense Text, Exact 0.75; Your Reading, She’s Right 0.43)"
+    ]
+   },
+   "b": {
+    "id": "brief-psychological_thriller-2",
+    "title": "The Overnight Study",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "watched",
+      "label": "Someone Was There",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "composure",
+      "gain": 1.2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.7 points"
+     },
+     {
+      "id": "fishing",
+      "label": "He’s Fishing",
+      "lean": "interpretation",
+      "draw": "focus",
+      "rewards": "composure",
+      "gain": 2.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 27.5 points"
+     },
+     {
+      "id": "tired",
+      "label": "Six Weeks Of Nights",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 1.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 16.9 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.29 (Psychological Thriller’s Feeling Held In 0.5; A Withholding Reader 0.5)",
+     "restrained by 0.81 (Psychological Thriller’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.41 (Psychological Thriller’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "road_movie",
+   "concerns": [
+    "partnership",
+    "spontaneity"
+   ],
+   "a": {
+    "id": "brief-road_movie",
+    "title": "Mile Marker 212",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "driver",
+      "label": "Eyes On The Road",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.2,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.6 points"
+     },
+     {
+      "id": "friends",
+      "label": "Two Days In",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "listening",
+      "gain": 1.8,
+      "limit": "connection",
+      "chief": "Listening And Responsiveness held back the connection by 25.7 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.07 (Its Comic Beats 0.63; Its Timing 0.25)",
+     "restrained by 0.48 (A Close Frame 0.5; Your Reading, Eyes On The Road 0.46)",
+     "open by 1.04 (Its Partner 1.5; Road Movie’s Caught Live 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-road_movie-2",
+    "title": "One More State",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "pitch",
+      "label": "The Last Pitch",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "adaptability",
+      "gain": 1.5,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 30 points"
+     },
+     {
+      "id": "gift",
+      "label": "One Good Night",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.3 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.47 (Its Comic Beats 0.63; Your Reading, The Last Pitch 0.48)",
+     "restrained by 0.21 (A Close Frame 0.5; Road Movie’s Caught Live 0.13)",
+     "open by 1.32 (Road Movie’s Caught Live 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "samurai",
+   "concerns": [
+    "period",
+    "command"
+   ],
+   "a": {
+    "id": "brief-samurai",
+    "title": "The Crossing At Dawn",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     2,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "duty",
+      "label": "Duty First",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "physical",
+      "gain": 2.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.5 points"
+     },
+     {
+      "id": "debt",
+      "label": "The Old Debt",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "physical",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.6 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "either, restrained, set",
+    "why": [
+     "measured by 0.25 (Its Grave Beats 0.42; Samurai’s Another Age’s Manners 0.25)",
+     "restrained by 0.13 (A Close Frame 0.5; Samurai’s Command Of The Frame 0.25)",
+     "set by 1.12 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-samurai-2",
+    "title": "The First Form",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 2
+    },
+    "features": [
+     2,
+     2,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "debt",
+      "label": "A Debt Owed",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "imagination",
+      "gain": 0.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.4 points"
+     },
+     {
+      "id": "judged",
+      "label": "Being Judged",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "physical",
+      "gain": 0.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.4 points"
+     }
+    ],
+    "rewarded": "imagination",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.87 (A Withholding Reader 0.5; Your Reading, A Debt Owed 0.48)",
+     "restrained by 0.36 (A Close Frame 0.5; Your Reading, A Debt Owed 0.35)",
+     "set by 0.75 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": true,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "satire",
+   "concerns": [
+    "stylized"
+   ],
+   "a": {
+    "id": "brief-satire",
+    "title": "The Contentment Index",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "believer",
+      "label": "The True Believer",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "imagination",
+      "gain": 1,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 20 points"
+     },
+     {
+      "id": "trapped",
+      "label": "The Trapped Clerk",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.7 points"
+     }
+    ],
+    "rewarded": "imagination",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.54 (Its Comic Beats 0.83; Its Timing 0.5)",
+     "expansive by 0.01 (Satire’s The World’s Own Logic 0.25; Its Comic Beats 0.17)",
+     "set by 0.93 (Satire’s The World’s Own Logic 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-satire-2",
+    "title": "The Monday Announcements",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "none",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "voiceover": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     0,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "company",
+      "label": "The Company Man",
+      "lean": "execution",
+      "draw": "vocal",
+      "rewards": "vocal",
+      "gain": 2.2,
+      "limit": "execution",
+      "chief": "Vocal Expression held back the execution by 15.6 points"
+     },
+     {
+      "id": "sees",
+      "label": "Reading Between The Lines",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "imagination",
+      "gain": 1.4,
+      "limit": "interpretation",
+      "chief": "Imagination held back the interpretation by 27.4 points"
+     }
+    ],
+    "rewarded": "vocal",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.66 (Its Comic Beats 0.93; Its Timing 0.5)",
+     "expansive by 0.48 (Its Voice Work 0.5; Satire’s The World’s Own Logic 0.25)",
+     "set by 0.81 (Satire’s The World’s Own Logic 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "science_fantasy",
+   "concerns": [
+    "invention",
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-science_fantasy",
+    "title": "The Messenger In The Shrine",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "con",
+      "label": "The Con",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "imagination",
+      "gain": 1.3,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 37.5 points"
+     },
+     {
+      "id": "wonder",
+      "label": "Seeing The Shrine",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "imagination",
+      "gain": 2.8,
+      "limit": "interpretation",
+      "chief": "Imagination held back the interpretation by 28.7 points"
+     }
+    ],
+    "rewarded": "imagination",
+    "sides": "driven, expansive, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.09 (Its Comic Beats 0.63; Your Reading, The Con 0.48)",
+     "expansive by 0.42 (Science Fantasy’s Played Large 1; Science Fantasy’s Belief In What Isn’t There 0.25)",
+     "open by 0.39 (What It Leaves To Be Found 1; Your Reading, The Con 0.27)"
+    ]
+   },
+   "b": {
+    "id": "brief-science_fantasy-2",
+    "title": "Spoken Into Force",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 3,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     1,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "letter",
+      "label": "The Letter Of It",
+      "lean": "consistency",
+      "draw": "focus",
+      "rewards": "composure",
+      "gain": 1.4,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 31.8 points"
+     },
+     {
+      "id": "surety",
+      "label": "Her Own Surety",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "imagination",
+      "gain": 1.9,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.3 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "driven, expansive, open",
+    "sidesWithoutRegister": "driven, expansive, open",
+    "why": [
+     "driven by 0.01 (Its Timing 0.5; Its Comic Beats 0.21)",
+     "expansive by 0.63 (Science Fantasy’s Played Large 1; Its Heightened Language 0.5)",
+     "open by 0.4 (An Unpredictable Reader 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "silent_film",
+   "concerns": [
+    "heightened",
+    "stylized"
+   ],
+   "a": {
+    "id": "brief-silent_film",
+    "title": "The Telegram For Miss Avery",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     3,
+     1,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "clown",
+      "label": "The Comic Clerk",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 3.6,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 17.8 points"
+     },
+     {
+      "id": "heart",
+      "label": "The Quiet Heart",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "physical",
+      "gain": 1.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 16.6 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.41 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.54 (Silent Film’s Played Large 1; Silent Film’s The World’s Own Logic 0.25)",
+     "set by 1.11 (Its Physical Score 0.75; Silent Film’s The World’s Own Logic 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-silent_film-2",
+    "title": "Her First Sitting Alone",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 0,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 0,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     3,
+     1,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "fuss",
+      "label": "Her Own Worst Sitter",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 3.6,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 17.2 points"
+     },
+     {
+      "id": "grief",
+      "label": "Bringing Him In",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "physical",
+      "gain": 1.4,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 16 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.4 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.54 (Silent Film’s Played Large 1; Silent Film’s The World’s Own Logic 0.25)",
+     "set by 1.11 (Its Physical Score 0.75; Silent Film’s The World’s Own Logic 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": true,
+    "readings": true,
+    "feedback": true
+   },
+   "n": 5,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "social_realism",
+   "concerns": [
+    "spontaneity"
+   ],
+   "a": {
+    "id": "brief-social_realism",
+    "title": "Between Clients",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     2
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "tired",
+      "label": "Too Tired To Fight",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21.1 points"
+     },
+     {
+      "id": "organizer",
+      "label": "The Organizer",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "adaptability",
+      "gain": 1.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.6 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.25 (Its Grave Beats 0.42; Its 2 Turns 0.3)",
+     "restrained by 0.54 (Your Reading, Too Tired To Fight 0.5; A Close Frame 0.5)",
+     "open by 1.51 (What It Leaves To Be Found 2; Its Partner 1.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-social_realism-2",
+    "title": "Proof Of Employer",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "withholding",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "braced",
+      "label": "Braced For It",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.5,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 37.9 points"
+     },
+     {
+      "id": "angry",
+      "label": "Angry At The Sum",
+      "lean": "interpretation",
+      "draw": "listening",
+      "rewards": "listening",
+      "gain": 2.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 36.5 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.29 (A Withholding Reader 0.5; Its 2 Turns 0.3)",
+     "restrained by 0.52 (A Close Frame 0.5; Your Reading, Braced For It 0.36)",
+     "open by 0.92 (Its Partner 1.5; Social Realism’s Caught Live 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "spaghetti_western",
+   "concerns": [
+    "command",
+    "restraint"
+   ],
+   "a": {
+    "id": "brief-spaghetti_western",
+    "title": "The Relay Station At Dry Fork",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     3,
+     1,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "stone",
+      "label": "Face Like Stone",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 1.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 37.6 points"
+     },
+     {
+      "id": "trade",
+      "label": "The Trade",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 1.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.4 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.15 (Spaghetti Western’s Feeling Held In 0.5; Its Grave Beats 0.42)",
+     "restrained by 0.89 (Spaghetti Western’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.75 (Its Timing 0.75; Your Reading, Face Like Stone 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-spaghetti_western-2",
+    "title": "Three Shares At The Mission",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "pressing",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     3,
+     1,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "books",
+      "label": "By The Books",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "composure",
+      "gain": 3.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.6 points"
+     },
+     {
+      "id": "dare",
+      "label": "Calling His Hand",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "composure",
+      "gain": 2.5,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 28.7 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.01 (Spaghetti Western’s Feeling Held In 0.5; Its 3 Turns 0.45)",
+     "restrained by 0.8 (Spaghetti Western’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.55 (Its Timing 0.75; Your Reading, By The Books 0.48)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "splatter",
+   "concerns": [
+    "extremity"
+   ],
+   "a": {
+    "id": "brief-splatter",
+    "title": "Paint Department",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "politeness",
+      "label": "Good Manners",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 1.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.7 points"
+     },
+     {
+      "id": "shock",
+      "label": "In Shock",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20.4 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.51 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.11 (Splatter’s States At The Limit 0.5; Its Comic Beats 0.13)",
+     "set by 0.55 (Its Timing 0.5; Your Reading, Good Manners 0.48)"
+    ]
+   },
+   "b": {
+    "id": "brief-splatter-2",
+    "title": "Two Heartbeats In The Straw",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "farmer",
+      "label": "One More Bad Night",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 13.3 points"
+     },
+     {
+      "id": "alone",
+      "label": "Keeping Him On The Line",
+      "lean": "connection",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.9 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.9 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.3 (Splatter’s States At The Limit 0.5; Its Grotesque Beats 0.25)",
+     "set by 0.31 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "stoner_comedy",
+   "concerns": [
+    "rhythm",
+    "spontaneity"
+   ],
+   "a": {
+    "id": "brief-stoner_comedy",
+    "title": "The Wrong Couch",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 2
+    },
+    "features": [
+     2,
+     1,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "host",
+      "label": "The Perfect Host",
+      "lean": "execution",
+      "draw": "focus",
+      "rewards": "focus",
+      "gain": 2.5,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 20.6 points"
+     },
+     {
+      "id": "dawning",
+      "label": "Slow Dawning",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "adaptability",
+      "gain": 1.6,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 24.7 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, either",
+    "why": [
+     "driven by 1.13 (Its Comic Beats 1.05; Stoner Comedy’s Comic Rhythm 0.75)",
+     "restrained by 0.2 (A Close Frame 0.5; Stoner Comedy’s Caught Live 0.13)",
+     "open by 0.38 (Stoner Comedy’s Caught Live 1; What It Leaves To Be Found 1)"
+    ]
+   },
+   "b": {
+    "id": "brief-stoner_comedy-2",
+    "title": "The Call With Her Father",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "unpredictable",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "comedy, improv",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4,
+     "improv": 2
+    },
+    "features": [
+     3,
+     2,
+     2,
+     0,
+     2
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "impression",
+      "label": "Mister Good Impression",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "focus",
+      "gain": 1.6,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 12.9 points"
+     },
+     {
+      "id": "honest",
+      "label": "Too Honest By Half",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "adaptability",
+      "gain": 1.5,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 13.5 points"
+     },
+     {
+      "id": "adrift",
+      "label": "Lost In Time",
+      "lean": "responsiveness",
+      "draw": "adaptability",
+      "rewards": "adaptability",
+      "gain": 2.7,
+      "limit": "responsiveness",
+      "chief": "Adaptability held back the responsiveness by 32.1 points"
+     }
+    ],
+    "rewarded": "adaptability",
+    "sides": "driven, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 1.05 (Its Comic Beats 0.93; Its Timing 0.75)",
+     "restrained by 0.16 (A Close Frame 0.5; Stoner Comedy’s Caught Live 0.13)",
+     "open by 1.09 (What It Leaves To Be Found 2; Stoner Comedy’s Caught Live 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "swashbuckler",
+   "concerns": [
+    "command",
+    "heightened"
+   ],
+   "a": {
+    "id": "brief-swashbuckler",
+    "title": "The Customs House Stair",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     2,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "play",
+      "label": "For The Joy Of It",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "physical",
+      "gain": 2.2,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 14.2 points"
+     },
+     {
+      "id": "stall",
+      "label": "Buying Time",
+      "lean": "interpretation",
+      "draw": "focus",
+      "rewards": "physical",
+      "gain": 1.5,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 13.4 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.22 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.68 (Swashbuckler’s Played Large 1; Its Heightened Language 0.5)",
+     "set by 0.85 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-swashbuckler-2",
+    "title": "The Steward Of The Cellar",
+    "medium": "camera",
+    "language": "heightened",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat, comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4,
+     "comedy": 2
+    },
+    "features": [
+     2,
+     3,
+     3,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "blade",
+      "label": "The Fight Is Real",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 2.3,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 12.6 points"
+     },
+     {
+      "id": "rogue",
+      "label": "All Charm",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "physical",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.2 points"
+     },
+     {
+      "id": "respect",
+      "label": "One Fencer To Another",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "physical",
+      "gain": 1.2,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.4 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, open",
+    "why": [
+     "driven by 0.35 (Its Comic Beats 0.63; Its Timing 0.5)",
+     "expansive by 0.51 (Swashbuckler’s Played Large 1; Its Heightened Language 0.5)",
+     "set by 0.14 (Its Physical Score 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "sword_and_sorcery",
+   "concerns": [
+    "command",
+    "invention"
+   ],
+   "a": {
+    "id": "brief-sword_and_sorcery",
+    "title": "The Bridge Toll",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     1,
+     3,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "blade",
+      "label": "The Blade Decides",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 1.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 17.7 points"
+     },
+     {
+      "id": "mirror",
+      "label": "Her Own Future",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "imagination",
+      "gain": 1.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 16.5 points"
+     }
+    ],
+    "rewarded": "physical",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.4 (Its 3 Turns 0.45; Its Grave Beats 0.38)",
+     "restrained by 0.17 (A Close Frame 0.5; Sword And Sorcery’s Command Of The Frame 0.25)",
+     "set by 0.74 (Its Physical Score 0.75; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-sword_and_sorcery-2",
+    "title": "The Last Night On Guard",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "unpredictable",
+    "transitions": 3,
+    "blends": 3,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "steel",
+      "label": "Her Sword Says It",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "composure",
+      "gain": 0.7,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 14.6 points"
+     },
+     {
+      "id": "stay",
+      "label": "She Can’t Leave Him",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 15.8 points"
+     },
+     {
+      "id": "test",
+      "label": "His Last Test",
+      "lean": "interpretation",
+      "draw": "imagination",
+      "rewards": "imagination",
+      "gain": 2.2,
+      "limit": "interpretation",
+      "chief": "Imagination held back the interpretation by 29.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.17 (Its 3 Turns 0.45; Sword And Sorcery’s Command Of The Frame 0.25)",
+     "restrained by 0.17 (A Close Frame 0.5; Sword And Sorcery’s Command Of The Frame 0.25)",
+     "set by 0.22 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": true,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 4,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "techno_thriller",
+   "concerns": [
+    "exactness",
+    "tension"
+   ],
+   "a": {
+    "id": "brief-techno_thriller",
+    "title": "The Dosing Pump",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 0,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "expert",
+      "label": "The Expert",
+      "lean": "execution",
+      "draw": "memory",
+      "rewards": "focus",
+      "gain": 1.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.3 points"
+     },
+     {
+      "id": "town",
+      "label": "For The Town",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.5,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 24.1 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.14 (Techno-Thriller’s Suspense Held 0.75; Its Grave Beats 0.5)",
+     "restrained by 0.36 (A Close Frame 0.5; Techno-Thriller’s Suspense Held 0.25)",
+     "set by 0.85 (Techno-Thriller’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-techno_thriller-2",
+    "title": "Three Of Five",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "withholding",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     3,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "script",
+      "label": "By The Script",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "composure",
+      "gain": 1.6,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 21.5 points"
+     },
+     {
+      "id": "friend",
+      "label": "Six Years At This Table",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 1.2,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.7 points"
+     },
+     {
+      "id": "doubt",
+      "label": "Frightened Or Guilty",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "composure",
+      "gain": 1.2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 24.1 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.64 (Techno-Thriller’s Suspense Held 0.75; A Withholding Reader 0.5)",
+     "restrained by 0.41 (A Close Frame 0.5; Techno-Thriller’s Suspense Held 0.25)",
+     "set by 0.11 (Techno-Thriller’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "tragicomedy",
+   "concerns": [
+    "rhythm",
+    "sincerity"
+   ],
+   "a": {
+    "id": "brief-tragicomedy",
+    "title": "Three Minutes",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 4
+    },
+    "features": [
+     3,
+     0,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "performer",
+      "label": "Her Son The Comic",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "focus",
+      "gain": 1.6,
+      "limit": "execution",
+      "chief": "Focus held back the execution by 13.9 points"
+     },
+     {
+      "id": "dam",
+      "label": "The Dam Breaks",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.6 points"
+     }
+    ],
+    "rewarded": "focus",
+    "sides": "driven, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.69 (Its Timing 0.75; Tragicomedy’s Comic Rhythm 0.75)",
+     "restrained by 0.21 (A Close Frame 0.5; Tragicomedy’s Played Straight 0.38)",
+     "set by 0.58 (Its Timing 0.75; Tragicomedy’s Comic Rhythm 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-tragicomedy-2",
+    "title": "The Soup Lesson",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "steady",
+    "transitions": 3,
+    "blends": 2,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "comedy",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "comedy": 2
+    },
+    "features": [
+     2,
+     2,
+     2,
+     0,
+     1
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "boss",
+      "label": "Still The Boss",
+      "lean": "execution",
+      "draw": "presence",
+      "rewards": "composure",
+      "gain": 0.9,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.1 points"
+     },
+     {
+      "id": "knows",
+      "label": "He Knows",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 1.7,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.3 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "driven, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.67 (Its Comic Beats 0.78; Tragicomedy’s Comic Rhythm 0.75)",
+     "restrained by 0.34 (A Close Frame 0.5; Tragicomedy’s Played Straight 0.38)",
+     "set by 0.35 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": false,
+    "preparation": false,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 3,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "true_crime",
+   "concerns": [
+    "exactness",
+    "restraint"
+   ],
+   "a": {
+    "id": "brief-true_crime",
+    "title": "The Register At The Starlite",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "rote",
+      "label": "The Story Tells Itself",
+      "lean": "interpretation",
+      "draw": "focus",
+      "rewards": "memory",
+      "gain": 1.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 18.5 points"
+     },
+     {
+      "id": "guilt",
+      "label": "Thirty Years Of It",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.6,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, restrained, set",
+    "why": [
+     "measured by 0.52 (True Crime’s Feeling Held In 0.5; Its Grave Beats 0.44)",
+     "restrained by 0.77 (True Crime’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.67 (True Crime’s Dense Text, Exact 0.75; Its Timing 0.25)"
+    ]
+   },
+   "b": {
+    "id": "brief-true_crime-2",
+    "title": "A Correction, Episode Nine",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 3,
+    "reader": "none",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     1,
+     2,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "record",
+      "label": "Setting The Record Straight",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "composure",
+      "gain": 2.6,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 26.3 points"
+     },
+     {
+      "id": "reckoning",
+      "label": "Her Own Reckoning",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 2,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 29.6 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "measured, expansive, open",
+    "why": [
+     "measured by 0.35 (True Crime’s Feeling Held In 0.5; Its Grave Beats 0.44)",
+     "restrained by 0.27 (True Crime’s Feeling Held In 1; Your Reading, Setting The Record Straight 0.04)",
+     "set by 0.24 (True Crime’s Dense Text, Exact 0.75; Your Reading, Setting The Record Straight 0.48)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 0,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "western",
+   "concerns": [
+    "command",
+    "restraint"
+   ],
+   "a": {
+    "id": "brief-western",
+    "title": "The Well At Cutbank",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 2
+    },
+    "features": [
+     2,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "iron",
+      "label": "Iron At The Well",
+      "lean": "execution",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 0.6,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 24.5 points"
+     },
+     {
+      "id": "neighbor",
+      "label": "A Neighbor’s Choice",
+      "lean": "responsiveness",
+      "draw": "listening",
+      "rewards": "emotionalDepth",
+      "gain": 1.3,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.1 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.27 (Western’s Feeling Held In 0.5; Its Grave Beats 0.38)",
+     "restrained by 0.86 (Western’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.83 (Its Timing 0.5; Its Physical Score 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-western-2",
+    "title": "The Hammer Spring",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "pressing",
+    "transitions": 2,
+    "blends": 1,
+    "task": "A Taped Brief, On Its Feet",
+    "techniques": "combat",
+    "reads": {
+     "screen": 2,
+     "scene": 1,
+     "combat": 4
+    },
+    "features": [
+     1,
+     2,
+     2,
+     1,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "physical",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "craft",
+      "label": "Her Husband’s Trade",
+      "lean": "execution",
+      "draw": "physical",
+      "rewards": "physical",
+      "gain": 0.8,
+      "limit": "execution",
+      "chief": "Physical Expression held back the execution by 11.3 points"
+     },
+     {
+      "id": "street",
+      "label": "The Street Took Her Husband",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "composure",
+      "gain": 0.7,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.8 points"
+     },
+     {
+      "id": "decision",
+      "label": "The Spring In Her Fingers",
+      "lean": "interpretation",
+      "draw": "focus",
+      "rewards": "composure",
+      "gain": 0.8,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 25.2 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "measured by 0.04 (Western’s Feeling Held In 0.5; Its 2 Turns 0.3)",
+     "restrained by 0.75 (Western’s Feeling Held In 1; A Close Frame 0.5)",
+     "set by 0.49 (Its Physical Score 0.5; Your Reading, Her Husband’s Trade 0.38)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": true,
+    "preparation": false,
+    "readings": false,
+    "feedback": false
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 0,
+   "sameSides": true,
+   "sameSidesWithoutRegister": true
+  },
+  {
+   "genre": "whodunit",
+   "concerns": [
+    "heightened",
+    "exactness"
+   ],
+   "a": {
+    "id": "brief-whodunit",
+    "title": "The Cloakroom Ticket",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 0,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     0,
+     0
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "sleuth",
+      "label": "The Born Sleuth",
+      "lean": "execution",
+      "draw": "memory",
+      "rewards": "memory",
+      "gain": 3.8,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 16.8 points"
+     },
+     {
+      "id": "danger",
+      "label": "Keep Talking",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "memory",
+      "gain": 2.1,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15.3 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, restrained, set",
+    "why": [
+     "driven by 0.74 (Its Comic Beats 0.83; Its Timing 0.5)",
+     "expansive by 0.49 (Whodunit’s Played Large 1; Your Reading, The Born Sleuth 0.32)",
+     "set by 0.84 (Whodunit’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-whodunit-2",
+    "title": "The Note Under The Storm",
+    "medium": "voice",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "none",
+    "transitions": 5,
+    "blends": 4,
+    "task": "A Taped Brief",
+    "techniques": "voiceover",
+    "reads": {
+     "voiceover": 4,
+     "scene": 1
+    },
+    "features": [
+     2,
+     0,
+     2,
+     3,
+     0
+    ],
+    "size": "long",
+    "lines": 70,
+    "trains": "vocal",
+    "speeds": "nothing",
+    "readings": [
+     {
+      "id": "ear",
+      "label": "The Ear Never Lies",
+      "lean": "execution",
+      "draw": "memory",
+      "rewards": "memory",
+      "gain": 4.5,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 15 points"
+     },
+     {
+      "id": "help",
+      "label": "The Hired Help",
+      "lean": "connection",
+      "draw": "presence",
+      "rewards": "memory",
+      "gain": 3.2,
+      "limit": "execution",
+      "chief": "Memory held back the execution by 14 points"
+     }
+    ],
+    "rewarded": "memory",
+    "sides": "driven, expansive, set",
+    "sidesWithoutRegister": "driven, expansive, set",
+    "why": [
+     "driven by 0.39 (Its Comic Beats 0.52; Its Timing 0.5)",
+     "expansive by 0.97 (Whodunit’s Played Large 1; Its Voice Work 0.75)",
+     "set by 0.91 (Whodunit’s Dense Text, Exact 0.75; Its Timing 0.5)"
+    ]
+   },
+   "same": {
+    "circumstances": false,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 1,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "yakuza",
+   "concerns": [
+    "command",
+    "partnership"
+   ],
+   "a": {
+    "id": "brief-yakuza",
+    "title": "The Last Lesson",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 1,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     0,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "elder",
+      "label": "The Elder’s Order",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 1.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.4 points"
+     },
+     {
+      "id": "regret",
+      "label": "A Life Undone",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 22.2 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "measured, restrained, open",
+    "why": [
+     "measured by 0.15 (Its Grave Beats 0.33; Yakuza’s Command Of The Frame 0.25)",
+     "restrained by 0.39 (A Close Frame 0.5; Yakuza’s Command Of The Frame 0.25)",
+     "open by 0.62 (Its Partner 1.5; Yakuza’s Played Between Two 0.75)"
+    ]
+   },
+   "b": {
+    "id": "brief-yakuza-2",
+    "title": "Five Years From The Day",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "steady",
+    "transitions": 1,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     0,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "dignity",
+      "label": "Dignity Intact",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "composure",
+      "gain": 2.1,
+      "limit": "consistency",
+      "chief": "Composure held back the consistency by 36.3 points"
+     },
+     {
+      "id": "hope",
+      "label": "A Date To Come Back",
+      "lean": "believability",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.8,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 21.2 points"
+     }
+    ],
+    "rewarded": "composure",
+    "sides": "measured, restrained, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "measured by 0.05 (Yakuza’s Command Of The Frame 0.25; Its Grave Beats 0.25)",
+     "restrained by 0.37 (A Close Frame 0.5; Yakuza’s Command Of The Frame 0.25)",
+     "open by 0.63 (Its Partner 1.5; Yakuza’s Played Between Two 0.75)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": true,
+    "techniques": true,
+    "preparation": true,
+    "readings": true,
+    "feedback": false
+   },
+   "n": 5,
+   "repetitive": true,
+   "matched": 2,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  },
+  {
+   "genre": "zombie",
+   "concerns": [
+    "extremity"
+   ],
+   "a": {
+    "id": "brief-zombie",
+    "title": "The Last Stop",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 1,
+    "reader": "steady",
+    "transitions": 2,
+    "blends": 2,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     1,
+     1,
+     3,
+     2,
+     0
+    ],
+    "size": "short",
+    "lines": 30,
+    "trains": "vocal",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "route",
+      "label": "The Children First",
+      "lean": "consistency",
+      "draw": "composure",
+      "rewards": "emotionalDepth",
+      "gain": 2.1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 20 points"
+     },
+     {
+      "id": "friend",
+      "label": "Nine Years",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 3.4,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 17.8 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, open",
+    "sidesWithoutRegister": "measured, either, open",
+    "why": [
+     "driven by 0.05 (Zombie’s States At The Limit 0.25; Its Timing 0.25)",
+     "expansive by 0.25 (Its Voice Work 0.5; Zombie’s States At The Limit 0.5)",
+     "open by 0.32 (Its Partner 1.5)"
+    ]
+   },
+   "b": {
+    "id": "brief-zombie-2",
+    "title": "The Left Sleeve",
+    "medium": "camera",
+    "language": "everyday",
+    "stakes": 2,
+    "reader": "unpredictable",
+    "transitions": 2,
+    "blends": 3,
+    "task": "A Taped Brief",
+    "techniques": "none",
+    "reads": {
+     "screen": 2,
+     "scene": 1
+    },
+    "features": [
+     2,
+     1,
+     3,
+     0,
+     1
+    ],
+    "size": "medium",
+    "lines": 50,
+    "trains": "nothing",
+    "speeds": "listening",
+    "readings": [
+     {
+      "id": "nurse",
+      "label": "Four Hundred Today",
+      "lean": "consistency",
+      "draw": "discipline",
+      "rewards": "emotionalDepth",
+      "gain": 1.1,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.6 points"
+     },
+     {
+      "id": "father",
+      "label": "His Daughter At The Rail",
+      "lean": "connection",
+      "draw": "emotionalDepth",
+      "rewards": "emotionalDepth",
+      "gain": 2.2,
+      "limit": "believability",
+      "chief": "Emotional Depth held back the believability by 19.5 points"
+     }
+    ],
+    "rewarded": "emotionalDepth",
+    "sides": "driven, expansive, open",
+    "sidesWithoutRegister": "driven, restrained, open",
+    "why": [
+     "driven by 0.22 (Its Timing 0.5; Zombie’s States At The Limit 0.25)",
+     "expansive by 0.06 (Zombie’s States At The Limit 0.5; Its Grotesque Beats 0.13)",
+     "open by 1.01 (Its Partner 1.5; An Unpredictable Reader 1)"
+    ]
+   },
+   "same": {
+    "circumstances": true,
+    "obstacles": false,
+    "techniques": false,
+    "preparation": false,
+    "readings": false,
+    "feedback": true
+   },
+   "n": 2,
+   "repetitive": false,
+   "matched": 1,
+   "sameSides": true,
+   "sameSidesWithoutRegister": false
+  }
+ ]
+}

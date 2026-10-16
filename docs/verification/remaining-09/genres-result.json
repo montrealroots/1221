@@ -1,0 +1,896 @@
+{
+ "key": "genres",
+ "on": "2026-10-16",
+ "against": "0ad3b487 (branch genres): measured on 488fe999, whose engine reads it keeps; 0ad3b487 changes a comment and two generated maps. Before: d7127819.",
+ "checklist": "docs/verification/remaining-09/genres-checklist.json",
+ "items": [
+  {
+   "id": "genres.1-count",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "before": "The account, the closeout README and the handoff said 54.",
+   "after": "55, counted from tools/genre-audit.ts on d7127819 (the same 55 as closeout/genre-audit.md); the 54 took drama’s stage scenes off twice. After the change, 46.",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/before/genre-audit.md",
+     "title": "npx vite-node tools/genre-audit.ts -- --out … (d7127819)",
+     "kind": "static",
+     "proves": "55 genres listed as two briefs suiting the same sides; 149 of 149 helped by knowing them, 0 leaks"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > the 55 are every genre in the code (149) whose briefs suited the same sides, counted from the register as it stands",
+     "kind": "static",
+     "proves": "the list of 55 the area audited"
+    }
+   ]
+  },
+  {
+   "id": "genres.2-compare",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Nothing compared a genre’s two briefs in what the engine reads.",
+   "after": "tools/genre-pairs.ts reads them in the six parts by a rule committed (ea2c5fe2) before any brief changed. The 55 before: {\"0\": 7, \"1\": 15, \"2\": 19, \"3\": 9, \"4\": 3, \"5\": 2, \"6\": 0}; after: {\"0\": 14, \"1\": 20, \"2\": 21, \"3\": 0, \"4\": 0, \"5\": 0, \"6\": 0}.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > a brief against itself renamed is the same in all six parts: a renamed description is caught, never passed",
+     "kind": "static",
+     "proves": "the rule calls a renamed copy the same in all six parts"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > none of the 55 genres whose briefs suited the same sides on 2026-10-16 is the same in three of the six parts or more",
+     "kind": "static",
+     "proves": "no pair of the 55 is substantively repetitive now"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "tools/genre-pairs.ts (copy)",
+     "find": "circumstances: a.medium === b.medium && a.language === b.language && …",
+     "replace": "circumstances: a.language === b.language && …",
+     "killed": true,
+     "by": "none of the 55 … and animated: …"
+    },
+    {
+     "file": "tools/genre-pairs.ts (copy)",
+     "find": "readings: matched >= 2,",
+     "replace": "readings: matched >= 3,",
+     "killed": true,
+     "by": "a brief against itself renamed is the same in all six parts: …"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-animated",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-animated-2, The Puddle On Larch Street: the same as High Wind in 4 of six (circumstances, obstacles, preparation, feedback).",
+   "after": "brief-animated-3, The Lamp On Gull Rock: the same in 0 of six (none); sides driven, expansive, set · driven, expansive, set; rewards vocal · physical.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > animated: its second situation is The Lamp On Gull Rock, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > animated: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-animated-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Puddle On Larch Street retired; The Lamp On Gull Rock written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-a.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-christmas",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-christmas-2, The Box With His Name On It: the same as The Christmas Eve Loaf in 3 of six (circumstances, techniques, readings).",
+   "after": "brief-christmas-3, The Last Hour In The Grotto: the same in 1 of six (circumstances); sides measured, restrained, open · driven, restrained, open; rewards emotionalDepth · adaptability.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > christmas: its second situation is The Last Hour In The Grotto, under a new id, and its two briefs are the same in circumstances",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > christmas: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-christmas-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Box With His Name On It retired; The Last Hour In The Grotto written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-a.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-conspiracy_thriller",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-conspiracy_thriller-2, The Revised Forecast: the same as The Amended Minutes in 3 of six (circumstances, techniques, feedback).",
+   "after": "brief-conspiracy_thriller-3, Everything In Order: the same in 0 of six (none); sides measured, restrained, set · measured, restrained, set; rewards focus · composure.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > conspiracy_thriller: its second situation is Everything In Order, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > conspiracy_thriller: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-conspiracy_thriller-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Revised Forecast retired; Everything In Order written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-b.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-farce",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-farce-2, The Sideways Presentation: the same as The Second Cake in 3 of six (circumstances, techniques, feedback).",
+   "after": "brief-farce-3, Rooms 412, 414 And 416: the same in 1 of six (techniques); sides driven, expansive, set · driven, expansive, set; rewards physical · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > farce: its second situation is Rooms 412, 414 And 416, under a new id, and its two briefs are the same in techniques",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > farce: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-farce-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Sideways Presentation retired; Rooms 412, 414 And 416 written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-c.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-film_noir",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-film_noir-2, The Number He Left: the same as The Night Line in 3 of six (techniques, readings, feedback).",
+   "after": "brief-film_noir-3, The Pawn Ticket: the same in 1 of six (circumstances); sides measured, restrained, set · measured, restrained, open; rewards composure · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > film_noir: its second situation is The Pawn Ticket, under a new id, and its two briefs are the same in circumstances",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > film_noir: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-film_noir-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Number He Left retired; The Pawn Ticket written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-c.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-gothic_horror",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-gothic_horror-2, The Locked Organ: the same as The Steward’s Ledger in 3 of six (techniques, readings, feedback).",
+   "after": "brief-gothic_horror-3, Entries For The Twelfth Of November: the same in 0 of six (none); sides measured, expansive, set · measured, expansive, set; rewards memory · vocal.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > gothic_horror: its second situation is Entries For The Twelfth Of November, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > gothic_horror: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-gothic_horror-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Locked Organ retired; Entries For The Twelfth Of November written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-c.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-jukebox_musical",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-jukebox_musical-2, The Resignation Number: the same as The Reunion Set in 3 of six (circumstances, preparation, feedback).",
+   "after": "brief-jukebox_musical-3, The Last Dance Before The Cake: the same in 1 of six (circumstances); sides driven, expansive, set · driven, expansive, set; rewards vocal · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > jukebox_musical: its second situation is The Last Dance Before The Cake, under a new id, and its two briefs are the same in circumstances",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > jukebox_musical: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-jukebox_musical-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Resignation Number retired; The Last Dance Before The Cake written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-c.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-new_wave",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-new_wave-2, Five Minutes Before The Lights: the same as The Night Train South in 4 of six (circumstances, preparation, readings, feedback).",
+   "after": "brief-new_wave-3, The Long Take On The Quay: the same in 1 of six (circumstances); sides driven, restrained, open · measured, expansive, open; rewards adaptability · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > new_wave: its second situation is The Long Take On The Quay, under a new id, and its two briefs are the same in circumstances",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > new_wave: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-new_wave-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Five Minutes Before The Lights retired; The Long Take On The Quay written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-d.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-psychological_thriller",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-psychological_thriller-2, The Overnight Study: the same as The Rehung Frames in 3 of six (circumstances, techniques, feedback).",
+   "after": "brief-psychological_thriller-3, The Third Telling: the same in 0 of six (none); sides measured, restrained, set · driven, restrained, set; rewards composure · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > psychological_thriller: its second situation is The Third Telling, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > psychological_thriller: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-psychological_thriller-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Overnight Study retired; The Third Telling written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-e.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-samurai",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-samurai-2, The First Form: the same as The Crossing At Dawn in 3 of six (circumstances, techniques, preparation).",
+   "after": "brief-samurai-3, Two Bowls Of Rice A Day: the same in 2 of six (techniques, feedback); sides measured, restrained, set · driven, expansive, open; rewards physical · physical.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > samurai: its second situation is Two Bowls Of Rice A Day, under a new id, and its two briefs are the same in techniques and feedback",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > samurai: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-samurai-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The First Form retired; Two Bowls Of Rice A Day written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-e.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-silent_film",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-silent_film-2, Her First Sitting Alone: the same as The Telegram For Miss Avery in 5 of six (circumstances, techniques, preparation, readings, feedback).",
+   "after": "brief-silent_film-3, Forty Feet Left: the same in 2 of six (circumstances, feedback); sides driven, expansive, set · driven, expansive, open; rewards physical · physical.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > silent_film: its second situation is Forty Feet Left, under a new id, and its two briefs are the same in circumstances and feedback",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > silent_film: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-silent_film-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Her First Sitting Alone retired; Forty Feet Left written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-e.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-sword_and_sorcery",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-sword_and_sorcery-2, The Last Night On Guard: the same as The Bridge Toll in 4 of six (circumstances, techniques, preparation, readings).",
+   "after": "brief-sword_and_sorcery-3, The Oath In The Old Tongue: the same in 0 of six (none); sides measured, restrained, set · measured, expansive, set; rewards physical · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > sword_and_sorcery: its second situation is The Oath In The Old Tongue, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > sword_and_sorcery: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-sword_and_sorcery-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Last Night On Guard retired; The Oath In The Old Tongue written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-f.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-tragicomedy",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-tragicomedy-2, The Soup Lesson: the same as Three Minutes in 3 of six (circumstances, obstacles, readings).",
+   "after": "brief-tragicomedy-3, Episode Two Hundred: the same in 0 of six (none); sides driven, restrained, set · driven, expansive, set; rewards focus · memory.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > tragicomedy: its second situation is Episode Two Hundred, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > tragicomedy: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-tragicomedy-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The Soup Lesson retired; Episode Two Hundred written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-f.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.3-yakuza",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "brief-yakuza-2, Five Years From The Day: the same as The Last Lesson in 5 of six (circumstances, obstacles, techniques, preparation, readings).",
+   "after": "brief-yakuza-3, The Cups At The Ferry House: the same in 0 of six (none); sides measured, restrained, open · measured, restrained, set; rewards emotionalDepth · discipline.",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "the genres revised on 2026-10-16 > yakuza: its second situation is The Cups At The Ferry House, under a new id, and its two briefs are the same in none of the six parts",
+     "kind": "static",
+     "proves": "the new scene is the genre’s second, its register the genre’s, the old id retired, and the parts the same as worked by hand"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "two situations for every genre > yakuza: its briefs are different situations",
+     "kind": "static",
+     "proves": "its wording apart from the first, two or more setting axes different"
+    },
+    {
+     "file": "tests/briefs-content.test.ts",
+     "title": "each practice brief > brief-yakuza-3: is a whole, honest brief",
+     "kind": "static",
+     "proves": "whole, its features said why, its genre’s applied demands staged, two or more readings leaning differently"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Five Years From The Day retired; The Cups At The Ferry House written for SLATE in its place",
+     "where": "src/engine/content/briefs/second-f.ts",
+     "failingTest": "tests/remaining-genres.test.ts “none of the 55 …” (mutation: the retired scene restored, killed for yakuza)"
+    }
+   ]
+  },
+  {
+   "id": "genres.4-kept",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "before": "“Their registers agree”, said of all 55 alike.",
+   "after": "41 kept, each with the parts it differs in and, axis by axis, whether the register or the scenes carry its sides (genres-09.md §4).",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09.md",
+     "title": "§4, the per-genre table",
+     "kind": "static",
+     "proves": "each kept genre’s reason, from tools/genre-pairs.ts"
+    }
+   ]
+  },
+  {
+   "id": "genres.5-saves",
+   "status": "Implemented And Verified",
+   "disposition": "older-save compatibility kept and tested",
+   "before": "No brief had been retired; a record under an id with no brief was read by suggestions, artistry, workpieces and the genre’s look, the last dropping its take.",
+   "after": "The record stays as it was across a reload; nothing offers it; every command on it is refused as any missing brief is; the new scene starts from nothing; the genre’s look still lists its take (briefKinds).",
+   "evidence": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a save that prepared a retired brief > keeps its record as it was across a reload, and nothing offers it or reads it as the new scene",
+     "kind": "fixture",
+     "proves": "FIXTURE: a record and a take copied under brief-yakuza-2 from one played on brief-yakuza"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a save that prepared a retired brief > its take is still the genre’s: the genre’s look lists it among its tapes",
+     "kind": "render",
+     "proves": "the yakuza look lists the retired take"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a save that prepared a retired brief > GUARD: a retired id names its genres, one offered now its own, and an id never written none",
+     "kind": "fixture",
+     "proves": "briefKinds"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/briefs/index.ts (copy)",
+     "find": "BRIEF_BY_ID[id]?.kinds ?? RETIRED_BRIEFS[id]?.kinds ?? []",
+     "replace": "BRIEF_BY_ID[id]?.kinds ?? []",
+     "killed": true,
+     "by": "its take is still the genre’s …; GUARD: …"
+    },
+    {
+     "file": "src/engine/content/briefs/second-f.ts (copy)",
+     "find": "brief-yakuza-3, The Cups At The Ferry House",
+     "replace": "the retired brief-yakuza-2, Five Years From The Day, as d7127819 had it",
+     "killed": true,
+     "by": "none of the 55 …; yakuza: …; every brief retired …; keeps its record …; GUARD: …"
+    }
+   ],
+   "classification": "older-save compatibility"
+  },
+  {
+   "id": "genres.6-table",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "None.",
+   "after": "docs/verification/integration-2026-10-16/genres-09.md §4: 55 rows, before and after, from tools/genre-pairs.ts.",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/genre-pairs.json",
+     "title": "npx vite-node tools/genre-pairs.ts -- --genres <the 55> --json …",
+     "kind": "static",
+     "proves": "the figures the table is written from"
+    }
+   ]
+  },
+  {
+   "id": "genres.7-measured",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "before": "designed: S1 0.901 (least 0.842), S2 revised 1.599, nearest 98.7%, S3 revised 88.8%; heldOut: S1 0.883 (least 0.809), S2 revised 1.612, nearest 98.7%, S3 revised 82.9%; designedFresh: S1 0.904 (least 0.845), S2 revised 1.598, nearest 98.7%, S3 revised 87.4%; heldOutFresh: S1 0.88 (least 0.785), S2 revised 1.613, nearest 98.7%, S3 revised 82.0%; S3 validate 87.9%; G2 0 pairs; audit: 149 of 149 helped by knowing them; 0 leak into another genre; 55 weaknesses.; I2 pace 24.2%, scale 20.8%, structure 32.9%; M1 Meets briefs 4495 of 4495; scenes 60 of 60; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0 [every case 100]; G3 Meets the most any actor is best on: 53 of 149; 8 actors best on 10 or more [at most half; at least 4 on 10 or more]; G4 Meets 2 briefs, 4 readings at least; 4 reader behaviors [2 briefs and 4 readings a genre; 3 behaviors]; G5 Meets 51.22 at 30 known, 53.86 at 100 [a change the screen shows (a tenth or more)]; H2 Meets brief: emotionalDepth specialist 96 of 298; scene: listening specialist 20 of 60; night: emotionalDepth specialist 7 of 30; casting: emotionalDepth specialist 7 of 30 [at most half of any kind with 30 or more]; H4 FAILS 2 of 12: emotionalDepth 85.0%, presence 9.5%, listening 66.4%, imagination 46.8%, focus 56.9%, memory 50.6%, adaptability 54.1%, composure 50.2%, vocal 49.7%, physical 35.8%, discipline 13.2%, stamina 4.7% [60% for 10 of 12]",
+   "after": "designed: S1 0.901 (least 0.842), S2 revised 1.599, nearest 98.7%, S3 revised 88.8%; heldOut: S1 0.885 (least 0.807), S2 revised 1.614, nearest 98.7%, S3 revised 81.4%; designedFresh: S1 0.904 (least 0.845), S2 revised 1.598, nearest 98.7%, S3 revised 87.4%; heldOutFresh: S1 0.881 (least 0.786), S2 revised 1.614, nearest 98.7%, S3 revised 81.7%; S3 validate 87.6%; G2 0 pairs; audit: 149 of 149 helped by knowing them; 0 leak into another genre; 46 weaknesses.; I2 pace 26.8%, scale 23.5%, structure 35.6%; M1 Meets briefs 4560 of 4560; scenes 60 of 60; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0 [every case 100]; G3 Meets the most any actor is best on: 50 of 149; 8 actors best on 10 or more [at most half; at least 4 on 10 or more]; G4 Meets 2 briefs, 4 readings at least; 4 reader behaviors [2 briefs and 4 readings a genre; 3 behaviors]; G5 Meets 51.13 at 30 known, 53.74 at 100 [a change the screen shows (a tenth or more)]; H2 Meets brief: emotionalDepth specialist 94 of 298; scene: listening specialist 20 of 60; night: emotionalDepth specialist 7 of 30; casting: emotionalDepth specialist 7 of 30 [at most half of any kind with 30 or more]; H4 FAILS 2 of 12: emotionalDepth 85.0%, presence 9.7%, listening 65.4%, imagination 46.2%, focus 55.6%, memory 52.1%, adaptability 53.6%, composure 49.2%, vocal 55.3%, physical 36.2%, discipline 14.8%, stamina 4.6% [60% for 10 of 12]",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/signature.json",
+     "title": "npx vite-node tools/genre-signature.ts -- --out …",
+     "kind": "static",
+     "proves": "S1 to S3 on the designed and held-out samples"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/signature-fresh.json",
+     "title": "npx vite-node tools/genre-signature.ts -- --fresh --out …",
+     "kind": "static",
+     "proves": "S1 to S3 on the fresh samples"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/signature-validate.json",
+     "title": "npx vite-node tools/genre-signature.ts -- --validate --out …",
+     "kind": "static",
+     "proves": "S3 on second readings off the grid"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/genre-identity.json",
+     "title": "npx vite-node tools/genre-identity.ts -- --out …",
+     "kind": "static",
+     "proves": "S4 (G2): 0 pairs"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/genre-audit.md",
+     "title": "npx vite-node tools/genre-audit.ts -- --out …",
+     "kind": "static",
+     "proves": "each genre helps its own brief, moves no other"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/ag-criteria.txt",
+     "title": "node tools/ag-criteria.mjs …/ag-baseline.json",
+     "kind": "static",
+     "proves": "M1, G3 to G5 and the attributes’ criteria"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/genres-09/after/interpretation.json",
+     "title": "npx vite-node tools/interpretation.ts -- --fresh --stage --out …",
+     "kind": "static",
+     "proves": "I1 to I5 and the stage"
+    }
+   ],
+   "assumptions": [
+    "The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.",
+    "S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5)."
+   ]
+  },
+  {
+   "id": "genres.8-docs",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "before": "docs/GENRE-COVERAGE.md names each genre’s first brief; no guide or tutorial text names a retired scene.",
+   "after": "npx vite-node tools/genre-coverage.ts regenerated docs/GENRE-COVERAGE.md unchanged (no first brief changed); no guide, tutorial, source or test outside content/briefs names a retired title or id (grep). The audit tool works out I2 instead of quoting it (69c965cc).",
+   "evidence": [
+    {
+     "file": "tests/genre-coverage.test.ts",
+     "title": "the coverage record > is what the tables say, and accounts for every genre once",
+     "kind": "static",
+     "proves": "the document held to the tables"
+    }
+   ]
+  }
+ ],
+ "commits": [
+  "0ad3b487 The new test is in the maps, and the look's comment writes the house's apostrophe",
+  "488fe999 Two of the new scenes keep the body a real share of their execution",
+  "69c965cc The audit measures I2 instead of quoting the day's figures",
+  "c6abcee3 Fourteen genres' second situations replaced: they asked what the first did",
+  "ea2c5fe2 A genre's two briefs compared in what the engine reads, not their wording",
+  "08d6bbbb The genre area's checklist, written before any of its code changed"
+ ],
+ "checks": [
+  {
+   "command": "npx tsc -b --noEmit",
+   "exit": 0
+  },
+  {
+   "command": "npx eslint .",
+   "exit": 0
+  },
+  {
+   "command": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/deciders.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "command": "npx vite-node tools/geo-check.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/devmap.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/traceability.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/capabilities.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  }
+ ],
+ "seeds": {
+  "tools/genre-signature.ts": "signature",
+  "tools/genre-identity.ts": "ag-baseline",
+  "tools/ag-baseline.ts": "ag-baseline, draws ag-<n>",
+  "tools/interpretation.ts": "interpretation",
+  "tools/genre-audit.ts": "audit",
+  "tools/genre-pairs.ts": "genre-pairs",
+  "tests/remaining-genres.test.ts": "retired-brief"
+ },
+ "outside": [
+  "The account (README.md For The Owner 6), closeout/README.md and the handoff say 54 genres; the audit lists 55, all same-sides genres: drama’s stage scenes were taken off twice.",
+  "Eighteen genres outside the 55 are the same in three or more of the six parts by the same rule, their sides differing; counting the sides as a seventh part, as for the 55, six reach the threshold: art_house, biker, childrens, detective, nordic_noir, screwball_comedy (genres-09/after/genre-pairs-all.json). Not in brief 09’s list; reported, not changed.",
+  "A brief carries no circumstances levels (concealment, intimacy, address, confrontation) where class scenes and plays do and suitabilityOf reads them: briefMaterial (systems/briefs.ts) passes none. The judge’s to weigh: giving all 298 briefs levels changes suitability across the catalog.",
+  "The brief catalog changed under played tools: tools/brief-journeys.ts (L1 to L3) and the advice cases (F2) played some retired scenes (closeout/journey-*-bj-0.json, l3-trace-*, runs/advice-cases.json); their owners should run them again on the integrated tree.",
+  "H4 moved a little with the new scenes (vocal 49.7% to 55.3%, discipline 13.2% to 14.8%, memory 50.6% to 52.1%; still 2 of 12): the H4 area works on the judge and content in its own clone, and may add briefs to content/briefs/, which this area also changed: expect to merge.",
+  "Artistry’s “Readings Toward …” habit counts a retired brief’s takes without their reading’s lean (systems/artistry.ts:159-166); left as it is.",
+  "tools/traceability.mjs crashed in a git-less copy of d7127819 (genres-old); in the clone it ran and wrote. Not investigated further."
+ ],
+ "testsRun": {
+  "how": "each file alone: VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run <file>, on 488fe999 (looks.test.ts rerun after 0ad3b487)",
+  "files": 100,
+  "lines": [
+   "tests/acceptance-contract.test.ts exit=0  Tests 2 passed (2)",
+   "tests/advice.test.ts exit=0  Tests 5 passed (5)",
+   "tests/arrears.test.ts exit=0  Tests 18 passed (18)",
+   "tests/attributes-complete.test.ts exit=0  Tests 12 passed (12)",
+   "tests/attributes-matrix.test.ts exit=0  Tests 1 passed (1)",
+   "tests/attributes-phase-2a.test.ts exit=0  Tests 13 passed (13)",
+   "tests/attributes-phase-2b.test.ts exit=0  Tests 13 passed (13)",
+   "tests/briefs-content.test.ts exit=0  Tests 451 passed (451)",
+   "tests/briefs-situations.test.ts exit=0  Tests 1 passed (1)",
+   "tests/briefs.test.ts exit=0  Tests 30 passed (30)",
+   "tests/cards.test.ts exit=0  Tests 17 passed (17)",
+   "tests/cohesion.test.ts exit=0  Tests 19 passed (19)",
+   "tests/condition-reach.test.ts exit=0  Tests 5 passed (5)",
+   "tests/connected-properties.test.ts exit=0  Tests 4 passed (4)",
+   "tests/coursework-defects.test.ts exit=0  Tests 4 passed (4)",
+   "tests/coursework-objective.test.ts exit=0  Tests 3 passed (3)",
+   "tests/creation.test.ts exit=0  Tests 25 passed (25)",
+   "tests/defects-g29-1.test.ts exit=0  Tests 3 passed (3)",
+   "tests/defects-g3-1.test.ts exit=0  Tests 7 passed (7)",
+   "tests/defects-g30-1.test.ts exit=0  Tests 3 passed (3)",
+   "tests/defects-g31-1.test.ts exit=0  Tests 3 passed (3)",
+   "tests/defects-g6-1.test.ts exit=0  Tests 5 passed (5)",
+   "tests/defects-g8-10.test.ts exit=0  Tests 7 passed (7)",
+   "tests/defects-g8-11.test.ts exit=0  Tests 7 passed (7)",
+   "tests/defects-g8-12.test.ts exit=0  Tests 6 passed (6)",
+   "tests/defects-g8-15.test.ts exit=0  Tests 4 passed (4)",
+   "tests/defects-g8-9.test.ts exit=0  Tests 7 passed (7)",
+   "tests/defects-r2-1.test.ts exit=0  Tests 4 passed (4)",
+   "tests/defects-r8-1.test.ts exit=0  Tests 10 passed (10)",
+   "tests/defects3-unread.test.ts exit=0  Tests 6 passed (6)",
+   "tests/determinism-played.test.ts exit=0  Tests 1 passed (1)",
+   "tests/development.test.ts exit=0  Tests 6 passed (6)",
+   "tests/direction-mastery.test.ts exit=0  Tests 1 passed (1)",
+   "tests/engagement.test.ts exit=0  Tests 5 passed (5)",
+   "tests/engine-properties.test.ts exit=0  Tests 11 passed (11)",
+   "tests/ensemble.test.ts exit=0  Tests 11 passed (11)",
+   "tests/evaluation.test.ts exit=0  Tests 12 passed (12)",
+   "tests/evidence-g06-life.test.ts exit=0  Tests 33 passed (33)",
+   "tests/evidence-g07-life.test.ts exit=0  Tests 29 passed (29)",
+   "tests/evidence-g09-life.test.ts exit=0  Tests 20 passed (20)",
+   "tests/evidence-g13-money.test.ts exit=0  Tests 25 passed (25)",
+   "tests/evidence-g18-school.test.ts exit=0  Tests 32 passed (32)",
+   "tests/evidence-g19-school.test.ts exit=0  Tests 19 passed (19)",
+   "tests/evidence-g20-school.test.ts exit=0  Tests 27 passed (27)",
+   "tests/evidence-g21-school.test.ts exit=0  Tests 24 passed (24)",
+   "tests/evidence-g23-school.test.ts exit=0  Tests 34 passed (34)",
+   "tests/evidence-g24-school.test.ts exit=0  Tests 29 passed (29)",
+   "tests/evidence-g26-school.test.ts exit=0  Tests 24 passed (24)",
+   "tests/evidence-g28-ui.test.ts exit=0  Tests 21 passed (21)",
+   "tests/evidence-g29-ui.test.ts exit=0  Tests 27 passed (27)",
+   "tests/evidence-g31-ui.test.ts exit=0  Tests 21 passed (21)",
+   "tests/evidence-g33-ui.test.ts exit=0  Tests 35 passed (35)",
+   "tests/evidence-g34-ui.test.ts exit=0  Tests 15 passed (15)",
+   "tests/evidence2-b08.test.ts exit=0  Tests 11 passed (11)",
+   "tests/evidence2-b09.test.ts exit=0  Tests 15 passed (15)",
+   "tests/evidence2-b10.test.ts exit=0  Tests 18 passed (18)",
+   "tests/evidence2-b11.test.ts exit=0  Tests 15 passed (15)",
+   "tests/evidence2-b13.test.ts exit=0  Tests 6 passed (6)",
+   "tests/evidence3-person.test.ts exit=0  Tests 19 passed (19)",
+   "tests/evidence3-school.test.ts exit=0  Tests 11 passed (11)",
+   "tests/feedback.test.ts exit=0  Tests 5 passed (5)",
+   "tests/genre-coverage.test.ts exit=0  Tests 6 passed (6)",
+   "tests/genre-identity-screens.test.ts exit=0  Tests 2 passed (2)",
+   "tests/genre-identity.test.ts exit=0  Tests 10 passed (10)",
+   "tests/genre-reader.test.ts exit=0  Tests 6 passed (6)",
+   "tests/guide-examples-coursework.test.ts exit=0  Tests 9 passed (9)",
+   "tests/guide-examples-craft.test.ts exit=0  Tests 10 passed (10)",
+   "tests/history-continuity.test.ts exit=0  Tests 2 passed (2)",
+   "tests/integration-mastery.test.ts exit=0  Tests 6 passed (6)",
+   "tests/integration-stage.test.ts exit=0  Tests 4 passed (4)",
+   "tests/interpretation-journey.test.ts exit=0  Tests 1 passed (1)",
+   "tests/interpretation.test.ts exit=0  Tests 9 passed (9)",
+   "tests/journey-limits.test.ts exit=0  Tests 2 passed (2)",
+   "tests/looks.test.ts exit=1  Tests 1 failed | 22 passed (23)  [rerun after the fix of ui/looks/actor.tsx:171: exit=0, 23 passed]",
+   "tests/mastery-contract.test.ts exit=0  Tests 4 passed (4)",
+   "tests/mastery-integration.test.ts exit=0  Tests 2 passed (2)",
+   "tests/material.test.ts exit=0  Tests 16 passed (16)",
+   "tests/migration-92.test.ts exit=0  Tests 5 passed (5)",
+   "tests/migration-94.test.ts exit=0  Tests 4 passed (4)",
+   "tests/navigation.test.ts exit=0  Tests 8 passed (8)",
+   "tests/need-paths.test.ts exit=0  Tests 17 passed (17)",
+   "tests/partners.test.ts exit=0  Tests 5 passed (5)",
+   "tests/piece.test.ts exit=0  Tests 8 passed (8)",
+   "tests/remaining-genres.test.ts exit=0  Tests 21 passed (21)",
+   "tests/remaining-papers.test.ts exit=0  Tests 7 passed (7)",
+   "tests/remaining-school.test.ts exit=0  Tests 29 passed (29)",
+   "tests/rounding-once.test.ts exit=0  Tests 4 passed (4)",
+   "tests/scenes.test.ts exit=0  Tests 4 passed (4)",
+   "tests/scope-money.test.ts exit=0  Tests 31 passed (31)",
+   "tests/scope-people.test.ts exit=0  Tests 4 passed (4)",
+   "tests/scope-school.test.ts exit=0  Tests 20 passed (20)",
+   "tests/scope-taxpapers.test.ts exit=0  Tests 17 passed (17)",
+   "tests/skills.test.ts exit=0  Tests 5 passed (5)",
+   "tests/stage-interpretation.test.ts exit=0  Tests 12 passed (12)",
+   "tests/traits-connected.test.ts exit=0  Tests 7 passed (7)",
+   "tests/ui-fixes.test.ts exit=0  Tests 4 passed (4)",
+   "tests/whynot-profile.test.ts exit=0  Tests 3 passed (3)",
+   "tests/workbook.test.ts exit=0  Tests 8 passed (8)",
+   "tests/workload.test.ts exit=0  Tests 10 passed (10)",
+   "done"
+  ]
+ }
+}

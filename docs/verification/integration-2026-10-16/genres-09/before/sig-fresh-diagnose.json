@@ -1,0 +1,455 @@
+{
+ "blind": false,
+ "designedFresh": {
+  "scenes": 99,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.904,
+   "least": 0.845,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.219,
+    "1": 4.219,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.474,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.741,
+   "one": 4.219,
+   "opposedOverOne": 1.598,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 28413,
+   "differing": 24838,
+   "differ": 0.874,
+   "holds": true,
+   "missesByMediumAndReader": {
+    "camera, steady reader": [
+     3143,
+     25830
+    ],
+    "voice, no reader": [
+     79,
+     861
+    ],
+    "camera, unpredictable reader": [
+     73,
+     287
+    ],
+    "camera, withholding reader": [
+     263,
+     1148
+    ],
+    "camera, pressing reader": [
+     17,
+     287
+    ]
+   },
+   "missesByScene": {
+    "brief-apocalyptic": 173,
+    "brief-parody": 169,
+    "brief-swashbuckler": 159,
+    "brief-found_footage": 149,
+    "brief-social_realism": 149,
+    "brief-espionage": 113,
+    "brief-absurdist": 92,
+    "brief-new_wave": 88,
+    "brief-prison_film": 88,
+    "brief-horror_comedy": 80,
+    "brief-coming_of_age": 73,
+    "brief-dystopian": 70,
+    "brief-kitchen_sink": 70,
+    "brief-historical_fiction": 66,
+    "brief-domestic_drama": 59,
+    "brief-farce": 59,
+    "brief-jukebox_musical": 58,
+    "brief-romantic_comedy": 55,
+    "brief-slapstick": 55,
+    "brief-romantic_drama": 52,
+    "brief-black_comedy": 51,
+    "brief-satire": 51,
+    "brief-science_fantasy": 51,
+    "brief-buddy_comedy": 49,
+    "brief-exploitation": 49,
+    "brief-horror": 49,
+    "brief-christmas": 48,
+    "brief-martial_arts": 45,
+    "brief-screwball_comedy": 44,
+    "brief-tragicomedy": 44,
+    "brief-musical": 43,
+    "brief-alternate_history": 42,
+    "brief-animated": 42,
+    "brief-true_crime": 42,
+    "brief-action_comedy": 39,
+    "brief-supernatural": 38,
+    "brief-stoner_comedy": 36,
+    "brief-time_travel": 36,
+    "brief-whodunit": 35,
+    "brief-post_apocalyptic": 34,
+    "brief-road_movie": 34,
+    "brief-psychological_thriller": 32,
+    "brief-dark_fantasy": 29,
+    "brief-nordic_noir": 29,
+    "brief-folk_horror": 28,
+    "brief-caper": 27,
+    "brief-childrens": 27,
+    "brief-chanbara": 26,
+    "brief-nature_documentary": 26,
+    "brief-slasher": 26,
+    "brief-mockumentary": 25,
+    "brief-police_procedural": 24,
+    "brief-wuxia": 23,
+    "brief-heist": 22,
+    "brief-werewolf": 21,
+    "brief-sword_and_sandal": 20,
+    "brief-creature_feature": 19,
+    "brief-dance": 19,
+    "brief-neo_noir": 19,
+    "brief-splatter": 19,
+    "brief-eco_horror": 18,
+    "brief-medical_drama": 17,
+    "brief-mumblecore": 17,
+    "brief-queer_cinema": 16,
+    "brief-disaster": 15,
+    "brief-space_opera": 14,
+    "brief-biographical": 13,
+    "brief-giallo": 13,
+    "brief-docudrama": 12,
+    "brief-legal_drama": 12,
+    "brief-sports": 12,
+    "brief-costume_drama": 11,
+    "brief-documentary": 11,
+    "brief-military": 11,
+    "brief-body_horror": 10,
+    "brief-concert_film": 10,
+    "brief-gothic_horror": 10,
+    "brief-jidaigeki": 10,
+    "brief-teen": 9,
+    "brief-zombie": 9,
+    "brief-techno_thriller": 8,
+    "brief-anthology": 7,
+    "brief-fantasy": 7,
+    "brief-hangout": 7,
+    "brief-rockumentary": 7,
+    "brief-sea_adventure": 7,
+    "brief-tokusatsu": 7,
+    "brief-war": 7,
+    "brief-avant_garde": 5,
+    "brief-backstage_musical": 5,
+    "brief-political_drama": 5,
+    "brief-surrealist": 5,
+    "brief-crime": 3,
+    "brief-erotic_thriller": 2,
+    "brief-cosmic_horror": 1,
+    "brief-holiday": 1,
+    "brief-period_drama": 1
+   }
+  },
+  "S3": {
+   "cases": 57915,
+   "differing": 45922,
+   "differ": 0.793,
+   "holds": false,
+   "missesByKinship": {
+    "-0.5": [
+     1784,
+     15444
+    ],
+    "1.0": [
+     1143,
+     2673
+    ],
+    "0.0": [
+     4436,
+     24156
+    ],
+    "0.5": [
+     4546,
+     13959
+    ],
+    "-1.0": [
+     84,
+     1683
+    ]
+   },
+   "missedSides": {
+    "100": 2339,
+    "101": 1225,
+    "110": 1907,
+    "111": 147,
+    "000": 3087,
+    "001": 2517,
+    "010": 602,
+    "011": 169
+   },
+   "missesByScene": {
+    "brief-apocalyptic": 386,
+    "brief-parody": 373,
+    "brief-swashbuckler": 358,
+    "brief-found_footage": 357,
+    "brief-social_realism": 357,
+    "brief-espionage": 280,
+    "brief-absurdist": 262,
+    "brief-prison_film": 251,
+    "brief-new_wave": 245,
+    "brief-jukebox_musical": 244,
+    "brief-historical_fiction": 229,
+    "brief-horror_comedy": 229
+   },
+   "missesByPair": {
+    "adventure/costume_drama": 75,
+    "adventure/historical_fiction": 75,
+    "gangster/historical_drama": 75,
+    "chase/drama": 66,
+    "biker/cosmic_horror": 63,
+    "adventure/caper": 61,
+    "art_house/thriller": 61,
+    "docufiction/romance": 61,
+    "film_noir/thriller": 61,
+    "experimental/military": 60,
+    "revenge/surrealist": 60,
+    "adventure/art_house": 58
+   }
+  }
+ },
+ "heldOutFresh": {
+  "scenes": 99,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.88,
+   "least": 0.785,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.06,
+    "1": 4.136,
+    "2": 0.001
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.465,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.67,
+   "one": 4.136,
+   "opposedOverOne": 1.613,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 28413,
+   "differing": 23304,
+   "differ": 0.82,
+   "holds": true,
+   "missesByMediumAndReader": {
+    "camera, unpredictable reader": [
+     1404,
+     7462
+    ],
+    "camera, pressing reader": [
+     704,
+     4879
+    ],
+    "voice, no reader": [
+     1182,
+     5740
+    ],
+    "camera, withholding reader": [
+     1230,
+     5740
+    ],
+    "camera, steady reader": [
+     589,
+     4592
+    ]
+   },
+   "missesByScene": {
+    "brief-concert_film-2": 190,
+    "brief-musical-2": 175,
+    "brief-screwball_comedy-2": 170,
+    "brief-horror_comedy-2": 150,
+    "brief-folk_horror-2": 148,
+    "brief-parody-2": 148,
+    "brief-jukebox_musical-2": 135,
+    "brief-supernatural-2": 131,
+    "brief-backstage_musical-2": 122,
+    "brief-satire-2": 115,
+    "brief-new_wave-2": 114,
+    "brief-whodunit-2": 113,
+    "brief-apocalyptic-2": 99,
+    "brief-tokusatsu-2": 94,
+    "brief-techno_thriller-2": 90,
+    "brief-true_crime-2": 85,
+    "brief-nature_documentary-2": 83,
+    "brief-stoner_comedy-2": 83,
+    "brief-romantic_comedy-2": 80,
+    "brief-erotic_thriller-2": 78,
+    "brief-slapstick-2": 76,
+    "brief-christmas-2": 74,
+    "brief-absurdist-2": 73,
+    "brief-animated-2": 73,
+    "brief-fantasy-2": 73,
+    "brief-cosmic_horror-2": 70,
+    "brief-social_realism-2": 70,
+    "brief-found_footage-2": 69,
+    "brief-hangout-2": 69,
+    "brief-period_drama-2": 69,
+    "brief-avant_garde-2": 64,
+    "brief-political_drama-2": 63,
+    "brief-sword_and_sandal-2": 63,
+    "brief-historical_fiction-2": 62,
+    "brief-mockumentary-2": 58,
+    "brief-action_comedy-2": 57,
+    "brief-anthology-2": 55,
+    "brief-buddy_comedy-2": 55,
+    "brief-caper-2": 52,
+    "brief-documentary-2": 52,
+    "brief-espionage-2": 52,
+    "brief-domestic_drama-2": 51,
+    "brief-holiday-2": 51,
+    "brief-dance-2": 49,
+    "brief-creature_feature-2": 48,
+    "brief-romantic_drama-2": 46,
+    "brief-space_opera-2": 45,
+    "brief-swashbuckler-2": 45,
+    "brief-giallo-2": 44,
+    "brief-post_apocalyptic-2": 42,
+    "brief-prison_film-2": 42,
+    "brief-crime-2": 41,
+    "brief-black_comedy-2": 40,
+    "brief-steampunk-2": 40,
+    "brief-farce-2": 37,
+    "brief-sea_adventure-2": 34,
+    "brief-sports-2": 33,
+    "brief-rockumentary-2": 30,
+    "brief-childrens-2": 28,
+    "brief-time_travel-2": 28,
+    "brief-dystopian-2": 27,
+    "brief-road_movie-2": 26,
+    "brief-fairy_tale-2": 25,
+    "brief-heist-2": 24,
+    "brief-wuxia-2": 24,
+    "brief-slasher-2": 23,
+    "brief-war-2": 22,
+    "brief-dark_fantasy-2": 20,
+    "brief-docudrama-2": 20,
+    "brief-horror-2": 20,
+    "brief-kitchen_sink-2": 20,
+    "brief-legal_drama-2": 20,
+    "brief-medical_drama-2": 20,
+    "brief-disaster-2": 19,
+    "brief-splatter-2": 19,
+    "brief-gothic_horror-2": 18,
+    "brief-neo_noir-2": 18,
+    "brief-nordic_noir-2": 18,
+    "brief-mumblecore-2": 17,
+    "brief-chanbara-2": 16,
+    "brief-jidaigeki-2": 16,
+    "brief-tragicomedy-2": 15,
+    "brief-biographical-2": 14,
+    "brief-police_procedural-2": 14,
+    "brief-science_fantasy-2": 13,
+    "brief-alternate_history-2": 12,
+    "brief-costume_drama-2": 12,
+    "brief-martial_arts-2": 10,
+    "brief-psychological_thriller-2": 10,
+    "brief-werewolf-2": 10,
+    "brief-coming_of_age-2": 9,
+    "brief-exploitation-2": 9,
+    "brief-queer_cinema-2": 9,
+    "brief-surrealist-2": 4,
+    "brief-zombie-2": 4,
+    "brief-body_horror-2": 3,
+    "brief-eco_horror-2": 3
+   }
+  },
+  "S3": {
+   "cases": 57915,
+   "differing": 41870,
+   "differ": 0.723,
+   "holds": false,
+   "missesByKinship": {
+    "-0.5": [
+     2565,
+     15444
+    ],
+    "1.0": [
+     1339,
+     2673
+    ],
+    "0.0": [
+     6365,
+     24156
+    ],
+    "0.5": [
+     5656,
+     13959
+    ],
+    "-1.0": [
+     120,
+     1683
+    ]
+   },
+   "missedSides": {
+    "100": 773,
+    "101": 2813,
+    "110": 3577,
+    "111": 3136,
+    "001": 2914,
+    "010": 1155,
+    "000": 927,
+    "011": 750
+   },
+   "missesByScene": {
+    "brief-concert_film-2": 420,
+    "brief-musical-2": 395,
+    "brief-screwball_comedy-2": 391,
+    "brief-parody-2": 340,
+    "brief-horror_comedy-2": 339,
+    "brief-folk_horror-2": 335,
+    "brief-supernatural-2": 320,
+    "brief-new_wave-2": 313,
+    "brief-whodunit-2": 310,
+    "brief-jukebox_musical-2": 299,
+    "brief-satire-2": 292,
+    "brief-backstage_musical-2": 278
+   },
+   "missesByPair": {
+    "docufiction/romance": 76,
+    "experimental/military": 72,
+    "revenge/surrealist": 72,
+    "adventure/costume_drama": 69,
+    "adventure/historical_fiction": 69,
+    "gangster/historical_drama": 69,
+    "adventure/caper": 66,
+    "biker/cosmic_horror": 66,
+    "kaiju/musical": 66,
+    "blaxploitation/domestic_drama": 61,
+    "blaxploitation/queer_cinema": 61,
+    "chase/fantasy": 61
+   }
+  }
+ }
+}
