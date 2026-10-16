@@ -142,3 +142,14 @@ every case a tenth apart a real difference under half a tenth whose sides stradd
 techniques' part and its stamina's part and nothing else. Mutations, each run in a copy of the clone and each killed:
 the grain leaking into ST3's comparison (`GRAIN.strength || 0.3`) failed all three; the whole shown by `Math.floor`
 rather than rounded once failed two; the drain reaching every dimension, not only those naming fatigue, failed the third.
+
+### After Brief 09's Follow-Up (2026-10-16, Later Still)
+
+`evaluation-10` cut a scene at its turns as well as its tones (`h4.md`, the follow-up's section), which spreads stamina's
+drain over more places, and Scapin's sack scene added two cases. Measured again (`followup-09/st3-cases.json`): the
+specialist better on stage on 189 of 189, the even actor the same as shown on **178 of 189**, 11 a tenth apart where 14
+were, **0 rounding defects**; the largest exact difference 0.0184 (0.0208 before), stamina's part 0.0170 and the
+techniques' 0.0026, the rest floating point. Which cases straddle a rounding point moved with the drain: Uncle Vanya's
+2, Machinal's 2, Othello's 4.3, Major Barbara and As You Like It now; the Bacchae, Creditors, Blood Wedding, The Wild Duck,
+Uncle Vanya the play and Salomé no longer. The account above holds as it is, and ST3 as written isn't met; ST3′ is as
+proposed.

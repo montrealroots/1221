@@ -180,3 +180,11 @@ scene is played), so its side choice moves less than an expansive specialist's. 
 which the interpretation criteria and ST1, ST7 and ST8 hold, and adopt ST6′ in place of ST6's second half; or, if a
 restrained specialist should gain more from its own side, say which reading of restraint to adopt (its feeling read on
 the connection, its control drawn larger), and it will be measured against I1 to I5 and the stage criteria first.
+
+### After Brief 09's Follow-Up (2026-10-16, Later Still)
+
+Measured again after `evaluation-10` and Scapin's sack scene (`followup-09/`, `h4.md`'s follow-up section): restrained
+**9 of 42** (8 before), expansive 22 of 50 (21 of 49; the new scene suits restraint by what it hides). The restrained
+specialist's lift as built 1.132 and the expansive's 1.496 (1.145 and 1.571 before); the readings considered above move
+as little (`followup-09/st6-cases.json`, `considered`). ST4 and ST7 hold (comedy 14 / 16; 95 of 95). ST6 as written isn't
+met; ST6′ is as proposed.
