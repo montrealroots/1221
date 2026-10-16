@@ -15,28 +15,28 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 
 ## Totals
 
-| Group | Rows | Deferred | Implemented | Informational | Legacy | Met | Not Met | Open | Owner's Decision | Partial | Superseded | Unresolved | Verified |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Life, Health And Time | 69 | 1 |  |  |  |  |  |  |  | 2 |  |  | 66 |
-| Money | 68 |  |  |  |  |  |  |  |  |  |  | 8 | 60 |
-| Papers | 51 | 14 |  |  | 2 |  |  |  |  |  |  | 5 | 30 |
-| School | 71 |  |  |  |  |  |  |  |  |  |  |  | 71 |
-| Creation, Profile, Home And The Looks | 71 | 1 |  | 8 | 1 |  |  |  |  |  |  |  | 61 |
-| Commands Traced Outside The Audit | 9 |  | 9 |  |  |  |  |  |  |  |  |  |  |
-| Remaining Area: banking | 16 |  |  |  |  |  |  |  | 1 |  |  |  | 15 |
-| Remaining Area: coverage | 8 |  |  |  |  |  |  |  |  |  |  |  | 8 |
-| Remaining Area: health-billing | 3 |  |  |  |  |  |  |  |  |  |  |  | 3 |
-| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  |  |  |  |  |  | 7 |
-| Remaining Area: school | 10 |  |  |  |  |  |  |  |  |  |  |  | 10 |
-| Remaining Area: tax | 18 |  |  |  |  |  |  |  |  |  |  |  | 18 |
-| Criteria: The Stage | 11 |  |  |  |  | 9 | 2 |  |  |  |  |  |  |
-| Criteria: Interpretation | 5 |  |  |  |  | 5 |  |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 |  |  |  |  | 22 | 2 |  |  |  | 1 |  |  |
-| Criteria: Long-Term Continuity | 3 |  |  |  |  | 2 | 1 |  |  |  |  |  |  |
-| Criteria: Mastery Through Play | 8 |  |  |  |  | 8 |  |  |  |  |  |  |  |
-| Criteria: The Genres | 5 |  |  |  |  | 5 |  |  |  |  |  |  |  |
-| Integration | 9 |  |  |  |  | 8 |  | 1 |  |  |  |  |  |
-| **All** | **467** | **16** | **9** | **8** | **3** | **59** | **5** | **1** | **1** | **2** | **1** | **13** | **349** |
+| Group | Rows | Deferred | Implemented | Informational | Legacy | Met | Not Met | Owner's Decision | Partial | Superseded | Unresolved | Verified |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Life, Health And Time | 69 | 1 |  |  |  |  |  |  | 2 |  |  | 66 |
+| Money | 68 |  |  |  |  |  |  |  |  |  | 8 | 60 |
+| Papers | 51 | 14 |  |  | 2 |  |  |  |  |  | 5 | 30 |
+| School | 71 |  |  |  |  |  |  |  |  |  |  | 71 |
+| Creation, Profile, Home And The Looks | 71 | 1 |  | 8 | 1 |  |  |  |  |  |  | 61 |
+| Commands Traced Outside The Audit | 9 |  | 9 |  |  |  |  |  |  |  |  |  |
+| Remaining Area: banking | 16 |  |  |  |  |  |  | 1 |  |  |  | 15 |
+| Remaining Area: coverage | 8 |  |  |  |  |  |  |  |  |  |  | 8 |
+| Remaining Area: health-billing | 3 |  |  |  |  |  |  |  |  |  |  | 3 |
+| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  |  |  |  |  | 7 |
+| Remaining Area: school | 10 |  |  |  |  |  |  |  |  |  |  | 10 |
+| Remaining Area: tax | 18 |  |  |  |  |  |  |  |  |  |  | 18 |
+| Criteria: The Stage | 11 |  |  |  |  | 9 | 2 |  |  |  |  |  |
+| Criteria: Interpretation | 5 |  |  |  |  | 5 |  |  |  |  |  |  |
+| Criteria: The Attributes | 25 |  |  |  |  | 22 | 2 |  |  | 1 |  |  |
+| Criteria: Long-Term Continuity | 3 |  |  |  |  | 2 | 1 |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 |  |  |  |  | 8 |  |  |  |  |  |  |
+| Criteria: The Genres | 5 |  |  |  |  | 5 |  |  |  |  |  |  |
+| Integration | 9 |  |  |  |  | 9 |  |  |  |  |  |  |
+| **All** | **467** | **16** | **9** | **8** | **3** | **60** | **5** | **1** | **2** | **1** | **13** | **349** |
 
 ## Life, Health And Time
 
@@ -598,7 +598,7 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log |
 | `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log |
 | `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
-| `INT-gate` | The gate and the build on the final revision | Open | package.json |
+| `INT-gate` | The gate and the build on the final revision | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md |
 
 ## What's Left
 
@@ -635,4 +635,3 @@ Every row not verified or met, with what its own fields say is open.
 - **`F2`** (Criteria: The Attributes, Not Met): As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met
 - **`G1`** (Criteria: The Attributes, Superseded): Replaced by the genre signature S1 to S4 on 2026-10-16 (work plan section 5), defined before it ran
 - **`L3`** (Criteria: Long-Term Continuity, Not Met): Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted
-- **`INT-gate`** (Integration, Open): Each refusal says why, and what comes next
