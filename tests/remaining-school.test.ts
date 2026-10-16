@@ -245,14 +245,15 @@ function journey(seed: string, extra: Record<string, unknown>, steps: readonly S
   return { sim, marks, settled: kept, told };
 }
 /**
- * The notices of a journey as heard, in order, but the tax system's. Found by these journeys on 2026-10-16 and outside the
- * school's area, so reported and not fixed here: a save opened from May to December 2027 on journey A has the IRS's
- * substitute return for 2026 put on its calendar by `armCollection` (systems/taxreturn.ts), which reads the return's
- * whole balance, Connecticut's part with it, where the deadline itself (`TAX_SFR_KIND`'s scheduling at the due date)
- * reads the IRS's part alone, $0 here; so the reloaded twin alone is told on 14 April 2028 “The IRS Figured Your 2026
- * Return … $0.00”, and assessed $0.00 in August. Nothing moves in the ledger, which the twins' comparison holds whole.
+ * The notices of a journey as heard, in order. Until later on 2026-10-16 the tax system's were left out: these journeys
+ * found that a save opened from May to December 2027 on journey A had the IRS's substitute return for 2026 put on its
+ * calendar by `armCollection` (systems/taxreturn.ts), which read the return's whole balance, Connecticut's part with it,
+ * where the deadline itself (`TAX_SFR_KIND`'s scheduling at the due date) reads the IRS's part alone, $0 here; so the
+ * reloaded twin alone was told on 14 April 2028 “The IRS Figured Your 2026 Return … $0.00”, and assessed $0.00 in August.
+ * Fixed that day outside the school's area (tests/integration-tax-reload.test.ts), and the tax system's notices compared
+ * here since.
  */
-const heard = (j: Journey) => [...j.told.log.values()].filter((n) => n.category !== 'tax').map((n) => `${n.at} ${n.category} ${n.title}: ${n.body}`);
+const heard = (j: Journey) => [...j.told.log.values()].map((n) => `${n.at} ${n.category} ${n.title}: ${n.body}`);
 const heardTitled = (j: Journey, title: string) => [...j.told.log.values()].filter((n) => n.title === title);
 
 /**
@@ -294,7 +295,8 @@ function lifeOf(sim: Simulation) {
     // has them, trust and bond: what a reload could touch beside the record.
     coursework: (s as typeof s & { coursework?: unknown }).coursework, classmates: s.classmates,
     ledger: sim.universe.transactions.map((t) => `${t.at} ${t.memo} ${t.postings.map((p) => `${p.accountId}:${p.amount}`).join(',')}`),
-    notices: sim.universe.notifications.filter((n) => n.category !== 'tax').map((n) => `${n.at} ${n.category} ${n.title}: ${n.body}`),
+    // Every notice, the tax system's with them since `armCollection` was fixed later on 2026-10-16 (`heard`).
+    notices: sim.universe.notifications.map((n) => `${n.at} ${n.category} ${n.title}: ${n.body}`),
   };
 }
 

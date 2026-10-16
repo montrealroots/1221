@@ -1205,8 +1205,11 @@ export function unassessedBalance(person: Person, r: TaxReturn): Money {
 /** A balance owed with no collection on the calendar, as a save from before 2026-09-28 holds one: it begins now. */
 export function armCollection(sim: Simulation, person: Person): void {
   for (const r of Object.values(person.returns ?? {})) {
-    // Owing, unfiled and past due, with nothing coming of it: the IRS's substitute return, on the calendar.
-    if (r.filedAt === undefined && r.figures.balance > 0 && r.due < sim.now && !sim.universe.scheduled.some((i) => i.kind === TAX_SFR_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) {
+    // Owing the IRS, unfiled and past due, with nothing coming of it: the IRS's substitute return, on the calendar, on its
+    // own part as `TAX_DUE_KIND` puts it there. Until 2026-10-16 this read the whole balance, so a student owing
+    // Connecticut alone and reloaded past the due date was told the IRS had figured her return, at $0.00
+    // (tests/integration-tax-reload.test.ts).
+    if (r.filedAt === undefined && owedToOf(person, r).irs > 0 && r.due < sim.now && !sim.universe.scheduled.some((i) => i.kind === TAX_SFR_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) {
       sim.schedule({ at: Math.max(sim.now + MS_DAY, r.due + SUBSTITUTE.afterDays * MS_DAY), kind: TAX_SFR_KIND, label: `The IRS On Your ${r.year} Return`, category: 'system', priority: 20, payload: { personId: person.id, year: r.year, step: 'proposed' } });
     }
     if (r.filedAt === undefined && r.due < sim.now) scheduleStateNonFiler(sim, person, r, owedToOf(person, r).states);
