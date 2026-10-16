@@ -64,8 +64,8 @@ export const MEETING_SCENES: readonly Scene[] = [
       {
         name: 'Peter Stockmann',
         objective: [
-          yes('silence', 'Keep the report from being read or spoken of', 'He moves that the meeting “should not permit the Medical Officer either to read or to comment on his proposed lecture.”'),
-          yes('order', 'Keep the meeting orderly and his own name out of it', 'He declines the chair for reasons “which you will easily understand,” and asks the chairman whether such expressions can be allowed to pass.'),
+          yes('silence', 'Keep the report from being read or spoken of', 'He moves that the meeting not let the Medical Officer “either to read or to comment on his proposed lecture.”'),
+          yes('order', 'Keep the meeting orderly and his own name out of it', 'He begs to be excused the chair, for reasons he leaves the meeting to understand, and asks the chairman whether such expressions can be allowed to pass.'),
           no('reconcile', 'Make peace with his brother before the town', 'He protests against the personal allusions and leaves the hall while the meeting votes.'),
         ],
         obstacle: [
@@ -83,7 +83,7 @@ export const MEETING_SCENES: readonly Scene[] = [
         name: 'Dr. Stockmann',
         objective: [
           yes('truth', 'Make the town hear the truth he has found', '“I have a great revelation to make to you, my fellow-citizens!”'),
-          yes('majority', 'Show them that the compact majority is truth’s worst enemy', '“The most dangerous enemy of truth and freedom amongst us is the compact majority.”'),
+          yes('majority', 'Show them that the compact majority is truth’s worst enemy', '“The most dangerous enemy of truth and freedom … is the compact majority.”'),
           no('baths', 'Have his report on the Baths voted through', 'He tells them he has no intention tonight of dealing with all that filth down at the Baths.'),
         ],
         obstacle: [
@@ -104,16 +104,16 @@ export const MEETING_SCENES: readonly Scene[] = [
     // between Harness and Roberts. The strikers' lines are the room's, Thomas's, Jago's and Rous's speeches from the
     // platform among them; Madge's coming with word that Roberts's wife is dying, after it, is a third part, and isn't set.
     id: 'strife-2-2', play: 'Strife', by: 'John Galsworthy', year: 1909, where: 'Act Two, Scene Two, the meeting outside the works', language: 'prose', size: 'long', genre: 'drama', difficulty: 3,
-    summary: 'The strike has lasted all winter and the men are starving. In the failing light outside the works, Harness, the Union’s man, stands on a platform of barrels and tells the crowd straight: they went too far for the moment, the Union will see them through if they cut their demands to the right pattern, and if not he won’t come down again. He fixes his eyes on Roberts, answers the hecklers, and goes. Old Thomas and Rous speak for giving in, and Rous turns his coat in front of them all. Then Roberts goes up, and holds them till there is dead silence: he has given up more than any man there, Harness has come too late, the fight is against Capital, and they have it on its knees. He asks for a free hand to send the London men home, and the crowd shouts his name.',
+    summary: 'The strike has lasted all winter and the men are starving. In the failing light outside the works, Harness, the Union’s man, stands on a platform of barrels and tells the crowd straight: they went too far for the moment, the Union will see them through if they cut their demands to the right pattern, and if not he won’t come down again. He fixes his eyes on Roberts, answers the hecklers, and goes. Old Thomas and Rous speak for giving in, and Rous turns his coat in front of them all. Then Roberts goes up, and holds them till they’re dead silent: he has given up more than any man there, Harness has come too late, the fight is against Capital, and they have it on its knees. He asks for a free hand to send the London men home, and the crowd shouts his name.',
     circumstances: [
-      yes('works', 'Past four, the light failing, an open muddy space outside the works crowded with workmen; a platform of barrels and boards against the wall', 'The stage directions set it in a grey, failing light, with the bargemen on the towing-path looking on indifferently.'),
+      yes('works', 'Past four, the light failing, an open muddy space outside the works crowded with workmen; a platform of barrels and boards against the wall', 'The stage directions set it in a gray, failing light, with the bargemen on the towing-path looking on indifferently.'),
       no('board', 'The Board’s table in the manager’s house', 'That was the first act, Roberts before the directors; here it’s the men alone.'),
       no('alone', 'The two men in private', 'Harness never speaks to Roberts, and Roberts answers him to the crowd once he has gone.'),
     ],
     relationship: [
       yes('rivals', 'The Union’s official and the men’s own leader, each wanting the crowd', 'Harness tells them to come in “no matter who advises you against it,” fixing his eyes on Roberts; Roberts says the Union deserted them.'),
       no('allies', 'Two men on the same side', 'Harness wants the demands cut; Roberts wants a free hand to send London home with nothing.'),
-      no('master', 'A master and his workman', 'The masters are the London men and the Board; Harness is the Union’s, and Roberts says “We have not much to thank Mr. Harness and the Union for.”'),
+      no('master', 'A master and his workman', 'The masters are the London men and the Board; Harness is the Union’s, and Roberts tells the crowd they have little to thank Mr. Harness and the Union for.'),
     ],
     roles: [
       {
@@ -147,7 +147,7 @@ export const MEETING_SCENES: readonly Scene[] = [
           no('easy', 'A crowd already with him', 'He goes up amid cries of “Get down!”'),
         ],
         tactic: [
-          yes('silence', 'Hold them with his eyes till they’re silent', 'He probes them with his eyes till they become silent, and pauses, holding out his hand, till there is utter silence.'),
+          yes('silence', 'Hold them with his eyes till they’re silent', 'He probes them with his eyes till they become silent, and pauses, holding out his hand, till they’re utterly silent.'),
           yes('scorn', 'Take each speaker’s words and turn them', '“‘Nature,’ says that old man, ‘give in to Nature.’ I tell you, strike your blow in Nature’s face.”'),
           no('reason', 'Reason with them in the Union’s figures', 'He speaks of Capital, a white-faced, stony-hearted monster, and drops to almost a whisper.'),
         ],
