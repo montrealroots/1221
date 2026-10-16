@@ -7509,13 +7509,13 @@
     {
       "id": "fitness",
       "kind": "state",
-      "entry": "Work Out",
+      "entry": "Work Out; from 2026-10-16 a class that trains the body as hard, attended: Movement Invention, stage combat (classTrains, life.ts; TRAINING_CLASSES, content/body.ts)",
       "reads": "",
       "changes": "",
       "downstream": "mendsTo, workoutCosts, Stamina: a whole task’s consistency inputs, and a piece judged in segments through its drain on every dimension tiredness reaches (piece.ts:276, from 2026-10-12), as the scene shown in class on 8 September reads it on five. Until 2026-10-13 this named consistency alone.",
       "persistent": "",
       "explanation": "wellbeing.tsx fitness",
-      "tests": "tests/evidence-g06-life.test.ts fitness ‘a workout costs 13 energy at fitness 20 and 7 at 80…’, ‘rest mends an untrained body no further than 91…’, ‘a sprain the workout’s own draw brings refuses the next…’, ‘PLAYER JOURNEY: a New Haven workout holds fitness through three midnights…’, ‘Stamina is read by the scene shown in class…’ (direction only); tests/evidence-g01-life.test.ts life.look_after:exercise ‘PLAYER JOURNEY: sixteen mornings’ workouts are read by the first scene shown in class…’; fitness.test.ts; wellbeing-bites.test.ts",
+      "tests": "tests/evidence-g06-life.test.ts fitness ‘a workout costs 13 energy at fitness 20 and 7 at 80…’, ‘rest mends an untrained body no further than 91…’, ‘a sprain the workout’s own draw brings refuses the next…’, ‘PLAYER JOURNEY: a New Haven workout holds fitness through three midnights…’, ‘Stamina is read by the scene shown in class…’ (direction only); tests/evidence-g01-life.test.ts life.look_after:exercise ‘PLAYER JOURNEY: sixteen mornings’ workouts are read by the first scene shown in class…’; fitness.test.ts; wellbeing-bites.test.ts; tests/fitness.test.ts ‘holds and builds fitness at each combat class of the spring as a workout indoors does…’",
       "status": "verified",
       "issue": "",
       "review": {
@@ -7643,7 +7643,7 @@
           },
           {
             "file": "evidence-g06-life.test.ts",
-            "title": "Stamina is read by the scene shown in class, a piece in two halves: at 35 every dimension tiredness reaches is lower than at 99.4, the age’s full, consistency among them, and interpretation, which it doesn’t reach, the same",
+            "title": "Stamina is read by the scene shown in class, a piece in its units: at 35 every dimension tiredness reaches is lower than at 99.4, the age’s full, consistency among them, and interpretation, which it doesn’t reach, the same",
             "kind": "command",
             "closes": "Stamina -> the judged piece through the engine (the scene shown by the clock on 8 September), rather than an overridden ability"
           }
