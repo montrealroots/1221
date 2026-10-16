@@ -218,8 +218,11 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     const given = papers(january);
     expect(given).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
     expect(given).not.toContain(REFUSED);
-    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from March 1, 2027.']);
-    expect(healthOf(january.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2027, 3, 1, 0), renewAt: at(2027, 9, 1, 0) });
+    // From the first of the month she enrolls in, 1 February, renewed six months on, 1 August (Connecticut's UPM
+    // § 1560.10(B), from 2026-10-16, brief 09's journeys: until then from 1 March, renewed 1 September). January, the one
+    // month an application from 2027 reaches back, had no care with nothing covering her, so it isn't reached.
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
+    expect(healthOf(january.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2027, 2, 1, 0), renewAt: at(2027, 8, 1, 0) });
 
     // 1 March: February was all on the leave, with no work. Within the 60 days of losing Yale Health on 20 January (to
     // 21 March), so the marketplace is open, from 1 April.
@@ -233,14 +236,14 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from April 1, 2027.']);
     expect(healthOf(idle.player).program).toBeUndefined();
 
-    // Change the input: 80 hours' work in February (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 April,
-    // renewed six months on.
+    // Change the input: 80 hours' work in February (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 March,
+    // the month she enrolls in, renewed six months on (until 2026-10-16 from 1 April).
     const worked = thaw(leave());
     wagesPosted(worked, at(2027, 2, 26, 17), 600_00, 80);
     worked.advanceTo(at(2027, 3, 1, 9));
     expect(papers(worked)).toContain('Last month’s income qualifies you for HUSKY D, at any time and with no premium.');
-    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from April 1, 2027.']);
-    expect(healthOf(worked.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2027, 4, 1, 0), renewAt: at(2027, 10, 1, 0) });
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from March 1, 2027.']);
+    expect(healthOf(worked.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2027, 3, 1, 0), renewAt: at(2027, 9, 1, 0) });
 
     // Past the 60 days from the loss (Yale Health lapsed on 20 January, and the 1 February look found her uncovered), and
     // out of open enrollment: the refusal stands alone and Enroll isn't drawn.
@@ -279,31 +282,37 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     expect(papers(later)).toContain(REFUSED);
   }, 600_000);
 
-  // Its title kept whole inside the new one, for what cites it. Until 2026-10-16 the renewal ended her HUSKY D at its own
-  // hour. Since then it sends a notice of noncompliance on 1 November, she's covered while she answers (to 5 December),
-  // it's decided on 6 December and ends with December (42 USC 1396a(xx)(6); 42 CFR 435.558, 431.211), and the next day
-  // is 2 January 2028, December the month before, still in open enrollment (to 15 January).
-  it('PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn’t given back, the line says why, and Enroll buys the marketplace in open enrollment, until 2026-10-16; since then the renewal sends a notice, HUSKY D ends with December, and the next day is 2 January 2028', () => {
+  // Until 2026-10-16 the renewal ended her HUSKY D at its own hour. Since then it sends a notice of noncompliance, she's
+  // covered while she answers, it's decided and ends with the month (42 USC 1396a(xx)(6); 42 CFR 435.558, 431.211).
+  // Renamed later on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: ended at renewal on 1 November 2027 for having no work, she presses Enroll the next day: HUSKY D isn’t given back, the line says why, and Enroll buys the marketplace in open enrollment, until 2026-10-16; since then the renewal sends a notice, HUSKY D ends with December, and the next day is 2 January 2028”): HUSKY D begins on the
+  // first of the month of application, and reaches back to a month before it with care in it (Connecticut's UPM
+  // § 1560.10), so enrolled on 1 October 2026, her generic filled uninsured on 31 August, it runs from 1 August and is
+  // renewed on 1 October 2027; the notice received on 6 October, answered by 4 November, decided on 5 November, and ten
+  // days on, 15 November, it ends with November. The next day she's on is 2 December, November the month before, in
+  // open enrollment (23 October to 15 January), so the marketplace from 1 January 2028.
+  it('PLAYER JOURNEY: HUSKY D enrolled on 1 October 2026, from 1 August, the month of a generic filled uninsured, comes to renewal on 1 October 2027 with no work; its notice ends it with November, and pressing Enroll on 2 December 2027, November the month before, doesn’t give it back, the line says why, and Enroll buys the marketplace in open enrollment', () => {
     const sim = life('cover-r1', 'comfortable', 'us-ny-newyork');
     sim.advanceTo(at(2026, 8, 25, 12));
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
     sim.advanceTo(at(2026, 10, 1, 9));
     papers(sim);
-    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
+    expect((healthOf(sim.player).fills ?? []).filter((f) => f.at < at(2026, 10, 1, 0)).map((f) => [f.at, coverOn(sim.player, f.at)])).toEqual([[at(2026, 8, 31, 9), undefined]]);
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from August 1, 2026.']);
+    expect(healthOf(sim.player).program!.renewAt).toBe(at(2027, 10, 1, 0));
     const back = thaw(freeze(sim));
-    back.advanceTo(at(2027, 11, 2, 9));
-    expect(titled(back, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 11, 1, 0, 30)]);
+    back.advanceTo(at(2027, 10, 2, 9));
+    expect(titled(back, 'A Notice Of Noncompliance').map((n) => n.at)).toEqual([at(2027, 10, 1, 0, 30)]);
     expect(coverOn(back.player, back.now)).toBe('medicaid');
-    back.advanceTo(at(2028, 1, 2, 9));
-    expect(titled(back, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 12, 6, 0)]);
+    back.advanceTo(at(2027, 12, 2, 9));
+    expect(titled(back, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
     expect(coverOn(back.player, back.now)).toBeUndefined();
-    // The next day, December the month before: under the line, no work, and no school.
-    expect(earningsOf(back.player).months['2027-12']).toBeLessThan(580_00);
-    expect(workedBetween(back, back.player, at(2027, 12, 1, 0), at(2028, 1, 1, 0))).toEqual({ pay: 0, hours: 0 });
+    // The next day, November the month before: under the line, no work, and no school.
+    expect(earningsOf(back.player).months['2027-11']).toBeLessThan(580_00);
+    expect(workedBetween(back, back.player, at(2027, 11, 1, 0), at(2027, 12, 1, 0))).toEqual({ pay: 0, hours: 0 });
     expect(papers(back)).toContain(`${REFUSED} The marketplace is open to you: open enrollment.`);
-    expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from February 1, 2028.']);
-    expect(healthOf(back.player).program!.until).toBe(at(2028, 1, 1, 0));
-    expect(healthOf(back.player).marketplace).toEqual({ from: at(2028, 2, 1, 0), state: 'ct' });
+    expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from January 1, 2028.']);
+    expect(healthOf(back.player).program!.until).toBe(at(2027, 12, 1, 0));
+    expect(healthOf(back.player).marketplace).toEqual({ from: at(2028, 1, 1, 0), state: 'ct' });
   }, 300_000);
 });
 
@@ -453,28 +462,32 @@ describe('a program taken on a personal leave without Affiliate cover, and Yale 
     expect(healthOf(sim.player).covered).toBe(true);
   }, 900_000);
 
-  it('PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 March 2028 is met by her being at the School', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 March 2028 is met by her being at the School”): HUSKY D begins on the
+  // first of the month of application, 1 February 2027 (Connecticut's UPM § 1560.10(B)), not 1 March, so each renewal six
+  // months on comes a month earlier: 1 August 2027, met by July's work (TEST SETUP), and 1 February 2028, which reads
+  // August 2027 to January 2028 and is met by January at the School.
+  it('PLAYER JOURNEY: a student with need takes HUSKY D on her leave (TEST SETUP: the work it asks); back at the School it stays beside Yale Health, and its renewal on 1 February 2028 is met by her being at the School', () => {
     const sim = onLeave(thaw(atSchool().need));
     wagesPosted(sim, at(2027, 1, 29, 17), 600_00, 80); // TEST SETUP: January's work, which no played life on a leave has
     sim.advanceTo(at(2027, 2, 1, 9));
     papers(sim);
-    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from March 1, 2027.']);
-    wagesPosted(sim, at(2027, 8, 27, 17), 600_00, 80); // TEST SETUP: August's work, for the renewal on 1 September
-    sim.advanceTo(at(2027, 9, 1, 9));
-    expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', renewAt: at(2028, 3, 1, 0) });
-    backAtSchool(sim, at(2028, 2, 2, 9));
-    // Beside Yale Health, which pays first: HUSKY D isn't ended by the look.
+    expect(pressEnroll()).toEqual(['Enrolled in HUSKY D, from February 1, 2027.']);
+    wagesPosted(sim, at(2027, 7, 30, 17), 600_00, 80); // TEST SETUP: July's work, for the renewal on 1 August
+    sim.advanceTo(at(2027, 8, 1, 9));
+    expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', renewAt: at(2028, 2, 1, 0) });
+    backAtSchool(sim, at(2028, 1, 31, 12));
+    // Beside Yale Health, which pays first: HUSKY D isn't ended.
     expect(coverOn(sim.player, sim.now)).toBe('yale');
     expect(healthOf(sim.player).program!.until).toBeUndefined();
+    tend(sim, at(2028, 2, 2, 9));
     expect(titled(sim, 'Your Public Cover Has Ended')).toEqual([]);
-    tend(sim, at(2028, 3, 1, 9));
-    // February 2028: under the line, and short of the work, 80 hours or $580; at the School, she meets it.
-    expect(earningsOf(sim.player).months['2028-02']).toBeLessThan(1_835_40);
-    const february = workedBetween(sim, sim.player, at(2028, 2, 1, 0), at(2028, 3, 1, 0));
-    expect(february.hours).toBeLessThan(80);
-    expect(february.pay).toBeLessThan(580_00);
+    // January 2028: under the line, and short of the work, 80 hours or $580; at the School, she meets it.
+    expect(earningsOf(sim.player).months['2028-01']).toBeLessThan(1_835_40);
+    const january = workedBetween(sim, sim.player, at(2028, 1, 1, 0), at(2028, 2, 1, 0));
+    expect(january.hours).toBeLessThan(80);
+    expect(january.pay).toBeLessThan(580_00);
     expect(titled(sim, 'Your Public Cover Ends')).toEqual([]);
-    expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', renewAt: at(2028, 9, 1, 0) });
+    expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', renewAt: at(2028, 8, 1, 0) });
     expect(healthOf(sim.player).program!.until).toBeUndefined();
   }, 900_000);
 });

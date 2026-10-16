@@ -13,6 +13,9 @@ export default defineConfig({
   test: {
     environment: 'node',
     include: ['tests/**/*.test.ts'],
+    // An ended life's clock asked forward again and again throws, naming the death (from 2026-10-16, brief 09's journeys:
+    // until then a test looping to a later time hung for good once mortality's draw ended its life).
+    setupFiles: ['tests/setup/ended-life.ts'],
     testTimeout: 60_000,
     hookTimeout: 60_000,
   },

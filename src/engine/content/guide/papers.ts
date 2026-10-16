@@ -273,12 +273,13 @@ export const PAPERS: readonly GuideEntry[] = [
       { label: 'Medical Debt On Your Record', value: `${usd(MEDICAL_DEBT.reportAt)} or more, unpaid ${MEDICAL_DEBT.reportAfterDays} days, and you living outside New York and California` },
     ],
     now: [
-      'Enroll: your program or plan starts on the first of next month, or, enrolled before Yale Health’s cover ends, on the first of the month on or after its end, so a graduate’s starts 1 August with no gap. The toast names it and its day.',
+      // From 2026-10-16 (brief 09's journeys): until then HUSKY D, too, started on the first of next month.
+      'Enroll: HUSKY D starts on the first of the month you enroll, and reaches back to the first of an earlier month in which you had care with nothing covering you and HUSKY D would have taken you, three months back for an application in 2026 and one from 2027, the care since priced again as HUSKY D’s; another program or a plan starts on the first of next month. Enrolled before Yale Health’s cover ends, each starts on the first of the month on or after its end, so a graduate’s starts 1 August with no gap. The toast names it and its day.',
       // From 2026-10-16 (brief 09's journeys): until then a renewal's notice stayed after a drop, and its hardship was said
       // granted while nothing was renewed; and Drop The Plan stayed for a second press.
       'Drop The Plan: it ends on the first of next month, and no later premium is taken. The toast says “It ends at the month’s end, and opens no special enrollment.”, and the panel says “Dropped: it ends on …” in place of the button. A renewal’s notice of noncompliance waiting on an answer goes with the program it would renew, and its decision with it.',
       `Apply For HUSKY D: the notice “A Notice Of Noncompliance” comes at once, naming the month read, the day to answer by (${PUBLIC_COVER.noticeReceivedDays} days for it to reach you, then ${PUBLIC_COVER.answerDays} more) and what follows. You aren’t covered by it yet; the marketplace still sells to you.`,
-      'Request A Hardship Exception: decided at once. A renewal is renewed, with “Your Public Cover Is Renewed” or, moving from Covered Connecticut, “Your Public Cover Changed At Renewal”; an application is approved, “Public Cover Approved”, from the first of the month it would have begun, or of next month where that’s passed, and a marketplace plan bought meanwhile ends as it begins.',
+      'Request A Hardship Exception: decided at once. A renewal is renewed, with “Your Public Cover Is Renewed” or, moving from Covered Connecticut, “Your Public Cover Changed At Renewal”; an application is approved, “Public Cover Approved”, from the first of the month you applied in, or of an earlier month with care in it as Enroll reaches back, and a marketplace plan bought meanwhile ends as it begins.',
       `Appeal It: the bill reads Appealed, and its answer comes ${DENIALS.decideDays} days on.`,
       `Apply For Assistance: decided at once. Free Care clears the bill, ${pct(CT_CHARITY.discount)} Off cuts it, and Over The Limit leaves it as it was.`,
       'Pay It Off: the whole debt is paid from your current account, and every bill that went to it reads Settled.',
@@ -344,7 +345,7 @@ export const PAPERS: readonly GuideEntry[] = [
       `Prepay Three Months and Prepay A Year are England’s, for its ${gbp(NHS.prescription)} prescription charge: “It’s England’s, for its prescription charge.” A life in New Haven never sees them.`,
     ],
     mistakes: [
-      `Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to 31 July, and Enroll shows from ${ENROLL_OPENS_ON}. Enrolled by 31 July, cover begins 1 August with no gap; enrolled on 1 August or later, it begins the first of the next month, and August goes uncovered.`,
+      `Waiting for Yale’s cover to end before enrolling: after the degree Yale Health runs to 31 July, and Enroll shows from ${ENROLL_OPENS_ON}. Enrolled by 31 July, cover begins 1 August with no gap; enrolled on 1 August or later, a plan begins the first of the next month, and August goes uncovered, where HUSKY D, if last month’s income and its work rules take you, begins on 1 August all the same.`,
       `Letting the current account run dry before the first: the premium isn’t taken, the plan ends, and a plan left unpaid opens no special enrollment. Unless a month’s income qualifies you for HUSKY D or Covered Connecticut, you wait for open enrollment, ${OPEN_FROM} to ${OPEN_UNTIL}.`,
       'Leaving a bill to its due date with too little in the bank: it goes to medical debt. Pay It Off takes the whole debt from your current account at once, so wait until it holds all of it.',
       `Missing a denial: “A Claim Denied” comes as a notice, and an appeal is filed within ${DENIALS.appealDays} days of the care.`,

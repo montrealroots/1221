@@ -582,10 +582,71 @@ export const lawfullyPresent = (person: Person): boolean => person.usOutOfStatus
  */
 export function enrollStart(person: Person, at: Instant): Instant {
   const p = zonedParts(at, HOME);
+  return Math.max(firstOf(p.year, p.month + 1), afterYale(person, at));
+}
+
+/** The first of the month on or after Yale Health's end, where it still covers her and its end is in sight; else nothing. */
+function afterYale(person: Person, at: Instant): Instant {
   const ends = yaleEndsAhead(person, at);
   const e = ends === undefined ? undefined : zonedParts(ends, HOME);
-  const onOrAfterEnd = e === undefined ? 0 : firstOf(e.year, e.month) >= ends! ? firstOf(e.year, e.month) : firstOf(e.year, e.month + 1);
-  return Math.max(firstOf(p.year, p.month + 1), onOrAfterEnd);
+  return e === undefined ? 0 : firstOf(e.year, e.month) >= ends! ? firstOf(e.year, e.month) : firstOf(e.year, e.month + 1);
+}
+
+/**
+ * When HUSKY D begins for an application made at an instant (from 2026-10-16, brief 09's journeys): the first day of
+ * the month of application, Connecticut's Uniform Policy Manual § 1560.10(B), “the first day of the month of
+ * application when all non-procedural eligibility requirements are met during that month” (as a DSS Office of Legal
+ * Counsel hearing decision quotes it, portal.ct.gov omel_2016_765192.pdf, read 2026-10-16; 42 CFR 435.915(b)); or,
+ * applied for while Yale Health still covers her, the first on or after its end, as `enrollStart` has it. Until then it
+ * began on the first of next month, the marketplace's rule (45 CFR 155.420(b)(2)(iv)), and care had in the month of
+ * application was billed uninsured. New York's Medicaid, Medi-Cal and Covered Connecticut keep next month's first:
+ * their own rules weren't read.
+ */
+export function programStart(person: Person, at: Instant, kind: 'medicaid' | 'essential', state: BenefitState): Instant {
+  if (kind !== 'medicaid' || state !== 'ct') return enrollStart(person, at);
+  const p = zonedParts(at, HOME);
+  return Math.max(firstOf(p.year, p.month), afterYale(person, at));
+}
+
+/** The months HUSKY D reaches back before the month of application: three, or one for an application from 2027. */
+export const retroMonths = (appliedAt: Instant): number => (appliedAt >= firstOf(2027, 1) ? 1 : 3);
+
+/**
+ * The first of the earliest month before the application HUSKY D covers, or `start` where none (from 2026-10-16).
+ * Connecticut's UPM § 1560.10(A): “the first day of the first, second or third month immediately preceding the month in
+ * which the Department receives a signed application when all non-procedural eligibility requirements are met and
+ * covered medical services are received at any time during that particular month”. For an application made on or
+ * after 1 January 2027, one month: 42 USC 1396a(a)(34) as Pub. L. 119-21 § 71112(a) amends it, for an individual
+ * “described in subclause (VIII) of section 1902(a)(10)(A)(i)”, HUSKY D's adults, care “furnished in or after the month
+ * before the month in which the individual made application … if such individual was (or upon application would have
+ * been) eligible … at the time such care and services were furnished”; § 71112(d), “applications for medical assistance
+ * … made (or deemed to be made) on or after the first day of the first quarter beginning after December 31, 2026”
+ * (govinfo.gov, PLAW-119publ21, the statute's own text, read 2026-10-16).
+ *
+ * SLATE reaches back a month at a time while each month is one she was eligible in, read as its own income and status
+ * then (`programFor` at the next month's first), and while no other plan of hers covered it; it begins on the earliest
+ * of those months in which she had care, or a prescription filled, with nothing covering her (care Yale Health paid for
+ * isn't care HUSKY D would pay again). A month she wasn't eligible in ends the reach: SLATE keeps one stretch of cover,
+ * so a retroactive month beyond a gap isn't covered (Connecticut would cover it alone). The work rules aren't read
+ * again here: from 2027 the one month reached is the month before the application, the month its work rules are read
+ * in (`lookBack`), so an application granted has them met there, by a stay in hospital on request among the rest; a
+ * check of them here was written first, and taking it out changed no test's outcome.
+ */
+export function retroStart(person: Person, appliedAt: Instant, start: Instant, into: string): Instant {
+  const h = healthOf(person);
+  const p = zonedParts(appliedAt, HOME);
+  let from = start;
+  for (let k = 1; k <= retroMonths(appliedAt); k += 1) {
+    const m0 = firstOf(p.year, p.month - k);
+    const m1 = firstOf(p.year, p.month - k + 1);
+    if (m1 > start) continue;
+    const then = programFor(person, m1, into, m0);
+    if (then?.kind !== 'medicaid' || then.scope !== undefined) break;
+    if ([h.program, h.marketplace].some((c) => c !== undefined && c.from < m1 && (c.until === undefined || c.until > m0) && (c.until ?? Number.POSITIVE_INFINITY) > c.from)) break;
+    const uninsured = (t: Instant) => t >= m0 && t < m1 && coverOn(person, t) === undefined;
+    if ((h.careLog ?? []).some((e) => uninsured(e.at)) || (h.fills ?? []).some((f) => uninsured(f.at))) from = m0;
+  }
+  return from;
 }
 
 /**
@@ -1071,13 +1132,18 @@ function grantPending(sim: Simulation, person: Person, pend: PendingDeterminatio
     applyRenewal(sim, person, prog, { kind: 'medicaid', band: pend.band }, at, pend.renewAt!, met);
     return;
   }
-  const from = Math.max(pend.from ?? at, enrollStart(person, at));
-  const f = zonedParts(from, HOME);
+  // From the month of application's first, and back to a month before it with care in it, decided now: the care since
+  // priced again as HUSKY D's (from 2026-10-16: until then the first of the month it would have begun when made, next
+  // month's, or of the month after the decision where that had passed, the care between billed uninsured).
+  const start = pend.from ?? programStart(person, pend.noticeAt, 'medicaid', pend.state);
+  const from = pend.state === 'ct' ? retroStart(person, pend.noticeAt, start, saveCurrency(sim.universe)) : Math.max(start, enrollStart(person, at));
+  const f = zonedParts(Math.max(start, from), HOME);
   h.program = { kind: 'medicaid', state: pend.state, from, band: pend.band, renewAt: firstOf(f.year, f.month + renewMonths(at, pend.state)) };
   const m = h.marketplace;
   const ended = m !== undefined && (m.until === undefined || m.until > from);
   if (m && ended) m.until = Math.max(m.from, from);
   armHealth(sim, person);
+  if (from < at) repriceCare(sim, person, from, at, `${PROGRAM_NAMES[pend.state].medicaid}, from ${formatDate(from, HOME)}`);
   const names = PROGRAM_NAMES[pend.state];
   if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Public Cover Approved', body: `${capital(names.medicaid)} is yours from ${formatDate(from, HOME)}, with no premium: ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}${ended ? ', and your marketplace plan ends as it begins' : ''}.`, importance: 80, route: '/workspace/papers' });
 }
@@ -2147,17 +2213,24 @@ export function registerHealth(sim: Simulation): void {
     const may = mayEnroll(person, s.now, cur, s);
     if (!may.ok) throw new CommandError(may.why);
     const state = BENEFIT_STATE[homeOf(person)]!;
-    // The first of next month, or the first on or after Yale Health's end (`enrollStart`).
-    const from = enrollStart(person, s.now);
+    // The first of next month, or the first on or after Yale Health's end (`enrollStart`); HUSKY D, the first of this
+    // month, and back to a month before it with care in it (`programStart`, `retroStart`, from 2026-10-16).
     const h = healthOf(person);
     if (may.program) {
-      const { band, scope } = programFor(person, s.now, cur, from)!;
-      // Renewed so many months from its start, which is next month's first unless it waits for Yale Health's end.
-      const f = zonedParts(from, HOME);
+      const start = programStart(person, s.now, may.program, state);
+      const { band, scope } = programFor(person, s.now, cur, start)!;
+      const from = may.program === 'medicaid' && state === 'ct' && scope === undefined ? retroStart(person, s.now, start, cur) : start;
+      // Renewed so many months from the month of application's start, not a retroactive month's.
+      const f = zonedParts(start, HOME);
       h.program = { kind: may.program, state, from, band, renewAt: firstOf(f.year, f.month + renewMonths(s.now, state)), ...(scope ? { scope } : {}) };
-    } else h.marketplace = { from, state };
+      armHealth(s, person);
+      if (from < s.now) repriceCare(s, person, from, s.now, `${PROGRAM_NAMES[state].medicaid}, from ${formatDate(from, HOME)}`);
+      return { from, kind: may.program };
+    }
+    const from = enrollStart(person, s.now);
+    h.marketplace = { from, state };
     armHealth(s, person);
-    return { from, kind: may.program ?? 'marketplace' };
+    return { from, kind: 'marketplace' };
   });
 
   // HUSKY D applied for where Enroll can't verify its work rules (from 2026-10-16): the application is taken, a notice
@@ -2169,7 +2242,8 @@ export function registerHealth(sim: Simulation): void {
     if (no) throw new CommandError(no);
     const cur = saveCurrency(s.universe);
     const state = BENEFIT_STATE[homeOf(person)]!;
-    const from = enrollStart(person, s.now);
+    // The month of application's first (`programStart`, from 2026-10-16: until then next month's).
+    const from = programStart(person, s.now, 'medicaid', state);
     const { band } = programFor(person, s.now, cur, from)!;
     const months = lookBack(s.now, state, 'apply');
     noticeOfNoncompliance(s, person, { kind: 'application', state, noticeAt: s.now, decideAt: decisionAt(s.now), months, band, from });

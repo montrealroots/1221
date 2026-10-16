@@ -7,8 +7,14 @@
  * and Mexico's residence and naturalizing (`systems/residence.ts`, `systems/citizenship.ts`). The OPT example's dates are
  * worked from them for the class that began in 2026, whose program ends May 31, 2029.
  *
- * Two figures are written as text because their rules don't export them: a residence card's renewal in its last 30 days
- * (`documents.renew_residence`), and OPT's days without work counted a week at a time (`OPT_WEEK_KIND`).
+ * One figure is written as text because its rule doesn't export it: OPT's days without work counted a week at a time
+ * (`OPT_WEEK_KIND`). A residence card's renewal in its last 30 days was the second until 2026-10-16, when Mexico's
+ * papers stopped being sold and the renewal's refusal came to say it (`MEXICO_RENEWAL`).
+ *
+ * Residence Abroad's entry told, until 2026-10-16 (brief 09's journeys), how to buy Mexico's temporary residence on the
+ * savings test, about $674.93, renew it, settle and naturalize, and that nothing but this tab read it; from then it
+ * says Mexico's rule is said and none of it is granted, and its worked example reads the row of a student whose
+ * savings meet the test, with nothing leaving the bank.
  *
  * Verified claim by claim against the code on 2026-10-12, and corrected where it listed refusals the screen never shows
  * (a button the code hides when it's refused shows no reason), read the replacement's lower fee from 62 as the card's,
@@ -52,7 +58,7 @@ import { NONCITIZEN_ID } from '../../systems/identity';
 import { STATUS_GRACE_DAYS } from '../../systems/permission';
 import { SSN } from '../../systems/taxid';
 import { PLAN } from '../../systems/taxreturn';
-import { MEXICAN_RESIDENCE } from '../../systems/residence';
+import { MEXICAN_RESIDENCE, MEXICO_RENEWAL, MEXICO_RULE, MEXICO_UNREAD } from '../../systems/residence';
 import { NATURALIZE } from '../../systems/citizenship';
 import type { GuideEntry } from './types';
 
@@ -105,10 +111,10 @@ const OPT_START = Math.max(PROGRAM_END, OPT_DECIDED);
 const OPT_ENDS = OPT_START + (Math.floor(OPT.unemploymentDays / 7) + 1) * 7 * MS_DAY;
 const STATUS_WITHOUT = PROGRAM_END + STATUS_GRACE_DAYS.f1 * MS_DAY;
 
-// Mexico's residence: its savings and income tests, and its fees in the save's dollars at SLATE's exchange rates.
+// Mexico's residence: its savings and income tests, and the savings in the save's dollars at SLATE's exchange rates.
+// Its first year's fees in dollars (`MX_FIRST`) went from here with the sale, on 2026-10-16.
 const MX_SAVINGS = Math.round(MX.savingsUma * MX.uma);
 const MX_INCOME = Math.round(MX.incomeUma * MX.uma);
-const MX_FIRST = (exchange(Math.round(MX.temporary * 100), 'MXN', 'USD') ?? 0) + Math.round(MX.consularVisaUsd * 100);
 const MX_SAVINGS_USD = Math.round((exchange(MX_SAVINGS * 100, 'MXN', 'USD') ?? 0) / 100) * 100;
 
 export const DOCUMENTS: readonly GuideEntry[] = [
@@ -294,71 +300,59 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     goal: 'papers',
     covers: ['documents.residence', 'documents.settle', 'documents.renew_residence', 'documents.naturalize'],
     synonyms: ['residence permit', 'Mexican residence', 'Residente Temporal', 'Residente Permanente', 'naturalization', 'second citizenship', 'green card', 'Global Talent visa', 'settle abroad', 'live abroad'],
-    questions: ['Can I live in another country?', 'How do I become a citizen of another country?', 'Why can’t I apply for a green card?', 'What does Mexican residence do?'],
+    questions: ['Can I live in another country?', 'How do I become a citizen of another country?', 'Why can’t I apply for a green card?', 'Why can’t I apply for Mexican residence?'],
     where: on('work', 'Papers, Permission To Work, Residence Abroad'),
     available: `From the guide’s chapter “${CHAPTER}”. A country you’re a citizen of, by birth or naturalized, leaves the list.`,
-    short: `Residence Abroad lists Canada, Ireland, Mexico, Britain and the United States, less your own country, with where you stand in each. Mexico’s temporary residence is the one route a student can take, on savings or income alone: Apply buys it for a year, Renew extends it, Settle makes it permanent after ${MX.permanentAfter} years, and Naturalize, after ${NATURALIZE.MX.years}, makes you a Mexican citizen ${NATURALIZE.MX.days} days on. No life in SLATE moves to Mexico, so these papers are all that reads it: each step costs its fee and changes this tab.`,
+    short: 'Residence Abroad lists Canada, Ireland, Mexico, Britain and the United States, less your own country, with where you stand in each: what the country asks, and why SLATE grants none. Mexico’s temporary residence asks only savings or income, but living there went with moving on 2026-10-09, so nothing would read its card, and SLATE sells none of its papers. What an older save holds is kept: a card to its end, an application for citizenship to its decision.',
     steps: [
-      'Open Papers, Permission To Work, and the Residence Abroad panel. Where You Stand says what each country asks, or what you hold there.',
-      'Where Mexico reads Open to you with its fee, press Apply.',
-      'In the card’s last 30 days, press Renew for another year.',
-      `After ${MX.permanentAfter} years held without a break, press Settle; after ${NATURALIZE.MX.years}, Naturalize.`,
+      'Open Papers, Permission To Work, and the Residence Abroad panel. Where You Stand says what each country asks, or what you hold there; Mexico’s Apply, and Renew on a card held, are grayed with why.',
+      'Holding Britain’s Global Talent visa or a green card from an older save, press Settle or Naturalize where they show.',
     ],
     needs: [
-      `Mexico’s solvency: savings of ${pesos(MX_SAVINGS)} in your current account and savings, or an income of ${pesos(MX_INCOME)} a month over the last six months.`,
-      'Not a citizen there already.',
-      'To renew: the temporary card in force, in its last 30 days.',
-      `To settle: ${MX.permanentAfter} years’ temporary residence without a break. To naturalize: ${NATURALIZE.MX.years} years’ residence without a break, and no application already being decided.`,
+      `There’s nothing to apply for: each country’s row says why there’s no route. Mexico’s rule, to read: savings of ${pesos(MX_SAVINGS)}, or an income of ${pesos(MX_INCOME)} a month over six months.`,
+      'To settle or naturalize: residence held from an older save, without a break, for the years the country asks.',
     ],
     costs: [
       { label: 'Time', value: 'None' },
-      { label: 'Temporary Residence', value: `${pesos(MX.temporary)} for the card and ${dollars(MX.consularVisaUsd)} for the consulate’s visa, about ${usd(MX_FIRST)} in all`, estimate: true },
-      { label: 'Renewing', value: `${pesos(MX.temporary)} a year` },
-      { label: 'Permanent Residence', value: pesos(MX.permanent) },
-      { label: 'Naturalizing', value: `${pesos(NATURALIZE.MX.fee)}, decided in ${NATURALIZE.MX.days} days` },
+      { label: 'Mexico’s Fees', value: `${pesos(MX.temporary)} a year for the card and ${dollars(MX.consularVisaUsd)} for the consulate’s visa, ${pesos(MX.permanent)} for permanent residence and ${pesos(NATURALIZE.MX.fee)} to naturalize: said with its rule, and charged by nothing here` },
     ],
     reads: [
-      { label: 'Your Savings', value: 'What your current account and savings can pay today, in pesos' },
-      { label: 'Your Income', value: 'What you earned in each of the last six months, averaged' },
       { label: 'Residence Held', value: 'From its first grant, each one reaching the next with no more than a day between' },
       { label: 'A Career’s Record', value: 'What Britain’s Global Talent visa and a US green card were judged on; with the career gone, SLATE holds none' },
     ],
     now: [
-      'Apply: the fee leaves your bank, and Residente Temporal is granted at once for a year.',
-      'Renew: the fee leaves your bank, and a year is added to its end.',
-      'Settle: the fee leaves your bank, the temporary card is canceled and Residente Permanente granted, with no end date.',
-      'Naturalize: the fee leaves your bank, and Where You Stand gives the day citizenship is decided.',
+      'Where You Stand gives each country’s answer, and nothing leaves your bank.',
+      'Settle (Britain) or Naturalize, where an older save’s papers allow it: the fee leaves your bank, and Where You Stand gives what’s granted or the day citizenship is decided.',
     ],
     later: [
-      'On its day, citizenship is granted beside the one you were born with, and Mexico leaves the list. You keep your birth country’s passport.',
-      'A temporary card not renewed runs out at its year’s end, and the years toward settling start again from the next grant.',
+      'A citizenship applied for is decided on its day, beside the one you were born with, and its country leaves the list. You keep your birth country’s passport.',
+      'A Mexican card an older save holds runs out at its end, and isn’t renewed.',
     ],
     interpret: [
-      'Where You Stand gives each country’s answer in its own words: Canada’s paused program, Ireland’s need of an employer’s offer, and the career’s record Britain and the US would read.',
+      'Where You Stand gives each country’s answer in its own words: Canada’s paused program, Ireland’s need of an employer’s offer, the career’s record Britain and the US would read, and Mexico’s rule with why SLATE grants none.',
       'Residence held reads its name, and its end date where it has one.',
-      'Mexico’s temporary residence lets you live there, not work, and a life in New Haven never draws on it.',
+      'Mexico’s temporary residence would let you live there, not work, and a life in New Haven never draws on it.',
     ],
     unavailable: [
-      `“Mexico asks savings of ${pesos(MX_SAVINGS)} or an income of ${pesos(MX_INCOME)} a month over six months.”`,
-      '“It’s renewed within its last 30 days.”',
-      `Settle and Naturalize show only once they’re allowed: Settle after ${MX.permanentAfter} years’ temporary residence without a break, Naturalize after ${NATURALIZE.MX.years} years’ residence with no application being decided.`,
+      `Mexico’s row: “${MEXICO_RULE} ${MEXICO_UNREAD}”`,
+      `A Mexican card held: “${MEXICO_RENEWAL}”`,
+      'Settle and Naturalize show only once they’re allowed; Mexico’s, past their four and five years, say why SLATE grants none.',
       'For Canada, Ireland, Britain and the United States, Where You Stand says why there’s no route.',
       'Any fee: “… is more than the bank can cover.”',
     ],
     mistakes: [
-      `Applying in the hope it changes your days: SLATE has no move to Mexico, so the first year’s ${usd(MX_FIRST)} buys papers alone.`,
-      'Letting the temporary card run out: renewal needs it in force, and once it lapses, the years toward settling start again.',
+      'Saving toward Mexico’s savings test in the hope it opens something: it’s Mexico’s rule, said, and SLATE grants nothing on it.',
     ],
     related: ['documents.passport-id', 'documents.work', 'bank.accounts'],
     connections: [
-      { to: 'bank.accounts', kind: 'immediate', why: 'Each fee leaves your accounts at once, and Mexico’s solvency test reads what they hold.' },
+      { to: 'bank.accounts', kind: 'immediate', why: 'Settling or naturalizing, where an older save’s papers allow it, takes its fee from your accounts at once.' },
       { to: 'documents.passport-id', kind: 'optional', why: 'A citizenship by naturalizing joins the one you were born with; the passport stays your birth country’s.' },
       { to: 'documents.work', kind: 'optional', why: 'Residence abroad and permission to work in the US are kept apart: OPT is the US’s route for a student.' },
     ],
     example: {
-      setup: `A student from a wealthy family with ${pesos(MX_SAVINGS)}, about ${usd(MX_SAVINGS_USD)}, in the bank.`,
-      steps: ['Where Mexico reads Open to you, press Apply.', 'In the card’s last 30 days, press Renew.'],
-      result: `About ${usd(MX_FIRST)} leaves the bank and Residente Temporal is granted at once for a year; the renewal adds a year for ${pesos(MX.temporary)}. Your days in New Haven go on as before, since no screen but this tab reads it.`,
+      setup: `A student from a wealthy family with ${pesos(MX_SAVINGS)}, about ${usd(MX_SAVINGS_USD)}, in the bank: Mexico’s savings test met.`,
+      steps: ['Open Residence Abroad and read Mexico’s row.'],
+      result: `Mexico’s row says its rule, savings of ${pesos(MX_SAVINGS)} or an income of ${pesos(MX_INCOME)} a month over six months, and that SLATE grants none, living there having gone with moving. Apply is grayed with those words, nothing leaves the bank, and a student short of the savings reads the same row.`,
     },
   },
 ];

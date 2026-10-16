@@ -23,6 +23,11 @@
  * The language and knowledge tests are taken as passed, SLATE not keeping
  * which languages a person speaks. Canada and Ireland aren't reached: no
  * route to residence there is open to an actor.
+ *
+ * From 2026-10-16 (brief 09's journeys) Mexico's is refused past its five
+ * years too, with the reason: its residence isn't sold (`systems/residence.ts`),
+ * and a Mexican citizenship is read only for a life in Mexico, which went with
+ * moving on 2026-10-09. An application already made is still decided.
  */
 
 import type { Simulation } from '../core/simulation';
@@ -33,7 +38,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import { exchange } from '../content/currency';
 import { citizenOf } from './documents';
 import { payFromBank } from './spending';
-import { continuousSince, residenceIn } from './residence';
+import { MEXICO_UNREAD, continuousSince, residenceIn } from './residence';
 
 const YEAR_MS = 365.2425 * MS_DAY;
 export const NATURALIZE = {
@@ -65,6 +70,8 @@ export function naturalizeRefusal(sim: Simulation, person: Person, iso: string):
     // Outstanding artistic work, read on the O-1's record, shortened it to two years until the career went on 2026-10-09,
     // and the refusal offered the two years until the connected world of that day.
     if (years < NATURALIZE.MX.years) return 'It asks five years’ residence in Mexico.';
+    // Applied for past the five years, for MXN 9,502.01, until 2026-10-16.
+    return `Mexico naturalizes after five years’ residence, for MXN ${NATURALIZE.MX.fee.toLocaleString('en-US', { minimumFractionDigits: 2 })}. ${MEXICO_UNREAD}`;
   }
   if (iso === 'US') {
     if (held.route !== 'us-green-card' || years < NATURALIZE.US.years) return 'It asks five years with a green card.';

@@ -108,20 +108,23 @@ describe('Chase’s Overdraft Assist, the end of the item’s own business day',
 });
 
 describe('HUSKY D held from before 1 October 2026', () => {
-  it('PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over”): HUSKY D begins on the
+  // first of the month of application (Connecticut's UPM § 1560.10(B)), 1 September, not 1 October, so its renewal is
+  // 1 September 2027, and said then it ends with the month ten days or more on, 30 September.
+  it('PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month, from 1 September, is told at its renewal on 1 September 2027 that it’s now for a citizen or a green card of five years, not that her income was over', () => {
     const sim = student('d4-husky', 'uk-eng-london');
     sim.advanceTo(edt(2026, 9, 2, 12));
     must(sim, 'school.withdraw', { confirm: true });
     sim.advanceTo(edt(2026, 9, 3, 12));
     expect(must<{ kind: string }>(sim, 'health.enroll')).toMatchObject({ kind: 'medicaid' });
     const program = healthOf(sim.player).program!;
-    expect([program.state, program.from, program.renewAt]).toEqual(['ct', edt(2026, 10, 1, 0), edt(2027, 10, 1, 0)]);
-    sim.advanceTo(edt(2027, 10, 2, 12));
-    // Said at the renewal, and ended at the month's end at least ten days on, 31 October (42 CFR 431.211; from
+    expect([program.state, program.from, program.renewAt]).toEqual(['ct', edt(2026, 9, 1, 0), edt(2027, 9, 1, 0)]);
+    sim.advanceTo(edt(2027, 9, 2, 12));
+    // Said at the renewal, and ended at the month's end at least ten days on, 30 September (42 CFR 431.211; from
     // 2026-10-16: until then it ended at the renewal's own hour, “Your Public Cover Ended At Renewal”).
     expect(notices(sim, 'Your Public Cover Ends').map((n) => n.body)).toEqual([
-      'From October 1, 2026, HUSKY D is for a US citizen, or somebody with a green card for five years, and renewing it reads that: HUSKY D ends on October 31, 2027, and out of status the marketplace won’t take you.',
+      'From October 1, 2026, HUSKY D is for a US citizen, or somebody with a green card for five years, and renewing it reads that: HUSKY D ends on September 30, 2027, and out of status the marketplace won’t take you.',
     ]);
-    expect(healthOf(sim.player).program!.until).toBe(edt(2027, 11, 1, 0));
+    expect(healthOf(sim.player).program!.until).toBe(edt(2027, 10, 1, 0));
   }, 300_000);
 });

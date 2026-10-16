@@ -35,9 +35,11 @@
  *   defect until 2026-10-13, fixed that day: each of the additional term’s class days was held twice. Refused in its
  *   words; the ninth semester allowed.
  * - `school.pay_balance`: a scholarship returned on a leave, refused in its words (nothing owed, nothing asked, more than
- *   owed, a bank short of it, which moves nothing), held unpaid into the return, where it stops registration until
- *   it's paid from the drawn panel, and then classes count again; a repeated year's terms past six paid from the
- *   panel, and a diploma held at Commencement for the last term's bill conferred when it's paid.
+ *   owed, a bank short of it, which moves nothing), paid from the drawn panel before the return, which lifts the hold
+ *   and leaves the return term's scholarship whole, where a twin left unpaid has its return term's scholarship pay the
+ *   account first (from 2026-10-16: until then the hold, held into the return, stopped registration until it was paid
+ *   from the panel); a repeated year's terms past six paid from the panel, and a diploma held at Commencement for the
+ *   last term's bill conferred when it's paid.
  * - `school.request_conversion`: refused in January and in the spring with only hours never assigned in prospect, and
  *   in June, the stat showing none; in May the hours never assigned asked on the drawn button and paid at May's
  *   processing, to the hour asked; an assigned shift called in sick asked in the fall and paid in January into the
@@ -842,7 +844,13 @@ describe('school.request_extra_term', () => {
 // ---------------------------------------------------------------------------
 
 describe('school.pay_balance', () => {
-  it('PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, holds registration on the return, and paid from the drawn panel lifts the hold and lets the term count', () => {
+  // Recast and renamed on 2026-10-16 (brief 09's journeys, journeys.d-aid-past-balance; inputs/renames.json): until then
+  // “PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, holds registration on
+  // the return, and paid from the drawn panel lifts the hold and lets the term count”, the hold held into the return,
+  // where the term's scholarship was paid whole to the bank while it stopped registration. From then the term's aid pays
+  // the account first, as Yale applies a credit to the charges before any refund (Yale Student Accounts, Refunds), so
+  // the payment from the panel is made before the return, and the twin left unpaid shows the aid paying it.
+  it('PLAYER JOURNEY: a scholarship returned on a leave is refused in its words and moves nothing, paid from the drawn panel before the return lifts the hold and leaves the return term’s scholarship whole; an unpaid twin’s return term pays the account from its scholarship first, the hold lifting at the term’s start, and only the student who registers is counted', () => {
     let sim = life('g26-paid', ON_AID);
     const school = () => sim.player.school!;
     tend(sim, at(2027, 1, 13, 12));
@@ -876,19 +884,12 @@ describe('school.pay_balance', () => {
     tend(sim, due.at + 5 * 30 * MS_DAY + MS_HOUR);
     expect(accountOwed(sim, sim.player)).toBe(returned + 375_00);
     expect(titled(sim, 'A Financial Hold').length).toBeGreaterThan(1);
-    // Notice of return given, and the leave's return term, Spring Term 2028, begun at nine on Monday 3 January.
+    // Notice of return given on 1 October.
     tend(sim, at(2027, 10, 1, 12));
     sim.must({ kind: 'school.return_notice', payload: {} });
-    tend(sim, at(2028, 1, 3, 10));
-    expect(school().leaves!.at(-1)!.status).toBe('returned');
-    expect(school().mustRegister).toBe(true);
     const owed = returned + 375_00;
     expect(accountOwed(sim, sim.player)).toBe(owed);
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe(`A financial hold stops registration: ${usd(sim, owed)} is owed on your Yale account.`);
-    const held = drawn(sim, LeavePanel);
-    expect(held.text).toContain('Register for Spring Term 2028: until you do, classes don’t count you and shifts can’t be worked. A financial hold stops it until your Yale account is paid.');
-    expect(drew('school.reregister').map((c) => c.disabled)).toEqual([true]);
-    // A twin left unpaid, for the term it keeps them out of.
+    // A twin left unpaid into the return.
     const unpaid = thaw(freeze(sim));
     // TEST SETUP: the bank emptied. Refused, and nothing moved: the account, the hold, the bank.
     drain(sim);
@@ -915,10 +916,28 @@ describe('school.pay_balance', () => {
     expect(bankHeld(sim)).toBe(bank - owed);
     expect(school().hold).toBeUndefined();
     expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account is paid. Registration and the diploma are open to you again.']);
+    // The leave's return term, Spring Term 2028, begun at nine on Monday 3 January: registration asked again, no hold.
+    tend(sim, at(2028, 1, 3, 10));
+    tend(unpaid, at(2028, 1, 3, 10));
+    expect(school().leaves!.at(-1)!.status).toBe('returned');
+    expect(school().mustRegister).toBe(true);
+    const register = drawn(sim, LeavePanel);
+    expect(register.text).toContain('Register for Spring Term 2028: until you do, classes don’t count you and shifts can’t be worked.');
+    expect(register.text).not.toContain('A financial hold stops it');
+    expect(drew('school.reregister').map((c) => c.disabled)).toEqual([false]);
+    // The term's scholarship, by hand: 2027–28's living-expense scholarship, $16,128.08, less its plan, $2,034.44, is
+    // $14,093.64 to pay out. Paid before, it's whole; the twin's pays the account first, and the rest reaches the bank.
+    const legs = (s: Simulation) => s.universe.transactions.filter((t) => t.memo.startsWith('Living-expense scholarship, the spring term of 2028:')).map((t) => t.postings.filter((p) => s.universe.accounts[p.accountId]?.ownerId === s.player.id).map((p) => [s.universe.accounts[p.accountId]!.category === 'yale-account' ? 'Yale account' : 'bank', p.amount]));
+    expect(legs(sim)).toEqual([[['bank', 14_093_64]]]);
+    expect(legs(unpaid)).toEqual([[['bank', 14_093_64 - owed], ['Yale account', owed]]]);
+    expect(accountOwed(unpaid, unpaid.player)).toBe(0);
+    expect(unpaid.player.school!.hold).toBeUndefined();
+    expect(titled(unpaid, 'The Financial Hold Is Lifted').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 3, 9), `This term’s living-expense scholarship paid the ${usd(unpaid, owed)} it owed. Registration and the diploma are open to you again.`]]);
     expect(sim.must<{ registeredAt: Instant }>({ kind: 'school.reregister', payload: {} }).registeredAt).toBe(sim.now);
     expect(school().mustRegister).toBeUndefined();
     sim = reload(sim);
-    // The term's first class day, Monday 10 January: registered, the classes count; the twin unregistered, they don't.
+    // The term's first class day, Monday 10 January: registered, the classes count; the twin, its hold lifted but not
+    // registered, isn't counted, and is told to register, not to pay.
     tend(sim, at(2028, 1, 10, 18));
     tend(unpaid, at(2028, 1, 10, 18));
     const met = recordsOf(sim, 3);
@@ -927,7 +946,7 @@ describe('school.pay_balance', () => {
     expect(titled(sim, 'Not Registered')).toHaveLength(0);
     expect(recordsOf(unpaid, 3).map(([k]) => k).sort()).toEqual(met.map(([k]) => k).sort());
     for (const [, r] of recordsOf(unpaid, 3)) expect(r.attended).toBe(0);
-    expect(titled(unpaid, 'Not Registered')).toHaveLength(1);
+    expect(titled(unpaid, 'Not Registered').map((n) => n.body)).toEqual(['You haven’t registered, so today’s classes didn’t count you. Register on the School screen: late, it takes the chair’s written permission, which SLATE takes as given.']);
     expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
     expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe('Your Yale account owes no balance.');
   }, 120_000);

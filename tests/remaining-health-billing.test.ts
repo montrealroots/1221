@@ -390,14 +390,18 @@ describe('the insured paths, from cover to a bill paid once, the same in one jum
     expect(memoed(f, /^Medical bill: /).map((t) => [t.at, into(t, checking(f).id)])).toEqual([[at(2026, 10, 24, 10), -183_98]]);
   }, 300_000);
 
-  /** Withdrawn on 25 August 2026 and enrolled on 1 October (the cover from 1 November); the 2 November week draws a visit (TEST SETUP). */
+  /**
+   * Withdrawn on 25 August 2026 and enrolled on 1 October (the cover from 1 November; HUSKY D's from 1 October, the month
+   * of application, from 2026-10-16, Connecticut's UPM § 1560.10(B), where until then it was 1 November too); the
+   * 2 November week draws a visit (TEST SETUP).
+   */
   const enrolled = (seed: string, wealth: StartingWealth, september?: number) => {
     const rig = rigged([[at(2026, 11, 2, 9), VISIT]]);
     const sim = rig(withdrawn(life(seed, wealth)));
     if (september !== undefined) { sim.advanceTo(at(2026, 8, 31, 23, 30)); setSavings(sim, september); }
     sim.advanceTo(at(2026, 10, 1, 9));
     const toast = sim.must<{ kind: string; from: Instant }>({ kind: 'health.enroll', payload: {} });
-    expect(toast.from).toBe(at(2026, 11, 1, 0));
+    expect(toast.from).toBe(toast.kind === 'medicaid' ? at(2026, 10, 1, 0) : at(2026, 11, 1, 0));
     return { sim, rig, kind: toast.kind };
   };
 

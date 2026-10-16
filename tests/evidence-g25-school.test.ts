@@ -579,9 +579,13 @@ describe('school.reregister', () => {
     expect(school.leave).toBeUndefined();
     expect(school.leaves!.at(-1)!.status).toBe('returned');
     expect(school.mustRegister).toBe(true);
-    // Three months' fees, to the term's $375 cap.
-    expect(accountOwed(sim, sim.player)).toBe(15_200_50 + 375_00);
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $15,575.50 is owed on your Yale account.');
+    // Three months' fees, to the term's $375 cap, $15,575.50, less the spring's living-expense scholarship paid onto it
+    // first: 2027–28's $16,128.08 less its $2,034.44 plan, $14,093.64 (by hand, a year's growth on 2026–27's figures),
+    // so $1,481.86 is left and the hold stays. From 2026-10-16 (brief 09's journeys): until then the $14,093.64 went to
+    // the bank and the $15,575.50 stayed owed.
+    expect(accountOwed(sim, sim.player)).toBe(15_200_50 + 375_00 - 14_093_64);
+    expect(accountOwed(sim, sim.player)).toBe(1_481_86);
+    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,481.86 is owed on your Yale account.');
     expect(school.mustRegister).toBe(true);
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(false);
     let shown = drawn(sim, LeavePanel);

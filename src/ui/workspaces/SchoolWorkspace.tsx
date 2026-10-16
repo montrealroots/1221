@@ -32,7 +32,7 @@ import { courseworkOf, termTally } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
-  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport } from '@/engine/systems/school';
+  academicTerm, cabaretSeason, keyOf, summerRuns, classPeriod, daysOffIn, hasNeed, nextClasses, hourlyIn, actingOf, CEILING, ceilingOf, termGrowth, bondWord, meanCraft, rankIn, termAccount, termLabel, termOf, termStart, timetable, yearOfStudy, yearOfTerm, cabaretRefusal, ppeCost, ppeRefusal, shiftRefusal, sickRefusal, summerRefusal, schoolEnded, termSupport, termWords } from '@/engine/systems/school';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Person } from '@/engine/domain/model';
 import { inSaveMoney } from '@/engine/systems/banking';
@@ -40,7 +40,7 @@ import { AttributesPanel } from '@/ui/components/AttributesPanel';
 import { CourseworkPane } from '@/ui/components/CourseworkPane';
 import { RehearsalProcess } from '@/ui/components/RehearsalProcess';
 import { ClassesPanel, LeavePanel, RepeatPanel, WorkLimitsBlock, YaleAccountPanel } from '@/ui/components/StudyPlanPanels';
-import { enrolledTerms } from '@/engine/systems/leave';
+import { enrolledTerms, yaleAccount } from '@/engine/systems/leave';
 import { hasProcess, holderFor } from '@/engine/systems/production';
 
 type SchoolTab = 'standing' | 'classes' | 'coursework' | 'casting' | 'work' | 'terms';
@@ -776,6 +776,14 @@ function TermsPane() {
   // Every calendar term the program runs to, with a leave's or a repeated year's (from 2026-10-10).
   const enrolled = enrolledTerms(school);
   const terms = Array.from({ length: YALE_DRAMA.terms + (school.offset ?? 0) }, (_, i) => ({ i, ...termStart(i) }));
+  // What the term's living scholarship put on the Yale account and paid to the bank: its own posting once the term has
+  // begun, else what it would, a term past six's paying its tuition first (from 2026-10-16, `aidOnAccount`). Until then
+  // the table said the whole refund was paid to the bank, whatever the account owed.
+  const yale = yaleAccount(sim, person, false);
+  const posted = need ? sim.universe.transactions.find((t) => t.category === 'scholarship' && t.memo.startsWith(`Living-expense scholarship, ${termWords(current)}:`)) : undefined;
+  const leg = (keep: (accountId: string) => boolean) => posted!.postings.filter((p) => keep(p.accountId)).reduce((n, p) => n + p.amount, 0);
+  const onYale = posted ? leg((id) => id === yale?.id) : unsupported && need ? Math.min(account.tuition, account.refund) : 0;
+  const toBank = posted ? leg((id) => id !== yale?.id && sim.universe.accounts[id]?.ownerId === person.id && !sim.universe.accounts[id]?.nominal) : account.refund - onYale;
 
 
   return (
@@ -807,19 +815,20 @@ function TermsPane() {
                 <tr><td>Yale Health Plan</td><td className="num mono">{money(account.healthPlan)}</td><td /></tr>
                 {need && <tr><td>Living-Expense Scholarship</td><td /><td className="num mono">{money(account.livingScholarship)}</td></tr>}
                 {/* A term billed past six: its tuition on the Yale account, and its health fee too unless living aid meets it, as `billUnsupportedTerm` charges them. */}
-                {unsupported && <tr className="strong"><td>On Your Yale Account</td><td className="num mono">{money(account.tuition + (need ? 0 : account.healthPlan))}</td><td className="num mono" /></tr>}
+                {onYale > 0 && <tr><td>Applied To Your Yale Account</td><td className="num mono" /><td className="num mono">{money(onYale)}</td></tr>}
+                {unsupported && <tr className="strong"><td>On Your Yale Account</td><td className="num mono">{money(account.tuition + (need ? 0 : account.healthPlan) - (posted ? Math.min(onYale, account.tuition) : onYale))}</td><td className="num mono" /></tr>}
                 {(need || !unsupported) && (
                   <tr className="strong">
                     <td>{need ? 'Paid To Your Bank' : 'Paid From Your Bank'}</td>
                     <td className="num mono">{need ? '' : money(account.healthPlan)}</td>
-                    <td className="num mono">{need ? money(account.refund) : ''}</td>
+                    <td className="num mono">{need ? money(toBank) : ''}</td>
                   </tr>
                 )}
               </tbody>
             </table>
           </div>
           <p className="small" style={{ margin: 0 }}>
-            {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept meets its health fee' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {found ? (need ? 'Yours found need, and the scholarship meets it.' : 'Yours found need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours found none, so the health plan and living costs come from your bank.'}
+            {unsupported ? `This term is past the six the tuition scholarship supports, so its tuition${need ? ' is billed to your Yale account, and the living scholarship the aid office kept meets its health fee and pays what the account owes before any reaches your bank' : ' and health fee are billed to your Yale account'}. ` : waived ? 'This term is past the six the tuition scholarship supports, and the aid office granted an exception: it’s supported as the six were. ' : ''}Tuition is met in full for every student’s six terms, from the David Geffen gift. Aid for living costs, {money(aidLiving)} a year with the health plan and up to {money(aidBooks)} of books this year, goes by need, and the need assessment reads the family’s means. {found ? (need ? 'Yours found need, and the scholarship meets it.' : 'Yours found need, but a term past six has living aid only where the aid office’s review keeps it.') : 'Yours found none, so the health plan and living costs come from your bank.'}
           </p>
           <YaleAccountPanel />
           <Fine>The {COST_2026_27.year} figures are the school’s; later years grow at the Bulletins’ own rise from 2022–23, SLATE’s estimate until they’re published. Source: {COST_2026_27.source}.</Fine>

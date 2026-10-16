@@ -41,7 +41,7 @@ import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseRepla
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
-import { residenceFee, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
+import { MEXICO_RENEWAL, residenceIn, routeRefusal, settleRefusal } from '@/engine/systems/residence';
 import { naturalizeRefusal } from '@/engine/systems/citizenship';
 
 const KIND_WORD: Record<PersonDocument['kind'], string> = { passport: 'Passport', authorization: 'Travel Authorization', visa: 'Visa', license: 'Driving License', idp: 'International Driving Permit', permit: 'Permission To Work', idcard: 'State ID Card' };
@@ -272,7 +272,12 @@ function TaxIdPanel() {
   );
 }
 
-/** Where they may make a home abroad, and what it takes (`systems/residence.ts`). */
+/**
+ * Where they may make a home abroad, and what it takes (`systems/residence.ts`). Until 2026-10-16 Mexico's row read
+ * “Open to you: $674.93. No life in SLATE moves to Mexico, so nothing but these papers reads it” beside Apply, and a
+ * card held had Renew; from then the row says Mexico's rule and why SLATE grants none, and a card held why it isn't
+ * renewed, and Apply and Renew are drawn grayed with those words, the refusal the command gives.
+ */
 function ResidencePanel() {
   const { sim, run, toast } = useGame();
   const person = useWorld((s) => s.player);
@@ -294,13 +299,13 @@ function ResidencePanel() {
               return (
                 <tr key={iso}>
                   <td><Open subject={at('country', iso === 'GB' ? 'uk' : iso.toLowerCase())}>{name}</Open></td>
-                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}` : no ?? `Open to you: ${formatMoney(residenceFee(sim), cur)}. No life in SLATE moves to Mexico, so nothing but these papers reads it`}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
+                  <td className="small">{held ? `${held.name}${held.expiresAt ? `, to ${formatDate(held.expiresAt, sim.zone)}` : ''}${held.route === 'mx-temporary' ? `. ${MEXICO_RENEWAL}` : ''}` : no}{person.naturalizing?.iso === iso ? `; citizenship decided by ${formatDate(person.naturalizing.readyAt, sim.zone)}` : ''}</td>
                   <td>
                     <div className="row gap-1" style={{ justifyContent: 'flex-end', flexWrap: 'wrap' }}>
-                      {!held && !no && <Gated feature="documents.residence" className="btn btn-sm" onClick={() => act('documents.residence', iso, 'Temporary residence is granted')}>Apply</Gated>}
+                      {!held && iso === 'MX' && <Gated feature="documents.residence" className="btn btn-sm" disabled={Boolean(no)} title={no} onClick={() => act('documents.residence', iso, 'Applied')}>Apply</Gated>}
+                      {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" disabled title={MEXICO_RENEWAL} onClick={() => act('documents.renew_residence', iso, 'Renewed')}>Renew</Gated>}
                       {!naturalize && <Gated feature="documents.naturalize" className="btn btn-sm btn-ghost" onClick={() => act('documents.naturalize', iso, 'Applied for citizenship')}>Naturalize</Gated>}
                       {held && !settle && <Gated feature="documents.settle" className="btn btn-sm btn-ghost" onClick={() => act('documents.settle', iso, 'Settled')}>Settle</Gated>}
-                      {held?.route === 'mx-temporary' && <Gated feature="documents.renew_residence" className="btn btn-sm btn-ghost" disabled={(held.expiresAt ?? 0) - sim.now > 30 * 86_400_000} title={(held.expiresAt ?? 0) - sim.now > 30 * 86_400_000 ? 'It’s renewed within its last 30 days.' : 'For a year'} onClick={() => act('documents.renew_residence', iso, 'Renewed for a year')}>Renew</Gated>}
                     </div>
                   </td>
                 </tr>
@@ -309,7 +314,7 @@ function ResidencePanel() {
           </tbody>
         </table>
       </LookRegion>
-      <Fine>Britain’s Global Talent visa and a green card by extraordinary ability were read on a career’s record until the career went on 2026-10-09; there’s none to read now. Mexico’s temporary residence lets you live there, not work. Naturalizing keeps the citizenship you were born with, and its passport stays the one in force in your name.</Fine>
+      <Fine>Britain’s Global Talent visa and a green card by extraordinary ability were read on a career’s record until the career went on 2026-10-09; there’s none to read now. Mexico’s temporary residence would let you live there, not work. Naturalizing keeps the citizenship you were born with, and its passport stays the one in force in your name.</Fine>
     </Panel>
   );
 }

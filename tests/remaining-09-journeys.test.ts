@@ -43,10 +43,12 @@ import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { breaches } from '@/engine/core/invariants';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { courseworkOf } from '@/engine/systems/coursework';
-import { HEALTH_WEEK_KIND, WORK_DECIDED_KIND, coverOn, hardshipRefusal, healthOf, mayEnroll } from '@/engine/systems/health';
-import { accountOwed, yaleAccount } from '@/engine/systems/leave';
+import { HEALTH_WEEK_KIND, WORK_DECIDED_KIND, careFor, coverOn, hardshipRefusal, healthOf, mayEnroll, retroStart } from '@/engine/systems/health';
+import { earningsOf } from '@/engine/systems/earnings';
+import { ACCOUNT_DUE_KIND, accountOwed, yaleAccount } from '@/engine/systems/leave';
 import { classPeriod } from '@/engine/systems/school';
-import { photoIdOf } from '@/engine/systems/documents';
+import { documentsOf, photoIdOf } from '@/engine/systems/documents';
+import { attentiveHour } from '../tools/policy';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -303,35 +305,59 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     expect(JSON.stringify(jump.player.school!.leave)).toBe(JSON.stringify(steps.player.school!.leave));
   }, 300_000);
 
-  it('PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload', () => {
+  // Recast and renamed on 2026-10-16 (inputs/renames.json), the coordinator's follow-up (journeys.d-aid-past-balance):
+  // until then “PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves
+  // her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class
+  // day counts her, through a reload”, the term's $14,093.64 paid whole to Chase Total Checking with $7,875.25 owed and
+  // the hold refusing registration. From then the term's aid pays the account first, as Yale applies a credit to the
+  // charges before any refund (Yale Student Accounts, Refunds); the payment from both accounts is a twin's, before.
+  it('DEFECT: back for Spring Term 2028 owing $7,875.25 under the hold since 26 February 2027, the term’s $16,128.08 living-expense scholarship less its $2,034.44 plan pays the account first: the hold lifts at nine on Monday 3 January, said once, $6,218.39 reaches Chase Total Checking, as the term’s notice and Terms And Award say; she registers, and the first class day counts her, through a reload; a twin who paid it from checking and savings on 1 October has the $14,093.64 whole (until 2026-10-16 it went to the bank whole, and the hold refused registration)', () => {
     let sim = fromLeave();
     tend(sim, at(2027, 10, 1, 12));
     const notice = ok<{ noticeAt: Instant; returnsAt: Instant }>(sim, 'school.return_notice');
     expect(notice).toEqual({ noticeAt: sim.now, returnsAt: at(2028, 1, 3, 9) });
     expect(refused(sim, 'school.return_notice')).toBe('You gave notice on October 1, 2027.');
+    expect(accountOwed(sim, sim.player)).toBe(7_875_25);
+    // The twin: nothing in checking since the cover was bought, $1,000.00 moved back into it from savings, and the account
+    // paid from both.
+    const twin = reload(sim);
+    {
+      const checking = account(twin, 'Chase Total Checking');
+      const savings = account(twin, 'Chase Savings');
+      expect(checking.balance).toBe(0);
+      ok(twin, 'bank.transfer', { fromId: savings.id, toId: checking.id, amount: 1_000_00 });
+      expect(checking.balance).toBe(1_000_00);
+      const saved = savings.balance;
+      expect(ok(twin, 'school.pay_balance')).toEqual({ owed: 0, held: false });
+      expect(checking.balance).toBe(0);
+      expect(saved - savings.balance).toBe(6_875_25);
+      expect(titled(twin, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account is paid. Registration and the diploma are open to you again.']);
+    }
     sim = reload(sim);
     tend(sim, at(2028, 1, 3, 10));
+    tend(twin, at(2028, 1, 3, 10));
     const school = () => sim.player.school!;
     expect(school().leaves!.at(-1)!.status).toBe('returned');
-    expect(school().mustRegister).toBe(true);
     expect(titled(sim, 'Back From Your Leave')).toHaveLength(1);
-    // Under the hold since 26 February 2027: the $7,600.25 sent back, less the $100.00 paid, and the term's $375.00 of fees.
-    expect(school().hold).toBe(at(2027, 2, 26, 12));
-    expect(accountOwed(sim, sim.player)).toBe(7_875_25);
-    const before = still(sim);
-    expect(refused(sim, 'school.reregister')).toBe('A financial hold stops registration: $7,875.25 is owed on your Yale account.');
-    expect(still(sim)).toBe(before);
-    // The player's own move again, all but $1,000.00 into savings, so the payment draws on both.
-    const checking = account(sim, 'Chase Total Checking');
-    const savings = account(sim, 'Chase Savings');
-    ok(sim, 'bank.transfer', { fromId: checking.id, toId: savings.id, amount: checking.balance - 1_000_00 });
-    const saved = savings.balance;
-    expect(ok(sim, 'school.pay_balance')).toEqual({ owed: 0, held: false });
-    expect(checking.balance).toBe(0);
-    expect(saved - savings.balance).toBe(6_875_25);
+    // By hand: 2027–28's figures, a year of the Bulletins' growth on 2026–27's (living expenses less the plan, and books,
+    // at 5.82%; the plan at 8.10%; tuition at 3.22%): a scholarship of $16,128.08, the plan $2,034.44, $14,093.64 to pay
+    // out; $7,875.25 of it onto the account, the $7,600.25 sent back less the $100.00 paid and the term's $375.00 of fees.
+    const yale = yaleAccount(sim, sim.player)!.id;
+    const legs = (s: Simulation) => {
+      const t = s.universe.transactions.filter((x) => x.memo.startsWith('Living-expense scholarship, the spring term of 2028:'));
+      expect(t).toHaveLength(1);
+      return t[0]!.postings.filter((p) => s.universe.accounts[p.accountId]?.ownerId === s.player.id).map((p) => [p.accountId === yale ? 'Yale Student Account' : s.universe.accounts[p.accountId]!.name, p.amount]);
+    };
+    expect(legs(sim)).toEqual([['Chase Total Checking', 6_218_39], ['Yale Student Account', 7_875_25]]);
+    expect(accountOwed(sim, sim.player)).toBe(0);
     expect(school().hold).toBeUndefined();
-    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => n.body)).toEqual(['Your Yale account is paid. Registration and the diploma are open to you again.']);
-    expect(refused(sim, 'school.pay_balance')).toBe('Your Yale account owes no balance.');
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => [n.at, n.body])).toEqual([[at(2028, 1, 3, 9), 'This term’s living-expense scholarship paid the $7,875.25 it owed. Registration and the diploma are open to you again.']]);
+    expect(titled(sim, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Your living-expense scholarship of $16,128.08 met this term’s Yale Health plan, $2,034.44, and the $7,875.25 your Yale account owed; $6,218.39 is in your Chase Total Checking. Tuition, $21,031.08 a term, is covered by the tuition scholarship.']);
+    const terms = drawn(sim, SchoolWorkspace, 'terms');
+    expect(terms).toContain(' Living-Expense Scholarship $16,128.08 Applied To Your Yale Account $7,875.25 Paid To Your Bank $6,218.39 ');
+    expect(terms).toContain(' Owed On Your Yale Account $0.00 ');
+    // The return asks registration again; the hold gone, it's taken.
+    expect(school().mustRegister).toBe(true);
     expect(ok<{ registeredAt: Instant }>(sim, 'school.reregister').registeredAt).toBe(sim.now);
     expect(refused(sim, 'school.reregister')).toBe('You’re registered.');
     sim = reload(sim);
@@ -342,6 +368,42 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     for (const r of met) expect(r.attended).toBe(r.meetings);
     expect(titled(sim, 'Not Registered')).toHaveLength(0);
     expect(titled(sim, 'The Financial Hold Is Lifted')).toHaveLength(1);
+    // The twin who paid: nothing owed at the term's start, so the $14,093.64 is paid out whole.
+    expect(legs(twin)).toEqual([['Chase Total Checking', 14_093_64]]);
+    expect(titled(twin, 'Spring Term 2028 Begins').map((n) => n.body)).toEqual(['Your living-expense scholarship of $16,128.08 met this term’s Yale Health plan, $2,034.44, and $14,093.64 is in your Chase Total Checking. Tuition, $21,031.08 a term, is covered by the tuition scholarship.']);
+    expect(titled(twin, 'The Financial Hold Is Lifted')).toHaveLength(1);
+    for (const s of [sim, twin]) {
+      expect(breaches(s.universe)).toEqual([]);
+      expect(s.ledger.audit()).toEqual([]);
+    }
+  }, 300_000);
+});
+
+describe('journeys.d-aid-past-balance: a term begun under a hold its aid clears', () => {
+  it('DEFECT: a student with need begins Spring Term 2027 under a hold (TEST SETUP: $1,000.00 owed on the Yale account and its due date come on 18 December, as tests/evidence-g25-school.test.ts sets them); the term’s scholarship pays the $1,125.00 first, the hold lifts at nine on 4 January, said once, registration isn’t asked, the first class day counts her, and $12,193.50 reaches Chase Total Checking (until 2026-10-16 the hold stayed, and the term asked her to register past it)', () => {
+    const sim = life('jy-hold', 'modest', {}, false);
+    tend(sim, at(2026, 12, 18, 12));
+    sim.post({ memo: 'TEST SETUP', category: 'school', postings: [{ accountId: sim.nominalAccount('expense', 'Other').id, amount: 1_000_00 }, { accountId: yaleAccount(sim, sim.player)!.id, amount: -1_000_00 }] });
+    sim.schedule({ at: sim.now + MS_HOUR, kind: ACCOUNT_DUE_KIND, label: 'Yale Account: Payment Due', category: 'school', priority: 33, payload: { personId: sim.player.id, term: 0 } });
+    tend(sim, at(2026, 12, 18, 14));
+    const school = () => sim.player.school!;
+    expect(school().hold).toBe(at(2026, 12, 18, 13));
+    // The month's $125.00 late fee: $1,125.00 owed.
+    expect(accountOwed(sim, sim.player)).toBe(1_125_00);
+    tend(sim, at(2027, 1, 4, 12));
+    // By hand: 2026–27's scholarship, $15,200.50, less its plan, $1,882.00, is $13,318.50; $1,125.00 of it onto the
+    // account, and $12,193.50 to the bank.
+    const posted = sim.universe.transactions.filter((t) => t.memo.startsWith('Living-expense scholarship, the spring term of 2027:'));
+    expect(posted.map((t) => t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).map((p) => [sim.universe.accounts[p.accountId]!.category === 'yale-account' ? 'Yale account' : sim.universe.accounts[p.accountId]!.name, p.amount]))).toEqual([[['Chase Total Checking', 12_193_50], ['Yale account', 1_125_00]]]);
+    expect(accountOwed(sim, sim.player)).toBe(0);
+    expect(school().hold).toBeUndefined();
+    expect(school().mustRegister).toBeUndefined();
+    expect(titled(sim, 'The Financial Hold Is Lifted').map((n) => [n.at, n.body])).toEqual([[at(2027, 1, 4, 9), 'This term’s living-expense scholarship paid the $1,125.00 it owed. Registration and the diploma are open to you again.']]);
+    tend(sim, at(2027, 1, 11, 18));
+    const met = Object.values(sim.player.school!.courses ?? {}).filter((r) => r.term === 1);
+    expect(met.length).toBeGreaterThan(0);
+    for (const r of met) expect(r.attended).toBe(r.meetings);
+    expect(titled(sim, 'Not Registered')).toHaveLength(0);
     expect(breaches(sim.universe)).toEqual([]);
     expect(sim.ledger.audit()).toEqual([]);
   }, 300_000);
@@ -428,7 +490,11 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
     expect(breaches(sim.universe)).toEqual([]);
   }, 300_000);
 
-  it('PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps', () => {
+  // Recast and renamed on 2026-10-16 (journeys.d-medicaid-start, inputs/renames.json; until then “PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps”): HUSKY D
+  // begins on the first of the month of application (Connecticut's UPM § 1560.10(B)), 1 December, so the visit the clock
+  // draws on 3 December, billed $183.98 as the uninsured's while HUSKY D waited for 1 January, is HUSKY D's at $0. The
+  // three months before (§ 1560.10(A)): Yale Health covered her to 4 November, and November had no care, so none is reached.
+  it('DEFECT: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls on 2 December, and is covered from 1 December, the month she applied in: the doctor’s visit of 3 December is HUSKY D’s, nothing to pay; the notice and the cover are the same in one jump as in six-hour steps (until 2026-10-16 HUSKY D began on 1 January and the visit was billed $183.98 uninsured)', () => {
     const sim = life('jw-1', 'modest');
     tend(sim, at(2026, 10, 5, 12));
     ok(sim, 'school.withdraw', { confirm: true });
@@ -441,9 +507,14 @@ describe('journeys.x3: a withdrawal, then health eligibility, then tax and Paper
       // Uncovered from 4 November at noon, thirty days on; told at December's look, 1 December, with the window's last
       // day, 60 days from the loss, 3 January 2027, and HUSKY D, which takes her at any time on November's income.
       expect(titled(s, 'Your Health Cover Ended').map((n) => [dated(n.at), n.body])).toEqual([['December 1, 2026', 'You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.']]);
-      expect(ok<{ kind: string; from: Instant }>(s, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2027, 1, 1, 0) });
-      expect(refused(s, 'health.enroll')).toBe('You’re enrolled from January 1, 2027.');
-      expect(coverOn(s.player, at(2027, 1, 1, 12))).toBe('medicaid');
+      expect((healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 11, 1, 0))).toEqual([]);
+      expect(ok<{ kind: string; from: Instant }>(s, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 12, 1, 0) });
+      expect(refused(s, 'health.enroll')).toBe('You’re enrolled.');
+      expect(coverOn(s.player, s.now)).toBe('medicaid');
+      tend(s, at(2026, 12, 10, 12));
+      const visit = (healthOf(s.player).careLog ?? []).filter((e) => e.at >= at(2026, 12, 1, 0));
+      expect(visit.map((e) => [e.at, e.care, e.share, e.billId])).toEqual([[at(2026, 12, 3, 10), 'visit', 0, undefined]]);
+      expect(titled(s, 'A Doctor’s Visit').filter((n) => n.at >= at(2026, 12, 1, 0)).map((n) => n.body)).toEqual(['A doctor’s visit, Fair Haven Community Health Care. Nothing to pay.']);
     }
   }, 300_000);
 
@@ -612,9 +683,11 @@ const press = (feature: string, label?: string) => {
 /**
  * tests/remaining-09-hardship.test.ts's member, played the same way: Ada Cole as the creation screen's draft makes her
  * (`newLifeFrom`), the Comfortable family at Capital One, withdrawn on 25 August 2026 by the fifteenth day of classes,
- * HUSKY D enrolled on Papers on 1 October from 1 November, every week's illness a "no" and the week of Monday 13
- * September 2027 a stay in hospital (TEST SETUP, as that file forces them); her renewal of 1 November 2027 reads May to
- * October 2027, finds no work, and sends its notice.
+ * HUSKY D enrolled on Papers on 1 October from 1 October, every week's illness a "no" and the week of Monday 13
+ * September 2027 a stay in hospital (TEST SETUP, as that file forces them); her renewal of 1 October 2027 reads April to
+ * September 2027, finds no work, and sends its notice. Until 2026-10-16's journeys.d-medicaid-start HUSKY D began on
+ * 1 November, and every date here was a month later: the renewal of 1 November, the drop on 2 November, its end on
+ * 1 December.
  */
 function noticed(): Simulation {
   const sim = createSave(1, 'r09-hardship', newLifeFrom({ homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'comfortable', bankId: 'us-capital-one' } as Partial<NewSaveConfig>));
@@ -623,24 +696,25 @@ function noticed(): Simulation {
   const force = forcing(sim);
   force('health.illness', null, []); // TEST SETUP: every week's illness a "no"
   sim.advanceTo(at(2026, 10, 1, 9));
-  expect(ok(sim, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 11, 1, 0) });
+  expect(ok(sim, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 10, 1, 0) });
   sim.advanceTo(at(2027, 9, 6, 12));
   const week = sim.universe.scheduled.filter((i) => i.kind === HEALTH_WEEK_KIND && i.status === 'pending' && i.payload.personId === sim.player.id).sort((a, b) => a.at - b.at)[0]!;
   expect(week.at).toBe(at(2027, 9, 13, 9));
   force('health.illness', [sim.player.id, String(week.at)], [0]); // TEST SETUP: that week's first draw, a stay
-  sim.advanceTo(at(2027, 11, 1, 9));
-  expect(healthOf(sim.player).pending).toMatchObject({ kind: 'renewal', decideAt: at(2027, 12, 6, 0) });
+  sim.advanceTo(at(2027, 10, 1, 9));
+  expect(healthOf(sim.player).pending).toMatchObject({ kind: 'renewal', decideAt: at(2027, 11, 5, 0) });
   expect(hardshipRefusal(sim, sim.player, sim.now)).toBeUndefined();
   return sim;
 }
 
 describe('journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending', () => {
-  it('DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)', () => {
+  // Renamed later on 2026-10-16 (inputs/renames.json; until then “DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)”): a month earlier, as noticed() says.
+  it('DEFECT: HUSKY D dropped on Papers on 2 October 2027, its renewal’s notice of 1 October waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 November as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)', () => {
     let sim = noticed();
-    sim.advanceTo(at(2027, 11, 2, 9));
+    sim.advanceTo(at(2027, 10, 2, 9));
     drawn(sim, PapersWorkspace, 'health');
     press('health.drop', 'Drop The Plan');
-    expect(healthOf(sim.player).program).toMatchObject({ until: at(2027, 12, 1, 0), ended: 'voluntary' });
+    expect(healthOf(sim.player).program).toMatchObject({ until: at(2027, 11, 1, 0), ended: 'voluntary' });
     // Nothing left to renew: the notice and its decision go with the program.
     expect(healthOf(sim.player).pending).toBeUndefined();
     expect(sim.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending')).toEqual([]);
@@ -648,25 +722,26 @@ describe('journeys.d-hardship-ended-renewal: a renewal’s notice once the progr
     expect(page).not.toContain('A notice of noncompliance of');
     expect(h.clicks.filter((c) => c.feature === 'health.request_hardship')).toEqual([]);
     expect(h.clicks.filter((c) => c.feature === 'health.drop')).toEqual([]);
-    expect(page).toContain('Dropped: it ends on December 1, 2027.');
+    expect(page).toContain('Dropped: it ends on November 1, 2027.');
     const before = still(sim);
     expect(refused(sim, 'health.request_hardship')).toBe('No notice of noncompliance waits on an answer.');
-    expect(refused(sim, 'health.drop')).toBe('It’s dropped: it ends on December 1, 2027.');
+    expect(refused(sim, 'health.drop')).toBe('It’s dropped: it ends on November 1, 2027.');
     expect(still(sim)).toBe(before);
     sim = reload(sim, false);
-    sim.advanceTo(at(2027, 12, 7, 9));
-    expect(coverOn(sim.player, at(2027, 11, 30, 23))).toBe('medicaid');
-    expect(coverOn(sim.player, at(2027, 12, 1, 9))).toBeUndefined();
+    sim.advanceTo(at(2027, 11, 7, 9));
+    expect(coverOn(sim.player, at(2027, 10, 31, 23))).toBe('medicaid');
+    expect(coverOn(sim.player, at(2027, 11, 1, 9))).toBeUndefined();
     for (const title of ['Your Public Cover Is Renewed', 'Your Public Cover Ends']) expect(titled(sim, title)).toEqual([]);
-    expect(titled(sim, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 11, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from December 1, 2027. A plan dropped or left unpaid opens no special enrollment: open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut, is the way back.']);
+    expect(titled(sim, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from November 1, 2027. A plan dropped or left unpaid opens no special enrollment: open enrollment, or a month’s income that qualifies you for HUSKY D or Covered Connecticut, is the way back.']);
     expect(breaches(sim.universe)).toEqual([]);
   }, 600_000);
 
   it('GUARD: a renewal’s notice waiting while its program has ended some other way, which no played life reaches (TEST SETUP: HUSKY D’s end set on the record by hand, the notice left), refuses the hardship in words that say so, and nothing is renewed or moved', () => {
     const sim = noticed();
-    sim.advanceTo(at(2027, 11, 10, 9));
-    // TEST SETUP: the program ended on the record without the drop that would take the notice with it.
-    healthOf(sim.player).program!.until = at(2027, 11, 10, 0);
+    sim.advanceTo(at(2027, 10, 10, 9));
+    // TEST SETUP: the program ended on the record without the drop that would take the notice with it (a month earlier
+    // from 2026-10-16, as noticed() says).
+    healthOf(sim.player).program!.until = at(2027, 10, 10, 0);
     const words = 'HUSKY D has ended, so there’s no renewal left to answer.';
     expect(hardshipRefusal(sim, sim.player, sim.now)).toBe(words);
     const before = still(sim);
@@ -677,4 +752,173 @@ describe('journeys.d-hardship-ended-renewal: a renewal’s notice once the progr
     expect(page).toContain(words);
     expect(h.clicks.filter((c) => c.feature === 'health.request_hardship')).toEqual([]);
   }, 600_000);
+});
+
+// ---------------------------------------------------------------------------
+// journeys.f-ended-life-loops
+// ---------------------------------------------------------------------------
+
+describe('journeys.f-ended-life-loops: a loop waiting for the clock once a life has ended', () => {
+  it('GUARD: jl-17’s life, ended by mortality’s draw at 9:58 PM on 11 January 2027, tended by this file’s own six-hour loop to the 20th fails at once naming the death (tests/setup/ended-life.ts), where it hung before; a single move of the clock still returns where it stopped', () => {
+    // jl-17, Modest: found 2026-10-16 when a search of jl-1 to jl-40 hung on it (probe p7-hang.ts).
+    const sim = life('jl-17', 'modest', {}, false);
+    expect(() => tend(sim, at(2027, 1, 20, 12))).toThrow('Ada Cole’s life ended on January 11, 2027 at 9:58 PM, at 24, and its clock stays there');
+    const stopped = sim.now;
+    expect(sim.universe.meta.endedAt).toBe(stopped);
+    // The engine's own rule: a life that has ended keeps its clock where it stopped.
+    const moved = sim.advanceTo(at(2027, 2, 1, 12));
+    expect([moved.from, moved.to, sim.now]).toEqual([stopped, stopped, stopped]);
+  }, 300_000);
+
+  it('GUARD: tools/policy.ts’s attentiveHour, the hour the tools and eight test files loop on, throws at once naming the death on an ended life (FIXTURE: mortality’s end written as its handler writes it, at 9 PM on 24 August 2026, aged 22), where a loop on it spun for good', () => {
+    const sim = life('jl-guard', 'modest', {}, false);
+    tend(sim, at(2026, 8, 24, 21));
+    expect(sim.now).toBe(at(2026, 8, 24, 21));
+    sim.universe.meta.endedAt = sim.now;
+    sim.universe.meta.endedAge = 22;
+    const stopped = sim.now;
+    expect(() => { while (sim.now < at(2026, 9, 1, 12)) attentiveHour(sim); }).toThrow('Ada Cole’s life ended on August 24, 2026 at 9:00 PM, at 22: its clock stays there, and an hour can’t be played.');
+    expect(sim.now).toBe(stopped);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// journeys.f-mexico-residence
+// ---------------------------------------------------------------------------
+
+describe('journeys.f-mexico-residence: Residence Abroad’s Mexico row, which sold papers nothing read', () => {
+  it('DEFECT: a wealthy New Yorker’s first day on Papers reads Mexico’s rule and why SLATE grants none, Apply grayed with those words, and the route asked for anyway is refused in them with nothing moved; a card an older save holds (FIXTURE) is shown to its end through a reload, Renew grayed and refused in its words, and once it runs out the row reads the rule again (until 2026-10-16 the row sold the card for $674.93 and said nothing but these papers read it)', () => {
+    const sim = life('jm-1', 'wealthy', {}, false);
+    // Mexico's rule by hand: 11,460 UMA and 680 UMA at 2026's MXN 117.31, MXN 1,344,372.6 and 79,770.8 to the peso; the
+    // card's MXN 11,140.74 a year and the consulate's US$56 (the guidelines of 25 July 2025, the Ley Federal de Derechos).
+    const why = 'Living there went with moving on 2026-10-09, so SLATE grants none: nothing would read it.';
+    const rule = `Mexico grants temporary residence on savings of MXN 1,344,373 or an income of MXN 79,771 a month over six months, the card MXN 11,140.74 a year and the consulate’s visa US$56. ${why}`;
+    const page = drawn(sim, PapersWorkspace, 'work');
+    expect(page).toContain(` Mexico ${rule} `);
+    expect(page).not.toContain('Open to you');
+    expect(page).not.toContain('$674.93');
+    expect(h.clicks.filter((c) => c.feature === 'documents.residence' || c.feature === 'documents.renew_residence' || c.feature === 'documents.settle').map((c) => [c.feature, c.label, c.disabled, c.title])).toEqual([['documents.residence', 'Apply', true, rule]]);
+    const before = still(sim);
+    expect(refused(sim, 'documents.residence', { country: 'MX' })).toBe(rule);
+    expect(still(sim)).toBe(before);
+    // FIXTURE: Residente Temporal bought on 3 September 2025, as an older save could have, a year's card to 3 September 2026.
+    documentsOf(sim.player).push({ id: 'mx-card', kind: 'visa', issuer: 'MX', name: 'Residente Temporal', number: 'R1', status: 'valid', issuedAt: at(2025, 9, 3, 12), expiresAt: at(2026, 9, 3, 12), destination: 'MX', route: 'mx-temporary' });
+    const back = reload(sim, false);
+    const renewal = `Mexico renews temporary residence a year at a time, in the card’s last 30 days, for MXN 11,140.74. ${why}`;
+    const holding = drawn(back, PapersWorkspace, 'work');
+    expect(holding).toContain(` Mexico Residente Temporal, to September 3, 2026. ${renewal} `);
+    expect(h.clicks.filter((c) => c.feature === 'documents.residence' || c.feature === 'documents.renew_residence' || c.feature === 'documents.settle' || c.feature === 'documents.naturalize').map((c) => [c.feature, c.label, c.disabled, c.title])).toEqual([['documents.renew_residence', 'Renew', true, renewal]]);
+    const held = still(back);
+    expect(refused(back, 'documents.renew_residence', { country: 'MX' })).toBe(renewal);
+    expect(refused(back, 'documents.settle', { country: 'MX' })).toBe('Permanent residence comes after four years’ temporary.');
+    expect(refused(back, 'documents.naturalize', { country: 'MX' })).toBe('It asks five years’ residence in Mexico.');
+    expect(still(back)).toBe(held);
+    // Run out at its year's end: the row reads Mexico's rule again.
+    tend(back, at(2026, 9, 4, 12));
+    expect(drawn(back, PapersWorkspace, 'work')).toContain(` Mexico ${rule} `);
+    expect([breaches(back.universe).length, back.ledger.audit().length]).toEqual([0, 0]);
+  }, 120_000);
+});
+
+// ---------------------------------------------------------------------------
+// journeys.d-f1-term-notice
+// ---------------------------------------------------------------------------
+
+describe('journeys.d-f1-term-notice: an F-1 student’s term notice and what reached her account', () => {
+  it('DEFECT: a London-born F-1 student’s Fall Term 2026 notice says $11,356.54 is in Chase Total Checking after $1,961.96 withheld for the IRS, as the posting has it (until 2026-10-16 it said the whole $13,318.50 was)', () => {
+    const sim = life('jw-2', 'modest', { homeRegionId: 'uk-eng-london' }, false);
+    tend(sim, at(2026, 9, 1, 12));
+    // By hand: 2026–27's scholarship, ($28,028 − $3,764 + $2,373 + $3,764) / 2 = $15,200.50, meets the plan's $1,882.00,
+    // leaving $13,318.50; its taxable part is all but the books' $1,186.50 a term, $14,014.00, and 14% of it, $1,961.96, is
+    // withheld at source for a nonresident (IRC 1441(b)), so $11,356.54 is paid in.
+    const t = sim.universe.transactions.filter((x) => x.memo.startsWith('Living-expense scholarship, the fall term of 2026:'));
+    expect(t.map((x) => x.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).map((p) => [sim.universe.accounts[p.accountId]!.name, p.amount]))).toEqual([[['Chase Total Checking', 11_356_54]]]);
+    expect(titled(sim, 'Fall Term 2026 Begins').map((n) => n.body)).toEqual(['Your living-expense scholarship of $15,200.50 met this term’s Yale Health plan, $1,882.00, and $11,356.54 is in your Chase Total Checking, after $1,961.96 withheld for the IRS. Tuition, $20,375.00 a term, is covered by the tuition scholarship.']);
+  }, 120_000);
+});
+
+// ---------------------------------------------------------------------------
+// journeys.d-medicaid-start
+// ---------------------------------------------------------------------------
+
+describe('journeys.d-medicaid-start: HUSKY D from the first of the month of application, and the months before it', () => {
+  it('DEFECT: withdrawn on Tuesday 25 August 2026, Yale Health canceled back to 1 August, her generic filled uninsured at $41.79 on 31 August, 14 September and 19 October; enrolled in HUSKY D on Papers on 22 October, it covers her from 1 August, the two months before October each with a fill and her income then under its line, and the three fills are priced again as its $0, $125.37 back to Chase Total Checking once, through a reload; a twin who waits to 2 December reaches back three months to 1 September, and the August fill stays hers (until 2026-10-16 HUSKY D began on 1 November and every fill stayed at $41.79)', () => {
+    const sim = life('jr-3', 'modest', {}, false);
+    tend(sim, at(2026, 8, 25, 12));
+    ok(sim, 'school.withdraw', { confirm: true });
+    tend(sim, at(2026, 10, 22, 12));
+    const h = () => healthOf(sim.player);
+    // jr-3, Modest, born in New York: searched, jr-1 to jr-12, for prescriptions filled in the lapse (probe p20-retro.ts).
+    const fills = (s: Simulation) => (healthOf(s.player).fills ?? []).map((f) => [dated(f.at), f.share]);
+    expect(fills(sim)).toEqual([['August 31, 2026', 41_79], ['September 14, 2026', 41_79], ['October 19, 2026', 41_79]]);
+    for (const f of h().fills ?? []) expect(coverOn(sim.player, f.at)).toBeUndefined();
+    const twin = reload(sim, false);
+    // By hand: an application in October 2026 reaches the three months before it, July to September (UPM § 1560.10(A),
+    // before Pub. L. 119-21 § 71112's one month from 2027). September and August each had a fill with nothing covering
+    // her and her income then under 138% of the poverty line, a citizen's: from 1 August. July had no care.
+    const checking = account(sim, 'Chase Total Checking');
+    const before = checking.balance;
+    expect(ok<{ kind: string; from: Instant }>(sim, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 8, 1, 0) });
+    expect(h().program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2026, 8, 1, 0), renewAt: at(2027, 10, 1, 0) });
+    // HUSKY D asks no copay at the pharmacy: each fill's $41.79 is credited, and paid back once.
+    expect(fills(sim)).toEqual([['August 31, 2026', 0], ['September 14, 2026', 0], ['October 19, 2026', 0]]);
+    expect(checking.balance - before).toBe(3 * 41_79);
+    expect(checking.balance - before).toBe(125_37);
+    const back = reload(sim, false);
+    tend(back, at(2026, 10, 29, 12));
+    expect(fills(back).slice(0, 3)).toEqual([['August 31, 2026', 0], ['September 14, 2026', 0], ['October 19, 2026', 0]]);
+    expect(back.universe.transactions.filter((t) => t.memo.startsWith('Refund:') && t.memo.includes('HUSKY D, from August 1, 2026'))).toHaveLength(3);
+    expect(breaches(back.universe)).toEqual([]);
+    expect(back.ledger.audit()).toEqual([]);
+    // The twin, applying in December: September, October and November are the three months, and each had care or was one
+    // she was eligible in, so it begins on 1 September; the August fill is outside its reach.
+    tend(twin, at(2026, 12, 2, 12));
+    expect(ok<{ kind: string; from: Instant }>(twin, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2026, 9, 1, 0) });
+    expect(fills(twin).slice(0, 3)).toEqual([['August 31, 2026', 41_79], ['September 14, 2026', 0], ['October 19, 2026', 0]]);
+  }, 300_000);
+
+  it('GUARD: an application made in January 2028 reaches one month back, where one made in 2026 reached three (FIXTURE: an income of $600 a month from October 2027, the work rules met by it and under HUSKY D’s line, and a doctor’s visit through the game’s own care on the 15th of October, November and December 2027, all uninsured); enrolled on 5 January 2028, HUSKY D covers her from 1 December 2027 and prices again December’s visit alone', () => {
+    // No played life reaches it: a student out of the School by 2027 has no work, so January's application would need
+    // December's work rules met, and a month's income of $580 or more under the line SLATE's lives don't earn.
+    const sim = life('jr-guard', 'modest', {}, false);
+    tend(sim, at(2026, 8, 25, 12));
+    ok(sim, 'school.withdraw', { confirm: true });
+    const months = earningsOf(sim.player).months;
+    for (const [m, d] of [[10, 15], [11, 15], [12, 15]] as const) {
+      tend(sim, at(2027, m, d, 10));
+      // Outside the clock's own care: the visit, as tools/condition.ts puts the flu (`careFor`).
+      careFor(sim, sim.player, { care: 'visit', what: 'A doctor’s visit' }, sim.now);
+    }
+    for (const m of ['2027-10', '2027-11', '2027-12']) months[m] = 600_00;
+    tend(sim, at(2028, 1, 5, 12));
+    const put = [at(2027, 10, 15, 10), at(2027, 11, 15, 10), at(2027, 12, 15, 10)];
+    const visits = () => (healthOf(sim.player).careLog ?? []).filter((e) => e.care === 'visit' && put.includes(e.at)).map((e) => [dated(e.at), e.share > 0]);
+    expect(visits()).toEqual([['October 15, 2027', true], ['November 15, 2027', true], ['December 15, 2027', true]]);
+    expect(ok<{ kind: string; from: Instant }>(sim, 'health.enroll')).toEqual({ kind: 'medicaid', from: at(2027, 12, 1, 0) });
+    expect(visits()).toEqual([['October 15, 2027', true], ['November 15, 2027', true], ['December 15, 2027', false]]);
+  }, 300_000);
+
+  it('GUARD: the reach back stops at a month she wasn’t eligible in, or one another plan of hers covered, as SLATE keeps one stretch of cover (FIXTURE: her care one visit on 28 August 2026 with nothing covering her, an application on 5 November; then September’s income set over the line, then a Covered Connecticut plan set on September)', () => {
+    const sim = life('jr-reach', 'modest', {}, false);
+    tend(sim, at(2026, 8, 25, 12));
+    ok(sim, 'school.withdraw', { confirm: true });
+    tend(sim, at(2026, 11, 5, 12));
+    const h = healthOf(sim.player);
+    // FIXTURE: one visit the whole of her care, Yale Health canceled back to 1 August by the withdrawal.
+    h.careLog = [{ at: at(2026, 8, 28, 10), care: 'visit', what: 'FIXTURE', share: 100_00 }];
+    h.fills = [];
+    expect(coverOn(sim.player, at(2026, 8, 28, 10))).toBeUndefined();
+    const start = at(2026, 11, 1, 0);
+    // October, September and August all hers: from 1 August.
+    expect(retroStart(sim.player, at(2026, 11, 5, 12), start, 'USD')).toBe(at(2026, 8, 1, 0));
+    // FIXTURE: September's income $5,000, over HUSKY D's $1,835.40: the reach stops there.
+    const months = earningsOf(sim.player).months;
+    const september = months['2026-09'];
+    months['2026-09'] = 5_000_00;
+    expect(retroStart(sim.player, at(2026, 11, 5, 12), start, 'USD')).toBe(start);
+    months['2026-09'] = september ?? 0;
+    // FIXTURE: a Covered Connecticut plan through September: the reach stops there too.
+    h.program = { kind: 'essential', state: 'ct', from: at(2026, 9, 1, 0), until: at(2026, 10, 1, 0), band: 'low', renewAt: at(2027, 9, 1, 0) };
+    expect(retroStart(sim.player, at(2026, 11, 5, 12), start, 'USD')).toBe(start);
+  }, 300_000);
 });

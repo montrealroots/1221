@@ -6,19 +6,23 @@
  * The rules, as SLATE keeps them (systems/health.ts, from 2026-10-16), and every figure below worked by hand from them:
  * - From 1 January 2027 HUSKY D's work rules are asked at a renewal of any one of the six months before it, in
  *   Connecticut (Pub. L. 119-21 §71119; the Connecticut Hospital Association's HUSKY D materials of 25 August 2026). A
- *   renewal of 1 November 2027 reads May to October 2027.
- * - Short of them, a notice of noncompliance (42 CFR 435.558): dated 1 November, received five days on (6 November),
- *   answered by the thirtieth day from then, 5 December; decided the next day at midnight, 6 December. A member is
+ *   renewal of 1 October 2027 reads April to September 2027.
+ * - Short of them, a notice of noncompliance (42 CFR 435.558): dated 1 October, received five days on (6 October),
+ *   answered by the thirtieth day from then, 4 November; decided the next day at midnight, 5 November. A member is
  *   covered while she answers. Unanswered, cover ends at the month's end ten days or more after the decision (42 CFR
- *   431.211): 6 December and ten days is 16 December, so with December, its last day 31 December 2027.
+ *   431.211): 5 November and ten days is 15 November, so with November, its last day 30 November 2027.
  * - A stay in hospital in a month assessed meets that month, on her request (435.555(d)(1); Connecticut: "Were recently
  *   inpatient in a hospital"): Request A Hardship Exception on Papers. Granted, the renewal is renewed as it would have
- *   been at its date: HUSKY D renewed in 2027 runs six months, to 1 May 2028, and the notice says the month met and how.
+ *   been at its date: HUSKY D renewed in 2027 runs six months, to 1 April 2028, and the notice says the month met and how.
+ * - HUSKY D begins on the first of the month of application (Connecticut's UPM § 1560.10(B)), from 2026-10-16 (brief
+ *   09's journeys, which worked every date here again): until then on the first of next month, so this life's cover ran
+ *   from 1 November 2026, its renewal was 1 November 2027 reading May to October, its notice was answered by 5 December
+ *   and decided on 6 December, and it was renewed to 1 May 2028 or ended with December.
  *
  * PLAYER JOURNEY: Ada Cole as the creation screen's draft makes her (`newLifeFrom`), born in New York, a citizen, the
  * Comfortable family at Capital One, at Yale in New Haven from Monday 24 August 2026; withdrawn on 25 August, by the
  * fifteenth day of classes, so Yale Health ends that day; enrolled in HUSKY D on Papers on 1 October 2026, from
- * 1 November, its renewal on 1 November 2027. Papers is rendered as the player has it and its buttons pressed by their
+ * 1 October, its renewal on 1 October 2027. Papers is rendered as the player has it and its buttons pressed by their
  * own handlers. The seed is arbitrary, not picked for what it draws.
  *
  * TEST SETUP, said again where it's done: the week's illness draw forced, every week's a "no" and the week of Monday
@@ -26,7 +30,7 @@
  * one. Any played week can draw a stay; forcing it puts one in the months the renewal reads, and keeps every other week
  * from drawing one that would.
  *
- * Change an input, the outcome changes: the twin who doesn't ask is ended with December; the twin with no stay is
+ * Change an input, the outcome changes: the twin who doesn't ask is ended with November; the twin with no stay is
  * refused the hardship in its words, and Papers draws no button for it.
  */
 import { describe, expect, it, vi } from 'vitest';
@@ -119,12 +123,12 @@ function press(feature: string, label?: string): string[] {
   return h.toasts;
 }
 
-// The notice of 1 November 2027, worked from the rules above: May to October read, answered by 5 December, decided on
-// 6 December, ended with December where unanswered.
-const NOTICE = 'HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in any month from May to October 2027. You’re covered while you answer, to December 5, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on December 31, 2027, said on December 6, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
-const PENDING_LINE = 'A notice of noncompliance of November 1, 2027: HUSKY D couldn’t find the work rules met in May to October 2027. Answer by December 5, 2027; you’re covered until it’s decided on December 6, 2027.';
-const RENEWED = 'HUSKY D is renewed to its next renewal, May 1, 2028: last month’s income is within what it allows, and September 2027 met its work rules by a stay in hospital, on your request.';
-const NO_STAY = 'No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.';
+// The notice of 1 October 2027, worked from the rules above: April to September read, answered by 4 November, decided on
+// 5 November, ended with November where unanswered (each a month earlier from 2026-10-16, brief 09's journeys).
+const NOTICE = 'HUSKY D couldn’t find 80 hours’ work, $580.00 of income, school at least half-time or an exception in any month from April to September 2027. You’re covered while you answer, to November 4, 2027. Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in those months counts if you ask for it (Request A Hardship Exception on Papers). Unanswered, HUSKY D ends on November 30, 2027, said on November 5, 2027, and the premium tax credit isn’t yours while HUSKY D would take you but for its work rules, and you can apply again in any month after one that meets them.';
+const PENDING_LINE = 'A notice of noncompliance of October 1, 2027: HUSKY D couldn’t find the work rules met in April to September 2027. Answer by November 4, 2027; you’re covered until it’s decided on November 5, 2027.';
+const RENEWED = 'HUSKY D is renewed to its next renewal, April 1, 2028: last month’s income is within what it allows, and September 2027 met its work rules by a stay in hospital, on your request.';
+const NO_STAY = 'No month it assessed, April to September 2027, had a stay in hospital, the hardship SLATE keeps.';
 
 /**
  * The Comfortable family's student withdrawn on 25 August 2026 and enrolled in HUSKY D on Papers on 1 October, played by
@@ -140,8 +144,8 @@ const enrolled = (() => {
       forcing(sim)('health.illness', null, []); // TEST SETUP: every week's illness a "no"
       sim.advanceTo(at(2026, 10, 1, 9));
       papers(sim);
-      expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from November 1, 2026.']);
-      expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2026, 11, 1, 0), renewAt: at(2027, 11, 1, 0) });
+      expect(press('health.enroll')).toEqual(['Enrolled in HUSKY D, from October 1, 2026.']);
+      expect(healthOf(sim.player).program).toMatchObject({ kind: 'medicaid', state: 'ct', from: at(2026, 10, 1, 0), renewAt: at(2027, 10, 1, 0) });
       sim.advanceTo(at(2027, 9, 1, 12));
       snap = freeze(sim);
     }
@@ -149,7 +153,7 @@ const enrolled = (() => {
   };
 })();
 
-/** From the enrolled save, every week's illness a "no", and the week of Monday 13 September 2027 a stay where `stay` (TEST SETUP); played to Sunday 31 October at noon. */
+/** From the enrolled save, every week's illness a "no", and the week of Monday 13 September 2027 a stay where `stay` (TEST SETUP); played to Thursday 30 September at noon (until 2026-10-16, Sunday 31 October). */
 function toTheRenewal(stay: boolean): Simulation {
   const sim = enrolled();
   const force = forcing(sim);
@@ -159,37 +163,39 @@ function toTheRenewal(stay: boolean): Simulation {
   const week = sim.universe.scheduled.filter((i) => i.kind === HEALTH_WEEK_KIND && i.status === 'pending' && i.payload.personId === sim.player.id).sort((a, b) => a.at - b.at)[0]!;
   expect(week.at).toBe(at(2027, 9, 13, 9));
   if (stay) force('health.illness', [sim.player.id, String(week.at)], [0]); // TEST SETUP: that week's first draw, a stay, a "yes"
-  sim.advanceTo(at(2027, 10, 31, 12));
+  sim.advanceTo(at(2027, 9, 30, 12));
   expect((healthOf(sim.player).careLog ?? []).filter((e) => e.care === 'stay').map((e) => e.at)).toEqual(stay ? [at(2027, 9, 13, 9)] : []);
   // No work and under $580 of income in every month the renewal reads: the rules short but for the stay.
-  for (const m of ['2027-05', '2027-06', '2027-07', '2027-08', '2027-09', '2027-10']) expect(earningsOf(sim.player).months[m] ?? 0).toBeLessThan(580_00);
-  expect(workedBetween(sim, sim.player, at(2027, 5, 1, 0), at(2027, 11, 1, 0))).toEqual({ pay: 0, hours: 0 });
+  for (const m of ['2027-04', '2027-05', '2027-06', '2027-07', '2027-08', '2027-09']) expect(earningsOf(sim.player).months[m] ?? 0).toBeLessThan(580_00);
+  expect(workedBetween(sim, sim.player, at(2027, 4, 1, 0), at(2027, 10, 1, 0))).toEqual({ pay: 0, hours: 0 });
   return sim;
 }
 
 describe('health.request_hardship: a member’s renewal notice answered by a stay in hospital', () => {
-  it('PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 November sends its notice, Request A Hardship Exception pressed on Papers on 10 November renews HUSKY D to 1 May 2028, said once; the decision of 6 December passes it by and she’s covered into January; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with December”): HUSKY D from the first of
+  // the month of application moves the renewal a month earlier, and every date after it with it.
+  it('PLAYER JOURNEY: a stay in hospital in September 2027; the renewal of 1 October sends its notice, Request A Hardship Exception pressed on Papers on 10 October renews HUSKY D to 1 April 2028, said once; the decision of 5 November passes it by and she’s covered into December; once each across a reload, the same in one jump as day by day; the twin who doesn’t ask is ended with November', () => {
     const snap = freeze(toTheRenewal(true));
 
-    // The notice, by the clock: May to October read, covered while she answers.
+    // The notice, by the clock: April to September read, covered while she answers.
     const jump = thaw(snap);
-    jump.advanceTo(at(2027, 11, 1, 9));
-    expect(titled(jump, 'A Notice Of Noncompliance').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 1, 0, 30), NOTICE]]);
-    expect(healthOf(jump.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-10', '2027-09', '2027-08', '2027-07', '2027-06', '2027-05'], renewAt: at(2028, 5, 1, 0) });
+    jump.advanceTo(at(2027, 10, 1, 9));
+    expect(titled(jump, 'A Notice Of Noncompliance').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 1, 0, 30), NOTICE]]);
+    expect(healthOf(jump.player).pending).toMatchObject({ kind: 'renewal', months: ['2027-09', '2027-08', '2027-07', '2027-06', '2027-05', '2027-04'], renewAt: at(2028, 4, 1, 0) });
     expect(coverOn(jump.player, jump.now)).toBe('medicaid');
-    expect(jump.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending').map((i) => i.at)).toEqual([at(2027, 12, 6, 0)]);
+    expect(jump.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending').map((i) => i.at)).toEqual([at(2027, 11, 5, 0)]);
 
     // Papers says it, and draws the hardship: a stay in a month it assessed counts if she asks.
-    jump.advanceTo(at(2027, 11, 10, 9));
+    jump.advanceTo(at(2027, 10, 10, 9));
     const before = papers(jump);
     expect(before).toContain(PENDING_LINE);
     expect(before).toContain('A stay in hospital in a month it assessed counts if you ask for it.');
     expect(drawnFor('health.apply')).toEqual([]);
     expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']);
 
-    // Renewed as it would have been at its date: six months on from the renewal of 1 November, no gap, said once.
-    expect(titled(jump, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 11, 10, 9), RENEWED]]);
-    expect(healthOf(jump.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 11, 1, 0), band: 'low', renewAt: at(2028, 5, 1, 0) });
+    // Renewed as it would have been at its date: six months on from the renewal of 1 October, no gap, said once.
+    expect(titled(jump, 'Your Public Cover Is Renewed').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 10, 9), RENEWED]]);
+    expect(healthOf(jump.player).program).toEqual({ kind: 'medicaid', state: 'ct', from: at(2026, 10, 1, 0), band: 'low', renewAt: at(2028, 4, 1, 0) });
     expect(healthOf(jump.player).pending).toBeUndefined();
     // Asked again: nothing waits; Papers draws neither the notice's line nor the button.
     expect(jump.execute({ kind: 'health.request_hardship', payload: {} }).error).toBe('No notice of noncompliance waits on an answer.');
@@ -197,14 +203,14 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     expect(after).not.toContain('A notice of noncompliance of');
     expect(drawnFor('health.request_hardship')).toEqual([]);
 
-    // Saved and loaded, and on past the decision's day: the decision finds nothing waiting, and she's covered into January.
+    // Saved and loaded, and on past the decision's day: the decision finds nothing waiting, and she's covered into December.
     const back = thaw(freeze(jump));
-    back.advanceTo(at(2028, 1, 2, 9));
-    expect(coverOn(back.player, at(2027, 12, 31, 23))).toBe('medicaid');
-    expect(coverOn(back.player, at(2028, 1, 1, 9))).toBe('medicaid');
+    back.advanceTo(at(2027, 12, 2, 9));
+    expect(coverOn(back.player, at(2027, 11, 30, 23))).toBe('medicaid');
+    expect(coverOn(back.player, at(2027, 12, 1, 9))).toBe('medicaid');
     expect(healthOf(back.player).program!.until).toBeUndefined();
     expect(titled(back, 'Your Public Cover Ends')).toEqual([]);
-    expect(titled(back, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 11, 1, 0))).toEqual([]);
+    expect(titled(back, 'Your Health Cover Ended').filter((n) => n.at >= at(2027, 10, 1, 0))).toEqual([]);
     expect(titled(back, 'A Notice Of Noncompliance')).toHaveLength(1);
     expect(titled(back, 'Your Public Cover Is Renewed')).toHaveLength(1);
     expect(back.universe.scheduled.filter((i) => i.kind === WORK_DECIDED_KIND && i.status === 'pending')).toEqual([]);
@@ -214,29 +220,30 @@ describe('health.request_hardship: a member’s renewal notice answered by a sta
     // The same span a day at a time, reloaded twice on the way, the hardship pressed at the same hour: the same record.
     // Each day at 9 AM by the calendar: the clocks go back on 7 November, so a day isn't always 24 hours.
     let steps = thaw(snap);
-    const reloadAt = [at(2027, 11, 5, 0), at(2027, 12, 6, 12)];
-    for (let day = 0, t = at(2027, 11, 1, 9); t <= at(2028, 1, 2, 9); day += 1, t = at(2027, 11, 1 + day, 9)) {
+    const reloadAt = [at(2027, 10, 5, 0), at(2027, 11, 5, 12)];
+    for (let day = 0, t = at(2027, 10, 1, 9); t <= at(2027, 12, 2, 9); day += 1, t = at(2027, 10, 1 + day, 9)) {
       steps.advanceTo(t);
       if (reloadAt.length && t >= reloadAt[0]!) { steps = thaw(freeze(steps)); reloadAt.shift(); }
-      if (t === at(2027, 11, 10, 9)) { papers(steps); expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']); }
+      if (t === at(2027, 10, 10, 9)) { papers(steps); expect(press('health.request_hardship', 'Request A Hardship Exception')).toEqual(['The hardship is granted, and the work rules met.']); }
       // Covered every day of it.
       expect(coverOn(steps.player, t)).toBe('medicaid');
     }
     expect(health(steps)).toEqual(health(back));
     expect(healthOf(steps.player)).toEqual(healthOf(back.player));
 
-    // The twin who doesn't ask: decided on 6 December, ended with December, said ten days ahead.
+    // The twin who doesn't ask: decided on 5 November, ended with November, said ten days ahead.
     const unasked = thaw(snap);
-    unasked.advanceTo(at(2028, 1, 2, 9));
+    unasked.advanceTo(at(2027, 12, 2, 9));
     expect(titled(unasked, 'Your Public Cover Is Renewed')).toEqual([]);
-    expect(titled(unasked, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 12, 6, 0)]);
-    expect(healthOf(unasked.player).program!.until).toBe(at(2028, 1, 1, 0));
-    expect(coverOn(unasked.player, at(2028, 1, 1, 9))).toBeUndefined();
+    expect(titled(unasked, 'Your Public Cover Ends').map((n) => n.at)).toEqual([at(2027, 11, 5, 0)]);
+    expect(healthOf(unasked.player).program!.until).toBe(at(2027, 12, 1, 0));
+    expect(coverOn(unasked.player, at(2027, 12, 1, 9))).toBeUndefined();
   }, 900_000);
 
-  it('PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed', () => {
+  // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: with no stay in hospital from May to October 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed”): the renewal of 1 October reads April to September.
+  it('PLAYER JOURNEY: with no stay in hospital from April to September 2027, the renewal’s notice offers no hardship: Papers says why in the engine’s words and draws no button, and the command is refused in them with nothing changed', () => {
     const sim = toTheRenewal(false);
-    sim.advanceTo(at(2027, 11, 10, 9));
+    sim.advanceTo(at(2027, 10, 10, 9));
     expect(healthOf(sim.player).pending).toMatchObject({ kind: 'renewal' });
     const text = papers(sim);
     expect(text).toContain(PENDING_LINE);

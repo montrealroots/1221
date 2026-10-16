@@ -710,9 +710,11 @@ function rescind(sim: Simulation, person: Person, l: Leave): void {
 
 /**
  * A term past the sixth enrolled in: no tuition support, so its tuition is billed to the Yale account, and its health fee
- * with it where no living scholarship meets it (`livingPaid`, `termSupport`).
+ * with it where no living scholarship meets it (`livingPaid`, `termSupport`). `aid` is what the term's living scholarship
+ * then pays out, which goes on the account first (`aidOnAccount`, from 2026-10-16), so the notice says what it pays and
+ * what's left due.
  */
-export function billUnsupportedTerm(sim: Simulation, person: Person, term: number, livingPaid = false): void {
+export function billUnsupportedTerm(sim: Simulation, person: Person, term: number, livingPaid = false, aid: Money = 0): void {
   const school = person.school!;
   const cur = saveCurrency(sim.universe);
   const a = termAccount(cur, false, term);
@@ -724,10 +726,19 @@ export function billUnsupportedTerm(sim: Simulation, person: Person, term: numbe
   // It names the health fee as on the account only where it was charged (from 2026-10-12: until then it named it
   // whenever the term was billed, where the living scholarship the aid review kept had met it too).
   const due = formatDate(sim.now + EXTENDED_STUDY.dueDays * MS_DAY, zone());
-  const billed = livingPaid
-    ? `${money(sim, a.tuition)} tuition is on your Yale account, due by ${due}; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee`
-    : `${money(sim, a.tuition)} tuition and ${money(sim, a.healthPlan)} for Yale Health are on your Yale account, due by ${due}`;
-  notify(sim, person, 'A Term Without Tuition Support', `The tuition scholarship supports six terms, and this is your ${enrolledTerms(school).length}th: ${billed}. Unpaid, a financial hold stops registration and the diploma, with a ${money(sim, usd(sim, EXTENDED_STUDY.lateFee))} late fee a month.`, 85);
+  // From 2026-10-16 the term's living scholarship pays the account first, and the notice says so: until then it was
+  // paid to the bank whole, and the tuition was left due beside it.
+  const applied = aidOnAccount(sim, person, aid);
+  const left = accountOwed(sim, person) - applied;
+  const unpaid = `Unpaid, a financial hold stops registration and the diploma, with a ${money(sim, usd(sim, EXTENDED_STUDY.lateFee))} late fee a month.`;
+  const billed = !livingPaid
+    ? `${money(sim, a.tuition)} tuition and ${money(sim, a.healthPlan)} for Yale Health are on your Yale account, due by ${due}. ${unpaid}`
+    : applied <= 0
+      ? `${money(sim, a.tuition)} tuition is on your Yale account, due by ${due}; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee. ${unpaid}`
+      : left > 0
+        ? `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee and pays ${money(sim, applied)} of what the account owes before any reaches your bank, so ${money(sim, left)} is due by ${due}. ${unpaid}`
+        : `${money(sim, a.tuition)} tuition is on your Yale account; the term’s living scholarship meets its ${money(sim, a.healthPlan)} Yale Health fee and pays the ${money(sim, applied)} the account owes before any reaches your bank, so none of it is due.`;
+  notify(sim, person, 'A Term Without Tuition Support', `The tuition scholarship supports six terms, and this is your ${enrolledTerms(school).length}th: ${billed}`, 85);
 }
 
 // ---------------------------------------------------------------------------
@@ -743,6 +754,31 @@ export function yaleAccount(sim: Simulation, person: Person, open = true): Accou
 
 /** What's owed on it: positive owed, negative a credit. */
 export const accountOwed = (sim: Simulation, person: Person): Money => 0 - (yaleAccount(sim, person, false)?.balance ?? 0) || 0;
+
+/**
+ * What of an amount Yale pays the student goes on the Yale account first: what the account owes, up to the amount (from
+ * 2026-10-16, brief 09's journeys). Yale applies a credit to the charges on the account before any refund, the only
+ * exception a disbursement of federal funds (Yale Student Accounts, Refunds, https://student-accounts.yale.edu/refunds,
+ * read 2026-10-16), and the living-expense scholarship is Yale's own. Until then a term's scholarship was paid to the
+ * bank whatever the account owed, and a hold it would have cleared stopped registration (found on x1: $14,093.64 paid to
+ * Chase Total Checking with $7,875.25 owed under a hold since 26 February 2027).
+ */
+export const aidOnAccount = (sim: Simulation, person: Person, amount: Money): Money => Math.max(0, Math.min(accountOwed(sim, person), amount));
+
+/**
+ * The hold lifted once the account owes nothing, said once: by a payment (`payBalance`), or by a term's aid
+ * (`aidOnAccount`, from 2026-10-16). The degree waiting on it is conferred. A credit that clears the account (a rebate,
+ * a fee refunded, aid restored on appeal, `creditAccount`) doesn't lift it: no played life was found to reach one under
+ * a hold, and a lift written there was protected by no test, so it wasn't kept.
+ */
+export function liftHold(sim: Simulation, person: Person, why: string): boolean {
+  const school = person.school;
+  if (!school || school.hold === undefined || accountOwed(sim, person) > 0) return false;
+  delete school.hold;
+  notify(sim, person, 'The Financial Hold Is Lifted', `${why} Registration and the diploma are open to you again.`, 70);
+  conferIfReady(sim, person, 'Your Yale account paid');
+  return true;
+}
 
 function chargeAccount(sim: Simulation, person: Person, amount: Money, memo: string): void {
   if (amount <= 0) return;
@@ -813,11 +849,7 @@ export function payBalance(sim: Simulation, person: Person, amount: Money): { ow
   sim.post({ memo: 'Payment: Yale Student Account', category: 'school', postings: [...bank.postings, { accountId: yaleAccount(sim, person)!.id, amount }] });
   const school = person.school!;
   const owed = accountOwed(sim, person);
-  if (owed <= 0 && school.hold !== undefined) {
-    delete school.hold;
-    notify(sim, person, 'The Financial Hold Is Lifted', 'Your Yale account is paid. Registration and the diploma are open to you again.', 70);
-    conferIfReady(sim, person, 'Your Yale account paid');
-  }
+  liftHold(sim, person, 'Your Yale account is paid.');
   return { owed, held: school.hold !== undefined };
 }
 
