@@ -124,7 +124,7 @@
   "edits": [
    {
     "file": "src/engine/content/piece.ts",
-    "find": "  drain: 0.3,",
+    "find": "  drain: 0.4,",
     "replace": "  drain: 0,"
    }
   ],
@@ -196,5 +196,137 @@
     "replace": "  eventWeight: { performance: 7 },"
    }
   ]
+ },
+ {
+  "id": "t-drain-back",
+  "clause": "tests: the full drain 0.4, the anchor’s lead at 0.3",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0.3,"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-full-anchor",
+  "clause": "tests: a night reaches the full drain at 4/3 of the anchor’s work",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/workload.ts",
+    "find": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2) * (4 / 3),",
+    "replace": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2),"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-part-text",
+  "clause": "tests: a night reads memory by its part’s time on stage",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const PART_TEXT = { from: 1, perHour: 0.5, most: 2 } as const;",
+    "replace": "export const PART_TEXT = { from: 1, perHour: 0, most: 2 } as const;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-part-text-whole",
+  "clause": "tests: half a unit an hour past the first, not a unit",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const PART_TEXT = { from: 1, perHour: 0.5, most: 2 } as const;",
+    "replace": "export const PART_TEXT = { from: 1, perHour: 1, most: 2 } as const;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-night-stakes",
+  "clause": "tests: a night before a house rides on 1.5",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const NIGHT_STAKES = 1.5;",
+    "replace": "export const NIGHT_STAKES = 1;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
+ },
+ {
+  "id": "t-part-unread",
+  "clause": "tests: a night’s record reads its part",
+  "cmd": "npx",
+  "args": [
+   "vitest",
+   "run",
+   "tests/decisions-judge.test.ts",
+   "--reporter=json",
+   "--outputFile",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/systems/school.ts",
+    "find": "  const read = material || playing ? materialContext(E, material && withPart(material, piece.night!), playing, proc?.direction) : undefined;",
+    "replace": "  const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;"
+   }
+  ],
+  "verdict": "o.numFailedTests === 0",
+  "figure": "o.testResults.flatMap((r) => r.assertionResults).filter((a) => a.status === 'failed').map((a) => a.title.slice(0, 80))"
  }
 ]

@@ -102,7 +102,7 @@
   "edits": [
    {
     "file": "src/engine/content/piece.ts",
-    "find": "  drain: 0.3,",
+    "find": "  drain: 0.4,",
     "replace": "  drain: 0,"
    }
   ],
@@ -234,5 +234,94 @@
   ],
   "verdict": "Object.values(o.h4r.budgets.specialists).every((b) => Math.abs(b - o.h4r.budgets.even) < 1e-9)",
   "figure": "`even ${o.h4r.budgets.even}, a specialist ${o.h4r.budgets.specialists.listening}`"
+ },
+ {
+  "id": "st6-no-draws-proposed",
+  "clause": "ST6-R (b′), proposed and not counted",
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/interpretation.ts",
+   "--",
+   "--st6",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+    "replace": "inputs: {} },"
+   }
+  ],
+  "verdict": "o.ST6R.proposedB.met",
+  "figure": "o.ST6R.proposedB.paid"
+ },
+ {
+  "id": "h4-drain-back",
+  "clause": "H4-R (a) and (b), stamina",
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/ag-baseline.ts",
+   "--",
+   "--out",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/piece.ts",
+    "find": "  drain: 0.4,",
+    "replace": "  drain: 0.3,"
+   },
+   {
+    "file": "src/engine/content/workload.ts",
+    "find": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2) * (4 / 3),",
+    "replace": "  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2),"
+   }
+  ],
+  "verdict": "o.h4r.abilities.stamina.own.n >= 5 && Object.keys(o.h4r.abilities.stamina.own.kinds).length >= 2 && o.h4r.abilities.stamina.own.ahead >= 0.6 * o.h4r.abilities.stamina.own.n && o.h4r.abilities.stamina.own.median >= 0.3",
+  "figure": "`${o.h4r.abilities.stamina.own.n} in ${JSON.stringify(o.h4r.abilities.stamina.own.kinds)}`"
+ },
+ {
+  "id": "h4-no-part-text",
+  "clause": "H4-R (a), memory",
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/ag-baseline.ts",
+   "--",
+   "--out",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const PART_TEXT = { from: 1, perHour: 0.5, most: 2 } as const;",
+    "replace": "export const PART_TEXT = { from: 1, perHour: 0, most: 2 } as const;"
+   }
+  ],
+  "verdict": "o.h4r.abilities.memory.own.n >= 5 && Object.keys(o.h4r.abilities.memory.own.kinds).length >= 2 && o.h4r.abilities.memory.own.ahead >= 0.6 * o.h4r.abilities.memory.own.n && o.h4r.abilities.memory.own.median >= 0.3",
+  "figure": "`${o.h4r.abilities.memory.own.n} in ${JSON.stringify(o.h4r.abilities.memory.own.kinds)}`"
+ },
+ {
+  "id": "h4-no-night-stakes",
+  "clause": "H4-R (a), composure",
+  "cmd": "npx",
+  "args": [
+   "vite-node",
+   "tools/ag-baseline.ts",
+   "--",
+   "--out",
+   "$OUT"
+  ],
+  "edits": [
+   {
+    "file": "src/engine/content/approaches.ts",
+    "find": "export const NIGHT_STAKES = 1.5;",
+    "replace": "export const NIGHT_STAKES = 1;"
+   }
+  ],
+  "verdict": "o.h4r.abilities.composure.own.n >= 5 && Object.keys(o.h4r.abilities.composure.own.kinds).length >= 2 && o.h4r.abilities.composure.own.ahead >= 0.6 * o.h4r.abilities.composure.own.n && o.h4r.abilities.composure.own.median >= 0.3",
+  "figure": "`${o.h4r.abilities.composure.own.n} in ${JSON.stringify(o.h4r.abilities.composure.own.kinds)}`"
  }
 ]

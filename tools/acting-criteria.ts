@@ -264,6 +264,17 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
   let withoutDraws: number[];
   try { withoutDraws = both.map(liftR); } finally { R.inputs = asBuilt; }
   const drawsPart = withDraws.map((v, i) => v - withoutDraws[i]!);
+  // ST6-R (b′), proposed and not counted (from 2026-10-16, brief 10, the judge area's second phase): (b) as the criteria
+  // write it compares the specialist's lift playing restrained with its lift playing expansive, and restraint's lean on
+  // believability makes the first larger with its draws taken out too (the mutation `st6-no-draws` survives it, 96 of 96).
+  // What the owner's (g) asks it to catch is restraint drawing on nothing, so (b′) reads the draws' own part of the lift:
+  // more than 0.05, half a shown tenth, on at least 90% of the materials where both sides fit, (b)'s floor kept.
+  const paid = both.filter((_m, i) => drawsPart[i]! > 0.05);
+  const proposedB = {
+    clause: 'ST6-R (b′), proposed, not counted: on at least 90% of the materials where both sides fit, the restrained specialist’s lift over the even actor, both playing restrained, more than 0.05 larger with restraint’s draws (`APPROACH_EFFECT.restrained.inputs`) than with them taken out',
+    met: pct(paid.length, both.length) >= 0.9, paid: paid.length, of: both.length, rate: r4(pct(paid.length, both.length)),
+    least: r4(Math.min(...drawsPart)), notPaid: both.filter((_m, i) => !(drawsPart[i]! > 0.05)).map((m) => m.id),
+  };
   const diagnostics = {
     restraintSuitsAndRestrainedSpecialistAhead: { ahead: withItAhead.length, of: withIt.length, note: 'both playing restrained, where restrained suits better: the specialist against the even actor at the criteria’s budget' },
     restraintsOwnDrawsPartOfTheLift: { mean: r4(drawsPart.reduce((t, v) => t + v, 0) / drawsPart.length), least: r4(Math.min(...drawsPart)), most: r4(Math.max(...drawsPart)), note: 'the restrained specialist’s lift over the even actor, both restrained, with restraint’s draws less without them' },
@@ -271,7 +282,7 @@ export function measureST6R(budgetFill = (n: number) => (600 - n) / 9) {
   return {
     criterion: 'ST6-R (docs/verification/decisions-2026-10-16/criteria.md)', diagnostics,
     budgets: { restrainedSpecialist: budgetOf(RES), expansiveSpecialist: budgetOf(EXP), evenActor: budgetOf(EVEN) },
-    verdict, met: Object.values(verdict).every((v) => v.met),
+    verdict, met: Object.values(verdict).every((v) => v.met), proposedB,
     st6AsWritten: { restrained: `${resWinsShown.length} of ${against.length}`, expansive: `${expWinsShown.length} of ${withIt.length}`, met: resWinsShown.length >= 0.25 * against.length && expWinsShown.length >= 0.25 * withIt.length, note: 'ST6 as written, superseded by ST6-R and kept as the record: each specialist’s own side against its other, as shown, on these budgets' },
     st6Prime: { restrainedAheadOfEvenBest: against.filter((m) => x(m, 'RES', 'restrained') - Math.max(x(m, 'EVEN', 'restrained'), x(m, 'EVEN', 'expansive')) > 0).length, of: against.length, note: 'ST6′ (brief 09, proposed): its own side ahead of the equal-budget even actor’s better side, at full precision' },
     cases: against.map((m) => ({ material: m.id, work: workOf(m), family: familyOf(m), gap: r4(suit(m).e - suit(m).r), resRestrainedLessEvenExpansive: r4(x(m, 'RES', 'restrained') - x(m, 'EVEN', 'expansive')), halfRehearsed: r4(x(m, 'RES', 'restrained', 0.5) - x(m, 'EVEN', 'expansive')), evenRestrainedLessExpansive: r4(x(m, 'EVEN', 'restrained') - x(m, 'EVEN', 'expansive')), expExpansiveLessResRestrained: r4(x(m, 'EXP', 'expansive') - x(m, 'RES', 'restrained')) })),
