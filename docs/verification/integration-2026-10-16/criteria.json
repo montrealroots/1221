@@ -2765,6 +2765,94 @@
      "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad"
     }
    ]
+  },
+  {
+   "id": "ST3.asWritten",
+   "status": "Explicitly Deferred",
+   "deferredBy": "Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: the even actor the same as shown on 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "H4.asWritten",
+   "status": "Explicitly Deferred",
+   "deferredBy": "Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: 1 of 12 on brief 10’s final code (decisions-2026-10-16/integrated/after/criteria.txt)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "L3.asWritten",
+   "status": "Explicitly Deferred",
+   "deferredBy": "Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: failing on 2 of brief 10’s 8 journeys on its final code (decisions-2026-10-16/integrated/after/l3r.json)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.residence_naturalization",
+   "status": "Explicitly Deferred",
+   "deferredBy": "A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided, each Explicitly Deferred); counted there, not twice (brief 11, section 3)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "judge.stamina-load",
+   "status": "Explicitly Deferred",
+   "deferredBy": "A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 to stamina.W10 (each Implemented And Verified; W2 and W3 hold that a longer or harder night drains more); counted there, not twice (brief 11, section 3)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "tax.s8.jurisdiction",
+   "status": "Explicitly Deferred",
+   "deferredBy": "A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "judge.baseline",
+   "status": "Explicitly Deferred",
+   "deferredBy": "A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
+  },
+  {
+   "id": "stamina.measure",
+   "status": "Explicitly Deferred",
+   "deferredBy": "A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)",
+   "why": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "citations": [
+    {
+     "file": "docs/verification/completion-2026-10-16/classification.json"
+    }
+   ]
   }
  ]
 }

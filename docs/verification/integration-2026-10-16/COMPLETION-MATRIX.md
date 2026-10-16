@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 530 of 608 rows in scope Implemented And Verified (87.1%); 63 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
+**Completion, by the matrix:** 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
 
 ## Totals
 
@@ -34,16 +34,16 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: health-billing | 3 | 3 |  |  |  |  |  |  |
 | Remaining Area: health-eligibility | 7 | 7 |  |  |  |  |  |  |
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
-| Remaining Area: tax | 18 | 11 | 7 |  |  |  |  |  |
+| Remaining Area: tax | 18 | 11 | 5 |  |  |  |  | 2 |
 | Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 10 | 3 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
-| Brief 09 Area: judge | 10 | 3 | 2 |  | 1 |  |  | 4 |
+| Brief 09 Area: judge | 10 | 3 | 1 |  |  |  |  | 6 |
 | Brief 10 Area: advice | 14 | 5 | 7 |  |  |  | 2 |  |
 | Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
-| Brief 10 Area: judge | 36 | 18 | 9 |  | 3 |  | 5 | 1 |
-| Brief 10 Area: stamina | 13 | 11 | 2 |  |  |  |  |  |
+| Brief 10 Area: judge | 36 | 18 | 8 |  |  |  | 5 | 5 |
+| Brief 10 Area: stamina | 13 | 11 | 1 |  |  |  |  | 1 |
 | Criteria: The Stage | 11 | 9 |  |  |  |  |  | 2 |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
 | Criteria: The Attributes | 25 | 16 | 6 |  |  |  |  | 3 |
@@ -52,7 +52,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
 | Integration | 9 | 9 |  |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **635** | **530** | **63** | **0** | **4** | **0** | **11** | **27** |
+| **All** | **635** | **530** | **58** | **0** | **0** | **0** | **11** | **36** |
 
 ## Life, Health And Time
 
@@ -510,8 +510,8 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `tax.s8.opt` | OPT (Form I-765, the EAD): window, fee, decision, term, days without work, status | Implemented, Verification Incomplete | verified as it stands | Existing verified rows' tests; tests/remaining-papers.test.ts GUARD for the EAD at the DMV |
 | `tax.s8.license` | A driving license held from before (identity only since the scope reset) | Implemented, Verification Incomplete | verified as it stands | Existing verified rows' tests (documents.replace_license, documents.report_lost) |
 | `tax.s8.visas_authorizations` | Visas and travel authorizations, and Going Abroad | Implemented, Verification Incomplete | verified as it stands | tests/defects-g25-1.test.ts (FIXTURE: an authorization held from before, a reading) |
-| `tax.s8.residence_naturalization` | Residence abroad and naturalization (Residence Abroad on Permission To Work) | Implemented, Verification Incomplete | verified as it stands | The deferred rows as they stand |
-| `tax.s8.jurisdiction` | Jurisdiction: US federal (USCIS, SSA, IRS, State), Connecticut (DMV, DRS), the home country's office; real requirements apart from SLATE's … | Implemented, Verification Incomplete | verified as it stands | docs/verification/remaining/tax-result.json sources and assumptions per item |
+| `tax.s8.residence_naturalization` | Residence abroad and naturalization (Residence Abroad on Permission To Work) | Explicitly Deferred | verified as it stands | The deferred rows as they stand |
+| `tax.s8.jurisdiction` | Jurisdiction: US federal (USCIS, SSA, IRS, State), Connecticut (DMV, DRS), the home country's office; real requirements apart from SLATE's … | Explicitly Deferred | verified as it stands | docs/verification/remaining/tax-result.json sources and assumptions per item |
 
 ## Brief 09 Area: banking
 
@@ -611,14 +611,14 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `judge.baseline` | Reproduce ST3, ST6, H4 and L3 on the current code before changing them, and every criterion that holds. Preserve the original results and c… | Implemented, Verification Incomplete | verified as it stands | docs/verification/integration-2026-10-16/baseline-09/README.md ‘every command, seed, file and exit code’ (measurement (seeded, no draw)); docs/verification/int… |
+| `judge.baseline` | Reproduce ST3, ST6, H4 and L3 on the current code before changing them, and every criterion that holds. Preserve the original results and c… | Explicitly Deferred | verified as it stands | docs/verification/integration-2026-10-16/baseline-09/README.md ‘every command, seed, file and exit code’ (measurement (seeded, no draw)); docs/verification/int… |
 | `judge.ST3` | ST3, consistent evaluation: keep full-precision calculation and final-boundary rounding; separate rounding defects from legitimate differen… | Explicitly Deferred | verified as it stands | tests/remaining-judge.test.ts ‘ST3 case by case: the stage and a close frame (brief 09) > identical effective inputs give identical results: an actor even in e… |
 | `judge.ST6` | ST6, restrained specialists: investigate why 8 of 38; trace failing cases through abilities, material, suitability, preparation and scoring… | Explicitly Deferred | verified as it stands | docs/verification/integration-2026-10-16/st6-09.json ‘tools/interpretation.ts -- --st6’ (measurement); docs/verification/integration-2026-10-16/st6-09.json ‘co… |
 | `judge.H4` | H4, all twelve specialist profiles: missing opportunities, benchmark assignments that don't fit, actual scoring weaknesses; add in-scope ma… | Explicitly Deferred | implemented | tests/remaining-judge.test.ts ‘H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level un… |
 | `judge.L3` | L3, long-term progress: compare the same work, interpretation, preparation and conditions at earlier and later levels; report apart the cha… | Explicitly Deferred | implemented | docs/verification/integration-2026-10-16/l3-09/l3-trace-specialist-bj-0.json ‘tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --trace’ (… |
 | `judge.remeasure` | Everything measured again after the changes: ST1 to ST9, F1, F2, I1 to I5, every attribute criterion, M1, S1 to S4 on all four samples, G2,… | Implemented And Verified | verified as it stands | docs/verification/integration-2026-10-16/final-09/README.md ‘every criterion before and after, with each command's exit’ (measurement); tests/genre-coverage.te… |
 | `judge.length` | Length: is there a sourced basis for a long piece being judged in more parts by its length as well as its tone, so sustaining precision ove… | Implemented And Verified | implemented for a scene's shifts of act… | tests/remaining-judge.test.ts ‘a scene’s units: its tone sections and its turns (evaluation-10, the follow-up) > a scene is cut at each change of tone and each… |
-| `judge.stamina-load` | Stamina: is load's clamp at 1 justified, or does a sourced account of physical demand (a play's length, its physical score) support a heavi… | Not Implemented | not implemented: no sourced account siz… | docs/verification/integration-2026-10-16/h4.md ‘Brief 09's Follow-Up, 2. The Load: Why It Stays At 1’ (account) |
+| `judge.stamina-load` | Stamina: is load's clamp at 1 justified, or does a sourced account of physical demand (a play's length, its physical score) support a heavi… | Explicitly Deferred | not implemented: no sourced account siz… | docs/verification/integration-2026-10-16/h4.md ‘Brief 09's Follow-Up, 2. The Load: Why It Stays At 1’ (account) |
 | `judge.classes-fitness` | Movement classes and fitness: a student who attends every movement class still falls to an everyday fitness of 35, since only a workout hol… | Implemented And Verified | implemented where the Compendium puts a… | tests/fitness.test.ts ‘a class that trains the body as hard as a workout, attended > holds and builds fitness at each combat class of the spring as a workout i… |
 | `judge.coverage-row` | docs/COVERAGE-MATRIX.md line 77 says 56 scenes: correct it. | Implemented, Verification Incomplete | corrected to 65, read from SCENES, with… | docs/COVERAGE-MATRIX.md ‘the scene bank row’ (documentation) |
 
@@ -661,14 +661,14 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 | Row | Goal | Status | Source's Word | Evidence |
 |---|---|---|---|---|
-| `judge.baseline` | The measurements, exactly as the criteria say, before anything in the judge changes | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/baseline/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>’ (measurement) |
+| `judge.baseline` | The measurements, exactly as the criteria say, before anything in the judge changes | Explicitly Deferred | implemented | docs/verification/decisions-2026-10-16/baseline/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>’ (measurement) |
 | `judge.budget` | Profiles and budgets: equal budgets, printed with the results | Implemented And Verified | fixed | docs/verification/decisions-2026-10-16/baseline/st6.json ‘npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R and ST6RAtTheBudgetBefore)’ (measurement)… |
 | `ST3-R.a` | ST3-R (a) Identical inputs, identical results | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record,… |
 | `ST3-R.b` | ST3-R (b) Legitimate demands kept | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better… |
 | `ST3-R.c` | ST3-R (c) Every difference attributed | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference… |
 | `ST3-R.d` | ST3-R (d) Rounded once, at the end | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact val… |
 | `ST3-R.e` | ST3-R (e) It catches what it should | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/st3.json ‘npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)’ (measurement) |
-| `ST3.asWritten` | ST3 as written, kept as the record | Not Implemented | superseded by ST3-R (the owner's approv… | docs/verification/decisions-2026-10-16/integrated/after/st3.json ‘tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)’ (measurement) |
+| `ST3.asWritten` | ST3 as written, kept as the record | Explicitly Deferred | superseded by ST3-R (the owner's approv… | docs/verification/decisions-2026-10-16/integrated/after/st3.json ‘tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)’ (measurement) |
 | `ST6-R.a` | ST6-R (a) Viable | Decision Required | owner decision | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that l… |
 | `ST6-R.b` | ST6-R (b) Restraint's own craft pays | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained… |
 | `ST6-R.c` | ST6-R (c) Success depends on what it should | Decision Required | owner decision | tests/decisions-judge.test.ts ‘ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win ag… |
@@ -682,13 +682,13 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H4-R.c` | H4-R (c) No erased weakness | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carri… |
 | `H4-R.d` | H4-R (d) Direct and indirect apart | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘H4-R: every ability’s contribution on its own work (brief 10) > PLAYER JOURNEY: what an ability does outside the piece shows in … |
 | `H4-R.e` | H4-R (e) It catches what it should | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>’ (m… |
-| `H4.asWritten` | H4 as written and H5 beside H4-R | Not Implemented | superseded by H4-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement) |
+| `H4.asWritten` | H4 as written and H5 beside H4-R | Explicitly Deferred | superseded by H4-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement) |
 | `L3-R.a` | L3-R (a) A fixed set, controlled | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
 | `L3-R.b` | L3-R (b) Enough journeys | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
 | `L3-R.c` | L3-R (c) Growth | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the f… |
 | `L3-R.d` | L3-R (d) More never makes it worse | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers… |
 | `L3-R.e` | L3-R (e) The journey kept in view | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days … |
-| `L3.asWritten` | L3 as written, kept as the record | Not Implemented | superseded by L3-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement) |
+| `L3.asWritten` | L3 as written, kept as the record | Explicitly Deferred | superseded by L3-R; kept as the record,… | docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement) |
 | `M1` | Mastery is kept | Implemented And Verified | verified as it stands | tests/decisions-judge.test.ts ‘M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day,… |
 | `judge.together` | Every criterion section 5 lists, after the change | Implemented, Verification Incomplete | verified as it stands | docs/verification/decisions-2026-10-16/integrated/after/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <after> <part>’ (measurement) |
 | `judge.tests` | The tests of section 1 | Implemented, Verification Incomplete | implemented | tests/decisions-judge.test.ts (test file) |
@@ -713,7 +713,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `stamina.W9` | W9 Bounded, and said: the workload a number between 0 and a stated cap by a stated formula; the forecast before the performance and the res… | Implemented And Verified | implemented | tests/decisions-stamina.test.ts ‘W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time’ (test (static)); t… |
 | `stamina.W10` | W10 History kept: a result kept under an earlier ruleset is shown as it was, under its ruleset's name; a save from before the change opens … | Implemented And Verified | older-save compatibility kept and tested | tests/decisions-stamina.test.ts ‘W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged u… |
 | `stamina.M1` | M1 must hold after the change: maximum relevant abilities (stamina included), genre mastery, complete preparation, a valid interpretation a… | Implemented And Verified | verified as it stands | tests/decisions-stamina.test.ts ‘M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient r… |
-| `stamina.measure` | Measure what moves, before and after, as a first look for the judge area: M1, H4 (tools/ag-criteria.mjs), ST3 (tools/interpretation.ts -- -… | Implemented, Verification Incomplete | implemented | docs/verification/decisions-2026-10-16/stamina/README.md ‘every command, file and exit’ (measurement); docs/verification/decisions-2026-10-16/stamina/before-ag… |
+| `stamina.measure` | Measure what moves, before and after, as a first look for the judge area: M1, H4 (tools/ag-criteria.mjs), ST3 (tools/interpretation.ts -- -… | Explicitly Deferred | implemented | docs/verification/decisions-2026-10-16/stamina/README.md ‘every command, file and exit’ (measurement); docs/verification/decisions-2026-10-16/stamina/before-ag… |
 | `stamina.A1` | A1 met: stamina’s +10 effect 0.63 on the mean of the 30 nights, as tools/ag-baseline.ts judges every night, a supporting part; it met A1 th… | Implemented, Verification Incomplete | owner decision | docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘A1 FAILS none at 0.5 for stamina’ (measurement (no draw)); tests/attributes-phase-2b.test… |
 
 ## Criteria: The Stage
@@ -833,7 +833,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (63)
+### Implemented, Verification Incomplete (58)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -854,8 +854,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`tax.s8.opt`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
 - **`tax.s8.license`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
 - **`tax.s8.visas_authorizations`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.residence_naturalization`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
-- **`tax.s8.jurisdiction`** (Remaining Area: tax): the area called it verified as it stands and cites no gate test that holds it
 - **`banking.2.arrange_overdraft`** (Brief 09 Area: banking): owner decision
 - **`banking.2.cancel_new`** (Brief 09 Area: banking): owner decision (its last unfinished item implemented: banking.1.pro-rata)
 - **`banking.2.switch`** (Brief 09 Area: banking): owner decision
@@ -870,7 +868,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`genres.4-kept`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it
 - **`genres.6-table`** (Brief 09 Area: genres): the area called it implemented and cites no gate test that holds it
 - **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
-- **`judge.baseline`** (Brief 09 Area: judge): the area called it verified as it stands and cites no gate test that holds it
 - **`judge.coverage-row`** (Brief 09 Area: judge): the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it
 - **`advice.harness`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it / TEST SETUP: abilities, techniques and stamina’s fitness drawn within the band and set where each is kept; every calendar hour cleared and the student rested before every command, as F2-A’s set-up does; F2-A’s own adv-N set-up kept exactly as it was, including that it never set the four abilities kept in the craft (it wrote them into attrs, where nothing reads them)
 - **`advice.F2`** (Brief 10 Area: advice): the area called it verified as it stands and cites no gate test that holds it
@@ -879,7 +876,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`advice.tests`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
 - **`advice.heldout`** (Brief 10 Area: advice): the area called it implemented and cites no gate test that holds it
 - **`advice.harness-hospital`** (Brief 10 Area: advice): the area called it fixed and cites no gate test that holds it
-- **`judge.baseline`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
 - **`ST3-R.e`** (Brief 10 Area: judge): Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands
 - **`H4-R.e`** (Brief 10 Area: judge): The mutations ran in copies by tools/judge-mutations.mjs, recorded in integrated/after/mutations.json; no gate test runs them / verified as it stands
 - **`L3-R.a`** (Brief 10 Area: judge): Measured on the integrated code by the committed tools (integrated/after/); no gate test holds this clause itself / verified as it stands
@@ -888,7 +884,6 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`judge.together`** (Brief 10 Area: judge): Measured on the integrated code by the committed tools (integrated/after/README.md); the criteria that fail, ST6-R (a), (c), (e), (g), F2 as written and the four originals, fail as they did / verified as it stands
 - **`judge.tests`** (Brief 10 Area: judge): the area called it implemented and cites no gate test that holds it
 - **`A1`** (Brief 10 Area: judge): Measured by tools/ag-baseline.ts and tools/ag-criteria.mjs on the integrated code; no gate test holds A1’s figure. A night drains as it did by WORKLOAD.full’s design, so A1 is met by briefs and scenes, and read at a lead a night would be 0.487, short of 0.5 / verified as it stands
-- **`stamina.measure`** (Brief 10 Area: stamina): the area called it implemented and cites no gate test that holds it
 - **`stamina.A1`** (Brief 10 Area: stamina): Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change / owner decision
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
@@ -903,12 +898,9 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 
 None.
 
-### Not Implemented (4)
+### Not Implemented (0)
 
-- **`judge.stamina-load`** (Brief 09 Area: judge): not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)
-- **`ST3.asWritten`** (Brief 10 Area: judge): superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met
-- **`H4.asWritten`** (Brief 10 Area: judge): superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)
-- **`L3.asWritten`** (Brief 10 Area: judge): superseded by L3-R; kept as the record, its figures in L3-R (e)
+None.
 
 ### Blocked Externally (0)
 
@@ -928,7 +920,7 @@ None.
 - **`L1`** (Criteria: Long-Term Continuity): L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn…
 - **`KS-bank-rows-scope`** (Known Shortfalls And Missing Tests): Nine bank commands (an arranged overdraft, a switch and its steps, a money transfer, a canceled new account, an overrun loan) are reached only on fixtures, since no New Haven bank offers them and lives abroad went in the scope reset. Do they stay counted against completion, or move to Explicitly Deferred? Evidence: docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 2; each row’s four-part acceptance on docs/GAMEPLAY-COVERAGE.md. Recommended: Defer them with the scope reset’s lives abroad, keeping their fixture tests, unless a home-country account now reaches one (being read…
 
-### Explicitly Deferred (27)
+### Explicitly Deferred (36)
 
 - `health.prepay` (Life, Health And Time): Deferred: England’s certificate, which the New Haven student is refused. A prescription free while it runs is shown on a London fixture (tests/coverage-gaps-life.test.ts ‘makes prescriptions free while it runs…’, rxShareOf read, not a fill…
 - `documents.naturalize` (Papers): Only Mexico can be reached, and a Mexican citizenship changes nothing for somebody living in New Haven. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
@@ -946,11 +938,20 @@ None.
 - `benefits.uc_period` (Papers): Can't live in Britain. / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `pension.ie_week / pension.bienestar_payment / pension.imss_month / pension.ss_month / pension.state_payment` (Papers): Each is unreachable, as its command is. Until 2026-10-10 recordPension had no caller, so none of these was taxed; since then each records its payment (earnings.ts:251). / the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
 - `trait-receipts` (Creation, Profile, Home And The Looks): the owner’s scope reset of 2026-10-09 (docs/REQUIREMENTS.md)
+- `tax.s8.residence_naturalization` (Remaining Area: tax): A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, …
+- `tax.s8.jurisdiction` (Remaining Area: tax): A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)
+- `judge.baseline` (Brief 09 Area: judge): A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows…
 - `judge.ST3` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: ST3 as written stays in the record, not met, superseded by ST3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
 - `judge.ST6` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: ST6 as written stays in the record, not met, superseded by ST6-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
 - `judge.H4` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: H4 as written stays in the record, not met, superseded by H4-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
 - `judge.L3` (Brief 09 Area: judge): The owner’s brief 10 (decision 1) decided it: L3 as written stays in the record, not met, superseded by L3-R, measured as the judge area’s rows of brief 10 (remaining-10/judge-result.json)
+- `judge.stamina-load` (Brief 09 Area: judge): A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 t…
+- `judge.baseline` (Brief 10 Area: judge): A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows…
+- `ST3.asWritten` (Brief 10 Area: judge): Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current i…
 - `ST6.asWritten` (Brief 10 Area: judge): Superseded by ST6-R, approved by the owner in brief 10 (decision 1); as written it holds on brief 10’s final code at its floor to the case (restrained 11 of 44, expansive 24 of 50, decisions-2026-10-16/integrated/after/stage.json), kept as…
+- `H4.asWritten` (Brief 10 Area: judge): Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current im…
+- `L3.asWritten` (Brief 10 Area: judge): Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current im…
+- `stamina.measure` (Brief 10 Area: stamina): A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)
 - `ST3` (Criteria: The Stage): ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json), not met; superseded by ST3-R, approved by the owner in brief 10 …
 - `ST6` (Criteria: The Stage): ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; 11 of 44 on brief 10’s final code, the 25% floor to the case (integrated/after/stage.json); supersede…
 - `H4` (Criteria: The Attributes): H4 as written: 1 of 12 (integrated-09), not met; 1 of 12 on brief 10’s final code (integrated/after/criteria.txt); superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remain…

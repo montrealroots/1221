@@ -149,3 +149,12 @@ Each recorded with its reason and impact, and kept apart from the baseline's row
 
 - **`defect.yale-credit-hold`**: brief 11, section 5, and the handoff’s open list: a credit that clears a held Yale account leaves the hold. A defect fix outside the baseline’s rows.
 - **`defect.personality-year`**: brief 11, section 5, and the handoff’s open list: tests/personality.test.ts’s year on autopilot ends 16 days in. A test defect outside the baseline’s rows.
+
+## Amendments
+
+Each change to the classification after it was frozen, said where it was made. The baseline itself is never amended.
+
+- **`judge.stamina-load`'s action** (2026-10-16, when the reconciliation was made). The classification said "its evidence
+  is W2’s and W3’s gate tests". It's Explicitly Deferred instead, as a duplicate counted once in stamina.W1 to W10,
+  because verifying it by those tests would count one requirement twice among the verified rows. Its category,
+  duplicate, is unchanged.

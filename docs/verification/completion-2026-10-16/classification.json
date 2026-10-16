@@ -359,7 +359,12 @@
    "category": "duplicate",
    "reason": "Brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 (brief 10): a night’s workload by its running time, part, intensity and breaks, verified as W1 to W10 (stamina.W1 to stamina.W10, Implemented And Verified)",
    "action": "administrative: its evidence is W2’s and W3’s gate tests (a longer or harder night drains more); not counted as progress",
-   "area": "integration"
+   "area": "integration",
+   "amended": {
+    "on": "2026-10-16, when the reconciliation was made",
+    "action": "administrative: Explicitly Deferred as a duplicate, counted once in stamina.W1 to W10 (W2 and W3 hold that a longer or harder night drains more); not counted as progress",
+    "why": "Verified by W2’s and W3’s tests, it would have counted one requirement twice among the verified rows"
+   }
   },
   {
    "id": "judge.coverage-row",

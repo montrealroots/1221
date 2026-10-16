@@ -280,8 +280,12 @@ for (const { key, dir, item, result } of areas()) {
     citations: [...(result?.evidence?.map((e) => ({ file: e.file, title: e.title })) ?? []), ...(override?.citations ?? [])],
     ...(status === IVI ? { missing: clean(join(unproven ? `the area called it ${result.disposition} and cites no gate test that holds it` : '', result?.missing, result?.assumptions, unproven ? '' : why)) } : {}),
     ...(status === PI || status === NI ? { gap: clean(join(result?.gap, result ? why : 'the area has written no result for it')) } : {}),
-    ...(status === DR ? { decision: result?.decision ?? (result?.ownerDecision ? { question: result.ownerDecision, evidence: `${dir}/${key}-result.json`, recommendation: result?.recommendation ?? NONE } : undefined) } : {}),
-    ...(status === BE ? { blocker: result?.blocker } : {}),
+    ...(status === DR ? { decision: override?.decision ?? result?.decision ?? (result?.ownerDecision ? { question: result.ownerDecision, evidence: `${dir}/${key}-result.json`, recommendation: result?.recommendation ?? NONE } : undefined) } : {}),
+    ...(status === BE ? { blocker: override?.blocker ?? result?.blocker } : {}),
+    // An override can carry the measurement that verifies an item, its commit and what it reads, held current as a
+    // criterion's is (from brief 11, 2026-10-16: until then an item verified by a measurement alone stayed Implemented,
+    // Verification Incomplete, whatever the measurement's commit).
+    ...(override?.measured ? { measured: override.measured } : {}),
     // An override can supersede an item, saying by what (from brief 10, 2026-10-16: until then only an area's result could).
     ...(status === ED ? { deferredBy: override?.deferredBy ?? result?.deferredBy } : {}),
   });
@@ -295,6 +299,8 @@ for (const c of criteriaRows) {
   if (r.status === IAV && r.measured) { const v = current(r.measured); if (v) Object.assign(r, { status: IVI, missing: `It ${v}` }); }
   rows.push(r);
 }
+// An area's item verified by a measurement, the same (from brief 11, 2026-10-16).
+for (const r of rows) if (r.kind === 'area item' && r.status === IAV && r.measured) { const v = current(r.measured); if (v) Object.assign(r, { status: IVI, missing: `It ${v}` }); }
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The checks

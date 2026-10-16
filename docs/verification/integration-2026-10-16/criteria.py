@@ -294,5 +294,24 @@ OVERRIDES = [
   {'id': 'coverage.7-overdraft-home-panel', 'status': IAV, 'why': 'Reported by the coverage area and fixed outside it the same day (d31f0a94): the overdraft and loan offers ask abroadRefusal first, and the panels say the refusal in place of their controls',
    'citations': [cite('tests/integration-home-lending.test.ts', 'borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad')]},
 ]
+# Brief 11 (2026-10-16): the open rows' administrative reconciliations (docs/verification/completion-2026-10-16/
+# classification.json). Each is a record, not progress: it leaves the in-scope rows and is reported apart from the rows
+# closed by work. Brief 11's own words decide each, so none goes back to the owner. Until brief 11 ST3, H4 and L3 as written stayed Not
+# Implemented, the two duplicates were open rows of their own, and the four records were Implemented, Verification
+# Incomplete, which nothing in the current build could verify.
+B11 = 'docs/verification/completion-2026-10-16'
+B11_HISTORICAL = 'brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”'
+B11_ADMIN = {
+  'ST3.asWritten': f'Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: the even actor the same as shown on 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json)',
+  'H4.asWritten': f'Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: 1 of 12 on brief 10’s final code (decisions-2026-10-16/integrated/after/criteria.txt)',
+  'L3.asWritten': f'Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence ({B11_HISTORICAL}); as written, not met: failing on 2 of brief 10’s 8 journeys on its final code (decisions-2026-10-16/integrated/after/l3r.json)',
+  'tax.s8.residence_naturalization': 'A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided, each Explicitly Deferred); counted there, not twice (brief 11, section 3)',
+  'judge.stamina-load': 'A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 to stamina.W10 (each Implemented And Verified; W2 and W3 hold that a longer or harder night drains more); counted there, not twice (brief 11, section 3)',
+  'tax.s8.jurisdiction': 'A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)',
+  'judge.baseline': 'A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)',
+  'stamina.measure': 'A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)',
+}
+for id, why in B11_ADMIN.items():
+    OVERRIDES.append({'id': id, 'status': ED, 'deferredBy': why, 'why': 'Reconciled administratively under brief 11, section 3; not counted as progress', 'citations': [{'file': f'{B11}/classification.json'}]})
 json.dump({'rows': rows, 'overrides': OVERRIDES}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))

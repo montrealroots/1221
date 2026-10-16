@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 530 of 608 rows in scope Implemented And Verified (87.1%); 63 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -8992,9 +8992,10 @@
    "implementation": "Not recorded",
    "evidence": "The deferred rows as they stand",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Explicitly Deferred",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A duplicate: residence abroad and naturalization were deferred by the owner’s scope reset of 2026-10-09, as the audit’s own rows for them already are (documents.residence, documents.settle, documents.renew_residence, documents.naturalize, citizenship.decided, each Explicitly Deferred); counted there, not twice (brief 11, section 3)"
   },
   {
    "id": "tax.s8.jurisdiction",
@@ -9016,9 +9017,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/remaining/tax-result.json sources and assumptions per item",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Explicitly Deferred",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A historical record of a process step: the tax area’s research of which office’s rules each papers system follows (remaining/tax-result.json); the rules themselves are each audit row’s own, verified there (brief 11, section 3)"
   },
   {
    "id": "banking.1.pro-rata",
@@ -10777,9 +10779,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/baseline-09/README.md ‘every command, seed, file and exit code’ (measurement (seeded, no draw)); docs/verification/integration-2026-10-16/baseline-09/tests-summary.txt ‘the judge's 51 test files run one at a time on d7127819’ (suite)",
    "sourceStatus": "verified as it stands",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Explicitly Deferred",
    "disposition": "verified as it stands",
-   "missing": "the area called it verified as it stands and cites no gate test that holds it"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)"
   },
   {
    "id": "judge.ST3",
@@ -10947,9 +10950,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/integration-2026-10-16/h4.md ‘Brief 09's Follow-Up, 2. The Load: Why It Stays At 1’ (account)",
    "sourceStatus": "not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)",
-   "status": "Not Implemented",
+   "status": "Explicitly Deferred",
    "disposition": "not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)",
-   "gap": "not implemented: no sourced account sizes a heavier load (h4.md, the follow-up's section 2)"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A duplicate: brief 09’s question whether a night’s load should read a heavier, sourced account was answered by the owner’s decision 5 in brief 10, a night’s workload by its running time, part, intensity and breaks, verified as stamina.W1 to stamina.W10 (each Implemented And Verified; W2 and W3 hold that a longer or harder night drains more); counted there, not twice (brief 11, section 3)"
   },
   {
    "id": "judge.classes-fitness",
@@ -11610,9 +11614,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/baseline/README.md ‘docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>’ (measurement)",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Explicitly Deferred",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A historical record of a process step: its brief’s criteria measured on the engine before any change, the outputs kept; nothing in the current build can measure an engine that no longer exists, and the current figures are the criteria rows’ (brief 11, section 3)"
   },
   {
    "id": "judge.budget",
@@ -11773,9 +11778,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/st3.json ‘tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)’ (measurement)",
    "sourceStatus": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met",
-   "status": "Not Implemented",
+   "status": "Explicitly Deferred",
    "disposition": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met",
-   "gap": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "Superseded by ST3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: the even actor the same as shown on 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json)"
   },
   {
    "id": "ST6-R.a",
@@ -12119,9 +12125,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/criteria.txt ‘node tools/ag-criteria.mjs (H4, H5)’ (measurement)",
    "sourceStatus": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)",
-   "status": "Not Implemented",
+   "status": "Explicitly Deferred",
    "disposition": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)",
-   "gap": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "Superseded by H4-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: 1 of 12 on brief 10’s final code (decisions-2026-10-16/integrated/after/criteria.txt)"
   },
   {
    "id": "L3-R.a",
@@ -12261,9 +12268,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/integrated/after/l3r.json ‘tools/l3r.mjs (verdict.e)’ (measurement)",
    "sourceStatus": "superseded by L3-R; kept as the record, its figures in L3-R (e)",
-   "status": "Not Implemented",
+   "status": "Explicitly Deferred",
    "disposition": "superseded by L3-R; kept as the record, its figures in L3-R (e)",
-   "gap": "superseded by L3-R; kept as the record, its figures in L3-R (e)"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "Superseded by L3-R, approved by the owner in brief 10 (decision 1), and kept as historical evidence (brief 11, section 3: “Superseded acting criteria remain historical evidence. Do not count their historical failures as separate current implementation tasks.”); as written, not met: failing on 2 of brief 10’s 8 journeys on its final code (decisions-2026-10-16/integrated/after/l3r.json)"
   },
   {
    "id": "M1",
@@ -12730,9 +12738,10 @@
    "implementation": "Not recorded",
    "evidence": "docs/verification/decisions-2026-10-16/stamina/README.md ‘every command, file and exit’ (measurement); docs/verification/decisions-2026-10-16/stamina/before-ag-criteria.txt ‘before’ (measurement (no draw)); docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt ‘after’ (measurement (no draw))",
    "sourceStatus": "implemented",
-   "status": "Implemented, Verification Incomplete",
+   "status": "Explicitly Deferred",
    "disposition": "implemented",
-   "missing": "the area called it implemented and cites no gate test that holds it"
+   "override": "Reconciled administratively under brief 11, section 3; not counted as progress",
+   "deferredBy": "A historical record of a process step: the stamina area’s first look at what moved, before and after its change (brief 10); the current figures are the criteria rows’ and the judge area’s, measured on the tested commit (brief 11, section 3)"
   },
   {
    "id": "stamina.A1",

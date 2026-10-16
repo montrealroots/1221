@@ -1,6 +1,39 @@
-# Read First: The Approved Decisions, Brief 10, 2026-10-16
+# Read First: Brief 11, Finishing The Current Build Against A Fixed Checklist, 2026-10-16
 
-**This section is the current status, and where a new session starts.** Every section below is history. It was written
+**This section is the current status, and where a new session starts.** Every section below is history. The owner's
+"Finish The Current Build Against A Fixed Checklist" (`docs/verification/briefs-2026-10-16/11-finish-the-current-build-against-a-fixed-checklist.txt`,
+kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted from `main` at `0e7ff7c2` (#37's merge).
+**In progress: nothing of it is merged or deployed.**
+
+## 1. Where It Stands
+
+- **The frozen baseline** (`docs/verification/completion-2026-10-16/`, `7572578b`): every row of the matrix at `0e7ff7c2`.
+  It holds 530 verified, 63 verification incomplete, 4 not implemented, 11 decision required, **608 in scope**, and 27
+  deferred. Completion is reported against those 608 throughout, as well as against the matrix's own count.
+- **The 78 open rows, classified** (`classification.json`, `README.md`):
+  - **46 actionable**;
+  - **decision 4's 23, unchanged**: its twelve audit rows, its three decision rows and the banking area's eight items;
+  - **9 administrative**: ST3, H4 and L3 as written, superseded; two duplicates; four records of a process step.
+- **The administrative reconciliations are in the matrix:** the 9 are Explicitly Deferred by `criteria.py`'s brief 11
+  overrides, each with its reason. They are not progress, so the matrix's denominator fell to 599 and no row was closed by them.
+- **Two defects are added work:** a credit that clears a held Yale account leaves the hold, and
+  `tests/personality.test.ts`'s year on autopilot ends 16 days in.
+- **Five areas are working in clones** (`…/scratchpad/<area>11`, branch `<area>11`) from instructions written before
+  their work (`completion-2026-10-16/prompts/`): journeys (the two defects, health.enroll, l-actor, the five tax.s8
+  items), research (the Connecticut ID card, passport fees abroad), attributes (A4, A5, T1, O3, F1, F3, A1, stamina.A1,
+  section 7), acting (ST6-R, the judge's measured clauses), advice (L1, F2-A10 (f) and (h), the harness). The
+  integration items are the coordinator's. A new session finds each clone's commits on its branch there, if the
+  container kept them, and its result in `completion-2026-10-16/<area>-result.json`.
+- **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
+  criterion's is.
+
+**Completion, by the matrix:** 530 of 599 rows in scope Implemented And Verified (88.4%); 58 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 11 Decision Required, 36 Explicitly Deferred.
+
+Against the frozen baseline's 608: 530 (87.1%), none yet closed by this pass's work.
+
+# Brief 10: The Approved Decisions, 2026-10-16
+
+Until brief 11 began, this section was the current status, and where a new session started. It was written
 at the end of the owner's "Implement The Approved Acting, Advice, Banking, And Stamina Decisions"
 (`docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt`, kept verbatim),
 worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge), and merged to `main` in #37 (`0e7ff7c2`)
