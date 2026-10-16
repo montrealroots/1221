@@ -5045,7 +5045,7 @@
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
-            "title": "what her life never reaches > tax.federal_lien_withdraw: her LT11 on 20 June is for $1,746.41, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn",
+            "title": "what her life never reaches > tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
             "kind": "render",
             "closes": "no lien filed at a played LT11, the command refused, no control drawn"
           }
@@ -5082,7 +5082,7 @@
       "explanation": "The lien panel",
       "tests": "tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own: 100% of each year’s tax, held to it; its waiver by the schedule once their own is filed’ (the assessments and the penalty set by calling the engine’s functions)",
       "status": "unresolved",
-      "issue": "Unreachable: only Oregon has the three-year penalty and every life files in Connecticut (tests/scope-taxpapers.test.ts). Tested on Oregon assessments set by calling the engine’s functions (tests/liens-and-arrangements.test.ts:259), at 25% only; a waiver larger than the penalty still owed drops the excess (statetax.ts, by reading, unconfirmed).",
+      "issue": "Unreachable: only Oregon has the three-year penalty and every life files in Connecticut (tests/scope-taxpapers.test.ts). Tested on Oregon assessments set by calling the engine’s functions (tests/liens-and-arrangements.test.ts:260), at 25% only; a waiver larger than the penalty still owed drops the excess (statetax.ts, by reading, unconfirmed).",
       "traced": "2026-10-12",
       "read": true,
       "review": {

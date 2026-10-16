@@ -56,7 +56,7 @@ export const PASSPORTS_ABROAD: Readonly<Record<string, AbroadTerms>> = {
   },
   DE: {
     fee: 106, youngFee: 73.5, currency: 'EUR', days: 42, daysEstimated: false, expedite: null,
-    basis: 'In person at the competent German mission, 36 EUR over the fee at home (PassV § 27(3)): 106 EUR from 24, 73.50 EUR under it; four to six weeks, the passport travelling from Berlin to the mission.',
+    basis: 'In person at the competent German mission, 36 EUR over the fee at home (PassV § 27(3)): 106 EUR from 24, 73.50 EUR under it; four to six weeks, the passport traveling from Berlin to the mission.',
     assumed: ['Express shortens only production abroad, not the journey to the mission: SLATE offers none.'],
   },
   FR: {

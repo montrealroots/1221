@@ -28,10 +28,19 @@
  * On 2026-10-13 “The Social Security office is in New Haven, at 150 Court Street.” went from the engine (`ssnRefusal`),
  * reached by no play, since every student is in New Haven and nothing moves one; until then the entry listed it, and
  * said the number needed you in New Haven.
+ *
+ * Corrected on 2026-10-16 with the papers' lifecycles (the owner's brief of that day, section 8): until then it said a
+ * passport cost its office's fee at home and offered its faster service wherever you applied, though every life applies
+ * from New Haven and a citizen of anywhere but the United States from abroad (`passportOffice`, `PASSPORTS_ABROAD`);
+ * that a US renewal cost the first passport's fee, where Form DS-82 by mail is $130 (`US_RENEWAL`); that the DMV asked
+ * someone not a citizen for no identity document, where it asks a passport in force or OPT's card (`idCardRefusal`);
+ * and that every US state ID card SLATE issues met REAL ID, where Connecticut issues a non-citizen's Not For Federal
+ * Identification.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
 import { PASSPORTS } from '../passports';
+import { PASSPORTS_ABROAD, US_RENEWAL } from '../passportsabroad';
 import { ID_CARDS } from '../identity';
 import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../replacements';
 import { WORK_RULES } from '../workrules';
@@ -63,6 +72,10 @@ const CHAPTER = CHAPTER_FOR['documents.apply_passport']!.title;
 
 const US = PASSPORTS['US']!;
 const US_FASTER = US.expedite!;
+const UK_ABROAD = PASSPORTS_ABROAD['GB']!;
+const AU_ABROAD = PASSPORTS_ABROAD['AU']!;
+/** A fee in an office's own money, as its screen gives it (`content/passportsabroad.ts`). */
+const inOwn = (units: number, currency: string): string => formatMoney(Math.round(units * 100), currency, { cents: units % 1 !== 0 });
 const CT_ID = ID_CARDS['us-ct']!;
 const CT_ID_AGAIN = ID_CARD_REPLACEMENT['us-ct']!;
 const NY_ID_AGAIN = ID_CARD_REPLACEMENT['us-ny']!;
@@ -108,7 +121,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     questions: ['How do I renew my passport?', 'What happens if I lose my passport?', 'How do I get a state ID card?', 'Why does a bank want a photo ID?', 'Do I need a police report for a lost card?', 'Can I travel abroad?'],
     where: on('passport', 'Papers, Passport And ID, Your Passport And Your ID'),
     available: `From the guide’s chapter “${CHAPTER}”; File A Police Report opens with “${PAPERS_CHAPTER}”.`,
-    short: 'Passport And ID holds the papers that prove who you are: your passport, from the country you’re a citizen of, and the state’s ID card where you live, beside any license you carry. A bank you don’t bank with yet asks for one of them in force before it opens an account, and the Social Security office asks for your passport. A paper lost or stolen is reported here, a license or an ID card is replaced here, and each paper opens when you press its name.',
+    short: 'Passport And ID holds the papers that prove who you are: your passport, from the country you’re a citizen of, and the state’s ID card where you live, beside any license you carry. A bank you don’t bank with yet asks for one of them in force before it opens an account, the Social Security office asks for your passport, and so does the DMV of anyone not a citizen. A paper lost or stolen is reported here, a license or an ID card is replaced here, and each paper opens when you press its name.',
     steps: [
       'Open Papers and its Passport And ID tab. Your Passport shows the one in force, A New One with its fee and days, and Faster where the office sells it.',
       'Press Apply For One, or Renew It when you hold one; Apply Faster or Renew It Faster pays for the quicker service.',
@@ -120,13 +133,14 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     needs: [
       'A passport office SLATE has for your citizenship, and no application already in.',
       'For the ID card: living where SLATE issues one (New York, Connecticut, California, Ontario, British Columbia, Mexico City or Ireland), with no license from there in force and no card held or on its way.',
-      'Not a US citizen, at a US state’s counter: in status; at school on an F-1, or, once school is over, a US permit in force, such as OPT; and a Social Security number, which SLATE issues only through work-study at school.',
+      'Not a US citizen, at a US state’s counter: in status; at school on an F-1, or, once school is over, a US permit in force, such as OPT; a primary identity document in force, your passport, or OPT’s card in its place; and a Social Security number, which SLATE issues only through work-study at school.',
       'To replace a card: report it lost first, and live where it was issued, though New York mails a license out of state.',
       'The fee in your accounts.',
     ],
     costs: [
       { label: 'Time', value: 'None: applying, reporting and replacing move no clock' },
-      { label: 'A US Passport', value: `${dollars(US.fee)}, ready in up to ${US.days} days, good for ${US.validityYears} years; ${dollars(US.fee + US_FASTER.extra)} for ${US_FASTER.days} days. A renewal costs the first-time fee too`, estimate: US.daysEstimated },
+      { label: 'A US Passport', value: `${dollars(US.fee)} the first time or after one is lost, ready in up to ${US.days} days, good for ${US.validityYears} years; renewed by mail on Form ${US_RENEWAL.form}, ${dollars(US_RENEWAL.fee)}, where your most recent was issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost; ${dollars(US_FASTER.extra)} more for ${US_FASTER.days} days`, estimate: US.daysEstimated },
+      { label: 'Another Country’s Passport', value: `Applied for from New Haven, so from abroad: its office’s fee and time for an applicant outside the country, where SLATE has them, as the UK’s ${inOwn(UK_ABROAD.fee, UK_ABROAD.currency)} online and Australia’s ${inOwn(AU_ABROAD.fee, AU_ABROAD.currency)} with its overseas surcharge; its faster service only where it’s sold abroad, which the UK’s Fast Track isn’t`, estimate: true },
       { label: 'Connecticut’s ID Card', value: `${dollars(CT_ID.fee)}, good for ${CT_ID.years} years, SLATE’s term for the state’s “up to seven”; for anyone not a citizen, after ${NONCITIZEN_ID.saveBusinessDays} federal workdays for the DMV’s SAVE check, weekends and federal holidays not among them, to the program’s end at school, or on OPT to the end printed on it, ${OPT.months} months from its start. OPT canceled for its days without work leaves the card in force to that printed end`, estimate: true },
       { label: 'Replacing An ID Card', value: `Connecticut ${dollars(CT_ID_AGAIN.fee)} in ${CT_ID_AGAIN.days} days; New York ${dollars(NY_ID_AGAIN.fee)} in ${NY_ID_AGAIN.days}; California ${dollars(CA_ID_AGAIN.fee)} in ${CA_ID_AGAIN.days}` },
       { label: 'Replacing A License', value: `Connecticut ${dollars(CT_LICENSE.fee)} in ${CT_LICENSE.days} days; New York ${dollars(NY_LICENSE.fee)} in ${NY_LICENSE.days}, free when it was stolen and the police have your report; California ${dollars(CA_LICENSE.fee)} in ${CA_LICENSE.days}` },
@@ -152,13 +166,14 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     interpret: [
       'Standing in a row reads In Force, Being Decided, Reported Lost, Canceled or Run Out.',
       'A passport’s own page counts the countries that would let you in on it for a week’s visit. That’s a reading: SLATE has no travel, so no border is crossed.',
-      'A card’s own page says “It meets REAL ID.” on every US state ID card SLATE issues, and on a license you began with where it was drawn as one: at its state’s published share of REAL ID licenses, or, for a state with none published, the mean of the shares that are. With no flights in SLATE, no airport check reads it.',
+      'A card’s own page says “It meets REAL ID.” on a US state ID card issued to a citizen, and “It’s marked Not For Federal Identification: it isn’t REAL ID.” on one issued to someone who isn’t, as Connecticut issues it; and “It meets REAL ID.” on a license you began with where it was drawn as one: at its state’s published share of REAL ID licenses, or, for a state with none published, the mean of the shares that are. With no flights in SLATE, no airport check reads it.',
       'Going Abroad lists what a country asks of your citizenship for a short visit, to read: visas and travel authorizations aren’t applied for here.',
       'In New Haven a police report is kept on the record and read by no other rule there; New York’s free replacement of a stolen license is the rule that reads one.',
     ],
     unavailable: [
       '“SLATE doesn’t have your country’s passport office yet.” or “An application is in already.”',
-      'Apply Faster shows only where the office sells a faster service; where that service “is for renewals only”, it waits until you’ve held a passport from that office.',
+      'Apply Faster shows only where the office sells a faster service to you where you are: from abroad, where it sells none, the command says “… sells no faster service to an applicant abroad.”; where that service “is for renewals only”, it waits until you’ve held a passport from that office.',
+      'Get, not a US citizen, with no passport in force and no OPT card: “The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for or renew it on Papers first.”',
       'Get: “You hold a license here. It serves as your ID.”, “You hold one in force.”, “One is on its way.”, or, living where SLATE issues no card, the list of places it does.',
       'Get, not a US citizen at a US state’s counter: “The DMV checks lawful presence through SAVE, and you stayed past your status.”; out of school on an F-1 with no OPT in force, “On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.”; or, with no Social Security number, “The DMV asks for your Social Security number, or the SSA’s letter that you can’t have one.”, then where you stand: at school, “You can, through work-study: apply for it on the Papers screen first.”; applied for, “Yours is on its way.”; out of school with none applied for, “SLATE issues the number only to an F-1 student at school, through work-study, and never the letter.”, so the card is out of reach.',
       'Report Lost… and Report Stolen… show only on a passport, a license, an international driving permit or an ID card in force. A visa, a permit or a travel authorization is a status the government holds, and losing its paper doesn’t end it.',
@@ -172,7 +187,8 @@ export const DOCUMENTS: readonly GuideEntry[] = [
     mistakes: [
       'Reporting a paper lost by mistake: it can’t be undone, so the second press, Cancel It, is the one that counts. Keep It backs out.',
       'Replacing a stolen New York license before the police report: the free replacement reads the report, and once replaced, the lost license’s row offers no report. File it first.',
-      'Letting your only photo ID lapse before switching banks: the new bank refuses until one is in force.',
+      'Letting your only photo ID lapse before switching banks: the new bank refuses until one is in force. A license from home runs out with no renewal in SLATE; the ID card where you live takes its place.',
+      'Reporting your passport lost before getting the ID card, not a citizen: the DMV asks the passport as your identity document, so the card waits on a new one from your office, weeks from abroad.',
       'Asking Connecticut for an ID card on an F-1 before your Social Security number: the DMV asks for it, and SLATE issues the number only through work-study at school, so apply on Permission To Work while you’re registered. A graduate on OPT who never applied is turned away for good.',
     ],
     related: ['documents.work', 'documents.residence', 'bank.other-banks', 'papers.overview'],
@@ -180,6 +196,7 @@ export const DOCUMENTS: readonly GuideEntry[] = [
       { to: 'bank.other-banks', kind: 'evaluation', why: 'A bank you don’t bank with yet reads your passport, license or ID card before it opens an account or takes your switch.' },
       { to: 'documents.work', kind: 'evaluation', why: 'The Social Security office asks for your passport in force before it takes an application.' },
       { to: 'documents.work', kind: 'prerequisite', why: 'On an F-1, Connecticut’s DMV asks your Social Security number before it issues an ID card.' },
+      { to: 'documents.work', kind: 'prerequisite', why: 'Not a citizen, Connecticut’s DMV asks your passport in force, or OPT’s card, before it issues an ID card.' },
       { to: 'bank.accounts', kind: 'immediate', why: 'Each fee leaves your accounts when you apply or replace.' },
     ],
     example: {

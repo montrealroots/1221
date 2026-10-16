@@ -50,9 +50,10 @@ import type { Simulation } from '@/engine/core/simulation';
 import type { Account } from '@/engine/core/ledger';
 import { MS_DAY, MS_HOUR, MS_MINUTE, instantFromZoned, type Instant } from '@/engine/core/time';
 import { newLifeConfig, withFamily } from '@/engine/world/bootstrap';
+import { formatMoney } from '@/engine/core/money';
 import { recordWages, yearOf } from '@/engine/systems/earnings';
 import { TAX_NOTICE_KIND, returnsOf, type TaxReturn } from '@/engine/systems/taxreturn';
-import { STATE_NOTICE_KIND, assessStateNonFiler, fileState, fileStateLien, reconsiderState, threeYearCheck } from '@/engine/systems/statetax';
+import { assessStateNonFiler, fileState, fileStateLien, reconsiderState, stateNonFilerStep, threeYearCheck } from '@/engine/systems/statetax';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -226,6 +227,18 @@ describe('tax.early_filing_notices', () => {
     expect(sim.ledger.audit()).toEqual([]);
   });
 
+  it('the same letters, on the same days, for the same sums, whether the clock jumps from filing to past the levy at once or a day at a time', () => {
+    const jumped = thaw(unpaid());
+    jumped.advanceTo(DUE + 171 * MS_DAY);
+    const stepped = thaw(unpaid());
+    while (stepped.now < DUE + 171 * MS_DAY) stepped.advanceTo(Math.min(DUE + 171 * MS_DAY, stepped.now + MS_DAY));
+    expect(irsLetters(stepped)).toEqual(irsLetters(jumped));
+    expect(irsLetters(jumped)).toHaveLength(5);
+    expect(ret(stepped).owed).toBe(ret(jumped).owed);
+    expect(ret(jumped).owed).toBe(1_808_35);
+    expect(titled(stepped, 'The IRS Levied Your Accounts').map((n) => n.at)).toEqual([DUE + 170 * MS_DAY]);
+  });
+
   it('a return filed after its due date unpaid has its bill with the penalties charged, and its first reminder 35 days after filing', () => {
     const sim = thaw(base());
     intoTheCd(sim);
@@ -339,5 +352,339 @@ describe('tax.ct_filed_in_error', () => {
     expect(drew('tax.lien_dispute')).toEqual([]);
     expect(refusal(again, 'tax.lien_dispute', { state: 'us-ct', year: 2001 })).toBe('It’s been withdrawn.');
     expect(again.ledger.audit()).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// FIXTURE lives for what no student reaches
+// ---------------------------------------------------------------------------
+
+const quick = (city: string, seed: string) => quickSave({ startLocationId: city, homeRegionId: city, livesWhereBorn: true, wealth: 'wealthy' }, seed);
+/** TEST SETUP: their current account and savings emptied by a posting, as liens-and-arrangements.test.ts's `empty`. */
+const empty = (sim: Simulation) => { for (const a of Object.values(sim.universe.accounts)) if (a.ownerId === sim.player.id && a.balance > 0 && (a.kind === 'checking' || a.kind === 'savings')) sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: a.id, amount: -a.balance }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: a.balance }] }); };
+/** TEST SETUP: money put in their current account by a posting. */
+const fund = (sim: Simulation, amount: number) => sim.post({ memo: 'TEST SETUP', category: 'test', postings: [{ accountId: sim.player.primaryAccountId!, amount }, { accountId: sim.nominalAccount('income', 'Test').id, amount: -amount }] });
+/** A 2026 year with these wages (TEST SETUP, as payroll records them), the clock at noon on 1 February 2027. */
+function withWages(city: string, seed: string, gross: number): Simulation {
+  const sim = quick(city, seed);
+  recordWages(sim.player, at(2026, 5, 1, 9), NY, { gross });
+  while (sim.now < at(2027, 2, 1)) sim.advanceTo(Math.min(at(2027, 2, 1), sim.now + 6 * MS_HOUR));
+  return sim;
+}
+const usd = (cents: number) => formatMoney(cents, 'USD');
+/** What a memo's postings put into their own accounts. */
+const intoOwn = (sim: Simulation, memo: string) => sim.universe.transactions.filter((t) => t.memo === memo).map((t) => t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).reduce((s, p) => s + p.amount, 0));
+/** The IRS's interest by the rule, 7% a year compounded daily over 2027's 365 days (IRC 6622), on an amount over a span. */
+const irsInterest2027 = (amount: number, from: number, to: number) => Math.round(amount * ((1 + 0.07 / 365) ** ((to - from) / MS_DAY) - 1));
+
+describe('tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2)', () => {
+  it('FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027: the 1040-X’s tax added on 9 September with the IRS’s interest from the 15 April due date, Connecticut’s with its 10% and 1% for each month begun, the IRS’s letters from then, once across a reload', () => {
+    const sim = withWages('us-ct-newhaven', 'rt-amend-more', 60_000_00);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    const r = returnsOf(sim.player)['2026']!;
+    expect([r.owed, r.due]).toEqual([undefined, at(2027, 4, 15, 23, 59)]);
+    sim.advanceTo(at(2027, 7, 1));
+    expect(refusal(sim, 'tax.amend', { year: 2026 })).toBe('Your return as filed matches what’s on record: there’s nothing to amend.');
+    // FIXTURE: a corrected W-2, $5,000 of wages the return didn't carry.
+    yearOf(sim.player, 2026).acting += 5_000_00;
+    const amended = sim.must<{ change: number; processAt: number; irs: number; states?: Record<string, number> }>({ kind: 'tax.amend', payload: { year: 2026 } });
+    // The IRS takes eight to twelve weeks; SLATE's ten.
+    expect(amended.processAt).toBe(at(2027, 7, 1) + 70 * MS_DAY);
+    expect(amended.irs).toBeGreaterThan(0);
+    const again = reload(sim);
+    again.advanceTo(amended.processAt + MS_HOUR);
+    const year = returnsOf(again.player)['2026']!;
+    // 146.5 days from the due date at 11:59 PM to noon on 9 September, a 365th of 7% a day compounded (2027).
+    const interest = irsInterest2027(amended.irs, year.due, amended.processAt);
+    expect(year.amended![0]!.interest).toBe(interest);
+    expect(year.owed).toBe(amended.irs + interest);
+    // Connecticut: 10% of the tax added once past the due date, and 1% of it for each of the five months begun.
+    const ctTax = amended.states!['us-ct']!;
+    const ctOwed = ctTax + Math.round(0.1 * ctTax) + 5 * Math.round(0.01 * ctTax);
+    expect(year.stateDue!['us-ct']!.owed).toBe(ctOwed);
+    expect(titled(again, 'Connecticut Processed Your Amended 2026 Return').map((n) => n.body)).toEqual([`${usd(ctTax)} more Connecticut tax, with what it charges from the due date: ${usd(ctOwed)} in all.`]);
+    expect(titled(again, 'Your Amended 2026 Return Is Processed')).toHaveLength(1);
+    expect(pending(again, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([amended.processAt + 35 * MS_DAY]);
+    expect(again.ledger.audit()).toEqual([]);
+  });
+
+  it('FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended: Connecticut’s part, paid at filing, comes back to her as its refund, and the IRS’s with its interest from the due date', () => {
+    const sim = withWages('us-ct-newhaven', 'rt-amend-less', 60_000_00);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    const r = returnsOf(sim.player)['2026']!;
+    expect(r.owed).toBeUndefined();
+    sim.advanceTo(at(2027, 7, 1));
+    yearOf(sim.player, 2026).acting -= 5_000_00;
+    const amended = sim.must<{ processAt: number; irs: number; states?: Record<string, number> }>({ kind: 'tax.amend', payload: { year: 2026 } });
+    sim.advanceTo(amended.processAt + MS_HOUR);
+    const ctBack = -amended.states!['us-ct']!;
+    expect(ctBack).toBeGreaterThan(0);
+    expect(intoOwn(sim, 'Connecticut tax refund, amended 2026 return')).toEqual([ctBack]);
+    expect(titled(sim, 'Connecticut Processed Your Amended 2026 Return').map((n) => n.body)).toEqual([`${usd(ctBack)} less Connecticut tax. ${usd(ctBack)} is refunded.`]);
+    // The IRS's from the later of the due date and the filing, the due date here.
+    const irsBack = -amended.irs;
+    expect(intoOwn(sim, 'Tax refund, amended 2026 return, with interest')).toEqual([irsBack + irsInterest2027(irsBack, r.due, amended.processAt)]);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force: no CP523, the plan kept at its payment, its history saying what joined', () => {
+    const sim = withWages('us-ct-newhaven', 'rt-amend-join', 60_000_00);
+    empty(sim);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    expect(returnsOf(sim.player)['2026']!.owed).toBeGreaterThan(0);
+    // TEST SETUP: enough in the bank for the fee, its payments and her living to the amendment.
+    fund(sim, 15_000_00);
+    const applied = sim.must<{ decideAt: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 500_00 } });
+    sim.advanceTo(applied.decideAt + MS_HOUR);
+    expect(sim.player.taxPlan!.status).toBe('active');
+    sim.advanceTo(at(2027, 7, 1));
+    // FIXTURE: a corrected W-2 with $1,000 more of wages, its tax well under two payments of $500.
+    yearOf(sim.player, 2026).acting += 1_000_00;
+    const amended = sim.must<{ processAt: number; irs: number }>({ kind: 'tax.amend', payload: { year: 2026 } });
+    fund(sim, 5_000_00);
+    sim.advanceTo(amended.processAt + MS_HOUR);
+    const joined = amended.irs + irsInterest2027(amended.irs, returnsOf(sim.player)['2026']!.due, amended.processAt);
+    expect(joined).toBeLessThanOrEqual(2 * 500_00);
+    const plan = sim.player.taxPlan!;
+    expect([plan.status, plan.monthly]).toEqual(['active', 500_00]);
+    expect(plan.history.filter((x) => x.what === 'New tax joined the plan').map((x) => x.amount)).toEqual([joined]);
+    expect(titled(sim, 'Notice CP523: Your Payment Plan')).toEqual([]);
+  });
+});
+
+describe('tax.catch_up_state_plan (FIXTURE: a New York quick-save)', () => {
+  /** New York's plan over 12 months, its first payment missed with the bank emptied: behind, to be made up by the next due date. */
+  function behind(seed: string) {
+    const sim = withWages('us-ny-newyork', seed, 60_000_00);
+    empty(sim);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    sim.must({ kind: 'tax.apply_state_plan', payload: { state: 'us-ny', months: 12 } });
+    sim.advanceTo(sim.now + MS_HOUR);
+    const plan = sim.player.statePlans!['us-ny']!;
+    expect(plan.status).toBe('active');
+    const missedAt = plan.nextDue!;
+    empty(sim);
+    sim.advanceTo(missedAt + MS_HOUR);
+    expect([plan.status, plan.endsBy]).toEqual(['missed', missedAt + 30 * MS_DAY]);
+    return { sim, endsBy: plan.endsBy!, monthly: plan.monthly };
+  }
+
+  it('FIXTURE: its payment missed, Catch Up drawn on Papers and pressed: the plan in force past the day it would have ended, its next payment taken, across a reload; its twin left behind ends that day', () => {
+    const { sim, endsBy, monthly } = behind('rt-ny-catch');
+    papers(sim);
+    expect(drew('tax.catch_up_state_plan')).toHaveLength(1);
+    // TEST SETUP: the payment's money back in the bank, and a month's living besides.
+    fund(sim, 3_000_00 + monthly);
+    const caughtAt = sim.now;
+    expect(press('tax.catch_up_state_plan')).toEqual([`Caught up: ${usd(monthly)} paid. The plan is back in force.`]);
+    const plan = () => again.player.statePlans!['us-ny']!;
+    const again = reload(sim);
+    expect([plan().status, plan().endsBy]).toEqual(['active', undefined]);
+    // GUARD: caught up twice, refused, nothing taken.
+    const before = still(again);
+    expect(refusal(again, 'tax.catch_up_state_plan', { state: 'us-ny' })).toBe('That plan isn’t behind.');
+    expect(still(again)).toBe(before);
+    again.advanceTo(endsBy + MS_HOUR);
+    expect(plan().status).toBe('active');
+    expect(titled(again, 'New York DTF Ended Your Plan')).toEqual([]);
+    again.advanceTo(caughtAt + 30 * MS_DAY + MS_HOUR);
+    expect(plan().history.filter((x) => x.what === 'A payment' || x.what === 'Caught up').map((x) => [x.what, x.amount])).toEqual([['Caught up', monthly], ['A payment', monthly]]);
+
+    const twin = behind('rt-ny-catch').sim;
+    twin.advanceTo(endsBy + MS_HOUR);
+    expect(twin.player.statePlans!['us-ny']!).toMatchObject({ status: 'ended', why: 'Ended: not caught up' });
+    expect(titled(twin, 'New York DTF Ended Your Plan')).toHaveLength(1);
+  });
+});
+
+describe('tax.federal_lien_withdraw (FIXTURE: a New York quick-save owing over $10,000)', () => {
+  it('FIXTURE: the IRS’s own return assessed for a year never filed, its lien filed at the LT11; her own return in its place shows the withholding paid it all: Ask For Its Release As Erroneous is drawn and pressed at once, released as erroneous 14 days on, across a reload, and not asked twice', () => {
+    const sim = quick('us-ny-newyork', 'rt-fed-error');
+    recordWages(sim.player, at(2026, 5, 1, 9), NY, { gross: 150_000_00 });
+    // Never filed: the IRS's substitute a year after the 15 April 2027 due date, assessed 120 days on, its letters 35
+    // days apart, the LT11 140 days after the assessment, which files the notice of lien on over $10,000.
+    const due = at(2027, 4, 15, 23, 59);
+    const assessedAt = due + (365 + 120) * MS_DAY;
+    sim.advanceTo(assessedAt + MS_HOUR);
+    const r = () => returnsOf(sim.player)['2026']!;
+    expect(r().substitute).toBe(true);
+    sim.advanceTo(assessedAt + 140 * MS_DAY + MS_HOUR);
+    expect(r().lien).toMatchObject({ status: 'filed', filedAt: assessedAt + 140 * MS_DAY });
+    expect(r().lien!.amount).toBeGreaterThanOrEqual(10_000_00);
+    drawn(sim, FederalLien, { year: 2026 });
+    expect(drew('tax.federal_lien_withdraw').map((c) => [c.label, c.disabled])).toEqual([['Ask For Its Withdrawal (Form 12277)', true]]);
+    // GUARD: the IRS's own return isn't amended (Papers draws no Amend The Return… on it), and nothing moves.
+    const before = still(sim);
+    expect(refusal(sim, 'tax.amend', { year: 2026 })).toBe('The IRS filed this one: file your own to replace it.');
+    expect(still(sim)).toBe(before);
+    // TEST SETUP: the withholding her employer reported and the IRS's figures missed, all of the year's tax and more.
+    yearOf(sim.player, 2026).withheld += 60_000_00;
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    expect([r().substitute, r().owed]).toEqual([false, undefined]);
+    drawn(sim, FederalLien, { year: 2026 });
+    expect(drew('tax.federal_lien_withdraw').map((c) => [c.label, c.disabled])).toEqual([['Ask For Its Release As Erroneous', false]]);
+    const asked = sim.now;
+    expect(press('tax.federal_lien_withdraw')).toEqual([`Asked as erroneous: decided by ${new Date(asked + 14 * MS_DAY).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: NY })}.`]);
+    expect(r().lien).toMatchObject({ status: 'disputed', decideAt: asked + 14 * MS_DAY });
+    // GUARD: asked twice.
+    expect(refusal(sim, 'tax.federal_lien_withdraw', { year: 2026 })).toMatch(/^Asked: decided by /);
+    const again = reload(sim);
+    again.advanceTo(asked + 14 * MS_DAY + MS_HOUR);
+    const lien = returnsOf(again.player)['2026']!.lien!;
+    expect([lien.status, lien.withdrawnAt]).toEqual(['withdrawn', asked + 14 * MS_DAY]);
+    expect(titled(again, 'Your Federal Tax Lien Is Withdrawn').map((n) => n.body)).toEqual(['The IRS withdrew the notice of federal tax lien on your 2026 return, as filed in error: it’s as if it had never been filed.']);
+    // The release after payment its own return set in motion doesn't turn it back.
+    again.advanceTo(asked + 31 * MS_DAY);
+    expect(returnsOf(again.player)['2026']!.lien!.status).toBe('withdrawn');
+    expect(refusal(again, 'tax.federal_lien_withdraw', { year: 2026 })).toBe('It’s been withdrawn.');
+  }, 120_000);
+});
+
+describe('tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years)', () => {
+  /** Three years, 2001 to 2003, each owing Oregon $1,000 with no return of their own, each due a year apart before now. */
+  function threeYears(seed: string) {
+    const sim = quick('us-or-portland', seed);
+    const rs = [2001, 2002, 2003].map((y) => { const r = { year: y, due: sim.now - (3 - (y - 2001)) * 365 * MS_DAY, figures: { income: 50_000_00, balance: 1_000_00, states: [{ state: 'us-or', tax: 1_000_00, credit: 0 }], owedTo: { irs: 0, states: { 'us-or': 1_000_00 } } } } as unknown as TaxReturn; sim.player.returns = { ...(sim.player.returns ?? {}), [String(y)]: r }; return r; });
+    return { sim, rs };
+  }
+
+  it('FIXTURE: her own 2001 return filed before any notice, paid at filing: 70% of the three-year penalty waived and refunded to her, $525 of $750', () => {
+    const { sim, rs } = threeYears('rt-or-70');
+    threeYearCheck(sim, sim.player, 'us-or', 2003, () => 1_000_00);
+    // Her own, three years late: 5% for paying late and 20% for filing past three months late, $250 (ORS 314.400(1),
+    // (2)), so the 100% has $750 of room under the year's tax.
+    fileState(sim, sim.player, rs[0]!, 'us-or', 1_000_00);
+    expect(rs[0]!.stateDue!['us-or']!.threeYear!.amount).toBe(750_00);
+    expect(rs[0]!.stateDue!['us-or']!.owed).toBeUndefined();
+    sim.must({ kind: 'tax.request_waiver', payload: { state: 'us-or', year: 2001 } });
+    expect(rs[0]!.stateDue!['us-or']!.threeYear!.waived).toBe(525_00);
+    expect(intoOwn(sim, 'Oregon DOR: a penalty waived and refunded')).toEqual([525_00]);
+    // GUARD: decided once.
+    const before = still(sim);
+    expect(refusal(sim, 'tax.request_waiver', { state: 'us-or', year: 2001 })).toBe('Its waiver has been decided.');
+    expect(still(sim)).toBe(before);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+
+  it('FIXTURE: its Demand To File sent, then her own return, unpaid: 50% waived off the penalty owed, $375 of $750', () => {
+    const { sim, rs } = threeYears('rt-or-50');
+    empty(sim);
+    threeYearCheck(sim, sim.player, 'us-or', 2003, () => 1_000_00);
+    // The non-filer's first letter, as the clock sends it.
+    stateNonFilerStep(sim, sim.player, rs[0]!, 'us-or', 0, 1_000_00);
+    expect(rs[0]!.lettersSent).toEqual({ 'us-or': 1 });
+    fileState(sim, sim.player, rs[0]!, 'us-or', 1_000_00);
+    const sd = rs[0]!.stateDue!['us-or']!;
+    expect([sd.threeYear!.amount, sd.parts!.penalty]).toEqual([750_00, 1_000_00]);
+    sim.must({ kind: 'tax.request_waiver', payload: { state: 'us-or', year: 2001 } });
+    expect([sd.threeYear!.waived, sd.parts!.penalty]).toEqual([375_00, 625_00]);
+  });
+
+  it('FIXTURE: assessed, $990 paid toward its $1,000 of penalties, then 25% of the $500 three-year penalty waived: $10 off what’s still owed of it and the $115 already paid credited to the interest; until 2026-10-16 the $115 was dropped', () => {
+    const { sim, rs } = threeYears('rt-or-excess');
+    for (const r of rs) assessStateNonFiler(sim, sim.player, r, 'us-or', 1_000_00);
+    threeYearCheck(sim, sim.player, 'us-or', 2003, () => 1_000_00);
+    reconsiderState(sim, sim.player, rs[0]!, 'us-or', 1_000_00);
+    const sd = rs[0]!.stateDue!['us-or']!;
+    // The assessment's 5%, 20% and 25% for not filing on demand ($500), and the three-year 100% held to the year's tax,
+    // $500 more; the interest charged since the due date.
+    expect([sd.parts!.tax, sd.parts!.penalty, sd.threeYear!.amount]).toEqual([1_000_00, 1_000_00, 500_00]);
+    const interest = sd.parts!.interest;
+    // Oregon takes a payment to the penalty first (ORS 305.265(13)).
+    fund(sim, 990_00);
+    sim.must({ kind: 'tax.pay_state', payload: { state: 'us-or', year: 2001, amount: 990_00 } });
+    expect(sd.parts).toEqual({ tax: 1_000_00, penalty: 10_00, interest });
+    const owedBefore = sd.owed!;
+    sim.must({ kind: 'tax.request_waiver', payload: { state: 'us-or', year: 2001 } });
+    // 25% of $500 waived, after the assessment: $125, of which $10 still owed and $115 paid, credited to the interest.
+    expect(sd.threeYear!.waived).toBe(125_00);
+    expect(sd.parts).toEqual({ tax: 1_000_00, penalty: 0, interest: interest - 115_00 });
+    expect(sd.owed).toBe(owedBefore - 125_00);
+    expect(sd.payments!.at(-1)).toMatchObject({ amount: 115_00, tax: 0, penalty: 0, interest: 115_00, how: 'refund offset' });
+    expect(titled(sim, 'Oregon DOR Waived Part Of Your Penalty').map((n) => n.body)).toEqual(['25% of the three-year penalty on your 2001 return, $125.00, by its schedule. $115.00 you’d paid toward it goes to what’s still owed on the year.']);
+    expect(sim.ledger.audit()).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// tax.other_refusals: what no screen sends, each a GUARD
+// ---------------------------------------------------------------------------
+
+describe('tax.other_refusals', () => {
+  it('GUARD: a return filed twice, a year with no return, and one not filed amended: refused in their words, nothing moved, no second bill', () => {
+    const sim = thaw(unpaid());
+    const before = still(sim);
+    // File It is gone from the year once it's filed, and its question answered; a second press is a duplicate.
+    papers(sim);
+    expect(drew('tax.file')).toEqual([]);
+    expect(refusal(sim, 'tax.file', { year: 2027 })).toBe('You’ve filed it. A change is an amended return.');
+    expect(refusal(sim, 'tax.file', { year: 2025 })).toBe('There’s no return for that year.');
+    expect(still(sim)).toBe(before);
+    expect(titled(sim, 'A Bill From The IRS')).toHaveLength(1);
+    // Amend The Return… is drawn only on a year filed; the command on one that isn't (her 2027 before 1 February 2028).
+    const early = thaw(base());
+    const unfiled = still(early);
+    expect(refusal(early, 'tax.amend', { year: 2027 })).toBe('It isn’t filed: file it.');
+    expect(still(early)).toBe(unfiled);
+  });
+
+  it('GUARD: a payment on a year paid, of nothing, and to Connecticut on a year it’s owed nothing: refused, nothing moved', () => {
+    const paid = thaw(base());
+    // Her 2026 return's $3.35 to Connecticut was paid at filing; the IRS was owed nothing.
+    const before = still(paid);
+    expect(refusal(paid, 'tax.pay', { year: 2026 })).toBe('That year is paid.');
+    expect(refusal(paid, 'tax.pay_state', { state: 'us-ct', year: 2026 })).toBe('You owe Connecticut DRS nothing on that year.');
+    expect(still(paid)).toBe(before);
+    const owing = thaw(unpaid());
+    const owed = still(owing);
+    expect(refusal(owing, 'tax.pay', { year: 2027, amount: 0 })).toBe('Pay something.');
+    expect(refusal(owing, 'tax.pay', { year: 2027, amount: -1_00 })).toBe('Pay something.');
+    expect(still(owing)).toBe(owed);
+  });
+
+  it('GUARD: the IRS’s plan limits, which no student’s balance reaches (FIXTURE: $400,000 of wages, unpaid): a monthly plan over $50,000 and a short-term one at $100,000 or more refused, nothing set', () => {
+    const sim = withWages('us-ny-newyork', 'rt-plan-max', 400_000_00);
+    empty(sim);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    expect(returnsOf(sim.player)['2026']!.owed).toBeGreaterThan(100_000_00);
+    const before = still(sim);
+    expect(refusal(sim, 'tax.apply_plan', { kind: 'long' })).toBe('A Simple Payment Plan is for $50,000 or less; more needs a financial statement SLATE doesn’t model.');
+    expect(refusal(sim, 'tax.apply_plan', { kind: 'short' })).toBe('A short-term plan is for less than $100,000.');
+    expect(still(sim)).toBe(before);
+    expect(sim.player.taxPlan).toBeUndefined();
+  });
+
+  it('GUARD: a revision once more than $50,000 is owed (FIXTURE: an amendment adding $200,000 of wages to a year under a plan): refused, no fee taken', () => {
+    const sim = withWages('us-ct-newhaven', 'rt-revise-max', 60_000_00);
+    empty(sim);
+    sim.must({ kind: 'tax.file', payload: { year: 2026 } });
+    fund(sim, 15_000_00);
+    const applied = sim.must<{ decideAt: number }>({ kind: 'tax.apply_plan', payload: { kind: 'long', monthly: 500_00 } });
+    sim.advanceTo(applied.decideAt + MS_HOUR);
+    sim.advanceTo(at(2027, 7, 1));
+    yearOf(sim.player, 2026).acting += 200_000_00;
+    const amended = sim.must<{ processAt: number }>({ kind: 'tax.amend', payload: { year: 2026 } });
+    fund(sim, 5_000_00);
+    sim.advanceTo(amended.processAt + MS_HOUR);
+    expect(sim.player.taxPlan!.status).toBe('default');
+    const before = still(sim);
+    expect(refusal(sim, 'tax.revise_plan', { monthly: 5_000_00 })).toBe('More than $50,000 is owed now: a revision needs a financial statement SLATE doesn’t model.');
+    expect(still(sim)).toBe(before);
+  });
+
+  it('GUARD: the Social Security office’s four its panel never sends: a citizen, an application on its way, a card come, and someone not on an F-1', () => {
+    const citizen = thaw(base());
+    expect(refusal(citizen, 'documents.apply_ssn')).toBe('You have a Social Security number already, as a citizen.');
+    const london = createSave(1, 'rt-ssn-guard', { ...withFamily(newLifeConfig(), 'scraping'), homeRegionId: 'uk-eng-london', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    london.advanceTo(at(2026, 8, 30, 12));
+    const applied = london.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
+    const before = still(london);
+    expect(refusal(london, 'documents.apply_ssn')).toBe('You’ve applied; the card is on its way.');
+    expect(still(london)).toBe(before);
+    london.advanceTo(applied.arrivesAt + MS_HOUR);
+    expect(refusal(london, 'documents.apply_ssn')).toBe('Your Social Security card came already.');
+    // FIXTURE: a British citizen living in New York, not at school, so on no F-1: no number to apply for.
+    const visitor = quickSave({ startLocationId: 'us-ny-newyork', homeRegionId: 'uk-eng-london', livesWhereBorn: false, wealth: 'wealthy' }, 'rt-ssn-visitor');
+    expect(refusal(visitor, 'documents.apply_ssn')).toBe('A number is for someone allowed to work in the US.');
   });
 });
