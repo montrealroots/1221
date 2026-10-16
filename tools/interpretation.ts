@@ -142,7 +142,8 @@ function measureFresh() {
 
 /**
  * `--stage` (from 2026-10-16, docs/verification/stage-2026-10-16/criteria.md, written before this was run): ST1 to ST8
- * on the 85 class scenes and plays as class scenes, and the fresh sets F1 (the plays as a production's night, its own
+ * on the class scenes and plays as class scenes (85 where both scales fit, and 89 from the integration pass of 2026-10-16,
+ * which added four drama scenes), and the fresh sets F1 (the plays as a production's night, its own
  * task) and F2 (even actors at 40 and 75).
  */
 function measureStage() {

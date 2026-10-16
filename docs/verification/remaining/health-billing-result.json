@@ -1,0 +1,268 @@
+{
+ "key": "health-billing",
+ "on": "2026-10-16",
+ "against": "fa5ba8b1 plus this pass's uncommitted tree (claude/peaceful-hamilton-59zdbb)",
+ "commandsAdded": [
+  "health.apply",
+  "health.request_hardship"
+ ],
+ "scheduledKindsAdded": [
+  "health.work_decided"
+ ],
+ "regenerated": [
+  "docs/DEVMAP.md",
+  "docs/TRACEABILITY.md"
+ ],
+ "items": [
+  {
+   "id": "health-billing.1-reprice-plan-part",
+   "before": "repriceCare rewrote the bill already issued: an open bill's share cut in place and, cut to nothing, Settled though nobody paid it; its plan part rewritten from whether a plan covered her (planOf), not whether it paid the care; care first billed uninsured and covered back carried no plan part (patient $50 + insurer $0 against a $3,323.84 price: reproduced on probe/health/reprice.ts); and a credit on care whose bill had gone to medical debt was refunded to the bank while the debt stood.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day",
+     "kind": "command+clock+render+reload+jump-vs-steps",
+     "proves": "The emergency's $50 bill stands with its plan part ($3,273.84 of $3,323.84), credited $50 (balance $0, Credited on Papers: \"$0.00 of $50.00 Credited\"); its line: credit $50, plan −$3,273.84, charity screened; the visit's line $183.98 with plan −$105.13, due 8 October, paid once; lines sum to each care's share now and plan part now; \"Care Billed Again\" $133.98; no refund; a second reprice changes nothing; one jump and day by day identical."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "PLAYER JOURNEY: on a personal leave without Affiliate cover, the flu at urgent care in the 25 January week (TEST SETUP) is billed $336.96 uninsured; Affiliate cover bought the next day credits all of it off the open bill, and the plan’s $192.55 is written on its line: $0 + $192.55, its price; nothing paid or refunded, across a reload",
+     "kind": "command+clock+reload",
+     "proves": "Urgent care uninsured $336.96; Affiliate bought: the bill stands (no plan part), credited $336.96; its line credit $336.96 with plan +$192.55; $0 + $192.55 = the price; nothing paid on its due day, nothing refunded, once across a reload."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due)",
+     "kind": "engine (FIXTURE)",
+     "proves": "The $50 credit comes off the medical debt (debt $0, bills settled), none to the bank."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August",
+     "kind": "command+clock",
+     "proves": "Updated: the issued bill keeps $3,273.84; the line carries −$3,273.84; across the two, $0."
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "PLAYER JOURNEY: asked on the third day of spring classes, begun on its decision: aid returned on the rebate schedule…",
+     "kind": "command",
+     "proves": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once.",
+     "citedAs": "(the leave and withdrawal reprice tests), named by title by the integration pass on 2026-10-16"
+    },
+    {
+     "file": "tests/leave.test.ts",
+     "title": "a withdrawal by the fifteenth day of classes > cancels Yale Health back to the insurance term’s start, and care had in it is billed as uninsured, a bill of its own",
+     "kind": "command",
+     "proves": "“Care Billed Again” once."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A bill as issued stands; each changed care event gets one line of its own (adjusts, credit, the plan's change in covered.planPaid); less owed comes off the open original (kept as credited), then off the medical debt, then back to the bank; the plan part follows planPays (a plan pays this care now); the care log keeps planPaid. Papers draws the credit, Credited and the issued share.",
+     "where": "src/engine/systems/health.ts repriceCare, planPays, careFor (care log plan part), MedicalBill (adjusts, credit, credited); src/ui/workspaces/PapersWorkspace.tsx (Care And Its Bills)",
+     "failingTest": "tests/remaining-health-billing.test.ts > PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day (mutation B1a rewrites the issued plan part as before and fails it); tests/remaining-health-billing.test.ts > GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due) (mutation B1c refunds to the bank as before and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "The project's own rules: repriceCare's documented intent (\"Every change is a posting or a bill of its own: nothing already on a statement is rewritten\"; \"What the plan paid of the bill follows\"), and the house standard (\"A ledger balance is never a number somebody typed. It is the sum of postings.\")",
+     "citation": "src/engine/systems/health.ts at fa5ba8b1; CLAUDE.md",
+     "effective": "—",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "What repricing may change, and when: only at a change of cover back in time (a withdrawal by the fifteenth day of classes, Affiliate cover bought on a leave, a leave's cover canceled back). It never changes a paid bill or one in debt, and never an issued bill's plan part; it may lower an open bill's balance by a credit, recorded on it as credited. A claim standing denied isn't repriced (only Yale Health's cover moves back, and its claims aren't denied).",
+    "The plan's change on a line is a delta (negative where the plan takes its part back); a $0 visit had no bill, so its plan part is on the care log, not on a line.",
+    "Older saves' care logs have no plan part: it's read from the bill, or as none."
+   ],
+   "mutations": [
+    {
+     "id": "B1a-issued-plan-part-stands",
+     "file": "src/engine/systems/health.ts",
+     "find": "    let credit = -diff;\n    if (was && !was.paid && !was.inDebt) {",
+     "replace": "    if (was?.covered) was.covered.planPaid = planNow;\n    let credit = -diff;\n    if (was && !was.paid && !was.inDebt) {",
+     "test": "tests/remaining-health-billing.test.ts -t \"withdrawn on 8 September\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "B1b-plan-change-on-line",
+     "file": "src/engine/systems/health.ts",
+     "find": "      ...(planDiff !== 0 ? { covered: { price, planPaid: planDiff } } : {}),",
+     "replace": "      ...(false ? { covered: { price, planPaid: planDiff } } : {}),",
+     "test": "tests/remaining-health-billing.test.ts -t \"personal leave without Affiliate\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "B1c-credit-off-debt",
+     "file": "src/engine/systems/health.ts",
+     "find": "    if (credit > 0 && debt && debt.balance < 0) {",
+     "replace": "    if (false && credit > 0 && debt && debt.balance < 0) {",
+     "test": "tests/remaining-health-billing.test.ts -t \"GUARD: a credit on care\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "B1d-credited-kept",
+     "file": "src/engine/systems/health.ts",
+     "find": "      was.credited = (was.credited ?? 0) + off;",
+     "replace": "      // MUTANT: credited not kept",
+     "test": "tests/remaining-health-billing.test.ts -t \"personal leave without Affiliate\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "B1e-plan-pays-reads-practice",
+     "file": "src/engine/systems/health.ts",
+     "find": "    const planNow = planPays(person, e.care, where, e.at) ? Math.max(0, price - now) : 0;",
+     "replace": "    const planNow = planOf(person, e.at) ? Math.max(0, price - now) : 0;",
+     "test": "tests/remaining-health-billing.test.ts -t \"withdrawn on 8 September\"",
+     "killed": false,
+     "restored": true
+    }
+   ],
+   "mutationNote": "B1e survived as an equivalent mutant: where a plan covers her but doesn't pay the care (a Yale Health member's visit outside its Health Center, restricted scope outside a hospital), the share is the uninsured price, 1.75 times the plan's price, so price − share is below nothing and the clamp gives $0 either way. planPays is kept as the rule's statement: a practice publishing a self-pay price under the plan's price (none in New Haven) would make planOf credit the plan with a part it never paid.",
+   "rowText": {},
+   "tutorial": "—",
+   "guide": "guide/papers.ts papers.health-cover interpret: the bills table's Credited, a credit below nothing, and Plan Paid's change on a line."
+  },
+  {
+   "id": "health-billing.2-husky-d-kept-through-work",
+   "before": "HUSKY D kept at renewal through work was reached only by tests/scope-cover.test.ts's leave journey (work posted by hand, kept on 1 September, last month alone, nothing said).",
+   "disposition": "implemented (the FIXTURE evidence, with the renewal notice)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+     "kind": "clock+reload (FIXTURE: a program from 1 March 2026, wages by hand)",
+     "proves": "Kept on 1 March 2027 over September 2026 to February 2027: covered by HUSKY D the hour before, at 00:30 and after (no gap); program unchanged but renewAt 1 September 2027 (six months); no premium; \"Your Public Cover Is Renewed\" once across a reload. Negative twin: the notice (months February back to September), covered to 30 April, \"Your Public Cover Ends\" on 5 April, uncovered 1 May. Boundary twin: August's work, outside, the notice."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Connecticut: work rules from 1 January 2027 (\"income of $580 or more a month, complete 80 hours/month ... or be enrolled at least half-time in school\"); \"If not exempt from the work rules at initial application, eligibility includes a 1-month look back\"; \"At renewal, there will be a 6-month look back to verify the individual met work/community engagement requirements or was exempt from requirements during at least 1 calendar month\"; who doesn't have to meet them (under 19 or over 64; recently inpatient; SNAP household not exempt from its work rules; medically frail and unable to work; ...); renewals every 6 months",
+     "citation": "Connecticut Hospital Association, H.R. 1 HUSKY D (Medicaid) Changes: Materials For Providers And Community-Based Organizations, dated 8/25/26 (adapted from DSS), cthosp.org/webfoo/wp-content/uploads/Providers-and-Community-Based-Organization-HUSKY-D-Resource-Materials-5.18.26.pdf",
+     "effective": "1 January 2027",
+     "read": "2026-10-16 (no DSS page read states the look-back periods itself: an uncertainty)"
+    },
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "A FIXTURE, labelled: no new life (made 24 August 2026) can hold HUSKY D from March 2026, and no played life on HUSKY D has wages.",
+    "The program's own renewal date at a month's first, as Enroll sets it."
+   ],
+   "mutations": [
+    {
+     "id": "B2a-renewed-notice",
+     "file": "src/engine/systems/health.ts",
+     "find": "    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed',",
+     "replace": "    if (false && mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed',",
+     "test": "tests/remaining-health-billing.test.ts -t \"work in November 2026\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "B2b-work-kept",
+     "file": "src/engine/systems/health.ts",
+     "find": "  if (work.hours >= PUBLIC_COVER.workHours) return 'work';",
+     "replace": "  if (work.hours >= PUBLIC_COVER.workHours + 1) return 'work';",
+     "test": "tests/remaining-health-billing.test.ts -t \"work in November 2026\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {
+    "health.enroll": {
+     "issue": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any)."
+    }
+   },
+   "tutorial": "—",
+   "guide": "—"
+  },
+  {
+   "id": "health-billing.3-insured-paths-trace",
+   "before": "Each path was played somewhere, but none advanced one jump against small steps; HUSKY D's and Covered Connecticut's $0 visits kept no plan part anywhere.",
+   "disposition": "verified (with the care log's plan part implemented)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day",
+     "kind": "command+clock+reload+jump-vs-steps",
+     "proves": "Yale Health: Tuesday 1 September at ten at its Health Center, $0, no bill, the plan's $105.13 on the care log; Fair Haven picked: Thursday 24 September, $183.98, no plan part, paid once on 24 October; a withdrawn twin refused Yale Health in its words (access)."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day",
+     "kind": "command+clock+reload+jump-vs-steps",
+     "proves": "$706.00 on 1 November and 1 December, once each; the visit Friday 27 November (Thanksgiving skipped), $45 + $60.13 = $105.13, paid once on 27 December."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day",
+     "kind": "command+clock+reload+jump-vs-steps+render",
+     "proves": "HUSKY D and Covered Connecticut: the 27 November visit at Fair Haven, $0, no bill, the plan's $105.13 on the care log, \"Nothing to pay.\", no premium; Papers names the program."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+     "kind": "clock",
+     "proves": "HUSKY D's renewal and its notices (the trace's Renewal → Notice)."
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.choose_clinic, New Haven’s two practices",
+     "kind": "render+command+clock",
+     "proves": "The select on Papers, the denial and appeal: unchanged and passing.",
+     "citedAs": "(health.choose_clinic and Access Health CT tests), named by title by the integration pass on 2026-10-16"
+    },
+    {
+     "file": "tests/scope-health.test.ts",
+     "title": "health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock bills",
+     "kind": "render+command+clock",
+     "proves": "The select on Papers, the denial and appeal: unchanged and passing."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The care log keeps the plan's part of every piece of care (careFor), a $0 visit's too, which makes no bill.",
+     "where": "src/engine/systems/health.ts careFor",
+     "failingTest": "tests/remaining-health-billing.test.ts > PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day (mutation B3a writes no plan part and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Plan designs, prices and the medical price index as SLATE keeps them (content/safetynet.ts PLANS, CARE, MEDICAL_CPI, BENCHMARK); New Haven's two practices (scope/yale-result.json)",
+     "citation": "src/engine/content/safetynet.ts; docs/research/world/research-health-visits.json",
+     "effective": "2026",
+     "read": "2026-10-16 (in the repository)"
+    }
+   ],
+   "assumptions": [
+    "The marketplace has no renewal in SLATE beyond its open enrollment; its trace ends at the premium and the bill."
+   ],
+   "mutations": [
+    {
+     "id": "B3a-plan-part-on-log",
+     "file": "src/engine/systems/health.ts",
+     "find": "  const planPart = pays ? Math.max(0, planPrice(event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at, cur) - amount) : 0;",
+     "replace": "  const planPart = 0;",
+     "test": "tests/remaining-health-billing.test.ts -t \"HUSKY D for the Comfortable\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "—",
+   "guide": "—"
+  }
+ ]
+}

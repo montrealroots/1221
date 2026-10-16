@@ -56,8 +56,13 @@
   "at": 1791902206759
  },
  "i-stale-claims": {
-  "verdict": "partial",
-  "at": 1791958719848,
-  "note": "2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision."
+  "verdict": "verified",
+  "at": 1792152000000,
+  "note": "2026-10-16: verified on static evidence, the kind added that day for a row whose claim is the repository’s own text, and for no other. The owner’s brief of 2026-10-16 answered the decision this row waited on (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 1) yes: a gate test that reads that text verifies such a row where it reaches the text the claim is about, checks it, and expects independently, with examples it must catch and examples it must accept, so it can’t pass vacuously. Read against that on 2026-10-16: tests/evidence3-person.test.ts’s four and tests/evidence2-b13.test.ts’s three meet it (each sentence they quote as an example is in the file as written, and each walk fails on an empty read); tests/evidence-g34-ui.test.ts’s three reach the text and support the row, with no example to catch or accept, the third on the first round’s rule. Until 2026-10-16 it was partial on the player-action standard, the note of 2026-10-15 reading: “2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision.”"
+ },
+ "bank.savings_notice": {
+  "verdict": "verified",
+  "at": 1792159200000,
+  "note": "2026-10-16: verified on a played journey. Until that day no life made at Yale banked in Germany and the row was unreachable, as it said; the account kept at home of that day made it reachable, which the coverage area’s probe found the same day. tests/integration-savings-notice.test.ts plays it from creation: a Berlin-raised student keeping Deutsche Bank presses Close It on the Bank screen on 1 September 2026 with €6,264.00 in her Flexgeld, past the €2,000 the month lets out; the notice is given, and on 1 December 2026 the clock closes the Flexgeld whole into her AktivKonto, its interest paid first, the $10 order into it ended, said once, across a reload, and the same in one jump as day by day; a scraping family’s €64.00 closes at once with no notice. Four mutations of the close, each in a copy, were killed. The money on its way to another bank, which only a switch leaves, is still held on FIXTURE lives living in Berlin; no current life reaches it. Read by the coverage area, which wrote the test, and checked by no separate skeptic."
  }
 }

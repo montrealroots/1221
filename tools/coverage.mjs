@@ -72,10 +72,29 @@
  * `docs/verification/review-2026-10-13/capabilities.json`, one for every live capability. Since then too the gate runs
  * this page's check.
  *
+ * From 2026-10-16 (the brief of that day, coverage classes and evidence totals) each row carries an evidence class,
+ * `verification.class`, which docs/verification/pipeline/merge-review.cjs writes and its status doesn't move: a player
+ * journey, the retained engine on labelled fixtures (a row no current player reaches), a documentation or static check
+ * (a row whose claim is the repository's own text), deferred scope, and, since neither fits any of those four, a path
+ * only older saves reach and a selection said back that decides nothing. Until then the page counted statuses alone, so
+ * the verified share said nothing of how each row was verified, and an unresolved row's place in the denominator said
+ * nothing of why. Every row's class is held against its evidence here, with --check or without: a journey has a test in
+ * the gate that reaches the action as a player does, not on a fixture; the engine is unresolved, has a fixture, and says
+ * in four parts what a Yale player meets, the engine's tests, whether the owner defers it and what's unfinished
+ * (`acceptance`, whose tests must land); a static row has a static test that meets the static standard; the last three
+ * are their status. The same day a seventh kind of evidence came in, `static`: a gate test that reads the repository's
+ * own text. It verifies a row only where the row's claim is that text, and only where it meets the standard
+ * player-journey tests are held to, written into the row as read (`standard`: what it reaches, examples it must catch and
+ * must accept, each quoted as it stands in the test's file, which is checked here). Until then such a test was recorded
+ * as a fixture, and i-stale-claims, whose claim is the tree's prose, stood partial for want of a command. Later the
+ * same day the audit could gain a row after the review (`added`, from the pipeline's inputs/added-rows.json): its review
+ * is of the day it was added, its place at fca00d8f "not a row", and the page lists it under Added Since The Review.
+ * Until then a command that came in later could be in no row, as health.apply and health.request_hardship were.
+ *
  *   node tools/coverage.mjs           writes docs/GAMEPLAY-COVERAGE.md
  *   node tools/coverage.mjs --check   fails when the page is behind the JSON
- * Both fail on a citation that doesn't land, a verified row the script can see isn't, or a command the two registries
- * disagree on.
+ * Both fail on a citation that doesn't land, a verified row the script can see isn't, a row whose evidence class its
+ * evidence doesn't bear out, or a command the two registries disagree on.
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
@@ -88,22 +107,41 @@ const AREAS = [
 ];
 const ORDER = ['verified', 'partial', 'unresolved', 'deferred', 'legacy', 'informational'];
 /** Where a row stood at `fca00d8f`, before the review of 2026-10-13, in the order the page lists them. */
-const BEFORE = ['verified, read', 'verified, not read', 'partial', 'unresolved', 'legacy', 'informational'];
+const BEFORE = ['verified, read', 'verified, not read', 'partial', 'unresolved', 'legacy', 'informational', 'not a row'];
 /** Evidence kinds, as the review records them: what can make a row verified, and what supports one. */
 const HOLDS = new Set(['command', 'render']);
-const KINDS = ['command', 'render', 'fixture', 'inspection', 'built-app', 'long-run'];
-/** The evidence that makes a row verified: a test in the gate that reaches the action, checks the consequence and expects independently. */
-const holding = (i) => [
+const KINDS = ['command', 'render', 'static', 'fixture', 'inspection', 'built-app', 'long-run'];
+/** A row's evidence classes (from 2026-10-16), in the order the page lists them, with what each is. */
+const CLASSES = {
+  journey: 'Player Journey',
+  engine: 'Retained Engine, On Labelled Fixtures',
+  static: 'Documentation And Static Checks',
+  deferred: 'Deferred Scope',
+  legacy: 'Older Saves Only',
+  informational: 'Said Back, Deciding Nothing',
+};
+/** A static test that meets the standard as read: what it reaches, and examples it must catch and must accept. */
+const staticHolds = (t) => t.kind === 'static' && t.standard?.meets === true && !!t.standard.reaches && t.standard.mustCatch?.length > 0 && t.standard.mustAccept?.length > 0;
+/** A player journey's evidence: a test in the gate that reaches the action as a player does, checks the consequence and expects independently. */
+const journeyHolding = (i) => [
   ...(i.review?.evidence ?? []).filter((e) => HOLDS.has(e.kind) && e.reachesAction && e.checksConsequence && e.independent),
   ...(i.after?.tests ?? []).filter((t) => HOLDS.has(t.kind)),
 ];
-/** A row's evidence by kind, the review's and the tests added since. */
+/**
+ * The evidence that makes a row verified: a player journey's, or, for a row whose claim is the repository's own text
+ * and only for one (from 2026-10-16), a static test that meets the standard.
+ */
+const holding = (i) => (i.verification?.class === 'static' ? (i.after?.tests ?? []).filter(staticHolds) : journeyHolding(i));
+/**
+ * A row's evidence by kind, the review's and the rounds' since. Until 2026-10-16 the rounds' were said to be "added
+ * 2026-10-13", though rounds three to five (2026-10-14 to 2026-10-16) added theirs to the same list.
+ */
 const evidenceCell = (i) => {
   const n = Object.fromEntries(KINDS.map((k) => [k, 0]));
   for (const e of i.review?.evidence ?? []) n[e.kind] = (n[e.kind] ?? 0) + 1;
   for (const t of i.after?.tests ?? []) n[t.kind] = (n[t.kind] ?? 0) + 1;
   const said = KINDS.filter((k) => n[k]).map((k) => `${k} ${n[k]}`).join(', ');
-  return `${said || 'none'}; ${holding(i).length} hold${i.after?.tests?.length ? `; ${i.after.tests.length} added 2026-10-13` : ''}`;
+  return `${said || 'none'}; ${holding(i).length} hold${i.after?.tests?.length ? `; ${i.after.tests.length} from the rounds since 2026-10-13` : ''}`;
 };
 const nowOf = (i) => i.status;
 /** A row's Note: a claim corrected on 2026-10-13 and what's still open, else what the row said before. */
@@ -128,6 +166,10 @@ const traced = [];
 const reviewed = [];
 /** Every item, by area, for the agreement with docs/capabilities.json. */
 const everyItem = [];
+/** Every item with its area's title, for the totals by evidence class (from 2026-10-16). */
+const classed = [];
+/** Rows added since the review of 2026-10-13, each read on the day it was added (from 2026-10-16). */
+const addedRows = [];
 /** The status the open-items revisit left, before any correction of 2026-10-12. */
 const revisited = (i) => i.corrected?.status ?? i.status;
 const statusCell = (i) => {
@@ -216,6 +258,45 @@ function citationsMissed(i) {
   }
   return missed;
 }
+/** The four parts a row out of a current player's reach says (from 2026-10-16), with what each says. */
+const PARTS = {
+  player: 'what a Yale player meets today',
+  engine: 'which tests hold the engine on fixtures',
+  deferred: 'whether the owner’s scope defers it',
+  unfinished: 'what’s unfinished',
+};
+/**
+ * Where a row's evidence class (from 2026-10-16) isn't borne out by its evidence and status: each class's requirement,
+ * a static test's examples each in its file as written, and a row out of reach's four parts, their tests landing.
+ */
+function classMissed(i) {
+  const c = i.verification?.class;
+  if (!Object.hasOwn(CLASSES, c)) return [`its evidence class is ${JSON.stringify(c)}, not one of ${Object.keys(CLASSES).join(', ')}`];
+  const out = [];
+  const kinds = new Set([...(i.review?.evidence ?? []).map((e) => e.kind), ...(i.after?.tests ?? []).map((t) => t.kind)]);
+  if (c === 'journey') {
+    if (!['verified', 'partial'].includes(i.status)) out.push(`a player journey, and ${i.status}: a journey is verified, or partial with its gap named`);
+    if (!journeyHolding(i).length) out.push('a player journey, and no test in the gate reaches the action as a player does (a command, the clock or the screen, not on a fixture), checks the consequence and expects independently');
+  }
+  if (c === 'engine') {
+    if (i.status !== 'unresolved') out.push(`the retained engine on fixtures, and ${i.status}: a row no current player reaches is unresolved`);
+    if (!kinds.has('fixture')) out.push('the retained engine on fixtures, and no evidence on a labelled fixture');
+    for (const [part, says] of Object.entries(PARTS)) if (!String(i.acceptance?.[part] ?? '').trim()) out.push(`the retained engine on fixtures, and its acceptance doesn’t say ${says} (acceptance.${part})`);
+  }
+  // The tests a row's acceptance names land, whatever its class: a row reached since keeps its four parts (from 2026-10-16).
+  for (const part of ['player', 'engine']) for (const miss of landing(i.acceptance?.[part], true)) out.push(`acceptance.${part}: ${miss}`);
+  if (c === 'static') {
+    if (!['verified', 'partial'].includes(i.status)) out.push(`a static check, and ${i.status}`);
+    if (!(i.after?.tests ?? []).some(staticHolds)) out.push('a static check, and no static test meets the standard: what it reaches, examples it must catch and examples it must accept');
+  }
+  if (['deferred', 'legacy', 'informational'].includes(c) && i.status !== c) out.push(`${CLASSES[c]}, and ${i.status}`);
+  // A static test's examples are quoted as they stand in its file, so the record can't claim one the test doesn't have.
+  for (const t of (i.after?.tests ?? []).filter((x) => x.standard)) {
+    const text = (testLines(t.file) ?? []).join('\n');
+    for (const ex of [...(t.standard.mustCatch ?? []), ...(t.standard.mustAccept ?? [])]) if (!text.includes(ex)) out.push(`${t.file} ‘${t.title.split(' > ').pop().slice(0, 60)}…’: its example “${ex}” isn’t in the file as written`);
+  }
+  return out;
+}
 /** Citations that don't land, and verified rows the script can see aren't, by item. */
 const stale = [];
 /** By area: the verified rows, how many of them were read by eye against the standard, and which rows were read. */
@@ -234,9 +315,15 @@ for (const [area, title] of AREAS) {
     if (i.corrected) corrected.push({ title, i });
     if (i.traced) traced.push({ title, i });
     for (const miss of citationsMissed(i)) stale.push(`${area} ${i.id}: ${miss}`);
-    if (i.review?.on !== '2026-10-13') stale.push(`${area} ${i.id}: no review of 2026-10-13`);
+    // A row added since (from 2026-10-16, `added`) is read on the day it was added, and wasn't a row at fca00d8f; every
+    // other row has the review of 2026-10-13. Until then a row added after the review couldn't be carried at all.
+    if (i.review?.on !== (i.added ?? '2026-10-13')) stale.push(`${area} ${i.id}: no review of ${i.added ?? '2026-10-13'}`);
     else if (!BEFORE.includes(i.review.before)) stale.push(`${area} ${i.id}: review.before is ${JSON.stringify(i.review.before)}, not one of ${BEFORE.join(', ')}`);
+    else if ((i.review.before === 'not a row') !== Boolean(i.added)) stale.push(`${area} ${i.id}: review.before is ${JSON.stringify(i.review.before)}, and it was ${i.added ? `added on ${i.added}` : 'a row at fca00d8f'}`);
+    if (i.added) addedRows.push({ title, i });
     if (i.status === 'verified' && !holding(i).length) stale.push(`${area} ${i.id}: verified, and no test in the gate reaches the action, checks the consequence and expects independently`);
+    for (const miss of classMissed(i)) stale.push(`${area} ${i.id}: ${miss}`);
+    classed.push({ title, i });
     // A test's own title, its describe path (cited as “row > title”) left off, as the file's titles are read.
     for (const t of i.after?.tests ?? []) for (const miss of landing(`${t.file} ‘${t.title.split(' > ').pop().replace(/’/g, "'")}’`, true)) stale.push(`${area} ${i.id}: added: ${miss}`);
     reviewed.push({ title, i });
@@ -331,7 +418,8 @@ function reviewSection() {
   const mutKilled = reviewed.reduce((n, { i }) => n + (i.after?.mutations?.killed ?? 0), 0);
   const has = (i, k) => (i.review?.evidence ?? []).some((e) => e.kind === k) || (i.after?.tests ?? []).some((t) => t.kind === k);
   const holds = (i, k) => holding(i).some((e) => e.kind === k);
-  const byKind = KINDS.map((k) => [k, reviewed.filter(({ i }) => has(i, k)).length, HOLDS.has(k) ? String(reviewed.filter(({ i }) => holds(i, k)).length) : '—']);
+  // A static test holds only for a row whose claim is the repository's text, and only where it meets the standard (from 2026-10-16).
+  const byKind = KINDS.map((k) => [k, reviewed.filter(({ i }) => has(i, k)).length, HOLDS.has(k) || k === 'static' ? String(reviewed.filter(({ i }) => holds(i, k)).length) : '—']);
   const none = reviewed.filter(({ i }) => !KINDS.some((k) => has(i, k))).length;
   const held = reviewed.filter(({ i }) => holding(i).length).length;
   const what = (i) => {
@@ -349,7 +437,7 @@ function reviewSection() {
   return [
     '## The Review Of 2026-10-13',
     '',
-    `The owner’s brief of 2026-10-13 asked for every coverage claim held to one standard. Every row here and every live capability was read on that day against \`fca00d8f\` by readers who changed nothing: what the row claims, the code and what reads the change, each test’s assertions read, whether the test reaches the action as a player does and checks the consequence with an expectation of its own, and the UI evidence a row about a screen needs. Each row keeps it as \`review\` in \`docs/verification/audit/*.json\`. The evidence is recorded by kind: **command** (a test in the gate that issues the command or runs the clock), **render** (a test in the gate that renders the screen and reads it), **fixture** (state set by hand, or a function called in place of the command or the clock), **inspection** (the code read), **built-app** (\`tools/acceptance-ui.mjs\`, outside the gate) and **long-run** (played lives and scenarios). Only the first two make a row verified, and only where the test reaches the action, checks the consequence and expects what an independent reading of the rule gives; the rest support. The pass that followed added ${added} tests in ${files.size} files for the rows the review left partial, fixed ${fixed.length} defects the tests found, and ran ${mutRun} mutations of the code those tests protect, ${mutKilled} of them killed; what each row gained is its \`after\`.`,
+    `The owner’s brief of 2026-10-13 asked for every coverage claim held to one standard. Every row here and every live capability was read on that day against \`fca00d8f\` by readers who changed nothing: what the row claims, the code and what reads the change, each test’s assertions read, whether the test reaches the action as a player does and checks the consequence with an expectation of its own, and the UI evidence a row about a screen needs. Each row keeps it as \`review\` in \`docs/verification/audit/*.json\`. The evidence is recorded by kind: **command** (a test in the gate that issues the command or runs the clock), **render** (a test in the gate that renders the screen and reads it), **fixture** (state set by hand, or a function called in place of the command or the clock), **inspection** (the code read), **built-app** (\`tools/acceptance-ui.mjs\`, outside the gate) and **long-run** (played lives and scenarios). Only the first two make a row verified, and only where the test reaches the action, checks the consequence and expects what an independent reading of the rule gives; the rest support. From 2026-10-16 a seventh kind, **static** (a test in the gate that reads the repository’s own text), verifies a row whose claim is that text and no other, where it meets the standard under The Static Kind, From 2026-10-16. The pass that followed added ${added} tests in ${files.size} files for the rows the review left partial, fixed ${fixed.length} defects the tests found, and ran ${mutRun} mutations of the code those tests protect, ${mutKilled} of them killed; what each row gained is its \`after\`.`,
     '',
     '### Where Each Row Stood, And Where It Stands',
     '',
@@ -358,6 +446,14 @@ function reviewSection() {
     `| At fca00d8f | Rows | ${ORDER.map((s) => s[0].toUpperCase() + s.slice(1)).join(' | ')} |`,
     `|---|---|${ORDER.map(() => '---').join('|')}|`,
     ...cross.map(([b, ...n]) => `| ${b} | ${n.reduce((x, y) => x + y, 0)} | ${n.join(' | ')} |`),
+    '',
+    '### Added Since The Review',
+    '',
+    `${addedRows.length} rows weren't rows at \`fca00d8f\` (“not a row” above): commands that came in later and were in no row until one was added through the pipeline (\`inputs/added-rows.json\`, from 2026-10-16), each read on the day it was added, against the commit it names, to the same standard, by a reader who wrote neither the code nor its tests.`,
+    '',
+    '| Area | Item | Added | Read Against | The Reading Found | Now |',
+    '|---|---|---|---|---|---|',
+    ...addedRows.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.added} | \`${cell(i.review.against)}\` | ${i.review.verdict}${i.review.gaps.length ? `: ${cell(i.review.gaps.join(' '))}` : ''} | ${nowOf(i)} |`),
     '',
     '### The Rows Called Verified And Not Read',
     '',
@@ -377,7 +473,7 @@ function reviewSection() {
     '',
     '### The Evidence, By Kind',
     '',
-    `The rows with each kind of evidence, a row counted under every kind it has, and, for the two kinds that can make a row verified, the rows where at least one holds: reaches the action, checks the consequence and expects independently. ${held} of the ${all} rows have evidence that holds; ${none} have none of any kind.`,
+    `The rows with each kind of evidence, a row counted under every kind it has, and, for the kinds that can make a row verified, the rows where at least one holds: reaches the action, checks the consequence and expects independently (static: for a row whose claim is the repository’s text, meets the standard). Until 2026-10-16 a test titled FIXTURE counted here as the command or render its round named. ${held} of the ${all} rows have evidence that holds; ${none} have none of any kind.`,
     '',
     '| Kind | Rows With It | Rows Where It Holds |',
     '|---|---|---|',
@@ -390,6 +486,47 @@ function reviewSection() {
     '| Capability | Status In The Registry | The Review Found | Disposition | Gaps |',
     '|---|---|---|---|---|',
     ...caps.map((c) => `| ${cell(c.id)} | ${cell(capabilities.find((x) => x.id === c.id)?.status ?? 'Retired')} | ${c.verdict} | ${cell(c.partialClass === 'none' ? '' : c.partialClass)} | ${(c.gaps ?? []).length} |`),
+  ];
+}
+/**
+ * The totals by evidence class (from 2026-10-16): rows by class and status, and what each class contributes to what can
+ * be verified; the static kind and its standard, each static test as read; and the rows out of a current player's reach,
+ * each in its four parts.
+ */
+function classSections() {
+  const byClass = Object.keys(CLASSES).map((c) => [c, classed.filter(({ i }) => i.verification?.class === c)]);
+  const inDenominator = ({ i }) => !['deferred', 'legacy', 'informational'].includes(i.status);
+  const verifiedBy = (c) => classed.filter(({ i }) => i.verification?.class === c && i.status === 'verified').length;
+  const statics = classed.flatMap(({ title, i }) => (i.after?.tests ?? []).filter((t) => t.kind === 'static' && t.standard).map((t) => ({ title, i, t })))
+    .filter((x, n, all) => all.findIndex((y) => y.i.id === x.i.id && y.t.file === x.t.file && y.t.title.split(' > ').pop() === x.t.title.split(' > ').pop()) === n);
+  const reach = classed.filter(({ i }) => i.verification?.class === 'engine' || i.acceptance);
+  return [
+    '## Totals, By How Each Row Is Evidenced',
+    '',
+    `From 2026-10-16 each row carries an evidence class beside its status (\`verification\` in \`docs/verification/audit/*.json\`, written by the pipeline's \`merge-review.cjs\`), so the totals above can't hide how a row is verified or why it's out of reach. The class moves no status, and \`tools/coverage.mjs\` fails a row whose evidence doesn't bear its class out. **${CLASSES.journey}**: a test in the gate reaches the action as a player does (a command, the clock or the rendered screen, not on a fixture), checks the consequence and expects independently; verified, or partial with its gap named. **${CLASSES.engine}**: no current player reaches the action, and its engine is tested on lives or state labelled FIXTURE or TEST SETUP; unresolved, kept in the denominator, each saying in four parts what a Yale player meets, the engine's tests, whether the owner defers it and what's unfinished (below). **${CLASSES.static}**: the row's claim is the repository's own text, tested against that text by a static test that meets the standard below. **${CLASSES.deferred}**: the owner's, out of this build. Two more fit none of those four, and are their status: **${CLASSES.legacy}**, a path only a save from before reaches, and **${CLASSES.informational}**, a selection said back that decides nothing. Until 2026-10-16 a test titled FIXTURE was recorded by the kind its round named, a command or a render, in 51 tests of 22 rows; each is a fixture now, and no verified row rested on them alone.`,
+    '',
+    `| Evidence Class | Rows | ${ORDER.map((s) => s[0].toUpperCase() + s.slice(1)).join(' | ')} | In What Can Be Verified |`,
+    `|---|---|${ORDER.map(() => '---').join('|')}|---|`,
+    ...byClass.map(([c, rs]) => `| ${CLASSES[c]} | ${rs.length} | ${ORDER.map((s) => rs.filter(({ i }) => i.status === s).length).join(' | ')} | ${rs.filter(inDenominator).length} |`),
+    `| **All** | **${classed.length}** | ${ORDER.map((s) => `**${classed.filter(({ i }) => i.status === s).length}**`).join(' | ')} | **${classed.filter(inDenominator).length}** |`,
+    '',
+    `**What the numbers are:** of the ${canBe} rows that can be verified, ${verifiedBy('journey')} are verified on a player journey (${percent(verifiedBy('journey'), canBe)}) and ${verifiedBy('static')} on a static check of the repository's text; ${byClass.find(([c]) => c === 'journey')[1].filter(({ i }) => i.status === 'partial').length} player journey${byClass.find(([c]) => c === 'journey')[1].filter(({ i }) => i.status === 'partial').length === 1 ? ' is' : 's are'} partial, and the ${byClass.find(([c]) => c === 'engine')[1].length} rows of the retained engine are verified by none: their engine is tested, and no current player reaches them. The ${totals.deferred} deferred, ${totals.legacy} legacy and ${totals.informational} informational rows are outside what can be verified, as the status totals have them.`,
+    '',
+    '### The Static Kind, From 2026-10-16',
+    '',
+    `**static**: a test in the gate that reads the repository's own text (its code, tests or documents) and checks a claim about that text. It was added on 2026-10-16, when the owner's brief of that day answered yes the decision of 2026-10-15 (\`docs/verification/CURRENT-SCOPE-2026-10-15.md\`, The Owner's Decisions, 1): whether a row whose claim is the repository's own text can be verified by a gate test that reads that text. It applies only to such a row, and verifies one only where the test meets the same three tests a player journey's does, read and written into the row (\`standard\`): it reaches the text the claim is about (the files themselves, not a copy or a summary), checks it, and expects independently, with examples it must catch and examples it must accept, so that a check passing everything fails its first and one failing everything its second, and a walk that reads nothing fails its own count. Each example is quoted as it stands in the test's file, and \`tools/coverage.mjs\` fails a row whose example isn't there. A static test of any other row supports it and never verifies it. Until 2026-10-16 such a test was recorded as a fixture, and i-stale-claims stood partial on the player-action standard, its note of 2026-10-15 kept in the row (\`verification.was\`).`,
+    '',
+    '| Item | Test | It Reaches | It Must Catch | It Must Accept | Meets The Standard |',
+    '|---|---|---|---|---|---|',
+    ...statics.map(({ i, t }) => `| ${cell(i.id)} | ${cell(`${t.file} ‘${t.title.split(' > ').pop()}’`)} | ${cell(t.standard.reaches)} | ${cell((t.standard.mustCatch ?? []).map((x) => `“${x}”`).join(' '))} | ${cell((t.standard.mustAccept ?? []).map((x) => `“${x}”`).join(' '))} | ${t.standard.meets ? 'Yes' : `No: ${cell(t.standard.read)}`} |`),
+    '',
+    "### The Rows Out Of A Player's Reach",
+    '',
+    `${reach.length} rows a current Yale player doesn't reach, or didn't until a change of this build, each in its four parts (\`acceptance\`, written through the pipeline's \`inputs/doc-fields.json\` and read against the code and the areas' results on 2026-10-16): what a Yale player meets today, and why the rest is out of reach; the tests that hold the retained engine on fixtures; whether the owner's scope defers it; and what's unfinished. The parts are words read, and their tests are checked to land.`,
+    '',
+    '| Area | Item | Status | A Yale Player Today | The Engine, On Fixtures | Deferred | Unfinished |',
+    '|---|---|---|---|---|---|---|',
+    ...reach.map(({ title, i }) => `| ${title} | ${cell(i.id)} | ${i.status} | ${cell(i.acceptance?.player)} | ${cell(i.acceptance?.engine)} | ${cell(i.acceptance?.deferred)} | ${cell(i.acceptance?.unfinished)} |`),
   ];
 }
 const page = [
@@ -408,7 +545,9 @@ const page = [
   ...rows.map((r) => `| ${r.join(' | ')} |`),
   `| **All** | **${all}** | ${ORDER.map((s) => `**${totals[s]}**`).join(' | ')} | **${percent(totals.verified, canBe)}** |`,
   '',
-  `**What the numbers are:** each row is counted once, by its status now, and every one of the ${all} has been read against the standard by the review of 2026-10-13 (below). Verified: ${totals.verified} of the ${all} rows (${percent(totals.verified, all)}), and of the ${canBe} that can be verified (${percent(totals.verified, canBe)}): the ${totals.deferred} deferred are the owner’s, out of this build, the ${totals.legacy} legacy are paths only a save from before reaches, and the ${totals.informational} informational decide nothing, so those ${totals.deferred + totals.legacy + totals.informational} are left out of what can be. Partial: works, with a gap named in the row. Unresolved: reached only by a fixture or a removed system. Until 2026-10-13 this table counted ${134} rows as called verified and not read, apart from the verified; none is now.`,
+  `**What the numbers are:** each row is counted once, by its status now, and every one of the ${all} has been read against the standard: by the review of 2026-10-13 (below), or, for the ${addedRows.length} added since, on the day each was added (Added Since The Review, below). Verified: ${totals.verified} of the ${all} rows (${percent(totals.verified, all)}), and of the ${canBe} that can be verified (${percent(totals.verified, canBe)}): the ${totals.deferred} deferred are the owner’s, out of this build, the ${totals.legacy} legacy are paths only a save from before reaches, and the ${totals.informational} informational decide nothing, so those ${totals.deferred + totals.legacy + totals.informational} are left out of what can be. Partial: works, with a gap named in the row. Unresolved: reached only by a fixture or a removed system. Until 2026-10-13 this table counted ${134} rows as called verified and not read, apart from the verified; none is now. How each row is verified is counted apart, by its evidence class (below).`,
+  '',
+  ...classSections(),
   '',
   ...reviewSection(),
   '',

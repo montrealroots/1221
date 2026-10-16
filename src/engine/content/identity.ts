@@ -5,7 +5,9 @@
  * REAL ID: since 7 May 2025 the TSA has asked a REAL ID-compliant license or
  * ID card, or a passport, at its checkpoints. New York, Connecticut and
  * California charge the same for a REAL ID card as for one that isn't, and an
- * American state's ID card that SLATE issues is REAL ID.
+ * American state's ID card that SLATE issues to a citizen is REAL ID; one issued
+ * to somebody who isn't is non-verified, Not For Federal Identification, as
+ * Connecticut issues it (from 2026-10-16: until then every one was REAL ID).
  *
  * Until 2026-10-09 SLATE read more of it: that date, TSA ConfirmID's $45 for
  * ten days of travel to a traveler with neither, and Connecticut's upgrade of
@@ -30,7 +32,7 @@
  * A state ID card, for someone the state hasn't licensed to drive: New York's
  * non-driver ID, $14 for eight years under 62; Connecticut's, $28, up to
  * seven years to the birthday, SLATE's six; California's, $40, six
- * birthdays. Each is REAL ID.
+ * birthdays. Each is REAL ID for a citizen.
  */
 
 export const REAL_ID = {

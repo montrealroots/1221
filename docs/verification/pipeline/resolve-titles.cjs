@@ -37,13 +37,17 @@ for (const line of out.split('\n')) {
   } else {
     const fields = doc[id] ?? {};
     let hit = false;
+    // A row's own words alone: `acceptance` (from 2026-10-16) is an object, its citations checked by tools/coverage.mjs.
     for (const k of Object.keys(fields)) {
+      if (typeof fields[k] !== 'string') continue;
       for (const variant of [cited, cited.replace(/'/g, '’')]) if (fields[k].includes(variant)) { fields[k] = fields[k].split(variant).join(best); hit = true; }
     }
     if (hit) { doc[id] = fields; fixed += 1; } else unresolved.push(`${id} | ${file} | (row text not in doc-fields) ${cited.slice(0, 120)} | best: ${best.slice(0, 100)}`);
   }
 }
-fs.writeFileSync(S + 'renames.json', JSON.stringify(renames, null, 2));
+// Indented by one space and ended by a newline, as the file is kept (until 2026-10-16 by two, so every run rewrote all
+// of it).
+fs.writeFileSync(S + 'renames.json', JSON.stringify(renames, null, 1) + '\n');
 fs.writeFileSync(S + 'doc-fields.json', JSON.stringify(doc, null, 1));
 console.log(`renamed ${renamed}, row text fixed ${fixed}, unresolved ${unresolved.length}`);
 for (const u of unresolved) console.log('  ' + u);

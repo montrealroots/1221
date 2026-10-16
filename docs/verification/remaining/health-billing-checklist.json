@@ -1,0 +1,62 @@
+{
+ "key": "health-billing",
+ "on": "2026-10-16",
+ "against": "fa5ba8b1 (claude/peaceful-hamilton-59zdbb), written before any code change of this area",
+ "brief": "docs/verification/integration-2026-10-16/prompts/health.md (Billing And Renewal Evidence); common.md; docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt sections 9, 10 and 13",
+ "readFirst": [
+  "docs/verification/remaining/health-eligibility-checklist.json (the look-back and the notice order item 2 reads)",
+  "docs/verification/scope/health-result.json",
+  "docs/verification/audit/life.json rows health.enroll, health.appointment, health.bill"
+ ],
+ "items": [
+  {
+   "id": "health-billing.1-reprice-plan-part",
+   "item": "`repriceCare`'s insurer portion (planPaid, near health.ts:1530) doesn't match its documented intent: find exactly how, decide what's right, fix, and prove consistent totals, no double charge, no duplicated payment, and that a coverage change never silently rewrites a bill already issued or paid",
+   "requirement": "THE PROJECT'S OWN RULES: repriceCare's comment (health.ts:1508-1513): 'More owed is a new bill, said for what it is; less comes off the bill still open, and what's left of it back to the bank. Every change is a posting or a bill of its own: nothing already on a statement is rewritten'; and at 1530: 'What the plan paid of the bill follows: nothing where the cover now reads none'. The house standard: 'A ledger balance is never a number somebody typed. It is the sum of postings.' The owner's brief §9 (no duplicate processing, no contradictory statuses) and this pass's item: patient + insurer = price; never double-charges; never duplicates a payment; historical bills stand; say what repricing may change and when. The plan rules: a care's price to a plan is planPrice (CARE.price grown by the medical price index); a plan pays price − share where it pays (careFor, health.ts:1479-1482): not for a Yale Health member's visit outside its Health Center (outsideItsPractice), not for restricted scope's non-hospital care, nothing while a claim stands denied.",
+   "currentBehavior": "health.ts:1514-1546. Reproduced on a fixture (probe/health/reprice.ts, run 2026-10-16, git-ignored): (a) a Yale Health emergency on 2 September 2026, its bill m1 $50.00 with covered {price $3,323.84, planPaid $3,273.84}, repriced as uninsured (cover canceled back to 1 August): Connecticut's charity takes the uninsured price to $0 for that income, so m1 is rewritten in place to amount $0.00, paid: true (Papers says Settled for a bill nobody paid), planPaid $0.00, with no word on the bill of the charity or the change; the issued bill's figures are gone (1530-1532, 1541). (b) An uninsured emergency on 10 September (no bill: charity free), then covered back by Yale Health: a new bill m2 of $50.00 with no plan part at all: the plan's $3,273.84 is written nowhere, so patient + insurer = $50.00 against a $3,323.84 price (1532 runs only where the bill already had `covered`). (c) The plan part is set from `planOf` (a plan exists) rather than whether the plan pays this care (outside its practice, restricted scope, a standing denial), and is skipped altogether when the share is unchanged (1527 continues before 1532). (d) Found on the way: a credit on care whose bill went to medical debt is refunded to the bank (1540-1542, `open` excludes inDebt) while the debt for the same care stands: paid twice over, once in cash and once owed.",
+   "affectedSystems": [
+    "health.repriceCare",
+    "health.careFor (care log's plan part)",
+    "MedicalBill (adjustment lines)",
+    "Papers Care And Its Bills (Your Share, Due, Plan Paid)",
+    "medical debt account",
+    "school.withdraw, school.buy_affiliate and the leave's cover canceled back (callers)",
+    "guide papers.health-cover"
+   ],
+   "plan": "Decided: a bill as issued stands. repriceCare never writes an existing bill's plan part, and never changes a bill paid or in debt. Each care event it changes gets one adjustment line of its own (a MedicalBill naming the bill it adjusts): more owed is billed on it and due in 30 days, as now; less owed is its credit, which comes off the open original's balance first (recorded on the original as `credited`, so its issued share stays readable and Papers says Credited), then off the medical debt where the original went to debt, then back to the bank. The plan's part follows the cover now: what the plan pays now (price − share where a plan pays this care now, 0 where none does) less what the lines already show for it, written on the adjustment line as the plan's change (negative where the plan takes back). The care log keeps each event's plan part. So for every care, the patient's lines (issued less credited and credits) sum to its share now, and the plan's lines sum to the plan's part now: patient + insurer = the price where the cover pays it. Uninsured hospital care repriced with Connecticut's charity says so on its line. Papers draws an adjustment's credit and the plan's change.",
+   "acceptance": "tests/remaining-health-billing.test.ts: (1) PLAYER JOURNEY: a Yale Health emergency in the fall's first week (TEST SETUP: the week's draw forced), then school.withdraw by the fifteenth day: the original bill stands as issued ($50.00, plan $3,273.84 of $3,323.84), the adjustment line carries the uninsured share's change and the plan's −$3,273.84, the sums equal the uninsured share (worked by hand from the charity rule and the income) and a plan part of $0; paid once on its due day, across a reload; a second reprice of the same window changes nothing. (2) PLAYER JOURNEY: on a personal leave without Affiliate cover, an emergency (TEST SETUP: forced) billed uninsured, then school.buy_affiliate: the original stands, the adjustment line credits the difference off the open bill (Credited on Papers) and records the plan's +$3,273.84, so $50.00 + $3,273.84 = $3,323.84; the bank pays $50.00 once on the due day; nothing refunded twice across reloads. (3) FIXTURE (the bank emptied by hand so the bill goes to debt, which a played life with money doesn't): the credit comes off the medical debt, not the bank. Each with a failing-before mutation recorded.",
+   "classification": "required reachable behavior (withdrawal by the fifteenth day and Affiliate cover bought back are both played)"
+  },
+  {
+   "id": "health-billing.2-husky-d-kept-through-work",
+   "item": "health.enroll's remaining evidence gap: HUSKY D kept at renewal through work, on a FIXTURE (wages posted by hand for the look-back the eligibility item settles), proving the program kept, its next renewal date, no gap, no premium, and the notice; and the negative twin",
+   "requirement": "Renewal of HUSKY D (Connecticut): income at or under 138% of the year's poverty line, status (US citizen from 1 October 2026), and from 1 January 2027 the work rules over Connecticut's six-month look-back at renewal, any one month (health-eligibility.4; CHA 8/25/26 from DSS's); renewed six months on from 2027 (PUBLIC_COVER.renewMonthsCt, 'Renewals required every 6 months'); no premium (HUSKY D has none; cost sharing only from 1 October 2028 per CHA); a notice of the renewal and its basis (42 CFR 435.916-917; health-eligibility.7). The negative twin: notice of noncompliance, 30 days from receipt, then the end at the month's end at least ten days after the decision (health-eligibility.3).",
+   "currentBehavior": "No played life holds HUSKY D with wages: SLATE pays wages only for a student's work-study and the Summer Cabaret, and a student on Yale Health can't enroll (health.ts:480-482). The kept path (health.ts:707-710) is tested only by tests/scope-cover.test.ts's leave journey (work posted by hand in January and August 2027, kept on 1 September), which reads last month alone and checks no notice (none is sent: 707-710 are silent).",
+   "affectedSystems": [
+    "healthMonth renewal",
+    "notices",
+    "Papers Your Cover",
+    "the ledger (no premium)"
+   ],
+   "plan": "FIXTURE: a citizen withdrawn on 25 August 2026 holding HUSKY D from 1 January 2026 with its renewal on 1 January 2027 (set by hand: no new life, made on 24 August 2026, can have enrolled before), wages posted by hand (80 hours, $600) in one month of July–December 2026; the clock to the renewal and past it. Assert: the program kept (same `from`, no `until`), renewAt 1 July 2027 (six months, 2027), coverOn medicaid every day across the renewal (no gap), no premium posting, 'Your Public Cover Is Renewed' once naming the month, across a reload. Negative twin with no wages: the notice of noncompliance, the window, the end with ten days' notice. Boundary twin: wages in June 2026 (outside July–December) gets the notice.",
+   "acceptance": "tests/remaining-health-billing.test.ts, FIXTURE + clock + reload, dates and the six months worked by hand.",
+   "classification": "older-save compatibility is not the point: a necessary FIXTURE for an engine path (HUSKY D with work) no current journey reaches"
+  },
+  {
+   "id": "health-billing.3-insured-paths-trace",
+   "item": "Trace verification, with tests, for the insured paths: Eligibility → Application → Approval → Effective Coverage → Appointment → Bill → Patient And Insurer Shares → Payment → Renewal → Notice → Persistence, for Yale Health at its Health Center, Yale Health at Fair Haven (uninsured), a marketplace plan, HUSKY D and Covered Connecticut; each bill's two shares worked by hand, paid once, the same across save/load and one jump against small steps; clinic selection's stated effects on access, waiting, coverage and cost",
+   "requirement": "The plan designs (content/safetynet.ts PLANS: Yale Health $0 a visit, $50 an emergency; Access Health CT Standard Silver $45 a visit; HUSKY D and Covered Connecticut $0) and SLATE's prices (CARE.price grown by the medical price index, uninsured × 1.75); Yale Health's rule that a member's care is had at its Health Center (scope/yale-result.json, read 2026-10-15); clinic access (members only), waits (the next weekday at Yale Health, 24 days at Fair Haven); a bill due in 30 days, paid once from checking; the brief's §9 and §13 (save/load, large time advances against equivalent smaller ones).",
+   "currentBehavior": "Each path is played somewhere (tests/scope-health.test.ts: Yale Health $0, Fair Haven $183.98, the marketplace's $45 with the plan's $60.13; tests/evidence-g03-life.test.ts: HUSKY D's quotes), but: no test advances the same life in one jump against small steps; HUSKY D's and Covered Connecticut's visits make no bill, so their plan part is written nowhere (careFor 1463 logs the share alone, 1468 returns with no bill); no single test follows a path from enrollment through a billed visit to the renewal's notice.",
+   "affectedSystems": [
+    "health.careFor (care log's plan part)",
+    "appointments",
+    "the bill and its payment",
+    "renewal",
+    "clinics"
+   ],
+   "plan": "One journey per cover, each run twice from the same save (one jump, and day by day), compared whole (bills, care log, ledger postings for health, notices, renewal), with a reload in the middle of the stepped one. Shares worked by hand: $100 (2024) × 439.389 ÷ 417.93 = $105.13 (the visit's 2026 price), × 1.75 = $183.98 uninsured; marketplace $45 + $60.13; HUSKY D and Covered Connecticut $0 + $105.13 (the care log's plan part); Yale Health at its Health Center $0 + $105.13. Clinic selection: the Yale twin booked the next weekday, the Fair Haven twin 24 days on, Fair Haven refused to none, Yale Health refused to a non-member.",
+   "acceptance": "tests/remaining-health-billing.test.ts, PLAYER JOURNEY for each cover, render + command + clock + reload + jump-vs-steps.",
+   "classification": "required reachable behavior"
+  }
+ ]
+}

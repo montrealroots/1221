@@ -1,0 +1,125 @@
+{
+ "key": "coverage",
+ "on": "2026-10-16",
+ "against": "a908bded (claude/peaceful-hamilton-59zdbb, with the areas' work committed: banking 841f46e9, tax bc834ee1, health b822ec60)",
+ "brief": "docs/verification/prompts-2026-10-16/coverage-classes-and-evidence-totals.txt, with docs/verification/integration-2026-10-16/prompts/coverage.md and the owner's brief of this pass (docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt), sections 13 and 14",
+ "baseline": {
+  "statusTotals": "counted from docs/verification/audit/*.json by status, as tools/coverage.mjs counts them: 328 rows, 285 verified, 2 partial (health.enroll, i-stale-claims), 14 unresolved, 16 deferred, 3 legacy, 8 informational. tools/coverage.mjs itself exits 1 before it prints them: `node tools/coverage.mjs --check` fails on life health.dental, whose Note cites defects-g8-4.test.ts:209-220 and :237-239, lines the health area's edit of that file moved by 30.",
+  "pipeline": "Run in a copy of the tree (scratchpad coverage/wt) in the README's order, the pipeline does not reproduce the committed audit: it undoes the four hand edits of bc834ee1 (tax.federal_lien_withdraw's and h-papers's renamed test titles, h-papers's tests, tax.request_waiver's issue :259 to :260), and writes c-performerTitle's after.tests title as 'Frau Gabor' where the committed audit and the test say 'Frau Bergmann'. The first three come back after resolve-titles and a second merge; the fourth never does (coverage.d-renames-chain). After two passes coverage.mjs fails on four things: the two health.dental lines, tax.request_waiver's :259, and c-performerTitle's title."
+ },
+ "items": [
+  {
+   "id": "coverage.1-separate-totals",
+   "item": "Separate totals (the brief's item 1): a per-row evidence class written by the pipeline into each audit row, a second table on docs/GAMEPLAY-COVERAGE.md beside the status totals, and coverage.mjs --check failing a row whose class disagrees with its evidence kinds; no row's status changed by it, none moved to Deferred or out of the denominator.",
+   "requirement": "The project's own rule (CLAUDE.md, rule 7; the owner's brief of this pass, section 14: 'no aggregate that conceals unfinished behavior', denominators reported): the totals say apart how each row is evidenced. Player journeys (a gate test reaches the action as a player does), retained engine verification (the action is beyond any current player and its engine is tested on labelled fixtures: the 9 bank and 5 tax rows, Unresolved), documentation and static checks (a claim about the repository's own text, tested against that text), and deferred scope (16). Legacy (3) and informational (8) rows fit none of the four honestly, so each keeps a class of its own named for its status rather than being forced into one of the four.",
+   "currentBehavior": "No row carries a class. tools/coverage.mjs:93-99 holds a row verified on any command or render test (HOLDS) and counts statuses only (:249, :404-411). Evidence kinds are recorded by the rounds: docs/verification/pipeline/scope-fold.cjs:12 `kindOf` takes a kind naming render or clock before fixture, so 51 tests in 22 rows titled FIXTURE (London, Berlin, Paris, Toronto lives, a LIFE FIXTURE) or GUARD are recorded as render or command (the earlier rounds recorded the kind they named) (reproduced: of bank.cancel_new's 18 tests, 16 are FIXTURE-titled and recorded render), and merge-review.cjs:42 maps them through KIND unchanged; so no bank row's after.tests holds a fixture, and a FIXTURE test counts toward `holding` (coverage.mjs:96-99). No verified row rests on FIXTURE tests alone: each of the 22 rows with such a test keeps another that holds (measured).",
+   "affectedSystems": [
+    "docs/verification/pipeline/merge-review.cjs",
+    "docs/verification/pipeline/inputs/classes.json (new)",
+    "tools/coverage.mjs",
+    "docs/GAMEPLAY-COVERAGE.md (generated)",
+    "docs/verification/audit/*.json (generated)"
+   ],
+   "plan": "merge-review.cjs writes `verification: { class, label, why }` into every row: deferred, legacy and informational by status; a row named in inputs/classes.json by that file (i-stale-claims: static); unresolved as engine; the rest (verified, partial) as journey. It records a test as fixture wherever the last segment of its title is labelled FIXTURE (or LIFE FIXTURE) or begins GUARD, OLDER SAVE or LEGACY STATE, whatever kind its round gave it. coverage.mjs: a `static` kind; `holding` by class (a journey row's command or render tests not on a fixture; a static row's static tests that meet the static standard); a check, run with or without --check, that every row has one of the six classes and agrees with its evidence: journey has a holding command or render test and is verified or partial; engine is unresolved, has fixture evidence, and its words carry the four parts (item 3); static has a static test meeting the standard; deferred, legacy and informational are their status. The page gains 'Totals, By How Each Row Is Evidenced': rows by class (down) and status (across), with the denominator each class contributes to what can be verified.",
+   "acceptance": "static (tools): `node tools/coverage.mjs --check` exits 0 on the regenerated audit and prints the class totals; the class table's rows add to 328 and each status column to the status table's. Falsified in a copy of the tree (scratchpad coverage/mut): (a) a journey row's class set to engine by hand fails the check; (b) a bank row's FIXTURE tests recorded as render again (kind rule taken out) fails it for want of fixture evidence; (c) an engine row's four parts removed fails it. No row's status changes between the regeneration without the class and with it, compared row by row.",
+   "classification": "required reachable behavior (the project's verification tooling)"
+  },
+  {
+   "id": "coverage.2-i-stale-claims",
+   "item": "i-stale-claims (the brief's item 2): the `static` evidence kind defined on the page with its standard (reaches the text the claim is about, must-catch and must-accept examples, not vacuous), the old classification kept in the row, and the three tests it cites read to see that they meet it.",
+   "requirement": "The owner's decision of this pass (the brief's item 2, answering docs/verification/CURRENT-SCOPE-2026-10-15.md 'The Owner's Decisions' 1 with yes): a row whose claim is the repository's own text may be verified by a gate test that reads that text, where the test meets the same tests a player-journey test does: it reaches what the claim is about, checks it, and expects independently (examples it must catch and examples it must accept, so it can't pass vacuously). It applies only to rows whose claim is repository text. The row's old classification (partial on the player-action standard, the note of 2026-10-15) is kept in it.",
+   "currentBehavior": "ui i-stale-claims is partial: its 16 after.tests are recorded `fixture`; docs/verification/pipeline/inputs/after-check.json holds the note of 2026-10-15 that left it partial for the owner's decision; its last skeptic check (checks.json) found it verified and holding; 14 mutations were run, 14 killed. Read on 2026-10-16: tests/evidence3-person.test.ts:724-842 (four tests: three of must-catch and must-accept examples written by hand, among them money's interest as must-accept; a tree walk over src/, tests/ and docs/ with files > 600, sentences found > 60 and every sentence of READ_TRUE found, so it can't pass on an empty walk) meets the standard; tests/evidence2-b13.test.ts:551-617 (the same rule written out again: one test of examples, two walks with their non-vacuity guards) meets it; tests/evidence-g34-ui.test.ts:413-458 (READ_CRAFTS named nowhere; the capability documents name no interests; the five files' sentences in the past) reaches the text and guards against an empty read (files > 300, text > 10,000, each of the five files found) but has no must-catch or must-accept examples, and its third test's PAST rule is the first round's, which evidence2-b13's first test shows passes a present-tense claim ('The interests are kept on the sheet and named on the Profile.').",
+   "affectedSystems": [
+    "docs/verification/pipeline/inputs/classes.json (new)",
+    "docs/verification/pipeline/inputs/after-check.json",
+    "docs/verification/pipeline/merge-review.cjs",
+    "tools/coverage.mjs"
+   ],
+   "plan": "inputs/classes.json names i-stale-claims static, with since 2026-10-16 and why, its classification until then (partial on the player-action standard, the 2026-10-15 note, verbatim), and per cited test: what it reaches, its must-catch and must-accept examples quoted from the test, and whether it meets the standard (evidence3-person's and evidence2-b13's do; evidence-g34-ui's support only, with why). merge-review records those tests as `static`, with the standard as read. coverage.mjs checks each example quoted is in the test file as written, defines the kind and its standard on the page (when, why, that it applies only to rows whose claim is repository text), and holds a static row verified only on a static test meeting it. after-check.json's i-stale-claims entry moves to verified with the owner's answer and the old note kept. No test is added: two of the three already meet the standard.",
+   "acceptance": "static: coverage.mjs --check exits 0 with i-stale-claims verified, class static; it fails, in a copy, when (a) an example quoted in classes.json is altered so it isn't in the test file, (b) the static tests are all marked as not meeting the standard, or (c) i-stale-claims' class is taken back to journey (no command or render holds). command (vitest, in a copy of the tree, one file at a time): the three test files' i-stale-claims tests pass as they stand; a present-tense sentence planted in a src/ comment ('Interests lift a meal.') fails both tree walks; `dated` without its PRESENT clause fails evidence3-person's must-catch examples; the walk given an empty folder fails its file-count guard.",
+   "classification": "required reachable behavior (the standard; the row's own claim is the repository's text)"
+  },
+  {
+   "id": "coverage.3-unresolved-rows",
+   "item": "The 14 unresolved rows (the brief's item 3): each row's words distinguish current Yale-player acceptance (unreachable, and why), retained engine behavior tested through fixtures (which tests), deferred gameplay (if the owner's scope defers it), and unfinished implementation (reported, not implemented); corrected through inputs/doc-fields.json, not the audit.",
+   "requirement": "The project's rules (THE ONE RULE, rule 12: the tree outranks a document) and the owner's brief of this pass, section 14 (skipped coverage reported, no aggregate concealing unfinished behavior). Each row's reachability is verified against the build as it stands, including the home-country account of 2026-10-16 (systems/homeaccount.ts, systems/abroad.ts), which the rows' words of 2026-10-15 predate.",
+   "currentBehavior": "Each row's issue or Note says 'unreachable' in the words of 2026-10-15 ('a life is made at Yale in New Haven at one of five US banks, and nothing moves a life'). Since 2026-10-16 a life may keep an account at a bank in the country it lived in before Yale. Read and reproduced on 2026-10-16 (probe/coverage/savings-notice.ts, vite-node): a Berlin-raised student keeping Deutsche Bank, Postbank or Berliner Sparkasse opens with her savings in its Tagesgeld or Flexgeld (from the modest family up, more than the €2,000 a month the bank lets go: CASH savingsMonthly 200000, content/cash.ts); bank.close_savings on it gives notice and schedules the savings notice three months on (banking.ts:730-746), and on 24 November 2026 bank.savings_notice closes it into the current account at its bank, 'Tagesgeld Closed: The notice ran out…', across a reload. So bank.savings_notice is reachable by a current Yale player through the command; no gate test plays it (its tests are quickSave lives living in Berlin, labelled FIXTURE). The other eight bank actions stay out of reach: abroadRefusal (abroad.ts:155-160) refuses a new overdraft, loan, savings, term or card at a bank abroad (lending.ts:1378, :1456, banking.ts:724, cardlife.ts:111), the overrun loan is never offered abroad (lending.ts:277-278), no switching service is where she lives (bank.switch), and an account kept from before Yale is past every cooling-off when the life begins (accountlife.ts inCoolingOff). The five tax rows' reasons were re-verified by the tax area (docs/verification/remaining/tax-result.json, items tax.amend to tax.request_waiver, 'verified as it stands', with FIXTURE tests in tests/remaining-tax.test.ts).",
+   "affectedSystems": [
+    "docs/verification/pipeline/inputs/doc-fields.json",
+    "docs/verification/pipeline/merge-review.cjs (an `acceptance` field)",
+    "tools/coverage.mjs (the four parts checked, and listed on the page)"
+   ],
+   "plan": "A row field `acceptance` with four parts, written through doc-fields.json (a field of its own, so the areas' rowText of `issue`, folded on every regeneration, can't overwrite it): player (current Yale-player acceptance: reachable or not, and why), engine (the retained engine's tests on fixtures, by file and title), deferred (whether the owner's scope defers it), unfinished (unfinished implementation or verification, or none found). Each of the 14 read individually against its tests and code. The page lists the 14 with the four parts. bank.savings_notice's player part says it became reachable on 2026-10-16 and no played test holds it; its status is not moved (a skeptic's and the launching session's), and it is reported.",
+   "acceptance": "static: coverage.mjs --check fails an engine-class row whose acceptance lacks any of the four parts; each test the engine part names lands (title in its file), as every row's citations are checked. Reading: each row's parts checked against the code and the area results, recorded in coverage-result.json.",
+   "classification": "required reachable behavior (row words); bank.savings_notice: required reachable behavior, unverified by play (reported)"
+  },
+  {
+   "id": "coverage.4-fold-areas",
+   "item": "This pass's areas folded in (the brief's item 4): a fold step that reads every docs/verification/remaining/*-result.json present (rowText into doc-fields.json, evidence into an evidence round), renamed titles into inputs/renames.json, the areas' hand edits of the audit brought into the inputs, regeneration in the README's order, then coverage.mjs, --check, capabilities --write and --check.",
+   "requirement": "The pipeline's own rule (docs/verification/pipeline/README.md): the audit and docs/GAMEPLAY-COVERAGE.md are generated, never edited by hand, and a regeneration reproduces the committed audit; the owner's brief, section 14: the completed coverage matrix with evidence links.",
+   "currentBehavior": "No step reads docs/verification/remaining/. Five results are present (banking, health-billing, health-eligibility, school, tax); each item has `rowText {auditRowId: {field: text}}` and `evidence [{file, title, kind, proves}]`, but evidence names no audit row: an item's id is a row id only for five tax items, and the rows an item's evidence is for must be read. Some rowText values are fragments ('… current account: … …', banking's bank.cancel_new changes), and one field isn't a row's ('why', health.dental). Some evidence titles aren't a test's title ('(the leave and withdrawal reprice tests)', 'school.continuity (A) and (B)'). The hand edits of bc834ee1 (papers.json, ui.json) are in no input. merge-review.cjs:59-89 takes the last round's record for gapsOpen and the verdict, so an evidence-only round would replace each row's open gaps and verdict.",
+   "affectedSystems": [
+    "docs/verification/pipeline/remaining-fold.cjs (new)",
+    "docs/verification/pipeline/inputs/remaining-rows.json (new)",
+    "docs/verification/pipeline/inputs/evidence5-results.json (generated)",
+    "docs/verification/pipeline/merge-review.cjs",
+    "docs/verification/pipeline/inputs/doc-fields.json",
+    "docs/verification/pipeline/inputs/renames.json",
+    "docs/verification/pipeline/README.md"
+   ],
+   "plan": "remaining-fold.cjs: for each remaining/*-result.json present, rowText into doc-fields.json (the row's own fields and corrected.now; a fragment applied only where inputs/remaining-rows.json resolves it, else reported; any other field reported), evidence into evidence5-results.json in the rounds' shape, by the rows inputs/remaining-rows.json maps each item to (an item whose id is a row maps to it), each title checked against its test file (one that isn't a test's title is reported and kept out), its kind mapped (static; FIXTURE, GUARD, older save, engine or unit as fixture; render; command or clock as command). Items unmapped are listed. Records carry no verdict: merge-review takes a row's verdict, open gaps and disposition from its latest record that has one, so the fold changes no status. The hand edits: tax.request_waiver's issue comes from the tax result's rowText; the two renamed titles go into renames.json; h-papers's tests into doc-fields.json. Regenerate in a copy first, then in the tree; then coverage.mjs, --check, capabilities --write and --check.",
+   "acceptance": "command (node): the pipeline, run twice in the README's order in the tree, reproduces itself byte for byte on a third run (nothing changes); the committed hand edits are in the regenerated audit; every row's status equals its status before the fold except i-stale-claims (item 2), compared row by row; `node tools/coverage.mjs --check` and `node tools/capabilities.mjs --check` exit 0.",
+   "classification": "required reachable behavior (the project's verification tooling)"
+  },
+  {
+   "id": "coverage.d-renames-chain",
+   "item": "Defect found on the way: a test renamed twice isn't followed to its last name.",
+   "requirement": "The pipeline's README: a regeneration reproduces the committed audit.",
+   "currentBehavior": "merge-review.cjs:30 `renamed` looks a title up once. inputs/renames.json:136 and :138 rename c-performerTitle's test to 'Frau Gabor' and that to 'Frau Bergmann' (the test's title, tests/evidence-g27-ui.test.ts:242), so every regeneration writes 'Frau Gabor' (reproduced in the copy) and coverage.mjs fails it; the committed audit's 'Frau Bergmann' was never the pipeline's.",
+   "affectedSystems": [
+    "docs/verification/pipeline/merge-review.cjs"
+   ],
+   "plan": "Follow a rename to its last name, stopping at a title seen before.",
+   "acceptance": "command (node): regenerated in the copy, c-performerTitle's title is 'Frau Bergmann' and coverage.mjs reports nothing for it; with the one-step lookup restored it says 'Frau Gabor' and coverage.mjs fails (the fix broken, run, restored).",
+   "classification": "required reachable behavior (the project's verification tooling)"
+  },
+  {
+   "id": "coverage.d-fixture-kind",
+   "item": "Defect found on the way: a test labelled FIXTURE or GUARD is recorded as a command or a render.",
+   "requirement": "docs/GAMEPLAY-COVERAGE.md's standard: a fixture supports a row and never makes it verified alone; the brief's item 1: a row's class must agree with its evidence kinds.",
+   "currentBehavior": "As coverage.1's currentBehavior: scope-fold.cjs:12 records 'render+command' for 'FIXTURE, London: …' as render; 51 such tests across 22 rows count toward `holding`.",
+   "affectedSystems": [
+    "docs/verification/pipeline/merge-review.cjs",
+    "docs/verification/pipeline/remaining-fold.cjs"
+   ],
+   "plan": "One rule in merge-review.cjs for every round's tests: the title's last segment labelled FIXTURE (or LIFE FIXTURE) anywhere, or beginning GUARD, OLDER SAVE or LEGACY STATE, is a fixture. Measured first: no verified row is left without a test that holds.",
+   "acceptance": "static: coverage.mjs --check exits 0 with the kinds corrected (no verified row loses its holding evidence); the evidence-by-kind table's fixture count rises by the tests moved; with the rule taken out the nine bank rows fail the engine class's fixture requirement.",
+   "classification": "required reachable behavior (the project's verification tooling)"
+  },
+  {
+   "id": "coverage.d-evidence-cell",
+   "item": "Defect found on the way: the Evidence column says every round's test was 'added 2026-10-13'.",
+   "requirement": "Prose load-bearing (CLAUDE.md): a sentence the code falsifies is part of the change.",
+   "currentBehavior": "tools/coverage.mjs:106 writes '; N added 2026-10-13' for every row's after.tests, which since 2026-10-14 hold rounds three, four (2026-10-15) and, with the fold, this pass's (2026-10-16).",
+   "affectedSystems": [
+    "tools/coverage.mjs"
+   ],
+   "plan": "Say 'N from the rounds since 2026-10-13', with a dated comment.",
+   "acceptance": "static: the regenerated page's Evidence cells say it; coverage.mjs --check exits 0.",
+   "classification": "misleading player-facing control (here a misleading sentence on the coverage page, not a game control)"
+  },
+  {
+   "id": "coverage.d-stale-claims-walk",
+   "item": "Found on the way (2026-10-16, before its fix): i-stale-claims’ two tree walks fail since 841f46e9 (the banking area’s commit).",
+   "requirement": "The row’s own claim and its static standard (item 2): the walks pass on the tree as it stands, and a sentence they flag is either a present-tense claim about the removed interests, to be corrected, or one read and found true, listed with why.",
+   "currentBehavior": "Run on 2026-10-16 (VITEST_MAX_FORKS=1, -t i-stale-claims): tests/evidence3-person.test.ts ‘…keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal…’ and tests/evidence2-b13.test.ts ‘…in src/, tests/ and docs/…’ each fail on two sentences the banking area wrote that day: src/engine/systems/accountlife.ts “That build posted a take as the primary account’s net, the Interest line’s gross and any Tax On Interest, …” and tests/remaining-banking.test.ts “That build’s Take Interest posted the primary’s net, the Interest line’s gross and any tax, …”. Both are money’s interest, the ledger’s Interest line, in the past; NAMES takes “interest line” for an interest’s line on the sheet the owner removed, and neither sentence has a removal word, so neither is dated.",
+   "affectedSystems": [
+    "tests/evidence3-person.test.ts (READ_TRUE)",
+    "tests/evidence2-b13.test.ts (READ_AND_TRUE)"
+   ],
+   "plan": "List both sentences, as each walk reads them, in READ_TRUE and READ_AND_TRUE with why (money’s interest: the ledger’s Interest line), under a dated comment; the rule itself is left as it is (NAMES’s “interest line” still catches the removed interests’ line). The banking area’s files are not touched.",
+   "acceptance": "command (vitest, one file at a time): both walks pass; each entry is asserted found where it’s listed (the walks’ own READ_TRUE check), so a sentence reworded or removed fails them; with either entry taken out the walk fails again on that sentence (the fix broken, run, restored).",
+   "classification": "required reachable behavior (the row’s verification); the flagged sentences are true, not stale claims"
+  }
+ ]
+}

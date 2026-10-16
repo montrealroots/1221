@@ -85,8 +85,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Attentive preparation done well-rested, and the concentration exercise.',
     // Until 2026-10-16 this said how far a step of preparation goes, which read the day's focus (readiness at the hour,
     // `focusAt`) and never this ability. From 2026-10-16 it speeds getting to know coursework's material (`STEP_SPEED`).
-    // From 2026-10-16 execution reads it more in comedy and in heightened or verse language (`DEMAND_EFFECT`).
-    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing, played comic, or in heightened or verse language; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
+    // From 2026-10-16 execution reads it more in comedy and in heightened or verse language (`DEMAND_EFFECT`); and from the
+    // integration pass of that day consistency reads it in any piece played Restrained, the inner line held (`APPROACH_EFFECT`).
+    affects: 'How far a step getting to know coursework’s material goes; interpretation and execution in written work; execution in voice work, a self-tape and a taped brief, more where the material is built on timing, played comic, or in heightened or verse language; consistency in any piece played Restrained, the inner line held through it; and holding movement and partnered physical work steady. The day’s focus is another thing: how ready you come to the hour.',
     derivedFrom: 'For a life from before it: the mean of its Script Analysis and Cold Reading.',
     source: 'Stanislavski, An Actor Prepares (1936), concentration of attention and the circles of attention',
   },
@@ -115,8 +116,10 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     id: 'composure', label: 'Composure',
     definition: 'Holding nerves under the pressure of a house, an audition or a camera.',
     develops: 'Every night in front of a house and a solo showing, a little, as performance anxiety falls with exposure; the graded-exposure exercise, and what concentration and a showing for classmates carry over.',
-    // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`).
-    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, and a little of believability where the stakes are high; recovering from a slip; and the stress nerves add before a performance.',
+    // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`); and from
+    // the integration pass of that day believability in any piece played Restrained, the calm that lets a held feeling read
+    // (`APPROACH_EFFECT`).
+    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
     derivedFrom: 'At the start, by emotional stability: 25 to 60.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },

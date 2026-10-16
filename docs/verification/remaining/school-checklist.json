@@ -1,0 +1,514 @@
+{
+ "key": "school",
+ "on": "2026-10-16",
+ "against": "fa5ba8b1 (claude/peaceful-hamilton-59zdbb), before any code change of this area",
+ "brief": "docs/verification/integration-2026-10-16/prompts/school.md; docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt sections 6, 9, 10, 11, 13",
+ "items": [
+  {
+   "id": "school.repeat-room-leave",
+   "item": "`repeatRoom`’s leave branch (src/engine/systems/school.ts)",
+   "requirement": "The Permanent Incomplete and Fail notices offer the year’s end only where `repeatRefusal` would grant it (the project’s own rule since 2026-10-15, courserecord.ts:153-162); the count is the Bulletin’s nine semesters (Yale Bulletin, David Geffen School of Drama 2026–2027 (https://bulletin.yale.edu/sites/default/files/david-geffen-school-of-drama-2026-2027.pdf, PDF created 11 August 2026, read 2026-10-16), p.194: “students must complete the degree requirements within nine semesters”) under SLATE’s repeat (SLATE’s faculty model: the Bulletin has no rule for repeating). On a leave the Bulletin lets a student complete outstanding work in courses for which extensions have been granted (p.158, item 5).",
+   "currentBehavior": "school.ts:2950-2957: on a leave under way, next = firstTerm − (offset − (returnTerm − firstTerm)), the program term taken again on return; otherwise academicTerm(termsBegun − 1) + 1. Only INCOMPLETE_DUE_KIND reaches it on a leave (kept() keeps it, leave.ts:160; an evaluation is called off on a leave, so tellFails never runs on one). Reproduced 2026-10-16 (probe, seed rr-lv1): Acting I called in sick eleven times in Fall Term 2026 (TEST SETUP: the flu) leaves four Incompletes due Sunday 10 January 2027 at five; a medical leave asked Monday 14 December begins with Spring Term 2027 (4 January); each Incomplete extended once to Tuesday 9 February 2027 at five; on that day, on the leave, each becomes Permanent, its notice offering the year’s end; back for Spring Term 2028 and registered, at its evaluation of Friday 28 April 2028 `repeatRefusal` says nothing, and the repeat asked is granted for the four. Worked by hand: the branch counts 1 enrolled + the year’s 2 again + 4 after + (2 − 1) still to take = 8; without it next is academicTerm(1) + 1 = 0 and the count 9: both within nine. `leaveLengths` grants only two-term leaves while every year of the curriculum has year-long courses, so the branch counts 8 + 2 per repeat granted and the other path 9 + 2 per repeat: the same side of nine in every reachable state. It decides only for a three-term leave (count 8 against 10), which the Bulletin allows (p.158) and `leaveLengths` would grant for a curriculum of one-term courses.",
+   "affectedSystems": [
+    "courserecord.ts INCOMPLETE_DUE_KIND, tellFails, repeatOpen",
+    "leave.ts repeatRefusal, withRepeat, startLeave, leaveLengths",
+    "StudyPlanPanels.tsx RepeatPanel",
+    "the notices"
+   ],
+   "plan": "Play the preferred journey through the commands and the clock and assert the notices against `repeatRefusal` and the Standing tab at the year’s end; play a twin that makes the extended Incomplete up on the leave (p.158 item 5). Mutation-check the branch: removed, the played journey still passes (the branch decides nothing reachable, recorded); a GUARD test on a three-term leave (TEST SETUP: the leave’s length set to three before it begins, which `leaveLengths` refuses today) kills it. Keep the branch with a dated comment saying why.",
+   "acceptance": [
+    "tests/remaining-school.test.ts PLAYER JOURNEY (command, clock, render): the Incompletes extended past the leave’s start become Permanent on 9 February 2027 during it, each notice offering the year’s end, once through a reload; back in Spring Term 2028, `repeatRefusal` says nothing at the evaluation of 28 April 2028, RepeatPanel draws Ask To Repeat The Year…, and the repeat is granted for those courses; the count worked by hand, 8.",
+    "PLAYER JOURNEY (command, clock): the twin that makes an extended Incomplete up on the leave has it passed, no Permanent notice for it, nothing more owed.",
+    "GUARD (TEST SETUP three-term leave): the Permanent Incomplete during it is offered the year’s end, the count 8; fails with the leave branch removed (count 10)."
+   ],
+   "classification": "necessary defensive guard (reached by play; decides nothing a two-term leave reaches)"
+  },
+  {
+   "id": "school.unreached-refusals",
+   "item": "Every other control or refusal in the school system that no current player journey reaches",
+   "requirement": "Each refusal a reachable state meets is played and says something true with the next step; each that only a command sent by hand reaches is kept as a guard and tested directly; a control the screen draws that a valid state never enables, or a refusal that tells the player something false, is corrected; redundant code goes only with no caller and no compatibility purpose (common.md; the brief’s sections 9 and 10).",
+   "currentBehavior": "Scanned 2026-10-16: 159 refusal strings in the refusal functions and CommandErrors of school.ts, leave.ts, courserecord.ts, coursework.ts and classmates.ts, each looked for in tests/ by its words; 47 found in no test. Each is classified in `inventory`. Two are wrong: the appeal’s “The term it began in is over.” for a dean’s leave not yet begun, and Call Off The Leave… drawn and taken on a dean’s leave (school.d-appeal-before-begun).",
+   "affectedSystems": [
+    "school.ts",
+    "leave.ts",
+    "coursework.ts",
+    "classmates.ts",
+    "StudyPlanPanels.tsx",
+    "SchoolWorkspace.tsx",
+    "CourseworkPane.tsx"
+   ],
+   "plan": "Play every reachable one through commands, the clock or the rendered screen in tests/remaining-school.test.ts, batched on the played lives; GUARD tests for those only a command by hand reaches; fix the two wrong ones (their own item).",
+   "acceptance": [
+    "tests/remaining-school.test.ts “school.unreached-refusals” describe: each inventory row its assertion of the exact words and that nothing moved (clock, ledger, the record)."
+   ],
+   "classification": "per row in inventory",
+   "inventory": [
+    {
+     "id": "sick.nothing-today",
+     "text": "There’s nothing at school today to miss.",
+     "where": "school.ts:162 sickRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a Sunday of a class week: no class, call, lab or shift",
+     "test": "command + render: Call In Sick grayed with its WhyNot line, the command refused, nothing excused"
+    },
+    {
+     "id": "ppe.ended",
+     "text": "It’s for students’ work-study.",
+     "where": "school.ts:1388 ppeRefusal",
+     "classification": "required reachable behavior",
+     "reach": "after Commencement (the degree conferred): school.buy_ppe sent",
+     "test": "command after the played degree; nothing spent"
+    },
+    {
+     "id": "cabaret.ended",
+     "text": "The Cabaret is for students.",
+     "where": "school.ts:1509 cabaretRefusal",
+     "classification": "required reachable behavior",
+     "reach": "after Commencement: school.cabaret",
+     "test": "command after the played degree"
+    },
+    {
+     "id": "cabaret.before-term",
+     "text": "The Cabaret’s season begins with the term.",
+     "where": "school.ts:1515 cabaretRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a new life at 7:30 on 24 August 2026, before the fall term begins at nine (termsBegun 0)",
+     "test": "command on a new life"
+    },
+    {
+     "id": "cabaret.no-week",
+     "text": "No Cabaret week this term is three weeks off and clear of your recesses and calls.",
+     "where": "school.ts:1519 cabaretRefusal",
+     "classification": "required reachable behavior",
+     "reach": "the fall’s last two weeks of classes",
+     "test": "command late in a played term"
+    },
+    {
+     "id": "cabaret.double-cast",
+     "text": "Cast in two productions at once, you can’t take a Cabaret show: the Bulletin bars double-cast actors from it.",
+     "where": "school.ts:1525 cabaretRefusal",
+     "classification": "required reachable behavior",
+     "reach": "cast by the chair in a School production and at the Rep with calls in the same weeks; which students the chair double-casts is the draw’s",
+     "test": "played life searched for a double casting; where none is found within the search, TEST SETUP a Rep call put in the window, said so"
+    },
+    {
+     "id": "conversion.may-none",
+     "text": "No hours to convert: only assigned hours missed ill or hurt, or never assigned, can be.",
+     "where": "school.ts:1784 conversionRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a student with need, early May, every assigned hour booked and none missed ill",
+     "test": "command in May 2027 on a Scraping life; nothing booked, no posting"
+    },
+    {
+     "id": "leave.cap",
+     "text": "You’ve had N terms of leave; the Bulletin allows 3 in all.",
+     "where": "leave.ts:207 leaveLengths",
+     "classification": "required reachable behavior",
+     "reach": "back from a two-term leave, asking for another",
+     "test": "command + render in the played leave journey"
+    },
+    {
+     "id": "leave.clear.hospital",
+     "text": "You’re in hospital: a Yale Health physician can’t clear you to come back yet.",
+     "where": "leave.ts:246 clearedToReturn",
+     "classification": "required reachable behavior",
+     "reach": "on a medical leave, in hospital (TEST SETUP: the stay, as an admission makes it)",
+     "test": "command: Give Notice Of Return refused, grayed with its words"
+    },
+    {
+     "id": "leave.clear.laid-up",
+     "text": "You’re laid up until DATE: a Yale Health physician can’t clear you yet.",
+     "where": "leave.ts:247 clearedToReturn",
+     "classification": "required reachable behavior",
+     "reach": "on a medical leave, laid up by an injury (TEST SETUP: the injury, as the draw makes one)",
+     "test": "command"
+    },
+    {
+     "id": "leave.clear.flu",
+     "text": "You’re down with the flu: a Yale Health physician can’t clear you until it’s past.",
+     "where": "leave.ts:248 clearedToReturn",
+     "classification": "required reachable behavior",
+     "reach": "on a medical leave with the flu (TEST SETUP: the flu)",
+     "test": "command"
+    },
+    {
+     "id": "leave.clear.unwell",
+     "text": "You’re not well enough yet for a Yale Health physician to clear you to come back.",
+     "where": "leave.ts:249 clearedToReturn",
+     "classification": "required reachable behavior",
+     "reach": "on a medical leave, condition under the sick line (TEST SETUP)",
+     "test": "command"
+    },
+    {
+     "id": "leave.before-term",
+     "text": "A leave is from the program, and your first term hasn’t begun.",
+     "where": "leave.ts:257 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a new life at 7:30 on 24 August 2026",
+     "test": "command on a new life"
+    },
+    {
+     "id": "leave.granted",
+     "text": "Your leave is granted, from TERM.",
+     "where": "leave.ts:260 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a medical leave granted for the next term, asked again before it begins",
+     "test": "command in the played leave journey"
+    },
+    {
+     "id": "leave.terms-done-degree",
+     "text": "Your terms are done; what’s left is the degree.",
+     "where": "leave.ts:263 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "the thirty days after a last year’s evaluation with a course unpassed (repeatBy set)",
+     "test": "command in the played withheld journey"
+    },
+    {
+     "id": "leave.reason-kind",
+     "text": "REASON is a reason for a KIND leave.",
+     "where": "leave.ts:264 leaveRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "the screen lists only the reasons of the kind chosen (StudyPlanPanels.tsx Reason select); only a command sent by hand reaches it",
+     "test": "GUARD: the command with a medical kind and a personal reason"
+    },
+    {
+     "id": "leave.professional",
+     "text": "The School doesn’t normally grant a leave to take on a professional commitment.",
+     "where": "leave.ts:265 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "Personal, A Professional Commitment, on the Leave form (Bulletin p.158: not normally granted)",
+     "test": "render + command: Ask For A Leave… grayed with the words"
+    },
+    {
+     "id": "leave.terms-done",
+     "text": "Your terms in the program are done.",
+     "where": "leave.ts:269 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "between the last spring’s evaluation, every course passed, and Commencement",
+     "test": "command in the played graduation journey"
+    },
+    {
+     "id": "leave.personal-first-term",
+     "text": "A personal leave comes after one term completed.",
+     "where": "leave.ts:272 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "the first fall, before its evaluation (Bulletin p.158)",
+     "test": "command + render"
+    },
+    {
+     "id": "leave.medical-no-recommendation",
+     "text": "A medical leave is on a Yale Health physician’s written recommendation, and nothing in the last 30 days would bring one: no illness, injury or stay in hospital.",
+     "where": "leave.ts:277 leaveRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a well student asking for a medical leave (Bulletin p.159)",
+     "test": "command + render"
+    },
+    {
+     "id": "leave.length",
+     "text": "A leave is one, two or three terms.",
+     "where": "leave.ts:288 requestLeave",
+     "classification": "necessary defensive guard",
+     "reach": "the Length select offers one to three terms only; a command sent by hand with four",
+     "test": "GUARD"
+    },
+    {
+     "id": "appeal.not-cleared",
+     "text": "You weren’t cleared: …",
+     "where": "leave.ts:659 rescindable",
+     "classification": "required reachable behavior",
+     "reach": "a dean’s leave appealed, ill again at the decision (TEST SETUP: the flu)",
+     "test": "clock: the appeal turned down in those words"
+    },
+    {
+     "id": "appeal.term-over",
+     "text": "The term it began in is over.",
+     "where": "leave.ts:663 rescindable",
+     "classification": "misleading player-facing control (a refusal that says something false)",
+     "reach": "reproduced 2026-10-16 (probe ap-late): a dean’s leave decided on Monday 14 December 2026, after the fall’s evaluation, is granted from Spring Term 2027; appealed that day and decided Tuesday 22 December, cleared, it is turned down “The term it began in is over.”, a term that hadn’t begun",
+     "test": "see school.d-appeal-before-begun"
+    },
+    {
+     "id": "aid.pending",
+     "text": "It’s with the aid office, decided by DATE.",
+     "where": "leave.ts:750 aidReviewRefusal",
+     "classification": "required reachable behavior",
+     "reach": "a repeat granted (a seventh term coming), the review asked, asked again",
+     "test": "command"
+    },
+    {
+     "id": "aid.decided",
+     "text": "The aid office has reviewed your support.",
+     "where": "leave.ts:751 aidReviewRefusal",
+     "classification": "required reachable behavior",
+     "reach": "after the review’s decision, asked again",
+     "test": "command"
+    },
+    {
+     "id": "repeat.last-past",
+     "text": "Your last year’s evaluation is past.",
+     "where": "leave.ts:859 repeatRefusal",
+     "classification": "required reachable behavior",
+     "reach": "after the last spring’s evaluation with every course passed, school.request_repeat sent (the Standing tab draws no Ask To Repeat The Year…)",
+     "test": "command + render in the graduation journey"
+    },
+    {
+     "id": "leave.no-reason",
+     "text": "Give a reason.",
+     "where": "leave.ts:949 school.request_leave",
+     "classification": "necessary defensive guard",
+     "reach": "a reason not in LEAVE_REASONS, by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "notice.again",
+     "text": "You gave notice on DATE.",
+     "where": "leave.ts:1145 school.return_notice",
+     "classification": "required reachable behavior",
+     "reach": "notice given, sent again (the panel draws no button after notice)",
+     "test": "command + render"
+    },
+    {
+     "id": "notice.late",
+     "text": "Its deadline has passed.",
+     "where": "leave.ts:1146 school.return_notice",
+     "classification": "necessary defensive guard",
+     "reach": "LEAVE_NOTICE_KIND dismisses at noticeBy exactly (leave.ts:1137), so “You’re not on leave.” answers any later notice; only a leave left on past its deadline with the item called off reaches it",
+     "test": "GUARD: the deadline’s item called off by hand (TEST SETUP)"
+    },
+    {
+     "id": "prepare.partner",
+     "text": "Work with your partner is a rehearsal you agree with them: ask them on the assignment.",
+     "where": "coursework.ts:491 needRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "the card draws no partner step but the reader’s (CourseworkPane.tsx activities filter); a command naming the partner step by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "assignment.none",
+     "text": "There’s no such assignment. / There’s no such work.",
+     "where": "coursework.ts:507, 563, 1023, 1442, 1690",
+     "classification": "necessary defensive guard",
+     "reach": "an id no piece has, sent by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "approach.no-partner",
+     "text": "This work has no partner.",
+     "where": "coursework.ts:515 approachRefusal, :1444 askRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "the partner ways and asks are drawn only on partnered pieces (CourseworkPane AnotherWay, Rehearsals); by hand on a solo piece",
+     "test": "GUARD"
+    },
+    {
+     "id": "approach.partner-dim",
+     "text": "That’s the work with your partner already.",
+     "where": "coursework.ts:516 approachRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "a persistent note on the partner part with the partner way chosen; AnotherWay draws only the ways approachRefusal allows",
+     "test": "GUARD"
+    },
+    {
+     "id": "prepare.step",
+     "text": "That isn’t a step of this work.",
+     "where": "coursework.ts:567 prepareRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "a step id the template hasn’t, by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "playing.shown",
+     "text": "It’s been shown. / There’s no scene in it to play one way or another.",
+     "where": "coursework.ts:1024, 1026 playingRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "the chooser is drawn only where playingRefusal is nothing (CourseworkPane.tsx); by hand on a shown or a scene-less piece",
+     "test": "GUARD"
+    },
+    {
+     "id": "orientation.done",
+     "text": "Done on DATE.",
+     "where": "coursework.ts:1429 orientationRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "the Orientation panel shows “Done DATE” in place of Catch Up; by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "ask.clash",
+     "text": "You have LABEL then.",
+     "where": "coursework.ts:1454 askRefusal",
+     "classification": "required reachable behavior",
+     "reach": "asking a partner for an evening that clashes with something on the calendar (a shift, a call)",
+     "test": "command in play"
+    },
+    {
+     "id": "feedback.none",
+     "text": "There’s no feedback on that.",
+     "where": "coursework.ts:1706 school.read_feedback",
+     "classification": "necessary defensive guard",
+     "reach": "Mark As Read is drawn only under feedback; by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "moment.none",
+     "text": "There’s no such conversation. / That isn’t an answer to it.",
+     "where": "classmates.ts:350, 353 respondRefusal",
+     "classification": "necessary defensive guard",
+     "reach": "ClassMoments draws only the moment’s own answers; by hand",
+     "test": "GUARD"
+    },
+    {
+     "id": "study.not-shared",
+     "text": "That isn’t a scene you share with NAME.",
+     "where": "classmates.ts:470 school.respond",
+     "classification": "necessary defensive guard",
+     "reach": "the screen sends no assignmentId; by hand with a piece not shared",
+     "test": "GUARD"
+    },
+    {
+     "id": "cancel.mandatory",
+     "text": "(none: Call Off The Leave… is drawn and taken on a leave the dean imposed)",
+     "where": "leave.ts:1095-1104 school.cancel_leave; StudyPlanPanels.tsx:96-104",
+     "classification": "misleading player-facing control",
+     "reach": "reproduced in reading 2026-10-16 and played in the test: a dean’s leave granted for the next term is called off by the student, which the Bulletin’s mandatory leave (p.159) doesn’t allow",
+     "test": "see school.d-appeal-before-begun"
+    }
+   ]
+  },
+  {
+   "id": "school.d-appeal-before-begun",
+   "item": "Defect found by school.unreached-refusals: a dean’s leave granted for the next term",
+   "requirement": "A mandatory medical leave is the dean’s decision, appealed in writing within seven days (Bulletin p.159); SLATE’s model upholds it unless the student is cleared and enough of the term is left to resume (content/school.ts MANDATORY_LEAVE). A leave not yet begun has its whole term to resume. A control or refusal says nothing false (common.md).",
+   "currentBehavior": "WELFARE_DECIDE_KIND (leave.ts:1006) grants a dean’s leave from the next term when the term is evaluated already. Then: (1) the Leave panel draws the dean’s block and Appeal To The Dean only for a leave on (StudyPlanPanels.tsx:56-83), while the notice says “You can appeal in writing to the dean until …”; (2) it draws Call Off The Leave… (StudyPlanPanels.tsx:96) and `school.cancel_leave` (leave.ts:1095) calls the dean’s leave off; (3) an appeal decided before it begins is turned down “The term it began in is over.” (rescindable, leave.ts:663), of a term not begun. Reproduced 2026-10-16 (probe ap-late; TEST SETUP: two stays in hospital, 22 November and 5 December, as admissions make them): a sick day on Wednesday 9 December brings the assessment on Friday 11 December at nine, slept through; the dean decides Monday 14 December at nine, from Spring Term 2027; the appeal that day is decided Tuesday 22 December at noon and turned down in those words, the student well.",
+   "affectedSystems": [
+    "leave.ts rescindable, rescind, APPEAL_KIND, school.cancel_leave",
+    "StudyPlanPanels.tsx LeavePanel",
+    "the guide’s leave entry"
+   ],
+   "plan": "Refuse `school.cancel_leave` on a dean’s leave, in words that name the appeal; draw the dean’s block and the appeal for a dean’s leave granted and not begun, and no Call Off; an appeal of a leave not begun is decided on the clearance alone, and overturned it is called off before it begins (nothing of `startLeave` to undo), its notice saying so.",
+   "acceptance": [
+    "tests/remaining-school.test.ts DEFECT (command, clock, render): the played chain to the dean’s leave from Spring Term 2027; the panel draws Appeal To The Dean and no Call Off The Leave…; the cancel refused; the appeal, cleared, overturns it on 22 December, the leave called off, Spring Term 2027 begun and enrolled on 4 January, once through a reload. Fails before the fix (turned down “The term it began in is over.”, the cancel taken)."
+   ],
+   "classification": "misleading player-facing control; a refusal that says something false"
+  },
+  {
+   "id": "school.continuity",
+   "item": "School continuity across leave, return, repeated terms, failures, extra terms, graduation decisions and reloads",
+   "requirement": "Previously earned results (course records, attendance, standings, credits, coursework, work-study hours and conversions, aid) never disappear, duplicate, or change without a rule; each notice comes once; a reload at any boundary is the same life as one played straight (the project’s own rule; the brief’s sections 11 and 13).",
+   "currentBehavior": "Played twins with reloads exist for single rows (tests/scope-school.test.ts) but no journey from creation through a leave, a repeat and the degree, or through a withheld degree, compares a reloaded life with one played straight at every boundary.",
+   "affectedSystems": [
+    "school.ts",
+    "leave.ts",
+    "courserecord.ts",
+    "coursework.ts",
+    "the ledger",
+    "notifications"
+   ],
+   "plan": "Two played journeys from creation, each twice: straight, and reloaded at every boundary (each term’s start and evaluation, the leave’s start and return, the Permanent Incompletes, the repeat’s decision, the year’s end, Commencement or the withholding): (A) Scraping, Fall 2026 Incompletes, a two-term medical leave, a Saturday called in sick and converted, the year repeated, then to the degree at Commencement 2031; (B) a third year’s fall course failed, the last spring’s thirty days, an additional term asked and its retake failed: withheld. Assert at each boundary that what earlier boundaries settled is unchanged, and at the end that both twins’ course records, history, credits, work-study, conversions, enrolled terms, ledger and notices are equal, and that no notice is duplicated.",
+   "acceptance": [
+    "tests/remaining-school.test.ts PLAYER JOURNEY (A) and (B), each a straight twin against a reloaded twin."
+   ],
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "school.s6.missed-term",
+   "item": "The missed-work term (the brief’s section 6; sweep-2026-10-16 “Left Open”)",
+   "requirement": "Play one term through the commands and the clock on a new life with at least two pieces missed unexcused, a revision missed and later pieces shown; the warning (A Word On Your Coursework), Shown Today and Due Soonest, the notices and the faculty’s review count them consistently, each once, and a reload changes none of it (the brief’s section 6; integration-2026-10-16 README “The missed-work term”). The warning’s mark and the review’s are SLATE’s design (TERM_CHECK, ESTIMATE.coursework).",
+   "currentBehavior": "tests/workload.test.ts sets the misses by hand and calls termWarning. Played 2026-10-16 (probe, seed mt-1, prepared 0.95 each midnight): Body As Source I missed on 10 September and Voice I on 11 September (asleep through the nine o’clock class), Acting I’s revision missed on 22 September; the warning came on Monday 14 September at nine, “3 of the 6 pieces due this term so far were Unready or not shown”, after the second of that day’s two pieces (the first made five, already over the share); the review of 11 December stored {shown 47, unready 10} and stood good. Found on the way: the Work Shown panel never says Not Shown Again (CourseworkPane.tsx:329 reads the revision only where `applied` is set, which a missed revision never sets), and nothing on the screen reads the review’s stored coursework count (school.d-coursework-shown).",
+   "affectedSystems": [
+    "coursework.ts termWarning, termTally, meetingWeight",
+    "school.ts evaluate",
+    "CourseworkPane.tsx",
+    "SchoolWorkspace.tsx"
+   ],
+   "plan": "tests/remaining-school-term.test.ts: the term played straight and with reloads at the first miss, at the warning and at the review; every count worked from the term’s own assignments by a function in the test (not termTally): the warning once, at the sixth piece due, its words; the screen after the miss (Due Soonest and Shown Today drawn for the open pieces, the missed one gone from them and in Work Shown as Not Shown); the notices once each; the review’s stored count and words (its band reads derived from the record, since the judge is changing). Boundary: five due over the share and no warning, six and the warning. Excused: a piece due on a day called in sick (TEST SETUP: the flu) moves to the next meeting and isn’t counted then; one due at its course’s last meeting is excused and never counted.",
+   "acceptance": [
+    "tests/remaining-school-term.test.ts PLAYER JOURNEY (command, clock, render, reload).",
+    "Mutations: TERM_CHECK.after 6 → 5; termTally without notShown; the revision’s missed flag not set."
+   ],
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "school.d-coursework-shown",
+   "item": "Defects found by school.s6.missed-term: a missed revision and the review’s coursework count shown nowhere",
+   "requirement": "THE ONE RULE (CLAUDE.md): a declared word with nothing that reads it is worse than none; the screen counts as the review does (the brief’s section 6: “warnings, forecasts, notifications, and faculty reviews count them consistently”).",
+   "currentBehavior": "(1) CourseworkPane.tsx:329 draws the revision’s line only where `revision.applied` is set; a missed revision sets `missed` and never `applied`, so Work Shown lists the piece at its first band, “Working”, while the review counts it Unready; the line’s own `missed ? 'Not Shown Again'` branch is never reached. Reproduced: mt-1’s Acting I piece of 22 September. (2) `TermReview.coursework` (school.ts:2895) is written at every evaluation and read by nothing: the Evaluations table shows attendance and growth only, and the Standing tab’s tiles show attendance and growth against their floors and no count for the coursework criterion until the warning, six pieces in.",
+   "affectedSystems": [
+    "CourseworkPane.tsx Shown",
+    "SchoolWorkspace.tsx StandingPane, Evaluations",
+    "the guide’s standing entry"
+   ],
+   "plan": "Work Shown says Not Shown Again for a missed revision; the Evaluations table gains Coursework from the review’s stored count; the Standing tab gains Coursework This Term, the term’s count as the review reads it (`termTally`) against its mark.",
+   "acceptance": [
+    "tests/remaining-school-term.test.ts DEFECT (render): Work Shown reads “Not Shown Again” for the missed revision; the Standing tile and the Evaluations row read the counts worked from the assignments. Each fails before its fix."
+   ],
+   "classification": "misleading player-facing control (Work Shown); declared value with no reader (the review’s count)"
+  },
+  {
+   "id": "school.s6.journey",
+   "item": "From creation to the endpoint: every school system the brief names, where it’s implemented and tested, and connections missing",
+   "requirement": "Follow a new life from creation through entry, orientation, terms, evaluations and the degree, and a withheld degree; list each system the brief’s section 6 names with its implementation and tests; fix a missing connection that closes a real hole; add no institutional machinery the school doesn’t have.",
+   "currentBehavior": "Each system is implemented and tested in pieces (tests/scope-school, evidence-g18..g26, journey-school-*, workload). Missing connections found so far: the review’s coursework count unread (school.d-coursework-shown); the Fail and Permanent Incomplete notices with no repeat left say nothing of the additional term that remains (school.s6.dead-ends); a dean’s leave not yet begun (school.d-appeal-before-begun).",
+   "affectedSystems": [
+    "all school systems"
+   ],
+   "plan": "The journeys of school.continuity are the played evidence; the result lists each system with file and test, and the fixes above close the holes found.",
+   "acceptance": [
+    "the result’s journey map, each line citing implementation and test",
+    "the continuity journeys"
+   ],
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "school.s6.policy",
+   "item": "Yale’s policy against SLATE’s design",
+   "requirement": "Research the David Geffen School of Drama’s M.F.A. in Acting (Bulletin, academic regulations, calendar, tuition and aid); say for each rule SLATE plays whether it is published policy (cited, dated) or SLATE’s design; correct words that present SLATE’s design as Yale’s policy or simulated staff feedback as real (the brief’s section 6).",
+   "currentBehavior": "content/school.ts labels most rules (LEAVE_RULES, EXTENDED_STUDY, MANDATORY_LEAVE, SCHOOL_POLICIES). Read 2026-10-16 against the 2026–2027 Bulletin: published: nine semesters and leave not over three (p.194), the disqualification counts (p.194), Pass/Fail (p.151), an Incomplete within one month and a Permanent Incomplete (p.152; but p.195 has Incompletes resolved by the next term’s registration day for financial aid), leave rules (pp.157–160), concern and warning (p.154), tuition support for six terms (pp.182, 190), late fees and the hold (p.184), the calendar (pp.5–6). Not published, SLATE’s: the repeat, the additional term, one evaluation a term and its floors, the coursework mark, a course’s three-quarters attendance line, an Incomplete given for illness rather than requested and granted by the instructor (p.152), the extension once by a month, the leave’s season rule. Guide and screen words to be read line by line for any of SLATE’s presented as Yale’s.",
+   "affectedSystems": [
+    "content/school.ts",
+    "content/guide/school.ts",
+    "content/guide/coursework.ts",
+    "content/tutorial.ts (school sentences)",
+    "SchoolWorkspace.tsx, StudyPlanPanels.tsx Fine lines",
+    "courserecord.ts notices"
+   ],
+   "plan": "Record each rule’s status with page; correct each sentence found presenting SLATE’s design as policy; note the Bulletin’s own disagreement (p.152 against p.195) as an uncertainty, keep p.152’s month.",
+   "acceptance": [
+    "tests/remaining-school.test.ts static/render: the corrected sentences read as corrected (guide entries rendered from the engine’s guide data)."
+   ],
+   "classification": "required reachable behavior (the words players read)"
+  },
+  {
+   "id": "school.s6.dead-ends",
+   "item": "No dead-end warning",
+   "requirement": "Every school warning and notice that can end in a consequence says what happened and what legitimate options remain, and the controls it names exist and work; a notice that leaves the student nothing to do says so plainly and what still stands (the brief’s section 6).",
+   "currentBehavior": "Read 2026-10-16: (1) a Fail or Permanent Incomplete with no repeat left (after a repeat granted) says only “The degree needs every course passed.” / “…can’t be completed without it.”, while an additional term after the last year’s evaluation stays open (`offerRepeat`, `extraRefusal`: enrolled at the last evaluation is 6, or 8 after one repeat, so the term fits the nine); played: tests/scope-school’s second fall Clown and repeated fall Acting I. (2) Dismissed From The School and The Degree Isn’t Recommended say the end but not what still stands (the course record, the résumé’s credits, hours worked paid: `setStanding`, school.ts:1829-1856). (3) Not Shown: “You weren’t there when it was due, and it isn’t taken later.” says nothing of how it counts (the term’s review, the course’s pass).",
+   "affectedSystems": [
+    "courserecord.ts tellFails, INCOMPLETE_DUE_KIND",
+    "school.ts setStanding",
+    "coursework.ts meetingWeight",
+    "the guide and tutorial sentences"
+   ],
+   "plan": "Name the additional term where it remains, and say plainly where nothing remains; dismissal and withholding say what stands; Not Shown and Not Shown Again say how it counts. Each played and its control pressed where the notice names one.",
+   "acceptance": [
+    "tests/remaining-school.test.ts PLAYER JOURNEY: the second fall’s Fail after a repeat names the additional term, and at the last year’s end Ask For An Additional Term is drawn and taken; the withheld and dismissed notices say what stands, its figures checked against the record.",
+    "tests/remaining-school-term.test.ts: the Not Shown notice’s words."
+   ],
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "school.d-not-registered-hold",
+   "item": "Defect found by school.s6.dead-ends (added 2026-10-16 before its fix): the Not Registered notice under a financial hold",
+   "requirement": "A refusal or warning says what happened and the next legitimate step (the brief’s sections 6 and 10). A financial hold stops registration until the account is paid (Bulletin 2026–27 p.184; SLATE: `school.reregister` refused under a hold, leave.ts:1176).",
+   "currentBehavior": "school.ts:3143: every class day a student isn’t registered for, “You haven’t registered, so today’s classes didn’t count you. Register on the School screen …”, whether or not a hold stops registration. Reproduced 2026-10-16 (probe, seed sc-x3, a first year repeated, Clown failed in Fall Term 2028, nothing paid on the Yale account): the eighth term, Spring Term 2030, begins under the hold that the seventh’s unpaid tuition brought; every class of it is told “Register on the School screen”, which the hold refuses; at its evaluation nine courses are failed at 0 of their meetings and the faculty dismiss.",
+   "affectedSystems": [
+    "school.ts CLASSES_KIND",
+    "StudyPlanPanels.tsx Register",
+    "the guide’s registration lines"
+   ],
+   "plan": "Under a hold the notice says the hold stops registration, what is owed, and to pay it on the Terms And Award tab, then register.",
+   "acceptance": [
+    "tests/remaining-school.test.ts DEFECT (clock, command): the Clown journey left unpaid to Spring Term 2030’s first class: the notice names the hold and the sum; paid and registered, the next class counts. Fails before the fix."
+   ],
+   "classification": "misleading player-facing notice (names a control the state refuses)"
+  }
+ ]
+}

@@ -37,7 +37,8 @@
  *   pays $165.60 from the bank and closes the decision once, across a reload; filed from Papers the decision closes at
  *   the moment of filing; unfiled, it lapses at the first world tick past its day (every two days) and troubles()
  *   carries return_late at $173.88, and a late filing from Papers pays $173.98 with three days' interest; with nothing
- *   in the bank, File It leaves it owed and the IRS's first reminder comes five weeks on.
+ *   in the bank, File It leaves it owed, the IRS's bill (CP14) comes at once and its first reminder five weeks after
+ *   the due date (from 2026-10-16: until then five weeks after filing, before the tax was due, and no bill).
  * - `n-decision-us-status`: at a graduate's program end the clock raises "Your US Status Is Ending", due sixty days on,
  *   offering Apply For OPT then Apply For OPT, Premium Processing; pressed, the standard one pays $470 and leaves an OPT
  *   permit pending ninety days, which holds her status past its end and is approved by the clock for twelve months,
@@ -706,11 +707,18 @@ describe('n-decision-tax', () => {
     expect(r.filedAt).toBe(sim.now);
     expect(r.owed).toBe(165_60);
     expect(returnDecision(sim)[0]!.resolvedAt).toBe(sim.now);
+    // The bill at filing, and the first reminder five weeks after the due date (from 2026-10-16, `nextNotice`: until
+    // then five weeks after filing, 8 March, before the tax was due).
+    expect(titled(sim, 'A Bill From The IRS').map((n) => n.at)).toEqual([sim.now]);
     const notices = sim.universe.scheduled.filter((i) => i.kind === 'tax.notice' && i.status === 'pending');
-    expect(notices.map((i) => i.at)).toEqual([sim.now + 35 * MS_DAY]);
+    expect(r.due).toBeGreaterThan(sim.now);
+    expect(notices.map((i) => i.at)).toEqual([r.due + 35 * MS_DAY]);
     const kept = reload(sim);
-    kept.advanceTo(at(2027, 3, 8, 13));
+    kept.advanceTo(r.due + 35 * MS_DAY - MS_HOUR);
+    expect(titled(kept, 'A Reminder From The IRS')).toEqual([]);
+    kept.advanceTo(r.due + 35 * MS_DAY + MS_HOUR);
     expect(titled(kept, 'A Reminder From The IRS')).toHaveLength(1);
+    expect(titled(kept, 'A Bill From The IRS')).toHaveLength(1);
   });
 });
 

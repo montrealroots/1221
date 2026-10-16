@@ -22,6 +22,7 @@ import { bankById } from '@/engine/content/banks';
 import { SECURITY } from '@/engine/content/security';
 import { bankAccountsOf, banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
+import { waiverWords } from '@/ui/bank/feeWords';
 import { balanceText } from '@/engine/systems/abroad';
 import { homeOf } from '@/engine/systems/earnings';
 import { paymentsOf } from '@/engine/systems/payments';
@@ -104,6 +105,13 @@ export function BankMoves() {
           : scheme?.sameDayBefore !== undefined ? `Money between banks here arrives the same business day before ${cutOff(scheme.sameDayBefore)}, the next after, by ${scheme.scheme}.`
             : scheme?.days ? `Money between banks here takes ${scheme.days} business day${scheme.days === 1 ? '' : 's'}, by ${scheme.scheme}.`
               : `Money it sends to another bank takes ${ESTIMATE_SEND_DAYS} business days, SLATE’s estimate: the bank doesn’t say.`);
+    // Its monthly fee and how the bank waives it, from the product `feeFor` (`systems/banking.ts`) charges by, as Your
+    // Accounts says it of an account held (from 2026-10-16). Until then the panel said nothing of it before Apply, and a
+    // student of 24 who opened Citi Access Checking and left it empty met its fee as an overdraft, charged off to
+    // collections sixty days on (docs/verification/remaining/banking-checklist.json, banking.s7.opening).
+    const fee = chosen.current.monthlyFee;
+    const inBank = (c: number) => formatMoney(inSaveMoney(sim, c, chosen.currency), cur);
+    parts.push(fee ? `Its ${chosen.current.name} costs ${inBank(fee)} a month${waiverWords(chosen.current, inBank)}.` : `Its ${chosen.current.name} has no monthly fee.`);
     return parts.join(' ');
   };
 

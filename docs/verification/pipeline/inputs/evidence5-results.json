@@ -1,0 +1,1771 @@
+[
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/remaining-banking.test.ts",
+  "rows": [
+   {
+    "id": "bank.standing_order",
+    "testsAdded": [
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped",
+      "closes": "A German account its bank would close at zero isn’t closed while its fees would take it below zero; the quarter’s €20.70 posts at its closing and the account is pursued as overdrawn; no closed account below zero; breaches 0. Why play can’t reach it: only Citi and Capital One close an account at zero or unfunded.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing (TEST SETUP: $2.50 built, which Citi Access Checking doesn’t pay) goes to Chase, the primary, by Citi’s own payment, nothing left in the closed account",
+      "closes": "Interest settled on the bank’s own close goes to the primary by the bank’s payment (landed 5 PM the same business day), the closed account at $0.00, the notice says it once.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "closes": "The overdraft’s set-off charges off €122.89, the overdraft €101.97 + 22¢ of interest built since 1 March + €20.70 of fees, all worked by hand; nothing posts to the closed account after; a twin played a day at a time with a reload each month comes to the same postings.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+      "closes": "Where the savings cover it, €122.89 is set off from the Flexgeld (its 41¢ of interest settled first), the AktivKonto closes, the Flexgeld stays open, the notice names both and the order ended.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld empty, is charged off on 7 March and banked again elsewhere: the closing fees charged once, and nothing of them carried to the new bank as an overdraft",
+      "closes": "A charge-off with no other German current account re-banks the life without charging the closing fees twice or carrying them to the new bank as an overdraft.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+      "closes": "A New Haven student’s Capital One account closed unfunded and Citi account charged off: from the closes to April nothing posts to either, no notice names either, no order fails; across a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March",
+      "closes": "An order from Commerzbank into a Flexgeld the charge-off closes ends with it; no “Didn’t Go” on 20 March.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+      "closes": "An order from Chase into the Barclays saver ends at Barclays’ close, said in its notice.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+      "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+      "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped",
+      "closes": "A played life’s BNP Paribas account, overdrawn by its fees, closed before the 1st is charged the interest built over ten day ends at 18.40%, worked from its balance; nothing dropped.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+      "closes": "Barclays’ own close on its notice charges $3.77: fourteen day ends at 35% on $300 less its £15 ($18.99) free, by hand.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+      "closes": "After a bank’s close nothing more posts to the account.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_new",
+    "testsAdded": [
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+      "closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+      "closes": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped",
+      "closes": "A played life’s BNP Paribas account, overdrawn by its fees, closed before the 1st is charged the interest built over ten day ends at 18.40%, worked from its balance; nothing dropped.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+      "closes": "Barclays’ own close on its notice charges $3.77: fourteen day ends at 35% on $300 less its £15 ($18.99) free, by hand.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+      "closes": "The set-off charges the 22¢ built since 1 March before taking what’s owed.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+      "closes": "Found once on opening (the step named, nothing posted, no balance or transaction changed), both takes returned with their tax, the primary debited €3.71, the year’s interest €5.04 lower, the ledger summing; a second cancel refused; a reload repeats nothing.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going back out of it, “Pay in €0.01 first”, as a term this build tagged is",
+      "closes": "The refusal reads what was found: €3.71 going back out of the AktivKonto, a cent short refused.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10th, the newer opened the 8th and taken on the 13th, each €3.15 under the same name: each is found to its own term, the newer canceled gives back the €3.15 it paid and no more, then the older its own",
+      "closes": "Same-named terms opened three days apart, each take found to its own term by the replay; canceling one takes back only its own.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 each: each term is given one of the two, never both the same",
+      "closes": "Twins opened together and taken together each get one take, never both the same.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a term whose records the replay can’t reproduce (its interest built set a cent off) has nothing found, and canceling it leaves the interest paid, as the build that paid it did",
+      "closes": "A term the replay can’t reproduce has nothing found; canceling it leaves the interest paid, the ledger summing.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > the four saves older builds wrote (2026-10-10 and 2026-10-11, tests/fixtures), migrated and opened as a slot opens them, take the step once and name it; New Haven lives, they hold no term deposit, so nothing is found",
+      "closes": "The step runs once on saves written on 2026-10-10 and 2026-10-11 and is named; they hold no term deposit, so nothing is found.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > a save this build began names the step and finds nothing: a take is tagged, and opening it, once or twice, adds no record",
+      "closes": "A save this build began names the step and finds nothing.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.scheduled_payment",
+    "testsAdded": [
+     {
+      "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+      "closes": "The order from 360 Checking ends at Capital One’s close and the one from Citi at its charge-off, each named once in the bank’s notice; the failures before the closes are said, after them none.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+      "closes": "An order from the account the set-off closes ends, said in “Closed An Account”.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March",
+      "closes": "An order from Commerzbank into a Flexgeld the charge-off closes ends with it; no “Didn’t Go” on 20 March.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+      "closes": "An order from Chase into the Barclays saver ends at Barclays’ close, said in its notice.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+      "closes": "A transfer past what the account holds refused: “Citi Access Checking holds $0.”",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+      "closes": "A second cancel refused; a reload repeats no settlement.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.take_term_interest",
+    "testsAdded": [
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+      "closes": "Found once on opening (the step named, nothing posted, no balance or transaction changed), both takes returned with their tax, the primary debited €3.71, the year’s interest €5.04 lower, the ledger summing; a second cancel refused; a reload repeats nothing.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going back out of it, “Pay in €0.01 first”, as a term this build tagged is",
+      "closes": "The refusal reads what was found: €3.71 going back out of the AktivKonto, a cent short refused.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10th, the newer opened the 8th and taken on the 13th, each €3.15 under the same name: each is found to its own term, the newer canceled gives back the €3.15 it paid and no more, then the older its own",
+      "closes": "Same-named terms opened three days apart, each take found to its own term by the replay; canceling one takes back only its own.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 each: each term is given one of the two, never both the same",
+      "closes": "Twins opened together and taken together each get one take, never both the same.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a term whose records the replay can’t reproduce (its interest built set a cent off) has nothing found, and canceling it leaves the interest paid, as the build that paid it did",
+      "closes": "A term the replay can’t reproduce has nothing found; canceling it leaves the interest paid, the ledger summing.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > the four saves older builds wrote (2026-10-10 and 2026-10-11, tests/fixtures), migrated and opened as a slot opens them, take the step once and name it; New Haven lives, they hold no term deposit, so nothing is found",
+      "closes": "The step runs once on saves written on 2026-10-10 and 2026-10-11 and is named; they hold no term deposit, so nothing is found.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > a save this build began names the step and finds nothing: a take is tagged, and opening it, once or twice, adds no record",
+      "closes": "A save this build began names the step and finds nothing.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.open_current",
+    "testsAdded": [
+     {
+      "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: the panel that opens an account at another bank says Citi Access Checking’s $5.00 a month and how Citi waives it before Apply, and that Capital One’s 360 Checking has none",
+      "closes": "The panel says Citi Access Checking’s $5.00 a month and its waivers ($250.00 of electronic deposits, or under 24) from the product feeFor charges by, and Capital One’s none, before Apply.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+      "closes": "Capital One closes an unfunded account at 60 days; Citi’s $5 fee for an owner of 24 overdraws an empty account and the overdraft is charged off at 60 days.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch",
+    "testsAdded": [
+     {
+      "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+      "closes": "Opening Citi beside Chase leaves Chase’s accounts as they were.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+      "closes": "$100 sent Monday 5 October is in Money In Transit, in neither account, and the receiving account can’t send it on until it lands on Thursday 8 October (Chase’s three business days); landed once across a reload; breaches 0.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: Move Money with $25 typed, pressed once, moves $25 to Chase Savings, clears the field and grays Move It, so the press can’t be made again with the same amount",
+      "closes": "One press is one transfer: Move It grays once the field clears, so the same amount can’t be sent twice by a second press.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+      "closes": "A second cancel refused; a reload repeats no settlement.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "statements",
+    "testsAdded": [
+     {
+      "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+      "closes": "No statement or alert names an account after the bank closed it.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.pay_balance",
+    "testsAdded": [
+     {
+      "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing",
+      "closes": "$20,000.00 paid from $19,565.00 of checking and $435.00 of savings, the savings unlinked; the refusal names the $45,217.00 the bank can pay and the next step; a reload shows the two payments once; breaches 0.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student on a personal leave from 20 January 2027, her Chase Total Checking down to $100.00 (TEST SETUP), buys Affiliate cover, $8,950.00, from it and Chase Savings beside it",
+      "closes": "Affiliate cover’s $8,950.00 paid from $100.00 of checking and $8,850.00 of savings.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.buy_affiliate",
+    "testsAdded": [
+     {
+      "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing",
+      "closes": "$20,000.00 paid from $19,565.00 of checking and $435.00 of savings, the savings unlinked; the refusal names the $45,217.00 the bank can pay and the next step; a reload shows the two payments once; breaches 0.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student on a personal leave from 20 January 2027, her Chase Total Checking down to $100.00 (TEST SETUP), buys Affiliate cover, $8,950.00, from it and Chase Savings beside it",
+      "closes": "Affiliate cover’s $8,950.00 paid from $100.00 of checking and $8,850.00 of savings.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/home-account-setoff.test.ts",
+  "rows": [
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "Updated 2026-10-16: the set-off now takes the debt and the interest built since 1 December (89 euro cents), bounded by hand from the rate, the days and the debt.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.cancel_new",
+    "testsAdded": [
+     {
+      "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+      "closes": "Updated 2026-10-16: the set-off now takes the debt and the interest built since 1 December (89 euro cents), bounded by hand from the rate, the days and the debt.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/evidence-g13-money.test.ts",
+  "rows": [
+   {
+    "id": "bank.standing_order",
+    "testsAdded": [
+     {
+      "title": "bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it",
+      "closes": "A payment set for a date from an account the bank charged off still fails on its day and says so once, as it did.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.scheduled_payment",
+    "testsAdded": [
+     {
+      "title": "bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it",
+      "closes": "A payment set for a date from an account the bank charged off still fails on its day and says so once, as it did.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it",
+      "closes": "A payment that can’t go says so once.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/scope-money.test.ts",
+  "rows": [
+   {
+    "id": "bank.open_current",
+    "testsAdded": [
+     {
+      "title": "bank.switch > PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID, as Citi’s opening asks one, and with a passport applied for and come, with the steps to take; nothing is set, across a reload; Your Banks draws those steps, and the Switch Bank panel isn’t drawn at all",
+      "closes": "A photo ID in force before a new bank takes the student (31 CFR 1020.220).",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+      "closes": "The fee refusal, unchanged words where no overdraft interest is built.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/bank-moves.test.ts",
+  "rows": [
+   {
+    "id": "bank.open_current",
+    "testsAdded": [
+     {
+      "title": "reviews a Bank of America application for two business days, its $100 deposit waiting on the decision",
+      "closes": "Review days and the opening deposit as the bank publishes them.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.switch",
+    "testsAdded": [
+     {
+      "title": "runs no switch: there is no US switching service, and the screen gives the steps instead",
+      "closes": "No US switching service; the steps are the player’s.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "moves the primary account, then wages, then orders, then closes Chase, with nothing lost",
+      "closes": "Each step its own; the old account closes only when the player closes it.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.close_current",
+    "testsAdded": [
+     {
+      "title": "sends a deposit back where it came from when the bank turns the application down",
+      "closes": "Money sent to an account that isn’t open comes back.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "reviews a Bank of America application for two business days, its $100 deposit waiting on the decision",
+      "closes": "An opening deposit waits in transit for the decision.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/pending.test.ts",
+  "rows": [
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "is held against the available balance at once and posts in the bank’s days",
+      "closes": "A card payment is held against the available balance and posts later.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/home-account-transfers.test.ts",
+  "rows": [
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "mirrors it: Chase’s $5, SLATE’s stated margin, HSBC UK’s £5, three business days of both, the pence exact",
+      "closes": "Fees, margin, days and exact minor units on a payment abroad.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "comes back to Chase less the margin and the fee when Barclays has closed the account before it lands",
+      "closes": "A payment to a closed account comes back.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.scheduled_payment",
+    "testsAdded": [
+     {
+      "title": "comes back to Chase less the margin and the fee when Barclays has closed the account before it lands",
+      "closes": "A payment to a closed account comes back.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/home-account-ledger.test.ts",
+  "rows": [
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "empties both figures exactly when what it holds is taken out: £10,000 in, £1,000 out, the rest closed",
+      "closes": "Integer minor units and exact emptying in two currencies.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/statements.test.ts",
+  "rows": [
+   {
+    "id": "statements",
+    "testsAdded": [
+     {
+      "title": "open at the balance before them, and each carries the balance after it, to the balance now",
+      "closes": "A statement’s balances are the ledger’s, worked back from the postings.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "run a quarter in Germany, whose banks close an account each quarter",
+      "closes": "Germany’s quarterly statements.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-banking",
+  "testFile": "tests/evidence-g25-school.test.ts",
+  "rows": [
+   {
+    "id": "school.pay_balance",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice",
+      "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.buy_affiliate",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice",
+      "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-coverage",
+  "testFile": "tests/integration-savings-notice.test.ts",
+  "rows": [
+   {
+    "id": "bank.savings_notice",
+    "testsAdded": [
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: Close It pressed on 1 September 2026 gives three months’ notice; on 1 December 2026 the Flexgeld closes whole into her AktivKonto, its interest paid first, the order into it ended, said once, across a reload",
+      "closes": "Close It pressed on the Bank screen gives notice to 1 December 2026 at 9 AM (three calendar months, by hand); refused again in its words; across a reload, closed on its day, the AktivKonto up by exactly the Flexgeld’s €6,264.00 and more held the minute before plus its closing interest, nothing else of hers moved, the $10 order into it ended and no payment or Didn’t Go after, ‘Flexgeld Closed’ once in its words, no invariant breached.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > the same close, on the same day, for the same sums, whether the clock jumps from the notice to 20 December at once or a day at a time with a reload between",
+      "closes": "One jump and day-by-day steps with a reload on 30 November give the same postings on the Flexgeld, the same close and one notice.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "bank.savings_notice: a Berlin-raised student’s savings kept at Deutsche Bank, closed past the month’s €2,000 > PLAYER JOURNEY: the scraping family’s student, her Flexgeld at €64.00, presses Close It on 1 September 2026 and it closes at once into the AktivKonto, with no notice and nothing on the clock",
+      "closes": "Change the input, the savings held: under the €2,000 the month lets out, the Flexgeld closes at once, nothing scheduled, the AktivKonto up by what it held and its interest.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-billing",
+  "testFile": "tests/remaining-health-billing.test.ts",
+  "rows": [
+   {
+    "id": "health.bill",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day",
+      "closes": "The emergency's $50 bill stands with its plan part ($3,273.84 of $3,323.84), credited $50 (balance $0, Credited on Papers: \"$0.00 of $50.00 Credited\"); its line: credit $50, plan −$3,273.84, charity screened; the visit's line $183.98 with plan −$105.13, due 8 October, paid once; lines sum to each care's share now and plan part now; \"Care Billed Again\" $133.98; no refund; a second reprice changes nothing; one jump and day by day identical.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: on a personal leave without Affiliate cover, the flu at urgent care in the 25 January week (TEST SETUP) is billed $336.96 uninsured; Affiliate cover bought the next day credits all of it off the open bill, and the plan’s $192.55 is written on its line: $0 + $192.55, its price; nothing paid or refunded, across a reload",
+      "closes": "Urgent care uninsured $336.96; Affiliate bought: the bill stands (no plan part), credited $336.96; its line credit $336.96 with plan +$192.55; $0 + $192.55 = the price; nothing paid on its due day, nothing refunded, once across a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due)",
+      "closes": "The $50 credit comes off the medical debt (debt $0, bills settled), none to the bank.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day",
+      "closes": "Yale Health: Tuesday 1 September at ten at its Health Center, $0, no bill, the plan's $105.13 on the care log; Fair Haven picked: Thursday 24 September, $183.98, no plan part, paid once on 24 October; a withdrawn twin refused Yale Health in its words (access).",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day",
+      "closes": "$706.00 on 1 November and 1 December, once each; the visit Friday 27 November (Thanksgiving skipped), $45 + $60.13 = $105.13, paid once on 27 December.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day",
+      "closes": "HUSKY D and Covered Connecticut: the 27 November visit at Fair Haven, $0, no bill, the plan's $105.13 on the care log, \"Nothing to pay.\", no premium; Papers names the program.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.withdraw",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day",
+      "closes": "The emergency's $50 bill stands with its plan part ($3,273.84 of $3,323.84), credited $50 (balance $0, Credited on Papers: \"$0.00 of $50.00 Credited\"); its line: credit $50, plan −$3,273.84, charity screened; the visit's line $183.98 with plan −$105.13, due 8 October, paid once; lines sum to each care's share now and plan part now; \"Care Billed Again\" $133.98; no refund; a second reprice changes nothing; one jump and day by day identical.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: on a personal leave without Affiliate cover, the flu at urgent care in the 25 January week (TEST SETUP) is billed $336.96 uninsured; Affiliate cover bought the next day credits all of it off the open bill, and the plan’s $192.55 is written on its line: $0 + $192.55, its price; nothing paid or refunded, across a reload",
+      "closes": "Urgent care uninsured $336.96; Affiliate bought: the bill stands (no plan part), credited $336.96; its line credit $336.96 with plan +$192.55; $0 + $192.55 = the price; nothing paid on its due day, nothing refunded, once across a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due)",
+      "closes": "The $50 credit comes off the medical debt (debt $0, bills settled), none to the bank.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+      "closes": "Kept on 1 March 2027 over September 2026 to February 2027: covered by HUSKY D the hour before, at 00:30 and after (no gap); program unchanged but renewAt 1 September 2027 (six months); no premium; \"Your Public Cover Is Renewed\" once across a reload. Negative twin: the notice (months February back to September), covered to 30 April, \"Your Public Cover Ends\" on 5 April, uncovered 1 May. Boundary twin: August's work, outside, the notice.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.appointment",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day",
+      "closes": "Yale Health: Tuesday 1 September at ten at its Health Center, $0, no bill, the plan's $105.13 on the care log; Fair Haven picked: Thursday 24 September, $183.98, no plan part, paid once on 24 October; a withdrawn twin refused Yale Health in its words (access).",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day",
+      "closes": "$706.00 on 1 November and 1 December, once each; the visit Friday 27 November (Thanksgiving skipped), $45 + $60.13 = $105.13, paid once on 27 December.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day",
+      "closes": "HUSKY D and Covered Connecticut: the 27 November visit at Fair Haven, $0, no bill, the plan's $105.13 on the care log, \"Nothing to pay.\", no premium; Papers names the program.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-billing",
+  "testFile": "tests/scope-health.test.ts",
+  "rows": [
+   {
+    "id": "health.bill",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August",
+      "closes": "Updated: the issued bill keeps $3,273.84; the line carries −$3,273.84; across the two, $0.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.withdraw",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August",
+      "closes": "Updated: the issued bill keeps $3,273.84; the line carries −$3,273.84; across the two, $0.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-billing",
+  "testFile": "tests/leave.test.ts",
+  "rows": [
+   {
+    "id": "health.bill",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: asked on the third day of spring classes, begun on its decision: aid returned on the rebate schedule…",
+      "closes": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "a withdrawal by the fifteenth day of classes > cancels Yale Health back to the insurance term’s start, and care had in it is billed as uninsured, a bill of its own",
+      "closes": "“Care Billed Again” once.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.withdraw",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: asked on the third day of spring classes, begun on its decision: aid returned on the rebate schedule…",
+      "closes": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "a withdrawal by the fifteenth day of classes > cancels Yale Health back to the insurance term’s start, and care had in it is billed as uninsured, a bill of its own",
+      "closes": "“Care Billed Again” once.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-billing",
+  "testFile": "tests/remaining-health-eligibility.test.ts",
+  "rows": [
+   {
+    "id": "health.appointment",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+      "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.bill",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+      "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-eligibility",
+  "testFile": "tests/remaining-health-eligibility.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from HUSKY D by her status, is given the marketplace, not Covered Connecticut; at $2,052.00, Covered Connecticut; a citizen at $1,500.00, HUSKY D",
+      "closes": "At $1,500.00 (15,960 × 1.38 ÷ 12 = $1,835.40 > 1,500 > 15,650 ÷ 12 = $1,304.17) Enroll on Papers gives the marketplace from 1 November, not Covered Connecticut; at $2,052.00 Covered Connecticut; a citizen at $1,500.00 HUSKY D.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+      "closes": "A citizen at 127.8% of the line gets no credit (HUSKY D would take her); the F-1 student at the same income, barred by status, gets it (item 5).",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "PLAYER JOURNEY: a student born in 1960, 66, withdrawn, is given HUSKY D on 4 January 2027 with no work, as the rules ask nothing of somebody 65 or over; her twin born in 2001 is shown them short",
+      "closes": "Born 1960 (66): December 2026 meets the rules by age and Enroll gives HUSKY D with no work; her twin born 2001 is shown the work rules short.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026 and it pays in December, while she’s under its work rules: on 4 January 2027 HUSKY D is hers with no work; her twin without SNAP is shown the work rules short",
+      "closes": "SNAP applied for on Papers (first month 27 November), paid in December while she is under its work rules (out of school, no unemployment claim, 18-64): HUSKY D on 4 January with no work; the twin without SNAP shown the rules short.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload",
+      "closes": "A stay forced on 7 December; Enroll buys the marketplace; Apply For HUSKY D sends the notice; Request A Hardship Exception (drawn only with a stay in a month assessed) approves HUSKY D from 1 February, the marketplace ends as it begins and its premium is never taken; the decision of 8 February passes it by; one approval across a reload; a second request refused \"No notice of noncompliance waits on an answer.\"",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "GUARD: under 19 for any of a month meets the rules; no life at Yale is under 21, so a birth set by hand reaches it (FIXTURE)",
+      "closes": "Under 19 for any of a month meets the rules; 19 for all of it doesn't. Unreachable in play (Yale's minimum age 21).",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+      "closes": "Asked with no stay, the hardship is refused in its words: \"No month it assessed, December 2026, had a stay in hospital, the hardship SLATE keeps.\"",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+      "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "GUARD: an ending said late in a month waits ten days into the next and ends with that one; no played renewal is decided later than the sixth of a month, so the ten days never cross a month there",
+      "closes": "The ten days' advance notice crosses into the next month only when said after the 20th; no played renewal is decided later than the 6th.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+      "closes": "$365,000 at 3.00% for December's 31 days = $930.00 of interest: HUSKY D on 4 January 2027 with no work; $182,500 = $465.00: the work rules short.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+      "closes": "Apply For HUSKY D on 4 January 2027: \"A Notice Of Noncompliance\" (months, how, deadline 7 February, consequences incl. the credit, how to reapply), pending, uncovered; a second press refused; decided 8 February 00:00: \"Public Cover Denied\", once; one jump and day by day with a reload identical; she may apply again (decided 16 March).",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+      "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "GUARD: an ending said late in a month waits ten days into the next and ends with that one; no played renewal is decided later than the sixth of a month, so the ten days never cross a month there",
+      "closes": "The ten days' advance notice crosses into the next month only when said after the 20th; no played renewal is decided later than the 6th.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance",
+      "closes": "80 hours in June 2027 (TEST SETUP) renew her on 1 November 2027 to 1 May 2028, said once; the same work in April, outside May to October, brings the notice (months October back to May listed).",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+      "closes": "$365,000 at 3.00% for December's 31 days = $930.00 of interest: HUSKY D on 4 January 2027 with no work; $182,500 = $465.00: the work rules short.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+      "closes": "$20,000 of income (127.8% of 2025's $15,650), two $706.00 premiums: 2 × (706.00 − 0.021 × 20,000 ÷ 12) = $1,342.00 on her 2026 1040-NR; $0 on her 2027 1040-NR; $0 for a citizen in 2026 (HUSKY D would take her).",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-eligibility",
+  "testFile": "tests/defects4.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+      "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+      "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-eligibility",
+  "testFile": "tests/need-paths.test.ts",
+  "rows": [
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+      "closes": "A Covered Connecticut member moving into HUSKY D is kept on Covered Connecticut through the window, and it ends with December, said on 6 December.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+      "closes": "A Covered Connecticut member moving into HUSKY D is kept on Covered Connecticut through the window, and it ends with December, said on 6 December.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-eligibility",
+  "testFile": "tests/defects-g8-4.test.ts",
+  "rows": [
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t",
+      "closes": "May's 80 hours renew a 1 July renewal; July's, its own month, don't.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance",
+      "closes": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance",
+      "closes": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-health-eligibility",
+  "testFile": "tests/remaining-health-billing.test.ts",
+  "rows": [
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+      "closes": "A March 2027 renewal reads September 2026 to February 2027; August's work, outside, doesn't count.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-school",
+  "testFile": "tests/remaining-school.test.ts",
+  "rows": [
+   {
+    "id": "school.request_repeat",
+    "testsAdded": [
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: Incompletes extended past a medical leave’s start run out on 9 February 2027 during it, each Permanent Incomplete’s notice offers the year’s end, once through a reload, and back in Spring Term 2028 the year’s end grants the repeat for them",
+      "closes": "The branch is reached by play: rr-lv1 (Scraping) has Acting I called in sick eleven times (TEST SETUP: the flu), four Incompletes due 10 January 2027 at five, a two-term medical leave from Spring Term 2027 asked 14 December, each Incomplete extended to 9 February 2027 at five; on that day, on the leave, each becomes Permanent and its notice offers the year’s end (count by hand 1 + 2 + 4 + 1 = 8 ≤ 9), once through a reload; back for Spring Term 2028, RepeatPanel draws Ask To Repeat The Year…, the request is decided Friday 5 May 2028 at six and granted for exactly those four courses, offset 4, repeatedYears [1].",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: the Bulletin lets a student on leave complete work whose deadline was extended (2026–27 p.158): a twin makes Acting I’s session up on the leave, and it passes, with no Permanent Incomplete for it and nothing left on the calendar",
+      "closes": "SLATE matches the Bulletin’s p.158 item 5: an extended Incomplete is made up on the leave (school.make_up on 20 January 2027), passes, its deadline items called off, no Permanent notice.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > GUARD: on a three-term leave, which the Bulletin allows (2026–27 p.158) and `leaveLengths` refuses while every year has year-long courses (TEST SETUP: the granted leave’s length set to three before it begins), the Permanent Incomplete offers the year’s end, counted 8 as the year’s end will count it; without the leave branch the count is 10",
+      "closes": "Where the branch decides: on a three-term leave it counts 8 and offers the year’s end; the other path counts 10 and doesn’t.",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "school.s6.dead-ends: … > PLAYER JOURNEY: a second fall’s Fail after the first year’s repeat can’t be repeated for, and its notice names the additional term instead; at the last spring’s end the Standing tab offers it, Ask For An Additional Term is pressed, and it’s granted, counted nine semesters (until 2026-10-16 the notice said only that the degree needs every course passed)",
+      "closes": "sc-x3: the notice names the additional term; at the evaluation of 26 April 2030 the Standing tab draws Ask For An Additional Term (no repeat), pressed, granted for Fall Term 2030; eight enrolled and the term make nine.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "… PLAYER JOURNEY: the degree withheld says so and what still stands, each clause true of the record: …",
+      "closes": "Each clause checked: passes kept, credits on the Profile, owed hours 0, practice.exercise taken after.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "… PLAYER JOURNEY: a dismissal says so and what still stands, and the practice it names is taken: sc-dq, …",
+      "closes": "The same for a dismissal.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_leave",
+    "testsAdded": [
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: Incompletes extended past a medical leave’s start run out on 9 February 2027 during it, each Permanent Incomplete’s notice offers the year’s end, once through a reload, and back in Spring Term 2028 the year’s end grants the repeat for them",
+      "closes": "The branch is reached by play: rr-lv1 (Scraping) has Acting I called in sick eleven times (TEST SETUP: the flu), four Incompletes due 10 January 2027 at five, a two-term medical leave from Spring Term 2027 asked 14 December, each Incomplete extended to 9 February 2027 at five; on that day, on the leave, each becomes Permanent and its notice offers the year’s end (count by hand 1 + 2 + 4 + 1 = 8 ≤ 9), once through a reload; back for Spring Term 2028, RepeatPanel draws Ask To Repeat The Year…, the request is decided Friday 5 May 2028 at six and granted for exactly those four courses, offset 4, repeatedYears [1].",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > PLAYER JOURNEY: the Bulletin lets a student on leave complete work whose deadline was extended (2026–27 p.158): a twin makes Acting I’s session up on the leave, and it passes, with no Permanent Incomplete for it and nothing left on the calendar",
+      "closes": "SLATE matches the Bulletin’s p.158 item 5: an extended Incomplete is made up on the leave (school.make_up on 20 January 2027), passes, its deadline items called off, no Permanent notice.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "school.repeat-room-leave: `repeatRoom`’s leave branch > GUARD: on a three-term leave, which the Bulletin allows (2026–27 p.158) and `leaveLengths` refuses while every year has year-long courses (TEST SETUP: the granted leave’s length set to three before it begins), the Permanent Incomplete offers the year’s end, counted 8 as the year’s end will count it; without the leave branch the count is 10",
+      "closes": "Where the branch decides: on a three-term leave it counts 8 and offers the year’s end; the other path counts 10 and doesn’t.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.cancel_leave",
+    "testsAdded": [
+     {
+      "title": "school.d-appeal-before-begun: a dean’s leave granted from the next term > DEFECT: its panel draws Appeal To The Dean and no Call Off The Leave…, the cancel is refused in words that name the appeal, and the appeal, the student cleared, overturns it before it begins: Spring Term 2027 begins and enrolls her, once through a reload (until 2026-10-16 the cancel was taken and the appeal turned down “The term it began in is over.”)",
+      "closes": "Appeal To The Dean pressed on the drawn panel; decided Monday 21 December at noon (five Yale working days); overturned: leave rescinded, offset 0, Spring Term 2027 begun and enrolled [0, 1]; ‘Your Leave Is Overturned’ once; no ‘Your Leave Has Begun’.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "… PLAYER JOURNEY: appealed and down with the flu at its decision (TEST SETUP), the appeal is turned down in the clearance’s words, and the leave begins with Spring Term 2027",
+      "closes": "The clearance still decides it.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.appeal_leave",
+    "testsAdded": [
+     {
+      "title": "school.d-appeal-before-begun: a dean’s leave granted from the next term > DEFECT: its panel draws Appeal To The Dean and no Call Off The Leave…, the cancel is refused in words that name the appeal, and the appeal, the student cleared, overturns it before it begins: Spring Term 2027 begins and enrolls her, once through a reload (until 2026-10-16 the cancel was taken and the appeal turned down “The term it began in is over.”)",
+      "closes": "Appeal To The Dean pressed on the drawn panel; decided Monday 21 December at noon (five Yale working days); overturned: leave rescinded, offset 0, Spring Term 2027 begun and enrolled [0, 1]; ‘Your Leave Is Overturned’ once; no ‘Your Leave Has Begun’.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "… PLAYER JOURNEY: appealed and down with the flu at its decision (TEST SETUP), the appeal is turned down in the clearance’s words, and the leave begins with Spring Term 2027",
+      "closes": "The clearance still decides it.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "credits",
+    "testsAdded": [
+     {
+      "title": "school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads > PLAYER JOURNEY (A): from creation through Incompletes, a medical leave, the year repeated, the aid office and a conversion to the degree at Commencement 2031, what each boundary settled stands at every later one, and reloaded at every boundary the life is its twin’s played straight, every notice once",
+      "closes": "rr-lv1 (Scraping), 38 boundaries: every settled course record, review, credit, conversion, leave and repeat unchanged at every later boundary but by rule (an Incomplete to a pass or a Permanent Incomplete); the reloaded twin equal to the straight one at every boundary and at the end in the course record, reviews, credits, work-study, conversions, enrolled terms, leaves, repeat, aid review, hold, the coursework (pieces, moments, notes, warnings), the classmates, the ledger and the notices (all but the tax system’s); eight living scholarships for eight terms enrolled; $138.00 converted once (six hours at $23.00); the aid office’s exception, nothing owed; the degree at Commencement 2031 once; each term’s beginning told once.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "school.continuity: … > PLAYER JOURNEY (B): from creation through a third year’s Fail, the last spring’s thirty days, an additional term and its retake failed, to the degree withheld, what each boundary settled stands, and reloaded at every boundary the life is its twin’s, every notice once",
+      "closes": "g26-l3: both attempts of Movement Invention III kept against program term 4; withheld once, no Commencement, nothing left on the calendar; twins equal.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.commencement",
+    "testsAdded": [
+     {
+      "title": "school.continuity: earned results across leave, return, a repeat, an additional term, the degree and reloads > PLAYER JOURNEY (A): from creation through Incompletes, a medical leave, the year repeated, the aid office and a conversion to the degree at Commencement 2031, what each boundary settled stands at every later one, and reloaded at every boundary the life is its twin’s played straight, every notice once",
+      "closes": "rr-lv1 (Scraping), 38 boundaries: every settled course record, review, credit, conversion, leave and repeat unchanged at every later boundary but by rule (an Incomplete to a pass or a Permanent Incomplete); the reloaded twin equal to the straight one at every boundary and at the end in the course record, reviews, credits, work-study, conversions, enrolled terms, leaves, repeat, aid review, hold, the coursework (pieces, moments, notes, warnings), the classmates, the ledger and the notices (all but the tax system’s); eight living scholarships for eight terms enrolled; $138.00 converted once (six hours at $23.00); the aid office’s exception, nothing owed; the degree at Commencement 2031 once; each term’s beginning told once.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "school.continuity: … > PLAYER JOURNEY (B): from creation through a third year’s Fail, the last spring’s thirty days, an additional term and its retake failed, to the degree withheld, what each boundary settled stands, and reloaded at every boundary the life is its twin’s, every notice once",
+      "closes": "g26-l3: both attempts of Movement Invention III kept against program term 4; withheld once, no Commencement, nothing left on the calendar; twins equal.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_extra_term",
+    "testsAdded": [
+     {
+      "title": "school.s6.dead-ends: … > PLAYER JOURNEY: a second fall’s Fail after the first year’s repeat can’t be repeated for, and its notice names the additional term instead; at the last spring’s end the Standing tab offers it, Ask For An Additional Term is pressed, and it’s granted, counted nine semesters (until 2026-10-16 the notice said only that the degree needs every course passed)",
+      "closes": "sc-x3: the notice names the additional term; at the evaluation of 26 April 2030 the Standing tab draws Ask For An Additional Term (no repeat), pressed, granted for Fall Term 2030; eight enrolled and the term make nine.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "… PLAYER JOURNEY: the degree withheld says so and what still stands, each clause true of the record: …",
+      "closes": "Each clause checked: passes kept, credits on the Profile, owed hours 0, practice.exercise taken after.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "… PLAYER JOURNEY: a dismissal says so and what still stands, and the practice it names is taken: sc-dq, …",
+      "closes": "The same for a dismissal.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.reregister",
+    "testsAdded": [
+     {
+      "title": "school.d-not-registered-hold: a term begun under a financial hold > DEFECT: the Not Registered notice names the hold, the sum owed and where to pay it, and once it’s paid and registered the classes count her again (until 2026-10-16 it said “Register on the School screen”, which the hold refused, every class day)",
+      "closes": "$49,944.30 owed (two terms past six at $24,784.65, worked in scope-school from the Bulletin’s figures, and the first’s late fees to their $375 cap) named in the notice; paid and registered, the next class counts.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-school",
+  "testFile": "tests/remaining-school-term.test.ts",
+  "rows": [
+   {
+    "id": "standing/term evaluation",
+    "testsAdded": [
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: two pieces missed unexcused, a revision missed and the pieces after shown: A Word On Your Coursework comes once, at the sixth piece due, with the counts the term’s own pieces give; at five the share was over the mark already",
+      "closes": "mt-1: The Body As Source I and Voice I missed asleep, Acting I’s revision missed; the warning at nine on the day the count reaches six, its counts worked by `countedAt` from the pieces in the order the day’s courses meet, not from termTally; at five pieces the Unready share already passed 0.35.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; the piece called in sick for moves to its course’s next meeting and isn’t counted on the day it left; the one due at its course’s last meeting is excused and never counted",
+      "closes": "Not Shown twice, Not Shown Again once, Excused once; the excused cases count as the rule says.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: the faculty’s review on 11 December counts the misses as due and Unready, as the warning did; its record and the Evaluations table say the term’s count, and its words say it where the mark is reached",
+      "closes": "history[0].coursework equals the count worked from the pieces (the misses among the due and the Unready); the review’s words follow the mark from the same count.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review, the term is its twin’s played straight: the same pieces, bands and statuses, the same notices once each, the same review",
+      "closes": "Twins equal; the warning once.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "the missed-work term, on the screen > DEFECT: after the first miss, every Shown Today line is an open piece’s, the missed one is in Work Shown as Not Shown, and the Standing tab’s Coursework This Term says the term’s count (until 2026-10-16 no tile said it)",
+      "closes": "Shown Today lines only on open pieces; the miss in Work Shown; the tile’s count worked from the pieces.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "the missed-work term, on the screen > DEFECT: a revision missed reads Not Shown Again in Work Shown, where until 2026-10-16 the piece stood at its first band with nothing said",
+      "closes": "The missed revision is said.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.evaluation",
+    "testsAdded": [
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: two pieces missed unexcused, a revision missed and the pieces after shown: A Word On Your Coursework comes once, at the sixth piece due, with the counts the term’s own pieces give; at five the share was over the mark already",
+      "closes": "mt-1: The Body As Source I and Voice I missed asleep, Acting I’s revision missed; the warning at nine on the day the count reaches six, its counts worked by `countedAt` from the pieces in the order the day’s courses meet, not from termTally; at five pieces the Unready share already passed 0.35.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; the piece called in sick for moves to its course’s next meeting and isn’t counted on the day it left; the one due at its course’s last meeting is excused and never counted",
+      "closes": "Not Shown twice, Not Shown Again once, Excused once; the excused cases count as the rule says.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: the faculty’s review on 11 December counts the misses as due and Unready, as the warning did; its record and the Evaluations table say the term’s count, and its words say it where the mark is reached",
+      "closes": "history[0].coursework equals the count worked from the pieces (the misses among the due and the Unready); the review’s words follow the mark from the same count.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review, the term is its twin’s played straight: the same pieces, bands and statuses, the same notices once each, the same review",
+      "closes": "Twins equal; the warning once.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_repeat",
+    "testsAdded": [
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; …",
+      "closes": "The Not Shown notice’s words and the course’s count.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_extra_term",
+    "testsAdded": [
+     {
+      "title": "the missed-work term, played > PLAYER JOURNEY: each miss is told once, in words that say how it counts; …",
+      "closes": "The Not Shown notice’s words and the course’s count.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/remaining-tax.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the due date; CP501, CP503, CP504 and the LT11 35 days apart from it, $1,728.81 to $1,789.55, and the levy 30 days on, each once across reloads; Connecticut’s bill 30 days after its due date: until 2026-10-16 CP501 came on 7 March and CP503 on 11 April, with no bill",
+      "closes": "the CP14 at filing in its words (due date, $1,700.39), nothing else from the IRS or Connecticut to a minute before the due date across a reload on 8 March, CP501 to LT11 at the due date + 35/70/105/140 days with $1,728.81/$1,748.92/$1,769.17/$1,789.55 worked by hand from IRC 6622 and 6651(a)(2), the levy at +170 with $1,808.35 still owed, Connecticut's bill at its due date + 30 ($649.71), one CP14 after reloads, ledger balanced",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "the same letters, on the same days, for the same sums, whether the clock jumps from filing to past the levy at once or a day at a time",
+      "closes": "one jump and day-by-day steps give the same five letters, days and $1,808.35",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "a return filed after its due date unpaid has its bill with the penalties charged, and its first reminder 35 days after filing",
+      "closes": "filed 15 days late: CP14 $1,790.51 (5% for filing and paying late, $85.02; $5.10 interest on the tax and the filing share) with the penalties clause, CP501 35 days after filing",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "tax.early_filing_notices: a plan refused, and a save from before > PLAYER JOURNEY: the IRS’s plan asked for on 1 February 2028 without direct debit and refused a minute on for its $43 fee, $50 having gone to the tax: its letters wait for the 18 April due date, CP501 35 days after it, and none before it; until 2026-10-16 CP501 came on 7 March",
+      "closes": "a plan refused before the due date (its $43 fee unpayable at the decision) leaves the first reminder at the due date + 35 days and no letter before the due date",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "tax.early_filing_notices: a plan refused, and a save from before > OLDER SAVE: a save written before 2026-10-16 holding CP501 for 7 March, before the 18 April due date, has it moved to 35 days after the due date on opening, once, across two openings",
+      "closes": "OLDER SAVE: a letter a save holds before its earliest day is moved on opening to the due date + 35 days, once across two openings, and comes then",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the due date; CP501, CP503, CP504 and the LT11 35 days apart from it, $1,728.81 to $1,789.55, and the levy 30 days on, each once across reloads; Connecticut’s bill 30 days after its due date: until 2026-10-16 CP501 came on 7 March and CP503 on 11 April, with no bill",
+      "closes": "the CP14 at filing in its words (due date, $1,700.39), nothing else from the IRS or Connecticut to a minute before the due date across a reload on 8 March, CP501 to LT11 at the due date + 35/70/105/140 days with $1,728.81/$1,748.92/$1,769.17/$1,789.55 worked by hand from IRC 6622 and 6651(a)(2), the levy at +170 with $1,808.35 still owed, Connecticut's bill at its due date + 30 ($649.71), one CP14 after reloads, ledger balanced",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "the same letters, on the same days, for the same sums, whether the clock jumps from filing to past the levy at once or a day at a time",
+      "closes": "one jump and day-by-day steps give the same five letters, days and $1,808.35",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "a return filed after its due date unpaid has its bill with the penalties charged, and its first reminder 35 days after filing",
+      "closes": "filed 15 days late: CP14 $1,790.51 (5% for filing and paying late, $85.02; $5.10 interest on the tax and the filing share) with the penalties clause, CP501 35 days after filing",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "tax.early_filing_notices: a plan refused, and a save from before > PLAYER JOURNEY: the IRS’s plan asked for on 1 February 2028 without direct debit and refused a minute on for its $43 fee, $50 having gone to the tax: its letters wait for the 18 April due date, CP501 35 days after it, and none before it; until 2026-10-16 CP501 came on 7 March",
+      "closes": "a plan refused before the due date (its $43 fee unpayable at the decision) leaves the first reminder at the due date + 35 days and no letter before the due date",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "tax.early_filing_notices: a plan refused, and a save from before > OLDER SAVE: a save written before 2026-10-16 holding CP501 for 7 March, before the 18 April due date, has it moved to 35 days after the due date on opening, once, across two openings",
+      "closes": "OLDER SAVE: a letter a save holds before its earliest day is moved on opening to the due date + 35 days, once across two openings, and comes then",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.lien_dispute",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Filed In Error and says why in the engine’s words, Ask For Its Release beside it; the command sent anyway is refused and moves nothing",
+      "closes": "a played Connecticut lien: no tax.lien_dispute button drawn, the engine's sentence ('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.') on the panel, no 'Filed in error' promise, Ask For Its Release drawn shut with its reason; GUARD: the command refused, nothing moved",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "FIXTURE: a Connecticut lien on DRS’s assessment that her own return, in its place, showed she didn’t owe: the button drawn and pressed, Asked To Be Withdrawn and decided 30 days on, Withdrawn with one notice across a reload, and not asked twice",
+      "closes": "a Connecticut lien in error (FIXTURE): the button and the 'withdrawn on request' line drawn, pressed, disputed with its 30 days (SLATE's), withdrawn on the day with one notice across a reload, refused after",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.amend",
+    "testsAdded": [
+     {
+      "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027: the 1040-X’s tax added on 9 September with the IRS’s interest from the 15 April due date, Connecticut’s with its 10% and 1% for each month begun, the IRS’s letters from then, once across a reload",
+      "closes": "more tax: the IRS's interest from the due date worked from IRC 6622 (2027's 365 days) on the 1040-X's change, owed = change + interest; Connecticut's added with 10% and five months of 1% (12-735); letters from the processing day; once across a reload",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended: Connecticut’s part, paid at filing, comes back to her as its refund, and the IRS’s with its interest from the due date",
+      "closes": "less tax: Connecticut's part posted back to her as 'Connecticut tax refund, amended 2026 return'; the IRS's refunded with its interest from the due date, by hand",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force: no CP523, the plan kept at its payment, its history saying what joined",
+      "closes": "new tax of two payments or less joins the plan: active, the same monthly, 'New tax joined the plan' with the amount worked by hand, no CP523",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.catch_up_state_plan",
+    "testsAdded": [
+     {
+      "title": "FIXTURE: its payment missed, Catch Up drawn on Papers and pressed: the plan in force past the day it would have ended, its next payment taken, across a reload; its twin left behind ends that day",
+      "closes": "New York's plan missed, Catch Up drawn on Papers and pressed ('Caught up: $382.46 paid…' in its own words), active past endsBy with no ending notice, the next payment taken 30 days on, across a reload; GUARD: caught up twice refused, nothing moved; its uncaught twin ends on endsBy, 'Ended: not caught up', one notice",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.federal_lien_withdraw",
+    "testsAdded": [
+     {
+      "title": "tax.federal_lien_withdraw (FIXTURE: a New York quick-save owing over $10,000) > FIXTURE: the IRS’s own return assessed for a year never filed, its lien filed at the LT11; her own return in its place shows the withholding paid it all: Ask For Its Release As Erroneous is drawn and pressed at once, released as erroneous 14 days on, across a reload, and not asked twice",
+      "closes": "a substitute assessed on $150,000 of wages (FIXTURE), its lien filed at the LT11; her own return, the withholding set by hand, owes nothing: the button reads Ask For Its Release As Erroneous and is enabled at once, pressed, decided in 14 days, withdrawn with its notice ', as filed in error', across a reload, not turned back by the release after payment; GUARDs: asked twice refused; the IRS's own return not amended",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.request_waiver",
+    "testsAdded": [
+     {
+      "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: her own 2001 return filed before any notice, paid at filing: 70% of the three-year penalty waived and refunded to her, $525 of $750",
+      "closes": "70% before any notice: $525 of $750 (the 100% held to the year's tax less its 25% of late penalties), refunded to her; GUARD: decided once",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: its Demand To File sent, then her own return, unpaid: 50% waived off the penalty owed, $375 of $750",
+      "closes": "50% after a Demand To File: $375 off the penalty owed",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: assessed, $990 paid toward its $1,000 of penalties, then 25% of the $500 three-year penalty waived: $10 off what’s still owed of it and the $115 already paid credited to the interest; until 2026-10-16 the $115 was dropped",
+      "closes": "reproduced and fixed: $990 paid to the penalty first, 25% ($125) waived: $10 off the penalty, $115 credited to the interest as a refund offset, owed down $125, its notice saying so; failed before the fix (owed down $10)",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/scope-taxpapers.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+      "closes": "a plan ended before the due date: its LT11 at the due date + 35 days (assertion corrected 2026-10-16: it was the plan's end + 35)",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
+      "closes": "renamed and corrected with the fix; the audit's citation in papers.json moved with it",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+      "closes": "a plan ended before the due date: its LT11 at the due date + 35 days (assertion corrected 2026-10-16: it was the plan's end + 35)",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
+      "closes": "renamed and corrected with the fix; the audit's citation in papers.json moved with it",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.lien_dispute",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June, three months begun, $661.41 owed: $100 goes to the $58.53 penalty, the $17.55 interest and $23.92 of tax; more than is owed refused; the rest paid on Papers; the levy pending for 17 July taken off the calendar; the lien’s release asked once and given on 25 July, and no levy, across a reload",
+      "closes": "assertion corrected 2026-10-16: no dispute button drawn, the engine's sentence on screen",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/evidence-g17-papers.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it",
+      "closes": "its return now filed at noon on the due day, where days after filing and after the due date are the same day; letters asserted at the due date + 35n exactly; Papers' payment date October 2, 2027",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it",
+      "closes": "its return now filed at noon on the due day, where days after filing and after the due date are the same day; letters asserted at the due date + 35n exactly; Papers' payment date October 2, 2027",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/evidence-g33-ui.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "with nothing in the bank, File It on Home leaves $165.60 owed and collection begins: the IRS’s first reminder five weeks on",
+      "closes": "File It on Home: the CP14 at filing and the first reminder at the due date + 35 days, none before, one bill across a reload",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "with nothing in the bank, File It on Home leaves $165.60 owed and collection begins: the IRS’s first reminder five weeks on",
+      "closes": "File It on Home: the CP14 at filing and the first reminder at the due date + 35 days, none before, one bill across a reload",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/evidence2-b12.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed, 0.5% for five months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172",
+      "closes": "renamed: the stored balance now brought up at the letters from the due date; the day moved to where live and stored still differ; ui.json's citation moved with it",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed, 0.5% for five months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172",
+      "closes": "renamed: the stored balance now brought up at the letters from the due date; the day moved to where live and stored still differ; ui.json's citation moved with it",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/retirement.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "is collected: four notices five weeks apart, the final one’s 30 days, then a levy on the bank accounts",
+      "closes": "counted from the due date (its `filed` reads the later of filing and the due date)",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "is collected: four notices five weeks apart, the final one’s 30 days, then a levy on the bank accounts",
+      "closes": "counted from the due date (its `filed` reads the later of filing and the due date)",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/liens-and-arrangements.test.ts",
+  "rows": [
+   {
+    "id": "tax.notice",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277",
+      "closes": "the LT11 reached from the due date",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277",
+      "closes": "the LT11 reached from the due date",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/remaining-papers.test.ts",
+  "rows": [
+   {
+    "id": "documents.apply_passport",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dollars; no Renew It Faster, the Fast Track not sold abroad, and the command refused; issued in 21 days, the old one canceled on the new one’s day, once across a reload; until 2026-10-16 £102 and Fast Track offered",
+      "closes": "£116.50 from abroad in dollars on screen and charged; Faster Not Offered with its reason; no Renew It Faster drawn and the command refused; issued in 21 days, the old one canceled then, one notice across a reload; the old passport serves meanwhile; the F-1 holds",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "PLAYER JOURNEY: a New York-born student renews her US passport by mail for $130 on Form DS-82; reported lost, the next is a first passport’s $165 on Form DS-11; until 2026-10-16 both $165",
+      "closes": "DS-82 renewal $130 shown and charged ('U.S. Passport Book, renewed on Form DS-82'); after the new one is reported lost, Apply For One at $165",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.apply_idcard",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID",
+      "closes": "passport lost: the button shut with the DMV's reason, the command refused, $0 taken; a new passport from abroad; the card asked for, pending, issued after SAVE's days, realId false, its page 'It’s marked Not For Federal Identification: it isn’t REAL ID.', across a reload",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "GUARD: an Employment Authorization Document in force stands as the primary document without a passport (FIXTURE: an OPT permit put on by hand: no play brings OPT and a lost passport together before 2029)",
+      "closes": "an EAD in force stands as the primary document",
+      "evidenceKind": "fixture"
+     },
+     {
+      "title": "OLDER SAVE: a non-citizen’s card a save from before 2026-10-16 marked REAL ID is put right on opening, once, and its page says Not For Federal Identification",
+      "closes": "a card a save from before marked REAL ID is corrected on opening, once",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/documents.test.ts",
+  "rows": [
+   {
+    "id": "documents.apply_passport",
+    "testsAdded": [
+     {
+      "title": "is applied for at the office’s fee and issued in its days, expedited faster for more; the new one cancels the old and what was issued on it",
+      "closes": "corrected: the renewal expedited $190 ($130 + $60)",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "runs five years for a Spaniard under thirty, as Spain issues it",
+      "closes": "corrected: from New York at the consulate, about three weeks",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ },
+ {
+  "key": "remaining-tax",
+  "testFile": "tests/evidence-g16-papers.test.ts",
+  "rows": [
+   {
+    "id": "documents.apply_idcard",
+    "testsAdded": [
+     {
+      "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+      "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
+ }
+]

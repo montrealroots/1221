@@ -25,7 +25,7 @@ import type { Dimension, DimensionSpec, TaskProfile } from '../content/tasks';
 import type { AbilityId } from '../content/abilities';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
-import { judge, leanedWeights, performerOf, type DimensionResult, type EvalContext, type Evaluation, type Limit, type Performer } from './evaluation';
+import { judgeExact, leanedWeights, performerOf, rounded, type DimensionResult, type EvalContext, type Evaluation, type Limit, type Performer } from './evaluation';
 
 /** One segment: what it's called on screen, its tones, its share of the piece, and whether a turn leads into it or it's held two ways. */
 export interface SegmentSpec { label: string; tones: readonly Tone[]; weight: number; turnInto: boolean; blend: boolean }
@@ -284,14 +284,17 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       ...ctx, task, inputs: mergeInputs(inputs, noStamina(own?.inputs)), lean: segmentLean(baseLean, seg.tones, own), prep, required, key: `${ctx.key}:${s}`,
       ...(extraPrep ? { extraPrep } : {}), ...(fit ? { fit } : {}), ...(drain ? { drain } : {}), ...(shaken ? { shaken } : {}),
     };
-    const e = judge(seed, performer, c);
-    const expected = ctx.expected ? e.overall : judge(seed, performer, { ...c, expected: true }).overall;
+    // Each segment at full precision (from 2026-10-16, evaluation-9): the piece's whole is worked out from the segments'
+    // exact wholes and rounded once, and what a segment shows is its own figures rounded once.
+    const e = judgeExact(seed, performer, c);
+    const expected = ctx.expected ? e.overall : judgeExact(seed, performer, { ...c, expected: true }).overall;
     const slip = expected - e.overall >= PIECE.slipAt ? r1(expected - e.overall) : undefined;
     results.push(e);
+    const shown = rounded(e);
     segments.push({
-      label: seg.label, tones: seg.tones, overall: e.overall, expected, dims: Object.fromEntries(e.dimensions.map((d) => [d.dimension, d.quality])),
+      label: seg.label, tones: seg.tones, overall: shown.overall, expected: r1(expected), dims: Object.fromEntries(shown.dimensions.map((d) => [d.dimension, d.quality])),
       part: prep[spec.part] ?? 1, required: required[spec.part] ?? 1, drain: r1(f * 1000) / 1000,
-      ...(slip ? { slip } : {}), ...(shaken ? { shaken: Math.round(shaken.f * 1000) / 1000 } : {}), ...(e.limits[0] ? { chief: e.limits[0], top: e.limits.slice(0, 3) } : {}),
+      ...(slip ? { slip } : {}), ...(shaken ? { shaken: Math.round(shaken.f * 1000) / 1000 } : {}), ...(shown.limits[0] ? { chief: shown.limits[0], top: shown.limits.slice(0, 3) } : {}),
     });
     // What a slip carries into the next segment, less as composure and adaptability recover it.
     shaken = slip ? { f: 1 - PIECE.rattle * (slip / 100) * (1 - recover), label: `Shaken By A Slip In ${seg.label}` } : undefined;
@@ -310,18 +313,19 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
         else merged.set(k, { ...l, by: l.by * w(s), whole: (l.whole ?? 0) * w(s) });
       }
     });
-    const limits = [...merged.values()].map((l) => ({ ...l, by: r1(l.by), whole: r1(l.whole ?? 0) })).filter((l) => l.by > 0).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
+    const limits = [...merged.values()].filter((l) => l.by > 0).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by);
     const mean = (pick: (x: DimensionResult) => number) => at.reduce((s, x, i) => s + pick(x) * w(i), 0);
     const fits = at.map((x) => x.fit).filter((x): x is number => x !== undefined);
     // The way it's played against the scene (from 2026-10-16): each segment's points, by its weight.
     const grains = at.map((x, i) => ({ g: x.grain, w: w(i) })).filter((x) => x.g);
     return {
-      dimension: d0.dimension, label: d0.label, quality: r1(mean((x) => x.quality)), capacity: mean((x) => x.capacity), prepared: mean((x) => x.prepared), condition: mean((x) => x.condition), day: mean((x) => x.day),
-      ...(fits.length ? { fit: Math.min(...fits) } : {}), ...(grains.length ? { grain: { d: grains[0]!.g!.d, label: grains[0]!.g!.label, points: r1(grains.reduce((t, x) => t + x.g!.points * x.w, 0)) } } : {}), variation: mean((x) => x.variation), ...(d0.strongest ? { strongest: d0.strongest } : {}), limits,
+      dimension: d0.dimension, label: d0.label, quality: mean((x) => x.quality), capacity: mean((x) => x.capacity), prepared: mean((x) => x.prepared), condition: mean((x) => x.condition), day: mean((x) => x.day),
+      ...(fits.length ? { fit: Math.min(...fits) } : {}), ...(grains.length ? { grain: { d: grains[0]!.g!.d, label: grains[0]!.g!.label, points: grains.reduce((t, x) => t + x.g!.points * x.w, 0) } } : {}), variation: mean((x) => x.variation), ...(d0.strongest ? { strongest: d0.strongest } : {}), limits,
     };
   });
-  const overall = r1(results.reduce((s, r, i) => s + r.overall * w(i), 0));
-  const held = segments.map((x) => ((x.dims.believability ?? x.overall) + (x.dims.interpretation ?? x.overall)) / 2);
+  const overall = results.reduce((s, r, i) => s + r.overall * w(i), 0);
+  const exactDim = (r: Evaluation, d: Dimension) => r.dimensions.find((x) => x.dimension === d)?.quality ?? r.overall;
+  const held = results.map((r) => (exactDim(r, 'believability') + exactDim(r, 'interpretation')) / 2);
   const continuity = r1(100 - (Math.max(...held) - Math.min(...held)));
   // The levels every segment read, and the three the piece itself reads: stamina, composure and adaptability.
   const abilities: Partial<Record<AbilityId, number>> = Object.assign({}, ...results.map((r) => r.inputs.abilities));
@@ -331,8 +335,8 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   // The piece's own reads, not segment 0's: replaying applies each segment's tones and its own way again.
   const { lean: _lean, inputs: _inputs, extraPrep: _extra, fit: _fit, grain: _grain, ...rest } = first.inputs;
   void _lean; void _inputs; void _extra; void _fit; void _grain;
-  return {
-    ruleset: first.ruleset, task: ctx.task.id, taskLabel: ctx.task.label, dimensions, overall, mastery: results.every((r) => r.mastery),
+  return rounded({
+    ruleset: first.ruleset, task: ctx.task.id, taskLabel: ctx.task.label, dimensions, overall, exact: overall, mastery: results.every((r) => r.mastery),
     limits: dimensions.flatMap((d) => d.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
     inputs: {
       ...rest, abilities, fulls, levels: Object.assign({}, ...results.map((r) => r.inputs.levels ?? {})), prep: { ...ctx.prep }, required: { ...ctx.required }, key: ctx.key,
@@ -340,5 +344,5 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       piece: spec,
     },
     piece: { segments, continuity, lowest: Math.min(...segments.map((x) => x.overall)) },
-  };
+  });
 }

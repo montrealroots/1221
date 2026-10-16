@@ -146,8 +146,9 @@ describe('the IRS’s notice of federal tax lien', () => {
     sim.must({ kind: 'tax.file', payload: { year: 2026 } });
     const r = () => returnsOf(sim.player)['2026']!;
     expect(r().owed).toBeGreaterThan(10_000_00);
-    // CP501, CP503, CP504 five weeks apart, the LT11 five weeks after.
-    sim.advanceTo(sim.now + 4 * 35 * DAY + 2 * DAY);
+    // CP501, CP503, CP504 five weeks apart from the due date, the LT11 five weeks after (from 2026-10-16: until then from
+    // the filing on 1 February, before the tax was due; `nextNotice`).
+    sim.advanceTo(r().due + 4 * 35 * DAY + 2 * DAY);
     expect(r().lien).toMatchObject({ name: 'Notice Of Federal Tax Lien', status: 'filed' });
     expect(sim.universe.notifications.find((n) => n.title === 'The IRS Filed A Notice Of Federal Tax Lien')!.body).toMatch(/Letter 3172.*30 days to ask for a Collection Due Process hearing/);
     expect(sim.execute({ kind: 'tax.federal_lien_withdraw', payload: { year: 2026 } }).error).toMatch(/once it’s released/);

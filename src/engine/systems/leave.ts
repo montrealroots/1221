@@ -654,9 +654,16 @@ export function assess(sim: Simulation, person: Person): { outcome: 'fit' | 'mod
   return { outcome: 'leave', why: back > soon ? `You won’t be able to take part in classes before ${formatDate(back, zone())}, past what excused absences and Incompletes can carry.` : 'You aren’t able to take part in classes, and nothing says when you will be.' };
 }
 
-/** A mandatory leave's appeal decided: overturned if the student's cleared and the term is young enough to resume. */
+/**
+ * A mandatory leave's appeal decided: overturned if the student's cleared and the term is young enough to resume. A leave
+ * not yet begun (the dean's decision came after its term's evaluation, so it runs from the next term) has its whole term
+ * ahead: the clearance alone decides it (from 2026-10-16: until then it went on to the term's checks, and an appeal
+ * decided before the leave began was turned down “The term it began in is over.”, of a term that hadn't begun; played on
+ * 2026-10-16, tests/remaining-school.test.ts).
+ */
 function rescindable(sim: Simulation, person: Person, l: Leave): string | undefined {
   if (clearedToReturn(person, sim.now)) return `You weren’t cleared: ${clearedToReturn(person, sim.now)}`;
+  if (l.status === 'granted') return undefined;
   const period = classPeriod(l.firstTerm);
   const from = at(period.from, 0), to = at(period.to, 23);
   if ((to - sim.now) / Math.max(1, to - from) < MANDATORY_LEAVE.resumeWithin) return 'Too much of the term has gone to resume it.';
@@ -753,21 +760,40 @@ export function aidReviewRefusal(sim: Simulation, person: Person): string | unde
   return coming ? undefined : 'Support past six terms is reviewed once a seventh is coming: you’re within the six.';
 }
 
+/**
+ * A payment to Yale from the bank: the primary current account, then the easy-access savings at its bank whether or not
+ * savings is linked, as a tax bill is paid (`payFromBank`) and as Yale takes one: online payments “can be made by anyone
+ * with a U.S. checking or savings account” (Yale Student Accounts, Payment Options,
+ * https://student-accounts.yale.edu/paying-your-bill/payment-options, read 2026-10-16; the page carries no date). Until
+ * 2026-10-16 it reached savings only where savings was linked to the current account, and a Comfortable student with
+ * $19,565.00 in Chase Total Checking and $45,652.00 in Chase Savings, $20,000.00 owed, was told “Your bank can’t cover
+ * it.”, with nothing to do next (docs/verification/remaining/banking-checklist.json, banking.s7.school).
+ */
+const fromBankToYale = (sim: Simulation, person: Person, amount: Money) => drawFromBank(sim, person, amount, false, true);
+
+/** Why the bank can't pay Yale an amount, in what it can pay now and what to do, or nothing (from 2026-10-16). */
+function bankShortWords(sim: Simulation, person: Person, amount: Money, inFull: boolean): string | undefined {
+  const short = fromBankToYale(sim, person, amount).short;
+  if (short <= 0) return undefined;
+  const can = amount - short;
+  if (can <= 0) return 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';
+  return `Your current account and the savings beside it can pay ${money(sim, can)} of it now: ${inFull ? 'it’s paid in full, so move money into your current account first' : 'pay that or less, or move money into your current account first'}.`;
+}
+
 /** Why a payment on the Yale account can't be made, or nothing. */
 export function payBalanceRefusal(sim: Simulation, person: Person, amount: Money): string | undefined {
   const owed = accountOwed(sim, person);
   if (owed <= 0) return 'Your Yale account owes no balance.';
   if (!(amount > 0)) return 'Pay something.';
   if (amount > owed) return `${money(sim, owed)} is owed; pay that or less.`;
-  if (drawFromBank(sim, person, amount, false).short > 0) return 'Your bank can’t cover it.';
-  return undefined;
+  return bankShortWords(sim, person, amount, false);
 }
 
 /** A payment from the bank onto the Yale account; the hold lifts once nothing is owed. */
 export function payBalance(sim: Simulation, person: Person, amount: Money): { owed: Money; held: boolean } {
   const no = payBalanceRefusal(sim, person, amount);
   if (no) throw new CommandError(no);
-  const bank = drawFromBank(sim, person, amount, false);
+  const bank = fromBankToYale(sim, person, amount);
   sim.post({ memo: 'Payment: Yale Student Account', category: 'school', postings: [...bank.postings, { accountId: yaleAccount(sim, person)!.id, amount }] });
   const school = person.school!;
   const owed = accountOwed(sim, person);
@@ -1027,8 +1053,18 @@ export function registerLeave(sim: Simulation): void {
     if (!person || !l || !ap || ap.outcome) return;
     const no = rescindable(s, person, l);
     ap.outcome = no ? 'upheld' : 'rescinded';
-    ap.why = no ?? 'You’re cleared, and enough of the term is left to resume it.';
+    const begun = l.status === 'on';
+    ap.why = no ?? (begun ? 'You’re cleared, and enough of the term is left to resume it.' : 'You’re cleared, and the leave hadn’t begun.');
     if (no) { notify(s, person, 'Your Appeal Is Turned Down', `The dean upholds the leave. ${no}`, 90); return; }
+    // Overturned before it began: called off, with nothing of `startLeave` to undo, and the term it would have taken begins
+    // as any term does (from 2026-10-16).
+    if (!begun) {
+      l.status = 'rescinded';
+      (person.school!.leaves ??= []).push(l);
+      delete person.school!.leave;
+      notify(s, person, 'Your Leave Is Overturned', `The dean has overturned the leave: ${ap.why} It won’t begin: ${termLabel(l.firstTerm)} is yours as before, from ${formatDate(at(termStart(l.firstTerm).date, 9), zone())}.`, 90);
+      return;
+    }
     rescind(s, person, l);
     notify(s, person, 'Your Leave Is Overturned', `The dean has overturned the leave: ${ap.why} Your courses this term are restored and classes count you again. A casting lost when the leave began isn’t given back.`, 90);
   });
@@ -1096,6 +1132,10 @@ export function registerLeave(sim: Simulation): void {
     const school = s.player.school;
     const l = school?.leave;
     if (!school || !l || (l.status !== 'pending' && l.status !== 'granted')) throw new CommandError(l?.status === 'on' ? 'You’re on leave: you come back at the term it ends, with notice. To leave for good, withdraw.' : 'No leave is asked for.');
+    // A leave the dean imposed isn't the student's to call off (Bulletin 2026–27 p.159: the dean's decision, appealed in
+    // writing). From 2026-10-16: until then one granted from the next term, the dean's decision having come after its
+    // term's evaluation, was called off here, and the Leave panel drew Call Off The Leave… for it.
+    if (l.mandatory) throw new CommandError(`The dean imposed this leave, so it isn’t yours to call off${!l.mandatory.appeal && s.now <= l.mandatory.appealBy ? `: appeal it in writing to the dean by ${formatDate(l.mandatory.appealBy, s.zone)}` : ''}.`);
     if (!p?.confirm) throw new CommandError('Calling it off keeps you at the School as you are. Confirm to go ahead.');
     for (const i of s.universe.scheduled) if (i.status === 'pending' && i.kind === LEAVE_DECIDE_KIND && i.payload.personId === s.player.id) s.timeline.cancel(i.id, s.now);
     l.status = 'canceled';
@@ -1158,8 +1198,11 @@ export function registerLeave(sim: Simulation): void {
     if (s.now > (l.affiliateBy ?? 0)) throw new CommandError(`It could be bought until ${formatDate(l.affiliateBy ?? s.now, s.zone)}.`);
     const { terms, cost, credit } = affiliateQuote(s, l);
     if (!p?.confirm) throw new CommandError(`Affiliate cover for the leave’s ${termsInWords(terms)} is ${formatMoney(cost, saveCurrency(s.universe))}${credit ? `, with the ${formatMoney(credit, saveCurrency(s.universe))} student fee you paid credited` : ''}, paid in full now. Confirm to buy it.`);
-    const bank = drawFromBank(s, person, cost, false);
-    if (bank.short > 0) throw new CommandError('Your bank can’t cover it.');
+    // From the current account and then the savings beside it, as a payment to Yale is taken (`fromBankToYale`, from
+    // 2026-10-16: until then savings only where linked, refused “Your bank can’t cover it.”).
+    const short = bankShortWords(s, person, cost, true);
+    if (short) throw new CommandError(short);
+    const bank = fromBankToYale(s, person, cost);
     s.post({ memo: 'Yale Health Affiliate Coverage, a leave of absence', category: 'health', postings: [...bank.postings, { accountId: s.nominalAccount('expense', expenseFor('health')).id, amount: cost }] });
     l.affiliate = { by: 'self', at: s.now, cost, credit };
     // Continuous from the day student cover ended: the lapse is closed, and care had in it billed as Yale Health's.

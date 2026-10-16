@@ -21,7 +21,8 @@
  * - `h-papers`: the Unemployment clause played: a fall kept up, a part in the Summer Cabaret's company paid $375 a
  *   week for thirteen Fridays, a withdrawal on 1 September 2027 and a claim on 1 October, "Unemployment, $93 a week.",
  *   Connecticut's 1/26 of the two best quarters' average ($1,500 and $3,375). The tax owed told from the stored balance
- *   by four dollars, $176 against $172, 180 days past due; and Connecticut's half of what's owed, $3.72, all of the $4
+ *   by two dollars, $174 against $172, 139 days past due (until 2026-10-16 by four, $176 against $172, 180 days past
+ *   due, before the IRS's letters waited for the due date); and Connecticut's half of what's owed, $3.72, all of the $4
  *   Home says since 2026's table came in on 2026-10-14 (until then $3.72 of $111, the IRS owed $107.56). And a
  *   defect, below: filed early and unpaid, the alert said interest and a penalty were "growing each month" before the
  *   due date, when nothing grows; from later on 2026-10-13 it says so only past the due date.
@@ -426,18 +427,23 @@ describe('h-papers', () => {
     expect(drawn(reload(sim)).affairs).toContain(line);
   }, 60_000);
 
-  it('filed on 1 February with nothing in the bank, 180 days past its day Home says $176 owed, 0.5% for six months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172', () => {
+  it('filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed, 0.5% for five months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172', () => {
     const sim = feb1();
     // TEST SETUP: the bank emptied, so filing can't pay.
     for (const a of [primary(sim), own(sim, 'savings')]) setBalance(sim, a, 0);
     expect(sim.must<{ paid: boolean; irs: number }>({ kind: 'tax.file', payload: { year: 2026 } })).toMatchObject({ paid: false, irs: 165_60 });
-    sim.advanceTo(DUE + 180 * MS_DAY);
-    // 16 April to 12 October: six months begun at 0.5% (IRC 6651(a)(2)), $4.97; 180 days at 7% a year compounded daily
-    // (IRC 6621, 6622), $5.82: $176.38.
-    const live = 165_60 * (1 + 6 * 0.005) + 165_60 * ((1 + 0.07 / 365) ** 180 - 1);
-    expect(dollars(live)).toBe('$176');
-    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. $176 of tax owed, with its interest and a late penalty growing each month. Papers How This Works');
-    // The balance as stored, last brought up to date in July: four dollars short of what's owed today.
+    // The day before the LT11, which brings the balance up to date. Until 2026-10-16 this was 180 days past the due date,
+    // Home $176 and the stored $172 brought up in July: the IRS's letters ran from the filing then. From that day they
+    // run from the due date (`nextNotice`), the levy brings it up on the 170th day, and the 180th's stored balance was
+    // $176 too, so the day was moved to one where the two still differ, as the check of 2026-10-13 asked.
+    sim.advanceTo(DUE + 139 * MS_DAY);
+    // 16 April to 1 September: five months begun at 0.5% (IRC 6651(a)(2)), $4.14; 139 days at 7% a year compounded daily
+    // (IRC 6621, 6622), $4.47: $174.21.
+    const live = 165_60 * (1 + 5 * 0.005) + 165_60 * ((1 + 0.07 / 365) ** 139 - 1);
+    expect(dollars(live)).toBe('$174');
+    expect(drawn(sim).affairs).toContain('Papers Cover: Yale Health. $174 of tax owed, with its interest and a late penalty growing each month. Papers How This Works');
+    // The balance as stored, last brought up to date by CP504 on the 105th day: four months begun, $3.31, and the interest
+    // brought up at each letter, $3.39: $172.31, two dollars short of what's owed today.
     expect(dollars(sim.player.returns!['2026']!.owed!)).toBe('$172');
   });
 

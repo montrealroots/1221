@@ -194,6 +194,12 @@ export interface Account {
    * one holds it (from 2026-10-16).
    */
   feeOwedHeld?: Money;
+  /**
+   * On a term deposit: the transactions of interest taken out of it during its term by a build before 2026-10-15's
+   * second recheck, which posted nothing against the term, found once when that build's save is opened
+   * (`findTermInterest`, `systems/accountlife.ts`, from 2026-10-16), so canceling it finds them (`interestPaidSince`).
+   */
+  untaggedTakes?: string[];
 }
 
 export interface Posting {

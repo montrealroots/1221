@@ -1812,7 +1812,7 @@
     {
       "id": "health-cover",
       "goal": "Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt",
-      "entry": "Papers, Health Cover: The Marketplace, Enroll or Drop The Plan; A Dental Plan, Buy Dental or Drop Dental; Care And Its Bills, Appeal It, Apply For Assistance, Pay It Off",
+      "entry": "Papers, Health Cover: The Marketplace, Enroll or Drop The Plan; A Dental Plan, Buy Dental or Drop Dental; Care And Its Bills, Appeal It, Apply For Assistance, Pay It Off; from 2026-10-16, Apply For HUSKY D, and on its notice Request A Hardship Exception",
       "entities": [
         "HealthRecord",
         "MedicalBill",
@@ -1827,9 +1827,11 @@
         "health.dental",
         "health.appeal",
         "health.apply_aid",
-        "health.pay_bill"
+        "health.pay_bill",
+        "health.apply",
+        "health.request_hardship"
       ],
-      "effects": "Cover from the next month; dropped, it ends at the month’s end. Yale’s dental plan paid for the year at once. An appeal decided after DENIALS.decideDays, overturned or upheld at its published rate. Connecticut’s charity care makes a bill free or discounted by income. An unpaid bill becomes medical debt, paid down from the current account",
+      "effects": "Cover from the next month; dropped, it ends at the month’s end. From 2026-10-16 HUSKY D applied for where its work rules weren’t met: a notice of noncompliance, thirty days from its receipt to answer, then decided, or granted at once on a stay in hospital asked for as a hardship. Yale’s dental plan paid for the year at once. An appeal decided after DENIALS.decideDays, overturned or upheld at its published rate. Connecticut’s charity care makes a bill free or discounted by income. An unpaid bill becomes medical debt, paid down from the current account",
       "persists": "HealthRecord.program, marketplace, dental, bills, debtSince; the medical debt account",
       "readers": [
         "coverOn and planOf for every bill (systems/health.ts)",
@@ -1856,7 +1858,8 @@
         "tests/defects-g8-5.test.ts",
         "tests/life-fixes.test.ts",
         "tests/medicaluis.test.ts",
-        "tests/safetynet.test.ts"
+        "tests/safetynet.test.ts",
+        "tests/remaining-health-eligibility.test.ts"
       ],
       "manual": "",
       "status": "Implemented",
@@ -1866,7 +1869,7 @@
         "interaction": "Implemented",
         "verified": "Partial"
       },
-      "limits": "Until 2026-10-12 this was called Verified, while four of its commands had a claimed outcome or reader no test reached through the engine. Driven through the commands and checked: health.drop ends a plan at the month’s end (coverOn), on a New York life with its marketplace plan put in by hand (tests/commands-kept.test.ts); an appeal is decided 60 days on, and one overturned comes off the debt, on New York lives with a marketplace plan put in by hand, since only a marketplace claim is denied, which a New Haven life reaches only after the school (tests/claims.test.ts, tests/life-fixes.test.ts). What isn’t: health.enroll is driven for the New Haven student withdrawn from the School, cover starting the day Yale Health ends and never beside it (tests/defects-g8-5.test.ts), for a low month’s Covered Connecticut, on a New Haven life that isn’t the student’s, and for Medi-Cal (tests/safetynet.test.ts, tests/medicaluis.test.ts), and no test enrolls through it and checks a premium armHealth charges. health.dental is driven on the New Haven student: Yale’s plan runs its plan year to 1 October, leaves a cleaning free and can’t be canceled once paid (tests/costs.test.ts, tests/defects-g8-4.test.ts); no test checks the year’s price it takes, and its cover past the degree is read by calling healthMonth by hand; New York’s and California’s monthly plans are fixtures, since SLATE sells no dental plan in Connecticut but Yale’s. health.apply_aid is checked for the bill’s amount, on a bill put in by hand on a New Haven life that isn’t the student’s (tests/safetynet.test.ts), and no test plays the due date and checks the bill paid at that amount. health.pay_bill takes a paid debt off the day’s money trouble, across a reload (tests/coverage-gaps-life.test.ts), and the medical debt’s report a year on (MEDICAL_DEBT.reportAt), what paying it spares, is checked only by setting debtSince back a year and calling healthMonth in the clock’s place (tests/coverage-gaps-life.test.ts). docs/GAMEPLAY-COVERAGE.md calls health.enroll, health.dental, health.apply_aid and health.pay_bill partial for the same gaps. The union plans and COBRA after one went with the career (docs/UNBITTEN.md). From 2026-10-09 the marketplace, the Essential Plan and Covered Connecticut ask lawful presence (45 CFR 155.305), so a graduate who stayed past their status is refused, and a plan held ends."
+      "limits": "Until 2026-10-12 this was called Verified, while four of its commands had a claimed outcome or reader no test reached through the engine. Driven through the commands and checked: health.drop ends a plan at the month’s end (coverOn), on a New York life with its marketplace plan put in by hand (tests/commands-kept.test.ts); an appeal is decided 60 days on, and one overturned comes off the debt, on New York lives with a marketplace plan put in by hand, since only a marketplace claim is denied, which a New Haven life reaches only after the school (tests/claims.test.ts, tests/life-fixes.test.ts). What isn’t: health.enroll is driven for the New Haven student withdrawn from the School, cover starting the day Yale Health ends and never beside it (tests/defects-g8-5.test.ts), for a low month’s Covered Connecticut, on a New Haven life that isn’t the student’s, and for Medi-Cal (tests/safetynet.test.ts, tests/medicaluis.test.ts), and no test enrolls through it and checks a premium armHealth charges. health.dental is driven on the New Haven student: Yale’s plan runs its plan year to 1 October, leaves a cleaning free and can’t be canceled once paid (tests/costs.test.ts, tests/defects-g8-4.test.ts); no test checks the year’s price it takes, and its cover past the degree is read by calling healthMonth by hand; New York’s and California’s monthly plans are fixtures, since SLATE sells no dental plan in Connecticut but Yale’s. health.apply_aid is checked for the bill’s amount, on a bill put in by hand on a New Haven life that isn’t the student’s (tests/safetynet.test.ts), and no test plays the due date and checks the bill paid at that amount. health.pay_bill takes a paid debt off the day’s money trouble, across a reload (tests/coverage-gaps-life.test.ts), and the medical debt’s report a year on (MEDICAL_DEBT.reportAt), what paying it spares, is checked only by setting debtSince back a year and calling healthMonth in the clock’s place (tests/coverage-gaps-life.test.ts). docs/GAMEPLAY-COVERAGE.md calls health.enroll, health.dental, health.apply_aid and health.pay_bill partial for the same gaps. The union plans and COBRA after one went with the career (docs/UNBITTEN.md). From 2026-10-09 the marketplace, the Essential Plan and Covered Connecticut ask lawful presence (45 CFR 155.305), so a graduate who stayed past their status is refused, and a plan held ends. From 2026-10-16 health.apply takes an application where HUSKY D’s work rules weren’t met, and is driven through Papers and the clock to its notice, its denial and its grant (tests/remaining-health-eligibility.test.ts). docs/GAMEPLAY-COVERAGE.md calls health.request_hardship partial: its grant of an application is played there, and a renewal’s notice answered by a hardship isn’t."
     },
     {
       "id": "doctor-and-appointments",

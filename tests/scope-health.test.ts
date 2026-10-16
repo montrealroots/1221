@@ -451,8 +451,14 @@ describe('health.enroll and health.appointment: Access Health CT’s silver plan
     expect(er().map((b) => [b.amount, b.covered])).toEqual([[50_00, { price: 3_323_84, planPaid: 3_273_84 }]]);
     sim.advanceTo(at(2026, 8, 31, 18));
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
-    // Billed again as the uninsured are (`repriceCare`): the plan paid none of it now.
-    expect(er()[0]!.covered).toEqual({ price: 3_323_84, planPaid: 0 });
+    // Billed again as the uninsured are (`repriceCare`): the plan paid none of it now. From 2026-10-16 the bill as issued
+    // stands, and a line of its own carries the change, the plan's part taken back, −$3,273.84: across the two the plan
+    // paid $0. Until then the issued bill's plan part was rewritten to $0 in place.
+    const [issued, line] = er();
+    expect(issued!.covered).toEqual({ price: 3_323_84, planPaid: 3_273_84 });
+    expect(line!.adjusts).toBe(issued!.id);
+    expect(line!.covered).toEqual({ price: 3_323_84, planPaid: -3_273_84 });
+    expect(issued!.covered!.planPaid + line!.covered!.planPaid).toBe(0);
   }, 60_000);
 });
 
@@ -614,13 +620,14 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     entry.at = at(2026, 9, 24, 10);
     entry.label = `The Doctor, ${FAIR_HAVEN_NAME}`;
     // Change the input, the save's age: the same JSON as this build writes it, the step named, is had where it was booked.
-    expect(older.opened).toEqual(['followTheCover']);
+    // From 2026-10-16 this build names a second step, the banking area's `findTermInterest` (src/engine/index.ts).
+    expect(older.opened).toEqual(['followTheCover', 'findTermInterest']);
     const current = loadSave(JSON.parse(JSON.stringify(older)) as never);
     expect(appointmentsOf(current.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), FAIR_HAVEN]]);
     delete older.opened;
     const opened = loadSave(older as never);
-    // The step taken, and named, so the next opening doesn't take it again.
-    expect(opened.universe.opened).toEqual(['followTheCover']);
+    // The step taken, and named, so the next opening doesn't take it again; the banking area's beside it from 2026-10-16.
+    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest']);
     quiet(opened);
     // Opened: had at Yale Health, its date kept, its entry renamed.
     expect(appointmentsOf(opened.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), YALE]]);

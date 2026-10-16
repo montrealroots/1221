@@ -28,7 +28,7 @@ import { dateKey, formatDate, formatDateTime, instantFromZoned, zonedParts } fro
 import { LookRegion, Open, at } from '@/ui/looks';
 import { CITIES } from '@/engine/content/geography';
 import { COST_2026_27, COURSES, REQUIRED_PPE, SCHOOL_POLICIES, SCHOOL_SEASON, SEAGULL_2027, SKILLS, SUMMER_CABARET, WORK_STUDY, YALE_CABARET, YALE_DRAMA, type Skill } from '@/engine/content/school';
-import { courseworkOf } from '@/engine/systems/coursework';
+import { courseworkOf, termTally } from '@/engine/systems/coursework';
 import { SIZE_WORD } from '@/engine/content/plays';
 import {
   CABARET_KIND, CALL_KIND, CLASSES_KIND, ESTIMATE, EVALUATION_KIND, LAB_KIND, SHIFT_KIND, STANDING_LABEL,
@@ -138,6 +138,11 @@ function StandingPane() {
   const { growth, classGrowth, grewTooLittle, pace } = termGrowth(person);
   const reach = person.craftCeiling;
   const evaluation = ahead(sim, person, [EVALUATION_KIND])[0];
+  // The term's coursework as its review will read it (`termTally`, `ESTIMATE.coursework`), from 2026-10-16: until then the
+  // tab showed attendance and growth against their floors and nothing of the third measure until the term's warning, six
+  // pieces in (found by tests/remaining-school-term.test.ts).
+  const work = termTally(courseworkOf(sim, person)?.assignments ?? [], Math.max(0, school.termsBegun - 1));
+  const workShort = work.shown >= ESTIMATE.coursework.shown && work.unready >= ESTIMATE.coursework.unready * work.shown;
   const skills: { id?: Skill; label: string; mine: number; reach: number; theirs: number[] }[] = [
     ...SKILLS.map((s) => ({ id: s.id, label: s.label, mine: craft[s.id], reach: ceilingOf(craft, s.id), theirs: school.classmates.map((m) => m.craft[s.id]) })),
     { label: 'Acting', mine: actingOf(craft), reach: reach ? actingOf(reach) : 100, theirs: school.classmates.map((m) => actingOf(m.craft)) },
@@ -148,10 +153,11 @@ function StandingPane() {
     <div className="col gap-5">
         <Panel title="Your Standing" subtitle={evaluation ? `Evaluation On ${formatDate(evaluation.at, zone())}` : undefined} help="school.standing">
           <div className="col gap-3">
-            <div className="grid grid-3">
+            <div className="grid grid-4">
               <Stat label="Standing" value={STANDING_LABEL[school.standing]} tone={school.standing === 'good' || school.standing === 'graduated' ? undefined : 'warning'} />
               <Stat label="Attendance This Term" value={attendance === undefined ? 'None Yet' : pct(attendance)} note={`${pct(ESTIMATE.attendanceFloor)} is the floor`} tone={attendance !== undefined && attendance < ESTIMATE.attendanceFloor ? 'warning' : undefined} />
               <Stat label="Growth This Term" value={growth.toFixed(1)} note={`The class’s ${classGrowth.toFixed(1)}: for the room each has, ${pace} it, and half its pace is the floor`} tone={grewTooLittle ? 'warning' : undefined} />
+              <Stat label="Coursework This Term" value={work.shown ? `${work.unready} of ${work.shown}` : 'None Yet'} note={`Unready or not shown, of the pieces due; half of ${ESTIMATE.coursework.shown} or more is short`} tone={workShort ? 'warning' : undefined} />
             </div>
             <p className="small" style={{ margin: 0 }}>
               Attendance counts {t.attended} of {t.classDays - t.excused} class days{t.excused ? ` (${t.excused} excused)` : ''}, {t.answered} of {t.calls} calls and {t.worked} of {t.shifts} assigned shifts. Short of either floor at the evaluation, or with a run on stage gone mostly off, or half or more of three or more pieces of coursework due unready or not shown, standing falls a step, from good to concern, to warning, to dismissal; meeting them all restores it. A missed performance or understudy call goes straight to warning, or from warning to dismissal{t.breaches ? `, and this term has had ${t.breaches === 1 ? 'one' : t.breaches}` : ''}. After the last term, Commencement confers the degree in good standing or with a concern; the last term ending on academic warning, the faculty don’t recommend it.
@@ -222,7 +228,7 @@ function StandingPane() {
           <div className="table-scroll">
             <table>
               <thead>
-                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Why</th></tr>
+                <tr><th scope="col">Term</th><th scope="col">Standing</th><th scope="col" className="num">Attendance</th><th scope="col" className="num">Growth</th><th scope="col" className="num">Class Growth</th><th scope="col">Coursework</th><th scope="col">Why</th></tr>
               </thead>
               <tbody>
                 {school.history.map((r, i) => (
@@ -232,6 +238,9 @@ function StandingPane() {
                     <td className="num mono">{pct(r.attendance)}</td>
                     <td className="num mono">{r.growth.toFixed(1)}</td>
                     <td className="num mono">{r.classGrowth.toFixed(1)}</td>
+                    {/* The review's own count of the term's coursework (`TermReview.coursework`), from 2026-10-16: until then it
+                        was kept at every evaluation and shown nowhere, and its words named it only where the mark was reached. */}
+                    <td className="small">{r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} unready or not shown` : 'None counted'}</td>
                     <td className="small">{r.reason}</td>
                   </tr>
                 ))}
@@ -591,7 +600,9 @@ function CoursesPanel() {
       <details className="small"><summary>Every Course</summary>
         <ul style={{ margin: 0 }}>{all.map(([key, r]) => <li key={key}>{termLabel(r.term)}, {r.code} {r.name}: {word(r)}</li>)}</ul>
       </details>
-      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. A year with a course failed can be repeated, once, on SLATE’s faculty model (below); each attempt stays on the record, and the degree reads the pass.</Fine>
+      {/* Whose the Incomplete's giving is, said from 2026-10-16: the Bulletin (p.152) has a student ask the instructor for
+          one, and the instructor grant it and any extension. */}
+      <Fine>The acting courses are Pass/Fail, the degree is recommended for a student who has completed every one, and an Incomplete is due within a month (Bulletin 2026–27 pp.151–152). SLATE’s estimates: the three quarters of a course’s meetings that pass it, two-hour make-up sessions each worth a week of the course, and one month’s extension. SLATE’s too: an Incomplete given for meetings missed ill, where the Bulletin has the student ask the instructor for one and petition for any extension. A year with a course failed can be repeated, once, on SLATE’s faculty model (below); each attempt stays on the record, and the degree reads the pass.</Fine>
     </div>
   );
 }

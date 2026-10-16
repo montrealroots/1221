@@ -79,7 +79,7 @@ import { APPOINTMENT_KIND, appointmentsOf } from '@/engine/systems/appointments'
 import { THERAPY_SESSION_KIND } from '@/engine/systems/therapy';
 import { COMP_KIND, laidUp } from '@/engine/systems/injury';
 import { payeeAccount } from '@/engine/systems/cash';
-import { recordWages } from '@/engine/systems/earnings';
+import { earningsOf, recordWages } from '@/engine/systems/earnings';
 import { overdraftRoom } from '@/engine/systems/lending';
 import { troubles } from '@/engine/systems/spending';
 import { fluByWeek, weekOfYear } from '@/engine/systems/seasons';
@@ -663,7 +663,12 @@ describe('health.month', () => {
     expect(drawn(drained.sim).text).toContain('Depression: Kept Up, But This Month’s Care Went Unpaid');
   });
 
-  it('PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of it', () => {
+  // Its title kept whole inside the new one, for what cites it. Until 2026-10-16 the idle twin's HUSKY D ended at the
+  // renewal's own hour. Since then the renewal sends a notice of noncompliance, she's covered through thirty days to
+  // answer (received five days on: to 5 October), it's decided on 6 October, and said ten days or more ahead it ends with
+  // October (42 USC 1396a(xx)(6); 42 CFR 435.558, 431.211). Her six months before the renewal, March to August 2027,
+  // had no work and under $580 of income in each.
+  it('PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work, and is renewed six months for 80 hours of it, until 2026-10-16; since then that renewal sends a notice of noncompliance, and HUSKY D ends on 31 October 2027', () => {
     const twin = (work: boolean) => {
       const sim = student(SEED.renew);
       withdraw(sim);
@@ -677,10 +682,17 @@ describe('health.month', () => {
       return sim;
     };
     const idle = twin(false);
+    for (const m of ['2027-03', '2027-04', '2027-05', '2027-06', '2027-07', '2027-08']) expect(earningsOf(idle.player).months[m] ?? 0).toBeLessThan(580_00);
+    expect(coverOn(idle.player, idle.now)).toBe('medicaid');
+    expect(healthOf(idle.player).pending).toMatchObject({ kind: 'renewal', noticeAt: at(2027, 9, 1, 0, 30), decideAt: at(2027, 10, 6, 0) });
+    expect(titled(idle, 'A Notice Of Noncompliance')).toHaveLength(1);
+    idle.advanceTo(at(2027, 10, 31, 12));
+    expect(coverOn(idle.player, idle.now)).toBe('medicaid');
+    expect(titled(idle, 'Your Public Cover Ends').map((n) => [n.at, n.body])).toEqual([[at(2027, 10, 6, 0), 'No month from March to August 2027 showed 80 hours’ work, $580.00 of income, school at least half-time or an exception, and none was shown by October 5, 2027: HUSKY D ends on October 31, 2027, and losing it opens 60 days to enroll in the marketplace, without the premium tax credit while HUSKY D would take you but for its work rules; you can apply again in any month after one that meets them.']]);
+    idle.advanceTo(at(2027, 11, 1, 2));
     expect(coverOn(idle.player, idle.now)).toBeUndefined();
-    expect(healthOf(idle.player).program!.until).toBe(at(2027, 9, 1, 0, 30));
-    expect(titled(idle, 'Your Public Cover Ended At Renewal').map((n) => n.body)).toEqual(['Medicaid now asks for 80 hours’ work, $580.00 of earnings or school at least half-time a month, and last month had none of them.']);
-    expect(titled(idle, 'Your Health Cover Ended', at(2027, 9, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from September 1, 2027. You have 60 days to enroll in the marketplace.']);
+    expect(healthOf(idle.player).program!.until).toBe(at(2027, 11, 1, 0));
+    expect(titled(idle, 'Your Health Cover Ended', at(2027, 9, 1, 0)).map((n) => n.body)).toEqual(['You’re uncovered from November 1, 2027. You have 60 days to enroll in the marketplace.']);
     expect(healthOf(idle.player).covered).toBe(false);
     const idleScreen = drawn(idle).text;
     expect(idleScreen).toContain('Your Cover How This Works This Month None');
@@ -692,7 +704,8 @@ describe('health.month', () => {
     // From 2027 Connecticut renews HUSKY D every six months: next on 1 March 2028.
     expect(healthOf(working.player).program!.renewAt).toBe(at(2028, 3, 1, 0));
     expect(healthOf(working.player).program!.until).toBeUndefined();
-    expect(titled(working, 'Your Public Cover Ended At Renewal')).toEqual([]);
+    expect(titled(working, 'A Notice Of Noncompliance')).toEqual([]);
+    expect(titled(working, 'Your Public Cover Is Renewed').map((n) => n.body)).toEqual(['HUSKY D is renewed to its next renewal, March 1, 2028: last month’s income is within what it allows, and August 2027 met its work rules by 80 hours’ work.']);
     const workingScreen = drawn(working).text;
     expect(workingScreen).toContain('Your Cover How This Works This Month HUSKY D');
     // HUSKY D asks no copays.

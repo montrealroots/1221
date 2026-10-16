@@ -47,6 +47,13 @@
  * the count that charged the month filing fell in twice, where `payLateRateAt` counts from the due date less the months
  * charged with filing; and it said the filing share’s floor gave way to the whole balance where that was less, the
  * IRS’s part and a state’s together, where `latePenaltyAll` takes it against the IRS’s part alone.
+ *
+ * Corrected on 2026-10-16 with the IRS's letters (`nextNotice`, `billed`): until then it said a balance left owing
+ * started them five weeks after filing, and that the IRS levied 170 days after filing, as the engine then sent them,
+ * before the due date on a return filed early. From that day the bill, Notice CP14, comes at filing, and the reminders,
+ * the notice of intent and the final notice count from the due date, or from filing where that's later. The same day
+ * the lien's Ask For Its Withdrawal As Filed In Error, which it said stayed grayed out on Connecticut's lien, came to
+ * show only on a lien filed in error (`ui/components/LienPanels.tsx`), and A Tax Lien says what shows in its place.
  */
 
 import { CHAPTER_FOR } from '../tutorial';
@@ -95,7 +102,10 @@ const REFUND_WORDS = CT.refundDays === RETURN.refundDays
   ? `${RETURN.refundDays} days later, the IRS’s and Connecticut’s alike, though the IRS’s takes ${ITIN_REFUND_DAYS} on a 1040-NR filed without a Social Security number`
   : `${RETURN.refundDays} days later from the IRS, or ${ITIN_REFUND_DAYS} on a 1040-NR filed without a Social Security number, and ${CT.refundDays} from Connecticut`;
 
-/** Filing to the IRS's levy: its notices so many weeks apart, then its final notice's days. */
+/**
+ * The due date, or filing where that's later, to the IRS's levy: its notices so many weeks apart, then its final notice's
+ * days. Until 2026-10-16 counted from filing, as the letters were (`nextNotice`).
+ */
 const IRS_LEVY_DAYS = COLLECTION.notices.length * COLLECTION.noticeWeeks * 7 + COLLECTION.finalDays;
 /**
  * Connecticut's levy: its bill, its notice of intent, then the levy's days, from its due date, or from filing where that's
@@ -193,7 +203,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     later: [
       `An IRS refund is paid into your current account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} days on a 1040-NR filed without a Social Security number. The IRS first takes from it anything you owe on another year, then a state’s past-due tax.`,
-      `A balance left owing starts the IRS’s letters ${COLLECTION.noticeWeeks} weeks after filing, and Connecticut’s bill ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later: see Paying Tax Owed. With an IRS plan in force, a new IRS balance goes to the plan instead. Connecticut’s deadline is mid-April even on a 1040-NR the IRS takes in June.`,
+      `A balance left owing brings the IRS’s bill, Notice CP14, at filing, and its reminders ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later; Connecticut’s bill comes ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later: see Paying Tax Owed. With an IRS plan in force, a new IRS balance goes to the plan instead. Connecticut’s deadline is mid-April even on a 1040-NR the IRS takes in June.`,
       'Still unfiled on the deadline, a notice says the return is late.',
       `Unfiled and owing the IRS, Notice CP2566 comes ${SUBSTITUTE.afterDays} days after the deadline (SLATE’s estimate of when) with the IRS’s own figures, leaving out the foreign tax credit and the premium tax credit only your return claims. ${SUBSTITUTE.answerDays} days on it’s assessed, with its penalty and interest, and collected.`,
       'Past its deadline, unfiled with a balance, it weighs on you each day as tax owed does: see Paying Tax Owed.',
@@ -222,7 +232,7 @@ export const TAXES: readonly GuideEntry[] = [
     connections: [
       { to: 'bank.accounts', kind: 'immediate', why: 'Filing takes a balance from your accounts at once, the current account first and then savings.' },
       { to: 'day.needs', kind: 'immediate', why: 'Filing answers the year’s question in What Needs You.' },
-      { to: 'taxes.pay', kind: 'scheduled', why: `A balance the bank couldn’t pay at filing is owed, and the IRS’s first letter comes ${COLLECTION.noticeWeeks} weeks later.` },
+      { to: 'taxes.pay', kind: 'scheduled', why: `A balance the bank couldn’t pay at filing is owed: the IRS’s bill comes at once, and its first reminder ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later.` },
       { to: 'bank.accounts', kind: 'scheduled', why: `A refund is paid into your current account ${RETURN.refundDays} days after filing, or ${ITIN_REFUND_DAYS} on a 1040-NR filed without a Social Security number.` },
       { to: 'papers.overview', kind: 'immediate', why: 'The Papers line on Home says when an unfiled return is due, what filing it would pay with any late penalty in it, and the tax owed.' },
       { to: 'documents.work', kind: 'optional', why: `On a 1040-NR, a Social Security number held before filing saves the ${SSN.itinWeeks} weeks an ITIN application holds the refund.` },
@@ -238,11 +248,11 @@ export const TAXES: readonly GuideEntry[] = [
     title: 'Paying Tax Owed',
     goal: 'papers',
     covers: ['tax.pay', 'tax.pay_state'],
-    synonyms: ['pay the IRS', 'tax owed', 'back taxes', 'IRS letters', 'Notice CP501', 'Notice CP504', 'final notice before levy', 'IRS levy', 'pay Connecticut', 'DRS bill', 'part payment of tax'],
+    synonyms: ['pay the IRS', 'tax owed', 'back taxes', 'IRS letters', 'IRS bill', 'Notice CP14', 'Notice CP501', 'Notice CP504', 'final notice before levy', 'IRS levy', 'pay Connecticut', 'DRS bill', 'part payment of tax'],
     questions: ['How do I pay tax I owe?', 'Can I pay part of it?', 'What happens if I don’t pay?', 'Why did the IRS take money from my account?', 'Where does a part payment go first?'],
     where: on('returns', 'Papers, Tax Returns, Owed To The IRS And Owed To A State'),
     available: `From the guide’s chapter “${CHAPTER}”, once a filed year has a balance left owing.`,
-    short: `A balance the bank couldn’t pay when you filed stays owed in three parts, the tax, the penalties and the interest, and the last two grow by each authority’s rule. Pay takes any part of it from your bank now, or all of it with the box left blank. Left alone, the IRS levies your accounts ${IRS_LEVY_DAYS} days after filing, and Connecticut ${CT_LEVY_DAYS} days after the deadline, or after filing if that’s later.`,
+    short: `A balance the bank couldn’t pay when you filed stays owed in three parts, the tax, the penalties and the interest, and the last two grow by each authority’s rule. Pay takes any part of it from your bank now, or all of it with the box left blank. Left alone, the IRS levies your accounts ${IRS_LEVY_DAYS} days after the deadline, and Connecticut ${CT_LEVY_DAYS} days after it, each counted from filing where that’s later.`,
     steps: [
       'Open Papers, Tax Returns, and the year’s panel. Owed To The IRS shows Tax Unpaid, Penalties and Interest as of now.',
       'Type an amount in Pay (Blank Pays It All), or leave it blank, and press Pay.',
@@ -279,7 +289,7 @@ export const TAXES: readonly GuideEntry[] = [
       'Everything owed to a state paid off outside its plan ends the plan as paid.',
     ],
     later: [
-      `Left owing, Notice CP501 comes ${COLLECTION.noticeWeeks} weeks after filing, then CP503, CP504 and the LT11 final notice, each ${COLLECTION.noticeWeeks} weeks after the last. ${COLLECTION.finalDays} days after the LT11 the IRS levies your current account and savings for what they hold, and again every ${COLLECTION.againDays} days while anything is owed (SLATE’s estimate of how often).`,
+      `Left owing at filing, the IRS’s bill, Notice CP14, comes at once; on a return filed before the deadline it names the deadline, and nothing is added before it. Notice CP501 comes ${COLLECTION.noticeWeeks} weeks after the deadline, or after filing if that’s later, then CP503, CP504 and the LT11 final notice, each ${COLLECTION.noticeWeeks} weeks after the last. ${COLLECTION.finalDays} days after the LT11 the IRS levies your current account and savings for what they hold, and again every ${COLLECTION.againDays} days while anything is owed (SLATE’s estimate of how often).`,
       `Connecticut sends “${CT.notices[0]!.title}” ${CT.notices[0]!.days} days after the deadline, or after filing if that’s later (its deadline mid-April, even on a 1040-NR the IRS takes in June), and “${CT.notices[1]!.title}” ${CT.notices[1]!.days} days after that, filing its lien then; ${CT.levy.afterDays} days on it levies, and again every ${CT.levy.againDays} days${CT.timingAssumed ? ' (SLATE’s days, since DRS doesn’t publish its own)' : ''}.`,
       `Owing the IRS ${usd(FEDERAL_LIEN.threshold)} or more on the year at its final notice brings a Notice Of Federal Tax Lien: see A Tax Lien.`,
       'A federal refund from another year goes first to what’s owed to the IRS, then to a state’s past-due tax; a Connecticut refund goes first to what’s owed to Connecticut.',
@@ -299,7 +309,7 @@ export const TAXES: readonly GuideEntry[] = [
     ],
     mistakes: [
       'Waiting for the levy: it takes what your current account and savings hold on the day, up to everything owed, whatever that money was for.',
-      `Watching only the IRS: Connecticut levies ${CT_LEVY_DAYS} days after the deadline, or after filing if that’s later, against the IRS’s ${IRS_LEVY_DAYS} after filing, so a return filed on its deadline is levied by Connecticut first.`,
+      `Watching only the IRS: Connecticut levies ${CT_LEVY_DAYS} days after the deadline, or after filing if that’s later, against the IRS’s ${IRS_LEVY_DAYS}, so Connecticut levies first.`,
       'Holding back because a part won’t clear it: a part to the IRS cuts the tax first, and its penalty is a share of the tax left. Connecticut takes its penalty and interest first, so there a part shrinks the tax last.',
       'Can’t pay it soon? A payment plan stops the letters and the levy: see Payment Plans And Waivers.',
     ],
@@ -427,7 +437,7 @@ export const TAXES: readonly GuideEntry[] = [
       'Pay the year in full with Pay. The lien reads Paid: Release To Come.',
       'For Connecticut, then press Ask For Its Release.',
       'Once the IRS has released its lien, press Ask For Its Withdrawal (Form 12277). Where it was filed in error, the button reads Ask For Its Release As Erroneous and can be pressed at once.',
-      'A state lien on an assessment your own return later showed was already paid: press Ask For Its Withdrawal As Filed In Error.',
+      'A state lien on an assessment your own return later showed was already paid: Ask For Its Withdrawal As Filed In Error shows on that lien alone; press it.',
     ],
     needs: [
       'A lien on the year.',
@@ -463,17 +473,17 @@ export const TAXES: readonly GuideEntry[] = [
       '“Filed as its collection reached that step” or “Filed as its payment plan asks” says why it went on record.',
       `The effect line is the authority’s own words: Connecticut’s says “${CT_LIEN.effect}”; the IRS’s says it may limit your ability to get credit.`,
       'SLATE’s credit record and banks read no lien, so its standing is all that changes.',
-      'On Connecticut’s lien Ask For Its Withdrawal As Filed In Error stays grayed out: Connecticut takes a payment to its penalty and interest before its tax, and files its lien only while something is owed, so its lien always secures tax still owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
+      'On a lien that secured tax owed when it was filed, the panel says so in place of Ask For Its Withdrawal As Filed In Error: “It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.” Connecticut’s always does: it takes a payment to its penalty and interest before its tax, and files its lien only while something is owed. Your own return in place of its assessment leaves the tax as it was, since DRS assessed it from the same figures.',
       `A student’s year never owes the IRS ${usd(FEDERAL_LIEN.threshold)}: a year of a living-expense scholarship and work-study owes it under two thousand dollars, so the IRS’s lien and its Form 12277 belong to bigger balances.`,
     ],
     unavailable: [
-      'A lien’s buttons show only under a year that has one, each grayed out with its reason beside it until it can be pressed.',
+      'A lien’s buttons show only under a year that has one. Ask For Its Release, and the IRS’s withdrawal, are grayed out with the reason beside them until they can be pressed; Ask For Its Withdrawal As Filed In Error shows only on a lien that was.',
       '“It’s been released.” or “It’s been withdrawn.”, or one asked already, with the date it’s decided by.',
       '“It’s released once the balance it secures is paid in full.”',
       'For a state that releases without being asked, “It’s released on its own”, with its days.',
       'For the IRS: “A withdrawal after payment comes once it’s released, within 30 days of payment in full; one filed in error can be withdrawn now.”',
       '“The IRS withdraws one after payment only with the last three years’ returns filed”, naming the year that isn’t.',
-      'Filed in error: refused where the lien secured tax you owed when it was filed.',
+      'Filed in error: not offered where the lien secured tax you owed when it was filed, and the panel says so.',
     ],
     mistakes: [
       'Asking for a withdrawal on a lien that secured tax you owed: refused. Pay it, and it’s released.',

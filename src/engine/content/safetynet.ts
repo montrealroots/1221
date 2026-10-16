@@ -221,6 +221,30 @@ export const PUBLIC_COVER = {
   workFrom: '2027-01-01',
   workHours: 80,
   workEarnings: 580_00,
+  /**
+   * The work rules' look-back (from 2026-10-16; until then SLATE read the month before alone, at renewal as at an
+   * application). Connecticut reads the one calendar month before the month applied in, and at renewal the six before
+   * the renewal's month, any one of them meeting the rules or an exception: "If not exempt from the work rules at
+   * initial application, eligibility includes a 1-month look back"; "At renewal, there will be a 6-month look back to
+   * verify the individual met work/community engagement requirements or was exempt from requirements during at least 1
+   * calendar month" (Connecticut Hospital Association, H.R. 1 HUSKY D Changes, Materials For Providers And
+   * Community-Based Organizations, 8/25/26, adapted from DSS's; read 2026-10-16; no DSS page read states the periods
+   * itself). The statute lets a State read one to three months before an application and one or more between renewals
+   * (42 USC 1396a(xx)(1); 42 CFR 435.556(a)). New York's and California's choices weren't read: the statute's least, one
+   * month each, is SLATE's assumption there.
+   */
+  workLookBack: { ct: { apply: 1, renew: 6 }, other: { apply: 1, renew: 1 } },
+  /**
+   * The notices around it (from 2026-10-16): a notice of noncompliance is "considered to be received 5 days after the
+   * date on the notice", and gives "a period of 30 calendar days beginning on the date on which such notice of
+   * noncompliance is received" (42 CFR 435.558(a)(2), (c)(4), CMS-2454-IFC of 3 June 2026; 42 USC 1396a(xx)(6)); an
+   * ending is said "at least 10 days before the date of action" (42 CFR 431.211; Connecticut's UPM 1570.10(A)(1), "at
+   * least ten days prior to the date of the intended action", applied to a HUSKY D discontinuance in DSS's Notice Of
+   * Decision 740154 of 2016; read 2026-10-16).
+   */
+  noticeReceivedDays: 5,
+  answerDays: 30,
+  advanceNoticeDays: 10,
   renewMonths: [['2025-01-01', 12], ['2027-03-01', 6]] as RateSteps,
   source: 'https://portal.ct.gov/dss/knowledge-base/articles/healthcare-coverage/husky-d; https://portal.ct.gov/dss/health-and-home-care/covered-connecticut-program; https://www.health.ny.gov/health_care/medicaid/; https://info.nystateofhealth.ny.gov/EssentialPlan; https://www.dhcs.ca.gov/services/medi-cal/; Pub. L. 119-21 (2025)',
 } as const;

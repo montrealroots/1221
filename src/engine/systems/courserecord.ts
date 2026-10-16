@@ -137,7 +137,7 @@ export function settleCourses(sim: Simulation, person: Person, term: number, sho
  * tests/scope-school.test.ts plays both dismissals, the review's and the warning unmet, against Fails that are offered,
  * and a second year's fall Fail after the first year's repeat, at concern, offered nothing.
  */
-export function tellFails(sim: Simulation, person: Person, term: number, ended: boolean, room: (academic: number) => boolean = () => true): void {
+export function tellFails(sim: Simulation, person: Person, term: number, ended: boolean, room: (academic: number) => boolean = () => true, later: () => boolean = () => false): void {
   if (person.id !== sim.universe.playerId) return;
   const school = person.school!;
   // Until 2026-10-15 this also refused a Fail in an additional term (`school.extra?.term !== term`), which `ended`
@@ -146,8 +146,21 @@ export function tellFails(sim: Simulation, person: Person, term: number, ended: 
   // dismissed. `room` doesn't settle it alone: a retake of a first year's course counts thirteen semesters, a second's
   // eleven, but a third's nine, which the nine allow (tests/scope-school.test.ts's played Movement Invention III, read
   // in play that day). A mutation removing the clause survived that day, and it was removed.
-  const repeatable = (r: CourseRecord) => !ended && repeatOpen(r, room);
-  for (const r of Object.values(coursesOf(school)).filter((x) => x.term === term && x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed${repeatable(r) ? ': at the year’s end you can ask to repeat the year, on the Standing tab' : ''}.`, importance: 85, route: '/workspace/school' });
+  for (const r of Object.values(coursesOf(school)).filter((x) => x.term === term && x.result === 'fail')) sim.notify({ category: 'school', title: `Not Passed: ${r.name}`, body: `${r.name} wasn’t passed: ${r.why}. The degree needs every course passed${ended ? '.' : remedy(r, room, later)}`, importance: 85, route: '/workspace/school' });
+}
+
+/**
+ * What's left for a course not passed, said with it (`tellFails`, the Permanent Incomplete): the year's end where a
+ * repeat of its year can still be asked; otherwise an additional term after the last year's evaluation, where one is
+ * still to be had (`later`, `extraLater` in systems/school.ts); otherwise that nothing is. From 2026-10-16, the owner's
+ * brief's “no dead-end warning”: until then a Fail or a Permanent Incomplete whose year couldn't be repeated (any after a
+ * repeat granted) was told only that the degree needs every course passed, while the last year's end would offer an
+ * additional term for it (played: tests/remaining-school.test.ts, a second fall's Fail after a first year's repeat).
+ */
+function remedy(r: CourseRecord, room: (academic: number) => boolean, later: () => boolean): string {
+  if (repeatOpen(r, room)) return ': at the year’s end you can ask to repeat the year, on the Standing tab.';
+  if (later()) return '. Its year can’t be repeated within the nine semesters the Bulletin allows; after your last year’s evaluation, unless it leaves you on academic warning, you can ask for an additional term to retake it, on the Standing tab.';
+  return ', and neither a repeat of its year nor an additional term is left within the nine semesters the Bulletin allows.';
 }
 
 /**
@@ -225,7 +238,7 @@ export function makeUpRefusal(sim: Simulation, person: Person, key: string): str
 }
 
 /** `onComplete` runs when an Incomplete becomes a pass, for the degree waiting on it. */
-export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation, person: Person, r: CourseRecord) => void, onPermanent: (s: Simulation, person: Person, r: CourseRecord) => void, room: (person: Person, academic: number) => boolean = () => true): void {
+export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation, person: Person, r: CourseRecord) => void, onPermanent: (s: Simulation, person: Person, r: CourseRecord) => void, room: (person: Person, academic: number) => boolean = () => true, later: (person: Person) => boolean = () => false): void {
   sim.onCommand<{ key: string }, { madeUp: number; owed: number; passed: boolean }>('school.make_up', (p, { sim: s }) => {
     const person = s.player;
     const key = String(p?.key);
@@ -273,7 +286,9 @@ export function registerCourseRecord(sim: Simulation, onComplete: (s: Simulation
     // Nor where a repeat would pass the nine semesters, which after any repeat granted it always would, the year repeated
     // with the rest (`repeatOpen`, as `tellFails`; from 2026-10-15: until then a Permanent Incomplete in a repeated
     // year, or in any year after a repeat, was told to ask, as the Fail notice was).
-    const ask = person.school!.awaitingDegree || !repeatOpen(r, (a) => room(person, a)) ? '.' : ': at the year’s end you can ask to repeat the year, on the Standing tab.';
+    // What's left otherwise, an additional term or nothing, as the Fail's notice says it (`remedy`, from 2026-10-16). A
+    // degree waiting on it is withheld at once, and that notice says what stands.
+    const ask = person.school!.awaitingDegree ? '.' : remedy(r, (a) => room(person, a), () => later(person));
     if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `Permanent Incomplete: ${r.name}`, body: `Its month ran out, so ${r.name} carries no credit, and the degree can’t be completed without it${ask}`, importance: 85, route: '/workspace/school' });
     onPermanent(s, person, r);
   });

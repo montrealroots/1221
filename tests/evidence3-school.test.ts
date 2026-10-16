@@ -244,6 +244,13 @@ const stat = (html: string, label: string) => {
 /** e3-r1, a Scraping family's student, on Tuesday 12 January 2027 at ten, the spring's second day of classes. */
 const jan12 = once(() => { const sim = life('e3-r1', chosen('scraping')); tend(sim, at(2027, 1, 12, 10)); return freeze(sim); });
 
+/**
+ * The Evaluations table's Coursework cell, from the review's own count, as `SchoolWorkspace` draws it. The table gained the
+ * column on 2026-10-16 (the school area: the review's count was written and read by nothing), and until later that day the
+ * row asserted here ran from the class's growth straight to the review's words.
+ */
+const courseworkCell = (r: { coursework?: { shown: number; unready: number } }) => (r.coursework ? `${r.coursework.unready} of ${r.coursework.shown} unready or not shown` : 'None counted');
+
 describe('school.respond', () => {
 
   it('PLAYER JOURNEY: an invitation open when a personal leave begins keeps its lapse at seven the next morning, and lapses then, costing the trust 1 an invitation left hanging costs, its answers refused, where everything else of the school’s is called off', () => {
@@ -394,7 +401,7 @@ describe('standing/term evaluation', () => {
     expect(review).toMatchObject({ term: 0, attendance: 1, standing: 'good' });
     expect(review!.reason.startsWith(`You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, ahead of the class.`)).toBe(true);
     expect(near.player.school!.standing).toBe('good');
-    expect(drawn(near, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Good Standing 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${review!.reason}`);
+    expect(drawn(near, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Good Standing 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
     // The twin as played began two thirds of the way and grew past half the class's raw points: the same fall otherwise.
     const q = paces(plain);
     expect(q.growth).toBeGreaterThan(0.5 * q.classRaw);
@@ -419,7 +426,7 @@ describe('standing/term evaluation', () => {
     expect(review!.work).toBeUndefined();
     expect(review!.reason).toMatch(new RegExp(`^You were at 100% of what was asked of you, and your craft grew ${p.growth.toFixed(1)} against the class’s ${p.classRaw.toFixed(1)}: for the room each of you had to grow, behind the class\\.( The faculty noted your coursework: \\d+ of \\d+ pieces strong or better\\.)?$`));
     expect(far.player.school!.standing).toBe('concern');
-    expect(drawn(far, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Academic Concern 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${review!.reason}`);
+    expect(drawn(far, SchoolWorkspace, { 'tab:/workspace/school': 'standing' }).text).toContain(`Fall Term 2026 Academic Concern 100% ${p.growth.toFixed(1)} ${p.classRaw.toFixed(1)} ${courseworkCell(review!)} ${review!.reason}`);
   }, 60_000);
 });
 

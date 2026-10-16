@@ -47,16 +47,16 @@
 import type { Simulation } from '../core/simulation';
 import { CommandError } from '../core/simulation';
 import type { Person, RoundUpChoice } from '../domain/model';
-import type { Account } from '../core/ledger';
+import type { Account, LedgerTransaction } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
-import { addDays, addMonths, endOfDay, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addDays, addMonths, endOfDay, formatDate, instantFromZoned, startOfNextDay, zonedParts, MS_DAY, type Instant } from '../core/time';
 import { bankById } from '../content/banks';
 import { afterBusinessDays, daysOfAccount } from '../content/bankdays';
 import { ACCOUNT_LIFE, UNCLAIMED, type BankAccountLife, type TermEnd } from '../content/accountlife';
 import { moveRoundUps, setRoundUps } from './roundups';
 import { closingFeesOf, dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, rateOn, settleFees, settleInterest } from './banking';
 import { savingsLeftThisMonth } from './cash';
-import { checkingAt, checkingsOf, lendingOf } from './lending';
+import { checkingAt, checkingsOf, lendingOf, settleOverdraftInterest } from './lending';
 import { ensurePrimary, stateOf } from './credit';
 import { closeRefusal, sendBetweenBanks } from './bankmoves';
 import { recordInterest } from './earnings';
@@ -171,11 +171,99 @@ const REFUNDS_CHARGES: ReadonlySet<string> = new Set(['CA', 'MX']);
  * which carries the term itself, a posting of nothing (`bank.take_term_interest`). Until 2026-10-15's second recheck a
  * term's taken interest was matched by its memo alone, and every term at a bank has the same name, so canceling a new
  * Deutsche Bank FestzinsSparen took back the €6.93 an older one had paid, out of the primary and off the year's income
- * (found by that day's skeptic). Interest taken before then carries no such posting, and isn't found.
+ * (found by that day's skeptic). Interest taken before then carries no such posting, and until 2026-10-16 it wasn't
+ * found: canceling the term left it paid and on the year's income, where the rule returns it. From then it's found once,
+ * when a save that build wrote is opened (`findTermInterest`), and kept on the term (`untaggedTakes`).
  */
 function interestPaidSince(sim: Simulation, account: Account) {
+  const untagged = new Set(account.untaggedTakes ?? []);
   return sim.universe.transactions.filter((t) => t.category === 'interest' && t.at >= account.openedAt
-    && t.postings.some((q) => q.accountId === account.id && (q.amount > 0 || (account.category === 'term' && q.amount === 0))));
+    && (untagged.has(t.id) || t.postings.some((q) => q.accountId === account.id && (q.amount > 0 || (account.category === 'term' && q.amount === 0)))));
+}
+
+/**
+ * The interest taken out of term deposits during their term by a build before 2026-10-15's second recheck, found once
+ * when a save that build wrote is opened (`loadSave`, named in `SaveUniverse.opened`, from 2026-10-16), and kept on each
+ * term (`untaggedTakes`) so canceling it in its cooling-off period gives it back as the country's rule has it
+ * (`interestPaidSince`, `bank.cancel_new`). Returns how many transactions were found.
+ *
+ * That build posted a take as the primary account's net, the Interest line's gross and any Tax On Interest, under
+ * “Interest: <the term's name>”, a name every term at the bank shares, and nothing against the term. What tells two
+ * same-named terms apart is the term itself: it builds its balance × its fixed rate / 365 at each day's end
+ * (`systems/lending.ts`), a take is the whole cents built then (`bank.take_term_interest`), and what's left is its
+ * `accrued`. So each term has its accrual replayed from its opening to now, day end by day end, the build's own
+ * arithmetic in its own order, through the untagged takes under its name since it opened that no earlier term has
+ * claimed. A take is its own where its gross is what the replay has built then, and the set taken is the one that leaves
+ * exactly its `accrued` now: the earliest such set where two would (twins opened together and taken the same day leave
+ * the same sums either way). Terms are read oldest first. Where no set leaves its `accrued` (a take the replay can't
+ * reproduce), nothing is found for it: the interest stays paid, as the build that paid it left it, rather than taken back
+ * from a term that may not have paid it. Nothing is posted, and no transaction is changed.
+ */
+export function findTermInterest(sim: Simulation): number {
+  const accounts = sim.universe.accounts;
+  const terms = Object.values(accounts).filter((a) => a.category === 'term');
+  const termIds = new Set(terms.map((a) => a.id));
+  const income = Object.values(accounts).find((a) => a.nominal && a.kind === 'income' && a.name === 'Interest');
+  if (!income) return 0;
+  const grossOf = (t: LedgerTransaction) => -t.postings.filter((q) => q.accountId === income.id).reduce((n, q) => n + q.amount, 0);
+  const claimed = new Set<string>();
+  // Every term, oldest first. Whether it's open, which country or bank it's at, and whether it renewed aren't asked: a take
+  // is found only where the replay reproduces the term, and a closed one (holding nothing, building nothing) and one that
+  // renewed (its balance and what it had built changed then) don't, and a term no country lets be canceled reads nothing
+  // it's given. Asking them changed no outcome (each survived its mutation, 2026-10-16), and they went.
+  const inOrder = [...terms].sort((a, b) => a.openedAt - b.openedAt || a.id.localeCompare(b.id));
+  let found = 0;
+  for (const term of inOrder) {
+    const into = (q: { accountId: string; amount: Money }) => q.amount > 0 && accounts[q.accountId]?.ownerId === term.ownerId && !accounts[q.accountId]?.nominal;
+    const candidates = sim.universe.transactions.filter((t) => t.category === 'interest' && t.memo === `Interest: ${term.name}` && t.at >= term.openedAt
+      && !claimed.has(t.id) && !t.postings.some((q) => termIds.has(q.accountId)) && t.postings.some(into) && grossOf(t) > 0);
+    if (candidates.length === 0) continue;
+    const fits = replayTakes(sim, term, candidates, grossOf);
+    if (!fits) continue;
+    term.untaggedTakes = fits.map((t) => t.id);
+    for (const t of fits) claimed.add(t.id);
+    found += fits.length;
+  }
+  return found;
+}
+
+/** The candidates a term's own accrual, replayed from its opening, says it paid, or nothing where no set reproduces it. */
+function replayTakes(sim: Simulation, term: Account, candidates: LedgerTransaction[], grossOf: (t: LedgerTransaction) => Money): LedgerTransaction[] | undefined {
+  // Each day's end builds this, as `systems/lending.ts` builds it, the same expression in the same order.
+  const daily = (Math.max(0, term.balance) * (term.fixedRate ?? 0)) / 365;
+  // Takes this build tagged with the term since: its own, fixed.
+  const tagged = sim.universe.transactions.filter((t) => t.category === 'interest' && t.at >= term.openedAt && t.postings.some((q) => q.accountId === term.id && q.amount === 0));
+  const events: { at: Instant; kind: 0 | 1 | 2; t?: LedgerTransaction }[] = [];
+  for (let d = startOfNextDay(term.openedAt, sim.homeZone); d <= sim.now; d = startOfNextDay(d, sim.homeZone)) events.push({ at: d, kind: 0 });
+  for (const t of tagged) events.push({ at: t.at, kind: 1, t });
+  for (const t of candidates) events.push({ at: t.at, kind: 2, t });
+  // A day's end runs before a command at its instant; transactions keep the ledger's order (a stable sort).
+  events.sort((a, b) => a.at - b.at || a.kind - b.kind);
+  const want = term.accrued ?? 0;
+  const pick: LedgerTransaction[] = [];
+  let steps = 0;
+  const walk = (from: number, built: number): boolean => {
+    let acc = built;
+    for (let i = from; i < events.length; i += 1) {
+      if ((steps += 1) > 100_000) return false;
+      const e = events[i]!;
+      if (e.kind === 0) { acc = acc + daily; continue; }
+      const earned = Math.floor(acc);
+      if (e.kind === 1) {
+        if (grossOf(e.t!) !== earned) return false;
+        acc = acc - earned;
+        continue;
+      }
+      // A candidate: taken from this term, or left for another.
+      if (earned > 0 && grossOf(e.t!) === earned) {
+        pick.push(e.t!);
+        if (walk(i + 1, acc - earned)) return true;
+        pick.pop();
+      }
+    }
+    return Math.abs(acc - want) < 1e-6;
+  };
+  return walk(0, 0) && pick.length > 0 ? [...pick] : undefined;
 }
 
 /**
@@ -246,6 +334,8 @@ export function cancelRefusal(sim: Simulation, person: Person, account: Account)
   const back = backs.get(account.id) ?? 0;
   const short = owed + back - account.balance - total(chargesBackOf(sim, account)) - (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0);
   const m = (n: Money) => formatMoney(n, saveCurrency(sim.universe));
+  // The overdraft interest built since the 1st, charged on canceling from 2026-10-16 (`settleOverdraftInterest`), is
+  // counted by Close It's refusal above: only a current account builds it.
   if (short > 0) {
     const what = owed > 0 && back > 0 ? `Its fees, ${m(owed)}, and the interest it was paid, ${m(back)}, are` : owed > 0 ? `Its fees, ${m(owed)}, are` : `The interest it was paid, ${m(back)}, goes back, and is`;
     return `${what} more than it holds. Pay in ${m(short)} first.`;
@@ -555,6 +645,8 @@ export function registerAccountLife(sim: Simulation): void {
         if (owner && gross > 0) recordInterest(owner, t.at, s.homeZone, -gross);
       }
     }
+    // The overdraft interest built since the 1st, from 2026-10-16 (`settleOverdraftInterest`): until then it was dropped.
+    settleOverdraftInterest(s, account);
     settleFees(s, account);
     // Each charge back against the line it was charged to (from 2026-10-15's recheck: until then all of it against Bank
     // Fees, overdraft interest included).

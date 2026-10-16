@@ -192,9 +192,14 @@ describe('a plan dropped, or its premium left unpaid, opens no special enrollmen
     healthOf(sim.player).program = { kind: 'medicaid', state: 'ct', from: sim.now - MS_DAY, band: 'low', renewAt: at(2026, 2, 1, 0) };
     recordInterest(sim.player, at(2026, 1, 20), NY, 10_000_00);
     healthMonth(sim, sim.player, at(2026, 2, 1, 1));
-    expect(healthOf(sim.player).program!.until).toBe(at(2026, 2, 1, 1));
-    expect(healthOf(sim.player).lostAt).toBe(at(2026, 2, 1, 1));
-    expect(mayEnroll(sim.player, at(2026, 2, 10))).toMatchObject({ ok: true, why: 'Within 60 days of losing cover.' });
+    // Said at the renewal and ended at the month's end at least ten days on, 28 February (42 CFR 431.211; from
+    // 2026-10-16: until then it ended at the renewal's own hour), and lost at the next month's look.
+    expect(healthOf(sim.player).program!.until).toBe(at(2026, 3, 1, 0));
+    // FIXTURE: February's income past the limit too, so the marketplace, not HUSKY D again, is what's open in March.
+    recordInterest(sim.player, at(2026, 2, 20), NY, 10_000_00);
+    healthMonth(sim, sim.player, at(2026, 3, 1, 1));
+    expect(healthOf(sim.player).lostAt).toBe(at(2026, 3, 1, 1));
+    expect(mayEnroll(sim.player, at(2026, 3, 10))).toMatchObject({ ok: true, why: 'Within 60 days of losing cover.' });
   });
 });
 

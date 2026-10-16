@@ -5,8 +5,8 @@
       "id": "documents.apply_idcard",
       "kind": "command",
       "entry": "Papers > Passport tab > IdPanel 'Get Non-Driver Identification Card' (ui/papers/Documents.tsx:172)",
-      "reads": "idCardRefusal (identity.ts:80-115): idCardHere/licensingOf(currentLocationId) (identity.ts:74-78), ID_CARDS['us-ct'], license/idcard held, one pending; for somebody not a citizen at a US state’s counter, in status, lawful presence (an F-1 at school, or a US permit in force, OPT, from 2026-10-12) and a Social Security number held: one on its way is refused, told so (identity.ts:103-108)",
-      "changes": "pays the fee (payFromBank); pushes an idcard document: valid at once for a citizen, and for somebody not a citizen a Limited Term card that waits on SAVE’s ten federal workdays and runs to the end of their lawful presence (from 2026-10-10; identity.ts:223-244). Until 2026-10-13 the ten days were counted Monday to Friday, holidays and all, and by the day in UTC",
+      "reads": "idCardRefusal: the state’s card where they live, a license or card held or pending; for somebody not a citizen at a US state’s counter, in status, lawful presence (an F-1 at school, or a US permit in force, OPT), from 2026-10-16 a primary identity document in force (the passport, or OPT’s EAD), and a Social Security number held",
+      "changes": "pays the fee; a citizen’s card in force at once and REAL ID; somebody not a citizen’s Limited Term card waiting on SAVE’s ten federal workdays, to the end of their lawful presence, non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID)",
       "downstream": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one",
       "persistent": "person.documents",
       "explanation": "toast with fee and expiry; DocumentList row; document look",
@@ -106,8 +106,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g15-papers.test.ts",
@@ -150,6 +150,34 @@
             "title": "on Passport And ID, Get Non-Driver Identification Card pressed says “$28.00; good until August 24, 2032”, lists the card, and is then shut with the reason; a Connecticut license holder sees why it is shut",
             "kind": "render",
             "closes": "UI evidence: IdPanel drawn as the player has it. The real button handler is pressed and its toast (fee and expiry) checked. The button is then disabled with title 'You hold one in force.', and for a CT license holder it is disabled with the license refusal."
+          },
+          {
+            "file": "remaining-papers.test.ts",
+            "title": "PLAYER JOURNEY: her number come and her passport reported lost, Get Non-Driver Identification Card is shut with the DMV’s reason and the command refused, nothing taken; her passport renewed from abroad, the card is asked for, comes after SAVE’s ten federal workdays, and is Not For Federal Identification, across a reload; until 2026-10-16 it was issued with no identity document, marked REAL ID",
+            "kind": "render",
+            "closes": "passport lost: the button shut with the DMV's reason, the command refused, $0 taken; a new passport from abroad; the card asked for, pending, issued after SAVE's days, realId false, its page 'It’s marked Not For Federal Identification: it isn’t REAL ID.', across a reload",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-papers.test.ts",
+            "title": "GUARD: an Employment Authorization Document in force stands as the primary document without a passport (FIXTURE: an OPT permit put on by hand: no play brings OPT and a lost passport together before 2029)",
+            "kind": "fixture",
+            "closes": "an EAD in force stands as the primary document",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-papers.test.ts",
+            "title": "OLDER SAVE: a non-citizen’s card a save from before 2026-10-16 marked REAL ID is put right on opening, once, and its page says Not For Federal Identification",
+            "kind": "fixture",
+            "closes": "a card a save from before marked REAL ID is corrected on opening, once",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence-g16-papers.test.ts",
+            "title": "PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying, runs to her program’s end, is said to arrive, and Wells Fargo takes it in place of a lost passport",
+            "kind": "command",
+            "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [
@@ -189,6 +217,10 @@
           "said": "tests/commands-kept.test.ts ‘issues an ID card where SLATE issues one, charges its fee, and refuses a second’, and the photo-ID gate it’s for, ‘lets a new bank take somebody only with a photo ID in force, which a passport gives’ (bank.open_current, with a passport); tests/defects-g24-1.test.ts …; tests/defects-r7-1.test.ts …; tests/defects-r3d-1.test.ts …; no test has a bank take the ID card",
           "now": "tests/evidence-g15-papers.test.ts (documents.apply_idcard). Citi refuses a New Haven student with every other photo ID reported lost and opens her account through bank.open_current once she holds the Connecticut card, with $28 leaving her bank. SAVE's ten business days are pinned on the calendar for a British student's Limited Term card. A second card, a Connecticut license holder, a student out of status and a bank short of $28 are each refused in their own words. IdPanel is drawn and its button pressed. Also tests/papers-transitions.test.ts, tests/guide-examples-papers.test.ts PLAYS['documents.passport-id'], tests/defects-g24-1.test.ts, tests/defects-r7-1.test.ts, tests/defects-r3d-1.test.ts and tests/defects-g27-1.test.ts. Until 2026-10-13 this said no test had a bank take the ID card, and left out papers-transitions, guide-examples-papers and defects-g27-1."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -363,6 +395,10 @@
           "said": "Papers > Work > 'Apply For OPT' / 'Apply With Premium Processing' (Documents.tsx:196-197); the decision 'Your US Status Is Ending' (permission.ts:402, premium:true)",
           "now": "Papers > Permission To Work > OPT 'Apply For OPT' / 'Apply With Premium Processing' (Documents.tsx:216-217); the decision 'Your US Status Is Ending', which offers the standard filing first and premium by name (permission.ts:240-247). Until 2026-10-13 this said Papers > Work (Documents.tsx:196-197) and gave the decision as permission.ts:402 with premium:true, which it hadn't been since 2026-10-10. The row's reads, changes and downstream cited permission.ts:265-276, 346-359, 310 and 376-378, which are now 87-100, 187-202, 151 and 219-221."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -370,7 +406,7 @@
       "kind": "command",
       "entry": "Passport tab 'Apply For One'/'Renew It'(+Faster) (Documents.tsx:125-127)",
       "reads": "PASSPORTS[iso], age, a pending one (passportRefusal, documents.ts:417-424)",
-      "changes": "fee; a pending passport; DECIDED_KIND (documents.ts:314-331)",
+      "changes": "Charges the office’s terms where the applicant is (`passportOffice`, from 2026-10-16): from abroad (`PASSPORTS_ABROAD`) for a citizen of anywhere but the US, every life being in New Haven, its faster service only where sold abroad; a US renewal by mail on Form DS-82 for $130 where the most recent passport allows; otherwise the office’s fee at home. A pending passport, issued on its day; the one it replaces canceled then.",
       "downstream": "documents.decided issuePassport cancels the old one; photoIdOf, read by an account at a new bank (bank.open_current) and by bank.switch",
       "persistent": "documents",
       "explanation": "toast, notice '<name> Issued' (documents.ts:516), DocumentList",
@@ -430,6 +466,53 @@
           "The '<name> Issued' notice (documents.ts:514) is not asserted.",
           "The row's line refs are stale: documents.ts:397-404 is now 415-422, 300-317 is now 314-331, 496 is now 514; Documents.tsx:107-109 is now 125-127."
         ]
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 2,
+        "tests": [
+          {
+            "file": "remaining-papers.test.ts",
+            "title": "PLAYER JOURNEY: a London-born student renews her British passport on Papers from New Haven: £116.50, the overseas fee, in dollars; no Renew It Faster, the Fast Track not sold abroad, and the command refused; issued in 21 days, the old one canceled on the new one’s day, once across a reload; until 2026-10-16 £102 and Fast Track offered",
+            "kind": "render",
+            "closes": "£116.50 from abroad in dollars on screen and charged; Faster Not Offered with its reason; no Renew It Faster drawn and the command refused; issued in 21 days, the old one canceled then, one notice across a reload; the old passport serves meanwhile; the F-1 holds",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-papers.test.ts",
+            "title": "PLAYER JOURNEY: a New York-born student renews her US passport by mail for $130 on Form DS-82; reported lost, the next is a first passport’s $165 on Form DS-11; until 2026-10-16 both $165",
+            "kind": "render",
+            "closes": "DS-82 renewal $130 shown and charged ('U.S. Passport Book, renewed on Form DS-82'); after the new one is reported lost, Apply For One at $165",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "documents.test.ts",
+            "title": "is applied for at the office’s fee and issued in its days, expedited faster for more; the new one cancels the old and what was issued on it",
+            "kind": "command",
+            "closes": "corrected: the renewal expedited $190 ($130 + $60)",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "documents.test.ts",
+            "title": "runs five years for a Spaniard under thirty, as Spain issues it",
+            "kind": "command",
+            "closes": "corrected: from New York at the consulate, about three weeks",
+            "round": "remaining-tax"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -478,6 +561,10 @@
         "gaps": [
           "It is one of the 16 deferred items. The row's 'the decision is never reached' is stale: coverage-gaps-papers.test.ts:150-157 fires CITIZENSHIP_KIND, though by hand."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -551,6 +638,10 @@
           "For every document except a New York license, a report changes no outcome (identity.ts:133 is its only reader).",
           "The row's line refs are stale: documents.ts:354-376 is now 372-382, 328-335 is now 346-353; Documents.tsx:66 is now 84. The 'issue' text ('nothing in New Haven reads the report') is superseded by the settled note."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -600,6 +691,10 @@
         "gaps": [
           "It is one of the 16 deferred items. The row's issue ('accepts an expired card, status valid rather than inForce') is stale: since 2026-10-10 the command requires inForce (residence.ts:205-207)."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -720,6 +815,10 @@
           "said": "tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’ (the card put in by hand); no test has a bank take the replacement",
           "now": "tests/evidence-g15-papers.test.ts (documents.replace_idcard). A New Haven student's stolen Connecticut card is replaced for $30 from her bank. Citi refuses her while the copy is on its way and opens her account once it has come, across a save and a load. A second replacement, a lost New York card and a short bank are each refused in their own words. The Replace It button is pressed. Also tests/guide-examples-papers.test.ts PLAYS['documents.passport-id'] and tests/idreplace.test.ts (a New York card put in by hand). Until 2026-10-13 this cited idreplace.test.ts alone and said no test had a bank take the replacement."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -850,6 +949,10 @@
           "said": "tests/coverage-gaps-papers.test.ts ‘is replaced by mail, free when stolen with the police’s report, and not where its issuer sends none out of state’ (the New Yorker at Yale, through the commands), ‘from California is refused, said why...’; tests/commands-kept.test.ts ‘replaces a lost license where it was issued, at the issuer’s fee, free in New York stolen with the police’s report’; no test has a bank take the replaced license, or idCardRefusal read it",
           "now": "tests/evidence-g15-papers.test.ts (documents.replace_license). A Connecticut-born student's license is replaced for $30 from her bank in 30 days. Citi refuses her until it comes and opens her account after, and the DMV then refuses her an ID card ('You hold a license here. It serves as your ID.'). A New Yorker's license is replaced by mail at $17.50 when lost and $0 when stolen with the police's report. A Californian is refused through the command, and a short bank is refused. The Replace It button is pressed. Also tests/coverage-gaps-papers.test.ts and tests/commands-kept.test.ts, which check the returned fee only. Until 2026-10-13 this said no test had a bank take the replaced license, or idCardRefusal read it."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1051,6 +1154,10 @@
           "said": "DocumentList 'Report Lost'/'Report Stolen' on any valid document, permits and visas included (Documents.tsx:64, WorkPane DocumentList kinds permit,visa)",
           "now": "DocumentList 'Report Lost…' / 'Report Stolen…', then 'Cancel It' (Documents.tsx:76-81), on a passport, license, international driving permit or ID card in force (LOSABLE, documents.ts:47). A visa, permit or authorization is refused by the command: 'A status isn’t lost with its paper: it holds.' (documents.ts:336). Until 2026-10-13 this said any valid document, permits and visas included (Documents.tsx:64, WorkPane DocumentList kinds permit,visa). Neither the screen nor the command had offered that since 2026-10-10. Its tests field said no test checked a document reported lost and refused as photo ID; tests/evidence-g15-papers.test.ts and tests/evidence2-b05.test.ts send bank.open_current after a report and after a run-out. It also left out tests/defects-g27-1.test.ts, tests/papers-complete.test.ts:147-154 and tests/guide-examples-papers.test.ts:762-768."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1098,6 +1205,10 @@
         "gaps": [
           "It is one of the 16 deferred items. Finding 3 stands: it is reachable from day one by a wealthy New Haven student, and nothing outside the Mexican chain reads it. The panel now says so before payment (Documents.tsx:283)."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1146,6 +1257,10 @@
         "gaps": [
           "It is one of the 16 deferred items. The row's issue (no continuity) was fixed by continuousSince, as its settled note says. The row cites only coverage-gaps-papers.test.ts."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1305,6 +1420,10 @@
           "said": "tests/assistance.test.ts ‘puts a New Yorker’s SNAP on an EBT card …’ (a life in New York, its balances emptied by hand; buyTheDaysFood called directly); checking less: tests/coverage-gaps-papers.test.ts … (snapStudentRefusal and snapIncome, functions); no test has the New Haven student apply",
           "now": "tests/evidence-g15-papers.test.ts (benefits.assistance). A New Haven student applies on her first morning, and each month's amount is checked: $298, $298, then $306 on 30 October with September's work-study counted as nothing. The next midnight's groceries come off the EBT card. The summer recess closes the case with one notice, and a new application is refused under 7 CFR 273.5. Ontario Works and BC are paid on quick lives in Toronto and Vancouver. The Apply button is pressed. Also tests/defects-g8-5.test.ts:201-214 (a New Haven student applying in term) and tests/assistance.test.ts. Until 2026-10-13 this said no test had the New Haven student apply, which defects-g8-5 already did. The row's line references also moved: PapersWorkspace.tsx:419 is now 769, and assistance.ts:276-308 and 349-359 are now 145-167 and 216-226."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1484,6 +1603,10 @@
           "said": "Benefits tab 'File A Claim' (PapersWorkspace.tsx:472; HomeClaimsPanel 357)",
           "now": "Papers > Unemployment 'File A Claim' (PapersWorkspace.tsx:827); HomeClaimsPanel (PapersWorkspace.tsx:701-755) for Britain, Ireland and Mexico City. Until 2026-10-13 this said PapersWorkspace.tsx:472 and HomeClaimsPanel 357. The row's reads also cited unemployment.ts:64-126 and 165-187, now 68-130 and 182-210. Its downstream cited taxreturn.ts:323, where figuresFor (:828) now reads the benefit at :836. Its tests field said no test earned the base period or left school through a command before claiming; tests/evidence-g15-papers.test.ts and tests/evidence2-b05.test.ts now do."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1524,6 +1647,10 @@
         "gaps": [
           "It is one of the 16 deferred items. eiOnCheck still has no caller (eiself.ts:44). The panel no longer says premiums come from each check: it says they would come from self-employed earnings, of which there are none (PapersWorkspace.tsx:792). The row's refs are stale: PapersWorkspace.tsx:444 is now 794 and health.ts:1145 is now 1332."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1572,6 +1699,10 @@
           "A New Haven student never lives in Mexico, since nothing moves a life after 2026-10-09, so the claim can't be reached.",
           "The row's entry line PapersWorkspace.tsx:635 is stale; it is now :1014."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1621,6 +1752,10 @@
           "The row's explanation is stale. The Fine no longer promises €22 for living alone; PapersWorkspace.tsx:997 now says '(The €22 Living Alone Increase isn’t kept since the home went.)'.",
           "The row's entry line :611 is stale; it is now :990."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1661,6 +1796,10 @@
           "contribute() (imss.ts:103) has no caller in src, so person.imss.days stays 0, the panel never shows and the command is dead in every new life. If this item is ever taken off the deferred list, that is missing-implementation.",
           "The row's entry line :622 is stale; it is now :1001."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1719,6 +1858,10 @@
           "Forty credits can't be earned in a school life.",
           "The row's line references are stale: PapersWorkspace.tsx:586 is now :965, and socialsecurity.ts:238-280 is now :119-156."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1759,6 +1902,10 @@
           "UK earnings and UC credits can't arise in a student's life.",
           "The row's line references are stale."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -1767,7 +1914,7 @@
       "entry": "Returns tab 'File It' (PapersWorkspace.tsx:465); decision 'Your <year> Tax Return' (taxreturn.ts:1233-1238)",
       "reads": "figuresFor earnings year, health premiums, deadline (taxreturn.ts:882-1038)",
       "changes": "filedAt, penalty, each state’s side first, then the IRS’s: refund, or payFromBank of the tax, penalty and interest from the due date (lateInterest), or owed + collection, or joined to a plan (taxreturn.ts:1483-1534)",
-      "downstream": "tax.refund pays; tax.notice collection and levy; tax.substitute skipped once filed (taxreturn.ts:1275), its pending CP2566 canceled at filing (:1492)",
+      "downstream": "Refund (TAX_REFUND_KIND) or balance; unpaid, the IRS’s bill (Notice CP14, from 2026-10-16) at once and collection from the due date (tax.notice); each state’s side (fileState)",
       "persistent": "person.returns, ledger",
       "explanation": "Return table line by line; toasts",
       "tests": "tests/safetynet.test.ts 'is ready in February, filed for a refund 21 days on, or a balance from the bank, or owed'; tests/defects-g8-8.test.ts ‘PLAYER JOURNEY: the IRS’s part owed and the bank empty, Connecticut’s a refund: no money “comes back in 21 days”’ and the File It toasts beside it; tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: the F-1 student files her 1040-NR with the bank empty and owes $165.60…’, ‘a 1040-NR filed with the card in hand is processed in the IRS’s 21 days; without it the W-7 holds it seven weeks more, 70’; tests/retirement.test.ts 'is left to them if they file in the months the IRS gives' (New York lives no new one lives, the year’s wages recorded by hand: a New Haven life files the IRS’s and Connecticut’s)",
@@ -1849,6 +1996,116 @@
           "The refusal 'There’s no return for that year.' is untested.",
           "Every line reference in the row is stale."
         ]
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 8,
+        "tests": [
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+            "kind": "fixture",
+            "closes": "$20,000 of income (127.8% of 2025's $15,650), two $706.00 premiums: 2 × (706.00 − 0.021 × 20,000 ÷ 12) = $1,342.00 on her 2026 1040-NR; $0 on her 2027 1040-NR; $0 for a citizen in 2026 (HUSKY D would take her).",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the due date; CP501, CP503, CP504 and the LT11 35 days apart from it, $1,728.81 to $1,789.55, and the levy 30 days on, each once across reloads; Connecticut’s bill 30 days after its due date: until 2026-10-16 CP501 came on 7 March and CP503 on 11 April, with no bill",
+            "kind": "render",
+            "closes": "the CP14 at filing in its words (due date, $1,700.39), nothing else from the IRS or Connecticut to a minute before the due date across a reload on 8 March, CP501 to LT11 at the due date + 35/70/105/140 days with $1,728.81/$1,748.92/$1,769.17/$1,789.55 worked by hand from IRC 6622 and 6651(a)(2), the levy at +170 with $1,808.35 still owed, Connecticut's bill at its due date + 30 ($649.71), one CP14 after reloads, ledger balanced",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "the same letters, on the same days, for the same sums, whether the clock jumps from filing to past the levy at once or a day at a time",
+            "kind": "command",
+            "closes": "one jump and day-by-day steps give the same five letters, days and $1,808.35",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "a return filed after its due date unpaid has its bill with the penalties charged, and its first reminder 35 days after filing",
+            "kind": "command",
+            "closes": "filed 15 days late: CP14 $1,790.51 (5% for filing and paying late, $85.02; $5.10 interest on the tax and the filing share) with the penalties clause, CP501 35 days after filing",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.early_filing_notices: a plan refused, and a save from before > PLAYER JOURNEY: the IRS’s plan asked for on 1 February 2028 without direct debit and refused a minute on for its $43 fee, $50 having gone to the tax: its letters wait for the 18 April due date, CP501 35 days after it, and none before it; until 2026-10-16 CP501 came on 7 March",
+            "kind": "render",
+            "closes": "a plan refused before the due date (its $43 fee unpayable at the decision) leaves the first reminder at the due date + 35 days and no letter before the due date",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.early_filing_notices: a plan refused, and a save from before > OLDER SAVE: a save written before 2026-10-16 holding CP501 for 7 March, before the 18 April due date, has it moved to 35 days after the due date on opening, once, across two openings",
+            "kind": "fixture",
+            "closes": "OLDER SAVE: a letter a save holds before its earliest day is moved on opening to the due date + 35 days, once across two openings, and comes then",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "scope-taxpapers.test.ts",
+            "title": "PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+            "kind": "command",
+            "closes": "a plan ended before the due date: its LT11 at the due date + 35 days (assertion corrected 2026-10-16: it was the plan's end + 35)",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "scope-taxpapers.test.ts",
+            "title": "tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
+            "kind": "render",
+            "closes": "renamed and corrected with the fix; the audit's citation in papers.json moved with it",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence-g17-papers.test.ts",
+            "title": "PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it",
+            "kind": "render",
+            "closes": "its return now filed at noon on the due day, where days after filing and after the due date are the same day; letters asserted at the due date + 35n exactly; Papers' payment date October 2, 2027",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence-g33-ui.test.ts",
+            "title": "with nothing in the bank, File It on Home leaves $165.60 owed and collection begins: the IRS’s first reminder five weeks on",
+            "kind": "render",
+            "closes": "File It on Home: the CP14 at filing and the first reminder at the due date + 35 days, none before, one bill across a reload",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence2-b12.test.ts",
+            "title": "filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed, 0.5% for five months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172",
+            "kind": "render",
+            "closes": "renamed: the stored balance now brought up at the letters from the due date; the day moved to where live and stored still differ; ui.json's citation moved with it",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "retirement.test.ts",
+            "title": "is collected: four notices five weeks apart, the final one’s 30 days, then a levy on the bank accounts",
+            "kind": "command",
+            "closes": "counted from the due date (its `filed` reads the later of filing and the due date)",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "liens-and-arrangements.test.ts",
+            "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277",
+            "kind": "command",
+            "closes": "the LT11 reached from the due date",
+            "round": "remaining-tax"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2037,6 +2294,10 @@
           "said": "pays; deletes owed; cancels pending notices (taxreturn.ts:633-643)",
           "now": "Pays from the bank, all of it or refused ('… is more than the bank can cover.'), posting 'Income tax owed, <year>' (', in part' for a part); applies it to the tax, then the penalty, then the interest; paid in full, deletes owed, cancels the year's pending notices and marks a filed federal lien paid (tax.pay, taxreturn.ts:1457-1469; applyPayment, :221-235). Until 2026-10-13 this cited taxreturn.ts:633-643, lines that had moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2078,6 +2339,10 @@
           "The row calls it legacy, but it is not reachable only from an old save. It is the decision of documents.naturalize, which is on the deferred list. A new life could reach it through documents.residence (MX), which a New Haven student can use (guide-examples-papers.test.ts:817-834), then five years of renewals, then naturalize. It belongs with the deferred items.",
           "The row's line reference citizenship.ts:244-251 is stale; it is now :91-98."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -2148,6 +2413,10 @@
           "The waitsOnVisit branch is legacy (see documents.visit).",
           "The row's line references are stale."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2271,6 +2540,10 @@
           "said": "tests/idreplace.test.ts ‘is replaced in New York for $8 and comes in three weeks’; no test has a bank take the card",
           "now": "tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a New York license reported lost leaves no photo ID and Capital One refuses; replaced by mail for $17.50, it arrives 21 days on…’ and ‘PLAYER JOURNEY: an F-1 student’s limited-term Connecticut card comes ten business days after applying… Wells Fargo takes it…’; also tests/idreplace.test.ts, tests/papers-transitions.test.ts, tests/guide-examples-papers.test.ts (documents.passport-id), tests/coverage-gaps-papers.test.ts. Until 2026-10-13 this said no test had a bank take the card."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2320,6 +2593,10 @@
           "The exact end, 13 weeks (91 days) after issuedAt, is not asserted anywhere.",
           "The row's line references are stale."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2459,6 +2736,10 @@
           "said": "valid from max(programEnd, now) for 12 months; OPT_WEEK; scheduleUsStatus (permission.ts:361-382)",
           "now": "valid from max(programEnd, now) for 12 calendar months, idleDays 0; OPT_WEEK a week on; scheduleUsStatus, the look moved to its expiry; 'OPT Approved' with both dates (the PERMISSION_KIND handler, permission.ts:208-229). Until 2026-10-13 this cited permission.ts:361-382, lines that had moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2657,6 +2938,10 @@
           "said": "load (index.ts:262,275), OPT events, missed visits",
           "now": "createSave and load (index.ts:276, :310); every end of school, by withdrawal, dismissal, the degree or a degree withheld (setStanding, school.ts:1797); a leave's start, end and F-1 extension (leave.ts:397, :673, :901); a biometrics visit (papervisits.ts:184); OPT decided and ended (permission.ts:220, :268). Until 2026-10-13 this said load (index.ts:262,275), OPT events, missed visits."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2698,6 +2983,10 @@
           "Only saves from before 2026-10-09 can hold a visit, and a new life can't reach it.",
           "The legacy test's title promises the document decided, which it doesn't assert. The miss and cancellation branches are untested."
         ]
+      },
+      "verification": {
+        "class": "legacy",
+        "label": "Older Saves Only"
       }
     },
     {
@@ -2940,6 +3229,10 @@
           "said": "EBT posting or provincial payment; months (assistance.ts:361-401)",
           "now": "The month's SNAP onto the EBT escrow account (opened at the first payment), or Ontario Works or BC assistance into the payee account; claim.months; 'SNAP Paid' or 'Assistance Paid'; a student in the summer without 87 hours closes the case ('Your SNAP Case Closed', closedAt); an adult past three counted months is refused ('SNAP Time Limit Reached') (the ASSISTANCE_KIND handler, assistance.ts:228-284). Until 2026-10-13 this cited assistance.ts:361-401, which the file, 290 lines long, doesn't have."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3072,6 +3365,10 @@
           "said": "weekly posting, recordBenefit (unemployment.ts:189-223)",
           "now": "Each Sunday at 8 PM, the week posted to the payee account as 'Unemployment insurance: the week to <date>', recordBenefit, claim.paid; nothing while unavailable (abroad, in hospital, laid up, without permission to work); the first week due unpaid outside Connecticut; closed at maxTotal or a year from filing with 'Your Unemployment Claim Ended' (unemployment.ts:212-249). Until 2026-10-13 this cited unemployment.ts:189-223."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3123,6 +3420,10 @@
           "A payment doesn't reach the year's income, since no recordBenefit is called. Legacy only.",
           "The row cites the weaker test; homebenefits.test.ts:81 is the stronger evidence."
         ]
+      },
+      "verification": {
+        "class": "legacy",
+        "label": "Older Saves Only"
       }
     },
     {
@@ -3168,6 +3469,10 @@
         "gaps": [
           "The student can't live in Ireland. This is one of the 16 deferred items."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -3214,6 +3519,10 @@
         "gaps": [
           "The student can't live in Britain. This is deferred, and the cited test doesn't run the period."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -3272,6 +3581,10 @@
           "The row's issue is stale: recordPension now has five callers (homepensions.ts:204, 227; imss.ts:162; socialsecurity.ts:152; statepension.ts:96). Its settled note says so.",
           "Only the Social Security month asserts the year's income."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -3429,6 +3742,10 @@
           "said": "returns[year], TAX_DUE, the decision (taxreturn.ts:503-530)",
           "now": "returns[year], TAX_DUE at its due date, Tax Season re-armed for the next 1 February, and 'Your <year> Tax Return' with File It; none for a year the US doesn't tax, nor, from 2026-10-13, for one with nothing owed or due back and income under the standard deduction, a 1040-NR excepted (taxreturn.ts:1123-1155). Until 2026-10-13 this cited taxreturn.ts:503-530."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3598,6 +3915,10 @@
           "said": "schedules TAX_SFR if owing (taxreturn.ts:532-540)",
           "now": "At an unfiled return's due date (the TAX_DUE_KIND handler, taxreturn.ts:1161-1190), tax.due schedules TAX_SFR a year on where the IRS's part is owed; each owed state's non-filer letters (scheduleStateNonFiler); Oregon's three-year check at the extended due date; and the notice 'Your <year> Return Is Late': past 60 days at least the lesser of $535 (returns required in 2027, Rev. Proc. 2025-32) and the IRS's part, each owed state named as charging its own, the IRS owed nothing or a refund waiting said so. Until 2026-10-13 this said only 'schedules TAX_SFR if owing (taxreturn.ts:532-540)', and the least was $525 for any balance."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3732,6 +4053,10 @@
           "said": "proposed then assessed; owed; collection (taxreturn.ts:542-567)",
           "now": "A year after the due date it is proposed: Notice CP2566 on the IRS's figures (sfrFigures, without the foreign and premium credits), with the late penalty and interest from the due date. Unanswered 120 days, it is assessed: filedAt, substitute and penalty are set, owed in its parts, and collection starts with CP501 35 days on (taxreturn.ts:1183-1213). Until 2026-10-13 the reference was taxreturn.ts:542-567."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3739,11 +4064,11 @@
       "kind": "scheduled",
       "entry": "unpaid filing, SFR, armCollection",
       "reads": "owed",
-      "changes": "Each step accrues, then CP501, CP503, CP504 and LT11 come five weeks apart; the federal lien is filed at LT11 where $10,000 or more is owed. The levy comes 30 days after LT11, through drawFromBank, and takes what the accounts hold up to what's owed. It comes again every 91 days while anything is owed; a payment plan pending, in force or in default stops it (the TAX_NOTICE_KIND handler, taxreturn.ts:1321-1349; nextNotice, :386-390). Until 2026-10-13 the reference was taxreturn.ts:569-593",
+      "changes": "At filing, a balance the bank couldn’t pay and no plan takes brings the IRS’s bill, Notice CP14 (`billed`, from 2026-10-16), naming the due date on a return filed early. Each step accrues; CP501, CP503, CP504 and LT11 come five weeks apart, the first five weeks after the later of the due date and filing (`nextNotice`; until 2026-10-16 counted from filing, so a return filed early had CP501 and CP503 before the tax was due); the federal lien is filed at LT11 where $10,000 or more is owed. The levy comes 30 days after LT11, through drawFromBank, and takes what the accounts hold up to what’s owed, again every 91 days while anything is owed; a plan pending, in force or in default stops it. A save holding a letter before its earliest day has it moved there on opening (`armCollection`).",
       "downstream": "bank balances",
       "persistent": "returns, ledger",
-      "explanation": "CP501..LT11 notices",
-      "tests": "tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it’, ‘a levy that finds the bank empty takes nothing and posts nothing…’; tests/retirement.test.ts 'is collected: four notices five weeks apart...'",
+      "explanation": "Notice CP14 ‘A Bill From The IRS’; CP501..LT11 notices",
+      "tests": "tests/remaining-tax.test.ts ‘PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April…’, ‘the same letters, on the same days…’, ‘a return filed after its due date unpaid has its bill…’, ‘PLAYER JOURNEY: the IRS’s plan asked for on 1 February 2028 without direct debit…’, ‘OLDER SAVE: a save written before 2026-10-16 holding CP501 for 7 March…’; tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing…’ (filed on the due day), ‘a levy that finds the bank empty takes nothing…’; tests/retirement.test.ts 'is collected: four notices five weeks apart...'",
       "status": "verified",
       "issue": "",
       "review": {
@@ -3803,8 +4128,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 8,
         "tests": [
           {
             "file": "evidence-g17-papers.test.ts",
@@ -3817,6 +4142,90 @@
             "title": "a levy that finds the bank empty takes nothing and posts nothing, says $0.00 was taken and what is still owed, and comes again 91 days on",
             "kind": "command",
             "closes": "Gap 2: the empty levy. Nothing is posted and no payment is recorded; the notice says '$0.00 taken… still owed'; levies follow at +91 and +182 days"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April; no letter before the due date; CP501, CP503, CP504 and the LT11 35 days apart from it, $1,728.81 to $1,789.55, and the levy 30 days on, each once across reloads; Connecticut’s bill 30 days after its due date: until 2026-10-16 CP501 came on 7 March and CP503 on 11 April, with no bill",
+            "kind": "render",
+            "closes": "the CP14 at filing in its words (due date, $1,700.39), nothing else from the IRS or Connecticut to a minute before the due date across a reload on 8 March, CP501 to LT11 at the due date + 35/70/105/140 days with $1,728.81/$1,748.92/$1,769.17/$1,789.55 worked by hand from IRC 6622 and 6651(a)(2), the levy at +170 with $1,808.35 still owed, Connecticut's bill at its due date + 30 ($649.71), one CP14 after reloads, ledger balanced",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "the same letters, on the same days, for the same sums, whether the clock jumps from filing to past the levy at once or a day at a time",
+            "kind": "command",
+            "closes": "one jump and day-by-day steps give the same five letters, days and $1,808.35",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "a return filed after its due date unpaid has its bill with the penalties charged, and its first reminder 35 days after filing",
+            "kind": "command",
+            "closes": "filed 15 days late: CP14 $1,790.51 (5% for filing and paying late, $85.02; $5.10 interest on the tax and the filing share) with the penalties clause, CP501 35 days after filing",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.early_filing_notices: a plan refused, and a save from before > PLAYER JOURNEY: the IRS’s plan asked for on 1 February 2028 without direct debit and refused a minute on for its $43 fee, $50 having gone to the tax: its letters wait for the 18 April due date, CP501 35 days after it, and none before it; until 2026-10-16 CP501 came on 7 March",
+            "kind": "render",
+            "closes": "a plan refused before the due date (its $43 fee unpayable at the decision) leaves the first reminder at the due date + 35 days and no letter before the due date",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.early_filing_notices: a plan refused, and a save from before > OLDER SAVE: a save written before 2026-10-16 holding CP501 for 7 March, before the 18 April due date, has it moved to 35 days after the due date on opening, once, across two openings",
+            "kind": "fixture",
+            "closes": "OLDER SAVE: a letter a save holds before its earliest day is moved on opening to the due date + 35 days, once across two openings, and comes then",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "scope-taxpapers.test.ts",
+            "title": "PLAYER JOURNEY: left behind, it ends on 1 April, 30 days after the missed payment, neither Catch Up nor Revise offered or taken, and one IRS letter coming, though the save was opened while it was behind: until 2026-10-15 two",
+            "kind": "command",
+            "closes": "a plan ended before the due date: its LT11 at the due date + 35 days (assertion corrected 2026-10-16: it was the plan's end + 35)",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "scope-taxpapers.test.ts",
+            "title": "tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
+            "kind": "render",
+            "closes": "renamed and corrected with the fix; the audit's citation in papers.json moved with it",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence-g17-papers.test.ts",
+            "title": "PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it",
+            "kind": "render",
+            "closes": "its return now filed at noon on the due day, where days after filing and after the due date are the same day; letters asserted at the due date + 35n exactly; Papers' payment date October 2, 2027",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence-g33-ui.test.ts",
+            "title": "with nothing in the bank, File It on Home leaves $165.60 owed and collection begins: the IRS’s first reminder five weeks on",
+            "kind": "render",
+            "closes": "File It on Home: the CP14 at filing and the first reminder at the due date + 35 days, none before, one bill across a reload",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "evidence2-b12.test.ts",
+            "title": "filed on 1 February with nothing in the bank, 139 days past its day Home says $174 owed, 0.5% for five months begun and 7% a year compounded daily on $165.60, where the balance as last stored reads $172",
+            "kind": "render",
+            "closes": "renamed: the stored balance now brought up at the letters from the due date; the day moved to where live and stored still differ; ui.json's citation moved with it",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "retirement.test.ts",
+            "title": "is collected: four notices five weeks apart, the final one’s 30 days, then a levy on the bank accounts",
+            "kind": "command",
+            "closes": "counted from the due date (its `filed` reads the later of filing and the due date)",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "liens-and-arrangements.test.ts",
+            "title": "PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277",
+            "kind": "command",
+            "closes": "the LT11 reached from the due date",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [
@@ -3849,6 +4258,10 @@
           "said": "accrue; notices; levy via drawFromBank (taxreturn.ts:569-593)",
           "now": "Each step accrues, then CP501, CP503, CP504 and LT11 come five weeks apart; the federal lien is filed at LT11 where $10,000 or more is owed. The levy comes 30 days after LT11, through drawFromBank, and takes what the accounts hold up to what's owed. It comes again every 91 days while anything is owed (taxreturn.ts:1231-1259). Until 2026-10-13 the reference was taxreturn.ts:569-593."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3918,6 +4331,10 @@
           "Not blocking: the IRS's offset to another year is tested only on a hand-made return. The IRS-to-state offset through the clock is behind a permissive `||`, and is otherwise tested only as a function (state-tax.test.ts:216).",
           "Not blocking: the row's line reference is stale (595-605 → 1250-1275). Whether a played student ever has a refund wasn't probed."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4083,6 +4500,10 @@
             "a 1040-NR’s 15 June is the IRS’s alone … (TEST SETUP of r.due; its stated reason for the setup is inaccurate, see problems)"
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4096,7 +4517,7 @@
       "explanation": "‘Your Amended <year> Return Is Processed’",
       "tests": "tests/tax-lifecycle.test.ts ‘applies each part to the tax, then the penalty, then the interest...’, ‘an amended return showing less tax takes it off what’s owed first...’, ‘runs out three years after filing’ (New York lives); tests/state-tax.test.ts ‘California: 5% and half a percent a month...’ (Los Angeles); tests/finance-paths.test.ts ‘an amended return’s tax joins a plan where it adds two payments or less...’",
       "status": "unresolved",
-      "issue": "Unreachable in play: nothing a life does changes a filed year’s record (every income is recorded to the year it’s paid, and a year’s return is raised the February after), so a played student is told ‘there’s nothing to amend’ (tests/scope-taxpapers.test.ts). Its processing is tested on lives with a corrected W-2 set by hand (tests/tax-lifecycle.test.ts, tests/finance-paths.test.ts) and Connecticut’s part amended on a render (tests/defects-g8-8.test.ts:201); its Connecticut refund posting, its interest literals and newLiability’s join branch remain untested.",
+      "issue": "Unreachable in play: nothing a life does changes a filed year’s record, so a played student is told ‘there’s nothing to amend’ (tests/scope-taxpapers.test.ts). Its processing is tested on FIXTURE lives with a corrected W-2 set by hand (tests/remaining-tax.test.ts: more tax with the IRS’s interest from the due date and Connecticut’s 10% and 1% a month worked by hand; Connecticut’s refund posted on less tax; new tax joining an IRS plan at two payments or less), and in tests/tax-lifecycle.test.ts and tests/finance-paths.test.ts.",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -4168,14 +4589,35 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
             "title": "what her life never reaches > tax.amend: her filed 2026 and 2027 match the record, and a year more on the clock leaves them so",
             "kind": "command",
             "closes": "the refusal 'there’s nothing to amend' before and after a year; 2027's figures unchanged while 2028's interest is recorded"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027: the 1040-X’s tax added on 9 September with the IRS’s interest from the 15 April due date, Connecticut’s with its 10% and 1% for each month begun, the IRS’s letters from then, once across a reload",
+            "kind": "fixture",
+            "closes": "more tax: the IRS's interest from the due date worked from IRC 6622 (2027's 365 days) on the 1040-X's change, owed = change + interest; Connecticut's added with 10% and five months of 1% (12-735); letters from the processing day; once across a reload",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended: Connecticut’s part, paid at filing, comes back to her as its refund, and the IRS’s with its interest from the due date",
+            "kind": "fixture",
+            "closes": "less tax: Connecticut's part posted back to her as 'Connecticut tax refund, amended 2026 return'; the IRS's refunded with its interest from the due date, by hand",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.amend (FIXTURE: New Haven quick-saves with a corrected W-2) > FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force: no CP523, the plan kept at its payment, its history saying what joined",
+            "kind": "fixture",
+            "closes": "new tax of two payments or less joins the plan: active, the same monthly, 'New tax joined the plan' with the amount worked by hand, no CP523",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [],
@@ -4197,6 +4639,16 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "acceptance": {
+        "player": "Unreachable: every writer to a year’s record writes at the moment it pays, into that moment’s year, and a year’s return is raised the February after, so a filed year’s figures never change and a played student is told there’s nothing to amend (tests/scope-taxpapers.test.ts ‘tax.amend: her filed 2026 and 2027 match the record…’).",
+        "engine": "tests/remaining-tax.test.ts ‘FIXTURE: $5,000 of wages a corrected W-2 adds, amended on 1 July 2027…’, ‘FIXTURE: a W-2 that overstated the wages by $5,000, corrected and amended…’ and ‘FIXTURE: an amendment’s new tax of two monthly payments or less joins the IRS plan in force…’ (New Haven quick-saves with a corrected W-2 set by hand); tests/tax-lifecycle.test.ts and tests/finance-paths.test.ts on New York lives.",
+        "deferred": "Not deferred by the owner. Nothing in the game reports a year’s pay late or corrects it (no late or corrected W-2), so nothing a player does gives a filed year something to amend.",
+        "unfinished": "None found. The three parts of its processing the row called untested on 2026-10-15 (Connecticut’s refund posted, the interest worked by hand, new tax joining a plan) are tested on fixtures since 2026-10-16 (the tax area’s result)."
+      },
+      "verification": {
+        "class": "engine",
+        "label": "Retained Engine, On Labelled Fixtures"
       }
     },
     {
@@ -4366,6 +4818,10 @@
           "said": "taxPlan pending, decided after its days (taxreturn.ts:1178)",
           "now": "taxPlan is pending: decided a minute on online with a Social Security number, or 30 days on by Form 9465 (taxreturn.ts:1288-1310; the decision at 1312-1326). Until 2026-10-13 the reference was taxreturn.ts:1178."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4460,6 +4916,10 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4584,6 +5044,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4724,6 +5188,10 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4737,7 +5205,7 @@
       "explanation": "The state’s rows",
       "tests": "tests/state-tax.test.ts ‘New York: half a percent a month and 9.5% a year from the due date; a missed plan payment made up by the next due date, then ended’ (a New York life)",
       "status": "unresolved",
-      "issue": "Unreachable in play: Connecticut, the only state a life files in, ends its plan at the first missed payment (cure ‘none’, SLATE’s reading), so no Connecticut plan is ever behind and Catch Up is never drawn; a played student’s missed plan ends and the command says ‘That plan isn’t behind.’ (tests/scope-taxpapers.test.ts). New York’s catch-up is tested on a New York life (tests/state-tax.test.ts:109), its consequences thinly.",
+      "issue": "Unreachable in play: Connecticut, the only state a life files in, ends its plan at the first missed payment (cure ‘none’, SLATE’s reading), so Catch Up is never drawn (tests/scope-taxpapers.test.ts). New York’s is played on a FIXTURE life through Papers’ Catch Up and the clock (tests/remaining-tax.test.ts): kept past the day it would have ended, its next payment taken, across a reload, against a twin that ends.",
       "traced": "2026-10-12",
       "read": true,
       "corrected": {
@@ -4776,14 +5244,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
             "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once, with no Catch Up offered or taken; collection resumes at the notice of intent, 30 days after the due date",
             "kind": "render",
             "closes": "that the control is never offered for Connecticut and its command refuses"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "FIXTURE: its payment missed, Catch Up drawn on Papers and pressed: the plan in force past the day it would have ended, its next payment taken, across a reload; its twin left behind ends that day",
+            "kind": "fixture",
+            "closes": "New York's plan missed, Catch Up drawn on Papers and pressed ('Caught up: $382.46 paid…' in its own words), active past endsBy with no ending notice, the next payment taken 30 days on, across a reload; GUARD: caught up twice refused, nothing moved; its uncaught twin ends on endsBy, 'Ended: not caught up', one notice",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [],
@@ -4805,6 +5280,16 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "acceptance": {
+        "player": "Unreachable: Connecticut, the only state a life files in, ends its plan at the first payment missed (its cure “none”, SLATE’s reading), so Catch Up is never drawn and the command says the plan isn’t behind (tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: its first payment missed with her money in the CD, the plan ends at once…’).",
+        "engine": "tests/remaining-tax.test.ts ‘FIXTURE: its payment missed, Catch Up drawn on Papers and pressed…’ (a New York plan kept past the day it would have ended, its next payment taken, across a reload, against a twin that ends); tests/state-tax.test.ts on a New York life.",
+        "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "unfinished": "None found. Connecticut’s cure “none” is SLATE’s reading of its plan, recorded as such."
+      },
+      "verification": {
+        "class": "engine",
+        "label": "Retained Engine, On Labelled Fixtures"
       }
     },
     {
@@ -4900,20 +5385,24 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
       "id": "tax.lien_dispute",
       "kind": "command",
-      "entry": "The lien panel’s Filed In Error (LienPanels.tsx:69)",
+      "entry": "The lien panel’s Ask For Its Withdrawal As Filed In Error, drawn only on a lien filed in error (LienPanels.tsx, from 2026-10-16)",
       "reads": "lienDisputeRefusal: a lien filed on an assessment the taxpayer’s own return showed was nothing",
       "changes": "the dispute asked; decided after the state’s days (statetax.ts:1031)",
       "downstream": "the lien withdrawn; its fee off what’s owed or back to the bank",
       "persistent": "returns[].stateDue[].lien",
-      "explanation": "The lien panel",
+      "explanation": "The lien panel: the button where it can act, the engine’s reason where it can’t",
       "tests": "tests/liens-and-arrangements.test.ts ‘one filed on an assessment their own return shows was nothing: withdrawn on request as in error, its fee back...’ (California’s lien, its assessment, the lien and the return each set by calling the engine’s functions)",
       "status": "unresolved",
-      "issue": "Unreachable for Connecticut, the only state a life files in: its lien secures tax still owed whenever it’s filed, so on a played student’s liens, one at the notice of intent and one on DRS’s assessment replaced by her return, the button is shut and the command refused (tests/scope-taxpapers.test.ts). California’s withdrawal is tested by calling the engine’s functions (tests/liens-and-arrangements.test.ts:109).",
+      "issue": "Unreachable for Connecticut, the only state a life files in: its lien secures tax still owed whenever it’s filed. Until 2026-10-16 the button was drawn shut on every lien; from then it’s drawn only on a lien the engine finds was filed in error, and a played student’s Connecticut lien says why in the engine’s words, the command refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’). Connecticut’s withdrawal in error is played through the button and the clock on a FIXTURE (‘FIXTURE: a Connecticut lien on DRS’s assessment…’), California’s by calling the engine’s functions (tests/liens-and-arrangements.test.ts:109).",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -4952,8 +5441,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 3,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
@@ -4966,6 +5455,27 @@
             "title": "tax.apply_state_plan and tax.catch_up_state_plan > PLAYER JOURNEY: a year Connecticut levied and was paid by the levy doesn’t refuse her a plan on the next: until 2026-10-15 it did, “won’t set up a plan on an account it has levied”",
             "kind": "command",
             "closes": "the nearest case, an assessed lien replaced by her return, refused"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date: Papers draws no Ask For Its Withdrawal As Filed In Error and says why in the engine’s words, Ask For Its Release beside it; the command sent anyway is refused and moves nothing",
+            "kind": "render",
+            "closes": "a played Connecticut lien: no tax.lien_dispute button drawn, the engine's sentence ('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.') on the panel, no 'Filed in error' promise, Ask For Its Release drawn shut with its reason; GUARD: the command refused, nothing moved",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "FIXTURE: a Connecticut lien on DRS’s assessment that her own return, in its place, showed she didn’t owe: the button drawn and pressed, Asked To Be Withdrawn and decided 30 days on, Withdrawn with one notice across a reload, and not asked twice",
+            "kind": "fixture",
+            "closes": "a Connecticut lien in error (FIXTURE): the button and the 'withdrawn on request' line drawn, pressed, disputed with its 30 days (SLATE's), withdrawn on the day with one notice across a reload, refused after",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "scope-taxpapers.test.ts",
+            "title": "PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June, three months begun, $661.41 owed: $100 goes to the $58.53 penalty, the $17.55 interest and $23.92 of tax; more than is owed refused; the rest paid on Papers; the levy pending for 17 July taken off the calendar; the lien’s release asked once and given on 25 July, and no levy, across a reload",
+            "kind": "render",
+            "closes": "assertion corrected 2026-10-16: no dispute button drawn, the engine's sentence on screen",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [],
@@ -4987,6 +5497,16 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "acceptance": {
+        "player": "Unreachable: Connecticut’s lien always secures tax still owed, since a payment goes to the penalty and interest first, a lien is filed only while something is owed, and DRS assesses from the return’s own figures. Since 2026-10-16 the button is drawn only on a lien filed in error; on a played student’s Connecticut lien Papers says why in the engine’s words and the command is refused (tests/remaining-tax.test.ts ‘PLAYER JOURNEY: her Connecticut lien, filed by the clock 60 days after the due date…’).",
+        "engine": "tests/remaining-tax.test.ts ‘FIXTURE: a Connecticut lien on DRS’s assessment that her own return, in its place, showed she didn’t owe…’ (the button pressed, decided 30 days on, withdrawn with one notice across a reload); tests/liens-and-arrangements.test.ts on California’s, by calling the engine’s functions.",
+        "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "unfinished": "None found. Connecticut’s 30 days to withdraw a lien filed in error are SLATE’s assumption (the tax area’s result)."
+      },
+      "verification": {
+        "class": "engine",
+        "label": "Retained Engine, On Labelled Fixtures"
       }
     },
     {
@@ -5000,7 +5520,7 @@
       "explanation": "The lien panel",
       "tests": "tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it; paid, released within 30 days; then withdrawn on Form 12277’ (a New York life given $150,000 of wages by hand)",
       "status": "unresolved",
-      "issue": "Unreachable: a student’s year owes the IRS under two thousand dollars (her 2027 LT11 is for $1,746.41), against the notice’s $10,000 (tests/scope-taxpapers.test.ts). Tested on a New York life given $150,000 of wages by hand (tests/liens-and-arrangements.test.ts:141); the erroneous path is untested. SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate; her years together stay far under it either way.",
+      "issue": "Unreachable: a student’s year owes the IRS under two thousand dollars (her 2027 LT11, from 2026-10-16 on 5 September 2028 for $1,789.55, was on 20 June for $1,746.41 while the letters ran from filing), against the notice’s $10,000 (tests/scope-taxpapers.test.ts). Tested on New York FIXTURE lives: paid, released and withdrawn on Form 12277 (tests/liens-and-arrangements.test.ts:141), and filed in error, released as erroneous in 14 days through the panel’s button (tests/remaining-tax.test.ts). SLATE reads the threshold on one year’s balance where IRM 5.12.2 reads the aggregate.",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -5040,14 +5560,21 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
-            "title": "what her life never reaches > tax.federal_lien_withdraw: her LT11 on 20 June is for $1,746.41, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn",
+            "title": "what her life never reaches > tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41",
             "kind": "render",
             "closes": "no lien filed at a played LT11, the command refused, no control drawn"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.federal_lien_withdraw (FIXTURE: a New York quick-save owing over $10,000) > FIXTURE: the IRS’s own return assessed for a year never filed, its lien filed at the LT11; her own return in its place shows the withholding paid it all: Ask For Its Release As Erroneous is drawn and pressed at once, released as erroneous 14 days on, across a reload, and not asked twice",
+            "kind": "fixture",
+            "closes": "a substitute assessed on $150,000 of wages (FIXTURE), its lien filed at the LT11; her own return, the withholding set by hand, owes nothing: the button reads Ask For Its Release As Erroneous and is enabled at once, pressed, decided in 14 days, withdrawn with its notice ', as filed in error', across a reload, not turned back by the release after payment; GUARDs: asked twice refused; the IRS's own return not amended",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [],
@@ -5069,6 +5596,16 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "acceptance": {
+        "player": "Unreachable: the IRS files its notice only on $10,000 or more at the LT11, and a played student’s year owes it under two thousand dollars, her 2027 LT11 on 5 September 2028 for $1,789.55, so there’s no lien and no panel (tests/scope-taxpapers.test.ts ‘tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55…’).",
+        "engine": "tests/remaining-tax.test.ts ‘FIXTURE: the IRS’s own return assessed for a year never filed…’ (filed in error, released as erroneous 14 days on through the panel, across a reload); tests/liens-and-arrangements.test.ts ‘PLAYER JOURNEY: $10,000 or more unpaid at the LT11 files it…’ on a New York life given $150,000 of wages by hand.",
+        "deferred": "Not deferred by the owner. A balance of $10,000 owed to the IRS needs income no current life earns, and no income is invented to reach it.",
+        "unfinished": "None found. SLATE reads the $10,000 on one year’s balance where IRM 5.12.2 reads the aggregate; her years together stay far under it either way."
+      },
+      "verification": {
+        "class": "engine",
+        "label": "Retained Engine, On Labelled Fixtures"
       }
     },
     {
@@ -5082,7 +5619,7 @@
       "explanation": "The lien panel",
       "tests": "tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own: 100% of each year’s tax, held to it; its waiver by the schedule once their own is filed’ (the assessments and the penalty set by calling the engine’s functions)",
       "status": "unresolved",
-      "issue": "Unreachable: only Oregon has the three-year penalty and every life files in Connecticut (tests/scope-taxpapers.test.ts). Tested on Oregon assessments set by calling the engine’s functions (tests/liens-and-arrangements.test.ts:259), at 25% only; a waiver larger than the penalty still owed drops the excess (statetax.ts, by reading, unconfirmed).",
+      "issue": "Unreachable: only Oregon has the three-year penalty and every life files in Connecticut (tests/scope-taxpapers.test.ts). Tested on Oregon FIXTURE lives (tests/remaining-tax.test.ts, tests/liens-and-arrangements.test.ts:260): 70% before any notice and refunded, 50% after a demand, 25% after an assessment; and, from 2026-10-16, a waiver larger than the penalty still owed credits what was paid toward it to the year and refunds the rest, where until then it was dropped.",
       "traced": "2026-10-12",
       "read": true,
       "review": {
@@ -5114,14 +5651,35 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "scope-taxpapers.test.ts",
             "title": "what her life never reaches > tax.request_waiver: only Oregon charges the three-year penalty, and she files in Connecticut alone",
             "kind": "render",
             "closes": "the refusal and no control drawn"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: her own 2001 return filed before any notice, paid at filing: 70% of the three-year penalty waived and refunded to her, $525 of $750",
+            "kind": "fixture",
+            "closes": "70% before any notice: $525 of $750 (the 100% held to the year's tax less its 25% of late penalties), refunded to her; GUARD: decided once",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: its Demand To File sent, then her own return, unpaid: 50% waived off the penalty owed, $375 of $750",
+            "kind": "fixture",
+            "closes": "50% after a Demand To File: $375 off the penalty owed",
+            "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-tax.test.ts",
+            "title": "tax.request_waiver (FIXTURE: Portland quick-saves, Oregon’s three years) > FIXTURE: assessed, $990 paid toward its $1,000 of penalties, then 25% of the $500 three-year penalty waived: $10 off what’s still owed of it and the $115 already paid credited to the interest; until 2026-10-16 the $115 was dropped",
+            "kind": "fixture",
+            "closes": "reproduced and fixed: $990 paid to the penalty first, 25% ($125) waived: $10 off the penalty, $115 credited to the interest as a refund offset, owed down $125, its notice saying so; failed before the fix (owed down $10)",
+            "round": "remaining-tax"
           }
         ],
         "gapsClosed": [],
@@ -5143,6 +5701,16 @@
           "problems": [],
           "weakTests": []
         }
+      },
+      "acceptance": {
+        "player": "Unreachable: only Oregon charges the three-year penalty, and every life files in Connecticut; shown on the played life, the refusal and no row drawn (tests/scope-taxpapers.test.ts ‘tax.request_waiver: only Oregon charges the three-year penalty…’).",
+        "engine": "tests/remaining-tax.test.ts ‘FIXTURE: her own 2001 return filed before any notice…’ (70%, refunded), ‘FIXTURE: its Demand To File sent, then her own return, unpaid…’ (50%) and ‘FIXTURE: assessed, $990 paid toward its $1,000 of penalties…’ (25%, the part paid credited) on Portland quick-saves; tests/liens-and-arrangements.test.ts ‘three years with tax and no return of their own…’.",
+        "deferred": "Not deferred by the owner. What would reach it, a life filing in another state, would need a life living there, which went with the travel in the owner’s scope reset of 2026-10-09 and isn’t to be restored (docs/REQUIREMENTS.md).",
+        "unfinished": "None found: the excess the row called dropped on 2026-10-15 was a defect, fixed on 2026-10-16 (credited to the year and refunded). That a penalty paid and then waived is refunded is SLATE’s reading of ORS 314.415, not read (the tax area’s assumption)."
+      },
+      "verification": {
+        "class": "engine",
+        "label": "Retained Engine, On Labelled Fixtures"
       }
     },
     {
@@ -5337,6 +5905,10 @@
           "said": "hasSsn: the bank’s channel (bankmoves.ts), the ID card (identity.ts), a lender’s terms (lending.ts), the 1040-NR’s W-7 and its seven weeks more, the IRS plan applied for online or by mail (taxreturn.ts)",
           "now": "hasSsn: the bank’s channel (bankmoves.ts channelFor), the ID card (identity.ts), the 1040-NR’s W-7 and its seven weeks more, and the IRS plan applied for online or by mail (taxreturn.ts). Until 2026-10-13 this also named 'a lender’s terms (lending.ts)'. Discover asking for a number changes only which refusal a student is given; its $25,000 of income refuses her with the number or without."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     }
   ],

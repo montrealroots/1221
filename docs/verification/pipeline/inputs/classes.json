@@ -1,0 +1,134 @@
+{
+ "about": "Rows whose evidence class merge-review.cjs doesn't settle by status (from 2026-10-16, the brief of that day's items 1 and 2), and each static test's standard as read: what it reaches, examples it must catch and must accept (each quoted as it's written in the test's file, which tools/coverage.mjs checks), and whether it meets the standard. A static test verifies a row only where the row's claim is the repository's own text.",
+ "rows": {
+  "i-stale-claims": {
+   "class": "static",
+   "since": "2026-10-16",
+   "why": "Its claim is the repository's own text: no sentence in src/, tests/ or docs/ says the removed interests do anything now. The owner's brief of 2026-10-16 (coverage-classes-and-evidence-totals, item 2) answered the decision of 2026-10-15 (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner's Decisions, 1) yes: such a row is verified by a gate test that reads that text, where the test reaches what the claim is about, checks it, and expects independently, with examples it must catch and examples it must accept.",
+   "was": {
+    "status": "partial",
+    "on": "2026-10-15",
+    "standard": "the player-action standard: only a test that issues a command, runs the clock or renders a screen verifies a row, and a test reading the tree was recorded as a fixture",
+    "note": "2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision."
+   },
+   "tests": {
+    "finds every present-tense claim the check of 2026-10-13 passed, and passes each one’s twin dated by the removal; money’s interest isn’t taken for them": {
+     "file": "evidence3-person.test.ts",
+     "meets": true,
+     "reaches": "the rule the tree walk below applies (NAMES, REMOVAL, PRESENT, dated, READ_TRUE), run on sentences written by hand",
+     "mustCatch": [
+      "An interest grows an ability by an hour of it.",
+      "A loved interest lifts a meal."
+     ],
+     "mustAccept": [
+      "An interest grew an ability by an hour of it until the interests went on 2026-10-10.",
+      "Its interest builds each day."
+     ],
+     "read": "2026-10-16: eight present-tense claims must be found, three dated twins and five of money's or the law's interest must pass"
+    },
+    "finds the present passives, “went into”, the possessive and adjective singulars and a present clause beside a past one, which the check of 2026-10-14 passed; passes their dated twins and the dated notes in the tree": {
+     "file": "evidence3-person.test.ts",
+     "meets": true,
+     "reaches": "the same rule, on the shapes the check of 2026-10-14 found passing, and on the dated notes as they stand in the tree",
+     "mustCatch": [
+      "An interest is dropped from the sheet when the term ends.",
+      "Interests lift a meal until they are removed."
+     ],
+     "mustAccept": [
+      "Interests lifted a meal until the owner removed them.",
+      "The interest is charged once."
+     ],
+     "read": "2026-10-16: sixteen must be found, eleven must pass, among them six notes copied from the tree"
+    },
+    "finds a present verb outside any list, “went on” and “went in”, a verb past a clause set off by commas, the future and two adjectives, which the first pass of 2026-10-15 passed; passes the present perfect, which it flagged": {
+     "file": "evidence3-person.test.ts",
+     "meets": true,
+     "reaches": "the same rule, on the shapes the first pass of 2026-10-15 handled wrong",
+     "mustCatch": [
+      "Interests shape a meal, and the owner removed the crafts.",
+      "Interests will lift a meal until migration 94."
+     ],
+     "mustAccept": [
+      "Interests have been removed since 2026-10-10.",
+      "Interests went on 2026-10-10, and with them the crafts."
+     ],
+     "read": "2026-10-16: eleven must be found, six must pass"
+    },
+    "keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside": {
+     "file": "evidence3-person.test.ts",
+     "meets": true,
+     "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), read as a reader reads it: a doc's paragraphs, a JSON file's strings, a source file's comments, strings and JSX words; the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+     "mustCatch": [
+      "Interests lift a meal until they are removed."
+     ],
+     "mustAccept": [
+      "The rest were marked · at creation as said back only (`interestsRead`)."
+     ],
+     "read": "2026-10-16: the walk applies the rule its three tests above hold to examples; it can't pass vacuously: more than 600 files, more than 60 sentences naming them, and each of the 32 sentences read and listed true must be found where it's listed (a must-accept from the tree itself)"
+    },
+    "tells a present-tense claim from its past-tense twin, where the first round’s check passed both": {
+     "file": "evidence2-b13.test.ts",
+     "meets": true,
+     "reaches": "the rule evidence3-person's walk applies, written out again here, on sentences written by hand",
+     "mustCatch": [
+      "The interests are kept on the sheet and named on the Profile.",
+      "Interests will lift a meal until migration 94."
+     ],
+     "mustAccept": [
+      "The interests were kept on the sheet and named on the Profile until 2026-10-10.",
+      "Interests have been removed since 2026-10-10."
+     ],
+     "read": "2026-10-16: the first round's example, which its check passed, must be found and its dated twin pass; money's and the law's interest aren't the interests"
+    },
+    "keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true": {
+     "file": "evidence2-b13.test.ts",
+     "meets": true,
+     "reaches": "the seven files the row corrected (the two capability documents and five source files), as a reader reads them",
+     "mustCatch": [
+      "Interests lift a meal until they are removed."
+     ],
+     "mustAccept": [
+      "The interests were kept on the sheet and named on the Profile until 2026-10-10."
+     ],
+     "read": "2026-10-16: each of the five source files must name them somewhere, more than 10 sentences in all, and the one sentence read and found true in them must still be found, so an empty read fails"
+    },
+    "keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside": {
+     "file": "evidence2-b13.test.ts",
+     "meets": true,
+     "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+     "mustCatch": [
+      "Interests lift a meal until they are removed."
+     ],
+     "mustAccept": [
+      "The rest were marked · at creation as said back only (`interestsRead`)."
+     ],
+     "read": "2026-10-16: more than 600 files and 60 sentences, and every sentence read and found true still where it's listed"
+    },
+    "names READ_CRAFTS nowhere in the code, the tests or the docs, but in the audit trail that records its correction": {
+     "file": "evidence-g34-ui.test.ts",
+     "meets": false,
+     "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ (more than 300)",
+     "mustCatch": [],
+     "mustAccept": [],
+     "read": "2026-10-16: reaches the text and can't pass on an empty walk, but names no example it must catch (the file that names the constant to say what it looks for is set aside, not asserted found) or accept; it supports the row"
+    },
+    "has the capability documents pair no interest with love or enjoyment, and name no interests": {
+     "file": "evidence-g34-ui.test.ts",
+     "meets": false,
+     "reaches": "docs/capabilities.json and docs/CAPABILITIES.md (each more than 10,000 characters)",
+     "mustCatch": [],
+     "mustAccept": [],
+     "read": "2026-10-16: reads the two documents whole, with no example it must catch or accept; it supports the row"
+    },
+    "keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected": {
+     "file": "evidence-g34-ui.test.ts",
+     "meets": false,
+     "reaches": "the five source files the removal corrected, their comments and strings",
+     "mustCatch": [],
+     "mustAccept": [],
+     "read": "2026-10-16: each of the five must name them, so an empty read fails; but it has no examples, and its rule is the first round's, which takes 'kept' and 'named' for the past: evidence2-b13's first test shows it passing 'The interests are kept on the sheet and named on the Profile.'. It supports the row"
+    }
+   }
+  }
+ }
+}

@@ -115,7 +115,9 @@ describe('a passport', () => {
     expect(new Date(first.expiresAt!).toISOString().slice(0, 10)).toBe(`${Number(issued.slice(0, 4)) + 10}${issued.slice(4)}`);
     const esta = holds(sim, { kind: 'authorization', issuer: 'US', destination: 'US', passportId: first.id });
     const b = sim.execute<{ readyAt: number; fee: number }>({ kind: 'documents.apply_passport', payload: { expedite: true } });
-    expect(b.value!.fee).toBe(225_00);
+    // A renewal by mail on Form DS-82, $130 with no acceptance fee, and the $60 to expedite (from 2026-10-16: until then
+    // every US application paid the first passport's $165, so this was $225; `US_RENEWAL`).
+    expect(b.value!.fee).toBe(190_00);
     expect(Math.round((b.value!.readyAt - sim.now) / MS_DAY)).toBe(21);
     sim.advanceBy(22 * MS_DAY);
     expect(first.status).toBe('cancelled');
@@ -126,7 +128,9 @@ describe('a passport', () => {
   it('runs five years for a Spaniard under thirty, as Spain issues it', () => {
     const sim = life('passport-es', 'es-md-madrid');
     expect(sim.execute({ kind: 'documents.apply_passport', payload: {} }).ok).toBe(true);
-    sim.advanceBy(2 * MS_DAY);
+    // Living in New York, she applies at the consulate, which doesn't issue it on the spot: about three weeks (from
+    // 2026-10-16, `PASSPORTS_ABROAD`; until then Madrid's same day, and this waited two days).
+    sim.advanceBy(22 * MS_DAY);
     const p = passportOf(sim.player, sim.now)!;
     expect(Math.round((p.expiresAt! - p.issuedAt!) / YEAR)).toBe(5);
   });

@@ -49,6 +49,7 @@ import { marksFallOff } from './credit';
 import { checkingAt } from './lending';
 import { sendBetweenBanks, usPerson } from './bankmoves';
 import { abroadRefusal, balanceText, chargeAbroadFee, heldOf, nonResidentFeeDue, nonResidentTaxOn } from './abroad';
+import type { StandingOrder } from './payments';
 
 export const MONTH_END_KIND = 'bank.month_end';
 
@@ -485,6 +486,34 @@ export function dropPaymentsFor(sim: Simulation, person: Person, account: Accoun
 }
 
 /**
+ * The standing orders paying from an account its bank closed of its own accord, or into it, ended with it, the bank having
+ * held them, and returned for the closing notice to name (from 2026-10-16). Until then they stayed, and each month said “A
+ * Standing Order Didn’t Go … is closed” for good (docs/verification/remaining/banking-checklist.json,
+ * banking.1.standing-orders). Close It and Cancel It refuse while one pays from the account (`linkedTo`), and take those
+ * into it (`dropPaymentsFor`), so only a bank's own close meets one. An order that never named its account follows the
+ * primary account (`orderSource`), and keeps following it.
+ */
+export function endOrdersOf(sim: Simulation, person: Person, account: Account): StandingOrder[] {
+  const pay = person.payments;
+  if (!pay) return [];
+  const ended = pay.standingOrders.filter((o) => o.fromId === account.id || o.toId === account.id);
+  if (ended.length === 0) return [];
+  const gone = new Set(ended.map((o) => o.id));
+  pay.standingOrders = pay.standingOrders.filter((o) => !gone.has(o.id));
+  for (const one of sim.universe.scheduled) {
+    if (one.status === 'pending' && one.kind === 'bank.standing_order' && gone.has(String(one.payload.orderId))) sim.timeline.cancel(one.id, sim.now);
+  }
+  return ended;
+}
+
+/** The closing notice's sentence on the standing orders that ended with the account, or nothing. */
+export function endedWords(sim: Simulation, ended: readonly StandingOrder[]): string {
+  if (ended.length === 0) return '';
+  const each = ended.map((o) => `${formatMoney(o.amount, saveCurrency(sim.universe))} into ${sim.universe.accounts[o.toId]?.name ?? 'your savings'} on the ${o.day}`);
+  return ` ${ended.length === 1 ? 'Its standing order' : 'Its standing orders'} of ${each.join(' and ')} ended with it: set ${ended.length === 1 ? 'one' : 'them'} up again on How You Pay.`;
+}
+
+/**
  * What a closing account owes of its fees: at Germany's quarterly closing,
  * the quarter's so far and this month's. Until 2026-09-27 an account closed
  * mid-quarter took them with it.
@@ -497,6 +526,17 @@ export function settleFees(sim: Simulation, account: Account): void {
   if (account.currency) account.feesDueHeld = 0;
   if (due <= 0) return;
   sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due, ...(native !== undefined ? { native: -native } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
+}
+
+/**
+ * What closing would charge past what an account holds, in a refusal's words, each named with its sum: “Its fees, €4.90,
+ * are”, “Its overdraft interest, €0.53, and its fees, €6.90, are” (from 2026-10-16, when the overdraft interest built
+ * since the 1st was first charged on closing, `settleOverdraftInterest`).
+ */
+export function owingWords(items: readonly (readonly [string, string])[]): string {
+  const said = items.map(([what, sum], i) => `${i > 0 && i === items.length - 1 ? 'and ' : ''}${what}, ${sum},`).join(' ');
+  const plural = items.length > 1 || items[0]?.[0].endsWith('fees') === true;
+  return `${said.charAt(0).toUpperCase()}${said.slice(1)} ${plural ? 'are' : 'is'}`;
 }
 
 /** What `settleFees` would charge now, read before it's charged (a cancellation's refusal, from 2026-10-15). */

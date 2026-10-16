@@ -1,0 +1,1058 @@
+{
+ "key": "banking",
+ "on": "2026-10-16",
+ "against": "64e3f82d (the launching session’s checkpoint) and the working tree after it",
+ "checklist": "docs/verification/remaining/banking-checklist.json",
+ "testFile": "tests/remaining-banking.test.ts",
+ "tests": "tests/remaining-banking.test.ts: 23 tests, all passing. Changed beside it, each a figure or words the fixes changed, with a dated comment: tests/home-account-setoff.test.ts (the set-off now includes the interest built since 1 December), tests/evidence-g25-school.test.ts and tests/evidence-g26-school.test.ts (the bank’s new refusal words), tests/scope-health.test.ts (SaveUniverse.opened names findTermInterest beside followTheCover).",
+ "items": [
+  {
+   "id": "banking.1",
+   "before": "latent defect (closedByBank) and reachable defect (closeForOverdraft)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped",
+     "kind": "clock (FIXTURE, TEST SETUP rule)",
+     "proves": "A German account its bank would close at zero isn’t closed while its fees would take it below zero; the quarter’s €20.70 posts at its closing and the account is pursued as overdrawn; no closed account below zero; breaches 0. Why play can’t reach it: only Citi and Capital One close an account at zero or unfunded."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing (TEST SETUP: $2.50 built, which Citi Access Checking doesn’t pay) goes to Chase, the primary, by Citi’s own payment, nothing left in the closed account",
+     "kind": "clock (TEST SETUP interest)",
+     "proves": "Interest settled on the bank’s own close goes to the primary by the bank’s payment (landed 5 PM the same business day), the closed account at $0.00, the notice says it once."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "kind": "clock (FIXTURE)",
+     "proves": "The overdraft’s set-off charges off €122.89, the overdraft €101.97 + 22¢ of interest built since 1 March + €20.70 of fees, all worked by hand; nothing posts to the closed account after; a twin played a day at a time with a reload each month comes to the same postings."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+     "kind": "clock (FIXTURE)",
+     "proves": "Where the savings cover it, €122.89 is set off from the Flexgeld (its 41¢ of interest settled first), the AktivKonto closes, the Flexgeld stays open, the notice names both and the order ended."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld empty, is charged off on 7 March and banked again elsewhere: the closing fees charged once, and nothing of them carried to the new bank as an overdraft",
+     "kind": "clock (FIXTURE)",
+     "proves": "A charge-off with no other German current account re-banks the life without charging the closing fees twice or carrying them to the new bank as an overdraft."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+     "kind": "command+clock",
+     "proves": "A New Haven student’s Capital One account closed unfunded and Citi account charged off: from the closes to April nothing posts to either, no notice names either, no order fails; across a reload."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "closedByBank works out what closing settles first: owed more than it holds it isn’t closed (the charges post when due, and the overdrawn path pursues them); what it leaves goes to the primary by the bank’s own payment; a standing order from it ends, said in the notice",
+     "where": "src/engine/systems/bankmoves.ts closedByBank",
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close one at zero thirty days (TEST SETUP: no German bank has one), isn’t closed while its fees would take it below zero; they post at the quarter’s closing, €20.70, and nothing is dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing (TEST SETUP: $2.50 built, which Citi Access Checking doesn’t pay) goes to Chase, the primary, by Citi’s own payment, nothing left in the closed account"
+    },
+    {
+     "summary": "closeForOverdraft settles the overdraft interest built since the 1st on every account at the bank and the fees of each account it closes before the set-off, and every account’s fees on a charge-off, so the debt is all of it to the day; completeSwitch’s quiet re-banking after a charge-off doesn’t settle the fees again",
+     "where": "src/engine/systems/lending.ts closeForOverdraft, completeSwitch",
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld empty, is charged off on 7 March and banked again elsewhere: the closing fees charged once, and nothing of them carried to the new bank as an overdraft"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "BGB § 675h(2)-(4): a payment service provider ends a framework contract for an indefinite period on at least two months’ notice; on termination regularly charged fees are owed pro rata to its end (“Im Fall der Kündigung sind regelmäßig erhobene Entgelte nur anteilig …”), and no fee may be agreed for terminating",
+     "citation": "https://dejure.org/gesetze/BGB/675h.html (https://www.gesetze-im-internet.de/bgb/__675h.html refused the fetch with HTTP 503 that day)",
+     "effective": "as amended by the act implementing the second Payment Services Directive, in force from 13 January 2018 (dejure.org’s note)",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "AGB-Banken Nr. 7 (the quarterly Rechnungsabschluss) and Nr. 19(1) (the bank’s ordinary termination on two months’ notice), as Deutsche Bank’s and Commerzbank’s BFSG information quotes them",
+     "citation": "src/engine/content/home-accounts.json (de-deutsche-bank, de-commerzbank conditions), banking.ts closesQuarterly",
+     "effective": "not given",
+     "read": "2026-10-16 (the research of that day; not fetched again)"
+    },
+    {
+     "rule": "Citi’s deposit agreement: “Accounts with zero balances are subject to closure after 90 days”; Access Checking $5 a month, waived with $250 of direct deposits a month or for an owner 23 or younger (the age waiver from 18 July 2026, as Citi’s pages summarize it)",
+     "citation": "docs/research/world/research-banking.json (Citi CDAA 5.1, read 2026-10-10); citi.com compare-bank-accounts via a search of 2026-10-16",
+     "effective": "the age waiver 18 July 2026; the rest not given",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Capital One 360 Checking “must be funded within 60 days of account opening, otherwise it will automatically close”",
+     "citation": "content/bankopening.ts us-capital-one (Capital One’s disclosure of 20 May 2026)",
+     "effective": "20 May 2026 (the disclosure’s date)",
+     "read": "2026-10-10 (not fetched again)"
+    }
+   ],
+   "assumptions": [
+    "Where a bank’s own close at zero would leave the account owing (its fees or overdraft interest), SLATE doesn’t close it, as Close It refuses an account its charges would overdraw; the charges post when due and the account is pursued as any overdrawn one. No German bank publishes closing an idle account at zero, so the case is a guard.",
+    "The month’s fee is charged whole on closing, as every close charged it before; § 675h(3)’s pro rata share is banking.1.pro-rata, the owner’s decision.",
+    "Found and not fixed, unreachable: homeCloses (systems/abroad.ts) settles fees again on each daily retry of an overdrawn account’s close, which at a quarterly (German) bank would charge the month’s fee each day; no German home bank closes a non-resident’s account, and Barclays, the bank that does, has no quarterly closing."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "  if (left < 0) return;\n",
+     "replace": "",
+     "killed": true,
+     "killedBy": [
+      "GUARD: a Deutsche Bank AktivKonto left at zero beside a Commerzbank primary, its bank given a rule to close on"
+     ]
+    },
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "const arrives = closeNow(sim, person, account, into);",
+     "replace": "const arrives = closeNow(sim, person, account, undefined);",
+     "killed": true,
+     "killedBy": [
+      "GUARD: Citi closes an Access Checking account left at zero ninety days, and the interest it settles on closing"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  for (const account of mine) if (closes(account)) settleFeesOf(account);\n",
+     "replace": "",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it in"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (feesSettled.has(account.id)) continue;\n    settleFeesOf(account);",
+     "replace": "    if (feesSettled.has(account.id)) continue;\n    continue;",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld em"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    if (!quietly) settleFees(sim, from);",
+     "replace": "    settleFees(sim, from);",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld em"
+     ]
+    }
+   ],
+   "rowText": {
+    "bank.close_current": {
+     "changes": "closedAt; interest, the overdraft interest built since the 1st (from 2026-10-16, settleOverdraftInterest) and fees settled; what it holds sent to the account named (bankmoves.ts closeNow)"
+    }
+   },
+   "tutorial": "The bank chapter’s overdraft sentence (src/engine/content/tutorial.ts, with a dated comment above it): the interest is charged on the 1st or when the account closes; a charge-off takes the interest and fees owed to the day, and a standing order from or into the account ends with it.",
+   "guide": "bank.other-banks: needs (enough for the overdraft interest built), reads (the monthly fee), now (Close It settles the overdraft interest), later (a bank’s close at zero or unfunded only where closing leaves nothing owed; interest to the primary; orders end), unavailable (the overdraft-interest refusals). bank.borrowing later: the charge-off takes the interest and fees owed to the day; orders end. Each with a dated comment."
+  },
+  {
+   "id": "banking.1.overdraft-interest",
+   "before": "defect (reachable at a home account abroad)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+     "kind": "command+clock (FIXTURE)",
+     "proves": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand) and €6.90; paid in, it closes charging both; a reload charges nothing again."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged",
+     "kind": "command+clock (FIXTURE)",
+     "proves": "Cancel It in the cooling-off period refused for 25¢ and €6.90, then charges both."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped",
+     "kind": "command+clock",
+     "proves": "A played life’s BNP Paribas account, overdrawn by its fees, closed before the 1st is charged the interest built over ten day ends at 18.40%, worked from its balance; nothing dropped."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+     "kind": "clock (TEST SETUP overdraft)",
+     "proves": "Barclays’ own close on its notice charges $3.77: fourteen day ends at 35% on $300 less its £15 ($18.99) free, by hand."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "kind": "clock (FIXTURE)",
+     "proves": "The set-off charges the 22¢ built since 1 March before taking what’s owed."
+    },
+    {
+     "file": "tests/home-account-setoff.test.ts",
+     "title": "the set-off against an overdraft > writes BNP Paribas’ letters in euros, sets the Livret A off in euros exactly, closes the Compte de dépôt as its notice said, and keeps the Livret A",
+     "kind": "clock",
+     "proves": "Updated 2026-10-16: the set-off now takes the debt and the interest built since 1 December (89 euro cents), bounded by hand from the rate, the days and the debt."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "settleOverdraftInterest charges the overdraft interest built since the 1st (whole cents, the fraction left as the 1st leaves it) in every closing path: closeNow, bank.cancel_new, homeCloses, completeSwitch, closeForOverdraft; closeRefusal counts it with the fees in the bank’s words",
+     "where": "src/engine/systems/lending.ts settleOverdraftInterest, overdraftInterestOf; bankmoves.ts closeNow, closeRefusal; accountlife.ts bank.cancel_new; abroad.ts homeCloses; banking.ts owingWords",
+     "failingTest": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused Cancel It in its fourteen days for its 25 cents of overdraft interest and €6.90 month; with €7.15 paid in, canceled, both charged / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zero by its fees at August’s end, its Livret A closed into it on 10 September and Close It pressed: the overdraft interest built since 1 September is charged on closing, worked from the rate and the days, never dropped / banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "The banks’ overdraft rates SLATE charges and the arithmetic the tests work by hand: Deutsche Bank 13.05% past its Dispo, Barclays 35.0% with none on the first £15, BNP Paribas 18.40%",
+     "citation": "src/engine/content/banks-lending.ts (each entry’s source)",
+     "effective": "not given",
+     "read": "as recorded there; not fetched again"
+    }
+   ],
+   "assumptions": [
+    "Interest is charged on closing in whole cents with the fraction left, as the 1st charges it. Canada’s refund on a cancellation leaves it out, as it leaves out overdraft interest already (SOR/2021-181 s.5(2)(b), “other than interest charges”).",
+    "cancelRefusal was given the interest too, and its mutation survived: for a current account Close It’s refusal, read first, counts it, and only a current account builds it. It was taken out the same day."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "  settleInterest(sim, account, `Interest: ${account.name}, on closing`);\n  settleOverdraftInterest(sim, account);\n  settleFees(sim, account);",
+     "replace": "  settleInterest(sim, account, `Interest: ${account.name}, on closing`);\n  settleFees(sim, account);",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close",
+      "PLAYER JOURNEY: a student with an account kept at BNP Paribas from Paris, emptied to Chase and taken below zer"
+     ]
+    },
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "  const od = overdraftInterestOf(account);",
+     "replace": "  const od = 0;",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close",
+      "FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused "
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  for (const account of mine) settleOverdraftInterest(sim, account, `Overdraft interest, ${closes(account) ? 'on closing' : 'before the set-off'}`);\n",
+     "replace": "",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March w",
+      "FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it in",
+      "FIXTURE, Berlin: a Deutsche Bank life with no other German bank, its AktivKonto €100 under and its Flexgeld em"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    settleOverdraftInterest(s, account);\n    settleFees(s, account);",
+     "replace": "    settleFees(s, account);",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: an AktivKonto opened on 5 January, €100 under that day and paid back on the 12th, is refused "
+     ]
+    },
+    {
+     "file": "src/engine/systems/abroad.ts",
+     "find": "settleOverdraftInterest(sim, account); settleFees(sim, account); }",
+     "replace": "settleFees(sim, account); }",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card c"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  const od = overdraftInterestOf(account);",
+     "replace": "  const od = 0;",
+     "killed": false,
+     "note": "Survived: removed as redundant (closeRefusal counts it for a current account; no other account builds it)."
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const plural = items.length > 1 || items[0]?.[0].endsWith('fees') === true;",
+     "replace": "  const plural = items.length > 1;",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with €3 in it is refused for its €4.90 mo",
+      "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 "
+     ]
+    }
+   ],
+   "rowText": {
+    "bank.cancel_new": {
+     "changes": "… current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds, settled as Close It settles (interest paid, overdraft interest and fees charged, from 2026-10-16 the overdraft interest too; in Canada fees refunded, never the interest) …"
+    }
+   },
+   "tutorial": "As banking.1.",
+   "guide": "bank.upkeep now (Cancel It charges a current account’s overdraft interest, never refunded) and unavailable (its refusal words), with a dated comment."
+  },
+  {
+   "id": "banking.1.standing-orders",
+   "before": "defect (reachable: a New Haven student’s order from an account Capital One closes unfunded, or one a bank charges off)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+     "kind": "command+clock",
+     "proves": "The order from 360 Checking ends at Capital One’s close and the one from Citi at its charge-off, each named once in the bank’s notice; the failures before the closes are said, after them none."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first",
+     "kind": "clock (FIXTURE)",
+     "proves": "An order from the account the set-off closes ends, said in “Closed An Account”."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March",
+     "kind": "clock (FIXTURE)",
+     "proves": "An order from Commerzbank into a Flexgeld the charge-off closes ends with it; no “Didn’t Go” on 20 March."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+     "kind": "clock",
+     "proves": "An order from Chase into the Barclays saver ends at Barclays’ close, said in its notice."
+    },
+    {
+     "file": "tests/evidence-g13-money.test.ts",
+     "title": "bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it",
+     "kind": "command+clock",
+     "proves": "A payment set for a date from an account the bank charged off still fails on its day and says so once, as it did."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "endOrdersOf ends the standing orders paying from or into an account its bank closes of its own accord, cancels their calendar entries and returns them for the closing notice (endedWords); called by closedByBank, closeForOverdraft and homeCloses",
+     "where": "src/engine/systems/banking.ts endOrdersOf, endedWords; bankmoves.ts closedByBank; lending.ts closeForOverdraft; abroad.ts homeCloses; routing.ts redirectAway’s comment",
+     "failingTest": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it into the Flexgeld: on 7 March Deutsche Bank takes the €122.89 it’s owed from the Flexgeld, closes the AktivKonto and ends the order with it, said once; the Flexgeld stays open with its 41 cents of interest settled first / banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained by the set-off and closed with the AktivKonto when Deutsche Bank charges it off on 7 March: the order ends with them, said once, and no “Didn’t Go” follows on 20 March"
+    }
+   ],
+   "sources": [],
+   "assumptions": [
+    "A standing order is the paying bank’s instruction and ends with the account it pays from; one into an account a bank closes ends too. SLATE’s reading; no bank’s term on it was read. A payment set for a date is left to fail on its day and say so, once, as before (the checklist planned dropping it with dropPaymentsFor; tests/evidence-g13-money.test.ts holds the notice, and a one-off notice isn’t a recurring one)."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/bankmoves.ts",
+     "find": "  const ended = endOrdersFrom(sim, person, account);\n  const into",
+     "replace": "  const ended = [] as ReturnType<typeof endOrdersFrom>;\n  const into",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    for (const account of closed) letGo(account);\n",
+     "replace": "",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it in"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "    for (const account of mine) if (account.closedAt !== undefined) letGo(account);\n",
+     "replace": "",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const ended = pay.standingOrders.filter((o) => o.fromId === account.id || o.toId === account.id);",
+     "replace": "  const ended = pay.standingOrders.filter((o) => o.fromId === account.id);",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained ",
+      "PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card c"
+     ]
+    },
+    {
+     "file": "src/engine/systems/abroad.ts",
+     "find": "  const ended = mine.flatMap((account) => endOrdersOf(sim, person, account));",
+     "replace": "  const ended = [] as ReturnType<typeof endOrdersOf>;",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card c"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (ended.length === 0) return '';\n  const each",
+     "replace": "  if (ended.length >= 0) return '';\n  const each",
+     "killed": true,
+     "killedBy": [
+      "FIXTURE, Berlin: the same AktivKonto with €500 in a Flexgeld beside it, and a standing order of €10 from it in",
+      "FIXTURE, Berlin: a standing order of €10 from Commerzbank into a Deutsche Bank Flexgeld, the Flexgeld drained ",
+      "PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card c"
+     ]
+    }
+   ],
+   "rowText": {},
+   "tutorial": "As banking.1.",
+   "guide": "bank.other-banks later and bank.borrowing later."
+  },
+  {
+   "id": "banking.1.pro-rata",
+   "before": "found 2026-10-16",
+   "disposition": "owner decision",
+   "evidence": [],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "BGB § 675h(2)-(4): a payment service provider ends a framework contract for an indefinite period on at least two months’ notice; on termination regularly charged fees are owed pro rata to its end (“Im Fall der Kündigung sind regelmäßig erhobene Entgelte nur anteilig …”), and no fee may be agreed for terminating",
+     "citation": "https://dejure.org/gesetze/BGB/675h.html (https://www.gesetze-im-internet.de/bgb/__675h.html refused the fetch with HTTP 503 that day)",
+     "effective": "as amended by the act implementing the second Payment Services Directive, in force from 13 January 2018 (dejure.org’s note)",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "How a German bank works the pro rata share isn’t read from any bank’s price list: by the days the account was open in the month, from its opening day where it opened that month, would be SLATE’s reading."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": "",
+   "ownerDecision": "Germany’s month’s fee is charged whole on any closing (banking.ts settleFees, closingFeesOf), where BGB § 675h(3) owes it pro rata to the end. (a) Charge the closing month pro rata: every German close charges less, and three tests whose titles the audit cites (tests/scope-money.test.ts’s Berlin Cancel It and Close It, “refused … for its €4.90 month”, and tests/accountlife.test.ts’s quarter-fee test) assert the whole month on an account opened and closed the same day; their titles would have to change, with the audit pipeline’s inputs, which these instructions forbid an area agent to do. (b) Keep the whole month as SLATE’s simplification and say so in the guide. No played New Haven life closes a German account; a home account at a German bank can be closed (Close It) and would charge less under (a)."
+  },
+  {
+   "id": "banking.2",
+   "before": "older-save gap (interest taken before 2026-10-15 not found)",
+   "disposition": "older-save compatibility kept and tested",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+     "kind": "loadSave of an older save (TEST SETUP) + command",
+     "proves": "Found once on opening (the step named, nothing posted, no balance or transaction changed), both takes returned with their tax, the primary debited €3.71, the year’s interest €5.04 lower, the ledger summing; a second cancel refused; a reload repeats nothing."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going back out of it, “Pay in €0.01 first”, as a term this build tagged is",
+     "kind": "loadSave + command",
+     "proves": "The refusal reads what was found: €3.71 going back out of the AktivKonto, a cent short refused."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10th, the newer opened the 8th and taken on the 13th, each €3.15 under the same name: each is found to its own term, the newer canceled gives back the €3.15 it paid and no more, then the older its own",
+     "kind": "loadSave + command",
+     "proves": "Same-named terms opened three days apart, each take found to its own term by the replay; canceling one takes back only its own."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 each: each term is given one of the two, never both the same",
+     "kind": "loadSave",
+     "proves": "Twins opened together and taken together each get one take, never both the same."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a term whose records the replay can’t reproduce (its interest built set a cent off) has nothing found, and canceling it leaves the interest paid, as the build that paid it did",
+     "kind": "loadSave + command",
+     "proves": "A term the replay can’t reproduce has nothing found; canceling it leaves the interest paid, the ledger summing."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > the four saves older builds wrote (2026-10-10 and 2026-10-11, tests/fixtures), migrated and opened as a slot opens them, take the step once and name it; New Haven lives, they hold no term deposit, so nothing is found",
+     "kind": "migrate + loadSave of the four real older saves",
+     "proves": "The step runs once on saves written on 2026-10-10 and 2026-10-11 and is named; they hold no term deposit, so nothing is found."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > a save this build began names the step and finds nothing: a take is tagged, and opening it, once or twice, adds no record",
+     "kind": "loadSave",
+     "proves": "A save this build began names the step and finds nothing."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "findTermInterest, a one-time step on opening named in SaveUniverse.opened: each term’s accrual replayed from its opening (balance × rate / 365 at each day’s end, in the build’s order), the untagged “Interest: <name>” takes since it opened that reproduce its stored accrued exactly kept on it as untaggedTakes (oldest term first, a take never given twice); interestPaidSince reads them",
+     "where": "src/engine/systems/accountlife.ts findTermInterest, replayTakes, interestPaidSince; src/engine/core/ledger.ts Account.untaggedTakes; src/engine/index.ts ONCE_ON_OPENING and loadSave",
+     "failingTest": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once / banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10th, the newer opened the 8th and taken on the 13th, each €3.15 under the same name: each is found to its own term, the newer canceled gives back the €3.15 it paid and no more, then the older its own"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "On a withdrawal from a distance contract for a financial service each side returns what it received (Directive 2002/65/EC art. 7(4)-(5); BGB § 355(3); Deutsche Bank’s ZinsMarkt pre-contract information, “die beiderseits empfangenen Leistungen”)",
+     "citation": "as cited in src/engine/systems/accountlife.ts at KEEPS_INTEREST",
+     "effective": "not given",
+     "read": "2026-10-15 (the current scope pass; not fetched again)"
+    }
+   ],
+   "assumptions": [
+    "The day ends a term built at are the local midnights the clock rolls over at (startOfNextDay), as every build since the spring-forward fix ran them; where an older build’s rollover differed, the replay doesn’t reproduce and nothing is found, and the interest stays paid, never taken back from a term that may not have paid it.",
+    "Each take is taken to have been recorded as income when taken (recordInterest, every build from 2026-09-27); a take by the build of 2026-09-26, which didn’t record it, would be taken off income it never added. No such save is known: the four real older saves hold no term deposit.",
+    "The step only finds: nothing is posted and no transaction is changed (the take’s missing posting against the term isn’t added after the fact).",
+    "Which country, bank or renewal a term has, and whether it’s open, aren’t asked: each of those filters survived its mutation (the replay alone settles them) and was taken out."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/index.ts",
+     "find": "    findTermInterest(sim);\n    opened.push('findTermInterest');",
+     "replace": "    opened.push('findTermInterest');",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €",
+      "OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going",
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    const fits = replayTakes(sim, term, candidates, grossOf);",
+     "replace": "    const fits = candidates;",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10",
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 ea",
+      "OLDER SAVE (TEST SETUP), Berlin: a term whose records the replay can’t reproduce (its interest built set a cen"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      && !claimed.has(t.id) && ",
+     "replace": "      && ",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 ea"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    return Math.abs(acc - want) < 1e-6;",
+     "replace": "    return true;",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: a term whose records the replay can’t reproduce (its interest built set a cen"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "    && (untagged.has(t.id) || t.postings",
+     "replace": "    && (false || t.postings",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €",
+      "OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going",
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "      if (e.kind === 0) { acc = acc + daily; continue; }",
+     "replace": "      if (e.kind === 0) { acc = acc + daily + daily; continue; }",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €",
+      "OLDER SAVE (TEST SETUP), Berlin: the AktivKonto spent to €3.70 since, canceling is refused for the €3.71 going",
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen of €10,000, the older opened 5 January and taken on the 10"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  const inOrder = [...terms].sort((a, b) => a.openedAt - b.openedAt || a.id.localeCompare(b.id));",
+     "replace": "  const inOrder = [...terms].sort((a, b) => b.openedAt - a.openedAt || b.id.localeCompare(a.id));",
+     "killed": true,
+     "killedBy": [
+      "OLDER SAVE (TEST SETUP), Berlin: two FestzinsSparen opened together and taken together on 10 January, €3.15 ea"
+     ]
+    },
+    {
+     "file": "src/engine/systems/accountlife.ts",
+     "find": "  const open = terms.filter((a) => !a.closedAt).sort(",
+     "replace": "  const open = terms.filter(() => true).sort(",
+     "killed": false,
+     "note": "Survived: the filter on open terms, with those on country, bank and renewal, was removed as redundant."
+    }
+   ],
+   "rowText": {
+    "bank.take_term_interest": {
+     "persistent": "ledger; from 2026-10-15 the take carries a posting of nothing against the term; one an older build made is found once on opening (findTermInterest, untaggedTakes, from 2026-10-16)"
+    }
+   },
+   "tutorial": "Not changed: the tutorial says nothing of an older save’s takes.",
+   "guide": "bank.upkeep now (Cancel It): a term’s interest taken in a save from before 2026-10-15 is found once on opening and goes back the same way, or stays paid where the records can’t say which term paid it; dated comment."
+  },
+  {
+   "id": "banking.s7.opening",
+   "before": "explanation hole: the opening panel didn’t say the monthly fee",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: the panel that opens an account at another bank says Citi Access Checking’s $5.00 a month and how Citi waives it before Apply, and that Capital One’s 360 Checking has none",
+     "kind": "render",
+     "proves": "The panel says Citi Access Checking’s $5.00 a month and its waivers ($250.00 of electronic deposits, or under 24) from the product feeFor charges by, and Capital One’s none, before Apply."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch > PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID, as Citi’s opening asks one, and with a passport applied for and come, with the steps to take; nothing is set, across a reload; Your Banks draws those steps, and the Switch Bank panel isn’t drawn at all",
+     "kind": "command+render",
+     "proves": "A photo ID in force before a new bank takes the student (31 CFR 1020.220)."
+    },
+    {
+     "file": "tests/bank-moves.test.ts",
+     "title": "reviews a Bank of America application for two business days, its $100 deposit waiting on the decision",
+     "kind": "command+clock",
+     "proves": "Review days and the opening deposit as the bank publishes them."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+     "kind": "command+clock",
+     "proves": "Capital One closes an unfunded account at 60 days; Citi’s $5 fee for an owner of 24 overdraws an empty account and the overdraft is charged off at 60 days."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The opening panel says the current account’s monthly fee and how it’s waived (waiverWords moved to ui/bank/feeWords.ts and shared with Your Accounts)",
+     "where": "src/ui/bank/BankMoves.tsx whatItTakes; src/ui/bank/feeWords.ts; src/ui/workspaces/BankWorkspace.tsx",
+     "failingTest": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: the panel that opens an account at another bank says Citi Access Checking’s $5.00 a month and how Citi waives it before Apply, and that Capital One’s 360 Checking has none"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Citi’s deposit agreement: “Accounts with zero balances are subject to closure after 90 days”; Access Checking $5 a month, waived with $250 of direct deposits a month or for an owner 23 or younger (the age waiver from 18 July 2026, as Citi’s pages summarize it)",
+     "citation": "docs/research/world/research-banking.json (Citi CDAA 5.1, read 2026-10-10); citi.com compare-bank-accounts via a search of 2026-10-16",
+     "effective": "the age waiver 18 July 2026; the rest not given",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Capital One 360 Checking “must be funded within 60 days of account opening, otherwise it will automatically close”",
+     "citation": "content/bankopening.ts us-capital-one (Capital One’s disclosure of 20 May 2026)",
+     "effective": "20 May 2026 (the disclosure’s date)",
+     "read": "2026-10-10 (not fetched again)"
+    }
+   ],
+   "assumptions": [
+    "Whether Citi charges its $5 into an account at zero isn’t in its terms as read; SLATE charges every bank’s monthly fee whatever the balance, so an empty Citi account a student of 24 opens and leaves is overdrawn by it and charged off at 60 days (ESTIMATE.closeAfterDays, SLATE’s estimate). Recorded as uncertainty, not changed."
+   ],
+   "mutations": [
+    {
+     "file": "src/ui/bank/BankMoves.tsx",
+     "find": "    parts.push(fee ? `Its",
+     "replace": "    if (Math.random() > 2) parts.push(fee ? `Its",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: the panel that opens an account at another bank says Citi Access Checking’s $5.00 a month and "
+     ]
+    }
+   ],
+   "rowText": {
+    "bank.open_current": {
+     "explanation": "The Your Banks panel; before Apply the opening panel says what the bank takes and, from 2026-10-16, its current account’s monthly fee and waivers"
+    }
+   },
+   "tutorial": "",
+   "guide": "bank.other-banks reads: the new bank’s monthly fee and how it’s waived."
+  },
+  {
+   "id": "banking.s7.ownership",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/home-account-creation.test.ts",
+     "title": "names a real bank in each entry, in its country, with a source, and maps retention to what the bank does",
+     "kind": "static",
+     "proves": "Retention read from each bank’s research."
+    },
+    {
+     "file": "tests/home-account-abroad.test.ts",
+     "title": "Barclays closes the account of a customer abroad > says so on the first morning with its date, once through a reload, and closes on it, the money arriving at Chase less its costs",
+     "kind": "clock",
+     "proves": "A bank that closes a non-resident’s account gives its notice once and closes on its day, nothing stranded."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > PLAYER JOURNEY (TEST SETUP: Barclays overdrawn by a posting, $300 under from 1 to 15 October, which its card could do only were it primary): Barclays’ own close on 23 October, on its notice, charges the overdraft interest built, $3.77, past its £15 free",
+     "kind": "clock",
+     "proves": "Barclays’ own close settles the overdraft interest built (banking.1.overdraft-interest)."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "The conditions an account abroad is kept on are taken as met: the owner’s design of 2026-10-16 (docs/UNBITTEN.md)."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.switching",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/bank-moves.test.ts",
+     "title": "runs no switch: there is no US switching service, and the screen gives the steps instead",
+     "kind": "command",
+     "proves": "No US switching service; the steps are the player’s."
+    },
+    {
+     "file": "tests/bank-moves.test.ts",
+     "title": "moves the primary account, then wages, then orders, then closes Chase, with nothing lost",
+     "kind": "command+clock",
+     "proves": "Each step its own; the old account closes only when the player closes it."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+     "kind": "command+clock",
+     "proves": "Opening Citi beside Chase leaves Chase’s accounts as they were."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.closure",
+   "before": "defects in the bank’s own closes (banking.1 and its found items)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: an AktivKonto €100 under from 5 January, paid back to nothing on 20 January, is refused Close It for its 53 cents of overdraft interest and €6.90 month, “Pay in €7.43 first”; with €7.43 paid in, it closes and charges both, nothing left; a reload doesn’t charge them again",
+     "kind": "command+clock",
+     "proves": "Close It refuses a balance below its closing charges and settles them all."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with €3 in it is refused Close It for its €4.90 month on Your Banks, as Cancel It is; with €100, Close It charges the €4.90 and sends €95.10 on",
+     "kind": "render+command",
+     "proves": "The fee refusal, unchanged words where no overdraft interest is built."
+    },
+    {
+     "file": "tests/bank-moves.test.ts",
+     "title": "sends a deposit back where it came from when the bank turns the application down",
+     "kind": "command+clock",
+     "proves": "Money sent to an account that isn’t open comes back."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+     "kind": "command+clock",
+     "proves": "After a bank’s close nothing more posts to the account."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "As banking.1."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.funds",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+     "kind": "command+clock",
+     "proves": "$100 sent Monday 5 October is in Money In Transit, in neither account, and the receiving account can’t send it on until it lands on Thursday 8 October (Chase’s three business days); landed once across a reload; breaches 0."
+    },
+    {
+     "file": "tests/pending.test.ts",
+     "title": "is held against the available balance at once and posts in the bank’s days",
+     "kind": "command+clock",
+     "proves": "A card payment is held against the available balance and posts later."
+    },
+    {
+     "file": "tests/bank-moves.test.ts",
+     "title": "reviews a Bank of America application for two business days, its $100 deposit waiting on the decision",
+     "kind": "command+clock",
+     "proves": "An opening deposit waits in transit for the decision."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.transfers",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: Move Money with $25 typed, pressed once, moves $25 to Chase Savings, clears the field and grays Move It, so the press can’t be made again with the same amount",
+     "kind": "render",
+     "proves": "One press is one transfer: Move It grays once the field clears, so the same amount can’t be sent twice by a second press."
+    },
+    {
+     "file": "tests/home-account-transfers.test.ts",
+     "title": "mirrors it: Chase’s $5, SLATE’s stated margin, HSBC UK’s £5, three business days of both, the pence exact",
+     "kind": "command+clock",
+     "proves": "Fees, margin, days and exact minor units on a payment abroad."
+    },
+    {
+     "file": "tests/home-account-ledger.test.ts",
+     "title": "empties both figures exactly when what it holds is taken out: £10,000 in, £1,000 out, the rest closed",
+     "kind": "unit",
+     "proves": "Integer minor units and exact emptying in two currencies."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "SLATE’s exchange rates don’t move (content/currency.ts), so no gain or loss on exchange; a margin a bank doesn’t publish is SLATE’s stated assumption (ASSUMED_MARGIN)."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.rejections",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7: what a New Haven student meets opening and moving money > PLAYER JOURNEY: $100 moved from Chase to a Citi account on Monday 5 October leaves Chase at once and is in neither account until it lands on Thursday 8 October, three business days on; Citi refuses to send it back meanwhile; reloaded in between, it lands once",
+     "kind": "command",
+     "proves": "A transfer past what the account holds refused: “Citi Access Checking holds $0.”"
+    },
+    {
+     "file": "tests/home-account-transfers.test.ts",
+     "title": "comes back to Chase less the margin and the fee when Barclays has closed the account before it lands",
+     "kind": "clock",
+     "proves": "A payment to a closed account comes back."
+    },
+    {
+     "file": "tests/evidence-g13-money.test.ts",
+     "title": "bank.scheduled_payment > from a current account Chase closed for sixty days overdrawn doesn’t go, and says so: nothing leaves it, nothing is in transit; the twin never overdrawn sends it",
+     "kind": "command+clock",
+     "proves": "A payment that can’t go says so once."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.2: a term’s interest taken before 2026-10-15 is found in an older save > OLDER SAVE (TEST SETUP), Berlin: a Deutsche Bank FestzinsSparen of €10,000 at 2.30% opened on 5 January, its €3.15 and €1.89 taken on the 10th and 13th with the year’s allowance used, canceled on the 15th: both go back with their tax, €3.71 out of the AktivKonto and €5.04 off the year’s interest, once",
+     "kind": "command",
+     "proves": "A second cancel refused; a reload repeats no settlement."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.statements",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/statements.test.ts",
+     "title": "open at the balance before them, and each carries the balance after it, to the balance now",
+     "kind": "unit",
+     "proves": "A statement’s balances are the ledger’s, worked back from the postings."
+    },
+    {
+     "file": "tests/statements.test.ts",
+     "title": "run a quarter in Germany, whose banks close an account each quarter",
+     "kind": "unit",
+     "proves": "Germany’s quarterly statements."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: an account a bank closed stops > PLAYER JOURNEY: a student of 24 opens Citi Access Checking and Capital One 360 Checking and funds neither, her standing order of $50 into Chase Savings set to pay from 360 Checking; Capital One closes it unfunded on 5 December and the order ends with it, said once; Citi charges off its two $5 months on 31 December and ends the $20 order from it; to April nothing more posts to either, no statement, no alert, no order, across a reload",
+     "kind": "clock",
+     "proves": "No statement or alert names an account after the bank closed it."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.features",
+   "before": "overdraft interest dropped on closing (banking.1.overdraft-interest)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/lending.test.ts",
+     "title": "sets off only what savings there needs to give, and charges off the rest",
+     "kind": "clock",
+     "proves": "The overdraft’s set-off and charge-off."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.1: a bank’s own close settles what it owes and leaves nothing in it > FIXTURE, Berlin: Deutsche Bank’s own close of an AktivKonto €100 under from 5 January charges off on 7 March what it’s owed to the day, €122.89: €101.97 overdrawn, 22 cents of interest built since 1 March, and €20.70 of fees, nothing left on the closed account",
+     "kind": "clock (FIXTURE)",
+     "proves": "Overdraft interest by hand at 13.05%: 96¢ on 1 February, 101¢ on 1 March, 22¢ on the close."
+    },
+    {
+     "file": "tests/accountlife.test.ts",
+     "title": "renews at Chase for the same term, with ten days to take it whole",
+     "kind": "clock",
+     "proves": "Term deposits as the bank ends them."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "banking.s7.school",
+   "before": "defect: a payment to Yale refused with savings at the bank that could pay it, and no next step",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing",
+     "kind": "command",
+     "proves": "$20,000.00 paid from $19,565.00 of checking and $435.00 of savings, the savings unlinked; the refusal names the $45,217.00 the bank can pay and the next step; a reload shows the two payments once; breaches 0."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student on a personal leave from 20 January 2027, her Chase Total Checking down to $100.00 (TEST SETUP), buys Affiliate cover, $8,950.00, from it and Chase Savings beside it",
+     "kind": "command+clock",
+     "proves": "Affiliate cover’s $8,950.00 paid from $100.00 of checking and $8,850.00 of savings."
+    },
+    {
+     "file": "tests/evidence-g25-school.test.ts",
+     "title": "PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice",
+     "kind": "command+render",
+     "proves": "Updated 2026-10-16 to the bank’s new words for an emptied bank."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A payment to Yale (Pay From Your Bank, Affiliate cover) draws on the primary current account and then the easy-access savings at its bank whatever the link, as a tax bill does; a refusal says what the bank can pay now and to move money into the current account",
+     "where": "src/engine/systems/leave.ts fromBankToYale, bankShortWords, payBalanceRefusal, payBalance, school.buy_affiliate",
+     "failingTest": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing / banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student on a personal leave from 20 January 2027, her Chase Total Checking down to $100.00 (TEST SETUP), buys Affiliate cover, $8,950.00, from it and Chase Savings beside it"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Yale Student Accounts: online payments “can be made by anyone with a U.S. checking or savings account”; “Payments are immediately posted to the student account”; no credit or debit cards; $25 for a rejected ePayment",
+     "citation": "https://student-accounts.yale.edu/paying-your-bill/payment-options",
+     "effective": "not given (the page carries only its 2026 copyright)",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "The savings drawn on are those at the primary account’s bank, as a tax bill’s are; money at another bank is moved by the player first, which the refusal says."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "const fromBankToYale = (sim: Simulation, person: Person, amount: Money) => drawFromBank(sim, person, amount, false, true);",
+     "replace": "const fromBankToYale = (sim: Simulation, person: Person, amount: Money) => drawFromBank(sim, person, amount, false);",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bill"
+     ]
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "  if (can <= 0) return 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';",
+     "replace": "  if (can <= 0) return 'Your bank can’t cover it.';",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bill"
+     ]
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "    const bank = fromBankToYale(s, person, cost);",
+     "replace": "    const bank = drawFromBank(s, person, cost, false);",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: the same student on a personal leave from 20 January 2027, her Chase Total Checking down to $1"
+     ]
+    },
+    {
+     "file": "src/engine/systems/leave.ts",
+     "find": "    const short = bankShortWords(s, person, cost, true);\n    if (short) throw new CommandError(short);",
+     "replace": "    const short = drawFromBank(s, person, cost, false).short > 0 ? 'Your bank can’t cover it.' : undefined;\n    if (short) throw new CommandError(short);",
+     "killed": true,
+     "killedBy": [
+      "PLAYER JOURNEY: the same student on a personal leave from 20 January 2027, her Chase Total Checking down to $1"
+     ]
+    }
+   ],
+   "rowText": {
+    "school.pay_balance": {
+     "reads": "payBalanceRefusal (leave.ts): accountOwed, something paid, no more than is owed, and from 2026-10-16 what the primary current account and the easy-access savings at its bank can pay together, whatever the link (fromBankToYale)"
+    },
+    "school.buy_affiliate": {
+     "reads": "a leave on, no Affiliate cover, by affiliateBy; affiliateQuote; from 2026-10-16 the primary current account and the easy-access savings at its bank (fromBankToYale)"
+    }
+   },
+   "tutorial": "",
+   "guide": "school.money (src/engine/content/guide/school.ts): needs, costs (Paying) and unavailable; school.leave’s unavailable (Affiliate cover’s bank refusal); dated comments."
+  },
+  {
+   "id": "banking.s7.holds",
+   "before": "verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/arrears.test.ts",
+     "title": "reports a US charge-off to ChexSystems, and most banks turn the report away for five years, fewer once it’s paid",
+     "kind": "clock",
+     "proves": "A charge-off’s report and its recovery path."
+    },
+    {
+     "file": "tests/defects-g8-3.test.ts",
+     "title": "is due in thirty days, said when the leave begins, and unpaid brings the hold and the late fee",
+     "kind": "clock",
+     "proves": "Yale’s financial hold, lifted once paid."
+    },
+    {
+     "file": "tests/remaining-banking.test.ts",
+     "title": "banking.s7.school: a payment to Yale comes from the current account and the savings beside it > PLAYER JOURNEY: a Comfortable student owing $20,000.00 on her Yale account (TEST SETUP, as a seventh term bills it) pays it from $19,565.00 in Chase Total Checking and $435.00 of Chase Savings; owing $70,000.00 more she is told the $45,217.00 left in savings is what the bank can pay, and what to do, pays that, and a reload changes nothing",
+     "kind": "command",
+     "proves": "The hold’s payment path reaches savings."
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  }
+ ],
+ "mutationsRun": {
+  "run": 32,
+  "killed": 29,
+  "survived": [
+   "cancelRefusal leaves out the overdraft interest",
+   "findTermInterest reads closed terms too",
+   "Affiliate cover reaches savings only where linked"
+  ],
+  "how": "each applied alone to the working tree, tests/remaining-banking.test.ts run (tests/scope-money.test.ts for the refusal words), the mutated region restored by its surrounding text and compared byte for byte with a copy taken before; the first run’s five empty replacements weren’t restored by the runner, and those two files were restored from their copies and the round run again whole",
+  "survivorsDealtWith": "cancelRefusal’s overdraft interest and findTermInterest’s filters removed as redundant; Affiliate cover’s first survivor killed by a test added for it"
+ }
+}

@@ -35,9 +35,9 @@ import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDaysIn, daysOfAccount } from '../content/bankdays';
 import { ASSUMED_DAYS, ASSUMED_WORDS, abroadTermsOf, chargeOf, homeTerms, marginOf, noticeFor, NON_RESIDENT_TAX, US_REPORTS, type AbroadTerms, type Charge } from '../content/homeaccounts';
 import { homeOf } from './earnings';
-import { isoOf, dropPaymentsFor, settleFees, settleInterest } from './banking';
+import { isoOf, dropPaymentsFor, endedWords, endOrdersOf, settleFees, settleInterest } from './banking';
 import { ARRIVES_KIND, inTransitOf, usPerson } from './bankmoves';
-import { checkingsOf } from './lending';
+import { checkingsOf, settleOverdraftInterest } from './lending';
 import { depositAccount, redirectAway } from './routing';
 import { ageOn } from './mortality';
 
@@ -504,7 +504,9 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   if (!person || !bank) return;
   const mine = Object.values(sim.universe.accounts).filter((a) => a.ownerId === person.id && !a.closedAt && a.bankId === bank.id && (a.kind === 'checking' || a.kind === 'savings'));
   if (mine.length === 0) return;
-  for (const account of mine) { settleInterest(sim, account, `Interest: ${account.name}, on closing`); settleFees(sim, account); }
+  // The overdraft interest built since the 1st with them, from 2026-10-16 (`settleOverdraftInterest`): until then it was
+  // dropped when the account closed.
+  for (const account of mine) { settleInterest(sim, account, `Interest: ${account.name}, on closing`); settleOverdraftInterest(sim, account); settleFees(sim, account); }
   const current = mine.find((a) => a.kind === 'checking') ?? mine[0]!;
   for (const account of mine) {
     if (account.id === current.id || account.balance === 0) continue;
@@ -527,6 +529,8 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   const held = heldOf(current);
   let arrives: Instant | undefined;
   if (held > 0 && into) arrives = sendAbroad(sim, person, current, into, held, into.bankId, true);
+  // A standing order paying from one of them ends with it, said once below (`endOrdersOf`, from 2026-10-16).
+  const ended = mine.flatMap((account) => endOrdersOf(sim, person, account));
   for (const account of mine) {
     account.accrued = 0;
     account.closedAt = sim.now;
@@ -536,7 +540,7 @@ function homeCloses(sim: Simulation, item: ScheduledItem): void {
   if (mineNow) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
-      body: arrives !== undefined && into ? `Its notice ran out. ${heldText(sim, current, held)} is on its way to ${into.name}, arriving ${formatDate(arrives, sim.zone)}, less the payment’s costs.` : 'Its notice ran out, and it held nothing to send.',
+      body: `${arrives !== undefined && into ? `Its notice ran out. ${heldText(sim, current, held)} is on its way to ${into.name}, arriving ${formatDate(arrives, sim.zone)}, less the payment’s costs.` : 'Its notice ran out, and it held nothing to send.'}${endedWords(sim, ended)}`,
       importance: 70, route: '/workspace/bank',
     });
   }

@@ -30,6 +30,7 @@ import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { END_WORDS } from '@/engine/systems/accountlife';
 import { CHARGE_OFF_DAYS } from '@/engine/systems/credit';
 import { banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
+import { abroadRefusal } from '@/engine/systems/abroad';
 import type { Account } from '@/engine/core/ledger';
 import {
   CASS, ESTIMATE, LOAN_DUE_KIND, SWITCH_KIND, checkingsOf, collectionsOf, collectionsSource, lendingOf, loanOf, loanOffer, overdraftOffer, overdraftRoom, repaymentAccount, termsOf,
@@ -96,6 +97,7 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
   const history = useWorld((s) => s.player.payments?.switches ?? []);
   const inDebt = useWorld((s) => Object.values(s.universe.accounts).filter((a) => a.ownerId === s.player.id && a.switchDebt && a.closedAt === undefined));
   const asked = cents(borrow);
+  const away = useWorld((s) => abroadRefusal(s.player, bank));
   const quote = useWorld((s) => (asked > 0 ? loanOffer(s, s.player, asked, Number(months), bank.id, purpose) : undefined), [asked, months, bank.id, purpose]);
   const od = lending.overdraft;
 
@@ -303,7 +305,12 @@ export function BankLending({ bank, show, account }: { bank: Bank; show: readonl
             </div>
           </div>
         )}
-        {!loan && lending.loan && (
+        {!loan && lending.loan && away && (
+          // A bank in another country lends nothing new, said in place of a form it can't act on (from 2026-10-16: until
+          // then the form was drawn, and its quote or Borrow It refused in these words).
+          <p className="small muted" style={{ margin: 0 }}>{away}</p>
+        )}
+        {!loan && lending.loan && !away && (
           <div className="col gap-3">
             {lending.loan.lender && <p className="small" style={{ margin: 0 }}>{bank.name}’s personal loans are made by {lending.loan.lender}.{lending.loan.rateSource === 'third-party' ? ' It publishes no rate of its own: the range is a comparison site’s, said in the source.' : ''}</p>}
             <p className="small" style={{ margin: 0 }}>

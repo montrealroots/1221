@@ -17,7 +17,7 @@ import { exchange } from '../content/currency';
 import { ID_CARDS } from '../content/identity';
 import { ID_CARD_REPLACEMENT, LICENSE_REPLACEMENT } from '../content/replacements';
 import { payFromBank } from './spending';
-import { addYears, citizenOf, documentsOf, inForce, licensingOf, numberFor, type PersonDocument } from './documents';
+import { addYears, citizenOf, documentsOf, inForce, licensingOf, numberFor, passportOf, type PersonDocument } from './documents';
 import { businessDaysOn, f1Of, programEnd } from './permission';
 import { hasSsn } from './taxid';
 import { schoolEnded } from './school';
@@ -94,6 +94,12 @@ export function idCardRefusal(person: Person, at: Instant): string | undefined {
     if (!(f1 && atSchool(person)) && !usPermitInForce(person, at)) {
       return f1 ? 'On an F-1, the DMV asks for your I-20 and proof you’re enrolled, and you’re not at school.' : 'The DMV asks for proof of lawful presence in the US, which you don’t hold.';
     }
+    // A primary identity document in force: for somebody born abroad, a foreign passport with its supporting documents
+    // (an F-1 student's I-20 and I-94), or an Employment Authorization Document, OPT's; documents “valid/unexpired”
+    // (Connecticut DMV, DI-3 Rev. 6-2026, “REAL ID Document Identity Verification Checklist”, read 2026-10-16). From
+    // 2026-10-16: until then none was asked, and a student who had reported her passport lost was issued a card with no
+    // identity document at all (tests/remaining-papers.test.ts).
+    if (!passportOf(person, at) && !usPermitInForce(person, at)) return 'The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for or renew it on Papers first.';
     // Only an F-1 student at school can apply for the number, through work-study (`ssnRefusal`), and SLATE issues no
     // letter; one applied for there still comes once the program has ended. From 2026-10-12: until then everyone
     // without a number was told to apply for it on Papers, which a graduate on OPT, let through above that day, can't,
@@ -192,6 +198,16 @@ export function idReplaceFee(sim: Simulation, person: Person, issuer: string): M
   return inMoney(sim, fee, rule.currency);
 }
 
+/**
+ * A save from before 2026-10-16 holding a US state ID card issued to somebody not a citizen, marked REAL ID as SLATE
+ * then marked them: corrected on opening to the non-verified card the state issues (`documents.apply_idcard`). Once:
+ * a card already unmarked is left alone. A permanent resident would be eligible, and SLATE has none.
+ */
+export function nonCitizenCards(person: Person): void {
+  if (citizenOf(person, 'US')) return;
+  for (const d of documentsOf(person)) if (d.kind === 'idcard' && d.issuer.startsWith('us-') && d.realId === true) d.realId = false;
+}
+
 export function registerIdentity(sim: Simulation): void {
   sim.onCommand<{ documentId: string }, { readyAt: Instant; fee: Money }>('documents.replace_idcard', (p, { sim: s }) => {
     const person = s.player;
@@ -235,7 +251,11 @@ export function registerIdentity(sim: Simulation): void {
     const expiresAt = card.years ? Math.min(addYears(s.now, card.years), book?.expiresAt ?? Infinity, limited ?? Infinity) : undefined;
     if (limited !== undefined) {
       const readyAt = businessDaysOn(s.now, NONCITIZEN_ID.saveBusinessDays, true);
-      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: `${card.name}, Limited Term`, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), realId: true } as PersonDocument);
+      // Not REAL ID: “Only U.S. Citizens and Permanent Residents are eligible for a verified REAL ID driver’s license”,
+      // and anyone else is “issued a non-verified (Not for Federal Identification) driver’s license or ID card”
+      // (Connecticut DMV, Non-US Citizen Requirements and DI-3 Rev. 6-2026, read 2026-10-16). Until 2026-10-16 it was
+      // marked REAL ID, and its page said it met it (`nonCitizenCards` corrects one a save holds).
+      documentsOf(person).push({ id, kind: 'idcard', issuer: jurisdiction, name: `${card.name}, Limited Term`, number: numberFor('ID', id), status: 'pending', appliedAt: s.now, readyAt, ...(expiresAt ? { expiresAt } : {}), realId: false } as PersonDocument);
       s.schedule({ at: readyAt, kind: ID_CARD_KIND, label: 'The ID Card Comes', category: 'personal', priority: 30, payload: { personId: person.id, documentId: id } });
       return { expiresAt, fee };
     }

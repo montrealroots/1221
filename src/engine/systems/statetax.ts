@@ -1032,9 +1032,20 @@ export function registerStateTax(sim: Simulation): void {
     const waived = Math.round(sd.threeYear!.amount * share);
     sd.threeYear!.waived = waived;
     sd.threeYear!.waivedAt = s.now;
-    if (sd.owed && sd.parts) { accrueState(sd, stateDueOf(r!), s.now); setStateOwed(sd, { ...sd.parts, penalty: Math.max(0, sd.parts.penalty - waived) }, s.now); }
-    else if (waived) s.post({ memo: `${agencyOf(state)}: a penalty waived and refunded`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: waived }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -waived }] });
-    notifyPlayer(s, person, `${rulesOf(state)!.short} Waived Part Of Your Penalty`, `${Math.round(share * 100)}% of the three-year penalty on your ${r!.year} return, ${formatMoney(waived, saveCurrency(s.universe))}, by its schedule.`);
+    const cur = saveCurrency(s.universe);
+    // What of it is still owed comes off the penalty; what was paid toward it already, a payment goes to the penalty
+    // first in Oregon, is an overpayment now: credited to the year's interest and tax still owed, and the rest refunded
+    // (SLATE's reading of ORS 314.415's credits and refunds; the waiver's rule says nothing of a part already paid). From
+    // 2026-10-16: until then the part paid was dropped, so a year paid down to $10.00 of penalty and waived $125.00 lost
+    // $115.00 (tests/remaining-tax.test.ts).
+    let off = 0;
+    if (sd.owed && sd.parts) { accrueState(sd, stateDueOf(r!), s.now); off = Math.min(waived, sd.parts.penalty); setStateOwed(sd, { ...sd.parts, penalty: sd.parts.penalty - off }, s.now); }
+    const paid = waived - off;
+    const credited = paid > 0 && sd.owed ? applyStatePayment(s, person, r!, state, Math.min(paid, stateOwedOn(sd, stateDueOf(r!), s.now)), 'refund offset') : undefined;
+    const creditedTotal = credited ? credited.tax + credited.penalty + credited.interest : 0;
+    const back = paid - creditedTotal;
+    if (back > 0) s.post({ memo: `${agencyOf(state)}: a penalty waived and refunded`, category: 'tax', postings: [{ accountId: payeeAccount(s, person).id, amount: back }, { accountId: s.nominalAccount('income', 'Tax Refund').id, amount: -back }] });
+    notifyPlayer(s, person, `${rulesOf(state)!.short} Waived Part Of Your Penalty`, `${Math.round(share * 100)}% of the three-year penalty on your ${r!.year} return, ${formatMoney(waived, cur)}, by its schedule.${creditedTotal > 0 ? ` ${formatMoney(creditedTotal, cur)} you’d paid toward it goes to what’s still owed on the year.` : ''}${back > 0 ? ` ${formatMoney(back, cur)} you’d paid toward it comes back.` : ''}`);
     return { waived };
   });
 

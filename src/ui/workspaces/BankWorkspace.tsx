@@ -40,11 +40,12 @@ import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSa
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
-import { CHEX, checkingsOf } from '@/engine/systems/lending';
+import { CHEX, checkingAt, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { abroadQuote, heldOf, heldText, homeAccountLines, quoteWords } from '@/engine/systems/abroad';
 import { exchange } from '@/engine/content/currency';
+import { waiverWords } from '@/ui/bank/feeWords';
 
 export function BankWorkspace() {
   const { sim, run, toast } = useGame();
@@ -151,18 +152,25 @@ export function BankWorkspace() {
                 )}
                 {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
                 {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}</Fine>}
-                {account.kind === 'savings' && (
+                {account.kind === 'savings' && (() => {
+                  // Where closing it sends the money, as `closeSavings` does: the current account at its own bank, or the
+                  // primary with none there (from 2026-10-16: until then both lines named the primary, so a Berlin-raised
+                  // student's Flexgeld at Deutsche Bank said it moved to Chase Total Checking, where it goes to the
+                  // AktivKonto; tests/integration-savings-notice.test.ts).
+                  const into = checkingAt(sim, sim.player, account.bankId) ?? current;
+                  return (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
-                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {current ? <Open subject={at('account', current.id)}>{current.name}</Open> : 'your current account'}.</span>
+                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your current account'}.</span>
                       : <>
                         <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given: it closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
                           Close It
                         </Gated>
-                        <span className="xs dim">{closingWords(sim, account, money, current?.name ?? 'your current account')}</span>
+                        <span className="xs dim">{closingWords(sim, account, money, into?.name ?? 'your current account')}</span>
                       </>}
                   </div>
-                )}
+                  );
+                })()}
               </div>
             </Panel>
           );
@@ -468,33 +476,4 @@ function closingWords(sim: Simulation, account: Account, money: (c: number) => s
   return `Its ${money(account.balance + net)}${net > 0 ? `, with ${money(net)} of interest built this month` : ''}, moves to ${into}.`;
 }
 
-/** How a fee is waived, the way the bank puts its conditions, each one an "or", and what lowers it. */
-function waiverWords(product: Product, money: (cents: number) => string): string {
-  const waiver = product.waiver;
-  // As the bank counts them: any electronic deposit where it does, and until 2026-09-27 this said wages for every bank.
-  const paidIn = product.deposits === 'electronic' ? 'of electronic deposits (wages, benefits or a tax refund) paid in' : 'of wages paid in';
-  const cut = product.reduced;
-  const lower = !cut ? '' : `; ${money(cut.to)} with ${[
-    cut.depositsAtLeast !== undefined ? `${money(cut.depositsAtLeast)} ${paidIn}` : '',
-    cut.averageAtLeast !== undefined ? `an average of ${money(cut.averageAtLeast)} over the month` : '',
-    cut.ageBelow !== undefined ? `being under ${cut.ageBelow}` : '',
-  ].filter(Boolean).join(', or ')}`;
-  if (!waiver) return lower;
-  const ways: string[] = [];
-  if (waiver.depositsAtLeast !== undefined) {
-    const also = waiver.depositsAlso;
-    const extra = !also ? '' : also.either !== undefined
-      ? ` and ${also.either} bills or card payments in ${also.months} months`
-      : ` and ${[also.bills !== undefined ? `${also.bills} bills` : '', also.purchases !== undefined ? `${also.purchases} card payments` : ''].filter(Boolean).join(' or ')} in ${also.months} months`;
-    ways.push(`${money(waiver.depositsAtLeast)} ${paidIn}${extra}`);
-  }
-  if (waiver.balanceAtLeast !== undefined) ways.push(`keeping ${money(waiver.balanceAtLeast)} in it all month`);
-  if (waiver.averageAtLeast !== undefined) ways.push(`an average of ${money(waiver.averageAtLeast)} over the month`);
-  if (waiver.linkedAverageAtLeast !== undefined) ways.push(`an average of ${money(waiver.linkedAverageAtLeast)} across your accounts at the bank`);
-  if (waiver.ageBelow !== undefined) ways.push(`being under ${waiver.ageBelow}`);
-  if (waiver.ageAtLeast !== undefined) ways.push(`being ${waiver.ageAtLeast} or over`);
-  if (waiver.purchasesAtLeast !== undefined) ways.push(`${waiver.purchasesAtLeast} card payments in the month`);
-  if (waiver.firstMonths !== undefined) ways.push(`the first ${waiver.firstMonths} months after opening`);
-  if (ways.length === 0) return lower;
-  return `, waived with ${ways.join(', or ')}${lower}`;
-}
+// `waiverWords` moved to `ui/bank/feeWords.ts` on 2026-10-16, so the opening panel says the fee before Apply.

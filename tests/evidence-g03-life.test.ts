@@ -762,7 +762,8 @@ describe('health.pay_bill', () => {
     posted(sim, savings(sim).id, 1_000_00);
     const was = { current: current(sim).balance, savings: savings(sim).balance };
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 0 } })).toMatchObject({ ok: false, error: 'Say how much.' });
-    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking can’t cover it.' });
+    // In words that say what to do from 2026-10-16; until then “Chase Total Checking can’t cover it.”
+    expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00 } })).toMatchObject({ ok: false, error: 'Chase Total Checking has nothing to pay it with: move money into it first, on your bank’s Move Money.' });
     expect(sim.execute({ kind: 'health.pay_bill', payload: { amount: 100_00, fromId: savings(sim).id } })).toMatchObject({ ok: true, value: { paid: 100_00 } });
     expect(-medicalDebtOf(sim, sim.player)!.balance).toBe(800_00);
     expect(healthOf(sim.player).debtSince).toBeDefined();

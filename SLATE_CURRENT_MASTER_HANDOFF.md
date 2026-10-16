@@ -1,6 +1,115 @@
-# Read First: The Session Handoff, 2026-10-16
+# Read First: The Integration And Acceptance Pass, 2026-10-16
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
+at the end of the owner's "Implement SLATE’s Complete Integration And Acceptance Pass"
+(`docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt`, kept verbatim), worked on
+`claude/peaceful-hamilton-59zdbb` from `main` at `ef784ccd` (#34's merge), and merged to `main` with a merge commit at the
+owner's word ("Merge it all.", 2026-10-16). **Merged isn't deployed: nothing is.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`.
+- **`main`:** this branch's pull request's merge commit, the first on `main` after `ef784ccd`. A file can't name the commit
+  that merges it: `git log origin/main -1` shows it. Its tree is the tree of the branch's head, which the gate passed on
+  (section 5), with the documents written after it.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, is wholly in `main`: every commit of the pass, listed by
+  `git log --oneline ef784ccd..origin/claude/peaceful-hamilton-59zdbb`. One pull request carried them, opened and merged
+  at the owner's word. The branches the section below names as left as they are (the `base44/setup-*` branches,
+  `claude/scope-reset`, `fix-main-cbc9a69be967`, `fix-save-error`) are still unmerged and still left: none is this
+  pass's, and `claude/scope-reset` never compiled.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree, and the pass left nothing
+  uncommitted in the tree. The owner's machine's stash, worktrees and untracked root files, as the work plan's Resume Here
+  records them, are untouched: never apply, pop or drop the stash; never merge the worktrees.
+- **One commit holds work mid-flight.** `64e3f82d`, a checkpoint taken while two areas each had a mutation applied:
+  `programNext` in `systems/school.ts` and `monthEngagement` in `systems/health.ts`. `8538912a`, the next commit,
+  restores both; check out neither alone.
+
+## 2. What The Pass Did, And Where It's Written
+
+`docs/verification/integration-2026-10-16/README.md` is the account: the baseline and the criteria written before any
+result changed, then "What The Pass Did, And What It Measured", written at the end. In short:
+
+- **The judge** (evaluation-9): a result rounded once from exact parts (ST3-P, met); four public-domain drama scenes of
+  public conflict (ST4, met); restraint drawing composure and focus, sourced, which moved no ST6 case. `st3.md`, `st6.md`,
+  `h4.md`, `l3.md`.
+- **Phase 2c's close-out** (`closeout/`): every attribute, interpretation, signature and stage criterion measured again on
+  the final engine; the genre audit (149 of 149 helped, none leaking).
+- **Mastery through play:** MA1 to MA8, MA8 played in `tests/integration-mastery.test.ts`; six mastery plans at 100.
+- **The six areas** (`docs/verification/remaining/`): health (eligibility, billing), banking, school (with the missed-work
+  term), tax and papers, coverage. Each wrote its checklist before its code and its result after.
+- **Outside the areas, fixed:** the IRS's substitute return armed on a load where only Connecticut was owed; a medical
+  debt's refusal with no next step; a savings close naming the wrong account; Borrowing offering at a bank kept from home
+  what the commands refused; two new commands in no capability; the built app's two steps skipped since 2026-10-12.
+- **Coverage:** each audit row's evidence class, the `static` standard, the 14 (now 13) unresolved rows in four parts,
+  the areas folded by `remaining-fold.cjs`, rows added through `inputs/added-rows.json`.
+- **The completion matrix** (`integration-2026-10-16/COMPLETION-MATRIX.md`, `tools/completion-matrix.mjs --check`): 467
+  rows, none open.
+
+## 3. What Isn't Done, And The Owner's Decisions
+
+Not counted met, and not changed without the owner's word (the account's "For The Owner"):
+
+1. **ST3** 157 of 171 as shown, contradictory as written: ST3′ proposed.
+2. **ST6** 8 of 38: keep it as the record, or name a basis for a change.
+3. **H4** 2 of 12: H4′ proposed, or content for presence, discipline and stamina.
+4. **L3** as written fails a student who earns callbacks: L3′ proposed.
+5. **F2 as written** 67.6%, superseded for advice by F2-A (40 of 40).
+6. **Germany's month's fee on a close**, pro rata under BGB § 675h(3): `banking.1.pro-rata`.
+7. **The 54 genres whose two briefs suit the same sides on every axis.**
+
+Open work, not the owner's decision:
+- **Nine commands traced outside the audit** (the brief, workbook and way-of-playing commands, and `life.look_after` by
+  command): no audit row yet.
+- **`health.request_hardship`'s renewal branch**, played by no test (its row is partial).
+- **The 13 unresolved rows** wait on the owner's decision already open on the nine bank rows
+  (`docs/verification/CURRENT-SCOPE-2026-10-15.md`, The Owner's Decisions, 2).
+- **`tools/completion-matrix.mjs --check` isn't in the gate**; adding it changes the gate CLAUDE.md describes.
+
+## 4. The Rules, The Schema And The Model
+
+Unchanged by this pass: CLAUDE.md, the gate's seventeen checks, the scope (`docs/REQUIREMENTS.md`), and the save schema,
+**94** in both `SAVE_SCHEMA_VERSION` (`src/engine/domain/model.ts`) and `SUPPORTED_SCHEMA_VERSION`
+(`base44/shared/guard.js`). The older-save work of this pass runs as one-time steps on opening: banking's
+`findTermInterest` (named in `SaveUniverse.opened`), tax's early letters moved, a non-citizen's ID card corrected. The
+judge's ruleset is **evaluation-9 (2026-10-16)**; a result kept under an earlier ruleset is shown as it was.
+
+## 5. What Was Tested, On What
+
+| Check | Result |
+|---|---|
+| `npm run gate` on `f68516b0`, exit from a file | **exit 0**: 361 files, 4,316 tests, none skipped; all seventeen checks |
+| `npm run build` | exit 0 |
+| `tools/scenario-saves.mjs` | 14 of 14, each breaches 0, unbalanced 0 |
+| The built app, 1440 and 390 | 72 passed, 0 failed, 0 skipped, 0 errors, 0 overflows at each width |
+| Lives to graduation (24) | 20 graduated; the 4 dismissed the autopilot control's; breaches, unbalanced and errors 0 |
+| Mastery plans (6), F2-A (40), workload (8), variety (3 years), freshness (8) | as the account's table; breaches 0 throughout |
+
+The scenario saves, the built app and the gate are `f68516b0`'s; the long runs were played on `d1452195`, and the code
+changed after it only where none of their play reaches (`runs/README.md`). What came after `f68516b0` is the account and
+this handoff. Every output is in `docs/verification/integration-2026-10-16/runs/`.
+
+## 6. The Environment
+
+As the section below this one says (its section 8): Node 22, npm 10, Playwright with Chromium, PowerShell 7 on the
+owner's machine, the gate read from a file, the built app from fresh saves. One correction from this pass: the mastery
+plans take the catalog's genre ids, which are written with underscores (`nordic_noir`, `social_realism`).
+
+## 7. Deployment
+
+Not deployed. Base44 deployment happens on the owner's word, after the gate passes (rule 14).
+
+## 8. Next, In Order
+
+1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
+   work plan (section 11), the briefs. Preserve the stash, worktrees and local files.
+2. **The owner's decisions** in section 3, each with what it would change written beside it in the account.
+3. **Merged** at the owner's word, in the pull request that carried this branch. A follow-up starts a fresh branch from
+   `main`; the merged pull request isn't reused.
+4. **The open work** in section 3: audit rows for the nine commands; the hardship's renewal branch played.
+
+# Earlier: The Session Handoff, 2026-10-16
+
+**This section was the current status until the integration pass later that day**, whose section above is now. It was written
 at the owner's "Prepare A Complete, Verified SLATE Session Handoff" (`docs/verification/briefs-2026-10-16/07-session-handoff.txt`),
 after the sweep, on `claude/zen-mccarthy-i88ujw`, and merged in pull request #34. Merged isn't deployed: nothing is.
 

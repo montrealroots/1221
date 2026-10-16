@@ -1,0 +1,611 @@
+{
+ "key": "health-eligibility",
+ "on": "2026-10-16",
+ "against": "fa5ba8b1 plus this pass's uncommitted tree (claude/peaceful-hamilton-59zdbb)",
+ "commandsAdded": [
+  "health.apply",
+  "health.request_hardship"
+ ],
+ "scheduledKindsAdded": [
+  "health.work_decided"
+ ],
+ "regenerated": [
+  "docs/DEVMAP.md",
+  "docs/TRACEABILITY.md"
+ ],
+ "items": [
+  {
+   "id": "health-eligibility.1-covered-ct-status-barred",
+   "before": "A noncitizen barred from HUSKY D by status (an F-1 student, from 1 October 2026) at 100-138% of the poverty line was given Covered Connecticut (health.ts programFor, Covered Connecticut asked only ≤175% of the year before's line and the credit). The return read ≤138% as Medicaid's whatever the status, and gave that person no credit on the marketplace.",
+   "disposition": "fixed (and uncertainty recorded)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from HUSKY D by her status, is given the marketplace, not Covered Connecticut; at $2,052.00, Covered Connecticut; a citizen at $1,500.00, HUSKY D",
+     "kind": "command+render (FIXTURE: status kept past grace, the month's income set by hand)",
+     "proves": "At $1,500.00 (15,960 × 1.38 ÷ 12 = $1,835.40 > 1,500 > 15,650 ÷ 12 = $1,304.17) Enroll on Papers gives the marketplace from 1 November, not Covered Connecticut; at $2,052.00 Covered Connecticut; a citizen at $1,500.00 HUSKY D."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+     "kind": "engine on a FIXTURE year",
+     "proves": "A citizen at 127.8% of the line gets no credit (HUSKY D would take her); the F-1 student at the same income, barred by status, gets it (item 5)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Covered Connecticut only where last month's income is over HUSKY D's line (\"ineligible ... due to income\"), whatever the status; the return's 138% exclusion only where Medicaid admits her by status (medicaidStatus at the year's end).",
+     "where": "src/engine/systems/health.ts programFor; src/engine/systems/taxreturn.ts figuresFor",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from HUSKY D by her status, is given the marketplace, not Covered Connecticut; at $2,052.00, Covered Connecticut; a citizen at $1,500.00, HUSKY D (mutation E1 restores the old rule and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Covered Connecticut: household income to 175% FPL, \"ineligible for HUSKY Health/Medicaid due to income\", eligible for APTC and CSRs and using 100% of them, a silver plan, 19-64; \"If your household income makes you eligible for HUSKY Health/Medicaid, you are not eligible for the Covered CT Program\"",
+     "citation": "portal.ct.gov/dss/health-and-home-care/covered-connecticut-program; help.accesshealthct.com/en_US/covered-connecticut-program (\"Income Guidelines for 2026 Coverage\"); OHS, Covered Connecticut Program Eligibility (8 July 2021), portal.ct.gov/-/media/ohs/press-room/announcements/covered-connecticut-eligibility-summary-2021.pdf (\"greater than 160%, and up to and including 175%\")",
+     "effective": "2026 coverage",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Covered Connecticut demonstration: expenditure authority for adults 19-64 \"who are not Medicaid eligible\", income to 175% FPL, \"eligible to receive advance premium tax credits\", in a silver QHP; described as having \"income that is above the Medicaid limit\"",
+     "citation": "CMS approval letter and Special Terms and Conditions, Covered Connecticut (11-W-00402/1), 15 December 2022, medicaid.gov/medicaid/section-1115-demonstrations/downloads/covered-ct-ca.pdf",
+     "effective": "15 December 2022 to 31 December 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Premium tax credit: applicable taxpayer at 100-400% FPL (36B(c)(1)(A), 26 CFR 1.36B-2(b)(1)), no rule excluding a nonresident alien; the under-100% exception for the lawfully present barred by status struck for taxable years after 2025 (Pub. L. 119-21 §71302); from taxable years after 31 December 2026 a noncitizen's month counts only as an \"eligible alien\" (36B(e)(2)(B), §71301)",
+     "citation": "26 USC 36B; Pub. L. 119-21 §§71301-71302 (govinfo PLAW-119publ21); 26 CFR 1.36B-2 (law.cornell.edu/cfr/text/26/1.36B-2)",
+     "effective": "§71302: taxable years beginning after 31 December 2025; §71301: after 31 December 2026",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "No DSS or Access Health CT document read states how it treats a noncitizen barred from HUSKY D by status at 100-138% of the poverty line; the state's published words (\"ineligible ... due to income\"; \"If your household income makes you eligible for HUSKY Health/Medicaid, you are not eligible\") are implemented. CMS's expenditure authority reads \"not Medicaid eligible\", which a status-barred person is: if Access Health CT reads it that way, SLATE is stricter than practice. Recorded in health.ts beside the rule.",
+    "The case is reached only on a FIXTURE: no played F-1 life holds 100-138% while in status with cover open (Capital One and Citi refuse an F-1, Chase pays cents, work-study is under the floor, and a withdrawal's grace ends status within weeks)."
+   ],
+   "mutations": [
+    {
+     "id": "E1-covered-ct-over-line",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (state === 'ct' && ratio > PUBLIC_COVER.medicaidShare && prior <= PUBLIC_COVER.coveredCtShare",
+     "replace": "if (state === 'ct' && prior <= PUBLIC_COVER.coveredCtShare",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"between the credit\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E5c-medicaid-by-status",
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "(ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, yearEnd))",
+     "replace": "(ratio <= PUBLIC_COVER.medicaidShare)",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"1040-NR\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "src/engine/content/tutorial.ts papers chapter: \"Covered Connecticut asks an income over HUSKY D’s line and at least the poverty line\" (dated comment above the chapter).",
+   "guide": "src/engine/content/guide/papers.ts papers.health-cover needs: Covered Connecticut \"over HUSKY D’s line ... an income HUSKY D’s line takes isn’t Covered Connecticut’s, whatever your status\"; interpret: the credit \"from 100% where your status keeps you from HUSKY D\"."
+  },
+  {
+   "id": "health-eligibility.2-work-exemptions",
+   "before": "No exception was read: every HUSKY D applicant and member from 2027 was asked the work, whatever her age, her SNAP or a stay in hospital.",
+   "disposition": "implemented (the readable exceptions; the rest recorded)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: a student born in 1960, 66, withdrawn, is given HUSKY D on 4 January 2027 with no work, as the rules ask nothing of somebody 65 or over; her twin born in 2001 is shown them short",
+     "kind": "render+command+clock",
+     "proves": "Born 1960 (66): December 2026 meets the rules by age and Enroll gives HUSKY D with no work; her twin born 2001 is shown the work rules short."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026 and it pays in December, while she’s under its work rules: on 4 January 2027 HUSKY D is hers with no work; her twin without SNAP is shown the work rules short",
+     "kind": "render+command+clock",
+     "proves": "SNAP applied for on Papers (first month 27 November), paid in December while she is under its work rules (out of school, no unemployment claim, 18-64): HUSKY D on 4 January with no work; the twin without SNAP shown the rules short."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload",
+     "kind": "render+command+clock+reload",
+     "proves": "A stay forced on 7 December; Enroll buys the marketplace; Apply For HUSKY D sends the notice; Request A Hardship Exception (drawn only with a stay in a month assessed) approves HUSKY D from 1 February, the marketplace ends as it begins and its premium is never taken; the decision of 8 February passes it by; one approval across a reload; a second request refused \"No notice of noncompliance waits on an answer.\""
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "GUARD: under 19 for any of a month meets the rules; no life at Yale is under 21, so a birth set by hand reaches it (FIXTURE)",
+     "kind": "engine (FIXTURE birth)",
+     "proves": "Under 19 for any of a month meets the rules; 19 for all of it doesn't. Unreachable in play (Yale's minimum age 21)."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+     "kind": "render+command",
+     "proves": "Asked with no stay, the hardship is refused in its words: \"No month it assessed, December 2026, had a stay in hospital, the hardship SLATE keeps.\""
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "monthEngagement reads, before any denial or ending: under 19 or 65 and over (435.551/435.553), SNAP received while not exempt from its work rules (435.554(c)(7)), and an inpatient stay on the request the notice offers (435.555(d)(1); health.request_hardship, a new command).",
+     "where": "src/engine/systems/health.ts monthEngagement, engagement, hardshipRefusal, health.request_hardship, grantPending; Papers Health Cover",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026 and it pays in December, while she’s under its work rules: on 4 January 2027 HUSKY D is hers with no work; her twin without SNAP is shown the work rules short (mutation E2c removes the SNAP exception and fails it; E2a the age; E2d the stay)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Medicaid community engagement: the look-back (1396a(xx)(1)), what meets it (xx)(2), the exceptions (xx)(3), (9)(A)(ii), the notice of noncompliance and 30 days (xx)(6), and (xx)(7)(B) (no premium tax credit while noncompliant)",
+     "citation": "Pub. L. 119-21 §71119, 42 USC 1396a(xx); govinfo.gov/content/pkg/PLAW-119publ21/html/PLAW-119publ21.htm",
+     "effective": "enacted 4 July 2025; in force \"not later than the first day of the first quarter that begins after December 31, 2026\" (1 January 2027), a good-faith exemption possible to 31 December 2028",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Connecticut: work rules from 1 January 2027 (\"income of $580 or more a month, complete 80 hours/month ... or be enrolled at least half-time in school\"); \"If not exempt from the work rules at initial application, eligibility includes a 1-month look back\"; \"At renewal, there will be a 6-month look back to verify the individual met work/community engagement requirements or was exempt from requirements during at least 1 calendar month\"; who doesn't have to meet them (under 19 or over 64; recently inpatient; SNAP household not exempt from its work rules; medically frail and unable to work; ...); renewals every 6 months",
+     "citation": "Connecticut Hospital Association, H.R. 1 HUSKY D (Medicaid) Changes: Materials For Providers And Community-Based Organizations, dated 8/25/26 (adapted from DSS), cthosp.org/webfoo/wp-content/uploads/Providers-and-Community-Based-Organization-HUSKY-D-Resource-Materials-5.18.26.pdf",
+     "effective": "1 January 2027",
+     "read": "2026-10-16 (no DSS page read states the look-back periods itself: an uncertainty)"
+    }
+   ],
+   "assumptions": [
+    "Not read, as SLATE keeps none of them: pregnancy or postpartum, children and caring for a disabled person (none since the scope reset), a veteran's rating, tribal membership, former foster care, Medicare, prison, TANF, treatment for addiction, a disaster or high-unemployment county, travel for care.",
+    "Medical frailty isn't applied: Connecticut's list of conditions isn't published (\"What is not yet known\", CHA 8/25/26), the rule asks that a condition \"significantly impairs\" the ability to comply, and SLATE's conditions (depression, asthma, high blood pressure, diabetes, arthritis), kept up or not, don't keep a life from work or school.",
+    "SNAP's \"not exempt from a work requirement\" is read as SLATE keeps SNAP's exemptions: at the School, an unemployment claim open, outside 18-64. SNAP's other work-registration exemptions (e.g. 30 hours' work a week) aren't kept.",
+    "SLATE's HUSKY D at 65 and over stands in for HUSKY C, which SLATE doesn't keep; the work rules aren't asked there, as the adult group is 19 to 64.",
+    "The hardship request is decided at once, the stay being on the State's own records; the regulation asks a \"timely process\"."
+   ],
+   "mutations": [
+    {
+     "id": "E2a-age",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (yearsAt(from) < 19 || yearsAt(until - 1) >= 65) return 'age';",
+     "replace": "if (yearsAt(from) < 19 || yearsAt(until - 1) >= 165) return 'age';",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"born in 1960\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E2b-under-19",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (yearsAt(from) < 19 || yearsAt(until - 1) >= 65) return 'age';",
+     "replace": "if (yearsAt(until - 1) < 19 || yearsAt(until - 1) >= 65) return 'age';",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"under 19\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E2c-snap",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (snap && !onUi && yearsAt(from) >= 18 && yearsAt(from) < 65) return 'snap';",
+     "replace": "if (false && snap && !onUi && yearsAt(from) >= 18 && yearsAt(from) < 65) return 'snap';",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"SNAP on Papers\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E2d-hardship-stay",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (!(person.health?.careLog ?? []).some((e) => e.care === 'stay' && pend.months.includes(monthKey(e.at))))",
+     "replace": "if (!(person.health?.careLog ?? []).some((e) => e.care === 'emergency' && pend.months.includes(monthKey(e.at))))",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"asks for the hardship\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "tutorial.ts papers chapter: \"unless you’re 65 or over, on SNAP under its work rules or, if you ask, in hospital that month\"; Request A Hardship Exception named.",
+   "guide": "guide/papers.ts papers.health-cover: needs (HUSKY D's exceptions; Request A Hardship Exception's requirement), reads (Last Month’s Work rewritten), now (Request A Hardship Exception's result), unavailable (its three refusals); covers gains health.apply and health.request_hardship."
+  },
+  {
+   "id": "health-eligibility.3-notice-and-response",
+   "before": "Enroll refused HUSKY D at once for last month's work, with no notice and no time to answer; a renewal that failed the work, the income or the status test ended cover at its own hour (00:30 on the renewal's day), \"Your Public Cover Ended At Renewal\", with nothing said ahead.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+     "kind": "render+command+clock+reload+jump-vs-steps",
+     "proves": "Apply For HUSKY D on 4 January 2027: \"A Notice Of Noncompliance\" (months, how, deadline 7 February, consequences incl. the credit, how to reapply), pending, uncovered; a second press refused; decided 8 February 00:00: \"Public Cover Denied\", once; one jump and day by day with a reload identical; she may apply again (decided 16 March)."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+     "kind": "clock+reload+jump-vs-steps",
+     "proves": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "GUARD: an ending said late in a month waits ten days into the next and ends with that one; no played renewal is decided later than the sixth of a month, so the ten days never cross a month there",
+     "kind": "engine",
+     "proves": "The ten days' advance notice crosses into the next month only when said after the 20th; no played renewal is decided later than the 6th."
+    },
+    {
+     "file": "tests/defects4.test.ts",
+     "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+     "kind": "clock",
+     "proves": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said."
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+     "kind": "clock+reload",
+     "proves": "A Covered Connecticut member moving into HUSKY D is kept on Covered Connecticut through the window, and it ends with December, said on 6 December."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A pending determination (HealthRecord.pending) with a notice of noncompliance and a scheduled decision (health.work_decided) at the thirty days' end (received five days after the notice's date); a member covered meanwhile; an ending, for the work, the income or the status, said at least ten days ahead and at the month's end (endsAfterNotice); an application taken on the notice (health.apply, a new command) and denied after it; the renewal run once while a notice waits.",
+     "where": "src/engine/systems/health.ts renewProgram, applyRenewal, endAhead, noticeOfNoncompliance, grantPending, applyRefusal, answerBy, decisionAt, endsAfterNotice, health.apply, health.work_decided; src/engine/content/safetynet.ts PUBLIC_COVER.noticeReceivedDays/answerDays/advanceNoticeDays; Papers Health Cover",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days (mutation E3b ends cover at the renewal as before and fails it; E3d runs the renewal again while the notice waits and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Medicaid community engagement: the look-back (1396a(xx)(1)), what meets it (xx)(2), the exceptions (xx)(3), (9)(A)(ii), the notice of noncompliance and 30 days (xx)(6), and (xx)(7)(B) (no premium tax credit while noncompliant)",
+     "citation": "Pub. L. 119-21 §71119, 42 USC 1396a(xx); govinfo.gov/content/pkg/PLAW-119publ21/html/PLAW-119publ21.htm",
+     "effective": "enacted 4 July 2025; in force \"not later than the first day of the first quarter that begins after December 31, 2026\" (1 January 2027), a good-faith exemption possible to 31 December 2028",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Advance notice of an adverse action: \"at least 10 days before the date of action\" (42 CFR 431.211); Connecticut's UPM 1570.10(A)(1): \"the Department mails or gives adequate notice at least ten days prior to the date of the intended action if the Department intends to discontinue, terminate, suspend or reduce benefits\", applied to a HUSKY D discontinuance by Access Health CT",
+     "citation": "DSS Office of Legal Counsel, Notice of Decision, Request #740154 (2016), portal.ct.gov/-/media/departments-and-agencies/dss/fair-hearings/other-medicaid-eligibility/other-medicaid-eligibility-2016/omel_2016_740154.pdf, quoting 42 CFR 431.211 and UPM 1570.10(A)(1)",
+     "effective": "in force",
+     "read": "2026-10-16; Connecticut's own day of discontinuance (end of month or not) not found: SLATE's assumption"
+    }
+   ],
+   "assumptions": [
+    "An ending takes effect at the end of the month in which the ten days' notice run out (Connecticut's own day of discontinuance not found); never later than 435.558(d)(2)(ii)'s end of the month after the window.",
+    "The thirty days are counted in New Haven calendar days: received on the fifth day after the notice's date, the thirtieth day from then the last to answer, decided at the next midnight.",
+    "Covered Connecticut's endings at renewal take the same ten days and month's end (its STCs bind the State to 42 CFR 431 subpart E for its terminations; individual exchange-side rules, 45 CFR 155.430, weren't applied).",
+    "No fair hearing is modeled; the notices say how to apply again instead."
+   ],
+   "mutations": [
+    {
+     "id": "E3a-received-five-days",
+     "file": "src/engine/content/safetynet.ts",
+     "find": "noticeReceivedDays: 5,",
+     "replace": "noticeReceivedDays: 0,",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"applies on 4 January 2027\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E3c-ten-days",
+     "file": "src/engine/content/safetynet.ts",
+     "find": "advanceNoticeDays: 10,",
+     "replace": "advanceNoticeDays: 0,",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"GUARD: an ending said late\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E3e-ending-ahead",
+     "file": "src/engine/systems/health.ts",
+     "find": "  const until = endsAfterNotice(at);\n  prog.until = until;",
+     "replace": "  const until = endsAfterNotice(at);\n  prog.until = at;",
+     "test": "tests/defects4.test.ts -t \"HUSKY D held from before\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E3b-notice-before-end",
+     "file": "src/engine/systems/health.ts",
+     "find": "      noticeOfNoncompliance(sim, person, { kind: 'renewal', state: prog.state, noticeAt: at, decideAt: decisionAt(at), months, band: still.band, renewAt: next }, prog);\n      return;",
+     "replace": "      endAhead(sim, person, prog, at, 'MUTANT');\n      return;",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"income in May to October 2027, the renewal of 1 November\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E3d-once-while-pending",
+     "file": "src/engine/systems/health.ts",
+     "find": "else if (at >= prog.renewAt && prog.until === undefined && h.pending?.kind !== 'renewal') renewProgram",
+     "replace": "else if (at >= prog.renewAt && prog.until === undefined) renewProgram",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"income in May to October 2027, the renewal of 1 November\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {
+    "health.enroll": {
+     "tests": "tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test passed on interest, the work test failed over May to October: a notice of noncompliance on 1 November, covered to 31 December, the end said on 6 December, across a reload; until 2026-10-16 it ended at the renewal's hour). tests/scope-cover.test.ts 'health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027' (the leave journey: given on 1 February for January at the School, the work rules short on 1 March for February on the leave; and the January-then-withdrawn journey), and its Covered Connecticut renewal on a leave. tests/remaining-health-eligibility.test.ts (Apply For HUSKY D on a notice, decided after thirty days; the exceptions; Connecticut's six months at renewal); tests/remaining-health-billing.test.ts 'FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027...' (HUSKY D kept at renewal through work, on a FIXTURE)."
+    },
+    "health.month": {
+     "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis."
+    }
+   },
+   "tutorial": "tutorial.ts papers chapter: \"Short of it, Apply For HUSKY D sends a notice giving 30 days from its receipt to answer, and a renewal’s keeps you covered meanwhile ... it ends at a month’s end, said 10 days or more ahead\".",
+   "guide": "guide/papers.ts papers.health-cover later: the renewal (kept said; ended said ten days ahead with “Your Public Cover Ends”), and the notice of noncompliance and its decision (\"Public Cover Denied\"); now: Apply For HUSKY D; unavailable: its refusals."
+  },
+  {
+   "id": "health-eligibility.4-look-back",
+   "before": "A renewal read the one month before, as an application did, where Connecticut reads six and asks any one.",
+   "disposition": "fixed (Connecticut's periods applied; their source recorded with its uncertainty)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance",
+     "kind": "command+clock+reload",
+     "proves": "80 hours in June 2027 (TEST SETUP) renew her on 1 November 2027 to 1 May 2028, said once; the same work in April, outside May to October, brings the notice (months October back to May listed)."
+    },
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+     "kind": "render+command",
+     "proves": "The application reads December 2026 alone (pending.months = [\"2026-12\"])."
+    },
+    {
+     "file": "tests/defects-g8-4.test.ts",
+     "title": "until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t",
+     "kind": "engine (FIXTURE program)",
+     "proves": "May's 80 hours renew a 1 July renewal; July's, its own month, don't."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+     "kind": "clock (FIXTURE program and wages)",
+     "proves": "A March 2027 renewal reads September 2026 to February 2027; August's work, outside, doesn't count."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "lookBack: the one calendar month before an application and the six before a renewal in Connecticut (PUBLIC_COVER.workLookBack), any month meeting the rules or an exception (engagement).",
+     "where": "src/engine/systems/health.ts lookBack, engagement, renewProgram, mayEnroll; src/engine/content/safetynet.ts PUBLIC_COVER.workLookBack",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance (mutation E4 sets renewal to one month and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Medicaid community engagement: the look-back (1396a(xx)(1)), what meets it (xx)(2), the exceptions (xx)(3), (9)(A)(ii), the notice of noncompliance and 30 days (xx)(6), and (xx)(7)(B) (no premium tax credit while noncompliant)",
+     "citation": "Pub. L. 119-21 §71119, 42 USC 1396a(xx); govinfo.gov/content/pkg/PLAW-119publ21/html/PLAW-119publ21.htm",
+     "effective": "enacted 4 July 2025; in force \"not later than the first day of the first quarter that begins after December 31, 2026\" (1 January 2027), a good-faith exemption possible to 31 December 2028",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Connecticut: work rules from 1 January 2027 (\"income of $580 or more a month, complete 80 hours/month ... or be enrolled at least half-time in school\"); \"If not exempt from the work rules at initial application, eligibility includes a 1-month look back\"; \"At renewal, there will be a 6-month look back to verify the individual met work/community engagement requirements or was exempt from requirements during at least 1 calendar month\"; who doesn't have to meet them (under 19 or over 64; recently inpatient; SNAP household not exempt from its work rules; medically frail and unable to work; ...); renewals every 6 months",
+     "citation": "Connecticut Hospital Association, H.R. 1 HUSKY D (Medicaid) Changes: Materials For Providers And Community-Based Organizations, dated 8/25/26 (adapted from DSS), cthosp.org/webfoo/wp-content/uploads/Providers-and-Community-Based-Organization-HUSKY-D-Resource-Materials-5.18.26.pdf",
+     "effective": "1 January 2027",
+     "read": "2026-10-16 (no DSS page read states the look-back periods itself: an uncertainty)"
+    }
+   ],
+   "assumptions": [
+    "The periods come from the Connecticut Hospital Association's materials adapted from DSS's (8/25/26); no DSS page read states them itself.",
+    "New York's and California's periods weren't read: the statute's least, one month each, is SLATE's assumption there (no life lives there).",
+    "At the first renewal after 1 January 2027 the six months may reach back into 2026; a month there that meets the rules counts (it can only help her)."
+   ],
+   "mutations": [
+    {
+     "id": "E4-six-months",
+     "file": "src/engine/content/safetynet.ts",
+     "find": "workLookBack: { ct: { apply: 1, renew: 6 }",
+     "replace": "workLookBack: { ct: { apply: 1, renew: 1 }",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"80 hours’ work in June 2027\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E4b-apply-one-month",
+     "file": "src/engine/content/safetynet.ts",
+     "find": "workLookBack: { ct: { apply: 1, renew: 6 }",
+     "replace": "workLookBack: { ct: { apply: 3, renew: 6 }",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"applies on 4 January 2027\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "tutorial.ts papers chapter: \"in Connecticut the month before you apply, and any one of the 6 before a renewal\".",
+   "guide": "guide/papers.ts papers.health-cover reads (Last Month’s Work), later (the renewal), interpret."
+  },
+  {
+   "id": "health-eligibility.5-f1-premium-credit-2026",
+   "before": "The return gave a nonresident alien no premium tax credit (\"which the 1040-NR doesn't carry\"), for any year, while Covered Connecticut (had with that credit) was given to an F-1 student in 2026; and the return read no status for 2027.",
+   "disposition": "fixed (2026: an unmarried F-1 student lawfully present qualifies, on Form 1040-NR; from 2027 she doesn't)",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+     "kind": "engine on a FIXTURE year",
+     "proves": "$20,000 of income (127.8% of 2025's $15,650), two $706.00 premiums: 2 × (706.00 − 0.021 × 20,000 ÷ 12) = $1,342.00 on her 2026 1040-NR; $0 on her 2027 1040-NR; $0 for a citizen in 2026 (HUSKY D would take her)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "figuresFor: the credit for a 1040-NR filer as for any; status read by creditStatus at the year's end (none for an F-1 from 2027); the 138% exclusion only where medicaidStatus admits her.",
+     "where": "src/engine/systems/taxreturn.ts figuresFor (credit lines)",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take (mutation E5a restores the nonresident's zero and fails it; E5b drops the 2027 status and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Premium tax credit: applicable taxpayer at 100-400% FPL (36B(c)(1)(A), 26 CFR 1.36B-2(b)(1)), no rule excluding a nonresident alien; the under-100% exception for the lawfully present barred by status struck for taxable years after 2025 (Pub. L. 119-21 §71302); from taxable years after 31 December 2026 a noncitizen's month counts only as an \"eligible alien\" (36B(e)(2)(B), §71301)",
+     "citation": "26 USC 36B; Pub. L. 119-21 §§71301-71302 (govinfo PLAW-119publ21); 26 CFR 1.36B-2 (law.cornell.edu/cfr/text/26/1.36B-2)",
+     "effective": "§71302: taxable years beginning after 31 December 2025; §71301: after 31 December 2026",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Form 8962 is filed \"with your income tax return (Form 1040, 1040-SR, or 1040-NR)\" when taking the PTC; on Form 1040-NR the PTC is barred only for dependents (save treaty cases), a spouse's advance payments, and a married filer outside the exceptions",
+     "citation": "IRS Publication 974 (2025), irs.gov/publications/p974; Instructions for Form 1040-NR (2025), irs.gov/instructions/i1040nr; Instructions for Form 8962 (2025), irs.gov/instructions/i8962",
+     "effective": "tax year 2025, the rules in force for 2026 unchanged by §71301 until 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "QHP enrollment for a citizen or a noncitizen \"lawfully present\"; APTC eligibility for an applicable taxpayer whose family member is not eligible for MEC and is a citizen or an \"eligible noncitizen\" (36B(e)(2)(B)); \"lawfully present\" includes \"a valid nonimmigrant status, as defined in 8 U.S.C. 1101(a)(15)\" (an F-1 is 1101(a)(15)(F))",
+     "citation": "45 CFR 155.305(a)(1), (f)(1); 45 CFR 155.20 (law.cornell.edu)",
+     "effective": "in force; \"eligible noncitizen\" tracks 36B(e)(2)(B), which §71301 narrows from 2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "SLATE models no advance payments: the whole premium is paid and the credit taken on the return, as for every marketplace plan in SLATE; so \"advance\" eligibility is read as the credit's and Covered Connecticut's.",
+    "Every SLATE life is unmarried, so the joint-filing rule never bars it.",
+    "The status is read at the year's end, for the year (an annual approximation: a status that changes mid-year isn't reached).",
+    "No played F-1 life pays marketplace premiums in 2026 (her status ends within weeks of a withdrawal, a personal leave is refused her, OPT comes after the degree in 2029), so this is reached on a FIXTURE only."
+   ],
+   "mutations": [
+    {
+     "id": "E5a-1040nr-credit",
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "const credit = pct === undefined || !creditStatus(person, yearEnd) ? 0",
+     "replace": "const credit = pct === undefined || !creditStatus(person, yearEnd) || nra ? 0",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"1040-NR\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E5b-credit-status-2027",
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "const credit = pct === undefined || !creditStatus(person, yearEnd) ? 0",
+     "replace": "const credit = pct === undefined ? 0",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"1040-NR\"",
+     "killed": true,
+     "restored": true
+    },
+    {
+     "id": "E5c-medicaid-by-status",
+     "file": "src/engine/systems/taxreturn.ts",
+     "find": "(ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, yearEnd))",
+     "replace": "(ratio <= PUBLIC_COVER.medicaidShare)",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"1040-NR\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "Unchanged: the tutorial says Covered Connecticut \"from 2027 a citizen’s or green card’s status\" already.",
+   "guide": "guide/papers.ts papers.health-cover interpret: \"on a 1040-NR too, in 2026, and from 2027 only for a citizen or a green card holder\"; Papers' line \"a nonresident’s 1040-NR too\"."
+  },
+  {
+   "id": "health-eligibility.6-work-test-income",
+   "before": "The $580 a month was work's pay alone (lastMonthWork, from 2026-10-12): interest, a benefit or a pension of $580 or more didn't count, and Papers and the guide said so.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+     "kind": "render+command+clock",
+     "proves": "$365,000 at 3.00% for December's 31 days = $930.00 of interest: HUSKY D on 4 January 2027 with no work; $182,500 = $465.00: the work rules short."
+    },
+    {
+     "file": "tests/defects-g8-4.test.ts",
+     "title": "until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance",
+     "kind": "engine (FIXTURE program)",
+     "proves": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered."
+    },
+    {
+     "file": "tests/need-paths.test.ts",
+     "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+     "kind": "clock+reload",
+     "proves": "The $930.00 twin renewed into HUSKY D by income."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "monthEngagement counts the month's income on the record (earningsOf.months, as programFor reads it), with any wages posted that the record doesn't hold, toward the $580 (42 CFR 435.552(f)(2)). The refusal sentence names \"income, school at least half-time or an exception\" (was \"of earnings\").",
+     "where": "src/engine/systems/health.ts monthEngagement, mayEnroll; Papers; guide; tutorial",
+     "failingTest": "tests/remaining-health-eligibility.test.ts > PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short (mutation E6 drops the income and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Connecticut: work rules from 1 January 2027 (\"income of $580 or more a month, complete 80 hours/month ... or be enrolled at least half-time in school\"); \"If not exempt from the work rules at initial application, eligibility includes a 1-month look back\"; \"At renewal, there will be a 6-month look back to verify the individual met work/community engagement requirements or was exempt from requirements during at least 1 calendar month\"; who doesn't have to meet them (under 19 or over 64; recently inpatient; SNAP household not exempt from its work rules; medically frail and unable to work; ...); renewals every 6 months",
+     "citation": "Connecticut Hospital Association, H.R. 1 HUSKY D (Medicaid) Changes: Materials For Providers And Community-Based Organizations, dated 8/25/26 (adapted from DSS), cthosp.org/webfoo/wp-content/uploads/Providers-and-Community-Based-Organization-HUSKY-D-Resource-Materials-5.18.26.pdf",
+     "effective": "1 January 2027",
+     "read": "2026-10-16 (no DSS page read states the look-back periods itself: an uncertainty)"
+    }
+   ],
+   "assumptions": [
+    "SLATE's month's income record stands in for MAGI-based household income: wages, work-study, unemployment, interest and pensions; the taxable part of a scholarship, which Medicaid's MAGI counts where used for living expenses, isn't in that record (as programFor already reads it)."
+   ],
+   "mutations": [
+    {
+     "id": "E6-income-counts",
+     "file": "src/engine/systems/health.ts",
+     "find": "if (income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';",
+     "replace": "if (false && income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';",
+     "test": "tests/remaining-health-eligibility.test.ts -t \"Inherited citizen withdrawn\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {
+    "health.dental": {
+     "corrected.now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:239-250), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:151-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:258-261). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:267-269, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price.",
+     "why": "tests/defects-g8-4.test.ts gained 30 lines above the dental tests on 2026-10-16 (the HUSKY D work-test tests re-figured: income of any kind, six months at renewal, the notice), so the line citations moved by 30; the review.evidence `where` lines move the same way (209-213 → 239-243, 215-220 → 245-250, 222-232 → 252-262, 234-240 → 264-270), as do health.choose_clinic and health.choose_pharmacy (244-260 → 274-290) and health.month (122-145, the work-test describe, now 126-196)."
+    }
+   },
+   "tutorial": "tutorial.ts: \"of income (interest or a benefit counts)\".",
+   "guide": "guide/papers.ts: needs, reads, interpret, unavailable and the example's quoted sentence."
+  },
+  {
+   "id": "health-eligibility.7-renewal-and-decision-notices",
+   "before": "A program kept at renewal moved its renewal date and band with nothing said.",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-health-eligibility.test.ts",
+     "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance",
+     "kind": "clock+reload",
+     "proves": "\"Your Public Cover Is Renewed\" once at 1 November 2027 00:30, naming 1 May 2028 and June 2027's 80 hours; once across a reload."
+    },
+    {
+     "file": "tests/remaining-health-billing.test.ts",
+     "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+     "kind": "clock+reload",
+     "proves": "Kept on 1 March 2027, said once, naming 1 September 2027 and November 2026."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "applyRenewal says each kept renewal (\"Your Public Cover Is Renewed\"), and a move between programs names the month that met the work.",
+     "where": "src/engine/systems/health.ts applyRenewal",
+     "failingTest": "tests/remaining-health-billing.test.ts > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice (mutation B2a silences it and fails it)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "42 CFR 435.550-563: applicable individual 19 to under 65 (435.551); monthly income is MAGI-based income, earned and unearned (435.552(f)(2)); mandatory exceptions incl. under 19 (435.553); specified excluded incl. \"a member of a household that receives [SNAP] benefits ... and is not exempt from a work requirement\" and the medically frail on the State's list (435.554); short-term hardship for inpatient care on request (435.555(d)(1)); look-back at application 1-3 months, at renewal 1 or more between determinations (435.556); notice received 5 days after its date, 30 calendar days to answer, coverage kept, disenrollment no later than the end of the month after the window, after advance notice (435.558); first renewal on or after 1 January 2027 (435.559)",
+     "citation": "CMS-2454-IFC, Medicaid Program; Community Engagement Requirement for Certain Individuals, public-inspection.federalregister.gov/2026-11094.pdf (FR 2026-11094)",
+     "effective": "published 3 June 2026; effective 31 July 2026; States implement by 1 January 2027",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [
+    {
+     "id": "B2a-renewed-notice",
+     "file": "src/engine/systems/health.ts",
+     "find": "    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed',",
+     "replace": "    if (false && mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed',",
+     "test": "tests/remaining-health-billing.test.ts -t \"work in November 2026\"",
+     "killed": true,
+     "restored": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "—",
+   "guide": "guide/papers.ts later: \"Kept, the notice “Your Public Cover Is Renewed” says to when, and which month met the work.\""
+  }
+ ]
+}

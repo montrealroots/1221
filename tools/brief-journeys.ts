@@ -36,6 +36,9 @@ import { forecast, prepareRefusal, preview, recordOf, requiredOf, suggestions, t
 import { studyRefusal } from '../src/engine/systems/engagement';
 import { attentiveHour, life, practiceHour } from './policy';
 import { adviceFor } from '../src/engine/systems/next-steps';
+import { replayAs, type Performer, type WorkRecord } from '../src/engine/systems/evaluation';
+import { TASK_PROFILES } from '../src/engine/content/tasks';
+import { TECHNIQUES } from '../src/engine/content/abilities';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const PROFILE = arg('profile', 'beginner');
@@ -137,6 +140,7 @@ function briefHour(): boolean {
     if (r.ok) {
       const t = recordOf(p, b.id).takes.at(-1)!;
       log.takes.push({ day: dayOf(), brief: b.id, genre, reading: t.reading, sides: t.sides.join('+'), purpose: t.purpose, overall: t.overall, ...(t.chief ? { chief: t.chief } : {}), ...(t.concern ? { concern: t.concern } : {}) });
+      if (TRACE) traced.push({ day: dayOf(), brief: b.id, purpose: t.purpose, record: structuredClone(p.work!.at(-1)!) });
       log.hours.brief += 1;
       if (!recordOf(p, b.id).callback) current = undefined;
       return true;
@@ -145,6 +149,22 @@ function briefHour(): boolean {
   return false;
 }
 
+/**
+ * `--trace <file>` (from 2026-10-16, the integration pass; L3's trace): each take's own record (its difficulty, its
+ * preparation, the day's readiness, the draw), the take again with no draw, and the same take as the actor's levels at
+ * the start of the run and at its end would have played it, so a month's mean can be put down to what was taped, how
+ * it was prepared, and how far the actor had come.
+ */
+const TRACE = process.argv.includes('--trace') ? arg('trace', '') : '';
+const snap = (): Performer => {
+  const p = sim.player;
+  const ab = Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, abilityOf(sim, p, d.id)]));
+  const fu = Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, abilityFull(sim, p, d.id)]));
+  const te = Object.fromEntries(TECHNIQUES.map((k) => [k, p.craft?.[k] ?? 0]));
+  return { ability: (id) => ab[id] ?? 0, full: (id) => fu[id] ?? 100, technique: (k) => te[k] ?? 0 };
+};
+const atStart = TRACE ? snap() : undefined;
+const traced: { day: number; brief: string; purpose: string; record: WorkRecord }[] = [];
 const end = sim.now + DAYS * MS_DAY;
 let lastReload = sim.now;
 let reloads = 0;
@@ -199,3 +219,24 @@ const result = {
 console.log(JSON.stringify(result));
 if (process.argv.includes("--debug")) console.log(JSON.stringify({ current, recs: Object.fromEntries(Object.entries(sim.player.briefs ?? {}).map(([k, r]) => [k, { prep: r.prep, reading: r.reading, takes: r.takes.length, req: requiredOf(BRIEF_BY_ID[k]!) }])), known: current ? Math.max(...BRIEF_BY_ID[current]!.kinds.map((g) => sim.player.engagement?.byGenre[g]?.familiarity ?? 0)) : 0 }));
 if (process.argv.includes('--write')) writeFileSync(arg('write', ''), JSON.stringify(result, null, 1));
+if (TRACE) {
+  const atEnd = snap();
+  const r1 = (x: number | undefined) => (x === undefined ? undefined : Math.round(x * 10) / 10);
+  const rows = traced.map(({ day, brief, purpose, record: w }) => {
+    const profile = TASK_PROFILES[w.task]!;
+    return {
+      day, month: Math.floor(day / 30), brief, purpose, task: w.task, overall: w.overall,
+      noDraw: r1(replayAs(w, profile, { ability: (id) => w.inputs.abilities[id] ?? 0, full: (id) => w.inputs.fulls?.[id] ?? 100, technique: (k) => w.inputs.levels?.[k] ?? 0 })?.overall),
+      atStartLevels: r1(replayAs(w, profile, atStart!)?.overall), atEndLevels: r1(replayAs(w, profile, atEnd)?.overall),
+      difficulty: w.inputs.difficulty, readiness: Math.round(w.inputs.condition.readiness), prep: w.inputs.prep, required: w.inputs.required,
+      limits: w.limits.map((l) => `${l.label} (${l.kind}, ${l.dimension}) ${l.whole ?? l.by}`),
+    };
+  });
+  const byMonth: Record<string, Record<string, number>> = {};
+  for (const m of [...new Set(rows.map((x) => x.month))]) {
+    const xs = rows.filter((x) => x.month === m);
+    const mean = (f: (x: (typeof rows)[number]) => number | undefined) => Math.round((xs.reduce((a, x) => a + (f(x) ?? 0), 0) / xs.length) * 100) / 100;
+    byMonth[`m${m}`] = { n: xs.length, overall: mean((x) => x.overall), noDraw: mean((x) => x.noDraw), atStartLevels: mean((x) => x.atStartLevels), atEndLevels: mean((x) => x.atEndLevels), difficulty: mean((x) => x.difficulty), readiness: mean((x) => x.readiness), callbacks: xs.filter((x) => x.purpose === 'callback').length };
+  }
+  writeFileSync(TRACE, JSON.stringify({ profile: PROFILE, seed: SEED, days: DAYS, byMonth, takes: rows }, null, 1));
+}

@@ -1,0 +1,62 @@
+{
+ "about": "Rows the audit gained after the review of 2026-10-13 (merge-review.cjs reads it, from 2026-10-16): each with its area, the row it follows, its own words, the day it was added and a review of that day, read to the page's standard by a reader who wrote neither the code nor its tests. merge-review inserts a row that's absent and writes its words from here on every run.",
+ "rows": {
+  "health.apply": {
+   "area": "life",
+   "follows": "health.enroll",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "Papers, Health Cover: Apply For HUSKY D (PapersWorkspace.tsx:573), with the line saying what applying brings, drawn only where applyRefusal finds nothing (from 2026-10-16)",
+    "reads": "applyRefusal (health.ts:1059): public cover where she lives (BENEFIT_STATE), no application waiting on its notice, no program of her own, Yale Health not covering her, last month’s income and her status placing her in HUSKY D (programFor), and its work rules not met in the month before (engagement over lookBack)",
+    "changes": "HealthRecord.pending, an application with the months read, the band and the first it would begin; a notice of noncompliance (noticeOfNoncompliance, health.ts:1000), received five days after its date with thirty days from then to answer; WORK_DECIDED_KIND the day after (the command at health.ts:2098)",
+    "downstream": "the decision (WORK_DECIDED_KIND, health.ts:2128): the months read again as the records stand, met by then → grantPending gives HUSKY D from the month’s first, a marketplace plan bought meanwhile ending as it begins; short → Public Cover Denied, and she may apply again; health.request_hardship grants it on a stay in hospital in a month read; coverOn gives an applicant none while she answers; Papers says the notice, its day and the hardship (PapersWorkspace.tsx:577-583), and draws no Apply while it waits",
+    "persistent": "HealthRecord.pending; the scheduled decision; the notices",
+    "explanation": "Papers’ line before applying (the notice, thirty days from its receipt, the month read, the hardship); A Notice Of Noncompliance; Public Cover Denied or Public Cover Approved",
+    "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (pressed on Papers: the notice in its words, uncovered meanwhile, refused again in its words and not drawn, denied on 8 February, one jump against day by day with a reload, applied again in February for January), ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December…’ (drawn where December’s $465.00 of interest is short, Enroll given where $930.00 meets the rules) and ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (applied for, then granted on the hardship)",
+    "issue": "Added on 2026-10-16, when the health area made the command, with no row. Not checked by a test: its refusals for a program of her own, for Yale Health’s cover, and for last month placing her elsewhere or meeting the rules (Papers draws no Apply for any of them), and New York’s and Los Angeles’ programs, where no current life lives."
+   },
+   "review": {
+    "against": "22c59eba",
+    "claim": "Apply For HUSKY D takes an application where last month’s income places her in HUSKY D and its work rules weren’t met in the month before: a notice of noncompliance, thirty days from its receipt to answer, uncovered meanwhile, then decided on the months read again (denied, or granted where met or a hardship is asked); it can be made again after a denial.",
+    "evidence": [
+     { "kind": "render", "where": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’", "reachesAction": true, "checksConsequence": true, "independent": true },
+     { "kind": "render", "where": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’", "reachesAction": true, "checksConsequence": true, "independent": true },
+     { "kind": "render", "where": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December…’", "reachesAction": false, "checksConsequence": false, "independent": true, "problem": "Reads only that Apply is drawn where December’s interest is short; it isn’t pressed." }
+    ],
+    "uiEvidence": "Papers rendered as the player has it, Apply For HUSKY D pressed by its own handler, its toast and the notice read; the button not drawn while the application waits.",
+    "verdict": "verified",
+    "partialClass": "none",
+    "gaps": []
+   }
+  },
+  "health.request_hardship": {
+   "area": "life",
+   "follows": "health.apply",
+   "added": "2026-10-16",
+   "row": {
+    "kind": "command",
+    "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:582), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
+    "reads": "hardshipRefusal (health.ts:1045): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, and a stay in hospital (the care log’s stay) in a month it read",
+    "changes": "the notice answered and cleared by grantPending (health.ts:1024): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2115)",
+    "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
+    "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
+    "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",
+    "tests": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: approved from 1 February, the marketplace ending as it begins, no premium taken, the decision of 8 February passing it by, across a reload; asked again, refused in its words) and ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ (with no stay, refused in its words and not drawn)",
+    "issue": "Added on 2026-10-16, when the health area made the command, with no row. Partial: a renewal’s notice answered by a hardship (grantPending’s renewal branch, applyRenewal: a member on HUSKY D with a stay in hospital in a month her renewal read) is played by no test; the application’s is. The stay is had by forcing the week’s illness draw (TEST SETUP), a stay any played week can draw."
+   },
+   "review": {
+    "against": "22c59eba",
+    "claim": "Request A Hardship Exception, on a notice of noncompliance with a stay in hospital in a month it read, grants what waits: an application approved (HUSKY D from the month’s first, a marketplace plan bought meanwhile ending as it begins), a renewal renewed as it would have been; with no stay, or no notice, it’s refused in its words.",
+    "evidence": [
+     { "kind": "render", "where": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’", "reachesAction": true, "checksConsequence": true, "independent": true },
+     { "kind": "command", "where": "tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’", "reachesAction": true, "checksConsequence": false, "independent": true, "problem": "The refusal with no stay, sent through the command; the screen’s not drawing it is read." }
+    ],
+    "uiEvidence": "Papers rendered, Request A Hardship Exception pressed by its own handler, its toast and the approval read.",
+    "verdict": "partial",
+    "partialClass": "missing-evidence",
+    "gaps": ["A renewal’s notice answered by a hardship (grantPending’s renewal branch) is played by no test."]
+   }
+  }
+ }
+}

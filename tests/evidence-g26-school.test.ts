@@ -682,7 +682,8 @@ describe('school.cancel_repeat', () => {
     const notices = titled(sim, 'The Degree Isn’t Recommended');
     expect(notices).toHaveLength(1);
     // Until 2026-10-13 it said “You didn’t ask to repeat the year in its thirty days”, whatever was open, and this held it.
-    expect(notices[0]!.body).toBe('The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.');
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(notices[0]!.body).toBe('The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.');
     const after = drawn(sim, RepeatPanel);
     expect(after.text).toContain('Year 3, asked April 27, 2029: called off, for Movement Invention III.');
     expect(sim.execute({ kind: 'school.request_repeat', payload: {} }).error).toBe('You’re not at school.');
@@ -895,8 +896,10 @@ describe('school.pay_balance', () => {
     expect(emptied).toBeLessThanOrEqual(0);
     const payments = () => sim.universe.transactions.filter((t) => t.memo === 'Payment: Yale Student Account').length;
     const paidBefore = payments();
-    expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe('Your bank can’t cover it.');
-    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 100_00 } }).error).toBe('Your bank can’t cover it.');
+    // In the bank's words from 2026-10-16, which say what to do; until then “Your bank can’t cover it.”
+    const nothing = 'Your current account and the savings beside it have nothing to pay it with: move money into your current account first.';
+    expect(sim.execute({ kind: 'school.pay_balance', payload: {} }).error).toBe(nothing);
+    expect(sim.execute({ kind: 'school.pay_balance', payload: { amount: 100_00 } }).error).toBe(nothing);
     expect(accountOwed(sim, sim.player)).toBe(owed);
     expect(school().hold).toBe(due.at);
     expect(payments()).toBe(paidBefore);

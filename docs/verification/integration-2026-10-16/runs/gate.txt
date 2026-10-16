@@ -1,0 +1,163 @@
+npm run gate on f68516b0, 2026-10-16; its exit read from a file: exit=0
+
+ Test Files  361 passed (361)
+      Tests  4316 passed (4316)
+
+   Start at  05:14:11
+   Duration  579.32s (transform 17.61s, setup 0ms, collect 281.29s, tests 1342.01s, environment 73ms, prepare 23.59s)
+0 strings in 0 files would change
+0 labels with a lowercase word
+0 counts printed in front of a plural noun without agreeing with it.
+282 files. 40 places a person would have contracted.
+     21  x not
+      9  x is
+      4  x are
+      3  X is
+      2  x will
+      1  X not
+Stiff shapes, for a person to look at:
+     20  "somebody"
+     19  a sentence that opens with "Nothing"
+     10  ", which is" tacked on
+      6  "SLATE’s own"
+Heaviest files:
+     14  src/engine/content/banks-world-sheets.ts
+      4  src/engine/content/security.ts
+      3  src/engine/content/banks-thirteen.ts
+      2  src/engine/content/bankopening.ts
+      2  src/engine/content/pending.ts
+      2  src/engine/content/personality-traits.ts
+      2  src/engine/decided.ts
+      1  src/engine/content/banks-lending.ts
+      1  src/engine/content/banks-world-fees.ts
+      1  src/engine/content/guide/money.ts
+      1  src/engine/content/guide/papers.ts
+      1  src/engine/content/roundups.ts
+      1  src/engine/content/scenes-classical.ts
+      1  src/engine/systems/identity.ts
+      1  src/engine/systems/leave.ts
+      1  src/engine/systems/taxreturn.ts
+      1  src/ui/creation/CharacterCreation.tsx
+      1  src/ui/looks/money.tsx
+What the game says, and the habits in it.
+  12/12   A clause tacked on to explain what the sentence just meant
+        End the sentence. Say the next thing plainly, or don’t say it.
+        engine/content/licensepaths.ts:234  Driving School And Lessons The middle of ISK 335,000 to 375,000 an instructor’s price list puts the whole cour
+        engine/content/passports.ts:201  {\"fee\":75,\"oldCancelled\":true,\"note\":\"The loss is reported inside the replacement application, which is
+        engine/content/pending.ts:27  {\"us-chase\":{\"source\":\"Chase Deposit Account Agreement, effective 6/14/2026 (chase.com/content/dam/chase-
+        engine/content/security.ts:92  {\"us-chase\":{\"source\":\"Chase Deposit Account Agreement (chase.com/.../deposit-account-agreement.pdf); Add
+        engine/systems/taxreturn.ts:1438  The IRS Levied Your Accounts  taken from your bank accounts for your   return  : ', which is now paid'}.
+        ui/looks/place.tsx:687  just short of the  , which is close enough that the year swings hard at both ends.
+        ui/looks/plans.tsx:195  Ordinary items on the world’s own timeline, which is why the clock stops at them and why two at once are flagg
+        ui/looks/weather.tsx:355  Its own draw, blended with the two days before it, which is why a cold snap lasts and a wet spell lingers.
+        ui/papers/Documents.tsx:131  A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one
+   1/6    An em dash, then a restatement of what came before it
+        A dash should add, not rephrase. Cut it or make it a new sentence.
+        ui/looks/day.tsx:219  — and it wants you there  — the world handles it
+   2/4    "the whole point / the whole thing / the entire point"
+        Everything can’t be the whole point of everything.
+        ui/looks/day.tsx:493  The sun doesn’t clear the horizon on it — a few hours of blue in the middle, and that’s the whole of the day.
+        ui/looks/place.tsx:632  The sun doesn’t come up here today — you get a few hours of blue in the middle of it and that’s the whole day.
+   7/8    Defining something by what it isn’t before saying what it is
+        Say what it is. The contrast is only worth it once or twice.
+        engine/content/passportsabroad.ts:80  The mission’s time wasn’t collected, only that it’s longer than at home: SLATE’s 30 days.
+        engine/content/statetax.ts:693  Distraint Warrant the county clerk’s lien record Oregon’s process for a warrant filed in error isn’t published
+        engine/content/statetax.ts:913  Philadelphia Tax Lien the court of common pleas Philadelphia’s process for a lien filed in error isn’t publish
+        ui/looks/day.tsx:636  This one wants you there, awake  : ''}, when the clock reaches it; if you aren’t, it’s missed .
+        ui/looks/money.tsx:251  and it isn’t yours to touch until the thing it’s for happens.
+        ui/papers/Documents.tsx:155  There’s no travel in SLATE since 2026-10-09, so a visa or an authorization isn’t applied for here: what each c
+        ui/workspaces/SchoolWorkspace.tsx:768  The 2026–2027 dates are the Yale Bulletin’s. Later years aren’t published yet, so they’re SLATE’s estimate by 
+  12/12   "rather than"
+        Often just "not". Sometimes the clause can go entirely.
+        engine/content/genre-register.ts:40  Playing a real person means documented fact: their voice, manners and movement reproduced, portrayed rather th
+        engine/content/genre-register.ts:55  Backstage advises playing the descent into madness as quiet detachment rather than ranting.
+        engine/content/genre-register.ts:123  A leading performance built on stillness and near-invisibility rather than display.
+        engine/content/guide/taxes.ts:401  Catch Up shows only while a plan is behind, and the bank has to cover the payment: “… is more than the bank ca
+        engine/content/licenses.ts:797  Whether an exchange-list driver with under 2 years' experience gets a Class 7 (novice) rather than a Class 5 —
+        engine/content/passports.ts:74  travel.state.gov blocks automated fetches (HTTP 403); processing times (4-6 weeks routine, 2-3 weeks expedited
+        engine/content/passports.ts:202  Passport Online works from anywhere in the world at the same €75 adult fee, plus a €15 postal fee for applican
+        engine/content/statetax.ts:985  SLATE hasn’t researched this state’s collection: the balance is kept with no penalty, interest, notice or plan
+        ui/looks/place.tsx:238  SLATE has no income tax table for   yet, so the tile below says so rather than showing you a zero it can’t sta
+        ui/looks/weather.tsx:529  One curve between the day’s high and its low, coldest before dawn and warmest at three, and a wet spell that f
+        ui/looks/weather.tsx:658  Each day is its own draw blended with the two before it, so the week has a shape rather than
+        ui/workspaces/CalendarWorkspace.tsx:324  stops when it comes round. Two things at once are allowed — the calendar flags them rather than
+   0/0    A sentence that opens with "Nothing"
+  25/25   "somebody"
+        A person, a name, "you", "they" — anything but the same word again.
+        engine/content/abilities.ts:50  What a house or a camera sees beyond technique: the pull of somebody fully there.
+        engine/content/guide/documents.ts:182  Replace It, for a license from elsewhere: “Its issuer replaces it for somebody living there, and SLATE found n
+        engine/content/personality-traits.ts:297  You’re better with somebody in the room. You always have been.
+        engine/content/tutorial.ts:373  A card can be locked, and nothing new goes on it, and unlocked. Reported lost, stolen or damaged, it stops at 
+        engine/decided.ts:208  Whether somebody else uses a card on a day, which card, how much, and whether the bank stops it: here, the fir
+        engine/decided.ts:366  Whether a US bank turns away somebody with a standing ChexSystems report.
+        engine/systems/bankmoves.ts:100  won’t open an account for somebody who owes it a charged-off debt.
+        engine/systems/health.ts:629  The marketplace sells to a citizen or somebody lawfully present, and you stayed past your status.
+        engine/systems/health.ts:773  Your Marketplace Plan Has Ended Your Marketplace Plan Won’t Begin The marketplace covers a citizen or somebody
+        engine/systems/health.ts:926  From October 1, 2026,   is for a US citizen, or somebody with a green card for five years, and renewing it rea
+        engine/systems/identity.ts:148  Its issuer replaces it for somebody living there, and SLATE found no way it sends one out of state.
+        engine/systems/lending.ts:129  won’t open an account for somebody who owes it a charged-off debt.
+        engine/systems/lending.ts:1565  won’t open an account for somebody who owes it a charged-off debt.
+        engine/systems/security.ts:399  Your Bank Stopped A Payment Somebody tried to spend   on your   card ending  .   declined it and asked; it was
+        engine/systems/security.ts:431  A Debit On Your Old Number Declined Somebody tried to take   with your old account number. It’s closed to them
+        ui/bank/BankSecurity.tsx:24  Lost Stolen Damaged Used by somebody else Not arrived yet
+        ui/creation/CharacterCreation.tsx:534  when somebody asks, and it’s the citizenship you were born to.
+        ui/looks/place.tsx:349  Somebody redrew the map, and it isn’t one of the pieces any more.
+        ui/looks/place.tsx:403  One of   the map cuts   into, and none of its towns are on your map yet — SLATE loads a country’s full list th
+        ui/looks/plans.tsx:171  You haven’t put anything on the calendar yourself. Everything on it is somebody else’s doing.
+        ui/looks/wellbeing.tsx:230  Yourself Somebody
+        ui/looks/wellbeing.tsx:490  How long it takes is the injury’s own, longer for somebody an illness hits harder (`illnessToll`).
+        ui/saves/SaveSlots.tsx:105  An empty universe, waiting for somebody to live in it.
+        ui/workspaces/ProfileWorkspace.tsx:192  Who somebody is decides nothing about how good they are: no ability here is drawn from a name, a portrait, a r
+        ui/workspaces/SchoolWorkspace.tsx:405  Fit is the evaluation’s night for the play, with preparation complete and a sufficient day; stamina and discip
+   0/3    Three negatives in a row: "no x, no y, no z"
+   2/8    "which is why" / "which is how"
+        Start a sentence with "That’s why", or drop the join.
+        ui/looks/plans.tsx:195  Ordinary items on the world’s own timeline, which is why the clock stops at them and why two at once are flagg
+        ui/looks/weather.tsx:355  Its own draw, blended with the two days before it, which is why a cold snap lasts and a wet spell lingers.
+And how the long lists begin, where one word does too much of it.
+  None. Every long list opens more than one way.
+61 in all, across 9 habits.
+1006 files named across 24 docs.
+Every one of them is there.
+What SLATE declares, and what nothing reads.
+     1  Id namespaces  (of 9)
+        A noun with no nextId call site is a table the game never fills.
+        person
+     1  Save tables nothing fills  (of 7)
+        A collection only bootstrap writes is a shape in the save, not a system in the game.
+        people
+     0  Personality knobs nothing reads  (of 19)
+     0  Personality axes nothing consults  (of 7)
+2 declared words that nothing reads.
+213 engine files. 16 of them draw.
+  ok       src/engine/systems/appointments.ts  (lines 79, 93)  →  health.referral, health.appointment
+  ok       src/engine/systems/attributes.ts  (lines 98, 129)  →  attributes.presence
+  ok       src/engine/systems/banknumber.ts  (line 30)  →  bank.number
+  ok       src/engine/systems/body.ts  (line 86)  →  body.draw
+  ok       src/engine/systems/classmates.ts  (lines 158, 244)  →  school.classmates
+  ok       src/engine/systems/coursework.ts  (lines 318, 406, 1090, 1495, 1595)  →  school.coursework, school.partner
+  ok       src/engine/systems/documents.ts  (line 521)  →  documents.start
+  ok       src/engine/systems/health.ts  (lines 656, 744, 1109, 1111, 1624, 1744, 2022)  →  health.illness, health.chronic, health.onset
+  ok       src/engine/systems/injury.ts  (line 90)  →  health.injury
+  ok       src/engine/systems/lending.ts  (line 294)  →  bank.chex
+  ok       src/engine/systems/mortality.ts  (line 114)  →  life.end
+  ok       src/engine/systems/production.ts  (line 168)  →  production.direction
+  ok       src/engine/systems/school.ts  (lines 1032, 1057, 1108, 1115, 1341, 1349, 1355, 2111, 2132, 2218, 2463)  →  school.class, school.attendance, school.cabaret_mates, school.night, school.understudy
+  ok       src/engine/systems/security.ts  (lines 368, 421)  →  bank.fraud
+  ok       src/engine/systems/therapy.ts  (line 86)  →  health.therapy
+  ok       src/engine/systems/weather.ts  (lines 132, 271)  →  weather.day
+Every draw is owned by a decider, and every decider owns a real one.
+24 registered: weather.day, life.end, bank.number, bank.fraud, documents.start, attributes.presence, school.class, school.attendance, school.cabaret_mates, school.night, school.understudy, production.direction, bank.chex, health.illness, health.chronic, health.onset, body.draw, health.injury, health.referral, health.appointment, school.coursework, school.partner, health.therapy, school.classmates
+0 British spellings in 0 files.
+0 misspellings or doubled words.
+252 countries, 3865 regions and 170,911 cities, in 246 country files.
+246 countries carry at least one city and the 6 that do not are uninhabited or dissolved; America alone carries 17,342 across all 51 states and the District.
+The gazetteer is public reference data. Every cost figure derived from it is SLATE’s own.
+The world holds.
+Inventory matches the code: 158 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 5 routes.
+docs/DEVMAP.md matches the code: 158 commands.
+docs/TRACEABILITY.md matches the code: 158 commands, 96 scheduled kinds.
+64 capabilities: Missing 0, Partial 11, Implemented 31, Verified 3, Blocked 0, Retired 19. 158 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 150 both name.
+docs/GAMEPLAY-COVERAGE.md matches the audit: 330 items.
+docs/capabilities.json agrees on the 150 commands both name.
+docs/verification/STUDENT-MATRIX.md matches: 57 of 57 verified.

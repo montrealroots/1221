@@ -89,13 +89,16 @@ describe('the evaluation, as properties over drawn cases', () => {
       if (parts.length) { const p = parts[Math.floor(r() * parts.length)]!; raised.push([`prep ${p}`, { ...c, ctx: { ...c.ctx, prep: { ...c.ctx.prep, [p]: Math.min(1, c.ctx.prep[p]! + 0.2) } } }]); }
       raised.push(['readiness', { ...c, ctx: { ...c.ctx, condition: { ...c.ctx.condition, readiness: Math.min(100, c.ctx.condition.readiness + 15) } } }]);
       if (c.ctx.fit && Object.keys(c.ctx.fit).length) raised.push(['fit', { ...c, ctx: { ...c.ctx, fit: {} } }]);
+      // With no allowance from the integration pass of 2026-10-16: a result rounded once (evaluation-9) is the rounding of
+      // an exact value that never falls as an input rises, so the tenth shown never falls either. Until then it allowed
+      // 0.05 for a whole worked out from rounded dimensions.
       for (const [what, up] of raised) {
         const e = judge('prop', performerFrom(up.performer), up.ctx);
         for (const d of e.dimensions) {
           const was = base.dimensions.find((x) => x.dimension === d.dimension)!.quality;
-          expect(d.quality, `seed ${s}, ${what}, ${d.dimension}`).toBeGreaterThanOrEqual(was - 0.051);
+          expect(d.quality, `seed ${s}, ${what}, ${d.dimension}`).toBeGreaterThanOrEqual(was);
         }
-        expect(e.overall, `seed ${s}, ${what}`).toBeGreaterThanOrEqual(base.overall - 0.051);
+        expect(e.overall, `seed ${s}, ${what}`).toBeGreaterThanOrEqual(base.overall);
         checked += 1;
       }
     }
@@ -131,7 +134,7 @@ describe('the evaluation, as properties over drawn cases', () => {
     for (let lv = 0; lv <= 100; lv += 5) {
       const p: Case['performer'] = { abilities: Object.fromEntries(ABILITIES.map((a) => [a, lv])), fulls: Object.fromEntries(ABILITIES.map((a) => [a, 100])), techniques: Object.fromEntries(TECHNIQUES.map((t) => [t, lv])) };
       const q = judge('prop', performerFrom(p), { ...ctx, key }).dimensions.find((x) => x.dimension === high)!.quality;
-      expect(q, `${high} at ${lv}, ${key}`).toBeGreaterThanOrEqual(was - 0.051);
+      expect(q, `${high} at ${lv}, ${key}`).toBeGreaterThanOrEqual(was);
       was = q;
     }
     }
