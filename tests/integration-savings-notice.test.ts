@@ -26,9 +26,10 @@
  * banking at Chase in New Haven, at Yale from Monday 24 August 2026. Close It is pressed on the Bank screen rendered as
  * the player has it, by its own handler. Seeds are arbitrary, none picked for what it draws.
  *
- * Not checked here, and reported on 2026-10-16: the Bank screen's line under Close It, and its "Notice is given" line,
- * name the primary account (Chase Total Checking) as where the money goes, where the engine moves it into the account at
- * the savings' own bank, the AktivKonto, as its notice says. The test reads the date in those lines, not the account.
+ * Found by this test's author on 2026-10-16 and fixed the same day: the Bank screen's line under Close It, and its
+ * "Notice is given" line, named the primary account (Chase Total Checking) as where the money goes, where the engine moves
+ * it into the account at the savings' own bank, the AktivKonto, as its notice says. Both lines name the AktivKonto now,
+ * and the two assertions that read them failed before the fix.
  */
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
@@ -137,7 +138,7 @@ async function noticeGiven(seed: string) {
   expect(orders(sim).filter((o) => o.toId === flex.id)).toHaveLength(1);
   const before = bank(sim);
   expect(before).toContain('It holds more than the');
-  expect(before).toContain('the month lets out without notice: closing it gives the law’s three months’ notice');
+  expect(before).toContain('the month lets out without notice: closing it gives the law’s three months’ notice, and it moves to AktivKonto then.');
   expect(press('bank.close_savings', 'Close It')).toEqual(['Notice given: it closes December 1, 2026.']);
   return { sim, flex: flex.id, konto: konto.id };
 }
@@ -149,7 +150,7 @@ describe('bank.savings_notice: a Berlin-raised student’s savings kept at Deuts
     expect(pending.map((i) => [i.at, i.payload.accountId])).toEqual([[at(2026, 12, 1, 9), flex]]);
     // Pressed again, refused in its words; the screen says the notice and its day, and draws no Close It.
     expect(sim.execute({ kind: 'bank.close_savings', payload: { accountId: flex } }).error).toBe('Notice is given: Flexgeld closes on December 1, 2026.');
-    expect(bank(sim)).toContain('Notice is given: it closes December 1, 2026, and what it holds moves to');
+    expect(bank(sim)).toContain('Notice is given: it closes December 1, 2026, and what it holds moves to AktivKonto.');
     expect(h.clicks.filter((c) => c.feature === 'bank.close_savings')).toEqual([]);
 
     // Reloaded in October; the minute before its day it's open, with what it holds.

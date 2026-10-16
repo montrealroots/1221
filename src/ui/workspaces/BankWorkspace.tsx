@@ -40,7 +40,7 @@ import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSa
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
-import { CHEX, checkingsOf } from '@/engine/systems/lending';
+import { CHEX, checkingAt, checkingsOf } from '@/engine/systems/lending';
 import type { Account } from '@/engine/core/ledger';
 import { LookRegion, Open, at } from '@/ui/looks';
 import { abroadQuote, heldOf, heldText, homeAccountLines, quoteWords } from '@/engine/systems/abroad';
@@ -152,18 +152,25 @@ export function BankWorkspace() {
                 )}
                 {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
                 {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}</Fine>}
-                {account.kind === 'savings' && (
+                {account.kind === 'savings' && (() => {
+                  // Where closing it sends the money, as `closeSavings` does: the current account at its own bank, or the
+                  // primary with none there (from 2026-10-16: until then both lines named the primary, so a Berlin-raised
+                  // student's Flexgeld at Deutsche Bank said it moved to Chase Total Checking, where it goes to the
+                  // AktivKonto; tests/integration-savings-notice.test.ts).
+                  const into = checkingAt(sim, sim.player, account.bankId) ?? current;
+                  return (
                   <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                     {savingsNotice(sim, account)
-                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {current ? <Open subject={at('account', current.id)}>{current.name}</Open> : 'your current account'}.</span>
+                      ? <span className="xs dim">Notice is given: it closes <Open subject={at('day', dateKey(savingsNotice(sim, account)!.at, sim.homeZone))}>{formatDate(savingsNotice(sim, account)!.at, sim.zone)}</Open>, and what it holds moves to {into ? <Open subject={at('account', into.id)}>{into.name}</Open> : 'your current account'}.</span>
                       : <>
                         <Gated feature="bank.close_savings" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ on?: number }>('bank.close_savings', { accountId: account.id }); if (a.ok && a.value?.on) toast(`Notice given: it closes ${formatDate(a.value.on, sim.zone)}.`, 'positive'); }}>
                           Close It
                         </Gated>
-                        <span className="xs dim">{closingWords(sim, account, money, current?.name ?? 'your current account')}</span>
+                        <span className="xs dim">{closingWords(sim, account, money, into?.name ?? 'your current account')}</span>
                       </>}
                   </div>
-                )}
+                  );
+                })()}
               </div>
             </Panel>
           );
