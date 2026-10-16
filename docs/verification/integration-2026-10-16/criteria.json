@@ -2475,9 +2475,9 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
+   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (fdf4bf1d): npm run gate on fdf4bf1d: 374 of 374 files, 4477 of 4477 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2488,11 +2488,17 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs-09/gate.txt"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-10/figures.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-10/gate.txt"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "7c1198a2",
+    "commit": "fdf4bf1d",
     "watch": "app"
    }
   },

@@ -1,9 +1,119 @@
-# Read First: The Remaining Integration Gaps, Brief 09, 2026-10-16
+# Read First: The Approved Decisions, Brief 10, 2026-10-16
 
 **This section is the current status, and where a new session starts.** Every section below is history. It was written
-at the end of the owner's "Finish SLATE’s Remaining Integration Gaps And Reconcile The Completion Evidence"
+at the end of the owner's "Implement The Approved Acting, Advice, Banking, And Stamina Decisions"
+(`docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt`, kept verbatim),
+worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's merge). **Not merged, not deployed.**
+
+## 1. The Repository
+
+- **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `44dcd973`.
+- **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
+  (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in a pull request the owner hasn't merged. **The tested commit is `fdf4bf1d`**: the gate passed on it, and the build,
+  the saves, the built app, the long runs and the advice's held-out set ran on `57b64401`, whose `src`, `tools`,
+  `index.html` and `vite.config.ts` are its own, and the criteria on `567d27dd`, no file they read different. What came
+  after is the gate's record, this handoff and the matrix.
+- **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
+  worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
+  Two stray files outside the repository, `/lint.txt` and `/tsc-node.txt`, each `exit=0`, were written by a check the
+  judge area ran with an unset path; this session's removal was refused by the container's safety check, and they're
+  harmless.
+- **How it was worked.** The criteria first (`docs/verification/decisions-2026-10-16/criteria.md`, `2e8e4db3`), then four
+  areas from instructions written before their work (`decisions-2026-10-16/prompts/`): the judge (two phases), the advice
+  and the stamina in their own clones, Arion in the shared tree. Each clone's commits came onto the branch by cherry-pick
+  or fast-forward.
+
+## 2. What Brief 10 Did, And Where It's Written
+
+`docs/verification/decisions-2026-10-16/brief-10.md` is the account: every decision's status, each criterion before and
+after, the regression, the final verification and the owner's decisions. In short:
+
+- **Decision 1, the acting criteria:** ST3-R, ST6-R, H4-R and L3-R written and justified before any tuning; the originals
+  kept and superseded. ST3-R, H4-R (12 of 12), L3-R and M1 met; **ST6-R not met on (a), (c), (e), (g)**, its (b′)
+  proposed. Two public meetings for presence; the restrained specialist's budget made equal (it was 645.6 against
+  600); a night's text read by the part's time on stage (memory), a night's stakes 1.5 (composure, its direction from
+  four studies, its size SLATE's); the full drain 0.4 (stamina's own work).
+- **Decision 2, the advice:** F2-A adopted, F2 kept (68.9%, not met). F2-A10 on 120 fresh held-out cases apart from the
+  tuning ones, run again on the final code: (a) to (e), (g), (i) met; **(f) and (h) the owner's**.
+- **Decision 3, Arion:** what a close owes from Iceland's Act 114/2021 art. 57(4); when the year is charged unknown, so a
+  labelled, configurable simulation (`ARION_CARD_YEAR`, paid ahead by default); the lifecycle played through the
+  commands.
+- **Decision 4:** unchanged, held by the matrix's check.
+- **Decision 5, stamina:** a night's workload by its running time, the part's share, intensity, breaks, the day and
+  stamina; W1 to W10 met.
+- **Together:** every criterion of section 5 that held holds, but **L1 regressed** with the advice
+  (`decisions-2026-10-16/l1/README.md`), put to the owner.
+- **Outside the brief, at the owner's word:** a genre's row on the Player Profile says **Mastered** once one of its
+  briefs is taped at full mastery (`BriefRecord.mastered`, `genreMastered`; an older save marked once on opening,
+  `briefsMastered`).
+- **Found on the way:** Table Work's select took an answer it then refused when the text wasn't read; grayed with the
+  reason now (`tableWorkRefusal`, `tests/table-work-unread.test.ts`).
+
+**Completion, by the matrix:** 530 of 608 rows in scope Implemented And Verified (87.1%); 63 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
+
+## 3. The Owner's Decisions
+
+Not counted met, and not changed without the owner's word (`brief-10.md`, For The Owner):
+
+1. **ST6-R (a), (c), (e), (g):** (a) is 2 of 44; adopting (b′) in (b)'s place is recommended.
+2. **F2-A10 (f)** (which preparation a take is read as having) and **(h)** (a rise under a thousandth near mastery).
+3. **L1**, regressed with the advice: read it on a journey that follows the advice, as recommended, or keep it.
+4. **Arion's real timing**, which no source found states.
+5. **The stamina area's A1 question**, which no longer decides A1.
+6. **ST3, H4 and L3 as written,** recorded by the judge area as Not Implemented beside their Explicitly Deferred criterion
+   rows.
+7. **Decision 4's twelve rows**, still as brief 09 left them.
+
+## 4. The Rules, The Schema And The Model
+
+CLAUDE.md counts **eighteen** checks. The scope and the save schema are unchanged: **94** in both `SAVE_SCHEMA_VERSION`
+and `SUPPORTED_SCHEMA_VERSION`. The judge's ruleset is **evaluation-11 (2026-10-16)**, its ENGINE-MODEL row saying what
+each phase moved. Three one-time steps on opening were added: `cardYears` (Arion's year in an older save),
+`timeTheCalls` (a booked call's running time) and `briefsMastered` (a brief taped at full mastery, for the genre row's
+Mastered). `ONCE_ON_OPENING` holds six.
+
+## 5. What Was Tested, On What
+
+| Check | Result |
+|---|---|
+| `npm run gate`, exit from a file | **exit 0 on `fdf4bf1d`**: 374 files, 4,477 tests, none skipped; typecheck, lint and all eighteen checks, the completion matrix last |
+| `npm run build` | exit 0 |
+| `tools/scenario-saves.mjs` | 14 of 14, each breaches 0, unbalanced 0 |
+| The built app, 1440 and 390 | 72 passed, 0 failed, 0 skipped, 0 errors, 0 overflows at each width |
+| Lives to graduation (24) | 20 graduated; the 4 dismissed the autopilot control's; breaches, unbalanced and errors 0 |
+| Mastery plans (6), F2-A (40), workload (8), variety (3 years), freshness (8) | 6 at 100, 40 of 40, 7 in good standing and the control dismissed, graduated, no repeat; breaches 0 throughout |
+| F2-A10, 150 held out, on the integrated code | (b) 118 of 120, (c) 120 of 120, (e) 118 of 120; (f) and (h) the owner's |
+| The criteria of section 5, together | every one that held holds but L1; on `567d27dd` byte for byte as on `167f996b` |
+
+Every output is in `docs/verification/integration-2026-10-16/runs-10/`, `docs/verification/decisions-2026-10-16/final/`
+and `advice/final/`.
+
+## 6. The Environment
+
+Node 22, npm 10, Playwright with Chromium, PowerShell 7 on the owner's machine, the gate read from a file. The long runs
+ran in clones of the branch, the criteria at `567d27dd` and the runs at `57b64401`, in lanes, each step's exit recorded so a restart would cost one step;
+none was lost.
+
+## 7. Deployment
+
+Not deployed. Base44 deployment happens on the owner's word, after the gate passes (rule 14).
+
+## 8. Next, In Order
+
+1. **The startup checks:** the repository, local changes, `origin/main`, this branch, the instructions, this file, the
+   work plan (section 13), the briefs. Preserve the stash, worktrees and local files.
+2. **The owner's decisions** in section 3, each with its evidence in `brief-10.md` and the matrix's rows.
+3. **The pull request**, merged only at the owner's word; a follow-up after a merge starts a fresh branch from `main`.
+4. **The matrix's What's Left**, row by row.
+
+# Earlier: The Remaining Integration Gaps, Brief 09, 2026-10-16
+
+**This section was the current status until brief 10's close-out, later on 2026-10-16** (the section above). It was
+written at the end of the owner's "Finish SLATE’s Remaining Integration Gaps And Reconcile The Completion Evidence"
 (`docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt`, kept verbatim), worked
-on `claude/peaceful-hamilton-59zdbb` from `main` at `64b69fc7` (#35's merge). **Not merged, not deployed.**
+on `claude/peaceful-hamilton-59zdbb` from `main` at `64b69fc7` (#35's merge), and merged to `main` in #36 (`44dcd973`) at
+the owner's word. **Merged isn't deployed: nothing is.** Its completion line below is brief 09's, as its close-out
+measured it then.
 
 ## 1. The Repository
 
@@ -41,7 +151,7 @@ the owner's decisions. In short:
 - **Journeys:** a finished School's page; the cover-ended window from the loss; a lapse's visit and prescription; the
   term's aid paying Yale first; HUSKY D from the application's month, reaching back; Mexico's residence no longer sold.
 
-**Completion, by the matrix:** 529 of 608 rows in scope Implemented And Verified (87.0%); 64 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
+**Completion, by the matrix:** 485 of 544 rows in scope Implemented And Verified (89.1%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 17 Explicitly Deferred.
 
 ## 3. The Owner's Decisions
 
