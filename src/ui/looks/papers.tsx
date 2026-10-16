@@ -205,7 +205,7 @@ defineLook<ThePaper>('document', {
           <p className="small">
             {issuer} issued it{doc.issuedAt ? ` on ${formatDate(doc.issuedAt, zone)}` : ''}.{' '}
             {state === 'valid' ? whatItDoes(sim, paper) : state === 'pending' ? 'Until it comes, it lets you do nothing.' : ''}
-            {/* A US state card issued non-verified says so, as the card itself does (from 2026-10-16: a non-citizen's
+            {/* A US state card issued non-verified says so, as the card itself does (from 2026-10-16: a non-citizen’s
                 Connecticut card was marked REAL ID until then, `documents.apply_idcard`). */}
             {doc.realId ? ' It meets REAL ID.' : doc.kind === 'idcard' && doc.issuer.startsWith('us-') && doc.realId === false ? ' It’s marked Not For Federal Identification: it isn’t REAL ID.' : ''}
           </p>
