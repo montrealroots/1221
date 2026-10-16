@@ -34,7 +34,8 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | Criteria: Long-Term Continuity | 3 |  |  |  |  | 2 | 1 |  |  |  |  |  |
 | Criteria: Mastery Through Play | 8 |  |  |  |  | 6 |  | 2 |  |  |  |  |
 | Criteria: The Genres | 5 |  |  |  |  | 5 |  |  |  |  |  |  |
-| **All** | **448** | **16** | **9** | **8** | **3** | **48** | **5** | **57** | **2** | **1** | **14** | **285** |
+| Integration | 9 |  |  |  |  | 4 |  | 5 |  |  |  |  |
+| **All** | **457** | **16** | **9** | **8** | **3** | **52** | **5** | **62** | **2** | **1** | **14** | **285** |
 
 ## Life, Health And Time
 
@@ -569,6 +570,20 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `S4` | No two briefs of different genres identical in every number a take reads (G2) | Met | docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/int… |
 | `Genre Audit` | Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits | Met | docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts |
 
+## Integration
+
+| Row | Goal | Status | Evidence |
+|---|---|---|---|
+| `INT-determinism` | A played life is the same to the byte straight through and reloaded halfway | Met | tests/determinism-played.test.ts |
+| `INT-time` | A large time advance and the same span in small steps come to the same | Met | tests/simulation.test.ts |
+| `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
+| `INT-migration` | An older save opens, migrates and plays on | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
+| `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Open | tests/remaining-school-term.test.ts |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Open | tools/acceptance-ui.mjs |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Open | tools/acceptance-ui.mjs |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Open | docs/verification/stage-2026-10-16/runs |
+| `INT-gate` | The gate and the build on the final revision | Open | package.json |
+
 ## What's Left
 
 Every row not verified or met, with what its own fields say is open.
@@ -661,3 +676,8 @@ Every row not verified or met, with what its own fields say is open.
 - **`L3`** (Criteria: Long-Term Continuity, Not Met): Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted
 - **`MA5`** (Criteria: Mastery Through Play, Open): Before: all six plans (stage-2026-10-16/runs/); after: measured again in the long runs
 - **`MA8`** (Criteria: Mastery Through Play, Open): Before: not measured before; after: with the school area
+- **`INT-missed-term`** (Integration, Open): Each refusal says why, and what comes next
+- **`INT-skipped`** (Integration, Open): Each refusal says why, and what comes next
+- **`INT-navigation`** (Integration, Open): Each refusal says why, and what comes next
+- **`INT-long-runs`** (Integration, Open): Each refusal says why, and what comes next
+- **`INT-gate`** (Integration, Open): Each refusal says why, and what comes next

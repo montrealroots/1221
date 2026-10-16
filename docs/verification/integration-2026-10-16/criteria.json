@@ -1709,6 +1709,246 @@
    ],
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)"
+  },
+  {
+   "id": "INT-determinism",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "A played life is the same to the byte straight through and reloaded halfway",
+   "entry": "tests/determinism-played.test.ts",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: byte-identical",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tests/determinism-played.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/determinism-played.test.ts",
+     "title": "is the same to the byte, straight through and reloaded halfway"
+    }
+   ]
+  },
+  {
+   "id": "INT-time",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "A large time advance and the same span in small steps come to the same",
+   "entry": "tests/simulation.test.ts, and each area’s twins",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: the same state",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tests/simulation.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/simulation.test.ts",
+     "title": "keeps the debt a short night left over sixty, and drains it the same by the minute as in one jump"
+    }
+   ]
+  },
+  {
+   "id": "INT-duplicates",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload",
+   "entry": "tests/briefs.test.ts, tests/engagement.test.ts, tests/evidence-g06-life.test.ts, tests/base44-contract.test.ts",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: once",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/briefs.test.ts",
+     "title": "lives an action sent twice once"
+    },
+    {
+     "file": "tests/engagement.test.ts",
+     "title": "lives an action sent twice once"
+    },
+    {
+     "file": "tests/base44-contract.test.ts",
+     "title": "writes once for a repeated idempotency key"
+    }
+   ]
+  },
+  {
+   "id": "INT-migration",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "An older save opens, migrates and plays on",
+   "entry": "tests/save-migration.test.ts, tests/migration-94.test.ts",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: opens, nothing charged or filed after the fact",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tests/save-migration.test.ts; tests/migration-94.test.ts",
+   "status": "Met",
+   "citations": [
+    {
+     "file": "tests/save-migration.test.ts",
+     "title": "opens with nothing charged or filed after the fact"
+    },
+    {
+     "file": "tests/migration-94.test.ts"
+    }
+   ]
+  },
+  {
+   "id": "INT-missed-term",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads",
+   "entry": "tests/remaining-school-term.test.ts (the school area)",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: as README.md writes it",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tests/remaining-school-term.test.ts",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "tests/remaining-school-term.test.ts"
+    }
+   ]
+  },
+  {
+   "id": "INT-skipped",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "Every skipped check accounted for: the suite skips none; the built app’s two steps played",
+   "entry": "tools/acceptance-ui.mjs at 1440 and 390",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: no step skipped, or its reason said",
+   "changes": "The coursework workbook step goes on to tomorrow morning where a way must wait, as a player does; the casting step on a new life checks the screen says when casting comes",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tools/acceptance-ui.mjs",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "tools/acceptance-ui.mjs"
+    }
+   ]
+  },
+  {
+   "id": "INT-navigation",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "Home readable; Money, School and Papers usable and aligned at 1440 and 390",
+   "entry": "node tools/acceptance-ui.mjs <out> 1440|390 <saves>",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: 0 failed, 0 overflows",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "tools/acceptance-ui.mjs",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "tools/acceptance-ui.mjs"
+    }
+   ]
+  },
+  {
+   "id": "INT-long-runs",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code",
+   "entry": "tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: breaches 0, unbalanced 0, no errors; the figures each account set",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "docs/verification/stage-2026-10-16/runs",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "docs/verification/stage-2026-10-16/runs"
+    }
+   ]
+  },
+  {
+   "id": "INT-gate",
+   "group": "Integration",
+   "kind": "integration",
+   "goal": "The gate and the build on the final revision",
+   "entry": "npm run gate (exit from a file); npm run build",
+   "preconditions": "As each test or run sets it up, said in its header",
+   "reads": "The save as play leaves it",
+   "decisions": "The player’s, as each journey plays them",
+   "validation": "Holds when: exit 0",
+   "changes": "Nothing in this pass",
+   "later": "As each journey runs on",
+   "systems": "Every retained system the journey passes through",
+   "sees": "The screens the journey plays",
+   "saveLoad": "Saved and opened again where the evidence says",
+   "failure": "Each refusal says why, and what comes next",
+   "implementation": "src/engine, src/ui",
+   "evidence": "package.json",
+   "status": "Open",
+   "citations": [
+    {
+     "file": "package.json"
+    }
+   ]
   }
  ]
 }
