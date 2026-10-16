@@ -1,0 +1,1865 @@
+{
+ "commit": "5c06fd7aaaa602b833a812fc4985d9b9024a587a",
+ "clean": true,
+ "command": "npx vite-node tools/advice.ts -- --cases adv-30..39 --held-out --out docs/verification/decisions-2026-10-16/advice/held-out-02.json",
+ "at": "2026-10-16T16:48:55.178Z",
+ "cases": [
+  {
+   "seed": "adv-30",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-sword_and_sandal-2:devout",
+    "brief-werewolf:planner",
+    "brief-giallo:sleuth"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 35,
+    "composure": 69,
+    "emotionalDepth": 53,
+    "focus": 68,
+    "imagination": 49.088,
+    "listening": 46,
+    "memory": 54.663,
+    "physical": 49.4,
+    "presence": 38,
+    "scene": 46,
+    "screen": 25.345,
+    "vocal": 55.232
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 0.9,
+     "forecast": 0.8540454385738556,
+     "why": "20 hours of its exercise would take it from 49 to about 53, worth about 0.9 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Cold Store (The Plan Holds), Taped, about +0.9), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.7,
+     "forecast": 0.7422590676318848,
+     "why": "20 hours of its exercise would take it from 25 to about 31, worth about 0.7 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Dry Umbrella (The Amateur Sleuth), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.6,
+     "forecast": 0.5650851151364453,
+     "why": "20 hours of its exercise would take it from 53 to about 57, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Dry Umbrella (The Amateur Sleuth), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.4,
+     "forecast": 0.41757799101949183,
+     "why": "20 hours of its exercise would take it from 68 to about 71, worth about 0.4 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Dry Umbrella (The Amateur Sleuth), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.4,
+     "forecast": 0.41326285887118885,
+     "why": "20 hours of its exercise would take it from 46 to about 50, worth about 0.4 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Dry Umbrella (The Amateur Sleuth), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "emotionalDepth",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.354,
+    "composure": 0.314,
+    "emotionalDepth": 0.565,
+    "focus": 0.418,
+    "imagination": 0.854,
+    "listening": 0.413,
+    "memory": 0.382,
+    "physical": 0.269,
+    "presence": 0.274,
+    "scene": 0.376,
+    "screen": 0.742,
+    "vocal": 0.256
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.38,
+    "composure": 0.33,
+    "emotionalDepth": 0.613,
+    "focus": 0.448,
+    "imagination": 0.938,
+    "listening": 0.446,
+    "memory": 0.407,
+    "physical": 0.28,
+    "presence": 0.286,
+    "scene": 0.401,
+    "screen": 0.813,
+    "vocal": 0.266
+   },
+   "best": "imagination",
+   "bestGain": 0.938,
+   "firstGain": 0.938,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.401,
+    "atOrAboveMedian": true,
+    "randomMean": 0.467,
+    "firstGain": 0.938
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.854,
+    "realized": 0.938,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.854,
+     0.361,
+     0.31
+    ],
+    "falls": true,
+    "leastDrop": 0.05038654192435149,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.02,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.854,
+    "after": 0.766,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "screen",
+    "leaderPoints": 0.726,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-31",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-horror:trust",
+    "brief-monster_movie:dread",
+    "brief-disaster:professional"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 51,
+    "composure": 40,
+    "emotionalDepth": 47.6,
+    "focus": 31,
+    "imagination": 39.081,
+    "listening": 45,
+    "memory": 52.445,
+    "physical": 47.538,
+    "presence": 75,
+    "scene": 69,
+    "screen": 48.149,
+    "vocal": 50.336
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 1,
+     "forecast": 0.9721729174627675,
+     "why": "20 hours of its exercise would take it from 39 to about 44, worth about 1 point a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Pump House (Listening To The Water), Taped, about +1), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.7,
+     "forecast": 0.7120366619512416,
+     "why": "20 hours of its exercise would take it from 48 to about 52, worth about 0.7 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Floor Eleven (Procedure Holds), Taped, about +0.7), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.6,
+     "forecast": 0.6142371515434857,
+     "why": "20 hours of its exercise would take it from 48 to about 53, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Someone Behind You (His Voice), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.5,
+     "forecast": 0.48124196060582014,
+     "why": "20 hours of its exercise would take it from 40 to about 45, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Floor Eleven (Procedure Holds), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.4,
+     "forecast": 0.42192992868699974,
+     "why": "20 hours of its exercise would take it from 45 to about 50, worth about 0.4 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Someone Behind You (His Voice), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "emotionalDepth",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.339,
+    "composure": 0.481,
+    "emotionalDepth": 0.712,
+    "focus": 0.407,
+    "imagination": 0.972,
+    "listening": 0.422,
+    "memory": 0.156,
+    "physical": 0.332,
+    "presence": 0.169,
+    "scene": 0.275,
+    "screen": 0.614,
+    "vocal": 0.249
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.364,
+    "composure": 0.523,
+    "emotionalDepth": 0.783,
+    "focus": 0.44,
+    "imagination": 1.076,
+    "listening": 0.457,
+    "memory": 0.159,
+    "physical": 0.356,
+    "presence": 0.173,
+    "scene": 0.292,
+    "screen": 0.674,
+    "vocal": 0.263
+   },
+   "best": "imagination",
+   "bestGain": 1.076,
+   "firstGain": 1.076,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.364,
+    "atOrAboveMedian": true,
+    "randomMean": 0.463,
+    "firstGain": 1.076
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.972,
+    "realized": 1.076,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.972,
+     0.441,
+     0.299
+    ],
+    "falls": true,
+    "leastDrop": 0.14193824336276012,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.006,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.972,
+    "after": 0.87,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "emotionalDepth",
+    "leaderPoints": 0.701,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-32",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-satire:believer",
+    "brief-prison_film:dignity",
+    "brief-period_drama-2:ledger"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 49,
+    "composure": 37,
+    "emotionalDepth": 55.4,
+    "focus": 53,
+    "imagination": 70.007,
+    "listening": 48,
+    "memory": 54.343,
+    "physical": 50.9,
+    "presence": 55,
+    "scene": 49,
+    "screen": 29.291,
+    "vocal": 52.8
+   },
+   "advice": [
+    {
+     "target": "composure",
+     "points": 1.5,
+     "forecast": 1.4528349834282785,
+     "why": "20 hours of its exercise would take it from 37 to about 42, worth about 1.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Tenancy Of Low Fold (The Accounts Speak), Taped, about +1.7), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.6,
+     "forecast": 0.6036077971830913,
+     "why": "20 hours of its exercise would take it from 29 to about 35, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Contentment Index (The True Believer), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.6,
+     "forecast": 0.570189244954746,
+     "why": "20 hours of its exercise would take it from 55 to about 59, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Table Nine (Letting Her Go), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.5,
+     "forecast": 0.5170321717188872,
+     "why": "20 hours of its exercise would take it from 48 to about 52, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Table Nine (Letting Her Go), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "adaptability",
+     "points": 0.5,
+     "forecast": 0.45344819351965643,
+     "why": "20 hours of its exercise would take it from 49 to about 53, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Table Nine (Letting Her Go), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "composure",
+   "said": [
+    "composure"
+   ],
+   "chief": "composure",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.453,
+    "composure": 1.453,
+    "emotionalDepth": 0.57,
+    "focus": 0.427,
+    "imagination": 0.355,
+    "listening": 0.517,
+    "memory": 0.221,
+    "physical": 0.218,
+    "presence": 0.299,
+    "scene": 0.34,
+    "screen": 0.604,
+    "vocal": 0.283
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.486,
+    "composure": 1.449,
+    "emotionalDepth": 0.617,
+    "focus": 0.456,
+    "imagination": 0.378,
+    "listening": 0.557,
+    "memory": 0.225,
+    "physical": 0.222,
+    "presence": 0.312,
+    "scene": 0.36,
+    "screen": 0.656,
+    "vocal": 0.295
+   },
+   "best": "composure",
+   "bestGain": 1.449,
+   "firstGain": 1.449,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.378,
+    "atOrAboveMedian": true,
+    "randomMean": 0.501,
+    "firstGain": 1.449
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 1.453,
+    "realized": 1.449,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     1.453,
+     0.495,
+     0.327
+    ],
+    "falls": true,
+    "leastDrop": 0.16760951432428328,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.057,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 1.453,
+    "after": 0.656,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "screen",
+    "leaderPoints": 0.717,
+    "leads": true,
+    "firstAfter": "screen",
+    "ok": true,
+    "tieLead": true
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-33",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-erotic_thriller-2:vote",
+    "brief-gangster-2:business",
+    "brief-melodrama:full"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 64,
+    "composure": 53,
+    "emotionalDepth": 50.7,
+    "focus": 61,
+    "imagination": 60.035,
+    "intimacy": 47.03,
+    "listening": 47,
+    "memory": 52.863,
+    "physical": 50.034,
+    "presence": 47,
+    "scene": 72,
+    "screen": 52.129,
+    "vocal": 56.84
+   },
+   "advice": [
+    {
+     "target": "listening",
+     "points": 0.5,
+     "forecast": 0.5240919908397347,
+     "tiedWith": [
+      "Presence",
+      "Composure",
+      "Emotional Depth"
+     ],
+     "why": "20 hours of its exercise would take it from 47 to about 51, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Terms For The Widow (All Business), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old. About as useful: Presence, Composure, Emotional Depth; any of them is a sound next step."
+    },
+    {
+     "target": "presence",
+     "points": 0.5,
+     "forecast": 0.520228070667649,
+     "why": "20 hours of its exercise would take it from 47 to about 51, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Terms For The Widow (All Business), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.5,
+     "forecast": 0.5141937386557119,
+     "why": "20 hours of its exercise would take it from 53 to about 57, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Terms For The Widow (All Business), Taped, about +0.7), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.5,
+     "forecast": 0.4596476500797415,
+     "why": "20 hours of its exercise would take it from 51 to about 55, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Terms For The Widow (All Business), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.3,
+     "forecast": 0.3292985398839541,
+     "why": "20 hours of its exercise would take it from 52 to about 56, worth about 0.3 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Terms For The Widow (All Business), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "listening",
+   "said": [
+    "listening",
+    "presence",
+    "composure",
+    "emotionalDepth"
+   ],
+   "chief": "vocal",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.241,
+    "composure": 0.514,
+    "emotionalDepth": 0.46,
+    "focus": 0.272,
+    "imagination": 0.322,
+    "intimacy": 0.15,
+    "listening": 0.524,
+    "memory": 0.319,
+    "physical": 0.26,
+    "presence": 0.52,
+    "scene": 0.181,
+    "screen": 0.329,
+    "vocal": 0.303
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "intimacy",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.256,
+    "composure": 0.561,
+    "emotionalDepth": 0.5,
+    "focus": 0.29,
+    "imagination": 0.346,
+    "intimacy": 0.154,
+    "listening": 0.599,
+    "memory": 0.342,
+    "physical": 0.276,
+    "presence": 0.608,
+    "scene": 0.188,
+    "screen": 0.355,
+    "vocal": 0.324
+   },
+   "best": "presence",
+   "bestGain": 0.608,
+   "firstGain": 0.599,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.333,
+    "atOrAboveMedian": true,
+    "randomMean": 0.369,
+    "firstGain": 0.599
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.524,
+    "realized": 0.599,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.524,
+     0.317,
+     0.279
+    ],
+    "falls": true,
+    "leastDrop": 0.03842526773091254,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.028,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.524,
+    "after": 0.341,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "composure",
+    "leaderPoints": 0.507,
+    "leads": true,
+    "firstAfter": "composure",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-34",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-coming_of_age:growing",
+    "brief-eco_horror-2:out",
+    "brief-stoner_comedy-2:impression"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 54,
+    "comedy": 42.041,
+    "composure": 43,
+    "emotionalDepth": 55.1,
+    "focus": 54,
+    "imagination": 53.065,
+    "improv": 25.067,
+    "listening": 43,
+    "memory": 48.273,
+    "physical": 49.948,
+    "presence": 49,
+    "scene": 40,
+    "screen": 68.051,
+    "vocal": 54.5
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 0.7,
+     "forecast": 0.6485157588365607,
+     "why": "20 hours of its exercise would take it from 53 to about 57, worth about 0.7 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Last Week’s Pay (The Hand Held Out), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "adaptability",
+     "points": 0.5,
+     "forecast": 0.49301321075832044,
+     "why": "20 hours of its exercise would take it from 54 to about 58, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Last Week’s Pay (The Hand Held Out), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.5,
+     "forecast": 0.48323485028815105,
+     "why": "20 hours of its exercise would take it from 43 to about 48, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Warm Walls (Get Him Out), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.5,
+     "forecast": 0.4485750290496521,
+     "why": "20 hours of its exercise would take it from 43 to about 48, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Warm Walls (Get Him Out), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.4,
+     "forecast": 0.4143505390393057,
+     "why": "20 hours of its exercise would take it from 54 to about 58, worth about 0.4 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Call With Her Father (Mister Good Impression), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.1 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "focus",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.493,
+    "comedy": 0.27,
+    "composure": 0.483,
+    "emotionalDepth": 0.371,
+    "focus": 0.414,
+    "imagination": 0.649,
+    "improv": 0.219,
+    "listening": 0.449,
+    "memory": 0.397,
+    "physical": 0.359,
+    "presence": 0.22,
+    "scene": 0.259,
+    "screen": 0.268,
+    "vocal": 0.166
+   },
+   "candidates": [
+    "adaptability",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "improv",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.537,
+    "comedy": 0.287,
+    "composure": 0.525,
+    "emotionalDepth": 0.401,
+    "focus": 0.449,
+    "imagination": 0.705,
+    "improv": 0.23,
+    "listening": 0.486,
+    "memory": 0.429,
+    "physical": 0.386,
+    "presence": 0.231,
+    "scene": 0.274,
+    "screen": 0.283,
+    "vocal": 0.171
+   },
+   "best": "imagination",
+   "bestGain": 0.705,
+   "firstGain": 0.705,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.386,
+    "atOrAboveMedian": true,
+    "randomMean": 0.385,
+    "firstGain": 0.705
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.649,
+    "realized": 0.705,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.649,
+     0.237,
+     0.216
+    ],
+    "falls": true,
+    "leastDrop": 0.02040418094700061,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.042,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.649,
+    "after": 0.455,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "listening",
+    "leaderPoints": 0.512,
+    "leads": true,
+    "firstAfter": "listening",
+    "ok": true,
+    "tieLead": true
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-35",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-science_fiction:catchup",
+    "brief-sword_and_sandal:servant",
+    "brief-romance-2:nerve"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 69,
+    "composure": 59,
+    "dance": 25.065,
+    "emotionalDepth": 49.2,
+    "focus": 62,
+    "imagination": 43.09,
+    "listening": 42,
+    "memory": 51.465,
+    "physical": 50.945,
+    "presence": 40,
+    "scene": 63,
+    "screen": 41.164,
+    "vocal": 45
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 1.1,
+     "forecast": 1.070994376353589,
+     "why": "20 hours of its exercise would take it from 43 to about 48, worth about 1.1 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Eight Years Out (Catching Up), Taped, about +1), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "prep:genre",
+     "points": 1,
+     "why": "Coming to the work with knowing the genre short cost about 1 points of the whole a piece: that’s preparation, not training."
+    },
+    {
+     "target": "screen",
+     "points": 0.6,
+     "forecast": 0.6424181153598264,
+     "why": "20 hours of its exercise would take it from 41 to about 46, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Games Account (The Faithful Steward), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.6,
+     "forecast": 0.5806190505122129,
+     "why": "20 hours of its exercise would take it from 49 to about 53, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Thursday Beginners (Working Up To It), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.5,
+     "forecast": 0.5331637362543825,
+     "why": "20 hours of its exercise would take it from 42 to about 47, worth about 0.5 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Eight Years Out (Catching Up), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "imagination",
+   "chiefIsFirst": true,
+   "predicted": {
+    "adaptability": 0.408,
+    "composure": 0.459,
+    "dance": 0.428,
+    "emotionalDepth": 0.581,
+    "focus": 0.387,
+    "imagination": 1.071,
+    "listening": 0.533,
+    "memory": 0.438,
+    "physical": 0.437,
+    "presence": 0.396,
+    "scene": 0.375,
+    "screen": 0.642,
+    "vocal": 0.318
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "dance",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.426,
+    "composure": 0.482,
+    "dance": 0.449,
+    "emotionalDepth": 0.62,
+    "focus": 0.402,
+    "imagination": 1.171,
+    "listening": 0.566,
+    "memory": 0.459,
+    "physical": 0.458,
+    "presence": 0.413,
+    "scene": 0.39,
+    "screen": 0.69,
+    "vocal": 0.325
+   },
+   "best": "imagination",
+   "bestGain": 1.171,
+   "firstGain": 1.171,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.454,
+    "atOrAboveMedian": true,
+    "randomMean": 0.527,
+    "firstGain": 1.171
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 1.071,
+    "realized": 1.171,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     1.071,
+     0.469,
+     0.374
+    ],
+    "falls": true,
+    "leastDrop": 0.09460631100515826,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": true,
+     "anyLargest": 0.002,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 4,
+    "ok": 4,
+    "missing": []
+   },
+   "h": {
+    "before": 1.071,
+    "after": 0.928,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "screen",
+    "leaderPoints": 0.611,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-36",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-caper:pro",
+    "brief-buddy_comedy:friction",
+    "brief-horror:trust"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 67,
+    "comedy": 31.052,
+    "composure": 56,
+    "emotionalDepth": 52.9,
+    "focus": 39,
+    "imagination": 74.001,
+    "listening": 45,
+    "memory": 55.36,
+    "physical": 50.845,
+    "presence": 66,
+    "scene": 43,
+    "screen": 72.017,
+    "vocal": 53.7
+   },
+   "advice": [
+    {
+     "target": "focus",
+     "points": 1.2,
+     "forecast": 1.2444257567556023,
+     "why": "20 hours of its exercise would take it from 39 to about 44, worth about 1.2 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Three States For A Cake (Pure Friction), Taped, about +1.2), worked out again with you as you are now, a session a day; about 0.6 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.9,
+     "forecast": 0.9416689280625288,
+     "why": "20 hours of its exercise would take it from 45 to about 49, worth about 0.9 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Someone Behind You (His Voice), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.6 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.9,
+     "forecast": 0.9299032939330232,
+     "why": "20 hours of its exercise would take it from 56 to about 60, worth about 0.9 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Someone Behind You (His Voice), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.6 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.9,
+     "forecast": 0.9091423728407134,
+     "why": "20 hours of its exercise would take it from 53 to about 57, worth about 0.9 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Someone Behind You (His Voice), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.6 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "physical",
+     "points": 0.9,
+     "forecast": 0.8507654306037592,
+     "why": "20 hours of its exercise would take it from 51 to about 55, worth about 0.9 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Three States For A Cake (Pure Friction), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.6 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "focus",
+   "said": [
+    "focus"
+   ],
+   "chief": "emotionalDepth",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.747,
+    "comedy": 0.678,
+    "composure": 0.93,
+    "emotionalDepth": 0.909,
+    "focus": 1.244,
+    "imagination": 0.664,
+    "listening": 0.942,
+    "memory": 0.683,
+    "physical": 0.851,
+    "presence": 0.639,
+    "scene": 0.707,
+    "screen": 0.705,
+    "vocal": 0.643
+   },
+   "candidates": [
+    "adaptability",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.765,
+    "comedy": 0.688,
+    "composure": 0.958,
+    "emotionalDepth": 0.947,
+    "focus": 1.335,
+    "imagination": 0.673,
+    "listening": 0.984,
+    "memory": 0.705,
+    "physical": 0.894,
+    "presence": 0.644,
+    "scene": 0.725,
+    "screen": 0.723,
+    "vocal": 0.648
+   },
+   "best": "focus",
+   "bestGain": 1.335,
+   "firstGain": 1.335,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.724,
+    "atOrAboveMedian": true,
+    "randomMean": 0.822,
+    "firstGain": 1.335
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 1.244,
+    "realized": 1.335,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     1.244,
+     0.847,
+     0.721
+    ],
+    "falls": true,
+    "leastDrop": 0.12571039387224414,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.035,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 1.244,
+    "after": 1.023,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "listening",
+    "leaderPoints": 0.83,
+    "leads": false,
+    "firstAfter": "focus",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-37",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-nordic_noir-2:method",
+    "brief-romantic_comedy-2:bet",
+    "brief-wuxia-2:eager"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 38,
+    "combat": 48.031,
+    "comedy": 61.016,
+    "composure": 72,
+    "emotionalDepth": 53.8,
+    "focus": 47,
+    "imagination": 63.028,
+    "listening": 44,
+    "memory": 59.957,
+    "physical": 58.54,
+    "presence": 57,
+    "scene": 66,
+    "screen": 45.176
+   },
+   "advice": [
+    {
+     "target": "listening",
+     "points": 1.1,
+     "forecast": 1.0638888168397216,
+     "tiedWith": [
+      "Adaptability"
+     ],
+     "why": "20 hours of its exercise would take it from 44 to about 49, worth about 1.1 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Mine Road (The Detail), Taped, about +1), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old. About as useful: Adaptability; either is a sound next step."
+    },
+    {
+     "target": "adaptability",
+     "points": 1.1,
+     "forecast": 1.051595070371275,
+     "why": "20 hours of its exercise would take it from 38 to about 43, worth about 1.1 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Table Six, Three Minutes (Winning The Bet), Taped, about +1.3), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.6,
+     "forecast": 0.5830316404279696,
+     "why": "20 hours of its exercise would take it from 47 to about 51, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Table Six, Three Minutes (Winning The Bet), Taped, about +0.7), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "physical",
+     "points": 0.4,
+     "forecast": 0.4172542785234228,
+     "why": "20 hours of its exercise would take it from 59 to about 62, worth about 0.4 points a piece on your recent work (1 of your last 3 pieces read it; it gains most on Learned Through The Shutters (All Heart), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.4,
+     "forecast": 0.3957424604112655,
+     "why": "20 hours of its exercise would take it from 54 to about 58, worth about 0.4 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Mine Road (The Detail), Taped, about +0.2), worked out again with you as you are now, a session a day; about 0.2 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "listening",
+   "said": [
+    "listening",
+    "adaptability"
+   ],
+   "chief": "physical",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 1.052,
+    "combat": 0.262,
+    "comedy": 0.262,
+    "composure": 0.311,
+    "emotionalDepth": 0.396,
+    "focus": 0.583,
+    "imagination": 0.349,
+    "listening": 1.064,
+    "memory": 0.361,
+    "physical": 0.417,
+    "presence": 0.326,
+    "scene": 0.247,
+    "screen": 0.341
+   },
+   "candidates": [
+    "adaptability",
+    "combat",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen"
+   ],
+   "realized": {
+    "adaptability": 1.153,
+    "combat": 0.268,
+    "comedy": 0.268,
+    "composure": 0.322,
+    "emotionalDepth": 0.418,
+    "focus": 0.628,
+    "imagination": 0.367,
+    "listening": 1.153,
+    "memory": 0.379,
+    "physical": 0.442,
+    "presence": 0.34,
+    "scene": 0.252,
+    "screen": 0.357
+   },
+   "best": "adaptability",
+   "bestGain": 1.153,
+   "firstGain": 1.153,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.362,
+    "atOrAboveMedian": true,
+    "randomMean": 0.488,
+    "firstGain": 1.153
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 1.064,
+    "realized": 1.153,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     1.064,
+     0.39,
+     0.33
+    ],
+    "falls": true,
+    "leastDrop": 0.05998479201825663,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.007,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 1.064,
+    "after": 0.803,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "adaptability",
+    "leaderPoints": 0.943,
+    "leads": true,
+    "firstAfter": "adaptability",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-38",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-eco_horror-2:out",
+    "brief-road_movie-2:pitch",
+    "brief-werewolf:planner"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 72,
+    "composure": 63,
+    "emotionalDepth": 50.2,
+    "focus": 40,
+    "imagination": 57.027,
+    "listening": 39,
+    "memory": 49.068,
+    "physical": 44,
+    "presence": 59,
+    "scene": 34,
+    "screen": 61.062,
+    "vocal": 46.9
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 0.8,
+     "forecast": 0.7900118768965367,
+     "why": "20 hours of its exercise would take it from 57 to about 60, worth about 0.8 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Cold Store (The Plan Holds), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "emotionalDepth",
+     "points": 0.6,
+     "forecast": 0.6319959821018983,
+     "why": "20 hours of its exercise would take it from 50 to about 54, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Cold Store (The Plan Holds), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "listening",
+     "points": 0.6,
+     "forecast": 0.6281984494552486,
+     "why": "20 hours of its exercise would take it from 39 to about 44, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Warm Walls (Get Him Out), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "screen",
+     "points": 0.6,
+     "forecast": 0.5589179280022034,
+     "why": "20 hours of its exercise would take it from 61 to about 64, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on One More State (The Last Pitch), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.6,
+     "forecast": 0.5507837832629505,
+     "why": "20 hours of its exercise would take it from 40 to about 45, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on One More State (The Last Pitch), Taped, about +0.3), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "emotionalDepth",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.452,
+    "composure": 0.459,
+    "emotionalDepth": 0.632,
+    "focus": 0.551,
+    "imagination": 0.79,
+    "listening": 0.628,
+    "memory": 0.346,
+    "physical": 0.393,
+    "presence": 0.382,
+    "scene": 0.515,
+    "screen": 0.559,
+    "vocal": 0.375
+   },
+   "candidates": [
+    "adaptability",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal"
+   ],
+   "realized": {
+    "adaptability": 0.474,
+    "composure": 0.48,
+    "emotionalDepth": 0.675,
+    "focus": 0.585,
+    "imagination": 0.849,
+    "listening": 0.668,
+    "memory": 0.354,
+    "physical": 0.408,
+    "presence": 0.395,
+    "scene": 0.545,
+    "screen": 0.594,
+    "vocal": 0.388
+   },
+   "best": "imagination",
+   "bestGain": 0.849,
+   "firstGain": 0.849,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.48,
+    "atOrAboveMedian": true,
+    "randomMean": 0.534,
+    "firstGain": 0.849
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.79,
+    "realized": 0.849,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.79,
+     0.445,
+     0.428
+    ],
+    "falls": true,
+    "leastDrop": 0.016912661506600812,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.006,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.79,
+    "after": 0.644,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "listening",
+    "leaderPoints": 0.642,
+    "leads": false,
+    "firstAfter": "imagination",
+    "ok": true,
+    "tieLead": false
+   },
+   "i": {
+    "same": true
+   }
+  },
+  {
+   "seed": "adv-39",
+   "set": "held-out",
+   "design": "F2-A",
+   "takes": [
+    "brief-animated-3:weight",
+    "brief-creature_feature-2:measure",
+    "brief-comedy-2:list"
+   ],
+   "genres": 3,
+   "atFull": [],
+   "levels": {
+    "adaptability": 43,
+    "character": 67.007,
+    "comedy": 44.034,
+    "composure": 34,
+    "emotionalDepth": 54,
+    "focus": 48,
+    "imagination": 46.086,
+    "improv": 32.053,
+    "listening": 38,
+    "memory": 48.482,
+    "physical": 51.477,
+    "presence": 51,
+    "scene": 57,
+    "screen": 34.259,
+    "vocal": 45.3,
+    "voiceover": 73.005
+   },
+   "advice": [
+    {
+     "target": "imagination",
+     "points": 0.8,
+     "forecast": 0.8090329230293538,
+     "why": "20 hours of its exercise would take it from 46 to about 51, worth about 0.8 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Out The Door By Seven (The List Is The Love), Taped, about +0.8), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "memory",
+     "points": 0.7,
+     "forecast": 0.6566679081022428,
+     "why": "20 hours of its exercise would take it from 48 to about 53, worth about 0.7 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Out The Door By Seven (The List Is The Love), Taped, about +0.5), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "composure",
+     "points": 0.7,
+     "forecast": 0.6508027427602745,
+     "why": "20 hours of its exercise would take it from 34 to about 39, worth about 0.7 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Dispensary Door (Measure Twice), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "focus",
+     "points": 0.6,
+     "forecast": 0.5982014956407096,
+     "why": "20 hours of its exercise would take it from 48 to about 52, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on Out The Door By Seven (The List Is The Love), Taped, about +0.4), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    },
+    {
+     "target": "physical",
+     "points": 0.6,
+     "forecast": 0.5571347560480172,
+     "why": "20 hours of its exercise would take it from 51 to about 55, worth about 0.6 points a piece on your recent work (3 of your last 3 pieces read it; it gains most on The Lamp On Gull Rock (All That Weight), Taped, about +0.6), worked out again with you as you are now, a session a day; about 0.3 of it is the discipline 20 days of practice keep, which any exercise kept up daily would bring. Steady to begin; spaced pays once the last session is a day to a week old."
+    }
+   ],
+   "first": "imagination",
+   "said": [
+    "imagination"
+   ],
+   "chief": "memory",
+   "chiefIsFirst": false,
+   "predicted": {
+    "adaptability": 0.554,
+    "character": 0.263,
+    "comedy": 0.369,
+    "composure": 0.651,
+    "emotionalDepth": 0.424,
+    "focus": 0.598,
+    "imagination": 0.809,
+    "improv": 0.322,
+    "listening": 0.423,
+    "memory": 0.657,
+    "physical": 0.557,
+    "presence": 0.296,
+    "scene": 0.317,
+    "screen": 0.444,
+    "vocal": 0.367,
+    "voiceover": 0.261
+   },
+   "candidates": [
+    "adaptability",
+    "character",
+    "comedy",
+    "composure",
+    "emotionalDepth",
+    "focus",
+    "imagination",
+    "improv",
+    "listening",
+    "memory",
+    "physical",
+    "presence",
+    "scene",
+    "screen",
+    "vocal",
+    "voiceover"
+   ],
+   "realized": {
+    "adaptability": 0.632,
+    "character": 0.271,
+    "comedy": 0.39,
+    "composure": 0.698,
+    "emotionalDepth": 0.452,
+    "focus": 0.646,
+    "imagination": 0.903,
+    "improv": 0.338,
+    "listening": 0.485,
+    "memory": 0.712,
+    "physical": 0.6,
+    "presence": 0.308,
+    "scene": 0.343,
+    "screen": 0.501,
+    "vocal": 0.387,
+    "voiceover": 0.269
+   },
+   "best": "imagination",
+   "bestGain": 0.903,
+   "firstGain": 0.903,
+   "pass": true,
+   "noAdvice": false,
+   "c": {
+    "medianOthers": 0.452,
+    "atOrAboveMedian": true,
+    "randomMean": 0.496,
+    "firstGain": 0.903
+   },
+   "d": {
+    "violations": [],
+    "allFull": {
+     "named": [],
+     "says": true
+    }
+   },
+   "e": {
+    "predicted": 0.809,
+    "realized": 0.903,
+    "within": true
+   },
+   "f": {
+    "ladder": [
+     0.809,
+     0.445,
+     0.411
+    ],
+    "falls": true,
+    "leastDrop": 0.034010329150455876,
+    "prep": {
+     "limited": false,
+     "largest": 0,
+     "same": true,
+     "stepsLimited": false,
+     "stepsLargest": 0,
+     "stepsSame": true,
+     "anyLimited": false,
+     "anyLargest": 0.034,
+     "anySame": false
+    }
+   },
+   "g": {
+    "recs": 5,
+    "ok": 5,
+    "missing": []
+   },
+   "h": {
+    "before": 0.809,
+    "after": 0.616,
+    "atFullAfter": false,
+    "fell": true,
+    "leader": "memory",
+    "leaderPoints": 0.631,
+    "leads": true,
+    "firstAfter": "memory",
+    "ok": true,
+    "tieLead": true
+   },
+   "i": {
+    "same": true
+   }
+  }
+ ],
+ "summary": {
+  "held-out": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 8,
+    "tieSaid": 2,
+    "chiefIsFirst": 2
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 1.018,
+    "randomMean": 0.505,
+    "ratio": 2.015
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.075
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 0,
+    "prepSame": 0,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 1,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 49,
+    "ok": 49
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 5,
+    "changedWhereLed": 5,
+    "leadsWithinATie": 3
+   },
+   "i": {
+    "same": 10
+   }
+  },
+  "held-out F2-A": {
+   "n": 10,
+   "b": {
+    "pass": 10,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 8,
+    "tieSaid": 2,
+    "chiefIsFirst": 2
+   },
+   "c": {
+    "named": 10,
+    "atOrAboveMedian": 10,
+    "share": 1,
+    "firstMean": 1.018,
+    "randomMean": 0.505,
+    "ratio": 2.015
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 10
+   },
+   "e": {
+    "named": 10,
+    "within": 10,
+    "share": 1,
+    "meanError": 0.075
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 0,
+    "prepSame": 0,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 1,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 49,
+    "ok": 49
+   },
+   "h": {
+    "cases": 10,
+    "fell": 10,
+    "leads": 5,
+    "changedWhereLed": 5,
+    "leadsWithinATie": 3
+   },
+   "i": {
+    "same": 10
+   }
+  }
+ }
+}
