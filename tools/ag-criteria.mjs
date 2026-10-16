@@ -101,6 +101,25 @@ if (a.h4Account) {
   const st = a.h4Account.staminaLastSegment;
   put('H4′ (proposed, not counted)', ok.length === own.length && st.aheadOnTheLast >= 0.6 * st.nights, `own work: ${ab.map(([id, x]) => `${id} ${x.ownWork.ahead}/${x.ownWork.n}`).join(', ')}; ${ok.length} of the ${own.length} with own work at 60%; stamina ahead on the last segment of ${st.aheadOnTheLast} of ${st.nights} nights (on the whole of ${st.aheadOnTheWhole})`, 'ahead on 60% of own work, every ability that has any; stamina on 60% of nights’ last segments');
 }
+// H4-R, the owner's approved replacement (from 2026-10-16, brief 10; docs/verification/decisions-2026-10-16/criteria.md),
+// on ag-baseline's section 11. H4 as written and H4′ above stay as the record, H4 superseded.
+if (a.h4r) {
+  const h = a.h4r;
+  const ab = Object.entries(h.abilities);
+  const budgetsEqual = Object.values(h.budgets.specialists).every((b) => Math.abs(b - h.budgets.even) < 1e-9);
+  put('H4-R budgets', budgetsEqual, `even ${h.budgets.even}; specialists ${[...new Set(Object.values(h.budgets.specialists).map((b) => +b.toFixed(9)))].join(', ')}`, 'every specialist’s twelve abilities total the even actor’s');
+  const aOk = ab.filter(([, x]) => x.own.n >= 5 && Object.keys(x.own.kinds).length >= 2);
+  put('H4-R (a)', aOk.length === 12, `${aOk.length} of 12: ${ab.map(([id, x]) => `${id} ${x.own.n} in ${Object.keys(x.own.kinds).length}`).join(', ')}`, 'each the largest input of 5 pieces or more, in 2 kinds or more');
+  const bOk = ab.filter(([, x]) => x.own.n > 0 && x.own.ahead >= 0.6 * x.own.n && (x.own.median ?? 0) >= 0.3);
+  put('H4-R (b)', bOk.length === 12, `${bOk.length} of 12: ${ab.map(([id, x]) => `${id} ${x.own.ahead}/${x.own.n} median ${x.own.median}`).join(', ')}`, 'ahead on 60% of its own work, median advantage 0.3 or more, all twelve');
+  const pairs = ab.reduce((t, [, x]) => t + x.underATenth.pairs, 0), ahead = ab.reduce((t, [, x]) => t + x.underATenth.ahead, 0);
+  const over = Object.entries(h.bestAllocation).map(([k, m]) => { const n = Object.values(m).reduce((s, x) => s + x, 0); const top = Object.entries(m).sort((x, y) => y[1] - x[1])[0]; return { k, n, top }; }).filter((x) => x.n >= 30);
+  const h2 = over.every((x) => x.top[1] <= x.n / 2);
+  put('H4-R (c)', ahead <= 0.01 * pairs && h2, `under a tenth: ${ahead} of ${pairs} ahead; H2 on this set: ${over.map((x) => `${x.k} ${x.top[0]} ${x.top[1]} of ${x.n}`).join('; ')}`, 'at most 1% ahead where the ability carries under a tenth; H2 holds (and H2 as written above)');
+  put('H4-R H5', h.generalist.aheadOfHalf >= 0.5 * h.generalist.n && h.generalist.withinAPoint >= 0.1 * h.generalist.n, `ahead of half on ${h.generalist.aheadOfHalf} of ${h.generalist.n}; within a point of the best on ${h.generalist.withinAPoint}`, 'H5 on this set: 50%; 10%');
+  put('H4-R', budgetsEqual && aOk.length === 12 && bOk.length === 12 && ahead <= 0.01 * pairs && h2, '(a), (b) and (c) above, on equal budgets; (d) is tools/h4-indirect.ts, (e) the mutations', 'all of them');
+  put('M1 on H4-R’s set', h.mastery.off100 === 0, `${h.mastery.cases - h.mastery.off100} of ${h.mastery.cases} at 100, no draw and three drawn keys${h.mastery.first.length ? `; ${h.mastery.first.join('; ')}` : ''}`, 'every case 100');
+}
 // H5: the even actor ahead of half the specialists on 50% of pieces; within a point of the best on 10%.
 {
   const g = a.generalist;

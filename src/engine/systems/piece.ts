@@ -306,8 +306,18 @@ export function pieceWeights(task: TaskProfile, lean: Partial<Record<Dimension, 
   return out;
 }
 
-/** Judges a piece segment by segment, and the whole from them. */
+/** Judges a piece segment by segment, and the whole from them, rounded once (`rounded`). */
 export function judgePiece(seed: string, performer: Performer, ctx: EvalContext, spec: PieceSpec): Evaluation {
+  return rounded(judgePieceExact(seed, performer, ctx, spec).evaluation);
+}
+
+/**
+ * A piece judged at full precision (from 2026-10-16, brief 10): the whole, its dimensions and its limits as worked out,
+ * before `judgePiece` rounds them once, and each segment's own judgment at full precision. What a check that every shown
+ * figure is its own exact value rounded once reads (ST3-R (d), `tools/interpretation.ts -- --st3`); it changes no figure.
+ * The segments' shown figures (`piece.segments`) are rounded here, once each, as before.
+ */
+export function judgePieceExact(seed: string, performer: Performer, ctx: EvalContext, spec: PieceSpec): { evaluation: Evaluation; segments: Evaluation[] } {
   const n = spec.segments.length;
   const W = spec.segments.reduce((s, x) => s + x.weight, 0) || 1;
   const norm = (a: AbilityId) => clamp(performer.ability(a) / Math.max(1, performer.full(a)), 0, 1);
@@ -402,7 +412,7 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   // The piece's own reads, not segment 0's: replaying applies each segment's tones and its own way again.
   const { lean: _lean, inputs: _inputs, extraPrep: _extra, fit: _fit, grain: _grain, ...rest } = first.inputs;
   void _lean; void _inputs; void _extra; void _fit; void _grain;
-  return rounded({
+  const evaluation: Evaluation = {
     ruleset: first.ruleset, task: ctx.task.id, taskLabel: ctx.task.label, dimensions, overall, exact: overall, mastery: results.every((r) => r.mastery),
     limits: dimensions.flatMap((d) => d.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
     inputs: {
@@ -411,5 +421,6 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       piece: spec,
     },
     piece: { segments, continuity, lowest: Math.min(...segments.map((x) => x.overall)) },
-  });
+  };
+  return { evaluation, segments: results };
 }
