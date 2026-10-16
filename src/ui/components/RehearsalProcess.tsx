@@ -9,6 +9,10 @@
  * answered. The part's forecast is shown in its movements (`systems/piece.ts`), the nights together with the company
  * beside it, and the part can be worked through between calls (`WorkThrough`). Until then "A Night's Readiness" was
  * shown as what a night would come to; from 2026-10-09 it reached a night's growth only, and it's said so now.
+ *
+ * From 2026-10-16 (brief 10) The Evening's Workload under A Night Now says what the night asks of stamina from the
+ * forecast's own figures (`workloadWords`): the running time and its breaks, the part's share, the intensity, the
+ * workload, the drain at the curtain's fall and the energy it costs, and where the running time comes from.
  */
 
 import { useState } from 'react';
@@ -27,6 +31,7 @@ import { materialOf } from '@/engine/systems/material';
 import { partPreview } from '@/engine/systems/school';
 import { workPiece } from '@/engine/systems/workpieces';
 import { wayRefusal } from '@/engine/systems/workbook';
+import { workloadWords } from '@/engine/systems/workload';
 
 const zone = () => CITIES.require(YALE_DRAMA.cityId).timeZone;
 const pct = (x: number) => `${Math.round(x * 100)}%`;
@@ -69,6 +74,12 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         <Stat label="Growth From A Night" value={`${Math.round(nightFactor(casting) * 100)}%`} note="What a night would grow your craft by, against every call kept and no more: it doesn’t change the night’s result" />
         {forecast && <Stat label="A Night Now" value={forecast.overall.toFixed(1)} note="What a night would come to if it opened now, with no draw" />}
       </div>
+      {forecast && workloadWords(forecast) && (
+        <div className="small" data-workload="">
+          <strong>The Evening’s Workload.</strong> {workloadWords(forecast)}
+          {forecast.inputs.piece?.night && <span className="xs dim"> The running time: {forecast.inputs.piece.night.from}.</span>}
+        </div>
+      )}
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
       {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company the nights have come to {Math.round(p.together.sum / p.together.n)} on average{p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered by you` : ''}` : ''}. How the show went together is what a night leaves you feeling; your own night is your result.</div>}
       {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s reading of the process.</span></div>}

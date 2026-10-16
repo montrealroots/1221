@@ -25,6 +25,7 @@ import { classesGrow, reachOf } from '@/engine/systems/school';
 import { EVERYDAY_FITNESS, FITNESS } from '@/engine/systems/life';
 import { genreSpeed, playOfGenre } from '@/engine/systems/engagement';
 import { chiefLimit, replay, type WorkRecord } from '@/engine/systems/evaluation';
+import { workloadWords } from '@/engine/systems/workload';
 import { DEMAND_LABEL, DEMAND_TECHNIQUE, GENRE_DEMANDS, applied } from '@/engine/content/demands';
 import type { Skill } from '@/engine/content/school';
 import { Stat } from '@/ui/components/primitives';
@@ -264,6 +265,9 @@ defineLook<TheWorkDone>('work', {
             </ul>
           )}
           {again?.piece && <Segments e={again} caption="Part By Part" />}
+          {/* A night’s workload, from its own record (from 2026-10-16, brief 10, `workloadWords`): what it asked of stamina
+              and what it cost. A night kept under evaluation-10 kept none, and shows none. */}
+          {workloadWords(w) && <p className="small" data-workload="">{workloadWords(w)} <span className="xs dim">The running time: {w.inputs.piece!.night!.from}.</span></p>}
           <p className="xs dim">Judged with readiness {Math.round(w.inputs.condition.readiness)}{w.inputs.condition.ill ? ', the flu' : ''}{w.inputs.condition.injured ? ', an injury' : ''}{w.inputs.condition.concussed ? ', a concussion mending' : ''}; difficulty {w.inputs.difficulty.toFixed(2)}; {prepared.length ? `preparation: ${prepared.join(', ')}` : 'preparation not read'}{w.inputs.families.length ? `; leaning to ${w.inputs.families.map(familyWords).join(', ')}` : ''}.</p>
         </>
       ),

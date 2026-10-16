@@ -158,8 +158,10 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Workouts, and more on a run in fine weather, held three days after each; lost past that, as fitness is.',
     // Until 2026-10-16 this said consistency in movement, fights, songs and every night on stage; a night reads it as the
     // drain through the piece, never as consistency (`systems/piece.ts`). From 2026-10-16 a night's and a long brief's load
-    // rose to their length (`PIECE.load`).
-    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more the longer the piece (a long brief, a whole night most) and the more of the body’s and the voice’s work it asks; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
+    // rose to their length (`PIECE.load`). Later that day (brief 10) a night's is its workload, the running time, the part's
+    // share of it and the body's and the voice's work (`systems/workload.ts`), and it spares the energy a night costs after,
+    // which until then was 10 whatever the stamina; this said a whole night, any part, was the heaviest until then.
+    affects: 'In a piece played through in parts (a scene, a brief, a night on stage), how much of the later parts it holds, more the longer the piece and the more of the body’s and the voice’s work it asks: a night by its workload, the production’s running time, your part’s share of it and its intensity, less after an interval; the energy a night costs afterward, up to half of it spared at full; in work shown whole without a scene (voice work, a song, movement, a fight), consistency.',
     derivedFrom: 'It’s the body’s fitness, kept in one place: full at the most a body that age can be brought to.',
     source: 'Hickson et al. (1981): half of the aerobic fitness gain was made in 10.3 to 10.8 days, and it levelled off by three weeks at a constant load; Hickson & Rosenkoetter (1981): two hard sessions a week kept it for 15 weeks; Mujika & Padilla (2000) on detraining',
   },

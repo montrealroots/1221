@@ -70,6 +70,7 @@ import { workPiece } from '@/engine/systems/workpieces';
 import { abilityFull, attributesOf } from '@/engine/systems/attributes';
 import { readiness } from '@/engine/systems/life';
 import { replay, type Evaluation } from '@/engine/systems/evaluation';
+import { drainOf, eveningCost, segmentShares } from '@/engine/systems/workload';
 import { PLAYREADING } from '@/engine/systems/playreading';
 import { CONTEMPORARY_PLAYS } from '@/engine/content/contemporary';
 
@@ -236,10 +237,15 @@ const PLAY: Record<string, () => void> = {
 
   'productions.notes': () => {
     const ex = example('productions.notes');
-    const { sim, proc, calls } = carlotta('guide-productions-notes');
+    const { sim, proc, calls, casting } = carlotta('guide-productions-notes');
     // TEST SETUP: an actor at full abilities but for stamina, at the half the example gives, so tiring is what the
     // part's forecast shows.
     expect(ex.setup).toContain('at stamina half of full');
+    // As a lead, rested at readiness 100, as the example gives it (from 2026-10-16, brief 10: a night's drain reads its
+    // part's share of the evening and the day at the curtain since). TEST SETUP: the part's size set to a lead.
+    expect(ex.setup).toContain('as a lead');
+    expect(ex.setup).toContain('at readiness 100');
+    casting().size = 'lead';
     const setUp = () => mastered(sim, 0.5);
     setUp();
     tended(sim, calls[4]!.at + 7 * MS_HOUR);
@@ -261,7 +267,7 @@ const PLAY: Record<string, () => void> = {
     const labels = piece.forecast().piece!.segments.map((s) => s.label);
     expect(labels).toEqual(['The First Half', 'The Second Half']);
     expect(said).toContain(labels[1]!.toLowerCase());
-    const before = { drain: piece.forecast().piece!.segments.at(-1)!.drain, load: piece.spec().load };
+    const before = { drain: piece.forecast().piece!.segments.at(-1)!.drain, load: piece.spec().load, share: segmentShares(piece.spec().night!, piece.spec().segments).at(-1)!, readiness: piece.forecast().inputs.condition.readiness };
     // The road not taken: the note left unworked, played to the same call below (TEST SETUP: the engine's own load).
     const unworked = twin(sim);
     const leftAlone = processOf(unworked.player.school!.casting!).notes.at(-1)!;
@@ -279,7 +285,15 @@ const PLAY: Record<string, () => void> = {
     expect(worked.value!.pending).toBe(true);
     expect(sim.execute({ kind: 'work.settle', payload: { piece: 'part:school', keep: true } }).ok).toBe(true);
     const after = { drain: piece.forecast().piece!.segments.at(-1)!.drain, load: piece.spec().load };
-    expect(ex.result).toContain(`Tiring took ${pct(1 - before.drain)} off what it reaches in the second half; now it takes ${pct(1 - after.drain)}, as places to breathe leave ${pct(after.load / before.load)} of the evening’s load on stamina`);
+    // The example's figures at readiness 100, from the part's own workload, before and after; and the forecast's own drain
+    // the same rule at the readiness it read (from 2026-10-16, brief 10: until then the forecast's figure was the example's,
+    // since a night's drain read no condition).
+    const half = (spec: ReturnType<typeof piece.spec>) => segmentShares(spec.night!, spec.segments).at(-1)!;
+    const forecastAt = (f: Evaluation) => f.inputs.condition.readiness;
+    const shares = { before: before.share, after: half(piece.spec()) };
+    expect(before.drain).toBeCloseTo(1 - drainOf(shares.before, 0.5, before.readiness), 3);
+    expect(after.drain).toBeCloseTo(1 - drainOf(shares.after, 0.5, forecastAt(piece.forecast())), 3);
+    expect(ex.result).toContain(`Tiring took ${pct(drainOf(shares.before, 0.5, 100))} off what it reaches in the second half; now it takes ${pct(drainOf(shares.after, 0.5, 100))}, as places to breathe leave ${pct(after.load / before.load)} of the evening’s load on stamina`);
 
     // The next call: Taken, its figure beside it. And its growth against a twin whose note isn't taken (TEST SETUP: the
     // craft set where a call grows it, the same in both, and the twin's note marked not taken).
@@ -368,6 +382,9 @@ const PLAY: Record<string, () => void> = {
     tended(sim, nights[0]!.at - MS_HOUR);
     const run = casting();
     run.play = title;
+    // A lead, as the example gives it (from 2026-10-16, brief 10: a night's workload reads the part). TEST SETUP.
+    expect(ex.setup).toContain(', a lead:');
+    run.size = 'lead';
     mastered(sim, stamina);
     const a = attributesOf(sim, sim.player);
     a.composure = recover * 100;
@@ -406,12 +423,18 @@ const PLAY: Record<string, () => void> = {
     const movements = segs.map((s) => `${s.label.toLowerCase()}${s.tones.length ? ` (${s.tones.join(' and ')})` : ''}`);
     expect(segs.map((s) => s.tones.join(' and '))).toEqual(['grotesque', 'grotesque', 'grave', 'grave']);
     expect(ex.setup).toContain(`it plays in ${word(segs.length)} movements, ${movements.slice(0, -1).join(', ')} and ${movements.at(-1)}`);
-    expect(ex.steps[0]).toContain(`${segs.at(-1)!.label} falls last: its Stamina reads “Tiring: ${pct(1 - segs.at(-1)!.drain)} off”`);
+    // Each movement's drain from the night's own workload: the example's at readiness 100, as it says, and the night's
+    // played the same rule at the readiness its curtain found (from 2026-10-16, brief 10). Until then the first read
+    // Holding and the last the load's figure, and the example's figures were the night's, since no drain read the day.
+    expect(ex.setup).toContain('at readiness 100');
+    const shares = segmentShares(night.inputs.piece!.night!, night.inputs.piece!.segments);
+    const r = record.inputs.condition.readiness;
+    segs.forEach((x, i) => expect(x.drain, x.label).toBeCloseTo(1 - drainOf(shares[i]!, stamina, r), 3));
+    expect(ex.steps[0]).toContain(`${segs.at(-1)!.label} falls last: its Stamina reads “Tiring: ${pct(drainOf(shares.at(-1)!, stamina, 100))} off”, and the first “Tiring: ${pct(drainOf(shares[0]!, stamina, 100))} off”`);
+    expect(ex.steps[0]).toContain(`The night’s workload line says ${night.inputs.piece!.night!.workload.toFixed(2)}, and the evening costs ${Math.round(eveningCost(night.inputs.piece!.night!, stamina, 100).energy)} energy.`);
     // A hard evening on stamina: its load against a new play's, which stages no body's or voice's work.
     expect(ex.setup).toContain('a hard evening on stamina');
     expect(night.inputs.piece!.load).toBeGreaterThan(playPiece({}).load);
-    expect(segs[0]!.drain).toBe(1);
-    expect(ex.steps[0]).toContain('the first reads Holding');
 
     // The company in it, as one partner.
     const read = companyRead(sim, sim.player, run)!;

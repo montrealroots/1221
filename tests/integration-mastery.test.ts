@@ -42,7 +42,8 @@ import { classPeriod, isClassDay, keyOf } from '@/engine/systems/school';
 import type { SchoolDate } from '@/engine/content/school';
 import { chiefLimit, performerOf, type Performer } from '@/engine/systems/evaluation';
 import { materialContext } from '@/engine/systems/material';
-import { judgePiece, loadOf, toneSegments, unitSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, toneSegments, unitSegments } from '@/engine/systems/piece';
+import { runningOf } from '@/engine/systems/workload';
 import { PIECE } from '@/engine/content/piece';
 import type { Person } from '@/engine/domain/model';
 
@@ -136,7 +137,7 @@ describe('MA3: every judged piece stays in bounds', () => {
         const read = materialContext(t, m);
         const parts = [...new Set(Object.values(t.dims).flatMap((d) => d!.prep ?? []))];
         const prep = next();
-        const e = judgePiece('ma3', p, { task: t, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(parts.map((k) => [k, prep])), required: Object.fromEntries(parts.map((k) => [k, 0.9])), difficulty: task === 'scene' ? difficultyOf(templateById('scene-study')!) : 0.1, condition: { readiness: 20 + next() * 80 }, lean: read.lean, inputs: read.inputs, key: `ma3:${m.id}` }, { segments: unitSegments(m, 2), work: [], part: task === 'scene' ? 'rehearsal' : 'blocking', perTurn: task === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: task === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, task === 'scene' ? 'scene' : 'night') });
+        const e = judgePiece('ma3', p, { task: t, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(parts.map((k) => [k, prep])), required: Object.fromEntries(parts.map((k) => [k, 0.9])), difficulty: task === 'scene' ? difficultyOf(templateById('scene-study')!) : 0.1, condition: { readiness: 20 + next() * 80 }, lean: read.lean, inputs: read.inputs, key: `ma3:${m.id}` }, task === 'scene' ? { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') } : nightPiece(m, runningOf({ play: m.id }), 'lead'));
         within(e.overall, m.id); e.dimensions.forEach((d) => within(d.quality, `${m.id} ${d.dimension}`)); e.piece?.segments.forEach((s) => within(s.overall, `${m.id} ${s.label}`));
         n += 1;
       }

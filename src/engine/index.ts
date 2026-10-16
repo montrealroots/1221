@@ -59,7 +59,7 @@ import { registerCash } from './systems/cash';
 import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
-import { enroll, registerSchool, yearOfStudy } from './systems/school';
+import { enroll, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
 import { registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
@@ -279,7 +279,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -424,6 +424,13 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('cardYears')) {
     cardYears(universe);
     opened.push('cardYears');
+  }
+  // Performance calls still to come in a save from before brief 10 (2026-10-16), booked for the hours every call held then:
+  // each held for its play's running time and the curtain call from here (`timeTheCalls`), once. The nights it kept stay
+  // as they were judged, under their ruleset.
+  if (!opened.includes('timeTheCalls')) {
+    timeTheCalls(sim);
+    opened.push('timeTheCalls');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

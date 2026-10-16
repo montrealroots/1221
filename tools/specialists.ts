@@ -28,7 +28,8 @@ import { PIECE } from '../src/engine/content/piece';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefPiece, type BriefRecord } from '../src/engine/systems/briefs';
 import { type Evaluation, type EvalContext, type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { runningOf } from '../src/engine/systems/workload';
 import { materialContext } from '../src/engine/systems/material';
 import { castingPerformer } from '../src/engine/systems/school';
 
@@ -80,7 +81,8 @@ function workJudge(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Pie
   const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty: 0, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: `sp:${m.id}`, expected: true };
-  const spec: PieceSpec = { segments: unitSegments(m, kind === 'scene' ? 1 : 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  // A night as the game judges it, a supporting part's workload (from 2026-10-16, brief 10; `loadOf`'s night until then).
+  const spec: PieceSpec = kind === 'scene' ? { segments: unitSegments(m, 1), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') } : nightPiece(m, runningOf({ play: m.id }), 'supporting');
   return { kind, id: m.id, material: m, judge: (p) => judgePiece('specialists', kind === 'casting' ? castingPerformer(p) : p, ctx, spec), weights: pieceWeights(task, read.lean, spec) };
 }
 

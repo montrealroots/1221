@@ -9,8 +9,9 @@
  *
  * Every rule figure is imported from the rule that sets it, and the worked examples are worked out here from the same
  * rules: the first spring's Carlotta Festival as the calendar has it (`schoolProduction`, `rehearsalDays`), what every
- * call makes of a part (`completeFor`), a reading for the chair (`castScore`), Woyzeck's movements and load
- * (`materialOf`, `toneSegments`, `loadOf`), and the Summer Cabaret of 2027 (`summerRuns`). A few figures the systems
+ * call makes of a part (`completeFor`), a reading for the chair (`castScore`), Woyzeck's movements and workload
+ * (`materialOf`, `unitSegments`, `nightLoad`; its load, `loadOf`, until brief 10 later on 2026-10-16), and the Summer
+ * Cabaret of 2027 (`summerRuns`). A few figures the systems
  * keep as bare numbers, exported by nothing, are written out in words and would drift from their rule unnoticed: a
  * call rehearsing a choice in at 0.3 before `PLAYING.gainShare` (`callAnswered`), "You know the part." at 97% of the
  * lines, a note on the blocking while it's under 70%, the Rep's calls at three and on call at five, the run-through's
@@ -59,7 +60,9 @@ import { ENSEMBLE } from '../../systems/ensemble';
 import { WORK } from '../../systems/coursework';
 import { PLAYREADING } from '../../systems/playreading';
 import { materialOf } from '../../systems/material';
-import { loadOf, unitSegments } from '../../systems/piece';
+import { unitSegments } from '../../systems/piece';
+import { drainOf, eveningCost, holdOf, nightLoad, segmentShares } from '../../systems/workload';
+import { RUNNING_TIMES, UNNAMED_RUNNING, WORKLOAD } from '../workload';
 import { ATTRIBUTES, abilityDef } from '../../systems/attributes';
 import { SPENT } from '../../systems/life';
 import { WORKERS_COMP } from '../injury';
@@ -136,11 +139,16 @@ const CABARET_PAR = completeFor(fresh(YALE_CABARET.rehearsalEvenings, 'cabaret')
 // --- the director's notes ---------------------------------------------------------------------------------------------
 
 const WAY_MINUTES = Object.values(ADJUSTMENTS).map((a) => a.minutes);
-const NEW_PLAY_LOAD = loadOf({ physical: 0, vocal: 0 }, 'night');
-/** What tiring leaves of what it reaches, at a movement's place in the evening, by a load and a stamina from 0 to 1. */
-const drainAt = (load: number, position: number, stamina: number): number => 1 - PIECE.drain * load * position * (1 - stamina);
-const SPENT_BEFORE = drainAt(NEW_PLAY_LOAD, 1, 0.5);
-const SPENT_AFTER = drainAt(NEW_PLAY_LOAD * WORKBOOK.breathe, 1, 0.5);
+/**
+ * A festival's new play as a lead, at half stamina, rested at readiness 100: what tiring leaves of what it reaches in its
+ * second half, before and after places to breathe (`systems/workload.ts`). Until brief 10 (2026-10-16) it was the load's
+ * figure at the last movement's place, a whole evening's 0.6 whatever the play's length or the part.
+ */
+const HALVES = unitSegments({ tones: [], turns: 0 }, 2);
+const NEW_PLAY = nightLoad(UNNAMED_RUNNING.newPlay, { physical: 0, vocal: 0 }, 'lead');
+const secondHalf = (breathe: number): number => 1 - drainOf(segmentShares({ ...NEW_PLAY, breathe }, HALVES)[1]!, 0.5, 100);
+const SPENT_BEFORE = secondHalf(1);
+const SPENT_AFTER = secondHalf(WORKBOOK.breathe);
 
 // --- how a part is played ---------------------------------------------------------------------------------------------
 
@@ -161,8 +169,15 @@ const WOYZECK = materialOf('Woyzeck');
 const W_TITLE = WOYZECK?.title ?? 'Woyzeck';
 // Its units, each tone section cut again at its turns (from 2026-10-16, evaluation-10: its tones only until then).
 const W_SEGMENTS = unitSegments(WOYZECK ?? { tones: [], turns: 0 }, 2);
-const W_LOAD = loadOf(WOYZECK ?? { physical: 0, vocal: 0 }, 'night');
-const W_LATE = drainAt(W_LOAD, 1, 0.5);
+// A lead's evening of it (from 2026-10-16, brief 10): Vesturport's running time, the body's work at 3 and the voice's at 1.
+const W_RUNNING = RUNNING_TIMES['Woyzeck']!;
+const W_NIGHT = nightLoad(W_RUNNING, WOYZECK ?? { physical: 0, vocal: 0 }, 'lead');
+const W_SHARES = segmentShares(W_NIGHT, W_SEGMENTS);
+const W_LATE = 1 - drainOf(W_SHARES[W_SHARES.length - 1]!, 0.5, 100);
+const W_EARLY = 1 - drainOf(W_SHARES[0]!, 0.5, 100);
+const W_COST = eveningCost(W_NIGHT, 0.5, 100);
+/** A running time in words. */
+const runWords = (minutes: number): string => (minutes % 60 === 0 ? `${word(minutes / 60)} hours` : minutes < 60 ? `${minutes} minutes` : `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, '0')}`);
 const W_SLIP = 6;
 const W_RECOVER = 0.6;
 const W_SHAKEN = 1 - PIECE.rattle * (W_SLIP / 100) * (1 - W_RECOVER);
@@ -468,7 +483,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { to: 'productions.playing', kind: 'optional', why: 'A choice against the director’s request comes back as a note until the choice changes.' },
     ],
     example: {
-      setup: `In the ${CARLOTTA.name}, off book and with the blocking set, at stamina half of full. A new play is judged in its two halves, and at a work-through the director says “You’re spent by the second half: find where the play lets you breathe.”`,
+      setup: `In the ${CARLOTTA.name}, as a lead, off book and with the blocking set, at stamina half of full and rested, at readiness 100. A new play is judged in its two halves, and at a work-through the director says “You’re spent by the second half: find where the play lets you breathe.”`,
       steps: [
         `From the ways beside the note, choose ${ADJUSTMENTS.breathe.label}.`,
         `Press Work On The Note: ${ADJUSTMENTS.breathe.label}. It takes ${ADJUSTMENTS.breathe.minutes} minutes, and the toast gives the second half’s figure before and after.`,
@@ -576,16 +591,16 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       'In New Haven, awake, out of hospital and not laid up at the curtain. In hospital, laid up or with the day called in sick, the night is covered and excused.',
     ],
     costs: [
-      { label: 'Time', value: `A School performance at eight, ${hoursOf(150)}; Yale Rep evenings at eight and Sundays at two, three hours; a Cabaret show ${hoursOf(90)}; a Summer Cabaret night ${hoursOf(150)}`, estimate: true },
+      { label: 'Time', value: `The production’s running time, its intervals in it, and ${WORKLOAD.curtainCall} minutes of curtain call: School curtains at eight, Yale Rep’s evenings at eight and Sundays at two. Twelfth Night as the RSC played it in 2024, ${runWords(holdOf({ play: 'Twelfth Night' }))}; A Marriage Proposal, ${runWords(holdOf({ play: 'A Marriage Proposal' }))}; a festival’s new play, ${runWords(holdOf({ kind: 'carlotta' }))}; a Cabaret piece, ${runWords(holdOf({ production: 'Yale Cabaret, Season 59' }))}. Each play’s figure is one production’s, or SLATE’s estimate where none is published, and the night’s forecast says which`, estimate: true },
       { label: 'Money', value: 'None' },
-      { label: 'The Body', value: `${ESTIMATE.energy.performance} energy; a stage’s risk of injury at the School, the Rep and the Summer Cabaret; and nerves, ${ATTRIBUTES.eventWeight.performance} stress before the curtain by your nature, less the more composure you have`, estimate: true },
+      { label: 'The Body', value: `Energy by the evening’s workload, ${WORKLOAD.energy} a unit, less by up to ${pct(WORKLOAD.staminaSpares)} as your stamina is full and more by up to ${pct(WORKLOAD.condition)} as you come to the curtain tired: a lead in Woyzeck at half stamina, rested, ${Math.round(W_COST.energy)}. A stage’s risk of injury at the School, the Rep and the Summer Cabaret, for the hours your part is on; and nerves, ${ATTRIBUTES.eventWeight.performance} stress before the curtain by your nature, less the more composure you have`, estimate: true },
     ],
     reads: [
       { label: 'The Part’s Techniques', value: 'What the play asks, its techniques and its kinds of play, as Why This Cast lists them' },
       { label: 'The Abilities', value: 'Believability from emotional depth and a little imagination, interpretation from imagination, connection from presence (a house’s, weighed heavily) and listening, execution from memory (every line of the part) and the voice and the body, consistency from composure and discipline (the score kept night after night), responsiveness from listening and adaptability; believability weighs most. The play’s own demands add to them: its partners listening, a grave play emotional depth, a comic one focus, a lyric or grotesque one imagination, verse memory, a fight or a dance the body and discipline', estimate: true },
       { label: 'Preparation', value: `The lines, the blocking and the notes taken, against what coming to every call makes and never under ${pct(NIGHT_LEAST.lines)} of the lines or the blocking; and how far your choice in How You’ll Play It has been rehearsed in, against its mark, ${pct(PLAYING.complete - GRAIN.prep)} to ${pct(Math.min(1, PLAYING.complete + GRAIN.prep))}` },
       { label: 'Each Movement', value: `Its own blocking with any work on it, and its tones leaning what counts: ${TONES}`, estimate: true },
-      { label: 'Stamina', value: `A drain growing through the evening, none at the first movement and at the last up to ${pct(PIECE.drain)} off what tiring reaches, by the evening’s load, ${pct(PIECE.load.night)} for its length and more for the play’s physical and vocal work, and how far your stamina is from full`, estimate: true },
+      { label: 'Stamina', value: `A drain growing with the work done through the evening, each movement reading its own stretch of it: at most ${pct(PIECE.drain)} off what tiring reaches once the work so far comes to ${WORKLOAD.full} stage hours at acting’s intensity. The workload is the playing time your part is on stage (a lead ${pct(WORKLOAD.share.lead)} of it, a supporting part ${pct(WORKLOAD.share.supporting)}, a featured part ${pct(WORKLOAD.share.featured)}) times its intensity, 1 and ${WORKLOAD.perLevel.toFixed(2)} more for each level of the body’s and the voice’s work. An interval gives back ${pct(WORKLOAD.recovers)} of the drain so far, a shorter pause in proportion. It’s nothing at full stamina, and up to ${pct(WORKLOAD.condition)} more on a tired day`, estimate: true },
       { label: 'A Slip', value: `A movement ${PIECE.slipAt} or more points under what it was expected to come to carries ${pct(PIECE.rattle)} of it into the next movement’s believability and consistency, less as composure and adaptability recover it. At full abilities and mastered techniques there’s no draw, and so no slip`, estimate: true },
       { label: 'The Day', value: 'Readiness at the curtain, the flu, and an injury by what it limits' },
       { label: 'How Hard', value: `By the part and the stage: a School featured, supporting or leading part ${NIGHT_DIFFICULTY.school.featured}, ${NIGHT_DIFFICULTY.school.supporting} or ${NIGHT_DIFFICULTY.school.lead}; at Yale Rep ${NIGHT_DIFFICULTY.rep.featured}, ${NIGHT_DIFFICULTY.rep.supporting} or ${NIGHT_DIFFICULTY.rep.lead}. An understudy plays the lead they cover`, estimate: true },
@@ -619,7 +634,7 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
     mistakes: [
       'Missing a School or Rep performance, well and unexcused: a grave breach, academic warning at once (dismissal from warning), and a night delivered at nothing in the record.',
       `Coming in tired: readiness under ${EVALUATION.sufficientReadiness} at the curtain costs every dimension but interpretation, and widens the draw downward.`,
-      'Leaving stamina to chance in a long, physical play: the last movement pays. Find Places To Breathe in Work It Through, or train stamina.',
+      'Leaving stamina to chance as a lead in a long, physical play: the last movements pay, and the evening costs more energy. Find Places To Breathe in Work It Through, or train stamina. A one-act or a small part asks much less of it.',
       'Missing a Summer Cabaret performance, not in hospital, laid up or called in sick, ends your summer with the company.',
     ],
     related: ['productions.part', 'productions.notes', 'productions.casting', 'school.standing', 'craft.work', 'craft.identity'],
@@ -634,9 +649,9 @@ export const PRODUCTIONS: readonly GuideEntry[] = [
       { to: 'coursework.feedback', kind: 'history', why: 'At the closing, the notes still open go into the coursework’s ledger for the next work.' },
     ],
     example: {
-      setup: `A part in ${W_TITLE}, if a thesis deals it to you: it plays in ${word(W_SEGMENTS.length)} movements, ${W_MOVEMENTS}, and its body’s work makes it a hard evening on stamina. Your stamina is at half of full, your composure and adaptability at ${pct(W_RECOVER)}.`,
+      setup: `A part in ${W_TITLE}, if a thesis deals it to you, a lead: it plays in ${word(W_SEGMENTS.length)} movements, ${W_MOVEMENTS}, over ${runWords(W_RUNNING.minutes)} with no interval as Vesturport played it, and its body’s work makes it a hard evening on stamina for its length. Your stamina is at half of full, your composure and adaptability at ${pct(W_RECOVER)}, and you’re rested, at readiness 100.`,
       steps: [
-        `${W_SEGMENTS[W_SEGMENTS.length - 1]!.label} falls last: its Stamina reads “Tiring: ${pct(1 - W_LATE)} off”, and the first reads Holding.`,
+        `${W_SEGMENTS[W_SEGMENTS.length - 1]!.label} falls last: its Stamina reads “Tiring: ${pct(1 - W_LATE)} off”, and the first “Tiring: ${pct(1 - W_EARLY)} off”. The night’s workload line says ${W_NIGHT.workload.toFixed(2)}, and the evening costs ${Math.round(W_COST.energy)} energy.`,
         `A slip in ${lower(W_SEGMENTS[0]!.label)}, ${W_SLIP} under what was expected, carries into the next: “Shaken by the slip before: ${pct(1 - W_SHAKEN)} off”.`,
         `Your classmates in the cast keep ${pct(COMPANY_KEEPS)} of their calls, with a timing of ${pct(COMPANY_TIMING)}: they bring ${pct(COMPANY_BRINGS)}, and a slip of theirs is ${pct(COMPANY_SLIPS)} likely.`,
       ],

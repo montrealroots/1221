@@ -97,7 +97,8 @@ import { armTaxes } from './taxreturn';
 import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
 import { bandOfQuality, countTogether, judge, leanedWeights, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
-import { evaluatePiece, judgePiece, loadOf, pieceWeights, unitSegments, withBook, type PieceSpec } from './piece';
+import { evaluatePiece, judgePiece, nightPiece, pieceWeights, withBook, type PieceSpec } from './piece';
+import { energyOfNight, holdOf, runningOf, type Participation } from './workload';
 import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
@@ -580,8 +581,12 @@ export const ESTIMATE = {
    * too, until it went on 2026-10-09.
    */
   nights: { lift: 3, sting: 3, presence: 0.02 },
-  /** What a day's classes, a rehearsal, a performance and a shift take out of a body, in energy. */
-  energy: { classes: 6, rehearsal: 8, performance: 10, shift: 4 },
+  /**
+   * What a day's classes, a rehearsal and a shift take out of a body, in energy. A performance took 10 flat until
+   * 2026-10-16 (brief 10), whatever the play, the part and the actor's stamina; it costs its workload since
+   * (`eveningCost`, `systems/workload.ts`).
+   */
+  energy: { classes: 6, rehearsal: 8, shift: 4 },
   /** The chance, each performance, that an understudy goes on. */
   goesOn: 0.02,
   /** How many hours before a performance an understudy on call hears whether they're on: at five for an eight o'clock curtain. */
@@ -1584,8 +1589,46 @@ export function cabaretEvenings(thu: SchoolDate, off: readonly (readonly [string
  * elective shift were both set on Seagull nights the understudy was on call for).
  */
 const ON_CALL_HOLDS_MINUTES = 180;
+/**
+ * From 2026-10-16 (brief 10) a night on call holds to the curtain's fall of the play's own running time and the curtain
+ * call (`holds`, `holdOf`); one booked before keeps the three hours it was booked for, `ON_CALL_HOLDS_MINUTES`, until its
+ * save's first opening times it (`timeTheCalls`).
+ */
+/**
+ * A save from before 2026-10-16's brief 10 has its performance calls still to come booked for the hours they held then
+ * (150 minutes at the School and the Summer Cabaret, 180 at the Rep, 90 at the Cabaret, three hours on call): each is
+ * given its play's running time and the curtain call (`holdOf`) on the save's first opening (`ONCE_ON_OPENING`), where
+ * nothing else the player must attend begins inside the span it would hold; where something does, it keeps what it was
+ * booked for, so no two things are held at once. A night on call is given its hold to keep (`holds`). Returns how many
+ * calls were timed.
+ */
+export function timeTheCalls(sim: Simulation): number {
+  let timed = 0;
+  const pending = sim.universe.scheduled.filter((i) => i.status === 'pending');
+  for (const item of pending) {
+    const person = sim.universe.people[String(item.payload.personId)];
+    const school = person?.school;
+    if (!person || !school) continue;
+    const call = item.payload.call;
+    const holder: NightHolder | undefined = item.kind === CALL_KIND ? ((item.payload.which === 'rep' ? school.rep : school.casting) as NightHolder | undefined)
+      : item.kind === CABARET_KIND ? (school.cabaret as NightHolder | undefined)
+        : item.kind === SUMMER_KIND ? (school.summer?.shows?.[Number(item.payload.run)] as NightHolder | undefined) : undefined;
+    if (!holder) continue;
+    if (item.kind === CALL_KIND && call === 'oncall' && item.payload.check === true && item.payload.holds === undefined) { item.payload.holds = holdOf(holder); timed += 1; continue; }
+    if (call !== 'performance' && call !== 'runthrough') continue;
+    const minutes = holdOf(holder);
+    if (minutes === item.durationMinutes) continue;
+    const end = item.at + minutes * 60_000;
+    const clash = pending.some((o) => o !== item && o.requiresPlayer === true && (o.payload.personId === undefined || o.payload.personId === person.id) && o.at > item.at && o.at < end);
+    if (clash) continue;
+    item.durationMinutes = minutes;
+    timed += 1;
+  }
+  return timed;
+}
+
 function heldSpan(i: { at: Instant; durationMinutes?: number; payload: Record<string, unknown> }): readonly [Instant, Instant] {
-  if (i.payload.call === 'oncall' && i.payload.perfAt !== undefined) return [i.at, Number(i.payload.perfAt) + ON_CALL_HOLDS_MINUTES * 60_000] as const;
+  if (i.payload.call === 'oncall' && i.payload.perfAt !== undefined) return [i.at, Number(i.payload.perfAt) + (Number(i.payload.holds) || ON_CALL_HOLDS_MINUTES) * 60_000] as const;
   return [i.at, i.at + (i.durationMinutes ?? 0) * 60_000] as const;
 }
 
@@ -2239,8 +2282,11 @@ export const NIGHT_DIFFICULTY: Readonly<Record<'school' | 'rep', Record<PartSize
   rep: { featured: 0.15, supporting: 0.2, lead: 0.3 },
 };
 
-/** What a night reads of a run: its play (the techniques, the genres) and its process (the preparation). */
-export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unknown };
+/**
+ * What a night reads of a run: its play (the techniques, the genres) and its process (the preparation). From 2026-10-16
+ * (brief 10) its production's name and whether it's a solo piece too, for the running time (`runningOf`).
+ */
+export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unknown; production?: string; solo?: boolean };
 
 /**
  * A night judged (`systems/evaluation.ts`, the `performance` profile), from 2026-10-09: the part's techniques as the
@@ -2256,11 +2302,20 @@ export type NightHolder = { play?: string; kind?: Casting['kind']; process?: unk
  * load. A play with no profile, a festival's or a cabaret's new one, was judged whole until 2026-10-12; from then it's
  * its two halves with no tones assumed (`toneSegments` with two at least). From 2026-10-16 (evaluation-10) a play's movements
  * are its units, each tone section cut again at its turns (`unitSegments`), where until then they were its tones only.
+ * From later that day (brief 10, evaluation-11) the evening's load is its workload (`nightPiece`, `systems/workload.ts`):
+ * the production's running time, the part's share of it by its size, and the body's and the voice's work. Until then it
+ * read the body and the voice alone, so a one-act and a featured part were each a whole evening's lead.
  */
-export function playPiece(holder: NightHolder): PieceSpec {
+export function playPiece(holder: NightHolder, size: Participation = 'supporting'): PieceSpec {
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
-  return withBook({ segments: unitSegments(material ?? { tones: [], turns: 0 }, 2), work: proc?.work ?? [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: loadOf(material ?? { physical: 0, vocal: 0 }, 'night') }, proc?.book);
+  return withBook({ ...nightPiece(material, runningOf(holder), holder.solo ? 'solo' : size), work: proc?.work ?? [] }, proc?.book);
+}
+
+/** The hours a part is on stage in a performance (from 2026-10-16, brief 10): the playing time, by the part's share of it. */
+export function stageHours(holder: NightHolder, size: Participation): number {
+  const n = playPiece(holder, size).night!;
+  return (n.playing * n.share) / 60;
 }
 
 export function nightEvaluation(sim: Simulation, person: Person, key: string, holder: NightHolder, at: Instant, size: PartSize = 'supporting', where: 'school' | 'rep' = 'school', expected = false): Evaluation {
@@ -2282,7 +2337,7 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
     condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
     ...(expected ? { expected: true } : {}),
   };
-  return evaluatePiece(sim, person, ctx, playPiece(holder));
+  return evaluatePiece(sim, person, ctx, playPiece(holder, size));
 }
 
 /**
@@ -2327,7 +2382,8 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
   const read = materialContext(E, material, chosen, proc?.direction);
   const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
-  return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder));
+  // A supporting part's workload, as its difficulty is (from 2026-10-16, brief 10): the same for every choice compared.
+  return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder, 'supporting'));
 }
 
 /** The least a night's lines and blocking must be at to count complete, however few the calls: off book (`PROCESS.offBook`), and the blocking set. */
@@ -2709,8 +2765,11 @@ function cast(sim: Simulation, person: Person, term: number): void {
       if (labs.some((l) => l.at < from + 360 * 60_000 && from < l.at + (l.durationMinutes ?? 0) * 60_000)) continue;
       ours.push({ at: from, minutes: 360, label: `${production.name}: Rehearsal`, call: 'rehearsal' });
     }
-    // At eight, as Carlotta's 2026 curtains were (from 2026-10-10; until then at seven, which nothing published).
-    production.runs.forEach((d, k) => ours.push({ at: at(d, 20), minutes: 150, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
+    // At eight, as Carlotta's 2026 curtains were (from 2026-10-10; until then at seven, which nothing published). Held for
+    // the play's running time and the curtain call (from 2026-10-16, brief 10, `holdOf`): until then two and a half hours
+    // whatever the play.
+    const hold = holdOf({ ...(mine.play.title ? { play: mine.play.title } : {}), kind: production.kind });
+    production.runs.forEach((d, k) => ours.push({ at: at(d, 20), minutes: hold, label: `${production.name}: Performance`, call: 'performance', ...(k === production.runs.length - 1 ? { last: true } : {}) }));
   }
   // Staged once the calls each production keeps are known (below), from 2026-10-12.
   let repStaged: { name: string; understudy: boolean } | undefined;
@@ -2733,11 +2792,13 @@ function cast(sim: Simulation, person: Person, term: number): void {
       const wd = weekday(d);
       if (inRole ? wd >= 2 && wd <= 6 : wd === 3 || wd === 5) reps.push({ at: at(d, 15), minutes: inRole ? 360 : 180, label: `${rep.name}: ${inRole ? 'Rehearsal' : 'Understudy Rehearsal'}`, call: 'rehearsal', which: 'rep' });
     }
-    // Every performance, evenings Tuesday to Saturday at eight and Sundays at two: played, or on call.
+    // Every performance, evenings Tuesday to Saturday at eight and Sundays at two: played, or on call. Each held for the
+    // play's running time and the curtain call (from 2026-10-16, brief 10): until then three hours whatever the play.
+    const repHold = holdOf({ ...(play ? { play: play.title } : {}), kind: inRole ? 'role' : 'understudy' });
     for (let d = parseKey(rep.run.from); keyOf(d) <= rep.run.to; d = addDays(d, 1)) {
       const wd = weekday(d);
       if (wd === 1) continue;
-      reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: 180, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
+      reps.push({ at: wd === 0 ? at(d, 14) : at(d, 20), minutes: repHold, label: `${rep.name}: ${inRole ? 'Performance' : 'On Call'}`, call: inRole ? 'performance' : 'oncall', which: 'rep' });
     }
     repStaged = { name: rep.name, understudy: !inRole };
     // An understudy's run-through: the understudies play the show once for the
@@ -2746,7 +2807,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (!inRole) {
       let d = addDays(parseKey(rep.run.from), 7);
       while (weekday(d) !== 1) d = addDays(d, 1);
-      if (keyOf(d) <= rep.run.to) reps.push({ at: at(d, 14), minutes: 180, label: `${rep.name}: Understudy Run-Through`, call: 'runthrough', which: 'rep' });
+      if (keyOf(d) <= rep.run.to) reps.push({ at: at(d, 14), minutes: repHold, label: `${rep.name}: Understudy Run-Through`, call: 'runthrough', which: 'rep' });
     }
   }
   const overlaps = (a: Call, b: Call) => a.at < b.at + b.minutes * 60_000 && b.at < a.at + a.minutes * 60_000;
@@ -2785,7 +2846,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
   for (const c of [...keptOurs, ...keptReps]) {
     // A night on call is a call at five (`ESTIMATE.onCallAt`), in New Haven and reachable, and needs nobody at the theater unless they're sent on. Until 2026-09-28 it held the evening at the theater and stopped the clock every performance night.
     if (c.call === 'oncall') {
-      schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, which: 'rep', ...(c.last ? { last: true } : {}) } });
+      schedule(sim, person, c.at - ESTIMATE.onCallAhead * 60 * 60_000, { kind: CALL_KIND, label: c.label, minutes: 0, requiresPlayer: false, payload: { call: 'oncall', check: true, perfAt: c.at, holds: c.minutes, which: 'rep', ...(c.last ? { last: true } : {}) } });
       continue;
     }
     schedule(sim, person, c.at, { kind: CALL_KIND, label: c.label, minutes: c.minutes, payload: { call: c.call, ...(c.which ? { which: c.which } : {}), ...(c.last ? { last: true } : {}), ...(c.stage ? { stage: c.stage, n: c.n, of: c.of } : {}) } });
@@ -3304,8 +3365,12 @@ export function registerSchool(sim: Simulation): void {
     school.workStudy.owedHours = 0;
   });
 
-  /** A night played: its reading, what it does, and on the last, the director's note. */
-  const reckonNight = (s: Simulation, person: Person, casting: Run, item: { at: Instant; payload: Record<string, unknown> }, rep: boolean): Night => {
+  /**
+   * A night played: its reading, what it does, and on the last, the director's note. From 2026-10-16 (brief 10) it returns
+   * the energy the night costs too, from its own workload (`energyOfNight`), which the call takes once after the night's
+   * growth, where 10 was taken flat until then.
+   */
+  const reckonNight = (s: Simulation, person: Person, casting: Run, item: { at: Instant; payload: Record<string, unknown> }, rep: boolean): { night: Night; energy: number } => {
     const n = ESTIMATE.nights;
     // An understudy plays the part they cover, which at the Rep is a lead.
     const evaluation = nightEvaluation(s, person, `${casting.production}-${item.at}`, casting, item.at, casting.size ?? 'lead', rep ? 'rep' : 'school');
@@ -3350,7 +3415,7 @@ export function registerSchool(sim: Simulation): void {
     if (item.payload.last === true) closeRun(s, person, casting, item.at);
     // A classmate in the cast asked you out after it from 2026-10-08 (`celebrate`), until the people they are and the
     // restaurants went in the scope reset of 2026-10-09.
-    return night;
+    return { night, energy: energyOfNight(evaluation) };
   };
 
   /**
@@ -3434,7 +3499,7 @@ export function registerSchool(sim: Simulation): void {
       }
       // Sent on: the night’s performance is theirs, on the calendar from now, with three hours’ notice, and on the last
       // night it closes the run when played or missed.
-      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: 180, payload: { call: 'performance', which: 'rep', wentOn: true, ...(last ? { last: true } : {}) } });
+      schedule(s, person, curtain, { kind: CALL_KIND, label: `${casting.production}: You’re On As ${casting.role}`, minutes: holdOf(casting), payload: { call: 'performance', which: 'rep', wentOn: true, ...(last ? { last: true } : {}) } });
       if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You’re On Tonight As ${casting.role}`, body: `The role’s actor is out: you go on in Yale Rep’s ${casting.production} tonight at ${formatTime(curtain, zone())}.`, importance: 95, route: '/workspace/school' });
       return;
     }
@@ -3452,9 +3517,9 @@ export function registerSchool(sim: Simulation): void {
       nerves(s, person, 'performance');
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10: until then the night was judged after its
       // own growth).
-      const night = reckonNight(s, person, casting, item, true);
+      const { night, energy } = reckonNight(s, person, casting, item, true);
       grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting), 0.75));
-      tire(person, ESTIMATE.energy.performance);
+      tire(person, energy);
       // A play of a kind they love is a better night, as a rehearsal of it is (from 2026-10-13: until then a School or
       // Rep night, its run-through and a night on call read no genre, while the creation screen and the guide said a
       // night of a play of its kind was a better day; found by the review of that day).
@@ -3472,7 +3537,8 @@ export function registerSchool(sim: Simulation): void {
         // Sent on: nerves (`attributes.ts`).
         nerves(s, person, 'performance');
         grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at), nightWeights(castingReads(casting), 0.75));
-        tire(person, ESTIMATE.energy.performance);
+        // Not judged, as it never was: its energy is the lead's evening it covers (from 2026-10-16, brief 10).
+        tire(person, energyOfNight(nightEvaluation(s, person, `oncall-${item.at}`, casting, item.at, 'lead', 'rep', true)));
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
         return;
@@ -3484,8 +3550,11 @@ export function registerSchool(sim: Simulation): void {
     if (present(person, item.at)) {
       school.tally.answered += 1;
       // A call's risk to the body, a student's on a stage (`systems/injury.ts`); Yale Health, not a workers' compensation, pays the care.
-      mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, call === 'performance' ? 3 : 4), item.at);
-      exerts(person, BODY.met.acting, call === 'performance' ? 3 : 4, true);
+      // A performance's hours are the part's own on stage (from 2026-10-16, brief 10, `stageHours`): until then three, a
+      // featured part in a one-act as a lead's long evening.
+      const hours = call === 'performance' ? stageHours(casting, casting.size ?? 'lead') : 4;
+      mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, hours), item.at);
+      exerts(person, BODY.met.acting, hours, true);
       if (call === 'performance') {
         casting.performed += 1;
         // Nerves before a house (`attributes.ts`); at the Rep the night added to reputation too, until 2026-10-09.
@@ -3495,9 +3564,9 @@ export function registerSchool(sim: Simulation): void {
         person.wellbeing.morale = Math.max(0, Math.min(100, person.wellbeing.morale + castCompany(person, friends)));
         // The rehearsal process behind it: lines, blocking and notes taken (`nightFactor`, 1 for an actor who came to every call).
         // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
-        reckonNight(s, person, casting, item, item.payload.which === 'rep');
+        const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');
         grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));
-        tire(person, ESTIMATE.energy.performance);
+        tire(person, energy);
         enjoyWork(person, { genres: genresOfPlay(casting.play) });
         if (item.payload.wentOn === true && person.id === s.universe.playerId) s.notify({ category: 'school', title: `You Went On As ${casting.role}`, body: `The role’s actor was out, and you played ${casting.role} in Yale Rep’s ${casting.production} tonight.`, importance: 90, route: '/workspace/school' });
       } else {
@@ -3604,7 +3673,8 @@ export function registerSchool(sim: Simulation): void {
       schedule(s, person, at(d, c.rehearsalFrom), { kind: CABARET_KIND, label: `Yale Cabaret: ${STAGE_LABEL[stages[i]!]}`, minutes: c.rehearsalMinutes, payload: { call: 'rehearsal', stage: stages[i]!, n: i + 1, of: evenings.length } });
     });
     c.shows.forEach(([wd, hour], n) => {
-      schedule(s, person, at(addDays(week, wd - 4), hour), { kind: CABARET_KIND, label: 'Yale Cabaret: Performance', minutes: 90, payload: { call: 'performance', last: n === c.shows.length - 1 } });
+      // Held for a Cabaret piece's running time and the curtain call (from 2026-10-16, brief 10; an hour and a half until then).
+      schedule(s, person, at(addDays(week, wd - 4), hour), { kind: CABARET_KIND, label: 'Yale Cabaret: Performance', minutes: holdOf(school.cabaret!), payload: { call: 'performance', last: n === c.shows.length - 1 } });
     });
     return { week: keyOf(week) };
   });
@@ -3643,9 +3713,9 @@ export function registerSchool(sim: Simulation): void {
       // The week's process behind it (`nightFactor`, 1 for a show joined before 2026-10-08 or one every evening was kept).
       nerves(sim, person, 'performance');
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
-      reckonNight(sim, person, run, item, false);
+      const { energy } = reckonNight(sim, person, run, item, false);
       grewFrom(sim, person, 'night:cabaret', focusAt(sim, person, item.at) * nightFactor(cab), nightWeights(castingReads(run)));
-      tire(person, ESTIMATE.energy.performance);
+      tire(person, energy);
     } else {
       // An evening staged: answered (`callAnswered`), and the technical and dress played through with no house.
       const weight = stage ? callAnswered(sim, person, cab, stage, Number(item.payload.n ?? 0), Number(item.payload.of ?? 0), castingReads(run), 'cabaret') : 1;
@@ -3682,9 +3752,11 @@ export function registerSchool(sim: Simulation): void {
     // at eight. A rehearsal on the afternoon of another show's performance gives way to it, as a School rehearsal gives
     // way to a lab's showing (from 2026-10-12: until then each show's rehearsals were booked without reading the others'
     // calls, and in 2027 the third show rehearsed from one to six over the second's matinees of 24 and 31 July).
-    const SHOW_MINUTES = 150;
+    // Each show held for its play's running time and the curtain call (from 2026-10-16, brief 10, `holdOf`): until then
+    // two and a half hours whatever the play, a 25-minute A Marriage Proposal as Major Barbara.
+    const showMinutes = runs.map((_r, n) => (shows[n] ? holdOf(shows[n]!) : holdOf({})));
     const performances = runs.map((run) => nightsOf(run).flatMap((d) => [...(weekday(d) === 6 ? [at(d, 14)] : []), at(d, 20)]));
-    const playing = (n: number, from: Instant) => performances.some((times, m) => m !== n && times.some((t) => t < from + SUMMER_CABARET.rehearsalMinutes * 60_000 && from < t + SHOW_MINUTES * 60_000));
+    const playing = (n: number, from: Instant) => performances.some((times, m) => m !== n && times.some((t) => t < from + SUMMER_CABARET.rehearsalMinutes * 60_000 && from < t + showMinutes[m]! * 60_000));
     runs.forEach((run, n) => {
       // Each show a full production's process (`stagesOf`, from 2026-10-08): its read-through, blocking, work, technical
       // and dress, staged and numbered over the days kept.
@@ -3697,8 +3769,8 @@ export function registerSchool(sim: Simulation): void {
       days.forEach((d, i) => schedule(s, person, at(d, SUMMER_CABARET.rehearsalFrom), { kind: SUMMER_KIND, label: `Summer Cabaret: ${STAGE_LABEL[stages[i]!]}`, minutes: SUMMER_CABARET.rehearsalMinutes, payload: { call: 'rehearsal', run: n, stage: stages[i]!, n: i + 1, of: days.length } }));
       const nights = nightsOf(run);
       nights.forEach((d, i) => {
-        if (weekday(d) === 6) schedule(s, person, at(d, 14), { kind: SUMMER_KIND, label: 'Summer Cabaret: Matinee', minutes: SHOW_MINUTES, payload: { call: 'performance', run: n } });
-        schedule(s, person, at(d, 20), { kind: SUMMER_KIND, label: 'Summer Cabaret: Performance', minutes: SHOW_MINUTES, payload: { call: 'performance', run: n, last: i === nights.length - 1 } });
+        if (weekday(d) === 6) schedule(s, person, at(d, 14), { kind: SUMMER_KIND, label: 'Summer Cabaret: Matinee', minutes: showMinutes[n]!, payload: { call: 'performance', run: n } });
+        schedule(s, person, at(d, 20), { kind: SUMMER_KIND, label: 'Summer Cabaret: Performance', minutes: showMinutes[n]!, payload: { call: 'performance', run: n, last: i === nights.length - 1 } });
       });
     });
     // The stipend, each Friday from the first rehearsal week to the closing.
@@ -3758,14 +3830,15 @@ export function registerSchool(sim: Simulation): void {
     const cur = saveCurrency(s.universe);
     const weeklyWage = cur === 'USD' ? SUMMER_CABARET.stipendWeekly : exchange(SUMMER_CABARET.stipendWeekly, 'USD', cur) ?? SUMMER_CABARET.stipendWeekly;
     // An F-1's stipend bears no FICA, and none is taken off its compensation (from 2026-10-13).
-    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? 3 : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage, employer: SUMMER_EMPLOYER, ...(nonresidentFor(person, zonedParts(item.at, zone()).year) ? { noFica: true } : {}) });
+    // A performance's hours on stage are the part's own (from 2026-10-16, brief 10, `stageHours`), three until then.
+    mayHurt(s, person, 'stage', chanceOver(INJURY.perThousandHours.stage, item.payload.call === 'performance' ? stageHours(show, show.size ?? 'supporting') : 4), item.at, { cityId: YALE_DRAMA.cityId, weeklyWage, employer: SUMMER_EMPLOYER, ...(nonresidentFor(person, zonedParts(item.at, zone()).year) ? { noFica: true } : {}) });
     if (item.payload.call === 'performance') {
       summer.played[run] = (summer.played[run] ?? 0) + 1;
       nerves(s, person, 'performance');
       // Judged as the craft stood coming in, then grown by it (from 2026-10-10).
-      reckonNight(s, person, show, item, false);
+      const { energy } = reckonNight(s, person, show, item, false);
       grewFrom(s, person, 'night:summer', focusAt(s, person, item.at) * nightFactor(show), nightWeights(castingReads(show)));
-      tire(person, ESTIMATE.energy.performance);
+      tire(person, energy);
       enjoyWork(person, { genres: genresOfPlay(show.play) });
       if (item.payload.last === true) (school!.credits ??= []).push({ production: `${show.play}, Yale Summer Cabaret ${summer.year}`, role: show.role, kind: 'summer', year: summer.year, wentOn: summer.played[run]! });
     } else {
@@ -3800,7 +3873,8 @@ export function registerSchool(sim: Simulation): void {
       nerves(sim, person, 'performance');
       // The solo piece judged as a night is, a lead's, and kept in the work's record and the journey (from 2026-10-10:
       // until then it was grown from and never judged). The piece is their own, so no process stands behind it.
-      const solo = nightEvaluation(sim, person, `creator-${item.at}`, { play: undefined }, item.at, 'lead', 'school');
+      // A solo piece, the one actor on stage throughout, for its own running time (from 2026-10-16, brief 10, `UNNAMED_RUNNING.solo`).
+      const solo = nightEvaluation(sim, person, `creator-${item.at}`, { play: undefined, solo: true }, item.at, 'lead', 'school');
       const band = nightBand(solo.overall);
       recordWork(sim, person, solo, { at: item.at, what: LABS.creator.name, band });
       const w = person.wellbeing;
@@ -3808,7 +3882,7 @@ export function registerSchool(sim: Simulation): void {
       else if (band !== 'solid') w.morale = Math.min(100, w.morale + ESTIMATE.nights.lift);
       if (person.id === sim.universe.playerId) sim.notify({ category: 'school', title: `Your Solo Showing: ${NIGHT_WORD_TITLE[band]}`, body: `${LABS.creator.name}, shown to the class: ${Math.round(solo.overall)} of 100.`, importance: 60, route: '/workspace/school' });
       grewFrom(sim, person, 'lab:showing', focusAt(sim, person, item.at), [['scene', 3]]);
-      tire(person, ESTIMATE.energy.performance);
+      tire(person, energyOfNight(solo));
       // A showing lifted somebody who loved theater (`enjoyWork`'s medium) until the interests went on 2026-10-10.
       return;
     }

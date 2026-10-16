@@ -4,9 +4,10 @@
  * - The guarantee in segments: every scene and every play with a profile, judged in its segments at full abilities,
  *   mastered techniques, complete preparation and a sufficient day, is 100 in every segment and as a whole, with no
  *   limit and no slip.
- * - Stamina is read through the piece: nothing in the first segment, more the later and the heavier the piece, nothing
- *   at full stamina, and it never falls as stamina rises; it's no longer a share of a segment's inputs, so it isn't
- *   counted twice.
+ * - Stamina is read through the piece: nothing in a scene's first segment, more the later and the heavier the piece,
+ *   nothing at full stamina, and it never falls as stamina rises; it's no longer a share of a segment's inputs, so it
+ *   isn't counted twice. From 2026-10-16 (brief 10) a night reads its workload, each segment the drain's mean over its
+ *   stretch of the running, so its first segment costs a little (tests/decisions-stamina.test.ts holds the workload).
  * - Work on a segment lifts that segment and the whole, and a turn asks more of the segment it leads into.
  * - A slip carries into the next segment, less as composure and adaptability recover it.
  * - Continuity is read from the segments, not added: the whole is the segments' weighted mean.
@@ -19,7 +20,9 @@ import { PIECE } from '@/engine/content/piece';
 import { RULESET, TASK_PROFILES } from '@/engine/content/tasks';
 import { MASTERED } from '@/engine/content/abilities';
 import { judge, replay, type EvalContext, type Performer } from '@/engine/systems/evaluation';
-import { judgePiece, loadOf, segmentPart, segmentRequired, unitSegments, type PieceSpec } from '@/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, segmentPart, segmentRequired, unitSegments, type PieceSpec } from '@/engine/systems/piece';
+import { nightLoad, runningOf } from '@/engine/systems/workload';
+import { RUNNING_TIMES } from '@/engine/content/workload';
 import { materialContext } from '@/engine/systems/material';
 
 const FULL: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
@@ -30,10 +33,10 @@ function ctxOf(m: MaterialProfile, night: boolean, prep: Record<string, number>,
   const read = materialContext(task, m);
   return { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty: 0, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: `t:${m.id}`, expected: true, ...over };
 }
-const specOf = (m: MaterialProfile, night: boolean, work: number[] = []): PieceSpec => ({
-  // Its units, as the engine cuts a scene and a night from evaluation-10 (`unitSegments`); its tones until then.
-  segments: unitSegments(m, night ? 2 : 1), work, part: night ? 'blocking' : 'rehearsal',
-  perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: loadOf(m, night ? 'night' : 'scene'),
+// Its units, as the engine cuts a scene and a night from evaluation-10 (`unitSegments`); its tones until then. A night as
+// a supporting part's workload over its play's running time from 2026-10-16 (brief 10, `nightPiece`); its load until then.
+const specOf = (m: MaterialProfile, night: boolean, work: number[] = []): PieceSpec => (night ? { ...nightPiece(m, runningOf({ play: m.id }), 'supporting'), work } : {
+  segments: unitSegments(m, 1), work, part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene'),
 });
 const SCENE_PREP = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 };
 const NIGHT_PREP = { lines: 1, blocking: 1, notes: 1 };
@@ -62,20 +65,29 @@ describe('the guarantee, in segments', () => {
 });
 
 describe('stamina, through the piece', () => {
-  const heavy = PLAY_MATERIAL.find((m) => m.physical + m.vocal >= 5)!;
-  it('costs nothing in the first segment, more later, more in a heavier piece, and nothing at full stamina', () => {
+  // A heavy play run straight through, so the drain rises the whole way (from 2026-10-16, brief 10: an interval gives
+  // some back, and a movement after it can tire less than the one before; until then the first heavy play found, which
+  // had none).
+  const heavy = PLAY_MATERIAL.find((m) => m.physical + m.vocal >= 5 && !RUNNING_TIMES[m.id]!.breaks.length)!;
+  // Until 2026-10-16 (brief 10) this was 'costs nothing in the first segment, more later, more in a heavier piece, and
+  // nothing at full stamina', of a night: a night's first segment reads the drain's mean over its own stretch since.
+  it('costs nothing in a scene’s first segment and a little in a night’s, more later, more in a heavier piece, and nothing at full stamina', () => {
     const tired = actor({ stamina: 20 }, 50);
     const e = judgePiece('seed', tired, ctxOf(heavy, true, NIGHT_PREP), specOf(heavy, true));
     const segs = e.piece!.segments;
-    expect(segs[0]!.drain).toBe(1);
-    expect(segs.at(-1)!.drain).toBeLessThan(1);
+    expect(segs[0]!.drain).toBeLessThan(1);
+    expect(segs.at(-1)!.drain).toBeLessThan(segs[0]!.drain);
     for (let i = 1; i < segs.length; i += 1) expect(segs[i]!.drain).toBeLessThanOrEqual(segs[i - 1]!.drain);
     expect(e.limits.some((l) => l.what === 'stamina')).toBe(true);
+    const scene = SCENE_MATERIAL.find((m) => m.physical + m.vocal >= 5)!;
+    expect(judgePiece('seed', tired, ctxOf(scene, false, SCENE_PREP), specOf(scene, false)).piece!.segments[0]!.drain).toBe(1);
     const fit = judgePiece('seed', actor({ stamina: 100 }, 50), ctxOf(heavy, true, NIGHT_PREP), specOf(heavy, true));
     expect(fit.piece!.segments.every((s) => s.drain === 1)).toBe(true);
     expect(fit.limits.some((l) => l.what === 'stamina')).toBe(false);
+    // Heavier at the same running time and part: the body's and the voice's work (a night's workload, `nightLoad`).
     const light = PLAY_MATERIAL.find((m) => m.physical + m.vocal <= 1)!;
-    expect(loadOf(light, 'night')).toBeLessThan(loadOf(heavy, 'night'));
+    const same = RUNNING_TIMES[heavy.id]!;
+    expect(nightLoad(same, light, 'supporting').workload).toBeLessThan(nightLoad(same, heavy, 'supporting').workload);
   });
 
   it('never falls as stamina rises, and is no longer a share of a segment’s inputs', () => {
