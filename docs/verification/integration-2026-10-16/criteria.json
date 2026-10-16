@@ -1295,9 +1295,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894; brief 09 (bcd75970): 40 of 40 advice cases: the first named input the best to raise",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1305,13 +1305,16 @@
     },
     {
      "file": "docs/verification/advice-2026-10-16/README.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "before": "40 of 40; the exact best in 38",
    "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "d1452195",
+    "commit": "bcd75970",
     "watch": "engine"
    }
   },
@@ -1816,9 +1819,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0; brief 09 (bcd75970): musical-m-0: mastered 2030-10-08, payoff [100, 100, 100]; nordic_noir-m-0: mastered 2029-11-15, payoff [100, 100, 100]; nordic_noir-m-1: mastered 2029-11-27, payoff [100, 100, 100]; slapstick-m-0: mastered 2030-12-25, payoff [100, 100, 100]; social_realism-m-0: mastered 2029-11-15, payoff [100, 100, 100]; social_realism-m-1: mastered 2029-11-27, payoff [100, 100, 100]",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json",
+   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1838,13 +1841,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "before": "all six plans (journeys-2026-10-16)",
    "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "d1452195",
+    "commit": "bcd75970",
     "watch": "engine"
    }
   },
@@ -2244,9 +2250,9 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2257,11 +2263,14 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "f68516b0",
+    "commit": "bcd75970",
     "watch": "app"
    }
   },
@@ -2280,9 +2289,9 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2290,11 +2299,14 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "f68516b0",
+    "commit": "bcd75970",
     "watch": "app"
    }
   },
@@ -2313,9 +2325,9 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): lives: 24, 20 graduated, 4 dismissed (reykjavik, autopilot), breaches 0, unbalanced 0; workload: 7 of 8 in good standing (london-lives-0-neglect: dismissed), breaches 0; mastery plans: 6 of 6 at 100 on every payoff tape; variety: graduated, breaches 0, 10 distinct top recommendations over 157 weeks, none at full (0), the longest unresolved 2 weeks, the same practice situation 4 in a row at most; freshness: 8 runs, 0 with a take or scene repeated outside the mastered profile; scenario saves 14 of 14",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json",
+   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2329,11 +2341,14 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/runs/freshness.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "d1452195",
+    "commit": "bcd75970",
     "watch": "engine"
    }
   },
@@ -2352,18 +2367,24 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again",
+   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/runs/gate.txt"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/figures.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs-09/gate.txt"
     }
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "f68516b0",
+    "commit": "7c1198a2",
     "watch": "app"
    }
   },

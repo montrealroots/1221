@@ -1,0 +1,19 @@
+at bcd75970, 0 files uncommitted, 2026-10-16T13:26:40Z
+workload-london-lives-0-attentive exit=0 secs=57 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy attentive --out <out>/workload-london-lives-0-attentive.json
+workload-london-lives-1-attentive exit=0 secs=60 cmd: npx vite-node tools/workload.ts -- --seed lives-1 --profile london --years 1.4 --policy attentive --out <out>/workload-london-lives-1-attentive.json
+workload-london-lives-2-attentive exit=0 secs=59 cmd: npx vite-node tools/workload.ts -- --seed lives-2 --profile london --years 1.4 --policy attentive --out <out>/workload-london-lives-2-attentive.json
+workload-london-lives-3-attentive exit=0 secs=60 cmd: npx vite-node tools/workload.ts -- --seed lives-3 --profile london --years 1.4 --policy attentive --out <out>/workload-london-lives-3-attentive.json
+workload-london-lives-0-neglect exit=0 secs=13 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile london --years 1.4 --policy neglect --out <out>/workload-london-lives-0-neglect.json
+workload-mexico-city-lives-0-attentive exit=0 secs=54 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile mexico-city --years 1.4 --policy attentive --out <out>/workload-mexico-city-lives-0-attentive.json
+workload-new-york-lives-0-attentive exit=0 secs=58 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile new-york --years 1.4 --policy attentive --out <out>/workload-new-york-lives-0-attentive.json
+workload-scraping-lives-0-attentive exit=0 secs=58 cmd: npx vite-node tools/workload.ts -- --seed lives-0 --profile scraping --years 1.4 --policy attentive --out <out>/workload-scraping-lives-0-attentive.json
+plan-musical-m-0 exit=0 secs=262 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre musical --seed m-0 --years 8
+plan-nordic_noir-m-0 exit=0 secs=228 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-0 --years 8
+plan-nordic_noir-m-1 exit=0 secs=222 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre nordic_noir --seed m-1 --years 8
+plan-slapstick-m-0 exit=0 secs=279 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre slapstick --seed m-0 --years 8
+plan-social_realism-m-0 exit=0 secs=230 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-0 --years 8
+plan-social_realism-m-1 exit=0 secs=228 cmd: npx vite-node tools/mastery.ts -- --mode plan --genre social_realism --seed m-1 --years 8
+advice exit=0 secs=35 cmd: npx vite-node tools/advice.ts -- --from 0 --to 40 --out <out>/advice-cases.json
+variety exit=0 secs=280 cmd: npx vite-node tools/variety.ts -- --seed v-0 --years 3
+freshness exit=0 secs=383 cmd: npx vite-node tools/freshness.ts -- --months 4 --seeds fr-0,fr-1
+DONE 2026-10-16T14:09:26Z

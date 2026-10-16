@@ -167,6 +167,19 @@ for r in rows:
         r['failure'] = f"{r['failure']}; on the integrated tree, brief 09 (c9cba9c8): {FIG[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {D}/integrated-09/README.md"
         r['citations'] = r['citations'] + [{'file': f'{D}/integrated-09/figures.json'}]
+# Brief 09's final runs (runs-09/, figures.json read from their outputs, none typed): the long runs and the built app on
+# bcd75970's code (7c1198a2 differs from it in no file they read), the gate on 7c1198a2. Until then these rows were the
+# last pass's, on d1452195 and f68516b0, which brief 09's code left behind.
+RUNS09, BUILT09, GATE09 = {'commit': 'bcd75970', 'watch': 'engine'}, {'commit': 'bcd75970', 'watch': 'app'}, {'commit': '7c1198a2', 'watch': 'app'}
+FIG09 = json.load(open(f'{D}/runs-09/figures.json', encoding='utf-8'))
+for r in rows:
+    m = r.get('measured')
+    if m in (RUNS, BUILT):
+        assert r['id'] in FIG09, r['id']
+        r['measured'] = GATE09 if r['id'] == 'INT-gate' else (RUNS09 if m == RUNS else BUILT09)
+        r['failure'] = f"{r['failure']}; brief 09 ({r['measured']['commit']}): {FIG09[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {D}/runs-09/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{D}/runs-09/figures.json'}] + ([{'file': f'{D}/runs-09/gate.txt'}] if r['id'] == 'INT-gate' else [])
 # The four shortfalls of the stage and the attributes, as measured, and what each awaits.
 for r in rows:
     # ST3, ST6, H4 and L3 after brief 09, section 2 (remaining-09/judge-result.json, followup-09/README.md): each reproduced,
