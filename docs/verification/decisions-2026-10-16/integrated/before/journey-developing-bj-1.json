@@ -1,0 +1,193 @@
+{
+ "profile": "developing",
+ "seed": "bj-1",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 74.8,
+  "training": 80,
+  "study": 42
+ },
+ "takes": 19,
+ "briefs": 13,
+ "readings": 19,
+ "genres": 13,
+ "purposes": {
+  "first": 13,
+  "another-reading": 6
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 1,
+   "mean": 55.9,
+   "min": 55.9,
+   "max": 55.9
+  },
+  "m2": {
+   "n": 4,
+   "mean": 57.8,
+   "min": 57,
+   "max": 58.3
+  },
+  "m3": {
+   "n": 14,
+   "mean": 59,
+   "min": 56.1,
+   "max": 60.8
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 13,
+  "mean": 0.32,
+  "max": 1,
+  "over1": 0
+ },
+ "notes": {
+  "takes": 19,
+  "distinct": 5,
+  "longestSame": 2,
+  "sameAgainInAnotherGenre": 1,
+  "withConcern": 14,
+  "concerns": [
+   "rhythm",
+   "stylized",
+   "invention",
+   "exactness",
+   "heightened",
+   "extremity"
+  ],
+  "asShown": {
+   "distinct": 12,
+   "longestSame": 1,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 55.9: Focus held back the execution: absurdist’s rhythm",
+   "d61 silent_film first 58.3: Physical Expression held back the execution: silent_film’s stylized",
+   "d61 absurdist another-reading 57: Imagination held back the interpretation: absurdist’s stylized",
+   "d62 historical_drama first 58.1: Emotional Depth held back the believability",
+   "d76 fairy_tale first 57.7: Imagination held back the interpretation: fairy_tale’s invention",
+   "d96 silent_film another-reading 59.5: Physical Expression held back the execution: silent_film’s stylized",
+   "d97 anime first 57.5: Focus held back the execution: anime’s exactness",
+   "d103 animated first 60: Vocal Expression held back the execution: animated’s heightened",
+   "d104 historical_drama another-reading 60.3: Emotional Depth held back the believability",
+   "d107 horror first 60: Emotional Depth held back the believability: horror’s extremity",
+   "d109 cyberpunk first 59.9: Imagination held back the interpretation: cyberpunk’s invention",
+   "d110 fairy_tale another-reading 59: Emotional Depth held back the believability",
+   "d111 kaiju first 60: Imagination held back the interpretation: kaiju’s invention",
+   "d113 social_realism first 57: Emotional Depth held back the believability",
+   "d113 anime another-reading 57.9: Focus held back the execution: anime’s exactness",
+   "d115 isekai first 56.1: Vocal Expression held back the execution: isekai’s heightened",
+   "d117 steampunk first 59.3: Imagination held back the interpretation: steampunk’s invention",
+   "d117 animated another-reading 59.2: Vocal Expression held back the execution: animated’s heightened",
+   "d118 alternate_history first 60.8: Emotional Depth held back the believability"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 3,
+  "sequence": [
+   "7:imagination@56",
+   "14:imagination@56",
+   "21:vocal@56",
+   "28:imagination@57",
+   "35:vocal@57",
+   "42:focus@57",
+   "49:vocal@57",
+   "56:focus@57",
+   "63:imagination@59",
+   "70:focus@57",
+   "77:imagination@60",
+   "84:imagination@60",
+   "91:imagination@60",
+   "98:focus@58",
+   "105:imagination@61",
+   "112:imagination@63",
+   "119:imagination@65"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 59,
+  "presence": 66,
+  "listening": 62,
+  "imagination": 65,
+  "focus": 59,
+  "memory": 58,
+  "adaptability": 56,
+  "composure": 55,
+  "vocal": 59,
+  "physical": 60,
+  "discipline": 63,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-social_realism",
+   "genre": "social_realism",
+   "reading": "organizer",
+   "sides": "",
+   "purpose": "first",
+   "overall": 57,
+   "chief": "Emotional Depth held back the believability by 17.3 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-anime",
+   "genre": "anime",
+   "reading": "laugh",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 57.9,
+   "chief": "Focus held back the execution by 12.1 points",
+   "concern": "exactness"
+  },
+  {
+   "day": 115,
+   "brief": "brief-isekai",
+   "genre": "isekai",
+   "reading": "audit",
+   "sides": "",
+   "purpose": "first",
+   "overall": 56.1,
+   "chief": "Vocal Expression held back the execution by 17.3 points",
+   "concern": "heightened"
+  },
+  {
+   "day": 117,
+   "brief": "brief-steampunk",
+   "genre": "steampunk",
+   "reading": "bluff",
+   "sides": "",
+   "purpose": "first",
+   "overall": 59.3,
+   "chief": "Imagination held back the interpretation by 17.1 points",
+   "concern": "invention"
+  },
+  {
+   "day": 117,
+   "brief": "brief-animated",
+   "genre": "animated",
+   "reading": "brave",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 59.2,
+   "chief": "Vocal Expression held back the execution by 19.9 points",
+   "concern": "heightened"
+  },
+  {
+   "day": 118,
+   "brief": "brief-alternate_history",
+   "genre": "alternate_history",
+   "reading": "ordinary",
+   "sides": "",
+   "purpose": "first",
+   "overall": 60.8,
+   "chief": "Emotional Depth held back the believability by 11.8 points"
+  }
+ ]
+}
