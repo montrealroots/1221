@@ -25,8 +25,8 @@
  * on the Forum, whose turns give it a long score) and behind where it's played off a partner, a mastered actor reaches
  * 100 on every way of playing that fits them, and a student meets them in play once the scenes before them run short.
  *
- * **A scene's units (evaluation-10, the follow-up).** Stanislavski divides a role by its action ("a new bit begins whenever
- * an action or counteraction shifts in manner of execution or strategy"), not by its length; a profile's turns are those
+ * **A scene's units (evaluation-10, the follow-up).** Stanislavski divides a role by its action ("a new 'bit' begins whenever
+ * an action or counteraction shifts in manner of execution or strategy", Carnicke's glossary), not by its length; a profile's turns are those
  * shifts beyond its changes of tone. From evaluation-10 a class scene and a play are cut into their units, each tone
  * section again at each of its turns, each section keeping its weight, and what a piece demands counts those units, so a
  * scene of more than three reads discipline's long score as a brief's beats do. Held here: the units by hand, the

@@ -672,6 +672,12 @@ export function classTrains(sim: Simulation, person: Person, code: string, seaso
   return w.fitness - before;
 }
 
+/** Whether a class trained the body on the day an instant falls in (`classTrains`), as the Work Out line says it. */
+function trainedInClassOn(sim: Simulation, person: Person, at: Instant): boolean {
+  const day = (t: Instant) => { const p = zonedParts(t, sim.homeZone); return `${p.year}-${p.month}-${p.day}`; };
+  return (person.development?.history ?? []).some((e) => e.id === 'stamina' && e.source.startsWith('class:') && day(e.at) === day(at));
+}
+
 /** What a workout costs in energy: 10 at fitness fifty, 15 at nought and 5 at a hundred. */
 export function workoutCosts(person: Person): number {
   return WORKOUT_ENERGY * remap(person.wellbeing.fitness, 0, 100, 1.5, 0.5);
@@ -760,7 +766,7 @@ export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
   // 2026-10-12). Until then the preview read the weather as the menu opened and no repeat, so a third workout in a row
   // showed +0.68 fitness and built +0.17.
   const workoutEnds = sim.now + minutesFor(sim, 'exercise') * 60_000;
-  const training = { ...trainingAt(sim, person, workoutEnds), repeats: repeatsSoFar(sim, person, WORKOUTS_TODAY, workoutEnds) };
+  const training = { ...trainingAt(sim, person, workoutEnds), repeats: repeatsSoFar(sim, person, WORKOUTS_TODAY, workoutEnds), fromClass: trainedInClassOn(sim, person, workoutEnds) };
   const options = order.map((action): LookAfterOption => {
     // A copy, without the body's tally, which a meal ordered in adds to (`eatsOut`).
     const copy = { ...person, wellbeing: { ...w }, body: undefined } as Person;
@@ -785,7 +791,7 @@ export function lookAfterOptions(sim: Simulation): LookAfterOption[] {
 }
 
 /** Why a thing stands where it does on the menu, in the dials' words. */
-function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean, training: { where: 'run' | 'indoors'; repeats: number }): string {
+function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean, training: { where: 'run' | 'indoors'; repeats: number; fromClass: boolean }): string {
   const w = person.wellbeing;
   const r = (x: number) => Math.round(x);
   if (action === 'eat' || action === 'order') {
@@ -803,7 +809,9 @@ function whyNow(person: Person, action: LookAfter, gain: number, urgent: boolean
   // A workout's worth is mostly fitness, which readiness doesn't read the day it's built; it costs energy now. Whether
   // it'll be a run, and what a repeat the same day keeps, said from 2026-10-12: until then the line said neither.
   const where = training.where === 'run' ? 'A run in fine weather' : 'Indoors, the weather being no good for a run';
-  const again = training.repeats > 0 ? ` It’s workout ${training.repeats + 1} today, so it builds ${Math.round(100 * DEVELOPMENT.repeat ** training.repeats)}% of a first.` : '';
+  // A class that trains the body counts among the day's workouts (`classTrains`, from 2026-10-16), and the line says so
+  // where one did: until then it said "workout 2" after a combat class and no workout.
+  const again = training.repeats > 0 ? ` It’s workout ${training.repeats + 1} today${training.fromClass ? ', a class that trained the body counting as one' : ''}, so it builds ${Math.round(100 * DEVELOPMENT.repeat ** training.repeats)}% of a first.` : '';
   return `${where}: builds fitness, at ${r(w.fitness)} now, and eases stress; costs ${r(workoutCosts(person))} energy.${again}`;
 }
 

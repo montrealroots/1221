@@ -119,9 +119,10 @@ export function toneSegments(tones: readonly Tone[], least = 1): SegmentSpec[] {
 /**
  * A scene's or a play's units (from 2026-10-16, evaluation-10, brief 09's follow-up): its tones in order, each section of
  * a tone cut again at each of its turns, so the piece is judged in as many parts as its action shifts. Stanislavski
- * divides a role into bits by its action, "a new bit begins whenever an action or counteraction shifts in manner of
- * execution or strategy" (An Actor Prepares, "Units and Objectives", 1936; the glossary Wikipedia's "Unit of action"
- * cites, read 2026-10-16), not by its length; a profile's turns are those shifts beyond its changes of tone
+ * divides a role into bits by its action, in Sharon Marie Carnicke's glossary "a new 'bit' begins whenever an action or
+ * counteraction shifts in manner of execution or strategy" (Stanislavsky in Focus, 2009, p. 214, as Wikipedia's "Unit of
+ * action" cites it, read 2026-10-16; this put the words to An Actor Prepares until a check later that day), and his own
+ * example cuts a walk home where the doing changes (An Actor's Work, tr. Benedetti, 2008, ch. 7), not by its length; a profile's turns are those shifts beyond its changes of tone
  * (`MaterialProfile.turns`), as a brief's are its beats. Until then a scene and a play were cut only where the tone
  * changed (`toneSegments`), so a scene of one tone with three reversals was two halves, and the long score of units a
  * brief's beats ask discipline for (`DEMAND_EFFECT.beats`) reached no scene and no night.

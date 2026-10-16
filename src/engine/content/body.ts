@@ -104,9 +104,10 @@ export const BODY = {
  * breath, much of it in tutorials), The Body As Source (the energetic body and its impulses; not a dance class, by the
  * citations review, docs/research/attributes/research-citations-review.json), Commedia (mask, articulation, sound and
  * rhythm, improvised) and Character Analysis And Movement, whose description the Bulletin doesn't print. No voice class
- * is one. One counts as one workout indoors and no more (`classTrains`, systems/life.ts): a dance class is low to
- * moderate in intensity and asks less than a performance does (Rodrigues-Krause, Krause & Reischak-Oliveira, J Dance Med
- * Sci 2015;19(3):91-102), and the house builds no more for a harder hour, as a run at 9.3 METs builds a tenth more than
+ * is one. One counts as one workout indoors and no more (`classTrains`, systems/life.ts): a dance class, built to develop
+ * technique, asks significantly less of the heart and lungs than a performance does (Rodrigues-Krause, Krause &
+ * Reischak-Oliveira, J Dance Med Sci 2015;19(3):91-102, its abstract; until a check later on 2026-10-16 this called it
+ * "low to moderate in intensity", which the abstract doesn't say), and the house builds no more for a harder hour, as a run at 9.3 METs builds a tenth more than
  * a workout's 3.5 (`TRAINING`), not 2.7 times. What a class burns isn't counted here: a class day is charged as any
  * waking day is.
  */

@@ -269,7 +269,7 @@ export const BODY: readonly GuideEntry[] = [
       `Order In: the same, and a restaurant’s larger meal, ${A_BODY.eatenOut} calories more toward your weight.`,
       'Shower: hygiene to 100, and stress eased by a tenth of what it put back.',
       `Work Out: fitness up 0.6 at readiness 75, ${RUN_MORE}% more on a run, never past what your age allows; energy, nourishment and hygiene down, stress eased, the mood up.`,
-      `A second workout the same day builds ${Math.round(DEVELOPMENT.repeat * 100)}% of the first, and a third ${Math.round(DEVELOPMENT.repeat ** 2 * 100)}%. A class that trains the body as hard as a workout counts as one of them: ${CLASS_LIST}, attended, builds what a workout indoors does.`,
+      `A second workout the same day builds ${Math.round(DEVELOPMENT.repeat * 100)}% of the first, and a third ${Math.round(DEVELOPMENT.repeat ** 2 * 100)}%. A class that trains the body as hard as a workout counts as one of them, and builds what a workout indoors does: ${CLASS_LIST}, attended.`,
       'Unwind: stress down and the mood up.',
     ],
     later: [

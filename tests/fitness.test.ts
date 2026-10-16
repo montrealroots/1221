@@ -9,7 +9,7 @@ import { quickSave, loadSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { MS_DAY, MS_HOUR } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
-import { FITNESS, EVERYDAY_FITNESS, TRAINING, workoutBuilds } from '@/engine/systems/life';
+import { FITNESS, EVERYDAY_FITNESS, TRAINING, lookAfterOptions, workoutBuilds } from '@/engine/systems/life';
 import { abilityFull, developmentOf, repeatsSoFar } from '@/engine/systems/attributes';
 import { createSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
@@ -194,5 +194,7 @@ describe('a class that trains the body as hard as a workout, attended', () => {
     expect(next).toBeDefined();
     tended(attend, next.at + 3 * MS_HOUR);
     expect(repeatsSoFar(attend, attend.player, 'stamina<workout')).toBe(1);
+    // And Look After Yourself's Work Out line says so: the second, a class having counted as the first.
+    expect(lookAfterOptions(attend).find((o) => o.action === 'exercise')!.why).toContain('It’s workout 2 today, a class that trained the body counting as one, so it builds 50% of a first.');
   }, 240_000);
 });
