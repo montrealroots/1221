@@ -27,6 +27,7 @@ import { GREEK_SCENES } from './scenes-greek';
 import { ORIGINAL_SCENES } from './scenes-original';
 import { PUBLIC_SCENES } from './scenes-public';
 import { HOUSE_SCENES } from './scenes-house';
+import { SCORED_SCENES } from './scenes-scored';
 
 /** The parts of a preparation SLATE keeps, each 0 to 1. */
 export type PrepDim = 'familiarity' | 'memorization' | 'interpretation' | 'rehearsal' | 'partner' | 'revision';
@@ -811,6 +812,8 @@ export const SCENES: readonly Scene[] = [
   // Scenes played out to a house (from 2026-10-16, brief 09; `content/scenes-house.ts`), last, for the same reason: a
   // seeded life meets them only once fewer than four of the scenes before them fit its draw as well.
   ...HOUSE_SCENES,
+  // A scene of many units (from 2026-10-16, brief 09's follow-up; `content/scenes-scored.ts`), last, for the same reason.
+  ...SCORED_SCENES,
 ];
 
 export const sceneById = (id: string): Scene | undefined => SCENES.find((s) => s.id === id);

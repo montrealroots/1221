@@ -31,7 +31,9 @@
  * voices; Montjoy's embassy in Henry V's 4.3, a third part, which the scene here ends before; and Scapin's sack scene
  * (Molière, The Impostures of Scapin, 3.2, tr. Charles Heron Wall, Gutenberg #8776), read as a long set score for
  * discipline: it's played off its partner line by line, in one tone, so it isn't a scene played out to a house, and a
- * scene is profiled by its changes of tone, so its five units would be two parts (docs/verification/integration-2026-10-16/h4.md).
+ * scene was profiled by its changes of tone, so its five turns would have been two parts
+ * (docs/verification/integration-2026-10-16/h4.md). From evaluation-10, later the same day, a scene is cut at its turns
+ * too, and the sack scene was added in `content/scenes-scored.ts`.
  *
  * Only the types come from `coursework.ts`: it imports this file, so a value import back would be circular. The two
  * helpers are local copies of its own.

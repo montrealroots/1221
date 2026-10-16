@@ -303,6 +303,61 @@ describe('a scene’s units: its tone sections and its turns (evaluation-10, the
   });
 });
 
+describe('Scapin’s sack scene: a scene of six units, discipline’s long score (the follow-up)', () => {
+  const task = TASK_PROFILES.scene!;
+  const difficulty = difficultyOf(templateById('scene-study')!);
+  const scapin = SCENE_MATERIAL.find((m) => m.id === 'scapin-3-2')!;
+  const judged = (m: MaterialProfile, p: Performer, sides: Sides = {}): Evaluation => {
+    const chosen = Object.keys(sides).length > 0;
+    const read = materialContext(task, m, chosen ? { ...sides, chosenAt: 0, prep: 1 } : undefined);
+    const prep: Record<string, number> = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(chosen ? { approach: 1 } : {}) };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `scapin:${m.id}`, expected: true };
+    return judgePiece('scapin', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') });
+  };
+  const EVEN: Performer = { ability: () => 50, full: () => 100, technique: () => 50 };
+  const DISCIPLINE: Performer = { ability: (id) => (id === 'discipline' ? 85 : (600 - 85) / 11), full: () => 100, technique: () => 50 };
+
+  it('is six units of a sixth, three past three, so its long score asks discipline 2.5 a unit more on consistency than the same scene without its turns', () => {
+    const units = unitSegments(scapin, 2);
+    expect(units).toHaveLength(1 + 5);
+    for (const u of units) expect(u.weight).toBeCloseTo(1 / 6, 12);
+    expect(demandsOf(scapin).beats).toBe(6 - 3);
+    const turnless = { ...scapin, turns: 0 };
+    const disciplineOn = (m: MaterialProfile) => materialContext(task, m).inputs.consistency?.find((x) => x.ability === 'discipline')?.weight ?? 0;
+    expect(disciplineOn(scapin) - disciplineOn(turnless)).toBeCloseTo(2.5 * 3, 12);
+  });
+
+  it('a specialist in discipline comes out ahead of an even actor of the same budget on it, by more than on the same scene without its turns', () => {
+    const lead = (m: MaterialProfile) => judged(m, DISCIPLINE).exact! - judged(m, EVEN).exact!;
+    expect(lead(scapin)).toBeGreaterThan(0.05);
+    expect(lead(scapin)).toBeGreaterThan(lead({ ...scapin, turns: 0 }));
+  });
+
+  it('a mastered, prepared actor reaches 100 on every way of playing that fits it', () => {
+    const MASTER: Performer = { ability: () => 100, full: () => 100, technique: () => MASTERED };
+    let n = 0;
+    for (const pace of [undefined, 'measured', 'driven'] as const) for (const scale of [undefined, 'restrained', 'expansive'] as const) for (const structure of [undefined, 'set', 'open'] as const) {
+      const sides: Sides = { ...(pace ? { pace } : {}), ...(scale ? { scale } : {}), ...(structure ? { structure } : {}) };
+      if ((Object.entries(sides) as [Axis, AxisValue][]).some(([a, v]) => misfitOf(a, v, scapin))) continue;
+      expect(judged(scapin, MASTER, sides).overall, JSON.stringify(sides)).toBe(100);
+      n += 1;
+    }
+    expect(n).toBe(27);
+  });
+
+  it('a student meets it in Acting III’s Scene Study once every earlier prose scene is studied, and never in Acting I’s, which sets plays from 1900', () => {
+    const studied = (t: string, course: string, ids: readonly string[]): Worked[] => ids.map((id, i) => ({ id: `w${i}`, course, template: t, setOn: `2026-09-${String(1 + (i % 28)).padStart(2, '0')}`, sceneId: id, answers: {}, status: 'shown' }));
+    const study = templateById('scene-study')!;
+    const fresh = scenesFor(study, 'DRAM 303a', [], 2);
+    expect(fresh.map((x) => x.id)).toContain('scapin-3-2');
+    expect(fresh[0]!.id).not.toBe('scapin-3-2');
+    const earlier = fresh.filter((x) => x.id !== 'scapin-3-2').map((x) => x.id);
+    expect(scenesFor(study, 'DRAM 303a', studied(study.id, 'DRAM 303a', earlier), 2)[0]!.id).toBe('scapin-3-2');
+    expect(scenesFor(study, 'DRAM 103a/b', [], 2).map((x) => x.id)).not.toContain('scapin-3-2');
+    expect(SCENES.find((x) => x.id === 'scapin-3-2')).toMatchObject({ language: 'prose', genre: 'comedy', year: 1671 });
+  });
+});
+
 describe('a save from before evaluation-10: work kept on a piece’s segments moved to its units, once', () => {
   const life = (seed: string): Simulation => createSave(1, seed, { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
   const reload = (sim: Simulation): Simulation => loadSave(deserialise(serialise(sim.universe)) as never);
