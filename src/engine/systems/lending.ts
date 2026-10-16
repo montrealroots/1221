@@ -1203,11 +1203,18 @@ export function registerLending(sim: Simulation): void {
           closeForOverdraft(s, person, bank);
           continue;
         }
-        if (current && bank?.card?.yearly !== undefined && s.now - (current.cardFeeAt ?? current.openedAt) >= 365 * MS_DAY) {
+        // The debit card's yearly fee: on each anniversary of the account's opening or its last charge; or, where the bank
+        // charges it for the year ahead (`Bank.card.ahead`, Berliner Sparkasse's, from 2026-10-16), on the account's first
+        // night and each 365 days after, kept for its refund on a close (`cardFeePaid`, `cardRefundDue`). In the bank's
+        // own figure from 2026-10-16: until then it went in dollars, converted back, and Arion's 950 kr took 949 kr from
+        // an account kept in krónur (docs/verification/remaining-09/banking-checklist.json, banking.5.arion-card).
+        const card = bank?.card;
+        const since = current?.cardFeeAt ?? (card?.ahead ? undefined : current?.openedAt);
+        if (current && bank && card?.yearly !== undefined && (since === undefined || s.now - since >= 365 * MS_DAY)) {
           current.cardFeeAt = s.now;
-          if (bank.card.freeUnder === undefined || ageOn(s, person, s.now) >= bank.card.freeUnder) {
-            charge(s, current, inSaveMoney(s, bank.card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees');
-          }
+          const free = card.freeUnder !== undefined && ageOn(s, person, s.now) < card.freeUnder;
+          if (card.ahead) current.cardFeePaid = free ? 0 : card.yearly;
+          if (!free) charge(s, current, inSaveMoney(s, card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', card.yearly);
         }
         if (current && bank) refundInterestTax(s, person, current, bank);
       }

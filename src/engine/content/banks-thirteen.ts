@@ -251,7 +251,12 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'de-commerzbank', name: 'Commerzbank', iso: 'DE', currency: 'EUR', format: 'de', code: '10040000',
-        current: p('GiroKonto', 'commerzbank.de, 1 December 2025: €4.90 a month, free only with €50,000 held at the bank (kept here as €50,000 in the account)', { monthlyFee: 4_90, waiver: { balanceAtLeast: 50_000_00 } }),
+        // Taken at each month's end from 2026-10-16 (brief 09's follow-up), as its distance-selling information books
+        // “Kontoführungsentgelte monatlich”: until then at the quarter's closing. Its price list's footnote (“mit dem
+        // nächstfolgenden Kontoabschluss berechnet”) and its payment-account information (“zum jeweiligen
+        // Rechnungsabschluss belastet”) say the closing instead; the booking clause, the one that names the account fee and
+        // sets it apart from the interest charged at the closing, is the one followed.
+        current: p('GiroKonto', 'commerzbank.de, 1 December 2025: €4.90 a month, free only with €50,000 held at the bank (kept here as €50,000 in the account); charged at each month’s end (commerzbank.de distance-selling information, 19 June 2026, read 16 October 2026)', { monthlyFee: 4_90, waiver: { balanceAtLeast: 50_000_00 }, feePosts: 'month' }),
         savings: p('Tagesgeld', NOT_FOUND),
       },
       {
@@ -261,11 +266,16 @@ export const THIRTEEN: readonly CountryBanking[] = [
       },
       {
         id: 'de-ing', name: 'ING Deutschland', iso: 'DE', currency: 'EUR', format: 'de', code: '50010517',
-        current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90', { deposits: 'electronic', monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 } }),
+        // Taken in the month after from 2026-10-16 (brief 09's follow-up): “Belastung des monatlichen Entgelts im
+        // Folgemonat” (ing.de conditions, Stand 1 June 2026); until then at the quarter's closing. The day in that month
+        // isn't published: SLATE takes the first.
+        current: p('Girokonto', 'ing.de conditions, 25 September 2026: free with €1,000 paid in a month or under 28, else €4.90, charged in the month after', { deposits: 'electronic', monthlyFee: 4_90, waiver: { depositsAtLeast: 1_000_00, ageBelow: 28 }, feePosts: 'next' }),
         savings: p('Extra-Konto', 'ing.de: 3.20% for a new customer’s first four months, then 0.75%', { rate: 0.0075, intro: [{ months: 4, rate: 0.032 }] }),
       },
       {
+        // Its Sparkassen-Card from 2026-10-16 (brief 09's follow-up): until then SLATE charged nothing for it.
         id: 'de-berliner-sparkasse', name: 'Berliner Sparkasse', iso: 'DE', currency: 'EUR', format: 'de', code: '10050000',
+        card: { yearly: 12_00, ahead: true, source: 'berliner-sparkasse.de Giro Digital fee information, 1 February 2026, and price list, 15 July 2026 (read 16 October 2026): Giro Digital includes no Sparkassen-Card, which costs €12.00 a year, paid ahead, the unused part refunded on an early close (footnote 45, § 675h(3) BGB); the month it’s charged in isn’t published' },
         current: p('Giro Digital', 'berliner-sparkasse.de, 1 February 2026: €4.95 a month', { monthlyFee: 4_95 }),
         savings: p('Tagesgeld', 'berliner-sparkasse.de: 0.50%', { rate: 0.005 }),
       },

@@ -4,11 +4,11 @@
  "against": "7e531122 and the working tree after it (this area's changes, beside the coverage and journeys areas' own)",
  "checklist": "docs/verification/remaining-09/banking-checklist.json",
  "testFile": "tests/remaining-09-banking.test.ts",
- "tests": "tests/remaining-09-banking.test.ts: 7 tests, all passing. Changed beside it, each with a dated comment saying what it asserted and why it changed, and each renamed title recorded in docs/verification/pipeline/inputs/renames.json: tests/scope-money.test.ts (the Berlin Cancel It and Close It, both renamed), tests/accountlife.test.ts (the German quarter-and-month test, renamed), tests/remaining-banking.test.ts (five of the last pass's German tests, renamed: Deutsche Bank's opening month free, and March to the day), tests/statements.test.ts (two figures, titles unchanged: Deutsche Bank's opening month free).",
+ "tests": "tests/remaining-09-banking.test.ts: 16 tests, all passing (7 for items 1 to 3; 8 for the follow-up’s 4 to 6; 1 for the eight rows, from the probe). Changed beside it, each with a dated comment saying what it asserted and why it changed, and each renamed title recorded in docs/verification/pipeline/inputs/renames.json: tests/scope-money.test.ts (the Berlin Cancel It and Close It, both renamed), tests/accountlife.test.ts (the German quarter-and-month test, renamed), tests/remaining-banking.test.ts (five of the last pass's German tests, renamed: Deutsche Bank's opening month free, and March to the day), tests/statements.test.ts (two figures, titles unchanged: Deutsche Bank's opening month free).",
  "statusTotals": {
-  "Implemented And Verified": 4,
+  "Implemented And Verified": 6,
   "Implemented, Verification Incomplete": 8,
-  "Decision Required": 1
+  "Decision Required": 2
  },
  "items": [
   {
@@ -340,10 +340,10 @@
    "disposition": "owner decision",
    "evidence": [
     {
-     "file": "scratchpad banking/work/tests/probe-rows.test.ts (run 2026-10-16, not in the tree)",
-     "title": "probe: each of the eight commands on six home-account lives (HSBC UK and BNP Paribas kept from 2010; RBC, BBVA México, Deutsche Bank and NatWest opened 1 August 2026, the latest Before Yale allows)",
-     "kind": "command (probe)",
-     "proves": "Every one refused in the bank's or the rule's words: Cancel It (every cooling-off ended by 21 August 2026, before the 24 August start), Arrange It (abroadRefusal, the bank's own words), a switch (to a US bank, refused by its opening rule; to a bank abroad, “That isn’t a bank where you live.”), Call It Off and Keep The Balance There (“No switch is under way.”), Take The Loan (“Your bank has offered no loan for an overrun.”), a card at the bank abroad (“A card is applied for in the country you bank in; … is elsewhere.”), a money transfer (“The Chase Freedom Unlimited doesn’t offer money transfers.”)."
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "Each of the eight commands refused in its words on six home-account lives, nothing posted, no switch set: Cancel It (every cooling-off over by the first morning), Arrange It (the bank's own words), a switch (Citi's opening, or not a bank where she lives), Call It Off and Keep The Balance There (no switch under way), Take The Loan (no offer), a card at the bank abroad, a money transfer. Written from the scratchpad probe of 2026-10-16 (banking/work/tests/probe-rows.test.ts), which first found it."
     }
    ],
    "ownerDecision": "What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether rows a current life can't reach count against completion is a product choice the briefs don't settle: (a) keep them Unresolved, counted against completion with nothing anyone can do; (b) move them to Explicitly Deferred, as health.prepay was, the engine and its fixture tests kept, counted outside the completed numerator. Recommended: (b), since no work remains and (a) asks for a life the scope forbids; either way they are not counted complete.",
@@ -364,9 +364,15 @@
     },
     {
      "file": "tests/integration-home-lending.test.ts",
-     "title": "(the coverage area's, as the row cites it)",
+     "title": "borrowing at a bank kept from home > PLAYER JOURNEY: a London-raised student keeping HSBC UK is told at Borrowing that it opens nothing new for a customer abroad, with no Arrange It and no loan form, as its primary account or not; the commands refuse in the same words",
      "kind": "render",
-     "proves": "A home bank's Borrowing refuses in its words; the probe confirms at five more banks."
+     "proves": "A home bank's Borrowing refuses in its words."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -384,6 +390,12 @@
      "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
      "kind": "render, command (FIXTURE)",
      "proves": "Germany's fee on canceling, to the day."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope: the probe found every country's cooling-off over before a home-account life begins (the latest, Canada's fourteen business days from 1 August 2026, ends 20 August).",
@@ -401,6 +413,12 @@
      "title": "bank.switch > PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID, as Citi’s opening asks one, and with a passport applied for and come, with the steps to take; nothing is set, across a reload; Your Banks draws those steps, and the Switch Bank panel isn’t drawn at all",
      "kind": "render",
      "proves": "What a New Haven student meets; the probe adds a home-account life's “That isn’t a bank where you live.”"
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -418,6 +436,12 @@
      "title": "bank.switch_complete > FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026, across a reload: the savings moved to the penny with its closing interest, the current account less the £20 of groceries still pending, held back until they post and then closed with the rest sent across, the standing order into savings re-pointed and paid there on the 15th",
      "kind": "fixture",
      "proves": "As the row says; no played switch can begin."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -431,10 +455,10 @@
    "disposition": "owner decision",
    "evidence": [
     {
-     "file": "(probe)",
-     "title": "“No switch is under way.” on six home-account lives",
-     "kind": "command (probe)",
-     "proves": "No played switch can be under way."
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -448,10 +472,10 @@
    "disposition": "owner decision",
    "evidence": [
     {
-     "file": "(probe)",
-     "title": "“No switch is under way.” on six home-account lives",
-     "kind": "command (probe)",
-     "proves": "As bank.cancel_switch."
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -465,10 +489,10 @@
    "disposition": "owner decision",
    "evidence": [
     {
-     "file": "(probe)",
-     "title": "a Paris-raised student keeping BNP Paribas: “Your bank has offered no loan for an overrun.”",
-     "kind": "command (probe)",
-     "proves": "No offer is made to a customer abroad (lending.ts's offer reads abroadRefusal)."
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
@@ -486,11 +510,250 @@
      "title": "card.money_transfer > PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer: The Card’s Offers draws no Move It, and the command is refused in its words with nothing moved",
      "kind": "render",
      "proves": "What a New Haven student meets; the probe: a card at a bank abroad is refused."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set",
+     "kind": "command",
+     "proves": "This command refused on six home-account lives, nothing posted."
     }
    ],
    "ownerDecision": "As banking.2.scope.",
    "assumptions": [],
    "mutations": []
+  },
+  {
+   "id": "banking.4.sparkassen-card",
+   "status": "Implemented And Verified",
+   "before": "not modeled: Berliner Sparkasse charged nothing for its Sparkassen-Card (found outside in the first report; reproduced: to 5 January 2027 a Berlin-raised student keeping it paid only Giro Digital's two quarterly closings)",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back",
+     "kind": "render, command, clock",
+     "proves": "€12.00 ($13.04) at midnight on 25 August 2026; before the press the line says €2.24 ($2.43) of fees (495 × 14 / 31 = 223.5) and €10.32 ($11.22) back (1,200 × 314 / 365 = 1,032.3, 51 days used); pressed, both posted once against Bank Fees, balanced, everything that left at the close what it held; a second press refused; reloaded to 1 September 2027, no second refund and no year's fee on the closed account; breaches 0."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close > PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days",
+     "kind": "clock, render, command",
+     "proves": "The second year 365 days on, once; twins identical to the cent; the close's three parts (two months kept, one day of 30 at 17 cents, 357 days back at €11.74) said and posted."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank",
+     "kind": "render, command (FIXTURE)",
+     "proves": "An account opened in the life is charged ahead its first night; the refund counts in the refusal's figure (closingFeesOf nets it), so an empty account cancels; €10.49 sent on. FIXTURE: no played life opens a German account."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)",
+     "kind": "engine (GUARD)",
+     "proves": "cardFeePaid set to nothing once given back: one refund."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Bank.card.ahead: Berliner Sparkasse's €12.00 a year charged for the 365 days ahead from the account's first night (cardFeePaid kept), and on any close the days of that year left after the closing day refunded pro rata, rounded half up, in euros first, against Bank Fees, before the fees are charged; closingFeesOf nets it, and the words under Close It and Cancel It say it; Other Charges says it's paid ahead and refunded.",
+     "where": "src/engine/content/banks.ts, src/engine/content/banks-thirteen.ts, src/engine/core/ledger.ts (cardFeePaid), src/engine/systems/lending.ts (the day loop), src/engine/systems/banking.ts (cardRefundDue, settleFees, closingFeesOf, closingFeesWords), src/ui/workspaces/BankWorkspace.tsx",
+     "failingTest": "see mutations M12 to M16"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Berliner Sparkasse: Giro Digital includes no Sparkassen-Card (“Sparkassen-Card inklusive: nein”), which costs “Jährlich 12,00 EUR” (fee information) and, in the price list, “Sparkassen-Card p.a. jede weitere 12,00 EUR” with footnote 45: “Im Fall der vorzeitigen Auflösung des Vertragsverhältnisses vor dem Jahresende erfolgt eine anteilige Erstattung vorausbezahlter Entgelte gemäß § 675 h III BGB.”",
+     "citation": "https://www.berliner-sparkasse.de/content/dam/myif/berliner-sk/work/dokumente/pdf/preise-leistungen/entgeltinformation-giro-digital.pdf; https://www.berliner-sparkasse.de/content/dam/myif/berliner-sk/work/dokumente/pdf/preise-leistungen/preis-leistungsverzeichnis.pdf",
+     "effective": "1 February 2026; 15 July 2026",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Which month Berliner Sparkasse charges the year's €12.00 in isn't published. SLATE charges it on the account's first night in the life and each 365 days after, the year it pays for running from the charge (as homeaccount.ts's opening float already counted a card's yearly fee, from the month the life begins). For a home account the year that was running before Yale is taken as paid outside the game; nothing of it is refunded.",
+    "The days counted used run from the charge's day through the closing day, as the closing month's fee counts them; a year is 365 days, as the day loop charges.",
+    "A cancellation in the cooling-off period gives the card's year back the same way (§ 357b: what each side received goes back, less Wertersatz for the service given).",
+    "The opening float of a Berliner Sparkasse home account grows by the card's three years (feesToGraduation reads Bank.card.yearly): €36.00 of the family's money moves from the American account to the home one; the sum is the family's to the cent, as before."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "const since = current?.cardFeeAt ?? (card?.ahead ? undefined : current?.openedAt);",
+     "replace": "const since = current?.cardFeeAt ?? current?.openedAt;",
+     "killed": true,
+     "note": "M12: charged on the anniversary, not ahead from the first night; 2 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "if (back) { … Debit card yearly fee refunded …",
+     "replace": "if (false && back) {",
+     "killed": true,
+     "note": "M13: no refund; 4 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "return (closingFeesDue(sim, account)?.total ?? 0) - (cardRefundDue(sim, account)?.refund ?? 0);",
+     "replace": "return closingFeesDue(sim, account)?.total ?? 0;",
+     "killed": true,
+     "note": "M14: the refusal not netting the refund; 1 failed (the empty Giro Digital refused)"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "const left = 365 - (day(sim.now) - day(account.cardFeeAt) + 1);",
+     "replace": "const left = 365 - (day(sim.now) - day(account.cardFeeAt));",
+     "killed": true,
+     "note": "M15: the closing day not counted used; 4 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "account.cardFeePaid = 0;",
+     "replace": "(nothing)",
+     "killed": true,
+     "note": "M16: refunded twice; the GUARD failed"
+    }
+   ],
+   "rowText": {
+    "bank.close_current": {
+     "evidence (add)": "From 2026-10-16 (brief 09's follow-up): a card's year paid ahead given back on the close (Berliner Sparkasse), said under Close It first: tests/remaining-09-banking.test.ts ‘banking.4.sparkassen-card: …’."
+    },
+    "bank.cancel_new": {
+     "evidence (add)": "From 2026-10-16 (brief 09's follow-up): canceling a Giro Digital gives back its card's year paid ahead, counted in the refusal's figure: tests/remaining-09-banking.test.ts ‘banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: …’."
+    }
+   },
+   "tutorial": "Not changed for the card: the tutorial's bank chapter names no bank's card fee.",
+   "guide": "src/engine/content/guide/money.ts, A Bank At Home: Berliner Sparkasse's Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close; Other Charges on the Bank screen says it too."
+  },
+  {
+   "id": "banking.5.arion-card",
+   "status": "Decision Required",
+   "before": "defect (reachable): Arion's 950 kr posted without its own figure, 949 kr taken (reproduced); and the closing treatment unknown",
+   "disposition": "fixed (the figure); owner decision (the close)",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing gives nothing of it back, as SLATE can’t say from Arion’s terms whether the year was paid ahead",
+     "kind": "clock, command",
+     "proves": "950 kr in its own figure each year (until 2026-10-16 949 kr); none at 20; a close refunds nothing and charges nothing for the card, as the decision stands."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The yearly card fee posted in the bank's own figure, so 950 kr leaves the account kept in krónur, as the per-purchase and dormant fees already were.",
+     "where": "src/engine/systems/lending.ts (the day loop's card fee)",
+     "failingTest": "The Arion journey failed with the figure taken out (M20)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Arion: “Árgjald debetkorts … 24 ára og eldri 950 kr.; 23 ára og yngri 0 kr.”; card fees, “svo sem árgjald korta”, follow the price list and are debited from the account holder's account (terms ch. 5); on the bank's close, fees owed may be debited before closing (4.7); “Ef samið hefur verið um reglubundnar greiðslur skal hlutfallslega tekið tillit til gildistíma uppsagnar við innheimtu greiðslna eftir uppsögn samnings” (4.2, on agreed recurring payments).",
+     "citation": "Arion's Gjaldskrá greiðslureikninga, Veltureikningur (07.05.2026), Verðskrá einstaklinga (07.05.2026) 13.1, Almennir viðskiptaskilmálar 18.7.1.15 (15 April 2026), URLs in the checklist",
+     "effective": "7 May 2026; 15 April 2026",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Iceland's Act on Payment Services no. 114/2021: not read (althingi.is: Cloudflare challenge, HTTP 403, every request on 2026-10-16).",
+     "citation": "https://www.althingi.is/lagas/nuna/2021114.html",
+     "effective": "1 November 2021",
+     "read": "not read"
+    }
+   ],
+   "ownerDecision": "What's missing: whether Arion charges the year's 950 kr for the year ahead or the year past. Its price list gives only the amount and the age; its terms say card fees follow the price list and come from the account, and that on its own close fees owed are taken first; the one proportional clause (4.2) is about agreed recurring payments collected after a termination. Iceland's statute couldn't be read (althingi.is refused every request). Either way the rule it carries from Directive (EU) 2015/2366 art. 55(4) gives the holder the card only to the close, but in opposite directions: paid ahead, the year's days left come back (as Berliner Sparkasse's now do, `Bank.card.ahead`); paid behind, the days since the last charge are charged on the close. SLATE charges it on each anniversary, the first on a home account's first night, and on a close does neither. Options: (a) take it as ahead, `ahead: true` on Arion's card, a one-word change the Berliner Sparkasse work makes ready; (b) take it as behind and charge the share on a close (new code); (c) leave it, as now. Recommended: read Arion's debit card terms (skilmálar debetkorta) or ask Arion, and Act 114/2021 when althingi.is can be read; until then (c), said here, since (a) and (b) would each be a guess. Reached by a Reykjavík-raised student of 24 or more keeping Arion.",
+   "assumptions": [
+    "None beyond SLATE's existing anniversaries, unchanged."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "'Debit card yearly fee', 'bank_fee', 'Bank Fees', card.yearly);",
+     "replace": "'Debit card yearly fee', 'bank_fee', 'Bank Fees');",
+     "killed": true,
+     "note": "M20: the figure converted back, 949 kr; 1 failed"
+    }
+   ]
+  },
+  {
+   "id": "banking.6.fee-schedule",
+   "status": "Implemented And Verified",
+   "before": "defect (reachable): ING's and Commerzbank's month's fee posted at the quarter's closing (reproduced: €9.80 on 30 September and €14.70 on 31 December 2026, nothing between)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November",
+     "kind": "render, clock",
+     "proves": "Five “Monthly fee: Girokonto” of €4.90 ($5.33), each at midnight on the 1st, totaling the €24.50 the quarterly closings took; no quarterly posting; the Accounts panel says “This month’s is charged November 1, 2026”; twins identical."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more",
+     "kind": "render, command, clock",
+     "proves": "Between ING's month's end and the 1st the kept month is said and charged on the close, once; the 1st posts nothing on the closed account."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing",
+     "kind": "render, clock",
+     "proves": "Five “Monthly fee: GiroKonto” at 11 PM on each month's last day; no quarterly posting; the panel says the day; Deutsche Bank's AktivKonto still posts €13.80 at 30 September's closing and no monthly fee."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Product.feePosts and feesPostAt: Commerzbank's GiroKonto at each month's end, ING's Girokonto kept at the month's end and posted at the first minute of the next month; Deutsche Bank, Postbank and Berliner Sparkasse at the quarter's closing as before. Interest and statements unchanged. The Accounts panel says each bank's day, and the close's words name a kept month as ING's “for last month, due on the 1st”.",
+     "where": "src/engine/content/banks.ts, src/engine/content/banks-thirteen.ts, src/engine/systems/banking.ts (feesPostAt, the month's end, the day's rollover, the close's words), src/ui/workspaces/BankWorkspace.tsx, src/engine/content/guide/money.ts, src/engine/content/tutorial.ts",
+     "failingTest": "see mutations M17 to M19, M21"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "ING: “Belastung des monatlichen Entgelts im Folgemonat”. Commerzbank: “Gegebenenfalls anfallende Entgelte und Zinsen werden auf dem Girokonto wie folgt gebucht: – Kontoführungsentgelte monatlich – Transaktionsbezogene Einzelentgelte nach Ausführung der Transaktion – Soll- und Habenzinsen zum Rechnungsabschluss” (distance-selling information), against its price list's “wird der Monatspreis mit dem nächstfolgenden Kontoabschluss berechnet” and its payment-account information's “Alle fälligen Kosten und Zinsen werden Ihrem Zahlungskonto zum jeweiligen Rechnungsabschluss belastet”.",
+     "citation": "https://www.ing.de/girokonto/konditionen/; https://www.commerzbank.de/portal/media/efw-dokumente/fernabsatz_girokonto_neukunde.pdf; https://www.commerzbank.de/portal/media/efw-dokumente/preis_leistungsverzeichnis.pdf",
+     "effective": "1 June 2026 (ING); 19 June 2026 and 1 October 2026 (Commerzbank)",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Commerzbank's own documents disagree; the booking clause is followed, since it names the account fee and sets it apart from the interest charged at the closing. Recorded at the product in content/banks-thirteen.ts.",
+    "ING's day in the month after isn't published: SLATE takes the first, at midnight in the save's zone.",
+    "Deutsche Bank (“Die Kontoabrechnung erfolgt vierteljährlich”), Postbank (“Rechnungsabschlussperiode … vierteljährlich”) and Berliner Sparkasse (no schedule published; the AGB-Sparkassen's quarterly closing) stay at the quarter's closing."
+   ],
+   "checkedReaders": "Every test reading a German fee's posting date or memo: tests/statements.test.ts and tests/home-account-abroad.test.ts (Deutsche Bank, unchanged), tests/remaining-banking.test.ts and tests/scope-money.test.ts (Commerzbank fixtures, closed before any month's end or asserting Deutsche Bank's postings), tests/cash.test.ts, tests/roundups.test.ts and tests/lending.test.ts (ING lives: none reads a fee date). The audit: bank.month_end's Changes says “monthly/quarterly fee” (rowText below); no row reads a German posting date.",
+   "rowText": {
+    "bank.month_end": {
+     "changes": "interest, bonus, the monthly fee or, at Deutsche Bank, Postbank and Berliner Sparkasse, the quarter's at its closing, ING's kept for the 1st of the month after and posted then (from 2026-10-16, feesPostAt; until then every German bank's at the quarter's closing), the current account’s statement notice, resets month trackers; marksFallOff",
+     "tests (add)": "tests/remaining-09-banking.test.ts ‘banking.6.fee-schedule: …’ (ING on the 1st, Commerzbank at each month's end, Deutsche Bank at the quarter's closing)"
+    }
+   },
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "if (zonedParts(s.now, s.homeZone).day === 1) {",
+     "replace": "if (false) {",
+     "killed": true,
+     "note": "M17: ING's kept month never posted; 2 failed"
+    },
+    {
+     "file": "src/engine/content/banks-thirteen.ts",
+     "find": "feePosts: 'month'",
+     "replace": "(nothing: at the quarter's closing)",
+     "killed": true,
+     "note": "M18: Commerzbank at the quarter's closing again; 1 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "if (posts !== 'month') {",
+     "replace": "if (posts === 'quarter') {",
+     "killed": true,
+     "note": "M19: ING's posted at the month's end; 2 failed"
+    },
+    {
+     "file": "src/ui/workspaces/BankWorkspace.tsx",
+     "find": "posts === 'next' ? `charged …` :",
+     "replace": "posts === 'next' ? `due …` :",
+     "killed": true,
+     "note": "M21: the panel saying the month's end for ING; 1 failed"
+    }
+   ],
+   "tutorial": "src/engine/content/tutorial.ts, the bank chapter's monthly fee sentence (dated comment above it): Deutsche Bank, Postbank and Berliner Sparkasse at the quarter's closing, ING on the 1st of the month after.",
+   "guide": "src/engine/content/guide/money.ts, Your Bank: The Monthly Fee's reads and the month's end's later line say each German bank's day."
   }
  ],
  "foundOutside": [
@@ -499,19 +762,20 @@
   "An Arion debit card's yearly fee (Iceland) is charged on each anniversary of the account (lending.ts) and nothing is refunded when the account closes; Iceland carries Directive (EU) 2015/2366 art. 55(4). Whether Arion charges it ahead isn't in what SLATE read. A Reykjavík-raised student keeping Arion reaches it. Not changed: outside Germany's item, and the bank's practice unread."
  ],
  "checks": {
-  "tests (one file at a time, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1)": "tests/remaining-09-banking 7/7, scope-money 31/31, remaining-banking 23/23, accountlife 30/30, statements 17/17, guide 12/12, help-mechanics 8/8, home-account-ledger 9/9, and every other file rendering the bank's screens or a German or home account (bank-fees, bank-moves-card-line, banking, cash, defects-g14-1, defects-g20-1, defects-g22-1, defects-g4-2, defects-r5-1, evidence-g10/11/13/14-money, evidence-g29-ui, evidence2-b04, guide-examples-money, home-account-abroad/creation/idle/screens/setoff/tax/transfers, integration-home-lending, integration-savings-notice, lending, roundups) and the tutorial's and guide's readers (defects-g1-1, defects-g12-1, defects-g27-1, defects-g3-1, defects-r8-1, evidence-g02-life, evidence-g31-ui, evidence-g33-ui, defects-g21-1, defects-g7-1, defects3-unread, evidence-g34-ui, evidence2-b13): each exit 0, none failed",
+  "tests (one file at a time, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1)": "After the follow-up: tests/remaining-09-banking 16/16, and the 48 files rendering the bank's screens or a German, Icelandic or home account, or reading the guide and the tutorial (scope-money, remaining-banking, accountlife, statements, bank-fees, banking, cash, roundups, lending, home-account-abroad/creation/idle/screens/setoff/tax/transfers/ledger, integration-home-lending, integration-savings-notice, guide, guide-examples-money, help-mechanics, bank-moves-card-line, defects-g14-1, defects-g20-1, defects-g22-1, defects-g4-2, defects-r5-1, evidence-g10/11/13/14-money, evidence-g29-ui, evidence2-b04, defects-g1-1, defects-g12-1, defects-g27-1, defects-g3-1, defects-r8-1, evidence-g02-life, evidence-g31-ui, evidence-g33-ui, defects-g21-1, defects-g7-1, defects3-unread, evidence-g34-ui, evidence2-b13, evidence3-home): each exit 0, none failed",
   "npx tsc -b --noEmit": 0,
   "npx eslint (this area's 17 files)": 0,
   "node tools/title-case.mjs --check": 0,
   "node tools/spelling.mjs": 0,
   "node tools/typos.mjs": 0,
-  "node tools/tics.mjs --check": "1: “A sentence that opens with Nothing” over by one, at src/ui/components/CourseworkPane.tsx:69, another area's file (not this area's, not changed)",
+  "node tools/tics.mjs --check": 0,
   "node tools/voice-check.mjs --check": 0,
   "node tools/wired.mjs --check": 0,
   "node tools/plural-check.mjs": 0,
   "node tools/label-sweep.mjs": 0,
   "node tools/doc-refs.mjs --check": 0,
-  "devmap, traceability": "not run: no command or scheduled kind added or removed"
+  "devmap, traceability": "not run: no command or scheduled kind added or removed",
+  "node tools/completion-matrix.mjs --check": "1 at the time of writing, for what this area's files caused fixed here (the last pass's banking-result.json citing eight renamed titles, now followed; the scratchpad probe cited, now a test in the tree), and beside it two lines the coverage area and the launching session own: the handoff's completion line and the matrix to regenerate (node tools/completion-matrix.mjs)"
  },
- "mutationsRun": "11, each in a copy of the tree's src in the scratchpad (banking/mut), never in the tree; all killed (M1 to M11)."
+ "mutationsRun": "21, each in a copy of the tree's src in the scratchpad (banking/mut), never in the tree; all killed (M1 to M11 for items 1 to 3, M12 to M21 for the follow-up's 4 to 6)."
 }

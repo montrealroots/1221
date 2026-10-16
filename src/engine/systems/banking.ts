@@ -402,6 +402,17 @@ export function closesQuarterly(account: Account): boolean {
   return bank?.iso === 'DE' && (account.kind === 'checking' || account.kind === 'savings');
 }
 
+/**
+ * When the month's fee comes off: at the month's end (`'month'`), as everywhere but Germany; in the month after
+ * (`'next'`), posted at the first minute of it, as ING takes it; or at the quarter's closing (`'quarter'`), as Deutsche
+ * Bank, Postbank and Berliner Sparkasse do (`Product.feePosts`, from 2026-10-16; until then every German bank's at the
+ * quarter's closing).
+ */
+export function feesPostAt(account: Account): 'month' | 'next' | 'quarter' {
+  if (!closesQuarterly(account)) return 'month';
+  return productOf(account)?.feePosts ?? 'quarter';
+}
+
 /** An amount in the save's money, in a bank's currency. */
 function inSaveMoneyBack(sim: Simulation, amount: Money, currency: string): Money {
   const from = saveCurrency(sim.universe);
@@ -580,7 +591,13 @@ export function closingFeesDue(sim: Simulation, account: Account): ClosingFees |
  */
 export function settleFees(sim: Simulation, account: Account): void {
   const due = closingFeesDue(sim, account);
+  const back = cardRefundDue(sim, account);
   account.feesEndedAt ??= sim.now;
+  // The debit card's year paid ahead, its days left given back first (from 2026-10-16, `cardRefundDue`).
+  if (back) {
+    sim.post({ memo: `Debit card yearly fee refunded: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: back.refund, ...(account.currency ? { native: back.refundHeld } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: -back.refund }] });
+    account.cardFeePaid = 0;
+  }
   if (!due) return;
   account.feesDue = 0;
   if (account.currency) account.feesDueHeld = 0;
@@ -589,19 +606,51 @@ export function settleFees(sim: Simulation, account: Account): void {
 }
 
 /**
- * What closing now would charge of the fees, in words, said under Close It and Cancel It before either is pressed, from
- * `closingFeesDue`'s figures (from 2026-10-16: until then neither said a figure unless it refused). Nothing where the
- * account's bank charges none at closing.
+ * The part of a debit card's yearly fee a close gives back, where the bank charges it for the year ahead
+ * (`Bank.card.ahead`, from 2026-10-16): Berliner Sparkasse refunds what was paid ahead pro rata on an early close (its
+ * price list's footnote 45, § 675h(3) BGB's second sentence). The year is the 365 days from the charge, as the day's loop
+ * charges it (`systems/lending.ts`); the days counted used run from the charge's day through the closing day, as the
+ * month's fee counts them (`closingFeesDue`), and the rest of the 365 come back, rounded half up, in the bank's own money
+ * first. Nothing where it was free (an age the bank spares) or isn't paid ahead, or once given back (`cardFeePaid` set to
+ * nothing by `settleFees`).
+ */
+export function cardRefundDue(sim: Simulation, account: Account): { refund: Money; refundHeld: Money; paid: Money; left: number } | undefined {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const paid = account.cardFeePaid ?? 0;
+  if (!bank?.card?.ahead || account.kind !== 'checking' || account.cardFeeAt === undefined || paid <= 0) return undefined;
+  const day = (at: Instant) => { const p = zonedParts(at, sim.homeZone); return Date.UTC(p.year, p.month - 1, p.day) / MS_DAY; };
+  const left = 365 - (day(sim.now) - day(account.cardFeeAt) + 1);
+  if (left <= 0) return undefined;
+  const refundHeld = Math.floor((2 * paid * left + 365) / (2 * 365));
+  return { refund: inSaveMoney(sim, refundHeld, bank.currency), refundHeld, paid, left };
+}
+
+/**
+ * What closing now would charge of the fees, and give back of a debit card's year paid ahead, in words, said under Close
+ * It and Cancel It before either is pressed, from `closingFeesDue`'s and `cardRefundDue`'s figures (from 2026-10-16:
+ * until then neither said a figure unless it refused). Nothing where the account's bank charges none at closing.
  */
 export function closingFeesWords(sim: Simulation, account: Account, doing: 'Closing' | 'Canceling' = 'Closing'): string | undefined {
   const due = closingFeesDue(sim, account);
-  if (!due || due.none === 'ended' || (due.total === 0 && (due.none === undefined || !productOf(account)?.monthlyFee))) return undefined;
+  const back = cardRefundDue(sim, account);
   const cur = account.currency ?? saveCurrency(sim.universe);
   const own = (save: Money, held: Money | undefined) => formatMoney(held ?? save, cur);
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const refund = back && bank ? `refunds ${balanceText(sim, account, back.refund, account.currency ? back.refundHeld : undefined)} of its debit card’s ${own(inSaveMoney(sim, back.paid, bank.currency), back.paid)} for the year, paid ahead: the ${back.left} of its 365 days left` : undefined;
+  const fees = feesWords(sim, account, due, doing, own);
+  if (!fees) return refund ? `${doing} it now ${refund}.` : undefined;
+  return refund ? `${fees} It ${refund}.` : fees;
+}
+
+/** `closingFeesWords`'s sentence on the fees, or nothing. */
+function feesWords(sim: Simulation, account: Account, due: ClosingFees | undefined, doing: string, own: (save: Money, held: Money | undefined) => string): string | undefined {
+  if (!due || due.none === 'ended' || (due.total === 0 && (due.none === undefined || !productOf(account)?.monthlyFee))) return undefined;
+  const posts = feesPostAt(account);
   const month = `${MONTH_NAMES[zonedParts(sim.now, sim.homeZone).month - 1]}’s`;
-  const kept = due.kept > 0 ? `${own(due.kept, due.keptHeld)} kept for the quarter’s closing` : '';
+  // Kept for the quarter's closing, or, at ING after the month's end and before the 1st, last month's still to come off.
+  const kept = due.kept > 0 ? `${own(due.kept, due.keptHeld)} ${posts === 'next' ? 'for last month, due on the 1st' : 'kept for the quarter’s closing'}` : '';
   const total = balanceText(sim, account, due.total, due.totalHeld);
-  if (due.none === 'accrued') return `${doing} it now charges ${kept ? `${total}, the ${kept}` : 'no fees'}: ${month} was counted at the month’s end.`;
+  if (due.none === 'accrued') return `${doing} it now charges ${kept ? `${total}, the ${kept}` : 'no fees'}: ${month} was ${posts === 'month' ? 'charged' : 'counted'} at the month’s end.`;
   if (due.none !== undefined) {
     const why = due.none === 'new' ? `${month} is free, the month it opened` : `${month} is waived so far`;
     return kept ? `${doing} it now charges ${total}, the ${kept}; ${why}.` : `${doing} it now charges no fees: ${why}.`;
@@ -626,7 +675,8 @@ export function owingWords(items: readonly (readonly [string, string])[]): strin
  * money: `closingFeesDue`'s total, this month's fee to the day (from 2026-10-16: until then the whole month).
  */
 export function closingFeesOf(sim: Simulation, account: Account): Money {
-  return closingFeesDue(sim, account)?.total ?? 0;
+  // Less a debit card's year paid ahead given back (`cardRefundDue`, from 2026-10-16), so a refusal reads what's owed net.
+  return (closingFeesDue(sim, account)?.total ?? 0) - (cardRefundDue(sim, account)?.refund ?? 0);
 }
 
 /** Pays what an account has built up, now, as a bank does when it closes one. */
@@ -675,6 +725,22 @@ export function registerBanking(sim: Simulation): void {
     }
     // A fee for a customer abroad that was owed, taken once the account holds it (from 2026-10-16).
     for (const account of Object.values(s.universe.accounts)) if (account.feeOwedHeld) chargeAbroadFee(s, account, 0);
+    // Last month's fee where the bank takes it in the month after (ING, `feesPostAt`, from 2026-10-16), at the first
+    // minute of it; the day isn't published, so the first is SLATE's.
+    if (zonedParts(s.now, s.homeZone).day === 1) {
+      for (const account of Object.values(s.universe.accounts)) {
+        if (account.closedAt || (account.feesDue ?? 0) <= 0 || feesPostAt(account) !== 'next') continue;
+        s.post({
+          memo: `Monthly fee: ${account.name}`, category: 'bank_fee',
+          postings: [
+            { accountId: account.id, amount: -account.feesDue!, ...(account.currency ? { native: -(account.feesDueHeld ?? 0) } : {}) },
+            { accountId: s.nominalAccount('expense', 'Bank Fees').id, amount: account.feesDue! },
+          ],
+        });
+        account.feesDue = 0;
+        if (account.currency) account.feesDueHeld = 0;
+      }
+    }
     for (const account of Object.values(s.universe.accounts)) {
       if (!account.bankId || account.closedAt || !isEveryday(account)) continue;
       if (account.dormant && ACCOUNT_LIFE[account.bankId]?.stopsInterest) continue;
@@ -705,17 +771,21 @@ export function registerBanking(sim: Simulation): void {
       account.bonusAccrued = 0;
       // Paid in the bank's months, where it doesn't pay every month, and in
       // Germany at the quarterly closing (AGB-Banken no. 7), with the
-      // quarter's fees beside it.
+      // quarter's fees beside it where the bank takes them then (`feesPostAt`:
+      // from 2026-10-16 not ING's or Commerzbank's).
       const quarterly = closesQuarterly(account);
       if ((!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
       // None once a closing has settled them (`feesEndedAt`, from 2026-10-16): they end with the contract.
       const { fee, native } = account.feesEndedAt !== undefined ? { fee: 0, native: undefined } : feeFor(s, account, monthStart);
       // On an account in another currency the bank's own figure goes with it, kept beside the quarter's fees too.
       const own = (n: Money | undefined) => (n !== undefined ? { native: -n } : {});
-      if (quarterly) {
+      // Kept for the quarter's closing, or for the 1st where the bank takes it in the month after (ING, from 2026-10-16;
+      // until then every German bank's went to the quarter's closing), or taken now.
+      const posts = feesPostAt(account);
+      if (posts !== 'month') {
         account.feesDue = (account.feesDue ?? 0) + fee;
         if (account.currency) account.feesDueHeld = (account.feesDueHeld ?? 0) + (native ?? 0);
-        if (month % 3 === 0 && account.feesDue > 0) {
+        if (posts === 'quarter' && month % 3 === 0 && account.feesDue > 0) {
           s.post({
             memo: `Quarterly closing, fees: ${account.name}`, category: 'bank_fee',
             postings: [

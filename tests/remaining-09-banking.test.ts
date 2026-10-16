@@ -51,6 +51,7 @@ import { addCountryHolidays } from '@/engine/content/holidays';
 import { addHomeTerms, homeTerms, resetHomeTerms } from '@/engine/content/homeaccounts';
 import { breaches } from '@/engine/core/invariants';
 import { HOME_CLOSES_KIND } from '@/engine/systems/abroad';
+import { settleFees } from '@/engine/systems/banking';
 
 const h = vi.hoisted(() => ({
   sim: undefined as unknown as import('@/engine/core/simulation').Simulation,
@@ -114,8 +115,9 @@ vi.mock('@/ui/kept', async (orig) => {
 
 const { BankMoves } = await import('@/ui/bank/BankMoves');
 const { BankAccountLife } = await import('@/ui/bank/BankAccountLife');
+const { BankWorkspace } = await import('@/ui/workspaces/BankWorkspace');
 
-for (const country of ['us', 'de']) addCountryHolidays(country, readFileSync(`public/holidays/${country}.tsv`, 'utf8'));
+for (const country of ['us', 'de', 'is']) addCountryHolidays(country, readFileSync(`public/holidays/${country}.tsv`, 'utf8'));
 
 // ---------------------------------------------------------------------------
 // Lives, the screens over them, and the ledger
@@ -135,6 +137,18 @@ async function berliner(seed: string): Promise<Simulation> {
   await loadPlacesFor(sim.universe);
   return sim;
 }
+/** Ada Cole raised in a town abroad, keeping her account at a bank there, born in the year given. */
+async function keeping(seed: string, cityId: string, bankId: string, birthYear: number): Promise<Simulation> {
+  const sim = createSave(1, seed, newLifeFrom({
+    homeRegionId: cityId, firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'scraping', bankId: 'us-chase', birthYear,
+    priorResidence: { cityId, fromYear: 2010, fromMonth: 6 }, homeBankId: bankId,
+  } as Partial<NewSaveConfig>));
+  await loadPlacesFor(sim.universe);
+  return sim;
+}
+const currentAt = (sim: Simulation, bankId: string): Account => mine(sim).find((a) => a.bankId === bankId && a.kind === 'checking')!;
+/** Each posting with this memo on one account: when, in the save's money and its own. */
+const dated = (sim: Simulation, memo: string, id: string) => sim.universe.transactions.filter((t) => t.memo === memo).flatMap((t) => t.postings.filter((p) => p.accountId === id).map((p) => [t.at, p.amount, p.native]));
 /** FIXTURE: a quick-save life in Berlin, banking at a German bank, which no new life is. */
 const inBerlin = (bankId: string, seed: string): Simulation =>
   quickSave({ startLocationId: 'de-be-berlin', homeRegionId: 'de-be-berlin', livesWhereBorn: true, wealth: 'comfortable', bankId }, seed);
@@ -469,5 +483,250 @@ describe('banking.3: a home bank’s own close settles the fees once', () => {
     expect(heldBy(back, 'Quarterly closing, fees: AktivKonto', k2.id)).toEqual([-13_80]);
     expect(titled(back, 'Deutsche Bank Closed Your Account')).toHaveLength(1);
     expect(breaches(back.universe)).toEqual([]);
+  }, 300_000);
+});
+
+// ---------------------------------------------------------------------------
+// banking.4: Berliner Sparkasse's Sparkassen-Card, paid for the year ahead
+// ---------------------------------------------------------------------------
+
+describe('banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a close', () => {
+  it('PLAYER JOURNEY: a Berlin-raised student keeping Berliner Sparkasse is charged €12.00 on her first night; on Wednesday 14 October 2026 Your Banks says closing charges October’s €4.95 to the day, €2.24, and refunds €10.32, 314 of the card’s 365 days; Close It pressed posts both once, against Bank Fees, and a second press and a reload give nothing more back', async () => {
+    const sim = await keeping('rb9-card-close', 'de-be-berlin', 'de-berliner-sparkasse', 2004);
+    const giro = currentAt(sim, 'de-berliner-sparkasse');
+    const chase = primary(sim);
+    expect([giro.name, chase.name]).toEqual(['Giro Digital', 'Chase Total Checking']);
+    sim.advanceTo(at(2026, 10, 14, 9));
+    // The first night, 25 August at midnight: €12.00, 1,200 / 0.92 = 1,304.3, $13.04; once.
+    expect(dated(sim, 'Debit card yearly fee', giro.id)).toEqual([[at(2026, 8, 25, 0), -13_04, -12_00]]);
+    expect(giro.cardFeePaid).toBe(12_00);
+    const tagesgeld = mine(sim).find((a) => a.bankId === 'de-berliner-sparkasse' && a.kind === 'savings');
+    if (tagesgeld) ok(sim, 'bank.close_savings', { accountId: tagesgeld.id });
+    sim.advanceTo(sim.now + 60_000);
+    // October's €4.95, 14 of its 31 days: 495 × 14 / 31 = 223.5, €2.24 ($2.43, 224 / 0.92 = 243.5). The card's year runs
+    // from 25 August: 7 + 30 + 14 = 51 days used to the 14th, 314 left: 1,200 × 314 / 365 = 1,032.3, €10.32 ($11.22).
+    const said = 'Closing it now charges its fees to the day, €2.24 ($2.43): October’s €4.95 for the 14 days of its 31 it’s been open, €2.24. German law charges a month’s fee only to the day an account closes. It refunds €10.32 ($11.22) of its debit card’s €12.00 for the year, paid ahead: the 314 of its 365 days left.';
+    expect(drawn(sim, createElement(BankMoves))).toContain(said);
+    const held = giro.held!;
+    press('Close It');
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.close_current', ok: true });
+    const closedAt = sim.now;
+    expect(dated(sim, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toEqual([[closedAt, 11_22, 10_32]]);
+    expect(dated(sim, 'Closing fees: Giro Digital', giro.id)).toEqual([[closedAt, -2_43, -2_24]]);
+    for (const memo of ['Debit card yearly fee refunded: Giro Digital', 'Closing fees: Giro Digital']) {
+      const t = sim.universe.transactions.find((x) => x.memo === memo)!;
+      expect(t.postings.reduce((n, q) => n + q.amount, 0)).toBe(0);
+      expect(t.postings.map((q) => sim.universe.accounts[q.accountId]!.name)).toEqual(['Giro Digital', 'Bank Fees']);
+    }
+    // Everything that left it at the close is what it held and the refund, less the fees: it holds nothing, closed.
+    const left = sim.universe.transactions.filter((t) => t.at === closedAt).flatMap((t) => t.postings).filter((q) => q.accountId === giro.id).reduce((n, q) => n + (q.native ?? 0), 0);
+    expect([left, giro.held, giro.closedAt]).toEqual([-held, 0, closedAt]);
+    expect(refusal(sim, 'bank.close_current', { accountId: giro.id, remainderTo: chase.id })).toBe('Only a current account of yours can be closed here.');
+    const back = reload(sim);
+    back.advanceTo(at(2027, 9, 1, 9));
+    // Nothing more: no second refund, and no year's fee on the closed account's anniversary.
+    expect(dated(back, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toHaveLength(1);
+    expect(dated(back, 'Debit card yearly fee', giro.id)).toHaveLength(1);
+    expect(onAccount(back, giro.id, closedAt + 1)).toEqual([]);
+    expect(breaches(back.universe)).toEqual([]);
+  }, 300_000);
+
+  it('PLAYER JOURNEY: kept, the card’s second year is charged on 25 August 2027, once, the same whether the clock jumps from 20 August or runs a day at a time with a reload on the 24th; closed on 1 September 2027, July’s and August’s €4.95 kept and one day of September’s, €10.07, and €11.74 of the year refunded, 357 days', async () => {
+    const sim = await keeping('rb9-card-year', 'de-be-berlin', 'de-berliner-sparkasse', 2004);
+    const giro = currentAt(sim, 'de-berliner-sparkasse');
+    sim.advanceTo(at(2027, 8, 20, 9));
+    const snap = freeze(sim);
+    const jump = thaw(snap);
+    jump.advanceTo(at(2027, 9, 1, 9));
+    let steps = thaw(snap);
+    for (let t = at(2027, 8, 21, 9); t <= at(2027, 9, 1, 9); t += MS_DAY) {
+      steps.advanceTo(t);
+      if (t === at(2027, 8, 24, 9)) steps = reload(steps);
+    }
+    // 365 days from 25 August 2026 at midnight.
+    expect(dated(jump, 'Debit card yearly fee', giro.id)).toEqual([[at(2026, 8, 25, 0), -13_04, -12_00], [at(2027, 8, 25, 0), -13_04, -12_00]]);
+    expect(onAccount(steps, giro.id, at(2027, 8, 20, 9))).toEqual(onAccount(jump, giro.id, at(2027, 8, 20, 9)));
+    const tagesgeld = mine(jump).find((a) => a.bankId === 'de-berliner-sparkasse' && a.kind === 'savings');
+    if (tagesgeld) ok(jump, 'bank.close_savings', { accountId: tagesgeld.id });
+    // Kept for the quarter: July's and August's €4.95, €9.90; September to the 1st: 495 / 30 = 16.5, 17 cents; €10.07.
+    // The card's year from 25 August: 8 days used to 1 September, 357 left: 1,200 × 357 / 365 = 1,173.7, €11.74.
+    // In dollars each part as it was converted when kept: 495 / 0.92 = 538.0, $5.38 twice, and 17 / 0.92 = 18.5, 18 cents:
+    // $10.94; the refund 1,174 / 0.92 = 1,276.1, $12.76.
+    expect(drawn(jump, createElement(BankMoves))).toContain('Closing it now charges its fees to the day, €10.07 ($10.94): €9.90 kept for the quarter’s closing, and September’s €4.95 for the one day of its 30 it’s been open, €0.17. German law charges a month’s fee only to the day an account closes. It refunds €11.74 ($12.76) of its debit card’s €12.00 for the year, paid ahead: the 357 of its 365 days left.');
+    expect(closeKonto2(jump, 'de-berliner-sparkasse').ok).toBe(true);
+    expect(heldBy(jump, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toEqual([11_74]);
+    expect(heldBy(jump, 'Closing fees: Giro Digital', giro.id)).toEqual([-10_07]);
+    expect(breaches(jump.universe)).toEqual([]);
+  }, 600_000);
+});
+
+describe('banking.4.sparkassen-card: on a Giro Digital opened in Berlin', () => {
+  it('FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00 that night; on the 12th, with nothing in it, Cancel It isn’t refused, as the card’s 358 days left, €11.77, are more than January’s 8 days, €1.28, which Your Accounts Over Time says first; canceled, €10.49 goes to Deutsche Bank', () => {
+    const sim = inBerlin('de-deutsche-bank', 'rb9-card-cancel');
+    const db = primary(sim);
+    const giro = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-berliner-sparkasse' }).accountId]!;
+    setTo(sim, giro, 100_00); // TEST SETUP
+    sim.advanceTo(berlin(2026, 1, 12, 12));
+    // Paid for the year ahead from its first night (until 2026-10-16 nothing was charged for the card).
+    expect(dated(sim, 'Debit card yearly fee', giro.id)).toEqual([[berlin(2026, 1, 6, 0), -12_00, undefined]]);
+    setTo(sim, giro, 0); // TEST SETUP
+    // January from the 5th to the 12th, 8 of 31 days: 495 × 8 / 31 = 127.7, €1.28. The card's year from the 6th, 7 days
+    // used: 1,200 × 358 / 365 = 1,177.0, €11.77. Owed net, nothing: no refusal at €0.
+    const said = 'Canceling it now charges its fees to the day, €1.28: January’s €4.95 for the 8 days of its 31 it’s been open, €1.28. German law charges a month’s fee only to the day an account closes. It refunds €11.77 of its debit card’s €12.00 for the year, paid ahead: the 358 of its 365 days left.';
+    expect(drawn(sim, createElement(BankAccountLife, { bankId: 'de-deutsche-bank' }))).toContain(`less the fees it owes. ${said}`);
+    pressAfter(giro.name, 'Cancel It');
+    expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.cancel_new', ok: true });
+    expect(postedTo(sim, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toEqual([11_77]);
+    expect(postedTo(sim, 'Closing fees: Giro Digital', giro.id)).toEqual([-1_28]);
+    expect([giro.closedAt, giro.balance]).toEqual([sim.now, 0]);
+    sim.advanceTo(sim.now + 7 * MS_DAY);
+    expect(sim.universe.transactions.filter((t) => t.postings.some((q) => q.accountId === db.id && q.amount === 10_49))).toHaveLength(1);
+    expect(breaches(sim.universe)).toEqual([]);
+  });
+
+  it('GUARD: a second settling of a Giro Digital’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again settles twice, and none closes a Berliner Sparkasse account)', () => {
+    const sim = inBerlin('de-deutsche-bank', 'rb9-card-twice');
+    const giro = sim.universe.accounts[ok<{ accountId: string }>(sim, 'bank.open_current', { bankId: 'de-berliner-sparkasse' }).accountId]!;
+    setTo(sim, giro, 100_00); // TEST SETUP
+    sim.advanceTo(berlin(2026, 1, 12, 12));
+    settleFees(sim, giro);
+    settleFees(sim, giro);
+    expect(postedTo(sim, 'Debit card yearly fee refunded: Giro Digital', giro.id)).toEqual([11_77]);
+    expect(postedTo(sim, 'Closing fees: Giro Digital', giro.id)).toEqual([-1_28]);
+    expect(giro.cardFeePaid).toBe(0);
+  });
+});
+
+/** Close It on the current account kept at a bank, into Chase. */
+function closeKonto2(sim: Simulation, bankId: string) {
+  return sim.execute({ kind: 'bank.close_current', payload: { accountId: currentAt(sim, bankId).id, remainderTo: sim.player.primaryAccountId } });
+}
+
+// ---------------------------------------------------------------------------
+// banking.5: Arion's yearly debit-card fee
+// ---------------------------------------------------------------------------
+
+describe('banking.5.arion-card: Arion’s yearly debit-card fee in its own figure', () => {
+  it('PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing gives nothing of it back, as SLATE can’t say from Arion’s terms whether the year was paid ahead', async () => {
+    const sim = await keeping('rb9-arion', 'is-39-reykjavik', 'is-arion', 2000);
+    const arion = currentAt(sim, 'is-arion');
+    const before = arion.held!;
+    sim.advanceTo(at(2026, 8, 25, 9));
+    // Arion's price list: 950 kr a year from 24. Until 2026-10-16 the krónur side was the dollars converted back: 949 kr.
+    expect(dated(sim, 'Debit card yearly fee', arion.id).map(([when, , native]) => [when, native])).toEqual([[at(2026, 8, 25, 0), -950_00]]);
+    expect(arion.held).toBe(before - 950_00);
+    sim.advanceTo(at(2027, 8, 26, 9));
+    expect(dated(sim, 'Debit card yearly fee', arion.id).map(([, , native]) => native)).toEqual([-950_00, -950_00]);
+    // Closed: neither refunded nor charged to the day (banking-result.json, banking.5.arion-card: the owner's decision).
+    const saver = mine(sim).find((a) => a.bankId === 'is-arion' && a.kind === 'savings');
+    if (saver) ok(sim, 'bank.close_savings', { accountId: saver.id });
+    expect(closeKonto2(sim, 'is-arion').ok).toBe(true);
+    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Debit card yearly fee refunded'))).toEqual([]);
+    expect(breaches(sim.universe)).toEqual([]);
+    const young = await keeping('rb9-arion-young', 'is-39-reykjavik', 'is-arion', 2006);
+    young.advanceTo(at(2027, 8, 26, 9));
+    expect(dated(young, 'Debit card yearly fee', currentAt(young, 'is-arion').id)).toEqual([]);
+  }, 300_000);
+});
+
+// ---------------------------------------------------------------------------
+// banking.6: each German bank's month's fee on its own day
+// ---------------------------------------------------------------------------
+
+describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end', () => {
+  it('PLAYER JOURNEY: a Berlin-raised student of 30 keeping ING is charged its €4.90 at the first minute of each next month, 1 September 2026 to 1 January 2027, €24.50, what the quarter’s closings took until 2026-10-16, and none at a quarter’s closing; the screen says when; the same whether the clock jumps or runs a day at a time with a reload on 1 November', async () => {
+    const sim = await keeping('rb9-ing', 'de-be-berlin', 'de-ing', 1996);
+    const ing = currentAt(sim, 'de-ing');
+    expect(ing.name).toBe('Girokonto');
+    sim.advanceTo(at(2026, 10, 25, 9));
+    const snap = freeze(sim);
+    // October's €4.90, not waived (no €1,000 paid in, and 30): charged on 1 November, as ING's conditions have it.
+    expect(drawn(sim, createElement(BankWorkspace))).toContain('This month’s is charged November 1, 2026 unless that changes.');
+    const jump = thaw(snap);
+    jump.advanceTo(at(2027, 1, 5, 9));
+    let steps = thaw(snap);
+    for (let t = at(2026, 10, 26, 9); t <= at(2026, 11, 3, 9); t += MS_DAY) {
+      steps.advanceTo(t);
+      if (t === at(2026, 11, 1, 9)) steps = reload(steps);
+    }
+    steps.advanceTo(at(2027, 1, 5, 9));
+    // €4.90, 490 / 0.92 = 532.6, $5.33, each at midnight on the 1st in New Haven.
+    const months = [at(2026, 9, 1, 0), at(2026, 10, 1, 0), at(2026, 11, 1, 0), at(2026, 12, 1, 0), at(2027, 1, 1, 0)];
+    expect(dated(jump, 'Monthly fee: Girokonto', ing.id)).toEqual(months.map((m) => [m, -5_33, -4_90]));
+    expect(dated(jump, 'Quarterly closing, fees: Girokonto', ing.id)).toEqual([]);
+    expect(dated(steps, 'Monthly fee: Girokonto', ing.id)).toEqual(dated(jump, 'Monthly fee: Girokonto', ing.id));
+    expect(onAccount(steps, ing.id, at(2026, 10, 25, 9))).toEqual(onAccount(jump, ing.id, at(2026, 10, 25, 9)));
+    expect(breaches(jump.universe)).toEqual([]);
+  }, 600_000);
+
+  it('PLAYER JOURNEY: the ING student closing at 11:30 PM on 31 October 2026, October’s €4.90 counted and not yet charged, is told and charged it once, and 1 November charges nothing more', async () => {
+    const sim = await keeping('rb9-ing-edge', 'de-be-berlin', 'de-ing', 1996);
+    const ing = currentAt(sim, 'de-ing');
+    sim.advanceTo(at(2026, 10, 31, 23, 30));
+    expect([ing.feesDue, ing.feesDueHeld]).toEqual([5_33, 4_90]);
+    const saver = mine(sim).find((a) => a.bankId === 'de-ing' && a.kind === 'savings');
+    if (saver) ok(sim, 'bank.close_savings', { accountId: saver.id });
+    expect(drawn(sim, createElement(BankMoves))).toContain('Closing it now charges €4.90 ($5.33), the €4.90 for last month, due on the 1st: October’s was counted at the month’s end.');
+    expect(closeKonto2(sim, 'de-ing').ok).toBe(true);
+    sim.advanceTo(at(2026, 11, 2, 9));
+    expect(heldBy(sim, 'Closing fees: Girokonto', ing.id)).toEqual([-4_90]);
+    expect(heldBy(sim, 'Monthly fee: Girokonto', ing.id)).toEqual([-4_90, -4_90]);
+    expect(dated(sim, 'Monthly fee: Girokonto', ing.id).map(([when]) => when)).toEqual([at(2026, 9, 1, 0), at(2026, 10, 1, 0)]);
+    expect(breaches(sim.universe)).toEqual([]);
+  }, 300_000);
+
+  it('PLAYER JOURNEY: a Berlin-raised student keeping Commerzbank is charged its €4.90 at 11 PM on each month’s last day, August to December 2026, and none at a quarter’s closing; the screen says the day; Deutsche Bank’s still goes to the quarter’s closing', async () => {
+    const sim = await keeping('rb9-commerz', 'de-be-berlin', 'de-commerzbank', 2004);
+    const giro = currentAt(sim, 'de-commerzbank');
+    sim.advanceTo(at(2026, 10, 14, 9));
+    expect(drawn(sim, createElement(BankWorkspace))).toContain('This month’s is due October 31, 2026 unless that changes.');
+    sim.advanceTo(at(2027, 1, 5, 9));
+    const ends = [at(2026, 8, 31, 23), at(2026, 9, 30, 23), at(2026, 10, 31, 23), at(2026, 11, 30, 23), at(2026, 12, 31, 23)];
+    expect(dated(sim, 'Monthly fee: GiroKonto', giro.id)).toEqual(ends.map((m) => [m, -5_33, -4_90]));
+    expect(dated(sim, 'Quarterly closing, fees: GiroKonto', giro.id)).toEqual([]);
+    const db = await berliner('rb9-commerz-db');
+    db.advanceTo(at(2026, 10, 2, 9));
+    expect(heldBy(db, 'Quarterly closing, fees: AktivKonto', konto(db).id)).toEqual([-13_80]);
+    expect(heldBy(db, 'Monthly fee: AktivKonto', konto(db).id)).toEqual([]);
+    expect(breaches(sim.universe)).toEqual([]);
+  }, 300_000);
+});
+
+// ---------------------------------------------------------------------------
+// banking.2: the eight bank rows, met by students keeping an account at home
+// ---------------------------------------------------------------------------
+
+describe('banking.2: what a student keeping an account at home meets at the eight unresolved bank rows', () => {
+  it('PLAYER JOURNEY: six students keeping an account at home (HSBC UK and BNP Paribas from 2010; RBC, BBVA México, Deutsche Bank and NatWest from 1 August 2026, the latest Before Yale allows) are refused each of the eight in its words on their first morning, every cooling-off period over, nothing posted and no switch set', async () => {
+    const away = (bank: string) => `The research found no way to open anything new at ${bank} from America, so SLATE takes it there’s none.`;
+    const lives = [
+      ['uk-eng-london', 'gb-hsbc', 2010, 'HSBC UK', 'HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.', 'gb-barclays'],
+      ['fr-idf-paris', 'fr-bnp-paribas', 2010, 'BNP Paribas', away('BNP Paribas'), 'gb-hsbc'],
+      ['ca-on-toronto', 'ca-rbc', 2026, 'RBC Royal Bank', away('RBC Royal Bank'), 'gb-hsbc'],
+      ['mx-cmx-mexico-city', 'mx-bbva', 2026, 'BBVA México', 'BBVA México asks for a Mexican address and a Mexican immigration form to open an account.', 'gb-hsbc'],
+      ['de-be-berlin', 'de-deutsche-bank', 2026, 'Deutsche Bank', away('Deutsche Bank'), 'gb-hsbc'],
+      ['uk-eng-london', 'gb-natwest', 2026, 'NatWest', 'NatWest opens accounts for people living in the UK, and none for a customer abroad.', 'gb-hsbc'],
+    ] as const;
+    for (const [cityId, bankId, fromYear, name, overdraft, other] of lives) {
+      const sim = createSave(1, `rb9-rows-${bankId}`, newLifeFrom({
+        homeRegionId: cityId, firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', wealth: 'modest', bankId: 'us-chase', birthYear: 2006,
+        priorResidence: { cityId, fromYear, fromMonth: fromYear === 2026 ? 8 : 6 }, homeBankId: bankId,
+      } as Partial<NewSaveConfig>));
+      await loadPlacesFor(sim.universe);
+      const home = currentAt(sim, bankId);
+      const lines = sim.universe.transactions.length;
+      expect([bankId, refusal(sim, 'bank.cancel_new', { accountId: home.id })]).toEqual([bankId, 'Its cooling-off period has passed, or there isn’t one here for it.']);
+      expect(refusal(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: home.id })).toBe(overdraft);
+      // Born abroad, not a US citizen: Citi's opening refuses first; a bank abroad isn't one where she lives.
+      expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi opens this account for US citizens and permanent residents.');
+      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('That isn’t a bank where you live.');
+      expect(refusal(sim, 'bank.cancel_switch', {})).toBe('No switch is under way.');
+      expect(refusal(sim, 'bank.stop_balance_transfer', {})).toBe('No switch is under way.');
+      expect(refusal(sim, 'bank.take_overrun_loan', { accountId: home.id })).toBe('Your bank has offered no loan for an overrun.');
+      expect(refusal(sim, 'card.apply', { bankId })).toBe(`A card is applied for in the country you bank in; ${name} is elsewhere.`);
+      expect(refusal(sim, 'card.money_transfer', { amount: 100_00 })).toBe('The Chase Freedom Unlimited doesn’t offer money transfers.');
+      expect(sim.universe.transactions.length).toBe(lines);
+      expect(sim.universe.scheduled.filter((i) => i.kind === 'bank.switch_complete' && i.status === 'pending')).toEqual([]);
+    }
   }, 300_000);
 });

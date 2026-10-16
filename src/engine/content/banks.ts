@@ -31,6 +31,13 @@ export interface Product {
   /** A month's fee, in the bank's currency's hundredths. Absent: none. */
   monthlyFee?: Money;
   /**
+   * Where a bank closes the account each quarter (`closesQuarterly`), when it takes the month's fee from it, by its own
+   * terms: at the month's end (`'month'`), or in the month after (`'next'`), posted at the first minute of it. Absent, at
+   * the quarter's closing beside the interest. From 2026-10-16 (brief 09's follow-up): until then every German bank's
+   * month's fee was taken at the quarter's closing, ING's and Commerzbank's among them.
+   */
+  feePosts?: 'month' | 'next';
+  /**
    * What waives the fee, any one of them: wages paid in during the month, a
    * balance kept all month, an age under or over a line, so many card
    * purchases in the month, or the first months after opening, in the
@@ -137,8 +144,14 @@ export interface Bank {
   overdraft?: string;
   /** A fee for a payment the bank returns unpaid, no more often than every so many business days, and none on a small one. */
   returned?: { fee: Money; gapDays: number; ifShortAtLeast?: Money; source: string };
-  /** The debit card's fees: a year's, and one a purchase; free under an age. */
-  card?: { yearly?: Money; perPurchase?: Money; freeUnder?: number; source: string };
+  /**
+   * The debit card's fees: a year's, and one a purchase; free under an age. `ahead`: the year's fee is paid for the 365
+   * days from when it's charged, the first on the account's first night, and on any close the days of that year left are
+   * refunded pro rata (from 2026-10-16: Berliner Sparkasse's price list, its footnote 45). Absent, it's charged on each
+   * anniversary of the account and nothing comes back on a close, which is how Arion's was charged before, and is still:
+   * its terms say neither.
+   */
+  card?: { yearly?: Money; perPurchase?: Money; freeUnder?: number; ahead?: boolean; source: string };
   /** A fee on an account nobody has used in years, below a balance where the bank says so. */
   dormant?: { yearly: Money; afterYears: number; belowBalance?: Money; source: string };
   /** A fee for a month with too few transactions, spared where wages are paid in. */

@@ -126,6 +126,12 @@ export interface Account {
   /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
   returnedAt?: Instant;
   cardFeeAt?: Instant;
+  /**
+   * What the debit card's yearly fee took at `cardFeeAt`, in the bank's own money, where the bank charges it for the year
+   * ahead and gives back its days left on a close (`Bank.card.ahead`, `cardRefundDue`, from 2026-10-16): none where the
+   * year was free, and none once given back.
+   */
+  cardFeePaid?: Money;
   dormantFeeAt?: Instant;
   /** Germany: the quarter's fees so far, charged at the quarterly closing. */
   feesDue?: Money;

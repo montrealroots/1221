@@ -131,6 +131,7 @@ const OWED = -MODEST.cardBalance;
 const HOME_BANKS = allHomeTerms().filter((t) => !t.unusable).length;
 const HOME_COUNTRIES = new Set(allHomeTerms().map((t) => bankById(t.bankId)?.iso)).size;
 const BARCLAYS = bankById('gb-barclays')!;
+const SPARKASSE = bankById('de-berliner-sparkasse')!;
 const LONDON_SPLIT = splitOf(MODEST, 'USD', BARCLAYS, true);
 const WORTH = MODEST.checking + MODEST.savings - OWED;
 const CHASE_RATE = priceWithin(CHASE_CARD.aprFrom ?? 0, CHASE_CARD.aprTo ?? 0, RECORD);
@@ -264,8 +265,9 @@ export const MONEY: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'Interest', value: 'Built each day on the day’s closing balance, past any floor, up to any cap, at the tier the balance reaches; paid on the month’s last day or in the bank’s own months, less any tax the country has the bank take first' },
-      // The month an account opens, from 2026-10-16 (Deutsche Bank's price list, `Product.waiver.openingMonth`).
-      { label: 'The Monthly Fee', value: 'Charged at 11 PM on the month’s last day unless the month met a waiver: deposits paid in, the month’s lowest balance, its average, an average across your accounts at the bank, your age, card purchases, the first months after opening, or at Deutsche Bank the month the account opens. Short of a waiver, a bank that sets a lower fee charges that where the month met its condition' },
+      // The month an account opens, from 2026-10-16 (Deutsche Bank's price list, `Product.waiver.openingMonth`); and each
+      // German bank's own day for it later that day (`feesPostAt`): until then every German bank's went to the quarter's closing.
+      { label: 'The Monthly Fee', value: 'Charged at 11 PM on the month’s last day unless the month met a waiver: deposits paid in, the month’s lowest balance, its average, an average across your accounts at the bank, your age, card purchases, the first months after opening, or at Deutsche Bank the month the account opens. Short of a waiver, a bank that sets a lower fee charges that where the month met its condition. Deutsche Bank, Postbank and Berliner Sparkasse take it at the quarter’s closing, and ING on the 1st of the month after' },
       { label: 'The Primary Account', value: `${PRIMARY_DOES.join('. ')}.` },
       { label: 'A Statement', value: 'Every entry on each account you’ve held, month by month (by the quarter in Germany), with the balance after each' },
     ],
@@ -275,7 +277,9 @@ export const MONEY: readonly GuideEntry[] = [
       'Make Primary: your debit purchases, cash from a machine, bills you pay by hand and anything new you set up use it from now, and the screen is headed by its bank. Wages, standing orders, card autopay and loan payments stay where they were set up.',
     ],
     later: [
-      'At 11 PM on the month’s last day: interest paid, the fee charged or waived, and the current account’s statement written. Germany’s banks settle at each quarter’s end.',
+      // Until 2026-10-16 this said Germany's banks settled the fee too at each quarter's end; Commerzbank's and ING's
+      // don't since (`feesPostAt`).
+      'At 11 PM on the month’s last day: interest paid, the fee charged or waived, and the current account’s statement written. Germany’s banks settle the interest at each quarter’s end, and Deutsche Bank, Postbank and Berliner Sparkasse the fee with it; ING takes the month’s fee on the 1st of the next.',
       // “… Closed” named the primary account wherever the money went until 2026-10-15 (`systems/banking.ts`).
       `In Germany, savings holding more than the ${GERMAN_MONTH} a month lets out takes three months’ notice to close, and closes then, its money to the current account at its bank, or with none there to your primary account; “… Closed” names the account it went to, and where it was sent in the bank’s days, the day it arrives.`,
     ],
@@ -1348,6 +1352,8 @@ export const MONEY: readonly GuideEntry[] = [
       // close tried again after its notice charges no more fees (`feesEndedAt`).
       `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad, and its fees end there. Overdrawn then, it tries again each day until it’s paid. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
       'Close It on its current account, once its savings there are closed, closes it as Another Bank says: at a German bank it charges the months kept for the quarter’s closing and this month’s fee only for the days it’s been open, the figure said under Close It first.',
+      // From 2026-10-16 (brief 09's follow-up, `Bank.card.ahead`): until then SLATE charged nothing for the card.
+      `Berliner Sparkasse’s Giro Digital comes without its Sparkassen-Card, which costs ${formatMoney(SPARKASSE.card?.yearly ?? 0, 'EUR')} a year, paid ahead: on the first night and each year after, and on a close the days of that year left are refunded, said under Close It first.`,
       `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
       'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
       // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).
