@@ -1,0 +1,157 @@
+{
+ "key": "advice",
+ "on": "2026-10-16",
+ "against": "f17ae369 (the four areas' instructions for brief 10, on 2e8e4db3, the owner's brief and its criteria), in the advice area's own clone, branch advice, read before any code of this area changed",
+ "brief": "docs/verification/decisions-2026-10-16/prompts/advice.md and common.md; brief 09's prompts-09/common.md; the owner's section 2 (\"Advice: Adopt F2-A And Broaden Its Proof\") of docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt; the criteria F2-A10 (a) to (i) (docs/verification/decisions-2026-10-16/criteria.md, section 2), unchanged; F2-A as defined before it was first run (docs/verification/advice-2026-10-16/criteria.md); CLAUDE.md",
+ "owns": "src/engine/systems/advice.ts, tools/advice.ts, the Player Profile's What To Improve Next (ProfileWorkspace.tsx NextWork, read through adviceFor in systems/next-steps.ts and the forecast branch of recommendations in systems/experience.ts); tools/advice-harness.ts, which tests/advice.test.ts shares, extended without changing what F2-A's own exports do. Not growth (DEVELOPMENT, systems/practice.ts) and not the judge: a change needed there is a finding.",
+ "seeds": {
+  "tuning": "adv-0 to adv-9 (F2-A's own set-up, unchanged) and adv-t-0 to adv-t-19 (the new set-up: band n mod 4, stage floor(n / 4) mod 3, so the twenty cover all twelve strata)",
+  "heldOut": "adv-10 to adv-39 (F2-A's own set-up, unchanged) and adv-h-0 to adv-h-119 (band floor(n / 30), stage floor((n mod 30) / 10), ten seeds a stratum: 30 cases a band, 40 a stage)",
+  "rule": "tools/advice.ts refuses a held-out seed unless --held-out is passed, and then writes the commit (git rev-parse HEAD) and whether the tree was clean into its output. The held-out set is run once, on the final code, into docs/verification/decisions-2026-10-16/advice/, in batches of 10, each batch's output its own file."
+ },
+ "items": [
+  {
+   "id": "advice.harness",
+   "item": "The harness, before any held-out case is run: the tuning and held-out seeds apart; four bands and three stages built through the game's commands; every measure the criteria name.",
+   "requirement": "advice.md, The Order, 1; F2-A10 (a); the owner's brief section 2: \"Expand beyond the existing forty cases using fresh profiles, genres, ability levels, and progression stages. Keep tuning cases separate from held-out validation. Set the expanded acceptance criteria before measuring the final implementation.\"",
+   "currentBehavior": "tools/advice.ts:29-47 runs adv-N only, from --from to --to, with nothing keeping held-out seeds apart. tools/advice-harness.ts:59-77 (setUp) draws abilities 30 to 75 and techniques 25 to 75 (stamina left as the save had it), tapes three camera briefs in one day, two rounds of each step and one genre study; no band, no stage, no voice brief, no genre drawn across the 149 (it draws briefs, 262 of the 298 camera ones). The realized gain (realize, worth: harness 50-83) is each copy's forecast().overall, rounded to a tenth, over the three taped briefs, weighted 1:2:3. tools/advice.ts:2 imports writeFileSync twice. No measure of (c) to (i) exists.",
+   "affectedSystems": ["tools/advice-harness.ts", "tools/advice.ts"],
+   "plan": "Keep F2-A's setUp, realize and worth exactly as they are (tests/advice.test.ts plays adv-2 through them), and add beside them: caseOf(seed) mapping a seed to its set-up (F2-A's for adv-N; the band and stage for adv-t-N and adv-h-N); buildCase(seed, band, stage): a student created through createSave, every ability (stamina's fitness included, capped at its full) and technique drawn uniformly in the band (TEST SETUP, set as F2-A sets them: beginner 25 to 45, developing 40 to 65, advanced 60 to 85, near mastery 80 to 97 with each input at full with chance one in four and at least two at full), then the stage's takes through brief.choose, brief.prepare, genre.study and practice.self_tape (the first week 1 to 3 takes inside seven days from 29 August; mid-term 6 to 10 to mid-October; later 15 to 20 to early December, at least ten genres), each take's genre drawn uniformly from the 149 and its brief from that genre's (either medium), its preparation drawn (one to three rounds of each step, none to two studies of the genre), and from mid-term on a share of the takes another reading of a brief already taped. The realized gain of each candidate (every ability and technique the latest twelve pieces read that has an exercise and isn't at full by the game's own atFull: an ability at its full, a technique at MASTERED): a copy plays twenty sessions of its exercise through practice.exercise, one a day at the matched tier, steady, rested, as F2-A's live does; a baseline copy lives the same days; the gain is each copy's forecast of the takes among the latest twelve pieces, each at the reading it was taped at, at full precision (exact), weighted (i + 1) / n as the advice weights, less the baseline's. Every measure of (b) to (i) is computed per case and written to the case's JSON; a summary per set and stratum is printed. Committed before any tuning run.",
+   "acceptance": "Static: the commit holds the harness before any change to systems/advice.ts; the tool refuses a held-out seed without --held-out. Run: the tuning set (30 cases) through it on the unchanged advice, written as the tuning 'before'.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "advice.F2",
+   "item": "F2 as written, kept in the record and still reported.",
+   "requirement": "Brief 10 section 2: \"Keep F2's original definition and results in the historical record\"; criteria.md section 2: \"F2 as written stays in the record (67.6%, not met), and keeps being reported.\"",
+   "currentBehavior": "302 of 447 (67.6%) on 7c1198a2's judge (completion matrix row F2, Decision Required). It reads the take's chief limit with +20 (tools/ag-baseline.ts section 8), not the advice, so nothing in this area moves it.",
+   "affectedSystems": [],
+   "plan": "Run tools/ag-baseline.ts and tools/ag-criteria.mjs on the area's final code and report F2 as written beside F2-A10, not counted for the advice.",
+   "acceptance": "The figure as measured, with the command and its exit code, in the result.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented (not met as written; kept as the record)"
+  },
+  {
+   "id": "advice.F2A10-a",
+   "item": "F2-A10 (a): cases, tuning apart from held out; 120 fresh held-out cases stratified as four bands, three stages and ten seeds each, their genres drawn across the 149; the held-out seeds first run on the code to be reported, the commit recorded.",
+   "requirement": "criteria.md F2-A10 (a).",
+   "currentBehavior": "40 cases of one design (advice.harness's currentBehavior); held-out adv-10 to 39 were run in F2-A on earlier code (played-cases.json), never on this area's.",
+   "affectedSystems": ["tools/advice-harness.ts", "tools/advice.ts", "docs/verification/decisions-2026-10-16/advice/"],
+   "plan": "As advice.harness. The held-out run's files record the commit, the tree's state and the command of each batch.",
+   "acceptance": "The output gives, for every held-out case, its band, stage, takes, genres (distinct genres counted over the 120: reported) and the commit; the summary counts 30 a band and 40 a stage.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "advice.F2A10-b",
+   "item": "F2-A10 (b): right often enough: at least 80% of the 120 fresh held-out cases pass F2-A, and at least 70% of each band and of each stage.",
+   "requirement": "criteria.md F2-A10 (b); F2-A's pass kept as it was defined: the advised input's realized gain is the largest, within a tenth of the largest, or the largest is among those the advice called about as useful.",
+   "currentBehavior": "F2-A: 40 of 40 (adv-0 to 39) on bcd75970. The fresh cases don't exist.",
+   "affectedSystems": ["src/engine/systems/advice.ts", "src/engine/systems/experience.ts (the forecast branch of recommendations)"],
+   "plan": "Measure per case: first = adviceFor's first recommendation with a forecast; said = it and its tiedWith; pass as F2-A defines it, on the realized gains at full precision. A case where the advice names no training passes only if no candidate's realized gain reaches 0.1 (the advice's own floor), and is counted apart. Fix in systems/advice.ts what the tuning cases show misranked, from the engine's own growth and judge, never from a case's name.",
+   "acceptance": "Held out: 120 fresh at least 96 (80%); each band (30) at least 21 (70%), each stage (40) at least 28 (70%). Reported apart: adv-10 to 39, and the tuning 30 before and after.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-c",
+   "item": "F2-A10 (c): better than the alternatives: on the same budget, the advised input's realized gain at or above the median of the other inputs' in at least 95% of held-out cases, and its mean at least 1.5 times the mean of an input chosen at random.",
+   "requirement": "criteria.md F2-A10 (c).",
+   "currentBehavior": "Not measured.",
+   "affectedSystems": ["tools/advice.ts"],
+   "plan": "The other inputs: the harness's candidates (advice.harness) less the advised one, each played on the same twenty sessions. Median of theirs per case; an input chosen at random: the mean of every candidate's realized gain, the advised one included, per case; both means over the cases. Cases with no advised input are counted apart and left out of both.",
+   "acceptance": "Over the 150 held-out cases and over the 120 fresh alone, each: at or above the median in at least 95%; mean advised gain / mean random gain at least 1.5. Met only if both sets meet it.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "advice.F2A10-d",
+   "item": "F2-A10 (d): improvable: the advice names no input at full and none the player has no way to train (0 cases); where every read input is at full, it says so.",
+   "requirement": "criteria.md F2-A10 (d); the owner's \"Targets something the player can actually improve.\"",
+   "currentBehavior": "forecastFor (advice.ts:76-80) skips an input with no exercise or at its full, a technique's full taken as 100 (advice.ts:79), so a technique at 90 to 99, past MASTERED, where no work reads more (practice.ts pastMastery), is forecast at 0 points and dropped only by the floor of 0.1 (experience.ts:132, 194). With every read input at full the forecast is empty, and recommendations falls back to the limits' costs (experience.ts:204-215), where an input with no exercise (stamina) can be named with no exercise, and nothing says every read input is at full; the Profile then says the work \"wasn't held back by any ability or technique with room to grow\" (ProfileWorkspace.tsx), which is also what it says for a new student with nothing over the floor.",
+   "affectedSystems": ["src/engine/systems/advice.ts", "src/engine/systems/experience.ts", "src/engine/systems/next-steps.ts", "src/ui/workspaces/ProfileWorkspace.tsx"],
+   "plan": "A technique counts at full at MASTERED in the forecast, as the game's atFull says; with work kept and every input it read that an exercise trains at full, the advice says so, in one recommendation with no exercise (a target with a colon, so tools reading training targets skip it), naming stamina's workouts and discipline's days where those are read and below full; the Profile shows it.",
+   "acceptance": "Every case (tuning and held out): each recommendation with an exercise is below full by atFull and has an exercise: 0 violations. Every near-mastery case also read again with every input its work read raised to full (TEST SETUP): no training named, and the statement given: all of them (30 held out). A test in tests/decisions-advice.test.ts.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "advice.F2A10-e",
+   "item": "F2-A10 (e): the real curve: the predicted gain for the first input within 0.3 points, or a quarter, of the realized gain in at least 80% of held-out cases (reading the engine's growth, costs and diminishing returns, not its own).",
+   "requirement": "criteria.md F2-A10 (e); the owner's \"Uses the real progression curve, costs, and available actions.\"",
+   "currentBehavior": "levelAfter (advice.ts:48-54) is the advice's own copy of the curve: abilityGain at focus 1 and a lift fixed at today's discipline, where the hour grows through gainAfter at the day's focus; and the twenty days' practice grows discipline too (PRACTICE.disciplineDay), which no forecast counts: F2-A's README found every realized gain about a quarter of a point above its forecast. The forecast also works from each replay's whole rounded to a tenth (advice.ts:69, 90-92: e.overall).",
+   "affectedSystems": ["src/engine/systems/advice.ts"],
+   "plan": "Measure on the tuning cases; forecast from the engine's own growth terms (the same functions an hour grows by) and from the replays' exact wholes; count what the hours bring beside their target where the engine brings it to every hour (discipline's day), said apart in the words.",
+   "acceptance": "|predicted − realized| ≤ max(0.3, 0.25 × |realized|) for the first-named input in at least 80% of the 150 held-out cases and of the 120 fresh alone.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.F2A10-f",
+   "item": "F2-A10 (f): mastery and preparation: near mastery, a predicted gain falls as the input's level rises (diminishing returns), on every case; where a take's preparation, not an ability, held it back, the advice's figures read the take as prepared.",
+   "requirement": "criteria.md F2-A10 (f); the owner's \"Accounts for current mastery, preparation needs, and diminishing returns.\"",
+   "currentBehavior": "Not measured. The forecast replays each take with its preparation as it was kept (replayAs, advice.ts:69, 90; evaluation.ts:355-361), so a take held back by knowing the genre (0.08 of 0.9 in every F2-A case) or by lines half learned scales every ability's forecast on the dimensions that part reads. The engine's deliberate practice grows at the floor's constant rate from 75 up (abilityGain, DEVELOPMENT.floor 0.25), which the measure will show.",
+   "affectedSystems": ["src/engine/systems/advice.ts"],
+   "plan": "Diminishing returns: on every near-mastery case, the first-named input's predicted gain at its level now, at a third and at two thirds of the way from there to full (everything else held), each below the one before; reported also for every candidate. Preparation: the forecast replays each take with every part of its preparation complete (at what the take required), the preparation's own advice kept as it is.",
+   "acceptance": "Near mastery: the ladder strictly falling on every near-mastery case (30 held out; and the tuning ones). Preparation: on every held-out case whose recent work holds a take with a preparation limit, the forecast is the same (under 1e-9) as with every take's preparation set complete. Tests in tests/decisions-advice.test.ts.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "advice.F2A10-g",
+   "item": "F2-A10 (g): it says why: every recommendation states the work it read and the gain it expects: 100%.",
+   "requirement": "criteria.md F2-A10 (g); the owner's \"Explains why it is recommended.\"",
+   "currentBehavior": "The forecast's why (experience.ts:200) gives the hours, the level now and after, the points a piece, and \"(N of the pieces read it)\": the gain, and a count, but no piece of the work by name.",
+   "affectedSystems": ["src/engine/systems/advice.ts", "src/engine/systems/experience.ts"],
+   "plan": "The forecast keeps which pieces it read and which gained most; the why names them (the count of the recent pieces, and the title of the one that gains most), the gain it expects, and what of it is the input's own.",
+   "acceptance": "Every recommendation with a forecast in every case: its why contains its points figure, the count of pieces it read out of the recent ones, and the title of a piece it read: 100%. A test.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "advice.F2A10-h",
+   "item": "F2-A10 (h): it updates: after twenty sessions of the advised exercise through the commands, the advice read again: the trained input's predicted gain falls on every case, and the first-named changes wherever another input's gain now leads.",
+   "requirement": "criteria.md F2-A10 (h); the owner's \"Updates when the player's state changes.\"",
+   "currentBehavior": "tests/interpretation-journey.test.ts sets the advised input to 100 (TEST SETUP) and checks the first moves on; tests/advice.test.ts checks an input at full drops out. Nothing reads the advice after the twenty sessions played.",
+   "affectedSystems": ["tools/advice.ts", "src/engine/systems/advice.ts", "src/engine/systems/experience.ts"],
+   "plan": "On the copy that trained the first-named input (the realized measure's own), adviceFor again: its forecast for the trained input against before; where another input's forecast is now larger (at full precision), the first-named must be another input. Counted apart: the leads within a tie, and the cases where the recurring weakness's place decided it.",
+   "acceptance": "Every case (150 held out): the trained input's predicted gain lower (or it dropped out at full); every case where another input now leads, a different first-named.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Partially Implemented"
+  },
+  {
+   "id": "advice.F2A10-i",
+   "item": "F2-A10 (i): no hardcoding: the advice reads no seed, profile or case name, and a case renamed gets the same advice.",
+   "requirement": "criteria.md F2-A10 (i); the owner's \"Do not hardcode recommendations for benchmark profiles.\"",
+   "currentBehavior": "By reading: systems/advice.ts, systems/next-steps.ts and recommendations read the levels, the work records and the exercise record; the replays pass each record's seed to the judge with expected set, where no draw is taken (evaluation.ts:414, piece.ts:355). Not checked by any test or tool.",
+   "affectedSystems": ["tools/advice.ts", "tests/decisions-advice.test.ts"],
+   "plan": "Static: no read of meta.seed, a seed literal, adv-, a band or stage name in the advice's files. Played: each case's save with its seed renamed (meta.seed and every work record's inputs.seed) gives deep-equal advice.",
+   "acceptance": "Every case: renamed advice equal. A test; and a mutation that reads the seed is caught.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "advice.tests",
+   "item": "Tests in tests/decisions-advice.test.ts: advice followed through the actual commands (twenty sessions of the advised exercise) gives the gain it forecast within the criteria's tolerance; it changes once its input's gain falls; it names nothing at full; it says why. Mutations in copies.",
+   "requirement": "advice.md, The Order, 3; brief 10 section 5 (\"Advice followed through actual actions\").",
+   "currentBehavior": "tests/advice.test.ts (5 tests, F2-A's) and tests/interpretation-journey.test.ts; no test of the forecast against twenty played sessions within a tolerance, nor of the renamed case.",
+   "affectedSystems": ["tests/decisions-advice.test.ts"],
+   "plan": "Played cases from the tuning set (never held out), each through practice.exercise; expected figures from the played record or worked from the rule, not from the advice's own helper. Mutations in a copy of the clone, each run against the test file.",
+   "acceptance": "The file passes alone (VITEST_MAX_FORKS=1); tests/advice.test.ts, tests/interpretation-journey.test.ts, tests/material.test.ts, tests/defects-r8-1.test.ts and tests/defects-g3-1.test.ts pass after the change; each mutation fails at least one test.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "advice.heldout",
+   "item": "The held-out run, once, on the final code, into docs/verification/decisions-2026-10-16/advice/, the commit recorded, each stratum reported.",
+   "requirement": "advice.md, The Order, 4; F2-A10 (a).",
+   "currentBehavior": "Not run.",
+   "affectedSystems": ["docs/verification/decisions-2026-10-16/advice/"],
+   "plan": "After the last code commit, in batches of ten in the foreground, each batch's JSON and log written as it finishes; a summary file from the batches; committed.",
+   "acceptance": "15 batch files and the summary, each naming the commit.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  }
+ ]
+}
