@@ -103,7 +103,8 @@ function capabilities() {
 /** The areas: each checklist item, with its result where the area has written one; the last pass's and brief 09's. */
 function areas() {
   const rows = [];
-  for (const dir of ['docs/verification/remaining', 'docs/verification/remaining-09']) {
+  // brief 10's areas (`remaining-10/`) read from 2026-10-16, as brief 09's were.
+  for (const dir of ['docs/verification/remaining', 'docs/verification/remaining-09', 'docs/verification/remaining-10']) {
   if (!existsSync(dir)) continue;
   for (const f of readdirSync(dir).filter((x) => x.endsWith('-checklist.json')).sort()) {
     const key = f.replace('-checklist.json', '');
@@ -264,7 +265,7 @@ for (const { key, dir, item, result } of areas()) {
   const status = override?.status ?? own;
   const why = clean(join(override?.why, result?.disposition));
   rows.push({
-    id: item.id, group: `${dir.endsWith('-09') ? 'Brief 09' : 'Remaining'} Area: ${key}`, kind: 'area item', source: `${dir}/${key}-checklist.json`,
+    id: item.id, group: `${dir.endsWith('-10') ? 'Brief 10' : dir.endsWith('-09') ? 'Brief 09' : 'Remaining'} Area: ${key}`, kind: 'area item', source: `${dir}/${key}-checklist.json`,
     goal: clean(item.item), entry: join(item.affectedSystems), preconditions: clean(item.requirement), reads: clean(item.currentBehavior), decisions: clean(item.plan),
     validation: clean(item.classification), changes: join(result?.fixes?.map((f) => f.summary)), later: NONE, systems: join(item.affectedSystems), sees: join(result?.guide, result?.tutorial),
     saveLoad: NONE, failure: join(result?.assumptions), implementation: join(result?.fixes?.map((f) => f.where)), evidence: ev.length ? ev.join('; ') : join(item.acceptance),
@@ -334,6 +335,16 @@ for (const r of rows) {
 }
 for (const o of overrides) if (!rows.some((r) => r.id === o.id && r.override)) problems.push(`${o.id}: an override for no area item`);
 for (const id of tr.commands.keys()) if (!rows.some((r) => r.id === id)) problems.push(`${id}: a command with no row`);
+// The owner's brief 10 left decision 4 as brief 09 did: the twelve rows out of a player's reach stay unresolved in the
+// audit, counted in the totals here as Implemented, Verification Incomplete, and their decision stays three rows of
+// Decision Required. Held from 2026-10-16 so no change moves them unseen; until the owner decides, not after.
+const DECISION_4 = ['bank.arrange_overdraft', 'bank.cancel_new', 'bank.switch', 'bank.switch_complete', 'bank.cancel_switch', 'bank.stop_balance_transfer', 'bank.take_overrun_loan', 'card.money_transfer', 'tax.amend', 'tax.catch_up_state_plan', 'tax.lien_dispute', 'tax.request_waiver'];
+for (const id of DECISION_4) {
+  const r = rows.find((x) => x.id === id && x.source === 'audit');
+  if (!r) problems.push(`${id}: decision 4's row is gone from the audit`);
+  else if (r.sourceStatus !== 'unresolved' || r.status !== IVI) problems.push(`${id}: decision 4's row moved (audit ${r.sourceStatus}, here ${r.status}), which the owner hasn't decided`);
+}
+for (const id of ['coverage09.3-unresolved', 'KS-bank-rows-scope', 'banking.2.scope']) if (!rows.some((r) => r.id === id && r.status === DR)) problems.push(`${id}: decision 4 isn't Decision Required here, which the owner hasn't decided`);
 
 // ---------------------------------------------------------------------------------------------------------------------
 // The totals, and the line the handoff states
