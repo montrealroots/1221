@@ -1259,7 +1259,8 @@ async function openBrief(label) {
   const rows = page.locator('tr', { has: page.getByRole('button', { name: /^Open Its Brief$/ }) });
   for (let i = 0; i < await rows.count(); i += 1) {
     const r = rows.nth(i);
-    if ((await r.locator('td').first().innerText()).trim().replace(/, Loved$/, '') === label) { await r.getByRole('button', { name: /^Open Its Brief$/ }).click(); await wait(600); return; }
+    // The genre's name, with its Loved and its Mastered chip taken off (the chip from 2026-10-16: until then a row said Loved alone).
+    if ((await r.locator('td').first().innerText()).trim().replace(/\s*Mastered$/, '').replace(/, Loved$/, '') === label) { await r.getByRole('button', { name: /^Open Its Brief$/ }).click(); await wait(600); return; }
   }
   throw new Error(`no ${label} row`);
 }

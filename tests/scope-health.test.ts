@@ -622,14 +622,15 @@ describe('health.choose_clinic: Yale Health’s rule that a member’s care is h
     // Change the input, the save's age: the same JSON as this build writes it, the step named, is had where it was booked.
     // From 2026-10-16 this build names a second step, the banking area's `findTermInterest` (src/engine/index.ts), and
     // from later that day a third, the judge area's `cutIntoUnits`, and from brief 10 that day a fourth, the Arion
-    // area's `cardYears`, and a fifth, the stamina area's `timeTheCalls` (until then this list ended at `cutIntoUnits`).
-    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls']);
+    // area's `cardYears`, and a fifth, the stamina area's `timeTheCalls` (until then this list ended at `cutIntoUnits`), and
+    // from later still a sixth, `briefsMastered`, for the genre row's Mastered (until then it ended at `timeTheCalls`).
+    expect(older.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered']);
     const current = loadSave(JSON.parse(JSON.stringify(older)) as never);
     expect(appointmentsOf(current.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), FAIR_HAVEN]]);
     delete older.opened;
     const opened = loadSave(older as never);
     // The step taken, and named, so the next opening doesn't take it again; the banking area's beside it from 2026-10-16.
-    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls']);
+    expect(opened.universe.opened).toEqual(['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered']);
     quiet(opened);
     // Opened: had at Yale Health, its date kept, its entry renamed.
     expect(appointmentsOf(opened.player).map((a) => [a.at, a.clinicId])).toEqual([[at(2026, 9, 24, 10), YALE]]);

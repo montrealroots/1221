@@ -70,7 +70,7 @@ import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attribut
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practicePreview, practiceRefusal } from '@/engine/systems/practice';
 import { studyRefusal } from '@/engine/systems/engagement';
-import { BRIEF } from '@/engine/systems/briefs';
+import { BRIEF, genreMastered } from '@/engine/systems/briefs';
 import { DEVELOPMENT } from '@/engine/content/abilities';
 import { BAND_WORD } from '@/ui/looks/actor';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
@@ -443,9 +443,12 @@ function GenresPanel() {
                 const tags = genreTags(g.id);
                 const d = GENRE_DEMANDS[g.id];
                 const study = studyRefusal(sim, person, g.id);
+                // A genre one of whose briefs was taped at full mastery (from 2026-10-16, `genreMastered`): until then its
+                // row said nothing of it, and mastery showed only as the brief's hundreds and the School Journey's milestone.
+                const mastered = genreMastered(person, g.id);
                 return (
                   <tr key={g.id}>
-                    <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}</td>
+                    <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}{mastered && <>{' '}<span className="chip chip-positive" title={`${mastered.brief.title} taped at full mastery on ${formatDate(mastered.at, sim.zone)}`}>Mastered</span></>}</td>
                     <td className="xs">{tags.length ? tags.map((t) => `${DEMAND_LABEL[t]} (${TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]} ${one(person.craft![DEMAND_TECHNIQUE[t]])} of ${MASTERED})`).join('; ') : d && !applied(g.id) && d.tags.length ? 'Not established: the research rests on one example' : 'Nothing past the camera’s own'}</td>
                     <td className="num mono">{one(e?.familiarity ?? 0)}</td>
                     <td className="num mono">{one(e?.practice ?? 0)}</td>
@@ -461,7 +464,7 @@ function GenresPanel() {
           </table>
         </LookRegion>
         {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}, and Study It builds it. Loving a genre makes a day of work in it better and caps nothing; material met before (its features, not its genre) makes a brief quicker to prepare.</Fine>
+        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}, and Study It builds it. Loving a genre makes a day of work in it better and caps nothing; material met before (its features, not its genre) makes a brief quicker to prepare. A genre is marked Mastered once a take of its brief is judged at full mastery: every ability and technique the take reads at full, its preparation complete, and the day’s condition enough.</Fine>
       </div>
     </Panel>
   );

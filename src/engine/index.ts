@@ -72,7 +72,7 @@ import { registerClassmates, strandedMoments } from './systems/classmates';
 import { WHICH, hasProcess, holderFor, registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
-import { registerBriefs } from './systems/briefs';
+import { briefsMastered, registerBriefs } from './systems/briefs';
 import { registerWorkbook } from './systems/workbook';
 import { workPiece } from './systems/workpieces';
 import { unitsFromTones, type Workbook } from './systems/piece';
@@ -279,7 +279,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -431,6 +431,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('timeTheCalls')) {
     timeTheCalls(sim);
     opened.push('timeTheCalls');
+  }
+  // A brief a save from before 2026-10-16 taped at full mastery, marked from the work record (`briefsMastered`), once, so
+  // its genre reads as mastered on the Player Profile.
+  if (!opened.includes('briefsMastered')) {
+    briefsMastered(Object.values(universe.people));
+    opened.push('briefsMastered');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

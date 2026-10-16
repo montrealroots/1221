@@ -226,6 +226,12 @@ export interface BriefRecord {
   takes: Take[];
   /** A callback earned and not yet taped: its direction, said before the take. */
   callback?: { axis: Axis; side: AxisValue; why: string; at: Instant };
+  /**
+   * When a take of it was first judged at full mastery (`Evaluation.mastery`: every input it reads at full, its
+   * preparation complete, the day's condition sufficient), from 2026-10-16. Kept on the record because the takes
+   * themselves go past `BRIEF.takesKept`. Its genre reads as mastered from then (`genreMastered`). Absent until one is.
+   */
+  mastered?: Instant;
 }
 
 export const briefRecords = (person: Person): Record<string, BriefRecord> => (person.briefs ??= {});
@@ -657,6 +663,8 @@ export function tapeBrief(sim: Simulation, person: Person, b: Brief, genre: stri
   };
   rec.takes.push(take);
   if (rec.takes.length > BRIEF.takesKept) rec.takes.splice(0, rec.takes.length - BRIEF.takesKept);
+  // The first take at full mastery, kept past the takes (from 2026-10-16): what marks its genre mastered.
+  if (e.mastery && rec.mastered === undefined) rec.mastered = take.at;
   // One callback a round: a callback answered ends it, and only a take that wasn't one earns the next. Until a played run
   // of 2026-10-12 every Strong callback earned another, and a mastered student taped one brief 84 times, a new note each
   // time and nothing else new: repetition with the numbers changed.
@@ -841,6 +849,40 @@ export function registerBriefs(sim: Simulation): void {
     const { evaluation, take } = tapeBrief(s, s.player, b!, genre);
     return { overall: evaluation.overall, brief: b!.id, purpose: take.purpose, band: take.band };
   });
+}
+
+/**
+ * Whether a genre is mastered, and by what (from 2026-10-16): one of its briefs taped at full mastery
+ * (`BriefRecord.mastered`), the first of them by when. Every brief is of one genre (`Brief.kinds`), so a take of one
+ * masters that genre alone. What the Player Profile's genre row marks Mastered.
+ */
+export function genreMastered(person: Person, genre: string): { at: Instant; brief: Brief } | undefined {
+  let found: { at: Instant; brief: Brief } | undefined;
+  for (const b of briefsOf(genre)) {
+    const at = person.briefs?.[b.id]?.mastered;
+    if (at !== undefined && (!found || at < found.at)) found = { at, brief: b };
+  }
+  return found;
+}
+
+/**
+ * A save from before 2026-10-16 marks no brief mastered. Its work record kept the take's judgment (`WorkRecord.mastery`)
+ * and the brief it was a take of (its key, `brief:<person>:<brief>:<day>:<n>`), so the first take at full mastery the
+ * record still holds is marked once, on its first opening. A take that went past `WORK_KEPT` before then isn't found;
+ * the next take at full mastery marks it. Returns how many briefs were marked.
+ */
+export function briefsMastered(people: Iterable<Person>): number {
+  let marked = 0;
+  for (const person of people) {
+    for (const w of person.work ?? []) {
+      const [kind, , id] = w.inputs.key.split(':');
+      const rec = kind === 'brief' && id ? person.briefs?.[id] : undefined;
+      if (!w.mastery || !rec || (rec.mastered !== undefined && rec.mastered <= w.at)) continue;
+      if (rec.mastered === undefined) marked += 1;
+      rec.mastered = w.at;
+    }
+  }
+  return marked;
 }
 
 /** A genre's familiarity, for the brief's look (`genreState` without creating one). */
