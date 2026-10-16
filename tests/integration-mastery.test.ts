@@ -3,8 +3,8 @@
  * to MA7 written before it, docs/verification/integration-2026-10-16/README.md). Each is held where a player reaches it:
  * an ability raised by the practice command, a brief chosen, prepared and taped by the brief commands, and what the
  * screen's own forecast and the take's record say. MA5 (a played mastery plan at 100 on every payoff tape) and MA6 (no
- * draw off 100 at mastery) are the mastery plans' runs and `tests/engine-properties.test.ts`; MA8 (mastery doesn't stand
- * in for the work the school asks) is `tests/remaining-school-term.test.ts`'s mastered twin.
+ * draw off 100 at mastery) are the mastery plans' runs and `tests/engine-properties.test.ts`. Until later on 2026-10-16
+ * this said MA8 was `tests/remaining-school-term.test.ts`'s mastered twin, which that file never had; MA8 is below.
  *
  * - **MA1.** Practice on an ability a brief reads raises the brief's forecast, prepared and played the same.
  * - **MA2.** Practice on an ability it doesn't read moves the forecast by nothing of that ability's: put back where it
@@ -16,24 +16,30 @@
  *   the dimension's capacity is the weighted mean worked by hand with the two weights added, and the take's record
  *   names it once there.
  * - **MA7.** A take short of its preparation, taped tired, or played a way the scene doesn't take says so in words.
+ * - **MA8.** Mastery doesn't stand in for the work the school asks: a mastered student who sleeps through two pieces due
+ *   is Unready on both, and the faculty's review counts exactly those two, where the same student missing nothing is
+ *   counted Unready on none.
  *
  * TEST SETUP, said where it's done: a performer's levels set directly where MA3 and MA4 read the judge over the whole
- * catalog. The played journeys set nothing but what a player does.
+ * catalog, and MA8's student mastered and its pieces prepared, since reaching mastery by play takes years
+ * (`tools/mastery.ts`). The played journeys set nothing else but what a player does.
  */
 import { describe, expect, it } from 'vitest';
 import { createSave } from '@/engine';
 import type { Simulation } from '@/engine/core/simulation';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { instantFromZoned, MS_DAY } from '@/engine/core/time';
+import { instantFromZoned, MS_DAY, MS_HOUR, type Instant } from '@/engine/core/time';
 import { BRIEFS, BRIEF_BY_ID, type Brief } from '@/engine/content/briefs';
 import { EXERCISES, EXERCISE_DESIGN } from '@/engine/content/practice';
 import { ABILITY_DEFS, MASTERED } from '@/engine/content/abilities';
 import { TASK_PROFILES, type Dimension } from '@/engine/content/tasks';
 import { PLAY_MATERIAL, SCENE_MATERIAL } from '@/engine/content/material';
-import { templateById } from '@/engine/content/coursework';
-import { abilityOf } from '@/engine/systems/attributes';
+import { PREP_DIMS, templateById } from '@/engine/content/coursework';
+import { abilityFull, abilityOf, attributesOf } from '@/engine/systems/attributes';
 import { briefContext, briefPiece, preview, recordOf } from '@/engine/systems/briefs';
-import { difficultyOf } from '@/engine/systems/coursework';
+import { courseworkOf, difficultyOf, questionsFor } from '@/engine/systems/coursework';
+import { classPeriod, isClassDay, keyOf } from '@/engine/systems/school';
+import type { SchoolDate } from '@/engine/content/school';
 import { chiefLimit, performerOf, type Performer } from '@/engine/systems/evaluation';
 import { materialContext } from '@/engine/systems/material';
 import { judgePiece, loadOf, toneSegments } from '@/engine/systems/piece';
@@ -200,6 +206,89 @@ describe('MA7: a shortfall says what it was', () => {
     expect(chiefLimit({ limits: e.limits.filter((l) => l.kind === 'fit') })).toMatch(/didn’t fit/);
     expect(chiefLimit(tired)).toMatch(/points/);
   });
+});
+
+describe('MA8: mastery doesn’t stand in for the work the school asks', () => {
+  /** TEST SETUP: every ability full, every craft skill at 100, the body at its age's ceiling (as tests/mastery-integration.test.ts). */
+  const mastered = (sim: Simulation) => {
+    const p = sim.player;
+    for (const k of Object.keys(p.craft!)) (p.craft as Record<string, number>)[k] = 100;
+    const a = attributesOf(sim, p) as unknown as Record<string, number>;
+    for (const k of Object.keys(a)) a[k] = 100;
+    p.wellbeing.fitness = abilityFull(sim, p, 'stamina');
+  };
+  const NYAt = (d: SchoolDate, hour: number): Instant => instantFromZoned({ ...d, hour }, NY);
+  const plus = (d: SchoolDate, n: number): SchoolDate => { const t = new Date(Date.UTC(d.year, d.month - 1, d.day + n)); return { year: t.getUTCFullYear(), month: t.getUTCMonth() + 1, day: t.getUTCDate() }; };
+  const DAYS: SchoolDate[] = [];
+  for (let d = classPeriod(0).from; keyOf(d) <= keyOf(classPeriod(0).to); d = plus(d, 1)) if (isClassDay(0, d)) DAYS.push(d);
+  /** TEST SETUP: rested, fed and awake each time the clock moves, six hours at a time (as tests/remaining-school-term.test.ts). */
+  const tend = (sim: Simulation, until: Instant) => {
+    while (sim.now < until) {
+      Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75, condition: 90 });
+      sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+      sim.advanceTo(Math.min(until, sim.now + 6 * MS_HOUR));
+    }
+  };
+  /**
+   * A first fall, every open piece's parts complete each midnight, and each scene's table work answered at six, after class, with
+   * what its text supports (`school.choose`, the command the table's selects issue: a first run without it left the
+   * scene's choices at a third of themselves, Working at mastery, as a scene with its choices unmade should be); asleep
+   * through the nine o’clock class (`life.sleep`, the player's command) on the first `misses` days with one piece due and
+   * nothing to show again.
+   */
+  function term(misses: number) {
+    const sim = life('ma-8');
+    mastered(sim);
+    sim.onEvent('world.day_rollover', 'test.doTheWork', (_e, { sim: s }) => {
+      for (const a of courseworkOf(s, s.player)?.assignments ?? []) if (a.status === 'open' || a.status === 'revising') for (const d of PREP_DIMS) a.prep[d] = 1;
+    });
+    const slept: string[] = [];
+    for (const d of DAYS) {
+      tend(sim, NYAt(d, 1));
+      const pieces = courseworkOf(sim, sim.player)!.assignments.filter((a) => a.term === 0);
+      const due = pieces.filter((a) => a.status === 'open' && a.dueOn === keyOf(d));
+      const again = pieces.filter((a) => a.status === 'revising' && a.revision?.dueOn === keyOf(d));
+      if (slept.length < misses && due.length === 1 && again.length === 0) {
+        sim.must({ kind: 'life.sleep', payload: { hours: 10 } });
+        slept.push(due[0]!.id);
+      }
+      tend(sim, NYAt(d, 18));
+      // The table work at six, after the day's classes: answered at one in the morning, the clock it takes kept her up near two, and
+      // the night the game gives her ran past nine on four days, four classes slept through that the test never chose.
+      for (const a of courseworkOf(sim, sim.player)!.assignments.filter((x) => x.term === 0 && (x.status === 'open' || x.status === 'revising'))) {
+        // TEST SETUP: a piece set in today's class prepared now, as at midnight, so its text is known to the table.
+        for (const k of PREP_DIMS) a.prep[k] = 1;
+        for (const { q, options } of questionsFor(a)) if (!options.find((o) => o.id === a.answers[q.id])?.supported) sim.must({ kind: 'school.choose', payload: { assignmentId: a.id, question: q.id, option: options.find((o) => o.supported)!.id } });
+      }
+    }
+    tend(sim, instantFromZoned({ year: 2026, month: 12, day: 14, hour: 12 }, NY));
+    const pieces = courseworkOf(sim, sim.player)!.assignments.filter((a) => a.term === 0);
+    return { sim, slept, pieces, review: sim.player.school!.history.find((r) => r.term === 0)! };
+  }
+
+  it('PLAYER JOURNEY: a mastered student asleep through two pieces is Unready on both and the review counts exactly those two; the same student missing nothing is counted Unready on none', () => {
+    const missing = term(2);
+    expect(missing.slept).toHaveLength(2);
+    for (const id of missing.slept) {
+      const a = missing.pieces.find((x) => x.id === id)!;
+      expect(a.status, a.id).toBe('missed');
+      expect(a.shown, a.id).toBeUndefined();
+    }
+    // Every piece shown came out at mastery's top bands: the misses are what the review can find wanting.
+    const shown = missing.pieces.filter((a) => a.shown);
+    expect(shown.length).toBeGreaterThan(2);
+    for (const a of shown) expect(['strong', 'exceptional'], a.id).toContain(a.revision?.band ?? a.shown!.band);
+    // Counted from the pieces by hand: every piece shown or missed is due; the two missed are the Unready.
+    const due = missing.pieces.filter((a) => a.shown || a.status === 'missed').length;
+    expect(missing.review.coursework).toEqual({ shown: due, unready: 2, strong: shown.length });
+
+    // Change the input, the two mornings slept through: the same mastered student is Unready on nothing.
+    const straight = term(0);
+    expect(straight.slept).toHaveLength(0);
+    expect(straight.pieces.filter((a) => a.status === 'missed')).toHaveLength(0);
+    expect(straight.review.coursework!.unready).toBe(0);
+    expect(straight.review.coursework!.shown).toBe(straight.pieces.filter((a) => a.shown).length);
+  }, 600_000);
 });
 
 void MS_DAY;
