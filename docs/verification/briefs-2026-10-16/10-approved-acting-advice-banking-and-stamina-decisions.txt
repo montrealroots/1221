@@ -1,0 +1,165 @@
+Implement The Approved Acting, Advice, Banking, And Stamina Decisions
+
+Continue from the latest verified SLATE code. Read the current handoff, repository instructions, and relevant criterion proposals before changing anything.
+
+This command authorizes work on decisions #1, #2, #3, and #5 from your “Decisions For You” list.
+
+Leave decision #4 completely unchanged for now: do not implement, defer, reclassify, or close its twelve unreachable rows, including the tax-amendment row. Do not restore removed systems.
+
+1. Acting Criteria: Implement The Intended Gameplay
+
+I authorize replacing inappropriate acceptance criteria with criteria that accurately measure the behaviors below. This is not blanket approval of every existing proposal.
+
+Compare ST3′, ST6′, H4′, and L3′ against these requirements. Adopt them only where they fully capture the intent; otherwise improve them. Write the new criteria and justify their thresholds before tuning the implementation.
+
+Preserve the original criteria and results as historical evidence. Mark approved replacements explicitly as superseding them—not as making their original failures disappear.
+
+ST3 — Consistent Evaluation:
+
+* Identical effective inputs must produce identical results.
+* Stage and camera may produce different results when they impose genuinely different demands.
+* Every difference must be attributable to an intended input or rule.
+* Calculate at full precision and round at the proper final boundary.
+* Do not remove legitimate stamina or stage demands merely to force equal displayed scores.
+
+ST6 — Viable Restrained Interpretations:
+
+* A performer skilled at restrained acting must have meaningful opportunities to make a valid restrained interpretation work, even where a scene favors larger expression.
+* Success should depend on relevant abilities, preparation, scene circumstances, and interpretation.
+* Preserve situations where expansive acting genuinely works better.
+* Do not force a universal win percentage or add an unexplained restraint bonus.
+* Require diverse, independent examples demonstrating both successful against-preference interpretations and justified limitations.
+* A revised test must still catch a system where restraint is effectively useless.
+
+H4 — Meaningful Specialization:
+
+* Every core attribute must have a purposeful role and appropriate opportunities where improving it makes a meaningful difference.
+* Specialists should show measurable advantages on suitable work under controlled comparisons.
+* One exceptional attribute must not automatically erase unrelated weaknesses.
+* Compare profiles fairly, document their ability budgets, and separate direct performance effects from indirect benefits such as preparation or endurance.
+* Add justified in-scope exercises or material where opportunities are missing.
+* Fix the remaining specialist weaknesses; do not replace the test with one that merely proves an attribute is read somewhere.
+
+L3 — Real Progress:
+
+* Measure growth on a fixed set of comparable work with interpretation, preparation, and conditions controlled.
+* Separately track the difficulty and variety of work attempted during the journey.
+* Increasing relevant abilities must not unintentionally reduce otherwise identical performance.
+* A student attempting harder material may have a lower raw average without being treated as having lost ability.
+* Keep actual journey outcomes visible alongside controlled progress measurements.
+
+Preserve the established mastery behavior: maximum relevant abilities and genre mastery, complete preparation, a valid interpretation, and suitable conditions must produce the intended maximum work quality.
+
+2. Advice: Adopt F2-A And Broaden Its Proof
+
+I approve F2-A as the primary advice measure where it evaluates the benefit of following advice through actual training. Keep F2’s original definition and results in the historical record.
+
+Verify that the recommendation:
+
+* Targets something the player can actually improve.
+* Uses the real progression curve, costs, and available actions.
+* Produces useful improvement compared with reasonable alternatives over an equivalent training budget.
+* Accounts for current mastery, preparation needs, and diminishing returns.
+* Explains why it is recommended.
+* Updates when the player’s state changes.
+
+Expand beyond the existing forty cases using fresh profiles, genres, ability levels, and progression stages. Keep tuning cases separate from held-out validation.
+
+Set the expanded acceptance criteria before measuring the final implementation. Do not hardcode recommendations for benchmark profiles.
+
+3. Arion: Resolve The Unknown Without Inventing A Fact
+
+Research the annual debit-card fee timing through accessible authoritative bank documents or other authoritative sources. Record precisely what is confirmed and what remains unknown.
+
+If reliable sources establish the timing, implement that behavior.
+
+If the timing remains unavailable after a focused search, I authorize a configurable SLATE simulation assumption so this item does not block development:
+
+* Choose and document a consistent default.
+* Explicitly label the timing as unverified and simulated.
+* Separate the assumption from confirmed fee amounts and other verified terms.
+* Do not invent a statutory requirement or call the assumption Arion’s confirmed policy.
+* Keep the rule configurable so later evidence can replace it safely.
+
+Implement and test the resulting lifecycle:
+
+* Initial charge.
+* Annual renewal.
+* Account closure.
+* Any credit or refund supported by the chosen rule.
+* Insufficient funds.
+* Duplicate attempts.
+* Save/load and calendar boundaries.
+
+Use precise monetary arithmetic and balanced ledger entries. Record the implemented behavior as verified against the simulation specification while retaining the real-world research uncertainty.
+
+4. Stamina: Implement Duration And Intensity
+
+I authorize performance workload to reflect:
+
+* The production’s running time.
+* The actor’s actual participation.
+* Physical and vocal intensity where represented.
+* Breaks and recovery.
+* Starting condition and stamina.
+
+Stop treating short one-act productions automatically as full evenings.
+
+Use production-specific running times where supported. A play does not have one universally exact runtime; label estimates and make their basis clear.
+
+Design a bounded, understandable model that:
+
+* Gives longer or more demanding participation greater workload when other inputs are equal.
+* Allows a short intense performance to be demanding.
+* Gives stamina meaningful protective value without making it unlimited energy.
+* Accounts for recovery without double-counting it.
+* Applies elapsed time and fatigue once.
+* Handles segmented performances consistently with the same performance processed as a whole.
+* Explains the workload and consequences to the player.
+
+Numerical coefficients are SLATE design choices unless genuinely supported by research. Document and balance them through testing rather than claiming an exact scientific formula for acting performance.
+
+Update forecasts, tutorials, saved results, and migrations as necessary. Preserve historical outcomes under their original ruleset.
+
+5. Implement And Verify Together
+
+These decisions interact. Validate the combined engine after integration, particularly stamina’s effects on specialist balance, stage scoring, and long-term progression.
+
+Add meaningful regression and gameplay tests for:
+
+* Identical-input consistency.
+* Legitimate stage/camera differences.
+* Restrained and expansive interpretations.
+* Every core attribute’s intended contribution.
+* Specialist and generalist development.
+* Controlled improvement over time.
+* Advice followed through actual actions.
+* Short, long, intense, and interrupted performances.
+* Breaks, recovery, and repeated performances.
+* Arion’s implemented fee lifecycle.
+* Save/load, duplicate actions, and relevant migrations.
+* Preservation of maximum-quality prepared work.
+
+Use focused tests during development, then run the required full gate, production build, and affected built-app and long-run checks on the integrated code.
+
+Do not stop at revising definitions or writing reports. Implement the approved behavior and resolve failures against the newly established criteria. Do not change those criteria afterward merely to make failures pass.
+
+6. Deliver Evidence And Preserve Scope
+
+Report:
+
+* Each authorized decision and how it was implemented.
+* Original criteria alongside their approved replacements.
+* Before-and-after results.
+* Remaining specialist weaknesses, if any.
+* Advice validation beyond the original forty cases.
+* The stamina formula with understandable examples.
+* Arion’s verified facts and any explicit simulation assumption.
+* Tested commits, commands, exit codes, and observed failures.
+* Updated coverage, tutorials, handoff, and PR.
+
+Keep decision #4 and its twelve rows unchanged and visible. Do not call them completed or quietly exclude them from existing completion totals.
+
+Commit and push the completed work, following the repository’s established merge and deployment authorization rules.
+
+Continue until these authorized items are implemented and their agreed acceptance checks pass, or a concrete external blocker is documented after all independent work is finished. Report evidence accurately; do not claim universal perfection or guaranteed absence of future bugs.
