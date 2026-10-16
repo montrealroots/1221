@@ -87,11 +87,14 @@ describe('Germany’s quarterly closing', () => {
     const fees = () => sim.universe.transactions.filter((t) => t.category === 'bank_fee' && t.memo.includes('AktivKonto'));
     sim.advanceTo(instantFromZoned({ year: 2026, month: 3, day: 15, hour: 12 }, sim.zone));
     expect(fees()).toHaveLength(0);
-    expect(current(sim).feesDue).toBe(2 * 6_90);
+    // The AktivKonto opened on 5 January, and Deutsche Bank's price list leaves the month it opens free: February's €6.90
+    // kept, and at the closing February's and March's. Until 2026-10-16, when that was read, January's was charged too,
+    // and these were 2 × €6.90 and 3 × €6.90.
+    expect(current(sim).feesDue).toBe(6_90);
     sim.advanceTo(instantFromZoned({ year: 2026, month: 4, day: 2, hour: 12 }, sim.zone));
     expect(fees()).toHaveLength(1);
     expect(fees()[0]!.memo).toMatch(/^Quarterly closing/);
-    expect(-fees()[0]!.postings.find((p) => p.accountId === current(sim).id)!.amount).toBe(3 * 6_90);
+    expect(-fees()[0]!.postings.find((p) => p.accountId === current(sim).id)!.amount).toBe(2 * 6_90);
     expect(current(sim).feesDue).toBe(0);
     expect(sim.ledger.audit()).toEqual([]);
   });
@@ -121,7 +124,9 @@ describe('an account’s statement', () => {
     const quarter = periodsOf(sim, current(sim))[1]!;
     const st = accountStatement(sim, current(sim), quarter);
     expect(st.opening + st.moneyIn - st.moneyOut).toBe(st.closing);
-    expect(st.fees).toBe(3 * 6_90);
+    // February's and March's: January, the month the AktivKonto opened, is free by Deutsche Bank's price list (from
+    // 2026-10-16; until then 3 × €6.90).
+    expect(st.fees).toBe(2 * 6_90);
   });
 });
 

@@ -295,7 +295,8 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   // A pending card payment is a debit, negative in the ledger's sense (`pendingOn`): until 2026-10-10 this asked for
   // more than nothing, and neither this refusal nor Citi's restricted close ever happened.
   if (pendingOn(sim, account) !== 0 && openingOf(bank)?.closeWithPendingDays === undefined) return `Card payments are still pending on it. ${bank?.name ?? 'The bank'} closes it once they’ve posted.`;
-  // The fees closing charges (`settleFees`, Germany's quarter so far) past what it holds with its interest would leave it
+  // The fees closing charges (`settleFees`, Germany's quarter so far and, from later on 2026-10-16, this month's only to
+  // the day, `closingFeesDue`, where until then the whole month) past what it holds with its interest would leave it
   // overdrawn, and the bank closes an overdrawn account only once that's paid, as above. Until 2026-10-15 Close It closed a
   // German account with €3 in it and €4.90 owed at -€1.90, its debt closed with it, where Cancel It refused the same
   // account from that morning (found by that day's skeptic). The overdraft interest built since the 1st counts with them

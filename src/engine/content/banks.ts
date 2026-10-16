@@ -56,6 +56,11 @@ export interface Product {
     purchasesAtLeast?: number;
     /** Free for the first so many months after the account opens. */
     firstMonths?: number;
+    /**
+     * Free in the calendar month the account opens, whatever day (from 2026-10-16: Deutsche Bank's price list, “Die
+     * Kontoführung im Eröffnungsmonat ist kostenfrei”, which until then SLATE charged whole).
+     */
+    openingMonth?: boolean;
   };
   /**
    * A lower fee, not none, for a condition that isn't a full waiver: wages

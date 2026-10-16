@@ -131,6 +131,11 @@ export interface Account {
   feesDue?: Money;
   /** The same in the bank's own figure, on an account in another currency (from 2026-10-16). */
   feesDueHeld?: Money;
+  /**
+   * When a closing settled its fees: they end there, as BGB § 675h(3) owes them only to the contract's end, and nothing
+   * more accrues on an account kept open after it only to be paid off (from 2026-10-16, `settleFees`).
+   */
+  feesEndedAt?: Instant;
   /** Untouched past the bank's months: inactive, then dormant and blocked until used again. */
   inactive?: boolean;
   dormant?: boolean;

@@ -17,7 +17,7 @@ import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
 import { ROUND_UPS } from '@/engine/content/roundups';
 import { RoundUps } from '@/ui/bank/RoundUps';
 import { bankById } from '@/engine/content/banks';
-import { inSaveMoney } from '@/engine/systems/banking';
+import { closingFeesWords, inSaveMoney } from '@/engine/systems/banking';
 import { BREAK_NOTICE, breakQuote, cancelRefusal, cancelWords, coolingOffEnds, END_WORDS, inCoolingOff, termEndOf, unclaimedLaw } from '@/engine/systems/accountlife';
 import type { TermEnd } from '@/engine/content/accountlife';
 
@@ -109,6 +109,9 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
           // to come back whole everywhere, though Britain and Canada leave the holder the interest earned.
           const why = a.kind === 'credit_card' ? undefined : cancelRefusal(sim, person, a);
           const back = cancelWords(a);
+          // The fees it owes, with their figure, where it owes them (from 2026-10-16: until then “less the fees it owes”
+          // said no figure unless canceling was refused for them).
+          const fees = a.kind === 'credit_card' ? undefined : closingFeesWords(sim, a, 'Canceling');
           // The account's own country's count, Canada's and Mexico's in business days (`coolingOffEnds`, from 2026-10-15's
           // recheck): until then the panel's bank's country's days, added as calendar days. Its last day is named in the
           // zone it ends in, the save's home (from that day's second recheck, when it began to end at that day's last
@@ -117,7 +120,7 @@ export function BankAccountLife({ bankId }: { bankId: string }) {
           const ends = coolingOffEnds(sim, a);
           return (
             <div key={a.id} className="row-between small">
-              <span><Open subject={at('account', a.id)}>{a.name}</Open> is new enough to cancel{ends !== undefined ? `, until ${formatDate(ends, sim.homeZone)}` : ''}, {back}.{why && <span className="xs muted" style={{ display: 'block' }}>{why}</span>}</span>
+              <span><Open subject={at('account', a.id)}>{a.name}</Open> is new enough to cancel{ends !== undefined ? `, until ${formatDate(ends, sim.homeZone)}` : ''}, {back}.{fees && <span className="xs muted" style={{ display: 'block' }}>{fees}</span>}{why && <span className="xs muted" style={{ display: 'block' }}>{why}</span>}</span>
               <Gated feature="bank.cancel_new" className="btn btn-sm btn-ghost" disabled={!!why} title={why} onClick={() => run('bank.cancel_new', { accountId: a.id })}>Cancel It</Gated>
             </div>
           );

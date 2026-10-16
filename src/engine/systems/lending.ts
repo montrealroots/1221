@@ -759,8 +759,9 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     }
     // The balance goes across, and anything built up on it is paid first, and any fees it owes, and any overdraft interest
     // built since the 1st (from 2026-10-16, `settleOverdraftInterest`). Re-banked after a charge-off (`quietly`), the
-    // overdraft's set-off has settled the fees already (`closeForOverdraft`), and a second settling would charge the
-    // month's fee again and carry it to the new bank as an overdraft.
+    // overdraft's set-off has settled the fees already (`closeForOverdraft`), and until later on 2026-10-16 a second
+    // settling charged the month's fee again and carried it to the new bank as an overdraft; it charges nothing since, the
+    // first having ended them (`feesEndedAt`), and `quietly` still passes it by.
     settleInterest(sim, from, `Interest: ${from.name}, on closing`);
     settleOverdraftInterest(sim, from);
     if (!quietly) settleFees(sim, from);
@@ -1006,7 +1007,9 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   // closed account: Deutsche Bank's own close of an AktivKonto overdrawn from 5 January 2026 charged off €101.97 on 7
   // March and dropped January's and February's €6.90, March's, and the interest built since 1 March
   // (docs/verification/remaining/banking-checklist.json, banking.1). A fee is settled once (`feesSettled`), as a second
-  // settling in the month charges the month again.
+  // settling in the month charged the month again until later on 2026-10-16, when the first began to end the fees
+  // (`feesEndedAt`, `settleFees`) and a second to charge nothing; the set still decides which accounts the charge-off's
+  // loop below passes over.
   for (const account of mine) settleOverdraftInterest(sim, account, `Overdraft interest, ${closes(account) ? 'on closing' : 'before the set-off'}`);
   const feesSettled = new Set<string>();
   const settleFeesOf = (account: Account) => { if (!feesSettled.has(account.id)) { feesSettled.add(account.id); settleFees(sim, account); } };

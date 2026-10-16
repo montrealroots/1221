@@ -20,7 +20,7 @@ import { SWITCHING } from '@/engine/content/banks-lending';
 import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, TRANSFERS } from '@/engine/content/bankopening';
 import { bankById } from '@/engine/content/banks';
 import { SECURITY } from '@/engine/content/security';
-import { bankAccountsOf, banksFor, inSaveMoney, isoOf } from '@/engine/systems/banking';
+import { bankAccountsOf, banksFor, closingFeesWords, inSaveMoney, isoOf } from '@/engine/systems/banking';
 import { checkingsOf } from '@/engine/systems/lending';
 import { waiverWords } from '@/ui/bank/feeWords';
 import { balanceText } from '@/engine/systems/abroad';
@@ -122,6 +122,9 @@ export function BankMoves() {
           {currents.map((a) => {
             const links = linkedTo(sim, person, a.id);
             const closing = closeRefusal(sim, person, a);
+            // What closing charges of its fees, said before Close It is pressed, from the engine's own figures (from
+            // 2026-10-16: until then nothing said it unless the close was refused for it).
+            const fees = closingFeesWords(sim, a);
             const elsewhere = everyday.filter((b) => b.id !== a.id);
             const into = remainder[a.id] || elsewhere.find((b) => b.id === person.primaryAccountId)?.id || elsewhere[0]?.id || '';
             return (
@@ -162,6 +165,7 @@ export function BankMoves() {
                   )}
                 </div>
                 {closing && a.id !== person.primaryAccountId && <p className="xs dim" style={{ margin: 0 }}>To close it: {closing}</p>}
+                {fees && a.id !== person.primaryAccountId && a.closingAt === undefined && <p className="xs dim" style={{ margin: 0 }}>{fees}</p>}
               </div>
             );
           })}

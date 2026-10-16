@@ -34,7 +34,7 @@ import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
 import { exchange } from '../content/currency';
-import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MS_DAY, type Instant } from '../core/time';
+import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MONTH_NAMES, MS_DAY, type Instant } from '../core/time';
 import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
 import { OPENING } from '../content/bankopening';
 import { ageOn } from './mortality';
@@ -246,6 +246,8 @@ export function feeFor(sim: Simulation, account: Account, monthStart: Instant): 
   if (waiver?.ageBelow !== undefined && age !== undefined && age < waiver.ageBelow) return met('age');
   if (waiver?.ageAtLeast !== undefined && age !== undefined && age >= waiver.ageAtLeast) return met('age');
   if (waiver?.firstMonths !== undefined && monthStart < addMonths(account.openedAt, waiver.firstMonths, sim.homeZone)) return met('new');
+  // The calendar month it opened in (from 2026-10-16, Deutsche Bank's price list): until then charged whole.
+  if (waiver?.openingMonth && monthStartOf(sim, account.openedAt) === monthStart) return met('new');
   if (waiver?.purchasesAtLeast !== undefined && purchasesSince(sim, account, monthStart) >= waiver.purchasesAtLeast) return met('purchases');
   if (waiver?.depositsAtLeast !== undefined
     && directDeposits(sim, account, monthStart, product.deposits) >= inSaveMoney(sim, waiver.depositsAtLeast, bank.currency)
@@ -514,18 +516,98 @@ export function endedWords(sim: Simulation, ended: readonly StandingOrder[]): st
 }
 
 /**
- * What a closing account owes of its fees: at Germany's quarterly closing,
- * the quarter's so far and this month's. Until 2026-09-27 an account closed
- * mid-quarter took them with it.
+ * What closing an account now charges of its fees, and what makes it up (from 2026-10-16). At Germany's quarterly closing:
+ * the quarter's months kept (`feesDue`), whole, each a month the account was served; and this month's fee only for the
+ * days of it the account was open, through the closing day, as BGB § 675h(3) owes a regular fee “nur anteilig bis zum
+ * Zeitpunkt der Beendigung des Vertrags” (https://www.gesetze-im-internet.de/bgb/__675h.html, read 2026-10-16), and a
+ * cancellation in the cooling-off period Wertersatz “für die vom Unternehmer bis zum Widerruf erbrachte Dienstleistung”
+ * (§ 357b(2)). None of the five German price lists read that day says how the share is counted: SLATE's reading is the
+ * days, from the day it opened where it opened that month, over the month's days, rounded half up to the cent, in the
+ * bank's own money first. Nothing is paid ahead at a German bank in SLATE, each month's fee accruing at its end and posting
+ * at the quarter's closing, so nothing is refunded. Until 2026-10-16 the whole month was charged on any day of it, and
+ * twice after 11 PM on its last day, when the month's end had put it with the quarter's already
+ * (docs/verification/remaining-09/banking-checklist.json, banking.1.pro-rata).
+ */
+export interface ClosingFees {
+  /** The quarter's months kept for its closing, in the save's money, and the bank's own where the account is kept in another. */
+  kept: Money;
+  keptHeld?: Money;
+  /** This month's fee as `feeFor` gives it, and the share of it charged, the same two ways. */
+  month: Money;
+  monthHeld?: Money;
+  share: Money;
+  shareHeld?: Money;
+  /** The month's days counted, of all its days. */
+  days: number;
+  of: number;
+  /** Why this month adds nothing: its end has put it with the quarter's, a closing ended the fees, or the bank's waiver. */
+  none?: 'accrued' | 'ended' | WaivedBy;
+  total: Money;
+  totalHeld?: Money;
+}
+
+/** `ClosingFees` now, or nothing where the account isn't closed each quarter (`closesQuarterly`). */
+export function closingFeesDue(sim: Simulation, account: Account): ClosingFees | undefined {
+  if (!closesQuarterly(account)) return undefined;
+  const kept = account.feesDue ?? 0;
+  const keptHeld = account.currency ? account.feesDueHeld ?? 0 : undefined;
+  const monthStart = monthStartOf(sim, sim.now);
+  const now = zonedParts(sim.now, sim.homeZone);
+  const of = daysInMonth(now.year, now.month);
+  const days = now.day - (account.openedAt >= monthStart ? zonedParts(account.openedAt, sim.homeZone).day : 1) + 1;
+  const held = (n: Money) => (keptHeld !== undefined ? n : undefined);
+  const made = (month: Money, monthHeld: Money | undefined, share: Money, shareHeld: Money | undefined, none?: ClosingFees['none']): ClosingFees => ({
+    kept, ...(keptHeld !== undefined ? { keptHeld, monthHeld: monthHeld ?? 0, shareHeld: shareHeld ?? 0, totalHeld: keptHeld + (shareHeld ?? 0) } : {}),
+    month, share, days, of, ...(none !== undefined ? { none } : {}), total: kept + share,
+  });
+  if (account.feesEndedAt !== undefined) return made(0, held(0), 0, held(0), 'ended');
+  // At or after 11 PM on its last day the month's end has put the whole month with the quarter's.
+  if (sim.now >= monthEndAfter(sim, monthStart)) return made(0, held(0), 0, held(0), 'accrued');
+  const fee = feeFor(sim, account, monthStart);
+  if (fee.fee <= 0) return made(0, held(0), 0, held(0), fee.waivedBy);
+  const part = (x: Money) => Math.floor((2 * x * days + of) / (2 * of));
+  const bank = bankById(account.bankId!)!;
+  const shareHeld = fee.native !== undefined ? part(fee.native) : undefined;
+  return made(fee.fee, fee.native, shareHeld !== undefined ? inSaveMoney(sim, shareHeld, bank.currency) : part(fee.fee), shareHeld);
+}
+
+/**
+ * Settles a closing account's fees (`closingFeesDue`), and ends them there (`feesEndedAt`, from 2026-10-16): the month's
+ * end charges it none after, and a second settling none, as BGB § 675h(3) owes none past the contract's end. Until then
+ * a home bank's close tried again each day on an account left overdrawn (`homeCloses`, systems/abroad.ts) charged the
+ * month's fee again each morning, and the month's end went on adding to it (docs/verification/remaining-09, banking.3).
+ * Until 2026-09-27 an account closed mid-quarter took its quarter's fees with it.
  */
 export function settleFees(sim: Simulation, account: Account): void {
-  if (!closesQuarterly(account)) return;
-  const due = closingFeesOf(sim, account);
-  const native = account.currency ? (account.feesDueHeld ?? 0) + (feeFor(sim, account, monthStartOf(sim, sim.now)).native ?? 0) : undefined;
+  const due = closingFeesDue(sim, account);
+  account.feesEndedAt ??= sim.now;
+  if (!due) return;
   account.feesDue = 0;
   if (account.currency) account.feesDueHeld = 0;
-  if (due <= 0) return;
-  sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due, ...(native !== undefined ? { native: -native } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due }] });
+  if (due.total <= 0) return;
+  sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due.total, ...(due.totalHeld !== undefined ? { native: -due.totalHeld } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due.total }] });
+}
+
+/**
+ * What closing now would charge of the fees, in words, said under Close It and Cancel It before either is pressed, from
+ * `closingFeesDue`'s figures (from 2026-10-16: until then neither said a figure unless it refused). Nothing where the
+ * account's bank charges none at closing.
+ */
+export function closingFeesWords(sim: Simulation, account: Account, doing: 'Closing' | 'Canceling' = 'Closing'): string | undefined {
+  const due = closingFeesDue(sim, account);
+  if (!due || due.none === 'ended' || (due.total === 0 && (due.none === undefined || !productOf(account)?.monthlyFee))) return undefined;
+  const cur = account.currency ?? saveCurrency(sim.universe);
+  const own = (save: Money, held: Money | undefined) => formatMoney(held ?? save, cur);
+  const month = `${MONTH_NAMES[zonedParts(sim.now, sim.homeZone).month - 1]}’s`;
+  const kept = due.kept > 0 ? `${own(due.kept, due.keptHeld)} kept for the quarter’s closing` : '';
+  const total = balanceText(sim, account, due.total, due.totalHeld);
+  if (due.none === 'accrued') return `${doing} it now charges ${kept ? `${total}, the ${kept}` : 'no fees'}: ${month} was counted at the month’s end.`;
+  if (due.none !== undefined) {
+    const why = due.none === 'new' ? `${month} is free, the month it opened` : `${month} is waived so far`;
+    return kept ? `${doing} it now charges ${total}, the ${kept}; ${why}.` : `${doing} it now charges no fees: ${why}.`;
+  }
+  const share = `${month} ${own(due.month, due.monthHeld)} for ${due.days === 1 ? 'the one day' : `the ${due.days} days`} of its ${due.of} it’s been open, ${own(due.share, due.shareHeld)}`;
+  return `${doing} it now charges its fees to the day, ${total}: ${kept ? `${kept}, and ` : ''}${share}. German law charges a month’s fee only to the day an account closes.`;
 }
 
 /**
@@ -539,9 +621,12 @@ export function owingWords(items: readonly (readonly [string, string])[]): strin
   return `${said.charAt(0).toUpperCase()}${said.slice(1)} ${plural ? 'are' : 'is'}`;
 }
 
-/** What `settleFees` would charge now, read before it's charged (a cancellation's refusal, from 2026-10-15). */
+/**
+ * What `settleFees` would charge now, read before it's charged (a cancellation's refusal, from 2026-10-15), in the save's
+ * money: `closingFeesDue`'s total, this month's fee to the day (from 2026-10-16: until then the whole month).
+ */
 export function closingFeesOf(sim: Simulation, account: Account): Money {
-  return closesQuarterly(account) ? (account.feesDue ?? 0) + feeFor(sim, account, monthStartOf(sim, sim.now)).fee : 0;
+  return closingFeesDue(sim, account)?.total ?? 0;
 }
 
 /** Pays what an account has built up, now, as a bank does when it closes one. */
@@ -623,7 +708,8 @@ export function registerBanking(sim: Simulation): void {
       // quarter's fees beside it.
       const quarterly = closesQuarterly(account);
       if ((!product?.pays || product.pays.includes(month)) && (!quarterly || month % 3 === 0)) payInterest(s, account, `Interest: ${account.name}`);
-      const { fee, native } = feeFor(s, account, monthStart);
+      // None once a closing has settled them (`feesEndedAt`, from 2026-10-16): they end with the contract.
+      const { fee, native } = account.feesEndedAt !== undefined ? { fee: 0, native: undefined } : feeFor(s, account, monthStart);
       // On an account in another currency the bank's own figure goes with it, kept beside the quarter's fees too.
       const own = (n: Money | undefined) => (n !== undefined ? { native: -n } : {});
       if (quarterly) {

@@ -245,7 +245,8 @@ export const THIRTEEN: readonly CountryBanking[] = [
     banks: [
       {
         id: 'de-deutsche-bank', name: 'Deutsche Bank', iso: 'DE', currency: 'EUR', format: 'de', code: '10070000',
-        current: p('AktivKonto', 'deutsche-bank.de fee information, 23 September 2026: €6.90 a month', { monthlyFee: 6_90 }),
+        // Its opening month free from 2026-10-16, read in the price list that day; until then charged whole.
+        current: p('AktivKonto', 'deutsche-bank.de fee information, 23 September 2026: €6.90 a month; its price list (Stand 1 October 2026, read 16 October 2026): the month it opens free', { monthlyFee: 6_90, waiver: { openingMonth: true } }),
         savings: p('Flexgeld', 'deutsche-bank.de: 0.50%', { rate: 0.005 }),
       },
       {

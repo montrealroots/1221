@@ -18,6 +18,8 @@ export function waiverWords(product: Product, money: (cents: number) => string):
     cut.ageBelow !== undefined ? `being under ${cut.ageBelow}` : '',
   ].filter(Boolean).join(', or ')}`;
   if (!waiver) return lower;
+  // Deutsche Bank's month of opening, free (from 2026-10-16, `Product.waiver.openingMonth`).
+  const opening = waiver.openingMonth ? ', free in the month it opens' : '';
   const ways: string[] = [];
   if (waiver.depositsAtLeast !== undefined) {
     const also = waiver.depositsAlso;
@@ -33,6 +35,6 @@ export function waiverWords(product: Product, money: (cents: number) => string):
   if (waiver.ageAtLeast !== undefined) ways.push(`being ${waiver.ageAtLeast} or over`);
   if (waiver.purchasesAtLeast !== undefined) ways.push(`${waiver.purchasesAtLeast} card payments in the month`);
   if (waiver.firstMonths !== undefined) ways.push(`the first ${waiver.firstMonths} months after opening`);
-  if (ways.length === 0) return lower;
-  return `, waived with ${ways.join(', or ')}${lower}`;
+  if (ways.length === 0) return `${opening}${lower}`;
+  return `${opening}, waived with ${ways.join(', or ')}${lower}`;
 }

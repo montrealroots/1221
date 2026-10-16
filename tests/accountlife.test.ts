@@ -302,16 +302,26 @@ describe('savings', () => {
     expect(closing.postings.find((q) => q.accountId === saver.id)!.amount).toBe(-(7_50 + month));
   });
 
-  it('settles a German current account’s quarter and this month’s fee when it goes', () => {
+  /**
+   * Until 2026-10-16 this was “settles a German current account’s quarter and this month’s fee when it goes”, settled on
+   * the morning the AktivKonto opened, 5 January, and asserted the quarter and the whole month, `feeFor`'s €6.90. That day
+   * the month's share became the days to the close (BGB § 675h(3), `closingFeesDue`), and Deutsche Bank's opening month
+   * free (its price list), so it's settled on 14 February, the opening month past, and the figure is worked by hand.
+   */
+  it('settles a German current account’s quarter and this month’s fee to the day when it goes, and once', () => {
     const sim = lifeIn('de-be-berlin', 'de-deutsche-bank', 'life-de-current-fees');
     const acct = current(sim);
-    const month = feeFor(sim, acct, monthStartOf(sim, sim.now)).fee;
-    expect(month).toBeGreaterThan(0);
-    acct.feesDue = 3_00;
+    sim.advanceTo(Date.UTC(2026, 1, 14, 11));
+    // January, the month it opened, was free: nothing kept for the quarter.
+    expect(acct.feesDue).toBe(0);
+    acct.feesDue = 3_00; // TEST SETUP
     const before = acct.balance;
     settleFees(sim, acct);
-    expect(before - acct.balance).toBe(3_00 + month);
+    // €3.00 kept, and February's €6.90 for 14 of its 28 days: 690 × 14 / 28 = 345.
+    expect(before - acct.balance).toBe(3_00 + 3_45);
     expect(acct.feesDue).toBe(0);
+    settleFees(sim, acct);
+    expect(before - acct.balance).toBe(6_45);
   });
 
   it('charges a second-chance account its own fee and not the ordinary one', () => {

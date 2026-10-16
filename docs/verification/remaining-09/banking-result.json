@@ -1,0 +1,517 @@
+{
+ "key": "banking",
+ "on": "2026-10-16",
+ "against": "7e531122 and the working tree after it (this area's changes, beside the coverage and journeys areas' own)",
+ "checklist": "docs/verification/remaining-09/banking-checklist.json",
+ "testFile": "tests/remaining-09-banking.test.ts",
+ "tests": "tests/remaining-09-banking.test.ts: 7 tests, all passing. Changed beside it, each with a dated comment saying what it asserted and why it changed, and each renamed title recorded in docs/verification/pipeline/inputs/renames.json: tests/scope-money.test.ts (the Berlin Cancel It and Close It, both renamed), tests/accountlife.test.ts (the German quarter-and-month test, renamed), tests/remaining-banking.test.ts (five of the last pass's German tests, renamed: Deutsche Bank's opening month free, and March to the day), tests/statements.test.ts (two figures, titles unchanged: Deutsche Bank's opening month free).",
+ "statusTotals": {
+  "Implemented And Verified": 4,
+  "Implemented, Verification Incomplete": 8,
+  "Decision Required": 1
+ },
+ "items": [
+  {
+   "id": "banking.1.pro-rata",
+   "status": "Implemented And Verified",
+   "before": "owner decision (the last pass's banking.1.pro-rata): the month's fee charged whole on any close; reached in play since 2026-10-16 through a home account, which the last pass's result didn't say",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day, €3.12 ($3.39), October’s €6.90 for 14 of its 31 days; Close It pressed charges that once against Bank Fees and sends the rest to Chase, and a second press and a reload charge nothing more",
+     "kind": "render, command, clock",
+     "proves": "Played from creation (Before Yale keeping Deutsche Bank): the line under Close It says €3.12 ($3.39) and how it's made before the press; pressed, “Closing fees: AktivKonto” −€3.12 / −$3.39 against Bank Fees, the transaction balanced; everything that left the account at the close is what it held; closed at nothing; a second press refused with nothing posted; reloaded and run past October's end and the quarter's, nothing more on it; breaches 0."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+     "kind": "clock, render, command",
+     "proves": "Month boundaries: the first day of a month (one day of 31, 22 cents, with the quarter's two months kept), the last day before 11 PM (the month whole), after the month's end (the month counted once, with the quarter's), after the quarter's closing (nothing at closing; the screen says why)."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: February in a leap year: closed on 15 February 2027, €10.60, January’s €6.90 and 15 of 28 days, €3.70; on 15 February 2028, €10.47, 15 of 29, €3.57; on 29 February 2028, €13.80, the month whole; and the 2027 close comes to the same postings whether the clock jumps from 1 February or runs a day at a time with a reload on the 8th",
+     "kind": "clock, render, command",
+     "proves": "Leap years (February of 28 and 29 days, and its 29th), and twins in one jump and day by day with a reload: identical postings on the account to the cent."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: moved down to €1.00, the AktivKonto is refused Close It on Your Banks for its fees to the day, with what to pay in; $50 moved in from Chase, it closes on the day it’s pressed for that day’s share, once",
+     "kind": "render, command, clock",
+     "proves": "Insufficient funds: played down with Move Money (Deutsche Bank's €11.55 payment fee worked from its price list), refused on the screen and by the command with what to pay in, the figure under it; paid in from Chase as a payment abroad; closed six days later for that day's share, €5.79, once, across a reload; refused again after."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+     "kind": "render, command (FIXTURE)",
+     "proves": "Cancel It in the cooling-off period: the share counted from the day it opened, said under Cancel It, with the overdraft interest in one refusal; paid in and pressed, both charged once; refused after; the same after a reload. FIXTURE: no played life's German account is in its cooling-off (opened before Yale; every country's period ends by 21 August 2026, probed)."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.cancel_new > FIXTURE, Berlin: a Commerzbank GiroKonto opened beside Deutsche Bank with 10 cents in it is refused for the 16 cents its €4.90 month comes to on its first day, on the panel, which says the figure; with €100, Cancel It charges the 16 cents, as Germany lets the bank, and sends €99.84 on",
+     "kind": "render, command (FIXTURE)",
+     "proves": "The audit's cited Cancel It test, renamed: one day of 31, 16 cents, and the figure said before the press."
+    },
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.close_current > FIXTURE, Berlin: a Commerzbank GiroKonto beside Deutsche Bank with 10 cents in it is refused Close It on Your Banks for the 16 cents its €4.90 month comes to on its first day, as Cancel It is, the figure said under it; with €100, Close It charges the 16 cents and sends €99.84 on",
+     "kind": "render, command (FIXTURE)",
+     "proves": "The audit's cited Close It test, renamed: the same share, refused and charged."
+    },
+    {
+     "file": "tests/accountlife.test.ts",
+     "title": "savings > settles a German current account’s quarter and this month’s fee to the day when it goes, and once",
+     "kind": "engine (FIXTURE)",
+     "proves": "The audit's cited quarter test, renamed: €3.00 kept and 14 of February's 28 days, €3.45; a second settling charges nothing."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The closing month's fee is charged only for the days the account was open in it, through the closing day, of the month's days, rounded half up to the cent in the bank's own money first (then SLATE's rate); the quarter's months kept are charged whole; one breakdown (closingFeesDue) is read by settleFees, closingFeesOf, every refusal and the words.",
+     "where": "src/engine/systems/banking.ts closingFeesDue, settleFees, closingFeesOf",
+     "failingTest": "Each of the tests above failed with the share replaced by the whole month (mutation M1, run 2026-10-16 in the scratchpad's copy: 7 of 7 in tests/remaining-09-banking.test.ts)"
+    },
+    {
+     "summary": "What closing (or canceling) would charge, said before the button is pressed: under Close It on Your Banks and under Cancel It on Your Accounts Over Time.",
+     "where": "src/engine/systems/banking.ts closingFeesWords; src/ui/bank/BankMoves.tsx; src/ui/bank/BankAccountLife.tsx",
+     "failingTest": "The journey, the edges and the leap-year tests failed with the line taken out of Your Banks (M9), and the Cancel It fixture with it taken out of Your Accounts Over Time (M10)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "BGB § 675h(3): “Im Fall der Kündigung sind regelmäßig erhobene Entgelte nur anteilig bis zum Zeitpunkt der Beendigung des Vertrags zu entrichten. Im Voraus gezahlte Entgelte, die auf die Zeit nach Beendigung des Vertrags fallen, sind anteilig zu erstatten.”",
+     "citation": "https://www.gesetze-im-internet.de/bgb/__675h.html",
+     "effective": "13 January 2018 (Act of 17 July 2017, BGBl. I S. 2446, implementing Directive (EU) 2015/2366, whose art. 55(4) it carries)",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "BGB § 357b(2): on withdrawal, Wertersatz “für die vom Unternehmer bis zum Widerruf erbrachte Dienstleistung”.",
+     "citation": "https://www.gesetze-im-internet.de/bgb/__357b.html",
+     "effective": "in force as read",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Deutsche Bank: “Die Kontoführung im Eröffnungsmonat ist kostenfrei. Die Kontoabrechnung erfolgt vierteljährlich.” db AktivKonto €6.90 a month; “Auflösung der Kontoverbindung kostenfrei”.",
+     "citation": "https://www.deutsche-bank.de/content/dam/deutschebank/de/shared/pdf/kontakt-und-service/preis-und-leistungsverzeichnis-der-deutsche-bank-ag.pdf",
+     "effective": "1 October 2026 (Stand)",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Commerzbank GiroKonto: Monatspreis €4.90, “wird der Monatspreis mit dem nächstfolgenden Kontoabschluss berechnet”; distance-selling information: “Kontoführungsentgelte monatlich”, and Wertersatz on withdrawal may mean paying “die vertraglichen Zahlungsverpflichtungen für den Zeitraum bis zum Widerruf”.",
+     "citation": "https://www.commerzbank.de/portal/media/efw-dokumente/preis_leistungsverzeichnis.pdf; https://www.commerzbank.de/portal/media/efw-dokumente/fernabsatz_girokonto_neukunde.pdf",
+     "effective": "1 October 2026 (price list); 19 June 2026 (information)",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Postbank Giro plus: Grundpreis pro Monat €6.90, €5.90 with €1,000 paid in; Rechnungsabschlussperiode for current accounts quarterly.",
+     "citation": "https://www.postbank.de/dam/postbank/pdf/allgemein/Postbank-Preis-und-Leistungsverzeichnis-923-959-000-1026.pdf",
+     "effective": "1 October 2026",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "ING Girokonto: €4.90 a month unless €1,000 paid in or under 28; “Belastung des monatlichen Entgelts im Folgemonat”; quarterly Rechnungsabschluss.",
+     "citation": "https://www.ing.de/girokonto/konditionen/",
+     "effective": "1 June 2026",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Berliner Sparkasse Giro Digital: Kontoführung pro Monat €4.95; footnote 45: “Im Fall der vorzeitigen Auflösung des Vertragsverhältnisses vor dem Jahresende erfolgt eine anteilige Erstattung vorausbezahlter Entgelte gemäß § 675 h III BGB.”",
+     "citation": "https://www.berliner-sparkasse.de/content/dam/myif/berliner-sk/work/dokumente/pdf/preise-leistungen/preis-leistungsverzeichnis.pdf",
+     "effective": "15 July 2026",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "How the closing month's share is counted is in none of the five price lists read: SLATE counts the days of the month the account was open, from the 1st or the day it opened in that month, through the closing day, over the month's days, and rounds half up to the cent, in the bank's own money first. Recorded in closingFeesDue's comment as SLATE's reading.",
+    "The month is the save's calendar month (America/New_York for a home account), as every month's end and fee in SLATE is.",
+    "A waiver or lower fee is read as the month stands at the close (Postbank's and ING's money paid in so far, Commerzbank's balance), as feeFor reads it on any day.",
+    "§ 675h(3) is applied to every close that settles fees: Close It, a bank's own close (closedByBank, closeForOverdraft, homeCloses), a switch; Directive (EU) 2015/2366 art. 55(4), which it carries, isn't limited to ordinary termination. A cancellation in the cooling-off period is charged the same share as § 357b(2)'s Wertersatz on the contract's price, as Commerzbank's own withdrawal notice describes it.",
+    "Fees already collected and refunds: no German fee SLATE charges is paid ahead (each month's accrues at its end and posts at the quarter's closing), so the months collected at an earlier closing were each served whole and stay, and nothing is refunded. Berliner Sparkasse's Sparkassen-Card (€12.00 a year, paid ahead, refunded pro rata under its footnote 45) is a fee SLATE doesn't model.",
+    "ING (“im Folgemonat”) and Commerzbank (“monatlich”, in its distance-selling information, against its price list's “mit dem nächstfolgenden Kontoabschluss”) take the month's fee monthly where SLATE posts every German bank's at the quarter's closing: the timing differs, the sums and what a close charges don't. Not changed."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "const part = (x: Money) => Math.floor((2 * x * days + of) / (2 * of));",
+     "replace": "const part = (x: Money) => x;",
+     "killed": true,
+     "note": "M1: the whole month; 7 of 7 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "const part = (x: Money) => Math.floor((2 * x * days + of) / (2 * of));",
+     "replace": "const part = (x: Money) => Math.floor((x * days) / of);",
+     "killed": true,
+     "note": "M6: rounded down, not half up; 5 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "...).day : 1) + 1;",
+     "replace": "...).day : 1);",
+     "killed": true,
+     "note": "M7: the closing day not counted; 7 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "now.day - (account.openedAt >= monthStart ? zonedParts(account.openedAt, sim.homeZone).day : 1) + 1",
+     "replace": "now.day - 1 + 1",
+     "killed": true,
+     "note": "M8: from the 1st though opened that month; 3 failed (both scope-money Berlin tests and the Cancel It fixture)"
+    },
+    {
+     "file": "src/ui/bank/BankMoves.tsx",
+     "find": "{fees && a.id !== person.primaryAccountId",
+     "replace": "{false && fees && a.id !== person.primaryAccountId",
+     "killed": true,
+     "note": "M9: no line under Close It; 5 failed"
+    },
+    {
+     "file": "src/ui/bank/BankAccountLife.tsx",
+     "find": "{fees && <span …>{fees}</span>}",
+     "replace": "(nothing)",
+     "killed": true,
+     "note": "M10: no line under Cancel It; 1 failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "shareHeld !== undefined ? inSaveMoney(sim, shareHeld, bank.currency) : part(fee.fee)",
+     "replace": "part(fee.fee)",
+     "killed": true,
+     "note": "M11: the dollars cut to the day instead of the euros charged converted; 1 failed (the GUARD's $5.57)"
+    }
+   ],
+   "rowText": {
+    "bank.cancel_new": {
+     "tests": "… Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: … (the rest as written). From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
+     "after.tests[4].closes": "The panel drawn while the fee refusal holds: “Its fees, €0.16, are more than it holds. Pay in €0.06 first.” under it and as the grayed Cancel It’s title, with “Canceling it now charges its fees to the day, €0.16: January’s €4.90 for the one day of its 31 it’s been open, €0.16.” before it; the command refused in the same words, nothing moved; then “Closing fees: GiroKonto” −16 and 99_84 landed at Deutsche Bank. Until 2026-10-16’s brief 09 the whole €4.90 (title renamed, inputs/renames.json).",
+     "after.tests[18].closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand), no fee owed for January, the month the AktivKonto opened (Deutsche Bank’s price list); paid in, it closes charging the interest; a reload charges nothing again. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
+     "after.tests[19].closes": "Cancel It in the cooling-off period refused for 25¢, no fee owed for the month it opened, then charges it. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
+     "acceptance.unfinished": "None found. The month’s fee a German close owes only to the day (BGB § 675h(3)) is charged so from 2026-10-16 (brief 09, docs/verification/remaining-09/banking-result.json, banking.1.pro-rata), on canceling as on closing, where until then the whole month; canceling reaches it only on a fixture."
+    },
+    "bank.close_current": {
+     "after.tests[6].closes": "Close It refused in the bank’s words for 53¢ of interest (15 day ends at 13.05% on €100, by hand), no fee owed for January, the month the AktivKonto opened; paid in, it closes charging the interest; a reload charges nothing again. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
+     "after.tests[7].closes": "Cancel It in the cooling-off period refused for 25¢, no fee owed for the month it opened, then charges it. Until 2026-10-16’s brief 09 €6.90 too (title renamed).",
+     "evidence (add)": "From 2026-10-16 (brief 09) played on a German account: tests/remaining-09-banking.test.ts ‘PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks tells the Berlin-raised student that closing her AktivKonto charges its fees to the day…’, the month’s edges, February in a leap year with twins, and insufficient funds then paid in: a Berlin-raised student’s AktivKonto kept at Deutsche Bank, closed with Close It."
+    }
+   },
+   "tutorial": "src/engine/content/tutorial.ts, the bank chapter's sentence on an account kept from before Yale (dated comment above it): “Closed with Close It, a German bank charges this month’s fee only for the days it’s been open, the figure said under the button before you press it.”",
+   "guide": "src/engine/content/guide/money.ts: Another Bank (Close It's now and a new interpret line), Keeping An Account (Cancel It's now and a new interpret line), A Bank At Home (a bank's own close ends its fees; Close It on a German home account), and Your Bank's The Monthly Fee (Deutsche Bank's month of opening)."
+  },
+  {
+   "id": "banking.1.pro-rata.month-end",
+   "status": "Implemented And Verified",
+   "before": "defect (reachable): a close after 11 PM on a month's last day charged that month twice",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > PLAYER JOURNEY: at the month’s edges: 31 October 2026 at 11:30 PM, after October’s end, €6.90 once (until 2026-10-16 €13.80); 1 March 2027 €14.02, January’s and February’s kept and one day of March’s; 31 March at 10 PM €20.70; at 11:30 PM, after the quarter’s closing took its €20.70, nothing at closing, and the screen says why",
+     "kind": "clock, render, command",
+     "proves": "€6.90 once at 11:30 PM on 31 October 2026 (reproduced before the fix as −1,380 native, scratchpad probe); after the quarter's closing nothing more; the line says the month was counted at its end."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "No share once the closing month's end (11 PM on its last day) has passed: the month is with the quarter's already.",
+     "where": "src/engine/systems/banking.ts closingFeesDue",
+     "failingTest": "The edges test failed with the check taken out (M2)"
+    }
+   ],
+   "sources": [],
+   "assumptions": [
+    "The month's end is known to have run by the clock (at or past 11 PM on the month's last day): the scheduler runs every item due at or before the instant it stops at, before a command there."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (sim.now >= monthEndAfter(sim, monthStart)) return made(0, held(0), 0, held(0), 'accrued');",
+     "replace": "",
+     "killed": true,
+     "note": "M2: 1 failed"
+    }
+   ]
+  },
+  {
+   "id": "banking.1.pro-rata.opening-month",
+   "status": "Implemented And Verified",
+   "before": "defect (fixtures only): Deutsche Bank's opening month charged, against its price list",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata.opening-month: Deutsche Bank’s month of opening, free > FIXTURE, Berlin: an AktivKonto opened beside Commerzbank on Monday 5 January is told on Your Banks that closing charges nothing, January being the month it opened; closed on 31 January at 10 PM nothing is charged; its twin kept is charged nothing at January’s end, and closed on 10 February €2.46, 10 of February’s 28 days",
+     "kind": "render, clock, command (FIXTURE)",
+     "proves": "January free at its end and on a close; February accrued at its end; closed on 10 February for 10 of 28 days. FIXTURE: a played life's Deutsche Bank account was opened before Yale."
+    },
+    {
+     "file": "tests/statements.test.ts",
+     "title": "Germany’s quarterly closing > charges the quarter’s fees in one at the end of March, not month by month",
+     "kind": "clock (FIXTURE)",
+     "proves": "The quarter's closing takes February's and March's, 2 × €6.90 (until 2026-10-16 three)."
+    },
+    {
+     "file": "tests/statements.test.ts",
+     "title": "an account’s statement > adds up what came in and went out, and counts interest after tax and the fees",
+     "kind": "clock (FIXTURE)",
+     "proves": "The statement's fees, 2 × €6.90."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A waiver for the calendar month the account opened in (Product.waiver.openingMonth), given to Deutsche Bank's AktivKonto from its price list; said in the fee's words (“free in the month it opens”).",
+     "where": "src/engine/content/banks.ts, src/engine/content/banks-thirteen.ts, src/engine/systems/banking.ts feeFor, src/ui/bank/feeWords.ts",
+     "failingTest": "Nine tests failed with the waiver taken out (M5): the opening-month fixture, statements' two, and the last pass's German tests as changed"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "“Die Kontoführung im Eröffnungsmonat ist kostenfrei.”",
+     "citation": "Deutsche Bank's price list (as banking.1.pro-rata)",
+     "effective": "1 October 2026 (Stand); whether earlier price lists said it wasn't read",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "No other German bank's price list read that day frees the opening month; SLATE charges theirs whole at the month's end, as before."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (waiver?.openingMonth && monthStartOf(sim, account.openedAt) === monthStart) return met('new');",
+     "replace": "",
+     "killed": true,
+     "note": "M5: 9 failed across remaining-09-banking, statements and remaining-banking"
+    }
+   ]
+  },
+  {
+   "id": "banking.3.homecloses",
+   "status": "Implemented And Verified",
+   "before": "latent defect, unreachable (the last pass's assumption): homeCloses re-settled fees on each daily retry at a quarterly bank",
+   "disposition": "guard kept and tested",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule (TEST SETUP: it closes no home account), its close on 23 October 2026 finding the AktivKonto overdrawn charges €5.12, 23 of October’s 31 days, once; the daily tries after and the months’ ends charge no more fees; paid off, it closes, and the quarter’s closing finds nothing",
+     "kind": "clock (GUARD, TEST SETUP terms)",
+     "proves": "One “Closing fees” of €5.12 ($5.57, the euros converted) on 23 October where before the fix it was €6.90 every morning (probe: eight by 30 October); the Didn't Close notice once; October's and November's ends add nothing; a retry still pending; paid off, closed on the next try; the quarter's closing posts nothing; across a reload; breaches 0. Why play can't reach it: only Barclays closes a home account (docs/research/banking/home-accounts.json), and Barclays has no monthly fee and closes monthly."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "settleFees ends an account's fees at the closing that settles them (Account.feesEndedAt): a second settling charges nothing, and the month's end charges it no monthly fee, as BGB § 675h(3) owes none past the contract's end. Fixed in settleFees, so every caller is covered; closeForOverdraft's own once-only set and completeSwitch's `quietly` stay, their comments corrected.",
+     "where": "src/engine/core/ledger.ts Account.feesEndedAt; src/engine/systems/banking.ts settleFees, closingFeesDue, the month's end; comments in src/engine/systems/abroad.ts homeCloses and src/engine/systems/lending.ts",
+     "failingTest": "The GUARD failed with feesEndedAt not set (M3) and with the month's end charging regardless (M4)"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "BGB § 675h(3)",
+     "citation": "as banking.1.pro-rata",
+     "effective": "13 January 2018",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "A home bank's close whose notice has run out has ended the contract though SLATE keeps the account open to be paid: its overdraft interest goes on as a debt, its fees don't. A fee for a customer abroad (chargeAbroadFee) isn't stopped by it: no bank that closes a home account charges one (Barclays charges none), so nothing reaches it, and no code was added for it."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  account.feesEndedAt ??= sim.now;",
+     "replace": "",
+     "killed": true,
+     "note": "M3: the GUARD failed"
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "account.feesEndedAt !== undefined ? { fee: 0, native: undefined } : feeFor(s, account, monthStart);",
+     "replace": "feeFor(s, account, monthStart);",
+     "killed": true,
+     "note": "M4: the GUARD failed"
+    }
+   ]
+  },
+  {
+   "id": "banking.2.scope",
+   "status": "Decision Required",
+   "before": "owner decision (CURRENT-SCOPE-2026-10-15, The Owner's Decisions, 2; the completion matrix's KS-bank-rows-scope)",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "scratchpad banking/work/tests/probe-rows.test.ts (run 2026-10-16, not in the tree)",
+     "title": "probe: each of the eight commands on six home-account lives (HSBC UK and BNP Paribas kept from 2010; RBC, BBVA México, Deutsche Bank and NatWest opened 1 August 2026, the latest Before Yale allows)",
+     "kind": "command (probe)",
+     "proves": "Every one refused in the bank's or the rule's words: Cancel It (every cooling-off ended by 21 August 2026, before the 24 August start), Arrange It (abroadRefusal, the bank's own words), a switch (to a US bank, refused by its opening rule; to a bank abroad, “That isn’t a bank where you live.”), Call It Off and Keep The Balance There (“No switch is under way.”), Take The Loan (“Your bank has offered no loan for an overrun.”), a card at the bank abroad (“A card is applied for in the country you bank in; … is elsewhere.”), a money transfer (“The Chase Freedom Unlimited doesn’t offer money transfers.”)."
+    }
+   ],
+   "ownerDecision": "What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether rows a current life can't reach count against completion is a product choice the briefs don't settle: (a) keep them Unresolved, counted against completion with nothing anyone can do; (b) move them to Explicitly Deferred, as health.prepay was, the engine and its fixture tests kept, counted outside the completed numerator. Recommended: (b), since no work remains and (a) asks for a life the scope forbids; either way they are not counted complete.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.arrange_overdraft",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.arrange_overdraft > PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words, a close of nothing is refused, and nothing is set or posted, across a reload; Chase’s Overdraft panel draws no Arrange It",
+     "kind": "render",
+     "proves": "What a New Haven student meets."
+    },
+    {
+     "file": "tests/integration-home-lending.test.ts",
+     "title": "(the coverage area's, as the row cites it)",
+     "kind": "render",
+     "proves": "A home bank's Borrowing refuses in its words; the probe confirms at five more banks."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.cancel_new",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision (its last unfinished item implemented: banking.1.pro-rata)",
+   "evidence": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.1.pro-rata: a German account’s month’s fee on a close, to the day > FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th: Your Accounts Over Time says canceling charges €1.90 of fees, 12 of January’s 31 days of its €4.90, and refuses it for those and 43 cents of overdraft interest, “Pay in €2.33 first”; paid in, canceled, both charged, once",
+     "kind": "render, command (FIXTURE)",
+     "proves": "Germany's fee on canceling, to the day."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope: the probe found every country's cooling-off over before a home-account life begins (the latest, Canada's fourteen business days from 1 August 2026, ends 20 August).",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.switch",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch > PLAYER JOURNEY: in New Haven a switch to Citi is refused first for a photo ID, as Citi’s opening asks one, and with a passport applied for and come, with the steps to take; nothing is set, across a reload; Your Banks draws those steps, and the Switch Bank panel isn’t drawn at all",
+     "kind": "render",
+     "proves": "What a New Haven student meets; the probe adds a home-account life's “That isn’t a bank where you live.”"
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.switch_complete",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "bank.switch_complete > FIXTURE, London: Barclays to HSBC on Wednesday 14 January 2026, across a reload: the savings moved to the penny with its closing interest, the current account less the £20 of groceries still pending, held back until they post and then closed with the rest sent across, the standing order into savings re-pointed and paid there on the 15th",
+     "kind": "fixture",
+     "proves": "As the row says; no played switch can begin."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.cancel_switch",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "(probe)",
+     "title": "“No switch is under way.” on six home-account lives",
+     "kind": "command (probe)",
+     "proves": "No played switch can be under way."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.stop_balance_transfer",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "(probe)",
+     "title": "“No switch is under way.” on six home-account lives",
+     "kind": "command (probe)",
+     "proves": "As bank.cancel_switch."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.take_overrun_loan",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "(probe)",
+     "title": "a Paris-raised student keeping BNP Paribas: “Your bank has offered no loan for an overrun.”",
+     "kind": "command (probe)",
+     "proves": "No offer is made to a customer abroad (lending.ts's offer reads abroadRefusal)."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  },
+  {
+   "id": "banking.2.money_transfer",
+   "status": "Implemented, Verification Incomplete",
+   "before": "unresolved",
+   "disposition": "owner decision",
+   "evidence": [
+    {
+     "file": "tests/scope-money.test.ts",
+     "title": "card.money_transfer > PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer: The Card’s Offers draws no Move It, and the command is refused in its words with nothing moved",
+     "kind": "render",
+     "proves": "What a New Haven student meets; the probe: a card at a bank abroad is refused."
+    }
+   ],
+   "ownerDecision": "As banking.2.scope.",
+   "assumptions": [],
+   "mutations": []
+  }
+ ],
+ "foundOutside": [
+  "Berliner Sparkasse's Giro Digital includes no debit card: its price list charges the Sparkassen-Card €12.00 a year (paid ahead, refunded pro rata on an early close by its footnote 45). SLATE models no such fee; adding it would change every Berliner Sparkasse home account's opening float (feesToGraduation). Not changed.",
+  "ING charges its month's fee “im Folgemonat”, and Commerzbank's distance-selling information books “Kontoführungsentgelte monatlich”, where SLATE posts every German bank's at the quarter's closing. Timing only. Not changed.",
+  "An Arion debit card's yearly fee (Iceland) is charged on each anniversary of the account (lending.ts) and nothing is refunded when the account closes; Iceland carries Directive (EU) 2015/2366 art. 55(4). Whether Arion charges it ahead isn't in what SLATE read. A Reykjavík-raised student keeping Arion reaches it. Not changed: outside Germany's item, and the bank's practice unread."
+ ],
+ "checks": {
+  "tests (one file at a time, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1)": "tests/remaining-09-banking 7/7, scope-money 31/31, remaining-banking 23/23, accountlife 30/30, statements 17/17, guide 12/12, help-mechanics 8/8, home-account-ledger 9/9, and every other file rendering the bank's screens or a German or home account (bank-fees, bank-moves-card-line, banking, cash, defects-g14-1, defects-g20-1, defects-g22-1, defects-g4-2, defects-r5-1, evidence-g10/11/13/14-money, evidence-g29-ui, evidence2-b04, guide-examples-money, home-account-abroad/creation/idle/screens/setoff/tax/transfers, integration-home-lending, integration-savings-notice, lending, roundups) and the tutorial's and guide's readers (defects-g1-1, defects-g12-1, defects-g27-1, defects-g3-1, defects-r8-1, evidence-g02-life, evidence-g31-ui, evidence-g33-ui, defects-g21-1, defects-g7-1, defects3-unread, evidence-g34-ui, evidence2-b13): each exit 0, none failed",
+  "npx tsc -b --noEmit": 0,
+  "npx eslint (this area's 17 files)": 0,
+  "node tools/title-case.mjs --check": 0,
+  "node tools/spelling.mjs": 0,
+  "node tools/typos.mjs": 0,
+  "node tools/tics.mjs --check": "1: “A sentence that opens with Nothing” over by one, at src/ui/components/CourseworkPane.tsx:69, another area's file (not this area's, not changed)",
+  "node tools/voice-check.mjs --check": 0,
+  "node tools/wired.mjs --check": 0,
+  "node tools/plural-check.mjs": 0,
+  "node tools/label-sweep.mjs": 0,
+  "node tools/doc-refs.mjs --check": 0,
+  "devmap, traceability": "not run: no command or scheduled kind added or removed"
+ },
+ "mutationsRun": "11, each in a copy of the tree's src in the scratchpad (banking/mut), never in the tree; all killed (M1 to M11)."
+}
