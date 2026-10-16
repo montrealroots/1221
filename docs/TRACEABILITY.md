@@ -111,7 +111,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `health.drop` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You have no plan of your own to drop. | — | — | — | 2 | — |
 | `health.enroll` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | — | — | — | — | 17 | — |
 | `health.extra_supply` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | It comes to more than the bank can cover. (also extraSupplyRefusal) | — | — | — | 3 | — |
-| `health.pay_bill` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You owe nothing for care.; Say how much.; … can’t pay a medical debt.; … can’t cover it. | — | Yes | — | 8 | — |
+| `health.pay_bill` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | You owe nothing for care.; Say how much.; … can’t pay a medical debt.; You have no current account to pay it from. | — | Yes | — | 8 | — |
 | `health.prepay` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | It comes to …, more than you can pay. (also prepayRefusal) | — | — | — | 3 | — |
 | `health.request_hardship` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/health.ts` | — (also hardshipRefusal) | — | — | — | 1 | — |
 | `health.therapy` | Implemented But Unverified | Cover, Benefits And Returns | PapersWorkspace.tsx | `systems/therapy.ts` | — (also therapyRefusal) | therapy; status | Yes | — | 7 | — |
@@ -210,7 +210,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `benefits.uc_period` | `systems/universalcredit.ts` | systems/universalcredit.ts | — | Yes | — | 0 |
 | `benefits.week` | `systems/unemployment.ts` | systems/unemployment.ts | — | Yes | benefits.week | 2 |
 | `card.arrives` | `systems/cardlife.ts` | systems/abroad.ts; systems/bankmoves.ts; systems/cardlife.ts | — | — | credit_card; card.arrives | 1 |
-| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 36 |
+| `card.due` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 37 |
 | `card.replaced` | `systems/security.ts` | systems/bankmoves.ts; systems/security.ts | last4; issued; expiresAt | — | — | 8 |
 | `card.statement` | `systems/credit.ts` | systems/credit.ts | — | Yes | — | 25 |
 | `citizenship.decided` | `systems/citizenship.ts` | systems/citizenship.ts | naturalized | — | — | 2 |
@@ -271,7 +271,7 @@ money, what it sets going next, and how many test files name it or its constant.
 | `school.welfare` | `systems/leave.ts` | systems/leave.ts | — | — | school.welfare_decide | 2 |
 | `school.welfare_decide` | `systems/leave.ts` | systems/leave.ts | — | — | medical; school.leave_appeal | 0 |
 | `tax.amended` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 0 |
-| `tax.due` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute; tax.three_year | 4 |
+| `tax.due` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute; tax.three_year | 6 |
 | `tax.federal_lien` | `systems/taxreturn.ts` | systems/taxreturn.ts | status; startedAt; nextDue; payBy; why; and 3 more | Yes | tax.federal_lien; tax.notice; short; and 4 more | 2 |
 | `tax.notice` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | Yes | — | 21 |
 | `tax.plan_decide` | `systems/taxreturn.ts` | systems/taxreturn.ts | status | Yes | — | 0 |
@@ -284,6 +284,6 @@ money, what it sets going next, and how many test files name it or its constant.
 | `tax.state_notice` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 11 |
 | `tax.state_plan_end` | `systems/statetax.ts` | systems/statetax.ts | — | Yes | tax.state_plan_payment | 0 |
 | `tax.state_plan_payment` | `systems/statetax.ts` | systems/statetax.ts | status; why; nextDue | Yes | tax.state_plan_payment | 1 |
-| `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 13 |
+| `tax.substitute` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | tax.substitute | 15 |
 | `tax.three_year` | `systems/taxreturn.ts` | systems/taxreturn.ts | — | — | — | 4 |
 | `world.tick` | `world/world.ts` | index.ts; world/world.ts | — | — | world.tick | 2 |
