@@ -291,10 +291,30 @@ await step('coursework: a way of playing it chosen and rehearsed in', async () =
   return said;
 });
 await step('coursework: table work answered from its select', async () => {
-  // Table Work’s own select, under its heading: the first select on the tab can be a rehearsal’s day or hour.
-  const sel = page.locator('[id^="school-pane-coursework"] .eyebrow', { hasText: /^Table Work$/ }).first().locator('xpath=ancestor::div[contains(@class,"col")][1]').locator('select').first();
-  if (!(await sel.count())) skip('no table work open');
-  must(!(await sel.isDisabled()), 'the table work select is grayed');
+  // Table Work’s own selects, under each work’s heading: the first select on the tab can be a rehearsal’s day or hour.
+  const selects = () => page.locator('[id^="school-pane-coursework"] .eyebrow', { hasText: /^Table Work$/ }).locator('xpath=ancestor::div[contains(@class,"col")][1]').locator('select');
+  if (!(await selects().count())) skip('no table work open');
+  // The first a player can answer now. Where every one waits on its text being read, the reason is on the screen and the
+  // text is read first, as a player would (from 2026-10-16: until then the step took the first select on the tab, which
+  // took any answer and refused it after, and failed on a life whose first open work was a play not read yet).
+  let sel;
+  let first = '';
+  for (let i = 0; i < await selects().count(); i += 1) if (!(await selects().nth(i).isDisabled())) { sel = selects().nth(i); break; }
+  if (!sel) {
+    const card = () => selects().first().locator('xpath=ancestor::section[contains(@class,"card")][1]');
+    const why = await card().locator('.why-not').first().innerText().catch(() => '');
+    must(/Read it first/.test(why), `the table work select is grayed with no reason on the screen: ${why || 'none'}`);
+    const read = () => card().getByRole('button', { name: /^(Read The Scene|Read The Play)/ }).first();
+    must(await read().count(), 'grayed till the text is read, and no way to read it on its card');
+    for (let n = 0; n < 4 && await selects().first().isDisabled(); n += 1) {
+      if (await read().isDisabled()) { await advance('This Evening'); await rail('School'); await tab('Coursework'); }
+      must(!(await read().isDisabled()), `reading grayed in the evening: ${await card().locator('.why-not').first().innerText().catch(() => '')}`);
+      await read().click(); await wait(1200); await settleDialogs();
+    }
+    must(!(await selects().first().isDisabled()), 'the table work select still grayed after the text was read');
+    sel = selects().first();
+    first = `grayed first (${why}), the text read; `;
+  }
   const current = await sel.inputValue();
   const values = await sel.locator('option').evaluateAll((os) => os.map((o) => o.value));
   const chosen = values.find((v) => v && v !== current);
@@ -305,7 +325,7 @@ await step('coursework: table work answered from its select', async () => {
   const said = await toast();
   must(/Decided at the table\./.test(said), `no answer taken: ${said || 'no toast'}`);
   must((await sel.inputValue()) === chosen, `the select went back to “${await sel.inputValue()}”`);
-  return `${values.length} options, “${chosen}” taken; ${said}`;
+  return `${first}${values.length} options, “${chosen}” taken; ${said}`;
 });
 /**
  * Work It Through on a piece (from 2026-10-12): each problem the forecast names in turn, until one has a way that can be

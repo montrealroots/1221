@@ -559,6 +559,12 @@ export function activitiesOf(a: Assignment): readonly Activity[] {
 }
 
 /** Why a step can't be done now, or nothing. */
+/**
+ * Why table work on a text can't be done yet: it's done on a text you know, read to 30% (from 2026-10-16 one rule, read by
+ * `school.choose` and by the Table Work select, which said nothing of it until then and took an answer it then refused).
+ */
+export const tableWorkRefusal = (a: Pick<Assignment, 'prep'>): string | undefined => (a.prep.familiarity < 0.3 ? 'Read it first: table work is done on a text you know.' : undefined);
+
 export function prepareRefusal(sim: Simulation, person: Person, a: Assignment | undefined, activityId: string): string | undefined {
   if (!a) return 'There’s no such assignment.';
   if (a.status !== 'open' && a.status !== 'revising') return 'That work is finished.';
@@ -1700,7 +1706,8 @@ export function registerCoursework(sim: Simulation): void {
     if (!qo) throw new CommandError('That isn’t a question this work asks.');
     const option = qo.options.find((o) => o.id === p.option);
     if (!option) throw new CommandError('That isn’t one of the answers.');
-    if (a.prep.familiarity < 0.3) throw new CommandError('Read it first: table work is done on a text you know.');
+    const unread = tableWorkRefusal(a);
+    if (unread) throw new CommandError(unread);
     if (a.answers[qo.q.id] === option.id) throw new CommandError('That’s your answer already.');
     const busy = startRefusal(s, person, CHOOSE_MINUTES);
     if (busy) throw new CommandError(busy);

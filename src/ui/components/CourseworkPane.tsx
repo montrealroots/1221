@@ -25,7 +25,7 @@ import {
 import { ClassMoments } from '@/ui/components/ClassMoments';
 import { WorkThrough } from '@/ui/components/WorkThrough';
 import { MaterialDemands, PlayingChooser } from '@/ui/components/PlayingChooser';
-import { bandFor, playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, urgentWork } from '@/engine/systems/coursework';
+import { bandFor, playingPreview, playingRefusal, remedyWords, shortParts, showingForecast, tableWorkRefusal, urgentWork } from '@/engine/systems/coursework';
 import { chiefLimit } from '@/engine/systems/evaluation';
 import { schoolEnded } from '@/engine/systems/school';
 import { EVALUATION } from '@/engine/content/tasks';
@@ -182,13 +182,17 @@ function AssignmentCard({ a }: { a: Assignment }) {
 function TableWork({ a }: { a: Assignment }) {
   const { run, toast } = useGame();
   const choose = useFeature('school.choose');
+  // A text not yet read far enough, said and grayed (from 2026-10-16): until then the select took an answer the command
+  // refused, and said so only in a toast after the choice.
+  const unread = choose.open ? tableWorkRefusal(a) : undefined;
   return (
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">Table Work</div><HowItWorks help="school.choose" /></div>
+      {unread && <WhyNot reasons={[['Table Work', unread]]} />}
       {questionsFor(a).map(({ q, options }) => (
         <div key={q.id} className="field" style={{ margin: 0 }}>
           <label htmlFor={`${a.id}-${q.id}`}>{q.label}</label>
-          <select id={`${a.id}-${q.id}`} value={a.answers[q.id] ?? ''} disabled={!choose.open} title={choose.reason} onChange={(e) => { if (!e.target.value) return; const r = run<{ supported: boolean }>('school.choose', { assignmentId: a.id, question: q.id, option: e.target.value }); if (r.ok) toast('Decided at the table.', 'neutral'); }}>
+          <select id={`${a.id}-${q.id}`} value={a.answers[q.id] ?? ''} disabled={!choose.open || Boolean(unread)} title={choose.reason ?? unread} onChange={(e) => { if (!e.target.value) return; const r = run<{ supported: boolean }>('school.choose', { assignmentId: a.id, question: q.id, option: e.target.value }); if (r.ok) toast('Decided at the table.', 'neutral'); }}>
             <option value="">Not Decided</option>
             {options.map((o) => <option key={o.id} value={o.id}>{o.text}</option>)}
           </select>

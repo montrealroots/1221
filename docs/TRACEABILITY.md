@@ -138,7 +138,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.cancel_leave` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | The dean imposed this leave, so it isn’t yours to call off${!l.mandatory.appeal && s.now <; Calling it off keeps you at the School as you are. Confirm to go ahead. | — | — | — | 3 | — |
 | `school.cancel_rehearsal` | Implemented But Unverified | Drama School | CourseworkPane.tsx TimeControls.tsx | `systems/coursework.ts` | There’s no such rehearsal booked. | — | — | — | 4 | — |
 | `school.cancel_repeat` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | No repeat is asked for.; … Confirm to go ahead. | — | — | school.term | 2 | — |
-| `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; Read it first: table work is done on a text you know.; That’s your answer already. (also startRefusal) | — | — | — | 9 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.choose` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | That isn’t a question this work asks.; That isn’t one of the answers.; That’s your answer already. (also tableWorkRefusal, startRefusal) | — | — | — | 10 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.choose_part_playing` | Implemented But Unverified | Drama School | RehearsalProcess.tsx | `systems/production.ts` | — (also partPlayingRefusal) | — | — | — | 6 | — |
 | `school.choose_playing` | Implemented But Unverified | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also playingRefusal) | — | — | — | 7 | — |
 | `school.extend_incomplete` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/courserecord.ts` | — (also extendRefusal) | — | — | — | 5 | — |
@@ -147,7 +147,7 @@ SLATE has no tests of its screens, and nothing is deployed.
 | `school.make_up` | Implemented But Unverified | Drama School | SchoolWorkspace.tsx | `systems/courserecord.ts` | — (also makeUpRefusal) | — | — | — | 6 | — |
 | `school.orientation` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also orientationRefusal) | — | — | — | 9 | journey-life.test.ts |
 | `school.pay_balance` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — | — | — | — | 14 | — |
-| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 29 | journey-school-year.test.ts; journey-three-students.test.ts |
+| `school.prepare` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | — (also prepareRefusal) | — | — | — | 30 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.read_feedback` | Verified (journey) | Drama School | CourseworkPane.tsx | `systems/coursework.ts` | There’s no feedback on that.; Read already. | — | — | — | 8 | journey-school-year.test.ts; journey-three-students.test.ts |
 | `school.request_aid_review` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/leave.ts` | — (also aidReviewRefusal) | — | — | school.aid_decide | 3 | — |
 | `school.request_conversion` | Implemented But Unverified | Drama School | StudyPlanPanels.tsx | `systems/school.ts` | — (also conversionRefusal) | status; history (added to) | Yes | school.convert; run; school.call | 8 | — |
