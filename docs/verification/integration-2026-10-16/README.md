@@ -137,7 +137,7 @@ Each wrote its checklist before its first change and its result after; each muta
 | Banking (with the brief's section 7) | 16 | fixed 7, verified as it stands 7, older-save compatibility 1, owner's decision 1 | 29 of 31 |
 | School (with section 6) | 10 | fixed 4, verified as it stands 3, guard kept and tested 2, control corrected 1 | 21 of 22 |
 | Tax and papers (with section 8) | 18 | verified as it stands 11, fixed 4, control corrected 2, guard kept and tested 1 | 19 of 20 |
-| Coverage | 7 | implemented 4, defects found and fixed 3 | every one, in copies |
+| Coverage | 11 | implemented 6, defects found and fixed 4, reported 1 (the overdraft panel, fixed outside the area in `d31f0a94`) | every one, in copies |
 
 Each surviving mutation is recorded in its result with why it survived (redundant code, removed or kept as a guard).
 
