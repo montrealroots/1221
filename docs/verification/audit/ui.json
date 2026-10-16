@@ -46,6 +46,10 @@
           "calledBy's rule (the preferred name only when it differs from both the full and the plain name, otherwise the first name; Home.tsx:565-569) is untested.",
           "Line refs have drifted: CharacterCreation.tsx:366-378 (not 352-363), bootstrap.ts:339-341 (not 325-327), Home.tsx:114/565 (not 554), ProfileWorkspace.tsx:143 (not 117), index.ts:249 (not 235)."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -93,6 +97,10 @@
           "calledBy (Home.tsx:565-569) is untested.",
           "Line refs have drifted: CharacterCreation.tsx:382-389 (not 368-375), bootstrap.ts:342 (not 328), Home.tsx:114/565, ProfileWorkspace.tsx:108/143, index.ts:249."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -163,6 +171,10 @@
           "The engine keeps a stated title that contradicts the pronouns: a probe of createSave with he/him and actress stored 'actress'. Only the screen prevents this.",
           "Line refs have drifted: CharacterCreation.tsx:392-410 (not 378-394), bootstrap.ts:303-305,344."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -317,6 +329,10 @@
           "said": "systems/school.ts:1312,1572,1614,1671 casting title (parts a play writes for actor/actress); systems/playreading.ts:80; index.ts:245 careerLabel",
           "now": "systems/school.ts:2534, the casting pool's title, read by partsFor (:2497-2508); :2580-2589, the lead-taken bond; :2647-2649, the Yale Rep role (Nina or Konstantin in 2027, then a lead written for the title); companyPart :2131-2140, the Summer Cabaret's parts; systems/playreading.ts:79 partFor, a read's part for you; index.ts:259, refreshMeta's careerLabel; labels at Home.tsx:110, GameShell.tsx:160, LifeEnded.tsx:41 and ProfileWorkspace.tsx:144. Until 2026-10-13 this said school.ts:1312,1572,1614,1671, playreading.ts:80 and index.ts:245, lines the files had moved on from."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -454,6 +470,10 @@
           "said": "ageOn (ProfileWorkspace.tsx:130), lifespan ceilings (content/lifespan.ts), mortality, latestBirthYear validation (CharacterCreation.tsx:65,1179)",
           "now": "ageOn (ProfileWorkspace.tsx:145: the age and the date born); the birthday on the calendar (systems/birthdays.ts:26-38, 83-95); the starting fitness capped by ceilingAt (content/lifespan.ts:81-93, bootstrap.ts:333,370); mortality, the year drawn to each birthday (systems/mortality.ts:97-127); validation: latestBirthYear (CharacterCreation.tsx:66, checked at :1216-1218), over 95 (:1220), and a day the month has (:1221-1222, with the day input capped to it at :512). Until 2026-10-13 this said ProfileWorkspace.tsx:130 and CharacterCreation.tsx:65,1179, and validate took any day up to 31, so 31 February 2002 was stored as 3 March."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -596,6 +616,10 @@
           "said": "systems/body.ts drawnBody (birth country's adult averages), at creation from 2026-10-12; systems/documents.ts:475; content/bankdays.ts:22; creation BodyFields units (CharacterCreation.tsx:255)",
           "now": "systems/body.ts drawnBody (:82-84, the birth country's adults), called at creation (bootstrap.ts:388-390) from 2026-10-12; citizenshipId (row c-citizenship); systems/documents.ts startingDocuments (:466-500; a US-born citizen's license from the birth state, :493-500); the creation BodyFields units, imperial for the US-born (CharacterCreation.tsx:255-256); the birth country's places and holidays, loaded by index.ts loadPlacesFor. Until 2026-10-13 this also named content/bankdays.ts:22, which reads currentLocationId first and falls back to homeRegionId only where a player has none, and documents.ts:475."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -728,6 +752,10 @@
           "said": "Identity: Citizenship (output, CharacterCreation.tsx:531-540)",
           "now": "Identity: Citizenship (output, CharacterCreation.tsx:543-555; citizenshipName at :336-339), moved by the birthplace picker above it (:533-541). Until 2026-10-13 this said CharacterCreation.tsx:531-540."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -781,6 +809,10 @@
           "No render test shows the Profile and the wellbeing look printing it (ProfileWorkspace.tsx:133-136; looks/wellbeing.tsx:182-185).",
           "Line refs have drifted: CharacterCreation.tsx:455-487 (not 441-476), bootstrap.ts:349-350 (not 335-336), ProfileWorkspace.tsx:133,161 (not 118,142)."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -826,6 +858,10 @@
           "The cited test doesn't touch storage or display: no createSave with a portrait asserts Person.portrait or meta.portrait.",
           "Line refs have drifted: CharacterCreation.tsx:358-362 (not 344-348), bootstrap.ts:315,343 (not 299,329), ProfileWorkspace.tsx:138 (not 123), index.ts:250 (not 236)."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -957,6 +993,10 @@
           "said": "systems/personality.ts:72-77 axisModifier stressGain/stressRecovery; ALSO systems/attributes.ts:126-129 starting Composure ability (25+0.35*stability), read by evaluation consistency (content/tasks.ts:80,105,151,161)",
           "now": "systems/personality.ts:78-79, axisModifier stressGain (1 - 0.3 x lean) and stressRecovery (1 + 0.3 x lean), read where stress arrives or clears: life.ts:211-212 (waking hours and on empty), attributes.ts:308 (nerves), enjoyment.ts:112, injury.ts:98, school.ts:2489 (a rival's lead), spending.ts:501. ALSO systems/attributes.ts:129-135, the starting composure (25 + 0.35 x stability, to a tenth), read by nerves (attributes.ts:305-311) and by evaluation consistency (content/tasks.ts:84,109,155,172,188,199,210). Until 2026-10-13 this said personality.ts:72-77, attributes.ts:126-129 and tasks.ts:80,105,151,161."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1088,6 +1128,10 @@
           "said": "tests/personality.test.ts ‘lets the three dispositions the page names...’ (the sleep knob); no test checks the discipline it starts",
           "now": "tests/evidence-g27-ui.test.ts > c-disp-conscientiousness: discipline at 32.5 and 77.5 at the slider's ends; an hour through practice.exercise growing 1.0933 times as much; five hours through life.sleep sleeping 1.2102 times as deep and putting back 1.4606 times the energy; the creation sentence and the Profile line rendered. tests/personality.test.ts holds the knob. Until 2026-10-13 this said no test checked the discipline it starts, and none did."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1241,6 +1285,10 @@
           "said": "downstream: systems/personality.ts:73-76 stressGain (+0.15 lean); tests: tests/personality.test.ts 'lets the three dispositions the page names...'",
           "now": "downstream: systems/personality.ts:78 stressGain (+0.15 × lean), read by every stress that arrives through it: running on empty (life.ts:212), a performance's nerves (attributes.ts:308), a turn (enjoyment.ts:112), an injury (injury.ts:98), a rival's lead (school.ts:2489) and money's worry (spending.ts:501). tests: tests/evidence-g27-ui.test.ts > c-disp-ambition and tests/evidence2-b10.test.ts > c-disp-ambition. Until 2026-10-13 these said personality.ts:73-76, named no reader, and cited a fixture of the knob alone."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1349,6 +1397,10 @@
           "said": "systems/credit.ts:1127 openCredit: >65 starts autopay on 'minimum' (called index.ts:218)",
           "now": "systems/credit.ts:1206-1210 openCredit (CARRIES_A_BALANCE = 65): over 65 starts the card's autopay on 'minimum', so the card carries what the minimum leaves and is charged interest at the next statement once any introductory rate has run (called by populateWorld, index.ts:232). Until 2026-10-13 this said credit.ts:1127 and index.ts:218."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1454,6 +1506,10 @@
           "said": "systems/enjoyment.ts:119-122 takeTheHouse, called by nerves systems/attributes.ts:292",
           "now": "systems/enjoyment.ts:119-122 takeTheHouse, called by nerves at systems/attributes.ts:309 (nerves is 305-312), before every performance and showing: school.ts:3295 (a run-through), 3316 (a night on call booked before 2026-09-28), 3335 (a School or Rep performance), 3480 (a Cabaret performance), 3600 (a Summer Cabaret night), 3636 (a lab's showing). Until 2026-10-13 this said attributes.ts:292."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1614,6 +1670,10 @@
           "said": "downstream: systems/enjoyment.ts:82 enjoyWork novel/away; callers school.ts:2100,2175,2183. explanation: Matches UI (festival new play, Cabaret). tests: tests/arrears.test.ts 'takes the room by extraversion, the road by openness...'",
           "now": "downstream: systems/enjoyment.ts:82 enjoyWork on a day of new work (WorkDay.novel), called at school.ts:3356 (a Hughes or Carlotta festival rehearsal), 3492 (a Cabaret rehearsal) and 3485 (a Cabaret performance, which the page leaves out); no call sets WorkDay.away (enjoyment.ts:55). explanation: matches the UI at a festival's or the Cabaret's rehearsal; at a Cabaret performance the engine reads openness where the UI says rehearsing (found 2026-10-13). tests: tests/evidence-g28-ui.test.ts > c-disp-openness and tests/evidence2-b10.test.ts > c-disp-openness. Until 2026-10-13 these cited school.ts:2100,2175,2183, said the engine matched the UI, and cited a fixture whose road half nothing reaches."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1716,6 +1776,10 @@
           "said": "systems/enjoyment.ts:83 enjoyWork rehearsal; callers school.ts:2100,2183,2265,2291",
           "now": "systems/enjoyment.ts:83 enjoyWork, on a day of rehearsal; callers school.ts:3356 (a School or Rep rehearsal call), 3492 (a Cabaret rehearsal), 3612 (a Summer Cabaret rehearsal) and 3658 (a lab meeting). Until 2026-10-13 this said school.ts:2100,2183,2265,2291."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1949,6 +2013,10 @@
           "said": "entry: CharacterCreation.tsx:663-694; changes: cleanPersonalityTraits, bootstrap.ts:345; downstream: looks/wellbeing.tsx:117-120,358 trait look",
           "now": "entry: CharacterCreation.tsx:604-714 (PersonalityStep: the toggle at 610-617, the groups' pairs and their buttons at 679-710); changes: cleanPersonalityTraits at bootstrap.ts:359 (systems/personality.ts:55-64); downstream: personalityOf knobs, looks/wellbeing.tsx:119-122 (each trait a way in) and 363 (the trait look). Until 2026-10-13 these said CharacterCreation.tsx:663-694, bootstrap.ts:345 and looks/wellbeing.tsx:117-120,358."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2103,6 +2171,10 @@
           "said": "entry: CharacterCreation.tsx:707-789; changes: known() filter, bootstrap.ts:348; downstream: systems/enjoyment.ts:60-86 lovedInWork/enjoyWork via school.ts:2100,2257,2265; genresRead marks unread ones '·'; ProfileWorkspace.tsx:62-68 nextGenre, GenresPanel",
           "now": "entry: CharacterCreation.tsx:716-805 (PersonalStep: genresRead at 742, the · at 763, Select All at 770-784, the copy at 793-796); changes: known() at bootstrap.ts:362; downstream: enjoyment.ts:60-63 lovedInWork and 78-86 enjoyWork, through school.ts:3304 (a Rep run-through), 3319 (a night on call booked before 2026-09-28), 3344 (a School or Rep performance, a night sent on among them), 3356 (a School or Rep rehearsal), 3605 and 3612 (a Summer Cabaret night and rehearsal); ProfileWorkspace.tsx:73-82 nextGenre and 367 GenresPanel; looks/wellbeing.tsx:145 and 196. Until 2026-10-13 these said CharacterCreation.tsx:707-789, bootstrap.ts:348, school.ts:2100,2257,2265 and ProfileWorkspace.tsx:62-68; and until that day's fix no School or Rep night, run-through or night on call read the genres."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2148,6 +2220,10 @@
           "The row cites stale lines: CharacterCreation.tsx:797-812 is now 803-830, bootstrap.ts:352 is now 366, ProfileWorkspace.tsx:135 is now 150, and looks/wellbeing.tsx:137,185-190 is now 139,183-188.",
           "No render test shows the Profile or look saying the background back."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -2288,6 +2364,10 @@
           "said": "Person.body via settle() only when both given and 120-230 cm / 35-250 kg (bootstrap.ts:372-374); else drawn lazily from birthplace (systems/body.ts:68-70, life.ts:868)",
           "now": "Person.body via settle() only when both are given and inside BODY_GIVEN, 120-230 cm and 35-250 kg (bootstrap.ts:182-188; the choice at 388-390); else drawn from the birthplace at creation (drawnBody, systems/body.ts:82-97), from 2026-10-12. bodyOf (body.ts:68-70) serves saves made before then, and the day's weight is bodyDay at the midnight (life.ts:946). Until 2026-10-13 this said 'else drawn lazily from birthplace (systems/body.ts:68-70, life.ts:868)'."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2355,6 +2435,10 @@
           "The row cites tests/creation.test.ts:240, which is the unreachable non-school branch. It should cite tests/school.test.ts:175 and :200.",
           "The row cites stale lines: CharacterCreation.tsx:846-909 is now 864-905, bootstrap.ts:156-165,183-186,272-305 has moved (atSchool 159-168, newLifeFrom 199-202), and index.ts:227 enroll is now 241."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2406,6 +2490,10 @@
           "The row cites stale lines: bootstrap.ts:68-77 is now 70-78, and CharacterCreation.tsx:524-526,869-873 is now 539-540,880-905.",
           "The cited test only scans the source for markup in the non-school branch."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -2566,6 +2654,10 @@
           "said": "index.ts:163-213 accounts/savings/card/opening balance; openCredit score (index.ts:218)",
           "now": "index.ts:175-227, populateWorld: the profile in the save's currency (177), checking and savings opened at the starting bank (182-185), and the bank's card at the profile's limit (199-227); openCredit score (index.ts:232). Until 2026-10-13 this cited index.ts:163-213 and 218, lines that had since moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2665,6 +2757,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2805,6 +2901,10 @@
           "said": "index.ts:168-170 openAt at that bank; card product CARDS[bank.id] (index.ts:189)",
           "now": "index.ts:182-185 openAt at startingBank's bank: the one chosen, or else the country's first, and for somebody born outside the US never one that OPENING keeps for US persons (banking.ts:88-92). Card product CARDS[bank.id] (index.ts:203). Until 2026-10-13 this cited index.ts:168-170 and 189, lines that had since moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2858,6 +2958,10 @@
           "The cited test (creation.test.ts:240) does not hold the start date. The evidence is school.test.ts:175 and :200.",
           "The row cites stale lines: bootstrap.ts:279-282 is now 295-298, and CharacterCreation.tsx:1189-1190 is now 1224."
         ]
+      },
+      "verification": {
+        "class": "informational",
+        "label": "Said Back, Deciding Nothing"
       }
     },
     {
@@ -3028,6 +3132,10 @@
           "said": "issue: Guard covers top-level commands only (see finding on decision buttons). tests: tests/tutorial.test.ts ‘refuses a command until its chapter is read, and names the chapter’, ‘leaves a life without the guide wholly open’; tests/life-fixes.test.ts ‘runs its command past the same guards as the command given directly’",
           "now": "issue: none. A decision's command passes the guide's own guard (Simulation.guardedBecause), shown on 2026-10-13 with File It held until “Cover, Benefits And Returns” was read. tests: tests/evidence-g29-ui.test.ts > c-tutorial and tests/evidence2-b10.test.ts > c-tutorial. Until 2026-10-13 the issue said the guard covered top-level commands only, which had stopped being true on 2026-10-10, and the tests cited quickSave lives and a guard installed by hand."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3170,6 +3278,10 @@
           "said": "life.ts:206; attributes.ts:291; enjoyment.ts:112; injury.ts:88; school.ts:1529; spending.ts:395",
           "now": "life.ts:212 (an empty tank); attributes.ts:308 (nerves before a performance); enjoyment.ts:112 (a standing change, feel, from setStanding at school.ts:1784); injury.ts:98 (an injury); school.ts:2489 (a rival's lead on the cast list, castListRead); spending.ts:501 (a midnight in money trouble); shown on School's Your Composure, ui/components/AttributesPanel.tsx:26. Until 2026-10-13 this cited life.ts:206, attributes.ts:291, injury.ts:88, school.ts:1529 and spending.ts:395, lines that had since moved, and left the panel out."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3309,6 +3421,10 @@
           "said": "life.ts:205,622,626",
           "now": "life.ts:211 (waking hours clear 0.35 an hour, in applyElapsedWellbeing, which the clock runs through chargeWakingHours), 690 (a workout's 8) and 694 (an hour unwinding's 10). Until 2026-10-13 this cited life.ts:205, 622 and 626, lines that had since moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3442,6 +3558,10 @@
           "said": "life.ts:740,1209",
           "now": "life.ts:817 (nightParts' depth: the quality a night is slept at, read by life.sleep at its bedtime, by a night nobody chose and by the Sleep dialog's suggestion) and 1286 (unattendedNight: how long a night nobody chose lies in). Until 2026-10-13 this cited life.ts:740 and 1209, lines that had since moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3568,6 +3688,10 @@
           "said": "life.ts:793,1209,1303",
           "now": "life.ts:870 (applySleep: the energy a night puts back, after life.sleep and after a night nobody chose), 1286 (unattendedNight's lie-in) and 1386 (suggestedSleep's restores: the Sleep dialog's hours and reason). Until 2026-10-13 this cited life.ts:793, 1209 and 1303, lines that had since moved."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3699,6 +3823,10 @@
           "said": "life.ts:219,621",
           "now": "life.ts:225 (applyElapsedWellbeing's hourly soiling, on the clock) and life.ts:689 (applyLookingAfter's workout, through life.look_after), as of 2026-10-13. Until 2026-10-13 this said life.ts:219,621; the review that day gave 225 and 682, and the workout line has since moved to 689."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3869,6 +3997,10 @@
           "said": "life.ts:222,601,823; enjoyment.ts:111; injury.ts:89; school.ts:1523; spending.ts:396",
           "now": "life.ts:228 (hungry and grimy hours, on the clock), life.ts:669 (applyLookingAfter: a meal, a workout, unwinding), life.ts:900 (a night); enjoyment.ts:111 (feel, reached by setStanding at school.ts:1784); injury.ts:99; school.ts:2483 (castListRead); spending.ts:502 (money worry), as of 2026-10-13. Until 2026-10-13 this said life.ts:222,601,823; injury.ts:89; school.ts:1523; spending.ts:396."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4009,6 +4141,10 @@
           "said": "spending.ts:68-74 foodOf/mealOf (spending.ts:298, life.ts:552-553); Review 'Going Out A Month' (CharacterCreation.tsx:1018)",
           "now": "spending.ts:74-80 foodOf/mealOf. buyTheDaysFood (spending.ts:393) runs at the day's start, on the clock, from life.ts:1015. costFor (life.ts:591-592) is what life.look_after charges and what spendRefusal and the Look After menu read. Review's 'Going Out A Month' is monthOf (CharacterCreation.tsx:1033-1039), shown at :1097. Until 2026-10-13 this said spending.ts:68-74 (spending.ts:298, life.ts:552-553) and CharacterCreation.tsx:1018."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4053,6 +4189,10 @@
           "Not a defect: the 'order' (delivered) path shares the line and isn't driven separately.",
           "The downstream line number is out of date (608 is now 669)."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4157,6 +4297,10 @@
           "said": "health.ts:1081; injury.ts:80",
           "now": "health.ts:1148 (careFor's toll, called by the clock's HEALTH_WEEK for the flu, a stay or an emergency) and injury.ts:89 (mayHurt's mend days, read by trainingRefusal and laidUp), as of 2026-10-13. Until 2026-10-13 this said health.ts:1081; injury.ts:80."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4258,6 +4402,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -4382,6 +4530,10 @@
           "said": "school.ts:1624; coursework.ts:260; classmates.ts:146",
           "now": "school.ts:2590 (the cast list, on the clock), coursework.ts:327 (moveTrust: a rehearsal kept or missed, and a scene shown strong together) and classmates.ts:175 (move: a moment answered, an evening kept or missed), as of 2026-10-13; bondMove itself is at school.ts:315-317 (the reads field's school.ts:195-197 is out of date too). Until 2026-10-13 this said school.ts:1624; coursework.ts:260; classmates.ts:146."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4475,6 +4627,10 @@
           "said": "school.ts:2084",
           "now": "school.ts:3338 (the performance call's handler, fired by the clock, adding castCompany to morale), as of 2026-10-13; castCompany itself is at school.ts:308-312 (the reads field's school.ts:188-193 is out of date too). Until 2026-10-13 this said school.ts:2084."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4578,6 +4734,10 @@
           "said": "body.ts:132 bodyDay",
           "now": "body.ts:144 bodyDay (run once a local day by dailyRollover on the clock), as of 2026-10-13. Until 2026-10-13 this said body.ts:132."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4693,6 +4853,10 @@
           "said": "reads: school.ts:617-618 focusAt; downstream: school.ts:1881-2289; production.ts; practice.ts:59; coursework.ts:474",
           "now": "reads: hourFit and focusAt at school.ts:907-917, and conditionAt at school.ts:924-932, which multiplies the readiness judged work meets by the hour's fit; downstream: a class meeting (school.ts:3005), nights, rehearsals and labs (school.ts:3166-3335, 3469-3475, 3589-3641), production.ts:522-568, practice.ts:115, coursework.ts:582, briefs.ts:416 and 531, playreading.ts:126 and 163, workbook.ts:242, and through conditionAt every judged piece: a self-tape (briefs.ts:532), coursework (coursework.ts:839), a night (school.ts:2196) and the forecasts (briefs.ts:342, coursework.ts:713). Until 2026-10-13 the row cited focusAt at 617-618 and left conditionAt out."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4738,6 +4902,10 @@
           "Not a defect: the cross-check at traits-connected.test.ts:92 could pass vacuously (undefined === undefined).",
           "The line numbers are out of date (coursework.ts:462-465 is now 568-576 and 593; 1053 is now preparedParts at 719)."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4843,6 +5011,10 @@
           "said": "ProfileWorkspace IdentityPanel (ProfileWorkspace.tsx:123-165)",
           "now": "ProfileWorkspace IdentityPanel (ProfileWorkspace.tsx:124-166). Until 2026-10-13 this said 123-165."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4951,6 +5123,10 @@
           "said": "navigate to /workspace/bank, /workspace/papers (both routes exist, game-context.tsx:421-425)",
           "now": "navigate to /workspace/bank, /workspace/papers (both routes exist, game-context.tsx:446-449; WorkspaceRouter.tsx:12-18 opens them, and as Locked while their chapter is unread, WorkspaceRouter.tsx:25-32). Until 2026-10-13 this cited game-context.tsx:421-425."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5058,6 +5234,10 @@
           "said": "tests/defects-g3-1.test.ts ‘open, as the guide says each trait does, once How You Are is read, and not before’ (the Profile rendered: a plain name until the chapter is read, a way into its look after); no test reads the dispositions line beside it",
           "now": "tests/defects-g3-1.test.ts ‘open, as the guide says each trait does, once How You Are is read, and not before’ (the trait links, falsified by the guide); tests/evidence-g31-ui.test.ts ‘lists the seven dispositions as made…’ and ‘changes when a disposition is made otherwise…’ read the Dispositions line and check two of its stated effects. Until 2026-10-13 this said no test read the dispositions line."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5261,6 +5441,10 @@
           "said": "Attributes And Craft table + Practice buttons (ProfileWorkspace.tsx:193-221, 277-320)",
           "now": "Attributes And Craft table + Practice buttons (ProfileWorkspace.tsx: AbilitiesPanel 283-325, PracticeButton 168-187, PracticeControl 195-223, todayFor 85-97). Until 2026-10-13 this cited 193-221 and 277-320, lines the panel had moved from."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5382,6 +5566,10 @@
           "said": "tests/defects-g3-1.test.ts renders the whole Profile and reads none of this panel (it reads the traits and Study It); tools/acceptance-ui.mjs doesn’t read it",
           "now": "tests/evidence-g31-ui.test.ts reads every row's Now, Classes Reach and Mastered, presses Speech Drill and Scene Work from their rows, and reads Yes at mastery; tests/guide-examples-craft.test.ts:374-390 reads Scene Study's To Go. Until 2026-10-13 this said no test read the panel, though guide-examples-craft already did."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5530,6 +5718,10 @@
           "said": "tools/acceptance-ui.mjs ‘[save: brief scenario] profile: a genre’s brief opened, the scene and what it asks shown before any time is spent’ and the brief’s steps after it (a genre found by its search, Open Its Brief, Tape It, the result read), on the built app, outside the gate; tests/defects-g3-1.test.ts ‘on the Profile, say the work studied and the familiarity it came to’ (Study It pressed on the rendered Profile); tests/ui-fixes.test.ts ‘says whether a part asks for it or it’s loved’ (nextGenre, a function, for a loved genre only); tests/defects-r8-1.test.ts ‘open once the chapter that opens a genre is read, and not before’ (the You love: paragraph rendered from the Profile); tests/engagement.test.ts (engine)",
           "now": "The same, plus tests/evidence-g31-ui.test.ts, in the gate: the search, every Show filter and the paging; Study It pressed and its row re-read; the genre to study said both ways, 'part' once the clock casts Major Barbara; Open Its Brief, Read It This Way and Tape It pressed, with tapeRefusal said under Tape It; and tests/whynot-profile.test.ts, Study It's refusal. Until 2026-10-13 the filters, the paging and the 'part' sentence had no test, and Open Its Brief and Tape It ran only on the built app."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5646,6 +5838,10 @@
           "said": "Current Condition (ProfileWorkspace.tsx:424-442)",
           "now": "Current Condition (ProfileWorkspace.tsx:433-451). Until 2026-10-13 this cited 424-442, lines the panel had moved from."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5868,6 +6064,10 @@
           "said": "School Journey, Development History (ProfileWorkspace.tsx:444-518)",
           "now": "School Journey, Your Work So Far, Development History (ProfileWorkspace.tsx:453-506, 255-281, 508-527). Until 2026-10-13 this cited 444-518, lines the panels had moved from, and left Your Work So Far out, which stands between them."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5981,6 +6181,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6104,6 +6308,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6366,6 +6574,10 @@
           "said": "world.ts:33-97",
           "now": "world.ts:32-76 (world.dismiss_decision, world.take_decision_action), 94-104 (world.mark_read), and expireDecisions at 123-133, which closes a dated row at the world's look after its day. Until 2026-10-13 this said world.ts:33-97, which stopped short of world.mark_read's end and left the expiry out."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6478,6 +6690,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6621,6 +6837,10 @@
           "said": "Where You Are, Weather (Home.tsx:338-436)",
           "now": "Where You Are, Weather (Home.tsx:338-382, 385-435). Until 2026-10-13 this cited 338-436; the away line at 355-357 and 365 is reached by nothing since the scope of 2026-10-09."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6752,7 +6972,7 @@
           {
             "file": "scope-money.test.ts",
             "title": "h-money > GUARD: a save whose primary account is gone, which no played life reaches, draws “No account: $0.00.” and a “Your Bank” button that still opens the bank",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "The fallback's words and its button's navigation, over a FIXTURE no command makes."
           },
           {
@@ -6794,6 +7014,10 @@
           "said": "none renders it: Home’s source is read by tests/cards.test.ts ‘run the card from the bank’s screen, and keep Home to a line of money (from 2026-10-10)’ and tests/defects-g12-1.test.ts, for what the Money line holds; no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
           "now": "tests/evidence-g33-ui.test.ts ‘h-money’ renders Home over played saves and checks: the line against the wealthy profile’s figures; the overdrawn alert, and a Move Money clearing it across a reload; the card’s “of it owed”; the Chase button’s navigation to /workspace/bank; and, in a guided life, the LockedPanel and the Locked button. tests/guide-examples-money.test.ts ‘money.affairs’ renders the line against the guide’s figures. Until 2026-10-13 this said no test rendered Home, though guide-examples-money did."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6998,6 +7222,10 @@
           "said": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
           "now": "tests/evidence-g33-ui.test.ts ‘h-school’ renders the line in each of its branches (Arriving, Year 1, academic concern with its alert, On Leave, Left the school, Graduated), along with its Next, its place in the class, its Yale button and its LockedPanel. Until 2026-10-13 this said no test rendered Home, though defects-g8-4, guide-examples-money and guide-examples-papers did, and none of them read this line."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7198,6 +7426,10 @@
           "said": "none: no test renders Home, and tools/acceptance-ui.mjs doesn’t read it",
           "now": "tests/evidence-g33-ui.test.ts ‘h-papers’ renders the line over a played F-1 tax year. It checks: the return's due date and what it pays; the late penalty in it; tax owed at owedEverywhere's figure, beyond the stored balance; no cover after a withdrawal; and the Papers button. defects-g8-4 reads its cover clause. Until 2026-10-13 this said no test rendered Home, though defects-g8-4 rendered this line."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7330,25 +7562,25 @@
           {
             "file": "scope-people.test.ts",
             "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: a she/her second person reads “Who she is.”, “Her body.”, “where she lives”, “On her papers.”, her traits, and dials said of her, none of it the player’s",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "A seeded she/her person (createUniverse, London, 160 cm and 55 kg, Curious and Frugal, Asian, a background, Comedy and Horror) in a played world. Her look's body, word for word, is in her pronouns, with the units worked by hand. Her ways are her eight dials, Readiness and her two traits, with no Your Own Plans. Every dial and Readiness detail is said of her ('what the day has left in her', 'how long since she ate properly', 'meets her in'), and no non-trait way says 'you'. The ways point at her ids. The player's own look in the same world keeps 'you', 5 ft 7 in and 143 lb, Spender and Your Own Plans."
           },
           {
             "file": "scope-people.test.ts",
             "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: the same person under he/him and they/them reads “His body.” and “Their body.”: changing only the pronouns changes the words said of them and nothing else",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "The falsifiability test. The same seeded person under she/her, he/him and they/them has the same name, kind, ways and figures. The words differ, and only in the pronouns and their verbs: each version, mapped back to she/her, is exactly hers."
           },
           {
             "file": "scope-people.test.ts",
             "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: her trait opens as A Trait She Holds, “with all she is”; his condition as A Condition He Carries, “He leaves it alone” and “He keeps it up … his plan”; her injury “keeps her off work”",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "The downstream looks read the person named in the id, in their pronouns. Cleo's Curious and Frugal are 'A Trait She Holds' with 'with all she is'. Dev's Depression (left alone) and Asthma (kept up) have their way details, 'A Condition He Carries', 'He leaves it alone …', 'He keeps it up: … his plan leaves.', the morale dial of his own, and no 'Papers keeps it up'. Cleo's broken bone shows 'Mending. A Broken Bone, till September 5, 2026, and off work till then.', the way 'what it keeps her from' and the injury look's 'keeps her off work and training till then'. All of it survives a save and a load, and the clock past the mend date takes the injury off."
           },
           {
             "file": "scope-people.test.ts",
             "title": "l-person: another person’s look reads their traits, their condition and their pronouns > FIXTURE: her dials and her Readiness, opened from her look, say “she” and “her”, his say “he”, theirs “they”; the player’s still say “you”",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "Her dials, each opened by the way on her look, with the dials written on by hand (FIXTURE): Energy at 90 '90, and she has a full day in her.', at 30 '30. She’s running down, and it shows in everything else.'; Sleep Debt at 1 'None to speak of. She’s square with the nights she’s had.'; Hygiene at 44 and 86 in 'her mood' and 'wearing on her'; Condition 'her fitness lets rest …' and 'to be her last'; Fitness 'Rest can mend her to'. Dev's are 'he has a full day in him' and 'He’s square with the nights he’s had', Kit's 'they have a full day in them' and 'They’re … they’ve had'. None of the eight, for any of the three, says 'you'. Her Readiness, opened from her look, is 'How Well She Would Do Today', parented to her look, naming energy in 'what’s costing her.'; his and theirs 'How Well He/They Would Do Today'. The player's own Energy, Sleep Debt, Hygiene and Readiness, in the same world, are word for word as before."
           }
         ],
@@ -7426,6 +7658,10 @@
           "said": "Reads Person directly. Body units by currentLocationId (wellbeing.tsx:161) vs creation by birthplace (CharacterCreation.tsx:255).",
           "now": "Reads Person directly. Body units by currentLocationId (wellbeing.tsx:164) vs creation by birthplace (CharacterCreation.tsx:256): a London-born student in New Haven reads 5 ft 7 in and 143 lb, and a life in London reads 170 cm and 65.0 kg (tests/evidence-g33-ui.test.ts). Until 2026-10-13 this cited wellbeing.tsx:161 and CharacterCreation.tsx:255."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7542,6 +7778,10 @@
           "said": "dial look, stress sentence (looks/wellbeing.tsx:257-260)",
           "now": "dial look, stress sentence (looks/wellbeing.tsx:260-263). Until 2026-10-13 this cited 257-260."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7641,6 +7881,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7691,6 +7935,10 @@
         "gaps": [
           "The 'interest' branch is reached only by saves from before schema 94, and no test reaches it. The test the row cites doesn't touch the actor look."
         ]
+      },
+      "verification": {
+        "class": "legacy",
+        "label": "Older Saves Only"
       }
     },
     {
@@ -7814,6 +8062,10 @@
           "said": "Action has effect; closes on due date if unfiled, then troubles() reports it late.",
           "now": "Action has effect. Unfiled, it closes at the first world tick past its due date (expireDecisions, run every two days; in play, 31.5 hours past it), and until then Home lists it first as overdue; troubles() then reports it late. Until 2026-10-13 this said it closed on the due date."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7860,6 +8112,10 @@
           "Line references are stale.",
           "Untested: bank.reactivate's refusal on an account that isn't dormant ('That account isn’t dormant.')."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8044,6 +8300,10 @@
           "said": "OPT approval (permission.ts:165-183)",
           "now": "OPT approval (permission.ts:204-225), at the permit's readyAt: twelve months from the later of the program's end and the approval. Until 2026-10-13 this cited 165-183."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8094,6 +8354,10 @@
         "gaps": [
           "All three line references in the row are stale."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8227,6 +8491,10 @@
           "said": "Dismiss; expiry (world.ts:33-43,116-143)",
           "now": "Dismiss; expiry (world.ts:33-43, 116-150: expireDecisions at 123-133; prune at 136-150, whose exception for a closed row with its date still ahead is at 145). Until 2026-10-13 this said 116-143, which stopped short of the prune's deletion and its exception."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8278,6 +8546,10 @@
           "The cohesion scan could widen to src/ui and to `byInterest`.",
           "The row's line reference is stale."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8433,6 +8705,10 @@
           "said": "No 'Interests' section, look or guide text remains (tutorial.ts has none; creation/profile only past-tense comments).",
           "now": "No 'Interests' section, look or guide text remains (tutorial.ts has none; creation/profile only past-tense comments). One line a player can read still names an interest, in the past tense, and only on a save from before 2026-10-10. sourceWords (src/ui/looks/actor.tsx) calls a development-history record an hour of an interest wrote (source 'interest:<id>') 'An interest, from before they were removed'. Migration 94 kept the development history, and the Profile's Attributes And Craft and Development History and the ability's look draw that record. A new life never has one. tests/evidence2-b13.test.ts opens such a save through openSlot and finds that line is the only interest wording there. It also renders the guide's reference and the tutorial's chapters as the player opens them, and finds no interests in either."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8443,8 +8719,8 @@
       "changes": "",
       "downstream": "",
       "explanation": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Until 2026-10-13 four more said the interests in the present tense: migration 92's comment in src/engine/index.ts, tests/attributes-matrix.test.ts:4, tests/looks.test.ts:491-492 and docs/UNBITTEN.md:112. Each is in the past tense since. From 2026-10-15 the tree is held to a stricter rule, a heuristic over the words rather than a parser, which catches the shapes its tests name: a present passive ('is dropped'), 'went into', 'went on' and 'went in', a possessive or adjective singular of up to two adjectives ('her own favorite interest'), any present or future verb with the interests as subject, past a clause set off by commas, beside a past clause; and which reads the present perfect ('have been removed') as the past.",
-      "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims (from 2026-10-15 on the same rule as evidence3, with the checks’ examples added); tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (the examples of 2026-10-13, 2026-10-14 and both passes of 2026-10-15, and the tree-wide walk, 32 sentences read and listed true)",
-      "status": "partial",
+      "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims (from 2026-10-15 on the same rule as evidence3, with the checks’ examples added); tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (the examples of 2026-10-13, 2026-10-14 and both passes of 2026-10-15, and the tree-wide walk, 34 sentences read and listed true: 32 until 2026-10-16, when two of that day’s sentences on money’s Interest line, the ledger’s, were read and listed). From 2026-10-16 they are static evidence: evidence3-person’s four and evidence2-b13’s three meet the static standard, and evidence-g34-ui’s three support the row (docs/GAMEPLAY-COVERAGE.md, The Static Kind, From 2026-10-16).",
+      "status": "verified",
       "issue": "None of the leftovers remain. Both tree-wide walks fail on a new sentence in any of the shapes the tests name; the rule is a heuristic, and a present claim in a shape it doesn't name can still pass it.",
       "auditStatus": "partial",
       "settled": "capabilities.json, CAPABILITIES.md and the comments corrected.",
@@ -8489,98 +8765,276 @@
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > names READ_CRAFTS nowhere in the code, the tests or the docs, but in the audit trail that records its correction",
-            "kind": "fixture",
-            "closes": "Nothing failed if READ_CRAFTS came back. Every file in src/, tests/ and docs/ is now scanned, except docs/verification/ and docs/GAMEPLAY-COVERAGE.md, which record the correction"
+            "kind": "static",
+            "closes": "Nothing failed if READ_CRAFTS came back. Every file in src/, tests/ and docs/ is now scanned, except docs/verification/ and docs/GAMEPLAY-COVERAGE.md, which record the correction",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ (more than 300)",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: reaches the text and can't pass on an empty walk, but names no example it must catch (the file that names the constant to say what it looks for is set aside, not asserted found) or accept; it supports the row"
+            }
           },
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > has the capability documents pair no interest with love or enjoyment, and name no interests",
-            "kind": "fixture",
-            "closes": "The row's own claim about docs/capabilities.json and docs/CAPABILITIES.md: no 'interests', no 'reading interest', and no 'interest' in a phrase with love or enjoy"
+            "kind": "static",
+            "closes": "The row's own claim about docs/capabilities.json and docs/CAPABILITIES.md: no 'interests', no 'reading interest', and no 'interest' in a phrase with love or enjoy",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "docs/capabilities.json and docs/CAPABILITIES.md (each more than 10,000 characters)",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: reads the two documents whole, with no example it must catch or accept; it supports the row"
+            }
           },
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected",
-            "kind": "fixture",
-            "closes": "In actor.tsx, life.ts, enjoyment.ts, CharacterCreation.tsx and ProfileWorkspace.tsx, every sentence of a comment or string that names the interests carries a past-tense marker. The test fails if one comes back in the present tense"
+            "kind": "static",
+            "closes": "In actor.tsx, life.ts, enjoyment.ts, CharacterCreation.tsx and ProfileWorkspace.tsx, every sentence of a comment or string that names the interests carries a past-tense marker. The test fails if one comes back in the present tense",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "the five source files the removal corrected, their comments and strings",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: each of the five must name them, so an empty read fails; but it has no examples, and its rule is the first round's, which takes 'kept' and 'named' for the past: evidence2-b13's first test shows it passing 'The interests are kept on the sheet and named on the Profile.'. It supports the row"
+            }
           },
           {
             "file": "evidence2-b13.test.ts",
             "title": "i-stale-claims > tells a present-tense claim from its past-tense twin, where the first round’s check passed both",
-            "kind": "fixture",
-            "closes": "The check's weak test, whose PAST regex took 'was/had/kept/named/carried/stood' for the past. The check's own example, 'The interests are kept on the sheet and named on the Profile.', is now found present-tense, and its twin with 'until 2026-10-10' is not. The attributes-matrix leftover's wording, 'every interest and genre has its definition', is found, and its past-tense rewrite is not. Money's 'interest' and the law's 'best interests' are not taken for the removed interests."
+            "kind": "static",
+            "closes": "The check's weak test, whose PAST regex took 'was/had/kept/named/carried/stood' for the past. The check's own example, 'The interests are kept on the sheet and named on the Profile.', is now found present-tense, and its twin with 'until 2026-10-10' is not. The attributes-matrix leftover's wording, 'every interest and genre has its definition', is found, and its past-tense rewrite is not. Money's 'interest' and the law's 'best interests' are not taken for the removed interests.",
+            "standard": {
+              "file": "evidence2-b13.test.ts",
+              "meets": true,
+              "reaches": "the rule evidence3-person's walk applies, written out again here, on sentences written by hand",
+              "mustCatch": [
+                "The interests are kept on the sheet and named on the Profile.",
+                "Interests will lift a meal until migration 94."
+              ],
+              "mustAccept": [
+                "The interests were kept on the sheet and named on the Profile until 2026-10-10.",
+                "Interests have been removed since 2026-10-10."
+              ],
+              "read": "2026-10-16: the first round's example, which its check passed, must be found and its dated twin pass; money's and the law's interest aren't the interests"
+            }
           },
           {
             "file": "evidence2-b13.test.ts",
             "title": "i-stale-claims > keeps every sentence naming the interests in the places the row corrected dated by the removal with no clause in the present, or among the sentences read and found true",
-            "kind": "fixture",
-            "closes": "The row's own corrections, held by the stricter rule. The seven places the row lists (the two capability documents, actor.tsx, life.ts, enjoyment.ts, CharacterCreation.tsx and ProfileWorkspace.tsx) are read with the TypeScript parser: comments, strings, template text and JSX. Every sentence there that names the removed interests carries a word of history (until, went, removed, dropped, deleted, gone, no longer, let go, from before, 2026-10-10, migration 94) or is the one enjoyment.ts sentence read and found true. All five source files name them, so an empty walk can't pass."
+            "kind": "static",
+            "closes": "The row's own corrections, held by the stricter rule. The seven places the row lists (the two capability documents, actor.tsx, life.ts, enjoyment.ts, CharacterCreation.tsx and ProfileWorkspace.tsx) are read with the TypeScript parser: comments, strings, template text and JSX. Every sentence there that names the removed interests carries a word of history (until, went, removed, dropped, deleted, gone, no longer, let go, from before, 2026-10-10, migration 94) or is the one enjoyment.ts sentence read and found true. All five source files name them, so an empty walk can't pass.",
+            "standard": {
+              "file": "evidence2-b13.test.ts",
+              "meets": true,
+              "reaches": "the seven files the row corrected (the two capability documents and five source files), as a reader reads them",
+              "mustCatch": [
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "The interests were kept on the sheet and named on the Profile until 2026-10-10."
+              ],
+              "read": "2026-10-16: each of the five source files must name them somewhere, more than 10 sentences in all, and the one sentence read and found true in them must still be found, so an empty read fails"
+            }
           },
           {
             "file": "evidence2-b13.test.ts",
             "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside",
-            "kind": "fixture",
-            "closes": "Review gap 'Nothing fails if a new present-tense claim appears', and the first round's open 'needs a claims tool'. The walk covers over 600 files in src/, tests/ and docs/, leaving out docs/verification/, docs/GAMEPLAY-COVERAGE.md, docs/research/, docs/drill-down-research.json and this file. It finds 74 sentences naming the removed interests. Each must carry a word of history or be one of 20 sentences listed with why they're true as written: titles and statements of absence, failure messages, fixtures written as 93 wrote them, and two sentences already in the past. Each listed sentence must still be found. It fails on the four leftovers below, and will fail on any new one."
+            "kind": "static",
+            "closes": "Review gap 'Nothing fails if a new present-tense claim appears', and the first round's open 'needs a claims tool'. The walk covers over 600 files in src/, tests/ and docs/, leaving out docs/verification/, docs/GAMEPLAY-COVERAGE.md, docs/research/, docs/drill-down-research.json and this file. It finds 74 sentences naming the removed interests. Each must carry a word of history or be one of 20 sentences listed with why they're true as written: titles and statements of absence, failure messages, fixtures written as 93 wrote them, and two sentences already in the past. Each listed sentence must still be found. It fails on the four leftovers below, and will fail on any new one.",
+            "standard": {
+              "file": "evidence2-b13.test.ts",
+              "meets": true,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+              "mustCatch": [
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "The rest were marked · at creation as said back only (`interestsRead`)."
+              ],
+              "read": "2026-10-16: more than 600 files and 60 sentences, and every sentence read and found true still where it's listed"
+            }
           },
           {
             "file": "evidence3-person.test.ts",
             "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds every present-tense claim the check of 2026-10-13 passed, and passes each one’s twin dated by the removal; money’s interest isn’t taken for them",
-            "kind": "fixture",
-            "closes": "The check's weak rule. Its four singular examples ('An interest grows an ability…', 'The interest look opens…', 'A loved interest lifts a meal.', 'Spend an hour on an interest.') and four that passed by 'until', 'drops', 'lets go', 'gone' or 'no longer' are all flagged. Their twins dated by the removal pass. Money's interest ('Its interest builds each day.', 'an interest penalty', 'an interest transaction') and the law's 'best interests' are not taken for the removed interests."
+            "kind": "static",
+            "closes": "The check's weak rule. Its four singular examples ('An interest grows an ability…', 'The interest look opens…', 'A loved interest lifts a meal.', 'Spend an hour on an interest.') and four that passed by 'until', 'drops', 'lets go', 'gone' or 'no longer' are all flagged. Their twins dated by the removal pass. Money's interest ('Its interest builds each day.', 'an interest penalty', 'an interest transaction') and the law's 'best interests' are not taken for the removed interests.",
+            "standard": {
+              "file": "evidence3-person.test.ts",
+              "meets": true,
+              "reaches": "the rule the tree walk below applies (NAMES, REMOVAL, PRESENT, dated, READ_TRUE), run on sentences written by hand",
+              "mustCatch": [
+                "An interest grows an ability by an hour of it.",
+                "A loved interest lifts a meal."
+              ],
+              "mustAccept": [
+                "An interest grew an ability by an hour of it until the interests went on 2026-10-10.",
+                "Its interest builds each day."
+              ],
+              "read": "2026-10-16: eight present-tense claims must be found, three dated twins and five of money's or the law's interest must pass"
+            }
           },
           {
             "file": "evidence3-person.test.ts",
             "title": "i-stale-claims: … > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside",
-            "kind": "fixture",
-            "closes": "The tree-wide walk, held by the stricter rule. Its names are the plural, 'an interest', 'each/every/one/loved/that/this interest', 'interest's', 'the interest look/hour/list/sheet/record' and the code's names, with money's phrases taken out first. Its history words are only removed, deleted, went, dropped, 2026-10-10 and migration 93/94. Every sentence that matches without them is one of 26 read on 2026-10-14 and listed with why it is true (titles of absence, failure messages, migration 94's message, fixtures as 93 wrote them, money's interest, two already past). Each listed sentence must still be found."
+            "kind": "static",
+            "closes": "The tree-wide walk, held by the stricter rule. Its names are the plural, 'an interest', 'each/every/one/loved/that/this interest', 'interest's', 'the interest look/hour/list/sheet/record' and the code's names, with money's phrases taken out first. Its history words are only removed, deleted, went, dropped, 2026-10-10 and migration 93/94. Every sentence that matches without them is one of 26 read on 2026-10-14 and listed with why it is true (titles of absence, failure messages, migration 94's message, fixtures as 93 wrote them, money's interest, two already past). Each listed sentence must still be found.",
+            "standard": {
+              "file": "evidence3-person.test.ts",
+              "meets": true,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), read as a reader reads it: a doc's paragraphs, a JSON file's strings, a source file's comments, strings and JSX words; the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+              "mustCatch": [
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "The rest were marked · at creation as said back only (`interestsRead`)."
+              ],
+              "read": "2026-10-16: the walk applies the rule its three tests above hold to examples; it can't pass vacuously: more than 600 files, more than 60 sentences naming them, and each of the 32 sentences read and listed true must be found where it's listed (a must-accept from the tree itself)"
+            }
           },
           {
             "file": "evidence3-person.test.ts",
             "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds the present passives, “went into”, the possessive and adjective singulars and a present clause beside a past one, which the check of 2026-10-14 passed; passes their dated twins and the dated notes in the tree",
-            "kind": "fixture",
-            "closes": "These are flagged: 'An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.', 'Interests went into every meal.', 'Your interest lifts a meal.', 'A favorite interest lifts a meal.', 'Her interest in cooking lifts a meal.', 'Their favorite interest opens on the Profile.', 'My interest grows each week.', 'The interests are removed when a save opens.', 'Each interest will be dropped at the term’s end.', 'Interests are being removed from the sheet.', 'An interest gets quietly deleted once it is dropped.', 'Interests lift a meal, and the owner removed the crafts.', 'The interests still lift a meal until 2026-10-10.', and, from the mutation check of 2026-10-15, 'Interests lifted a meal until they are removed.' and 'An interest grew an ability, until it is dropped from the sheet.', which only REMOVAL's lookbehind on an auxiliary finds. Their dated twins pass. So do six dated notes quoted verbatim from model.ts, enjoyment.ts, actor.tsx, attributes-matrix.test.ts and UNBITTEN.md. 'Your interest rate goes up…', 'The interest is charged once.' and 'Its interest is paid…' aren't taken for the interests."
+            "kind": "static",
+            "closes": "These are flagged: 'An interest is dropped from the sheet when the term ends.', 'Interests lift a meal until they are removed.', 'Interests went into every meal.', 'Your interest lifts a meal.', 'A favorite interest lifts a meal.', 'Her interest in cooking lifts a meal.', 'Their favorite interest opens on the Profile.', 'My interest grows each week.', 'The interests are removed when a save opens.', 'Each interest will be dropped at the term’s end.', 'Interests are being removed from the sheet.', 'An interest gets quietly deleted once it is dropped.', 'Interests lift a meal, and the owner removed the crafts.', 'The interests still lift a meal until 2026-10-10.', and, from the mutation check of 2026-10-15, 'Interests lifted a meal until they are removed.' and 'An interest grew an ability, until it is dropped from the sheet.', which only REMOVAL's lookbehind on an auxiliary finds. Their dated twins pass. So do six dated notes quoted verbatim from model.ts, enjoyment.ts, actor.tsx, attributes-matrix.test.ts and UNBITTEN.md. 'Your interest rate goes up…', 'The interest is charged once.' and 'Its interest is paid…' aren't taken for the interests.",
+            "standard": {
+              "file": "evidence3-person.test.ts",
+              "meets": true,
+              "reaches": "the same rule, on the shapes the check of 2026-10-14 found passing, and on the dated notes as they stand in the tree",
+              "mustCatch": [
+                "An interest is dropped from the sheet when the term ends.",
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "Interests lifted a meal until the owner removed them.",
+                "The interest is charged once."
+              ],
+              "read": "2026-10-16: sixteen must be found, eleven must pass, among them six notes copied from the tree"
+            }
           },
           {
             "file": "evidence3-person.test.ts",
             "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > finds a present verb outside any list, “went on” and “went in”, a verb past a clause set off by commas, the future and two adjectives, which the first pass of 2026-10-15 passed; passes the present perfect, which it flagged",
-            "kind": "fixture",
-            "closes": "Flagged: 'Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour, as removed crafts did.', 'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value into every meal.', 'The interests, removed by the owner, lift a meal.', 'Interests, which the owner removed, still lift a meal.', 'Interests will lift a meal until migration 94.', 'Each interest will have been removed by the term’s end.', the British 'Her own favo(u)rite interest lifts a meal.' (written with an escape, for tools/spelling.mjs) and its American twin. Passed: 'Interests have been removed since 2026-10-10.', 'An interest has been removed since 2026-10-10.', and four dated twins. b13's example test carries the same ten and two."
+            "kind": "static",
+            "closes": "Flagged: 'Interests shape a meal, and the owner removed the crafts.', 'Interests reward an hour, as removed crafts did.', 'Interests went on lifting a meal.', 'Interests went in the pot.', 'Interests went at full value into every meal.', 'The interests, removed by the owner, lift a meal.', 'Interests, which the owner removed, still lift a meal.', 'Interests will lift a meal until migration 94.', 'Each interest will have been removed by the term’s end.', the British 'Her own favo(u)rite interest lifts a meal.' (written with an escape, for tools/spelling.mjs) and its American twin. Passed: 'Interests have been removed since 2026-10-10.', 'An interest has been removed since 2026-10-10.', and four dated twins. b13's example test carries the same ten and two.",
+            "standard": {
+              "file": "evidence3-person.test.ts",
+              "meets": true,
+              "reaches": "the same rule, on the shapes the first pass of 2026-10-15 handled wrong",
+              "mustCatch": [
+                "Interests shape a meal, and the owner removed the crafts.",
+                "Interests will lift a meal until migration 94."
+              ],
+              "mustAccept": [
+                "Interests have been removed since 2026-10-10.",
+                "Interests went on 2026-10-10, and with them the crafts."
+              ],
+              "read": "2026-10-16: eleven must be found, six must pass"
+            }
           },
           {
             "file": "evidence3-person.test.ts",
             "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside",
-            "kind": "fixture",
-            "closes": "The claim itself, held where it lives: every sentence in src/, tests/ and docs/ that names the interests is dated by the removal with no present clause (NAMES, REMOVAL, PRESENT), or is one of the 32 read and listed true; green on the tree, and failed with a present-tense comment put into src/ui/looks/wellbeing.tsx."
+            "kind": "static",
+            "closes": "The claim itself, held where it lives: every sentence in src/, tests/ and docs/ that names the interests is dated by the removal with no present clause (NAMES, REMOVAL, PRESENT), or is one of the 32 read and listed true; green on the tree, and failed with a present-tense comment put into src/ui/looks/wellbeing.tsx.",
+            "standard": {
+              "file": "evidence3-person.test.ts",
+              "meets": true,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), read as a reader reads it: a doc's paragraphs, a JSON file's strings, a source file's comments, strings and JSX words; the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+              "mustCatch": [
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "The rest were marked · at creation as said back only (`interestsRead`)."
+              ],
+              "read": "2026-10-16: the walk applies the rule its three tests above hold to examples; it can't pass vacuously: more than 600 files, more than 60 sentences naming them, and each of the 32 sentences read and listed true must be found where it's listed (a must-accept from the tree itself)"
+            }
           },
           {
             "file": "evidence2-b13.test.ts",
             "title": "i-stale-claims > tells a present-tense claim from its past-tense twin, where the first round’s check passed both",
-            "kind": "fixture",
-            "closes": "Extended: the check's five examples, plus a present claim carrying 'gone' and 'drops', are flagged under b13's rule (now the strict one), and three dated twins pass."
+            "kind": "static",
+            "closes": "Extended: the check's five examples, plus a present claim carrying 'gone' and 'drops', are flagged under b13's rule (now the strict one), and three dated twins pass.",
+            "standard": {
+              "file": "evidence2-b13.test.ts",
+              "meets": true,
+              "reaches": "the rule evidence3-person's walk applies, written out again here, on sentences written by hand",
+              "mustCatch": [
+                "The interests are kept on the sheet and named on the Profile.",
+                "Interests will lift a meal until migration 94."
+              ],
+              "mustAccept": [
+                "The interests were kept on the sheet and named on the Profile until 2026-10-10.",
+                "Interests have been removed since 2026-10-10."
+              ],
+              "read": "2026-10-16: the first round's example, which its check passed, must be found and its dated twin pass; money's and the law's interest aren't the interests"
+            }
           },
           {
             "file": "evidence2-b13.test.ts",
             "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside",
-            "kind": "fixture",
-            "closes": "Retitled on 2026-10-15: it said 'in the past, by a word only history uses', of the HISTORY rule it no longer has. The walk uses the same NAMES, REMOVAL, PRESENT and READ_TRUE as evidence3. It is green on the tree, and fails on a present-tense comment put into src."
+            "kind": "static",
+            "closes": "Retitled on 2026-10-15: it said 'in the past, by a word only history uses', of the HISTORY rule it no longer has. The walk uses the same NAMES, REMOVAL, PRESENT and READ_TRUE as evidence3. It is green on the tree, and fails on a present-tense comment put into src.",
+            "standard": {
+              "file": "evidence2-b13.test.ts",
+              "meets": true,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ as it stands (more than 600), the audit trail, the research records, the banks' research the engine reads, and the two files that write the rule out aside",
+              "mustCatch": [
+                "Interests lift a meal until they are removed."
+              ],
+              "mustAccept": [
+                "The rest were marked · at creation as said back only (`interestsRead`)."
+              ],
+              "read": "2026-10-16: more than 600 files and 60 sentences, and every sentence read and found true still where it's listed"
+            }
           },
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > names READ_CRAFTS nowhere in the code, the tests or the docs, but in the audit trail that records its correction",
-            "kind": "fixture",
-            "closes": "READ_CRAFTS is named in no file of src/, tests/ or docs/ (over 300 read) but the audit trail and this test."
+            "kind": "static",
+            "closes": "READ_CRAFTS is named in no file of src/, tests/ or docs/ (over 300 read) but the audit trail and this test.",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "every .ts, .tsx, .mjs, .js, .json and .md file under src/, tests/ and docs/ (more than 300)",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: reaches the text and can't pass on an empty walk, but names no example it must catch (the file that names the constant to say what it looks for is set aside, not asserted found) or accept; it supports the row"
+            }
           },
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > has the capability documents pair no interest with love or enjoyment, and name no interests",
-            "kind": "fixture",
-            "closes": "docs/capabilities.json and docs/CAPABILITIES.md, as they stand, name no interests and pair no interest with love or enjoyment."
+            "kind": "static",
+            "closes": "docs/capabilities.json and docs/CAPABILITIES.md, as they stand, name no interests and pair no interest with love or enjoyment.",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "docs/capabilities.json and docs/CAPABILITIES.md (each more than 10,000 characters)",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: reads the two documents whole, with no example it must catch or accept; it supports the row"
+            }
           },
           {
             "file": "evidence-g34-ui.test.ts",
             "title": "i-stale-claims > keeps every sentence naming the interests in the past, in the five files whose prose the removal corrected",
-            "kind": "fixture",
-            "closes": "src/ui/looks/actor.tsx, src/engine/systems/life.ts and the other three files the removal corrected: every comment or string naming the interests is in the past, and each of the five names them, so a walk that found nothing fails."
+            "kind": "static",
+            "closes": "src/ui/looks/actor.tsx, src/engine/systems/life.ts and the other three files the removal corrected: every comment or string naming the interests is in the past, and each of the five names them, so a walk that found nothing fails.",
+            "standard": {
+              "file": "evidence-g34-ui.test.ts",
+              "meets": false,
+              "reaches": "the five source files the removal corrected, their comments and strings",
+              "mustCatch": [],
+              "mustAccept": [],
+              "read": "2026-10-16: each of the five must name them, so an empty read fails; but it has no examples, and its rule is the first round's, which takes 'kept' and 'named' for the past: evidence2-b13's first test shows it passing 'The interests are kept on the sheet and named on the Profile.'. It supports the row"
+            }
           }
         ],
         "gapsClosed": [
@@ -8597,11 +9051,10 @@
           "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
           "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
           "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
-          "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule."
+          "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
+          "Settled after the check: partial: the prose holds and its rule holds, by every skeptic’s check (2026-10-15): every must-catch example is caught, every must-accept passes, and both tree walks are green in the gate. But the row is about the repository’s own text, not a player’s action, and the page’s standard verifies a row only on a test that issues a command, runs the clock or renders a screen; a test that reads the tree is recorded as a fixture, as it was at bef4bde5. Recording it as a command to make the row verified was considered on 2026-10-15 and not done: it would stretch the word. Whether a gate test that reads the repository may verify a row whose claim is that repository’s text is the owner’s decision."
         ],
-        "gapsOpen": [
-          "partial: the prose holds and its rule holds, by every skeptic’s check (2026-10-15): every must-catch example is caught, every must-accept passes, and both tree walks are green in the gate. But the row is about the repository’s own text, not a player’s action, and the page’s standard verifies a row only on a test that issues a command, runs the clock or renders a screen; a test that reads the tree is recorded as a fixture, as it was at bef4bde5. Recording it as a command to make the row verified was considered on 2026-10-15 and not done: it would stretch the word. Whether a gate test that reads the repository may verify a row whose claim is that repository’s text is the owner’s decision."
-        ],
+        "gapsOpen": [],
         "disposition": "Every first-round problem was worked. I ran the file's own regexes (evidence3-person.test.ts:602-665) in node. All ten new must-catch examples are flagged: an open plural verb, 'went on/in/at', an appositive or relative aside, the future and future perfect, and 'Her own favourite interest'. 'Interests have been removed since 2026-10-10.' now passes. The rule in evidence2-b13 is byte-identical, compared constant by constant over MONEYS through dated. READ_TRUE and READ_AND_TRUE hold 32 each, and rowText now says 32. b13's two titles were retitled, with a past-tense comment at :584/:596 saying what they said. The rowText explanation and issue now say it is a heuristic that catches the shapes its tests name, and that a present claim in another shape can still pass, which is the honest claim. The handoff's line 9 names `git merge-base --is-ancestor`. Both tree walks and both example tests are green. The heuristic's remaining limits are disclosed by the rowText, so they don't refute it.",
         "defects": [
           {
@@ -8700,7 +9153,7 @@
           "killed": 14,
           "survived": []
         },
-        "verdict": "partial",
+        "verdict": "verified",
         "claimed": "partial",
         "check": {
           "holds": true,
@@ -8718,7 +9171,19 @@
           "said": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense.",
           "now": "Until 2026-10-10: docs/capabilities.json and docs/CAPABILITIES.md named enjoyment’s loved interests, capabilities.json the reading interest’s enjoyment (READ_CRAFTS, which no longer exists), and src/ui/looks/actor.tsx and src/engine/systems/life.ts named an interest in the present tense. Those places are corrected, and tests/evidence-g34-ui.test.ts holds them. On 2026-10-13, three present-tense leftovers remained outside them: src/engine/index.ts:889 (migration 92's 'familiarity, sessions and interests begin at nothing', although the 92 block has made no interests since 2026-10-10), tests/attributes-matrix.test.ts:4 ('every interest and genre has its definition') and tests/looks.test.ts:491-492 ('no empty line where ... the interests ... would be')."
         },
-        "afterCheck": "2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision."
+        "afterCheck": "2026-10-16: verified on static evidence, the kind added that day for a row whose claim is the repository’s own text, and for no other. The owner’s brief of 2026-10-16 answered the decision this row waited on (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 1) yes: a gate test that reads that text verifies such a row where it reaches the text the claim is about, checks it, and expects independently, with examples it must catch and examples it must accept, so it can’t pass vacuously. Read against that on 2026-10-16: tests/evidence3-person.test.ts’s four and tests/evidence2-b13.test.ts’s three meet it (each sentence they quote as an example is in the file as written, and each walk fails on an empty read); tests/evidence-g34-ui.test.ts’s three reach the text and support the row, with no example to catch or accept, the third on the first round’s rule. Until 2026-10-16 it was partial on the player-action standard, the note of 2026-10-15 reading: “2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision.”"
+      },
+      "verification": {
+        "class": "static",
+        "label": "Documentation And Static Checks",
+        "since": "2026-10-16",
+        "why": "Its claim is the repository's own text: no sentence in src/, tests/ or docs/ says the removed interests do anything now. The owner's brief of 2026-10-16 (coverage-classes-and-evidence-totals, item 2) answered the decision of 2026-10-15 (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner's Decisions, 1) yes: such a row is verified by a gate test that reads that text, where the test reaches what the claim is about, checks it, and expects independently, with examples it must catch and examples it must accept.",
+        "was": {
+          "status": "partial",
+          "on": "2026-10-15",
+          "standard": "the player-action standard: only a test that issues a command, runs the clock or renders a screen verifies a row, and a test reading the tree was recorded as a fixture",
+          "note": "2026-10-15: the skeptic found the prose and its rule hold, but the row’s tests read the repository’s text (tree walks and examples, recorded as fixtures, as at bef4bde5); the standard verifies a row only on a command, the clock or a rendered screen, so it stays partial. Whether a gate test reading the repository may verify a row about that text is the owner’s decision."
+        }
       }
     },
     {
@@ -8913,6 +9378,10 @@
           "said": "enjoyment.ts, personality.ts, credit.ts, attributes.ts",
           "now": "enjoyment.ts (genres, openness and agreeableness, and extraversion through takeTheHouse at each performance's nerves) and personality.ts (emotional stability, ambition and conscientiousness, with the traits) read them at every call and night. credit.ts (risk tolerance, the card's starting autopay) and attributes.ts (conscientiousness for starting discipline, emotional stability for starting composure) read them only when a life begins, so on a save migrated from 93 what they set at creation is what's kept. Until 2026-10-13 this named all four as readers alike."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     }
   ],

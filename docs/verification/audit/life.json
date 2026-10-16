@@ -205,6 +205,10 @@
           "said": "health.ts:present (an appointment missed while asleep), the PLAN_KIND handler (asleep->missed), the ‘You Slept Through N Commitments’ notice; life.ts:sleepAlone (no second night); readiness->school.ts:focusOf",
           "now": "health.ts:presentForCare (an appointment or a therapy session missed while asleep: appointments.ts:141, therapy.ts:129) and health.ts:present (classes and sessions, school.ts), the PLAN_KIND handler (asleep->missed), the ‘You Slept Through N Commitments’ notice; life.ts:sleepAlone (no second night); readiness->school.ts:focusOf. Until 2026-10-13 this said health.ts:present for an appointment missed while asleep; appointments read presentForCare."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -386,6 +390,10 @@
           "said": "money (spend 'A meal', paid as it’s ordered, before its 40 minutes, from 2026-10-12), nourishment +<=50, morale (moraleSwing x mealMood)",
           "now": "money (spend 'A meal', paid as it’s ordered, before its 40 minutes, from 2026-10-12), nourishment +<=50, morale (moraleSwing x mealMood); nothing to body.intake (a meal ordered in adds 134 kcal), and the day's groceries are bought at midnight whether or not a meal was. Until 2026-10-13 the row said neither; both are the design as built, not a defect."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -513,6 +521,10 @@
           "said": "TimeControls.tsx:490",
           "now": "TimeControls.tsx:557, LookAfterMenu's act (run('life.look_after', { action })), which other sessions moved on 2026-10-13. Until 2026-10-13 this said :490."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -645,6 +657,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -760,7 +776,7 @@
           {
             "file": "evidence-g01-life.test.ts",
             "title": "bills an injury’s care where the plan leaves a share, due in 30 days (LIFE FIXTURE: a New Haven life outside the school)",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "the injury's bill: one bill at the workout's end, due in 30 days, named in the notice and on the calendar, and still one after a reload"
           },
           {
@@ -809,6 +825,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -923,6 +943,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1061,6 +1085,10 @@
           "said": "CalendarWorkspace; checkConflicts flag; the Sleep dialog’s suggestion (suggestedSleep), tested on an item put on the timeline by hand (simulation.test.ts), not a plan the command made",
           "now": "CalendarWorkspace (its form rendered and Put It On pressed in tests/evidence-g01-life.test.ts); checkConflicts flag; the Sleep dialog’s suggestion (suggestedSleep), rendered over a plan calendar.schedule made in tests/evidence-g01-life.test.ts. Until 2026-10-13 this said the suggestion was tested only on an item put on the timeline by hand (simulation.test.ts), not a plan the command made."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1192,6 +1220,10 @@
           "said": "CalendarWorkspace.tsx:352",
           "now": "CalendarWorkspace.tsx:354 (callOff's run('calendar.cancel'), pressed by Call It Off at :367). Until 2026-10-13 this said :352, a blank line two above the call."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1261,6 +1293,10 @@
         "gaps": [
           "Minor: the 'missed' status isn't reloaded after the skip (the reload in coverage-gaps-life is before it); resolvedAt isn't asserted; the refusal for the world's own item ('That one isn’t yours to walk away from.') isn't tested; no interface evidence for Don't Go."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1407,6 +1443,10 @@
           "said": "Home.tsx:267",
           "now": "Home.tsx:273, Dismiss's run('world.dismiss_decision', { decisionId }). Until 2026-10-13 this said :267, the Go There button's words."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1459,6 +1499,10 @@
         "gaps": [
           "Minor: the read flags aren't checked across a reload; an empty notificationIds array marks nothing, which is untested; no interface evidence for Home's button or count."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1607,6 +1651,10 @@
           "said": "TimeControls.tsx:55",
           "now": "TimeControls.tsx:62, setSpeed's run('world.set_preferences', { timeSpeed: next }, { silent: true }), sent by the Play/Pause button. Until 2026-10-13 this said :55."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1746,6 +1794,10 @@
           "said": "Home.tsx:254",
           "now": "Home.tsx:260 (a decision's button's run('world.take_decision_action')). Until 2026-10-13 this said :254, the row of buttons around it."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -1900,6 +1952,10 @@
           "said": "verified",
           "now": "partial. Until 2026-10-13 this said verified. That day's review found the finished guide's open branch, the open-time migration and two refusals' words untested (now held by tests/evidence-g02-life.test.ts). That file found the top bar's Guide button still counting chapters added after a finished guide as left."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2055,6 +2111,10 @@
           "said": "PapersWorkspace.tsx:245",
           "now": "PapersWorkspace.tsx:579 (Appeal It in the bills table). Until 2026-10-13 this said :245."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2175,6 +2235,10 @@
           "said": "PapersWorkspace.tsx:245",
           "now": "PapersWorkspace.tsx:579 (Apply For Assistance in the bills table). Until 2026-10-13 this said :245."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2288,7 +2352,7 @@
           {
             "file": "evidence-g03-life.test.ts",
             "title": "LIFE FIXTURE (Vancouver, where a prescription runs out after two years): a renewal called off and booked again is kept and the medicine filled again; a twin who left it owed has it booked again by the next week’s fill, kept, and filled again too",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "renewPrescriptions downstream checked where it is read: the booked renewal kept on the clock renews prescribedAt and the next health week fills; the twin is Out Of Medicine on Papers"
           }
         ],
@@ -2337,6 +2401,10 @@
           "said": "referrals.test.ts ‘comes of a visit kept, and a missed one is booked again’ (through the command only the rebooking’s date; the visits kept are booked by calling book(); on a New York life no new one lives); journey-life.test.ts (books conditionally and checks nothing of the visit)",
           "now": "Until 2026-10-13 this cited referrals.test.ts and journey-life.test.ts, whose health.book is refused 'There’s nothing to see a doctor about.' so its cancel and rebook never ran, and left out guide-examples-papers.test.ts papers.doctor, which books through the command on the student after a missed visit and keeps it at $0; nor did it say that renewPrescriptions is read by nothing in New Haven (RX.validYears holds British Columbia alone). Now: tests/evidence-g03-life.test.ts 'health.book' (each refusal by its words; called off and booked again on the rendered Papers, owedVisit cleared, kept once across two reloads; a renewal booked again and kept in Vancouver, where it is read) and guide-examples-papers.test.ts papers.doctor. The entry is PapersWorkspace.tsx:937, not :560."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2400,6 +2468,10 @@
           "The 'No such appointment.' refusal is untested.",
           "Not exercised on the student; journey-life, which the row cites, never reaches it."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2485,13 +2557,13 @@
           {
             "file": "evidence-g03-life.test.ts",
             "title": "LIFE FIXTURE (London, which lists more than one practice): the doctor picked on Your Doctor is where the week’s visit is booked and had; a twin who picked none is seen at Soho Square",
-            "kind": "render",
+            "kind": "fixture",
             "closes": "downstream after a choice: bookIn's practice, the calendar label, the booking notice and the kept visit's notice name the chosen practice, against a twin; the select changed on the rendered Papers, across a reload"
           },
           {
             "file": "evidence-g03-life.test.ts",
             "title": "LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the doctor chosen bills an uninsured visit at its own published MX$60, named on the bill; a twin is billed at IMSS’s practice",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "downstream after a choice: shareOf's self-pay price and careFor's bill name, on the clock, and Papers' quote"
           },
           {
@@ -2503,13 +2575,13 @@
           {
             "file": "evidence2-b01.test.ts",
             "title": "health.choose_clinic > LIFE FIXTURE (Mexico City, a US citizen IMSS doesn’t cover): the twin who chose no doctor is billed at IMSS’s practice MX$3,311.60, the uninsured price worked out from the rule’s own numbers, where the one who chose Similares is billed its MX$60",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "The check's weak test: the twin's price is now the literal MX$3,311.60, worked out as $100 (2024) × BLS physicians' CPI 439.389/417.93 × 18 pesos × 1.75, where the first round asked only that it be over MX$60. The chooser is billed Similares' published MX$60"
           },
           {
             "file": "evidence2-b01.test.ts",
             "title": "health.choose_clinic > LIFE FIXTURE (London): a visit at Bupa’s pay-as-you-go private GP, chosen as her doctor, is billed, since the NHS doesn’t pay a private GP; her twin at Soho Square’s NHS practice pays nothing",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "Turns the first round's pinned 'Nothing to pay.' at a private GP into the right behavior, which FAILS today: an engine defect, reported below"
           },
           {
@@ -2545,7 +2617,7 @@
           {
             "file": "scope-health.test.ts",
             "title": "health.choose_clinic, New Haven’s two practices > GUARD: a practice for its members isn’t given or chosen with no moment to read the cover at; every engine caller gives one",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "the undefined-moment guard in seesThem, clinicFor and clinicRefusal; not claimed reachable by a player"
           },
           {
@@ -2708,6 +2780,10 @@
           "said": "clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn",
           "now": "clinics.ts:clinicFor -> shareOf selfPay, careFor bill name, bookIn. Until 2026-10-13 this didn't say that for the New Haven student none of them changes: New Haven lists one doctor's practice, Fair Haven Community Health Care, the one clinicFor gives with nothing chosen. Each is checked after a choice where it decides something, London (the booking, its calendar label and the kept visit) and Mexico City (the self-pay MX$60 on the bill). The entry is PapersWorkspace.tsx:895, not :528."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2823,6 +2899,10 @@
           "said": "PapersWorkspace.tsx:536",
           "now": "Until 2026-10-13 this said PapersWorkspace.tsx:536; the Your Pharmacy select is at PapersWorkspace.tsx:903."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -2842,7 +2922,7 @@
         "on": "2026-10-12",
         "status": "verified",
         "said": "Downstream teethAndEyesShareOf and healthMonth’s premium and end; verified on costs.test.ts and journey-life.test.ts. Until the fourth review of 2026-10-12 the Note cited only New York’s plan, on a life that isn’t a student’s, and left out the student’s own plan, Yale’s, which the command drives and teethAndEyesShareOf reads.",
-        "now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:209-220), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:151-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:228-231). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:237-239, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price."
+        "now": "SLATE sells the New Haven student one dental plan, Yale’s, its year paid at once (dentalPlanFor); New York’s and California’s monthly plans are for lives in those states, which no new life lives, so they’re fixtures here. Through the command on the student, Yale’s plan is bought for its plan year, to 1 October (defects-g8-4.test.ts:239-250), leaves a cleaning free (teethAndEyesShareOf), and can’t be canceled once paid (costs.test.ts:220-223). What isn’t checked on it: the year’s price taken from the current account, a filling past its deductible to its $1,000 maximum (tested on New York’s plan alone, costs.test.ts:151-167), and the plan read past its end; that it outlives the degree is tested with healthMonth called by hand (defects-g8-4.test.ts:258-261). The monthly plans’ premium and ending are tested by calling healthMonth on a plan put in (defects-g8-4.test.ts:267-269, costs.test.ts:178-179). Partial on the student’s own plan, for the year’s price."
       },
       "review": {
         "on": "2026-10-13",
@@ -3013,6 +3093,10 @@
           "said": "PapersWorkspace.tsx:329-330",
           "now": "Until 2026-10-13 this said PapersWorkspace.tsx:329-330; Buy Dental and Drop Dental are at PapersWorkspace.tsx:674-675."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3060,6 +3144,10 @@
           "No assertion that February's premium is not charged.",
           "Not played on the student, who reaches it through school.withdraw, health.enroll, health.drop."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3071,9 +3159,9 @@
       "downstream": "coverOn/planOf -> every share, on the clock's bill (careFor), with the plan's own part on the bill (covered.planPaid, Papers' Plan Paid, from 2026-10-15); healthMonth premium",
       "persistent": "cover",
       "explanation": "Papers",
-      "tests": "tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test passed on interest, the work test failed, ended and said, across a reload). tests/scope-cover.test.ts 'health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027' (the leave journey, re-figured in the recheck of 2026-10-15: given on 1 February for January at the School, refused on 1 March for February on the leave; and the January-then-withdrawn journey), and its Covered Connecticut renewal on a leave.",
+      "tests": "tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test passed on interest, the work test failed over May to October: a notice of noncompliance on 1 November, covered to 31 December, the end said on 6 December, across a reload; until 2026-10-16 it ended at the renewal’s hour). tests/scope-cover.test.ts 'health.enroll: HUSKY D asks an applicant for the month before’s work, from 2027' (the leave journey: given on 1 February for January at the School, the work rules short on 1 March for February on the leave; and the January-then-withdrawn journey), and its Covered Connecticut renewal on a leave. tests/remaining-health-eligibility.test.ts (Apply For HUSKY D on a notice, decided after thirty days; the exceptions; Connecticut’s six months at renewal); tests/remaining-health-billing.test.ts 'FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027...' (HUSKY D kept at renewal through work, on a FIXTURE).",
       "status": "partial",
-      "issue": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll, health.ts:374-375), through the command across a reload in tests/evidence-g03-life.test.ts.",
+      "issue": "Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any).",
       "corrected": {
         "on": "2026-10-12",
         "status": "verified",
@@ -3134,8 +3222,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 7,
+        "on": "2026-10-16",
+        "rounds": 12,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -3280,6 +3368,104 @@
             "title": "documents.us_status > PLAYER JOURNEY: an F-1 student who withdraws by the fifteenth day of the spring’s classes takes the marketplace from 1 February, Covered Connecticut not being hers in 2027; out of status on the 4th, it ends at the month’s look, and the notice when her cover ends offers her no marketplace",
             "kind": "command",
             "closes": ""
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+            "kind": "fixture",
+            "closes": "Kept on 1 March 2027 over September 2026 to February 2027: covered by HUSKY D the hour before, at 00:30 and after (no gap); program unchanged but renewAt 1 September 2027 (six months); no premium; \"Your Public Cover Is Renewed\" once across a reload. Negative twin: the notice (months February back to September), covered to 30 April, \"Your Public Cover Ends\" on 5 April, uncovered 1 May. Boundary twin: August's work, outside, the notice.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "FIXTURE: an F-1 student on a month’s $1,500.00, between the credit’s $1,304.17 and HUSKY D’s $1,835.40, barred from HUSKY D by her status, is given the marketplace, not Covered Connecticut; at $2,052.00, Covered Connecticut; a citizen at $1,500.00, HUSKY D",
+            "kind": "fixture",
+            "closes": "At $1,500.00 (15,960 × 1.38 ÷ 12 = $1,835.40 > 1,500 > 15,650 ÷ 12 = $1,304.17) Enroll on Papers gives the marketplace from 1 November, not Covered Connecticut; at $2,052.00 Covered Connecticut; a citizen at $1,500.00 HUSKY D.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "FIXTURE: two months’ $706.00 premiums on $20,000 of income come back as $1,342.00 on an F-1 student’s 2026 Form 1040-NR; none on her 2027 return; none for a citizen in 2026, whom HUSKY D would take",
+            "kind": "fixture",
+            "closes": "A citizen at 127.8% of the line gets no credit (HUSKY D would take her); the F-1 student at the same income, barred by status, gets it (item 5).",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: a student born in 1960, 66, withdrawn, is given HUSKY D on 4 January 2027 with no work, as the rules ask nothing of somebody 65 or over; her twin born in 2001 is shown them short",
+            "kind": "render",
+            "closes": "Born 1960 (66): December 2026 meets the rules by age and Enroll gives HUSKY D with no work; her twin born 2001 is shown the work rules short.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: withdrawn, she applies for SNAP on Papers on 20 November 2026 and it pays in December, while she’s under its work rules: on 4 January 2027 HUSKY D is hers with no work; her twin without SNAP is shown the work rules short",
+            "kind": "render",
+            "closes": "SNAP applied for on Papers (first month 27 November), paid in December while she is under its work rules (out of school, no unemployment claim, 18-64): HUSKY D on 4 January with no work; the twin without SNAP shown the rules short.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced); on 4 January she buys the marketplace, applies for HUSKY D and asks for the hardship: approved from 1 February, the marketplace ending as it begins, its premium never taken, and the decision of 8 February passes it by, across a reload",
+            "kind": "render",
+            "closes": "A stay forced on 7 December; Enroll buys the marketplace; Apply For HUSKY D sends the notice; Request A Hardship Exception (drawn only with a stay in a month assessed) approves HUSKY D from 1 February, the marketplace ends as it begins and its premium is never taken; the decision of 8 February passes it by; one approval across a reload; a second request refused \"No notice of noncompliance waits on an answer.\"",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "GUARD: under 19 for any of a month meets the rules; no life at Yale is under 21, so a birth set by hand reaches it (FIXTURE)",
+            "kind": "fixture",
+            "closes": "Under 19 for any of a month meets the rules; 19 for all of it doesn't. Unreachable in play (Yale's minimum age 21).",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+            "kind": "render",
+            "closes": "Asked with no stay, the hardship is refused in its words: \"No month it assessed, December 2026, had a stay in hospital, the hardship SLATE keeps.\"",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "kind": "command",
+            "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "GUARD: an ending said late in a month waits ten days into the next and ends with that one; no played renewal is decided later than the sixth of a month, so the ten days never cross a month there",
+            "kind": "fixture",
+            "closes": "The ten days' advance notice crosses into the next month only when said after the 20th; no played renewal is decided later than the 6th.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+            "kind": "render",
+            "closes": "$365,000 at 3.00% for December's 31 days = $930.00 of interest: HUSKY D on 4 January 2027 with no work; $182,500 = $465.00: the work rules short.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "defects4.test.ts",
+            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+            "kind": "command",
+            "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "need-paths.test.ts",
+            "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+            "kind": "command",
+            "closes": "A Covered Connecticut member moving into HUSKY D is kept on Covered Connecticut through the window, and it ends with December, said on 6 December.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "defects-g8-4.test.ts",
+            "title": "until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance",
+            "kind": "fixture",
+            "closes": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered.",
+            "round": "remaining-health-eligibility"
           }
         ],
         "gapsClosed": [
@@ -3728,6 +3914,10 @@
           "said": "PapersWorkspace.tsx:216",
           "now": "Until 2026-10-13 this said PapersWorkspace.tsx:216; Enroll is at PapersWorkspace.tsx:548."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -3868,6 +4058,10 @@
           "said": "PapersWorkspace.tsx:304",
           "now": "Until 2026-10-13 this said PapersWorkspace.tsx:304; Fill A Longer Supply is at PapersWorkspace.tsx:648."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4014,6 +4208,10 @@
           "said": "PapersWorkspace.tsx:237",
           "now": "Until 2026-10-13 this said PapersWorkspace.tsx:237; Pay It Off is at PapersWorkspace.tsx:570, and it sends the amount alone, never fromId."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4062,6 +4260,10 @@
         "gaps": [
           "Deferred by the owner's brief (England's certificate; the New Haven student is refused it)."
         ]
+      },
+      "verification": {
+        "class": "deferred",
+        "label": "Deferred Scope"
       }
     },
     {
@@ -4226,6 +4428,10 @@
           "said": "PapersWorkspace.tsx:278",
           "now": "PapersWorkspace.tsx:620 (Begin A Course Of 8 in TherapyRow). Until 2026-10-13 this said PapersWorkspace.tsx:278, a line the button had moved from."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4349,6 +4555,10 @@
           "said": "PapersWorkspace.tsx:298",
           "now": "PapersWorkspace.tsx:642 (Keep It Up / Let It Go in ConditionsPanel). Until 2026-10-13 this said PapersWorkspace.tsx:298, a line the button had moved from."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4494,6 +4704,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4640,6 +4854,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4791,6 +5009,10 @@
           "said": "simulation.test.ts 'charges nothing at midnight...', wellbeing-bites.test.ts 'settles condition at midnight...'",
           "now": "tests/evidence-g04-life.test.ts life.day_rollover (a sprain's 1 morale and 1 stress against a twin, an everyday injury drawn at midnight, an ordered meal's 134 kcal on the scale, fitness's 0.18, groceries and hygiene 82 at midnight); wellbeing-bites.test.ts 'a year on autopilot keeps everyday fitness...'; defects-r3a-1.test.ts (groceries at midnight or 'No Money For Food Today'); simulation.test.ts (the hygiene floor of 82); body.test.ts 'ends a life starved below...'; mortality.test.ts (endBand moved back by the clock). Until 2026-10-13 this cited a test that asserts only the absence of a charge at midnight and a direct call of settleTheBody."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -4914,6 +5136,10 @@
           "said": "mortality.test.ts ‘ends, stops the clock for good...’; body.test.ts ‘ends a life starved below...’; tests/life-fixes.test.ts ‘stands through a redraw of the year’s chance’",
           "now": "mortality.test.ts ‘ends, stops the clock for good...’; body.test.ts ‘ends a life starved below...’; tests/evidence-g04-life.test.ts life.end (the starved end standing through the same midnight's redraw by the clock, a birthday-drawn end reached, LifeEnded and the slot's 'Died At 24' rendered). Until 2026-10-13 the same-midnight case was cited from life-fixes.test.ts ‘stands through a redraw of the year’s chance’, which calls starvedPastTheLimit and redrawIfChanged directly and never fires the end."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5056,6 +5282,10 @@
           "said": "expire/dismiss decisions, prune",
           "now": "expire dated decisions on the tick after their date, and prune (closed rows 180 days on, kept to a date still ahead; the timeline's done items after 400 days). Its dismissal of an undated row after ninety days is a rule no played life reaches, since every raiser dates its row. Until 2026-10-13 this didn't say so."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5259,6 +5489,10 @@
           "said": "bill.denied, bill.paid",
           "now": "Until 2026-10-13 this said bill.denied, bill.paid, and its changes left out the debt. The decision reads bill.denied, bill.paid, bill.inDebt and the medical debt's balance (medicalDebtOf); overturned, it posts what was paid over the share to the payee account, or takes what went to debt over it off the Owed For Medical Care account, and sets bill.amount to the share."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5353,8 +5587,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-15",
-        "rounds": 4,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -5421,6 +5655,34 @@
             "title": "health.choose_clinic, New Haven’s two practices > PLAYER JOURNEY: booked at Yale Health, then withdrawn the same Monday, she isn’t seen there on Tuesday: “Not Seen At Your Practice”, owed, unbilled; Papers names Fair Haven, and Book An Appointment books it there 24 days on, across a reload",
             "kind": "render",
             "closes": "a members-only practice’s appointment is not kept once she is no member: “Not Seen At Your Practice”, owed, unbilled"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day",
+            "kind": "command",
+            "closes": "Yale Health: Tuesday 1 September at ten at its Health Center, $0, no bill, the plan's $105.13 on the care log; Fair Haven picked: Thursday 24 September, $183.98, no plan part, paid once on 24 October; a withdrawn twin refused Yale Health in its words (access).",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day",
+            "kind": "command",
+            "closes": "$706.00 on 1 November and 1 December, once each; the visit Friday 27 November (Thanksgiving skipped), $45 + $60.13 = $105.13, paid once on 27 December.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day",
+            "kind": "render",
+            "closes": "HUSKY D and Covered Connecticut: the 27 November visit at Fair Haven, $0, no bill, the plan's $105.13 on the care log, \"Nothing to pay.\", no premium; Papers names the program.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "kind": "command",
+            "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
+            "round": "remaining-health-billing"
           }
         ],
         "gapsClosed": [
@@ -5475,6 +5737,10 @@
           "said": "renewPrescriptions -> fillMedicine; reviewed; mayRefer",
           "now": "Until 2026-10-13 this said renewPrescriptions -> fillMedicine; reviewed; mayRefer. In New Haven a kept visit's renewal is read by nothing (fillMedicine reads prescribedAt only where RX.validYears gives an end, British Columbia); a review moves reviewedAt, which only the next review's due date reads; mayRefer books a specialist at 9.1%. A missed visit sets owedVisit, which drops the health week's later visits and reviews."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5548,8 +5814,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 2,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -5586,6 +5852,76 @@
             "title": "health.bill > A Medical Bill Went Unpaid says what the injury was in the sentence’s own case",
             "kind": "command",
             "closes": "The unpaid notice's words for an injury's bill. It fails: the engine says '$699.13 for a Sprained Ankle: its care is a medical debt now.'"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: an emergency and a $0 visit Yale Health paid in the fall’s first week; withdrawn on 8 September, the cover canceled back to 1 August: the emergency’s $50 bill stands, a line credits it and takes the plan’s $3,273.84 back; the visit gets a line of $183.98, the plan’s $105.13 back; paid once on its due day, the same in one jump as day by day",
+            "kind": "render",
+            "closes": "The emergency's $50 bill stands with its plan part ($3,273.84 of $3,323.84), credited $50 (balance $0, Credited on Papers: \"$0.00 of $50.00 Credited\"); its line: credit $50, plan −$3,273.84, charity screened; the visit's line $183.98 with plan −$105.13, due 8 October, paid once; lines sum to each care's share now and plan part now; \"Care Billed Again\" $133.98; no refund; a second reprice changes nothing; one jump and day by day identical.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: on a personal leave without Affiliate cover, the flu at urgent care in the 25 January week (TEST SETUP) is billed $336.96 uninsured; Affiliate cover bought the next day credits all of it off the open bill, and the plan’s $192.55 is written on its line: $0 + $192.55, its price; nothing paid or refunded, across a reload",
+            "kind": "command",
+            "closes": "Urgent care uninsured $336.96; Affiliate bought: the bill stands (no plan part), credited $336.96; its line credit $336.96 with plan +$192.55; $0 + $192.55 = the price; nothing paid on its due day, nothing refunded, once across a reload.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "GUARD: a credit on care whose bill went to medical debt comes off the debt, and none goes back to the bank (FIXTURE: the bank emptied, and the cover moved back by hand after the bill fell due, which no played journey does: both windows close before a bill is due)",
+            "kind": "fixture",
+            "closes": "The $50 credit comes off the medical debt (debt $0, bills settled), none to the bank.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: Yale Health at its Health Center, the next weekday at $0, the plan’s $105.13 kept; her twin who picks Fair Haven is booked 24 days on and billed $183.98, the plan paying none, paid once on its due day; each the same in one jump as day by day",
+            "kind": "command",
+            "closes": "Yale Health: Tuesday 1 September at ten at its Health Center, $0, no bill, the plan's $105.13 on the care log; Fair Haven picked: Thursday 24 September, $183.98, no plan part, paid once on 24 October; a withdrawn twin refused Yale Health in its words (access).",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: Access Health CT’s silver plan for an Inherited family’s student: $706.00 taken on 1 November and 1 December once each; a visit booked 24 days on, Thanksgiving skipped to Friday 27 November, billed the $45 copay, the plan paying $60.13 of $105.13; paid once on 27 December; the same in one jump as day by day",
+            "kind": "command",
+            "closes": "$706.00 on 1 November and 1 December, once each; the visit Friday 27 November (Thanksgiving skipped), $45 + $60.13 = $105.13, paid once on 27 December.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "PLAYER JOURNEY: HUSKY D for the Comfortable family’s student, and Covered Connecticut for the Inherited family’s on September’s $2,052.00 of interest: the 27 November visit leaves her $0 with no bill, the plan’s $105.13 on the care log, “Nothing to pay.”; no premium taken; the same in one jump as day by day",
+            "kind": "render",
+            "closes": "HUSKY D and Covered Connecticut: the 27 November visit at Fair Haven, $0, no bill, the plan's $105.13 on the care log, \"Nothing to pay.\", no premium; Papers names the program.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "scope-health.test.ts",
+            "title": "PLAYER JOURNEY: an emergency Yale Health paid on 31 August, the plan $3,273.84 of $3,323.84, paid nothing once a withdrawal that day cancels the cover back to 1 August",
+            "kind": "command",
+            "closes": "Updated: the issued bill keeps $3,273.84; the line carries −$3,273.84; across the two, $0.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "leave.test.ts",
+            "title": "PLAYER JOURNEY: asked on the third day of spring classes, begun on its decision: aid returned on the rebate schedule…",
+            "kind": "command",
+            "closes": "Unchanged and passing: the open bill brought down, \"Care Credited\"/\"Care Billed Again\" once.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "leave.test.ts",
+            "title": "a withdrawal by the fifteenth day of classes > cancels Yale Health back to the insurance term’s start, and care had in it is billed as uninsured, a bill of its own",
+            "kind": "command",
+            "closes": "“Care Billed Again” once.",
+            "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "kind": "command",
+            "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
+            "round": "remaining-health-billing"
           }
         ],
         "gapsClosed": [
@@ -5654,6 +5990,10 @@
           "said": "injury.test.ts ‘bills its care away from work’; tests/life-fixes.test.ts ‘is owed as debt and not settled, until the debt is paid’",
           "now": "Until 2026-10-13 this cited injury.test.ts, which counts bills and never reaches BILL_KIND, and life-fixes, whose bill came from billCare called directly. tests/evidence-g05-life.test.ts plays a stay's bill from the health week and therapy sessions' bills through the clock. tests/evidence2-b02.test.ts plays an injury's bill, an uninsured workout sprain, to its due date, paid and gone to debt, and measures the worry the debt brings at the midnight."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5665,7 +6005,7 @@
       "downstream": "coverOn shares, keptUp tolls",
       "persistent": "health record, ledger",
       "explanation": "Papers, notices",
-      "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…’ (the work a salary posting put in by hand, whose $600 passes the earnings test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; checking less: carried.test.ts, safetynet.test.ts, medicaluis.test.ts (healthMonth and keepUp called directly in Los Angeles and New York)",
+      "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
       "status": "verified",
       "issue": "Closed 2026-10-13: onsetMonth is played end to end through the clock’s month (tests/evidence-g05-life.test.ts ‘diagnoses high blood pressure on the 1st…’, tests/evidence-g07-life.test.ts chronic, tests/evidence2-b03.test.ts body), its draw forced or its seed chosen.",
       "review": {
@@ -5727,8 +6067,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -5753,6 +6093,76 @@
             "title": "health.month > PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported on the first month a year past due, once, across a reload",
             "kind": "command",
             "closes": "The debt report through the clock: $720 of debt from three unpaid sessions (debtSince 7 October 2026), not reported on 1 October 2027, reported on 1 November 2027 ('Unpaid a year and $500.00 or more, it’s reported now.') with a 40-point credit mark, once across a reload and the next month"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027: a notice, thirty days from its receipt, uncovered meanwhile, denied on 8 February; one notice each across a reload, the same in one jump as day by day; and she may apply again",
+            "kind": "render",
+            "closes": "Apply For HUSKY D on 4 January 2027: \"A Notice Of Noncompliance\" (months, how, deadline 7 February, consequences incl. the credit, how to reapply), pending, uncovered; a second press refused; decided 8 February 00:00: \"Public Cover Denied\", once; one jump and day by day with a reload identical; she may apply again (decided 16 March).",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: with no work and under $580 of income in May to October 2027, the renewal of 1 November sends a notice; covered to 31 December, decided on 6 December, ended with December, said ten days ahead; one notice each, the same in one jump as day by day, and across a reload in the thirty days",
+            "kind": "command",
+            "closes": "Renewal 1 November 2027: notice at 00:30; covered every day to 31 December; no ending said before 6 December; \"Your Public Cover Ends\" at 6 December 00:00; until 1 January 2028; \"Your Health Cover Ended\" on 1 January; one notice each; jump and steps identical; no premium.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "GUARD: an ending said late in a month waits ten days into the next and ends with that one; no played renewal is decided later than the sixth of a month, so the ten days never cross a month there",
+            "kind": "fixture",
+            "closes": "The ten days' advance notice crosses into the next month only when said after the 20th; no played renewal is decided later than the 6th.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance",
+            "kind": "command",
+            "closes": "80 hours in June 2027 (TEST SETUP) renew her on 1 November 2027 to 1 May 2028, said once; the same work in April, outside May to October, brings the notice (months October back to May listed).",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-eligibility.test.ts",
+            "title": "PLAYER JOURNEY: an Inherited citizen withdrawn, her savings at $365,000 for December, $930.00 of interest, is given HUSKY D on 4 January 2027 with no work; at $182,500, $465.00, she’s shown the work rules short",
+            "kind": "render",
+            "closes": "$365,000 at 3.00% for December's 31 days = $930.00 of interest: HUSKY D on 4 January 2027 with no work; $182,500 = $465.00: the work rules short.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "defects4.test.ts",
+            "title": "PLAYER JOURNEY: an F-1 student who withdrew on 2 September 2026 and enrolled in HUSKY D that month is told at its renewal on 1 October 2027 that it’s now for a citizen or a green card of five years, not that her income was over",
+            "kind": "command",
+            "closes": "A status ending at renewal said on 1 October 2027, ending 31 October; out of status the marketplace refusal said.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "need-paths.test.ts",
+            "title": "PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over",
+            "kind": "command",
+            "closes": "A Covered Connecticut member moving into HUSKY D is kept on Covered Connecticut through the window, and it ends with December, said on 6 December.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "defects-g8-4.test.ts",
+            "title": "until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t",
+            "kind": "fixture",
+            "closes": "May's 80 hours renew a 1 July renewal; July's, its own month, don't.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "defects-g8-4.test.ts",
+            "title": "until 2026-10-16 it read: ends at renewal for somebody whose June was an unemployment benefit and interest and no work, however much; since then $720 of them renews her, and $520 brings a notice of noncompliance",
+            "kind": "fixture",
+            "closes": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered.",
+            "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-health-billing.test.ts",
+            "title": "FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+            "kind": "fixture",
+            "closes": "A March 2027 renewal reads September 2026 to February 2027; August's work, outside, doesn't count.",
+            "round": "remaining-health-eligibility"
           }
         ],
         "gapsClosed": [
@@ -5802,6 +6212,10 @@
           "said": "carried.test.ts; safetynet.test.ts; medicaluis.test.ts",
           "now": "Until 2026-10-13 this cited carried.test.ts, safetynet.test.ts and medicaluis.test.ts, direct calls to healthMonth and keepUp in Los Angeles and New York. The clock's month in New Haven is played in tests/guide-examples-papers.test.ts (papers.health-cover), tests/defects-g8-5.test.ts and tests/evidence-g05-life.test.ts (onset, lapse, HUSKY D's renewal, the debt's report)."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -5956,6 +6370,10 @@
           "now": "Until 2026-10-13 this said currentLocationId only. A session reads presentForCare (awakeSince, inHospitalUntil), coverOn for Yale's counseling, and the bank (payFromBank), billing a session it can't pay (billCare)."
         },
         "afterCheck": "The gap the check named, a lifted course ending the month's care, was closed on 2026-10-13 by tests/evidence-g05-life.test.ts ‘PLAYER JOURNEY: uninsured, a course that lifts the depression ends its month of care on the next 1st, against a twin’s that doesn’t’; its mutation (the lift left the depression) was killed."
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6119,6 +6537,10 @@
           "said": "carried.test.ts 'is likelier short of sleep and under stress', 'let asthma left alone double...'; seasons.test.ts",
           "now": "Until 2026-10-13 this cited only direct calls to illnessWeek. tests/evidence-g05-life.test.ts plays the flu, a stay and an emergency drawn by the clock's week, what reads each, and catching's 2.5 × 1.8 on the week's own draw."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6302,6 +6724,10 @@
           "said": "No caller passes `work` to mayHurt (life.ts:452, school.ts:2076, decided.ts:434), so atWork and COMP_KIND never arise in play",
           "now": "Until 2026-10-13 this said no caller passes work to mayHurt. Two do: the Summer Cabaret's calls (school.ts:3597) and work-study's shifts (school.ts:3095). A crew Saturday's mix keeps nobody off work, so from work-study only an elective front-of-house shift's fracture or concussion schedules injury.comp."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6456,6 +6882,10 @@
           "said": "wellbeing-bites.test.ts; personality.test.ts 'charges running on empty...'",
           "now": "evidence-g06-life.test.ts (energy): three an hour by the clock to 40 and 7 as Home and the Energy look show it, stress past fifteen, the gate at 25 reached by play, a chosen night's exact figure, the health week's stay, emergency and flu against a twin, and the first classes; simulation.test.ts 189-256 (the drain by the minute and in one jump); looking-after.test.ts 'refuses training spent'. Until 2026-10-13 this cited only wellbeing-bites.test.ts and personality.test.ts, whose running-on-empty test calls applyElapsedWellbeing on a hand-built person."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6516,6 +6946,10 @@
           "Minor: catching()'s effect on the flu is shown only by direct illnessWeek draws, not by the health week through the clock.",
           "Minor: the row cites simulation.test.ts and carried.test.ts but not the stronger looks.test.ts dial journey."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6752,6 +7186,10 @@
           "said": "mortality frailty + redraw, readiness, morale settle, school sickBelow, applySleep worn",
           "now": "mortality frailty + redraw, readiness, morale settle, school sickBelow, applySleep worn, medical leave (leave.ts physicianRecommends :238, clearedToReturn :246). Until 2026-10-13 this left out the leave's two readers."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -6931,6 +7369,10 @@
           "said": "mendsTo, workoutCosts, stamina ability -> tasks consistency",
           "now": "mendsTo, workoutCosts, Stamina: a whole task's consistency inputs, and a piece judged in segments through its drain on every dimension tiredness reaches (systems/piece.ts, from 2026-10-12), as the scene shown in class on 8 September reads it on five. Until 2026-10-13 this named consistency alone."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7073,6 +7515,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7239,6 +7685,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7405,6 +7855,10 @@
           "said": "empty, injury, nerves",
           "now": "empty, injury, nerves, money worry at the midnight (spending.ts 501), a turn at school and loved work (enjoyment.ts 85, 112, 121), a rival's lead (school.ts 2457). Until 2026-10-13 this named the first three only."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7535,6 +7989,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7672,6 +8130,10 @@
           "said": "UI provenance (wellbeing.tsx:348) names auditions and a day's work, which went 2026-10-09",
           "now": "Until 2026-10-13 this said the UI provenance (wellbeing.tsx:348) named auditions and a day's work. That was corrected on 2026-10-12: the person look's Readiness way (wellbeing.tsx:113-115) and the readiness look's provenance (:351) name what reads it now, a class, a lab, a rehearsal, an hour of practice or a workout, and the condition judged work meets you in. Line 348 is a ways label. No issue stands."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7784,6 +8246,10 @@
           "said": "heatindex.test.ts 'keeps a run in on a humid afternoon under 32 °C'; weather.test.ts",
           "now": "tests/evidence-g07-life.test.ts 'a dry hour under freezing is a Work Out indoors…' and 'a humid afternoon under 32 °C that feels over it is indoors…' (Work Out pressed on the menu in New Haven, reached by the clock); tests/guide-examples-start-day-body.test.ts 'day.weather' (a run). Until 2026-10-13 this cited heatindex.test.ts, which calls trainingAt directly in Houston, and weather.test.ts, which never reaches a workout."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -7975,6 +8441,10 @@
           "said": "school.call_in_sick, school focus ‘ill’, lookAfterRefusal (no workout, from 2026-10-10)",
           "now": "school.call_in_sick (sickRefusal); the judged work's condition, ill (conditionAt, read by the evaluation); lookAfterRefusal (no workout, from 2026-10-10); Profile's For Work. Until 2026-10-13 this said school focus ‘ill’, but focusOf and focusAt don't read the flu; conditionAt does."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8066,7 +8536,7 @@
           {
             "file": "evidence-g07-life.test.ts",
             "title": "holidays > LIFE FIXTURE (London): England’s repeat ordered on 30 March 2026 is ready on 8 April, past Good Friday and Easter Monday, and collected at the 13 April week",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "England's repeat prescription order through the clock: orderedReadyAt 8 Apr 13:00Z, not 6 Apr; not collected on 6 Apr; supply to 11 May 13:00Z on 13 Apr; across a reload"
           },
           {
@@ -8102,7 +8572,7 @@
           {
             "file": "evidence2-b03.test.ts",
             "title": "holidays > LIFE FIXTURE (a New Haven life at Bank of America): round-ups move at a business day’s end, so Saturday’s to Martin Luther King Jr. Day’s wait for the end of Tuesday 20 January",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "roundups.ts, a business-day reader no correction had named, crosses MLK Day 2026. Five $34.65 meals ordered in round up 35¢ each. The moves are exactly 35¢ at 17 Jan 05:00Z and $1.40 at 21 Jan 05:00Z, with nothing at the ends of Saturday, Sunday or the holiday."
           },
           {
@@ -8167,6 +8637,10 @@
           "said": "bankdays (pending postings, UK repeat Rx order)",
           "now": "bankdays (content/bankdays.ts), which feeds: pending card postings (pending.ts:47); bank moves (bankmoves.ts: an application's review, a new card's days, a transfer between banks); lending (lending.ts: Overdraft Assist's next business day, the returned-payment fee's gap); security (security.ts: a replacement card, a fraud refund, Regulation E's business days); round-ups (roundups.ts: Bank of America's and Wells Fargo's business days); a missed paper visit booked again (papervisits.ts, on a save from before 2026-10-09 only); and England's repeat prescription order (health.ts:716). holidaysOn itself, by the region the player stands in, decides a doctor's appointment's day (appointments.ts:111, from 2026-10-13) and the Calendar's month (world/calendar.ts monthGrid → CalendarWorkspace). A US bank keeps the Federal Reserve's days (usholidays.ts), not the state's. Until 2026-10-13 this named the pending postings and the repeat order alone. The first round's correction that day said appointments didn't read it, which the fix of the same day (73b2a9ec) had made untrue."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8275,7 +8749,7 @@
           {
             "file": "evidence-g07-life.test.ts",
             "title": "injuries > LIFE FIXTURE (New Haven, uninsured): an everyday injury drawn at midnight by the clock bills its care, due in 30 days, and is paid then, once",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "an everyday injury through world.day_rollover (seed searched, draw asserted): a sprain at midnight on 6 Jan, bill 'A Sprained Ankle: its care' of $699.13 due 5 Feb, the notice's words, training refused. At the due date one payment of −$699.13 posts from checking, and none again after a reload."
           },
           {
@@ -8287,7 +8761,7 @@
           {
             "file": "evidence2-b03.test.ts",
             "title": "injuries > LIFE FIXTURE (New Haven, uninsured): an everyday sprain’s care is $699.13, worked from CARE’s $180 and $100 grown by the BLS physicians’ services index and the 1.75 the uninsured are billed, and paid once at its due date",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "The skeptic's weak test: the growth factor is now worked from BLS CPI-U physicians' services (CUUR0000SEMC01): 439.389 in August 2026 over 417.93, the 2024 average. Each price is grown to the cent and then multiplied by 1.75: $189.24 → $331.17, and $105.13 → $183.98 twice, for $699.13. The bill, its notice and the one payment at its due date (5 Feb 05:00Z) are checked against that figure, across a reload."
           },
           {
@@ -8340,6 +8814,10 @@
           "said": "trainingRefusal, laidUp->present, school conditions, eiWeek",
           "now": "trainingRefusal (Work Out refused till it mends), laidUp -> present (classes excused, the dean's medical leave), school conditions (conditionAt: injured or concussed), sickRefusal; a bill for care away from work, or workers' compensation at work. eiWeek (health.ts:1356) is still called with laidUp and pays nothing in any life: it reads acting earnings no life in Canada has had since the career went in the scope reset of 2026-10-09, and a New Haven student is refused registration. Until 2026-10-13 this named eiWeek as a downstream the injury reached."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8459,7 +8937,7 @@
           {
             "file": "evidence-g07-life.test.ts",
             "title": "chronic > LIFE FIXTURE (New Haven, uninsured): a month’s care unpaid on 1 February leaves depression lapsed, and the next health week takes 3 morale from her and not from her twin who paid",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "a lapse through health.month (not keepUp called directly): the twin who can't pay is lapsed with no 'Care for depression' payment; the payer pays and isn't lapsed. Across a reload, the next health.week takes CHRONIC's 3 morale from the lapsed one only."
           },
           {
@@ -8516,6 +8994,10 @@
           "said": "carried.test.ts; medicine.test.ts; claims.test.ts",
           "now": "tests/evidence-g07-life.test.ts (onset, lapse, emergency and review through the clock in New Haven); carried.test.ts, medicine.test.ts and claims.test.ts call keepUp, fillMedicine and illnessWeek directly or play London, BC and New York fixtures, and claims.test's review assertion accepts an owed visit. Until 2026-10-13 this cited only those three."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8683,6 +9165,10 @@
           ],
           "weakTests": []
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -8783,7 +9269,7 @@
           {
             "file": "evidence-g08-life.test.ts",
             "title": "mortality > weighs it by the country she lives in: aged 95 and worn, Tokyo ends about 0.437 of lives and Mexico City 0.921 (World Bank 2024 life expectancy, e^0.085 a year from the US 78.89) (LIFE FIXTURE: lives in Tokyo and Mexico City, which New Haven can’t reach)",
-            "kind": "command",
+            "kind": "fixture",
             "closes": "the country read through the birthday's draw (World Bank e0 84.04 and 75.26 against 78.89, Gompertz 0.085)"
           },
           {
@@ -8876,6 +9362,10 @@
             }
           ]
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9031,6 +9521,10 @@
           "said": "life.ts:206, injury.ts:88, attributes.ts:291, enjoyment.ts:112",
           "now": "life.ts:212 (applyElapsedWellbeing, an hour on empty), injury.ts:98 (mayHurt), attributes.ts:308 (nerves), enjoyment.ts:112 (feel, from school.ts:1773 setStanding), school.ts:2478 (castListRead, a rival's lead), spending.ts:501 (spending.day, a day in trouble), ui/components/AttributesPanel.tsx:26 (the nerves figure). Until 2026-10-13 this said life.ts:206, injury.ts:88, attributes.ts:291, enjoyment.ts:112, and left out the cast list, the money worry and the panel."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9135,6 +9629,10 @@
           "said": "life.ts:205,622,626",
           "now": "life.ts:211 (applyElapsedWellbeing's waking recovery, also taken off the on-empty climb at :212), 683 (Work Out), 687 (Unwind). Until 2026-10-13 this said life.ts:205,622,626."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9265,6 +9763,10 @@
           "said": "life.ts:740,1209",
           "now": "life.ts:810 (nightParts' depth, read by life.sleep, creditNightAlone and suggestedSleep at :1378), 1279 (unattendedNight's lie-in). Until 2026-10-13 this said life.ts:740,1209."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9385,6 +9887,10 @@
           "said": "life.ts:793,1209,1303",
           "now": "life.ts:863 (applySleep), 1279 (unattendedNight's lie-in), 1379 (suggestedSleep's restores). Until 2026-10-13 this said life.ts:793,1209,1303."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9487,6 +9993,10 @@
           "said": "life.ts:219,621",
           "now": "life.ts:225 (applyElapsedWellbeing, which also sets the grimy hours' morale at :226-228), 682 (Work Out's sweat); read by lookAfterRefusal's 'already clean' at :620. Until 2026-10-13 this said life.ts:219,621."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9605,6 +10115,10 @@
           "said": "life.ts:222,601,823; injury.ts:89; enjoyment.ts:111",
           "now": "life.ts:228 (hungry and grimy hours), 662 (a meal, Work Out and Unwind through applyLookingAfter), 893 (applySleep); injury.ts:99 (mayHurt); enjoyment.ts:111 (feel, from school.ts:1773 setStanding); school.ts:2472 (castListRead, her own and friends' leads); spending.ts:502 (spending.day). Until 2026-10-13 this said life.ts:222,601,823; injury.ts:89; enjoyment.ts:111, and left out the cast list and the money worry."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9742,6 +10256,10 @@
           "said": "CharacterCreation.tsx:1018",
           "now": "CharacterCreation.tsx:1036 (monthOf reads spending; Review shows Going Out A Month at :1097). Until 2026-10-13 this said CharacterCreation.tsx:1018."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9854,6 +10372,10 @@
           "said": "health.ts:1081 (careFor, an illness’s toll), injury.ts:80 (an injury’s mend time)",
           "now": "health.ts:1148-1150 (careFor, an illness’s toll on condition and energy, run by the weekly health.week draw at :1353), injury.ts:89 (mayHurt, an injury’s mend time and offWorkUntil). Until 2026-10-13 this said health.ts:1081 and injury.ts:80; injury.ts:80 had become mayHurt’s own declaration."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -9959,6 +10481,10 @@
           "said": "body.ts:132",
           "now": "body.ts:144 (bodyDay, run at each midnight by dailyRollover at life.ts:946). Until 2026-10-13 this said body.ts:132."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -10005,6 +10531,10 @@
           "Minor: lift magnitudes are not asserted, and 'order' is not exercised.",
           "The downstream line reference is stale (608, now 669)."
         ]
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     },
     {
@@ -10225,6 +10755,10 @@
           "said": "taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465",
           "now": "taxreturn.ts:836-837 (receipts, in figuresFor); school.ts:307-311 (castCompany, read on a performance night at :3324), :314-316 (bondMove, read by the cast list at school.ts:2579, coursework.ts:327 and classmates.ts:175), :907-911 (hourFit, read by focusAt at :914 and conditionAt at :924); coursework.ts:568-576 (prepLean, read by prepare at :593). Until 2026-10-13 this said taxreturn.ts:326; school.ts:189,196,617,618; coursework.ts:462-465."
         }
+      },
+      "verification": {
+        "class": "journey",
+        "label": "Player Journey"
       }
     }
   ],

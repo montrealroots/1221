@@ -1,0 +1,609 @@
+{
+ "key": "coverage",
+ "on": "2026-10-16",
+ "against": "a908bded, with the areas’ results committed (banking 841f46e9, tax bc834ee1, health b822ec60 and a55a2f0e)",
+ "checklist": "docs/verification/remaining/coverage-checklist.json",
+ "totals": {
+  "countedBy": "node tools/coverage.mjs (which counts each row by its status and, from 2026-10-16, its evidence class)",
+  "before": {
+   "at": "a908bded: docs/GAMEPLAY-COVERAGE.md as the tool last wrote it; `node tools/coverage.mjs --check` itself exited 1 there, on life health.dental’s Note (defects-g8-4.test.ts:209-220 and :237-239, lines the health area’s edit moved), before printing",
+   "rows": 328,
+   "statuses": {
+    "verified": 285,
+    "partial": 2,
+    "unresolved": 14,
+    "deferred": 16,
+    "legacy": 3,
+    "informational": 8
+   },
+   "verifiedOfWhatCanBe": "285 of 301, 95%",
+   "classes": "none: no row carried an evidence class"
+  },
+  "after": {
+   "at": "the tree regenerated on 2026-10-16 (exit 0 for `node tools/coverage.mjs` and `--check`)",
+   "rows": 328,
+   "statuses": {
+    "verified": 286,
+    "partial": 1,
+    "unresolved": 14,
+    "deferred": 16,
+    "legacy": 3,
+    "informational": 8
+   },
+   "verifiedOfWhatCanBe": "286 of 301, 95%",
+   "classes": {
+    "Player Journey": {
+     "rows": 286,
+     "verified": 285,
+     "partial": 1
+    },
+    "Retained Engine, On Labelled Fixtures": {
+     "rows": 14,
+     "unresolved": 14
+    },
+    "Documentation And Static Checks": {
+     "rows": 1,
+     "verified": 1
+    },
+    "Deferred Scope": {
+     "rows": 16,
+     "deferred": 16
+    },
+    "Older Saves Only": {
+     "rows": 3,
+     "legacy": 3
+    },
+    "Said Back, Deciding Nothing": {
+     "rows": 8,
+     "informational": 8
+    }
+   },
+   "evidenceByKind": {
+    "before": "command 319 (307 hold), render 180 (180), fixture 200, inspection 63, built-app 43, long-run 24",
+    "after": "command 319 (307 hold), render 184 (184), static 1 (1), fixture 219, inspection 63, built-app 43, long-run 24"
+   },
+   "statusMoved": "i-stale-claims, partial to verified, on static evidence (item 2); no other row’s status moved (compared row by row against a908bded)"
+  }
+ },
+ "items": [
+  {
+   "id": "coverage.1-separate-totals",
+   "before": "no evidence class; statuses alone",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tools/coverage.mjs",
+     "title": "every row has one of six classes, and its evidence bears it out",
+     "kind": "static (tools)",
+     "proves": "`node tools/coverage.mjs --check` exits 0 on the regenerated audit; the class table’s rows sum to 328 and each status column to the status table’s."
+    },
+    {
+     "file": "tools/coverage.mjs",
+     "title": "a journey row set to engine by hand fails",
+     "kind": "static (tools)",
+     "proves": "Mutation (a), in a copy: bank.transfer’s class set to engine, the check exits 1 naming it (unresolved, fixture, the four parts)."
+    },
+    {
+     "file": "tools/coverage.mjs",
+     "title": "the nine bank rows need their fixtures",
+     "kind": "static (tools)",
+     "proves": "Mutation (b), in a copy: the pipeline’s FIXTURE label rule taken out, six bank rows fail “no evidence on a labelled fixture”."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The owner’s brief of this pass, sections 13 and 14 (denominators reported, skipped coverage reported, no aggregate concealing unfinished behavior); the coverage brief of 2026-10-16, item 1",
+     "citation": "docs/verification/briefs-2026-10-16/08-complete-integration-and-acceptance-pass.txt; docs/verification/prompts-2026-10-16/coverage-classes-and-evidence-totals.txt",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "Legacy (3) and informational (8) rows fit none of the brief’s four classes honestly: an informational row like c-livesWhereBorn has no player-journey evidence, and l-actor no fixture. Each keeps a class of its own named for its status (Older Saves Only, Said Back, Deciding Nothing), outside what can be verified as before."
+   ],
+   "mutations": [
+    {
+     "file": "docs/verification/audit/money.json (copy)",
+     "find": "bank.transfer verification.class \"journey\"",
+     "replace": "\"engine\"",
+     "killed": true
+    },
+    {
+     "file": "docs/verification/pipeline/merge-review.cjs (copy)",
+     "find": "const labelledFixture = (title) => { … }",
+     "replace": "const labelledFixture = () => false;",
+     "killed": true
+    },
+    {
+     "file": "docs/verification/audit/papers.json (copy)",
+     "find": "tax.amend acceptance.deferred",
+     "replace": "(deleted)",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "note": "The class is written by docs/verification/pipeline/merge-review.cjs (`verification: {class, label, since?, why?, was?}`) and held by tools/coverage.mjs (`classMissed`); docs/GAMEPLAY-COVERAGE.md has “Totals, By How Each Row Is Evidenced” beside the status totals.",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.2-i-stale-claims",
+   "before": "partial (2026-10-15): its tests read the repository’s text and were recorded as fixtures; the player-action standard verified a row only on a command, the clock or a rendered screen; the owner’s decision",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular (its four tests)",
+     "kind": "static",
+     "proves": "Meets the static standard: three tests of must-catch and must-accept examples written by hand, and a tree walk over src/, tests/ and docs/ that fails on an empty read (files > 600, sentences > 60, each of the 34 sentences read and listed true found). Passed on 2026-10-16 (4 passed, -t i-stale-claims; the whole file 19 passed)."
+    },
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "title": "i-stale-claims (its three tests)",
+     "kind": "static",
+     "proves": "Meets the standard: the same rule’s examples, the seven corrected files’ walk, and the tree walk. Passed on 2026-10-16 (3 passed; the whole file 6 passed)."
+    },
+    {
+     "file": "tests/evidence-g34-ui.test.ts",
+     "title": "i-stale-claims (its three tests)",
+     "kind": "static",
+     "proves": "Reaches the text and can’t pass on an empty read, but has no must-catch or must-accept example, and its third test’s rule is the first round’s; supports the row, verifies nothing. Passed on 2026-10-16 (3 passed)."
+    },
+    {
+     "file": "tools/coverage.mjs",
+     "title": "a static row is verified only on a static test meeting the standard, each example in its file as written",
+     "kind": "static (tools)",
+     "proves": "Mutations (d), (e) and (b2) below, each failing the check."
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "The owner’s answer to the decision of 2026-10-15 (docs/verification/CURRENT-SCOPE-2026-10-15.md, The Owner’s Decisions, 1): yes, the standard gains a kind for it",
+     "citation": "docs/verification/prompts-2026-10-16/coverage-classes-and-evidence-totals.txt, item 2",
+     "effective": "2026-10-16",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "The rule both walks apply is a heuristic over the words, as the row says: a present claim in a shape its examples don’t name can still pass it (the skeptic of 2026-10-15 listed four), and it took the ledger’s “Interest line” for an interest’s line on 2026-10-16 (coverage.d-stale-claims-walk)."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/life.ts (copy)",
+     "find": "(end of file)",
+     "replace": "// Interests lift a meal.",
+     "killed": true,
+     "note": "evidence3-person’s walk failed (1 failed), evidence2-b13’s two walks failed (2 failed)"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts (copy)",
+     "find": "const dated = (sentence: string) => REMOVAL.test(sentence) && !PRESENT.test(sentence.replace(MONEYS, ''));",
+     "replace": "const dated = (sentence: string) => REMOVAL.test(sentence);",
+     "killed": true,
+     "note": "two example tests failed"
+    },
+    {
+     "file": "tests/evidence3-person.test.ts (copy)",
+     "find": ".filter((f) => /\\.(ts|tsx|mjs|js|json|md)$/.test(f))",
+     "replace": ".filter((f) => /\\.(nothing)$/.test(f))",
+     "killed": true,
+     "note": "the walk failed its file count"
+    },
+    {
+     "file": "docs/verification/audit/ui.json (copy)",
+     "find": "a static example",
+     "replace": "“Interests lift a meal and dance.”",
+     "killed": true
+    },
+    {
+     "file": "docs/verification/audit/ui.json (copy)",
+     "find": "i-stale-claims verification.class \"static\"",
+     "replace": "\"journey\"",
+     "killed": true
+    },
+    {
+     "file": "docs/verification/audit/ui.json (copy)",
+     "find": "every static standard meets: true",
+     "replace": "meets: false",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "note": "docs/verification/pipeline/inputs/classes.json names i-stale-claims static, with since, why, `was` (partial on the player-action standard, the note of 2026-10-15 verbatim) and each cited test’s standard as read; inputs/after-check.json moves it to verified with the owner’s answer, the old note quoted. The page defines the kind and its standard under “The Static Kind, From 2026-10-16”, with a table of the ten tests. No test was added: two of the three files already meet the standard.",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.3-unresolved-rows",
+   "before": "each of the 14 said “unreachable” in the words of 2026-10-15, before the home-country account",
+   "disposition": "implemented (the words); one row found reachable, reported",
+   "evidence": [
+    {
+     "file": "tools/coverage.mjs",
+     "title": "a row of the retained engine says its four parts, and the tests they cite land",
+     "kind": "static (tools)",
+     "proves": "Every engine-class row has acceptance.player, .engine, .deferred and .unfinished; the titles cited in .player and .engine are in their files (`--check` exits 0; mutation (c) fails it)."
+    },
+    {
+     "file": "probe/coverage/savings-notice.ts (git-ignored; the script and its output below)",
+     "title": "can a life made at Yale reach bank.savings_notice through its home account?",
+     "kind": "command+clock+reload (a probe outside the gate)",
+     "proves": "Yes: Berlin-raised students keeping Deutsche Bank, Postbank or Berliner Sparkasse, every family from modest up, close their savings past the €2,000 allowance: notice given on 24 August 2026, closed on 24 November 2026 into the account at that bank, said, across a reload."
+    }
+   ],
+   "probe": {
+    "script": "// Probe (coverage agent, 2026-10-16): can a life made at Yale reach bank.savings_notice through its home account?\nimport { readFileSync } from 'node:fs';\nimport { createSave, loadPlacesFor, loadSave } from '@/engine';\nimport { newLifeConfig, withFamily, type NewSaveConfig } from '@/engine/world/bootstrap';\nimport { addCountryHolidays } from '@/engine/content/holidays';\nimport { deserialise, serialise } from '@/engine/persistence/adapter';\nimport { homeAccountRefusal } from '@/engine/systems/homeaccount';\nfor (const country of ['uk', 'de', 'jp', 'fr']) addCountryHolidays(country, readFileSync(`public/holidays/${country}.tsv`, 'utf8'));\nfor (const wealth of ['modest', 'comfortable', 'wealthy', 'inherited'] as const) {\n  for (const bank of ['de-deutsche-bank', 'de-postbank', 'de-berliner-sparkasse']) {\n    const config: NewSaveConfig = { ...withFamily(newLifeConfig(), wealth), homeRegionId: 'de-be-berlin', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her', bankId: 'us-chase', priorResidence: { cityId: 'de-be-berlin', fromYear: 2002, fromMonth: 6 }, homeBankId: bank };\n    const why = homeAccountRefusal(config, bank);\n    if (why) { console.log(wealth, bank, 'REFUSED:', why); continue; }\n    const sim = createSave(1, 'cov-sn', config);\n    await loadPlacesFor(sim.universe);\n    const mine = Object.values(sim.universe.accounts).filter((a) => !a.nominal && a.ownerId === sim.player.id && !a.closedAt);\n    const savings = mine.find((a) => a.bankId === bank && a.kind === 'savings');\n    console.log(wealth, bank, 'accounts:', mine.map((a) => `${a.name}@${a.bankId}:${a.balance}${a.held !== undefined ? `(held ${a.held})` : ''}`).join(', '));\n    if (!savings) continue;\n    const r = sim.execute<{ closed: string; on?: number }>({ kind: 'bank.close_savings', payload: { accountId: savings.id } });\n    console.log('  close_savings:', r.ok ? JSON.stringify(r.value) : r.error, r.ok && r.value?.on ? new Date(r.value.on).toISOString() : '');\n    if (r.ok && r.value?.on) {\n      const reloaded = loadSave(deserialise(serialise(sim.universe)) as never);\n      reloaded.advanceTo(r.value.on + 3_600_000);\n      const s2 = reloaded.universe.accounts[savings.id]!;\n      const notes = reloaded.universe.notifications?.filter?.((n: { title: string }) => /Closed/.test(n.title)).map((n: { title: string; body: string }) => `${n.title}: ${n.body}`) ?? [];\n      console.log('  after notice: closedAt', s2.closedAt ? new Date(s2.closedAt).toISOString() : 'open', 'balance', s2.balance, '|', notes.slice(-2).join(' || '));\n    }\n  }\n}\n",
+    "output": [
+     "modest de-deutsche-bank accounts: Chase Total Checking@us-chase:521787, Chase Freedom Unlimited@us-chase:-45700, AktivKonto@de-deutsche-bank:25543(held 23500), Flexgeld@de-deutsche-bank:680870(held 626400)",
+     "  close_savings: {\"closed\":\"account_000006\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Flexgeld Closed: The notice ran out, and what it held is in your AktivKonto at Deutsche Bank.",
+     "modest de-postbank accounts: Chase Total Checking@us-chase:521787, Chase Freedom Unlimited@us-chase:-45700, Giro plus@de-postbank:25543(held 23500), Tagesgeld@de-postbank:680870(held 626400)",
+     "  close_savings: {\"closed\":\"account_000006\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro plus at Postbank.",
+     "modest de-berliner-sparkasse accounts: Chase Total Checking@us-chase:521787, Chase Freedom Unlimited@us-chase:-45700, Giro Digital@de-berliner-sparkasse:18370(held 16900), Tagesgeld@de-berliner-sparkasse:688043(held 633000)",
+     "  close_savings: {\"closed\":\"account_000006\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro Digital at Berliner Sparkasse.",
+     "comfortable de-deutsche-bank accounts: Chase Total Checking@us-chase:1956591, Chase Freedom Unlimited@us-chase:0, AktivKonto@de-deutsche-bank:25543(held 23500), Flexgeld@de-deutsche-bank:4539566(held 4176400)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Flexgeld Closed: The notice ran out, and what it held is in your AktivKonto at Deutsche Bank.",
+     "comfortable de-postbank accounts: Chase Total Checking@us-chase:1956591, Chase Freedom Unlimited@us-chase:0, Giro plus@de-postbank:25543(held 23500), Tagesgeld@de-postbank:4539566(held 4176400)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro plus at Postbank.",
+     "comfortable de-berliner-sparkasse accounts: Chase Total Checking@us-chase:1956591, Chase Freedom Unlimited@us-chase:0, Giro Digital@de-berliner-sparkasse:18370(held 16900), Tagesgeld@de-berliner-sparkasse:4546739(held 4183000)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro Digital at Berliner Sparkasse.",
+     "wealthy de-deutsche-bank accounts: Chase Total Checking@us-chase:9239161, Chase Freedom Unlimited@us-chase:0, AktivKonto@de-deutsche-bank:25543(held 23500), Flexgeld@de-deutsche-bank:41278696(held 37976400)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Flexgeld Closed: The notice ran out, and what it held is in your AktivKonto at Deutsche Bank.",
+     "wealthy de-postbank accounts: Chase Total Checking@us-chase:9239161, Chase Freedom Unlimited@us-chase:0, Giro plus@de-postbank:25543(held 23500), Tagesgeld@de-postbank:41278696(held 37976400)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro plus at Postbank.",
+     "wealthy de-berliner-sparkasse accounts: Chase Total Checking@us-chase:9239161, Chase Freedom Unlimited@us-chase:0, Giro Digital@de-berliner-sparkasse:18370(held 16900), Tagesgeld@de-berliner-sparkasse:41285869(held 37983000)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro Digital at Berliner Sparkasse.",
+     "inherited de-deutsche-bank accounts: Chase Total Checking@us-chase:26087035, Chase Freedom Unlimited@us-chase:0, AktivKonto@de-deutsche-bank:25543(held 23500), Flexgeld@de-deutsche-bank:260844022(held 239976500)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Flexgeld Closed: The notice ran out, and what it held is in your AktivKonto at Deutsche Bank.",
+     "inherited de-postbank accounts: Chase Total Checking@us-chase:26087035, Chase Freedom Unlimited@us-chase:0, Giro plus@de-postbank:25543(held 23500), Tagesgeld@de-postbank:260844022(held 239976500)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro plus at Postbank.",
+     "inherited de-berliner-sparkasse accounts: Chase Total Checking@us-chase:26087035, Chase Freedom Unlimited@us-chase:0, Giro Digital@de-berliner-sparkasse:18370(held 16900), Tagesgeld@de-berliner-sparkasse:260851195(held 239983100)",
+     "  close_savings: {\"closed\":\"account_000005\",\"on\":1795523400000} 2026-11-24T12:30:00.000Z",
+     "  after notice: closedAt 2026-11-24T12:30:00.000Z balance 0 | Tagesgeld Closed: The notice ran out, and what it held is in your Giro Digital at Berliner Sparkasse."
+    ]
+   },
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "“Deferred” is the owner’s word: none of the 14 is deferred. The nine bank rows wait on the owner’s decision 2 of 2026-10-15 (Unresolved or Deferred), and what would reach most of them, a life living abroad or in another state, went with the travel in the scope reset of 2026-10-09."
+   ],
+   "mutations": [],
+   "rowText": {},
+   "rows": {
+    "bank.arrange_overdraft": "Unreachable as an arrangement (US banks arrange none; a bank abroad opens nothing new, abroadRefusal). Not played: whether the overdraft panel draws Arrange It for a home account made primary (overdraftOffer reads no abroad rule).",
+    "bank.cancel_new": "Unreachable: no US cooling-off; a home account opened 1 August 2026 at the latest is past every cooling-off (14 days, 14 and 10 business days) by 24 August.",
+    "bank.switch": "Unreachable: no US switching service; a switch is by the service where she lives.",
+    "bank.switch_complete": "Unreachable: no switch starts.",
+    "bank.cancel_switch": "Unreachable: no switch starts.",
+    "bank.stop_balance_transfer": "Unreachable: no switch starts.",
+    "bank.take_overrun_loan": "Unreachable: only a French bank offers it, and a bank abroad makes no offer to a customer abroad.",
+    "card.money_transfer": "Unreachable: no American card offers it; a bank abroad issues no card to a customer abroad.",
+    "bank.savings_notice": "REACHABLE since 2026-10-16 through the home account (probe above); no gate test plays it. Status left Unresolved; reported.",
+    "tax.amend": "Unreachable: a filed year’s record never changes. Its three gaps of 2026-10-15 tested on fixtures since 2026-10-16.",
+    "tax.catch_up_state_plan": "Unreachable: Connecticut’s cure is none (SLATE’s reading).",
+    "tax.lien_dispute": "Unreachable: Connecticut’s lien always secures tax owed; the control drawn only where it can act since 2026-10-16.",
+    "tax.federal_lien_withdraw": "Unreachable: her LT11, $1,789.55, is far under $10,000.",
+    "tax.request_waiver": "Unreachable: only Oregon charges the three-year penalty. The excess dropped was a defect, fixed 2026-10-16."
+   },
+   "note": "The four parts are a row field of their own, `acceptance`, written through docs/verification/pipeline/inputs/doc-fields.json (merge-review.cjs copies it), so an area’s `issue`, folded on every regeneration, can’t overwrite them; the page lists the 14 under “The Rows Out Of A Player’s Reach”.",
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.4-fold-areas",
+   "before": "no step read docs/verification/remaining/; the areas’ hand edits of the audit were undone by a regeneration",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "docs/verification/pipeline/remaining-fold.cjs",
+     "title": "node ../remaining-fold.cjs",
+     "kind": "command (node)",
+     "proves": "6 results; 31 batches, 192 tests on 35 rows; 31 fields of row text. Listed and left out: two of health-billing’s titles that are describes, not tests (‘health.choose_clinic, New Haven’s two practices’, ‘health.enroll and health.appointment: Access Health CT’s silver plan…’), and health.dental’s `why`, which is no row field."
+    },
+    {
+     "file": "docs/verification/pipeline/README.md",
+     "title": "the regeneration in its order, then merge and resolve once more",
+     "kind": "command (node)",
+     "proves": "In the tree: a third run changes nothing, byte for byte (audit, inputs, page). Every row’s status as at a908bded but i-stale-claims’. The hand edits of bc834ee1 reproduced: tax.federal_lien_withdraw’s and h-papers’s renamed titles (inputs/renames.json), h-papers’s tests (inputs/doc-fields.json), tax.request_waiver’s :260 (carried by the tax area’s newer row text, which supersedes that line)."
+    },
+    {
+     "file": "tools/coverage.mjs",
+     "title": "node tools/coverage.mjs; --check",
+     "kind": "static (tools)",
+     "proves": "exit 0 and 0: 328 items, 286 verified, 1 partial, 14 unresolved, 16 deferred, 3 legacy, 8 informational; capabilities agree on the 148 commands both name."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "An evidence-only round no longer takes a row’s verdict, gaps and disposition: merge-review takes them from the latest record that judged the row.",
+     "where": "docs/verification/pipeline/merge-review.cjs",
+     "failingTest": "Mutation (g), in a copy: with the last record taken whatever it was, 35 rows lost their open gaps (health.enroll’s partial gap among them) and 30 their claimed verdict; statuses held only because each row’s skeptic check held them."
+    },
+    {
+     "summary": "A straight apostrophe inside a word in an area’s row text is curled, as the audit has them: health-eligibility’s “renewal's hour” ran coverage.mjs’s citation of a describe on into the next and failed it.",
+     "where": "docs/verification/pipeline/remaining-fold.cjs",
+     "failingTest": "node tools/coverage.mjs failed health.enroll (two citations) before it; passes after."
+    },
+    {
+     "summary": "resolve-titles.cjs writes renames.json as the file is kept (one-space indent, a final newline), and skips doc-fields entries that aren’t text (`acceptance`).",
+     "where": "docs/verification/pipeline/resolve-titles.cjs",
+     "failingTest": "Run in a copy before it, every run rewrote all of renames.json (2,139c2,141)."
+    },
+    {
+     "summary": "A note after the check that verifies a row moves the gaps its last record left open into the gaps closed, as history: i-stale-claims said “Still open: partial” beside its verification.",
+     "where": "docs/verification/pipeline/merge-review.cjs",
+     "failingTest": "The page’s i-stale-claims Note before it (read on 2026-10-16); no other row with a note had a gap open."
+    }
+   ],
+   "sources": [],
+   "assumptions": [
+    "The rows an item’s tests are evidence for are read, not inferred: inputs/remaining-rows.json maps each item, with why; 13 items map to no single row, each said why (among them the home-country account’s ownership and a bank’s own close, which have no row).",
+    "Folded evidence judges nothing and moves no status: the areas’ tests are attached to rows unchecked by a skeptic, marked `round: remaining-<key>` in each test."
+   ],
+   "mutations": [
+    {
+     "file": "docs/verification/pipeline/merge-review.cjs (copy)",
+     "find": "const a = judged[judged.length - 1] ?? { gapsOpen: [], verdict: r.verdict };",
+     "replace": "const a = recs[recs.length - 1];",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.d-renames-chain",
+   "before": "a test renamed twice kept its middle name in every regeneration (c-performerTitle, “Frau Gabor”)",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tools/coverage.mjs",
+     "title": "c-performerTitle’s title lands",
+     "kind": "static (tools)",
+     "proves": "Regenerated, it reads “Frau Bergmann”, the test’s title (tests/evidence-g27-ui.test.ts:242)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A rename is followed to its last name, stopping at a title seen before.",
+     "where": "docs/verification/pipeline/merge-review.cjs (lastName, renamed)",
+     "failingTest": "node tools/coverage.mjs: “ui c-performerTitle: added: evidence-g27-ui.test.ts has no test ‘…Frau Gabor…’” with the one-step lookup (mutation (f), in a copy), and in every regeneration before the fix."
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "docs/verification/pipeline/merge-review.cjs (copy)",
+     "find": "renames[last] !== undefined ? lastName(last) : renames[t] !== undefined ? lastName(t) : last",
+     "replace": "renames[last] ?? renames[t] ?? last",
+     "killed": true
+    }
+   ],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.d-fixture-kind",
+   "before": "51 tests in 22 rows titled FIXTURE (or GUARD) recorded as commands or renders, counted among the tests that verify a row",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tools/coverage.mjs",
+     "title": "no verified row rests on fixtures alone; every engine row has one",
+     "kind": "static (tools)",
+     "proves": "`--check` exits 0 with the kinds corrected; the evidence table’s fixture rows rose from 200 to 219 (with the fold’s)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "A test whose title’s last segment says FIXTURE, or begins GUARD, OLDER SAVE or LEGACY STATE, is recorded as a fixture, whatever its round named.",
+     "where": "docs/verification/pipeline/merge-review.cjs (labelledFixture), remaining-fold.cjs (kindOf)",
+     "failingTest": "Mutation (b): with the rule out, six bank rows fail the engine class’s fixture requirement."
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.d-evidence-cell",
+   "before": "every row’s Evidence cell said its rounds’ tests were “added 2026-10-13”",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tools/coverage.mjs",
+     "title": "the Evidence column",
+     "kind": "static (tools)",
+     "proves": "Says “N from the rounds since 2026-10-13”; `--check` exits 0."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The wording, with a dated comment.",
+     "where": "tools/coverage.mjs (evidenceCell)",
+     "failingTest": "(a sentence, read)"
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "",
+   "guide": ""
+  },
+  {
+   "id": "coverage.d-stale-claims-walk",
+   "before": "both of i-stale-claims’ tree walks failed since 841f46e9, on two of the banking area’s sentences about the ledger’s Interest line",
+   "disposition": "fixed",
+   "evidence": [
+    {
+     "file": "tests/evidence3-person.test.ts",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal, or read and listed true; the audit trail, the research records and the two files that quote them aside",
+     "kind": "static",
+     "proves": "Passes with the two sentences read and listed; fails with either taken out."
+    },
+    {
+     "file": "tests/evidence2-b13.test.ts",
+     "title": "i-stale-claims > keeps every sentence naming the interests in src/, tests/ and docs/ dated by the removal with no clause in the present, or among the sentences read and found true; the audit trail and the research records aside",
+     "kind": "static",
+     "proves": "Passes with the two sentences read and listed."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "The two sentences (src/engine/systems/accountlife.ts and tests/remaining-banking.test.ts, money’s Interest line, in the past) listed in READ_TRUE and READ_AND_TRUE with why; the second’s backticks written escaped so tools/devmap.mjs doesn’t count the two rule files as tests of bank.take_term_interest (it did, and devmap --check failed, until they were).",
+     "where": "tests/evidence3-person.test.ts, tests/evidence2-b13.test.ts",
+     "failingTest": "Both walks, run before the fix (1 failed in each), and mutation M4 (the accountlife entry taken out: the walk fails on it)."
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [
+    {
+     "file": "tests/evidence3-person.test.ts (copy)",
+     "find": "the READ_TRUE entry for src/engine/systems/accountlife.ts “That build posted a take…”",
+     "replace": "(deleted)",
+     "killed": true
+    }
+   ],
+   "rowText": {
+    "i-stale-claims": {
+     "tests": "tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i-stale-claims (from 2026-10-15 on the same rule as evidence3, with the checks’ examples added); tests/evidence3-person.test.ts > 'i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular' (the examples of 2026-10-13, 2026-10-14 and both passes of 2026-10-15, and the tree-wide walk, 34 sentences read and listed true: 32 until 2026-10-16, when two of that day’s sentences on money’s Interest line, the ledger’s, were read and listed). From 2026-10-16 they are static evidence: evidence3-person’s four and evidence2-b13’s three meet the static standard, and evidence-g34-ui’s three support the row (docs/GAMEPLAY-COVERAGE.md, The Static Kind, From 2026-10-16)."
+    }
+   },
+   "tutorial": "",
+   "guide": ""
+  }
+ ],
+ "checks": [
+  {
+   "command": "node docs/verification/pipeline/{scope-fold,remaining-fold,collect-checks,scope-prep,merge-review,resolve-titles,merge-review,resolve-titles}.cjs (from inputs/)",
+   "exit": 0
+  },
+  {
+   "command": "node tools/coverage.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/coverage.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/capabilities.mjs --write",
+   "exit": 1,
+   "why": "health.apply and health.request_hardship (the health area’s, 2026-10-16) are named by no live capability; not this area’s. It rewrote docs/CAPABILITIES.md’s count line (156 of 158)."
+  },
+  {
+   "command": "node tools/capabilities.mjs --check",
+   "exit": 1,
+   "why": "the same two commands"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence3-person.test.ts",
+   "exit": 0,
+   "result": "19 passed"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence2-b13.test.ts",
+   "exit": 0,
+   "result": "6 passed"
+  },
+  {
+   "command": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/evidence-g34-ui.test.ts -t i-stale-claims",
+   "exit": 0,
+   "result": "3 passed, 12 skipped"
+  },
+  {
+   "command": "npx tsc -b --noEmit",
+   "exit": 0
+  },
+  {
+   "command": "npx eslint tools/coverage.mjs tests/evidence3-person.test.ts tests/evidence2-b13.test.ts (and the pipeline’s .cjs, which the config ignores)",
+   "exit": 0
+  },
+  {
+   "command": "node tools/title-case.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/spelling.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/typos.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/tics.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/voice-check.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/wired.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/plural-check.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/label-sweep.mjs",
+   "exit": 0
+  },
+  {
+   "command": "node tools/doc-refs.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/devmap.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/traceability.mjs",
+   "exit": 1,
+   "why": "behind the code on health.pay_bill’s refusals (a55a2f0e) and the test counts of card.due, tax.due and tax.substitute (the tax area’s tests); none of this area’s files. Measured with a copy of the tool writing to the scratchpad."
+  },
+  {
+   "command": "node tools/student-matrix.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/inventory.mjs --check",
+   "exit": 0
+  },
+  {
+   "command": "node tools/deciders.mjs --check",
+   "exit": 0
+  }
+ ],
+ "foundOutsideMyArea": [
+  "bank.savings_notice is reachable by a current Yale player since 2026-10-16 (a Berlin-raised student’s savings kept at Deutsche Bank, Postbank or Berliner Sparkasse, closed past the €2,000 allowance), and no gate test plays it; its row stays Unresolved (status is the launching session’s and a skeptic’s). A played test belongs to the banking area.",
+  "The audit has no row for what this pass added: the home-country account (creation’s Before Yale: priorResidence, homeBankId, savingsAtHome; the bank’s closing of a customer abroad), a bank’s own close of an account (closedByBank, closeForOverdraft), and the health area’s health.apply and health.request_hardship. merge-review.cjs needs a review of a row (inputs/row-review.json) before it can carry one.",
+  "node tools/capabilities.mjs --write and --check exit 1: health.apply and health.request_hardship are in no live capability row. Adding them to health-cover would also need them in an audit row or docs/verification/connected-journey/TRACE.md (generated by tools/trace.ts from the guide), which tools/coverage.mjs holds.",
+  "node tools/traceability.mjs exits 1 (docs/TRACEABILITY.md behind the code: health.pay_bill’s refusals, card.due’s, tax.due’s and tax.substitute’s test counts).",
+  "Not played: the overdraft panel (BankLending.tsx) may draw Arrange It for an account kept at home made primary, where overdraftOffer (lending.ts) reads no abroad rule and the command refuses it in the bank’s words (read in the code only).",
+  "health-billing-result.json cites two describes as test titles (tests/scope-health.test.ts ‘health.choose_clinic, New Haven’s two practices’ and ‘health.enroll and health.appointment: Access Health CT’s silver plan on a visit the clock…’); the fold leaves them out.",
+  "health-eligibility-result.json’s rowText for health.dental carries `why`, saying the review’s evidence lines (row-review.json, against fca00d8f) move by 30; the review is the record of 2026-10-13 at that commit, so its lines were left as they were read."
+ ]
+}

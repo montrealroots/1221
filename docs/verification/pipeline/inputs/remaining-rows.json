@@ -1,0 +1,294 @@
+{
+ "about": "The audit rows each item of docs/verification/remaining/<key>-result.json is evidence for, read on 2026-10-16 by the coverage area (remaining-fold.cjs reads it). An item whose id is an audit row's maps to that row without an entry here. rows [] means its tests are evidence for no single row's claim, with why. `fragments`: a row-text value an area wrote as a fragment of the field, with what in the field it replaces.",
+ "items": {
+  "banking/banking.1": {
+   "rows": [
+    "bank.standing_order"
+   ],
+   "why": "A bank's own close (closedByBank, closeForOverdraft) has no row of its own in the audit; what a row claims that these tests reach is an order from or into an account its bank closed: it ends with the account, said once, and fails no more."
+  },
+  "banking/banking.1.overdraft-interest": {
+   "rows": [
+    "bank.close_current",
+    "bank.cancel_new"
+   ],
+   "why": "Close It and Cancel It settle the overdraft interest built since the 1st (settleOverdraftInterest, from 2026-10-16); the area's row text corrects both rows' changes."
+  },
+  "banking/banking.1.standing-orders": {
+   "rows": [
+    "bank.standing_order",
+    "bank.scheduled_payment"
+   ],
+   "why": "An order or a payment set for a date from an account its bank closed: ends with it, or fails on its day and says so once."
+  },
+  "banking/banking.1.pro-rata": {
+   "rows": [],
+   "why": "The owner's decision (BGB § 675h(3)), with no test."
+  },
+  "banking/banking.2": {
+   "rows": [
+    "bank.take_term_interest",
+    "bank.cancel_new"
+   ],
+   "why": "A term's interest taken before 2026-10-15 found in an older save on opening (take_term_interest's persistent, the area's row text), and given back on canceling the term."
+  },
+  "banking/banking.s7.opening": {
+   "rows": [
+    "bank.open_current"
+   ],
+   "why": "The opening panel says the bank's monthly fee and waivers before Apply (the area's row text corrects its explanation); the review days and the photo ID the opening reads."
+  },
+  "banking/banking.s7.ownership": {
+   "rows": [],
+   "why": "The account kept at home (2026-10-16) has no row in the audit: what it claims, a bank's research on keeping a customer abroad and its closing on notice, is no row's. Reported by the coverage area."
+  },
+  "banking/banking.s7.switching": {
+   "rows": [
+    "bank.switch"
+   ],
+   "why": "No US switching service: the switch refused with the steps, and the steps each the player's."
+  },
+  "banking/banking.s7.closure": {
+   "rows": [
+    "bank.close_current"
+   ],
+   "why": "Close It's refusals and what it settles; money sent to an account that isn't open comes back."
+  },
+  "banking/banking.s7.funds": {
+   "rows": [
+    "bank.transfer"
+   ],
+   "why": "Money between banks in transit, in neither account, until it lands, once across a reload."
+  },
+  "banking/banking.s7.transfers": {
+   "rows": [
+    "bank.transfer"
+   ],
+   "why": "Move Money pressed once moves once; fees, margin and days on a payment abroad, in whole minor units."
+  },
+  "banking/banking.s7.rejections": {
+   "rows": [
+    "bank.transfer",
+    "bank.scheduled_payment"
+   ],
+   "why": "A transfer past what the account holds refused; a payment to a closed account comes back; a payment that can't go says so once."
+  },
+  "banking/banking.s7.statements": {
+   "rows": [
+    "statements"
+   ],
+   "why": "A statement's balances are the ledger's; Germany's quarters; no statement names an account after its bank closed it."
+  },
+  "banking/banking.s7.features": {
+   "rows": [],
+   "why": "A survey of features rows already hold (the overdraft's set-off, terms renewing); its one new test is banking.1's, folded there."
+  },
+  "banking/banking.s7.school": {
+   "rows": [
+    "school.pay_balance",
+    "school.buy_affiliate"
+   ],
+   "why": "A payment to Yale drawn on the current account and the savings at its bank (fromBankToYale); the area's row text corrects both rows' reads."
+  },
+  "banking/banking.s7.holds": {
+   "rows": [],
+   "why": "A survey of holds rows already hold (ChexSystems, the school's hold); its one new test is banking.s7.school's, folded there."
+  },
+  "health-billing/health-billing.1-reprice-plan-part": {
+   "rows": [
+    "health.bill",
+    "school.withdraw"
+   ],
+   "why": "Care repriced when a withdrawal cancels Yale Health back to the term's start (school.withdraw's changes), each bill's plan part written on its line and paid once (health.bill)."
+  },
+  "health-billing/health-billing.2-husky-d-kept-through-work": {
+   "rows": [
+    "health.enroll"
+   ],
+   "why": "HUSKY D kept at renewal through work, the gap health.enroll is partial on, held on a FIXTURE (the area's row text corrects its issue)."
+  },
+  "health-billing/health-billing.3-insured-paths-trace": {
+   "rows": [
+    "health.appointment",
+    "health.bill"
+   ],
+   "why": "Visits had on each cover and billed by the clock, the plan's part kept, paid once."
+  },
+  "health-eligibility/health-eligibility.1-covered-ct-status-barred": {
+   "rows": [
+    "health.enroll"
+   ],
+   "why": "Enroll gives the marketplace, not Covered Connecticut, to a noncitizen HUSKY D bars by status."
+  },
+  "health-eligibility/health-eligibility.2-work-exemptions": {
+   "rows": [
+    "health.enroll"
+   ],
+   "why": "HUSKY D's work test's exemptions at an application."
+  },
+  "health-eligibility/health-eligibility.3-notice-and-response": {
+   "rows": [
+    "health.enroll",
+    "health.month"
+   ],
+   "why": "The notice of noncompliance at an application and at a renewal (health.month), the area's row text correcting both rows' tests."
+  },
+  "health-eligibility/health-eligibility.4-look-back": {
+   "rows": [
+    "health.month"
+   ],
+   "why": "Connecticut's look-back at a renewal, which health.month runs."
+  },
+  "health-eligibility/health-eligibility.5-f1-premium-credit-2026": {
+   "rows": [
+    "tax.file"
+   ],
+   "why": "The premium tax credit figured on a filed 2026 Form 1040-NR (a FIXTURE year)."
+  },
+  "health-eligibility/health-eligibility.6-work-test-income": {
+   "rows": [
+    "health.enroll",
+    "health.month"
+   ],
+   "why": "The work test's income of any kind, at an application and a renewal. Its row text is health.dental's alone, line numbers its edit of defects-g8-4.test.ts moved: its tests aren't dental's."
+  },
+  "health-eligibility/health-eligibility.7-renewal-and-decision-notices": {
+   "rows": [
+    "health.month"
+   ],
+   "why": "The renewal's and the decision's notices, said once across a reload."
+  },
+  "school/school.repeat-room-leave": {
+   "rows": [
+    "school.request_repeat",
+    "school.request_leave"
+   ],
+   "why": "repeatRoom's leave branch: Permanent Incompletes during a medical leave, and the year's repeat asked on return."
+  },
+  "school/school.unreached-refusals": {
+   "rows": [],
+   "why": "Its evidence names a describe of sixteen tests, each a refusal of its own command; no single row."
+  },
+  "school/school.d-appeal-before-begun": {
+   "rows": [
+    "school.cancel_leave",
+    "school.appeal_leave"
+   ],
+   "why": "A dean's leave granted from the next term: appealed, not called off (the area's row text corrects both rows)."
+  },
+  "school/school.continuity": {
+   "rows": [
+    "credits",
+    "school.commencement"
+   ],
+   "why": "Earned results kept across a leave, a return, a repeat, an additional term, the degree and reloads."
+  },
+  "school/school.s6.missed-term": {
+   "rows": [
+    "standing/term evaluation",
+    "school.evaluation"
+   ],
+   "why": "Missed pieces and a missed revision counted alike by the term's warning, the forecast and the faculty's review."
+  },
+  "school/school.d-coursework-shown": {
+   "rows": [
+    "standing/term evaluation"
+   ],
+   "why": "The Evaluations panel's coursework count and Work Shown (the area's row text corrects its explanation)."
+  },
+  "school/school.s6.journey": {
+   "rows": [],
+   "why": "Its evidence is school.continuity's, named by its describe."
+  },
+  "school/school.s6.policy": {
+   "rows": [],
+   "why": "SLATE's design not presented as Yale's policy: a check across the guide, the tutorial and the notices, which no single row claims."
+  },
+  "school/school.s6.dead-ends": {
+   "rows": [
+    "school.request_repeat",
+    "school.request_extra_term"
+   ],
+   "why": "A Fail or a Permanent Incomplete that can't be repeated for names the additional term (the area's row text corrects request_repeat's explanation)."
+  },
+  "school/school.d-not-registered-hold": {
+   "rows": [
+    "school.reregister"
+   ],
+   "why": "The Not Registered notice under a hold names the sum and where to pay it."
+  },
+  "tax/tax.early_filing_notices": {
+   "rows": [
+    "tax.notice",
+    "tax.file"
+   ],
+   "why": "The IRS's bill at filing and its letters counted from the due date (the area's row text corrects both rows)."
+  },
+  "tax/tax.ct_filed_in_error": {
+   "rows": [
+    "tax.lien_dispute"
+   ],
+   "why": "Connecticut's Filed In Error drawn only where it can act."
+  },
+  "tax/tax.other_refusals": {
+   "rows": [],
+   "why": "Guards across several commands, each named in its GUARD title; no single row."
+  },
+  "tax/tax.s8.inventory": {
+   "rows": [],
+   "why": "The papers' inventory, across the documents; no single row."
+  },
+  "tax/tax.s8.passport": {
+   "rows": [
+    "documents.apply_passport"
+   ],
+   "why": "A passport renewed at the office's terms where the applicant is (the area's row text corrects its changes)."
+  },
+  "tax/tax.s8.idcard": {
+   "rows": [
+    "documents.apply_idcard"
+   ],
+   "why": "The DMV's identity card's primary document and its Not For Federal Identification mark (the area's row text corrects its reads and changes)."
+  },
+  "coverage/coverage.1-separate-totals": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.2-i-stale-claims": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.3-unresolved-rows": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.4-fold-areas": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.d-renames-chain": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.d-fixture-kind": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.d-evidence-cell": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  },
+  "coverage/coverage.d-stale-claims-walk": {
+   "rows": [],
+   "why": "The coverage area’s own item: its evidence is the pipeline’s and tools/coverage.mjs’s checks and the static tests i-stale-claims already cites, which the rows carry in their own fields (verification, acceptance, the static standard); no test of it is a row’s new evidence."
+  }
+ },
+ "fragments": {
+  "bank.cancel_new|changes": {
+   "fragment": "… current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds, settled as Close It settles (interest paid, overdraft interest and fees charged, from 2026-10-16 the overdraft interest too; in Canada fees refunded, never the interest) …",
+   "replaces": "current account: on Close It’s refusals and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, fees charged, the limit cleared; in Canada fees refunded, from 2026-10-15: until then neither)",
+   "with": "current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, overdraft interest and fees charged, the limit cleared; in Canada fees refunded, never the overdraft interest; from 2026-10-15: until then neither, and the overdraft interest from 2026-10-16: until then it was dropped)",
+   "read": "2026-10-16, against accountlife.ts bank.cancel_new: cancelRefusal still asked, settleOverdraftInterest then settleFees, the limit still cleared (overdraftLimit = undefined); the area's fragment left out cancelRefusal, the limit and the date its settling began, which the coverage area kept"
+  }
+ }
+}

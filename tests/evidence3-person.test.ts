@@ -702,6 +702,12 @@ const READ_TRUE: readonly (readonly [file: string, sentence: string, why: string
   ['tests/evidence-g13-money.test.ts', 'asked to move the statement day every morning, it moves once a cycle: the statements, their due dates, their interest and their reports still come, and at day 125 the score has gained nothing on a twin’s who never moved it', 'money’s interest: a card statement’s'],
   ['tests/evidence-g13-money.test.ts', "- `credit score`: a statement day asked to move every morning moves once a cycle, so the statements, their due dates, their interest and their reports still come, and the score moves as a twin's who never moved it; a mark seven years old leaves at the month's end on the clock and gives 25 back, which a card application then reads, and the card's screen reprices; 80% of the limit used at a due date costs ten of the month's three points, 20% none; with no card open the record ages back 2 a month on the 1st to 680, and not with a payment late in the year; a Citi loan is priced by the record, 12.10% at 735 and 12.30% at 730.", 'money’s interest: a card statement’s'],
   ['tests/evidence3-lifepapers.test.ts', "These two failed before: the CD paid out, and the CD broken, posted their interest and left the year's record at nothing.", 'money’s interest: a CD’s'],
+  // Found by the walk on 2026-10-16, in the banking area's prose of that day, and read by the coverage area: the ledger's
+  // Interest line, money's, which NAMES takes for a line on the sheet the interests had. Both in the past, with no word of
+  // the removal, since neither is about it. The second's command is written with its backticks escaped, so tools/devmap.mjs
+  // doesn't take this file for a test that issues it.
+  ['src/engine/systems/accountlife.ts', "That build posted a take as the primary account's net, the Interest line's gross and any Tax On Interest, under “Interest: <the term's name>”, a name every term at the bank shares, and nothing against the term.", 'money’s interest: the ledger’s Interest line'],
+  ['tests/remaining-banking.test.ts', "That build's Take Interest posted the primary's net, the Interest line's gross and any tax, and nothing against the term (git show a4d05745^:src/engine/systems/accountlife.ts, \u0060bank.take_term_interest\u0060), and it kept no `opened`.", 'money’s interest: the ledger’s Interest line'],
 ];
 
 /** Each sentence that names them, in each file given. */
