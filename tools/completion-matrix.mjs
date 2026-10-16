@@ -33,6 +33,12 @@
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
+// A test renamed since it was cited is followed to its last name through the audit pipeline's record of renames
+// (`inputs/renames.json`, each old title to its new one), as the audit's fold follows it. Until brief 10 (2026-10-16) a
+// result written before a rename failed here, and the only way through was to edit an earlier pass's record.
+const RENAMES = existsSync('docs/verification/pipeline/inputs/renames.json') ? JSON.parse(readFileSync('docs/verification/pipeline/inputs/renames.json', 'utf8')) : {};
+const renamed = (title) => { let t = title; for (let i = 0; i < 10 && RENAMES[t] && RENAMES[t] !== t; i++) t = RENAMES[t]; return t; };
+
 const DIR = 'docs/verification/integration-2026-10-16';
 const MD = `${DIR}/COMPLETION-MATRIX.md`;
 const JSON_OUT = `${DIR}/completion-matrix.json`;
@@ -297,6 +303,7 @@ const FIELDS = ['goal', 'entry', 'preconditions', 'reads', 'decisions', 'validat
 function titled(c) {
   const file = c.file.split(':')[0];
   if (!existsSync(file)) return `cites ${file}, which isn't there`;
+  if (c.title) c = { ...c, title: c.title.split(' > ').map(renamed).join(' > ') };
   // A title is cited as vitest names it, its describes before it (`describe > it`), and cut short anywhere with “…” or
   // "...": each piece of it, cut at those, is in the file. Until later on 2026-10-16 the title's first 60 characters had
   // to be, which no `describe > it` citation was.

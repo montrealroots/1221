@@ -216,6 +216,10 @@ known('KS-passport-fees', 'A passport renewed abroad costs its issuer’s publis
 # An area's item whose status its result doesn't give rightly, said here with why: only an item the area left reported or
 # open that was settled after, with the test that settles it.
 OVERRIDES = [
+  # Brief 09 left Arion's card year to the owner; brief 10 approved a labelled simulation where no source settles the
+  # timing, and Iceland's Act 114/2021 art. 57(4) settles what a close owes (remaining-10/arion-result.json).
+  {'id': 'banking.5.arion-card', 'status': IAV, 'why': 'Settled under brief 10, section 3: the amount and age from Arion’s price list, a close’s refund in proportion from Act 114/2021 art. 57(4), the year paid ahead as SLATE’s labelled, configurable simulation (`ARION_CARD_YEAR`), verified as specified; Arion’s real timing stays unverified',
+   'citations': [cite('tests/decisions-arion.test.ts', 'arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…')]},
   # The last pass's banking area left Germany's month's fee on a close to the owner; brief 09 implemented it from the
   # statute and the banks' price lists (remaining-09/banking-result.json, banking.1.pro-rata), so the decision is settled.
   {'id': 'banking.1.pro-rata', 'status': IAV, 'why': 'Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded',

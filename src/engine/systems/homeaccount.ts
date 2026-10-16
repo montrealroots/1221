@@ -189,7 +189,9 @@ export function feesToGraduation(config: NewSaveConfig, bank: Bank): Money {
     if (fee.ageBelow !== undefined && ageOnDate(born, at) < fee.ageBelow) continue;
     if (fee.months === 3 ? at.month % 3 === 0 : i % fee.months === 0) total += fee.amount;
   }
-  for (let i = 0; bank.card?.yearly && i < months; i += 12) {
+  // A card year charged at its end is charged first a year in (`CardYear.paid`, from brief 10, 2026-10-16); paid ahead,
+  // on the first night, as every card year was counted until then.
+  for (let i = bank.card?.year?.paid === 'behind' ? 12 : 0; bank.card?.yearly && i < months; i += 12) {
     if (bank.card.freeUnder === undefined || ageOnDate(born, monthEnd(i)) >= bank.card.freeUnder) total += bank.card.yearly;
   }
   return Math.ceil(total / 100) * 100;

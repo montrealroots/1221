@@ -36,7 +36,7 @@ import { dateKey, formatDate } from '@/engine/core/time';
 import { bankById, bankingIn } from '@/engine/content/banks';
 import type { Simulation } from '@/engine/core/simulation';
 import type { Product } from '@/engine/content/banks';
-import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, feesPostAt, savingsNotice, tierRate, earningBalance } from '@/engine/systems/banking';
+import { bankAccountsOf, introStep, rateOn, bankOf, directDeposits, feeFor, inSaveMoney, interestTaxOn, interestTaxFor, interestAllowanceLeft, monthEndAfter, monthStartOf, productOf, closesQuarterly, feesPostAt, savingsNotice, tierRate, earningBalance, cardYearWords } from '@/engine/systems/banking';
 import { savingsDebit } from '@/engine/systems/accountlife';
 import { savingsLeftThisMonth } from '@/engine/systems/cash';
 import { ACCOUNT_LIFE } from '@/engine/content/accountlife';
@@ -157,6 +157,8 @@ export function BankWorkspace() {
                   <p className="small" style={{ margin: 0 }}>No monthly fee.</p>
                 )}
                 {homeAccountLines(sim, account).map((line) => <p key={line} className="small" style={{ margin: 0 }}>{line}</p>)}
+                {/* The debit card's year (`cardYearWords`, from brief 10, 2026-10-16): until then no panel said it. */}
+                {cardYearWords(sim, account) && <p className="small" style={{ margin: 0 }}>{cardYearWords(sim, account)}</p>}
                 {product && <Fine>{product.estimate ? 'Estimate' : 'Source'}: {product.source}, {product.asOf}.{CONFIDENCE[own.confidence ?? 'H']}</Fine>}
                 {account.kind === 'savings' && (() => {
                   // Where closing it sends the money, as `closeSavings` does: the current account at its own bank, or the
@@ -446,8 +448,13 @@ function OtherCharges({ bank }: { bank: import('@/engine/content/banks').Bank })
   const refund = bankingIn(bank.iso)?.interestTax;
   const lines: string[] = [];
   if (bank.card) {
-    // Paid for the year ahead, and its days left given back on a close (`Bank.card.ahead`, from 2026-10-16).
-    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}${bank.card.ahead ? ', paid for the year ahead, and what’s left of the year is refunded when the account closes' : ''}. Source: ${bank.card.source}.`);
+    // Paid for the year ahead, and its days left given back on a close (from 2026-10-16, `Bank.card.ahead` until brief 10);
+    // charged behind, and its days used charged on a close, and where the timing is SLATE's, said to be simulated and
+    // unverified (`Bank.card.year`, from brief 10).
+    const year = bank.card.yearly !== undefined ? bank.card.year : undefined;
+    const timing = year ? (year.paid === 'ahead' ? ', paid for the year ahead, and what’s left of the year is refunded when the account closes' : ', charged at the end of each card year, and the year’s days so far charged when the account closes') : '';
+    const simulated = year?.simulated ? ` Its timing is SLATE’s simulation, unverified: ${year.simulated}.` : '';
+    lines.push(`The debit card costs ${bank.card.yearly !== undefined ? `${money(bank.card.yearly)} a year` : 'nothing a year'}${bank.card.perPurchase !== undefined ? ` and ${money(bank.card.perPurchase)} a purchase` : ''}${bank.card.freeUnder !== undefined ? `, free under ${bank.card.freeUnder}` : ''}${timing}.${simulated} Source: ${bank.card.source}.`);
   }
   if (bank.returned) lines.push(`A payment the bank returns unpaid costs ${money(bank.returned.fee)}${bank.returned.ifShortAtLeast !== undefined ? `, none on a payment under ${money(bank.returned.ifShortAtLeast)}` : ''}${bank.returned.gapDays > 1 ? `, at most once every ${bank.returned.gapDays} business days` : ''}. Source: ${bank.returned.source}.`);
   if (bank.dormant) lines.push(`An account unused for ${bank.dormant.afterYears} years costs ${money(bank.dormant.yearly)} a year${bank.dormant.belowBalance !== undefined ? ` while it holds under ${money(bank.dormant.belowBalance)}` : ''}. Source: ${bank.dormant.source}.`);

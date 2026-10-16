@@ -21,7 +21,44 @@
  * screen offers yet.
  */
 
-import type { CountryBanking, Product } from './banks';
+import type { CardYear, CountryBanking, Product } from './banks';
+
+/**
+ * SLATE SIMULATION ASSUMPTION, UNVERIFIED (brief 10, 2026-10-16): when in the year Arion charges its debit card's 950 kr.
+ * This is the one setting a later source replaces: `paid: 'behind'` is implemented and tested beside it, and `simulated`
+ * goes once a source settles the timing (docs/verification/remaining-10/arion-result.json, the research record).
+ *
+ * Confirmed, and not part of this assumption (read 2026-10-16): the amount, 950 kr a year from 24 and 0 kr at 23 and
+ * under (Gjaldskrá greiðslureikninga, Veltureikningur, 07.05.2026; Verðskrá einstaklinga 13.1 and 13.1.1, from
+ * 07.05.2026); a fee paid once a year (the official glossary of payment-account terms, B-deild no. 485/2023); paid by the
+ * account holder from the account (Almennir viðskiptaskilmálar 18.7.1.15, ch. 5), under a framework contract in the sense
+ * of Act 114/2021 (the same, 1.1); and what a close owes whatever the timing: Act 114/2021 art. 57(4), "Ef gjöld vegna
+ * greiðsluþjónustu samkvæmt rammasamningi eru greidd fyrir fram skulu þau endurgreidd notanda hlutfallslega, með tilliti
+ * til gildistíma uppsagnar", and the share of a regular payment collected after a termination likewise (Stjórnartíðindi
+ * A, 15 July 2021, in force 1 November 2021, art. 115; it carries Directive (EU) 2015/2366 as EEA Joint Committee
+ * Decision 165/2019 incorporated it, art. 113). That a debit card's yearly fee is such a fee is SLATE's reading: the Act
+ * names no card fee, and Arion's terms put its cards in the framework contract.
+ *
+ * Not confirmed, and so assumed here: whether the 950 kr pays for the card year ahead or the year past, the day it's
+ * charged, and that the share is counted in days. None of Arion's documents, the glossary or the Act says. The default,
+ * ahead, from the account's first night in the life and on the same date each year after, in Reykjavík's calendar:
+ * - it changes least of what every played life already did, the year charged on the first night of a kept account, and
+ *   the opening float counts the same years (`feesToGraduation`);
+ * - it is the form Berliner Sparkasse's price list states for its card, so one model serves both;
+ * - under art. 57(4) the holder pays for the same days held either way: the assumption moves when the krónur leave and
+ *   whether a close gives back or charges, not what a year costs.
+ * The year counted to the same date a year on, not 365 days, as "once a year" reads, so 29 February neither moves the
+ * renewal nor goes uncounted. A close in the hours between Reykjavík's midnight and New Haven's, when SLATE's night opens
+ * the next year, finds the last year used up and the next not begun: nothing back, nothing charged.
+ */
+export const ARION_CARD_YEAR: CardYear = {
+  paid: 'ahead',
+  length: 'anniversary',
+  zone: 'Atlantic/Reykjavik',
+  place: 'Reykjavík',
+  simulated: 'Arion’s price list and terms don’t say when in the year it’s charged',
+  law: 'Iceland’s Act on Payment Services, art. 57',
+};
 
 const AS_OF = '2026-09-25';
 const p = (name: string, source: string, extra: Partial<Product> = {}): Product => ({ name, source, asOf: AS_OF, ...extra });
@@ -195,7 +232,9 @@ export const THIRTEEN: readonly CountryBanking[] = [
         savings: p('Vaxtareikningur', 'landsbankinn.is rate decision, 1 September 2026: 5.79% on the lowest tier, up to 6.25%', { rate: 0.0579 }),
       },
       {
-        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, source: 'Arion price list, 23 September 2026: a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
+        // The source said "Arion price list, 23 September 2026" until brief 10 (2026-10-16), when the price list read was
+        // the one valid from 7 May 2026, its figures the same; the timing is `ARION_CARD_YEAR`'s, labelled simulated.
+        id: 'is-arion', card: { yearly: 950_00, perPurchase: 19_00, freeUnder: 24, year: ARION_CARD_YEAR, source: 'Arion’s price list and payment-account fee sheet, from 7 May 2026 (read 16 October 2026): a debit card at 950 kr a year and 19 kr a purchase, free for 23 and under' }, name: 'Arion banki', iso: 'IS', currency: 'ISK', format: 'is', code: '03', currentLedger: '26', savingsLedger: '13',
         current: p('Veltureikningur', 'arionbanki.is rate table, 24 September 2026: 0.05%; no monthly fee', { rate: 0.0005 }),
         savings: p('Vöxtur', 'arionbanki.is individuals’ rate table, 24 September 2026, Vöxtur óbundinn: 5.55% to 1 million kr, 5.65% to 5 million, 5.75% to 20 million, 5.85% over', { rate: 0.0555, tiers: [{ from: 1_000_000_00, rate: 0.0565 }, { from: 5_000_000_00, rate: 0.0575 }, { from: 20_000_000_00, rate: 0.0585 }] }),
       },
@@ -275,7 +314,8 @@ export const THIRTEEN: readonly CountryBanking[] = [
       {
         // Its Sparkassen-Card from 2026-10-16 (brief 09's follow-up): until then SLATE charged nothing for it.
         id: 'de-berliner-sparkasse', name: 'Berliner Sparkasse', iso: 'DE', currency: 'EUR', format: 'de', code: '10050000',
-        card: { yearly: 12_00, ahead: true, source: 'berliner-sparkasse.de Giro Digital fee information, 1 February 2026, and price list, 15 July 2026 (read 16 October 2026): Giro Digital includes no Sparkassen-Card, which costs €12.00 a year, paid ahead, the unused part refunded on an early close (footnote 45, § 675h(3) BGB); the month it’s charged in isn’t published' },
+        // `ahead: true` until brief 10 (2026-10-16), the same rule in `CardYear`'s words.
+        card: { yearly: 12_00, year: { paid: 'ahead', length: 365 }, source:'berliner-sparkasse.de Giro Digital fee information, 1 February 2026, and price list, 15 July 2026 (read 16 October 2026): Giro Digital includes no Sparkassen-Card, which costs €12.00 a year, paid ahead, the unused part refunded on an early close (footnote 45, § 675h(3) BGB); the month it’s charged in isn’t published' },
         current: p('Giro Digital', 'berliner-sparkasse.de, 1 February 2026: €4.95 a month', { monthlyFee: 4_95 }),
         savings: p('Tagesgeld', 'berliner-sparkasse.de: 0.50%', { rate: 0.005 }),
       },

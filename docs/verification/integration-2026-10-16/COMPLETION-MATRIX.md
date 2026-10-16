@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 485 of 544 rows in scope Implemented And Verified (89.1%); 45 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 13 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 491 of 555 rows in scope Implemented And Verified (88.4%); 51 Implemented, Verification Incomplete, 0 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 12 Decision Required, 17 Explicitly Deferred.
 
 ## Totals
 
@@ -35,20 +35,21 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: health-eligibility | 7 | 7 |  |  |  |  |  |  |
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
 | Remaining Area: tax | 18 | 11 | 7 |  |  |  |  |  |
-| Brief 09 Area: banking | 18 | 8 | 8 |  |  |  | 2 |  |
+| Brief 09 Area: banking | 18 | 9 | 8 |  |  |  | 1 |  |
 | Brief 09 Area: coverage | 14 | 10 | 3 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 21 | 21 |  |  |  |  |  |  |
 | Brief 09 Area: judge | 10 | 3 | 2 |  | 1 |  | 4 |  |
+| Brief 10 Area: arion | 11 | 11 |  |  |  |  |  |  |
 | Criteria: The Stage | 11 | 9 |  |  |  |  | 2 |  |
 | Criteria: Interpretation | 5 | 5 |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 | 16 | 6 |  |  |  | 2 | 1 |
+| Criteria: The Attributes | 25 | 15 | 7 |  |  |  | 2 | 1 |
 | Criteria: Long-Term Continuity | 3 | 2 |  |  |  |  | 1 |  |
-| Criteria: Mastery Through Play | 8 | 8 |  |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 | 7 | 1 |  |  |  |  |  |
 | Criteria: The Genres | 5 | 5 |  |  |  |  |  |  |
-| Integration | 9 | 9 |  |  |  |  |  |  |
+| Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **561** | **485** | **45** | **0** | **1** | **0** | **13** | **17** |
+| **All** | **572** | **491** | **51** | **0** | **1** | **0** | **12** | **17** |
 
 ## Life, Health And Time
 
@@ -527,7 +528,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `banking.2.take_overrun_loan` | bank.take_overrun_loan | Implemented, Verification Incomplete | owner decision | tests/remaining-09-banking.test.ts ‘banking.2: what a student keeping an account at home meets at the eight unresolved bank rows > PLAYER JOURNEY: six students… |
 | `banking.2.money_transfer` | card.money_transfer | Implemented, Verification Incomplete | owner decision | tests/scope-money.test.ts ‘card.money_transfer > PLAYER JOURNEY: a New Haven student’s Chase card offers no money transfer: The Card’s Offers draws no Move It,… |
 | `banking.4.sparkassen-card` | Follow-up 1: Berliner Sparkasse's Giro Digital debit card, €12 a year, paid ahead, refunded pro rata on closing (its footnote 45). | Implemented And Verified | implemented | tests/remaining-09-banking.test.ts ‘banking.4.sparkassen-card: Berliner Sparkasse’s Sparkassen-Card, €12.00 a year paid ahead, its days left refunded on a clos… |
-| `banking.5.arion-card` | Follow-up 2: Arion's (Iceland) yearly debit-card fee: charged ahead or behind, and what happens on closing. | Decision Required | fixed (the figure); owner decision (the… | tests/remaining-09-banking.test.ts ‘banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 ke… |
+| `banking.5.arion-card` | Follow-up 2: Arion's (Iceland) yearly debit-card fee: charged ahead or behind, and what happens on closing. | Implemented And Verified | fixed (the figure); owner decision (the… | tests/remaining-09-banking.test.ts ‘banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 ke… |
 | `banking.6.fee-schedule` | Follow-up 3: ING (“im Folgemonat”) and Commerzbank (“monatlich”) post the month's fee monthly where SLATE posts every German bank's at the … | Implemented And Verified | fixed | tests/remaining-09-banking.test.ts ‘banking.6.fee-schedule: ING’s month’s fee in the month after, Commerzbank’s at each month’s end > PLAYER JOURNEY: a Berlin-… |
 | `banking.7.redirect-close` | Follow-up 2, 1: Close It right after Have Wages Paid Here (bank.redirect_deposits) says the wages are paid into the old account, without th… | Implemented And Verified | fixed | tests/remaining-09-banking.test.ts ‘banking.7.redirect-close: Close It says when the wages stop arriving > PLAYER JOURNEY: Have Wages Paid Here pressed on Capi… |
 | `banking.8.apostrophes` | Follow-up 2, 2: credit.ts:809's “It's $…” in player-facing text, a straight apostrophe where the house writes curly ones; tests/evidence-g1… | Implemented And Verified | fixed | tests/evidence-g13-money.test.ts ‘card.statement > raises a clean record’s limit by a fifth at the first statement 182 days on, and says so; a holder who said … |
@@ -618,6 +619,22 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `judge.classes-fitness` | Movement classes and fitness: a student who attends every movement class still falls to an everyday fitness of 35, since only a workout hol… | Implemented And Verified | implemented where the Compendium puts a… | tests/fitness.test.ts ‘a class that trains the body as hard as a workout, attended > holds and builds fitness at each combat class of the spring as a workout i… |
 | `judge.coverage-row` | docs/COVERAGE-MATRIX.md line 77 says 56 scenes: correct it. | Implemented, Verification Incomplete | corrected to 65, read from SCENES, with… | docs/COVERAGE-MATRIX.md ‘the scene bank row’ (documentation) |
 
+## Brief 10 Area: arion
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `arion.AR0.research` | AR0: the debit-card fee’s timing researched, and what’s confirmed and what isn’t recorded with each source. | Implemented And Verified | verified (the research recorded: the ti… | tests/decisions-arion.test.ts ‘arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its… |
+| `arion.AR0.assumption` | AR0: the configurable SLATE simulation assumption for the timing, labelled unverified and simulated, apart from the confirmed terms. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keep… |
+| `arion.AR1.first-charge` | AR1: the first charge, its day and its amount. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keep… |
+| `arion.AR2.renewal` | AR2: the year’s renewal, once a year. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight i… |
+| `arion.AR3.close` | AR3: a close, what it owes or refunds by the rule, said before the press. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing t… |
+| `arion.AR4.refund` | AR4: the refund the rule supports. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing t… |
+| `arion.AR5.insufficient-funds` | AR5: an account that can’t cover the fee, and what’s said. | Implemented And Verified | implemented (the rule unchanged, said) | tests/decisions-arion.test.ts ‘arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETU… |
+| `arion.AR6.duplicates` | AR6: a second charge in a year, a second refund, a reload: nothing more. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing t… |
+| `arion.AR7.save-and-calendar` | AR7: save and load, and the calendar’s edges: 29 February, the year’s turn, Reykjavík’s time. | Implemented And Verified | implemented | tests/decisions-arion.test.ts ‘arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, alread… |
+| `arion.AR7.older-save` | AR7: a save from before brief 10 opens with its card year as it was charged. | Implemented And Verified | older-save compatibility kept and tested | tests/decisions-arion.test.ts ‘arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP): the Reykjavík-raise… |
+| `arion.AR8.verified-as-specified` | AR8: the lifecycle verified against the rule as specified, the real-world uncertainty kept. | Implemented And Verified | verified (against the simulation specif… | tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing t… |
+
 ## Criteria: The Stage
 
 | Row | Goal | Status | Source's Word | Evidence |
@@ -665,7 +682,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Implemented And Verified | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Decision Required | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Decision Required | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
-| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
+| `F2-A` | The advice’s first-named input is the largest realized gain, played | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Explicitly Deferred | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Implemented, Verification Incomplete | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4) |
 | `A5` | Every ability can be developed by an action the player chooses, and says what moved | Implemented, Verification Incomplete | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5) |
@@ -692,7 +709,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `MA4` | An ability read twice by one dimension is counted once, at its summed weight | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 | `MA6` | At mastery no draw moves a result off 100 | Implemented And Verified | Met | tests/engine-properties.test.ts |
 | `MA7` | Each shortfall a take has is named in words | Implemented And Verified | Met | tests/integration-mastery.test.ts |
-| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
+| `MA5` | A played mastery plan reaches 100 on every payoff tape | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
 | `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Implemented And Verified | Met | tests/integration-mastery.test.ts |
 
 ## Criteria: The Genres
@@ -714,10 +731,10 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Implemented And Verified | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
 | `INT-migration` | An older save opens, migrates and plays on | Implemented And Verified | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
 | `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Implemented And Verified | Met | tests/remaining-school-term.test.ts |
-| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented And Verified | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
-| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
-| `INT-gate` | The gate and the build on the final revision | Implemented And Verified | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Implemented, Verification Incomplete | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; d… |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
+| `INT-gate` | The gate and the build on the final revision | Implemented, Verification Incomplete | Met | docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-… |
 
 ## Known Shortfalls And Missing Tests
 
@@ -735,7 +752,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (45)
+### Implemented, Verification Incomplete (51)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -774,12 +791,18 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
 - **`judge.baseline`** (Brief 09 Area: judge): the area called it verified as it stands and cites no gate test that holds it
 - **`judge.coverage-row`** (Brief 09 Area: judge): the area called it corrected to 65, read from SCENES, with what 2026-10-16 added and cites no gate test that holds it
+- **`F2-A`** (Criteria: The Attributes): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
 - **`A4`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`A5`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`T1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`O3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F1`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
 - **`F3`** (Criteria: The Attributes): Judged by reading the code (phase-2b.md §9), not by a test the gate runs: no assertion would fail if it stopped holding
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on bcd75970, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on 7c1198a2, and what it reads has changed since (src/engine/content/banks-thirteen.ts, src/engine/content/banks.ts, src/engine/content/guide/money.ts, …): measure it again
 - **`KS-ct-idcard`** (Known Shortfalls And Missing Tests): The tax area’s sources weren’t conclusive on the term and the mailing for a non-citizen; unchanged, and no authoritative source verifies them (tax-result.json)
 - **`KS-passport-fees`** (Known Shortfalls And Missing Tests): Some fees in content/passportsabroad.ts are estimates, marked as assumptions, not verified figures (tax-result.json)
 
@@ -795,10 +818,9 @@ None.
 
 None.
 
-### Decision Required (13)
+### Decision Required (12)
 
 - **`banking.2.scope`** (Brief 09 Area: banking): What's missing: nothing to implement. Each of the eight commands works and is tested on labelled lives abroad (each row's tests), and each row's unfinished work is none (bank.cancel_new's last item, Germany's fee to the day, is implemented above). What a played life lacks is a way to reach them: a life living outside America, which the owner's scope reset of 2026-10-09 removed and the briefs forbid restoring, or a New Haven bank offering what no US bank offers (a switching service, an arranged overdraft at the five, a money transfer card, a cooling-off period, France's overrun loan). Whether …
-- **`banking.5.arion-card`** (Brief 09 Area: banking): What's missing: whether Arion charges the year's 950 kr for the year ahead or the year past. Its price list gives only the amount and the age; its terms say card fees follow the price list and come from the account, and that on its own close fees owed are taken first; the one proportional clause (4.2) is about agreed recurring payments collected after a termination. Iceland's statute couldn't be read (althingi.is refused every request). Either way the rule it carries from Directive (EU) 2015/2366 art. 55(4) gives the holder the card only to the close, but in opposite directions: paid ahead, t…
 - **`coverage09.3-unresolved`** (Brief 09 Area: coverage): [object Object] Evidence: docs/verification/remaining-09/coverage-result.json. Recommended: Not recorded
 - **`judge.ST3`** (Brief 09 Area: judge): Accept ST3′ (st3.md) in place of ST3's second clause, or keep ST3 as the record. The clause asks two results that differ by up to 0.021 (the drain the stage weighs differently, which ST3's own first clause and the piece's continuity read) to show the same tenth; no boundary of rounding can, and removing the difference would remove the stage's execution weight or stamina's drain. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded
 - **`judge.ST6`** (Brief 09 Area: judge): ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept. Evidence: docs/verification/remaining-09/judge-result.json. Recommended: Not recorded

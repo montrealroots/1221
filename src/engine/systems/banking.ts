@@ -33,9 +33,9 @@ import type { Account } from '../core/ledger';
 import { formatMoney, saveCurrency, type Money } from '../core/money';
 import type { Person } from '../domain/model';
 import { CITIES, COUNTRIES } from '../content/geography';
-import { exchange } from '../content/currency';
+import { currencyInfo, exchange } from '../content/currency';
 import { addMonths, dateKey, daysInMonth, formatDate, instantFromZoned, zonedParts, MONTH_NAMES, MS_DAY, type Instant } from '../core/time';
-import { bankById, bankingIn, banksIn, type Bank, type Product } from '../content/banks';
+import { bankById, bankingIn, banksIn, type Bank, type CardYear, type Product } from '../content/banks';
 import { OPENING } from '../content/bankopening';
 import { ageOn } from './mortality';
 import { accountNumber } from './banknumber';
@@ -591,13 +591,25 @@ export function closingFeesDue(sim: Simulation, account: Account): ClosingFees |
  */
 export function settleFees(sim: Simulation, account: Account): void {
   const due = closingFeesDue(sim, account);
-  const back = cardRefundDue(sim, account);
+  const card = cardYearDue(sim, account);
   account.feesEndedAt ??= sim.now;
-  // The debit card's year paid ahead, its days left given back first (from 2026-10-16, `cardRefundDue`).
-  if (back) {
-    sim.post({ memo: `Debit card yearly fee refunded: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: back.refund, ...(account.currency ? { native: back.refundHeld } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: -back.refund }] });
-    account.cardFeePaid = 0;
+  // The debit card's year running, settled by the rule it was opened under (`cardYearDue`, from brief 10, 2026-10-16):
+  // a year paid ahead gives its days left back first, as it did from 2026-10-16 (`cardRefundDue`, Berliner Sparkasse's
+  // alone); one charged behind is charged its days used. The year ends with the fees (`feesEndedAt`): nothing of it is
+  // settled again or charged after.
+  if (card) {
+    const signed = card.kind === 'refund' ? 1 : -1;
+    sim.post({
+      memo: card.kind === 'refund' ? `Debit card yearly fee refunded: ${account.name}` : `Debit card yearly fee to the closing day: ${account.name}`,
+      category: 'bank_fee',
+      postings: [
+        { accountId: account.id, amount: signed * card.save, ...(account.currency ? { native: signed * card.held } : {}) },
+        { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: -signed * card.save },
+      ],
+    });
   }
+  // What was paid ahead is given back, so none is left paid (and a card year charged behind had none).
+  if (account.cardYearRule !== undefined) account.cardFeePaid = 0;
   if (!due) return;
   account.feesDue = 0;
   if (account.currency) account.feesDueHeld = 0;
@@ -605,41 +617,146 @@ export function settleFees(sim: Simulation, account: Account): void {
   sim.post({ memo: `Closing fees: ${account.name}`, category: 'bank_fee', postings: [{ accountId: account.id, amount: -due.total, ...(due.totalHeld !== undefined ? { native: -due.totalHeld } : {}) }, { accountId: sim.nominalAccount('expense', 'Bank Fees').id, amount: due.total }] });
 }
 
-/**
- * The part of a debit card's yearly fee a close gives back, where the bank charges it for the year ahead
- * (`Bank.card.ahead`, from 2026-10-16): Berliner Sparkasse refunds what was paid ahead pro rata on an early close (its
- * price list's footnote 45, § 675h(3) BGB's second sentence). The year is the 365 days from the charge, as the day's loop
- * charges it (`systems/lending.ts`); the days counted used run from the charge's day through the closing day, as the
- * month's fee counts them (`closingFeesDue`), and the rest of the 365 come back, rounded half up, in the bank's own money
- * first. Nothing where it was free (an age the bank spares) or isn't paid ahead, or once given back (`cardFeePaid` set to
- * nothing by `settleFees`).
- */
-export function cardRefundDue(sim: Simulation, account: Account): { refund: Money; refundHeld: Money; paid: Money; left: number } | undefined {
-  const bank = account.bankId ? bankById(account.bankId) : undefined;
-  const paid = account.cardFeePaid ?? 0;
-  if (!bank?.card?.ahead || account.kind !== 'checking' || account.cardFeeAt === undefined || paid <= 0) return undefined;
-  const day = (at: Instant) => { const p = zonedParts(at, sim.homeZone); return Date.UTC(p.year, p.month - 1, p.day) / MS_DAY; };
-  const left = 365 - (day(sim.now) - day(account.cardFeeAt) + 1);
-  if (left <= 0) return undefined;
-  const refundHeld = Math.floor((2 * paid * left + 365) / (2 * 365));
-  return { refund: inSaveMoney(sim, refundHeld, bank.currency), refundHeld, paid, left };
+/** A bank's debit card year, where it charges a yearly fee for the card (`Bank.card.year`, from brief 10, 2026-10-16). */
+export function cardYearOf(bank: Bank | undefined): CardYear | undefined {
+  return bank?.card?.yearly !== undefined ? bank.card.year : undefined;
+}
+
+/** A moment's date in a zone, as a count of days, so two dates subtract to the days between them. */
+function dayIn(at: Instant, zone: string): number {
+  const p = zonedParts(at, zone);
+  return Date.UTC(p.year, p.month - 1, p.day) / MS_DAY;
 }
 
 /**
- * What closing now would charge of the fees, and give back of a debit card's year paid ahead, in words, said under Close
- * It and Cancel It before either is pressed, from `closingFeesDue`'s and `cardRefundDue`'s figures (from 2026-10-16:
- * until then neither said a figure unless it refused). Nothing where the account's bank charges none at closing.
+ * The card year running on an account (`CardYear`): its first day and the day the next begins, as `dayIn` counts them in
+ * the year's calendar, and its days. `'anniversary'`: the same date a year on, or that month's last day where the date
+ * doesn't exist, so a year from 25 August 2027 is 366 days and one from 29 February 2028 ends on 28 February 2029; 365:
+ * 365 days on.
+ */
+export function cardYearSpan(sim: Simulation, account: Account, year: CardYear): { from: number; next: number; days: number } | undefined {
+  if (account.cardFeeAt === undefined) return undefined;
+  const zone = year.zone ?? sim.homeZone;
+  const from = dayIn(account.cardFeeAt, zone);
+  const p = zonedParts(account.cardFeeAt, zone);
+  const next = year.length === 365 ? from + 365 : Date.UTC(p.year + 1, p.month - 1, Math.min(p.day, daysInMonth(p.year + 1, p.month))) / MS_DAY;
+  return { from, next, days: next - from };
+}
+
+/**
+ * Whether the card year running has ended by now, so tonight opens the next: its next first day reached in its calendar;
+ * or, for a year of 365 days, 365 days since it began, to the moment, as the day's loop has charged it since 2026-10-16.
+ */
+export function cardYearOver(sim: Simulation, account: Account, year: CardYear): boolean {
+  if (account.cardFeeAt === undefined) return true;
+  if (year.length === 365) return sim.now - account.cardFeeAt >= 365 * MS_DAY;
+  return dayIn(sim.now, year.zone ?? sim.homeZone) >= cardYearSpan(sim, account, year)!.next;
+}
+
+/** The card's yearly fee for a person today, in the bank's money: none under the age the bank spares. */
+export function cardFeeFor(sim: Simulation, person: Person | undefined, bank: Bank): Money {
+  const card = bank.card;
+  if (!card?.yearly) return 0;
+  return card.freeUnder !== undefined && person && ageOn(sim, person, sim.now) < card.freeUnder ? 0 : card.yearly;
+}
+
+/** What a close settles of the debit card's year running (`cardYearDue`). */
+export interface CardYearDue {
+  /** Given back, of a year paid ahead, or charged, of one charged behind. */
+  kind: 'refund' | 'charge';
+  /** In the bank's own money, and in the save's. */
+  held: Money;
+  save: Money;
+  /** The year's fee it's a share of, in the bank's money. */
+  fee: Money;
+  /** The days it's for, left of the year after the closing day (a refund) or used of it, the closing day among them (a charge), of the year's days. */
+  days: number;
+  of: number;
+}
+
+/**
+ * What closing now settles of the debit card's year running (from brief 10, 2026-10-16), by the rule the year was opened
+ * under (`Account.cardYearRule`): of a year paid ahead, the fee paid × the days left after the closing day ÷ the year's
+ * days comes back; of one charged behind, the year's fee × the days used, the closing day among them, ÷ the year's days is
+ * charged, at the age the price list reads on the closing day. The days are dates in the year's calendar (`CardYear.zone`,
+ * Reykjavík's for Arion), and the share is rounded half up once to the currency's smallest written unit, the cent or the
+ * whole króna. Nothing once the account's fees have ended (`feesEndedAt`), where nothing was paid ahead, or once the year
+ * is used up. Until then `cardRefundDue` gave back Berliner Sparkasse's year alone, its year 365 days in New Haven's
+ * calendar, to the cent: the same figures for it.
+ */
+export function cardYearDue(sim: Simulation, account: Account): CardYearDue | undefined {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const year = cardYearOf(bank);
+  if (!bank || !year || account.kind !== 'checking' || account.feesEndedAt !== undefined || account.cardYearRule === undefined) return undefined;
+  const span = cardYearSpan(sim, account, year);
+  if (!span) return undefined;
+  const used = Math.min(span.days, dayIn(sim.now, year.zone ?? sim.homeZone) - span.from + 1);
+  const unit = 10 ** (2 - currencyInfo(bank.currency).decimals);
+  const share = (fee: Money, days: number) => Math.floor((2 * fee * days + span.days * unit) / (2 * span.days * unit)) * unit;
+  if (account.cardYearRule === 'ahead') {
+    const paid = account.cardFeePaid ?? 0;
+    const left = span.days - used;
+    if (paid <= 0 || left <= 0) return undefined;
+    const held = share(paid, left);
+    return { kind: 'refund', held, save: inSaveMoney(sim, held, bank.currency), fee: paid, days: left, of: span.days };
+  }
+  const fee = cardFeeFor(sim, sim.universe.people[account.ownerId], bank);
+  if (fee <= 0 || used <= 0) return undefined;
+  const held = share(fee, used);
+  return { kind: 'charge', held, save: inSaveMoney(sim, held, bank.currency), fee, days: used, of: span.days };
+}
+
+/** A day count in a zone's calendar, written as the date it is. */
+function dayWords(day: number): string {
+  return formatDate(day * MS_DAY + 12 * 3_600_000, 'UTC');
+}
+
+/**
+ * The debit card's year, said on its account's panel (from brief 10, 2026-10-16): its fee and the age the bank spares,
+ * the card year running and when the next is charged, what a close does, what an account that can't cover the fee comes
+ * to, and, where the timing is SLATE's, that it's simulated and unverified. Until then nothing on an account's panel said
+ * the card's year, and Other Charges only for the primary account's bank.
+ */
+export function cardYearWords(sim: Simulation, account: Account): string | undefined {
+  const bank = account.bankId ? bankById(account.bankId) : undefined;
+  const year = cardYearOf(bank);
+  if (!bank || !year || account.kind !== 'checking' || account.closedAt !== undefined || account.feesEndedAt !== undefined) return undefined;
+  const own = (x: Money) => formatMoney(x, bank.currency);
+  const fee = bank.card!.yearly!;
+  const said = [`Its debit card costs ${own(fee)} a year${bank.card!.freeUnder !== undefined ? ` from ${bank.card!.freeUnder}, nothing at ${bank.card!.freeUnder - 1} and under` : ''}.`];
+  const span = cardYearSpan(sim, account, year);
+  if (span && account.cardYearRule) {
+    const paid = account.cardFeePaid ?? 0;
+    said.push(account.cardYearRule === 'ahead'
+      ? ` This card year began ${dayWords(span.from)}, ${paid > 0 ? `paid ahead with ${own(paid)}` : 'nothing paid for it'}, and runs to ${dayWords(span.next - 1)}; the next is charged ${dayWords(span.next)}.`
+      : ` This card year began ${dayWords(span.from)} and runs to ${dayWords(span.next - 1)}; its fee is charged at its end, ${dayWords(span.next)}.`);
+  } else said.push(year.paid === 'ahead' ? ' The first year is charged ahead, tonight.' : ' The first year begins tonight, its fee charged at its end.');
+  said.push((account.cardYearRule ?? year.paid) === 'ahead' ? ' Closing the account gives back the days of the year left.' : ' Closing the account charges the days of the year used.');
+  if (year.place) said.push(` Its days are counted by ${year.place}’s calendar.`);
+  said.push(' An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.');
+  if (year.simulated) said.push(` Its timing is SLATE’s simulation, unverified: ${year.simulated}.`);
+  return said.join('');
+}
+
+/**
+ * What closing now would charge of the fees, and give back or charge of a debit card's year, in words, said under Close
+ * It and Cancel It before either is pressed, from `closingFeesDue`'s and `cardYearDue`'s figures (from 2026-10-16:
+ * until then neither said a figure unless it refused; until brief 10 the card's refund alone, `cardRefundDue`'s, and
+ * nothing of the law or of a timing SLATE simulates). Nothing where the account's bank charges none at closing.
  */
 export function closingFeesWords(sim: Simulation, account: Account, doing: 'Closing' | 'Canceling' = 'Closing'): string | undefined {
   const due = closingFeesDue(sim, account);
-  const back = cardRefundDue(sim, account);
+  const card = cardYearDue(sim, account);
   const cur = account.currency ?? saveCurrency(sim.universe);
   const own = (save: Money, held: Money | undefined) => formatMoney(held ?? save, cur);
   const bank = account.bankId ? bankById(account.bankId) : undefined;
-  const refund = back && bank ? `refunds ${balanceText(sim, account, back.refund, account.currency ? back.refundHeld : undefined)} of its debit card’s ${own(inSaveMoney(sim, back.paid, bank.currency), back.paid)} for the year, paid ahead: the ${back.left} of its 365 days left` : undefined;
+  const year = cardYearOf(bank);
+  // The card year's share in its words, and, where it's SLATE's, the law that sizes it and the label (from brief 10).
+  const share = card && bank ? `${card.kind === 'refund' ? 'refunds' : 'charges'} ${balanceText(sim, account, card.save, account.currency ? card.held : undefined)} of its debit card’s ${own(inSaveMoney(sim, card.fee, bank.currency), card.fee)} for the year, ${card.kind === 'refund' ? `paid ahead: the ${card.days} of its ${card.of} days left` : `charged at its end: the ${card.days} of its ${card.of} days so far`}` : undefined;
+  const after = card && bank && year ? `${year.law ? ` ${year.law}, ${card.kind === 'refund' ? 'gives a fee paid ahead back in proportion' : 'owes a regular fee only in proportion to the close'}.` : ''}${year.simulated ? ` Its timing is SLATE’s simulation, unverified: ${year.simulated}.` : ''}` : '';
   const fees = feesWords(sim, account, due, doing, own);
-  if (!fees) return refund ? `${doing} it now ${refund}.` : undefined;
-  return refund ? `${fees} It ${refund}.` : fees;
+  if (!fees) return share ? `${doing} it now ${share}.${after}` : undefined;
+  return share ? `${fees} It ${share}.${after}` : fees;
 }
 
 /** `closingFeesWords`'s sentence on the fees, or nothing. */
@@ -675,8 +792,10 @@ export function owingWords(items: readonly (readonly [string, string])[]): strin
  * money: `closingFeesDue`'s total, this month's fee to the day (from 2026-10-16: until then the whole month).
  */
 export function closingFeesOf(sim: Simulation, account: Account): Money {
-  // Less a debit card's year paid ahead given back (`cardRefundDue`, from 2026-10-16), so a refusal reads what's owed net.
-  return (closingFeesDue(sim, account)?.total ?? 0) - (cardRefundDue(sim, account)?.refund ?? 0);
+  // Less a debit card's year paid ahead given back, or with one charged behind's days used (`cardYearDue`, from brief 10,
+  // 2026-10-16; from earlier that day the refund alone, `cardRefundDue`), so a refusal reads what's owed net.
+  const card = cardYearDue(sim, account);
+  return (closingFeesDue(sim, account)?.total ?? 0) + (card ? (card.kind === 'charge' ? card.save : -card.save) : 0);
 }
 
 /** Pays what an account has built up, now, as a bank does when it closes one. */

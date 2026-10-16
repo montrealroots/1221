@@ -115,6 +115,38 @@ export interface Product {
   asOf: string;
 }
 
+/**
+ * A debit card's year (from brief 10, 2026-10-16): when its yearly fee is charged and what a close does with the card year
+ * running. Both values settle a close the way Iceland's Act on Payment Services no. 114/2021 art. 57(4) and BGB § 675h(3)
+ * do, each carrying Directive (EU) 2015/2366 art. 55(4): a fee paid ahead comes back in proportion, and a regular fee
+ * owed after is owed only in proportion to the close.
+ *
+ * - `paid: 'ahead'`: each charge pays for the card year it opens, the first on the account's first night in the life; on
+ *   a close the days of that year left after the closing day come back.
+ * - `paid: 'behind'`: each charge pays for the card year it ends, the first year running from the account's first night
+ *   in the life; on a close the days of that year used, the closing day among them, are charged.
+ * - `length`: 365 days from the year's start (Berliner Sparkasse's, as brief 09 set it), or `'anniversary'`, to the same
+ *   date a year on in `zone`'s calendar, the month's last day where that date doesn't exist (a year from 29 February
+ *   renews on 28 February), so a year that holds 29 February is 366 days.
+ * - `zone`: the calendar the year and a close's days are counted in, the bank's own, and `place`, the town the screen
+ *   names it by; the save's home zone where absent.
+ * - `simulated`: where the bank's documents don't say when the year is charged, why, in the words the screen and the
+ *   guide say after "Its timing is SLATE’s simulation, unverified:"; absent where a source settles it.
+ * - `law`: the statute the screen names for a close's share, where one was read.
+ *
+ * A share is the fee × the days ÷ the card year's days, rounded half up once, to the bank's currency's smallest written
+ * unit (the cent; the whole króna). Each card year is settled by the value it was opened under (`Account.cardYearRule`),
+ * so changing a bank's `paid` never charges or refunds a year twice.
+ */
+export interface CardYear {
+  paid: 'ahead' | 'behind';
+  length: 365 | 'anniversary';
+  zone?: string;
+  place?: string;
+  simulated?: string;
+  law?: string;
+}
+
 export interface Bank {
   id: string;
   name: string;
@@ -145,13 +177,13 @@ export interface Bank {
   /** A fee for a payment the bank returns unpaid, no more often than every so many business days, and none on a small one. */
   returned?: { fee: Money; gapDays: number; ifShortAtLeast?: Money; source: string };
   /**
-   * The debit card's fees: a year's, and one a purchase; free under an age. `ahead`: the year's fee is paid for the 365
-   * days from when it's charged, the first on the account's first night, and on any close the days of that year left are
-   * refunded pro rata (from 2026-10-16: Berliner Sparkasse's price list, its footnote 45). Absent, it's charged on each
-   * anniversary of the account and nothing comes back on a close, which is how Arion's was charged before, and is still:
-   * its terms say neither.
+   * The debit card's fees: a year's, and one a purchase; free under an age, read on the day a fee is charged. `year`:
+   * when the year's fee is charged and what a close does with the card year running (`CardYear`), given wherever `yearly`
+   * is. Until brief 10 (2026-10-16) it was `ahead`, Berliner Sparkasse's alone, and a card without it, Arion's, was
+   * charged on each anniversary of the account's opening or its last charge, 365 days apart, and nothing came back or was
+   * charged on a close (docs/verification/remaining-10/arion-result.json).
    */
-  card?: { yearly?: Money; perPurchase?: Money; freeUnder?: number; ahead?: boolean; source: string };
+  card?: { yearly?: Money; perPurchase?: Money; freeUnder?: number; year?: CardYear; source: string };
   /** A fee on an account nobody has used in years, below a balance where the bank says so. */
   dormant?: { yearly: Money; afterYears: number; belowBalance?: Money; source: string };
   /** A fee for a month with too few transactions, spared where wages are paid in. */

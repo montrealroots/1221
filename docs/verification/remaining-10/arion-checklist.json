@@ -1,0 +1,168 @@
+{
+  "key": "arion",
+  "on": "2026-10-16",
+  "brief": "docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt, section 3 (\"Arion: Resolve The Unknown Without Inventing A Fact\"), to the criteria AR0 to AR8 of docs/verification/decisions-2026-10-16/criteria.md section 3, as docs/verification/decisions-2026-10-16/prompts/arion.md gives them.",
+  "against": "f17ae369 (claude/peaceful-hamilton-59zdbb), the tree clean, read before any code of this area changed. A copy of that tree, node_modules linked, is the scratchpad's arion/base, where the reproductions below were run (arion/probe-before.txt).",
+  "writtenBefore": "This checklist was written after the research (AR0, which reads and changes nothing in the repository) and before the first change to code, content, a test or a tool.",
+  "reachability": "Every new life is made at Yale in New Haven. Creation's Before Yale keeps an account at a bank in the country the student lived in (systems/homeaccount.ts): a Reykjavík-raised student keeps Arion's Veltureikningur, opened before Yale, its debit card charged on the life's first night, 25 August 2026 at midnight in New Haven (04:00 in Reykjavík), and Close It (bank.close_current) closes it once its savings are closed and Chase is primary. So the first charge, the renewals and a close are reached in play. An Arion account opened in the life is reached only by a quick-save life in Iceland (a FIXTURE), as no played life opens an Icelandic account.",
+  "research": {
+    "searched": "2026-10-16, a focused search: Arion's price list, payment-account fee sheet, general terms (which carry its card terms), its debit-card pages in Icelandic and English, the official glossary of payment-account terms; Iceland's Act on Payment Services no. 114/2021 from the Official Journal (althingi.is still answers 403, and web.archive.org is blocked by this container's egress policy); the amending acts the Official Journal's search finds for 2022 to 2026; the EEA incorporation of Directive (EU) 2015/2366 (EFTA's EEA-Lex); the Directive's art. 55 (legislation.gov.uk; EUR-Lex answered 202 with a challenge). Every source and what it says is in the result, arion-result.json, research.",
+    "confirmed": [
+      "The amount and the age: 950 kr a year from 24, 0 kr at 23 and under (Arion's Gjaldskrá greiðslureikninga, Veltureikningur, 07.05.2026; Verðskrá einstaklinga 13.1 and 13.1.1, valid from 07.05.2026; its debit-card pages).",
+      "That it's a fee paid once a year (the official glossary, B-deild no. 485/2023: 'Gjald sem viðskiptavinur greiðir reikningsveitanda einu sinni á ári fyrir debetkort').",
+      "Who pays and from where: the account holder, debited from the account holder's account (Arion's general terms 18.7.1.15, ch. 5).",
+      "That Arion's card terms are a framework contract under Act 114/2021 (its terms 1.1), and that its separate debit-card terms ceased with the general terms (ch. 11).",
+      "What a close owes whatever the timing, for a consumer: Act 114/2021 art. 57(4): regular payments are collected after a termination in proportion to its effective date, and fees paid in advance are refunded in proportion; art. 57(2), termination free of charge; art. 41, derogation only where the user isn't a consumer; art. 113, it implements Directive (EU) 2015/2366 as incorporated by EEA Joint Committee Decision 165/2019 of 14 June 2019; art. 115, in force 1 November 2021."
+    ],
+    "notConfirmed": [
+      "Whether the 950 kr pays for the card year ahead or the year past, and on what day it's charged: none of Arion's documents read, nor the glossary, nor the Act, says.",
+      "How Arion counts the proportional share (days, months), and whether the year runs from the card's issue, the account's opening or a fixed date.",
+      "Whether art. 57 has been amended since 2021: the consolidated text couldn't be read; the amending acts the Official Journal's search found don't touch it."
+    ]
+  },
+  "rule": "The Act settles what a close owes whatever the timing (art. 57(4)), so that part is the source's. The timing isn't settled, so the brief's labelled, configurable SLATE simulation assumption: ARION_CARD_YEAR (content/banks-thirteen.ts), default 'ahead': each charge pays for the card year it opens, the first on the account's first night in the life, renewed on the same date a year on in Reykjavík's calendar; on a close the days of that card year left come back in proportion, rounded half up to the whole króna, against Bank Fees. 'behind' (each charge pays for the year it ends, and a close charges the days used) is implemented and tested as the setting's other value, so a later source replaces it by one word. Each card year is settled by the rule it was opened under (Account.cardYearRule), so changing the setting never charges or refunds a year twice.",
+  "items": [
+    {
+      "id": "arion.AR0.research",
+      "item": "AR0: the debit-card fee’s timing researched, and what’s confirmed and what isn’t recorded with each source.",
+      "requirement": "AR0 Research, recorded: the fee's timing searched for in Arion's own documents and in law that binds it; the record says exactly what is confirmed, with the source and date, and what isn't; no statute cited for what a statute doesn't say.",
+      "currentBehavior": "Brief 09 read the price list and the general terms; Act 114/2021 couldn't be read (althingi.is 403); the timing and the close were left to the owner (banking.5.arion-card, Decision Required).",
+      "plan": "Read Arion's documents and the Act from the Official Journal (island.is/stjornartidindi), its incorporation (EEA-Lex) and the Directive's article (legislation.gov.uk); record each source's address, date and words, confirmed and not.",
+      "acceptance": "The result's research record: every source with its address, the date read (2026-10-16), what it confirms and what it doesn't; the words quoted. Measured by reading, not by a test.",
+      "affectedSystems": [],
+      "classification": "research (reads and changes nothing in the repository)"
+    },
+    {
+      "id": "arion.AR0.assumption",
+      "item": "AR0: the configurable SLATE simulation assumption for the timing, labelled unverified and simulated, apart from the confirmed terms.",
+      "requirement": "AR0: if no source settles the timing, a SLATE simulation assumption is chosen, documented, labelled unverified and simulated on the screen and in the guide, kept apart from the confirmed amount and age, and configurable, so later evidence replaces it safely.",
+      "currentBehavior": "content/banks-thirteen.ts gives Arion's card { yearly: 950_00, perPurchase: 19_00, freeUnder: 24 } and no timing; lending.ts charges it on each anniversary of the account's opening or its last charge, 365 days apart; nothing on the screen or in the guide says when or what a close does (probe-before.txt: the account panel and Close It say nothing of the card's year; Other Charges is drawn only for the primary bank).",
+      "plan": "Bank.card.year (CardYear: paid ahead or behind, its length, its zone, and the simulated words); ARION_CARD_YEAR the one setting; Berliner Sparkasse's year written in the same shape from its source (unchanged behavior). The words, labelled 'SLATE's simulation, unverified', on the account's panel, under Close It, in Other Charges and in the guide's A Bank At Home, each beside the confirmed amount and age said apart.",
+      "acceptance": "tests/decisions-arion.test.ts: the account's panel, Close It's line and the guide say the amount and age as Arion's, and the timing as SLATE's simulation, unverified, in those words; a FIXTURE with the setting at 'behind' charges the year at its end and a close the days used, and a save's year opened under one value is settled by it after the setting changes.",
+      "affectedSystems": [
+        "content/banks.ts (Bank.card.year, CardYear)",
+        "content/banks-thirteen.ts (ARION_CARD_YEAR, Arion, Berliner Sparkasse)",
+        "ui/workspaces/BankWorkspace.tsx (the account panel, Other Charges)",
+        "systems/banking.ts (cardYearWords, closingFeesWords)",
+        "content/guide/money.ts (A Bank At Home)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR1.first-charge",
+      "item": "AR1: the first charge, its day and its amount.",
+      "requirement": "AR1: the first charge, its day and its amount, 950 kr exactly, 0 under 24.",
+      "currentBehavior": "A Reykjavík-raised student born in 2000 keeping Arion: 950 kr (−95,000 in the account's own figure, −$6.88 in the save's) on 25 August 2026 at midnight in New Haven; one born in 2006 nothing (probe-before.txt; tests/remaining-09-banking.test.ts banking.5). An account opened in the life is first charged 365 days after opening (tests/bank-fees.test.ts).",
+      "plan": "Under 'ahead' the first charge on the account's first night in the life, for a kept account and an opened one alike.",
+      "acceptance": "PLAYER JOURNEY: 950 kr exactly on 25 August 2026 at 00:00 New Haven, 04:00 Reykjavík, its dollars SLATE's rate; none at 20; FIXTURE: a Mosfellsbær life's opened account charged its first night.",
+      "affectedSystems": [
+        "systems/lending.ts (the day loop, cardYearNight)",
+        "systems/banking.ts (cardYearOver, cardFeeFor)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR2.renewal",
+      "item": "AR2: the year’s renewal, once a year.",
+      "requirement": "AR2: the year's renewal, once a year.",
+      "currentBehavior": "Every 365 days from the last charge: 25 August 2027, then 24 August 2028, a day early across 29 February 2028 (probe-before.txt).",
+      "plan": "Renewed on the same date a year on in Reykjavík's calendar: 25 August 2027 and 25 August 2028.",
+      "acceptance": "PLAYER JOURNEY: three charges to 1 September 2028, 25 August each year; none on 24 August 2028; the same whether the clock jumps or runs a day at a time with a reload on the eve.",
+      "affectedSystems": [
+        "systems/lending.ts (cardYearNight)",
+        "systems/banking.ts (cardYearSpan, cardYearOver)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR3.close",
+      "item": "AR3: a close, what it owes or refunds by the rule, said before the press.",
+      "requirement": "AR3: a close, what it owes or refunds by the rule, and what's said before the press.",
+      "currentBehavior": "Close It on 14 October 2026 posts nothing for the card and says nothing of it (probe-before.txt).",
+      "plan": "settleFees settles the card year by its rule; closingFeesWords says it under Close It first, with the label.",
+      "acceptance": "PLAYER JOURNEY: on Wednesday 14 October 2026 Close It's line says 817 kr back (950 × 314 / 365 = 817.26), 51 days used; pressed, posted once against Bank Fees, balanced, in krónur exactly.",
+      "affectedSystems": [
+        "systems/banking.ts (settleFees, cardYearDue, closingFeesWords, closingFeesOf)",
+        "systems/bankmoves.ts (Close It, through settleFees)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR4.refund",
+      "item": "AR4: the refund the rule supports.",
+      "requirement": "AR4: any refund the rule supports.",
+      "currentBehavior": "None.",
+      "plan": "The days of the card year left after the closing day (Reykjavík's date), of the card year's days (365 or 366), rounded half up to the whole króna once.",
+      "acceptance": "Figures worked by hand in the tests: 14 October 2026, 29 February 2028 (189 days used of 366, 459 kr), New Year's Eve at 9 PM in New Haven (1 January in Reykjavík: 130 used, 612 kr, not 614).",
+      "affectedSystems": [
+        "systems/banking.ts (cardYearDue)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR5.insufficient-funds",
+      "item": "AR5: an account that can’t cover the fee, and what’s said.",
+      "requirement": "AR5: insufficient funds: what SLATE's fees do on an account that can't cover them, said.",
+      "currentBehavior": "charge() posts the whole fee whatever the account holds; Arion's account goes below zero by the shortfall, under its overdraft rule (15.75%, 60 days to the bank's close); nothing says so for the card.",
+      "plan": "Unchanged rule, said: the account's panel says an account that can't cover the year is charged all the same and goes below zero by what's short; Close It is refused while it's below zero, and once paid in the close refunds the year's days left.",
+      "acceptance": "PLAYER JOURNEY (TEST SETUP: the account brought to 300 kr on the eve): the renewal takes 950 kr, −650 kr; the panel's words; Close It refused; paid in, the close refunds.",
+      "affectedSystems": [
+        "systems/lending.ts (charge)",
+        "systems/banking.ts (cardYearWords)",
+        "systems/bankmoves.ts (closeRefusal)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR6.duplicates",
+      "item": "AR6: a second charge in a year, a second refund, a reload: nothing more.",
+      "requirement": "AR6: duplicate attempts: a second charge in a year, a second refund, a reload: nothing more.",
+      "currentBehavior": "One charge per 365 days; no refund to duplicate.",
+      "plan": "The charge keyed on the card year (cardFeeAt, cardYearRule); settleFees ends the card year with the fees (feesEndedAt), so nothing settles or charges twice; a closed or settled account charged no year after.",
+      "acceptance": "PLAYER JOURNEY: Close It pressed twice (refused the second time), a reload, the clock run past the next anniversary: one refund, no further charge; GUARD: settleFees twice gives one refund; the clock asked forward repeatedly within a day charges once.",
+      "affectedSystems": [
+        "systems/lending.ts (cardYearNight)",
+        "systems/banking.ts (settleFees, cardYearDue)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR7.save-and-calendar",
+      "item": "AR7: save and load, and the calendar’s edges: 29 February, the year’s turn, Reykjavík’s time.",
+      "requirement": "AR7: save and load, and the calendar's edges (29 February, the year's turn, Reykjavík's time). Krónur exact, balanced against Bank Fees, every posting a sum of postings.",
+      "currentBehavior": "A 365-day year, counted in New Haven's calendar; the renewal drifts to 24 August 2028.",
+      "plan": "The card year and a close's days in Reykjavík's calendar; a year that holds 29 February counted 366 days; one jump against day by day with a reload.",
+      "acceptance": "Tests named in AR2 and AR4; every posting's amounts sum to zero; breaches 0; one jump and day by day give the same postings.",
+      "affectedSystems": [
+        "systems/banking.ts (cardYearSpan, dayIn)"
+      ],
+      "classification": "required reachable behavior"
+    },
+    {
+      "id": "arion.AR7.older-save",
+      "item": "AR7: a save from before brief 10 opens with its card year as it was charged.",
+      "requirement": "AR7 (save and load), and the brief's 'save/load and relevant migrations': a save from before this change opens with its card year as it was charged.",
+      "currentBehavior": "An Arion account in a save from before keeps cardFeeAt and no cardFeePaid: under a new rule its year wouldn't know it had been paid.",
+      "plan": "A one-time step on opening (ONCE_ON_OPENING, `cardYears`): an Arion year charged under the old rule is taken as paid ahead with what it took; an account not yet charged has the year from its opening taken as settled, as the old rule had charged nothing, its next charge on the opening's anniversary; Berliner Sparkasse's years marked ahead as they were.",
+      "acceptance": "OLDER SAVE (TEST SETUP): a save written as before opens with nothing posted and its year paid ahead; a close then refunds its days left; reopened, the step doesn't run again.",
+      "affectedSystems": [
+        "engine/index.ts (ONCE_ON_OPENING, cardYears)",
+        "core/ledger.ts (Account.cardYearRule)"
+      ],
+      "classification": "older-save compatibility"
+    },
+    {
+      "id": "arion.AR8.verified-as-specified",
+      "item": "AR8: the lifecycle verified against the rule as specified, the real-world uncertainty kept.",
+      "requirement": "AR8 Verified as specified: the lifecycle verified against the rule as written in the criteria and in the code; the real-world uncertainty stays in the record and on the screen.",
+      "currentBehavior": "Decision Required.",
+      "plan": "The result says the lifecycle is verified against ARION_CARD_YEAR as specified, and keeps the timing's real-world question open, with what would settle it.",
+      "acceptance": "Every AR1 to AR7 test passing, every mutation killed, typecheck, lint and the gate's checks this area touches exit 0.",
+      "affectedSystems": [],
+      "classification": "verification"
+    }
+  ],
+  "mutations": "Run in copies under the scratchpad's arion/, never in the tree: the refund removed; the year counted 365 in a leap year; the days counted in New Haven's calendar; the rounding to the cent; the second settling not guarded; the setting's 'behind' value ignored; the older-save step not run; the closed account still charged.",
+  "scope": "Decision 4 (the twelve rows out of a player's reach) untouched. No removed system restored. Files: content/banks.ts, content/banks-thirteen.ts, core/ledger.ts, systems/lending.ts, systems/banking.ts, systems/homeaccount.ts, engine/index.ts (the step), ui/workspaces/BankWorkspace.tsx, content/guide/money.ts, tests.",
+  "shape": "The items were written with each criterion clause under \"criterion\"; after the first code change their fields were renamed to brief 09's shape, which tools/completion-matrix.mjs reads (\"requirement\" for \"criterion\", with \"item\", \"affectedSystems\" and \"classification\" added). No plan, acceptance or current behavior changed."
+}

@@ -2579,6 +2579,17 @@
  ],
  "overrides": [
   {
+   "id": "banking.5.arion-card",
+   "status": "Implemented And Verified",
+   "why": "Settled under brief 10, section 3: the amount and age from Arion’s price list, a close’s refund in proportion from Act 114/2021 art. 57(4), the year paid ahead as SLATE’s labelled, configurable simulation (`ARION_CARD_YEAR`), verified as specified; Arion’s real timing stays unverified",
+   "citations": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…"
+    }
+   ]
+  },
+  {
    "id": "banking.1.pro-rata",
    "status": "Implemented And Verified",
    "why": "Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded",
