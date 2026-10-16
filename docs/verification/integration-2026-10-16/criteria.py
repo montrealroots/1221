@@ -7,7 +7,7 @@ scratchpad of the session that wrote it, and criteria.json could not be made aga
 
 Run from the repository's root; then node tools/completion-matrix.mjs and --check.
 """
-import json, sys
+import json, os, re, sys
 D = 'docs/verification/integration-2026-10-16'
 AG = 'docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md'
 STC = 'docs/verification/stage-2026-10-16/criteria.md'
@@ -180,6 +180,48 @@ for r in rows:
         r['failure'] = f"{r['failure']}; brief 09 ({r['measured']['commit']}): {FIG09[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {D}/runs-09/README.md"
         r['citations'] = r['citations'] + [{'file': f'{D}/runs-09/figures.json'}] + ([{'file': f'{D}/runs-09/gate.txt'}] if r['id'] == 'INT-gate' else [])
+# Measured again on brief 10's integrated code (its criteria, section 5): the four areas together on 167f996b, whose src
+# and tools are the close-out's, by the judge area's second phase (decisions-2026-10-16/integrated/after/, every exit 0),
+# each figure read by integrated-09/figures.py from those outputs into after/figures.json, none typed. Until then these
+# rows were brief 09's of c9cba9c8, which brief 10's rules left behind.
+INTEGRATED10 = {'commit': '167f996b', 'watch': 'judge'}
+A10 = 'docs/verification/decisions-2026-10-16/integrated/after'
+FIG10 = json.load(open(f'{A10}/figures.json', encoding='utf-8'))
+for r in rows:
+    if r.get('measured') == INTEGRATED:
+        assert r['id'] in FIG10, r['id']
+        r['measured'] = INTEGRATED10
+        r['failure'] = f"{r['failure']}; on brief 10's integrated code (167f996b): {FIG10[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {A10}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{A10}/figures.json'}]
+# Brief 10's final runs (runs-10/, figures.json read from their outputs, none typed): the long runs, the built app and the
+# advice on 2634283b's code, the gate on the commit gate.txt names. Until then these rows were brief 09's, on bcd75970
+# and 7c1198a2, which brief 10's code left behind.
+# Until the runs' figures are there, these rows stay brief 09's, and the matrix calls them unverified.
+FIG10R = json.load(open(f'{D}/runs-10/figures.json', encoding='utf-8')) if os.path.exists(f'{D}/runs-10/figures.json') else {}
+GATE10 = re.search(r'^at (\w+)', open(f'{D}/runs-10/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG10R else None
+RUNS10, BUILT10 = {'commit': '2634283b', 'watch': 'engine'}, {'commit': '2634283b', 'watch': 'app'}
+for r in rows:
+    m = r.get('measured')
+    if m in (RUNS09, BUILT09, GATE09):
+        if r['id'] == 'INT-gate' and not GATE10: continue  # the gate's figure, folded in once it has run
+        if not FIG10R: continue
+        assert r['id'] in FIG10R, r['id']
+        r['measured'] = {'commit': GATE10, 'watch': 'app'} if r['id'] == 'INT-gate' else (RUNS10 if m == RUNS09 else BUILT10)
+        r['failure'] = f"{r['failure']}; brief 10 ({r['measured']['commit']}): {FIG10R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {D}/runs-10/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{D}/runs-10/figures.json'}] + ([{'file': f'{D}/runs-10/gate.txt'}] if r['id'] == 'INT-gate' else [])
+# L1 held before brief 10 and fails after it: a regression, traced to the advice area's change (decisions-2026-10-16/l1/).
+# Section 5 of brief 10's criteria asks it fixed or reported with its cause; no fix moves it back without moving the advice
+# off the input whose training brings most, which F2-A10 (b) fails, so it's put to the owner. Until 2026-10-16 it was
+# Implemented And Verified on brief 09's measurement (the specialist 4 weeks, the beginner 3).
+for r in rows:
+    if r['id'] == 'L1':
+        r['status'] = DR
+        r['decision'] = {
+            'question': 'L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?',
+            'evidence': 'docs/verification/decisions-2026-10-16/l1/README.md (each measurement point’s sequence, the 84db36b7 journeys); decisions-2026-10-16/integrated/after/journey-specialist-bj-0.json and journey-beginner-bj-0.json; integrated-09’s for brief 09',
+            'recommendation': 'Keep the advice naming the best input, and read L1 on a journey that follows the advice: F2-A10 (h) shows the first-named moves on once it’s followed, which is what “changes or is acted on” asks. Until decided, L1 is counted not met.'}
 # The four shortfalls of the stage and the attributes, as measured, and what each awaits.
 for r in rows:
     # ST3, ST6, H4 and L3 after brief 09, section 2 (remaining-09/judge-result.json, followup-09/README.md): each reproduced,
@@ -190,17 +232,17 @@ for r in rows:
     # in the record as measured, not met, and is superseded; its replacement is the judge area's rows of brief 10
     # (remaining-10/judge-result.json), counted in its place. Until then each was Decision Required with its proposal.
     SUPERSEDED = {
-        'ST3': 'ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R',
-        'ST6': 'ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R',
-        'H4': 'H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R',
-        'L3': 'L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R',
+        'ST3': 'ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json), not met; superseded by ST3-R',
+        'ST6': 'ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; 11 of 44 on brief 10’s final code, the 25% floor to the case (integrated/after/stage.json); superseded by ST6-R',
+        'H4': 'H4 as written: 1 of 12 (integrated-09), not met; 1 of 12 on brief 10’s final code (integrated/after/criteria.txt); superseded by H4-R',
+        'L3': 'L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; failing on 2 of brief 10’s 8 journeys on its final code (integrated/after/l3r.json); superseded by L3-R',
     }
     if r['id'] in SUPERSEDED:
         r['status'], r['deferredBy'] = ED, f"{SUPERSEDED[r['id']]}, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
     elif r['id'] == 'F2':
         # The owner's brief 10 approved F2-A as the advice's measure (decision 2). F2 as written stays in the record as
         # measured, not met; until then this row was Decision Required.
-        r['status'], r['deferredBy'] = ED, 'Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported'
+        r['status'], r['deferredBy'] = ED, 'Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447 on brief 09’s integrated tree; 68.9%, 308 of 447 on brief 10’s final code, decisions-2026-10-16/integrated/after/criteria.txt), and is still run and reported'
     elif r['id'] == 'G1':
         r['status'], r['deferredBy'] = ED, 'Replaced under the owner’s authorization in brief 02, section 3 ("I authorize replacing a demonstrably invalid metric…"), on the conditions it set (docs/verification/genres-2026-10-16/g1-replacement.md); S1 to S4 are counted in its place, and its result is kept as measured'
 # Every known shortfall and missing test not already a row of its own: the handoff's open work, the areas' reports.
@@ -230,6 +272,18 @@ OVERRIDES = [
   # timing, and Iceland's Act 114/2021 art. 57(4) settles what a close owes (remaining-10/arion-result.json).
   {'id': 'banking.5.arion-card', 'status': IAV, 'why': 'Settled under brief 10, section 3: the amount and age from Arion’s price list, a close’s refund in proportion from Act 114/2021 art. 57(4), the year paid ahead as SLATE’s labelled, configurable simulation (`ARION_CARD_YEAR`), verified as specified; Arion’s real timing stays unverified',
    'citations': [cite('tests/decisions-arion.test.ts', 'arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…')]},
+  # The judge area kept ST6 as written as Not Implemented, but its second phase measured it holding on the final code: the
+  # restrained specialist 11 of 44 against the grain, the floor of 25% to the case (integrated/after/stage.json, holds:
+  # true). It's superseded all the same (brief 10, decision 1), so it's kept as the record, as the ST6 criterion row is.
+  # ST3, H4 and L3 as written stay as the area put them, not met.
+  {'id': 'ST6.asWritten', 'status': ED, 'deferredBy': 'Superseded by ST6-R, approved by the owner in brief 10 (decision 1); as written it holds on brief 10’s final code at its floor to the case (restrained 11 of 44, expansive 24 of 50, decisions-2026-10-16/integrated/after/stage.json), kept as the record, not counted', 'why': 'Measured holding on the final code, where the area’s status said not met', 'citations': []},
+  # The stamina area put A1's night to the owner (a supporting part's 0.32 or a lead's 0.50). The judge area's second
+  # phase met A1 on the integrated code without that choice: the drain went to 0.4, SLATE's choice set by testing on
+  # H4-R's 797 pieces to give stamina's specialist work of its own (content/piece.ts says what each value gave), and
+  # stamina's briefs and scenes passed 0.5 with it. Nights are still read at a supporting part. The stamina area had
+  # advised against a larger drain moved to lift A1 alone, and this one was moved for H4-R; A1 moved with it.
+  {'id': 'stamina.A1', 'status': IVI, 'why': 'Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change',
+   'citations': []},
   # The last pass's banking area left Germany's month's fee on a close to the owner; brief 09 implemented it from the
   # statute and the banks' price lists (remaining-09/banking-result.json, banking.1.pro-rata), so the decision is settled.
   {'id': 'banking.1.pro-rata', 'status': IAV, 'why': 'Settled by brief 09, section 4 (8f0d25c6): the month’s fee on a German close charged to the day under BGB § 675h(3), shown before the press, its last pass’s decision row superseded',

@@ -15,9 +15,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94",
+   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94; on brief 10's integrated code (167f996b): restrained 50, expansive 44 of 96",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -28,13 +28,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -53,9 +56,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material; on brief 10's integrated code (167f996b): 82 of 82, no house signal on any material",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -63,13 +66,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -108,7 +114,7 @@
    "before": "specialist 171/171; even actor 159 of 171",
    "after": "specialist 171/171; even actor 157 of 171 as shown; ST3′ (proposed) 171 of 171 on each part",
    "sourceStatus": "Not Met",
-   "deferredBy": "ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+   "deferredBy": "ST3 as written: the even actor the same as shown on 178 of 189 (integrated-09), not met; 185 of 193 on brief 10’s final code (decisions-2026-10-16/integrated/after/st3.json), not met; superseded by ST3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "ST4",
@@ -125,9 +131,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}",
+   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}; on brief 10's integrated code (167f996b): drama {\"r\": 25, \"e\": 7, \"n\": 32}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -139,13 +145,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -164,9 +173,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100",
+   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100; on brief 10's integrated code (167f996b): 2,574 of 2,574 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -174,13 +183,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -215,7 +227,7 @@
    "before": "expansive 21 of 49; restrained 7 of 34",
    "after": "expansive 21 of 49; restrained 8 of 38 (21.1%)",
    "sourceStatus": "Not Met",
-   "deferredBy": "ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+   "deferredBy": "ST6 as written: the restrained half 9 of 42 (integrated-09; 10 of 42 once the specialists’ budgets were made equal in brief 10), not met; 11 of 44 on brief 10’s final code, the 25% floor to the case (integrated/after/stage.json); superseded by ST6-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "ST7",
@@ -232,9 +244,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95",
+   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95; on brief 10's integrated code (167f996b): 97 of 97",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -242,13 +254,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -267,9 +282,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80; on brief 10's integrated code (167f996b): 82 of 82",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -277,13 +292,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -302,9 +320,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say",
+   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say; on brief 10's integrated code (167f996b): I1 to I5, S1 to S4 and G2 as their rows say",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -312,13 +330,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -337,9 +358,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27; on brief 10's integrated code (167f996b): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -347,13 +368,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -372,9 +396,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80; on brief 10's integrated code (167f996b): 40: ST1 50 / 45 of 96, ST8 82 of 82; 75: ST1 52 / 42 of 96, ST8 82 of 82",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -382,13 +406,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -407,9 +434,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520",
+   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520; on brief 10's integrated code (167f996b): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,574 of 2,574",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -420,13 +447,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -445,9 +475,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%",
+   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%; on brief 10's integrated code (167f996b): pace 26.8%, scale 23.5%, structure 35.6%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -458,13 +488,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -483,9 +516,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%",
+   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%; on brief 10's integrated code (167f996b): designed sd 1.26, restrained ahead 69.6%, expansive 28.4%, heldOut sd 1.14, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.38, restrained ahead 52.1%, expansive 45.8%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -496,13 +529,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -521,9 +557,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}",
+   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}; on brief 10's integrated code (167f996b): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 44.3, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 82, \"evenActorFollowsSuitability\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -534,13 +570,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -559,9 +598,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}",
+   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}; on brief 10's integrated code (167f996b): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 98}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -572,13 +611,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -597,9 +639,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work; on brief 10's integrated code (167f996b): Meets: every ability at 0.5 or more on a kind of work",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -613,13 +655,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -638,9 +683,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina)",
+   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina); on brief 10's integrated code (167f996b): Meets: highest 0.444 (presence, listening)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -654,13 +699,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -679,9 +727,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43; on brief 10's integrated code (167f996b): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, adaptability cv 0.39, composure cv 0.41",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -695,13 +743,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -720,9 +771,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4",
+   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4; on brief 10's integrated code (167f996b): Meets: 1.875 sessions' worth against 4",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -736,13 +787,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -761,9 +815,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%)",
+   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%); on brief 10's integrated code (167f996b): Meets: 0.105 at 90 against 0.294 at 30 (36%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -777,13 +831,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -802,9 +859,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more",
+   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more; on brief 10's integrated code (167f996b): Meets: the most any actor is best on: 49 of 149; 8 actors best on 10 or more",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -818,13 +875,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -843,9 +903,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors; on brief 10's integrated code (167f996b): Meets: 2 briefs, 4 readings at least; 4 reader behaviors",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -859,13 +919,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -884,9 +947,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100",
+   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100; on brief 10's integrated code (167f996b): Meets: 50.66 at 30 known, 53.1 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -900,13 +963,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -925,9 +991,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0",
+   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0; on brief 10's integrated code (167f996b): Meets: briefs 4560 of 4560; scenes 67 of 67; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -941,13 +1007,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -966,9 +1035,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming",
+   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming; on brief 10's integrated code (167f996b): Meets: own 100 to 100 on 67 scenes, the partner never coming",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -982,13 +1051,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1007,9 +1079,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0",
+   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0; on brief 10's integrated code (167f996b): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1023,13 +1095,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1048,9 +1123,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100",
+   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100; on brief 10's integrated code (167f996b): Meets: together 93.05, 86.1, 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1064,13 +1139,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1089,9 +1167,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30",
+   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30; on brief 10's integrated code (167f996b): Meets: brief: emotionalDepth specialist 93 of 298; scene: listening specialist 17 of 67; night: discipline specialist 7 of 30; casting: emotionalDepth specialist 6 of 30",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1105,13 +1183,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1130,9 +1211,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%)",
+   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%); on brief 10's integrated code (167f996b): Meets: ahead of half on 438 of 438; within a point of the best on 131 (29.9%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1146,13 +1227,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1171,9 +1255,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62",
+   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62; on brief 10's integrated code (167f996b): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.58",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1187,13 +1271,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1230,7 +1317,7 @@
    "before": "1 of 12",
    "after": "2 of 12 (emotional depth 85.0%, listening 66.4%)",
    "sourceStatus": "Not Met",
-   "deferredBy": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+   "deferredBy": "H4 as written: 1 of 12 (integrated-09), not met; 1 of 12 on brief 10’s final code (integrated/after/criteria.txt); superseded by H4-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "F2",
@@ -1262,7 +1349,7 @@
    "before": "303 of 447 (67.8%)",
    "after": "302 of 447 (67.6%)",
    "sourceStatus": "Not Met",
-   "deferredBy": "Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447), and is still run and reported"
+   "deferredBy": "Superseded by F2-A, approved by the owner in brief 10 (decision 2), and F2-A10 its broadened proof (remaining-10/advice-result.json); F2 as written stays in the record, not met (67.6%, 302 of 447 on brief 09’s integrated tree; 68.9%, 308 of 447 on brief 10’s final code, decisions-2026-10-16/integrated/after/criteria.txt), and is still run and reported"
   },
   {
    "id": "F2-A",
@@ -1520,10 +1607,10 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks",
+   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks; on brief 10's integrated code (167f996b): specialist 8, beginner 6 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
-   "status": "Implemented And Verified",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
+   "status": "Decision Required",
    "citations": [
     {
      "file": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json"
@@ -1533,14 +1620,22 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
+   },
+   "decision": {
+    "question": "L1 held before brief 10 and fails after it. On the final code the week’s top recommendation in the 120-day journeys is focus 8 weeks running for the specialist (51 to 55) and 6 for the beginner (55 to 56), where L1 allows 4 without the input rising 5 points; brief 09 read 4 and 3. The advice area’s change moved it on its own (84db36b7 reads 8 and 6; the judge’s first phase alone read 4 and 3). The journeys’ student never trains the named input, and F2-A10 holds the advice to naming the input whose training brings most. Should the advice change its first-named input after 4 weeks a player hasn’t acted on it, against F2-A10 (b); should L1 be read on a journey whose student acts on the advice, as F2-A10 (h) is; or does L1 stay as written and not met?",
+    "evidence": "docs/verification/decisions-2026-10-16/l1/README.md (each measurement point’s sequence, the 84db36b7 journeys); decisions-2026-10-16/integrated/after/journey-specialist-bj-0.json and journey-beginner-bj-0.json; integrated-09’s for brief 09",
+    "recommendation": "Keep the advice naming the best input, and read L1 on a journey that follows the advice: F2-A10 (h) shows the first-named moves on once it’s followed, which is what “changes or is acted on” asks. Until decided, L1 is counted not met."
    }
   },
   {
@@ -1558,9 +1653,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0; on brief 10's integrated code (167f996b): specialist 0, beginner 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1568,13 +1663,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1608,7 +1706,7 @@
    "before": "specialist 65.5 → 64.0; beginner 54.0 → 56.9",
    "after": "specialist 65.5 → 64.1; beginner 54.0 → 56.6; L3′ (proposed) 17 of 17 and 19 of 19",
    "sourceStatus": "Not Met",
-   "deferredBy": "L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
+   "deferredBy": "L3 as written: the specialist 65.5 to 64.3, the beginner 54.0 to 56.8 (integrated-09), not met for the specialist; failing on 2 of brief 10’s 8 journeys on its final code (integrated/after/l3r.json); superseded by L3-R, approved by the owner in brief 10 (decision 1) and measured as the judge area's rows of brief 10 (remaining-10/judge-result.json); the original's result stays in the record"
   },
   {
    "id": "MA1",
@@ -1878,9 +1976,9 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786)",
+   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786); on brief 10's integrated code (167f996b): designed 0.905 (least 0.847); held out 0.884 (least 0.793); fresh designed 0.903 (least 0.847); fresh held out 0.877 (least 0.784)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1894,13 +1992,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1919,9 +2020,9 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×",
+   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×; on brief 10's integrated code (167f996b): designed 1.597×; held out 1.615×; fresh designed 1.598×; fresh held out 1.615×",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1935,13 +2036,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -1960,9 +2064,9 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%)",
+   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%); on brief 10's integrated code (167f996b): designed 12,742 of 14,350 (88.8%); held out 11,670 of 14,350 (81.3%); fresh designed 24,871 of 28,413 (87.5%); fresh held out 23,222 of 28,413 (81.7%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -1976,13 +2080,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -2001,9 +2108,9 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number; on brief 10's integrated code (167f996b): 0 briefs of different genres identical in every number",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2017,13 +2124,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -2042,9 +2152,9 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0",
+   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0; on brief 10's integrated code (167f996b): helps its own brief in 149 of 149, moves another genre’s in 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md; docs/verification/decisions-2026-10-16/integrated/after/README.md",
    "status": "Implemented And Verified",
    "citations": [
     {
@@ -2055,13 +2165,16 @@
     },
     {
      "file": "docs/verification/integration-2026-10-16/integrated-09/figures.json"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/integrated/after/figures.json"
     }
    ],
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "c9cba9c8",
+    "commit": "167f996b",
     "watch": "judge"
    }
   },
@@ -2596,6 +2709,19 @@
      "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…"
     }
    ]
+  },
+  {
+   "id": "ST6.asWritten",
+   "status": "Explicitly Deferred",
+   "deferredBy": "Superseded by ST6-R, approved by the owner in brief 10 (decision 1); as written it holds on brief 10’s final code at its floor to the case (restrained 11 of 44, expansive 24 of 50, decisions-2026-10-16/integrated/after/stage.json), kept as the record, not counted",
+   "why": "Measured holding on the final code, where the area’s status said not met",
+   "citations": []
+  },
+  {
+   "id": "stamina.A1",
+   "status": "Implemented, Verification Incomplete",
+   "why": "Met on brief 10’s integrated code by the judge area’s second phase (remaining-10/judge-result.json, A1): stamina’s briefs 0.53 and scenes 0.54, its nights 0.334 at a supporting part as the tool reads them (0.487 at a lead, 0.138 featured), measured by tools/ag-baseline.ts and tools/ag-criteria.mjs (decisions-2026-10-16/integrated/after/criteria.txt, a1-nights.json); no gate test holds A1’s figure. Which part a night is read at no longer decides A1, and stays the owner’s to change",
+   "citations": []
   },
   {
    "id": "banking.1.pro-rata",
