@@ -28,7 +28,10 @@
  *
  * Considered and left out: Henry V's "Once more unto the breach" (3.1) and the Chorus's prologues, each one voice with
  * no second part; Coriolanus before the people (3.3), where the tribunes and the citizens share the scene among a dozen
- * voices; and Montjoy's embassy in Henry V's 4.3, a third part, which the scene here ends before.
+ * voices; Montjoy's embassy in Henry V's 4.3, a third part, which the scene here ends before; and Scapin's sack scene
+ * (Molière, The Impostures of Scapin, 3.2, tr. Charles Heron Wall, Gutenberg #8776), read as a long set score for
+ * discipline: it's played off its partner line by line, in one tone, so it isn't a scene played out to a house, and a
+ * scene is profiled by its changes of tone, so its five units would be two parts (docs/verification/integration-2026-10-16/h4.md).
  *
  * Only the types come from `coursework.ts`: it imports this file, so a value import back would be circular. The two
  * helpers are local copies of its own.
