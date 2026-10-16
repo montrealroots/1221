@@ -1029,7 +1029,7 @@
    "group": "Criteria: The Attributes",
    "kind": "criterion",
    "goal": "The advice’s first-named input is the largest realized gain, played",
-   "entry": "npx vite-node tools/advice.ts (docs/verification/advice-2026-10-16/README.md)",
+   "entry": "npx vite-node tools/advice.ts -- --from 0 --to 40 (docs/verification/advice-2026-10-16/README.md)",
    "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
    "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
    "decisions": "None: a measurement, not a player decision",
@@ -1039,17 +1039,20 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 40 of 40; after: measured again in the long runs",
+   "failure": "Before: 40 of 40; the exact best in 38; after: 40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/advice-2026-10-16/README.md",
-   "status": "Open",
+   "evidence": "docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/README.md",
+   "status": "Met",
    "citations": [
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/advice-cases.json"
+    },
     {
      "file": "docs/verification/advice-2026-10-16/README.md"
     }
    ],
-   "before": "40 of 40",
-   "after": "measured again in the long runs"
+   "before": "40 of 40; the exact best in 38",
+   "after": "40 of 40 (designed 10 of 10, held out 30 of 30); the exact best in 39; 529 candidates, forecast against realized 0.894"
   },
   {
    "id": "G1",
@@ -1499,7 +1502,7 @@
    "group": "Criteria: Mastery Through Play",
    "kind": "criterion",
    "goal": "A played mastery plan reaches 100 on every payoff tape",
-   "entry": "npx vite-node tools/mastery.ts -- --mode plan (the long runs)",
+   "entry": "npx vite-node tools/mastery.ts -- --mode plan --genre <id> --seed <s> --years 8",
    "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
    "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
    "decisions": "None: a measurement, not a player decision",
@@ -1509,44 +1512,60 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all six plans (stage-2026-10-16/runs/); after: measured again in the long runs",
+   "failure": "Before: all six plans (journeys-2026-10-16); after: all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/stage-2026-10-16/runs",
-   "status": "Open",
+   "evidence": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json",
+   "status": "Met",
    "citations": [
     {
-     "file": "docs/verification/stage-2026-10-16/runs"
+     "file": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-1.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/plan-social_realism-m-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/plan-social_realism-m-1.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/plan-slapstick-m-0.json"
     }
    ],
-   "before": "all six plans (stage-2026-10-16/runs/)",
-   "after": "measured again in the long runs"
+   "before": "all six plans (journeys-2026-10-16)",
+   "after": "all six plans 100, 100, 100; mastered 2 to 3 weeks sooner; breaches 0"
   },
   {
    "id": "MA8",
    "group": "Criteria: Mastery Through Play",
    "kind": "criterion",
    "goal": "Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review counts them",
-   "entry": "tests/remaining-school-term.test.ts (the school area)",
+   "entry": "tests/integration-mastery.test.ts",
    "preconditions": "A measurement: the set and the actors its criterion names, written before it was first run",
    "reads": "The judge (`systems/evaluation.ts`, `systems/piece.ts`) over the pieces the criterion names",
    "decisions": "None: a measurement, not a player decision",
    "validation": "Threshold: as README.md writes it",
-   "changes": "Nothing in this pass",
+   "changes": "None to the engine: a played test, killed by the tally leaving pieces not shown out of its Unready",
    "later": "None",
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: not measured before; after: with the school area",
+   "failure": "Before: not measured before; after: two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "tests/remaining-school-term.test.ts",
-   "status": "Open",
+   "evidence": "tests/integration-mastery.test.ts",
+   "status": "Met",
    "citations": [
     {
-     "file": "tests/remaining-school-term.test.ts"
+     "file": "tests/integration-mastery.test.ts",
+     "title": "PLAYER JOURNEY: a mastered student asleep through two pieces is Unready on both and the review counts exactly those two; the same student missing nothing is counted Unready on none"
     }
    ],
    "before": "not measured before",
-   "after": "with the school area"
+   "after": "two pieces slept through, both Unready, the review counting exactly two; the twin missing nothing, none"
   },
   {
    "id": "S1",
@@ -1843,10 +1862,15 @@
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
    "evidence": "tests/remaining-school-term.test.ts",
-   "status": "Open",
+   "status": "Met",
    "citations": [
     {
-     "file": "tests/remaining-school-term.test.ts"
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, played > PLAYER JOURNEY: two pieces missed unexcused, a revision missed and the pieces after shown"
+    },
+    {
+     "file": "tests/remaining-school-term.test.ts",
+     "title": "the missed-work term, reloaded > PLAYER JOURNEY: reloaded at the first miss, at the warning and at the review"
     }
    ]
   },
@@ -1860,18 +1884,24 @@
    "reads": "The save as play leaves it",
    "decisions": "The player’s, as each journey plays them",
    "validation": "Holds when: no step skipped, or its reason said",
-   "changes": "The coursework workbook step goes on to tomorrow morning where a way must wait, as a player does; the casting step on a new life checks the screen says when casting comes",
+   "changes": "The workbook step learns the lines its ways wait on and reads a locked way’s chapter, as a player does; the casting step on a new life checks the screen says when casting comes. The suite skips none, at the baseline and at the end",
    "later": "As each journey runs on",
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs",
-   "status": "Open",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
+   "status": "Met",
    "citations": [
     {
      "file": "tools/acceptance-ui.mjs"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/acceptance/1440.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
     }
    ]
   },
@@ -1892,11 +1922,14 @@
    "saveLoad": "Saved and opened again where the evidence says",
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
-   "evidence": "tools/acceptance-ui.mjs",
-   "status": "Open",
+   "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log",
+   "status": "Met",
    "citations": [
     {
-     "file": "tools/acceptance-ui.mjs"
+     "file": "docs/verification/integration-2026-10-16/runs/acceptance/1440.log"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/acceptance/390.log"
     }
    ]
   },
@@ -1905,7 +1938,7 @@
    "group": "Integration",
    "kind": "integration",
    "goal": "Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code",
-   "entry": "tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts",
+   "entry": "tools/lives.ts, tools/workload.ts, tools/mastery.ts, tools/advice.ts, tools/variety.ts, tools/freshness.ts",
    "preconditions": "As each test or run sets it up, said in its header",
    "reads": "The save as play leaves it",
    "decisions": "The player’s, as each journey plays them",
@@ -1917,11 +1950,20 @@
    "saveLoad": "Saved and opened again where the evidence says",
    "failure": "Each refusal says why, and what comes next",
    "implementation": "src/engine, src/ui",
-   "evidence": "docs/verification/stage-2026-10-16/runs",
-   "status": "Open",
+   "evidence": "docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/runs/variety-v-0.json; docs/verification/integration-2026-10-16/runs/freshness.json",
+   "status": "Met",
    "citations": [
     {
-     "file": "docs/verification/stage-2026-10-16/runs"
+     "file": "docs/verification/integration-2026-10-16/runs/README.md"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/lives.jsonl"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/variety-v-0.json"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/runs/freshness.json"
     }
    ]
   },

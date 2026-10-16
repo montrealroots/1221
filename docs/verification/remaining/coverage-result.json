@@ -175,21 +175,24 @@
    "evidence": [
     {
      "file": "tests/evidence3-person.test.ts",
-     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular (its four tests)",
+     "title": "i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular",
      "kind": "static",
-     "proves": "Meets the static standard: three tests of must-catch and must-accept examples written by hand, and a tree walk over src/, tests/ and docs/ that fails on an empty read (files > 600, sentences > 60, each of the 34 sentences read and listed true found). Passed on 2026-10-16 (4 passed, -t i-stale-claims; the whole file 19 passed)."
+     "proves": "Meets the static standard: three tests of must-catch and must-accept examples written by hand, and a tree walk over src/, tests/ and docs/ that fails on an empty read (files > 600, sentences > 60, each of the 34 sentences read and listed true found). Passed on 2026-10-16 (4 passed, -t i-stale-claims; the whole file 19 passed).",
+     "tests": "four"
     },
     {
      "file": "tests/evidence2-b13.test.ts",
-     "title": "i-stale-claims (its three tests)",
+     "title": "i-stale-claims",
      "kind": "static",
-     "proves": "Meets the standard: the same rule’s examples, the seven corrected files’ walk, and the tree walk. Passed on 2026-10-16 (3 passed; the whole file 6 passed)."
+     "proves": "Meets the standard: the same rule’s examples, the seven corrected files’ walk, and the tree walk. Passed on 2026-10-16 (3 passed; the whole file 6 passed).",
+     "tests": "three"
     },
     {
      "file": "tests/evidence-g34-ui.test.ts",
-     "title": "i-stale-claims (its three tests)",
+     "title": "i-stale-claims",
      "kind": "static",
-     "proves": "Reaches the text and can’t pass on an empty read, but has no must-catch or must-accept example, and its third test’s rule is the first round’s; supports the row, verifies nothing. Passed on 2026-10-16 (3 passed)."
+     "proves": "Reaches the text and can’t pass on an empty read, but has no must-catch or must-accept example, and its third test’s rule is the first round’s; supports the row, verifies nothing. Passed on 2026-10-16 (3 passed).",
+     "tests": "three"
     },
     {
      "file": "tools/coverage.mjs",
@@ -268,10 +271,12 @@
      "proves": "Every engine-class row has acceptance.player, .engine, .deferred and .unfinished; the titles cited in .player and .engine are in their files (`--check` exits 0; mutation (c) fails it)."
     },
     {
-     "file": "probe/coverage/savings-notice.ts (git-ignored; the script and its output below)",
+     "file": "docs/verification/remaining/coverage-result.json",
      "title": "can a life made at Yale reach bank.savings_notice through its home account?",
      "kind": "command+clock+reload (a probe outside the gate)",
-     "proves": "Yes: Berlin-raised students keeping Deutsche Bank, Postbank or Berliner Sparkasse, every family from modest up, close their savings past the €2,000 allowance: notice given on 24 August 2026, closed on 24 November 2026 into the account at that bank, said, across a reload."
+     "proves": "Yes: Berlin-raised students keeping Deutsche Bank, Postbank or Berliner Sparkasse, every family from modest up, close their savings past the €2,000 allowance: notice given on 24 August 2026, closed on 24 November 2026 into the account at that bank, said, across a reload.",
+     "citedAs": "probe/coverage/savings-notice.ts (git-ignored; the script and its output below)",
+     "note": "A probe outside the gate and outside git (probe/ is ignored); its script and output are kept in this file. Pointed here by the integration pass on 2026-10-16, so the matrix finds what it cites."
     }
    ],
    "probe": {
@@ -641,10 +646,12 @@
    "disposition": "reported (src not changed)",
    "evidence": [
     {
-     "file": "probe/coverage/overdraft-home.probe.test.ts (git-ignored; the script is below)",
+     "file": "docs/verification/remaining/coverage-result.json",
      "title": "is Arrange It drawn for an account kept at home, where the command refuses?",
      "kind": "render+command (a probe outside the gate)",
-     "proves": "Yes. A London-raised student of the modest family who kept HSBC UK, played to 2 October 2026 (September’s work-study, $414.00, paid into Chase), sees on Borrowing at HSBC UK, chosen in Borrow At or made primary: “It would arrange up to $414 at 39.9%”, an Overdraft Limit field and Arrange It; pressed, the command refuses “HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.” The Personal Loan panel beside it draws Borrow It, refused in the same words."
+     "proves": "Yes. A London-raised student of the modest family who kept HSBC UK, played to 2 October 2026 (September’s work-study, $414.00, paid into Chase), sees on Borrowing at HSBC UK, chosen in Borrow At or made primary: “It would arrange up to $414 at 39.9%”, an Overdraft Limit field and Arrange It; pressed, the command refuses “HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.” The Personal Loan panel beside it draws Borrow It, refused in the same words.",
+     "citedAs": "probe/coverage/overdraft-home.probe.test.ts (git-ignored; the script is below)",
+     "note": "A probe outside the gate and outside git (probe/ is ignored); its script and output are kept in this file. Pointed here by the integration pass on 2026-10-16, so the matrix finds what it cites."
     }
    ],
    "probe": {

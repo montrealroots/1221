@@ -15,28 +15,28 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 
 ## Totals
 
-| Group | Rows | Deferred | Implemented | Implemented But Unverified | Informational | Legacy | Met | Not Met | Open | Owner's Decision | Partial | Superseded | Unresolved | Verified |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Life, Health And Time | 67 | 1 |  |  |  |  |  |  |  |  | 1 |  |  | 65 |
-| Money | 68 |  |  |  |  |  |  |  |  |  |  |  | 9 | 59 |
-| Papers | 51 | 14 |  |  |  | 2 |  |  |  |  |  |  | 5 | 30 |
-| School | 71 |  |  |  |  |  |  |  |  |  |  |  |  | 71 |
-| Creation, Profile, Home And The Looks | 71 | 1 |  |  | 8 | 1 |  |  |  |  | 1 |  |  | 60 |
-| Commands Traced Outside The Audit | 11 |  | 9 | 2 |  |  |  |  |  |  |  |  |  |  |
-| Remaining Area: banking | 16 |  |  |  |  |  |  |  |  | 1 |  |  |  | 15 |
-| Remaining Area: coverage | 7 |  |  |  |  |  |  |  | 7 |  |  |  |  |  |
-| Remaining Area: health-billing | 3 |  |  |  |  |  |  |  |  |  |  |  |  | 3 |
-| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  |  |  |  |  |  |  | 7 |
-| Remaining Area: school | 10 |  |  |  |  |  |  |  |  |  |  |  |  | 10 |
-| Remaining Area: tax | 18 |  |  |  |  |  |  |  |  |  |  |  |  | 18 |
-| Criteria: The Stage | 11 |  |  |  |  |  | 9 | 2 |  |  |  |  |  |  |
-| Criteria: Interpretation | 5 |  |  |  |  |  | 5 |  |  |  |  |  |  |  |
-| Criteria: The Attributes | 25 |  |  |  |  |  | 21 | 2 | 1 |  |  | 1 |  |  |
-| Criteria: Long-Term Continuity | 3 |  |  |  |  |  | 2 | 1 |  |  |  |  |  |  |
-| Criteria: Mastery Through Play | 8 |  |  |  |  |  | 6 |  | 2 |  |  |  |  |  |
-| Criteria: The Genres | 5 |  |  |  |  |  | 5 |  |  |  |  |  |  |  |
-| Integration | 9 |  |  |  |  |  | 4 |  | 5 |  |  |  |  |  |
-| **All** | **466** | **16** | **9** | **2** | **8** | **3** | **52** | **5** | **15** | **1** | **2** | **1** | **14** | **338** |
+| Group | Rows | Deferred | Implemented | Informational | Legacy | Met | Not Met | Open | Owner's Decision | Partial | Superseded | Unresolved | Verified |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Life, Health And Time | 69 | 1 |  |  |  |  |  |  |  | 2 |  |  | 66 |
+| Money | 68 |  |  |  |  |  |  |  |  |  |  | 8 | 60 |
+| Papers | 51 | 14 |  |  | 2 |  |  |  |  |  |  | 5 | 30 |
+| School | 71 |  |  |  |  |  |  |  |  |  |  |  | 71 |
+| Creation, Profile, Home And The Looks | 71 | 1 |  | 8 | 1 |  |  |  |  |  |  |  | 61 |
+| Commands Traced Outside The Audit | 9 |  | 9 |  |  |  |  |  |  |  |  |  |  |
+| Remaining Area: banking | 16 |  |  |  |  |  |  |  | 1 |  |  |  | 15 |
+| Remaining Area: coverage | 8 |  |  |  |  |  |  |  |  |  |  |  | 8 |
+| Remaining Area: health-billing | 3 |  |  |  |  |  |  |  |  |  |  |  | 3 |
+| Remaining Area: health-eligibility | 7 |  |  |  |  |  |  |  |  |  |  |  | 7 |
+| Remaining Area: school | 10 |  |  |  |  |  |  |  |  |  |  |  | 10 |
+| Remaining Area: tax | 18 |  |  |  |  |  |  |  |  |  |  |  | 18 |
+| Criteria: The Stage | 11 |  |  |  |  | 9 | 2 |  |  |  |  |  |  |
+| Criteria: Interpretation | 5 |  |  |  |  | 5 |  |  |  |  |  |  |  |
+| Criteria: The Attributes | 25 |  |  |  |  | 22 | 2 |  |  |  | 1 |  |  |
+| Criteria: Long-Term Continuity | 3 |  |  |  |  | 2 | 1 |  |  |  |  |  |  |
+| Criteria: Mastery Through Play | 8 |  |  |  |  | 8 |  |  |  |  |  |  |  |
+| Criteria: The Genres | 5 |  |  |  |  | 5 |  |  |  |  |  |  |  |
+| Integration | 9 |  |  |  |  | 8 |  | 1 |  |  |  |  |  |
+| **All** | **467** | **16** | **9** | **8** | **3** | **59** | **5** | **1** | **1** | **2** | **1** | **13** | **349** |
 
 ## Life, Health And Time
 
@@ -65,6 +65,8 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `health.dental` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Buy Dental: dentalPlanFo… | Verified | tests/evidence-g03-life.test.ts health.dental ‘PLAYER JOURNEY: Buy Dental pressed on Papers takes the year’s $312.72 in one posting, runs to 1 October 2027 acr… |
 | `health.drop` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Drop The Plan ends a pro… | Verified | commands-kept.test.ts ‘drops a plan of one’s own at the month’s end’ (coverOn through the month’s end; on a New York life no new one lives, its marketplace pla… |
 | `health.enroll` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Enroll checks mayEnroll … | Partial | tests/need-paths.test.ts 'health.enroll: a program’s renewal, reached by the clock' (HUSKY D from 1 November 2026, renewal 1 November 2027, the income test pas… |
+| `health.apply` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Apply For HUSKY D takes … | Verified | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: withdrawn, with no work and under $580 of income in December 2026, she applies on 4 January 2027…’ … |
+| `health.request_hardship` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Request A Hardship Excep… | Partial | tests/remaining-health-eligibility.test.ts ‘PLAYER JOURNEY: a stay in hospital in December 2026 (TEST SETUP: the week’s draw forced)…’ (pressed on Papers: appr… |
 | `health.extra_supply` | Keep a chronic condition treated, fill a longer supply, prepay prescriptions, and begin a course of therapy / Fill A Longer Supply fills ea… | Verified | tests/evidence-g03-life.test.ts health.extra_supply ‘PLAYER JOURNEY: Fill A Longer Supply pressed fills a drawn high blood pressure for 90 days at three of Yal… |
 | `health.pay_bill` | Enroll in or drop a health plan, buy dental, and deal with care’s bills: appeal, apply for aid, pay off the debt / Pay It Off pays toward t… | Verified | tests/evidence-g03-life.test.ts health.pay_bill ‘PLAYER JOURNEY: Pay It Off pressed settles the bill on Papers and takes it off Home’s worries; a year and a mo… |
 | `health.prepay` | Keep a chronic condition treated, fill a longer supply, prepay prescriptions, and begin a course of therapy / England's prescription prepay… | Deferred | tests/coverage-gaps-life.test.ts |
@@ -161,7 +163,7 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `bank.fraud_refund` | card.dispute (security.ts:318-334) schedules bank.fraud_refund in the law's days. On its day the handler (security.ts:243-252) posts amount… | Verified | evidence-g13-money.test.ts ‘bank.fraud_refund’ (3: a card closed since, a second bank’s current account closed since, the open card); security.test.ts:148; gui… |
 | `bank.loan_due` | Monthly from bank.borrow or take_overrun_loan: the handler charges a month's interest, takes the payment (the last one clears the remainder… | Verified | evidence-g11-money.test.ts ‘takes a Citi loan’s monthly payment from Chase Savings when it falls due, with the link pressed On, and misses it onto the record w… |
 | `bank.month_end` | Armed by armBanking, at each month's end the handler (banking.ts:526-575): marks past their years leave the record (marksFallOff, :528); a … | Verified | evidence-g13-money.test.ts ‘a mark seven years old leaves the record at the month’s end on the clock and gives 25 back, which an application then reads and the… |
-| `bank.savings_notice` | bank.close_savings (Germany, past the €2,000 monthly allowance, banking.ts:633-638) or a German switch (lending.ts:702-704) schedules bank.… | Unresolved | tests/scope-money.test.ts ‘bank.savings_notice’ (Berlin FIXTURES: Postbank savings on notice into the Postbank account beside it, the notice and the order chec… |
+| `bank.savings_notice` | bank.close_savings (Germany, past the €2,000 monthly allowance, banking.ts:633-638) or a German switch (lending.ts:702-704) schedules bank.… | Verified | tests/integration-savings-notice.test.ts ‘PLAYER JOURNEY: Close It pressed on 1 September 2026 gives three months’ notice…’ (from 2026-10-16: a Berlin-raised s… |
 | `bank.scheduled_payment` | bank.schedule_payment puts it on the calendar. On its day the handler (payments.ts:222-245) posts from-to (or sends across banks in the sen… | Verified | evidence-g13-money.test.ts ‘bank.scheduled_payment’ (3: from a current account Chase closed for sixty days overdrawn, told; RBC savings’ fee in Toronto; Deutsc… |
 | `bank.standing_order` | bank.add_standing_order schedules it. On its day the handler (payments.ts:198-219) moves the amount from the account it was set up on into … | Verified | evidence2-b05.test.ts ‘PLAYER JOURNEY: moved to Capital One before a penny is in it, the $50 order doesn’t go on Friday 28 August, from there or from Chase, an… |
 | `bank.switch_complete` | bank.switch schedules bank.switch_complete on the switching service's working days. completeSwitch then opens accounts at the new bank, mov… | Unresolved | tests/scope-money.test.ts ‘bank.switch_complete’ (London FIXTURE, held back for pending groceries, to the penny); lending.test.ts, bank-lifecycle.test.ts, paym… |
@@ -224,7 +226,7 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `tax.season` | armTaxes schedules Tax Season every 1 February at 09:00 New York time and re-arms it each year. The handler: - settles UK years that fell d… | Verified | tests/evidence-g16-papers.test.ts ‘PLAYER JOURNEY: a student born in New York earns $1,670.59 in 2026, under any year’s standard deduction, and on 1 February 2… |
 | `tax.due` | At the due date of an unfiled return: - if it owes the IRS, the IRS's substitute is proposed at due + 365 days (TAX_SFR); - each state owed… | Verified | tests/evidence2-b06.test.ts ‘a return owed to New York and Connecticut, with the IRS’s part over $535, is told the $535 least and that both states charge their… |
 | `tax.substitute` | The IRS's substitute for an unfiled return that owes it. Proposed: it keeps sfrFigures (without the foreign and premium credits) and sends … | Verified | tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: the F-1 student’s 1040-NR left unfiled: CP2566 a year after the due date for $365.13, assessed 120 days on i… |
-| `tax.notice` | The IRS's collection on an owed return. It holds while a plan is pending, active or in default. Otherwise it accrues, then sends four notic… | Verified | tests/evidence-g17-papers.test.ts ‘PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th fin… |
+| `tax.notice` | The IRS's collection on an owed return. It holds while a plan is pending, active or in default. Otherwise it accrues, then sends four notic… | Verified | tests/remaining-tax.test.ts ‘PLAYER JOURNEY: filed on Papers on 1 February 2028 unpaid, the IRS’s bill comes at once and names 18 April…’, ‘the same letters, o… |
 | `tax.refund` | The day a filed return's refund arrives (21 days, or 21 plus the ITIN weeks on a 1040-NR without an SSN). Branches: Canada's treaty refund;… | Verified | tests/safetynet.test.ts 'is ready in February, filed for a refund 21 days on...' |
 | `tax.pay_state` | File each year’s tax return, amend it, and pay what’s owed to the IRS and to a state / Paying a state's balance from the bank, in part or i… | Verified | tests/scope-taxpapers.test.ts ‘PLAYER JOURNEY: a part refused in March with her money in the CD; on 25 June …’, ‘filed on 1 February unpaid, Connecticut’s bill… |
 | `tax.amend` | File each year’s tax return, amend it, and pay what’s owed to the IRS and to a state / Form 1040-X (with the 1040-NR for a nonresident), al… | Unresolved | tests/tax-lifecycle.test.ts ‘applies each part to the tax, then the penalty, then the interest...’, ‘an amended return showing less tax takes it off what’s owe… |
@@ -388,7 +390,7 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `n-dismiss-expire` | world.dismiss_decision sets dismissedAt, once (a second press is refused). world.tick, every two days, resolves a dated open decision once … | Verified | tests/evidence-g34-ui.test.ts n-dismiss-expire: 'PLAYER JOURNEY: a London-born student’s 2026 return, Dismiss pressed on Home, leaves What Needs You at once; a… |
 | `i-runtime` | Nothing at runtime reads or writes person.interests or engagement.byInterest, and no interest.pursue command exists. Only migration 94 read… | Verified | tests/cohesion.test.ts '...nothing reads interests but the migration that drops them'; tests/migration-94.test.ts; tests/creation.test.ts 'asks for genres and … |
 | `i-ui-text` | No Interests section, look or guide text remains. Creation's Genres & Background step and Review have none, the Profile has none, there is … | Verified | tests/evidence-g34-ui.test.ts i-ui-text: 'PLAYER JOURNEY: creation’s five steps name no interests…', 'PLAYER JOURNEY: the Profile, on the first morning and aft… |
-| `i-stale-claims` | The present-tense leftovers about the removed interests are corrected: docs/capabilities.json and docs/CAPABILITIES.md no longer name enjoy… | Partial | tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i… |
+| `i-stale-claims` | The present-tense leftovers about the removed interests are corrected: docs/capabilities.json and docs/CAPABILITIES.md no longer name enjoy… | Verified | tests/evidence-g34-ui.test.ts > i-stale-claims (READ_CRAFTS named nowhere; the capability documents; the five corrected files); tests/evidence2-b13.test.ts > i… |
 | `i-genres-dispositions-intact` | After the interests were removed (code removal and migration 94, 2026-10-10), Person.genres and Person.personality (the seven dispositions,… | Verified | tests/evidence-g34-ui.test.ts i-genres-dispositions-intact: 'PLAYER JOURNEY: a 93 save opened through openSlot keeps the personality, the trait and the genres … |
 
 ## Commands Traced Outside The Audit
@@ -398,8 +400,6 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `brief.choose` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / A Reading And A Way To Play It (`… | Implemented | `brief.choose`: `tests/attributes-complete.test.ts`, `tests/briefs.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.… |
 | `brief.prepare` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Preparing A Brief (`craft.brief-p… | Implemented | `brief.prepare`: `tests/briefs.test.ts`, `tests/defects-g29-1.test.ts`, `tests/defects-g3-1.test.ts`, `tests/defects-g30-1.test.ts`, `tests/defects-g31-1.test.… |
 | `brief.reader` | Prepare a practice brief, choose its reading and how to play it, choose who reads with you, and tape it / Who Reads With You (`craft.brief-… | Implemented | `brief.reader`: `tests/defects-g31-1.test.ts`, `tests/determinism-played.test.ts`, `tests/ensemble.test.ts`, `tests/guide-examples-craft.test.ts` / 5 test files |
-| `health.apply` | Not recorded | Implemented But Unverified | 1 test files |
-| `health.request_hardship` | Not recorded | Implemented But Unverified | 1 test files |
 | `life.look_after` | Eat, order in, shower, work out or unwind, each for its time | Implemented | 39 test files / journey-life.test.ts |
 | `school.choose_part_playing` | Choose how to play a class scene or a part you’re cast in: its pace, scale and structure / How You’ll Play A Part (`productions.playing`) | Implemented | `school.choose_part_playing`: `tests/defects-g8-11.test.ts`, `tests/defects-g8-12.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-productions.te… |
 | `school.choose_playing` | Choose how to play a class scene or a part you’re cast in: its pace, scale and structure / How You’ll Play A Scene (`coursework.playing`) | Implemented | `school.choose_playing`: `tests/defects-g8-10.test.ts`, `tests/defects-g8-15.test.ts`, `tests/guide-examples-coursework.test.ts`, `tests/trace-commands.test.ts… |
@@ -432,13 +432,14 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 
 | Row | Goal | Status | Evidence |
 |---|---|---|---|
-| `coverage.1-separate-totals` | Separate totals (the brief's item 1): a per-row evidence class written by the pipeline into each audit row, a second table on docs/GAMEPLAY… | Open | static (tools): `node tools/coverage.mjs --check` exits 0 on the regenerated audit and prints the class totals; the class table's rows add to 328 and each stat… |
-| `coverage.2-i-stale-claims` | i-stale-claims (the brief's item 2): the `static` evidence kind defined on the page with its standard (reaches the text the claim is about,… | Open | static: coverage.mjs --check exits 0 with i-stale-claims verified, class static; it fails, in a copy, when (a) an example quoted in classes.json is altered so … |
-| `coverage.3-unresolved-rows` | The 14 unresolved rows (the brief's item 3): each row's words distinguish current Yale-player acceptance (unreachable, and why), retained e… | Open | static: coverage.mjs --check fails an engine-class row whose acceptance lacks any of the four parts; each test the engine part names lands (title in its file),… |
-| `coverage.4-fold-areas` | This pass's areas folded in (the brief's item 4): a fold step that reads every docs/verification/remaining/*-result.json present (rowText i… | Open | command (node): the pipeline, run twice in the README's order in the tree, reproduces itself byte for byte on a third run (nothing changes); the committed hand… |
-| `coverage.d-renames-chain` | Defect found on the way: a test renamed twice isn't followed to its last name. | Open | command (node): regenerated in the copy, c-performerTitle's title is 'Frau Bergmann' and coverage.mjs reports nothing for it; with the one-step lookup restored… |
-| `coverage.d-fixture-kind` | Defect found on the way: a test labelled FIXTURE or GUARD is recorded as a command or a render. | Open | static: coverage.mjs --check exits 0 with the kinds corrected (no verified row loses its holding evidence); the evidence-by-kind table's fixture count rises by… |
-| `coverage.d-evidence-cell` | Defect found on the way: the Evidence column says every round's test was 'added 2026-10-13'. | Open | static: the regenerated page's Evidence cells say it; coverage.mjs --check exits 0. |
+| `coverage.1-separate-totals` | Separate totals (the brief's item 1): a per-row evidence class written by the pipeline into each audit row, a second table on docs/GAMEPLAY… | Verified | tools/coverage.mjs ‘every row has one of six classes, and its evidence bears it out’ (static (tools)); tools/coverage.mjs ‘a journey row set to engine by hand … |
+| `coverage.2-i-stale-claims` | i-stale-claims (the brief's item 2): the `static` evidence kind defined on the page with its standard (reaches the text the claim is about,… | Verified | tests/evidence3-person.test.ts ‘i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular’ (static); tests/evidence2-b13.test.ts ‘i-st… |
+| `coverage.3-unresolved-rows` | The 14 unresolved rows (the brief's item 3): each row's words distinguish current Yale-player acceptance (unreachable, and why), retained e… | Verified | tools/coverage.mjs ‘a row of the retained engine says its four parts, and the tests they cite land’ (static (tools)); docs/verification/remaining/coverage-resu… |
+| `coverage.4-fold-areas` | This pass's areas folded in (the brief's item 4): a fold step that reads every docs/verification/remaining/*-result.json present (rowText i… | Verified | docs/verification/pipeline/remaining-fold.cjs ‘node ../remaining-fold.cjs’ (command (node)); docs/verification/pipeline/README.md ‘the regeneration in its orde… |
+| `coverage.d-renames-chain` | Defect found on the way: a test renamed twice isn't followed to its last name. | Verified | tools/coverage.mjs ‘c-performerTitle’s title lands’ (static (tools)) |
+| `coverage.d-fixture-kind` | Defect found on the way: a test labelled FIXTURE or GUARD is recorded as a command or a render. | Verified | tools/coverage.mjs ‘no verified row rests on fixtures alone; every engine row has one’ (static (tools)) |
+| `coverage.d-evidence-cell` | Defect found on the way: the Evidence column says every round's test was 'added 2026-10-13'. | Verified | tools/coverage.mjs ‘the Evidence column’ (static (tools)) |
+| `coverage.d-stale-claims-walk` | Found on the way (2026-10-16, before its fix): i-stale-claims’ two tree walks fail since 841f46e9 (the banking area’s commit). | Verified | tests/evidence3-person.test.ts ‘i-stale-claims: a rule a present-tense claim can’t pass by “until” or the singular > keeps every sentence naming the interests … |
 
 ## Remaining Area: health-billing
 
@@ -545,7 +546,7 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `H7` | Randomness doesn’t overwhelm skill, and still exists | Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attri… |
 | `H4` | Specialists are advantaged on suitable work | Not Met | docs/verification/integration-2026-10-16/h4.md; docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/h4… |
 | `F2` | Acting on the first-named weakness pays more than training at random (as written) | Not Met | docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/advice-2026-10-16/criteria.md |
-| `F2-A` | The advice’s first-named input is the largest realized gain, played | Open | docs/verification/advice-2026-10-16/README.md |
+| `F2-A` | The advice’s first-named input is the largest realized gain, played | Met | docs/verification/integration-2026-10-16/runs/advice-cases.json; docs/verification/integration-2026-10-16/runs/advice.txt; docs/verification/advice-2026-10-16/… |
 | `G1` | A genre’s label predicts what its work asks (as written) | Superseded | docs/verification/genres-2026-10-16/g1-replacement.md |
 | `A4` | What the game says an ability does, it does | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A4) |
 | `A5` | Every ability can be developed by an action the player chooses, and says what moved | Met | docs/verification/attributes-genres-2026-10-16/phase-2b.md; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A5) |
@@ -572,8 +573,8 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `MA4` | An ability read twice by one dimension is counted once, at its summed weight | Met | tests/integration-mastery.test.ts |
 | `MA6` | At mastery no draw moves a result off 100 | Met | tests/engine-properties.test.ts |
 | `MA7` | Each shortfall a take has is named in words | Met | tests/integration-mastery.test.ts |
-| `MA5` | A played mastery plan reaches 100 on every payoff tape | Open | docs/verification/stage-2026-10-16/runs |
-| `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Open | tests/remaining-school-term.test.ts |
+| `MA5` | A played mastery plan reaches 100 on every payoff tape | Met | docs/verification/integration-2026-10-16/runs/plan-nordic_noir-m-0.json; docs/verification/integration-2026-10-16/runs/plan-musical-m-0.json; docs/verification… |
+| `MA8` | Mastery in the work doesn’t stand in for the work the school asks: a mastered student who misses pieces is Unready on them and the review c… | Met | tests/integration-mastery.test.ts |
 
 ## Criteria: The Genres
 
@@ -593,10 +594,10 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 | `INT-time` | A large time advance and the same span in small steps come to the same | Met | tests/simulation.test.ts |
 | `INT-duplicates` | A command sent twice (a repeat click, a duplicate submission) is lived once, across a reload | Met | tests/briefs.test.ts; tests/engagement.test.ts; tests/base44-contract.test.ts |
 | `INT-migration` | An older save opens, migrates and plays on | Met | tests/save-migration.test.ts; tests/migration-94.test.ts |
-| `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Open | tests/remaining-school-term.test.ts |
-| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Open | tools/acceptance-ui.mjs |
-| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Open | tools/acceptance-ui.mjs |
-| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Open | docs/verification/stage-2026-10-16/runs |
+| `INT-missed-term` | A term played with missed pieces and a missed revision: warning, forecast, notices and review count alike, once, through reloads | Met | tests/remaining-school-term.test.ts |
+| `INT-skipped` | Every skipped check accounted for: the suite skips none; the built app’s two steps played | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log |
+| `INT-navigation` | Home readable; Money, School and Papers usable and aligned at 1440 and 390 | Met | tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log |
+| `INT-long-runs` | Played lives through graduation, the workload runs, the mastery plans, the advice cases and three years of variety on the final code | Met | docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs/lives.jsonl; docs/verification/integration-2026-10-16/ru… |
 | `INT-gate` | The gate and the build on the final revision | Open | package.json |
 
 ## What's Left
@@ -604,12 +605,12 @@ scope reset of 2026-10-09; "Unresolved" is behavior kept in the engine that no l
 Every row not verified or met, with what its own fields say is open.
 
 - **`health.enroll`** (Life, Health And Time, Partial): each refusal said in the player's words (above) / Open: The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through the command is followed to healthMonth charging its premium (health.ts:553-561).; The r…
+- **`health.request_hardship`** (Life, Health And Time, Partial): each refusal said in the player's words (above) / Open: A renewal’s notice answered by a hardship (grantPending’s renewal branch) is played by no test.
 - **`bank.arrange_overdraft`** (Money, Unresolved): each refusal said in the player's words (above) / Open: Unreachable in a New Haven life. Chase, Bank of America and Wells Fargo charge by the item, and Citi and Capital One have no overdraft terms (content/banks-lending.ts:136-157), so overdraftOffer refuses at every bank a New Haven student can hold (lending.ts:424-425; probe D). The row is grouped among the student's commands, but only lives ab…
 - **`bank.cancel_new`** (Money, Unresolved): each refusal said in the player's words (above) / Open: Unreachable in a New Haven life: the US has no cooling-off period in content, so nothing a New Haven student opens can be canceled new. Both tests are in Toronto. The row is grouped with the student's commands.; Abroad: the card branch (accountlife.ts:327-333) and the current-account branch with its linkedTo refusal (:337-338) are untested.;…
 - **`bank.switch`** (Money, Unresolved): each refusal said in the player's words (above) / Open: A New Haven student can't reach bank.switch from any screen: the panel the row names as its entry (BankLending.tsx:323, now :342-405) is hidden wherever SWITCHING has no entry, the US included. So the row's 'the New Haven student meets only the refusal' isn't so through the interface. They meet BankMoves' steps instead, which no test renders…
 - **`bank.take_overrun_loan`** (Money, Unresolved): each refusal said in the player's words (above) / Open: Only a French bank offers it (frenchOverrun returns early unless isFrench, lending.ts:253), and every New Haven life banks at one of five US banks, so a New Haven student can't reach it. It's held back by the owner's brief of 2026-10-09, as the row itself says (like health.prepay).; Even in Paris, the claimed downstream (LOAN_DUE payments, t…
 - **`card.money_transfer`** (Money, Unresolved): each refusal said in the player's words (above) / Open: No life the game makes can reach this. Every life banks in New Haven at one of five American banks, and none of their cards offers a money transfer.; Not one of the 16 named deferred items, but in the same position as health.prepay. The row itself says it is held back by the owner's brief of 2026-10-09. partialClass is deferred-removed for t…
-- **`bank.savings_notice`** (Money, Unresolved): Open: Can't be reached in a New Haven life: only German banks set savingsMonthly, so a US close_savings closes at once (banking.ts:640) and never schedules the notice. The row says verified and doesn't say its only test is a Berlin life.; The 'X Closed' notice and the dropping of standing orders on this path are untested here. Orders are tested only on the immediate close (accountlife.test.ts:279…
 - **`bank.switch_complete`** (Money, Unresolved): Open: Unreachable for a New Haven student: the US has no switching service, so bank.switch is refused (lending.test.ts:293-296) and switch_complete never runs.; Stale description: 'changes completeSwitch lending.ts:542' (now :639), and 'new accounts carry everything' has been false since 2026-10-10. A partial switch or a stopped balance transfer leaves the old account open with its balance (lendi…
 - **`bank.cancel_switch`** (Money, Unresolved): each refusal said in the player's words (above) / Open: Unreachable in a New Haven life by design: the US has no switching service, and bank.switch is refused (bank-moves.test.ts:45). It is reached only on a British life.; It is not on the owner's 16 deferred items. It belongs with bank.switch, whose row is held 'unresolved, as health.prepay is' until the owner decides.; On the British life, 'not…
 - **`bank.stop_balance_transfer`** (Money, Unresolved): each refusal said in the player's words (above) / Open: Unreachable in a New Haven life by design: there is no US switching service and bank.switch is refused. It is reached only on a British life.; It is not on the owner's 16 deferred items. It belongs with bank.switch's owner decision.; On the British life these are untested: the close-of-business deadline refusal (lending.ts:1159-1163), 'Its b…
@@ -618,12 +619,9 @@ Every row not verified or met, with what its own fields say is open.
 - **`tax.lien_dispute`** (Papers, Unresolved): each refusal said in the player's words (above) / Open: It can't be reached for Connecticut, the only state a student's return can owe, even with a fixture W-2. For a non-filer, SLATE's assessment takes the return's own Connecticut figure (assessStateNonFiler), so the taxpayer's own return replaces it with the same tax. lienInError then needs that tax to be no more than the tax paid before the li…
 - **`tax.federal_lien_withdraw`** (Papers, Unresolved): each refusal said in the player's words (above) / Open: Reachable only through a fixture in a New Haven student's life. The notice is filed only where $10,000 or more is unpaid at the LT11 (FEDERAL_LIEN.threshold, taxreturn.ts:244). A student's IRS liability is at most an F-1's 1040-NR on work-study (about $166 for 2026 by probe), so no student life files one without wages put on by hand.; The er…
 - **`tax.request_waiver`** (Papers, Unresolved): each refusal said in the player's words (above) / Open: Reachable only through a fixture. Only Oregon charges the three-year penalty, and every new life files in Connecticut (no threeYear rule), so no student's life can reach it.; The downstream named in the row (what is owed, less the waiver) is not asserted.; Untested shares: 70% (filed before any notice) and 50% (after a demand).; By reading, …
-- **`i-stale-claims`** (Creation, Profile, Home And The Looks, Partial): Open: Present-tense leftovers remain outside the places the row lists. tests/attributes-matrix.test.ts:4 says 'every interest and genre has its definition', while the same test asserts at :20 that '## Interests' is gone.; tests/looks.test.ts:491-492 says 'no empty line where the background, the interests and the films would be', as if an interests line could still be drawn.; Nothing fails if a ne…
 - **`brief.choose`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also chooseRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts)…
 - **`brief.prepare`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also prepareRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts…
 - **`brief.reader`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also readerRefusal) / Until 2026-10-12 this was called Verified, while what a classmate brings as your reader had no test that drove it. What’s driven through the commands: preparing, choosing a reading and a way to play it, and taping, each step spending its time and the take judged and kept with its purpose (tests/briefs.test.ts, tests/engagement.test.ts)…
-- **`health.apply`** (Commands Traced Outside The Audit, Implemented But Unverified): refusals said in the player's words: — (also applyRefusal)
-- **`health.request_hardship`** (Commands Traced Outside The Audit, Implemented But Unverified): refusals said in the player's words: — (also hardshipRefusal)
 - **`life.look_after`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: That isn’t something you can do for yourself here.; The payment didn’t go through. (also lookAfterRefusal) / Until 2026-10-12 this was called Verified, while two of its claims had no test through the command, and until later that day these limits called a shower, an hour unwinding and a meal you needed checked through the command, while the shower and the meal…
 - **`school.choose_part_playing`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also partPlayingRefusal) / Until 2026-10-12 this was called Verified on tests/trace-commands.test.ts alone, whose title said the showing read the choice while the test checked only that a shown scene refused a new one. What’s driven through the engine there: school.choose_playing chooses a way, work on the feet (school.prepare) rehearses it in, and a change…
 - **`school.choose_playing`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also playingRefusal) / Until 2026-10-12 this was called Verified on tests/trace-commands.test.ts alone, whose title said the showing read the choice while the test checked only that a shown scene refused a new one. What’s driven through the engine there: school.choose_playing chooses a way, work on the feet (school.prepare) rehearses it in, and a change kee…
@@ -631,24 +629,10 @@ Every row not verified or met, with what its own fields say is open.
 - **`work.settle`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also settleRefusal) / Until 2026-10-12 this was called Verified, while no test played a night after a way was kept, and these limits said no test worked a class scene, while tests/defects-g8-9.test.ts did. Driven through the commands and checked on a brief: a problem named, an adjustment tried and its evidence kept, a change of a beat waiting to be kept or …
 - **`work.try`** (Commands Traced Outside The Audit, Implemented): refusals said in the player's words: — (also tryRefusal) / Until 2026-10-12 this was called Verified, while no test played a night after a way was kept, and these limits said no test worked a class scene, while tests/defects-g8-9.test.ts did. Driven through the commands and checked on a brief: a problem named, an adjustment tried and its evidence kept, a change of a beat waiting to be kept or put…
 - **`banking.1.pro-rata`** (Remaining Area: banking, Owner's Decision): How a German bank works the pro rata share isn’t read from any bank’s price list: by the days the account was open in the month, from its opening day where it opened that month, would be SLATE’s reading.
-- **`coverage.1-separate-totals`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
-- **`coverage.2-i-stale-claims`** (Remaining Area: coverage, Open): required reachable behavior (the standard; the row's own claim is the repository's text)
-- **`coverage.3-unresolved-rows`** (Remaining Area: coverage, Open): required reachable behavior (row words); bank.savings_notice: required reachable behavior, unverified by play (reported)
-- **`coverage.4-fold-areas`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
-- **`coverage.d-renames-chain`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
-- **`coverage.d-fixture-kind`** (Remaining Area: coverage, Open): required reachable behavior (the project's verification tooling)
-- **`coverage.d-evidence-cell`** (Remaining Area: coverage, Open): misleading player-facing control (here a misleading sentence on the coverage page, not a game control)
 - **`ST3`** (Criteria: The Stage, Not Met): As written it asks two different real numbers to show the same tenth; the difference is the even actor’s stamina drain on the execution the stage weighs. Contradictory as written; ST3′ proposed in st3.md, not counted
 - **`ST6`** (Criteria: The Stage, Not Met): The grain against a scene built on size costs more than strength gives past a gap of about 0.5; the owner’s options in st6.md
 - **`H4`** (Criteria: The Attributes, Not Met): Every configuration measured that lifted H4 past 3 broke H2 on class scenes; presence, discipline and stamina reach 60% in none. The owner’s options and H4′ in h4.md
 - **`F2`** (Criteria: The Attributes, Not Met): As written it reads the take’s chief limit, not the advice, against a comparator that isn’t equal cost (advice-2026-10-16/criteria.md); superseded for advice by F2-A, and reported as measured, not counted met
-- **`F2-A`** (Criteria: The Attributes, Open): Before: 40 of 40; after: measured again in the long runs
 - **`G1`** (Criteria: The Attributes, Superseded): Replaced by the genre signature S1 to S4 on 2026-10-16 (work plan section 5), defined before it ran
 - **`L3`** (Criteria: Long-Term Continuity, Not Met): Nothing deteriorated: every take rose 3.0 to 4.2 points at the end’s levels; the last month holds the callbacks earned, pitched harder. As written it fails a student who earns them; L3′ proposed in l3.md, not counted
-- **`MA5`** (Criteria: Mastery Through Play, Open): Before: all six plans (stage-2026-10-16/runs/); after: measured again in the long runs
-- **`MA8`** (Criteria: Mastery Through Play, Open): Before: not measured before; after: with the school area
-- **`INT-missed-term`** (Integration, Open): Each refusal says why, and what comes next
-- **`INT-skipped`** (Integration, Open): Each refusal says why, and what comes next
-- **`INT-navigation`** (Integration, Open): Each refusal says why, and what comes next
-- **`INT-long-runs`** (Integration, Open): Each refusal says why, and what comes next
 - **`INT-gate`** (Integration, Open): Each refusal says why, and what comes next
