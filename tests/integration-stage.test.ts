@@ -24,6 +24,7 @@ import { TASK_PROFILES } from '@/engine/content/tasks';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '@/engine/content/material';
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { PUBLIC_SCENES } from '@/engine/content/scenes-public';
+import { HOUSE_SCENES } from '@/engine/content/scenes-house';
 import { CIRCUMSTANCE_AFFINITY } from '@/engine/content/interpretation';
 import { difficultyOf } from '@/engine/systems/coursework';
 import { materialContext, misfitOf } from '@/engine/systems/material';
@@ -49,7 +50,9 @@ const drama = [...SCENE_MATERIAL, ...PLAY_MATERIAL].filter((m) => sceneOfMateria
 
 describe('ST4: drama suits each side somewhere, from what its scenes are', () => {
   it('the catalog’s drama has scenes where restraint suits better and scenes where size does, and every one of the 25 before 2026-10-16 still suits restraint', () => {
-    const before = drama.filter((m) => !NEW.includes(m.id));
+    // The 25 are the drama there was before 2026-10-16's additions: from brief 09 the scenes played out to a house
+    // (`content/scenes-house.ts`) add Henry V's 4.3, filed as drama, which isn't one of them.
+    const before = drama.filter((m) => !NEW.includes(m.id) && !HOUSE_SCENES.some((s) => s.id === m.id));
     expect(before).toHaveLength(25);
     for (const m of before) { const { r, e } = suits(m); expect(r.s, m.id).toBeGreaterThan(e.s); }
     const added = drama.filter((m) => NEW.includes(m.id));

@@ -78,7 +78,8 @@ function briefScore(b: Brief, p: Performer, o: { key?: string; prep?: number; ge
 /** Every reading's mean: what a random choice of reading would come to (the effect matrix reads this). */
 const briefMean = (b: Brief, p: Performer, o: { key?: string; prep?: number; genre?: number } = {}): Evaluation => {
   const es = b.readings.map((r) => briefScore(b, p, { ...o, reading: r.id }));
-  return { ...es[0]!, overall: r2(mean(es.map((e) => e.overall))) };
+  // The mean at full precision beside it (from 2026-10-16, brief 09), for the account of H4 that reads exact effects.
+  return { ...es[0]!, overall: r2(mean(es.map((e) => e.overall))), exact: mean(es.map((e) => e.exact ?? e.overall)) };
 };
 
 function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Piece {
@@ -391,6 +392,48 @@ const cond = (kind: Kind, c: { readiness: number; ill?: boolean; injured?: boole
 out.condition = { masteredBriefs: { sufficient: cond('brief', { readiness: 100 }), tired30: cond('brief', { readiness: 30 }), ill: cond('brief', { readiness: 100, ill: true }), injured: cond('brief', { readiness: 100, injured: true }) } };
 const staminaEffect = Object.fromEntries(KINDS.map((k) => { const xs = PIECES.map((pc, i) => [pc, effect.stamina![i]!] as const).filter(([pc]) => pc.kind === k).map(([, x]) => x); return [k, stats(xs)]; }));
 out.staminaPlus10 = staminaEffect;
+
+// ---------------------------------------------------------------------------------------------------------------
+// 10. H4 taken apart, at full precision (from 2026-10-16, brief 09; docs/verification/integration-2026-10-16/h4.md)
+// ---------------------------------------------------------------------------------------------------------------
+// For each ability: its share of what a piece's abilities move (its +10 effect over the twelve's positive effects), on
+// H4's own set of its pieces and everywhere; the pieces where it's the largest of the twelve (its own work), and whether
+// its specialist is ahead there; and the share above which specialists come out ahead. Stamina, read only as the drain
+// through a piece, is also measured on what it's named for: the last segment of a night. H4' (proposed, not counted)
+// reads `ownWork` and `staminaLastSegment`; H4 as written is section 2's, unchanged.
+log('10. H4 taken apart');
+{
+  const exactOf = (e: Evaluation) => e.exact ?? e.overall;
+  const evenX = PIECES.map((pc) => exactOf(pc.judge(EVEN)));
+  const effX = Object.fromEntries(ABILITIES.map((a) => [a, PIECES.map((pc, i) => exactOf(pc.judge(bump(EVEN, a, 10))) - evenX[i]!)]));
+  const total = PIECES.map((_, i) => ABILITIES.reduce((t, a) => t + Math.max(0, effX[a]![i]!), 0));
+  const shareOf = (a: Ab, i: number) => (total[i]! > 0 ? Math.max(0, effX[a]![i]!) / total[i]! : 0);
+  const specX = Object.fromEntries(ABILITIES.map((a) => [a, PIECES.map((pc, i) => exactOf(pc.judge(specialist(a))) - evenX[i]!)]));
+  const bandEdges = [0, 0.1, 0.125, 0.15, 0.2, 0.3, 1.01];
+  const bands = bandEdges.slice(0, -1).map((lo, k) => ({ from: lo, to: bandEdges[k + 1]!, pairs: 0, ahead: 0 }));
+  const q = (xs: number[], p: number) => (xs.length ? [...xs].sort((x, y) => x - y)[Math.min(xs.length - 1, Math.floor(p * xs.length))]! : 0);
+  const kindsOf = (idx: number[]) => idx.reduce((m, i) => { m[PIECES[i]!.kind] = (m[PIECES[i]!.kind] ?? 0) + 1; return m; }, {} as Record<string, number>);
+  const abilities = Object.fromEntries(ABILITIES.map((a) => {
+    PIECES.forEach((_, i) => { const b = bands.find((x) => shareOf(a, i) >= x.from && shareOf(a, i) < x.to)!; b.pairs += 1; if (specX[a]![i]! > 0.05) b.ahead += 1; });
+    const suit = suitable(a);
+    const h4 = PIECES.map((_, i) => i).filter((i) => suit[i]);
+    const own = PIECES.map((_, i) => i).filter((i) => effX[a]![i]! >= 0.05 && ABILITIES.every((b) => b === a || effX[b]![i]! < effX[a]![i]!));
+    return [a, {
+      h4Set: { n: h4.length, shareMedian: r3(q(h4.map((i) => shareOf(a, i)), 0.5)), shareP90: r3(q(h4.map((i) => shareOf(a, i)), 0.9)), underATenth: h4.filter((i) => shareOf(a, i) < 0.1).length, kinds: kindsOf(h4) },
+      ownWork: { n: own.length, ahead: own.filter((i) => specX[a]![i]! > 0.05).length, kinds: kindsOf(own), pieces: own.map((i) => `${PIECES[i]!.kind}:${PIECES[i]!.id} share ${r3(shareOf(a, i))} specialist ${r2(specX[a]![i]!)}`) },
+      shareAQuarterOrMore: PIECES.filter((_, i) => shareOf(a, i) >= 0.25).length,
+    }];
+  }));
+  const S = specialist('stamina');
+  const nights = PIECES.filter((pc) => pc.kind === 'night');
+  const last = nights.map((pc) => { const s = pc.judge(S), e = pc.judge(EVEN); return { id: pc.id, lastSegment: r2(s.piece!.segments.at(-1)!.overall - e.piece!.segments.at(-1)!.overall), whole: r2(exactOf(s) - exactOf(e)) }; });
+  out.h4Account = {
+    note: 'At full precision. A specialist is ahead where its result is more than 0.05 over the even actor’s. Own work: the pieces where the ability’s +10 effect is the largest of the twelve.',
+    aheadByShare: bands.map((b) => ({ ...b, share: b.pairs ? r3(b.ahead / b.pairs) : null })),
+    abilities,
+    staminaLastSegment: { nights: last.length, aheadOnTheLast: last.filter((x) => x.lastSegment > 0.05).length, aheadOnTheWhole: last.filter((x) => x.whole > 0.05).length, rows: last },
+  };
+}
 
 mkdirSync(dirname(OUT), { recursive: true });
 writeFileSync(OUT, `${JSON.stringify(out, null, 1)}\n`);
