@@ -25,7 +25,7 @@
 
 import { CHAPTER_BY_ID } from '../tutorial';
 import { YALE_DRAMA } from '../school';
-import { BODY as A_BODY } from '../body';
+import { BODY as A_BODY, TRAINING_CLASS_NAMES } from '../body';
 import { INJURY } from '../injury';
 import { CHRONIC } from '../safetynet';
 import { DEVELOPMENT } from '../abilities';
@@ -73,6 +73,8 @@ const RUN_MORE = Math.round((TRAINING.run / TRAINING.indoors - 1) * 100);
 const RUN_RISK = (chanceOver(INJURY.perThousandHours.run, 1) * 100).toFixed(2);
 const GYM_RISK = (chanceOver(INJURY.perThousandHours.gym, 1) * 100).toFixed(2);
 const WORKOUT_ENERGY = Math.round(workoutCosts(firstMorning()));
+/** The classes that count as a workout (`TRAINING_CLASSES`, from 2026-10-16), as a list. */
+const CLASS_LIST = TRAINING_CLASS_NAMES.length < 2 ? TRAINING_CLASS_NAMES.join('') : `${TRAINING_CLASS_NAMES.slice(0, -1).join(', ')} or ${TRAINING_CLASS_NAMES.at(-1)}`;
 const LABELS = Object.values(LOOKING_AFTER).map((one) => one.label);
 const minutesOf = (action: LookAfter): string => plural(LOOKING_AFTER[action].minutes, 'minute');
 
@@ -267,11 +269,11 @@ export const BODY: readonly GuideEntry[] = [
       `Order In: the same, and a restaurant’s larger meal, ${A_BODY.eatenOut} calories more toward your weight.`,
       'Shower: hygiene to 100, and stress eased by a tenth of what it put back.',
       `Work Out: fitness up 0.6 at readiness 75, ${RUN_MORE}% more on a run, never past what your age allows; energy, nourishment and hygiene down, stress eased, the mood up.`,
-      `A second workout the same day builds ${Math.round(DEVELOPMENT.repeat * 100)}% of the first, and a third ${Math.round(DEVELOPMENT.repeat ** 2 * 100)}%.`,
+      `A second workout the same day builds ${Math.round(DEVELOPMENT.repeat * 100)}% of the first, and a third ${Math.round(DEVELOPMENT.repeat ** 2 * 100)}%. A class that trains the body as hard as a workout counts as one of them: ${CLASS_LIST}, attended, builds what a workout indoors does.`,
       'Unwind: stress down and the mood up.',
     ],
     later: [
-      `Fitness holds for ${plural(FITNESS.heldDays, 'day')} after a workout, then falls ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS}.`,
+      `Fitness holds for ${plural(FITNESS.heldDays, 'day')} after a workout or one of those classes, then falls ${FITNESS.perDay} a day toward ${EVERYDAY_FITNESS}.`,
       `Awake, nourishment falls ${NOURISHMENT_DRAIN_PER_HOUR} an hour. Each midnight the day’s groceries are bought at the town’s prices, and the day starts fed to at least 76 nourishment, or 40 if they can’t be paid for, and washed to at least 82 hygiene.`,
       'A shower skipped costs nothing past its day: the morning washes you to 82 whatever the day before was. That’s the owner’s decision, of 2026-10-14.',
       `Your weight follows the day’s eating against what you burn, half the way to its new level in ${plural(A_BODY.halfLifeDays, 'day')}. Eat A Meal is part of the day’s eating and adds nothing to it; Order In adds its ${A_BODY.eatenOut} calories. A run burns ${A_BODY.met.run} METs against a workout indoors’ ${A_BODY.met.workout}, and none of it is eaten back.`,

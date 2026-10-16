@@ -3,6 +3,8 @@
  * and what its weight raises.
  */
 
+import { COURSES } from './school';
+
 // ---------------------------------------------------------------------------
 // Drawn from
 // ---------------------------------------------------------------------------
@@ -85,6 +87,38 @@ export const BODY = {
   met: { run: 9.3, workout: 3.5, swim: 5.8, acting: 3.0, musical: 10.3, rehearsal: 5.0, booth: 1.5 },
   source: 'NCD-RisC (Lancet 2020; Nature 2026); NHNS 2023; Mifflin et al. 1990; FAO/WHO/UNU 2004; Hall et al., Lancet 2011; Zheng et al., JAMA 2017; USDA ERS ERR-90; 2024 Adult Compendium of Physical Activities',
 } as const;
+
+/**
+ * The classes that train the body as hard as a workout does or harder, by the course's code, and the term it does so in
+ * (from 2026-10-16, brief 09's follow-up): by the 2024 Adult Compendium of Physical Activities, read against each
+ * course's description in the Bulletin (docs/research/world/research-yale-coursework.json). A workout indoors is the
+ * Compendium's weight training, multiple exercises (02054), 3.5 METs (`BODY.met.workout`).
+ * - Movement Invention II and III (DRAM 273a, DRAM 373a), "improvisation, physical research, phrase work, and
+ *   composition": a ballet, modern or jazz class or rehearsal (03010), 5.0.
+ * - Stage combat: Advanced Principles Of Acting Stage Combat (DRAM 405a/b), and Acting Intimacy And Combat For The Stage
+ *   (DRAM 403a/b) in its spring, when its work is combat (the consent and intimacy practice is the fall's,
+ *   `content/coursework.ts`): martial arts of different types at a slower pace, novices practicing (15425), 5.3, a fight
+ *   drilled at half speed before it's shown at speed. Fencing's 6.0 (15200) is the sport's bout.
+ *
+ * Left out, their descriptions fitting no activity at 3.5 or more: the Alexander Technique (balance, alignment and
+ * breath, much of it in tutorials), The Body As Source (the energetic body and its impulses; not a dance class, by the
+ * citations review, docs/research/attributes/research-citations-review.json), Commedia (mask, articulation, sound and
+ * rhythm, improvised) and Character Analysis And Movement, whose description the Bulletin doesn't print. No voice class
+ * is one. One counts as one workout indoors and no more (`classTrains`, systems/life.ts): a dance class is low to
+ * moderate in intensity and asks less than a performance does (Rodrigues-Krause, Krause & Reischak-Oliveira, J Dance Med
+ * Sci 2015;19(3):91-102), and the house builds no more for a harder hour, as a run at 9.3 METs builds a tenth more than
+ * a workout's 3.5 (`TRAINING`), not 2.7 times. What a class burns isn't counted here: a class day is charged as any
+ * waking day is.
+ */
+export const TRAINING_CLASSES: Readonly<Record<string, 'fall' | 'spring' | 'both'>> = {
+  'DRAM 273a': 'both',
+  'DRAM 373a': 'both',
+  'DRAM 403a/b': 'spring',
+  'DRAM 405a/b': 'both',
+};
+
+/** Those classes by name, in the catalog's order, as the guide and the tutorial say them. */
+export const TRAINING_CLASS_NAMES: readonly string[] = COURSES.filter((c) => TRAINING_CLASSES[c.code]).map((c) => (TRAINING_CLASSES[c.code] === 'both' ? c.name : `${c.name} in its ${TRAINING_CLASSES[c.code]}`));
 
 // ---------------------------------------------------------------------------
 // What the weight raises

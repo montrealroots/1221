@@ -26,7 +26,7 @@ import { starvedPastTheLimit } from './mortality';
 import { chanceOver, mayHurt, trainingRefusal } from './injury';
 import { inHospital } from './health';
 import { INJURY } from '../content/injury';
-import { BODY } from '../content/body';
+import { BODY, TRAINING_CLASSES } from '../content/body';
 import { buyTheDaysFood, fedOn, mealOf, spend, spendRefusal } from './spending';
 import { heatIndexC, weatherAt } from './weather';
 import { alreadyApplied, developmentOf, markApplied, recordDevelopment, repeatsSoFar, repeatsToday } from './attributes';
@@ -648,6 +648,28 @@ export function lookAfterRefusal(sim: Simulation, action: LookAfter): string | u
  */
 export function workoutBuilds(person: Person): number {
   return WORKOUT_FITNESS * remap(readiness(person), 0, 100, 0.4, 1.2);
+}
+
+/**
+ * A class that trains the body as hard as a workout does (`TRAINING_CLASSES`, content/body.ts), attended in the term it
+ * does: it holds fitness as a workout does, for `FITNESS.heldDays`, and builds what a workout indoors builds at that
+ * readiness, never past what the age allows, counted among the day's workouts, so a workout after it the same day builds
+ * half (`DEVELOPMENT.repeat`), and a second such class too. Its energy is the class day's (`ESTIMATE.energy.classes`,
+ * systems/school.ts), not a workout's. From 2026-10-16, brief 09's follow-up: until then no class counted, and a student
+ * at every Movement Invention and Stage Combat meeting who never chose Work Out detrained as one who went to none.
+ * Returns what it built, or undefined where the class isn't one.
+ */
+export function classTrains(sim: Simulation, person: Person, code: string, season: 'fall' | 'spring'): number | undefined {
+  const term = TRAINING_CLASSES[code];
+  if (!term || (term !== 'both' && term !== season)) return undefined;
+  const w = person.wellbeing;
+  const before = w.fitness;
+  const ceiling = ceilingAt(yearsSince(person.birthInstant, sim.now)).fitness;
+  const again = DEVELOPMENT.repeat ** repeatsToday(sim, person, WORKOUTS_TODAY);
+  if (before < ceiling) w.fitness = Math.min(before + workoutBuilds(person) * TRAINING.indoors * again, ceiling);
+  recordDevelopment(sim, person, 'stamina', w.fitness - before, `class:${code}`);
+  developmentOf(person).workout = { at: sim.now };
+  return w.fitness - before;
 }
 
 /** What a workout costs in energy: 10 at fitness fifty, 15 at nought and 5 at a hundred. */

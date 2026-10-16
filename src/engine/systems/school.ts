@@ -83,7 +83,7 @@ import {
   CLASSES_2026_27, COST_2026_27, COURSES, LABS, ORIENTATION_2026, SCHOOL_SEASON, REQUIRED_PPE, SEAGULL_2027, SKILLS, SKILL_FROM, SUMMER_CABARET, TERM_STARTS_2026_27, WORK_LIMITS, WORK_STUDY, YALE_CABARET, YALE_DRAMA,
   type Course, type SchoolDate, type Skill, type Term,
 } from '../content/school';
-import { readiness } from './life';
+import { classTrains, readiness } from './life';
 import { COMPANY_READ, NEW_PLAYS_READ, REP_PLAYS, genresOfPlay, SHAKESPEARE_PLAYS, SIZE_WORD, SUMMER_PLAYS, THESIS_PLAYS, unnamedParts, type Part, type PartSize } from '../content/plays';
 import { enjoyWork, feel } from './enjoyment';
 import { expenseFor, owe, payFromCurrent, spend } from './spending';
@@ -3161,6 +3161,8 @@ export function registerSchool(sim: Simulation): void {
         // reads discipline and halves the same growth again the same day as every other growth does.
         for (const skill of course.skills) ordinary(s, person, skill, focus, weights[i]!, `class:${course.code}`);
         for (const ability of classAbilities(course.skills)) ordinary(s, person, ability, focus, weights[i]! * CLASS_ABILITY_SHARE, `class:${course.code}`);
+        // A class that trains the body as hard as a workout counts as one (`classTrains`, from 2026-10-16).
+        classTrains(s, person, course.code, termStart(termOf(day)).fall ? 'fall' : 'spring');
       });
       // The class, met in the room if not before.
       for (const mate of school.classmates) mateRecord(mate).met ??= item.at;
