@@ -117,8 +117,11 @@ describe('HUSKY D held from before 1 October 2026', () => {
     const program = healthOf(sim.player).program!;
     expect([program.state, program.from, program.renewAt]).toEqual(['ct', edt(2026, 10, 1, 0), edt(2027, 10, 1, 0)]);
     sim.advanceTo(edt(2027, 10, 2, 12));
-    expect(notices(sim, 'Your Public Cover Ended At Renewal').map((n) => n.body)).toEqual([
-      'From October 1, 2026, HUSKY D is for a US citizen, or somebody with a green card for five years, and renewing it reads that.',
+    // Said at the renewal, and ended at the month's end at least ten days on, 31 October (42 CFR 431.211; from
+    // 2026-10-16: until then it ended at the renewal's own hour, “Your Public Cover Ended At Renewal”).
+    expect(notices(sim, 'Your Public Cover Ends').map((n) => n.body)).toEqual([
+      'From October 1, 2026, HUSKY D is for a US citizen, or somebody with a green card for five years, and renewing it reads that: HUSKY D ends on October 31, 2027, and out of status the marketplace won’t take you.',
     ]);
+    expect(healthOf(sim.player).program!.until).toBe(edt(2027, 11, 1, 0));
   }, 300_000);
 });

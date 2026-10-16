@@ -1,8 +1,9 @@
 /**
  * A tax lien's record on Papers (from the remaining-gaps pass of 2026-10-11): which authority filed it and why, what it
  * secured, where it's recorded, its fees, its dates and what's next; the request a release asks where the authority's
- * rule asks one, and the request to withdraw one filed in error, each refused with its reason where it can't be made.
- * Beside it, Oregon's three-year penalty and its waiver.
+ * rule asks one, refused with its reason where it can't be made; and the request to withdraw one filed in error, drawn
+ * only on a lien that was (from 2026-10-16: until then drawn on every lien, refused with its reason, below). Beside it,
+ * Oregon's three-year penalty and its waiver.
  */
 import { useGame, useWorld } from '@/app/game-context';
 import { Fine, WhyNot } from '@/ui/components/primitives';
@@ -56,6 +57,14 @@ export function StateLienAndPenalty({ year, state }: { year: number; state: stri
   const l = sd.lien;
   const release = lienReleaseRefusal(sim, person, r, state);
   const dispute = lienDisputeRefusal(r, state);
+  // The withdrawal as filed in error, offered only on a lien the engine finds was (`lienInError`): one on a state's
+  // assessment that your own return, in its place, showed you'd paid. Any other filed lien says why it isn't, in the
+  // engine's words, and its next step is its release. From 2026-10-16: until then the button was drawn shut on every
+  // lien, and on Connecticut's, the only state a life files in, no state could open it, since DRS takes a payment to its
+  // penalty and interest first, files only while tax is owed and assesses from the return's own figures; the line beside
+  // it said a lien filed in error is withdrawn on request (the integration pass's tax item 2).
+  const inError = !dispute;
+  const secured = l !== undefined && ['filed', 'paid', 'released'].includes(l.status) ? dispute : undefined;
   const waive = waiverRefusal(sim, r, state);
   return (
     <>
@@ -63,13 +72,13 @@ export function StateLienAndPenalty({ year, state }: { year: number; state: stri
         <div className="col gap-1">
           <div className="eyebrow">{`${agencyOf(state)}’s Lien`}</div>
           <LienFacts l={l} money={money} zone={sim.zone} />
-          <p className="xs dim" style={{ margin: 0 }}>{rules.lien.effect} It’s released {lienReleaseWords(rules.lien)}. Filed in error, it’s withdrawn on request: {rules.lien.error.how}.</p>
+          <p className="xs dim" style={{ margin: 0 }}>{rules.lien.effect} It’s released {lienReleaseWords(rules.lien)}.{inError ? ` Filed in error, it’s withdrawn on request: ${rules.lien.error.how}.` : secured ? ` ${secured}` : ''}</p>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             <Gated feature="tax.lien_release" className="btn btn-sm btn-ghost" disabled={Boolean(release)} title={release} onClick={() => { const a = run<{ releaseDue?: number }>('tax.lien_release', { state, year }); if (a.ok) toast(a.value!.releaseDue !== undefined ? `Asked: released by ${formatDate(a.value!.releaseDue, sim.zone)}.` : 'Released.', 'positive'); }}>Ask For Its Release</Gated>
-            <Gated feature="tax.lien_dispute" className="btn btn-sm btn-ghost" disabled={Boolean(dispute)} title={dispute} onClick={() => { const a = run<{ decideAt: number }>('tax.lien_dispute', { state, year }); if (a.ok) toast(`Asked: ${agencyOf(state)} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For Its Withdrawal As Filed In Error</Gated>
+            {inError && <Gated feature="tax.lien_dispute" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('tax.lien_dispute', { state, year }); if (a.ok) toast(`Asked: ${agencyOf(state)} decides by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For Its Withdrawal As Filed In Error</Gated>}
             <HowItWorks help="taxes.lien" />
           </div>
-          <WhyNot reasons={[['Ask For Its Release', release], ['Ask For Its Withdrawal As Filed In Error', dispute]]} />
+          <WhyNot reasons={[['Ask For Its Release', release]]} />
         </div>
       )}
       {sd.threeYear && rules.threeYear && (

@@ -85,7 +85,8 @@ import { redirectAway } from './routing';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
-import { bankOf, banksFor, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
+import { bankOf, banksFor, dropPaymentsFor, endedWords, endOrdersFrom, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
+import type { StandingOrder } from './payments';
 import { savingsLeftThisMonth } from './cash';
 import { homeOf, recordInterest } from './earnings';
 import { businessDay, businessDaysBetween as bankDaysBetween, daysOfAccount } from '../content/bankdays';
@@ -528,6 +529,26 @@ function charge(sim: Simulation, account: Account, amount: Money, memo: string, 
   ]);
 }
 
+/** The overdraft interest an account has built since the 1st and not yet been charged, in whole cents. */
+export function overdraftInterestOf(account: Account): Money {
+  return Math.max(0, Math.floor(account.odAccrued ?? 0));
+}
+
+/**
+ * Charges the overdraft interest an account has built since the 1st, as the 1st charges it, where the account closes
+ * before then, or the bank sets off what it's owed (from 2026-10-16). The fraction of a cent stays behind, as it does on
+ * the 1st. Until then every close dropped it: Close It, Cancel It, a bank's own close, a switch and the overdraft's
+ * set-off closed the account with it unsettled, nothing charges a closed account, and a home account abroad overdrawn,
+ * paid back and closed before the 1st kept the interest it owed (docs/verification/remaining/banking-checklist.json,
+ * banking.1.overdraft-interest).
+ */
+export function settleOverdraftInterest(sim: Simulation, account: Account, memo = 'Overdraft interest, on closing'): void {
+  const interest = overdraftInterestOf(account);
+  if (interest <= 0) return;
+  account.odAccrued = (account.odAccrued ?? 0) - interest;
+  charge(sim, account, interest, memo, 'bank_fee', 'Overdraft Interest');
+}
+
 /**
  * The fee for an item that took the current account below zero, where the
  * bank charges by the item: after the payment's posted, if the account is
@@ -726,9 +747,13 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
       sim.schedule({ at: from.closingAt, kind: 'bank.current_closes', label: `${from.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: from.id, remainderTo: account.id } });
       return account;
     }
-    // The balance goes across, and anything built up on it is paid first, and any fees it owes.
+    // The balance goes across, and anything built up on it is paid first, and any fees it owes, and any overdraft interest
+    // built since the 1st (from 2026-10-16, `settleOverdraftInterest`). Re-banked after a charge-off (`quietly`), the
+    // overdraft's set-off has settled the fees already (`closeForOverdraft`), and a second settling would charge the
+    // month's fee again and carry it to the new bank as an overdraft.
     settleInterest(sim, from, `Interest: ${from.name}, on closing`);
-    settleFees(sim, from);
+    settleOverdraftInterest(sim, from);
+    if (!quietly) settleFees(sim, from);
     if (from.balance !== 0) {
       post(sim, `Moved to ${to.name}`, 'transfer', [{ accountId: from.id, amount: -from.balance }, { accountId: account.id, amount: from.balance }]);
     }
@@ -965,6 +990,17 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   const closes = (account: Account) => account.negativeSince !== undefined && (account.id !== current.id || elsewhereAtAll !== undefined);
   // The interest is settled before the set-off, so it's set off too; on an account staying open it says so.
   for (const account of mine) settleInterest(sim, account, `Interest: ${account.name}, ${closes(account) ? 'on closing' : 'before the set-off'}`);
+  // What's owed the bank to the day goes against it too (from 2026-10-16): the overdraft interest built since the 1st,
+  // and on each account that closes, Germany's quarter of fees so far (`settleFees`), the rest of them once a charge-off
+  // ends the relationship (below). Until then the bank closed the accounts with both unsettled, and nothing charges a
+  // closed account: Deutsche Bank's own close of an AktivKonto overdrawn from 5 January 2026 charged off €101.97 on 7
+  // March and dropped January's and February's €6.90, March's, and the interest built since 1 March
+  // (docs/verification/remaining/banking-checklist.json, banking.1). A fee is settled once (`feesSettled`), as a second
+  // settling in the month charges the month again.
+  for (const account of mine) settleOverdraftInterest(sim, account, `Overdraft interest, ${closes(account) ? 'on closing' : 'before the set-off'}`);
+  const feesSettled = new Set<string>();
+  const settleFeesOf = (account: Account) => { if (!feesSettled.has(account.id)) { feesSettled.add(account.id); settleFees(sim, account); } };
+  for (const account of mine) if (closes(account)) settleFeesOf(account);
   // Set-off: what's owed on any account there is gathered on the current
   // account, and what's held there goes against it, as much as it takes.
   // Between two accounts in the bank's own money where it isn't the save's, that figure goes on both sides, so each
@@ -983,9 +1019,13 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     const covers = (account.held ?? 0) >= -(current.held ?? 0);
     setOff(account, covers ? -current.balance : account.balance, covers ? -(current.held ?? 0) : account.held ?? 0);
   }
-  const owed = Math.max(0, -current.balance);
   const cur = saveCurrency(sim.universe);
-  if (owed === 0) {
+  // The standing orders paying from an account it closes end with it, and payments set for a date to or from it and orders
+  // into it go as every other close takes them (`endOrdersFrom`, `dropPaymentsFor`, from 2026-10-16: until then each
+  // order said “A Standing Order Didn’t Go” every month for good, and orders into savings closed here did the same).
+  const ended: StandingOrder[] = [];
+  const letGo = (account: Account) => { ended.push(...endOrdersFrom(sim, person, account)); dropPaymentsFor(sim, person, account); };
+  if (current.balance >= 0) {
     // What the person holds there covered it: the bank takes it, closes
     // the accounts that ran below zero, and nothing is charged off. The
     // current account closes only where they keep one at another bank, and
@@ -1002,13 +1042,22 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
       if (person.primaryAccountId === current.id) person.primaryAccountId = elsewhereAtAll.id;
       redirectAway(sim, person, current.id, elsewhereAtAll.id);
     }
+    for (const account of closed) letGo(account);
     if (person.id === sim.universe.playerId) {
       const kept = mine.filter((a) => a.closedAt === undefined);
       const which = `${closed.length > 0 ? ` It closed ${closed.map((a) => a.name).join(' and ')}.` : ''}${kept.length > 0 ? ` ${kept.map((a) => a.name).join(' and ')} ${kept.length > 1 ? 'stay' : 'stays'} open.` : ''}`;
-      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.${which}`, importance: 60 });
+      sim.notify({ category: 'bank', title: closed.length > 0 ? `${bank.name} Closed An Account` : `${bank.name} Took What It Was Owed`, body: `It had been below zero for ${ESTIMATE.closeAfterDays} days, so the bank took what it was owed from your other money there.${which}${endedWords(sim, ended)}`, importance: 60 });
     }
     return;
   }
+  // Charged off, the relationship ends: the fees of the accounts that weren't settled above come into the debt, any one
+  // they leave below zero gathered on the current account as the set-off gathers it (from 2026-10-16, as above).
+  for (const account of mine) {
+    if (feesSettled.has(account.id)) continue;
+    settleFeesOf(account);
+    if (account.id !== current.id && account.balance < 0) setOff(account, account.balance, shared(account) ? account.held ?? 0 : undefined);
+  }
+  const owed = Math.max(0, -current.balance);
   // The debt owed to this bank, its own (from 2026-10-13: until then a second bank's charge-off went into whichever debt
   // was open, named for the first bank, and the refusals that read who's owed read the wrong one).
   const debt = collectionsOf(sim, person, bank.name) ?? sim.openAccount({
@@ -1043,11 +1092,12 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
     for (const account of mine) { if (account.balance === 0) account.closedAt = sim.now; account.overdraftLimit = undefined; }
     if (person.primaryAccountId === current.id) person.primaryAccountId = elsewhere.id;
     redirectAway(sim, person, current.id, elsewhere.id);
+    for (const account of mine) if (account.closedAt !== undefined) letGo(account);
   } else completeSwitch(sim, person, to, true, secondChance);
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
-      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your record' : ''}; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your record' : ''}; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.${endedWords(sim, ended)}`,
       importance: 90,
     });
   }

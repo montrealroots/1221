@@ -451,8 +451,14 @@ describe('health.enroll and health.appointment: Access Health CT’s silver plan
     expect(er().map((b) => [b.amount, b.covered])).toEqual([[50_00, { price: 3_323_84, planPaid: 3_273_84 }]]);
     sim.advanceTo(at(2026, 8, 31, 18));
     expect(sim.must<{ early: boolean }>({ kind: 'school.withdraw', payload: { confirm: true } }).early).toBe(true);
-    // Billed again as the uninsured are (`repriceCare`): the plan paid none of it now.
-    expect(er()[0]!.covered).toEqual({ price: 3_323_84, planPaid: 0 });
+    // Billed again as the uninsured are (`repriceCare`): the plan paid none of it now. From 2026-10-16 the bill as issued
+    // stands, and a line of its own carries the change, the plan's part taken back, −$3,273.84: across the two the plan
+    // paid $0. Until then the issued bill's plan part was rewritten to $0 in place.
+    const [issued, line] = er();
+    expect(issued!.covered).toEqual({ price: 3_323_84, planPaid: 3_273_84 });
+    expect(line!.adjusts).toBe(issued!.id);
+    expect(line!.covered).toEqual({ price: 3_323_84, planPaid: -3_273_84 });
+    expect(issued!.covered!.planPaid + line!.covered!.planPaid).toBe(0);
   }, 60_000);
 });
 

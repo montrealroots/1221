@@ -21,8 +21,9 @@
  *   collected from the 35th day; Papers says the IRS filed it. The premium tax credit only their own return claims left
  *   out of the IRS's figures (`sfrFigures`), run through the clock. A save from before, holding the unfiled return with
  *   no substitute on the calendar, has it put there on opening, at the year or a day on, never twice.
- * - `tax.notice`: the four notices on the 35th, 70th, 105th and 140th days after filing, the levy on the 170th; a levy
- *   that finds $500 takes $500, to the tax, says what's still owed and comes again 91 days on; one that finds nothing
+ * - `tax.notice`: the four notices on the 35th, 70th, 105th and 140th days after filing on the due day (from 2026-10-16
+ *   each at the due date's minute: until then the return was filed on 1 February and they ran from it), the levy on
+ *   the 170th; a levy that finds $500 takes $500, to the tax, says what's still owed and comes again 91 days on; one that finds nothing
  *   posts nothing and says $0.00 was taken. That last was the review's open question: the IRS's notice of levy (Form
  *   668-A) is served on the bank whatever the account holds, and the taxpayer is sent a copy, so a notice that says what
  *   it took, nothing, is kept as right.
@@ -448,29 +449,37 @@ describe('tax.substitute', () => {
 
 describe('tax.notice', () => {
   /**
-   * A 2026 return filed on 1 February 2027 with nothing in the bank to pay it, as retirement.test.ts's: a New York
-   * quickSave life, since no student owes the IRS this much ($90,000 of wages, TEST SETUP as payroll records them).
+   * A 2026 return filed at noon on its due day, 15 April 2027, with nothing in the bank to pay it: a New York quickSave
+   * life, since no student owes the IRS this much ($90,000 of wages, TEST SETUP as payroll records them). Until
+   * 2026-10-16 it was filed on 1 February, as retirement.test.ts's is, and the letters ran from that filing, before the
+   * tax was due; from then each waits for the due date, 11:59 PM that day (`nextNotice`), so it's filed on the due day,
+   * where a day after filing and a day after the due date are the same day. A return filed early is played in
+   * tests/remaining-tax.test.ts.
    */
   function owing(seed: string) {
     const sim = elsewhere(seed);
     recordWages(sim.player, on(2026, 5, 1, 9), NY, { gross: 90_000_00 });
-    while (sim.now < on(2027, 2, 1)) sim.advanceTo(sim.now + 6 * MS_HOUR);
+    while (sim.now < on(2027, 4, 15)) sim.advanceTo(Math.min(on(2027, 4, 15), sim.now + 6 * MS_HOUR));
     emptyBank(sim);
     expect(sim.execute({ kind: 'tax.file', payload: { year: 2026 } }).ok).toBe(true);
     const filed = sim.now;
+    const due = returnsOf(sim.player)['2026']!.due;
+    expect(due - filed).toBe(11 * MS_HOUR + 59 * MS_MINUTE);
     /** TEST SETUP: the bank kept empty, each six hours, to a moment. */
     const emptyTo = (s: Simulation, at: number) => { while (s.now < at) { emptyBank(s); s.advanceTo(Math.min(at, s.now + 6 * MS_HOUR)); } emptyBank(s); };
-    return { sim, filed, emptyTo };
+    return { sim, filed, due, emptyTo };
   }
 
   it('PLAYER JOURNEY: CP501, CP503, CP504 and LT11 on the 35th, 70th, 105th and 140th days after filing; the levy on the 170th finds $500, takes it to the tax, says what is still owed, and comes again 91 days on, once across a reload; Papers lists it', () => {
-    const { sim, filed, emptyTo } = owing('g17-levy');
+    const { sim, filed, due, emptyTo } = owing('g17-levy');
     const r = returnsOf(sim.player)['2026']!;
     const irs = r.figures.owedTo!.irs;
     expect(r.owed).toBe(irs);
-    const levyAt = filed + 170 * MS_DAY;
+    // Each on its day after filing, at 11:59 PM, the due date's minute (from 2026-10-16: until then at filing's own).
+    const levyAt = due + 170 * MS_DAY;
     emptyTo(sim, levyAt - MS_MINUTE);
-    const letters = sim.universe.notifications.filter((n) => /^Notice (CP501|CP503|CP504|LT11): /.test(n.body)).map((n) => [n.title, (n.at - filed) / MS_DAY]);
+    const letters = sim.universe.notifications.filter((n) => /^Notice (CP501|CP503|CP504|LT11): /.test(n.body)).map((n) => [n.title, Math.floor((n.at - filed) / MS_DAY)]);
+    expect(sim.universe.notifications.filter((n) => /^Notice (CP501|CP503|CP504|LT11): /.test(n.body)).map((n) => n.at - due)).toEqual([35, 70, 105, 140].map((d) => d * MS_DAY));
     expect(letters).toEqual([['A Reminder From The IRS', 35], ['A Second Reminder From The IRS', 70], ['The IRS Intends To Levy', 105], ['Final Notice Of Intent To Levy', 140]]);
     expect(titled(sim, 'The IRS Levied Your Accounts')).toEqual([]);
     expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([levyAt]);
@@ -492,7 +501,7 @@ describe('tax.notice', () => {
     expect(titled(sim, 'The IRS Levied Your Accounts').map((n) => [n.at, n.body])).toEqual([[levyAt, `$500.00 taken from your bank accounts for your 2026 return; ${usd(r.owed!)} is still owed, and it levies again while it is.`]]);
     expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([levyAt + 91 * MS_DAY]);
     const papers = drawn(sim, PapersWorkspace);
-    expect(papers.text).toContain('Payments On The Year July 21, 2027: $500.00, taken by levy; to the tax $500.00, penalties $0.00, interest $0.00.');
+    expect(papers.text).toContain('Payments On The Year October 2, 2027: $500.00, taken by levy; to the tax $500.00, penalties $0.00, interest $0.00.');
     expect(papers.text).toContain(`Tax Unpaid ${usd(irs - 500_00)}`);
     const again = reload(sim);
     again.advanceTo(levyAt + 2 * MS_DAY);
@@ -502,9 +511,9 @@ describe('tax.notice', () => {
   });
 
   it('a levy that finds the bank empty takes nothing and posts nothing, says $0.00 was taken and what is still owed, and comes again 91 days on', () => {
-    const { sim, filed, emptyTo } = owing('g17-levy-empty');
+    const { sim, due, emptyTo } = owing('g17-levy-empty');
     const r = returnsOf(sim.player)['2026']!;
-    const levyAt = filed + 170 * MS_DAY;
+    const levyAt = due + 170 * MS_DAY;
     emptyTo(sim, levyAt - MS_MINUTE);
     sim.advanceTo(levyAt + MS_MINUTE);
     expect(memos(sim, 'IRS levy, 2026 return')).toEqual([]);

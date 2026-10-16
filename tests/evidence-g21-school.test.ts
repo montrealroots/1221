@@ -650,9 +650,11 @@ describe('school.evaluation', () => {
     // The Evaluations table on the Standing tab.
     // The held twin's growth as the table rounds it: 0.0 until 2026-10-16, when the last afternoon's rehearsal call, after
     // its last reset, read discipline as every growth does (`grown`) and came to 0.05 of the mean craft, which rounds up.
-    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% ${spring(held).growth.toFixed(1)} ${spring(held).classGrowth.toFixed(1)} ${spring(held).reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(drawn(held, 'standing')).toContain(`Spring Term 2027 Academic Concern 100% ${spring(held).growth.toFixed(1)} ${spring(held).classGrowth.toFixed(1)} ${spring(held).coursework ? `${spring(held).coursework?.unready} of ${spring(held).coursework?.shown} unready or not shown` : 'None counted'} ${spring(held).reason}`);
     expect(spring(held).growth).toBeLessThan(0.1);
-    expect(drawn(reach, 'standing')).toContain(`Spring Term 2027 Good Standing 100% 0.0 ${spring(reach).classGrowth.toFixed(1)} ${spring(reach).reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(drawn(reach, 'standing')).toContain(`Spring Term 2027 Good Standing 100% 0.0 ${spring(reach).classGrowth.toFixed(1)} ${spring(reach).coursework ? `${spring(reach).coursework?.unready} of ${spring(reach).coursework?.shown} unready or not shown` : 'None counted'} ${spring(reach).reason}`);
   }, 60_000);
 
   it('reads a first-year Carlotta played weak at the second fall’s evaluation: its work the mean of both runs’ nights, falling short; a twin at their own craft doesn’t', () => {
@@ -885,7 +887,8 @@ describe('school.commencement', () => {
     tended(sim, day + 3 * MS_HOUR);
     expect(sim.player.school!.standing).toBe('withheld');
     expect(sim.player.school!.endedAt).toBe(day);
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Acting VI wasn’t. The faculty didn’t recommend the degree, and your terms at the School are over.']);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The degree needs every course passed, and Acting VI wasn’t. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
     expect(titled(sim, 'Your MFA Is Conferred')).toEqual([]);
     expect(sim.player.school!.awaitingDegree).toBeUndefined();
   });

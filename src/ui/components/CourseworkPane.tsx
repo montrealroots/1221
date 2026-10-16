@@ -326,7 +326,10 @@ function Shown({ list }: { list: Assignment[] }) {
           return (
             <div key={a.id} className="small">
               <strong>{courseName(a.course)}</strong>: {t.title}{scene ? `, ${scene.play}` : ''}{a.partner !== undefined ? `, with ${a.partnerName ?? person.school?.classmates[a.partner]?.name ?? 'a classmate'}` : ''} · {a.status === 'missed' ? 'Not Shown' : a.status === 'excused' ? 'Excused, Not Shown' : a.status === 'lapsed' ? 'Lapsed At Term’s End' : a.shown ? BAND_LABEL[a.shown.band] : 'Done'}
-              {a.revision?.applied !== undefined && <span className="xs dim"> · {a.revision.missed ? 'Not Shown Again' : a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
+              {/* A revision missed has no `applied`, only `missed` (from 2026-10-16: until then this line was drawn only where
+                  `applied` was set, so a missed revision stood at its first band with nothing said, while the term's review
+                  counted it Unready; found by tests/remaining-school-term.test.ts). */}
+              {(a.revision?.applied !== undefined || a.revision?.missed) && <span className="xs dim"> · {a.revision.missed ? 'Not Shown Again, Counted Unready' : a.revision.applied ? 'Note Taken' : 'Note Not Taken'}{a.revision.band ? `, Shown Again ${BAND_LABEL[a.revision.band]}` : ''}</span>}
               {a.feedback && <div className="xs dim">{a.feedback.text}</div>}
             </div>
           );

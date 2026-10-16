@@ -35,7 +35,7 @@ import { ENTRY, ENTRY_AS_OF } from '@/engine/content/entry';
 import { inSaveMoney } from '@/engine/systems/banking';
 import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
-  LOSABLE, citizenOf, passportOf, passportRefusal, passportRuleFor, passportTerms, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
+  LOSABLE, citizenOf, passportOf, passportOffice, passportRefusal, passportRuleFor, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
 import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal } from '@/engine/systems/identity';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
@@ -101,8 +101,9 @@ export function PassportPane() {
   const money = (c: number) => formatMoney(c, cur);
   const rule = passportRuleFor(person);
   const passport = passportOf(person, sim.now);
-  const age = (sim.now - person.birthInstant) / (365.25 * 86_400_000);
-  const terms = rule ? passportTerms(rule, age) : undefined;
+  // What the office asks of them where they are, from abroad or a US renewal by mail, as the command charges it
+  // (`passportOffice`, from 2026-10-16: until then the office's terms at home, whatever the screen's fine print said).
+  const office = passportOffice(person, sim.now);
   const [dest, setDest] = useState('');
   const destinations = Object.keys(ENTRY).filter((iso) => iso !== isoOfCity(person.currentLocationId)).sort((a, b) => countryName(a).localeCompare(countryName(b)));
   const chosen = dest || destinations[0] || '';
@@ -118,18 +119,18 @@ export function PassportPane() {
         <div className="col gap-3">
           <div className="grid grid-3">
             <Stat label="Passport" look={passport ? at('document', passport.id) : undefined} value={passport ? 'In Force' : 'None In Force'} note={passport ? `${passport.number}, runs out ${formatDate(passport.expiresAt!, sim.zone)}` : 'Asked by a new bank and the Social Security office'} />
-            <Stat label="A New One" value={rule && terms ? money(inSaveMoney(sim, Math.round(terms.fee * 100), rule.currency)) : '—'} note={rule ? `${rule.daysEstimated ? 'About ' : 'Up to '}${rule.days} days; good for ${terms!.years} years` : 'SLATE doesn’t have your country’s office'} />
-            <Stat label="Faster" value={rule?.expedite ? money(inSaveMoney(sim, Math.round((terms!.fee + rule.expedite.extra) * 100), rule.currency)) : 'Not Offered'} note={rule?.expedite ? `${rule.expedite.days === 0 ? 'The same day' : `${rule.expedite.days} days`}${rule.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} sells no faster service`} />
+            <Stat label="A New One" value={rule && office ? money(inSaveMoney(sim, Math.round(office.fee * 100), office.currency)) : '—'} note={rule && office ? `${office.daysEstimated ? 'About ' : 'Up to '}${office.days} days; good for ${office.years} years${office.abroad ? '; from abroad' : office.renewal ? '; renewed by mail' : ''}` : 'SLATE doesn’t have your country’s office'} />
+            <Stat label="Faster" value={office?.expedite ? money(inSaveMoney(sim, Math.round((office.fee + office.expedite.extra) * 100), office.currency)) : 'Not Offered'} note={office?.expedite ? `${office.expedite.days === 0 ? 'The same day' : `${office.expedite.days} days`}${office.expedite.renewalOnly ? ', renewals only' : ''}` : `${rule?.issuer ?? 'The office'} sells no faster service${office?.abroad ? ' to an applicant abroad' : ''}`} />
           </div>
           <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
             <Gated feature="documents.apply_passport" className="btn btn-sm" disabled={Boolean(passportRefusal(person))} title={passportRefusal(person)} onClick={() => apply(false)}>{passport ? 'Renew It' : 'Apply For One'}</Gated>
-            {rule?.expedite && (
+            {office?.expedite && (
               <Gated feature="documents.apply_passport" className="btn btn-sm btn-ghost" disabled={Boolean(passportRefusal(person, true))} title={passportRefusal(person, true)} onClick={() => apply(true)}>{passport ? 'Renew It Faster' : 'Apply Faster'}</Gated>
             )}
           </div>
           <p className="small" style={{ margin: 0 }}>A new passport replaces the one before it, which is canceled, and a travel authorization issued on the old one ends with it.</p>
           <DocumentList kinds={['passport', 'visa', 'authorization']} />
-          {rule && <Fine>{rule.feeBasis} {rule.daysEstimated ? 'The office publishes no processing time; SLATE’s estimate. ' : ''}From abroad: {rule.abroad} Sources: {rule.sources.map((s) => s.url).join('; ')}.{rule.uncertain.length ? ` Not confirmed: ${rule.uncertain.join(' ')}` : ''}</Fine>}
+          {rule && office && <Fine>{office.basis} {office.daysEstimated ? 'The office publishes no processing time for it; SLATE’s estimate. ' : ''}{office.abroad ? '' : `From abroad: ${rule.abroad} `}Sources: {rule.sources.map((s) => s.url).join('; ')}.{[...office.assumed, ...rule.uncertain].length ? ` Not confirmed: ${[...office.assumed, ...rule.uncertain].join(' ')}` : ''}</Fine>}
         </div>
       </Panel>
 

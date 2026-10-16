@@ -224,9 +224,10 @@ export const SCHOOL: readonly GuideEntry[] = [
     short: `The School screen is your place at the ${YALE_DRAMA.name}: your standing, this term’s attendance and growth against the floors the faculty judge, your ${SKILLS.length} skills against the class’s ${YALE_DRAMA.classSize - 1} others, and every evaluation so far. Classes run nine to three on class days, and each grows the skills its courses train. At five on the last day of each term’s classes the faculty evaluate you: fall short anywhere and your standing drops a step; meet everything and you’re back in good standing.`,
     steps: [
       `Open it from Home with the ${YALE_DRAMA.short} button on the School line in Your Affairs, or with School on the menu.`,
-      'On Standing And Craft, Your Standing gives Standing, then Attendance This Term and Growth This Term, each with its floor, and a line on whether you’re in the casting pool.',
+      // Coursework This Term from 2026-10-16: until then the review's third measure had no figure on the tab.
+      'On Standing And Craft, Your Standing gives Standing, then Attendance This Term, Growth This Term and Coursework This Term, each with its floor or mark, and a line on whether you’re in the casting pool.',
       'Your Craft Against The Class lists each skill with You, You Can Reach, Class Best, Class Median and Your Place. Press a skill to open it.',
-      'Evaluations keeps every term’s result and its reason, and From Your Teachers the last term’s notes.',
+      'Evaluations keeps every term’s result, its coursework as the review counted it, and its reason; From Your Teachers keeps the last term’s notes, the game’s words, not the teachers’.',
       'Under Classes, Your Week is the timetable with the next classes, and the courses table lists each course, its teachers and what it trains. Press a course, or the school’s name at the top, to open it.',
     ],
     needs: ['A life that began at drama school; any other shows No School.', `On a guided life, “${CHAPTER}” read in the guide.`],
@@ -239,8 +240,10 @@ export const SCHOOL: readonly GuideEntry[] = [
       { label: 'Growth', value: `Your craft’s rise this term against the class’s middle, each measured by the room left to grow; under ${pct(ESTIMATE.growthFloor)} of the class’s pace falls short`, estimate: true },
       { label: 'Work On Stage', value: `A run with ${ESTIMATE.workNights} nights or more by the evaluation, its nights mostly off, falls short`, estimate: true },
       { label: 'Coursework', value: `With ${ESTIMATE.coursework.shown} or more pieces due, ${pct(ESTIMATE.coursework.unready)} or more of them unready or not shown falls short`, estimate: true },
-      { label: 'A Course Failed', value: 'Any course failed in the term falls short' },
-      { label: 'A Grave Breach', value: `A missed performance or understudy call: ${STANDING_LABEL.warning} at once, or dismissal from it` },
+      // Whose each rule is, said from 2026-10-16 (the owner's brief: “distinguish verified institutional policy from SLATE's
+      // simulation design”): until then these two read as the School's own.
+      { label: 'A Course Failed', value: 'Any course failed in the term falls short: SLATE’s rule, where the Bulletin lets the faculty act on a student’s progress at any time' },
+      { label: 'A Grave Breach', value: `A missed performance or understudy call, which the Bulletin calls a grave breach that may be grounds for dismissal: ${STANDING_LABEL.warning} at once, or dismissal from it, by SLATE’s rule` },
       { label: 'A Class Meeting', value: `Grows each skill its course trains, more when you come rested and less the nearer the skill is to your reach: each skill as you were admitted and ${CEILING.headroom} points more`, estimate: true },
     ],
     now: ['Opening the screen, a tab or an underlined word changes nothing in the world, and moves no clock.', 'A tab is kept while you’re elsewhere, and the screen opens on it next time.'],
@@ -256,7 +259,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Growth This Term says whether you’re ahead of, in line with or behind the class for the room each of you had. Pace is what’s judged: the class’s strongest, near their reach, aren’t marked down for fewer points.',
       `Your Place counts the classmates above you, 1 to ${YALE_DRAMA.classSize}. Overall is the mean of all ${SKILLS.length} skills, and Acting is scene study twice with character work and emotional depth.`,
       'A line below the stats says whether you’re in the casting pool, or out of it after missed calls, until a good evaluation.',
-      'Each Evaluations row has the term’s attendance, your growth and the class’s, and why the standing came out as it did.',
+      `Coursework This Term counts this term’s pieces due, shown or missed unexcused, and of them those Unready or not shown, as the review will count them; it shows a warning at half of ${ESTIMATE.coursework.shown} or more.`,
+      'Each Evaluations row has the term’s attendance, your growth and the class’s, its coursework as the review counted it, and why the standing came out as it did.',
+      'Whose rules these are: the four standings, the faculty’s majority vote on the degree and no readmission after a dismissal are the Bulletin’s (2026–27 pp.151, 154, 157); one evaluation a term at the end of its classes, its floors and marks, and a standing stepped one at a time are SLATE’s reading of a Bulletin that has the faculty evaluate regularly and act at any time. The notices that tell a standing are SLATE’s words for the faculty’s decision, not the School’s or its staff’s.',
       `The school’s own look gives the year you’re in and Terms Begun, how many of the program’s ${YALE_DRAMA.terms} terms have begun: the calendar’s less those a leave or a repeated year took, which its note counts apart, as it does an additional term. On a leave it counts the terms before the one the leave began in, since that one is taken again when you’re back, and the year you’re in is read from the same count.`,
     ],
     unavailable: [
@@ -269,7 +274,9 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Standing drops one step at an evaluation, and one term meeting every floor takes it back to good standing from concern or warning.',
       `A grave breach goes to ${STANDING_LABEL.warning} at once, or from it to dismissal, and keeps its term’s evaluation from good standing: on its own the evaluation leaves you on the warning it brought, and with anything else short it dismisses. Be in New Haven for every performance and night on call.`,
       `A rehearsal, a run-through or a lab missed unexcused, when the term’s missed calls reach ${ESTIMATE.missedCallsOut}, takes you out of the casting pool until a good evaluation, and a notice says so. A missed performance counts among them, and is a grave breach besides.`,
-      'A dismissal is final: the Bulletin readmits nobody it dismissed.',
+      'A dismissal is final: the Bulletin readmits nobody it dismissed. Its notice, and a withheld degree’s, says what stands: every course and its result on your record, the productions you played on your Profile, hours worked paid, and practice and the practice briefs going on outside the School.',
+      // Said from 2026-10-16: until then the Not Registered notice told a student under a hold to register, which the hold refused.
+      'A term that begins under a financial hold doesn’t count your classes until you register, and the hold stops registering: pay the Yale account on Terms And Award first, then Register, or the term’s meetings go by unexcused. The Not Registered notice says what’s owed.',
     ],
     related: ['school.sick', 'school.repeat', 'school.leave', 'craft.profile', 'productions.casting', 'coursework.feedback'],
     connections: [
@@ -444,10 +451,11 @@ export const SCHOOL: readonly GuideEntry[] = [
     short: `A leave takes you out of the program for a time and brings you back with the class a year below. Ask for a medical or a personal one, and the chair and the dean decide within ${LEAVE_RULES.decideWorkingDays} working days. On leave you have no aid, classes, calls or assigned shifts; Yale Health goes on for a medical leave, and a personal one can buy Affiliate cover. Give notice ${LEAVE_RULES.noticeWeeks} weeks before the term you return, or the leave ends in dismissal, then register again. Withdrawing gives up your place for good.`,
     steps: [
       'Open School, Standing And Craft. Under A Leave Of Absence, choose the Kind, Medical or Personal, then the Length and the Reason.',
-      'Press Ask For A Leave…, read what it would do, and press Ask. Until it begins, Call Off The Leave… and then Call It Off keeps you as you are.',
+      // A leave the dean imposed has no Call Off from 2026-10-16: until then one granted from the next term drew it, and was called off.
+      'Press Ask For A Leave…, read what it would do, and press Ask. Until it begins, Call Off The Leave… and then Call It Off keeps you as you are; a leave the dean imposed isn’t yours to call off, and is appealed instead.',
       'On leave, press Give Notice Of Return before its date. On a personal leave, Buy Affiliate Cover… and then Buy It, before its deadline, to keep Yale Health.',
       'Back for the return term, press Register before classes.',
-      'If the dean imposed a medical leave, press Appeal To The Dean while the appeal is open.',
+      'If the dean imposed a medical leave, press Appeal To The Dean while the appeal is open: from the dean’s decision, before the leave begins as well as on it.',
       'To leave for good, press Withdraw From The School…, read what it does, and press Withdraw; Stay backs out.',
     ],
     needs: [
@@ -489,7 +497,8 @@ export const SCHOOL: readonly GuideEntry[] = [
     interpret: [
       'Your Leave shows a leave while it’s With The Chair And The Dean, “Granted, Not Yet Begun” or On Leave. From and Back For give the terms. Once it’s over, Leaves Before keeps it with how it ended.',
       'A Length marked (Not Possible) says why under the choices: one or three terms would bring you back to the second halves of year-long courses.',
-      `An appeal succeeds only if you’re cleared and at least ${pct(MANDATORY_LEAVE.resumeWithin)} of the term’s classes are still ahead; the leave stands while it’s heard.`,
+      // A leave not begun was turned down “The term it began in is over.” until 2026-10-16, of a term that hadn’t begun.
+      `An appeal succeeds only if you’re cleared and at least ${pct(MANDATORY_LEAVE.resumeWithin)} of the term’s classes are still ahead; the leave stands while it’s heard. A leave granted from the next term, the dean having decided after the term’s evaluation, has all of its term ahead: cleared, it’s overturned and called off before it begins, and you go on with that term as before. The Bulletin sets the appeal (in writing, within ${MANDATORY_LEAVE.appealDays} days); SLATE’s model decides it.`,
       `Used, at the foot of the panel, counts the terms of leave you’ve had out of ${LEAVE_RULES.maxTerms}; Leaves Before keeps every leave and how it ended.`,
       'Yale Health’s assessment shows above the leave while it’s scheduled or being decided. Whether you came to it is kept on its finding: not coming is a finding of its own, “You didn’t come to the assessment, which the Bulletin names as a ground of its own.”, and the appeal is the way back from the leave it brings.',
     ],
@@ -507,6 +516,7 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Register: “A financial hold stops registration: … is owed on your Yale account.”',
       'Affiliate cover: “The School pays for your Affiliate cover.” on a medical leave, or “It could be bought until …”.',
       'Appeal: “Only a leave the dean imposed can be appealed.” or “The appeal had to be in by …”.',
+      'Call It Off, on a leave the dean imposed: “The dean imposed this leave, so it isn’t yours to call off: appeal it in writing to the dean by …”.',
     ],
     mistakes: [
       'Missing the notice date is a dismissal, and a dismissal is final. Give notice as soon as you know; after a medical leave, be well enough to be cleared by then.',
@@ -545,7 +555,9 @@ export const SCHOOL: readonly GuideEntry[] = [
     questions: ['What happens if I fail a course?', 'How do I make up an Incomplete?', 'Can I repeat a year?', 'What’s an additional term?', 'Why was my degree withheld?', 'Can an Incomplete be extended?'],
     where: { route: ROUTE, tab: TAB.standing, label: 'School, Standing And Craft, Courses And The Degree' },
     available: `${OPENED}: an Incomplete after a term’s evaluation, a repeat at a year’s end, an additional term after the last year’s.`,
-    short: `Each course is settled at the term’s evaluation as passed, Incomplete or failed, and the degree needs every one passed. An Incomplete comes of classes missed excused: make it up in ${COURSE_RULES.makeUpMinutes}-minute sessions with its teachers within ${COURSE_RULES.incompleteDays} days, extendable once by as long, or it becomes a Permanent Incomplete. A failed course is put right by repeating its year, once, on the chair’s and the dean’s approval, or after the last year by an additional term that retakes only what’s unpassed. Repeating is SLATE’s faculty model: the Bulletin has no rule for it.`,
+    // Whose each rule is, said from 2026-10-16: until then the Incomplete's coming of excused absence and its one extension
+    // read as the Bulletin's, which has a student ask the instructor for one and petition for an extension.
+    short: `Each course is settled at the term’s evaluation as passed, Incomplete or failed, and the degree needs every one passed. An Incomplete comes of classes missed excused, by SLATE’s rule (the Bulletin has the student ask the instructor for one): make it up in ${COURSE_RULES.makeUpMinutes}-minute sessions with its teachers within ${COURSE_RULES.incompleteDays} days, the Bulletin’s month, extendable once by as long, SLATE’s limit on the extension the Bulletin lets the instructor grant, or it becomes a Permanent Incomplete. A failed course is put right by repeating its year, once, on the chair’s and the dean’s approval, or after the last year by an additional term that retakes only what’s unpassed. Repeating and the additional term are SLATE’s faculty model: the Bulletin has no rule for either.`,
     steps: [
       'Open School, Standing And Craft. Courses And The Degree lists each Incomplete with its sessions left and its deadline.',
       'Press Make Up A Session for each session owed; Ask For A Month More moves the deadline once.',
@@ -567,7 +579,7 @@ export const SCHOOL: readonly GuideEntry[] = [
     ],
     reads: [
       { label: 'A Course’s Pass', value: `${pct(COURSE_RULES.passFloor)} or more of the meetings you weren’t excused from, and, where two or more pieces were due, more than half of them shown`, estimate: true },
-      { label: 'An Incomplete', value: `Passed on the meetings you weren’t excused from, but at under ${pct(COURSE_RULES.passFloor)} of all of them` },
+      { label: 'An Incomplete', value: `Passed on the meetings you weren’t excused from, but at under ${pct(COURSE_RULES.passFloor)} of all of them: SLATE’s rule`, estimate: true },
       { label: 'Sessions Owed', value: `What it takes to reach ${pct(COURSE_RULES.passFloor)} of the meetings, a week’s meetings a session`, estimate: true },
       { label: 'Disqualification', value: `The Bulletin’s: ${EXTENDED_STUDY.disqualify.inOneTerm} Fails in a term, ${BY_TERM}, or ${EXTENDED_STUDY.disqualify.total} in all` },
       { label: 'Semesters', value: `The degree within ${EXTENDED_STUDY.maxSemesters} semesters enrolled, with tuition support for ${EXTENDED_STUDY.supportedTerms}. A leave’s terms aren’t enrolled ones and don’t count toward them: a leave has its own limit, ${LEAVE_RULES.maxTerms} terms in all` },
@@ -588,14 +600,17 @@ export const SCHOOL: readonly GuideEntry[] = [
       'Repeated, the last year’s courses meet again in the next fall and spring; the terms past six are billed to your Yale account, and with every course passed the degree comes at that year’s Commencement.',
       `An additional term granted: in it you take only the retakes, with the class then in that year. Passed in a fall, the degree comes at Yale’s December conferral on ${MONTHS[DEGREE_DATES.december[0] - 1]} ${DEGREE_DATES.december[1]}; in a spring, at Commencement. A retake not passed in it withholds the degree at that evaluation, and nothing more can be asked.`,
       `After the last year’s evaluation with a course unpassed, you have ${EXTENDED_STUDY.requestDays} days to ask for either, or the degree is withheld. With neither open to you, it’s withheld at the evaluation.`,
-      'At an evaluation where the Bulletin’s count of Fails is reached, with a Fail the faculty haven’t judged before, they review it. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning, the year to be repeated, and the Fails they kept you through don’t stand against the repeat or an additional term.',
+      'At an evaluation where the Bulletin’s count of Fails is reached, with a Fail the faculty haven’t judged before, they review it. Already on warning, reviewed before, or with no room to repeat, you’re dismissed; otherwise you’re placed on warning, the year to be repeated, and the Fails they kept you through don’t stand against the repeat or an additional term. The count is the Bulletin’s, which says a student “may be” disqualified; the review and its outcomes are SLATE’s faculty model.',
+      // From 2026-10-16 (the owner's brief's “no dead-end warning”): until then such a notice said only that the degree
+      // needs every course passed.
+      'A Fail or a Permanent Incomplete whose year can’t be repeated within the nine semesters, as none can after a repeat granted, names what’s left instead: an additional term after the last year’s evaluation, unless that evaluation leaves you on academic warning. Where neither is left, it says so.',
       'An Incomplete still open at Commencement keeps you from the ceremony, and the degree comes once it’s made up in time.',
     ],
     interpret: [
       'Each Incomplete reads how many of its make-up sessions are left, and by when.',
       // Until 2026-10-15 “only where that can still be asked” was false after a leave begun at the year’s spring: a fall
       // Fail or an Incomplete run out in the leave was offered the year’s end, which then refused it (`repeatCourses`).
-      `A failed course says why: the meetings you were at, or the work not shown. Its notice comes after the evaluation’s word on your standing, and offers the year’s end to ask to repeat the year only where that can still be asked: not where the same evaluation dismissed you or withheld the degree, as a retake not passed in an additional term does, and not where the repeat would take the degree past ${EXTENDED_STUDY.maxSemesters} semesters, counted as the year’s end will count them, which after any repeat granted is every year, the repeated one with the rest. A Permanent Incomplete’s notice offers it on the same terms, and not where the degree waits on it.`,
+      `A failed course says why: the meetings you were at, or the work not shown. Its notice comes after the evaluation’s word on your standing, and offers the year’s end to ask to repeat the year only where that can still be asked: not where the same evaluation dismissed you or withheld the degree, as a retake not passed in an additional term does, and not where the repeat would take the degree past ${EXTENDED_STUDY.maxSemesters} semesters, counted as the year’s end will count them, which after any repeat granted is every year, the repeated one with the rest; there it names the additional term after the last year’s evaluation. A Permanent Incomplete’s notice offers it on the same terms, and not where the degree waits on it.`,
       'Every Course marks each attempt Passed, Incomplete, Not Passed, Permanent Incomplete, Left On Leave or In Progress.',
       // Until 2026-10-15 this listed “refused and why” among them, which only the decision's guards draw.
       'Finishing The Degree says where a request stands: with the chair and the dean, granted, or called off.',

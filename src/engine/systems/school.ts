@@ -1863,19 +1863,28 @@ export function setStanding(sim: Simulation, person: Person, to: Standing, reaso
     scheduleUsStatus(sim, person);
   }
   if (person.id !== sim.universe.playerId) return;
-  const chair = YALE_DRAMA.actingChair.name;
+  // What still stands when nothing is left to ask, said with the end (from 2026-10-16, the owner's brief's “no dead-end
+  // warning”): until then a dismissal and a withheld degree said the end and nothing of what it left. Each clause is what
+  // the end does above: the course record isn't touched, the runs played go on the Profile (`keepCredit`), the hours
+  // worked are paid (`PAYDAY_KIND`), and practice and the briefs read the craft, not the School (`practiceRefusal`,
+  // `tapeRefusal`). A withdrawal's own words already said the hours (school.withdraw).
+  const stands = 'What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.';
+  // The decision is SLATE's simulation of the faculty's, so the notice says what the program's chair and faculty do and
+  // names nobody as having said it (from 2026-10-16, the owner's brief's “do not present … simulated staff feedback as
+  // authentic”: until then each was put in the words of the chair of Acting by her name, which the Standing tab's Your
+  // Faculty keeps as the Bulletin gives it).
   const words: Record<Standing, [string, string]> = {
-    good: ['In Good Standing', `The acting faculty, with the chair, ${chair}, find you in good standing. ${reason}`],
-    concern: ['A Notice Of Academic Concern', `The chair, ${chair}, has raised a concern. ${reason} Remedy it by the end of next term, or it becomes an academic warning.`],
-    warning: ['Academic Warning', `A formal meeting with the chair, ${chair}, and an associate dean. ${reason} Improve by the end of next term, or you may be dismissed.`],
-    dismissed: ['Dismissed From The School', `${reason} Once dismissed, a student isn’t eligible to come back.`],
+    good: ['In Good Standing', `The acting faculty find you in good standing. ${reason}`],
+    concern: ['A Notice Of Academic Concern', `The chair of Acting has raised a concern. ${reason} Remedy it by the end of next term, or it becomes an academic warning.`],
+    warning: ['Academic Warning', `A formal meeting with the chair of Acting and an associate dean, as the Bulletin gives a warning. ${reason} Improve by the end of next term, or you may be dismissed.`],
+    dismissed: ['Dismissed From The School', `${reason} Once dismissed, a student isn’t eligible to come back. ${stands}`],
     graduated: ['Your MFA Is Conferred', reason],
     withdrawn: ['You Withdrew From The School', reason],
-    withheld: ['The Degree Isn’t Recommended', `${reason} The faculty didn’t recommend the degree, and your terms at the School are over.`],
+    withheld: ['The Degree Isn’t Recommended', `${reason} The faculty didn’t recommend the degree, and your terms at the School are over. ${stands}`],
   };
   // The last term has no next one to remedy anything in (from 2026-10-10: until then a last-term concern said "by the
   // end of next term").
-  if (to === 'concern' && academicTerm(school, school.termsBegun) >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair, ${chair}, has raised a concern. ${reason} It was your last term: the concern is noted, and doesn’t stand in the way of the degree.`];
+  if (to === 'concern' && academicTerm(school, school.termsBegun) >= YALE_DRAMA.terms) words.concern = ['A Notice Of Academic Concern', `The chair of Acting has raised a concern. ${reason} It was your last term: the concern is noted, and doesn’t stand in the way of the degree.`];
   const [title, body] = words[to];
   sim.notify({ category: 'school', title, body, importance: to === 'good' ? 45 : 85, route: '/workspace/school' });
 }
@@ -2789,7 +2798,8 @@ function cast(sim: Simulation, person: Person, term: number): void {
     if (mates.length) schedule(sim, person, at(parseKey(rep.run.to), 23), { kind: COMPANY_KIND, label: `${rep.name}: The Run Ends`, minutes: 0, requiresPlayer: false, payload: { mates: mates.map(({ i }) => i), rehearsals: Math.round(days * 5 / 7), performances: Math.round((Date.parse(rep.run.to) - Date.parse(rep.run.from)) / MS_DAY * 6 / 7) + 1, production: rep.name, opened: rep.run.from } });
   }
   if (person.id === sim.universe.playerId) {
-    const chair = YALE_DRAMA.actingChair.name;
+    // The casting is SLATE's simulation of the chair's (from 2026-10-16 the notice names nobody as having made it: until then
+    // it named the chair of Acting, as `setStanding`'s notices did).
     const parts: string[] = [];
     const c = school.casting;
     if (c) {
@@ -2800,7 +2810,7 @@ function cast(sim: Simulation, person: Person, term: number): void {
     }
     const r = school.rep;
     if (r) parts.push(r.kind === 'role' ? `and, at the director’s invitation with the dean’s approval, in the company of ${r.production}` : `and to understudy ${term === 1 ? `${r.role} in Yale Rep’s ${SEAGULL_2027.name}, directed by ${SEAGULL_2027.director}` : `in ${r.production}`}, in New Haven and reachable at every performance`);
-    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair, ${chair}, has cast you ${parts.join(', ')}. Once cast, you fulfill the casting.`, importance: 75, route: '/workspace/school' });
+    if (parts.length) sim.notify({ category: 'school', title: `Cast: ${school.casting?.production ?? r!.production}`, body: `The chair of Acting has cast you ${parts.join(', ')}. Once cast, you fulfill the casting.`, importance: 75, route: '/workspace/school' });
   }
 }
 
@@ -2938,6 +2948,24 @@ export function conferIfReady(sim: Simulation, person: Person, why: string): voi
 }
 
 /**
+ * The program term taken next: on a leave under way, the one it began in, taken again on return (as `yearOfStudy` reads
+ * it); otherwise the one after the term now. From 2026-10-16 a function of its own, read by `repeatRoom` and `extraLater`.
+ *
+ * The leave's branch was played on 2026-10-16 (tests/remaining-school.test.ts): a Permanent Incomplete run out during a
+ * medical leave is the only notice that reads it on a leave, since an evaluation is called off with the leave. It decides
+ * nothing a played leave reaches: `leaveLengths` grants only two-term leaves while every year of the curriculum has
+ * year-long courses, and on one the other branch counts one term more (the leave's first term less the offset that
+ * already holds the leave, plus one), 9 against 8 with no repeat granted and 11 against 10 with one, the same side of the
+ * nine. It is kept, as a guard, for a leave of one or three terms, which the Bulletin allows (2026–27 p.158) and
+ * `leaveLengths` grants for a curriculum of one-term courses: on a three-term leave the other branch counts 10 where the
+ * program has 8, and offers nothing that `repeatRefusal` would grant (tests/remaining-school.test.ts, GUARD).
+ */
+const programNext = (school: SchoolRecord): number => {
+  const away = undefined as typeof school.leave;
+  return away ? away.firstTerm - ((school.offset ?? 0) - (away.returnTerm - away.firstTerm)) : academicTerm(school, Math.max(0, school.termsBegun - 1)) + 1;
+};
+
+/**
  * Room in the nine semesters the Bulletin allows for a repeat of the year ending with this spring (`withRepeat`), read
  * by the Fail and Permanent Incomplete notices so they offer only what `repeatRefusal` would grant (from 2026-10-15:
  * until then a Fail in any year after a repeat was told to ask, and “Repeating would make 10 semesters” refused it).
@@ -2950,10 +2978,24 @@ export function conferIfReady(sim: Simulation, person: Person, why: string): voi
 const repeatRoom = (person: Person, spring: number): boolean => {
   const school = person.school;
   if (!school) return false;
-  // The program term taken next: on a leave, the one it began in, taken again on return (as `yearOfStudy` reads it).
-  const away = school.leave?.status === 'on' ? school.leave : undefined;
-  const next = away ? away.firstTerm - ((school.offset ?? 0) - (away.returnTerm - away.firstTerm)) : academicTerm(school, Math.max(0, school.termsBegun - 1)) + 1;
-  return withRepeat(school, spring) + Math.max(0, spring + 1 - next) <= EXTENDED_STUDY.maxSemesters;
+  return withRepeat(school, spring) + Math.max(0, spring + 1 - programNext(school)) <= EXTENDED_STUDY.maxSemesters;
+};
+
+/**
+ * Whether an additional term after the last year's evaluation is still to be had, for a Fail or a Permanent Incomplete
+ * whose year can't be repeated (from 2026-10-16, the owner's brief's “no dead-end warning”): until then their notices
+ * said only that the degree needs every course passed, though `offerRepeat` offers that term at the last year's end
+ * wherever the evaluation leaves the student short of warning and dismissal. Still ahead: no last year's thirty days,
+ * no degree waiting, no additional term already, and the last program term not yet evaluated; and within the nine
+ * semesters with the program's terms still to come (`programNext`) and the term itself, as `extraRefusal` will count it.
+ */
+const extraLater = (person: Person): boolean => {
+  const school = person.school;
+  if (!school || schoolEnded(school.standing) || school.repeatBy !== undefined || school.awaitingDegree || school.extra || school.extraRequest?.status === 'pending') return false;
+  const t = Math.max(0, school.termsBegun - 1);
+  const last = academicTerm(school, t) >= YALE_DRAMA.terms - 1 && school.leave?.status !== 'on';
+  if (last && school.history.some((h) => h.term === t)) return false;
+  return enrolledTerms(school).length + Math.max(0, YALE_DRAMA.terms - programNext(school)) + 1 <= EXTENDED_STUDY.maxSemesters;
 };
 
 export function registerSchool(sim: Simulation): void {
@@ -2964,7 +3006,7 @@ export function registerSchool(sim: Simulation): void {
       delete school.awaitingDegree;
       setStanding(s, person, 'withheld', `${r.name} wasn’t made up in its month, and the degree needs every course passed.`);
     }
-  }, repeatRoom);
+  }, repeatRoom, extraLater);
   const personOf = (item: { payload: Record<string, unknown> }) => sim.universe.people[String(item.payload.personId)];
 
   sim.onSchedule(TERM_KIND, (item, s) => {
@@ -3102,7 +3144,11 @@ export function registerSchool(sim: Simulation): void {
     if (!registered(school, courseworkOf(s, person))) {
       meet(false, false);
       item.status = 'missed';
-      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Registered', body: 'You haven’t registered, so today’s classes didn’t count you. Register on the School screen: late, it takes the chair’s written permission, which SLATE takes as given.', importance: 75, route: '/workspace/school' });
+      // Under a financial hold, which stops registration (`school.reregister`), the hold is the step first (from 2026-10-16:
+      // until then this said to register, which the hold refused, every class day of a term the hold had begun; played,
+      // tests/remaining-school.test.ts, a term's nine courses failed at none of their meetings and the faculty dismissed).
+      const held = school.hold !== undefined ? ` A financial hold stops registration: ${formatMoney(accountOwed(s, person), saveCurrency(s.universe))} is owed on your Yale account. Pay it on the Terms And Award tab, then register on the Standing tab.` : ' Register on the School screen: late, it takes the chair’s written permission, which SLATE takes as given.';
+      if (person.id === s.universe.playerId) s.notify({ category: 'school', title: 'Not Registered', body: `You haven’t registered, so today’s classes didn’t count you.${held}`, importance: 75, route: '/workspace/school' });
       return;
     }
     if (present(person, item.at)) {
@@ -3486,12 +3532,12 @@ export function registerSchool(sim: Simulation): void {
       if (review?.outcome === 'dismissed') {
         person.school.history.push({ term, standing: 'dismissed', attendance: 0, growth: 0, classGrowth: 0, reason: review.why });
         setStanding(s, person, 'dismissed', review.why);
-        tellFails(s, person, term, true, (a) => repeatRoom(person, a));
+        tellFails(s, person, term, true, (a) => repeatRoom(person, a), () => extraLater(person));
         return;
       }
       evaluate(s, person, term);
       // The Fails told after the standing they led to (`tellFails`, from 2026-10-15).
-      tellFails(s, person, term, schoolEnded(person.school.standing), (a) => repeatRoom(person, a));
+      tellFails(s, person, term, schoolEnded(person.school.standing), (a) => repeatRoom(person, a), () => extraLater(person));
       return;
     }
     evaluate(s, person, term);

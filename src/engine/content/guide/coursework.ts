@@ -286,7 +286,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
     ],
     later: [
       `At nine on the day it’s due the course meets, and the work is shown once in place of the meeting’s ordinary growth: the course’s skills grow ${pct(WORK.weight.unready)} of an ordinary meeting’s for Unready, ${pct(WORK.weight.working)} for Working, ${pct(WORK.weight.strong)} for Strong and ${pct(WORK.weight.exceptional)} for Exceptional.`,
-      `Away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next meeting, or is excused if none is left. Away without one, it’s Not Shown and never taken later; it counts as unready at the term’s evaluation, and a partner’s trust falls ${-WORK.trust.missed}.`,
+      // The course's pass and the notice's count said from 2026-10-16 (tests/remaining-school-term.test.ts).
+      `Away with an excuse (called in sick, in hospital or laid up), it moves to the course’s next meeting, or is excused if none is left. Away without one, it’s Not Shown and never taken later; it counts as due and unready at the term’s evaluation, a course with half or more of its pieces due not shown isn’t passed, and a partner’s trust falls ${-WORK.trust.missed}. Its notice says so, with the course’s count so far.`,
       `In the term, once ${TERM_CHECK.after} of its pieces have been due and ${pct(ESTIMATE.coursework.unready - TERM_CHECK.margin)} or more of them were Unready or not shown, as the review counts them, A Word On Your Coursework comes once: how many, the part most often short on those shown, the steps that answer it, how many pieces set are still to be shown and the day the faculty reviews the term.`,
       `At the term’s evaluation, with ${ESTIMATE.coursework.shown} or more pieces due, ${pct(ESTIMATE.coursework.unready)} or more of them unready or not shown falls short, and ${pct(ESTIMATE.coursework.strong)} or more Strong or better is noted.`,
       'Work a course revises comes back to be shown again at its next meeting, with the note to take; work in rounds is shown a round at a time. Work still open when the term’s classes end lapses.',
@@ -296,7 +297,8 @@ export const COURSEWORK: readonly GuideEntry[] = [
       `At ${pct(EVALUATION.complete.coursework)} a part is complete for the showing. Below it, the dimensions that read it are held back: a part at nothing holds them to ${pct(EVALUATION.prepFloor)} of themselves, whatever it Weighs.`,
       'Shown Today is the showing’s own judge with the day taken out: no draw, and you as rested as you could be. It moves when a part does, and the band beside the figure says what it would earn.',
       'A scene you’ve worked before says so, and asks for the other part, or for another reading at the table.',
-      'Work Shown keeps the last twelve pieces and how each went: its band, or “Not Shown”, “Excused, Not Shown” or “Lapsed At Term’s End”.',
+      // “Not Shown Again, Counted Unready” from 2026-10-16: until then a revision missed showed nothing beside the first band.
+      'Work Shown keeps the last twelve pieces and how each went: its band, or “Not Shown”, “Excused, Not Shown” or “Lapsed At Term’s End”; and for work shown again, Note Taken or Not Taken with the second band, or “Not Shown Again, Counted Unready”. The Standing tab’s Coursework This Term counts the term’s pieces as the review will.',
     ],
     unavailable: [
       '“That work is finished.”',

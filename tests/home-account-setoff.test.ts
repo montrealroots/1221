@@ -74,10 +74,22 @@ describe('the set-off against an overdraft', () => {
     expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it\'s back within it.']);
     const owedHeld = -current.held!;
     expect(owedHeld).toBeGreaterThan(0);
+    const owedThen = -current.balance;
     sim.advanceTo(Date.UTC(2027, 0, 2, 12));
     const setOff = sim.universe.transactions.filter((t) => t.memo === 'Set off against the overdraft');
     expect(setOff).toHaveLength(1);
-    expect(setOff[0]!.postings.map((p) => [p.accountId, p.native])).toEqual([[livret.id, -owedHeld], [current.id, owedHeld]]);
+    // The overdraft interest built since 1 December is charged before the set-off, and set off with the rest (from
+    // 2026-10-16: until then the set-off took the debt as it stood on the 29th, €61.42, and the interest was dropped with
+    // the account). Twenty-nine day ends, 2 to 30 December, on the debt at 18.40%, with less than a cent carried from
+    // November: 29 × owed × 0.184 / 365, in whole cents.
+    const interest = sim.universe.transactions.filter((t) => t.memo === 'Overdraft interest, on closing').map((t) => t.postings.find((p) => p.accountId === current.id)!);
+    expect(interest).toHaveLength(1);
+    const built = (29 * owedThen * 0.184) / 365;
+    expect(-interest[0]!.amount).toBeGreaterThanOrEqual(Math.floor(built));
+    expect(-interest[0]!.amount).toBeLessThanOrEqual(Math.floor(built + 1));
+    const settled = -interest[0]!.native!;
+    expect(settled).toBeGreaterThan(0);
+    expect(setOff[0]!.postings.map((p) => [p.accountId, p.native])).toEqual([[livret.id, -(owedHeld + settled)], [current.id, owedHeld + settled]]);
     expect([current.balance, current.held, current.closedAt !== undefined]).toEqual([0, 0, true]);
     expect(livret.closedAt).toBeUndefined();
     expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Interest: Livret A,')).map((t) => t.memo)).toEqual(['Interest: Livret A, before the set-off']);

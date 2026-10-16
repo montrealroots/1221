@@ -36,6 +36,7 @@ import { LICENSES, type LicenseRule } from '../content/licenses';
 import { payFromBank } from './spending';
 import { realIdShare } from '../content/identity';
 import { PASSPORTS, type PassportRule } from '../content/passports';
+import { PASSPORTS_ABROAD, US_RENEWAL } from '../content/passportsabroad';
 
 export type DocumentKind = 'passport' | 'authorization' | 'visa' | 'license' | 'idp' | 'permit' | 'idcard';
 
@@ -71,7 +72,8 @@ export interface PersonDocument {
   alone?: boolean;
   /**
    * An American license or ID card that meets REAL ID (from 2026-09-30): a starting license's drawn at its state's
-   * share (`realIdShare`, `content/identity.ts`), and every American state ID card SLATE issues (`systems/identity.ts`).
+   * share (`realIdShare`, `content/identity.ts`), and every American state ID card SLATE issues to a citizen
+   * (`systems/identity.ts`). A non-citizen's is non-verified, false (from 2026-10-16: until then every card was marked).
    * Its page says so, and nothing else reads it. The TSA's rule (`tsaAccepts`) read it for the checkpoint until the
    * scope reset of 2026-10-09 and for an ID card's page until 2026-10-10, and the TSA's date of 2025-05-07 in
    * `content/identity.ts` went on 2026-10-12; until then this said the TSA asks it, citing `systems/identity.ts`.
@@ -317,11 +319,11 @@ export function registerDocuments(sim: Simulation): void {
     const no = passportRefusal(person, expedite);
     if (no) throw new CommandError(no);
     const rule = passportRuleFor(person)!;
-    const age = (s.now - person.birthInstant) / (365.25 * MS_DAY);
-    const terms = passportTerms(rule, age);
-    const fee = inSave(s, terms.fee + (expedite ? rule.expedite!.extra : 0), rule.currency);
-    if (!payFromBank(s, person, fee, `${rule.name}${expedite ? ', expedited' : ''}`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
-    const days = expedite ? rule.expedite!.days : rule.days;
+    // The office's terms where they are: from abroad, or a US renewal by mail (`passportOffice`, from 2026-10-16).
+    const office = passportOffice(person, s.now)!;
+    const fee = inSave(s, office.fee + (expedite ? office.expedite!.extra : 0), office.currency);
+    if (!payFromBank(s, person, fee, `${rule.name}${office.renewal ? `, renewed on Form ${US_RENEWAL.form}` : ''}${expedite ? ', expedited' : ''}`, 'documents')) throw new CommandError(`${formatMoney(fee, saveCurrency(s.universe))} is more than the bank can cover.`);
+    const days = expedite ? office.expedite!.days : office.days;
     // Handed over the same day where the office does it: a few hours, SLATE's estimate.
     const readyAt = s.now + (days > 0 ? days * MS_DAY : 3 * MS_HOUR);
     const id = s.nextId('document');
@@ -413,11 +415,59 @@ export function passportTerms(rule: PassportRule, age: number): { years: number;
   return { years: rule.validityYears, fee: rule.fee };
 }
 
+/**
+ * What applying asks of a person where they are (from 2026-10-16): the office's terms at home, or from abroad where they
+ * live outside the country that issues it (`PASSPORTS_ABROAD`, where SLATE has them), and a US citizen's renewal by mail
+ * where they may (`US_RENEWAL`, Form DS-82). Every life lives in New Haven, so a citizen of anywhere but the United
+ * States applies from abroad. Until 2026-10-16 everyone paid the office's fee at home and was offered its faster
+ * service at home: a British student was charged £102 and offered the UK's Fast Track, which isn't sold outside the UK,
+ * and a US citizen renewing paid a first passport's $165 (tests/remaining-papers.test.ts). The fee is in the office's
+ * currency, for its term at their age.
+ */
+export interface PassportOffice { fee: number; currency: string; days: number; daysEstimated: boolean; expedite: PassportRule['expedite']; years: number; basis: string; abroad: boolean; renewal: boolean; assumed: readonly string[] }
+
+export function passportOffice(person: Person, at: Instant): PassportOffice | undefined {
+  const rule = passportRuleFor(person);
+  const iso = isoOfCountry(person.citizenshipId);
+  if (!rule || !iso) return undefined;
+  const age = (at - person.birthInstant) / (365.25 * MS_DAY);
+  const terms = passportTerms(rule, age);
+  const here = isoOfCity(person.currentLocationId);
+  const away = here !== undefined && here !== iso ? PASSPORTS_ABROAD[iso] : undefined;
+  if (away) {
+    const young = rule.young !== undefined && age < rule.young.under;
+    return { fee: young && away.youngFee !== undefined ? away.youngFee : away.fee, currency: away.currency, days: away.days, daysEstimated: away.daysEstimated, expedite: away.expedite, years: terms.years, basis: away.basis, abroad: true, renewal: false, assumed: away.assumed };
+  }
+  if (iso === 'US' && here === 'US' && renewsByMail(person, at)) {
+    return { fee: US_RENEWAL.fee, currency: US_RENEWAL.currency, days: rule.days, daysEstimated: rule.daysEstimated, expedite: rule.expedite, years: terms.years, basis: `A renewal by mail on Form ${US_RENEWAL.form}: $${US_RENEWAL.fee} to the Department of State, with no acceptance fee, your most recent passport issued within ${US_RENEWAL.withinYears} years, at ${US_RENEWAL.issuedFromAge} or older, and never reported lost or stolen.`, abroad: false, renewal: true, assumed: [] };
+  }
+  return { fee: terms.fee, currency: rule.currency, days: rule.days, daysEstimated: rule.daysEstimated, expedite: rule.expedite, years: terms.years, basis: rule.feeBasis, abroad: false, renewal: false, assumed: [] };
+}
+
+/**
+ * Whether a US citizen may renew by mail (`US_RENEWAL`): their most recent US passport, in force or run out, issued
+ * within the last 15 years, at 16 or older, for 10 years, and never reported lost or stolen. One replaced by a newer
+ * passport isn't the most recent; a lost one is, and sends them to Form DS-11.
+ */
+export function renewsByMail(person: Person, at: Instant): boolean {
+  const last = documentsOf(person).filter((d) => d.kind === 'passport' && d.issuer === 'US' && d.issuedAt !== undefined).sort((a, b) => b.issuedAt! - a.issuedAt!)[0];
+  if (!last || last.status === 'lost' || last.status === 'pending') return false;
+  const issued = last.issuedAt!;
+  return at - issued <= US_RENEWAL.withinYears * 365.25 * MS_DAY
+    && issued - person.birthInstant >= US_RENEWAL.issuedFromAge * 365.25 * MS_DAY
+    && last.expiresAt !== undefined && Math.round((last.expiresAt - issued) / (365.25 * MS_DAY)) >= US_RENEWAL.validityYears;
+}
+
 /** Why a passport can't be applied for now, or nothing. */
 export function passportRefusal(person: Person, expedite = false): string | undefined {
   const rule = passportRuleFor(person);
   if (!rule) return 'SLATE doesn’t have your country’s passport office yet.';
   if (documentsOf(person).some((d) => d.kind === 'passport' && d.status === 'pending')) return 'An application is in already.';
+  // From abroad, the faster service the office sells there, if any (from 2026-10-16, `passportOffice`).
+  const iso = isoOfCountry(person.citizenshipId) ?? '';
+  const here = isoOfCity(person.currentLocationId);
+  const away = here !== undefined && here !== iso ? PASSPORTS_ABROAD[iso] : undefined;
+  if (expedite && away && !away.expedite) return `${rule.issuer} sells no faster service to an applicant abroad.`;
   if (expedite && !rule.expedite) return `${rule.issuer} doesn’t sell a faster service.`;
   if (expedite && rule.expedite?.renewalOnly && !documentsOf(person).some((d) => d.kind === 'passport' && d.issuer === isoOfCountry(person.citizenshipId))) return `${rule.issuer}’s faster service is for renewals only.`;
   return undefined;

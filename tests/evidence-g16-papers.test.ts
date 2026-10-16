@@ -483,11 +483,11 @@ describe('documents.idcard_arrives', () => {
     const ssn = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} });
     sim.advanceTo(ssn.arrivesAt + MS_HOUR);
     const passport = documentsOf(sim.player).find((d) => d.kind === 'passport')!;
-    expect(run(sim, 'documents.report_lost', { documentId: passport.id }).ok).toBe(true);
-    expect(f1Of(sim.player)!.status).toBe('valid');
     const wells = { bankId: 'us-wells-fargo', fundFrom: current(sim).id, amount: 25_00 };
-    expect(run(sim, 'bank.open_current', wells)).toMatchObject({ ok: false, error: 'Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.' });
 
+    // Asked for with her passport in force, the DMV's primary identity document for her, and the passport reported lost
+    // once the card has come. Until 2026-10-16 the passport was reported lost first and the card issued all the same, with
+    // no identity document (`idCardRefusal`; tests/remaining-papers.test.ts).
     const asked = sim.now;
     expect(asked).toBe(Date.UTC(2026, 8, 30, 1));
     const applied = run(sim, 'documents.apply_idcard');
@@ -506,6 +506,15 @@ describe('documents.idcard_arrives', () => {
     expect(card.status).toBe('valid');
     expect(card.issuedAt).toBe(asked + 15 * MS_DAY);
     expect(titled(sim, 'Non-Driver Identification Card, Limited Term Arrived').map((n) => n.at)).toEqual([asked + 15 * MS_DAY]);
+    expect(run(sim, 'documents.report_lost', { documentId: passport.id }).ok).toBe(true);
+    expect(f1Of(sim.player)!.status).toBe('valid');
+    // Her twin, the same life to the same hour with no card, her passport lost too: Wells Fargo turns her away.
+    const twin = student('g16-idf1', 'uk-eng-london');
+    twin.advanceTo(Date.UTC(2026, 8, 8, 23));
+    twin.must({ kind: 'documents.apply_ssn', payload: {} });
+    twin.advanceTo(sim.now);
+    expect(run(twin, 'documents.report_lost', { documentId: passport.id }).ok).toBe(true);
+    expect(run(twin, 'bank.open_current', { ...wells, fundFrom: current(twin).id })).toMatchObject({ ok: false, error: 'Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.' });
     const opened = run(sim, 'bank.open_current', wells);
     expect(opened.ok).toBe(true);
     expect(sim.universe.accounts[(opened.value as { accountId: string }).accountId]!.bankId).toBe('us-wells-fargo');

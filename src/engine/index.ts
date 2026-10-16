@@ -56,7 +56,7 @@ import { registerStatements } from './systems/statements';
 import { armPayments, freshPayments, registerPayments } from './systems/payments';
 import { armCardLife, registerCardLife } from './systems/cardlife';
 import { registerCash } from './systems/cash';
-import { registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
+import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
 import { enroll, registerSchool, yearOfStudy } from './systems/school';
@@ -84,7 +84,7 @@ import { registerEiSelfEmployed } from './systems/eiself';
 import { registerCitizenship } from './systems/citizenship';
 import { registerResidence } from './systems/residence';
 import { registerPaperVisits } from './systems/papervisits';
-import { registerIdentity } from './systems/identity';
+import { nonCitizenCards, registerIdentity } from './systems/identity';
 import { armHealth, registerHealth } from './systems/health';
 import { registerUnemployment } from './systems/unemployment';
 import { armCollection, armTaxes, registerTaxReturn } from './systems/taxreturn';
@@ -277,7 +277,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest'] as const;
 
 /** Creates a brand new save universe with every system wired up. */
 export function createSave(slot: 1 | 2 | 3, seed: string, config: NewSaveConfig): Simulation {
@@ -332,6 +332,12 @@ export function loadSave(universe: SaveUniverse): Simulation {
     followTheCover(sim);
     opened.push('followTheCover');
   }
+  // Interest a build before 2026-10-15's second recheck let be taken out of a term deposit, posted with nothing against the
+  // term: found once, from 2026-10-16, so canceling the term in its cooling-off period gives it back (`findTermInterest`).
+  if (!opened.includes('findTermInterest')) {
+    findTermInterest(sim);
+    opened.push('findTermInterest');
+  }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;
   // A save from before the attributes draws them on opening, the same draw a new life makes.
@@ -344,6 +350,8 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (universe.people[universe.playerId]) for (const which of WHICH) { const h = holderFor(sim, sim.player, which); if (hasProcess(h)) for (const n of h.process.notes) n.text = n.text.replace(/^Still: i(?=[\s’'])/, 'Still: I'); }
   // A save from before papers: the ones the life would have begun with (`startingDocuments`).
   if (universe.people[universe.playerId]) startingDocuments(sim, sim.player);
+  // A non-citizen's state ID card marked REAL ID before 2026-10-16, which the state issues non-verified (`nonCitizenCards`).
+  if (universe.people[universe.playerId]) nonCitizenCards(sim.player);
   // A save from before 2026-10-01 has no look at a foreign student's status on its calendar: one is put there.
   if (universe.people[universe.playerId] && !universe.scheduled.some((one) => one.status === 'pending' && one.kind === US_STATUS_KIND && one.payload.personId === universe.playerId)) scheduleUsStatus(sim, sim.player);
   // What a home held of theirs comes back, once, on the first opening after the home went (schema 90).

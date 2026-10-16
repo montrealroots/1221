@@ -48,6 +48,7 @@ import { payeeAccount } from './cash';
 import { type Lien, THREE_YEAR_KIND, threeYearCheck, reconsiderState, scheduleStateNonFiler, stateLateAt, stateNonFilerStep, STATE_NONFILER_KIND, STATE_NOTICE_KIND, accrueState, applyStatePayment, federalOffsetToState, fileState, owedToStates, payStateRefund, rulesOf, stateDuesOf, stateName, stateDueOf, stateNextNotice, stateOwedOn, statePlanNewBalance, type StateDue } from './statetax';
 import { YALE_DRAMA } from '../content/school';
 import { foreignAccountsNotice } from './abroad';
+import { creditStatus, medicaidStatus } from './health';
 
 export const TAX_SEASON_KIND = 'tax.season';
 export const TAX_NOTICE_KIND = 'tax.notice';
@@ -380,16 +381,46 @@ export function registerFederalLien(sim: Simulation): void {
   });
 }
 
+/** The days before a step of the IRS's collection: a reminder's five weeks, the final notice's 30 days, a levy's quarter. */
+const noticeWait = (step: number): number => (step < COLLECTION.notices.length ? COLLECTION.noticeWeeks * 7 : step === COLLECTION.notices.length ? COLLECTION.finalDays : COLLECTION.againDays);
+
 /**
- * The next step of the IRS's collection on a return, on the calendar, counted from now: a return filed early and unpaid
- * has its CP501 five weeks after filing, before the tax is due. Connecticut's collection waits for its due date from
- * 2026-10-15 (`stateNextNotice`); whether the IRS's should was left to the owner that day, since the gate's IRS notice
- * tests (tests/evidence-g17-papers.test.ts, tests/liens-and-arrangements.test.ts) count from a filing before it.
+ * The next step of the IRS's collection on a return, on the calendar, its wait counted from the later of now and the
+ * return's due date (from 2026-10-16). The tax shown on a return is due on the day fixed for filing it (IRC 6151(a)),
+ * so a reminder that it's still owed (CP501, CP503), a notice of intent to levy (CP504) or the final notice (LT11)
+ * can't come before then; the bill that says what's owed and when (CP14, `billed`) comes at filing. Until 2026-10-16
+ * the wait was counted from now, so a student who filed her 2027 return unpaid on 1 February 2028 had CP501 on 7 March
+ * and CP503 on 11 April, each saying she still owed it “with the interest and penalty since”, before the 18 April due
+ * date and with neither charged; her LT11 came on 20 June and the levy on 20 July (tests/remaining-tax.test.ts). The
+ * same count put the letters back from a plan refused or ended before the due date. Connecticut's waited for its due
+ * date from 2026-10-15 (`stateNextNotice`), and the owner's decision on the IRS's, left open that day, was taken by
+ * the integration pass's brief of 2026-10-16 (its tax item 1).
  */
 function nextNotice(sim: Simulation, person: Person, r: TaxReturn): void {
   const step = r.collection ?? 0;
-  const wait = step < COLLECTION.notices.length ? COLLECTION.noticeWeeks * 7 : step === COLLECTION.notices.length ? COLLECTION.finalDays : COLLECTION.againDays;
-  sim.schedule({ at: sim.now + wait * MS_DAY, kind: TAX_NOTICE_KIND, label: 'The IRS', category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
+  sim.schedule({ at: Math.max(sim.now, r.due) + noticeWait(step) * MS_DAY, kind: TAX_NOTICE_KIND, label: 'The IRS', category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
+}
+
+/**
+ * The IRS's bill on a balance a return leaves unpaid at filing, Notice CP14 (from 2026-10-16): the first letter of its
+ * collection (“If you owe taxes, we will send you a bill. This is your first bill for tax due”, IRS Publication 594,
+ * Rev. 1-2026, read 2026-10-16). Filed before the due date it names that date, and says nothing is added until then
+ * (IRC 6601(a), 6651(a)(2)); filed on or after it, what's owed with the penalties and interest charged. The IRS dates
+ * its own CP14 with the assessment, the Monday of the third week after the return posts (IRM 3.30.123.5.5, read
+ * 2026-10-16); SLATE assesses at filing and sends it then, its simplification. Whether the IRS holds an early return's
+ * CP14 until the due date wasn't found; one that names the due date is a valid bill either way. Until 2026-10-16 no
+ * CP14 came, and the first letter was CP501's reminder.
+ */
+function billed(sim: Simulation, person: Person, r: TaxReturn): void {
+  if (person.id !== sim.universe.playerId || !r.owed) return;
+  const cur = saveCurrency(sim.universe);
+  const owed = owedOn(r, sim.now);
+  const pct = (x: number) => `${Math.round(x * 1000) / 10}%`;
+  const runs = `interest at ${pct(COLLECTION.interest)} a year and a penalty for paying late of ${pct(RETURN.payLateMonthly)} a month`;
+  const body = sim.now < r.due
+    ? `Notice CP14: your ${r.year} return shows ${formatMoney(owed, cur)} owed to the IRS, due by ${formatDate(r.due, HOME)}. Paid by then, nothing is added; from then, ${runs} run on what’s unpaid, and its reminders begin ${COLLECTION.noticeWeeks} weeks after that date.`
+    : `Notice CP14: ${formatMoney(owed, cur)} owed on your ${r.year} return${owed > (r.parts?.tax ?? owed) ? ', with the penalties and interest since its due date' : ''}. Until it’s paid, ${runs} go on, and its reminders begin in ${COLLECTION.noticeWeeks} weeks.`;
+  sim.notify({ category: 'tax', title: 'A Bill From The IRS', body, importance: 75, route: '/workspace/papers' });
 }
 export const TAX_DUE_KIND = 'tax.due';
 export const TAX_REFUND_KIND = 'tax.refund';
@@ -1029,11 +1060,21 @@ export function figuresFor(person: Person, year: number, into = 'USD', filedAt?:
   const payroll = nra ? 0 : computeAnnualTax(y.acting, cityId, at, { currency: into }).payroll;
   const premiums = person.health?.premiums[year] ?? [];
   // The poverty line the year's cover reads is the year before's; a person Medicaid or the Essential Plan would take gets no credit.
+  // Medicaid takes her only where her status admits her (`medicaidStatus`, read at the year's end, as `nonresidentFor`
+  // reads the green card): a noncitizen it bars by status is no person it would take, and from 100% has the credit
+  // (36B(c)(1)(A)). From 2026-10-16: until then 138% was read as Medicaid's whatever the status.
+  const yearEnd = instantFromZoned({ year, month: 12, day: 31, hour: 12 }, HOME);
   const ratio = income / usd(byYear(POVERTY_LINE, year - 1), into);
-  const program = ratio <= PUBLIC_COVER.medicaidShare || (lastState === 'us-ny' && ratio <= PUBLIC_COVER.essentialShare);
+  const program = (ratio <= PUBLIC_COVER.medicaidShare && medicaidStatus(person, yearEnd)) || (lastState === 'us-ny' && ratio <= PUBLIC_COVER.essentialShare);
   const pct = program ? undefined : applicablePercent(year, ratio);
-  // A nonresident alien isn't an applicable taxpayer for the premium tax credit, which the 1040-NR doesn't carry.
-  const credit = pct === undefined || nra ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
+  // A nonresident alien takes the credit on Form 1040-NR as anybody does (Form 8962 is filed "with your income tax return
+  // (Form 1040, 1040-SR, or 1040-NR)", IRS Pub. 974 (2025); the Instructions for Form 1040-NR (2025) bar it only for a
+  // married filer, a spouse's advance payments and most dependents; 26 CFR 1.36B-2(b) has no rule for nonresidents; all
+  // read 2026-10-16), unmarried as every SLATE life is. What bars it is status: a month counts while she's lawfully
+  // present, which an F-1 student is until 2027, and from 2027 only as an "eligible alien" (36B(e)(2)(B), Pub. L. 119-21
+  // §71301), which she isn't (`creditStatus`, read at the year's end). Until 2026-10-16 a nonresident alien took none,
+  // though Covered Connecticut, which needs the credit, was given to her in 2026.
+  const credit = pct === undefined || !creditStatus(person, yearEnd) ? 0 : premiums.reduce((sum, premium) => sum + Math.max(0, Math.round(premium - (pct * income) / 12)), 0);
   // Connecticut's 2026 assistance: what the expired enhanced credits would have added, in full or half by income.
   const ct = ENHANCED_CREDIT.connecticut;
   const share = lastState === 'us-ct' && year === ct.year && !program ? (ratio > ct.full[0] && ratio <= ct.full[1] ? 1 : ratio > ct.half[0] && ratio <= ct.half[1] ? 0.5 : 0) : 0;
@@ -1170,6 +1211,16 @@ export function armCollection(sim: Simulation, person: Person): void {
     }
     if (r.filedAt === undefined && r.due < sim.now) scheduleStateNonFiler(sim, person, r, owedToOf(person, r).states);
     for (const [state, sd] of Object.entries(r.stateDue ?? {})) if (sd.owed && !person.statePlans?.[state] && !sim.universe.scheduled.some((i) => i.kind === STATE_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year && i.payload.state === state)) stateNextNotice(sim, person, r, state);
+    // A letter a save from before 2026-10-16 holds pending before its earliest day, the due date and its step's wait
+    // (`nextNotice`): moved to that day, so a return filed early and unpaid has no reminder before the tax is due.
+    if (r.owed) {
+      const earliest = r.due + noticeWait(r.collection ?? 0) * MS_DAY;
+      for (const one of sim.universe.scheduled) {
+        if (one.status !== 'pending' || one.kind !== TAX_NOTICE_KIND || one.payload.personId !== person.id || one.payload.year !== r.year || one.at >= earliest) continue;
+        sim.timeline.cancel(one.id, sim.now);
+        sim.schedule({ at: Math.max(sim.now, earliest), kind: TAX_NOTICE_KIND, label: 'The IRS', category: 'system', priority: 20, payload: { personId: person.id, year: r.year } });
+      }
+    }
     if (!r.owed || sim.universe.scheduled.some((i) => i.kind === TAX_NOTICE_KIND && i.status === 'pending' && i.payload.personId === person.id && i.payload.year === r.year)) continue;
     // A plan being decided, in force or behind holds collection, and puts it back itself when it ends (`endPlan`,
     // `refusePlan`). From 2026-10-15: until then a save opened while a plan was behind had a letter put on the calendar
@@ -1563,7 +1614,8 @@ export function registerTaxReturn(sim: Simulation): void {
       demand(r, lateShares(irs, r.due, s.now, cur).payLate, s.now);
       // Under a payment plan, another year's balance joins it or puts it in default (`newLiability`, from 2026-10-10).
       if (person.taxPlan?.status === 'active') { if (r.filedAt <= r.due) underPlan(r, s.now); newLiability(s, person, total); }
-      else { r.collection = 0; nextNotice(s, person, r); }
+      // Its bill now, Notice CP14, and its reminders from the due date (`billed`, `nextNotice`, from 2026-10-16).
+      else { r.collection = 0; nextNotice(s, person, r); billed(s, person, r); }
     }
     else if (total > 0) r.paidTax = irs;
     void stateTotal;

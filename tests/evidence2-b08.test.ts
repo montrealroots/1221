@@ -652,8 +652,10 @@ describe('standing/term evaluation', () => {
     // The Standing tab, as the player has it.
     const { text } = drawn(driven, SchoolWorkspace, 'standing');
     expect(text).toContain('Evaluations');
-    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${b!.growth.toFixed(1)} ${b!.classGrowth.toFixed(1)} ${b!.reason}`);
-    expect(drawn(plain, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${a!.growth.toFixed(1)} ${a!.classGrowth.toFixed(1)} ${a!.reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${b!.growth.toFixed(1)} ${b!.classGrowth.toFixed(1)} ${b!.coursework ? `${b!.coursework.unready} of ${b!.coursework.shown} unready or not shown` : 'None counted'} ${b!.reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(drawn(plain, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${a!.growth.toFixed(1)} ${a!.classGrowth.toFixed(1)} ${a!.coursework ? `${a!.coursework.unready} of ${a!.coursework.shown} unready or not shown` : 'None counted'} ${a!.reason}`);
     // What the standing gates: the Rep's understudy at the spring's casting, and the Summer Cabaret's company.
     for (const s of [plain, driven]) s.advanceTo(at(2027, 1, 4, 9, 1));
     expect(plain.player.school!.rep).toMatchObject({ production: 'The Seagull', role: 'Nina', kind: 'understudy' });

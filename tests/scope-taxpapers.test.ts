@@ -16,7 +16,7 @@
  *   once; refused outside 2 to 12 months, twice, and while a levied year is still owed.
  * - What no student reaches, shown by play to stay shut: `tax.catch_up_state_plan` (Connecticut ends a plan at its
  *   first missed payment, so none is ever behind), `tax.lien_dispute` (a Connecticut lien always secures tax still
- *   owed), `tax.federal_lien_withdraw` (her LT11 is for $1,746.41, the IRS's notice of lien for $10,000 or more),
+ *   owed), `tax.federal_lien_withdraw` (her LT11 is for $1,789.55, the IRS's notice of lien for $10,000 or more),
  *   `tax.request_waiver` (Oregon's alone) and `tax.amend` (nothing played changes a filed year).
  * - `documents.apply_ssn`: on a London-born student's played 1040-NR, the refund from her scholarship's withholding
  *   held seven weeks more without the card, and the IRS's plan applied for online with it, by Form 9465 without.
@@ -39,8 +39,10 @@
  *   is 15 June; Connecticut's return is due in mid-April all the same (Conn. Gen. Stat. 12-719(a)). They run from the
  *   state's date now (`stateDueOf`).
  *
- * The IRS's letters still begin five weeks after filing, before the due date for a return filed early: that was left
- * to the owner on 2026-10-15 (`nextNotice`), and nothing here asserts it either way.
+ * The IRS's letters began five weeks after filing until 2026-10-16, before the due date for a return filed early: left
+ * to the owner on 2026-10-15 (`nextNotice`), and settled by the brief of 2026-10-16. From then each waits for the due
+ * date, and the bill (Notice CP14) comes at filing (tests/remaining-tax.test.ts). Two dates here moved with it: the LT11
+ * of `tax.federal_lien_withdraw`, 20 June 2028 for $1,746.41 until then, and the letter after a plan left behind.
  *
  * Every figure is worked here from the rule, never asked of the engine's helper: the IRS's least monthly payment is
  * $1,700.39 over 72 months, rounded up, $23.62 (SLATE's term, said); its low-income fee is $0 by direct debit for income
@@ -291,9 +293,11 @@ describe('tax.catch_up_plan and tax.revise_plan', () => {
     expect([drew('tax.catch_up_plan'), drew('tax.revise_plan')]).toEqual([[], []]);
     expect(refusal(sim, 'tax.catch_up_plan')).toBe('Your plan isn’t behind.');
     expect(refusal(sim, 'tax.revise_plan')).toBe('Only a monthly plan in force is revised.');
-    // Collection back at the LT11, five weeks on: one letter, though the save was opened while the plan was behind.
-    // Until 2026-10-15 opening it put a second on the calendar beside it (`armCollection`).
-    expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([end + 35 * MS_DAY]);
+    // Collection back at the LT11, five weeks after the 18 April due date, since the plan ended before it: one letter,
+    // though the save was opened while the plan was behind. Until 2026-10-15 opening it put a second on the calendar
+    // beside it (`armCollection`); until 2026-10-16 the five weeks ran from the plan's end, 6 May (`nextNotice`).
+    expect(end).toBeLessThan(ret(sim).due);
+    expect(pending(sim, TAX_NOTICE_KIND).map((i) => i.at)).toEqual([ret(sim).due + 35 * MS_DAY]);
   });
 });
 
@@ -332,13 +336,16 @@ describe('tax.pay_state and tax.lien_release', () => {
     sim.advanceTo(at(2028, 6, 25, 12));
     const sd = ct(sim);
     const lien = sd.lien!;
-    papers(sim);
+    const screen = papers(sim);
     // Its lien filed on 17 June, and the levy pending 30 days on, 17 July: what paying in full is to stop.
     expect(lien).toMatchObject({ status: 'filed', filedAt: ret(sim).due + 60 * MS_DAY });
     expect(pending(sim, STATE_NOTICE_KIND).map((i) => i.at)).toEqual([ret(sim).due + 90 * MS_DAY]);
-    // Shut until it's paid, each with its reason.
+    // Its release shut until it's paid, with its reason. The withdrawal as filed in error isn't drawn: the panel says why
+    // in the engine's words (from 2026-10-16: until then it was drawn shut with them, on a lien no Connecticut state lets
+    // it act on; tests/remaining-tax.test.ts).
     expect(drew('tax.lien_release').map((c) => [c.disabled, c.title])).toEqual([[true, 'It’s released once the balance it secures is paid in full.']]);
-    expect(drew('tax.lien_dispute').map((c) => [c.disabled, c.title])).toEqual([[true, 'It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.']]);
+    expect(drew('tax.lien_dispute')).toEqual([]);
+    expect(screen).toContain('It secured tax owed when it was filed: it’s released once that’s paid, not withdrawn.');
     expect(sim.must({ kind: 'tax.pay_state', payload: { state: 'us-ct', year: 2027, amount: 100_00 } })).toEqual({ paid: 100_00, owed: 561_41, tax: 23_92, penalty: 58_53, interest: 17_55 });
     expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 561_42 })).toBe('$561.41 is owed to Connecticut DRS; pay that or less.');
     expect(refusal(sim, 'tax.pay_state', { state: 'us-ct', year: 2027, amount: 0 })).toBe('Pay something.');
@@ -502,10 +509,18 @@ describe('what her life never reaches', () => {
     expect(JSON.stringify(ret(sim).figures)).toBe(before);
   });
 
-  it('tax.federal_lien_withdraw: her LT11 on 20 June is for $1,746.41, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn', () => {
+  it('tax.federal_lien_withdraw: her LT11 on 5 September is for $1,789.55, under the $10,000 the IRS files its notice at, so none is filed and nothing can be withdrawn; until 2026-10-16 it came on 20 June, for $1,746.41', () => {
     const sim = thaw(unpaid());
-    sim.advanceTo(at(2028, 6, 21, 12));
-    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => n.body)).toEqual(['Notice LT11: $1,746.41 on your 2027 return; in 30 days it takes what you owe from your bank accounts.']);
+    // The LT11 comes 140 days after the 18 April due date, its letters each 35 days apart from it (`nextNotice`, from
+    // 2026-10-16: until then they ran from the filing on 1 February, and the LT11 came on 20 June for $1,746.41). Worked
+    // from the rule: $1,700.39 of tax; the penalty half a percent a month or part since the due date, 5 months begun at
+    // 140 days, $42.50; the interest 7% a year compounded daily, a 366th a day in 2028, brought up at each letter (35, 70,
+    // 105, 140 days) on the tax, the penalty and the interest charged before it: $11.42, $23.03, $34.78, $46.66. In all
+    // $1,700.39 + $42.50 + $46.66 = $1,789.55.
+    sim.advanceTo(at(2028, 9, 5, 12));
+    expect(titled(sim, 'Final Notice Of Intent To Levy')).toEqual([]);
+    sim.advanceTo(at(2028, 9, 6, 12));
+    expect(titled(sim, 'Final Notice Of Intent To Levy').map((n) => [n.at, n.body])).toEqual([[ret(sim).due + 140 * MS_DAY, 'Notice LT11: $1,789.55 on your 2027 return; in 30 days it takes what you owe from your bank accounts.']]);
     expect(ret(sim).lien).toBeUndefined();
     expect(refusal(sim, 'tax.federal_lien_withdraw', { year: 2027 })).toBe('There’s no federal tax lien on that year.');
     papers(sim);

@@ -80,7 +80,9 @@ describe('a balance left owing', () => {
     const { sim, zero } = owing('owing-levy');
     const r = returnsOf(sim.player)['2026']!;
     const titles = () => sim.universe.notifications.filter((n) => n.category === 'tax').map((n) => n.title);
-    const filed = sim.now;
+    // The letters run from the due date, the return filed on 1 February before it (from 2026-10-16, `nextNotice`: until
+    // then from the filing, and this read `filed` as the filing's moment).
+    const filed = Math.max(sim.now, r.due);
     const until = (days: number) => { while (sim.now < filed + days * MS_DAY) { zero(); sim.advanceTo(Math.min(filed + days * MS_DAY, sim.now + 6 * 3_600_000)); } };
     until(4 * 35 + 1);
     expect(titles()).toEqual(expect.arrayContaining(['A Reminder From The IRS', 'A Second Reminder From The IRS', 'The IRS Intends To Levy', 'Final Notice Of Intent To Levy']));

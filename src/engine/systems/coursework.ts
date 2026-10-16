@@ -1274,7 +1274,14 @@ export function meetingWeight(sim: Simulation, person: Person, course: string, d
       }
       due.status = 'missed';
       if (due.partner !== undefined) { const mate = person.school!.classmates[due.partner]!; moveTrust(mate, WORK.trust.missed, { person, by: WORK.bond.missed }); noteIncident(mate, sim.now, 'missed'); remember(sim, mate, `You weren’t there to show ${sceneById(due.sceneId ?? '')?.play ?? 'the work'}`); }
-      if (mine) sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: 'You weren’t there when it was due, and it isn’t taken later.', importance: 60, route: '/workspace/school' });
+      // What it counts for, said with it (from 2026-10-16, the owner's brief's “no dead-end warning”): until then the notice
+      // said only that it isn't taken later, while the term's review counts it as due and Unready and the course's pass
+      // reads it (`termTally`, `settleCourses`). The course's count is its pieces due so far, shown or missed, as the
+      // evaluation reads them.
+      if (mine) {
+        const so = cw.assignments.filter((x) => x.course === course && x.term === due.term && (x.shown || x.status === 'missed'));
+        sim.notify({ category: 'school', title: `Not Shown: ${courseOf(course)?.name}`, body: `You weren’t there when it was due, and it isn’t taken later. The term’s review counts it as due and Unready, and a course with half or more of its pieces due not shown isn’t passed at the term’s evaluation: ${so.filter((x) => !x.shown).length} of ${so.length} so far.`, importance: 60, route: '/workspace/school' });
+      }
       termWarning(sim, person, due);
       return 1;
     }

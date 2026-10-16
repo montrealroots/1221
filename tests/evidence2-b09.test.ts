@@ -386,7 +386,8 @@ describe('school.make_up', () => {
     expect(twin.player.school!.courses![ON_CAMERA_KEY]!.result).toBe('permanent');
     expect(twin.player.school!.standing).toBe('withheld');
     expect(twin.player.school!.endedAt).toBe(at(2029, 5, 27, 17));
-    expect(titled(twin, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['On-Camera Acting Technique wasn’t made up in its month, and the degree needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.']);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(twin, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['On-Camera Acting Technique wasn’t made up in its month, and the degree needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
     expect(titled(twin, 'Your MFA Is Conferred')).toHaveLength(0);
   }, 60_000);
 
@@ -576,7 +577,8 @@ describe('school.request_repeat', () => {
     expect(school.repeat).toMatchObject({ status: 'refused', why });
     expect(school.standing).toBe('withheld');
     expect(school.endedAt).toBe(at(2029, 5, 4, 18));
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused your request to repeat the year. ${why} The faculty didn’t recommend the degree, and your terms at the School are over.`]);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused your request to repeat the year. ${why} The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.`]);
     expect(titled(sim, 'Your Repeat Is Refused')).toHaveLength(0);
     expect(school.offset ?? 0).toBe(0);
     expect(f1Of(sim.player)!.expiresAt).toBe(l3().i20);
@@ -619,7 +621,8 @@ describe('school.request_extra_term', () => {
     expect(school.standing).toBe('withheld');
     // Until 2026-10-13 it said “You didn’t ask to repeat the year in its thirty days”, to a student who could ask for
     // neither, and this test held it.
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.']);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
     expect(twin.must<{ term: number }>({ kind: 'school.request_extra_term', payload: {} }).term).toBe(9);
   }, 60_000);
 
@@ -636,7 +639,8 @@ describe('school.request_extra_term', () => {
     tend(sim, at(2030, 5, 26, 18));
     expect(school.standing).toBe('withheld');
     // Until 2026-10-13: “You didn’t ask to repeat the year in its thirty days”, a repeat this student was never offered.
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over.']);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual(['The thirty days to finish the degree ended with nothing asked for, and it needs every course passed. The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.']);
   }, 60_000);
 
   it('past the Bulletin’s nine at the decision, reached only from a fixture: refused in its words and the degree withheld, no term on the calendar; a twin without it granted', () => {
@@ -652,7 +656,8 @@ describe('school.request_extra_term', () => {
     expect(school.extra).toBeUndefined();
     expect(school.standing).toBe('withheld');
     expect(school.endedAt).toBe(at(2030, 5, 3, 18));
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused an additional term. ${why} The faculty didn’t recommend the degree, and your terms at the School are over.`]);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused an additional term. ${why} The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.`]);
     expect(titled(sim, 'An Additional Term Granted')).toHaveLength(0);
     expect(pendingOf(sim, TERM_KIND)).toHaveLength(0);
     tend(twin, at(2030, 5, 3, 19));
@@ -677,7 +682,8 @@ describe('school.request_extra_term', () => {
     const why = '2 courses failed in Fall Term 2028: the Bulletin disqualifies a student with 2 Failures in a term.';
     expect(sim.player.school!.extraRequest).toMatchObject({ status: 'refused', why });
     expect(sim.player.school!.standing).toBe('withheld');
-    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused an additional term. ${why} The faculty didn’t recommend the degree, and your terms at the School are over.`]);
+    // What still stands is said with the end, from 2026-10-16 (the owner’s brief’s “no dead-end warning”; tests/remaining-school.test.ts).
+    expect(titled(sim, 'The Degree Isn’t Recommended').map((n) => n.body)).toEqual([`The chair and the dean refused an additional term. ${why} The faculty didn’t recommend the degree, and your terms at the School are over. What you did here stands: every course and its result stay on your record, the productions you played stay on your Profile, and hours you worked are still paid. Practice, and the practice briefs on your Profile, go on outside the School.`]);
     expect(f1Of(sim.player)!.expiresAt).toBe(l3().i20);
     tend(twin, at(2029, 5, 4, 19));
     expect(twin.player.school!.extraRequest!.status).toBe('granted');

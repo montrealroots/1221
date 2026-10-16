@@ -36,8 +36,8 @@ import { bankById, type Bank } from '../content/banks';
 import { afterBusinessDays, businessDay, daysOfAccount } from '../content/bankdays';
 import { ESTIMATE_CARD_DAYS, ESTIMATE_SEND_DAYS, OPENING, TRANSFERS, type Opening } from '../content/bankopening';
 import { SECURITY } from '../content/security';
-import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, inSaveMoney, interestTaxFor, openOne, settleFees, settleInterest } from './banking';
-import { checkingAt, checkingsOf, collectionsOf, declines, CHEX } from './lending';
+import { bankAccountsOf, banksFor, closingFeesOf, dropPaymentsFor, endedWords, endOrdersFrom, inSaveMoney, interestTaxFor, openOne, owingWords, settleFees, settleInterest } from './banking';
+import { checkingAt, checkingsOf, collectionsOf, declines, overdraftInterestOf, settleOverdraftInterest, CHEX } from './lending';
 import { changeDeposits, depositAccount, linkedTo, orderSource, redirectAway } from './routing';
 import { autopaySource, cardsOf } from './credit';
 import { paymentsOf } from './payments';
@@ -298,17 +298,24 @@ export function closeRefusal(sim: Simulation, person: Person, account: Account):
   // The fees closing charges (`settleFees`, Germany's quarter so far) past what it holds with its interest would leave it
   // overdrawn, and the bank closes an overdrawn account only once that's paid, as above. Until 2026-10-15 Close It closed a
   // German account with €3 in it and €4.90 owed at -€1.90, its debt closed with it, where Cancel It refused the same
-  // account from that morning (found by that day's skeptic).
-  const owed = closingFeesOf(sim, account);
+  // account from that morning (found by that day's skeptic). The overdraft interest built since the 1st counts with them
+  // from 2026-10-16, when closing began to charge it (`settleOverdraftInterest`).
+  const fees = closingFeesOf(sim, account);
+  const od = overdraftInterestOf(account);
   const earned = Math.floor(account.accrued ?? 0);
-  const short = owed - account.balance - (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0);
-  if (owed > 0 && short > 0) return `Its fees, ${formatMoney(owed, saveCurrency(sim.universe))}, are more than it holds. Pay in ${formatMoney(short, saveCurrency(sim.universe))} first.`;
+  const short = fees + od - account.balance - (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0);
+  const m = (n: Money) => formatMoney(n, saveCurrency(sim.universe));
+  if (fees + od > 0 && short > 0) return `${owingWords([...(od > 0 ? [['its overdraft interest', m(od)] as const] : []), ...(fees > 0 ? [['its fees', m(fees)] as const] : [])])} more than it holds. Pay in ${m(short)} first.`;
   return undefined;
 }
 
-/** Closes a current account now: interest and fees settled, what it holds sent on, its history kept. */
+/**
+ * Closes a current account now: interest, overdraft interest and fees settled, what it holds sent on, its history kept.
+ * The overdraft interest built since the 1st from 2026-10-16 (`settleOverdraftInterest`): until then it was dropped.
+ */
 function closeNow(sim: Simulation, person: Person, account: Account, remainderTo: Account | undefined): Instant | undefined {
   settleInterest(sim, account, `Interest: ${account.name}, on closing`);
+  settleOverdraftInterest(sim, account);
   settleFees(sim, account);
   let arrives: Instant | undefined;
   if (account.balance > 0 && remainderTo) {
@@ -326,17 +333,35 @@ function closeNow(sim: Simulation, person: Person, account: Account, remainderTo
 }
 
 /**
- * The bank closes an account it opened that was never funded, or one idle at zero past its days: nothing in it, so
- * nothing to send. Payments into it go to the account kept elsewhere, as a payer re-sends a returned one
- * (`redirectAway`); a standing order or autopay from it fails until moved, and says so.
+ * The bank closes an account it opened that was never funded, or one idle at zero past its days. Payments into it go to
+ * the account kept elsewhere, as a payer re-sends a returned one (`redirectAway`); autopay from it fails until moved, and
+ * says so; a standing order from it ends with it (`endOrdersFrom`, from 2026-10-16: until then it failed and said so every
+ * month for good).
+ *
+ * What closing settles is worked out first (from 2026-10-16): the interest built, less its tax, against the fees closing
+ * charges and the overdraft interest built (`closingFeesOf`, `overdraftInterestOf`). Where those are more, the bank doesn't
+ * close it: they're charged when they fall due, at the quarter's closing or on the 1st, and an account they take below
+ * zero is pursued as any overdrawn one (sixty days, `closeForOverdraft`), as Close It won't close an account they'd
+ * overdraw, and as BGB § 675h(3) leaves fees owed to the end of the contract (dejure.org, read 2026-10-16). What closing
+ * leaves in it, its interest, goes to the primary account by the bank's own payment. Until then it closed at zero and
+ * settled after: a German account's fees would have closed it below zero with nothing pursuing the debt, and interest
+ * settled would have stayed in a closed account. Neither was reached in play: only Citi and Capital One close an account
+ * at zero or unfunded (`OPENING`), and neither builds interest on one or charges fees at closing
+ * (docs/verification/remaining/banking-checklist.json, banking.1).
  */
 function closedByBank(sim: Simulation, person: Person, account: Account, why: string): void {
   const other = checkingsOf(sim, person).find((a) => a.id !== account.id);
   if (!other || account.balance !== 0) return;
+  const earned = Math.floor(account.accrued ?? 0);
+  const left = (earned > 0 ? earned - interestTaxFor(sim, account, earned) : 0) - closingFeesOf(sim, account) - overdraftInterestOf(account);
+  if (left < 0) return;
   if (person.primaryAccountId === account.id) person.primaryAccountId = other.id;
   redirectAway(sim, person, account.id, other.id);
-  closeNow(sim, person, account, undefined);
-  if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.institution ?? 'The Bank'} Closed ${account.name}`, body: why, importance: 60, route: '/workspace/bank' });
+  const ended = endOrdersFrom(sim, person, account);
+  const into = sim.universe.accounts[person.primaryAccountId ?? other.id] ?? other;
+  const arrives = closeNow(sim, person, account, into);
+  const sent = left > 0 ? ` Its ${formatMoney(left, saveCurrency(sim.universe))} of interest ${arrives !== undefined && arrives > sim.now ? `is on its way to ${into.name}, arriving ${formatDate(arrives, sim.zone)}` : `went to ${into.name}`}.` : '';
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.institution ?? 'The Bank'} Closed ${account.name}`, body: `${why}${sent}${endedWords(sim, ended)}`, importance: 60, route: '/workspace/bank' });
 }
 
 export function registerBankMoves(sim: Simulation): void {

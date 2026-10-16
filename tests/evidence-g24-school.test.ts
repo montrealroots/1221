@@ -576,10 +576,12 @@ describe('standing/term evaluation', () => {
     const [review] = plain.player.school!.history;
     const { text } = drawn(plain, SchoolWorkspace, 'standing');
     expect(text).toContain('Evaluations');
-    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${review!.growth.toFixed(1)} ${review!.classGrowth.toFixed(1)} ${review!.reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${review!.growth.toFixed(1)} ${review!.classGrowth.toFixed(1)} ${review!.coursework ? `${review!.coursework.unready} of ${review!.coursework.shown} unready or not shown` : 'None counted'} ${review!.reason}`);
     const done = fallWorked();
     const ok = done.player.school!.history[0]!;
-    expect(drawn(done, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${ok.growth.toFixed(1)} ${ok.classGrowth.toFixed(1)} ${ok.reason}`);
+    // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
+    expect(drawn(done, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${ok.growth.toFixed(1)} ${ok.classGrowth.toFixed(1)} ${ok.coursework ? `${ok.coursework.unready} of ${ok.coursework.shown} unready or not shown` : 'None counted'} ${ok.reason}`);
   });
 });
 

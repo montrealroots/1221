@@ -71,12 +71,7 @@ export function LeavePanel() {
                 {l.f1Extended ? 'Your I-20 runs a year longer, as a reduced course load. ' : ''}
                 {l.noticeAt ? `You gave notice of your return on ${formatDate(l.noticeAt, sim.zone)}.` : `Give notice of your return by ${formatDate(l.noticeBy!, sim.zone)}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}; without it the leave ends in dismissal.`}
               </p>
-              {l.mandatory && (
-                <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
-                  <span className="small"><strong>Imposed by the dean</strong> on Yale Health’s recommendation: {l.mandatory.why} {l.mandatory.appeal ? (l.mandatory.appeal.outcome ? `Your appeal was ${l.mandatory.appeal.outcome === 'rescinded' ? 'granted' : 'turned down'}: ${l.mandatory.appeal.why}` : `Your appeal is with the dean, decided by ${formatDate(l.mandatory.appeal.decideAt, sim.zone)}.`) : sim.now <= l.mandatory.appealBy ? `You can appeal in writing to the dean until ${formatDate(l.mandatory.appealBy, sim.zone)}; the leave stands meanwhile, and it’s overturned if you’re cleared while enough of the term is left to resume.` : ''}</span>
-                  {!l.mandatory.appeal && sim.now <= l.mandatory.appealBy && <Gated feature="school.appeal_leave" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ decideAt: number }>('school.appeal_leave'); if (r.ok) toast(`Appealed: decided by ${formatDate(r.value!.decideAt, sim.zone)}.`, 'positive'); }}>Appeal To The Dean</Gated>}
-                </div>
-              )}
+              {l.mandatory && <DeanLeave />}
               <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
                 {!l.noticeAt && <Gated feature="school.return_notice" className="btn btn-sm" disabled={Boolean(noticeNo)} title={noticeNo} onClick={() => { if (run('school.return_notice').ok) toast('Notice given: you’re expected back.', 'positive'); }}>Give Notice Of Return</Gated>}
                 {noticeNo && !l.noticeAt && <span className="xs dim">{noticeNo}</span>}
@@ -91,7 +86,11 @@ export function LeavePanel() {
               </div>
             </div>
           )}
-          {(l.status === 'pending' || l.status === 'granted') && (
+          {/* A leave the dean imposed, granted from the next term, is the dean's: its appeal, not Call Off The Leave… (from
+              2026-10-16: until then this drew Call Off for it, and the cancel was taken; the appeal was drawn only once the
+              leave was on). */}
+          {l.status === 'granted' && l.mandatory && <DeanLeave />}
+          {(l.status === 'pending' || (l.status === 'granted' && !l.mandatory)) && (
             <div className="row gap-2">
               {asking !== 'cancel'
                 ? <button type="button" className="btn btn-sm btn-ghost" onClick={() => setAsking('cancel')}>Call Off The Leave…</button>
@@ -157,6 +156,25 @@ export function LeavePanel() {
 
 /** A term's first morning in New Haven. */
 const at9 = (term: number) => instantFromZoned({ ...termStart(term).date, hour: 9 }, 'America/New_York');
+
+/**
+ * A leave the dean imposed (`MANDATORY_LEAVE`): why, and its appeal, on a leave under way or one granted from the next
+ * term (a function of its own from 2026-10-16, when the second came to be drawn: until then it was drawn only on a leave
+ * under way, though the dean's notice said it could be appealed from the decision).
+ */
+function DeanLeave() {
+  const { sim, run, toast } = useGame();
+  const person = useWorld((s) => s.player);
+  const l = person.school!.leave!;
+  const m = l.mandatory!;
+  const open = !m.appeal && sim.now <= m.appealBy;
+  return (
+    <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
+      <span className="small"><strong>Imposed by the dean</strong> on Yale Health’s recommendation{l.status === 'granted' ? `, from ${termLabel(l.firstTerm)}` : ''}: {m.why} {m.appeal ? (m.appeal.outcome ? `Your appeal was ${m.appeal.outcome === 'rescinded' ? 'granted' : 'turned down'}: ${m.appeal.why}` : `Your appeal is with the dean, decided by ${formatDate(m.appeal.decideAt, sim.zone)}.`) : open ? `You can appeal in writing to the dean until ${formatDate(m.appealBy, sim.zone)}; the leave stands meanwhile, and it’s overturned if you’re cleared while enough of the term is left to resume${l.status === 'granted' ? ', as all of it is before the leave begins' : ''}. It isn’t yours to call off.` : 'It isn’t yours to call off.'}</span>
+      {open && <Gated feature="school.appeal_leave" className="btn btn-sm btn-ghost" onClick={() => { const r = run<{ decideAt: number }>('school.appeal_leave'); if (r.ok) toast(`Appealed: decided by ${formatDate(r.value!.decideAt, sim.zone)}.`, 'positive'); }}>Appeal To The Dean</Gated>}
+    </div>
+  );
+}
 
 /** A year asked to be repeated, SLATE's faculty model. */
 export function RepeatPanel() {

@@ -73,6 +73,8 @@ export interface Chronic {
   prescribedAt?: Instant; orderedReadyAt?: Instant;
 }
 export const HEALTH_WEEK_KIND = 'health.week';
+/** A notice of noncompliance's thirty days over: the renewal or the application decided (from 2026-10-16). */
+export const WORK_DECIDED_KIND = 'health.work_decided';
 export const BILL_KIND = 'health.bill';
 
 export type Cover = 'yale' | 'medicaid' | 'essential' | 'marketplace';
@@ -97,6 +99,33 @@ export interface MedicalBill {
    * what was left to the patient, and what the plan paid was written nowhere.
    */
   covered?: { price: Money; planPaid: Money };
+  /**
+   * A line a change of cover wrote (`repriceCare`, from 2026-10-16): the bill it adjusts, and what came off where less is
+   * owed. Its `covered.planPaid` is the plan's change, negative where the plan took its part back. Until 2026-10-16 a
+   * change of cover rewrote the bill already issued: its share, its plan part, and Settled for one nobody paid.
+   */
+  adjusts?: string;
+  credit?: Money;
+  /** On a bill a later line credited before it was paid: what came off, so the share issued is `amount` + `credited`. */
+  credited?: Money;
+}
+
+/**
+ * A determination waiting on the person (from 2026-10-16): HUSKY D's work rules unverified, at a renewal or an
+ * application (`healthMonth`, `health.apply`). The notice of noncompliance is dated `noticeAt`, taken as received five
+ * days on, and gives thirty calendar days from then (42 CFR 435.558(a)(2), (c)(4)); the decision is made at `decideAt`.
+ */
+export interface PendingDetermination {
+  kind: 'renewal' | 'application';
+  state: BenefitState;
+  noticeAt: Instant;
+  decideAt: Instant;
+  /** The months assessed, as 'YYYY-MM'. */
+  months: string[];
+  band: 'low' | 'high';
+  /** A renewal's next renewal had it been kept; an application's first day had it been approved when made. */
+  renewAt?: Instant;
+  from?: Instant;
 }
 
 /**
@@ -154,7 +183,9 @@ export interface HealthRecord {
    * cover back in time bills it again as the cover then was (`repriceCare`). Yale Health's $0 share makes no bill, so
    * without it a cancellation back to a term's start had nothing to reckon.
    */
-  careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string; adjusted?: { at: Instant; why: string; change: Money }[]; /** Where a visit was had, so a change of cover reads it there again (from 2026-10-15). */ clinicId?: string }[];
+  careLog?: { at: Instant; care: Care; what: string; share: Money; billId?: string; adjusted?: { at: Instant; why: string; change: Money; plan?: Money }[]; /** Where a visit was had, so a change of cover reads it there again (from 2026-10-15). */ clinicId?: string; /** What the plan paid of it (from 2026-10-16): its price less the share where the cover paid, and no bill is made for a share of $0, so this is where HUSKY D's or Yale Health's part of a $0 visit is kept. `repriceCare` moves it. Absent on a log written before, and read then from its bill, or as none. */ planPaid?: Money }[];
+  /** A determination waiting on the person: HUSKY D's work rules unverified (from 2026-10-16). */
+  pending?: PendingDetermination;
   /**
    * Care older than the log keeps, by year: how many events and what was charged (from 2026-10-10). The log itself keeps
    * every event within `CARE_LOG.keepDays`, past any cover change's reach back, and any event whose bill is still
@@ -361,21 +392,103 @@ export function creditStatus(person: Person, at: Instant): boolean {
 /** The credit's floor, a share of the poverty line, and the year its eligible noncitizens begin (`creditAllowed`). */
 export const PREMIUM_CREDIT_RULES = { floor: 1, eligibleAliensFrom: 2027 } as const;
 
-/**
- * Whether a month counts toward Medicaid's community engagement from 2027 (Pub. L. 119-21 §71119, 42 USC 1396a(xx)(2)):
- * 80 hours' work, or a month's earnings of 80 hours at the federal minimum wage ($580), or enrollment in an educational
- * program at least half-time. Both halves read last month, the month the statute asks about, at an application and at a
- * renewal alike (`lastMonthWork`, `enrolledIn`). The schooling counts from 2026-10-15: until then a HUSKY D member back
- * at the School from a leave was ended at renewal for having no work. Until later that day the schooling was read as
- * being at the School at the instant asked, not over last month: a student at the School all of January 2027 who
- * withdrew on 1 February was refused HUSKY D on 2 February for having had none of it last month (found by play).
+/*
+ * Medicaid's community engagement from 2027 (Pub. L. 119-21 §71119, 42 USC 1396a(xx)(2)). Until 2026-10-16 `engaged`
+ * read the one month before a moment, at an application and at a renewal alike, by work's hours and pay
+ * (`lastMonthWork`) and the School, with no exception of any kind. The schooling counted from 2026-10-15: until then a
+ * HUSKY D member back at the School from a leave was ended at renewal for having no work; until later that day it was
+ * read at the instant asked, and a student at the School all of January 2027 who withdrew on 1 February was refused on
+ * 2 February (found by play). Since 2026-10-16 a month is read by `monthEngagement`, and the months by `engagement`:
+ * Connecticut's one before an application and six before a renewal (`lookBack`, `PUBLIC_COVER.workLookBack`).
  */
-function engaged(sim: Simulation, person: Person, at: Instant, cur: string): boolean {
-  const work = lastMonthWork(sim, person, at);
-  const p = zonedParts(at, HOME);
-  const school = enrolledIn(person, firstOf(p.year, p.month - 1), firstOf(p.year, p.month));
-  return school || work.hours >= PUBLIC_COVER.workHours || work.pay >= usd(PUBLIC_COVER.workEarnings, cur);
+/** How a month meets Medicaid's work rules, or nothing: by work, by income, at school, or by an exception. */
+export type EngagedBy = 'work' | 'income' | 'school' | 'age' | 'snap' | 'hardship';
+/**
+ * Whether a month meets Medicaid's community engagement, and how (from 2026-10-16), read from what SLATE holds as the
+ * State's own records would (42 CFR 435.557, ex parte):
+ * - 80 hours' work (435.552(a)(1)), the hours of the wages paid in it (`workedBetween`);
+ * - a month's income of 80 hours at the federal minimum wage, $580 (435.552(f)), which is "the individual's MAGI-based
+ *   income" (435.552(f)(2)), earned and unearned: CMS "considered counting only earned income" and didn't
+ *   (CMS-2454-IFC, read 2026-10-16). It's the month's income the record holds, as `programFor` reads it, with any wages
+ *   posted that the record doesn't. Until 2026-10-16 it was work's pay alone, and interest, a benefit or a pension of
+ *   $580 or more didn't count;
+ * - school at least half-time, any of the month at the School (`enrolledIn`);
+ * - under 19, or 65 or over, for any part of it: the adult group is 19 to 64 (435.551, 435.553(a)(1)). SLATE's HUSKY D
+ *   at 65 stands in for HUSKY C, which it doesn't keep; no life at Yale is under 21, so under 19 is a guard;
+ * - SNAP received in it while not exempt from SNAP's work rules: out of school, no unemployment claim open, 18 to 64
+ *   (435.554(c)(7); `systems/assistance.ts`), which Connecticut gives as "in a household receiving SNAP ... and not
+ *   exempt from the SNAP work rules" (CHA, 8/25/26);
+ * - a stay in hospital in it, on her request alone (`hardship`, 435.555(d)(1); Connecticut: "Were recently inpatient in
+ *   a hospital"), which the notice of noncompliance offers (`health.request_hardship`).
+ * What SLATE doesn't hold isn't read: pregnancy, children, caring for a disabled person, a veteran's rating, tribal
+ * membership, foster care, Medicare, prison, TANF, treatment for addiction, a disaster or an unemployment county,
+ * travel for care, and medical frailty, whose list Connecticut hasn't published and which SLATE's conditions, kept up or
+ * not, don't make (none of them keeps a life from work or school here).
+ */
+export function monthEngagement(sim: Simulation, person: Person, key: string, cur: string, hardship = false): EngagedBy | undefined {
+  const year = Number(key.slice(0, 4));
+  const month = Number(key.slice(5, 7));
+  const from = firstOf(year, month);
+  const until = firstOf(year, month + 1);
+  const yearsAt = (t: Instant) => (t - person.birthInstant) / (365.2425 * MS_DAY);
+  if (yearsAt(from) < 19 || yearsAt(until - 1) >= 65) return 'age';
+  if (enrolledIn(person, from, until)) return 'school';
+  const work = workedBetween(sim, person, from, until);
+  if (work.hours >= PUBLIC_COVER.workHours) return 'work';
+  const kinds = earningsOf(person).kinds?.[key];
+  const recordedPay = kinds ? kinds.wages + kinds.workStudy : 0;
+  const income = (earningsOf(person).months[key] ?? 0) + Math.max(0, work.pay - recordedPay);
+  if (false && income >= usd(PUBLIC_COVER.workEarnings, cur)) return 'income';
+  const snap = sim.universe.transactions.some((t) => t.at >= from && t.at < until && t.memo === 'SNAP, the month, onto the EBT card' && t.postings.some((q) => sim.universe.accounts[q.accountId]?.ownerId === person.id));
+  const claims = [person.unemployment?.claim, ...(person.unemployment?.past ?? [])].filter((c) => c !== undefined);
+  const onUi = claims.some((c) => c.filedAt < until && (c.closedAt ?? c.endsAt) > from);
+  if (snap && !onUi && yearsAt(from) >= 18 && yearsAt(from) < 65) return 'snap';
+  if (hardship && (person.health?.careLog ?? []).some((e) => e.care === 'stay' && e.at >= from && e.at < until)) return 'hardship';
+  return undefined;
 }
+/** The first of the months that meets the work rules, and how; or nothing. */
+export function engagement(sim: Simulation, person: Person, months: string[], cur: string, hardship = false): { month: string; by: EngagedBy } | undefined {
+  for (const month of months) { const by = monthEngagement(sim, person, month, cur, hardship); if (by) return { month, by }; }
+  return undefined;
+}
+/** The calendar months a look-back reads before a moment's month, the latest first: one before an application, six (in Connecticut) before a renewal. */
+export function lookBack(at: Instant, state: BenefitState, kind: 'apply' | 'renew'): string[] {
+  const n = (PUBLIC_COVER.workLookBack[state === 'ct' ? 'ct' : 'other'])[kind];
+  const p = zonedParts(at, HOME);
+  return Array.from({ length: n }, (_, i) => { const d = normalDate(p.year, p.month - 1 - i, 1); return `${d.year}-${String(d.month).padStart(2, '0')}`; });
+}
+/** A month's key in words: '2027-10' is October 2027. */
+const monthWords = (key: string): string => `${MONTH_NAMES[Number(key.slice(5, 7)) - 1]} ${key.slice(0, 4)}`;
+/** The months assessed in words, the earliest first: "October 2027", or "May to October 2027". */
+export const monthsWords = (months: string[]): string => {
+  const sorted = [...months].sort();
+  if (sorted.length === 1) return monthWords(sorted[0]!);
+  const [first, last] = [sorted[0]!, sorted[sorted.length - 1]!];
+  return first.slice(0, 4) === last.slice(0, 4) ? `${MONTH_NAMES[Number(first.slice(5, 7)) - 1]} to ${monthWords(last)}` : `${monthWords(first)} to ${monthWords(last)}`;
+};
+/** The day a notice dated `noticeAt` is answered by: received five days on, and the thirtieth calendar day from then. */
+export function answerBy(noticeAt: Instant): Instant {
+  const p = zonedParts(noticeAt, HOME);
+  return instantFromZoned({ ...normalDate(p.year, p.month, p.day + PUBLIC_COVER.noticeReceivedDays + PUBLIC_COVER.answerDays - 1), hour: 12 }, HOME);
+}
+/** When the answer's thirty days are over, and the decision is made: the start of the day after the last. */
+export function decisionAt(noticeAt: Instant): Instant {
+  const p = zonedParts(noticeAt, HOME);
+  return instantFromZoned({ ...normalDate(p.year, p.month, p.day + PUBLIC_COVER.noticeReceivedDays + PUBLIC_COVER.answerDays), hour: 0 }, HOME);
+}
+/**
+ * When cover found ineligible ends, said at `at`: the end of the month in which the ten days' advance notice run out
+ * (42 CFR 431.211; Connecticut's UPM 1570.10(A)(1)), the first of the next month at midnight. SLATE's reading, as
+ * Connecticut's own day of discontinuance wasn't found: it is never later than the end of the month after a notice of
+ * noncompliance's thirty days end (42 CFR 435.558(d)(2)(ii)). From 2026-10-16: until then a renewal ended cover at its
+ * own hour, with nothing said ahead.
+ */
+export function endsAfterNotice(at: Instant): Instant {
+  const p = zonedParts(at + PUBLIC_COVER.advanceNoticeDays * MS_DAY, HOME);
+  return firstOf(p.year, p.month + 1);
+}
+/** The last day cover ending at `until` (a month's first, at midnight) covers. */
+const lastDayBefore = (until: Instant): Instant => until - 12 * 60 * 60_000;
 /**
  * Whether they held an enrollment at the School in a month, as CMS's interim final rule of 3 June 2026 reads it (42 CFR
  * 435.552(c), CMS-2454-IFC, public-inspection.federalregister.gov/2026-11094.pdf, read 2026-10-15). The status is the
@@ -427,8 +540,16 @@ export function programFor(person: Person, at: Instant, into = 'USD', startsAt =
   // accumulated in trust under the BHP"). So it's kept for them; what New York does after 2028 isn't known.
   // Covered Connecticut reads the year before's poverty line, as the marketplace does, and is had with the premium tax
   // credit, so for its people alone (`creditAllowed`, from 2026-10-15).
+  // And it's for somebody "ineligible for HUSKY Health/Medicaid due to income": "If your household income makes you
+  // eligible for HUSKY Health/Medicaid, you are not eligible for the Covered CT Program" (portal.ct.gov/dss and
+  // help.accesshealthct.com, Covered Connecticut Program, read 2026-10-16; CMS's approval of 15 December 2022 describes
+  // its people as having "income that is above the Medicaid limit"). So an income HUSKY D's line takes isn't
+  // Covered Connecticut's, whatever the status: a noncitizen HUSKY D bars by status, at 100% to 138%, is given the
+  // marketplace, whose credit the return gives from 100% (`figuresFor`). Neither DSS nor Access Health CT was found to
+  // say how it treats that person in so many words; this follows the words it publishes. From 2026-10-16: until then
+  // she was given Covered Connecticut on any income from 100% to 175%.
   const prior = income / povertyMonth(zonedParts(at, HOME).year - 1, into);
-  if (state === 'ct' && prior <= PUBLIC_COVER.coveredCtShare && creditAllowed(person, startsAt, prior)) return { kind: 'essential', band: 'low' };
+  if (state === 'ct' && ratio > PUBLIC_COVER.medicaidShare && prior <= PUBLIC_COVER.coveredCtShare && creditAllowed(person, startsAt, prior)) return { kind: 'essential', band: 'low' };
   return undefined;
 }
 
@@ -487,12 +608,17 @@ export function mayEnroll(person: Person, at: Instant, into = 'USD', sim?: Simul
   // specified by the State) consecutive months immediately preceding the month during which such individual applies",
   // govinfo.gov PLAW-119publ21, read 2026-10-15; "If not exempt from the work rules at initial application, eligibility
   // includes a 1-month look back", Connecticut Hospital Association's HUSKY D materials from DSS's, 25 August 2026, read
-  // 2026-10-15; CMS's interim final rule of 3 June 2026 asks at least one month). Refused it, she's taken to be
-  // eligible for Medicaid for the premium tax credit (1396a(xx)(7)(B)), so Covered Connecticut isn't hers either, and
-  // the marketplace is, in its own windows. From 2026-10-15: until then Enroll asked no work, and a member ended at renewal for having none
-  // had HUSKY D back by pressing it the next day.
-  const unengaged = program !== undefined && engagementAsked(program, at) && !(sim !== undefined && engaged(sim, person, at, into));
-  const refused = unengaged ? `From January 1, 2027, ${PROGRAM_NAMES[state].medicaid} asks an applicant for ${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(usd(PUBLIC_COVER.workEarnings, into), into)} of earnings or school at least half-time in the month before, and last month had none of them.` : undefined;
+  // 2026-10-15; `lookBack`). Short of it, she's taken to be eligible for Medicaid for the premium tax credit
+  // (1396a(xx)(7)(B)), so Covered Connecticut isn't hers either, and the marketplace is, in its own windows. From
+  // 2026-10-15: until then Enroll asked no work, and a member ended at renewal for having none had HUSKY D back by
+  // pressing it the next day.
+  // Short of it, HUSKY D isn't refused outright: an application is denied only after a notice of noncompliance and
+  // thirty days to answer (42 CFR 435.558), so it can be applied for on that notice (`health.apply`, `applyRefusal`),
+  // beside the marketplace Enroll buys. From 2026-10-16: until then Enroll's refusal was the end of it. The sentence
+  // names income, not earnings, and an exception, from 2026-10-16 (`monthEngagement`): until then it said "of earnings".
+  const months = lookBack(at, state, 'apply');
+  const unengaged = program !== undefined && engagementAsked(program, at) && !(sim !== undefined && engagement(sim, person, months, into));
+  const refused = unengaged ? `From January 1, 2027, ${PROGRAM_NAMES[state].medicaid} asks an applicant for ${workWords(into)} in the month before, and last month had none of them.` : undefined;
   if (program && !refused) return { ok: true, why: `Last month’s income qualifies you for ${PROGRAM_NAMES[state][program.kind]}, at any time and with no premium.`, program: program.kind };
   const also = (r: { ok: boolean; why: string }) => (refused ? { ok: r.ok, why: `${refused} ${r.ok ? `The marketplace is open to you: ${r.why.charAt(0).toLowerCase()}${r.why.slice(1)}` : r.why}` } : r);
   return also(marketplaceOpen(person, at, state, endsAhead, h));
@@ -591,16 +717,10 @@ function nextMonday(from: Instant): Instant {
 }
 
 
-/**
- * Last month's work, for the work requirement: the pay and the hours of the wages paid in it (`workedBetween`,
- * work-study's and the Summer Cabaret's). Its hours were the career's days worked until the career went in the scope
- * reset of 2026-10-09. From then until 2026-10-12 it read the month's whole income, so an unemployment benefit,
- * interest or a pension passed the test as pay did, and the hours it names were read by nothing but its texts.
- */
-function lastMonthWork(sim: Simulation, person: Person, at: Instant): { pay: Money; hours: number } {
-  const p = zonedParts(at, HOME);
-  return workedBetween(sim, person, firstOf(p.year, p.month - 1), firstOf(p.year, p.month));
-}
+// `lastMonthWork` was here until 2026-10-16: last month's work for the work requirement, the pay and the hours of the
+// wages paid in it. Its hours were the career's days worked until the career went in the scope reset of 2026-10-09; from
+// then until 2026-10-12 it read the month's whole income, and from 2026-10-12 wages alone, so interest, a benefit or a
+// pension of $580 or more didn't count, which CMS's rule of 3 June 2026 asks them to (`monthEngagement` reads them).
 
 const renewMonths = (at: Instant, state?: BenefitState) => rateOn(state === 'ct' ? PUBLIC_COVER.renewMonthsCt : PUBLIC_COVER.renewMonths, monthKey(at) + '-01');
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -694,59 +814,11 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
         : `${Plan} comes with the premium tax credit, which from January 1, 2027, a noncitizen has only with a green card, as a Cuban or Haitian entrant or under a Compact of Free Association. The marketplace still sells to you, with no credit.`,
     });
   }
-  // A program's renewal: its income test, and from 2027 Medicaid's work.
+  // A program's renewal: its income test, and from 2027 Medicaid's work (`renewProgram`). Once, at its date: not again
+  // while a notice of noncompliance waits on an answer, nor once its end is set and said (from 2026-10-16).
   if (prog && active(prog, at)) {
     if (BENEFIT_STATE[home] !== prog.state) prog.until = at;
-    else if (at >= prog.renewAt) {
-      const still = programFor(person, at, cur);
-      // The work test is Medicaid's, at a renewal into it: kept, or moved into from the Essential Plan or Covered
-      // Connecticut, since Pub. L. 119-21 §71119 asks it of an applicant as of a member. Over every limit, it's read of
-      // the program held, as it was before. School at least half-time meets it (`engaged`, from 2026-10-15).
-      const into = still ?? prog;
-      const worksEnough = !engagementAsked(into, at) || engaged(sim, person, at, cur);
-      if (still?.kind === prog.kind && worksEnough) {
-        prog.band = still.band;
-        if (still.scope) prog.scope = still.scope; else delete prog.scope;
-        prog.renewAt = firstOf(p.year, p.month + renewMonths(at, prog.state));
-      } else if (still && worksEnough) {
-        // Renewed into the other program, where last month's income now places her, from the hour the old one ends: no
-        // gap, one program at a time, and neither has a premium to take twice. A renewal considers every basis of
-        // eligibility before ending cover, and a Medicaid member found ineligible is assessed for the others (42 CFR
-        // 435.916(f)(1)-(2), law.cornell.edu, read 2026-10-15); an exchange enrollee found eligible for Medicaid or a
-        // Basic Health Program leaves her plan the day before that eligibility begins (45 CFR 155.430(d)(2)(v), read
-        // 2026-10-15). Covered Connecticut is for somebody "ineligible for HUSKY Health/Medicaid due to income" to 175%
-        // of the poverty line, and HUSKY D for income under 138% (portal.ct.gov/dss, Covered Connecticut Program and
-        // HUSKY D, read 2026-10-15); Access Health CT's renewal gives "a final determination on whether your HUSKY
-        // Health coverage will be renewed or if you qualify for another program" (help.accesshealthct.com, read
-        // 2026-10-15). Set up as Enroll sets it (`health.enroll`): its band and scope, renewed so many months on.
-        // From 2026-10-15: until then a Covered Connecticut member whose income fell under HUSKY D's limit lost her cover
-        // at renewal and was told “Last month’s income is over what it allows”, and a HUSKY D member whose income rose
-        // into Covered Connecticut's band lost hers, told the same.
-        const names = PROGRAM_NAMES[prog.state];
-        const why = still.kind === 'medicaid' ? `Last month’s income is under what ${names.medicaid} allows, which takes the place of ${names.essential}`
-          : prog.kind === 'medicaid' && prog.scope === undefined && !medicaidStatus(person, at) ? `From October 1, 2026, ${names.medicaid} is for a US citizen, or a green card holder of five years`
-            : `Last month’s income is over what ${names.medicaid} allows and within what ${names.essential} does`;
-        prog.until = at;
-        h.program = { kind: still.kind, state: prog.state, from: at, band: still.band, renewAt: firstOf(p.year, p.month + renewMonths(at, prog.state)), ...(still.scope ? { scope: still.scope } : {}) };
-        if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Changed At Renewal', body: `${why}: you’re renewed into ${names[still.kind]} from ${formatDate(at, HOME)}, with no gap and no premium.`, importance: 80, route: '/workspace/papers' });
-      } else {
-        prog.until = at;
-        // Its status isn’t why: out of status, the Essential Plan or Covered Connecticut has ended with the month before
-        // any renewal finds it (above). Until 2026-10-13 one ran to its renewal, and there a student out of status was
-        // told first that her income, the bank’s interest alone, was over what it allows, and later that day that she
-        // had stayed past her status; that sentence went when no renewal could reach her (found by that day’s second
-        // and third rounds).
-        // A federal Medicaid held from before 1 October 2026 by somebody it no longer admits ends here for that, and says
-        // so (from 2026-10-13: until then an F-1 student enrolled before that day was told at renewal that last month’s
-        // income was over what it allows, whatever it was; found by that day’s third round of defects).
-        // One whose income now places her in HUSKY D, from Covered Connecticut, and who fails its work test is told both
-        // (from 2026-10-15: until then she was told her income was over what it allows, which it was under).
-        // The work notice names school at least half-time, which passes the test (`engaged`), from 2026-10-15: until then it
-        // named work and earnings alone, and said last month had “neither”.
-        const admitted = prog.kind !== 'medicaid' || prog.scope !== undefined || medicaidStatus(person, at);
-        if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ended At Renewal', body: !admitted ? `From October 1, 2026, ${PROGRAM_NAMES[prog.state].medicaid} is for a US citizen, or somebody with a green card for five years, and renewing it reads that.` : !worksEnough ? `${into.kind !== prog.kind ? `Last month’s income is under what ${PROGRAM_NAMES[prog.state].medicaid} allows, which takes the place of ${PROGRAM_NAMES[prog.state].essential}, and ` : ''}Medicaid now asks for ${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of earnings or school at least half-time a month, and last month had none of them.` : 'Last month’s income is over what it allows.', importance: 80, route: '/workspace/papers' });
-      }
-    }
+    else if (at >= prog.renewAt && prog.until === undefined && h.pending?.kind !== 'renewal') renewProgram(sim, person, prog, at, cur);
   }
   // California's premium on its state-funded Medi-Cal, from July 2027; 90 days unpaid and it's restricted scope.
   if (prog && active(prog, at) && prog.scope === 'state' && at >= MEDI_CAL_UIS.premiumFrom) {
@@ -814,6 +886,192 @@ export function healthMonth(sim: Simulation, person: Person, at: Instant): void 
     markRecord(person, MEDICAL_DEBT.recordHit, at, home);
     if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Medical Debt Is On Your Record', body: `Unpaid a year and ${formatMoney(usd(MEDICAL_DEBT.reportAt, cur), cur)} or more, it’s reported now.`, importance: 80, route: '/workspace/papers' });
   }
+}
+
+/** How a month met the work rules, in a sentence (`renewProgram`, `health.request_hardship`). */
+const BY_WORDS: Readonly<Record<EngagedBy, string>> = {
+  work: 'by 80 hours’ work', income: 'by its income, $580.00 or more', school: 'at the School', age: 'by your age, which they aren’t asked of',
+  snap: 'by SNAP, whose work rules you were under', hardship: 'by a stay in hospital, on your request',
+};
+const capital = (s: string): string => `${s.charAt(0).toUpperCase()}${s.slice(1)}`;
+
+/**
+ * A program comes up for renewal (`healthMonth`): its income and status (`programFor`), and from 2027 Medicaid's work
+ * over Connecticut's six months before (`lookBack`), any one of them (from 2026-10-16: until then the month before
+ * alone). The work test is Medicaid's, at a renewal into it: kept, or moved into from the Essential Plan or Covered
+ * Connecticut, since Pub. L. 119-21 §71119 asks it of an applicant as of a member.
+ * - Kept: renewed so many months on, and said ("Your Public Cover Is Renewed", from 2026-10-16: until then a renewal
+ *   kept said nothing, though 42 CFR 435.916-917 has the agency notify the basis of each determination).
+ * - Moved into the other program, where last month's income now places her (`applyRenewal`).
+ * - Over every line, or out of the status it asks: ended, said ten days or more ahead, at the month's end
+ *   (`endAhead`). From 2026-10-16: until then cover ended at the renewal's own hour, with nothing said ahead.
+ * - Short of the work: a notice of noncompliance, cover kept through thirty days to answer, then decided
+ *   (`noticeOfNoncompliance`, `WORK_DECIDED_KIND`). From 2026-10-16: until then cover ended at the renewal's hour.
+ */
+function renewProgram(sim: Simulation, person: Person, prog: NonNullable<HealthRecord['program']>, at: Instant, cur: string): void {
+  const p = zonedParts(at, HOME);
+  const names = PROGRAM_NAMES[prog.state];
+  const next = firstOf(p.year, p.month + renewMonths(at, prog.state));
+  const still = programFor(person, at, cur);
+  if (!still) {
+    // Its status isn’t why for the Essential Plan or Covered Connecticut: out of status, either has ended with the month
+    // before any renewal finds it (above). Until 2026-10-13 one ran to its renewal, and a student out of status was told
+    // there first that her income, the bank’s interest alone, was over what it allows, and later that day that she had
+    // stayed past her status (found by that day’s second and third rounds). A federal Medicaid held from before
+    // 1 October 2026 by somebody it no longer admits ends here for that, and says so (from 2026-10-13: until then an
+    // F-1 student enrolled before that day was told her income was over, whatever it was; found by that day's third
+    // round). Over every line, the work isn't asked: until 2026-10-16 a member over the line with no work was told the
+    // work was why.
+    const admitted = prog.kind !== 'medicaid' || prog.scope !== undefined || medicaidStatus(person, at);
+    endAhead(sim, person, prog, at, !admitted ? `From October 1, 2026, ${names.medicaid} is for a US citizen, or somebody with a green card for five years, and renewing it reads that` : 'Last month’s income is over what it allows');
+    return;
+  }
+  let met: { month: string; by: EngagedBy } | undefined;
+  if (engagementAsked(still, at)) {
+    const months = lookBack(at, prog.state, 'renew');
+    met = engagement(sim, person, months, cur);
+    if (!met) {
+      noticeOfNoncompliance(sim, person, { kind: 'renewal', state: prog.state, noticeAt: at, decideAt: decisionAt(at), months, band: still.band, renewAt: next }, prog);
+      return;
+    }
+  }
+  applyRenewal(sim, person, prog, still, at, next, met);
+}
+
+/**
+ * A renewal granted: the program kept, or the other one from this hour. Moving into the other program, where last
+ * month's income now places her, is from the hour the old one ends: no gap, one program at a time, and neither has a
+ * premium to take twice. A renewal considers every basis of eligibility before ending cover, and a Medicaid member found
+ * ineligible is assessed for the others (42 CFR 435.916(f)(1)-(2), law.cornell.edu, read 2026-10-15); an exchange
+ * enrollee found eligible for Medicaid or a Basic Health Program leaves her plan the day before that eligibility begins
+ * (45 CFR 155.430(d)(2)(v), read 2026-10-15). Covered Connecticut is for somebody "ineligible for HUSKY Health/Medicaid
+ * due to income" to 175% of the poverty line, and HUSKY D for income under 138% (portal.ct.gov/dss, read 2026-10-15);
+ * Access Health CT's renewal gives "a final determination on whether your HUSKY Health coverage will be renewed or if
+ * you qualify for another program" (help.accesshealthct.com, read 2026-10-15). From 2026-10-15: until then a Covered
+ * Connecticut member whose income fell under HUSKY D's limit lost her cover at renewal and was told “Last month’s
+ * income is over what it allows”, and a HUSKY D member whose income rose into Covered Connecticut's band lost hers.
+ */
+function applyRenewal(sim: Simulation, person: Person, prog: NonNullable<HealthRecord['program']>, still: { kind: 'medicaid' | 'essential'; band: 'low' | 'high'; scope?: 'state' | 'restricted' }, at: Instant, next: Instant, met?: { month: string; by: EngagedBy }): void {
+  const h = healthOf(person);
+  const names = PROGRAM_NAMES[prog.state];
+  const mine = person.id === sim.universe.playerId;
+  const work = met ? `, and ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}` : '';
+  if (still.kind === prog.kind) {
+    prog.band = still.band;
+    if (still.scope) prog.scope = still.scope; else delete prog.scope;
+    prog.renewAt = next;
+    if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Is Renewed', body: `${capital(names[prog.kind])} is renewed to its next renewal, ${formatDate(next, HOME)}: last month’s income is within what it allows${work}.`, importance: 60, route: '/workspace/papers' });
+    return;
+  }
+  const why = still.kind === 'medicaid' ? `Last month’s income is under what ${names.medicaid} allows, which takes the place of ${names.essential}`
+    : prog.kind === 'medicaid' && prog.scope === undefined && !medicaidStatus(person, at) ? `From October 1, 2026, ${names.medicaid} is for a US citizen, or a green card holder of five years`
+      : `Last month’s income is over what ${names.medicaid} allows and within what ${names.essential} does`;
+  prog.until = at;
+  h.program = { kind: still.kind, state: prog.state, from: at, band: still.band, renewAt: next, ...(still.scope ? { scope: still.scope } : {}) };
+  if (mine) sim.notify({ category: 'health', title: 'Your Public Cover Changed At Renewal', body: `${why}: you’re renewed into ${names[still.kind]} from ${formatDate(at, HOME)}, with no gap and no premium${work}.`, importance: 80, route: '/workspace/papers' });
+}
+
+/**
+ * A program found ineligible ends at the month's end at least ten days after it's said (`endsAfterNotice`, from
+ * 2026-10-16), and the notice says when. Losing it opens the marketplace's 60 days at the month's look that finds her
+ * uncovered (`lostAt`).
+ */
+function endAhead(sim: Simulation, person: Person, prog: NonNullable<HealthRecord['program']>, at: Instant, why: string, credit = ''): void {
+  const until = endsAfterNotice(at);
+  prog.until = until;
+  const name = capital(PROGRAM_NAMES[prog.state][prog.kind]);
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Your Public Cover Ends', body: `${why}: ${name} ends on ${formatDate(lastDayBefore(until), HOME)}, ${lawfullyPresent(person) ? `and losing it opens ${ENROLLMENT.specialDays} days to enroll in the marketplace${credit}` : 'and out of status the marketplace won’t take you'}.`, importance: 80, route: '/workspace/papers' });
+}
+
+/** The work rules' words, for the notices: "80 hours’ work, $580.00 of income, school at least half-time or an exception". */
+const workWords = (cur: string): string => `${PUBLIC_COVER.workHours} hours’ work, ${formatMoney(usd(PUBLIC_COVER.workEarnings, cur), cur)} of income, school at least half-time or an exception`;
+/** The months assessed, in a sentence: "in December 2026", "in any month from May to October 2027". */
+const inMonths = (months: string[]): string => (months.length > 1 ? `in any month from ${monthsWords(months)}` : `in ${monthsWords(months)}`);
+
+/**
+ * The notice of noncompliance (from 2026-10-16; 42 USC 1396a(xx)(6); 42 CFR 435.558, CMS-2454-IFC of 3 June 2026): the
+ * months assessed, how to show the rules met or an exception, the day to answer by (received five days after its date,
+ * thirty calendar days from then), what follows for the cover and for the premium tax credit, and how to apply again;
+ * Connecticut's short-term hardship for a stay in hospital is had on a request (`health.request_hardship`). A member is
+ * covered while she answers (435.558(a)(3)); an applicant isn't covered yet. Decided at the thirty days' end
+ * (`WORK_DECIDED_KIND`). Until 2026-10-16 an applicant was refused and a member ended at once, with no notice and no
+ * time to answer.
+ */
+function noticeOfNoncompliance(sim: Simulation, person: Person, pend: PendingDetermination, held?: NonNullable<HealthRecord['program']>): void {
+  const h = healthOf(person);
+  const cur = saveCurrency(sim.universe);
+  h.pending = pend;
+  sim.schedule({ at: pend.decideAt, kind: WORK_DECIDED_KIND, label: 'Public Cover Decided', category: 'system', priority: 6, payload: { personId: person.id, noticeAt: pend.noticeAt } });
+  if (person.id !== sim.universe.playerId) return;
+  const names = PROGRAM_NAMES[pend.state];
+  const by = formatDate(answerBy(pend.noticeAt), HOME);
+  const read = `Your pay, your income, the School, your age and SNAP are read from the records; a stay in hospital in ${pend.months.length > 1 ? 'those months' : 'that month'} counts if you ask for it (Request A Hardship Exception on Papers).`;
+  const after = `the premium tax credit isn’t yours while ${names.medicaid} would take you but for its work rules, and you can apply again in any month after one that meets them.`;
+  const body = pend.kind === 'renewal'
+    ? `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}${held && held.kind !== 'medicaid' ? `, and last month’s income places you in it in place of ${names.essential}` : ''}. You’re covered while you answer, to ${by}. ${read} Unanswered, ${held ? names[held.kind] : names.medicaid} ends on ${formatDate(lastDayBefore(endsAfterNotice(pend.decideAt)), HOME)}, said on ${formatDate(pend.decideAt, HOME)}, and ${after}`
+    : `${names.medicaid} couldn’t find ${workWords(cur)} ${inMonths(pend.months)}, before the month you applied. Answer by ${by}. ${read} Unanswered, the application is denied on ${formatDate(pend.decideAt, HOME)}; the marketplace sells to you meanwhile in its own windows, ${after}`;
+  sim.notify({ category: 'health', title: 'A Notice Of Noncompliance', body: capital(body), importance: 80, route: '/workspace/papers' });
+}
+
+/**
+ * A determination waiting on the work rules, granted (`health.request_hardship`, or the decision finding them met): a
+ * renewal is renewed as it would have been at its date, the program kept or moved into from this hour (no gap: she was
+ * covered while she answered); an application is approved, HUSKY D from the first of the month it would have begun when
+ * made, or of next month where that's passed (SLATE starts every cover on a month's first; Connecticut's own day of
+ * eligibility, the month applied in and one month before, isn't kept), and a marketplace plan bought meanwhile ends as
+ * it begins (45 CFR 155.430(d)(2)(v)).
+ */
+function grantPending(sim: Simulation, person: Person, pend: PendingDetermination, met: { month: string; by: EngagedBy }, at: Instant): void {
+  const h = healthOf(person);
+  delete h.pending;
+  if (pend.kind === 'renewal') {
+    const prog = h.program;
+    if (!prog || !active(prog, at) || prog.until !== undefined) return;
+    applyRenewal(sim, person, prog, { kind: 'medicaid', band: pend.band }, at, pend.renewAt!, met);
+    return;
+  }
+  const from = Math.max(pend.from ?? at, enrollStart(person, at));
+  const f = zonedParts(from, HOME);
+  h.program = { kind: 'medicaid', state: pend.state, from, band: pend.band, renewAt: firstOf(f.year, f.month + renewMonths(at, pend.state)) };
+  const m = h.marketplace;
+  const ended = m !== undefined && (m.until === undefined || m.until > from);
+  if (m && ended) m.until = Math.max(m.from, from);
+  armHealth(sim, person);
+  const names = PROGRAM_NAMES[pend.state];
+  if (person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'Public Cover Approved', body: `${capital(names.medicaid)} is yours from ${formatDate(from, HOME)}, with no premium: ${monthWords(met.month)} met its work rules ${BY_WORDS[met.by]}${ended ? ', and your marketplace plan ends as it begins' : ''}.`, importance: 80, route: '/workspace/papers' });
+}
+
+/** Why a hardship can't be asked for now, or nothing: a notice waiting on an answer, and a stay in hospital in a month it assessed. */
+export function hardshipRefusal(_sim: Simulation, person: Person, at: Instant): string | undefined {
+  const pend = person.health?.pending;
+  if (!pend) return 'No notice of noncompliance waits on an answer.';
+  if (at >= pend.decideAt) return `The thirty days to answer ended on ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
+  if (!(person.health?.careLog ?? []).some((e) => e.care === 'stay' && pend.months.includes(monthKey(e.at)))) return `No month it assessed, ${monthsWords(pend.months)}, had a stay in hospital, the hardship SLATE keeps.`;
+  return undefined;
+}
+
+/**
+ * Why HUSKY D can't be applied for on its notice now, or nothing (`health.apply`, from 2026-10-16): only where last
+ * month's income and her status place her in it and its work rules aren't shown for the month before. A marketplace plan
+ * held or bought ahead doesn't stop it, as Medicaid takes an application at any time; Yale Health's cover does, as it
+ * stops Enroll (`mayEnroll`), and so does a program of her own.
+ */
+export function applyRefusal(sim: Simulation, person: Person, at: Instant): string | undefined {
+  const state = BENEFIT_STATE[homeOf(person)];
+  if (!state) return 'SLATE has public cover and the marketplace in New York, Los Angeles and New Haven.';
+  const h = healthOf(person);
+  const pend = h.pending;
+  if (pend?.kind === 'application') return `Your application waits on its notice: answer it by ${formatDate(answerBy(pend.noticeAt), HOME)}.`;
+  const prog = h.program;
+  if (prog && (prog.until === undefined || prog.until > at) && (prog.until === undefined || prog.until > prog.from)) return prog.from > at ? `You’re enrolled from ${formatDate(prog.from, HOME)}.` : 'You’re enrolled.';
+  const yale = yaleUntil(person);
+  const opensAt = yale !== undefined && Number.isFinite(yale) ? yale - ENROLLMENT.specialDays * MS_DAY : undefined;
+  if (yale !== undefined && yale > at && !yaleLapsed(person, at) && (opensAt === undefined || at < opensAt)) return 'Yale Health covers you while you’re at the School.';
+  const cur = saveCurrency(sim.universe);
+  const program = programFor(person, at, cur, enrollStart(person, at));
+  if (program?.kind !== 'medicaid') return `Last month’s income or your status doesn’t place you in ${PROGRAM_NAMES[state].medicaid}.`;
+  if (!engagementAsked(program, at) || engagement(sim, person, lookBack(at, state, 'apply'), cur)) return 'Last month meets its work rules: Enroll gives it.';
+  return undefined;
 }
 
 /**
@@ -1404,6 +1662,17 @@ export function illnessWeek(sim: Simulation, person: Person, at: Instant): { car
 export const planPrice = (care: 'visit' | 'urgent' | 'emergency' | 'stay', at: Instant, into: string): Money => usd(grown(CARE.price[care], care as 'visit', at), into);
 
 /**
+ * Whether a plan pays a piece of medical care had at a moment (from 2026-10-16, read alike by `careFor` and
+ * `repriceCare`): a plan covers them, and it isn't restricted scope's care outside a hospital, nor a Yale Health
+ * member's visit outside its Health Center (`outsideItsPractice`). Until then `repriceCare` asked only whether a plan
+ * covered them, so the plan's part it wrote didn't follow what the plan pays.
+ */
+function planPays(person: Person, care: Care, clinic: ReturnType<typeof clinicById>, at: Instant): boolean {
+  const hospital = care === 'emergency' || care === 'stay';
+  return planOf(person, at) !== undefined && !(restrictedScope(person, at) && !hospital) && !(care === 'visit' && outsideItsPractice(person, clinic, at));
+}
+
+/**
  * An illness or a piece of care: what it takes from the body, a stay's days, and the bill. An appointment's visit is had
  * at the practice it was booked at (`clinicId`, from 2026-10-15: until then at whichever was their doctor on the day).
  */
@@ -1459,8 +1728,11 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
     return bill;
   }
   if (clinic) event = { ...event, what: `${event.what}, ${clinic.name}` };
-  // On the care log, whatever it cost (`repriceCare`).
-  const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount, ...(event.care === 'visit' && clinic ? { clinicId: clinic.id } : {}) } as NonNullable<HealthRecord['careLog']>[number] : undefined;
+  // On the care log, whatever it cost (`repriceCare`), with the plan's part (from 2026-10-16: a share of $0 makes no
+  // bill, and until then what HUSKY D, Covered Connecticut or Yale Health paid of such care was written nowhere).
+  const pays = MEDICAL.includes(event.care) && planPays(person, event.care, clinic, at);
+  const planPart = pays ? Math.max(0, planPrice(event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at, cur) - amount) : 0;
+  const logged = MEDICAL.includes(event.care) ? { at, care: event.care, what: event.what, share: amount, ...(event.care === 'visit' && clinic ? { clinicId: clinic.id } : {}), planPaid: planPart } as NonNullable<HealthRecord['careLog']>[number] : undefined;
   if (logged) { h.careLog = [...(h.careLog ?? []), logged]; pruneCareLog(h, at); }
   if (person.id === sim.universe.playerId && MEDICAL.includes(event.care)) {
     sim.notify({ category: 'health', title: event.care === 'stay' ? 'In Hospital' : event.flu ? 'You Have The Flu' : event.care === 'emergency' ? 'The Emergency Room' : 'A Doctor’s Visit', body: `${event.what}${event.care === 'stay' ? `, ${CARE.stayDays} days` : ''}. ${outside ? 'Yale Health pays for a visit at its own Health Center, not here. ' : ''}${amount > 0 ? `Your share is ${formatMoney(amount, cur)}, due in ${MEDICAL_DEBT.dueDays} days.` : 'Nothing to pay.'}`, importance: event.care === 'stay' ? 85 : 60, route: '/workspace/papers' });
@@ -1477,8 +1749,9 @@ export function careFor(sim: Simulation, person: Person, event: { care: Care; wh
   const screened = hospital && !planOf(person, at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
   const screening = screened ? (incomeRatio(person, at, cur) <= CHARITY.connecticut.discountTo ? 'screened' as const : 'refused' as const) : undefined;
   // The plan's part, where a plan paid (restricted scope pays only a hospital's): the price less the share, none while denied.
-  const paying = planOf(person, at) && !(restrictedScope(person, at) && !hospital) && !outside;
+  const paying = pays;
   const price = paying ? planPrice(event.care as 'visit' | 'urgent' | 'emergency' | 'stay', at, cur) : 0;
+  if (logged && denied) logged.planPaid = 0;
   const bill: MedicalBill = { id: `m${h.seq}`, at, what: event.what, amount: full, dueAt: at + MEDICAL_DEBT.dueDays * MS_DAY, ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screening ? { aid: screening } : {}), ...(denied ? { denied: { share: amount } } : {}), ...(paying ? { covered: { price, planPaid: denied ? 0 : Math.max(0, price - amount) } } : {}) };
   if (denied && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: 'A Claim Denied', body: `Your plan denied the claim for ${inSentence(event.what)}: ${formatMoney(full, cur)} is yours to pay unless an appeal overturns it.`, importance: 60, route: '/workspace/papers' });
   h.bills.push(bill);
@@ -1507,9 +1780,28 @@ export function pruneCareLog(h: HealthRecord, now: Instant): void {
 
 /**
  * Care had between two moments billed again as the cover then now reads (from 2026-10-10): Yale Health canceled back
- * to an insurance term's start, or Affiliate cover bought back to the day student cover ended. More owed is a new bill,
- * said for what it is; less comes off the bill still open, and what's left of it back to the bank. Every change is a
- * posting or a bill of its own: nothing already on a statement is rewritten. Returns the net change, more owed positive.
+ * to an insurance term's start, or Affiliate cover bought back to the day student cover ended. Returns the net change to
+ * what she owes, more owed positive.
+ *
+ * What it may change, and when (from 2026-10-16). A bill as issued stands: its plan part is never rewritten, and a bill
+ * paid or gone to medical debt is never changed at all. Each care event whose share or plan part the cover now moves
+ * gets one line of its own (`adjusts` naming the bill it adjusts), said in the notice:
+ * - more owed is billed on that line, due in 30 days, as any bill;
+ * - less owed is that line's credit: off the original's balance while it's open and unpaid (kept on it as `credited`,
+ *   so the share it was issued at is still read), then off the medical debt where the original went to debt, then back
+ *   to the bank;
+ * - the plan's part follows what the plan pays now (`planPays`: the price less the share where it pays this care,
+ *   nothing where it doesn't), and the line carries the change, negative where the plan takes its part back.
+ * So a care event's lines sum to its share now, its care log keeps the plan's part now, and where the cover pays it the
+ * two make its price. A second change of cover over the same care bills only the difference (`share` and `planPaid`
+ * move with each). A claim standing denied isn't repriced: only Yale Health's cover moves back in time, and its claims
+ * aren't denied.
+ *
+ * Until 2026-10-16: an open bill's share was cut in place and marked paid when cut to nothing, so Papers said Settled
+ * for a bill nobody paid; the plan's part was set only on a bill that already had one, and from whether a plan covered
+ * her rather than whether it paid this care, so care first billed uninsured and then covered back carried a plan part
+ * of nothing, its share and the plan's falling short of the price; and a credit on care whose bill had gone to debt was
+ * paid back to the bank while the debt for it stood.
  */
 export function repriceCare(sim: Simulation, person: Person, from: Instant, to: Instant, why: string): Money {
   const h = healthOf(person);
@@ -1517,31 +1809,65 @@ export function repriceCare(sim: Simulation, person: Person, from: Instant, to: 
   let net = 0;
   for (const e of h.careLog ?? []) {
     if (e.at < from || e.at > to) continue;
+    const was = h.bills.find((b) => b.id === e.billId);
+    if (was?.denied && was.denied.outcome !== 'overturned') continue;
     // Read without moving the year's deductible and copay counters, which the care already moved once when it was had.
     const kept = { deductible: { ...h.deductible }, stayCopays: h.stayCopays ? { ...h.stayCopays } : undefined };
     const now = shareOf(person, e.care, e.at, cur, e.clinicId);
     h.deductible = kept.deductible;
     if (kept.stayCopays) h.stayCopays = kept.stayCopays; else delete h.stayCopays;
+    const medical = e.care as 'visit' | 'urgent' | 'emergency' | 'stay';
+    const where = e.care === 'visit' ? (e.clinicId ? clinicById(e.clinicId) : clinicFor(person, 'visit', e.at)) : undefined;
+    const price = planPrice(medical, e.at, cur);
+    const planNow = planPays(person, e.care, where, e.at) ? Math.max(0, price - now) : 0;
+    // A log written before 2026-10-16 has no plan part: its bill's, or none.
+    const planWas = e.planPaid ?? was?.covered?.planPaid ?? 0;
     // Against what was last charged for it: a second change of cover over the same care bills only the difference.
     const diff = now - e.share;
-    if (diff === 0) continue;
+    const planDiff = planNow - planWas;
+    if (diff === 0 && planDiff === 0) continue;
     net += diff;
     e.share = now;
-    // What the plan paid of the bill follows: nothing where the cover now reads none (from 2026-10-15).
-    const was = h.bills.find((b) => b.id === e.billId);
-    if (was?.covered) was.covered.planPaid = planOf(person, e.at) ? Math.max(0, was.covered.price - now) : 0;
-    (e.adjusted ??= []).push({ at: sim.now, why, change: diff });
+    e.planPaid = planNow;
+    (e.adjusted ??= []).push({ at: sim.now, why, change: diff, plan: planDiff });
+    // Hospital care now billed as the uninsured's, in Connecticut, was screened for the charity, as `careFor` screens it.
+    const hospital = e.care === 'emergency' || e.care === 'stay';
+    const screened = hospital && planNow === 0 && !planOf(person, e.at) && CITIES.get(homeOf(person))?.parentId === 'us-ct';
+    const screening = screened ? (incomeRatio(person, e.at, cur) <= CHARITY.connecticut.discountTo ? 'screened' as const : 'refused' as const) : undefined;
+    h.seq = (h.seq ?? 0) + 1;
+    const line: MedicalBill = {
+      id: `m${h.seq}`, at: sim.now, what: `${e.what}: ${why}`, amount: Math.max(0, diff), dueAt: sim.now + MEDICAL_DEBT.dueDays * MS_DAY,
+      ...(e.billId ? { adjusts: e.billId } : {}),
+      ...(hospital ? { hospital: true, cityId: homeOf(person) } : {}), ...(screening ? { aid: screening } : {}),
+      ...(planDiff !== 0 ? { covered: { price, planPaid: planDiff } } : {}),
+      ...(diff <= 0 ? { paid: true } : {}), ...(diff < 0 ? { credit: -diff } : {}),
+    };
+    h.bills.push(line);
+    h.bills = keptBills(h.bills);
     if (diff > 0) {
-      const bill = billCare(sim, person, `${e.what}: ${why}`, diff, sim.now);
-      e.billId ??= bill.id;
+      e.billId ??= line.id;
+      sim.schedule({ at: line.dueAt, kind: BILL_KIND, label: `Medical Bill Due: ${line.what}`, category: 'personal', priority: 20, payload: { personId: person.id, billId: line.id } });
       continue;
     }
     let credit = -diff;
-    const open = h.bills.find((b) => b.id === e.billId && !b.paid && !b.inDebt);
-    if (open) { const off = Math.min(credit, open.amount); open.amount -= off; credit -= off; if (open.amount === 0) open.paid = true; }
+    if (was && !was.paid && !was.inDebt) {
+      const off = Math.min(credit, was.amount);
+      was.amount -= off;
+      was.credited = (was.credited ?? 0) + off;
+      credit -= off;
+      if (was.amount === 0) was.paid = true;
+    }
+    const debt = was?.inDebt ? medicalDebtOf(sim, person) : undefined;
+    if (credit > 0 && debt && debt.balance < 0) {
+      const off = Math.min(credit, -debt.balance);
+      sim.post({ memo: `Credit: ${e.what}, ${why}`, category: 'health', postings: [{ accountId: debt.id, amount: off }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: -off }] });
+      credit -= off;
+      // A debt cleared settles its bills, as health.pay_bill does.
+      if (debt.balance >= 0) { delete h.debtSince; for (const b of h.bills) if (b.inDebt) { b.paid = true; delete b.inDebt; } }
+    }
     if (credit > 0) sim.post({ memo: `Refund: ${e.what}, ${why}`, category: 'health', postings: [{ accountId: payeeAccount(sim, person).id, amount: credit }, { accountId: sim.nominalAccount('expense', expenseFor('health')).id, amount: -credit }] });
   }
-  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${why}: care you had from ${formatDate(from, HOME)} is billed as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, off what was open and back to your bank`}.`, importance: 75, route: '/workspace/papers' });
+  if (net !== 0 && person.id === sim.universe.playerId) sim.notify({ category: 'health', title: net > 0 ? 'Care Billed Again' : 'Care Credited', body: `${why}: care you had from ${formatDate(from, HOME)} is billed as that cover pays, ${net > 0 ? `${formatMoney(net, cur)} more, on a bill of its own` : `${formatMoney(-net, cur)} less, off what was open or owed and the rest back to your bank`}.`, importance: 75, route: '/workspace/papers' });
   return net;
 }
 
@@ -1764,6 +2090,60 @@ export function registerHealth(sim: Simulation): void {
     } else h.marketplace = { from, state };
     armHealth(s, person);
     return { from, kind: may.program ?? 'marketplace' };
+  });
+
+  // HUSKY D applied for where Enroll can't verify its work rules (from 2026-10-16): the application is taken, a notice
+  // of noncompliance sent, and it's decided at its thirty days' end (`noticeOfNoncompliance`, `WORK_DECIDED_KIND`).
+  // Until then the refusal on Papers was the end of it, with no notice and no time to answer.
+  sim.onCommand<Record<string, never>, { decideAt: Instant; months: string[] }>('health.apply', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = applyRefusal(s, person, s.now);
+    if (no) throw new CommandError(no);
+    const cur = saveCurrency(s.universe);
+    const state = BENEFIT_STATE[homeOf(person)]!;
+    const from = enrollStart(person, s.now);
+    const { band } = programFor(person, s.now, cur, from)!;
+    const months = lookBack(s.now, state, 'apply');
+    noticeOfNoncompliance(s, person, { kind: 'application', state, noticeAt: s.now, decideAt: decisionAt(s.now), months, band, from });
+    armHealth(s, person);
+    return { decideAt: decisionAt(s.now), months };
+  });
+
+  // A short-term hardship asked for on a notice of noncompliance (from 2026-10-16; 42 CFR 435.555(d)(1), "subject to a
+  // request"): a stay in hospital in a month assessed deems that month met, and the renewal or the application is
+  // granted at once (`grantPending`).
+  sim.onCommand<Record<string, never>, { month: string }>('health.request_hardship', (_p, { sim: s }) => {
+    const person = s.player;
+    const no = hardshipRefusal(s, person, s.now);
+    if (no) throw new CommandError(no);
+    const pend = healthOf(person).pending!;
+    const met = engagement(s, person, pend.months, saveCurrency(s.universe), true)!;
+    grantPending(s, person, pend, met, s.now);
+    return { month: met.month };
+  });
+
+  // A notice of noncompliance's thirty days over (from 2026-10-16). The months are read again, as the records stand;
+  // still short, a renewal's cover ends at the month's end at least ten days on, said, and an application is denied,
+  // said with how to apply again (42 CFR 435.558(d), (e)). A notice answered, or a program ended meanwhile, is passed by.
+  sim.onSchedule(WORK_DECIDED_KIND, (item, s) => {
+    const person = s.universe.people[String(item.payload.personId)];
+    const h = person ? healthOf(person) : undefined;
+    const pend = h?.pending;
+    if (!person || !h || !pend || pend.noticeAt !== item.payload.noticeAt) return;
+    const cur = saveCurrency(s.universe);
+    const met = engagement(s, person, pend.months, cur);
+    if (met) { grantPending(s, person, pend, met, item.at); return; }
+    delete h.pending;
+    const names = PROGRAM_NAMES[pend.state];
+    const why = `${pend.months.length > 1 ? `No month from ${monthsWords(pend.months)} showed` : `${monthsWords(pend.months)} didn’t show`} ${workWords(cur)}, and none was shown by ${formatDate(answerBy(pend.noticeAt), HOME)}`;
+    const credit = `, without the premium tax credit while ${names.medicaid} would take you but for its work rules; you can apply again in any month after one that meets them`;
+    if (pend.kind === 'application') {
+      if (person.id === s.universe.playerId) s.notify({ category: 'health', title: 'Public Cover Denied', body: `${why}: ${names.medicaid} is denied. The marketplace sells to you in its own windows${credit}.`, importance: 80, route: '/workspace/papers' });
+      return;
+    }
+    const prog = h.program;
+    if (!prog || !active(prog, item.at) || prog.until !== undefined) return;
+    endAhead(s, person, prog, item.at, why, credit);
   });
 
   sim.onCommand<Record<string, never>, { until: Instant }>('health.drop', (_p, { sim: s }) => {
