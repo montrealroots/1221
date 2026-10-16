@@ -107,7 +107,7 @@ for id, goal, th, b, a in [
   ('S3', 'Contrasting genres change outcomes on the same scene (revised), on all four samples', '80% on each', '12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413', '12,744, 11,890, 24,838, 23,304 (82.0% the lowest)'),
   ('S4', 'No two briefs of different genres identical in every number a take reads (G2)', '0 pairs', '0', '0')]:
     row(id, 'Criteria: The Genres', goal, 'npx vite-node tools/genre-signature.ts -- [--fresh] --out <file>; tools/genre-identity.ts', th, b, a, 'Met', [SIG, SIGF, f'{D}/closeout/genre-identity.json', G1R], [cite(SIG), cite(SIGF), cite(G1R)], systems='Every take of a brief, a class scene and a play, read in its genre’s register', sees='The Genre Asks on a brief; the take’s note; the genre’s look')
-row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)')
+row('Genre Audit', 'Criteria: The Genres', 'Every genre in the code (149): knowing it helps its own work and transfers to no other; what each reads and suits', 'npx vite-node tools/genre-audit.ts -- --out <file>', 'helps its own in every genre; leaks into none', '149 of 149; 0; 56 to weigh', '149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)', 'Met', [f'{D}/closeout/genre-audit.md', 'tests/genre-identity.test.ts'], [cite(f'{D}/closeout/genre-audit.md'), cite('tests/genre-identity.test.ts')], failure='The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md)')
 json.dump({'rows': rows}, open(sys.argv[1], 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows))
 # ---- appended: integration rows (the brief's sections 6, 9 to 13) ----
@@ -155,6 +155,18 @@ for r in rows:
         r['status'], r['measured'] = IAV, BUILT
     elif r['status'] == 'Met':
         r['status'] = IAV
+# Measured again on the integrated tree (brief 09, section 7): the judge's and the genre area's changes together, on
+# c9cba9c8, each figure read from the tools' outputs into integrated-09/figures.json, none typed. Until then these rows
+# were the close-out's of 4a1b339f, which the judge's evaluation-10 left behind, and the matrix called them unverified.
+INTEGRATED = {'commit': 'c9cba9c8', 'watch': 'judge'}
+FIG = json.load(open(f'{D}/integrated-09/figures.json', encoding='utf-8'))
+for r in rows:
+    if r.get('measured') == CLOSEOUT:
+        assert r['id'] in FIG, r['id']
+        r['measured'] = INTEGRATED
+        r['failure'] = f"{r['failure']}; on the integrated tree, brief 09 (c9cba9c8): {FIG[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {D}/integrated-09/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{D}/integrated-09/figures.json'}]
 # The four shortfalls of the stage and the attributes, as measured, and what each awaits.
 for r in rows:
     # ST3, ST6, H4 and L3 after brief 09, section 2 (remaining-09/judge-result.json, followup-09/README.md): each reproduced,

@@ -9,7 +9,7 @@
   "Decision Required",
   "Explicitly Deferred"
  ],
- "completion": "Completion, by the matrix: 436 of 539 rows in scope Implemented And Verified (80.8%); 86 Implemented, Verification Incomplete, 0 Partially Implemented, 2 Not Implemented, 0 Blocked Externally, 15 Decision Required, 17 Explicitly Deferred.",
+ "completion": "Completion, by the matrix: 472 of 539 rows in scope Implemented And Verified (87.5%); 50 Implemented, Verification Incomplete, 0 Partially Implemented, 2 Not Implemented, 0 Blocked Externally, 15 Decision Required, 17 Explicitly Deferred.",
  "fields": [
   "goal",
   "entry",
@@ -10935,18 +10935,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89",
+   "failure": "Before: restrained 50, expansive 33 of 85; after: restrained 49, expansive 37 of 89; on the integrated tree, brief 09 (c9cba9c8): restrained 50, expansive 42 of 94",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/stage-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "restrained 50, expansive 33 of 85",
    "after": "restrained 49, expansive 37 of 89",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -10964,18 +10963,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80, no house signal on any material",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11022,18 +11020,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
+   "failure": "Before: drama 25 / 0; after: drama 25 / 4; comedy 13 / 15; tragedy 4 / 16; on the integrated tree, brief 09 (c9cba9c8): drama {\"r\": 25, \"e\": 5, \"n\": 30}; comedy {\"r\": 14, \"e\": 16, \"n\": 30}; tragedy {\"r\": 4, \"e\": 18, \"n\": 24}",
    "implementation": "content/scenes-public.ts, content/material.ts, content/coursework.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st6.md; docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; tests/integration-stage.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "drama 25 / 0",
    "after": "drama 25 / 4; comedy 13 / 15; tragedy 4 / 16",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11051,18 +11048,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385",
+   "failure": "Before: 2,277 of 2,277; after: 2,385 of 2,385; on the integrated tree, brief 09 (c9cba9c8): 2,520 of 2,520 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "2,277 of 2,277",
    "after": "2,385 of 2,385",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11109,18 +11105,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 84 of 86; after: 88 of 90",
+   "failure": "Before: 84 of 86; after: 88 of 90; on the integrated tree, brief 09 (c9cba9c8): 95 of 95",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "84 of 86",
    "after": "88 of 90",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11138,18 +11133,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 72 of 72; after: 75 of 75",
+   "failure": "Before: 72 of 72; after: 75 of 75; on the integrated tree, brief 09 (c9cba9c8): 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "72 of 72",
    "after": "75 of 75",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11167,18 +11161,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2",
+   "failure": "Before: held; after: see I1 to I5, S1 to S4 and G2; on the integrated tree, brief 09 (c9cba9c8): I1 to I5, S1 to S4 and G2 as their rows say",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "held",
    "after": "see I1 to I5, S1 to S4 and G2",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11196,18 +11189,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): ST1 16 / 13 of 29; ST5 783 of 783; ST7 30 of 30; ST8 27 of 27",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11225,18 +11217,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: all hold; after: all hold",
+   "failure": "Before: all hold; after: all hold; on the integrated tree, brief 09 (c9cba9c8): 40: ST1 50 / 42 of 94, ST8 80 of 80; 75: ST1 51 / 41 of 94, ST8 80 of 80",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "all hold",
    "after": "all hold",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11254,18 +11245,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100",
+   "failure": "Before: 8,010 and 9,117 at 100; after: 8,010, 9,117 and 2,385 at 100; on the integrated tree, brief 09 (c9cba9c8): designed 8,010 of 8,010, heldOut 9,378 of 9,378, freshHeldOut 2,520 of 2,520",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "8,010 and 9,117 at 100",
    "after": "8,010, 9,117 and 2,385 at 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11283,18 +11273,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same",
+   "failure": "Before: pace 24.2%, scale 20.8%, structure 32.9%; after: the same; on the integrated tree, brief 09 (c9cba9c8): pace 26.8%, scale 23.5%, structure 35.6%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "pace 24.2%, scale 20.8%, structure 32.9%",
    "after": "the same",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11312,18 +11301,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
+   "failure": "Before: spread 1.29 / 1.19; expansive ahead 27.0%; after: spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%; on the integrated tree, brief 09 (c9cba9c8): designed sd 1.28, restrained ahead 70.3%, expansive 27%, heldOut sd 1.15, restrained ahead 51.4%, expansive 42.6%, freshHeldOut sd 3.4, restrained ahead 53.2%, expansive 44.7%",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "spread 1.29 / 1.19; expansive ahead 27.0%",
    "after": "spread 1.28 / 1.19 / 3.43; expansive ahead 27.0% / 41.2% / 41.6%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11341,18 +11329,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 100%; after: 100% on every sample",
+   "failure": "Before: 100%; after: 100% on every sample; on the integrated tree, brief 09 (c9cba9c8): designed {\"restrainedSuitsMore\": 94, \"specialistExpansiveWins\": 54.3, \"bandApart\": 84, \"evenActorFollowsSuitability\": 100}, heldOut {\"restrainedSuitsMore\": 70, \"specialistExpansiveWins\": 47.1, \"bandApart\": 86, \"evenActorFollowsSuitability\": 100}, freshHeldOut {\"bandApart\": 80, \"evenActorFollowsSuitability\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "100%",
    "after": "100% on every sample",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11370,18 +11357,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%",
+   "failure": "Before: ≥ 98.7%; after: 99.3%, 98.0%, 97.8%; on the integrated tree, brief 09 (c9cba9c8): designed {\"atLeastTwoWithinAPoint\": 99.3}, heldOut {\"atLeastTwoWithinAPoint\": 97.3}, freshHeldOut {\"atLeastTwoWithinAPoint\": 100}",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/st3/stage-restraint-draw.json; docs/verification/interpretation-2026-10-16/criteria.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "≥ 98.7%",
    "after": "99.3%, 98.0%, 97.8%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11399,18 +11385,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: every ability at 0.5 or more on a kind of work",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11428,18 +11413,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: highest 0.536; after: highest 0.527",
+   "failure": "Before: highest 0.536; after: highest 0.527; on the integrated tree, brief 09 (c9cba9c8): Meets: highest 0.532 (discipline, stamina)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "highest 0.536",
    "after": "highest 0.527",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11457,18 +11441,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: the least spread among the widest: emotionalDepth cv 0.49, presence cv 0.55, listening cv 0.41, imagination cv 0.39, focus cv 0.5, memory cv 0.75, adaptability cv 0.4, composure cv 0.43",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (A3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11486,18 +11469,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.875 of 4; after: 1.875 of 4",
+   "failure": "Before: 1.875 of 4; after: 1.875 of 4; on the integrated tree, brief 09 (c9cba9c8): Meets: 1.875 sessions' worth against 4",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "1.875 of 4",
    "after": "1.875 of 4",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11515,18 +11497,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 36%; after: 36%",
+   "failure": "Before: 36%; after: 36%; on the integrated tree, brief 09 (c9cba9c8): Meets: 0.105 at 90 against 0.294 at 30 (36%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (T3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "36%",
    "after": "36%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11544,18 +11525,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors",
+   "failure": "Before: 53 of 149; 8 actors; after: 53 of 149; 8 actors; on the integrated tree, brief 09 (c9cba9c8): Meets: the most any actor is best on: 50 of 149; 8 actors best on 10 or more",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "53 of 149; 8 actors",
    "after": "53 of 149; 8 actors",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11573,18 +11553,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: met; after: met",
+   "failure": "Before: met; after: met; on the integrated tree, brief 09 (c9cba9c8): Meets: 2 briefs, 4 readings at least; 4 reader behaviors",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G4); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "met",
    "after": "met",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11602,18 +11581,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86",
+   "failure": "Before: 51.23 → 53.86; after: 51.22 → 53.86; on the integrated tree, brief 09 (c9cba9c8): Meets: 51.13 at 30 known, 53.74 at 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (G5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "51.23 → 53.86",
    "after": "51.22 → 53.86",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11631,18 +11609,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
+   "failure": "Before: 4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; after: 4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off; on the integrated tree, brief 09 (c9cba9c8): Meets: briefs 4560 of 4560; scenes 65 of 65; nights 30 of 30; casting 30 of 30; coursework 13 of 13; drawn off 100: 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "4,495 briefs, 56 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "after": "4,495 briefs, 60 scenes, 30 nights, 30 casting, 13 coursework; 0 drawn off",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11660,18 +11637,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes",
+   "failure": "Before: own 100 on 56 scenes, the partner never coming (the reader); after: own 100 on 60 scenes; on the integrated tree, brief 09 (c9cba9c8): Meets: own 100 to 100 on 65 scenes, the partner never coming",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (M3); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "own 100 on 56 scenes, the partner never coming (the reader)",
    "after": "own 100 on 60 scenes",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11689,18 +11665,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: sd 0; after: sd 0",
+   "failure": "Before: sd 0; after: sd 0; on the integrated tree, brief 09 (c9cba9c8): Meets: A Recording: own sd 0; Unprepared, Distracted: own sd 0; Prepared, Attentive: own sd 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O1); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "sd 0",
    "after": "sd 0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11718,18 +11693,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100",
+   "failure": "Before: 93.1, 86.1, 100; after: 93.1, 86.1, 100; on the integrated tree, brief 09 (c9cba9c8): Meets: together 93.05, 86.1, 100",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (O2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "93.1, 86.1, 100",
    "after": "93.1, 86.1, 100",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11747,18 +11721,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60",
+   "failure": "Before: briefs 96 of 298; scenes 20 of 56; after: briefs 96 of 298; scenes 20 of 60; on the integrated tree, brief 09 (c9cba9c8): Meets: brief: emotionalDepth specialist 94 of 298; scene: emotionalDepth specialist 17 of 65; night: emotionalDepth specialist 7 of 30; casting: listening specialist 8 of 30",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H2); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "briefs 96 of 298; scenes 20 of 56",
    "after": "briefs 96 of 298; scenes 20 of 60",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11776,18 +11749,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%",
+   "failure": "Before: 427 of 427; 26.5%; after: 431 of 431; 26.9%; on the integrated tree, brief 09 (c9cba9c8): Meets: ahead of half on 436 of 436; within a point of the best on 126 (28.9%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H5); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "427 of 427; 26.5%",
    "after": "431 of 431; 26.9%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -11805,18 +11777,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0%; 2.61; after: 0%; 2.62",
+   "failure": "Before: 0%; 2.61; after: 0%; 2.62; on the integrated tree, brief 09 (c9cba9c8): Meets: beginner 30 against 40: 0.0%; developing 50 against 60: 0.0%; advanced 70 against 80: 0.0%; a developing actor's range 2.62",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7)",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/ag-baseline.json; docs/verification/integration-2026-10-16/baseline/ag-baseline.json; docs/verification/attributes-genres-2026-10-16/acceptance-criteria.md (H7); docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "0%; 2.61",
    "after": "0%; 2.62",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12096,18 +12067,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3",
+   "failure": "Before: specialist 4, beginner 3; after: specialist 4, beginner 3; on the integrated tree, brief 09 (c9cba9c8): specialist 4, beginner 3 weeks",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/closeout/journey-beginner-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "specialist 4, beginner 3",
    "after": "specialist 4, beginner 3",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12125,18 +12095,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): specialist 0, beginner 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/journey-specialist-bj-0.json; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12380,18 +12349,17 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880",
+   "failure": "Before: 0.90, 0.88, 0.90, 0.87; after: 0.901, 0.883, 0.904, 0.880; on the integrated tree, brief 09 (c9cba9c8): designed 0.901 (least 0.842); held out 0.885 (least 0.807); fresh designed 0.904 (least 0.845); fresh held out 0.881 (least 0.786)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "0.90, 0.88, 0.90, 0.87",
    "after": "0.901, 0.883, 0.904, 0.880",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12409,18 +12377,17 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%",
+   "failure": "Before: 1.60, 1.61, 1.60, 1.61; 98.7%; after: 1.599, 1.612, 1.598, 1.613; 98.7%; on the integrated tree, brief 09 (c9cba9c8): designed 1.599×; held out 1.614×; fresh designed 1.598×; fresh held out 1.614×",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "1.60, 1.61, 1.60, 1.61; 98.7%",
    "after": "1.599, 1.612, 1.598, 1.613; 98.7%",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12438,18 +12405,17 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
+   "failure": "Before: 12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413; after: 12,744, 11,890, 24,838, 23,304 (82.0% the lowest); on the integrated tree, brief 09 (c9cba9c8): designed 12,744 of 14,350 (88.8%); held out 11,676 of 14,350 (81.4%); fresh designed 24,838 of 28,413 (87.4%); fresh held out 23,206 of 28,413 (81.7%)",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "12,757, 11,887, 24,832, 23,300 of 14,350, 14,350, 28,413, 28,413",
    "after": "12,744, 11,890, 24,838, 23,304 (82.0% the lowest)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12467,18 +12433,17 @@
    "systems": "Every take of a brief, a class scene and a play, read in its genre’s register",
    "sees": "The Genre Asks on a brief; the take’s note; the genre’s look",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "Before: 0; after: 0",
+   "failure": "Before: 0; after: 0; on the integrated tree, brief 09 (c9cba9c8): 0 briefs of different genres identical in every number",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/signature.json; docs/verification/integration-2026-10-16/closeout/signature-fresh.json; docs/verification/integration-2026-10-16/closeout/genre-identity.json; docs/verification/genres-2026-10-16/g1-replacement.md; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "0",
    "after": "0",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -12496,18 +12461,17 @@
    "systems": "Every judged piece: briefs, class scenes, nights, casting reads, coursework",
    "sees": "Its figures on the screens that show a take, a scene or a part (the account says which)",
    "saveLoad": "A result kept under its ruleset (`RULESET` evaluation-9) is shown as it was",
-   "failure": "The 54 genres whose two briefs suit the same sides on every axis are weighed, not faults (their registers agree; I2 holds across the catalog)",
+   "failure": "The 55 genres whose two briefs suited the same sides on every axis were weighed, not faults (their registers agree; I2 holds across the catalog); 54 until brief 09 counted them again, 46 after it replaced fourteen genres’ second briefs (genres-09.md); on the integrated tree, brief 09 (c9cba9c8): helps its own brief in 149 of 149, moves another genre’s in 0",
    "implementation": "systems/evaluation.ts, systems/piece.ts, content/tasks.ts, content/approaches.ts",
-   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts",
-   "status": "Implemented, Verification Incomplete",
+   "evidence": "docs/verification/integration-2026-10-16/closeout/genre-audit.md; tests/genre-identity.test.ts; docs/verification/integration-2026-10-16/integrated-09/README.md",
+   "status": "Implemented And Verified",
    "before": "149 of 149; 0; 56 to weigh",
    "after": "149 of 149; 0; 55 to weigh (drama’s restraint-only stage settled by ST4)",
    "sourceStatus": "Met",
    "measured": {
-    "commit": "4a1b339f",
+    "commit": "c9cba9c8",
     "watch": "judge"
-   },
-   "missing": "It was measured on 4a1b339f, and what it reads has changed since (src/engine/content/briefs/index.ts, src/engine/content/briefs/second-a.ts, src/engine/content/briefs/second-b.ts, …): measure it again"
+   }
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",

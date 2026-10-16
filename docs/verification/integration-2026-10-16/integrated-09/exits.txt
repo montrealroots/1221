@@ -1,0 +1,13 @@
+at c9cba9c8, 0 files uncommitted
+stage exit=0 secs=20 cmd: npx vite-node tools/interpretation.ts -- --fresh --stage --out <out>/stage.json
+ag exit=0 secs=56 cmd: npx vite-node tools/ag-baseline.ts -- --out <out>/ag-baseline.json
+criteria exit=0 secs=0 cmd: node tools/ag-criteria.mjs <out>/ag-baseline.json
+journey-specialist exit=0 secs=14 cmd: npx vite-node tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --write <out>/journey-specialist-bj-0.json --trace <out>/l3-trace-specialist-bj-0.json
+journey-beginner exit=0 secs=14 cmd: npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120 --write <out>/journey-beginner-bj-0.json --trace <out>/l3-trace-beginner-bj-0.json
+signature exit=0 secs=81 cmd: npx vite-node tools/genre-signature.ts -- --out <out>/signature.json
+signature-fresh exit=0 secs=165 cmd: npx vite-node tools/genre-signature.ts -- --fresh --out <out>/signature-fresh.json
+signature-validate exit=0 secs=147 cmd: npx vite-node tools/genre-signature.ts -- --validate --out <out>/signature-validate.json
+identity exit=0 secs=6 cmd: npx vite-node tools/genre-identity.ts -- --out <out>/genre-identity.json
+audit exit=0 secs=4 cmd: npx vite-node tools/genre-audit.ts -- --out <out>/genre-audit.md
+genre-pairs exit=0 secs=6 cmd: npx vite-node tools/genre-pairs.ts -- --json <out>/genre-pairs-all.json
+DONE
