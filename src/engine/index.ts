@@ -59,7 +59,7 @@ import { registerCash } from './systems/cash';
 import { findTermInterest, registerAccountLife, TERM_NOTICE_KIND } from './systems/accountlife';
 import { registerCardOffers } from './systems/cardoffers';
 import { registerSecurity } from './systems/security';
-import { enroll, registerSchool, yearOfStudy } from './systems/school';
+import { enroll, registerSchool, timeTheCalls, yearOfStudy } from './systems/school';
 import { registerLeave } from './systems/leave';
 import { registerInjury } from './systems/injury';
 import { attributesOf, derivedAbilities } from './systems/attributes';
@@ -72,7 +72,7 @@ import { registerClassmates, strandedMoments } from './systems/classmates';
 import { WHICH, hasProcess, holderFor, registerProduction } from './systems/production';
 import { registerPractice } from './systems/practice';
 import { addPractice, playOfCredit, registerEngagement } from './systems/engagement';
-import { registerBriefs } from './systems/briefs';
+import { briefsMastered, registerBriefs } from './systems/briefs';
 import { registerWorkbook } from './systems/workbook';
 import { workPiece } from './systems/workpieces';
 import { unitsFromTones, type Workbook } from './systems/piece';
@@ -279,7 +279,7 @@ export function refreshMeta(sim: Simulation): void {
 }
 
 /** The one-time steps `loadSave` takes on an older build's save, by the name `SaveUniverse.opened` keeps (from 2026-10-15). */
-const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits'] as const;
+const ONCE_ON_OPENING = ['followTheCover', 'findTermInterest', 'cutIntoUnits', 'cardYears', 'timeTheCalls', 'briefsMastered'] as const;
 
 /**
  * A save from before evaluation-10 (2026-10-16) has its work on a scene's or a play's segments moved to the units it's cut
@@ -323,6 +323,37 @@ export function cutIntoUnits(universe: SaveUniverse): number {
     walk(school, 0);
   }
   return moved;
+}
+
+/**
+ * A save from before brief 10 (2026-10-16) has each debit card's year running marked with the rule it was opened under
+ * (`Account.cardYearRule`, `CardYear`), so a close settles it and the next night renews it as the save's own charges had
+ * it, whatever the bank's setting is now. A year paid ahead from earlier on 2026-10-16 (Berliner Sparkasse's,
+ * `cardFeePaid` kept) is marked ahead. One an older build charged on an anniversary (Arion's), which kept no record of
+ * what it paid for, is taken as paid ahead with what its charge took, read from that night's posting, as SLATE's default
+ * for Arion now reads it (`ARION_CARD_YEAR`): a close gives back its days left. An account it hadn't charged yet, opened in
+ * the life less than a year before, has the year from its opening taken as settled, since the older build had charged
+ * nothing for it and nothing comes back of it, and its next charge falls on the opening's anniversary, as the older build
+ * would have charged it. Posts nothing and changes no balance. Returns how many accounts were marked.
+ */
+export function cardYears(universe: SaveUniverse): number {
+  let marked = 0;
+  for (const account of Object.values(universe.accounts)) {
+    const bank = account.bankId ? bankById(account.bankId) : undefined;
+    if (!bank?.card?.yearly || !bank.card.year || account.kind !== 'checking' || account.closedAt !== undefined || account.cardYearRule !== undefined) continue;
+    if (account.cardFeePaid === undefined) {
+      if (account.cardFeeAt === undefined) {
+        account.cardFeeAt = account.openedAt;
+        account.cardFeePaid = 0;
+      } else {
+        const posting = universe.transactions.find((t) => t.at === account.cardFeeAt && t.memo === 'Debit card yearly fee')?.postings.find((q) => q.accountId === account.id);
+        account.cardFeePaid = posting ? -(account.currency ? posting.native ?? 0 : posting.amount) : 0;
+      }
+    }
+    account.cardYearRule = 'ahead';
+    marked += 1;
+  }
+  return marked;
 }
 
 /** Creates a brand new save universe with every system wired up. */
@@ -388,6 +419,24 @@ export function loadSave(universe: SaveUniverse): Simulation {
   if (!opened.includes('cutIntoUnits')) {
     cutIntoUnits(universe);
     opened.push('cutIntoUnits');
+  }
+  // A debit card's year running in a save from before brief 10, marked with the rule it was opened under (`cardYears`), once.
+  if (!opened.includes('cardYears')) {
+    cardYears(universe);
+    opened.push('cardYears');
+  }
+  // Performance calls still to come in a save from before brief 10 (2026-10-16), booked for the hours every call held then:
+  // each held for its play's running time and the curtain call from here (`timeTheCalls`), once. The nights it kept stay
+  // as they were judged, under their ruleset.
+  if (!opened.includes('timeTheCalls')) {
+    timeTheCalls(sim);
+    opened.push('timeTheCalls');
+  }
+  // A brief a save from before 2026-10-16 taped at full mastery, marked from the work record (`briefsMastered`), once, so
+  // its genre reads as mastered on the Player Profile.
+  if (!opened.includes('briefsMastered')) {
+    briefsMastered(Object.values(universe.people));
+    opened.push('briefsMastered');
   }
   // A guide read to its end before 2026-10-12 is marked finished, so a chapter added later doesn't reopen it.
   if (universe.tutorial && !universe.tutorial.finished && !nextChapter(sim)) universe.tutorial.finished = true;

@@ -1,0 +1,3790 @@
+{
+ "st6AsShown": {
+  "expansive": "24 of 50",
+  "restrained": "10 of 42"
+ },
+ "restrained": {
+  "cases": 42,
+  "aheadExact": 11,
+  "meanGap": 0.928,
+  "gapOver057": 32,
+  "aheadOfEqualBudgetEvenBest": 5,
+  "list": [
+   {
+    "material": "muchado-4-1",
+    "genre": "comedy",
+    "gap": 0.04,
+    "ownSide": {
+     "s": 0,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5"
+     ]
+    },
+    "otherSide": {
+     "s": 0.04,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "ownLessOther": 1.257,
+    "ahead": true,
+    "grainOnOwn": 0,
+    "grainOnOther": 0.059,
+    "lift": 1.318,
+    "ownSideLessEqualBudgetEvenBest": -1.108
+   },
+   {
+    "material": "enemy-2",
+    "genre": "drama",
+    "gap": 0.06,
+    "ownSide": {
+     "s": -0.06,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "A Private Exchange: 0.25",
+      "What’s Kept Hidden: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Private Exchange: -0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "ownLessOther": 1.442,
+    "ahead": true,
+    "grainOnOwn": -0.123,
+    "grainOnOther": 0,
+    "lift": 1.568,
+    "ownSideLessEqualBudgetEvenBest": 0.037
+   },
+   {
+    "material": "earnest-2",
+    "genre": "comedy",
+    "gap": 0.12,
+    "ownSide": {
+     "s": 0.13,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": 1.042,
+    "ahead": true,
+    "grainOnOwn": 0.196,
+    "grainOnOther": 0.629,
+    "lift": 1.475,
+    "ownSideLessEqualBudgetEvenBest": 0.406
+   },
+   {
+    "material": "wayoftheworld-4",
+    "genre": "comedy",
+    "gap": 0.12,
+    "ownSide": {
+     "s": 0.13,
+     "signals": [
+      "What’s Kept Hidden: 0.25",
+      "A Private Exchange: 0.25",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "What’s Kept Hidden: -0.25",
+      "A Private Exchange: -0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": 0.991,
+    "ahead": true,
+    "grainOnOwn": 0.19,
+    "grainOnOther": 0.67,
+    "lift": 1.47,
+    "ownSideLessEqualBudgetEvenBest": 0.101
+   },
+   {
+    "material": "stoops-2",
+    "genre": "comedy",
+    "gap": 0.12,
+    "ownSide": {
+     "s": 0.13,
+     "signals": [
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "A Private Exchange: -0.25"
+     ]
+    },
+    "ownLessOther": 0.984,
+    "ahead": true,
+    "grainOnOwn": 0.19,
+    "grainOnOther": 0.671,
+    "lift": 1.465,
+    "ownSideLessEqualBudgetEvenBest": 0.038
+   },
+   {
+    "material": "hamlet-3-1",
+    "genre": "tragedy",
+    "gap": 0.25,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.13,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "A Private Exchange: -0.25"
+     ]
+    },
+    "ownLessOther": 0.802,
+    "ahead": true,
+    "grainOnOwn": -0.275,
+    "grainOnOther": 0.336,
+    "lift": 1.416,
+    "ownSideLessEqualBudgetEvenBest": -1.466
+   },
+   {
+    "material": "orig-runway",
+    "genre": "comedy",
+    "gap": 0.31,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Conflict Out Loud: -0.5",
+      "What’s Kept Hidden: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.19,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "What’s Kept Hidden: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "ownLessOther": 0.888,
+    "ahead": true,
+    "grainOnOwn": -0.26,
+    "grainOnOther": 0.536,
+    "lift": 1.684,
+    "ownSideLessEqualBudgetEvenBest": 0.254
+   },
+   {
+    "material": "Much Ado About Nothing",
+    "genre": "romantic_comedy",
+    "gap": 0.31,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Conflict Out Loud: -0.5",
+      "What’s Kept Hidden: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.19,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "What’s Kept Hidden: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "ownLessOther": 0.542,
+    "ahead": true,
+    "grainOnOwn": -0.224,
+    "grainOnOther": 0.443,
+    "lift": 1.21,
+    "ownSideLessEqualBudgetEvenBest": -1.58
+   },
+   {
+    "material": "caesar-4-3",
+    "genre": "tragedy",
+    "gap": 0.5,
+    "ownSide": {
+     "s": -0.25,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": 0.189,
+    "ahead": true,
+    "grainOnOwn": -0.485,
+    "grainOnOther": 0.598,
+    "lift": 1.275,
+    "ownSideLessEqualBudgetEvenBest": -2.198
+   },
+   {
+    "material": "henry5-4-3",
+    "genre": "drama",
+    "gap": 0.56,
+    "ownSide": {
+     "s": -0.31,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "ownLessOther": 0.107,
+    "ahead": true,
+    "grainOnOwn": -0.528,
+    "grainOnOther": 0.684,
+    "lift": 1.317,
+    "ownSideLessEqualBudgetEvenBest": -3.533
+   },
+   {
+    "material": "A Midsummer Night’s Dream",
+    "genre": "comedy",
+    "gap": 0.57,
+    "ownSide": {
+     "s": -0.25,
+     "signals": [
+      "A Conflict Out Loud: -0.5"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "ownLessOther": 0.014,
+    "ahead": true,
+    "grainOnOwn": -0.331,
+    "grainOnOther": 0.778,
+    "lift": 1.119,
+    "ownSideLessEqualBudgetEvenBest": -3.055
+   },
+   {
+    "material": "scandal-2-1",
+    "genre": "comedy",
+    "gap": 0.62,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Conflict Out Loud: -0.5",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "A Private Exchange: -0.25"
+     ]
+    },
+    "ownLessOther": -0.08,
+    "ahead": false,
+    "grainOnOwn": -0.188,
+    "grainOnOther": 1.363,
+    "lift": 1.47,
+    "ownSideLessEqualBudgetEvenBest": -0.911
+   },
+   {
+    "material": "agamemnon-855",
+    "genre": "tragedy",
+    "gap": 0.75,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "What’s Kept Hidden: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "What’s Kept Hidden: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -0.173,
+    "ahead": false,
+    "grainOnOwn": -0.583,
+    "grainOnOther": 0.896,
+    "lift": 1.308,
+    "ownSideLessEqualBudgetEvenBest": -2.155
+   },
+   {
+    "material": "Macbeth",
+    "genre": "tragedy",
+    "gap": 0.75,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -0.145,
+    "ahead": false,
+    "grainOnOwn": -0.545,
+    "grainOnOther": 0.809,
+    "lift": 1.212,
+    "ownSideLessEqualBudgetEvenBest": -2.463
+   },
+   {
+    "material": "The Winter’s Tale",
+    "genre": "romance",
+    "gap": 0.79,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.5",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.42,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "Spoken To Many: 0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "ownLessOther": -0.494,
+    "ahead": false,
+    "grainOnOwn": -0.674,
+    "grainOnOther": 0.921,
+    "lift": 1.103,
+    "ownSideLessEqualBudgetEvenBest": -4.482
+   },
+   {
+    "material": "pygmalion-4",
+    "genre": "comedy",
+    "gap": 0.81,
+    "ownSide": {
+     "s": -0.25,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Heightened Language: 0.5",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "ownLessOther": -0.537,
+    "ahead": false,
+    "grainOnOwn": -0.49,
+    "grainOnOther": 1.386,
+    "lift": 1.34,
+    "ownSideLessEqualBudgetEvenBest": -2.313
+   },
+   {
+    "material": "justice-2",
+    "genre": "drama",
+    "gap": 0.81,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "A Conflict Out Loud: -0.5",
+      "What’s Kept Hidden: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "ownLessOther": -0.162,
+    "ahead": false,
+    "grainOnOwn": -0.787,
+    "grainOnOther": 1.008,
+    "lift": 1.635,
+    "ownSideLessEqualBudgetEvenBest": -0.375
+   },
+   {
+    "material": "weavers-1",
+    "genre": "drama",
+    "gap": 0.81,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Spoken To Many: -0.5",
+      "What’s Kept Hidden: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Spoken To Many: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "ownLessOther": -0.228,
+    "ahead": false,
+    "grainOnOwn": -0.62,
+    "grainOnOther": 0.908,
+    "lift": 1.301,
+    "ownSideLessEqualBudgetEvenBest": -2.158
+   },
+   {
+    "material": "shrew-2-1",
+    "genre": "comedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "ownLessOther": -0.521,
+    "ahead": false,
+    "grainOnOwn": -0.373,
+    "grainOnOther": 1.245,
+    "lift": 1.094,
+    "ownSideLessEqualBudgetEvenBest": -2.851
+   },
+   {
+    "material": "proposal",
+    "genre": "comedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "ownLessOther": -0.515,
+    "ahead": false,
+    "grainOnOwn": -0.363,
+    "grainOnOther": 1.236,
+    "lift": 1.081,
+    "ownSideLessEqualBudgetEvenBest": -2.811
+   },
+   {
+    "material": "dream-3-2",
+    "genre": "comedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "ownLessOther": -0.584,
+    "ahead": false,
+    "grainOnOwn": -0.368,
+    "grainOnOther": 1.189,
+    "lift": 0.968,
+    "ownSideLessEqualBudgetEvenBest": -3.389
+   },
+   {
+    "material": "The Bear",
+    "genre": "comedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "ownLessOther": -0.58,
+    "ahead": false,
+    "grainOnOwn": -0.362,
+    "grainOnOther": 1.186,
+    "lift": 0.963,
+    "ownSideLessEqualBudgetEvenBest": -3.432
+   },
+   {
+    "material": "A Marriage Proposal",
+    "genre": "comedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "ownLessOther": -0.515,
+    "ahead": false,
+    "grainOnOwn": -0.363,
+    "grainOnOther": 1.236,
+    "lift": 1.081,
+    "ownSideLessEqualBudgetEvenBest": -2.811
+   },
+   {
+    "material": "bacchae-451",
+    "genre": "tragedy",
+    "gap": 0.93,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Grotesque Beats: 0.38",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25"
+     ]
+    },
+    "ownLessOther": -0.701,
+    "ahead": false,
+    "grainOnOwn": -0.521,
+    "grainOnOther": 1.4,
+    "lift": 1.217,
+    "ownSideLessEqualBudgetEvenBest": -3.739
+   },
+   {
+    "material": "dream-5-1",
+    "genre": "comedy",
+    "gap": 0.97,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "Spoken To Many: -0.75"
+     ]
+    },
+    "otherSide": {
+     "s": 0.6,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "Its Grotesque Beats: 0.38",
+      "Its Comic Beats: 0.06"
+     ]
+    },
+    "ownLessOther": -0.832,
+    "ahead": false,
+    "grainOnOwn": -0.49,
+    "grainOnOther": 1.299,
+    "lift": 0.955,
+    "ownSideLessEqualBudgetEvenBest": -4.775
+   },
+   {
+    "material": "hamlet-3-4",
+    "genre": "tragedy",
+    "gap": 1,
+    "ownSide": {
+     "s": -0.5,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "A Private Exchange: 0.25",
+      "What’s Kept Hidden: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "A Private Exchange: -0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "ownLessOther": -0.772,
+    "ahead": false,
+    "grainOnOwn": -0.803,
+    "grainOnOther": 1.154,
+    "lift": 1.187,
+    "ownSideLessEqualBudgetEvenBest": -3.53
+   },
+   {
+    "material": "faustus-3",
+    "genre": "tragedy",
+    "gap": 1,
+    "ownSide": {
+     "s": -0.5,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": -0.711,
+    "ahead": false,
+    "grainOnOwn": -0.757,
+    "grainOnOther": 1.328,
+    "lift": 1.375,
+    "ownSideLessEqualBudgetEvenBest": -2.746
+   },
+   {
+    "material": "strife-1",
+    "genre": "drama",
+    "gap": 1.06,
+    "ownSide": {
+     "s": -0.56,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Spoken To Many: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Spoken To Many: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "ownLessOther": -0.805,
+    "ahead": false,
+    "grainOnOwn": -0.976,
+    "grainOnOther": 1.222,
+    "lift": 1.395,
+    "ownSideLessEqualBudgetEvenBest": -2.127
+   },
+   {
+    "material": "The Playboy Of The Western World",
+    "genre": "comedy",
+    "gap": 1.16,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Conflict Out Loud: -0.5",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.79,
+     "signals": [
+      "A Conflict Out Loud: 0.5",
+      "Its Heightened Language: 0.5",
+      "Its Grotesque Beats: 0.25",
+      "Spoken To Many: 0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "ownLessOther": -1.348,
+    "ahead": false,
+    "grainOnOwn": -0.615,
+    "grainOnOther": 1.885,
+    "lift": 1.153,
+    "ownSideLessEqualBudgetEvenBest": -4.382
+   },
+   {
+    "material": "electra-328",
+    "genre": "tragedy",
+    "gap": 1.25,
+    "ownSide": {
+     "s": -0.5,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25",
+      "A Private Exchange: 0.25",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.75,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Its Heightened Language: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25",
+      "A Private Exchange: -0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": -1.338,
+    "ahead": false,
+    "grainOnOwn": -0.889,
+    "grainOnOther": 1.994,
+    "lift": 1.549,
+    "ownSideLessEqualBudgetEvenBest": -1.883
+   },
+   {
+    "material": "medea-446",
+    "genre": "tragedy",
+    "gap": 1.25,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.63,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25"
+     ]
+    },
+    "ownLessOther": -1.351,
+    "ahead": false,
+    "grainOnOwn": -1.046,
+    "grainOnOther": 1.786,
+    "lift": 1.483,
+    "ownSideLessEqualBudgetEvenBest": -2.786
+   },
+   {
+    "material": "caesar-3-2",
+    "genre": "tragedy",
+    "gap": 1.25,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.63,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": -1.437,
+    "ahead": false,
+    "grainOnOwn": -1.024,
+    "grainOnOther": 1.627,
+    "lift": 1.216,
+    "ownSideLessEqualBudgetEvenBest": -4.151
+   },
+   {
+    "material": "Major Barbara",
+    "genre": "comedy",
+    "gap": 1.32,
+    "ownSide": {
+     "s": -0.5,
+     "signals": [
+      "Spoken To Many: -0.5",
+      "A Conflict Out Loud: -0.5"
+     ]
+    },
+    "otherSide": {
+     "s": 0.82,
+     "signals": [
+      "Spoken To Many: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "ownLessOther": -1.59,
+    "ahead": false,
+    "grainOnOwn": -0.895,
+    "grainOnOther": 2.209,
+    "lift": 1.515,
+    "ownSideLessEqualBudgetEvenBest": -2.149
+   },
+   {
+    "material": "An Enemy Of The People",
+    "genre": "political_drama",
+    "gap": 1.37,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "A Conflict Out Loud: -0.75",
+      "Political Drama’s Command Of The Frame: economy and presence in the frame: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.75,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "A Conflict Out Loud: 0.75"
+     ]
+    },
+    "ownLessOther": -1.661,
+    "ahead": false,
+    "grainOnOwn": -1.156,
+    "grainOnOther": 1.957,
+    "lift": 1.456,
+    "ownSideLessEqualBudgetEvenBest": -3.216
+   },
+   {
+    "material": "richard3-1-2",
+    "genre": "tragedy",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.82,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "Its Grotesque Beats: 0.38",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25"
+     ]
+    },
+    "ownLessOther": -1.879,
+    "ahead": false,
+    "grainOnOwn": -1.086,
+    "grainOnOther": 1.937,
+    "lift": 1.144,
+    "ownSideLessEqualBudgetEvenBest": -5.335
+   },
+   {
+    "material": "Woyzeck",
+    "genre": "tragedy",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.82,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Grotesque Beats: 0.38",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -1.823,
+    "ahead": false,
+    "grainOnOwn": -1.078,
+    "grainOnOther": 2.01,
+    "lift": 1.269,
+    "ownSideLessEqualBudgetEvenBest": -5.305
+   },
+   {
+    "material": "oedipus-1",
+    "genre": "tragedy",
+    "gap": 1.5,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.75,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -2.003,
+    "ahead": false,
+    "grainOnOwn": -1.204,
+    "grainOnOther": 2.306,
+    "lift": 1.507,
+    "ownSideLessEqualBudgetEvenBest": -3.462
+   },
+   {
+    "material": "Salomé",
+    "genre": "tragedy",
+    "gap": 1.62,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 1,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Its Heightened Language: 0.5",
+      "Its Grotesque Beats: 0.38",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "ownLessOther": -2.197,
+    "ahead": false,
+    "grainOnOwn": -0.892,
+    "grainOnOther": 2.444,
+    "lift": 1.137,
+    "ownSideLessEqualBudgetEvenBest": -6.673
+   },
+   {
+    "material": "Blood Wedding",
+    "genre": "tragedy",
+    "gap": 1.75,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "Spoken To Many: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 1,
+     "signals": [
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Heightened Language: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "Spoken To Many: 0.25"
+     ]
+    },
+    "ownLessOther": -2.465,
+    "ahead": false,
+    "grainOnOwn": -1.233,
+    "grainOnOther": 2.48,
+    "lift": 1.251,
+    "ownSideLessEqualBudgetEvenBest": -5.665
+   },
+   {
+    "material": "antigone-441",
+    "genre": "tragedy",
+    "gap": 2,
+    "ownSide": {
+     "s": -1,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 1,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Its Heightened Language: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -2.933,
+    "ahead": false,
+    "grainOnOwn": -1.739,
+    "grainOnOther": 2.739,
+    "lift": 1.549,
+    "ownSideLessEqualBudgetEvenBest": -3.377
+   },
+   {
+    "material": "oedipus-300",
+    "genre": "tragedy",
+    "gap": 2,
+    "ownSide": {
+     "s": -1,
+     "signals": [
+      "A Conflict Out Loud: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Spoken To Many: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 1,
+     "signals": [
+      "A Conflict Out Loud: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Spoken To Many: 0.5",
+      "Its Heightened Language: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -3.125,
+    "ahead": false,
+    "grainOnOwn": -1.784,
+    "grainOnOther": 2.824,
+    "lift": 1.486,
+    "ownSideLessEqualBudgetEvenBest": -3.75
+   },
+   {
+    "material": "Julius Caesar",
+    "genre": "tragedy",
+    "gap": 2,
+    "ownSide": {
+     "s": -1,
+     "signals": [
+      "Spoken To Many: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Conflict Out Loud: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 1,
+     "signals": [
+      "Spoken To Many: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Conflict Out Loud: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "ownLessOther": -2.566,
+    "ahead": false,
+    "grainOnOwn": -1.332,
+    "grainOnOther": 2.36,
+    "lift": 1.127,
+    "ownSideLessEqualBudgetEvenBest": -5.174
+   }
+  ]
+ },
+ "expansive": {
+  "cases": 50,
+  "aheadExact": 25,
+  "meanGap": 0.747,
+  "gapOver057": 30,
+  "aheadOfEqualBudgetEvenBest": 0,
+  "list": [
+   {
+    "material": "The Importance Of Being Earnest",
+    "genre": "comedy",
+    "gap": 0.12,
+    "ownSide": {
+     "s": 0.13,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "What’s Kept Hidden: 0.5"
+     ]
+    },
+    "ownLessOther": 1.275,
+    "ahead": true,
+    "grainOnOwn": 0.243,
+    "grainOnOther": 0.495,
+    "lift": 1.528,
+    "ownSideLessEqualBudgetEvenBest": -1.587
+   },
+   {
+    "material": "suppressed-2",
+    "genre": "comedy",
+    "gap": 0.13,
+    "ownSide": {
+     "s": 0,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "Its Comic Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.13,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "ownLessOther": 1.749,
+    "ahead": true,
+    "grainOnOwn": 0,
+    "grainOnOther": 0.35,
+    "lift": 2.099,
+    "ownSideLessEqualBudgetEvenBest": -2.784
+   },
+   {
+    "material": "orig-what-we-keep",
+    "genre": "drama",
+    "gap": 0.13,
+    "ownSide": {
+     "s": -0.06,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.07,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 1.529,
+    "ahead": true,
+    "grainOnOwn": -0.088,
+    "grainOnOther": 0.184,
+    "lift": 1.8,
+    "ownSideLessEqualBudgetEvenBest": -2.424
+   },
+   {
+    "material": "playboy-3",
+    "genre": "comedy",
+    "gap": 0.18,
+    "ownSide": {
+     "s": 0.07,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "A Private Exchange: 0.5"
+     ]
+    },
+    "ownLessOther": 1.225,
+    "ahead": true,
+    "grainOnOwn": 0.086,
+    "grainOnOther": 0.541,
+    "lift": 1.683,
+    "ownSideLessEqualBudgetEvenBest": -1.794
+   },
+   {
+    "material": "julie",
+    "genre": "drama",
+    "gap": 0.19,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.07,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 1.191,
+    "ahead": true,
+    "grainOnOwn": -0.214,
+    "grainOnOther": 0.193,
+    "lift": 1.595,
+    "ownSideLessEqualBudgetEvenBest": -1.587
+   },
+   {
+    "material": "orig-night-desk",
+    "genre": "comedy",
+    "gap": 0.19,
+    "ownSide": {
+     "s": -0.06,
+     "signals": [
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.13,
+     "signals": [
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "ownLessOther": 1.488,
+    "ahead": true,
+    "grainOnOwn": -0.096,
+    "grainOnOther": 0.427,
+    "lift": 2.011,
+    "ownSideLessEqualBudgetEvenBest": -3.251
+   },
+   {
+    "material": "Miss Julie",
+    "genre": "drama",
+    "gap": 0.19,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.07,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 1.191,
+    "ahead": true,
+    "grainOnOwn": -0.214,
+    "grainOnOther": 0.193,
+    "lift": 1.595,
+    "ownSideLessEqualBudgetEvenBest": -1.587
+   },
+   {
+    "material": "othello-4-3",
+    "genre": "tragedy",
+    "gap": 0.25,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "A Private Exchange: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.13,
+     "signals": [
+      "A Private Exchange: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25",
+      "What’s Kept Hidden: 0.25"
+     ]
+    },
+    "ownLessOther": 0.905,
+    "ahead": true,
+    "grainOnOwn": -0.206,
+    "grainOnOther": 0.324,
+    "lift": 1.434,
+    "ownSideLessEqualBudgetEvenBest": -0.985
+   },
+   {
+    "material": "scapin-3-2",
+    "genre": "comedy",
+    "gap": 0.37,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "Its Comic Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "ownLessOther": 0.38,
+    "ahead": true,
+    "grainOnOwn": -0.191,
+    "grainOnOther": 0.415,
+    "lift": 0.988,
+    "ownSideLessEqualBudgetEvenBest": -0.692
+   },
+   {
+    "material": "Measure For Measure",
+    "genre": "tragicomedy",
+    "gap": 0.37,
+    "ownSide": {
+     "s": -0.18,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Conflict Out Loud: 0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.19,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Conflict Out Loud: -0.25",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.696,
+    "ahead": true,
+    "grainOnOwn": -0.256,
+    "grainOnOther": 0.564,
+    "lift": 1.515,
+    "ownSideLessEqualBudgetEvenBest": -3.964
+   },
+   {
+    "material": "Tartuffe",
+    "genre": "comedy",
+    "gap": 0.37,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "Its Comic Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "ownLessOther": 0.684,
+    "ahead": true,
+    "grainOnOwn": -0.258,
+    "grainOnOther": 0.406,
+    "lift": 1.351,
+    "ownSideLessEqualBudgetEvenBest": -1.853
+   },
+   {
+    "material": "arms-1",
+    "genre": "comedy",
+    "gap": 0.38,
+    "ownSide": {
+     "s": 0,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "What’s Kept Hidden: -0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "What’s Kept Hidden: 0.5",
+      "A Conflict Out Loud: -0.25"
+     ]
+    },
+    "ownLessOther": 0.819,
+    "ahead": true,
+    "grainOnOwn": 0,
+    "grainOnOther": 0.826,
+    "lift": 1.647,
+    "ownSideLessEqualBudgetEvenBest": -2.283
+   },
+   {
+    "material": "asyoulike-3-2",
+    "genre": "comedy",
+    "gap": 0.38,
+    "ownSide": {
+     "s": 0,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Its Heightened Language: 0.5",
+      "Its Comic Beats: 0.25",
+      "A Private Exchange: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "ownLessOther": 0.842,
+    "ahead": true,
+    "grainOnOwn": 0,
+    "grainOnOther": 0.737,
+    "lift": 1.581,
+    "ownSideLessEqualBudgetEvenBest": -2.179
+   },
+   {
+    "material": "Spring Awakening",
+    "genre": "coming_of_age",
+    "gap": 0.38,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Coming Of Age’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Grotesque Beats: 0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.26,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Conflict Out Loud: -0.25",
+      "Coming Of Age’s Caught Live: behavior found in the moment, not fixed: 0.13",
+      "Coming Of Age’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.462,
+    "ahead": true,
+    "grainOnOwn": -0.194,
+    "grainOnOther": 0.764,
+    "lift": 1.418,
+    "ownSideLessEqualBudgetEvenBest": -2.867
+   },
+   {
+    "material": "orig-hundred-questions",
+    "genre": "comedy",
+    "gap": 0.43,
+    "ownSide": {
+     "s": -0.18,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "A Private Exchange: 0.5"
+     ]
+    },
+    "ownLessOther": 0.939,
+    "ahead": true,
+    "grainOnOwn": -0.307,
+    "grainOnOther": 0.765,
+    "lift": 2.011,
+    "ownSideLessEqualBudgetEvenBest": -3.764
+   },
+   {
+    "material": "As You Like It",
+    "genre": "romantic_comedy",
+    "gap": 0.43,
+    "ownSide": {
+     "s": -0.18,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "What’s Kept Hidden: 0.5"
+     ]
+    },
+    "ownLessOther": 0.788,
+    "ahead": true,
+    "grainOnOwn": -0.297,
+    "grainOnOther": 0.511,
+    "lift": 1.599,
+    "ownSideLessEqualBudgetEvenBest": -2.435
+   },
+   {
+    "material": "dollhouse-3",
+    "genre": "drama",
+    "gap": 0.44,
+    "ownSide": {
+     "s": -0.25,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Conflict Out Loud: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.19,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.647,
+    "ahead": true,
+    "grainOnOwn": -0.471,
+    "grainOnOther": 0.689,
+    "lift": 1.805,
+    "ownSideLessEqualBudgetEvenBest": -2.118
+   },
+   {
+    "material": "windermere-1",
+    "genre": "comedy",
+    "gap": 0.44,
+    "ownSide": {
+     "s": -0.06,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Its Heightened Language: 0.5",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "ownLessOther": 0.597,
+    "ahead": true,
+    "grainOnOwn": -0.077,
+    "grainOnOther": 1.174,
+    "lift": 1.847,
+    "ownSideLessEqualBudgetEvenBest": -4.164
+   },
+   {
+    "material": "Mrs Warren’s Profession",
+    "genre": "drama",
+    "gap": 0.44,
+    "ownSide": {
+     "s": -0.12,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Its Heightened Language: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.406,
+    "ahead": true,
+    "grainOnOwn": -0.241,
+    "grainOnOther": 1.248,
+    "lift": 1.893,
+    "ownSideLessEqualBudgetEvenBest": -3.284
+   },
+   {
+    "material": "caesar-2-1",
+    "genre": "tragedy",
+    "gap": 0.5,
+    "ownSide": {
+     "s": -0.25,
+     "signals": [
+      "A Private Exchange: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "What’s Kept Hidden: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.25,
+     "signals": [
+      "A Private Exchange: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "What’s Kept Hidden: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "ownLessOther": 0.548,
+    "ahead": true,
+    "grainOnOwn": -0.488,
+    "grainOnOther": 0.667,
+    "lift": 1.704,
+    "ownSideLessEqualBudgetEvenBest": -2.721
+   },
+   {
+    "material": "masterbuilder-1",
+    "genre": "drama",
+    "gap": 0.63,
+    "ownSide": {
+     "s": -0.31,
+     "signals": [
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Private Exchange: -0.25",
+      "What’s Kept Hidden: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "A Private Exchange: 0.25",
+      "What’s Kept Hidden: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.272,
+    "ahead": true,
+    "grainOnOwn": -0.53,
+    "grainOnOther": 1.105,
+    "lift": 1.906,
+    "ownSideLessEqualBudgetEvenBest": -4.628
+   },
+   {
+    "material": "orig-the-reception",
+    "genre": "drama",
+    "gap": 0.65,
+    "ownSide": {
+     "s": -0.33,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Spoken To Many: 0.25",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "Spoken To Many: -0.25",
+      "A Private Exchange: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.102,
+    "ahead": true,
+    "grainOnOwn": -0.518,
+    "grainOnOther": 1.2,
+    "lift": 1.82,
+    "ownSideLessEqualBudgetEvenBest": -4.949
+   },
+   {
+    "material": "seagull-4",
+    "genre": "drama",
+    "gap": 0.69,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.068,
+    "ahead": false,
+    "grainOnOwn": -0.49,
+    "grainOnOther": 1.072,
+    "lift": 1.49,
+    "ownSideLessEqualBudgetEvenBest": -3.983
+   },
+   {
+    "material": "twelfth-1-5",
+    "genre": "comedy",
+    "gap": 0.69,
+    "ownSide": {
+     "s": -0.31,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "ownLessOther": 0.239,
+    "ahead": true,
+    "grainOnOwn": -0.533,
+    "grainOnOther": 0.889,
+    "lift": 1.662,
+    "ownSideLessEqualBudgetEvenBest": -3.943
+   },
+   {
+    "material": "measure-2-4",
+    "genre": "drama",
+    "gap": 0.69,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.077,
+    "ahead": false,
+    "grainOnOwn": -0.547,
+    "grainOnOther": 1.068,
+    "lift": 1.535,
+    "ownSideLessEqualBudgetEvenBest": -3.889
+   },
+   {
+    "material": "ghosts-1",
+    "genre": "drama",
+    "gap": 0.69,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "A Conflict Out Loud: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.048,
+    "ahead": true,
+    "grainOnOwn": -0.622,
+    "grainOnOther": 1.269,
+    "lift": 1.936,
+    "ownSideLessEqualBudgetEvenBest": -3.313
+   },
+   {
+    "material": "orig-office-hours",
+    "genre": "drama",
+    "gap": 0.69,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Private Exchange: -0.25",
+      "What’s Kept Hidden: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.32,
+     "signals": [
+      "A Private Exchange: 0.25",
+      "What’s Kept Hidden: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": 0.201,
+    "ahead": true,
+    "grainOnOwn": -0.66,
+    "grainOnOther": 1.313,
+    "lift": 2.174,
+    "ownSideLessEqualBudgetEvenBest": -4.081
+   },
+   {
+    "material": "Twelfth Night",
+    "genre": "comedy",
+    "gap": 0.71,
+    "ownSide": {
+     "s": -0.33,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25"
+     ]
+    },
+    "ownLessOther": 0,
+    "ahead": false,
+    "grainOnOwn": -0.488,
+    "grainOnOther": 0.858,
+    "lift": 1.345,
+    "ownSideLessEqualBudgetEvenBest": -3.306
+   },
+   {
+    "material": "macbeth-1-7",
+    "genre": "tragedy",
+    "gap": 0.75,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "ownLessOther": -0.119,
+    "ahead": false,
+    "grainOnOwn": -0.608,
+    "grainOnOther": 1.265,
+    "lift": 1.753,
+    "ownSideLessEqualBudgetEvenBest": -4.189
+   },
+   {
+    "material": "malfi-1",
+    "genre": "tragedy",
+    "gap": 0.75,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: 0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.38,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.75",
+      "Tragedy’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "Tragedy’s States At The Limit: states pushed to their limit: -0.25"
+     ]
+    },
+    "ownLessOther": -0.004,
+    "ahead": false,
+    "grainOnOwn": -0.574,
+    "grainOnOther": 0.998,
+    "lift": 1.566,
+    "ownSideLessEqualBudgetEvenBest": -3.683
+   },
+   {
+    "material": "The Cherry Orchard",
+    "genre": "tragicomedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.44,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.393,
+    "ahead": false,
+    "grainOnOwn": -0.663,
+    "grainOnOther": 1.412,
+    "lift": 1.68,
+    "ownSideLessEqualBudgetEvenBest": -4.25
+   },
+   {
+    "material": "The Wild Duck",
+    "genre": "drama",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Private Exchange: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.44,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.25",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.385,
+    "ahead": false,
+    "grainOnOwn": -0.749,
+    "grainOnOther": 1.375,
+    "lift": 1.738,
+    "ownSideLessEqualBudgetEvenBest": -4.404
+   },
+   {
+    "material": "Uncle Vanya",
+    "genre": "tragicomedy",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "A Conflict Out Loud: 0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.44,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "A Conflict Out Loud: -0.25",
+      "Tragicomedy’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.385,
+    "ahead": false,
+    "grainOnOwn": -0.749,
+    "grainOnOther": 1.375,
+    "lift": 1.738,
+    "ownSideLessEqualBudgetEvenBest": -4.404
+   },
+   {
+    "material": "Trifles",
+    "genre": "mystery",
+    "gap": 0.87,
+    "ownSide": {
+     "s": -0.37,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "Mystery’s Played Large: feeling sized past life, shaped in the body: 0.5",
+      "A Private Exchange: -0.5"
+     ]
+    },
+    "otherSide": {
+     "s": 0.5,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "Mystery’s Played Large: feeling sized past life, shaped in the body: -0.5",
+      "A Private Exchange: 0.5",
+      "Mystery’s Suspense Held: suspense held in silence and pace: 0.25"
+     ]
+    },
+    "ownLessOther": -0.574,
+    "ahead": false,
+    "grainOnOwn": -0.533,
+    "grainOnOther": 1.828,
+    "lift": 1.784,
+    "ownSideLessEqualBudgetEvenBest": -3.153
+   },
+   {
+    "material": "vanya-2",
+    "genre": "drama",
+    "gap": 0.94,
+    "ownSide": {
+     "s": -0.5,
+     "signals": [
+      "A Private Exchange: -0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.44,
+     "signals": [
+      "A Private Exchange: 0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.375,
+    "ahead": false,
+    "grainOnOwn": -0.862,
+    "grainOnOther": 1.547,
+    "lift": 2.035,
+    "ownSideLessEqualBudgetEvenBest": -4.957
+   },
+   {
+    "material": "machinal-2",
+    "genre": "drama",
+    "gap": 0.99,
+    "ownSide": {
+     "s": -0.43,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Its Grotesque Beats: 0.38",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.716,
+    "ahead": false,
+    "grainOnOwn": -0.694,
+    "grainOnOther": 1.77,
+    "lift": 1.745,
+    "ownSideLessEqualBudgetEvenBest": -4.396
+   },
+   {
+    "material": "anna-christie-1",
+    "genre": "drama",
+    "gap": 1.12,
+    "ownSide": {
+     "s": -0.56,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.862,
+    "ahead": false,
+    "grainOnOwn": -0.896,
+    "grainOnOther": 2.053,
+    "lift": 2.087,
+    "ownSideLessEqualBudgetEvenBest": -4.943
+   },
+   {
+    "material": "A Doll’s House",
+    "genre": "domestic_drama",
+    "gap": 1.12,
+    "ownSide": {
+     "s": -0.56,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Domestic Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "Domestic Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.98,
+    "ahead": false,
+    "grainOnOwn": -0.817,
+    "grainOnOther": 1.73,
+    "lift": 1.564,
+    "ownSideLessEqualBudgetEvenBest": -4.545
+   },
+   {
+    "material": "Three Sisters",
+    "genre": "drama",
+    "gap": 1.14,
+    "ownSide": {
+     "s": -0.58,
+     "signals": [
+      "What’s Kept Hidden: -0.5",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "otherSide": {
+     "s": 0.56,
+     "signals": [
+      "What’s Kept Hidden: 0.5",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -0.942,
+    "ahead": false,
+    "grainOnOwn": -0.813,
+    "grainOnOther": 1.801,
+    "lift": 1.672,
+    "ownSideLessEqualBudgetEvenBest": -6.275
+   },
+   {
+    "material": "rising-moon",
+    "genre": "drama",
+    "gap": 1.15,
+    "ownSide": {
+     "s": -0.46,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Its Heightened Language: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.08"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -1.125,
+    "ahead": false,
+    "grainOnOwn": -0.689,
+    "grainOnOther": 1.892,
+    "lift": 1.455,
+    "ownSideLessEqualBudgetEvenBest": -4.07
+   },
+   {
+    "material": "orig-two-time-zones",
+    "genre": "comedy",
+    "gap": 1.19,
+    "ownSide": {
+     "s": -0.56,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.63,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5"
+     ]
+    },
+    "ownLessOther": -1.219,
+    "ahead": false,
+    "grainOnOwn": -0.938,
+    "grainOnOther": 2.188,
+    "lift": 1.906,
+    "ownSideLessEqualBudgetEvenBest": -5.988
+   },
+   {
+    "material": "twelfth-2-4",
+    "genre": "comedy",
+    "gap": 1.25,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5"
+     ]
+    },
+    "otherSide": {
+     "s": 0.63,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5"
+     ]
+    },
+    "ownLessOther": -1.285,
+    "ahead": false,
+    "grainOnOwn": -1.125,
+    "grainOnOther": 2.005,
+    "lift": 1.844,
+    "ownSideLessEqualBudgetEvenBest": -5.009
+   },
+   {
+    "material": "cherry-orchard-4",
+    "genre": "drama",
+    "gap": 1.37,
+    "ownSide": {
+     "s": -0.68,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25",
+      "Its Comic Beats: 0.13"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -1.526,
+    "ahead": false,
+    "grainOnOwn": -1.041,
+    "grainOnOther": 2.282,
+    "lift": 1.794,
+    "ownSideLessEqualBudgetEvenBest": -4.907
+   },
+   {
+    "material": "trifles",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -1.942,
+    "ahead": false,
+    "grainOnOwn": -1.112,
+    "grainOnOther": 2.618,
+    "lift": 1.784,
+    "ownSideLessEqualBudgetEvenBest": -4.424
+   },
+   {
+    "material": "creditors",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -2.087,
+    "ahead": false,
+    "grainOnOwn": -1.175,
+    "grainOnOther": 2.657,
+    "lift": 1.743,
+    "ownSideLessEqualBudgetEvenBest": -6.081
+   },
+   {
+    "material": "riders-sea",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.62,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.75",
+      "Its Heightened Language: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.82,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -2.281,
+    "ahead": false,
+    "grainOnOwn": -0.933,
+    "grainOnOther": 3.086,
+    "lift": 1.735,
+    "ownSideLessEqualBudgetEvenBest": -4.801
+   },
+   {
+    "material": "orig-bed-fourteen",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -2.136,
+    "ahead": false,
+    "grainOnOwn": -1.318,
+    "grainOnOther": 2.958,
+    "lift": 2.141,
+    "ownSideLessEqualBudgetEvenBest": -6.304
+   },
+   {
+    "material": "Hedda Gabler",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -1.965,
+    "ahead": false,
+    "grainOnOwn": -1.239,
+    "grainOnOther": 2.473,
+    "lift": 1.744,
+    "ownSideLessEqualBudgetEvenBest": -4.736
+   },
+   {
+    "material": "Ghosts",
+    "genre": "drama",
+    "gap": 1.44,
+    "ownSide": {
+     "s": -0.75,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.69,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.5",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -2.029,
+    "ahead": false,
+    "grainOnOwn": -1.14,
+    "grainOnOther": 2.576,
+    "lift": 1.684,
+    "ownSideLessEqualBudgetEvenBest": -5.047
+   },
+   {
+    "material": "hedda-2",
+    "genre": "drama",
+    "gap": 1.69,
+    "ownSide": {
+     "s": -0.87,
+     "signals": [
+      "What’s Kept Hidden: -0.75",
+      "A Private Exchange: -0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: -0.25"
+     ]
+    },
+    "otherSide": {
+     "s": 0.82,
+     "signals": [
+      "What’s Kept Hidden: 0.75",
+      "A Private Exchange: 0.75",
+      "Drama’s Played Straight: played with complete earnestness, never winked at: 0.13"
+     ]
+    },
+    "ownLessOther": -2.899,
+    "ahead": false,
+    "grainOnOwn": -1.494,
+    "grainOnOther": 3.465,
+    "lift": 2.06,
+    "ownSideLessEqualBudgetEvenBest": -7.228
+   }
+  ]
+ },
+ "lift": {
+  "asBuilt": {
+   "restrained": 1.306,
+   "expansive": 1.724
+  },
+  "leansOnly": {
+   "restrained": 0.638,
+   "expansive": 0.551
+  },
+  "drawsOnly": {
+   "restrained": 0.594,
+   "expansive": 1.03
+  }
+ },
+ "considered": {
+  "emotional depth 1 on connection, composure 0.5 on believability, focus 0.5 on consistency": {
+   "st6": {
+    "expansive": "35 of 50",
+    "restrained": "20 of 42"
+   },
+   "lifts": {
+    "restrained": 2.109,
+    "expansive": 2.236
+   }
+  },
+  "composure 0.5 on connection in place of believability": {
+   "st6": {
+    "expansive": "30 of 50",
+    "restrained": "16 of 42"
+   },
+   "lifts": {
+    "restrained": 1.787,
+    "expansive": 2.033
+   }
+  },
+  "the control doubled: composure 1, focus 1": {
+   "st6": {
+    "expansive": "24 of 50",
+    "restrained": "12 of 42"
+   },
+   "lifts": {
+    "restrained": 1.423,
+    "expansive": 1.747
+   }
+  },
+  "the control in place of emotional depth: composure 1, focus 1": {
+   "st6": {
+    "expansive": "24 of 50",
+    "restrained": "8 of 42"
+   },
+   "lifts": {
+    "restrained": 1.103,
+    "expansive": 1.699
+   }
+  }
+ },
+ "ST6R": {
+  "criterion": "ST6-R (docs/verification/decisions-2026-10-16/criteria.md)",
+  "budgets": {
+   "restrainedSpecialist": 600,
+   "expansiveSpecialist": 600,
+   "evenActor": 600
+  },
+  "verdict": {
+   "a": {
+    "met": false,
+    "wins": 3,
+    "of": 42,
+    "rate": 0.0714,
+    "materials": [
+     "earnest-2",
+     "wayoftheworld-4",
+     "orig-runway"
+    ]
+   },
+   "b": {
+    "met": true,
+    "larger": 94,
+    "of": 94,
+    "rate": 1,
+    "notLarger": []
+   },
+   "c": {
+    "met": false,
+    "abilities": {
+     "evenActorRestrainedAhead": 0,
+     "rate": 0,
+     "atMost": -0.0286,
+     "met": false
+    },
+    "preparation": {
+     "halfRehearsedWins": 0,
+     "fullyRehearsedWins": 3,
+     "met": true
+    },
+    "circumstances": {
+     "half": 21,
+     "smallerGapRate": 0.1429,
+     "largerGapRate": 0,
+     "smallerGapUpTo": 0.87,
+     "largerGapFrom": 0.87,
+     "met": false
+    },
+    "interpretation": {
+     "everyWinAllowed": true
+    }
+   },
+   "d": {
+    "met": true,
+    "behind": 37,
+    "of": 42,
+    "rate": 0.881,
+    "expansiveSpecialistAheadThere": 30,
+    "shareThere": 0.8108,
+    "materials": [
+     "muchado-4-1",
+     "hamlet-3-1",
+     "Much Ado About Nothing",
+     "caesar-4-3",
+     "henry5-4-3",
+     "A Midsummer Night’s Dream",
+     "scandal-2-1",
+     "agamemnon-855",
+     "Macbeth",
+     "The Winter’s Tale",
+     "justice-2",
+     "pygmalion-4",
+     "weavers-1",
+     "A Marriage Proposal",
+     "dream-3-2",
+     "proposal",
+     "shrew-2-1",
+     "The Bear",
+     "bacchae-451",
+     "dream-5-1",
+     "faustus-3",
+     "hamlet-3-4",
+     "strife-1",
+     "The Playboy Of The Western World",
+     "caesar-3-2",
+     "electra-328",
+     "medea-446",
+     "Major Barbara",
+     "An Enemy Of The People",
+     "richard3-1-2",
+     "Woyzeck",
+     "oedipus-1",
+     "Salomé",
+     "Blood Wedding",
+     "antigone-441",
+     "Julius Caesar",
+     "oedipus-300"
+    ]
+   },
+   "e": {
+    "met": false,
+    "winWorks": {
+     "importance of being earnest": 1,
+     "way of the world": 1,
+     "runway": 1
+    },
+    "winFamilies": [
+     "comedy"
+    ],
+    "mostFromOneWork": 1,
+    "limitWorks": {
+     "much ado about nothing": 2,
+     "hamlet": 2,
+     "julius caesar": 3,
+     "henry v": 1,
+     "a midsummer night's dream": 3,
+     "school for scandal": 1,
+     "agamemnon": 1,
+     "macbeth": 1,
+     "winter's tale": 1,
+     "justice": 1,
+     "pygmalion": 1,
+     "weavers": 1,
+     "a marriage proposal": 1,
+     "proposal": 1,
+     "taming of the shrew": 1,
+     "bear": 1,
+     "bacchae": 1,
+     "doctor faustus": 1,
+     "strife": 1,
+     "playboy of the western world": 1,
+     "electra": 1,
+     "medea": 1,
+     "major barbara": 1,
+     "an enemy of the people": 1,
+     "richard iii": 1,
+     "woyzeck": 1,
+     "oedipus tyrannus": 2,
+     "salomé": 1,
+     "blood wedding": 1,
+     "antigone": 1
+    }
+   },
+   "f": {
+    "met": true,
+    "wins": 24,
+    "of": 50,
+    "rate": 0.48,
+    "asShown": 24
+   }
+  },
+  "met": false,
+  "st6AsWritten": {
+   "restrained": "10 of 42",
+   "expansive": "24 of 50",
+   "met": false,
+   "note": "ST6 as written, superseded by ST6-R and kept as the record: each specialist’s own side against its other, as shown, on these budgets"
+  },
+  "st6Prime": {
+   "restrainedAheadOfEvenBest": 5,
+   "of": 42,
+   "note": "ST6′ (brief 09, proposed): its own side ahead of the equal-budget even actor’s better side, at full precision"
+  },
+  "cases": [
+   {
+    "material": "muchado-4-1",
+    "work": "much ado about nothing",
+    "family": "comedy",
+    "gap": 0.04,
+    "resRestrainedLessEvenExpansive": -1.1082,
+    "halfRehearsed": -5.0684,
+    "evenRestrainedLessExpansive": -0.0553,
+    "expExpansiveLessResRestrained": -2.1761
+   },
+   {
+    "material": "enemy-2",
+    "work": "an enemy of the people",
+    "family": "drama",
+    "gap": 0.06,
+    "resRestrainedLessEvenExpansive": 0.0373,
+    "halfRehearsed": -5.2009,
+    "evenRestrainedLessExpansive": -0.2556,
+    "expExpansiveLessResRestrained": -0.9837
+   },
+   {
+    "material": "earnest-2",
+    "work": "importance of being earnest",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 0.4061,
+    "halfRehearsed": -2.8104,
+    "evenRestrainedLessExpansive": -0.3495,
+    "expExpansiveLessResRestrained": -2.5981
+   },
+   {
+    "material": "stoops-2",
+    "work": "she stoops to conquer",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 0.0376,
+    "halfRehearsed": -3.0858,
+    "evenRestrainedLessExpansive": -0.3889,
+    "expExpansiveLessResRestrained": -2.4806
+   },
+   {
+    "material": "wayoftheworld-4",
+    "work": "way of the world",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 0.1013,
+    "halfRehearsed": -3.0222,
+    "evenRestrainedLessExpansive": -0.3886,
+    "expExpansiveLessResRestrained": -2.4011
+   },
+   {
+    "material": "hamlet-3-1",
+    "work": "hamlet",
+    "family": "tragedy",
+    "gap": 0.25,
+    "resRestrainedLessEvenExpansive": -1.4664,
+    "halfRehearsed": -6.0211,
+    "evenRestrainedLessExpansive": -0.9687,
+    "expExpansiveLessResRestrained": -0.8458
+   },
+   {
+    "material": "Much Ado About Nothing",
+    "work": "much ado about nothing",
+    "family": "romantic_comedy",
+    "gap": 0.31,
+    "resRestrainedLessEvenExpansive": -1.5802,
+    "halfRehearsed": -5.1413,
+    "evenRestrainedLessExpansive": -0.9558,
+    "expExpansiveLessResRestrained": -0.9022
+   },
+   {
+    "material": "orig-runway",
+    "work": "runway",
+    "family": "comedy",
+    "gap": 0.31,
+    "resRestrainedLessEvenExpansive": 0.2544,
+    "halfRehearsed": -4.2667,
+    "evenRestrainedLessExpansive": -1.1009,
+    "expExpansiveLessResRestrained": -3.154
+   },
+   {
+    "material": "caesar-4-3",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 0.5,
+    "resRestrainedLessEvenExpansive": -2.1979,
+    "halfRehearsed": -6.5024,
+    "evenRestrainedLessExpansive": -1.8925,
+    "expExpansiveLessResRestrained": 0.2583
+   },
+   {
+    "material": "henry5-4-3",
+    "work": "henry v",
+    "family": "drama",
+    "gap": 0.56,
+    "resRestrainedLessEvenExpansive": -3.5334,
+    "halfRehearsed": -7.7476,
+    "evenRestrainedLessExpansive": -2.0418,
+    "expExpansiveLessResRestrained": 3.3298
+   },
+   {
+    "material": "A Midsummer Night’s Dream",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.57,
+    "resRestrainedLessEvenExpansive": -3.0549,
+    "halfRehearsed": -6.3712,
+    "evenRestrainedLessExpansive": -1.7338,
+    "expExpansiveLessResRestrained": 1.5452
+   },
+   {
+    "material": "scandal-2-1",
+    "work": "school for scandal",
+    "family": "comedy",
+    "gap": 0.62,
+    "resRestrainedLessEvenExpansive": -0.9106,
+    "halfRehearsed": -4.0905,
+    "evenRestrainedLessExpansive": -1.7277,
+    "expExpansiveLessResRestrained": -1.5648
+   },
+   {
+    "material": "agamemnon-855",
+    "work": "agamemnon",
+    "family": "tragedy",
+    "gap": 0.75,
+    "resRestrainedLessEvenExpansive": -2.1551,
+    "halfRehearsed": -6.596,
+    "evenRestrainedLessExpansive": -2.6383,
+    "expExpansiveLessResRestrained": 0.621
+   },
+   {
+    "material": "Macbeth",
+    "work": "macbeth",
+    "family": "tragedy",
+    "gap": 0.75,
+    "resRestrainedLessEvenExpansive": -2.4626,
+    "halfRehearsed": -6.6227,
+    "evenRestrainedLessExpansive": -2.4963,
+    "expExpansiveLessResRestrained": 1.5115
+   },
+   {
+    "material": "The Winter’s Tale",
+    "work": "winter's tale",
+    "family": "romance",
+    "gap": 0.79,
+    "resRestrainedLessEvenExpansive": -4.4823,
+    "halfRehearsed": -8.8867,
+    "evenRestrainedLessExpansive": -2.5609,
+    "expExpansiveLessResRestrained": 2.0005
+   },
+   {
+    "material": "justice-2",
+    "work": "justice",
+    "family": "drama",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": -0.3749,
+    "halfRehearsed": -5.7218,
+    "evenRestrainedLessExpansive": -3.3277,
+    "expExpansiveLessResRestrained": -1.6363
+   },
+   {
+    "material": "pygmalion-4",
+    "work": "pygmalion",
+    "family": "comedy",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": -2.3134,
+    "halfRehearsed": -6.5882,
+    "evenRestrainedLessExpansive": -2.5558,
+    "expExpansiveLessResRestrained": -0.0064
+   },
+   {
+    "material": "weavers-1",
+    "work": "weavers",
+    "family": "drama",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": -2.1578,
+    "halfRehearsed": -6.3689,
+    "evenRestrainedLessExpansive": -2.9338,
+    "expExpansiveLessResRestrained": 1.7983
+   },
+   {
+    "material": "A Marriage Proposal",
+    "work": "a marriage proposal",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -2.8106,
+    "halfRehearsed": -5.7049,
+    "evenRestrainedLessExpansive": -2.4973,
+    "expExpansiveLessResRestrained": 2.5298
+   },
+   {
+    "material": "dream-3-2",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -3.3895,
+    "halfRehearsed": -6.4994,
+    "evenRestrainedLessExpansive": -2.4467,
+    "expExpansiveLessResRestrained": 2.4599
+   },
+   {
+    "material": "proposal",
+    "work": "proposal",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -2.8106,
+    "halfRehearsed": -5.7049,
+    "evenRestrainedLessExpansive": -2.4973,
+    "expExpansiveLessResRestrained": 2.5298
+   },
+   {
+    "material": "shrew-2-1",
+    "work": "taming of the shrew",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -2.8509,
+    "halfRehearsed": -5.8235,
+    "evenRestrainedLessExpansive": -2.5261,
+    "expExpansiveLessResRestrained": 1.3437
+   },
+   {
+    "material": "The Bear",
+    "work": "bear",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -3.4323,
+    "halfRehearsed": -6.4932,
+    "evenRestrainedLessExpansive": -2.4283,
+    "expExpansiveLessResRestrained": 3.4925
+   },
+   {
+    "material": "bacchae-451",
+    "work": "bacchae",
+    "family": "tragedy",
+    "gap": 0.93,
+    "resRestrainedLessEvenExpansive": -3.7391,
+    "halfRehearsed": -7.6761,
+    "evenRestrainedLessExpansive": -2.9003,
+    "expExpansiveLessResRestrained": 1.9618
+   },
+   {
+    "material": "dream-5-1",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.97,
+    "resRestrainedLessEvenExpansive": -4.7751,
+    "halfRehearsed": -8.5063,
+    "evenRestrainedLessExpansive": -2.6608,
+    "expExpansiveLessResRestrained": 2.9753
+   },
+   {
+    "material": "faustus-3",
+    "work": "doctor faustus",
+    "family": "tragedy",
+    "gap": 1,
+    "resRestrainedLessEvenExpansive": -2.7456,
+    "halfRehearsed": -7.2892,
+    "evenRestrainedLessExpansive": -3.7183,
+    "expExpansiveLessResRestrained": 1.3827
+   },
+   {
+    "material": "hamlet-3-4",
+    "work": "hamlet",
+    "family": "tragedy",
+    "gap": 1,
+    "resRestrainedLessEvenExpansive": -3.5298,
+    "halfRehearsed": -7.9324,
+    "evenRestrainedLessExpansive": -3.4735,
+    "expExpansiveLessResRestrained": 1.9073
+   },
+   {
+    "material": "strife-1",
+    "work": "strife",
+    "family": "drama",
+    "gap": 1.06,
+    "resRestrainedLessEvenExpansive": -2.1274,
+    "halfRehearsed": -7.3747,
+    "evenRestrainedLessExpansive": -4.0776,
+    "expExpansiveLessResRestrained": 1.2164
+   },
+   {
+    "material": "The Playboy Of The Western World",
+    "work": "playboy of the western world",
+    "family": "comedy",
+    "gap": 1.16,
+    "resRestrainedLessEvenExpansive": -4.3817,
+    "halfRehearsed": -8.5785,
+    "evenRestrainedLessExpansive": -3.3873,
+    "expExpansiveLessResRestrained": 1.9128
+   },
+   {
+    "material": "caesar-3-2",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": -4.1514,
+    "halfRehearsed": -8.8028,
+    "evenRestrainedLessExpansive": -4.552,
+    "expExpansiveLessResRestrained": 3.5172
+   },
+   {
+    "material": "electra-328",
+    "work": "electra",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": -1.8834,
+    "halfRehearsed": -7.2192,
+    "evenRestrainedLessExpansive": -4.5506,
+    "expExpansiveLessResRestrained": 0.1901
+   },
+   {
+    "material": "medea-446",
+    "work": "medea",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": -2.7859,
+    "halfRehearsed": -7.9661,
+    "evenRestrainedLessExpansive": -4.9583,
+    "expExpansiveLessResRestrained": 0.7885
+   },
+   {
+    "material": "Major Barbara",
+    "work": "major barbara",
+    "family": "comedy",
+    "gap": 1.32,
+    "resRestrainedLessEvenExpansive": -2.1489,
+    "halfRehearsed": -7.2404,
+    "evenRestrainedLessExpansive": -4.5879,
+    "expExpansiveLessResRestrained": -0.5057
+   },
+   {
+    "material": "An Enemy Of The People",
+    "work": "an enemy of the people",
+    "family": "political_drama",
+    "gap": 1.37,
+    "resRestrainedLessEvenExpansive": -3.2159,
+    "halfRehearsed": -8.7565,
+    "evenRestrainedLessExpansive": -5.165,
+    "expExpansiveLessResRestrained": 2.3057
+   },
+   {
+    "material": "richard3-1-2",
+    "work": "richard iii",
+    "family": "tragedy",
+    "gap": 1.44,
+    "resRestrainedLessEvenExpansive": -5.3355,
+    "halfRehearsed": -10.0287,
+    "evenRestrainedLessExpansive": -4.7367,
+    "expExpansiveLessResRestrained": 2.7202
+   },
+   {
+    "material": "Woyzeck",
+    "work": "woyzeck",
+    "family": "tragedy",
+    "gap": 1.44,
+    "resRestrainedLessEvenExpansive": -5.3051,
+    "halfRehearsed": -10.1116,
+    "evenRestrainedLessExpansive": -4.8366,
+    "expExpansiveLessResRestrained": 4.1725
+   },
+   {
+    "material": "oedipus-1",
+    "work": "oedipus tyrannus",
+    "family": "tragedy",
+    "gap": 1.5,
+    "resRestrainedLessEvenExpansive": -3.4624,
+    "halfRehearsed": -8.906,
+    "evenRestrainedLessExpansive": -5.9221,
+    "expExpansiveLessResRestrained": 2.6989
+   },
+   {
+    "material": "Salomé",
+    "work": "salomé",
+    "family": "tragedy",
+    "gap": 1.62,
+    "resRestrainedLessEvenExpansive": -6.6734,
+    "halfRehearsed": -10.9912,
+    "evenRestrainedLessExpansive": -4.8408,
+    "expExpansiveLessResRestrained": 5.7812
+   },
+   {
+    "material": "Blood Wedding",
+    "work": "blood wedding",
+    "family": "tragedy",
+    "gap": 1.75,
+    "resRestrainedLessEvenExpansive": -5.6654,
+    "halfRehearsed": -10.6877,
+    "evenRestrainedLessExpansive": -5.7102,
+    "expExpansiveLessResRestrained": 4.2038
+   },
+   {
+    "material": "antigone-441",
+    "work": "antigone",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -3.3768,
+    "halfRehearsed": -9.6267,
+    "evenRestrainedLessExpansive": -7.8262,
+    "expExpansiveLessResRestrained": 1.4291
+   },
+   {
+    "material": "Julius Caesar",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -5.1744,
+    "halfRehearsed": -10.099,
+    "evenRestrainedLessExpansive": -6.6545,
+    "expExpansiveLessResRestrained": 4.271
+   },
+   {
+    "material": "oedipus-300",
+    "work": "oedipus tyrannus",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -3.7498,
+    "halfRehearsed": -9.9931,
+    "evenRestrainedLessExpansive": -7.8118,
+    "expExpansiveLessResRestrained": 1.4101
+   }
+  ]
+ },
+ "ST6RAtTheBudgetBefore": {
+  "criterion": "ST6-R (docs/verification/decisions-2026-10-16/criteria.md)",
+  "budgets": {
+   "restrainedSpecialist": 645.625,
+   "expansiveSpecialist": 645.625,
+   "evenActor": 600
+  },
+  "verdict": {
+   "a": {
+    "met": true,
+    "wins": 24,
+    "of": 42,
+    "rate": 0.5714,
+    "materials": [
+     "muchado-4-1",
+     "enemy-2",
+     "earnest-2",
+     "stoops-2",
+     "wayoftheworld-4",
+     "hamlet-3-1",
+     "Much Ado About Nothing",
+     "orig-runway",
+     "caesar-4-3",
+     "A Midsummer Night’s Dream",
+     "scandal-2-1",
+     "agamemnon-855",
+     "Macbeth",
+     "justice-2",
+     "pygmalion-4",
+     "weavers-1",
+     "A Marriage Proposal",
+     "proposal",
+     "shrew-2-1",
+     "faustus-3",
+     "strife-1",
+     "electra-328",
+     "medea-446",
+     "Major Barbara"
+    ]
+   },
+   "b": {
+    "met": true,
+    "larger": 94,
+    "of": 94,
+    "rate": 1,
+    "notLarger": []
+   },
+   "c": {
+    "met": true,
+    "abilities": {
+     "evenActorRestrainedAhead": 0,
+     "rate": 0,
+     "atMost": 0.4714,
+     "met": true
+    },
+    "preparation": {
+     "halfRehearsedWins": 0,
+     "fullyRehearsedWins": 24,
+     "met": true
+    },
+    "circumstances": {
+     "half": 21,
+     "smallerGapRate": 0.8571,
+     "largerGapRate": 0.2857,
+     "smallerGapUpTo": 0.87,
+     "largerGapFrom": 0.87,
+     "met": true
+    },
+    "interpretation": {
+     "everyWinAllowed": true
+    }
+   },
+   "d": {
+    "met": true,
+    "behind": 16,
+    "of": 42,
+    "rate": 0.381,
+    "expansiveSpecialistAheadThere": 16,
+    "shareThere": 1,
+    "materials": [
+     "The Winter’s Tale",
+     "The Bear",
+     "bacchae-451",
+     "dream-5-1",
+     "hamlet-3-4",
+     "The Playboy Of The Western World",
+     "caesar-3-2",
+     "An Enemy Of The People",
+     "richard3-1-2",
+     "Woyzeck",
+     "oedipus-1",
+     "Salomé",
+     "Blood Wedding",
+     "antigone-441",
+     "Julius Caesar",
+     "oedipus-300"
+    ]
+   },
+   "e": {
+    "met": true,
+    "winWorks": {
+     "much ado about nothing": 2,
+     "an enemy of the people": 1,
+     "importance of being earnest": 1,
+     "she stoops to conquer": 1,
+     "way of the world": 1,
+     "hamlet": 1,
+     "runway": 1,
+     "julius caesar": 1,
+     "a midsummer night's dream": 1,
+     "school for scandal": 1,
+     "agamemnon": 1,
+     "macbeth": 1,
+     "justice": 1,
+     "pygmalion": 1,
+     "weavers": 1,
+     "a marriage proposal": 1,
+     "proposal": 1,
+     "taming of the shrew": 1,
+     "doctor faustus": 1,
+     "strife": 1,
+     "electra": 1,
+     "medea": 1,
+     "major barbara": 1
+    },
+    "winFamilies": [
+     "comedy",
+     "drama",
+     "tragedy",
+     "romantic_comedy"
+    ],
+    "mostFromOneWork": 2,
+    "limitWorks": {
+     "winter's tale": 1,
+     "bear": 1,
+     "bacchae": 1,
+     "a midsummer night's dream": 1,
+     "hamlet": 1,
+     "playboy of the western world": 1,
+     "julius caesar": 2,
+     "an enemy of the people": 1,
+     "richard iii": 1,
+     "woyzeck": 1,
+     "oedipus tyrannus": 2,
+     "salomé": 1,
+     "blood wedding": 1,
+     "antigone": 1
+    }
+   },
+   "f": {
+    "met": true,
+    "wins": 22,
+    "of": 50,
+    "rate": 0.44,
+    "asShown": 22
+   }
+  },
+  "met": true,
+  "st6AsWritten": {
+   "restrained": "9 of 42",
+   "expansive": "22 of 50",
+   "met": false,
+   "note": "ST6 as written, superseded by ST6-R and kept as the record: each specialist’s own side against its other, as shown, on these budgets"
+  },
+  "st6Prime": {
+   "restrainedAheadOfEvenBest": 24,
+   "of": 42,
+   "note": "ST6′ (brief 09, proposed): its own side ahead of the equal-budget even actor’s better side, at full precision"
+  },
+  "cases": [
+   {
+    "material": "muchado-4-1",
+    "work": "much ado about nothing",
+    "family": "comedy",
+    "gap": 0.04,
+    "resRestrainedLessEvenExpansive": 2.1246,
+    "halfRehearsed": -2.7894,
+    "evenRestrainedLessExpansive": -0.0553,
+    "expExpansiveLessResRestrained": -1.8238
+   },
+   {
+    "material": "enemy-2",
+    "work": "an enemy of the people",
+    "family": "drama",
+    "gap": 0.06,
+    "resRestrainedLessEvenExpansive": 3.0832,
+    "halfRehearsed": -2.6933,
+    "evenRestrainedLessExpansive": -0.2556,
+    "expExpansiveLessResRestrained": -0.8594
+   },
+   {
+    "material": "earnest-2",
+    "work": "importance of being earnest",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 3.2427,
+    "halfRehearsed": -0.4896,
+    "evenRestrainedLessExpansive": -0.3495,
+    "expExpansiveLessResRestrained": -2.1496
+   },
+   {
+    "material": "stoops-2",
+    "work": "she stoops to conquer",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 2.9358,
+    "halfRehearsed": -0.7023,
+    "evenRestrainedLessExpansive": -0.3889,
+    "expExpansiveLessResRestrained": -2.0459
+   },
+   {
+    "material": "wayoftheworld-4",
+    "work": "way of the world",
+    "family": "comedy",
+    "gap": 0.12,
+    "resRestrainedLessEvenExpansive": 2.9883,
+    "halfRehearsed": -0.6497,
+    "evenRestrainedLessExpansive": -0.3886,
+    "expExpansiveLessResRestrained": -1.9797
+   },
+   {
+    "material": "hamlet-3-1",
+    "work": "hamlet",
+    "family": "tragedy",
+    "gap": 0.25,
+    "resRestrainedLessEvenExpansive": 1.7842,
+    "halfRehearsed": -3.6526,
+    "evenRestrainedLessExpansive": -0.9687,
+    "expExpansiveLessResRestrained": -0.688
+   },
+   {
+    "material": "Much Ado About Nothing",
+    "work": "much ado about nothing",
+    "family": "romantic_comedy",
+    "gap": 0.31,
+    "resRestrainedLessEvenExpansive": 1.6387,
+    "halfRehearsed": -2.8735,
+    "evenRestrainedLessExpansive": -0.9558,
+    "expExpansiveLessResRestrained": -0.6963
+   },
+   {
+    "material": "orig-runway",
+    "work": "runway",
+    "family": "comedy",
+    "gap": 0.31,
+    "resRestrainedLessEvenExpansive": 3.0886,
+    "halfRehearsed": -2.3985,
+    "evenRestrainedLessExpansive": -1.1009,
+    "expExpansiveLessResRestrained": -2.5941
+   },
+   {
+    "material": "caesar-4-3",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 0.5,
+    "resRestrainedLessEvenExpansive": 1.1175,
+    "halfRehearsed": -4.1661,
+    "evenRestrainedLessExpansive": -1.8925,
+    "expExpansiveLessResRestrained": 0.2933
+   },
+   {
+    "material": "henry5-4-3",
+    "work": "henry v",
+    "family": "drama",
+    "gap": 0.56,
+    "resRestrainedLessEvenExpansive": -0.0428,
+    "halfRehearsed": -5.2042,
+    "evenRestrainedLessExpansive": -2.0418,
+    "expExpansiveLessResRestrained": 2.993
+   },
+   {
+    "material": "A Midsummer Night’s Dream",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.57,
+    "resRestrainedLessEvenExpansive": 0.328,
+    "halfRehearsed": -3.9092,
+    "evenRestrainedLessExpansive": -1.7338,
+    "expExpansiveLessResRestrained": 1.4316
+   },
+   {
+    "material": "scandal-2-1",
+    "work": "school for scandal",
+    "family": "comedy",
+    "gap": 0.62,
+    "resRestrainedLessEvenExpansive": 1.9872,
+    "halfRehearsed": -2.1944,
+    "evenRestrainedLessExpansive": -1.7277,
+    "expExpansiveLessResRestrained": -1.1789
+   },
+   {
+    "material": "agamemnon-855",
+    "work": "agamemnon",
+    "family": "tragedy",
+    "gap": 0.75,
+    "resRestrainedLessEvenExpansive": 1.0961,
+    "halfRehearsed": -4.3513,
+    "evenRestrainedLessExpansive": -2.6383,
+    "expExpansiveLessResRestrained": 0.6185
+   },
+   {
+    "material": "Macbeth",
+    "work": "macbeth",
+    "family": "tragedy",
+    "gap": 0.75,
+    "resRestrainedLessEvenExpansive": 0.8639,
+    "halfRehearsed": -4.2905,
+    "evenRestrainedLessExpansive": -2.4963,
+    "expExpansiveLessResRestrained": 1.363
+   },
+   {
+    "material": "The Winter’s Tale",
+    "work": "winter's tale",
+    "family": "romance",
+    "gap": 0.79,
+    "resRestrainedLessEvenExpansive": -0.904,
+    "halfRehearsed": -6.1816,
+    "evenRestrainedLessExpansive": -2.5609,
+    "expExpansiveLessResRestrained": 1.8637
+   },
+   {
+    "material": "justice-2",
+    "work": "justice",
+    "family": "drama",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": 2.4871,
+    "halfRehearsed": -3.767,
+    "evenRestrainedLessExpansive": -3.3277,
+    "expExpansiveLessResRestrained": -1.2637
+   },
+   {
+    "material": "pygmalion-4",
+    "work": "pygmalion",
+    "family": "comedy",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": 0.8375,
+    "halfRehearsed": -4.3955,
+    "evenRestrainedLessExpansive": -2.5558,
+    "expExpansiveLessResRestrained": 0.1577
+   },
+   {
+    "material": "weavers-1",
+    "work": "weavers",
+    "family": "drama",
+    "gap": 0.81,
+    "resRestrainedLessEvenExpansive": 1.0767,
+    "halfRehearsed": -4.0117,
+    "evenRestrainedLessExpansive": -2.9338,
+    "expExpansiveLessResRestrained": 1.6219
+   },
+   {
+    "material": "A Marriage Proposal",
+    "work": "a marriage proposal",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": 0.4302,
+    "halfRehearsed": -3.4229,
+    "evenRestrainedLessExpansive": -2.4973,
+    "expExpansiveLessResRestrained": 2.2976
+   },
+   {
+    "material": "dream-3-2",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -0.0221,
+    "halfRehearsed": -4.0405,
+    "evenRestrainedLessExpansive": -2.4467,
+    "expExpansiveLessResRestrained": 2.2373
+   },
+   {
+    "material": "proposal",
+    "work": "proposal",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": 0.4302,
+    "halfRehearsed": -3.4229,
+    "evenRestrainedLessExpansive": -2.4973,
+    "expExpansiveLessResRestrained": 2.2976
+   },
+   {
+    "material": "shrew-2-1",
+    "work": "taming of the shrew",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": 0.4002,
+    "halfRehearsed": -3.5415,
+    "evenRestrainedLessExpansive": -2.5261,
+    "expExpansiveLessResRestrained": 1.2916
+   },
+   {
+    "material": "The Bear",
+    "work": "bear",
+    "family": "comedy",
+    "gap": 0.87,
+    "resRestrainedLessEvenExpansive": -0.0605,
+    "halfRehearsed": -4.0213,
+    "evenRestrainedLessExpansive": -2.4283,
+    "expExpansiveLessResRestrained": 3.1173
+   },
+   {
+    "material": "bacchae-451",
+    "work": "bacchae",
+    "family": "tragedy",
+    "gap": 0.93,
+    "resRestrainedLessEvenExpansive": -0.318,
+    "halfRehearsed": -5.221,
+    "evenRestrainedLessExpansive": -2.9003,
+    "expExpansiveLessResRestrained": 1.8138
+   },
+   {
+    "material": "dream-5-1",
+    "work": "a midsummer night's dream",
+    "family": "comedy",
+    "gap": 0.97,
+    "resRestrainedLessEvenExpansive": -1.1886,
+    "halfRehearsed": -5.7602,
+    "evenRestrainedLessExpansive": -2.6608,
+    "expExpansiveLessResRestrained": 2.707
+   },
+   {
+    "material": "faustus-3",
+    "work": "doctor faustus",
+    "family": "tragedy",
+    "gap": 1,
+    "resRestrainedLessEvenExpansive": 0.5144,
+    "halfRehearsed": -5.0611,
+    "evenRestrainedLessExpansive": -3.7183,
+    "expExpansiveLessResRestrained": 1.3046
+   },
+   {
+    "material": "hamlet-3-4",
+    "work": "hamlet",
+    "family": "tragedy",
+    "gap": 1,
+    "resRestrainedLessEvenExpansive": -0.1105,
+    "halfRehearsed": -5.477,
+    "evenRestrainedLessExpansive": -3.4735,
+    "expExpansiveLessResRestrained": 1.7665
+   },
+   {
+    "material": "strife-1",
+    "work": "strife",
+    "family": "drama",
+    "gap": 1.06,
+    "resRestrainedLessEvenExpansive": 0.9908,
+    "halfRehearsed": -5.2704,
+    "evenRestrainedLessExpansive": -4.0776,
+    "expExpansiveLessResRestrained": 1.1941
+   },
+   {
+    "material": "The Playboy Of The Western World",
+    "work": "playboy of the western world",
+    "family": "comedy",
+    "gap": 1.16,
+    "resRestrainedLessEvenExpansive": -0.9573,
+    "halfRehearsed": -6.0491,
+    "evenRestrainedLessExpansive": -3.3873,
+    "expExpansiveLessResRestrained": 1.847
+   },
+   {
+    "material": "caesar-3-2",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": -0.7272,
+    "halfRehearsed": -6.3423,
+    "evenRestrainedLessExpansive": -4.552,
+    "expExpansiveLessResRestrained": 3.2275
+   },
+   {
+    "material": "electra-328",
+    "work": "electra",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": 1.0949,
+    "halfRehearsed": -5.2903,
+    "evenRestrainedLessExpansive": -4.5506,
+    "expExpansiveLessResRestrained": 0.3521
+   },
+   {
+    "material": "medea-446",
+    "work": "medea",
+    "family": "tragedy",
+    "gap": 1.25,
+    "resRestrainedLessEvenExpansive": 0.3649,
+    "halfRehearsed": -5.8642,
+    "evenRestrainedLessExpansive": -4.9583,
+    "expExpansiveLessResRestrained": 0.8661
+   },
+   {
+    "material": "Major Barbara",
+    "work": "major barbara",
+    "family": "comedy",
+    "gap": 1.32,
+    "resRestrainedLessEvenExpansive": 0.7777,
+    "halfRehearsed": -5.3145,
+    "evenRestrainedLessExpansive": -4.5879,
+    "expExpansiveLessResRestrained": -0.1748
+   },
+   {
+    "material": "An Enemy Of The People",
+    "work": "an enemy of the people",
+    "family": "political_drama",
+    "gap": 1.37,
+    "resRestrainedLessEvenExpansive": -0.0533,
+    "halfRehearsed": -6.6111,
+    "evenRestrainedLessExpansive": -5.165,
+    "expExpansiveLessResRestrained": 2.1817
+   },
+   {
+    "material": "richard3-1-2",
+    "work": "richard iii",
+    "family": "tragedy",
+    "gap": 1.44,
+    "resRestrainedLessEvenExpansive": -1.8012,
+    "halfRehearsed": -7.4002,
+    "evenRestrainedLessExpansive": -4.7367,
+    "expExpansiveLessResRestrained": 2.5719
+   },
+   {
+    "material": "Woyzeck",
+    "work": "woyzeck",
+    "family": "tragedy",
+    "gap": 1.44,
+    "resRestrainedLessEvenExpansive": -1.7964,
+    "halfRehearsed": -7.5433,
+    "evenRestrainedLessExpansive": -4.8366,
+    "expExpansiveLessResRestrained": 3.7991
+   },
+   {
+    "material": "oedipus-1",
+    "work": "oedipus tyrannus",
+    "family": "tragedy",
+    "gap": 1.5,
+    "resRestrainedLessEvenExpansive": -0.2969,
+    "halfRehearsed": -6.7906,
+    "evenRestrainedLessExpansive": -5.9221,
+    "expExpansiveLessResRestrained": 2.5839
+   },
+   {
+    "material": "Salomé",
+    "work": "salomé",
+    "family": "tragedy",
+    "gap": 1.62,
+    "resRestrainedLessEvenExpansive": -2.9963,
+    "halfRehearsed": -8.189,
+    "evenRestrainedLessExpansive": -4.8408,
+    "expExpansiveLessResRestrained": 5.2062
+   },
+   {
+    "material": "Blood Wedding",
+    "work": "blood wedding",
+    "family": "tragedy",
+    "gap": 1.75,
+    "resRestrainedLessEvenExpansive": -2.1793,
+    "halfRehearsed": -8.1426,
+    "evenRestrainedLessExpansive": -5.7102,
+    "expExpansiveLessResRestrained": 3.8784
+   },
+   {
+    "material": "antigone-441",
+    "work": "antigone",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -0.3811,
+    "halfRehearsed": -7.6865,
+    "evenRestrainedLessExpansive": -7.8262,
+    "expExpansiveLessResRestrained": 1.5548
+   },
+   {
+    "material": "Julius Caesar",
+    "work": "julius caesar",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -1.7331,
+    "halfRehearsed": -7.6398,
+    "evenRestrainedLessExpansive": -6.6545,
+    "expExpansiveLessResRestrained": 3.9126
+   },
+   {
+    "material": "oedipus-300",
+    "work": "oedipus tyrannus",
+    "family": "tragedy",
+    "gap": 2,
+    "resRestrainedLessEvenExpansive": -0.6986,
+    "halfRehearsed": -7.9657,
+    "evenRestrainedLessExpansive": -7.8118,
+    "expExpansiveLessResRestrained": 1.5596
+   }
+  ]
+ }
+}

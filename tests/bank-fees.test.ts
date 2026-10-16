@@ -145,7 +145,10 @@ describe('Arion’s debit card', () => {
     // A year of living on no wages: enough in the account that the bank never closes it.
     set(sim, current(sim), 20_000_000_00);
     sim.advanceBy(366 * MS_DAY);
-    expect(charged(sim, current(sim), 'Debit card yearly fee')).toEqual([-950_00]);
+    // Two card years begun in the 366 days, each paid ahead: on the account's first night and on that date a year on
+    // (`ARION_CARD_YEAR`, SLATE's simulation, from brief 10, 2026-10-16). Until then the first came a year after opening,
+    // and this asserted one, [-950_00].
+    expect(charged(sim, current(sim), 'Debit card yearly fee')).toEqual([-950_00, -950_00]);
     const young = lifeIn('is-39-mosfellsbr', { bankId: 'is-arion', birthYear: 2004 });
     spend(young, young.player, 1_000_00, 'Groceries', 'food');
     expect(charged(young, current(young), 'Debit card purchase fee')).toEqual([]);

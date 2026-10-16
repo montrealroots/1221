@@ -133,6 +133,9 @@ const REAL_NAMES = [
   'UK Theatre',
   // Where the real plays were first staged, as each theater spells its own name (`content/contemporary.ts`).
   'Manhattan Theatre Club', 'Biltmore Theatre', 'Steppenwolf Theatre Company', 'Royal Court Theatre', 'Theatre Upstairs', 'Jerwood Theatre Downstairs', 'Studio Theatre', 'Williamstown Theatre Festival', 'Vineyard Theatre', 'Laura Pels Theatre', 'Chichester Festival Theatre', 'Denver Center Theatre Company', 'National Theatre of Scotland', 'Soho Theatre', 'Almeida Theatre', 'Ricketson Theatre', 'Theatre Communications Group',
+  // The theaters whose productions' running times a night reads (`content/workload.ts`, from 2026-10-16, brief 10), as each
+  // spells its own name.
+  'Noël Coward Theatre', 'Royal George Theatre', 'Norwegian Touring Theatre', 'Royal Shakespeare Theatre', 'Harold Pinter Theatre', 'Duke of York’s Theatre', 'Garrick Theatre', 'Sam Bass Community Theatre', 'Roman Theatre', 'Hen and Chickens Theatre', 'Mick Lally Theatre', 'Swan Theatre',
   // Watch and jewelry names the maker itself spells this way, on its own American pages.
   'Bulgari Aluminium', 'Aluminium Watch', 'Aluminium Chronograph', 'Calibre 321', 'Grey Side Of The Moon', 'Grey Mother Of Pearl',
   // Christian Louboutin Beaute prints the British spelling on the tube everywhere.

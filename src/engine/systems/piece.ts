@@ -26,6 +26,8 @@ import type { AbilityId } from '../content/abilities';
 import type { Simulation } from '../core/simulation';
 import type { Person } from '../domain/model';
 import { judgeExact, leanedWeights, performerOf, rounded, type DimensionResult, type EvalContext, type Evaluation, type Limit, type Performer } from './evaluation';
+import type { RunningTime } from '../content/workload';
+import { drainOf, endShare, nightLoad, segmentShares, type NightLoad, type Participation } from './workload';
 
 /**
  * One segment: what it's called on screen, its tones, its share of the piece, and whether a turn leads into it or it's
@@ -55,9 +57,19 @@ export interface PieceSpec {
   perTurn: number;
   perBlend: number;
   most: number;
-  /** How hard the piece is on stamina, 0 to 1. */
+  /**
+   * How hard the piece is on stamina, 0 to 1. A night’s, from 2026-10-16 (brief 10), is its drain’s share at the curtain’s
+   * fall (`endShare`), kept for what reads a piece’s load; what judges it is `night`.
+   */
   load: number;
   own?: readonly (SegmentOwn | undefined)[];
+  /**
+   * A night’s workload (from 2026-10-16, brief 10, `systems/workload.ts`): its running time, the part’s share, the body’s
+   * and the voice’s intensity and its breaks. Where it’s given each segment reads the drain’s mean over its own stretch
+   * of the running, by the actor’s stamina and the day at the curtain; until then a night read `load` by each segment’s
+   * place, its first segment none and its last all of it, a whole evening’s for a one-act and a featured part alike.
+   */
+  night?: NightLoad;
 }
 
 export interface SegmentResult {
@@ -169,12 +181,25 @@ export function unitsFromTones(m: { tones: readonly Tone[]; turns: number }, lea
   return Array.from({ length: n }, (_, u) => Math.min(halves - 1, Math.floor(((u + 0.5) / n) * halves)));
 }
 
-/** How hard a piece is on stamina (`PIECE.load`), from the body's and the voice's work it stages. */
-export function loadOf(m: { physical: number; vocal: number }, kind: 'brief' | 'scene' | 'night', medium = false): number {
+/**
+ * How hard a brief or a scene is on stamina (`PIECE.load`), from the body's and the voice's work it stages. A night's was
+ * read here too until 2026-10-16 (brief 10): 0.6 and 0.12 a level, clamped at 1, whatever its length or the part's size.
+ * A night's workload is its own since (`nightPiece`, `systems/workload.ts`).
+ */
+export function loadOf(m: { physical: number; vocal: number }, kind: 'brief' | 'scene', medium = false): number {
   const L = PIECE.load;
-  if (kind === 'night') return clamp(L.night + (m.physical + m.vocal) * L.nightPerLevel, 0, 1);
   const base = kind === 'brief' ? (medium ? L.briefMedium : L.brief) : L.scene;
   return clamp(base + (m.physical + m.vocal) * L.perLevel, 0, 1);
+}
+
+/**
+ * A play's night as a piece (from 2026-10-16, brief 10): its units, two at least, the blocking the part they refine, and
+ * its workload, from the production's running time, the body's and the voice's work the material reads and the part's
+ * size. A play with no profile (a festival's new play, a Cabaret piece) stages no body's or voice's work the game knows.
+ */
+export function nightPiece(m: { tones: readonly Tone[]; turns: number; physical: number; vocal: number } | undefined, running: RunningTime, size: Participation): PieceSpec {
+  const night = nightLoad(running, m ?? { physical: 0, vocal: 0 }, size);
+  return { segments: unitSegments(m ?? { tones: [], turns: 0 }, 2), work: [], part: 'blocking', perTurn: 0, perBlend: 0, most: 1, load: endShare(night), night };
 }
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
@@ -231,7 +256,10 @@ export function withBook(spec: PieceSpec, book: Workbook | undefined): PieceSpec
     const extraPrep = Object.fromEntries(Object.entries(e.lean).filter(([, x]) => x >= 1.1).map(([d]) => [d, ['way']]));
     return { lean: e.lean, inputs: e.inputs, extraPrep, prep: { way: way.prep }, required: { way: PLAYING.complete } };
   });
-  return { ...spec, ...(own.some(Boolean) ? { own } : {}), load: spec.load * (book.breathe ? WORKBOOK.breathe : 1) };
+  // A night's breath found leaves its share of the drain the whole way through (from 2026-10-16, brief 10), worked out
+  // again over the running, as the load's bound is: it spends less early, so there's more at the end.
+  const night = spec.night && book.breathe ? { ...spec.night, breathe: WORKBOOK.breathe } : spec.night;
+  return { ...spec, ...(own.some(Boolean) ? { own } : {}), load: night ? endShare(night) : spec.load * (book.breathe ? WORKBOOK.breathe : 1), ...(night ? { night } : {}) };
 }
 
 /** A task with stamina taken out of its dimensions' inputs: a segmented piece reads it through the drain instead. */
@@ -306,8 +334,18 @@ export function pieceWeights(task: TaskProfile, lean: Partial<Record<Dimension, 
   return out;
 }
 
-/** Judges a piece segment by segment, and the whole from them. */
+/** Judges a piece segment by segment, and the whole from them, rounded once (`rounded`). */
 export function judgePiece(seed: string, performer: Performer, ctx: EvalContext, spec: PieceSpec): Evaluation {
+  return rounded(judgePieceExact(seed, performer, ctx, spec).evaluation);
+}
+
+/**
+ * A piece judged at full precision (from 2026-10-16, brief 10): the whole, its dimensions and its limits as worked out,
+ * before `judgePiece` rounds them once, and each segment's own judgment at full precision. What a check that every shown
+ * figure is its own exact value rounded once reads (ST3-R (d), `tools/interpretation.ts -- --st3`); it changes no figure.
+ * The segments' shown figures (`piece.segments`) are rounded here, once each, as before.
+ */
+export function judgePieceExact(seed: string, performer: Performer, ctx: EvalContext, spec: PieceSpec): { evaluation: Evaluation; segments: Evaluation[] } {
   const n = spec.segments.length;
   const W = spec.segments.reduce((s, x) => s + x.weight, 0) || 1;
   const norm = (a: AbilityId) => clamp(performer.ability(a) / Math.max(1, performer.full(a)), 0, 1);
@@ -320,6 +358,9 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   const results: Evaluation[] = [];
   const segments: SegmentResult[] = [];
   let shaken: EvalContext['shaken'];
+  // A night's drain by its workload (from 2026-10-16, brief 10): each segment's mean share over its stretch of the
+  // running, and the day at the curtain (`systems/workload.ts`).
+  const shares = spec.night ? segmentShares(spec.night, spec.segments) : undefined;
   for (let s = 0; s < n; s += 1) {
     const seg = spec.segments[s]!;
     const own = spec.own?.[s];
@@ -338,7 +379,8 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       prep[spec.part] = segmentPart(base, spec.work[s] ?? 0);
       required[spec.part] = segmentRequired(spec, ctx.required[spec.part] ?? 1, s);
     }
-    const f = 1 - PIECE.drain * clamp(spec.load, 0, 1) * position * (1 - stamina);
+    // A brief's and a scene's by their load and the segment's place; a night's by its workload, once, over its stretch.
+    const f = shares ? 1 - drainOf(shares[s]!, stamina, ctx.condition.readiness) : 1 - PIECE.drain * clamp(spec.load, 0, 1) * position * (1 - stamina);
     const drain = f < 1 ? { f, label: `Stamina, By ${seg.label}` } : undefined;
     const fit = own?.fit ? { ...(ctx.fit ?? {}), ...Object.fromEntries(Object.entries(own.fit).map(([d, x]) => [d, { f: Math.min(ctx.fit?.[d as Dimension]?.f ?? 1, x!.f), label: x!.label }])) } : ctx.fit;
     const extraPrep = own?.extraPrep ? Object.fromEntries([...new Set([...Object.keys(ctx.extraPrep ?? {}), ...Object.keys(own.extraPrep)])].map((d) => [d, [...new Set([...(ctx.extraPrep?.[d as Dimension] ?? []), ...(own.extraPrep![d as Dimension] ?? [])])]])) : ctx.extraPrep;
@@ -402,7 +444,7 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
   // The piece's own reads, not segment 0's: replaying applies each segment's tones and its own way again.
   const { lean: _lean, inputs: _inputs, extraPrep: _extra, fit: _fit, grain: _grain, ...rest } = first.inputs;
   void _lean; void _inputs; void _extra; void _fit; void _grain;
-  return rounded({
+  const evaluation: Evaluation = {
     ruleset: first.ruleset, task: ctx.task.id, taskLabel: ctx.task.label, dimensions, overall, exact: overall, mastery: results.every((r) => r.mastery),
     limits: dimensions.flatMap((d) => d.limits).sort((a, b) => (b.whole ?? 0) - (a.whole ?? 0) || b.by - a.by),
     inputs: {
@@ -411,5 +453,6 @@ export function judgePiece(seed: string, performer: Performer, ctx: EvalContext,
       piece: spec,
     },
     piece: { segments, continuity, lowest: Math.min(...segments.map((x) => x.overall)) },
-  });
+  };
+  return { evaluation, segments: results };
 }

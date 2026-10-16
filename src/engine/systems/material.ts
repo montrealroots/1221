@@ -92,7 +92,8 @@ export function demandsOf(m: MaterialProfile): Record<keyof typeof DEMAND_EFFECT
   const share = (t: string) => (total > 0 ? tones.filter((x) => x.t === t).reduce((a, x) => a + x.w, 0) / total : 0);
   return {
     solo: Math.max(0, 2 - m.partner),
-    text: m.size === 'long' ? 2 : m.size === 'medium' ? 1 : 0,
+    // A night's part by its time on stage where the part is known (from 2026-10-16, brief 10, `partText`); a brief's by its size.
+    text: m.text ?? (m.size === 'long' ? 2 : m.size === 'medium' ? 1 : 0),
     stakes: m.stakes ?? 1,
     beats: Math.max(0, segments - 3),
     grave: share('grave'),

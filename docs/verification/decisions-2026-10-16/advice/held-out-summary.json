@@ -1,0 +1,601 @@
+{
+ "commit": "a2fcbf8b37148c9298c7978f3a6fdc9f2b68081f",
+ "clean": true,
+ "command": "npx vite-node tools/advice.ts -- --summarize docs/verification/decisions-2026-10-16/advice/held-out-00.json docs/verification/decisions-2026-10-16/advice/held-out-01.json docs/verification/decisions-2026-10-16/advice/held-out-02.json docs/verification/decisions-2026-10-16/advice/held-out-03.json docs/verification/decisions-2026-10-16/advice/held-out-04.json docs/verification/decisions-2026-10-16/advice/held-out-05.json docs/verification/decisions-2026-10-16/advice/held-out-06.json docs/verification/decisions-2026-10-16/advice/held-out-07.json docs/verification/decisions-2026-10-16/advice/held-out-08.json docs/verification/decisions-2026-10-16/advice/held-out-08b.json docs/verification/decisions-2026-10-16/advice/held-out-09.json docs/verification/decisions-2026-10-16/advice/held-out-10.json docs/verification/decisions-2026-10-16/advice/held-out-11.json docs/verification/decisions-2026-10-16/advice/held-out-12.json docs/verification/decisions-2026-10-16/advice/held-out-13.json docs/verification/decisions-2026-10-16/advice/held-out-14.json --out docs/verification/decisions-2026-10-16/advice/held-out-summary.json",
+ "at": "2026-10-16T16:57:35.763Z",
+ "files": [
+  "docs/verification/decisions-2026-10-16/advice/held-out-00.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-01.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-02.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-03.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-04.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-05.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-06.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-07.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-08.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-08b.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-09.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-10.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-11.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-12.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-13.json",
+  "docs/verification/decisions-2026-10-16/advice/held-out-14.json"
+ ],
+ "commits": [
+  "5c06fd7aaaa602b833a812fc4985d9b9024a587a",
+  "a2fcbf8b37148c9298c7978f3a6fdc9f2b68081f"
+ ],
+ "cases": 150,
+ "groups": {
+  "held-out": {
+   "n": 150,
+   "b": {
+    "pass": 148,
+    "share": 0.987,
+    "noAdvice": 0,
+    "exactBest": 143,
+    "tieSaid": 41,
+    "chiefIsFirst": 61
+   },
+   "c": {
+    "named": 150,
+    "atOrAboveMedian": 150,
+    "share": 1,
+    "firstMean": 0.826,
+    "randomMean": 0.405,
+    "ratio": 2.037
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 150
+   },
+   "e": {
+    "named": 150,
+    "within": 147,
+    "share": 0.98,
+    "meanError": 0.099
+   },
+   "f": {
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 277,
+    "ofCandidates": 287,
+    "prepLimited": 57,
+    "prepSame": 16,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 83,
+    "prepAnySame": 13
+   },
+   "g": {
+    "recs": 671,
+    "ok": 671
+   },
+   "h": {
+    "cases": 150,
+    "fell": 141,
+    "leads": 62,
+    "changedWhereLed": 62,
+    "leadsWithinATie": 41
+   },
+   "i": {
+    "same": 150
+   }
+  },
+  "held-out F2-A": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 28,
+    "tieSaid": 5,
+    "chiefIsFirst": 6
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 1.023,
+    "randomMean": 0.462,
+    "ratio": 2.215
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.086
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 0,
+    "prepSame": 0,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 5,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 147,
+    "ok": 147
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 11,
+    "changedWhereLed": 11,
+    "leadsWithinATie": 6
+   },
+   "i": {
+    "same": 30
+   }
+  },
+  "held-out F2-A10": {
+   "n": 120,
+   "b": {
+    "pass": 118,
+    "share": 0.983,
+    "noAdvice": 0,
+    "exactBest": 115,
+    "tieSaid": 36,
+    "chiefIsFirst": 55
+   },
+   "c": {
+    "named": 120,
+    "atOrAboveMedian": 120,
+    "share": 1,
+    "firstMean": 0.776,
+    "randomMean": 0.391,
+    "ratio": 1.984
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 120
+   },
+   "e": {
+    "named": 120,
+    "within": 117,
+    "share": 0.975,
+    "meanError": 0.103
+   },
+   "f": {
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 277,
+    "ofCandidates": 287,
+    "prepLimited": 57,
+    "prepSame": 16,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 78,
+    "prepAnySame": 13
+   },
+   "g": {
+    "recs": 524,
+    "ok": 524
+   },
+   "h": {
+    "cases": 120,
+    "fell": 111,
+    "leads": 51,
+    "changedWhereLed": 51,
+    "leadsWithinATie": 35
+   },
+   "i": {
+    "same": 120
+   }
+  },
+  "held-out F2-A10 beginner": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 29,
+    "tieSaid": 10,
+    "chiefIsFirst": 11
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 1.096,
+    "randomMean": 0.579,
+    "ratio": 1.895
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 28,
+    "share": 0.933,
+    "meanError": 0.056
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 0,
+    "prepSame": 0,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 0,
+    "prepAnySame": 0
+   },
+   "g": {
+    "recs": 150,
+    "ok": 150
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 19,
+    "changedWhereLed": 19,
+    "leadsWithinATie": 10
+   },
+   "i": {
+    "same": 30
+   }
+  },
+  "held-out F2-A10 developing": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 30,
+    "tieSaid": 4,
+    "chiefIsFirst": 9
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.834,
+    "randomMean": 0.403,
+    "ratio": 2.069
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.053
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 1,
+    "prepSame": 1,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 18,
+    "prepAnySame": 2
+   },
+   "g": {
+    "recs": 139,
+    "ok": 139
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 18,
+    "changedWhereLed": 18,
+    "leadsWithinATie": 12
+   },
+   "i": {
+    "same": 30
+   }
+  },
+  "held-out F2-A10 advanced": {
+   "n": 30,
+   "b": {
+    "pass": 28,
+    "share": 0.933,
+    "noAdvice": 0,
+    "exactBest": 26,
+    "tieSaid": 15,
+    "chiefIsFirst": 16
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.629,
+    "randomMean": 0.317,
+    "ratio": 1.983
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 0,
+    "allFullSaid": 0,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 29,
+    "share": 0.967,
+    "meanError": 0.144
+   },
+   "f": {
+    "nearMastery": 0,
+    "ladderFalls": 0,
+    "everyCandidate": 0,
+    "ofCandidates": 0,
+    "prepLimited": 26,
+    "prepSame": 8,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 30,
+    "prepAnySame": 4
+   },
+   "g": {
+    "recs": 119,
+    "ok": 119
+   },
+   "h": {
+    "cases": 30,
+    "fell": 30,
+    "leads": 11,
+    "changedWhereLed": 11,
+    "leadsWithinATie": 11
+   },
+   "i": {
+    "same": 30
+   }
+  },
+  "held-out F2-A10 nearMastery": {
+   "n": 30,
+   "b": {
+    "pass": 30,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 30,
+    "tieSaid": 7,
+    "chiefIsFirst": 19
+   },
+   "c": {
+    "named": 30,
+    "atOrAboveMedian": 30,
+    "share": 1,
+    "firstMean": 0.547,
+    "randomMean": 0.266,
+    "ratio": 2.053
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 30,
+    "allFullSaid": 30,
+    "allFullSaidEveryCase": 30
+   },
+   "e": {
+    "named": 30,
+    "within": 30,
+    "share": 1,
+    "meanError": 0.158
+   },
+   "f": {
+    "nearMastery": 30,
+    "ladderFalls": 30,
+    "everyCandidate": 277,
+    "ofCandidates": 287,
+    "prepLimited": 30,
+    "prepSame": 7,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 30,
+    "prepAnySame": 7
+   },
+   "g": {
+    "recs": 116,
+    "ok": 116
+   },
+   "h": {
+    "cases": 30,
+    "fell": 21,
+    "leads": 3,
+    "changedWhereLed": 3,
+    "leadsWithinATie": 2
+   },
+   "i": {
+    "same": 30
+   }
+  },
+  "held-out F2-A10 firstWeek": {
+   "n": 40,
+   "b": {
+    "pass": 39,
+    "share": 0.975,
+    "noAdvice": 0,
+    "exactBest": 39,
+    "tieSaid": 15,
+    "chiefIsFirst": 22
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.761,
+    "randomMean": 0.384,
+    "ratio": 1.985
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 40,
+    "share": 1,
+    "meanError": 0.117
+   },
+   "f": {
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 83,
+    "ofCandidates": 83,
+    "prepLimited": 17,
+    "prepSame": 6,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 25,
+    "prepAnySame": 9
+   },
+   "g": {
+    "recs": 173,
+    "ok": 173
+   },
+   "h": {
+    "cases": 40,
+    "fell": 38,
+    "leads": 16,
+    "changedWhereLed": 16,
+    "leadsWithinATie": 11
+   },
+   "i": {
+    "same": 40
+   }
+  },
+  "held-out F2-A10 midTerm": {
+   "n": 40,
+   "b": {
+    "pass": 39,
+    "share": 0.975,
+    "noAdvice": 0,
+    "exactBest": 38,
+    "tieSaid": 11,
+    "chiefIsFirst": 18
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.784,
+    "randomMean": 0.422,
+    "ratio": 1.857
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 38,
+    "share": 0.95,
+    "meanError": 0.08
+   },
+   "f": {
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 91,
+    "ofCandidates": 95,
+    "prepLimited": 19,
+    "prepSame": 3,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 27,
+    "prepAnySame": 1
+   },
+   "g": {
+    "recs": 174,
+    "ok": 174
+   },
+   "h": {
+    "cases": 40,
+    "fell": 35,
+    "leads": 18,
+    "changedWhereLed": 18,
+    "leadsWithinATie": 12
+   },
+   "i": {
+    "same": 40
+   }
+  },
+  "held-out F2-A10 later": {
+   "n": 40,
+   "b": {
+    "pass": 40,
+    "share": 1,
+    "noAdvice": 0,
+    "exactBest": 38,
+    "tieSaid": 10,
+    "chiefIsFirst": 15
+   },
+   "c": {
+    "named": 40,
+    "atOrAboveMedian": 40,
+    "share": 1,
+    "firstMean": 0.784,
+    "randomMean": 0.368,
+    "ratio": 2.13
+   },
+   "d": {
+    "casesWithViolation": 0,
+    "nearMastery": 10,
+    "allFullSaid": 10,
+    "allFullSaidEveryCase": 40
+   },
+   "e": {
+    "named": 40,
+    "within": 39,
+    "share": 0.975,
+    "meanError": 0.11
+   },
+   "f": {
+    "nearMastery": 10,
+    "ladderFalls": 10,
+    "everyCandidate": 103,
+    "ofCandidates": 109,
+    "prepLimited": 21,
+    "prepSame": 7,
+    "prepStepsLimited": 0,
+    "prepStepsSame": 0,
+    "prepAnyLimited": 26,
+    "prepAnySame": 3
+   },
+   "g": {
+    "recs": 177,
+    "ok": 177
+   },
+   "h": {
+    "cases": 40,
+    "fell": 38,
+    "leads": 17,
+    "changedWhereLed": 17,
+    "leadsWithinATie": 12
+   },
+   "i": {
+    "same": 40
+   }
+  }
+ }
+}

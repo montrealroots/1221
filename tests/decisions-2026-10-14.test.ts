@@ -126,9 +126,11 @@ describe('companyPart', () => {
     };
     // Sixth, eighth and eighth until later on 2026-10-16, when a stage's house came to weigh the voice and the body
     // (`STAGE_LEAN`); sixth, sixth and seventh until the integration pass of 2026-10-16, when a result came to be rounded
-    // once (evaluation-9) and classmates read within a tenth of her fell either side: below the four leads in each, then
-    // and now.
-    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 6], ['A Marriage Proposal', 8], ['The Bear', 7]]);
+    // once (evaluation-9) and classmates read within a tenth of her fell either side; sixth, eighth and seventh until later
+    // still that day (brief 10), when a night before a house came to ride on more than a class scene (`NIGHT_STAKES`) and
+    // casting's read of a part with it, so composure counts for more and one classmate read above her in A Marriage
+    // Proposal fell below her: below the four leads in each, then and now.
+    expect(shows.map((s) => [s.play, place(s.play!)])).toEqual([['Riders To The Sea', 6], ['A Marriage Proposal', 7], ['The Bear', 7]]);
     // Riders to the Sea writes three parts for a woman below its lead; the other two write her a lead and nothing else.
     // Until 2026-10-14 she was given Natalya Stepanovna and Yelena Popova, leads she hadn't earned.
     expect(shows.map((s) => [s.role, s.size])).toEqual([['Cathleen', 'supporting'], ['In The Company', 'featured'], ['In The Company', 'featured']]);

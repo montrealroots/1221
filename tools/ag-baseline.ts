@@ -32,12 +32,14 @@ import { TIER } from '../src/engine/content/practice';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefPiece, tapeReadsOf, BRIEF, type BriefRecord } from '../src/engine/systems/briefs';
 import { judge, type EvalContext, type Evaluation, type Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, pieceWeights, type PieceSpec, unitSegments } from '../src/engine/systems/piece';
+import { runningOf, withPart } from '../src/engine/systems/workload';
 import { materialContext, misfitOf, type Playing } from '../src/engine/systems/material';
 import { castingPerformer, NIGHT_DIFFICULTY } from '../src/engine/systems/school';
 import { difficultyOf, partnerPart as ownPartnerPart, READER, type Assignment } from '../src/engine/systems/coursework';
 import { abilityGain } from '../src/engine/systems/attributes';
 import { sharedOf } from '../src/engine/systems/ensemble';
+import { ALL_PIECES } from './pieces';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i >= 0 ? process.argv[i + 1]! : d; };
 const OUT = arg('out', 'docs/verification/attributes-genres-2026-10-16/baseline.json');
@@ -84,10 +86,12 @@ const briefMean = (b: Brief, p: Performer, o: { key?: string; prep?: number; gen
 
 function workPiece(m: MaterialProfile, kind: 'scene' | 'night' | 'casting'): Piece {
   const task = kind === 'scene' ? TASK_PROFILES.scene! : TASK_PROFILES.performance!;
-  const read = materialContext(task, m);
   const prep: Record<string, number> = kind === 'scene' ? { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1 } : kind === 'night' ? { lines: 1, blocking: 1, notes: 1 } : {};
   const difficulty = kind === 'scene' ? difficultyOf(templateById('scene-study')!) : kind === 'night' ? NIGHT_DIFFICULTY.school.supporting : 0;
-  const spec: PieceSpec = { segments: unitSegments(m, 2), work: [], part: kind === 'scene' ? 'rehearsal' : 'blocking', perTurn: kind === 'scene' ? PIECE.scene.perTurn : 0, perBlend: 0, most: kind === 'scene' ? PIECE.scene.most : 1, load: loadOf(m, kind === 'scene' ? 'scene' : 'night') };
+  // A night as the game judges it, a supporting part's workload over the play's running time (from 2026-10-16, brief 10:
+  // until then its load, 0.6 and 0.12 a level, `loadOf`'s night), and from later that day its text (`withPart`).
+  const spec: PieceSpec = kind === 'scene' ? { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') } : nightPiece(m, runningOf({ play: m.id }), 'supporting');
+  const read = materialContext(task, kind === 'scene' ? m : withPart(m, spec.night!));
   return {
     kind, id: m.id, material: m,
     judge: (p, o = {}) => {
@@ -432,6 +436,53 @@ log('10. H4 taken apart');
     aheadByShare: bands.map((b) => ({ ...b, share: b.pairs ? r3(b.ahead / b.pairs) : null })),
     abilities,
     staminaLastSegment: { nights: last.length, aheadOnTheLast: last.filter((x) => x.lastSegment > 0.05).length, aheadOnTheWhole: last.filter((x) => x.whole > 0.05).length, rows: last },
+  };
+}
+
+// ---------------------------------------------------------------------------------------------------------------
+// 11. H4-R, as the owner's approved criteria write it (from 2026-10-16, brief 10; docs/verification/decisions-2026-10-16/
+// criteria.md, H4-R). Its own pieces (`tools/pieces.ts`): every brief in each of its readings, every class scene, night,
+// casting read and coursework template not a scene, fully prepared, every axis left open, readiness 100, no draw. The
+// profiles are this file's: the even actor every ability and technique 50, each specialist 85 on one ability and the
+// other eleven (600 − 85) / 11, techniques 50; their budgets are printed. Own work as section 10 reads it: the pieces
+// where the ability's +10 effect is at least 0.05 and larger than each other ability's, at full precision.
+// `node tools/ag-criteria.mjs` judges H4-R (a) to (c), its budgets, H2 and H5 on this set, and M1 on it.
+// ---------------------------------------------------------------------------------------------------------------
+log('11. H4-R');
+{
+  const exactOf = (e: Evaluation) => e.exact ?? e.overall;
+  const P = ALL_PIECES;
+  const evenX = P.map((pc) => exactOf(pc.judge(EVEN)));
+  const effX = Object.fromEntries(ABILITIES.map((a) => [a, P.map((pc, i) => exactOf(pc.judge(bump(EVEN, a, 10))) - evenX[i]!)]));
+  const specX = Object.fromEntries(ABILITIES.map((a) => [a, P.map((pc, i) => exactOf(pc.judge(specialist(a))) - evenX[i]!)]));
+  const total = P.map((_, i) => ABILITIES.reduce((t, a) => t + Math.max(0, effX[a]![i]!), 0));
+  const shareOf = (a: Ab, i: number) => (total[i]! > 0 ? Math.max(0, effX[a]![i]!) / total[i]! : 0);
+  const kindsOf = (idx: number[]) => idx.reduce((m, i) => { m[P[i]!.kind] = (m[P[i]!.kind] ?? 0) + 1; return m; }, {} as Record<string, number>);
+  const median = (xs: number[]) => { if (!xs.length) return null; const s = [...xs].sort((x, y) => x - y); const k = Math.floor(s.length / 2); return s.length % 2 ? s[k]! : (s[k - 1]! + s[k]!) / 2; };
+  const abilities = Object.fromEntries(ABILITIES.map((a) => {
+    const own = P.map((_, i) => i).filter((i) => effX[a]![i]! >= 0.05 && ABILITIES.every((b) => b === a || effX[b]![i]! < effX[a]![i]!));
+    const adv = own.map((i) => specX[a]![i]!);
+    const under = P.map((_, i) => i).filter((i) => shareOf(a, i) < 0.1);
+    return [a, {
+      budget: ABILITIES.reduce((t, b) => t + specialist(a).ability(b), 0),
+      own: { n: own.length, kinds: kindsOf(own), ahead: adv.filter((x) => x > 0.05).length, median: median(adv) === null ? null : r3(median(adv)!), pieces: own.map((i) => `${P[i]!.kind}:${P[i]!.id} share ${r3(shareOf(a, i))} effect ${r3(effX[a]![i]!)} specialist ${r3(specX[a]![i]!)}`) },
+      underATenth: { pairs: under.length, ahead: under.filter((i) => specX[a]![i]! > 0.05).length },
+    }];
+  }));
+  // H2 and H5 on this set: the best of the thirteen on each piece, and the even actor against the twelve.
+  const names = ['even', ...ABILITIES];
+  const scoreOf = (n: string, i: number) => (n === 'even' ? evenX[i]! : evenX[i]! + specX[n]![i]!);
+  const best: Record<string, Record<string, number>> = {};
+  P.forEach((pc, i) => { const top = names.reduce((b, n) => (scoreOf(n, i) > scoreOf(b, i) + 1e-9 ? n : b), 'even'); (best[pc.kind] ??= {})[top] = (best[pc.kind]![top] ?? 0) + 1; });
+  const h5 = { n: P.length, aheadOfHalf: P.filter((_, i) => ABILITIES.filter((a) => specX[a]![i]! < -0.05).length >= 6).length, withinAPoint: P.filter((_, i) => Math.max(...ABILITIES.map((a) => specX[a]![i]!)) <= 1).length };
+  // M1 on this set: the mastered actor, no draw, and three drawn keys.
+  const masteryMiss = P.flatMap((pc) => [undefined, 'h4r-m-0', 'h4r-m-1', 'h4r-m-2'].map((key) => ({ pc, key, x: pc.judge(MASTER, key ? { key } : {}).overall }))).filter((r) => r.x !== 100);
+  out.h4r = {
+    note: 'H4-R (criteria.md): every brief in each reading, every class scene, night, casting read and coursework template not a scene; full precision; ahead is more than 0.05 over the even actor.',
+    pieces: P.length, byKind: kindsOf(P.map((_, i) => i)),
+    budgets: { even: ABILITIES.reduce((t, b) => t + EVEN.ability(b), 0), specialists: Object.fromEntries(ABILITIES.map((a) => [a, ABILITIES.reduce((t, b) => t + specialist(a).ability(b), 0)])) },
+    abilities, bestAllocation: best, generalist: h5,
+    mastery: { cases: 4 * P.length, off100: masteryMiss.length, first: masteryMiss.slice(0, 5).map((r) => `${r.pc.kind}:${r.pc.id}${r.key ? ` ${r.key}` : ''}: ${r.x}`) },
   };
 }
 

@@ -1,0 +1,240 @@
+adv-h-70 advanced midTerm first=imagination best=imagination (0.637) first gained 0.637 predicted 0.458 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-71 advanced midTerm first=imagination best=imagination (0.55) first gained 0.55 predicted 0.426 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-72 advanced midTerm first=imagination best=imagination (0.781) first gained 0.781 predicted 0.587 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-73 advanced midTerm first=imagination best=imagination (0.698) first gained 0.698 predicted 0.55 PASS median=true e=true f=true prep=true g=4/4 h=true/true i=true d=0/true
+adv-h-74 advanced midTerm first=composure best=composure (0.496) first gained 0.496 predicted 0.411 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-75 advanced midTerm first=imagination best=adaptability (0.545) first gained 0.383 predicted 0.397 MISS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-76 advanced midTerm first=imagination best=imagination (0.709) first gained 0.709 predicted 0.572 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-77 advanced midTerm first=composure best=composure (0.848) first gained 0.848 predicted 0.638 PASS median=true e=true f=true prep=false g=4/4 h=true/true i=true d=0/true
+adv-h-78 advanced midTerm first=focus best=listening (0.562) first gained 0.445 predicted 0.386 PASS median=true e=true f=true prep=- g=3/3 h=true/true i=true d=0/true
+adv-h-79 advanced midTerm first=presence best=presence (0.709) first gained 0.709 predicted 0.482 PASS median=true e=true f=true prep=true g=4/4 h=true/true i=true d=0/true
+{
+ "held-out": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 5,
+   "chiefIsFirst": 4
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.626,
+   "randomMean": 0.326,
+   "ratio": 1.918
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.135
+  },
+  "f": {
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 9,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 0
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 5,
+   "changedWhereLed": 5,
+   "leadsWithinATie": 5
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 5,
+   "chiefIsFirst": 4
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.626,
+   "randomMean": 0.326,
+   "ratio": 1.918
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.135
+  },
+  "f": {
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 9,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 0
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 5,
+   "changedWhereLed": 5,
+   "leadsWithinATie": 5
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10 advanced": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 5,
+   "chiefIsFirst": 4
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.626,
+   "randomMean": 0.326,
+   "ratio": 1.918
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.135
+  },
+  "f": {
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 9,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 0
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 5,
+   "changedWhereLed": 5,
+   "leadsWithinATie": 5
+  },
+  "i": {
+   "same": 10
+  }
+ },
+ "held-out F2-A10 midTerm": {
+  "n": 10,
+  "b": {
+   "pass": 9,
+   "share": 0.9,
+   "noAdvice": 0,
+   "exactBest": 8,
+   "tieSaid": 5,
+   "chiefIsFirst": 4
+  },
+  "c": {
+   "named": 10,
+   "atOrAboveMedian": 10,
+   "share": 1,
+   "firstMean": 0.626,
+   "randomMean": 0.326,
+   "ratio": 1.918
+  },
+  "d": {
+   "casesWithViolation": 0,
+   "nearMastery": 0,
+   "allFullSaid": 0,
+   "allFullSaidEveryCase": 10
+  },
+  "e": {
+   "named": 10,
+   "within": 10,
+   "share": 1,
+   "meanError": 0.135
+  },
+  "f": {
+   "nearMastery": 0,
+   "ladderFalls": 0,
+   "everyCandidate": 0,
+   "ofCandidates": 0,
+   "prepLimited": 9,
+   "prepSame": 2,
+   "prepStepsLimited": 0,
+   "prepStepsSame": 0,
+   "prepAnyLimited": 10,
+   "prepAnySame": 0
+  },
+  "g": {
+   "recs": 39,
+   "ok": 39
+  },
+  "h": {
+   "cases": 10,
+   "fell": 10,
+   "leads": 5,
+   "changedWhereLed": 5,
+   "leadsWithinATie": 5
+  },
+  "i": {
+   "same": 10
+  }
+ }
+}

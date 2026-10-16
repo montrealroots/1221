@@ -123,15 +123,25 @@ export interface Account {
   overdrewDay?: string;
   /** Opted into the bank paying everyday debit card purchases into an overdraft (a US bank's Regulation E choice). */
   debitOverdraft?: boolean;
-  /** When a returned payment's fee, the debit card's yearly fee and a dormant account's fee were last charged. */
+  /** When a returned payment's fee and a dormant account's fee were last charged. */
   returnedAt?: Instant;
+  /**
+   * When the debit card's year running began (`Bank.card.year`, `CardYear`, from brief 10, 2026-10-16): its charge's
+   * night where it was paid ahead, the night it opened where it's charged behind. Until then the moment the yearly fee was
+   * last charged, which is the same for a year paid ahead.
+   */
   cardFeeAt?: Instant;
   /**
-   * What the debit card's yearly fee took at `cardFeeAt`, in the bank's own money, where the bank charges it for the year
-   * ahead and gives back its days left on a close (`Bank.card.ahead`, `cardRefundDue`, from 2026-10-16): none where the
-   * year was free, and none once given back.
+   * What the debit card's yearly fee took for the year running, in the bank's own money, where it was paid ahead and its
+   * days left come back on a close (`cardYearDue`, from 2026-10-16): none where the year was free, is charged behind, or
+   * was given back.
    */
   cardFeePaid?: Money;
+  /**
+   * The rule the card year running was opened under, `CardYear.paid` then (from brief 10, 2026-10-16), so it's settled by
+   * that rule whatever the bank's setting is now.
+   */
+  cardYearRule?: 'ahead' | 'behind';
   dormantFeeAt?: Instant;
   /** Germany: the quarter's fees so far, charged at the quarterly closing. */
   feesDue?: Money;

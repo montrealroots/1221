@@ -130,6 +130,8 @@ export const RECOMMEND = { floor: 0.5, recurringWithin: 0.5 } as const;
 
 /** The least a forecast's hours must be worth, in points a piece, to be recommended (from 2026-10-16): a tenth, the least a result shows. */
 const ADVICE_FLOOR = 0.1;
+/** A forecast's own share at full precision (from brief 10), or its said figure where it's one from before. */
+const ownOf = (f: Forecast): number => f.own ?? f.exact ?? f.points;
 const labelOf = (id: string) => ABILITY_DEFS.find((d) => d.id === id)?.label ?? TECHNIQUE_LABEL[id as Skill] ?? id;
 
 /** Days since an exercise was last practised, by the calendar at home (`lastDay`), for `recommendations`' focus; undefined where it never was. */
@@ -188,17 +190,25 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
   const out: Recommendation[] = [];
   // Forecast (from 2026-10-16, `systems/advice.ts`): what each input's hours would be worth on the recent work, every input
   // it read, in place of what each cost made whole. Where there's no forecast (no work kept under today's rules), as before.
-  const forecasting = forecast !== undefined && forecast.size > 0;
+  // From brief 10 (later on 2026-10-16) a forecast passed is the forecast even when it holds nothing (every input at full,
+  // or none worth a tenth): until then an empty one fell back to the costs, which could name stamina, which no exercise
+  // trains, with no exercise (F2-A10 (d)). `adviceFor` passes none where no work is kept under today's rules.
+  const forecasting = forecast !== undefined;
   if (forecasting) {
     for (const [what, f] of forecast!) {
-      if (f.points < ADVICE_FLOOR) continue;
+      // The floor reads the input's own share (from brief 10): what the days of practice bring beside it any exercise brings.
+      if (ownOf(f) < ADVICE_FLOOR) continue;
       const ex = exerciseFor(what);
       if (!ex) continue;
       const since = lastPracticed?.(ex.id);
       const focus = since !== undefined && since >= 1 && since <= 7 ? 'spaced' : 'steady';
       const label = cost.get(what)?.label ?? labelOf(what);
       const each = Math.round(f.points * 10) / 10;
-      out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}, worth about ${each} ${each === 1 ? 'point' : 'points'} a piece on your recent work (${f.pieces} of the pieces read it), worked out again with you as you are now. ${focus === 'spaced' ? 'Spaced: the last session was a day to a week ago, when spacing pays.' : 'Steady to begin; spaced pays once the last session is a day to a week old.'}` });
+      // The work it read and the gain it expects, by name (from brief 10, F2-A10 (g)): until then "(N of the pieces read it)".
+      const read = f.of !== undefined ? ` (${f.pieces} of your last ${f.of} ${f.of === 1 ? 'piece' : 'pieces'} read it${f.most ? `; it gains most on ${f.most.what}, about ${f.most.points >= 0 ? '+' : ''}${Math.round(f.most.points * 10) / 10}` : ''})` : ` (${f.pieces} of the pieces read it)`;
+      const prepared = f.prepared ? `; ${f.prepared === 1 ? 'the piece' : `the ${f.prepared} pieces`} its own preparation held back most ${f.prepared === 1 ? 'is' : 'are'} read as prepared` : '';
+      const days = (f.days ?? 0) >= 0.05 ? `; about ${Math.round(f.days! * 10) / 10} of it is the discipline ${f.hours} days of practice keep, which any exercise kept up daily would bring` : '';
+      out.push({ target: what, label, exercise: ex.id, tier: matchedTier(f.from), focus, points: each, forecast: f, why: `${f.hours} hours of its exercise would take it from ${Math.round(f.from)} to about ${Math.round(f.to)}, worth about ${each} ${each === 1 ? 'point' : 'points'} a piece on your recent work${read}, worked out again with you as you are now${f.of !== undefined ? ', a session a day' : ''}${prepared}${days}. ${focus === 'spaced' ? 'Spaced: the last session was a day to a week ago, when spacing pays.' : 'Steady to begin; spaced pays once the last session is a day to a week old.'}` });
     }
   }
   for (const [what, c] of forecasting ? [] : cost) {
@@ -223,24 +233,29 @@ export function recommendations(levelOf: (id: string) => number, fullOf: (id: st
     if (c.points < RECOMMEND.floor) continue;
     out.push({ target: k, label: c.label, focus: c.kind === 'fit' ? 'choice' : 'condition', points: Math.round(c.points * 10) / 10, why: c.kind === 'fit' ? `A way of playing that didn’t fit cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: choose one the material or the direction takes.` : `${c.label} cost about ${Math.round(c.points * 10) / 10} points of the whole a piece: come to the work rested and well, or find places to breathe in it.` });
   }
-  // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't.
-  const rank = (r: Recommendation) => r.forecast?.points ?? r.points;
+  // Ranked by the forecast's own figure where there is one: the tenth said can make two forecasts equal that aren't. From
+  // brief 10 at full precision (`exact`), what the hours are forecast to bring, which is what's said and what's played
+  // against; the floor and a near-tie read the input's own share (`ownOf`).
+  const rank = (r: Recommendation) => (r.forecast ? r.forecast.exact ?? r.forecast.points : r.points);
   out.sort((a, b) => rank(b) - rank(a) || a.target.localeCompare(b.target));
   // The weakness the work so far keeps coming back to, where it's here at all: said, with what it rests on, and first
   // where it's within half a point of the top. Forecast (from 2026-10-16), only where it's about as useful as the top:
-  // what keeps holding you back and what pays most to train are two things, and the order says the second.
+  // what keeps holding you back and what pays most to train are two things, and the order says the second. From brief 10
+  // (later on 2026-10-16) a forecast's order is the forecast's alone, and the recurring weakness is said where it stands:
+  // put first when about as useful, it stayed first after twenty sessions of it while another input's forecast had come
+  // to lead (F2-A10 (h), tuning case adv-t-10: memory first at 0.335, imagination 0.345).
   const mine = recurring ? out.find((r) => r.target === recurring.target) : undefined;
   if (recurring && mine) {
     mine.recurring = { last: recurring.last, evidence: recurring.evidence };
     mine.why = `${mine.why} Your work keeps coming back to it: it’s held back ${recurring.pieces} of your pieces for life, ${recurring.whole} ${recurring.whole === 1 ? 'point' : 'points'} of the whole in all.`;
-    const top = out.find((r) => r.forecast) ?? out[0]!;
-    if (forecasting ? mine.forecast && tied(mine.points, top.points) : mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
+    if (!forecasting && mine.points >= out[0]!.points - RECOMMEND.recurringWithin) out.unshift(...out.splice(out.indexOf(mine), 1));
   }
   // Training about as useful as the first's (from 2026-10-16): said beside it, not ranked as if a tenth decided it.
   const firstTraining = out.find((r) => r.forecast);
   if (firstTraining) {
-    const near = out.filter((r) => r !== firstTraining && r.forecast && tied(r.forecast.points, firstTraining.forecast!.points)).map((r) => r.label);
-    if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; either is a sound next step.`; }
+    const near = out.filter((r) => r !== firstTraining && r.forecast && tied(ownOf(r.forecast), ownOf(firstTraining.forecast!))).map((r) => r.label);
+    // "Either" for one beside it, "any of them" for more (from brief 10: near mastery four or five can be within a tenth).
+    if (near.length) { firstTraining.tiedWith = near; firstTraining.why = `${firstTraining.why} About as useful: ${near.join(', ')}; ${near.length === 1 ? 'either' : 'any of them'} is a sound next step.`; }
   }
   return out.slice(0, 5);
 }

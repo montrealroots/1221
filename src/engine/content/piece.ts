@@ -39,8 +39,25 @@ export const TONE_LEAN: Readonly<Record<Tone, Partial<Record<Dimension, number>>
 };
 
 export const PIECE = {
-  /** The stamina drain at the last segment of a piece of load 1, by an actor with none: a factor of 1 − drain on what tiring reaches. */
-  drain: 0.3,
+  /**
+   * The stamina drain at the last segment of a brief or scene of load 1, and at the curtain's fall of a night whose work
+   * so far reaches `WORKLOAD.full` (from 2026-10-16, brief 10), by an actor with none on a good day: a factor of 1 − drain
+   * on what tiring reaches.
+   *
+   * SLATE's choice, balanced through testing as brief 10's section 4 asks of the workload's coefficients: it was 0.3
+   * until later on 2026-10-16. At 0.3, on the integrated code, the stamina specialist (85, the other eleven at 515/11,
+   * H4-R's budget) owned one of the 797 pieces H4-R reads and was ahead on none, and no kind of work moved stamina by 0.5
+   * a +10 on average (A1). Tried on those 797 pieces: 0.35 gave stamina 6 pieces of its own, scenes only; 0.37 gave 12 in
+   * two kinds (briefs 5, scenes 7), ahead on 11, median 0.63, a brief's mean effect 0.511; 0.4 gave 37 (briefs 24, scenes
+   * 13), ahead on all 37, median 0.81, a brief's mean effect 0.552, a scene's 0.533, with H2 and H5 holding and memory's
+   * own work 119 pieces to 111. 0.4 was taken: a third more than it was, and a margin over each target. A night's drain
+   * reaches all of it at `WORKLOAD.full`, which went to 4/3 of itself with it, so a night short of the anchor there drains
+   * as it did (that comment says why); with `WORKLOAD.full` as it was, the specialist led a whole night as a lead in 5 of
+   * the 30 plays, and now in none (the closest, −0.21, where it was −0.28). `WORKLOAD.full` at 0.6 of itself, the other
+   * way to a deeper drain, reached A1 on nights alone (0.552) and left stamina one piece of its own, a scene: on no night
+   * is stamina the largest input (docs/verification/decisions-2026-10-16/integrated/after/README.md).
+   */
+  drain: 0.4,
   /** A segment this many points under what it was expected to come to, with no draw, is a slip. */
   slipAt: 3,
   /** The share of a slip carried into the next segment, before composure and adaptability recover it. */
@@ -50,13 +67,17 @@ export const PIECE = {
   /** A scene's, against coursework's complete; never past what preparation can reach. */
   scene: { perTurn: 0.05, perBlend: 0, most: 0.95 },
   /**
-   * How hard a piece is on stamina, 0 to 1: a base for its kind and length, and a share for each level of the body's
-   * and the voice's work it stages. A night is a whole evening; a brief or a scene a few minutes.
+   * How hard a brief or a scene is on stamina, 0 to 1: a base for its kind and length, and a share for each level of the
+   * body's and the voice's work it stages, a few minutes of it.
    *
    * From 2026-10-16 by length as well as by the body and the voice: a long brief 0.35 where it was 0.3, and a night 0.6
    * and 0.12 a level where it was 0.4 and 0.1. Measured on the 427 pieces (phase-2b.md §3), a night, two or three hours
    * on stage, drew less of stamina's effect (+0.43 for +10) than a short brief built on a fight, and a light scene's
    * stamina came to a tenth of a point or under, which is kept: it's a few minutes, and stamina shouldn't decide it.
+   *
+   * Later on 2026-10-16 (brief 10) a night's load went from here: it read neither the play's length nor the part's size,
+   * so a one-act was a whole evening and a featured part its lead. A night's drain is its workload since
+   * (`content/workload.ts`, `systems/workload.ts`).
    */
-  load: { brief: 0.1, briefMedium: 0.2, briefLong: 0.35, scene: 0.15, night: 0.6, perLevel: 1 / 6, nightPerLevel: 0.12 },
+  load: { brief: 0.1, briefMedium: 0.2, briefLong: 0.35, scene: 0.15, perLevel: 1 / 6 },
 } as const;

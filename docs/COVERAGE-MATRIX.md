@@ -74,7 +74,7 @@ What the acceptance pass left as limitations, closed or enlarged, with where eac
 | State collection researched for three states | Implemented: every state a life can owe, fifteen; three with tax tables and no city stay unresearched | `tests/state-tax-states.test.ts` |
 | A state never assessed a non-filer | Implemented, played: each state's letters, assessment, collection, replacement | `tests/state-tax-states.test.ts`; `tools/scenarios.ts` (`nonfiler`); `tools/acceptance-ui.mjs` (from a save) |
 | No refund offsets between states | Implemented: New York's, California's and Connecticut's partners | `tests/state-tax-states.test.ts` |
-| 42 scenes, 26 plays | Enlarged, still finite: 65 scenes, 30 plays, 27 exercises. It said 56 scenes until brief 09's follow-up corrected it: on 2026-10-16 the integration pass added four drama scenes (`content/scenes-public.ts`), brief 09 four played out to a house (`content/scenes-house.ts`) and its follow-up Scapin's sack scene (`content/scenes-scored.ts`) | `tests/scenes.test.ts`; `tools/variety.ts` |
+| 42 scenes, 26 plays | Enlarged, still finite: 67 scenes, 30 plays, 27 exercises. It said 56 scenes until brief 09's follow-up corrected it: on 2026-10-16 the integration pass added four drama scenes (`content/scenes-public.ts`), brief 09 four played out to a house (`content/scenes-house.ts`) and its follow-up Scapin's sack scene (`content/scenes-scored.ts`); it said 65 until brief 10 added two public meetings (`content/scenes-meeting.ts`) | `tests/scenes.test.ts`; `tools/variety.ts` |
 | Older credits' years | Implemented: dated once by their casting notices; the résumé shows the year | `tests/credits-dated.test.ts` |
 
 ## The remaining-gaps pass (2026-10-11)

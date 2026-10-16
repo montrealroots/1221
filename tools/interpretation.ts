@@ -6,7 +6,7 @@
  * strengths were set) and, held out, on the further briefs (`brief-<genre>-2` and on), which weren't. `--off` sets the
  * grain's strength and its rehearsal shift to 0: the way of playing as it was before, which the criteria should fail.
  *
- *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md]
+ *   npx vite-node tools/interpretation.ts -- [--off] [--fresh] [--stage] [--out file.json] [--md file.md] [--st3 file.json] [--st6 file.json]
  */
 import { writeFileSync } from 'node:fs';
 import { BRIEFS, type Brief } from '../src/engine/content/briefs';
@@ -17,7 +17,8 @@ import type { Axis, AxisValue } from '../src/engine/content/material';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, sceneOf, readingOf, type BriefRecord } from '../src/engine/systems/briefs';
 import type { EvalContext, Evaluation, Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, unitSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, unitSegments } from '../src/engine/systems/piece';
+import { runningOf, withPart } from '../src/engine/systems/workload';
 import { PIECE } from '../src/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '../src/engine/content/material';
 import { TASK_PROFILES } from '../src/engine/content/tasks';
@@ -26,6 +27,7 @@ import { difficultyOf } from '../src/engine/systems/coursework';
 import { materialContext } from '../src/engine/systems/material';
 import { misfitOf, type Playing } from '../src/engine/systems/material';
 import { sceneOfMaterial, suitabilityOf } from '../src/engine/systems/interpretation';
+import { measureST3R, measureST6R } from './acting-criteria';
 
 const flag = (n: string) => process.argv.includes(`--${n}`);
 const arg = (n: string, d: string) => { const i = process.argv.indexOf(`--${n}`); return i >= 0 ? process.argv[i + 1]! : d; };
@@ -200,8 +202,10 @@ function measureStage() {
   const byGenre: Record<string, { r: number; e: number; n: number }> = {};
   for (const m of mats) { if (!both(m)) continue; const g = sceneOfMaterial(m).genre ?? 'none'; const { r, e } = suit(m); const x = (byGenre[g] ??= { r: 0, e: 0, n: 0 }); x.n += 1; if (r.s > e.s) x.r += 1; else if (e.s > r.s) x.e += 1; }
   const big = Object.entries(byGenre).filter(([, x]) => x.n >= 5);
-  // ST6: strength carrying the harder side.
-  const fill = (n: number) => (600 - n) / 8;
+  // ST6: strength carrying the harder side. Each specialist's other nine abilities share what's left of the even actor's
+  // 600 (from 2026-10-16, brief 10): until then `fill` divided it by 8 where 9 abilities are left, so each specialist
+  // totalled 645.6, 45.6 over the even actor's budget (docs/verification/decisions-2026-10-16/baseline/README.md).
+  const fill = (n: number) => (600 - n) / 9;
   const EXP = actor({ presence: 85, vocal: 75, physical: 75 }, fill(235));
   const RES = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, fill(235));
   let st6a = 0, st6an = 0, st6b = 0, st6bn = 0;
@@ -212,6 +216,9 @@ function measureStage() {
     if (e.s > r.s) { st6bn += 1; if (judgeAs(sceneTask, m, RES, { scale: 'restrained' }) > judgeAs(sceneTask, m, RES, { scale: 'expansive' })) st6b += 1; }
   }
   const perf = TASK_PROFILES.performance!;
+  // F1's plays with a supporting part's text, as the game reads a night from later on 2026-10-16 (brief 10, `withPart`):
+  // the night's own task, a supporting part as every measuring tool reads one.
+  const parts = PLAY_MATERIAL.map((m) => withPart(m, nightPiece(m, runningOf({ play: m.id }), 'supporting').night!));
   return {
     ST1: ahead(sceneTask, mats, EVEN),
     ST2: { houseSignalOnAnyMaterial: house, bandApart: st2n, restsOnTheScene: st2ok, holds: !house && st2ok === st2n },
@@ -221,7 +228,7 @@ function measureStage() {
     ST6: { expansiveSpecialistWinsAgainstTheGrain: `${st6a} of ${st6an}`, restrainedSpecialistWinsAgainstTheGrain: `${st6b} of ${st6bn}`, holds: st6a >= 0.25 * st6an && st6b >= 0.25 * st6bn },
     ST7: several(sceneTask, mats),
     ST8: follows(sceneTask, mats, EVEN),
-    F1: { task: 'performance', ST1: ahead(perf, PLAY_MATERIAL, EVEN), ST5: mastery(perf, PLAY_MATERIAL), ST7: several(perf, PLAY_MATERIAL), ST8: follows(perf, PLAY_MATERIAL, EVEN) },
+    F1: { task: 'performance', ST1: ahead(perf, parts, EVEN), ST5: mastery(perf, parts), ST7: several(perf, parts), ST8: follows(perf, parts, EVEN) },
     F2: { at40: { ST1: ahead(sceneTask, mats, actor({}, 40)), ST8: follows(sceneTask, mats, actor({}, 40)) }, at75: { ST1: ahead(sceneTask, mats, actor({}, 75)), ST8: follows(sceneTask, mats, actor({}, 75)) } },
     bySide: mats.filter(both).map((m) => { const { r, e } = suit(m); return `${m.id}: restrained ${r.s}, expansive ${e.s}`; }),
   };
@@ -299,7 +306,8 @@ function measureST6Cases() {
     const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `stage:${m.id}`, expected: true };
     return judgePiece(SEED, p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).exact!;
   };
-  const fill = (n: number) => (600 - n) / 8;
+  // Over the nine abilities left from 2026-10-16, brief 10 (over eight until then, 645.6 in all: `measureStage`'s ST6 says it).
+  const fill = (n: number) => (600 - n) / 9;
   const EXP = actor({ presence: 85, vocal: 75, physical: 75 }, fill(235));
   const RES = actor({ emotionalDepth: 85, composure: 75, focus: 75 }, fill(235));
   const EVEN50 = actor({}, 50);
@@ -352,9 +360,11 @@ function measureST6Cases() {
 
 const out = { strength: GRAIN.strength, prep: GRAIN.prep, I2: measureI2(BRIEFS), designed: measure(first), heldOut: measure(held), ...(flag('fresh') ? { freshHeldOut: measureFresh() } : {}), ...(flag('stage') ? { stage: measureStage() } : {}) };
 const st3 = arg('st3', '');
-if (st3) writeFileSync(st3, `${JSON.stringify(measureST3Cases(), null, 1)}\n`);
+// From 2026-10-16, brief 10: ST3-R and ST6-R as the owner's approved criteria write them (`tools/acting-criteria.ts`),
+// beside brief 09's case lists; ST6-R also on the specialists' budget as it was until then (645.6), to say what it changed.
+if (st3) writeFileSync(st3, `${JSON.stringify({ ...measureST3Cases(), ST3R: measureST3R() }, null, 1)}\n`);
 const st6 = arg('st6', '');
-if (st6) writeFileSync(st6, `${JSON.stringify(measureST6Cases(), null, 1)}\n`);
+if (st6) writeFileSync(st6, `${JSON.stringify({ ...measureST6Cases(), ST6R: measureST6R(), ST6RAtTheBudgetBefore: measureST6R((n) => (600 - n) / 8) }, null, 1)}\n`);
 console.log(JSON.stringify(out, null, 1));
 const o = arg('out', '');
 if (o) writeFileSync(o, `${JSON.stringify(out, null, 1)}\n`);

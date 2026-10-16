@@ -91,3 +91,23 @@ twenty days through `practice.exercise` in its own copy of the save, against a b
 - Twenty hours is SLATE's horizon. A longer one would favor inputs with more room; this one is about the next few weeks.
 - A transfer from one exercise to another target isn't forecast. It's the same for every candidate in the played
   measure, which is why the realized gains run about a quarter of a point above the forecasts.
+
+## Later On 2026-10-16: Brief 10, F2-A10
+
+The owner approved F2-A as the advice's measure (brief 10, section 2) and asked for its proof broadened. F2-A10's
+criteria (`../decisions-2026-10-16/criteria.md`, section 2) were measured by `tools/advice.ts` over 30 tuning cases and
+150 held-out ones (`../decisions-2026-10-16/advice/`; the account is `../remaining-10/advice-result.json`). What above
+is no longer so:
+
+- **The growth curve.** The hours were grown by the advice's own copy of the curve with discipline held where it stood;
+  from brief 10 they're grown through the engine's `develop`, discipline kept once a day, and what the days' discipline
+  brings is said apart. The quarter of a point every realized gain ran above its forecast was that discipline.
+- **The recurring weakness** went first where it was about as useful as the top; it's said where its forecast puts it.
+- **"N of the pieces read it."** The reason says how many of the last pieces read the input and names the one it gains
+  most on.
+- **What's read.** Each replay's exact whole, not its tenth; knowing the genre as it's known now; a take its own
+  preparation held back most read as prepared.
+- **An input at full drops out**, a technique at 90 from brief 10; and where everything an exercise trains is at full, the
+  advice says so.
+- **F2-A as defined** is still 40 of 40 on brief 10's advice (tuning 10 of 10, held out 30 of 30), measured at full
+  precision where it read the shown tenth.

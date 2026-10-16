@@ -1,0 +1,1197 @@
+{
+ "key": "stamina",
+ "on": "2026-10-16",
+ "against": "f17ae369 (before) and 2c190fe7 (after, the area’s code commit), branch stamina in the area’s own clone",
+ "checklist": "docs/verification/remaining-10/stamina-checklist.json",
+ "testFile": "tests/decisions-stamina.test.ts",
+ "tests": 21,
+ "formula": {
+  "workload": "W = min(8, playing minutes / 60 × share(size) × (1 + 2/9 × (physical + vocal))), the playing minutes the running time less its breaks",
+  "drainWithin": "the work so far A(t) rises at W per playing time; at each break of m minutes A × (1 − 0.25 × min(1, m / 20)); the drain at t is 0.3 × min(1, b × A(t) / F) × (1 − stamina) × g, b the share places to breathe leave (0.7, or 1), F the full; each segment reads the mean of it over its own stretch of the running, integrated exactly",
+  "condition": "g = 1 + 0.5 × (1 − readiness / 100), readiness the condition at the curtain (readiness at the hour’s fit, as the night’s judgment reads it), 1 at 100 and 1.5 at 0",
+  "energyAfter": "E = 5 × W × (1 − 0.5 × stamina) × g, taken once at the call; it reads W, the work done, so a break isn’t credited again",
+  "call": "held for the running time and a 5-minute curtain call",
+  "where": "src/engine/content/workload.ts (the running times and the coefficients), src/engine/systems/workload.ts (the formula), src/engine/systems/piece.ts (judgePiece reads it), src/engine/systems/school.ts (the calls, the energy)"
+ },
+ "coefficients": [
+  {
+   "name": "share (participation)",
+   "value": {
+    "lead": 0.75,
+    "supporting": 0.5,
+    "featured": 0.2,
+    "solo": 1
+   },
+   "basis": "SLATE’s design: the catalog keeps no lines or entrances. A lead on for most of the evening, a supporting part half of it, a featured part a fifth, a solo piece all of it."
+  },
+  {
+   "name": "perLevel (intensity step)",
+   "value": 0.2222222222222222,
+   "basis": "From a source: the 2024 Adult Compendium of Physical Activities, an actor on stage 3.0 METs and a dance performance or rehearsal (03010) 5.0 (BODY.met), so the body’s level 3 is taken at 5.0 and each level a third of the way: (5.0/3.0 − 1)/3. The voice’s level takes the same step, SLATE’s design (no MET is published for the voice; the load before counted the two alike). The shape, time at an intensity, is the dose’s (Titze, Švec and Popolo, J Speech Lang Hear Res 2003;46:919–932); its sizes aren’t sourced."
+  },
+  {
+   "name": "full (F)",
+   "value": 2.685763888888889,
+   "basis": "SLATE’s design on the old load’s own anchor, worked out not typed: the work done at the curtain of a lead’s ordinary full-length evening (150 minutes with a 20-minute interval, the catalog’s middle running time) in a play of four levels between body and voice, where the old load (0.6 + 0.12 a level) reached 1. About 2.686. A first draft took 3.5, the heaviest lead’s, which left every ordinary lead well short of the drain’s stated most."
+  },
+  {
+   "name": "drain (D)",
+   "value": 0.3,
+   "basis": "PIECE.drain, kept: SLATE’s estimate since 2026-10-12, unchanged."
+  },
+  {
+   "name": "recovers",
+   "value": 0.25,
+   "basis": "SLATE’s design: what an interval of 20 minutes or more gives back of the drain so far, a shorter pause in proportion. No study found measures what an interval restores of an actor’s work."
+  },
+  {
+   "name": "condition (G)",
+   "value": 0.5,
+   "basis": "SLATE’s design: half again of the drain and the energy at no readiness, nothing more at full."
+  },
+  {
+   "name": "energy per unit",
+   "value": 5,
+   "basis": "SLATE’s design, balanced so an ordinary lead at half stamina, rested, costs about the 10 a performance took before (Hedda Gabler’s lead 9.5)."
+  },
+  {
+   "name": "staminaSpares",
+   "value": 0.5,
+   "basis": "SLATE’s design: full stamina halves the energy, never takes it to nothing (W4)."
+  },
+  {
+   "name": "cap",
+   "value": 8,
+   "basis": "SLATE’s bound, above every part the catalog holds (3.56 at most, a lead in Julius Caesar), so none is clamped."
+  },
+  {
+   "name": "curtainCall",
+   "value": 5,
+   "basis": "SLATE’s 5 minutes, held with the evening."
+  },
+  {
+   "name": "assumed interval",
+   "value": 20,
+   "basis": "Where a listing gives an interval and not its length: the length the RSC’s and the Globe’s listings give, SLATE’s reading."
+  },
+  {
+   "name": "break placing",
+   "value": "even shares of the playing time",
+   "basis": "SLATE’s placing: the acts’ lengths aren’t kept."
+  }
+ ],
+ "workedExamples": [
+  {
+   "case": "A one-act lead: The Bear (OVO, the Roman Theatre, 2025: 55 minutes, no interval), the body 3 and the voice 2, at half stamina and rested (readiness 100)",
+   "steps": [
+    "Playing 55 minutes; a lead is on for 0.75 of it: 41.25 minutes, 0.6875 stage hours.",
+    "Intensity 1 + 2/9 × (3 + 2) = 2.111.",
+    "Workload 0.6875 × 2.111 = 1.451, of at most 8.",
+    "No break: the work done rises straight to 1.451 at the curtain, 1.451 / 2.686 = 0.540 of the full.",
+    "The drain at the curtain’s fall: 0.3 × 0.540 × (1 − 0.5) × 1 = 8.1% off what tiring reaches; across the night 4.05% on average.",
+    "The energy after: 5 × 1.451 × (1 − 0.25) × 1 = 5.4. The call holds 55 + 5 = 60 minutes."
+   ],
+   "result": {
+    "workload": 1.451,
+    "drainAtCurtain": 0.081,
+    "energy": 5.4,
+    "callHeld": 60
+   },
+   "before": "A whole evening’s load of 1: 15% off at its last movement whatever its length, 10 energy, a 150-minute call."
+  },
+  {
+   "case": "A full-length supporting part: Hedda Gabler (the National Theatre, to March 2017: 160 minutes with a 20-minute interval), the body 1 and the voice 1, at half stamina and rested",
+   "steps": [
+    "Playing 160 − 20 = 140 minutes; a supporting part is on for 0.5 of it: 1.1667 stage hours.",
+    "Intensity 1 + 2/9 × 2 = 1.444.",
+    "Workload 1.1667 × 1.444 = 1.685.",
+    "At the interval, 70 minutes in, the work done is 0.843; the interval gives back a quarter: 0.632. By the curtain 0.632 + 0.843 = 1.474, 0.549 of the full.",
+    "The drain at the curtain’s fall: 0.3 × 0.549 × 0.5 = 8.2% off; just before the interval 0.3 × (0.843/2.686) × 0.5 = 4.7%, just after it 3.5%.",
+    "The energy after: 5 × 1.685 × 0.75 = 6.3, the interval not taking any of it back. The call holds 165 minutes."
+   ],
+   "result": {
+    "workload": 1.685,
+    "drainAtCurtain": 0.082,
+    "energy": 6.3,
+    "callHeld": 165
+   },
+   "before": "A load of 0.84, the same as Hedda’s: 12.6% off at the last movement, 10 energy, 150 minutes."
+  },
+  {
+   "case": "A long, intense lead with an interval: Julius Caesar (Shakespeare’s Globe, 2022: 150 minutes with a 15-minute interval), the body 2 and the voice 3, at half stamina and rested",
+   "steps": [
+    "Playing 135 minutes; a lead 0.75 of it: 1.6875 stage hours.",
+    "Intensity 1 + 2/9 × 5 = 2.111.",
+    "Workload 1.6875 × 2.111 = 3.563.",
+    "At the interval, 67.5 minutes in, 1.781 done; a 15-minute interval gives back 0.25 × 15/20 = 0.1875 of it: 1.447. It reaches the full, 2.686, 47 minutes after the interval, and holds there the last 20 minutes.",
+    "The drain at the curtain’s fall: 0.3 × 1 × 0.5 = 15% off (30% at no stamina, none at full; 17.3% coming in at readiness 70).",
+    "The energy after: 5 × 3.563 × 0.75 = 13.4 (8.9 at full stamina, 17.8 at none, 15.4 at readiness 70). The call holds 155 minutes."
+   ],
+   "result": {
+    "workload": 3.563,
+    "drainAtCurtain": 0.15,
+    "energy": 13.4,
+    "callHeld": 155
+   },
+   "before": "A load of 1: 15% off at its last movement, 10 energy, 150 minutes at the School."
+  }
+ ],
+ "runningTimes": [
+  {
+   "play": "Hedda Gabler",
+   "minutes": 160,
+   "breaks": "20",
+   "playing": 140,
+   "basis": "production",
+   "from": "National Theatre, the Lyttelton, to March 2017 (Ivo van Hove, in Patrick Marber’s version): 2 h 40; its listing names no interval, and National Theatre Live’s screening gives one of 20 minutes",
+   "source": "https://officiallondontheatre.com/show/hedda-gabler-373526/",
+   "read": "2026-10-16",
+   "callHeld": 165,
+   "workloadLead": 2.528,
+   "workloadSupporting": 1.685,
+   "workloadFeatured": 0.674
+  },
+  {
+   "play": "The Importance Of Being Earnest",
+   "minutes": 165,
+   "breaks": "20",
+   "playing": 145,
+   "basis": "production",
+   "from": "National Theatre, Max Webster’s production at the Noël Coward Theatre, to January 2026: 2 h 45 with an interval",
+   "source": "https://officiallondontheatre.com/show/the-importance-of-being-earnest-111449914/",
+   "read": "2026-10-16",
+   "callHeld": 170,
+   "workloadLead": 2.618,
+   "workloadSupporting": 1.745,
+   "workloadFeatured": 0.698
+  },
+  {
+   "play": "Woyzeck",
+   "minutes": 90,
+   "breaks": "none",
+   "playing": 90,
+   "basis": "production",
+   "from": "Vesturport’s production at the Barbican, 2005 and 2006: 1 h 30, no interval named",
+   "source": "https://officiallondontheatre.com/show/woyzeck-73965/",
+   "read": "2026-10-16",
+   "callHeld": 95,
+   "workloadLead": 2.125,
+   "workloadSupporting": 1.417,
+   "workloadFeatured": 0.567
+  },
+  {
+   "play": "Three Sisters",
+   "minutes": 170,
+   "breaks": "20",
+   "playing": 150,
+   "basis": "production",
+   "from": "Shakespeare’s Globe, the Sam Wanamaker Playhouse: 2 h 50 with an interval",
+   "source": "https://www.shakespearesglobe.com/whats-on/three-sisters/",
+   "read": "2026-10-16",
+   "callHeld": 175,
+   "workloadLead": 1.875,
+   "workloadSupporting": 1.25,
+   "workloadFeatured": 0.5
+  },
+  {
+   "play": "Blood Wedding",
+   "minutes": 120,
+   "breaks": "15",
+   "playing": 105,
+   "basis": "production",
+   "from": "Royal Central School of Speech and Drama, 2022: 2 h with a 15-minute interval",
+   "source": "https://www.cssd.ac.uk/events/blood-wedding",
+   "read": "2026-10-16",
+   "callHeld": 125,
+   "workloadLead": 2.479,
+   "workloadSupporting": 1.653,
+   "workloadFeatured": 0.661
+  },
+  {
+   "play": "The Cherry Orchard",
+   "minutes": 158,
+   "breaks": "20",
+   "playing": 138,
+   "basis": "production",
+   "from": "National Theatre, in Andrew Upton’s version, as National Theatre Live filmed it: 2 h 38 with a short interval, its length not given",
+   "source": "https://www.ntathome.com/the-cherry-orchard-audio-description",
+   "read": "2026-10-16",
+   "callHeld": 163,
+   "workloadLead": 2.108,
+   "workloadSupporting": 1.406,
+   "workloadFeatured": 0.562
+  },
+  {
+   "play": "Major Barbara",
+   "minutes": 195,
+   "breaks": "20",
+   "playing": 175,
+   "basis": "production",
+   "from": "Shaw Festival, 2025, the Royal George Theatre: about 3 h 15 with one intermission",
+   "source": "https://www.stage-door.com/3/news/2025-News/Entries/2025/5/niagara-on-the-lake-major-barbara-begins-previews-at-the-shaw-festival-on-june-1.html",
+   "read": "2026-10-16",
+   "callHeld": 200,
+   "workloadLead": 2.674,
+   "workloadSupporting": 1.782,
+   "workloadFeatured": 0.713
+  },
+  {
+   "play": "Ghosts",
+   "minutes": 140,
+   "breaks": "20",
+   "playing": 120,
+   "basis": "production",
+   "from": "Riksteatret, the Norwegian Touring Theatre (Bentein Baardson), from 31 August 2017: 2 h 20 with an interval",
+   "source": "https://sceneweb.no/en/production/74856/Ghosts",
+   "read": "2026-10-16",
+   "callHeld": 145,
+   "workloadLead": 2.167,
+   "workloadSupporting": 1.444,
+   "workloadFeatured": 0.578
+  },
+  {
+   "play": "The Wild Duck",
+   "minutes": 140,
+   "breaks": "20",
+   "playing": 120,
+   "basis": "production",
+   "from": "Norwegian Ibsen Company, 2024, in Bergen and at the Coronet in London: 140 minutes with the interval",
+   "source": "https://sceneweb.no/en/production/100461/The_Wild%20Duck",
+   "read": "2026-10-16",
+   "callHeld": 145,
+   "workloadLead": 1.833,
+   "workloadSupporting": 1.222,
+   "workloadFeatured": 0.489
+  },
+  {
+   "play": "Spring Awakening",
+   "minutes": 120,
+   "breaks": "20",
+   "playing": 100,
+   "basis": "production",
+   "from": "Landestheater Eisenach, as a school’s report of an April 2026 performance gives it: about two hours, a pause after the second act. The thinnest basis in the table: no theater’s own figure for the play, not the musical, was found",
+   "source": "https://www.salzmannschule.de/images/Aktuell/Bericht%20Theater.pdf",
+   "read": "2026-10-16",
+   "callHeld": 125,
+   "workloadLead": 2.083,
+   "workloadSupporting": 1.389,
+   "workloadFeatured": 0.556
+  },
+  {
+   "play": "Twelfth Night",
+   "minutes": 174,
+   "breaks": "20",
+   "playing": 154,
+   "basis": "production",
+   "from": "RSC, 2024–25, the Royal Shakespeare Theatre: 2 h 54 with a 20-minute interval",
+   "source": "https://www.rsc.org.uk/twelfth-night",
+   "read": "2026-10-16",
+   "callHeld": 179,
+   "workloadLead": 3.208,
+   "workloadSupporting": 2.139,
+   "workloadFeatured": 0.856
+  },
+  {
+   "play": "Measure For Measure",
+   "minutes": 165,
+   "breaks": "20",
+   "playing": 145,
+   "basis": "production",
+   "from": "RSC, 2019–20 (Gregory Doran), at the Barbican: 2 h 45 with an interval",
+   "source": "https://www.barbican.org.uk/node/111731",
+   "read": "2026-10-16",
+   "callHeld": 170,
+   "workloadLead": 2.215,
+   "workloadSupporting": 1.477,
+   "workloadFeatured": 0.591
+  },
+  {
+   "play": "The Winter’s Tale",
+   "minutes": 190,
+   "breaks": "20+5",
+   "playing": 165,
+   "basis": "production",
+   "from": "Shakespeare’s Globe, 2022: about 3 h 10 with one 20-minute interval and one 5-minute pause",
+   "source": "https://www.shakespearesglobe.com/whats-on/the-winters-tale-2022/",
+   "read": "2026-10-16",
+   "callHeld": 195,
+   "workloadLead": 3.438,
+   "workloadSupporting": 2.292,
+   "workloadFeatured": 0.917
+  },
+  {
+   "play": "Julius Caesar",
+   "minutes": 150,
+   "breaks": "15",
+   "playing": 135,
+   "basis": "production",
+   "from": "Shakespeare’s Globe, 2022 (Diane Page): 2 h 30 with a 15-minute interval, as the Globe’s visual story for it gives it",
+   "source": "https://cdn.shakespearesglobe.com/uploads/2022/08/Visual-_Story_Julius-Ceasar_2022.pdf",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 3.563,
+   "workloadSupporting": 2.375,
+   "workloadFeatured": 0.95
+  },
+  {
+   "play": "A Midsummer Night’s Dream",
+   "minutes": 170,
+   "breaks": "20",
+   "playing": 150,
+   "basis": "production",
+   "from": "RSC, 2024, the Royal Shakespeare Theatre: 2 h 50 with a 20-minute interval",
+   "source": "https://www.rsc.org.uk/a-midsummer-nights-dream",
+   "read": "2026-10-16",
+   "callHeld": 175,
+   "workloadLead": 3.125,
+   "workloadSupporting": 2.083,
+   "workloadFeatured": 0.833
+  },
+  {
+   "play": "Macbeth",
+   "minutes": 153,
+   "breaks": "20",
+   "playing": 133,
+   "basis": "production",
+   "from": "RSC, 2018 (Polly Findlay), at the Barbican: 2 h 33 with the interval",
+   "source": "https://www.londontheatre.co.uk/show/macbeth-rsc-barbican-2018",
+   "read": "2026-10-16",
+   "callHeld": 158,
+   "workloadLead": 3.14,
+   "workloadSupporting": 2.094,
+   "workloadFeatured": 0.837
+  },
+  {
+   "play": "As You Like It",
+   "minutes": 150,
+   "breaks": "20",
+   "playing": 130,
+   "basis": "production",
+   "from": "Shakespeare’s Globe, 2023: about 2 h 30 with a 20-minute interval",
+   "source": "https://www.shakespearesglobe.com/whats-on/as-you-like-it-2023",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 2.347,
+   "workloadSupporting": 1.565,
+   "workloadFeatured": 0.626
+  },
+  {
+   "play": "Much Ado About Nothing",
+   "minutes": 150,
+   "breaks": "20",
+   "playing": 130,
+   "basis": "production",
+   "from": "Shakespeare’s Globe, 2026: about 2 h 30 with a 20-minute interval",
+   "source": "https://www.shakespearesglobe.com/whats-on/much-ado-about-nothing/",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 2.347,
+   "workloadSupporting": 1.565,
+   "workloadFeatured": 0.626
+  },
+  {
+   "play": "A Doll’s House",
+   "minutes": 150,
+   "breaks": "20",
+   "playing": 130,
+   "basis": "production",
+   "from": "Nordland Teater’s 1995 production: 2 h 30 with an interval",
+   "source": "https://sceneweb.no/en/production/51624/A_Doll%27s%20House",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 2.347,
+   "workloadSupporting": 1.565,
+   "workloadFeatured": 0.626
+  },
+  {
+   "play": "Uncle Vanya",
+   "minutes": 150,
+   "breaks": "20",
+   "playing": 130,
+   "basis": "production",
+   "from": "Harold Pinter Theatre, 2020 (Conor McPherson’s version): 2 h 30 with the interval",
+   "source": "https://www.londontheatredirect.com/play/uncle-vanya-harold-pinter-theatre-tickets",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 1.986,
+   "workloadSupporting": 1.324,
+   "workloadFeatured": 0.53
+  },
+  {
+   "play": "Tartuffe",
+   "minutes": 160,
+   "breaks": "20",
+   "playing": 140,
+   "basis": "production",
+   "from": "Teatr Narodowy, Warsaw, from 25 March 2006 (Jacques Lassalle): 2 h 40 with one interval",
+   "source": "https://www.narodowy.pl/en,whats_on,performances,79,tartuffe_or_the_impostor.html",
+   "read": "2026-10-16",
+   "callHeld": 165,
+   "workloadLead": 2.917,
+   "workloadSupporting": 1.944,
+   "workloadFeatured": 0.778
+  },
+  {
+   "play": "An Enemy Of The People",
+   "minutes": 135,
+   "breaks": "20",
+   "playing": 115,
+   "basis": "production",
+   "from": "Duke of York’s Theatre, 2024 (Thomas Ostermeier, Duncan Macmillan’s version): 2 h 15 with the interval",
+   "source": "https://officiallondontheatre.com/show/an-enemy-of-the-people-111442452/",
+   "read": "2026-10-16",
+   "callHeld": 140,
+   "workloadLead": 2.396,
+   "workloadSupporting": 1.597,
+   "workloadFeatured": 0.639
+  },
+  {
+   "play": "The Playboy Of The Western World",
+   "minutes": 150,
+   "breaks": "15",
+   "playing": 135,
+   "basis": "production",
+   "from": "National Theatre, 2024, the Lyttelton: 2 h 30 with one interval, 15 minutes as National Theatre Live’s listing gives it",
+   "source": "https://www.londontheatre.co.uk/show/44282",
+   "read": "2026-10-16",
+   "callHeld": 155,
+   "workloadLead": 2.813,
+   "workloadSupporting": 1.875,
+   "workloadFeatured": 0.75
+  },
+  {
+   "play": "Mrs Warren’s Profession",
+   "minutes": 105,
+   "breaks": "none",
+   "playing": 105,
+   "basis": "production",
+   "from": "Garrick Theatre, 2025: about 1 h 45, no interval",
+   "source": "https://officiallondontheatre.com/show/mrs-warrens-profession-111447745/",
+   "read": "2026-10-16",
+   "callHeld": 110,
+   "workloadLead": 1.604,
+   "workloadSupporting": 1.069,
+   "workloadFeatured": 0.428
+  },
+  {
+   "play": "Miss Julie",
+   "minutes": 90,
+   "breaks": "none",
+   "playing": 90,
+   "basis": "production",
+   "from": "Åbo Svenska Teater’s 2024 production: about 1 h 30, no intermission, as Strindberg’s preface asks",
+   "source": "https://abosvenskateater.fi/?p=2213",
+   "read": "2026-10-16",
+   "callHeld": 95,
+   "workloadLead": 1.875,
+   "workloadSupporting": 1.25,
+   "workloadFeatured": 0.5
+  },
+  {
+   "play": "Trifles",
+   "minutes": 35,
+   "breaks": "none",
+   "playing": 35,
+   "basis": "production",
+   "from": "Sam Bass Community Theatre, 2020: about 35 minutes",
+   "source": "https://ctxlivetheatre.com/productions/20201016-trifles-by-sam-bass-community-theatre/",
+   "read": "2026-10-16",
+   "callHeld": 40,
+   "workloadLead": 0.632,
+   "workloadSupporting": 0.421,
+   "workloadFeatured": 0.169
+  },
+  {
+   "play": "The Bear",
+   "minutes": 55,
+   "breaks": "none",
+   "playing": 55,
+   "basis": "production",
+   "from": "OVO’s 2025 production at the Roman Theatre, St Albans: one act, 55 minutes, no interval",
+   "source": "https://ovo.org.uk/shows/the-bear",
+   "read": "2026-10-16",
+   "callHeld": 60,
+   "workloadLead": 1.451,
+   "workloadSupporting": 0.968,
+   "workloadFeatured": 0.387
+  },
+  {
+   "play": "A Marriage Proposal",
+   "minutes": 25,
+   "breaks": "none",
+   "playing": 25,
+   "basis": "production",
+   "from": "Camden Fringe, 2025, at the Hen and Chickens Theatre (Alexandra Shelest): 25 minutes",
+   "source": "https://www.thereviewshub.com/camden-fringe-2025-the-proposal-hen-chickens-theatre-london/",
+   "read": "2026-10-16",
+   "callHeld": 30,
+   "workloadLead": 0.59,
+   "workloadSupporting": 0.394,
+   "workloadFeatured": 0.157
+  },
+  {
+   "play": "Riders To The Sea",
+   "minutes": 25,
+   "breaks": "none",
+   "playing": 25,
+   "basis": "production",
+   "from": "Druid’s 2025 production, the Mick Lally Theatre, Galway: an estimated 25 minutes",
+   "source": "https://www.druid.ie/productions/riders-to-the-sea",
+   "read": "2026-10-16",
+   "callHeld": 30,
+   "workloadLead": 0.59,
+   "workloadSupporting": 0.394,
+   "workloadFeatured": 0.157
+  },
+  {
+   "play": "Salomé",
+   "minutes": 75,
+   "breaks": "none",
+   "playing": 75,
+   "basis": "production",
+   "from": "RSC, 2017, the Swan Theatre: 75 minutes, no interval",
+   "source": "https://www.britishtheatreguide.info/news/rsc-revives-wildes-one-act-7848",
+   "read": "2026-10-16",
+   "callHeld": 80,
+   "workloadLead": 1.979,
+   "workloadSupporting": 1.319,
+   "workloadFeatured": 0.528
+  },
+  {
+   "play": "Yale Rep’s The Seagull, 2027 (no profile)",
+   "minutes": 140,
+   "breaks": "20",
+   "playing": 120,
+   "basis": "production",
+   "from": "Yale Rep hasn’t published its 2027 production’s running time; this is Teatr Narodowy’s, Warsaw, 2010: 2 h 20 with one interval",
+   "source": "https://teatr.narodowy.pl/en,whats_on,past_seasons,68,the_seagull.html",
+   "read": "2026-10-16",
+   "callHeld": 145,
+   "workloadLead": 1.5,
+   "workloadSupporting": 1.0,
+   "workloadFeatured": 0.4
+  },
+  {
+   "play": "A festival’s new play (no profile)",
+   "minutes": 100,
+   "breaks": "none",
+   "playing": 100,
+   "basis": "estimate",
+   "from": "SLATE’s estimate: no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16), so a new play of an hour and forty minutes, run straight through",
+   "source": null,
+   "read": null,
+   "callHeld": 105,
+   "workloadLead": 1.25,
+   "workloadSupporting": 0.833,
+   "workloadFeatured": 0.333
+  },
+  {
+   "play": "A Yale Cabaret piece (no profile)",
+   "minutes": 60,
+   "breaks": "none",
+   "playing": 60,
+   "basis": "estimate",
+   "from": "SLATE’s estimate from the Cabaret’s own format, a show about an hour long, as the Daily Nutmeg describes a Yale Cabaret production (https://dailynutmeg.com/blogs/blog/this-yale-cabaret-play-by-ear, read 2026-10-16), run straight through",
+   "source": null,
+   "read": null,
+   "callHeld": 65,
+   "workloadLead": 0.75,
+   "workloadSupporting": 0.5,
+   "workloadFeatured": 0.2
+  },
+  {
+   "play": "You Are The Creator, a solo piece",
+   "minutes": 20,
+   "breaks": "none",
+   "playing": 20,
+   "basis": "estimate",
+   "from": "SLATE’s estimate: the Bulletin doesn’t give a solo piece’s length for You Are The Creator, so 20 minutes, the one actor on stage throughout",
+   "source": null,
+   "read": null,
+   "callHeld": 25,
+   "workloadLead": 0.333,
+   "workloadSupporting": null,
+   "workloadFeatured": null
+  }
+ ],
+ "items": [
+  {
+   "id": "stamina.W1",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "No play had a running time; a night’s load read the body and the voice alone, so four one-acts were whole evenings; every call held 150, 180, 90 or 150 minutes whatever the play.",
+   "after": "30 of 30 plays with a production’s published figure (read 2026-10-16, its source beside it), and The Seagull of 2027, a festival’s new play, a Cabaret piece and the solo showing each with its own, three of them SLATE’s estimates said so. Every one-act runs shorter than every play in two acts or more, and at the same intensity its lead’s workload is under each of theirs. Calls hold the running time and the curtain call. The thinnest basis: Spring Awakening, a school’s report of the Landestheater Eisenach’s 2026 performance (no theater’s own figure for the play, not the musical, was found).",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W1: every play has a running time, with its basis > gives every play the catalog stages a running time, its breaks and its basis, a cited production’s figure read on 2026-10-16 or SLATE’s estimate said so",
+     "kind": "test (static)",
+     "proves": "every staged play has a running time, its breaks, its basis and source; the unnamed pieces said as estimates"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+     "kind": "test (static)",
+     "proves": "6 one-acts against 23 plays in two acts or more; the four the old load put at a whole evening worked by hand"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W1: every play has a running time, with its basis > PLAYER JOURNEY: books the Carlotta’s performances for its new play’s running time and the curtain call, where every School performance held two and a half hours",
+     "kind": "test (played)",
+     "proves": "the four booked performances hold 105 minutes"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/workload-table.tsv",
+     "title": "the catalog’s running times, bases and workloads",
+     "kind": "measurement (no draw)",
+     "proves": "the table, printed by the engine’s own functions"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/workload.ts",
+     "find": "  'Trifles': at(35, [], ",
+     "replace": "  'Trifles (cut)': at(35, [], ",
+     "what": "a play without a running time",
+     "killed": true,
+     "caughtBy": [
+      "W1: every play has a running time, with its basis > gives every play the catalog stages a running time, its breaks and its basis, a cited production’s figure read on 2026-10-16 or SLATE’s estimate said so",
+      "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+      "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+     ]
+    },
+    {
+     "file": "src/engine/content/workload.ts",
+     "find": "  'The Bear': at(55, [], ",
+     "replace": "  'The Bear': at(150, [], ",
+     "what": "a one-act loaded as a whole evening",
+     "killed": true,
+     "caughtBy": [
+      "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W2",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "The load read no length and no part: a featured part drained as its lead.",
+   "after": "Every play, every size, 15 minutes longer: a greater workload, mean drain and energy, the drain at the curtain never less and greater wherever under the full; featured < supporting < lead on every play. Played: The Bear (55) against Salomé (75), each one act, the body 3 and the voice 2, energy by hand.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+     "kind": "test (static)",
+     "proves": "the sweep over 30 plays × 3 sizes"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+     "kind": "test (played)",
+     "proves": "played twins, the energy each spent worked by hand"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "const workload = Math.min(WORKLOAD.cap, (playing / 60) * share * intensity);",
+     "replace": "const workload = Math.min(WORKLOAD.cap, share * intensity);",
+     "what": "the running time taken out of the workload",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+      "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+      "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+     ]
+    },
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "const share = WORKLOAD.share[size];",
+     "replace": "const share = WORKLOAD.share.lead;",
+     "what": "the part’s size taken out of the workload",
+     "killed": true,
+     "caughtBy": [
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+      "the part and its piece > reads the part’s own size in its piece and its hours on stage"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W3",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Intensity was read (0.12 a level) but every heavy play hit the clamp at 1.",
+   "after": "At Major Barbara’s running time every level of either raises the workload, by hand; Salomé’s lead (75 minutes, 1.979) at or over Three Sisters’ lead (150 minutes of playing, 1.875), and its drain at the curtain greater.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters",
+     "kind": "test (static)",
+     "proves": "the pair, by hand"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/workload.ts",
+     "find": "  perLevel: PER_LEVEL,",
+     "replace": "  perLevel: 0,",
+     "what": "the intensity’s step at nothing",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W4",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "The drain was (1 − stamina); the energy after 10 flat whatever the stamina.",
+   "after": "Twins at the same curtain, stamina 30 and 70 of full: the fitter drains less or the same in every movement, less at the last, and spends less, each by hand; at full no drain in any movement and the energy 5 × W × 0.5 × g, above 0.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+     "kind": "test (played)",
+     "proves": "stamina’s protection and its limit, played"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/workload.ts",
+     "find": "  staminaSpares: 0.5,",
+     "replace": "  staminaSpares: 1,",
+     "what": "full stamina as unlimited energy",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+      "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+      "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+     ]
+    },
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "PIECE.drain * share * (1 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+     "replace": "PIECE.drain * share * conditionFactor(readiness)",
+     "what": "stamina no protection within",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+      "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W5",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "No break existed.",
+   "after": "A 20-minute interval gives back a quarter of the drain so far for what follows, a 5-minute pause a sixteenth, the first half untouched, the energy the same with or without; played, the interval’s minutes are charged as waking minutes at the waking rate, and sleep after restores from the dials alone.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+     "kind": "test (engine, FIXTURE)",
+     "proves": "FIXTURE: Hedda Gabler’s 140 minutes with and without its interval, by hand"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W5: a break recovers, once > PLAYER JOURNEY: holds the interval on the clock as waking time charged as any, and a night’s sleep after restores from the dials by its own rule, whatever the interval gave back",
+     "kind": "test (played)",
+     "proves": "no credit from the clock or from sleep"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "    energy: WORKLOAD.energy * n.workload * (1 - WORKLOAD.staminaSpares * s) * g,",
+     "replace": "    energy: WORKLOAD.energy * endShare(n) * WORKLOAD.full * (1 - WORKLOAD.staminaSpares * s) * g,",
+     "what": "recovery credited again in the energy after",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+     ]
+    },
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "export const recovered = (minutes: number): number => WORKLOAD.recovers * clamp(minutes / WORKLOAD.recoversFullAt, 0, 1);",
+     "replace": "export const recovered = (minutes: number): number => (minutes > 0 ? 0 : 0) * WORKLOAD.recovers;",
+     "what": "a break recovering nothing",
+     "killed": true,
+     "caughtBy": [
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W6",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Calls held fixed hours; fatigue taken once (10).",
+   "after": "A night holds exactly its running time and the curtain call (occupied at 104 minutes, free at 106 of 105); its energy taken once at the curtain, by hand; a save and a load at the half of the evening and after it leave one record and the same energy and sleep debt to 1e-9; a save from before has its booked calls timed once on opening, and keeps one whose new span would meet another call (GUARD).",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+     "kind": "test (played)",
+     "proves": "the hold and the energy, once"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: a save and a load in the middle of the evening and after it take neither the time nor the energy again",
+     "kind": "test (played)",
+     "proves": "reload through the persistence adapter mid-evening and after"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)",
+     "kind": "test (older save, FIXTURE)",
+     "proves": "older-save compatibility and its guard"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "export const holdOf = (holder: Parameters<typeof runningOf>[0]): number => runningOf(holder).minutes + WORKLOAD.curtainCall;",
+     "replace": "export const holdOf = (holder: Parameters<typeof runningOf>[0]): number => (runningOf(holder).minutes > 0 ? 150 : 150);",
+     "what": "every call held two and a half hours again",
+     "killed": true,
+     "caughtBy": [
+      "W1: every play has a running time, with its basis > PLAYER JOURNEY: books the Carlotta’s performances for its new play’s running time and the curtain call, where every School performance held two and a half hours",
+      "W5: a break recovers, once > PLAYER JOURNEY: holds the interval on the clock as waking time charged as any, and a night’s sleep after restores from the dials by its own rule, whatever the interval gave back",
+      "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+      "W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone",
+      "the part and its piece > reads the part’s own size in its piece and its hours on stage"
+     ]
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "        const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');\n        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));\n        tire(person, energy);",
+     "replace": "        const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');\n        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));\n        tire(person, energy);\n        tire(person, energy);",
+     "what": "the night’s fatigue taken twice",
+     "killed": true,
+     "caughtBy": [
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+     ]
+    },
+    {
+     "file": "src/engine/systems/school.ts",
+     "find": "    if (clash) continue;\n    item.durationMinutes = minutes;",
+     "replace": "    void clash;\n    item.durationMinutes = minutes;",
+     "what": "an older save’s call re-timed over another call",
+     "killed": true,
+     "caughtBy": [
+      "W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W7",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "A night processed as one segment had no drain; in units it did.",
+   "after": "On 30 plays × 3 sizes × with and without places to breathe (180 cases): the units’ length-weighted mean share equals the whole’s, and so the drain at three staminas and days, and the units’ shares of the workload sum to it, each under 1e-9; as judged, each unit’s factor is its exact share’s.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+     "kind": "test (static)",
+     "proves": "units and whole agree under 1e-9"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "export const segmentShares = (n: NightLoad, segments: readonly SegmentSpec[]): number[] => spansOf(n, segments).map(([u, v]) => meanShare(n, u, v));",
+     "replace": "export const segmentShares = (n: NightLoad, segments: readonly SegmentSpec[]): number[] => spansOf(n, segments).map(([u]) => shareAt(n, u));",
+     "what": "a segment sampled at its start",
+     "killed": true,
+     "caughtBy": [
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+      "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W8",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "The condition at the curtain reached a night only under readiness 60, never the drain or the energy.",
+   "after": "Twins at the same curtain, one short of sleep: lower readiness, more drain in every movement and more energy, by g worked by hand; g bounded at 1.5 at readiness 0 and 1 at or over 100.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+     "kind": "test (played)",
+     "proves": "the starting condition, played"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "export const conditionFactor = (readiness: number): number => 1 + WORKLOAD.condition * (1 - clamp(readiness, 0, 100) / 100);",
+     "replace": "export const conditionFactor = (readiness: number): number => 1 + WORKLOAD.condition * (clamp(readiness, 0, 100) / 100);",
+     "what": "the condition read the wrong way round",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+      "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+      "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+      "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.W9",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Nothing said a night’s workload.",
+   "after": "The workload capped at 8 (a 2,000-minute FIXTURE clamps, every catalog part under it), the drain at most 45% off (60% from later on 2026-10-16, when the judge area’s second phase raised the full drain to 0.4: 0.4 × 1.5, where it was 0.3 × 1.5; the test renamed, renames.json); The Evening’s Workload under A Night Now and the night’s record (its look) say the running time and its basis, the breaks, the part’s share, the intensity, the workload of at most 8, the drain at the curtain’s fall and the energy, rendered and checked against the rule by hand; the guide’s nights and notes entries and the tutorial follow, dated.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time",
+     "kind": "test (static)",
+     "proves": "the bound"
+    },
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+     "kind": "test (render)",
+     "proves": "rendered forecast and record"
+    },
+    {
+     "file": "tests/guide-examples-productions.test.ts",
+     "ran": "9 passed"
+    },
+    {
+     "file": "tests/tutorial.test.ts",
+     "ran": "16 passed"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "const workload = Math.min(WORKLOAD.cap, (playing / 60) * share * intensity);",
+     "replace": "const workload = (playing / 60) * share * intensity;",
+     "what": "no bound on the workload",
+     "killed": true,
+     "caughtBy": [
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+     ]
+    }
+   ],
+   "guide": "src/engine/content/guide/productions.ts: the nights entry’s Time, The Body and Stamina lines and a mistake; its Woyzeck example (a lead, rested, the drain in its first and last movements, the workload and the energy); the notes entry’s breathing example (a lead, rested). Each figure from the engine’s functions.",
+   "tutorial": "src/engine/content/tutorial.ts, the School chapter: a performance holds the clock for its play’s running time and tires by its workload; stamina holds the late movements and spares up to half the energy; The Evening’s Workload says it."
+  },
+  {
+   "id": "stamina.W10",
+   "status": "Implemented And Verified",
+   "disposition": "older-save compatibility kept and tested",
+   "before": "RULESET evaluation-10.",
+   "after": "RULESET evaluation-11 (2026-10-16) and its ENGINE-MODEL row; a night kept under evaluation-10 (FIXTURE: the record as the build before wrote it) opens unchanged, overall, band and dimensions, replay refuses it, it says no workload, and its look says “Judged under evaluation-10 (2026-10-16), rules since changed…”; the next night is judged under evaluation-11 with its workload. The save schema stays 94: no field changed meaning (a night’s record gained `inputs.piece.night`; a night on call’s booking `payload.holds`).",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged under evaluation-10, replays none, names the ruleset, and judges the next by its workload",
+     "kind": "test (older save, FIXTURE)",
+     "proves": "history kept"
+    },
+    {
+     "file": "tests/stage-interpretation.test.ts",
+     "title": "the stage reads the scene, not the house > a result kept under the rules before this change isn’t judged again by today’s",
+     "kind": "test (static)",
+     "proves": "evaluation-10 refused, evaluation-11 current"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/tasks.ts",
+     "find": "export const RULESET = 'evaluation-11 (2026-10-16)';",
+     "replace": "export const RULESET = 'evaluation-10 (2026-10-16)';",
+     "what": "the ruleset not moved",
+     "killed": true,
+     "caughtBy": [
+      "W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged under evaluation-10, replays none, names the ruleset, and judges the next by its workload"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.M1",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "before": "M1 met on f17ae369 (tools/ag-baseline.ts: briefs 4560 of 4560, scenes 65, nights 30, casting 30, coursework 13).",
+   "after": "M1 met on 2c190fe7, the same counts (after-ag-criteria.txt); a mastered actor at 100 on Julius Caesar’s, The Winter’s Tale’s and The Bear’s lead at readiness 60, every movement holding.",
+   "evidence": [
+    {
+     "file": "tests/decisions-stamina.test.ts",
+     "title": "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+     "kind": "test (static)",
+     "proves": "the guarantee under the heaviest workload"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt",
+     "title": "M1 Meets",
+     "kind": "measurement (no draw)",
+     "proves": "every case 100"
+    },
+    {
+     "file": "tests/integration-mastery.test.ts",
+     "ran": "6 passed"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/workload.ts",
+     "find": "PIECE.drain * share * (1 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+     "replace": "PIECE.drain * share * (1.02 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+     "what": "a drain at full stamina",
+     "killed": true,
+     "caughtBy": [
+      "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+      "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+      "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+      "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time",
+      "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stamina.measure",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Not measured on this pass’s code.",
+   "after": "Measured before (f17ae369) and after (2c190fe7): M1 met both; ST3 unchanged, 178 of 189 the same as shown, 0 rounding defects, its stamina part 0.0170 at most (class scenes keep their load); L3 unchanged, the specialist 65.5 → 64.3, the beginner 54.0 → 56.8 (a 120-day journey from the fall holds no performance: the first-years’ first night is in May); H4 1 of 12 both (stamina 5.4% → 5.9%); H4′, proposed, presence 2/3 → 3/3, and stamina ahead on the last segment of 29 → 2 of 30 nights, the baseline judging every night as a supporting part; H5 met (within a point of the best 28.9% → 28.2%); A2 met (discipline and stamina 0.532 → 0.478); A1 NOT met after (see stamina.A1).",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/README.md",
+     "title": "every command, file and exit",
+     "kind": "measurement",
+     "proves": "the before and after runs"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/before-ag-criteria.txt",
+     "title": "before",
+     "kind": "measurement (no draw)",
+     "proves": "the criteria on f17ae369"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt",
+     "title": "after",
+     "kind": "measurement (no draw)",
+     "proves": "the criteria on 2c190fe7"
+    }
+   ]
+  },
+  {
+   "id": "stamina.A1",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "before": "A1 met: stamina’s +10 effect 0.63 on the mean of the 30 nights, as tools/ag-baseline.ts judges every night, a supporting part; it met A1 there alone (briefs 0.39, scenes 0.40, coursework 0.43).",
+   "after": "A1 not met: stamina’s nights 0.32 (supporting), so no kind of work reaches 0.5. The cause is decision 5 itself: a supporting part is on stage half the evening and drains by its share, where every part was loaded as a whole evening’s lead. As a lead the same nights give 0.50 (tests/attributes-phase-2b.test.ts, its claim moved to a lead’s night, dated) and a featured part 0.14; stamina also now spares up to half the energy a night costs, which A1 doesn’t read. No coefficient was moved to pass it.",
+   "ownerDecision": {
+    "missing": "Whether A1’s night kind should read the part where the workload puts stamina’s work (a lead, 0.50, at the threshold) or stay a supporting part’s (0.32, not met).",
+    "options": [
+     "Read A1’s, H4’s and H4-R’s nights at a lead’s part, or at each size, in tools/ag-baseline.ts (the judge area’s measurement): stamina meets A1 at 0.50 exactly; other criteria move and must be re-measured.",
+     "Keep the supporting part and record A1 as not met for stamina, its causal role being a lead’s long evening and the energy after.",
+     "Raise the drain’s size or a part’s share to lift it: a weight with no figure behind it, not recommended."
+    ],
+    "recommended": "The first: the measurement chose a supporting part when a part’s size didn’t matter to stamina; it does now."
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/stamina/after-ag-criteria.txt",
+     "title": "A1 FAILS none at 0.5 for stamina",
+     "kind": "measurement (no draw)",
+     "proves": "the regression"
+    },
+    {
+     "file": "tests/attributes-phase-2b.test.ts",
+     "title": "stamina counts by how long and how hard a piece is > gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief",
+     "kind": "test (static)",
+     "proves": "0.50 a lead, less a supporting part, less a featured one"
+    }
+   ]
+  }
+ ],
+ "specialist": {
+  "stamina": "The stamina specialist (85, the other eleven at 46.8) against the even actor on the 30 nights: behind on the whole on all 30 as a lead (closest Julius Caesar −0.15, The Winter’s Tale −0.41) and as a supporting part, as before the change (30 of 30, h4.md); ahead on the last movement on 15 of 30 as a lead and 2 of 30 as a supporting part. Stamina’s own work under the model is a lead’s long, intense evening, and the energy after (H4-R(d)); its whole-piece weakness remains, the judge area’s.",
+  "evidence": "docs/verification/decisions-2026-10-16/stamina/after-stamina-specialist.txt"
+ },
+ "renames": {
+  "piece.test.ts": [
+   "costs nothing in the first segment, more later, more in a heavier piece, and nothing at full stamina",
+   "costs nothing in a scene’s first segment and a little in a night’s, more later, more in a heavier piece, and nothing at full stamina"
+  ],
+  "attributes-phase-2b.test.ts": [
+   [
+    "loads a night as a whole evening, and a long brief more than a medium one",
+    "loads a night by its running time, a one-act less than a whole evening, and a long brief more than a medium one"
+   ],
+   [
+    "gives +10 stamina half a point or more on a night, on the mean of the plays, and a tenth or less on a light brief",
+    "gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief"
+   ]
+  ]
+ },
+ "laterChanged": "Later on 2026-10-16, before evaluation-11 left its branch, the judge area’s second phase moved two of this model’s coefficients to give stamina work of its own (judge-2.md, The Work, 2): the full drain 0.3 to 0.4 (content/piece.ts, PIECE.drain) and WORKLOAD.full to 4/3 of the anchor’s work (content/workload.ts), so the anchor’s lead still drains 0.3 at its curtain. The figures here are this area’s, on its commits. tests/decisions-stamina.test.ts worked W4’s, W7’s, W8’s and W9’s figures again by hand at the new values, each with a dated comment, and W1 to W10 hold (remaining-10/judge-result.json, coefficients; docs/verification/decisions-2026-10-16/integrated/after/README.md). A1, which this area put to the owner, was met by that phase on briefs and scenes, nights still read at a supporting part (the matrix’s stamina.A1 row)."
+}

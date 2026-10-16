@@ -7,8 +7,8 @@
  *   npx vite-node tools/brief-journeys.ts -- --profile beginner --seed bj-0 --days 120
  *
  * Profiles (the starting levels are TEST SETUP): `beginner` (a new student as made), `developing` (abilities and
- * techniques raised to 55), `specialist` (the feeling abilities at 90, the rest at 49, techniques as made), `mastered`
- * (everything full).
+ * techniques raised to 55), `specialist` (the feeling abilities at 90, the rest at 49, techniques as made), `generalist`
+ * (from 2026-10-16, brief 10: the specialist's eleven at their mean, 63.9 each), `mastered` (everything full).
  *
  * The brief policy, an hour at a time: a callback waiting comes first, its note followed; then the brief in hand,
  * prepared a step at a time until every part is complete (studying its genre if it's short), then taped; then a new
@@ -39,6 +39,8 @@ import { adviceFor } from '../src/engine/systems/next-steps';
 import { replayAs, type Performer, type WorkRecord } from '../src/engine/systems/evaluation';
 import { TASK_PROFILES } from '../src/engine/content/tasks';
 import { TECHNIQUES } from '../src/engine/content/abilities';
+import type { Evaluation } from '../src/engine/systems/evaluation';
+import { fixedPieces } from './pieces';
 
 const arg = (name: string, d: string) => { const i = process.argv.indexOf(`--${name}`); return i > 0 ? process.argv[i + 1]! : d; };
 const PROFILE = arg('profile', 'beginner');
@@ -57,6 +59,12 @@ function setUp(sim: Simulation) {
     for (const k of ['emotion'] as const) p.craft![k] = 90;
     p.attrs = { ...(p.attrs ?? {}), composure: 90, imagination: 90, presence: 90, listening: 49, focus: 49, adaptability: 49, discipline: 49 } as typeof p.attrs;
     p.craft!.memorization = 49; p.craft!.voice = 49; p.craft!.movement = 49;
+  } else if (PROFILE === 'generalist') {
+    // From 2026-10-16, brief 10 (L3-R (b)): the eleven abilities the specialist sets, each at their mean (four at 90 and
+    // seven at 49, 703 / 11), techniques as made, so the two spend the same budget, the one evenly.
+    const at = 703 / 11;
+    for (const k of ['emotion', 'memorization', 'voice', 'movement'] as const) p.craft![k] = at;
+    p.attrs = { ...(p.attrs ?? {}), composure: at, imagination: at, presence: at, listening: at, focus: at, adaptability: at, discipline: at } as typeof p.attrs;
   } else if (PROFILE === 'mastered') {
     p.craft = evenCraft(MASTERED);
     for (const k of ['emotion', 'memorization', 'voice', 'movement'] as const) p.craft[k] = 100;
@@ -262,5 +270,41 @@ if (TRACE) {
     const count = (f: (x: (typeof rows)[number]) => string) => xs.reduce((o, x) => { const k = f(x); o[k] = (o[k] ?? 0) + 1; return o; }, {} as Record<string, number>);
     return [`m${m}`, { takes: xs.length, purposes: count((x) => x.purpose), difficulty: count((x) => String(x.difficulty)), size: count((x) => String(x.size)), stakes: count((x) => String(x.stakes)), beats: count((x) => String(x.beats)), genres: new Set(xs.map((x) => x.brief.replace(/^brief-/, '').replace(/-\d+$/, ''))).size }];
   }));
-  writeFileSync(TRACE, JSON.stringify({ profile: PROFILE, seed: SEED, days: DAYS, byMonth, controlled, falls, mix, takes: rows }, null, 1));
+  // L3-R (from 2026-10-16, brief 10; docs/verification/decisions-2026-10-16/criteria.md): the fixed set of 24
+  // (`tools/pieces.ts`, named before it was measured) judged at the levels of the start, of each month's start and of
+  // the end, fully prepared, every axis left open, readiness 100, no draw; and every fall between two points, of a
+  // fixed piece or of a replayed take, put to the abilities it reads that fell (each held at the point before's level
+  // and full) and judged again. A fall is explained where it then comes out at or over the point before's.
+  const perf = [{ at: 'start', p: atStart! }, ...monthLevels.map((m) => ({ at: `m${m.month}`, p: m.levels })), { at: 'end', p: atEnd }];
+  const nOf = (p: Performer, id: AbilityId) => p.ability(id) / Math.max(1e-9, p.full(id));
+  const held = (cur: Performer, prev: Performer, ids: readonly AbilityId[]): Performer => ({ ability: (id) => (ids.includes(id) ? prev.ability(id) : cur.ability(id)), full: (id) => (ids.includes(id) ? prev.full(id) : cur.full(id)), technique: (k) => cur.technique(k) });
+  const fixed = fixedPieces();
+  type Judged = { what: string; at: (p: Performer) => Evaluation | undefined };
+  const judged: Judged[] = [
+    ...fixed.map((pc): Judged => ({ what: `fixed ${pc.kind}:${pc.id}`, at: (p) => pc.judge(p) })),
+    ...traced.map(({ day, brief, record: w }): Judged => ({ what: `take ${brief} day ${day}`, at: (p) => replayAs(w, TASK_PROFILES[w.task]!, p) })),
+  ];
+  const stepFalls: { what: string; from: string; to: string; by: number; fell: string[]; held?: number; explained: boolean }[] = [];
+  for (const j of judged) {
+    for (let k = 1; k < perf.length; k += 1) {
+      const prev = perf[k - 1]!, cur = perf[k]!;
+      const a = j.at(prev.p), b = j.at(cur.p);
+      if (!a || !b) continue;
+      const by = b.exact! - a.exact!;
+      if (by >= -1e-9) continue;
+      const reads = Object.keys(b.inputs.abilities) as AbilityId[];
+      const fell = reads.filter((id) => nOf(cur.p, id) < nOf(prev.p, id) - 1e-12);
+      const again = fell.length ? j.at(held(cur.p, prev.p, fell))!.exact! - a.exact! : undefined;
+      stepFalls.push({ what: j.what, from: prev.at, to: cur.at, by, fell, ...(again !== undefined ? { held: again } : {}), explained: again !== undefined && again >= -1e-9 });
+    }
+  }
+  const fixedAt = perf.map((pt) => ({ at: pt.at, mean: fixed.reduce((t, pc) => t + pc.judge(pt.p).exact!, 0) / fixed.length }));
+  const monthsOf = Object.entries(result.quality);
+  const l3r = {
+    fixedSet: { pieces: fixed.length, byPoint: fixedAt.map((x) => ({ at: x.at, mean: Math.round(x.mean * 1000) / 1000 })), growth: fixedAt.at(-1)!.mean - fixedAt[0]!.mean, perPiece: fixed.map((pc) => ({ piece: `${pc.kind}:${pc.id}`, byPoint: perf.map((pt) => Math.round(pc.judge(pt.p).exact! * 1000) / 1000) })) },
+    falls: { steps: judged.length * (perf.length - 1), falls: stepFalls.length, unexplained: stepFalls.filter((f) => !f.explained).length, list: stepFalls },
+    journeyMetric: { firstMonth: monthsOf[0]?.[1], lastMonth: monthsOf.at(-1)?.[1], l3AsWritten: monthsOf.length ? (monthsOf.at(-1)![1].mean >= monthsOf[0]![1].mean ? 'meets' : 'fails') : 'no takes' },
+    mix: Object.fromEntries([...new Set(rows.map((x) => x.month))].map((m) => { const xs = rows.filter((x) => x.month === m); const ds = xs.map((x) => x.difficulty); return [`m${m}`, { takes: xs.length, purposes: xs.reduce((o, x) => { o[x.purpose] = (o[x.purpose] ?? 0) + 1; return o; }, {} as Record<string, number>), difficulty: { mean: Math.round((ds.reduce((t, x) => t + x, 0) / ds.length) * 1000) / 1000, min: Math.min(...ds), max: Math.max(...ds) }, stakes: xs.reduce((o, x) => { o[String(x.stakes)] = (o[String(x.stakes)] ?? 0) + 1; return o; }, {} as Record<string, number>), genres: [...new Set(xs.map((x) => BRIEF_BY_ID[x.brief]?.kinds[0] ?? x.brief))] }]; })),
+  };
+  writeFileSync(TRACE, JSON.stringify({ profile: PROFILE, seed: SEED, days: DAYS, byMonth, controlled, falls, mix, takes: rows, l3r }, null, 1));
 }

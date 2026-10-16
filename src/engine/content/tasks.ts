@@ -46,7 +46,15 @@ import type { AbilityId } from './abilities';
 // weighted mean divided once. A result kept
 // under evaluation-9 is shown as it was; work a save kept on a piece's segments moves to its units on its first opening
 // (`cutIntoUnits`, engine/index.ts).
-export const RULESET = 'evaluation-10 (2026-10-16)';
+// evaluation-11 from later on 2026-10-16, the owner's brief 10 (decision 5): a night's drain reads its workload, the
+// production's running time, the part's share of it by its size, the body's and the voice's intensity, its breaks, and
+// the day at the curtain, each segment the mean over its own stretch of the running (`systems/workload.ts`,
+// `content/workload.ts`); until then a night's load was 0.6 and 0.12 a level, clamped at 1, read by a segment's place,
+// so a one-act and a featured part were a whole evening's lead. A night kept under evaluation-10 is shown as it was.
+// Later still that day, before evaluation-11 left its branch and so part of it (brief 10, the judge area's second phase):
+// the full drain 0.4 where it was 0.3 (`PIECE.drain`), a night's part's text read by its time on stage (`PART_TEXT`), and
+// a night before a house at stakes 1.5 where a play read 1 (`NIGHT_STAKES`).
+export const RULESET = 'evaluation-11 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';
 

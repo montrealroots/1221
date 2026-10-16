@@ -235,8 +235,12 @@ describe('What To Work On, with the work so far', () => {
     const first = withIt.find((x) => !x.target.includes(':'))!;
     const brief = pane(sim, 'drama', 'brief-drama');
     expect(brief).toContain(`<strong>${first.label}</strong>. ${first.why}`);
-    // About as useful as the top, it goes first; otherwise it's said where its forecast puts it, with its pieces for life.
-    if (tied(mine.points, first.points)) expect(first.target).toBe(r.target); else expect(first.points).toBeGreaterThan(mine.points);
+    // Until brief 10 (later on 2026-10-16) this said: about as useful as the top, it goes first; otherwise it's said where
+    // its forecast puts it. From then a forecast's order is the forecast's alone (`recommendations`): put first when about
+    // as useful, the recurring weakness stayed first after twenty sessions of it while another's forecast had come to lead
+    // (F2-A10 (h)). So it's said, with its pieces for life, where its forecast puts it, never ahead of a higher one.
+    expect(first.forecast!.exact!).toBeGreaterThanOrEqual(mine.forecast!.exact!);
+    if (first.target !== r.target) expect(tied(mine.points, first.points) || first.points > mine.points).toBe(true);
   }, 120_000);
 });
 

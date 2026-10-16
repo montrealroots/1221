@@ -61,10 +61,17 @@ export interface MaterialProfile {
   /**
    * A practice brief's length and what rides on it (from 2026-10-16, `briefMaterial`), which what a piece demands reads
    * (`DEMAND_EFFECT`, `content/approaches.ts`). A scene's and a play's aren't given: a scene is a class scene's length,
-   * and a play's night is read as a whole evening by its own task.
+   * and a play's night is read by its own task, and from later on 2026-10-16 its part's text by the part (`text`).
    */
   size?: 'short' | 'medium' | 'long';
-  stakes?: 0 | 1 | 2 | 3;
+  /** A brief's 0 to 3 in steps; a night's before a house 1.5 (`NIGHT_STAKES`, from later on 2026-10-16), set with its part. */
+  stakes?: number;
+  /**
+   * The text a night's part holds, in what a piece demands' units of it (from 2026-10-16, the owner's brief 10), set where
+   * the part is known, by its time on stage (`partText`, `systems/workload.ts`). A brief's comes from its size; a scene's
+   * and a play's aren't given, and a play read with no part reads none (`demandsOf`).
+   */
+  text?: number;
   techniques?: Partial<Record<Skill, number>>;
   allows?: Partial<Record<Axis, readonly AxisValue[]>>;
   /**
@@ -229,6 +236,13 @@ export const SCENE_MATERIAL: readonly MaterialProfile[] = [
   // profile before it moved.
   m({ id: 'scapin-3-2', title: 'The Impostures Of Scapin', language: 'everyday', timing: 3, physical: 3, partner: 2, vocal: 3, tones: ['comic'], turns: 5, techniques: { comedy: 1, accents: 1 },
     circumstances: { concealment: 3, confrontation: 1 }, why: { concealment: 'Géronte hides in a sack, and Scapin plays every enemy who beats it, each in another voice.', confrontation: 'The bullies threaten and strike out loud, but they’re Scapin’s voices: he never puts his own quarrel, his revenge for the lie, to Géronte’s face before he runs.', timing: 'Scapin’s asides to the sack in his own voice between a bully’s lines, keeping the old man still and hidden, and each blow cried out as it falls.', physical: 'The sack got into, the stick laid on it again and again, the old man’s head pushed back in twice, and the run at the end.', partner: 'Line by line while Géronte is talked into the sack and each time he looks out of it; between, Scapin plays both sides of each encounter to a listener who can’t see him.', vocal: 'Voices of his own besides his natural tone: a Gascon bully, a foreigner, half a dozen soldiers at once, and his cries as if beaten.', language: 'Quick, plain prose: the period is in the situation, and what the voices ask is their accents.', tones: 'Farce throughout: a miser beaten in a sack by the servant who tricked him.', turns: 'Frightened, into the sack; the Gascon’s beating; the complaint talked away; the foreigner’s beating; the soldiers, until Géronte looks out and sees the trick.', techniques: 'The bullies’ accents are written into the lines, “Vat! I shall not hab de pleasure to kill dis Géronte,” and the beating is played for its laughs.' } }),
+  // Two public meetings (from 2026-10-16, brief 10; `content/scenes-meeting.ts`): each a speech to many answered by a
+  // second part that speaks to the same many, as the house scenes are, in prose. Every level was read from the scene's
+  // text and written down before any measurement of how it comes out. Appended, so no profile before them moved.
+  m({ id: 'enemy-4', title: 'An Enemy Of The People', language: 'everyday', timing: 1, physical: 0, partner: 1, vocal: 2, tones: ['grave', 'comic', 'grave'], turns: 1,
+    circumstances: { address: 3, confrontation: 3, concealment: 1 }, why: { address: 'A public meeting in a room nearly filled with townspeople: the motion and the lecture are both made to the meeting, through its chairman.', confrontation: 'The brothers’ quarrel brought before the whole town: the doctor names Peter as a specimen of the kind, and the room shouts him down.', concealment: 'Peter moves that the report not be read or commented on, and his account in the paper is what the meeting is to believe.', partner: 'The two never answer each other but once (“Have you gone clean out of your senses, Peter?”): Peter speaks to the chair, the doctor to the room.', vocal: 'He raises his voice over the uproar and the horn, shouting above the din at the end.', timing: 'Interruptions to answer as they come, the chairman’s bell, and the room hushed down before he begins.', tones: 'The motion, put gravely; the doctor’s mockery of the compact majority, barn-door hens and poodles, met by laughter and mocking cries; and, shouted down, his losing his self-control.', turns: 'He gives way to the motion and turns it: he won’t speak of the Baths at all, but of the majority itself.' } }),
+  m({ id: 'strife-2-2', title: 'Strife', language: 'everyday', timing: 2, physical: 0, partner: 1, vocal: 2, tones: ['grave'], turns: 2, techniques: { accents: 1 },
+    circumstances: { address: 3, confrontation: 2 }, why: { address: 'Two speeches from a platform of barrels to a crowd of strikers in the open, every word for the crowd.', confrontation: 'A contest for the crowd: Harness never names Roberts, but Roberts faces down Bulgin and Rous to their faces before he can speak.', partner: 'Harness fixes his eyes on Roberts and never speaks to him; Roberts answers him to the crowd once he has gone.', vocal: 'Out of doors over the crowd’s murmurs, lifting the voice above them, and Roberts’s close in almost a whisper.', timing: 'Each waits on the crowd: Harness quartering them with his eyes, Roberts holding out his hand till they’re utterly silent.', tones: 'A starving strike argued in earnest; the laughter is the crowd’s, at old Thomas.', turns: 'The crowd swings to the Union and Rous turns his coat; Roberts takes them back, and drops from passion to a whisper.', techniques: 'Galsworthy writes Roberts’s speech: “’T es only by that in Nature’s face that a man can be a man.”' } }),
 ];
 
 /** The plays a production casts (`content/plays.ts`), by title. Their techniques are the play's own `reads`. */

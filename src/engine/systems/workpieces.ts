@@ -110,7 +110,9 @@ function partWork(sim: Simulation, person: Person, which: string): WorkPiece | u
     ...(material ? { material } : {}),
     ...(proc.direction && Object.keys(proc.direction).length ? { direction: proc.direction } : {}),
     ...(proc.playing ? { playing: proc.playing } : {}),
-    spec: () => playPiece(holder),
+    // The part's own workload, its size's share of the evening, as its forecast and its night read it (from 2026-10-16,
+    // brief 10: until then the spec read no size, and a night's load was the same for every part).
+    spec: () => playPiece(holder, holder.size ?? 'lead'),
     // An understudy plays the lead they cover, as the night itself is judged (`reckonNight`): the only holder with no
     // size. Until 2026-10-12 this forecast it as a supporting part, so a Rep understudy's A Night Now and the problems
     // worked on were read at the Rep's supporting difficulty, and the run-through and a night gone on at its lead's.

@@ -1,0 +1,488 @@
+{
+ "key": "judge",
+ "on": "2026-10-16",
+ "against": "f17ae369 (the criteria 2e8e4db3 and the instructions; the engine as 44dcd973, #36's merge, left it), in the judge area's own clone, written before any code changed",
+ "brief": "docs/verification/decisions-2026-10-16/prompts/judge.md and common.md; ../integration-2026-10-16/prompts-09/common.md; the owner's section 1 of docs/verification/briefs-2026-10-16/10-approved-acting-advice-banking-and-stamina-decisions.txt; CLAUDE.md",
+ "criteria": "docs/verification/decisions-2026-10-16/criteria.md (section 1, unchanged)",
+ "conventions": [
+  "\"Ahead\" is ahead at full precision by more than 0.05; \"behind\" is behind by more than 0.05 (the criteria's convention, mirrored).",
+  "Every judgment here is fully prepared (every part at 1, a chosen way rehearsed in at 1), readiness 100, no draw (`expected`), unless the item says otherwise; the stage and ST6 cases on the class-scene task at Scene Study's difficulty as `tools/interpretation.ts --stage` judges them.",
+  "\"Its fitting way\" (H4-R, L3-R) is read as every axis left open: no side forced, which every piece takes, as H4 and H4′ were measured. Said here before measurement so it can't be chosen by outcome.",
+  "\"Briefs and their readings\" (H4-R) is read as each reading of each brief a piece.",
+  "The stamina model belongs to the stamina area; H4-R's stamina lines, ST3-R and L3-R are measured finally after it's integrated, and M1 on the integrated code."
+ ],
+ "items": [
+  {
+   "id": "judge.baseline",
+   "item": "The measurements, exactly as the criteria say, before anything in the judge changes",
+   "requirement": "judge.md, The Order, 1; docs/verification/decisions-2026-10-16/criteria.md section 1; brief 10 section 1 (\"Write the new criteria and justify their thresholds before tuning the implementation\").",
+   "currentBehavior": "The tools measure ST3, ST6, H4 and L3 as written and the proposals ST3′, ST6′, H4′, L3′ (brief 09). None measures ST3-R, ST6-R, H4-R or L3-R as written; tools/brief-journeys.ts has no generalist profile and no fixed set; there is no monotonicity sweep; no mutation runner for the \"it catches what it should\" clauses.",
+   "affectedSystems": [
+    "tools/interpretation.ts",
+    "tools/ag-baseline.ts",
+    "tools/ag-criteria.mjs",
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new)",
+    "docs/verification/decisions-2026-10-16/baseline/"
+   ],
+   "plan": "Extend the tools to measure every clause as the criteria write it (below), commit them, then measure on the engine as 2e8e4db3 left it into docs/verification/decisions-2026-10-16/baseline/, with every command, seed and exit in its README. Mutations run in copies of the clone (node_modules linked), never in the tree.",
+   "acceptance": "baseline/README.md names each command, seed, file and exit; the tools are committed before the measurement, and the measurement before any change to the judge.",
+   "measure": "The commands listed per item below.",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.budget",
+   "item": "Profiles and budgets: equal budgets, printed with the results",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md: ST6-R \"its other abilities lowered evenly to the even actor's budget\"; H4-R \"its total equals the even actor's ... the budgets are printed with the results\"; judge.md, The Order, 2.",
+   "currentBehavior": "tools/interpretation.ts builds both ST6 specialists as actor({…three at 85/75/75…}, fill(235)) with fill = (600 − n) / 8, and actor() reads every ability not named at fill: 9 abilities are left, not 8, so each specialist's total is 235 + 9 × 45.625 = 645.6 against the even actor's 600 (12 × 50), 45.6 over. ST6 as written compares a specialist with itself, so its budget moves little; ST6′'s 26 of 42 (brief 09) compared a 645.6 budget with a 600 one. ST3's voice-and-body specialist ((600 − 170) / 10 over 10 left) and ag-baseline's specialists ((600 − 85) / 11 over 11 left) total 600.",
+   "affectedSystems": [
+    "tools/interpretation.ts"
+   ],
+   "plan": "Print each profile's budget with every result; fix fill to (600 − n) / 9 with a dated comment saying what it did; measure ST6 as written and ST6′ both ways (old fill and corrected) so what the defect changed is a figure.",
+   "acceptance": "Every ST6-R and H4-R output carries the budgets; the even actor's and each specialist's totals equal to 1e-9; ST6 as written and ST6′ reported on both budgets.",
+   "measure": "npx vite-node tools/interpretation.ts -- --stage --st6 <file>; npx vite-node tools/ag-baseline.ts",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3-R.a",
+   "item": "ST3-R (a) Identical inputs, identical results",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (a); brief 10 section 1, ST3.",
+   "currentBehavior": "Brief 09's tests held the even-undrained clause at 3e-14 on 179 cases and the replay by `replayAs`; no save-and-load round trip; nothing on a judged-twice or drawn replay.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st3)",
+    "src/engine/systems/piece.ts (judgePieceExact, (d) only)"
+   ],
+   "plan": "Each case (every class scene and play as a class scene, every scale side that fits, the grain held at nothing) judged twice, its record serialised and deserialised through the save adapter and replayed, and replayed with the draw under `replay`: 0 apart or under 1e-12. An actor even in everything the formula reads (abilities 55 of 100, techniques 49.5 of 90), stamina 100 (undrained), on stage and at a close frame: under 1e-9 exact and the same as shown.",
+   "acceptance": "ST3-R (a) printed met on every case by `--st3`; tests/decisions-judge.test.ts holds it.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st3 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3-R.b",
+   "item": "ST3-R (b) Legitimate demands kept",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (b); brief 10 section 1, ST3.",
+   "currentBehavior": "Brief 09: specialist 189 of 189; stamina's part up to 0.0170; its least not reported.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st3)",
+    "src/engine/systems/piece.ts (judgePieceExact, (d) only)"
+   ],
+   "plan": "The voice-and-body specialist (vocal 85, physical 85, the other ten (600 − 170) / 10) better on stage than at a close frame at full precision on every case. An actor whose stamina is 55 shows a stamina part above 1e-9 on every case with a unit after its first: measured as the drain's cost on each medium (its result at stamina 100 less at 55, the rest even) and as the drain's part of the stage-less-close difference; both reported, the clause read as both.",
+   "acceptance": "ST3-R (b) printed met on every case by `--st3`; tests/decisions-judge.test.ts holds it.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st3 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3-R.c",
+   "item": "ST3-R (c) Every difference attributed",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (c); brief 10 section 1, ST3.",
+   "currentBehavior": "Brief 09: residual 3e-14 on 189; techniques ≤ 0.0026, stamina ≤ 0.0170.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st3)",
+    "src/engine/systems/piece.ts (judgePieceExact, (d) only)"
+   ],
+   "plan": "The criterion's even actor (abilities 55, techniques 50, stamina 55): stage less close at full precision equals techniques' part + stamina's part + what's left, each by changing one input at a time; what's left (the actor even in everything read, undrained) under 1e-9 on every case.",
+   "acceptance": "ST3-R (c) printed met on every case by `--st3`; tests/decisions-judge.test.ts holds it.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st3 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3-R.d",
+   "item": "ST3-R (d) Rounded once, at the end",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (d); brief 10 section 1, ST3.",
+   "currentBehavior": "Brief 09: 0 rounding defects on the whole; dimensions, segments and limits not checked case by case.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st3)",
+    "src/engine/systems/piece.ts (judgePieceExact, (d) only)"
+   ],
+   "plan": "Every shown figure of each case (the whole, each dimension, each segment's whole and dimensions, each limit's cost to its dimension and to the whole, the grain's points) equals its own exact value rounded once to a tenth. The exact values are read from a piece judged at full precision (`judgePieceExact`, exported for this from `judgePiece` without changing any figure).",
+   "acceptance": "ST3-R (d) printed met on every case by `--st3`; tests/decisions-judge.test.ts holds it.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st3 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3-R.e",
+   "item": "ST3-R (e) It catches what it should",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R (e); brief 10 section 1, ST3.",
+   "currentBehavior": "Brief 09 killed three related mutations in its tests; none run against these clauses.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st3)",
+    "src/engine/systems/piece.ts (judgePieceExact, (d) only)"
+   ],
+   "plan": "In copies of the clone, each fails the clause named: the whole rounded by floor, and a whole worked from rounded dimensions (d); STAGE_LEAN and CAMERA_LEAN both 1 (b); PIECE.drain 0 (b); the grain leaking into ST3's comparison, `GRAIN.strength || 0.3` in `grainOf` (a).",
+   "acceptance": "ST3-R (e) printed met on every case by `--st3`; tests/decisions-judge.test.ts holds it.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st3 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST3.asWritten",
+   "item": "ST3 as written, kept as the record",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST3-R: \"ST3's own clause, the even actor the same as shown, is still measured and reported beside it, as the record.\"",
+   "currentBehavior": "Last measured 178 of 189 the same as shown (integrated-09): not met.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--stage)"
+   ],
+   "plan": "Measured and reported beside ST3-R, marked superseded, never counted met.",
+   "acceptance": "ST3 as written in baseline and after, with its count.",
+   "measure": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.a",
+   "item": "ST6-R (a) Viable",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (a); brief 10 section 1, ST6.",
+   "currentBehavior": "ST6′ (brief 09, unequal budget): 26 of 42.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "Restrained specialist (emotional depth 85, composure 75, focus 75, the other nine (600 − 235) / 9) playing restrained on every material where expansive suits better (and both fit), ahead (by more than 0.05 at full precision) of the even actor (every ability 50, techniques 50) playing expansive, on at least 25%. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (a) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.b",
+   "item": "ST6-R (b) Restraint's own craft pays",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (b); brief 10 section 1, ST6.",
+   "currentBehavior": "Not measured.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "On every material where both sides fit: (RS restrained − even restrained) > (RS expansive − even expansive) + 1e-9 on at least 90%; the materials where it isn't are named. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (b) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.c",
+   "item": "ST6-R (c) Success depends on what it should",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (c); brief 10 section 1, ST6.",
+   "currentBehavior": "Not measured.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "Abilities: the even actor restrained ahead of itself expansive (by > 0.05) on at least 10 points fewer of the against-grain materials than (a). Preparation: the specialist's restrained choice half rehearsed in (Playing.prep and prep.approach 0.5), its (a) count lower. Circumstances: the against-grain materials sorted by gap (expansive less restrained suitability, ties by id); the first ⌊n/2⌋ the smaller half, the last ⌊n/2⌋ the larger (a middle one in neither); (a)'s rate on the smaller at least 20 points above on the larger. Interpretation: every win in (a) on a material whose `allows` takes restrained. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (c) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.d",
+   "item": "ST6-R (d) Limits kept",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (d); brief 10 section 1, ST6.",
+   "currentBehavior": "Not measured.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "On at least 25% of the against-grain materials the specialist's restrained take is behind (by more than 0.05) the even actor's expansive one; on at least half of those the expansive specialist (presence 85, vocal 75, physical 75, the other nine (600 − 235) / 9) playing expansive is ahead (by > 0.05) of the restrained specialist playing restrained. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (d) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.e",
+   "item": "ST6-R (e) Diverse, independent examples",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (e); brief 10 section 1, ST6.",
+   "currentBehavior": "Not measured.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "The wins in (a) from at least 6 source works (a class scene's `SCENES[].play`, a play's title) and at least 3 register families (the genre whose register the material is read in, `sceneOfMaterial`), no work giving more than a quarter of the wins; the limits in (d) from at least 4 works. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (e) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.f",
+   "item": "ST6-R (f) The other half kept",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (f); brief 10 section 1, ST6.",
+   "currentBehavior": "ST6 as written, expansive half: 22 of 50 (brief 09, unequal budget).",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "The expansive specialist (equal budget, as (d)) playing expansive ahead (by > 0.05 at full precision) of itself playing restrained on at least 25% of the materials where restrained suits better; the as-shown count reported beside it. Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (f) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6-R.g",
+   "item": "ST6-R (g) It catches what it should",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6-R (g); brief 10 section 1, ST6.",
+   "currentBehavior": "Not run.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--st6)",
+    "src/engine/content/approaches.ts (only if (b) fails, from a source)"
+   ],
+   "plan": "In copies: restraint's draws removed (APPROACH_EFFECT.restrained.inputs {}) fails (b); restrained suitability forced to −1 on every material fails (a) or (c); GRAIN.strength 0 fails (c) or (d). Every profile fully prepared (every part 1, the choice rehearsed in), Scene Study's task and difficulty, readiness 100, no draw, as `--stage` judges.",
+   "acceptance": "ST6-R (g) printed by `--st6`; tests/decisions-judge.test.ts holds the wins and limits.",
+   "measure": "npx vite-node tools/interpretation.ts -- --st6 <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "ST6.asWritten",
+   "item": "ST6 as written, kept as the record",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, ST6 → ST6-R: originals stay in the record with every result.",
+   "currentBehavior": "Last measured restrained 9 of 42, expansive 22 of 50 (integrated-09): not met.",
+   "affectedSystems": [
+    "tools/interpretation.ts (--stage)"
+   ],
+   "plan": "Measured and reported beside ST6-R, marked superseded.",
+   "acceptance": "ST6 as written in baseline and after.",
+   "measure": "npx vite-node tools/interpretation.ts -- --fresh --stage",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4-R.a",
+   "item": "H4-R (a) Opportunities",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (a); brief 10 section 1, H4.",
+   "currentBehavior": "H4′ (brief 09, briefs as the mean of their readings): presence 3 own pieces, stamina 1; composure's and memory's own work all briefs.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (h4r section)",
+    "tools/ag-criteria.mjs",
+    "tools/h4-indirect.ts (new, (d))",
+    "content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)"
+   ],
+   "plan": "Pieces: every brief in each of its readings (each reading a piece), every class scene (Scene Study's task and difficulty), every play as a supporting part at the School (a night), casting's read of every play, every coursework template not judged as a scene; fully prepared, every axis of the way of playing left open (a way that fits every piece; read as the criteria's \"its fitting way\"), readiness 100, no draw. An ability's own work: the pieces where its +10 effect from the even actor is at least 0.05 and larger than each other ability's at full precision (brief 09's own work). Each of the twelve: at least 5 own pieces in at least 2 kinds.",
+   "acceptance": "H4-R (a) printed by `node tools/ag-criteria.mjs`; tests/decisions-judge.test.ts holds each ability's contribution on its own work.",
+   "measure": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4-R.b",
+   "item": "H4-R (b) Advantage where the work is about it",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (b); brief 10 section 1, H4.",
+   "currentBehavior": "H4′: 11 of 12 abilities at 60%; medians not measured.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (h4r section)",
+    "tools/ag-criteria.mjs",
+    "tools/h4-indirect.ts (new, (d))",
+    "content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)"
+   ],
+   "plan": "Each specialist (85 on its ability, the other eleven (600 − 85) / 11, techniques 50) ahead of the even actor (every ability 50, techniques 50) by more than 0.05 on at least 60% of its own work, and its median advantage there at least 0.3; all twelve.",
+   "acceptance": "H4-R (b) printed by `node tools/ag-criteria.mjs`; tests/decisions-judge.test.ts holds each ability's contribution on its own work.",
+   "measure": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4-R.c",
+   "item": "H4-R (c) No erased weakness",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (c); brief 10 section 1, H4.",
+   "currentBehavior": "Brief 09: 0 of 3,463 ahead; H2 holds.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (h4r section)",
+    "tools/ag-criteria.mjs",
+    "tools/h4-indirect.ts (new, (d))",
+    "content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)"
+   ],
+   "plan": "Over every (ability, piece) where the ability's share of the piece's positive +10 effects is under 0.1, its specialist ahead on at most 1%; H2 holds on ag-baseline's pieces as written and on this set.",
+   "acceptance": "H4-R (c) printed by `node tools/ag-criteria.mjs`; tests/decisions-judge.test.ts holds each ability's contribution on its own work.",
+   "measure": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4-R.d",
+   "item": "H4-R (d) Direct and indirect apart",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (d); brief 10 section 1, H4.",
+   "currentBehavior": "Covered piecemeal by earlier tests (guide-examples-*, attributes-phase-2a/2b, evidence-*); never measured as one account.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (h4r section)",
+    "tools/ag-criteria.mjs",
+    "tools/h4-indirect.ts (new, (d))",
+    "content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)"
+   ],
+   "plan": "Each benefit outside the judged piece that `ABILITY_DEFS[].affects` claims, measured by twin lives through the game's commands and reported on its own line: listening (an evening with a partner or reader, a brief rehearsed on its feet), imagination (table work, a brief's breakdown), focus (getting to know coursework's material), memory (learning lines), adaptability (a revision after a note; a director's note on the blocking), composure (the stress nerves add before a performance), discipline (the pace of growth), stamina (the condition after the work and across a run: waits on the stamina area's model). None added into (b).",
+   "acceptance": "H4-R (d) printed by `node tools/ag-criteria.mjs`; tests/decisions-judge.test.ts holds each ability's contribution on its own work.",
+   "measure": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>; npx vite-node tools/h4-indirect.ts -- --out <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4-R.e",
+   "item": "H4-R (e) It catches what it should",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R (e); brief 10 section 1, H4.",
+   "currentBehavior": "Not run.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (h4r section)",
+    "tools/ag-criteria.mjs",
+    "tools/h4-indirect.ts (new, (d))",
+    "content (new in-scope material, only where (a) or (b) fails, read from a source and committed before it's measured)"
+   ],
+   "plan": "In copies: one ability's every input weight cut to a tenth in `termsOf` fails (a) or (b); a specialist built over 12 abilities instead of 11 fails the printed budgets.",
+   "acceptance": "H4-R (e) printed by `node tools/ag-criteria.mjs`; tests/decisions-judge.test.ts holds each ability's contribution on its own work.",
+   "measure": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "H4.asWritten",
+   "item": "H4 as written and H5 beside H4-R",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, H4-R: \"H5 must hold beside it\"; originals kept.",
+   "currentBehavior": "H4 as written 1 of 12 (integrated-09): not met. H5 holds (436 of 436, 28.9%).",
+   "affectedSystems": [
+    "tools/ag-criteria.mjs"
+   ],
+   "plan": "Both printed beside H4-R, H4 marked superseded.",
+   "acceptance": "H4 and H5 in baseline and after.",
+   "measure": "node tools/ag-criteria.mjs <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3-R.a",
+   "item": "L3-R (a) A fixed set, controlled",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (a); brief 10 section 1, L3.",
+   "currentBehavior": "L3′ (brief 09): each journey's own takes only, two journeys of one seed.",
+   "affectedSystems": [
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new, (d))"
+   ],
+   "plan": "The 24, chosen here before any measurement by kind and spread, not by outcome: briefs (each at its first reading) brief-art_house (restraint), brief-comedy (rhythm), brief-drama (sincerity), brief-musical (heightened), brief-horror (extremity), brief-legal_drama (exactness), brief-thriller (tension), brief-social_realism (spontaneity); class scenes seagull-4, earnest-2, hamlet-3-1, antigone-441, dream-3-2, scapin-3-2, henry5-4-3, orig-office-hours; nights (a supporting part at the School) The Bear, Three Sisters, Macbeth, Hedda Gabler; castings Twelfth Night, Julius Caesar, Trifles, Tartuffe. Each fully prepared, every axis left open, readiness 100, no draw, judged at the levels of the start, each month's start and the end of each journey; beside them each journey's own takes replayed (L3′).",
+   "acceptance": "L3-R (a) printed per journey by `--trace` and summed by tools/l3r.mjs (new); tests/decisions-judge.test.ts holds controlled improvement and a generalist's and a specialist's development.",
+   "measure": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --write <f> --trace <f>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3-R.b",
+   "item": "L3-R (b) Enough journeys",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (b); brief 10 section 1, L3.",
+   "currentBehavior": "Two profiles on bj-0.",
+   "affectedSystems": [
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new, (d))"
+   ],
+   "plan": "Beginner (as made), developing (abilities and techniques raised to 55), specialist (the feeling abilities at 90, the rest 49), generalist (new: the eleven abilities the specialist sets, each at their mean, 703 / 11 = 63.9, techniques as made), each on bj-0 and bj-1, 120 days, through the commands (`tools/brief-journeys.ts`).",
+   "acceptance": "L3-R (b) printed per journey by `--trace` and summed by tools/l3r.mjs (new); tests/decisions-judge.test.ts holds controlled improvement and a generalist's and a specialist's development.",
+   "measure": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --write <f> --trace <f>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3-R.c",
+   "item": "L3-R (c) Growth",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (c); brief 10 section 1, L3.",
+   "currentBehavior": "L3′: 0 falls in 68 and 76 steps, two journeys; stamina fell 50 → 35 on both (no workouts).",
+   "affectedSystems": [
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new, (d))"
+   ],
+   "plan": "Per non-mastered journey: the fixed set's mean at the end's levels less at the start's at least 1.0. Between consecutive months, no fixed-set piece and no replayed take falls by more than 1e-9 where no ability it reads fell; where one fell, the piece judged again with each fallen ability held at the month before's level comes out at or over its month-before figure (the fall disappears).",
+   "acceptance": "L3-R (c) printed per journey by `--trace` and summed by tools/l3r.mjs (new); tests/decisions-judge.test.ts holds controlled improvement and a generalist's and a specialist's development.",
+   "measure": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --write <f> --trace <f>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3-R.d",
+   "item": "L3-R (d) More never makes it worse",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (d); brief 10 section 1, L3.",
+   "currentBehavior": "tests/engine-properties.test.ts holds a sampled monotonicity; no catalog-wide sweep.",
+   "affectedSystems": [
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new, (d))"
+   ],
+   "plan": "Every piece of H4-R's set; from the even actor (50), the twelve specialists, a beginner (35 everywhere, techniques 30), a near-master (92, techniques 85) and four drawn actors (seeded, abilities 25 to 95, techniques 20 to 90): each ability +10 (held at full) and to full, everything else held: never lower by more than 1e-9.",
+   "acceptance": "L3-R (d) printed per journey by `--trace` and summed by tools/l3r.mjs (new); tests/decisions-judge.test.ts holds controlled improvement and a generalist's and a specialist's development.",
+   "measure": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --write <f> --trace <f>; npx vite-node tools/monotonicity.ts -- --out <file>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3-R.e",
+   "item": "L3-R (e) The journey kept in view",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (e); brief 10 section 1, L3.",
+   "currentBehavior": "Brief 09's trace gives most of it for two journeys.",
+   "affectedSystems": [
+    "tools/brief-journeys.ts",
+    "tools/monotonicity.ts (new, (d))"
+   ],
+   "plan": "Per journey and month: the takes, their purposes, difficulty (mean and range), stakes and genres; L3 as written (the last month's mean of takes against the first's) beside the controlled measure.",
+   "acceptance": "L3-R (e) printed per journey by `--trace` and summed by tools/l3r.mjs (new); tests/decisions-judge.test.ts holds controlled improvement and a generalist's and a specialist's development.",
+   "measure": "npx vite-node tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --write <f> --trace <f>",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "L3.asWritten",
+   "item": "L3 as written, kept as the record",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, L3-R (e).",
+   "currentBehavior": "Last measured: the specialist 65.5 → 64.3, not met; the beginner 54.0 → 56.8, met (integrated-09).",
+   "affectedSystems": [
+    "tools/brief-journeys.ts"
+   ],
+   "plan": "Reported per journey beside L3-R.",
+   "acceptance": "L3 per journey in baseline and after.",
+   "measure": "as L3-R (b)",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "M1",
+   "item": "Mastery is kept",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md, Mastery Is Kept; brief 10 section 1, last paragraph.",
+   "currentBehavior": "M1 holds (integrated-09): briefs 4,560 of 4,560, scenes 65, nights 30, casting 30, coursework 13 at 100, 0 drawn off; ST5 2,520 of 2,520 and F1's ST5 every fitting way at 100.",
+   "affectedSystems": [
+    "tools/ag-baseline.ts (mastery)",
+    "tools/interpretation.ts (ST5, F1)"
+   ],
+   "plan": "Measured on every judged piece and reading, every fitting way of playing, with no draw and with three drawn keys, before and after; final figure after the stamina model is integrated.",
+   "acceptance": "Every case at 100, 0 drawn off.",
+   "measure": "ag-baseline mastery; interpretation --stage ST5 and F1 ST5",
+   "classification": "required reachable behavior",
+   "statusBefore": "Implemented, Verification Incomplete"
+  },
+  {
+   "id": "judge.together",
+   "item": "Every criterion section 5 lists, after the change",
+   "requirement": "docs/verification/decisions-2026-10-16/criteria.md section 5; judge.md, The Order, 5.",
+   "currentBehavior": "Integrated-09: every criterion that held holds (ST1, ST2, ST4, ST5, ST7, ST8, F1, F2, I1 to I5, A1 to A3, T2, T3, G3 to G5, M1, M3, O1, O2, H2, H5, H7, S1 to S4, G2, the audit's isolation).",
+   "affectedSystems": [
+    "docs/verification/decisions-2026-10-16/judge/"
+   ],
+   "plan": "Measure all of them after the change (and again once the stamina model is in); a criterion that held and fails is a regression fixed or reported with its cause.",
+   "acceptance": "judge/README.md with every command, exit and figure.",
+   "measure": "the commands of baseline/README.md, plus genre-signature (three samples), genre-identity, genre-audit",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  },
+  {
+   "id": "judge.tests",
+   "item": "The tests of section 1",
+   "requirement": "judge.md, The Order, 4; brief 10 section 5.",
+   "currentBehavior": "None in tests/decisions-judge.test.ts (new).",
+   "affectedSystems": [
+    "tests/decisions-judge.test.ts"
+   ],
+   "plan": "Identical-input consistency; the stage and the close frame differing where they should; restrained and expansive interpretations, wins and limits; every ability's contribution on its own work; a specialist's and a generalist's development; controlled improvement over time; mastery at 100. Figures worked from the rule; mutations in copies.",
+   "acceptance": "The file passes alone, one fork; each mutation listed fails it.",
+   "measure": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts",
+   "classification": "required reachable behavior",
+   "statusBefore": "Not Implemented"
+  }
+ ]
+}

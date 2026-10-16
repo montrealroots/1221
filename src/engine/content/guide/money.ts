@@ -132,6 +132,9 @@ const HOME_BANKS = allHomeTerms().filter((t) => !t.unusable).length;
 const HOME_COUNTRIES = new Set(allHomeTerms().map((t) => bankById(t.bankId)?.iso)).size;
 const BARCLAYS = bankById('gb-barclays')!;
 const SPARKASSE = bankById('de-berliner-sparkasse')!;
+// Arion's debit card, its amount and age from its price list and its timing SLATE's simulation (from brief 10, 2026-10-16).
+const ARION = bankById('is-arion')!;
+const ARION_YEAR = ARION.card!.year!;
 const LONDON_SPLIT = splitOf(MODEST, 'USD', BARCLAYS, true);
 const WORTH = MODEST.checking + MODEST.savings - OWED;
 const CHASE_RATE = priceWithin(CHASE_CARD.aprFrom ?? 0, CHASE_CARD.aprTo ?? 0, RECORD);
@@ -1353,8 +1356,12 @@ export const MONEY: readonly GuideEntry[] = [
       // close tried again after its notice charges no more fees (`feesEndedAt`).
       `A bank that closes the account of a customer abroad says so on the first morning, with the day; on that day it settles the interest and fees and sends what’s left to your American account by a payment abroad, and its fees end there. Overdrawn then, it tries again each day until it’s paid. Barclays does, with ${homeTerms('gb-barclays')?.closeNoticeDays} days’ notice.`,
       'Close It on its current account, once its savings there are closed, closes it as Another Bank says: at a German bank it charges the months kept for the quarter’s closing and this month’s fee only for the days it’s been open, the figure said under Close It first.',
-      // From 2026-10-16 (brief 09's follow-up, `Bank.card.ahead`): until then SLATE charged nothing for the card.
+      // From 2026-10-16 (brief 09's follow-up, `Bank.card.ahead`, `Bank.card.year` from brief 10): until then SLATE charged
+      // nothing for the card.
       `Berliner Sparkasse’s Giro Digital comes without its Sparkassen-Card, which costs ${formatMoney(SPARKASSE.card?.yearly ?? 0, 'EUR')} a year, paid ahead: on the first night and each year after, and on a close the days of that year left are refunded, said under Close It first.`,
+      // From brief 10 (2026-10-16, `ARION_CARD_YEAR`): until then Arion's year was charged on each anniversary of the
+      // account or its last charge, 365 days apart, a close neither refunded nor charged it, and the guide didn't say it.
+      `Arion’s debit card costs ${formatMoney(ARION.card?.yearly ?? 0, 'ISK')} a year from ${ARION.card?.freeUnder}, nothing at ${(ARION.card?.freeUnder ?? 0) - 1} and under, as its price list says. ${ARION_YEAR.paid === 'ahead' ? 'It’s charged ahead, on the first night and on that date each year after' : 'It’s charged at the end of each card year, the first a year after the first night'}, by ${ARION_YEAR.place}’s calendar, and on a close the days of that year ${ARION_YEAR.paid === 'ahead' ? 'left are refunded' : 'used are charged'} in proportion, as ${ARION_YEAR.law}, has it, said on the account’s panel and under Close It first.${ARION_YEAR.simulated ? ` Its timing is SLATE’s simulation, unverified: ${ARION_YEAR.simulated}.` : ''}`,
       `Move Money sends between it and your American account as a payment abroad, typed in the sending account’s money: out now, with the sending bank’s fee, and in after its business days in both countries, less its margin on the exchange and the receiving bank’s fee. Barclays charges nothing online and takes up to ${percentOf(homeTerms('gb-barclays')!.abroad.margin!)}; Chase takes ${usd(US_WIRES['us-chase']!.incoming!.fixed!)} on a payment from abroad. Where a bank publishes no margin SLATE takes ${percentOf(ASSUMED_MARGIN)}, and where it publishes no time ${ASSUMED_DAYS} business days, and says so.`,
       'Make Primary on its current account makes its debit card your everyday card here, for its own fee on every purchase in dollars, where its card works abroad and the research has the fee.',
       // From 2026-10-16, module 6: the return reads the interest by its bank's country (`figuresFor`), and the accounts' figures each night (`Account.peak`).

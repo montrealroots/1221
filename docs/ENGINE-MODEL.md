@@ -1,8 +1,8 @@
 # The Attribute And Genre Engine: Its Model, Invariants And Balance
 
 Written 2026-10-10, for ruleset `evaluation-2 (2026-10-10)`; from 2026-10-12 the ruleset was `evaluation-3`, and §9
-says what changed. From 2026-10-16 it's `evaluation-10` (it said `evaluation-8` until the integration pass of that day, and `evaluation-9`
-until brief 09's follow-up later that day), and §10 says where each change since `evaluation-3` is
+says what changed. From 2026-10-16 it's `evaluation-11` (it said `evaluation-8` until the integration pass of that day, `evaluation-9`
+until brief 09's follow-up later that day, and `evaluation-10` until brief 10's workload), and §10 says where each change since `evaluation-3` is
 written. This document wasn't rewritten for them: where its §1 to §9 and §10's accounts disagree, the accounts hold, and
 the lines found false are marked in place. Every formula below is the code's, with the file it lives in. Every number is either a research figure (cited in `docs/research/attributes/`) or **SLATE's**, and says
 which. The research gives directions and orderings much more often than sizes. Where a size is SLATE's, the balance
@@ -374,7 +374,7 @@ Two places read the moment alone and ignored the history behind it.
 
 The pool is finite, and nothing here claims otherwise. Variety comes from the record, not from more text.
 
-- **Material:** 65 scenes and 30 plays, each with its structured profile (42 and 26 until the limitations pass of 2026-10-11,
+- **Material:** 67 scenes and 30 plays (65 until brief 10 added two public meetings, `content/scenes-meeting.ts`), each with its structured profile (42 and 26 until the limitations pass of 2026-10-11,
   56 scenes until 2026-10-16, when the integration pass added four drama scenes, brief 09 four played out to a house and
   its follow-up Scapin's sack scene),
   and from 2026-10-12 149 practice briefs, one written for each genre, with 302 readings among them (§8).
@@ -771,7 +771,7 @@ Each piece counts once now (`limitsOnce`), and the backfill a save gets on openi
 
 ### Limits
 
-- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 65 scenes for class (56 until 2026-10-16);
+- **The content is finite:** 298 briefs, two for each genre, with 648 readings; 67 scenes for class (56 until 2026-10-16, 65 until brief 10's two public meetings);
   30 plays with profiles.
 - **Every size in this section is SLATE's estimate.** That covers the drain, the slip and its recovery, the tones' leans,
   a partner's shares and slip, the workbook's gains, the direction note's rule for addressed, and the identity's
@@ -796,6 +796,7 @@ in `RULESET`'s comments (`content/tasks.ts`); each change has its account, with 
 | `evaluation-8` | A stage's house is read on the take's execution (`STAGE_LEAN`) and pulls no scale; a stage voice's demand no longer counts as size; a scene's circumstances say what its scale asks (`CIRCUMSTANCE_AFFINITY`). | `docs/verification/stage-2026-10-16/` |
 | `evaluation-9` | A result is rounded once, from parts kept at full precision (`judgeExact`, `rounded`); until then a dimension and a piece's segment were rounded before a whole was worked out from them. Restrained draws on composure and focus as well as emotional depth (`APPROACH_EFFECT`). | `docs/verification/integration-2026-10-16/st3.md`, `st6.md` |
 | `evaluation-10` | A class scene and a play are judged in their units, each tone section cut again at each of its turns, as Stanislavski divides a role by its shifts of action (`unitSegments`); what a piece demands counts those units, so one of more than three reads discipline as a brief's beats do (`demandsOf`). A segment's place in the piece is read by the running of the segments before it (`SegmentSpec.length`; a brief's heart weighs more and takes no longer), and the whole and each dimension are the segments' weighted mean divided once. Work a save kept on a piece's segments moves to its units on its first opening (`cutIntoUnits`). | `docs/verification/integration-2026-10-16/h4.md` |
+| `evaluation-11` | A night's drain reads its workload (brief 10, decision 5): the production's running time, from a cited production or SLATE's estimate (`content/workload.ts`), the part's share of it by its size, the body's and the voice's intensity, its breaks, which give back a share of the drain for what follows, and the day at the curtain; each segment reads the drain's mean over its own stretch of the running, so a night judged in its units comes to the same drain as the whole (`systems/workload.ts`). The evening costs energy by its workload, half at full stamina; a call holds its running time and the curtain call. Until then a night's load was 0.6 and 0.12 a level of the body's and the voice's work, clamped at 1, whatever its length or the part. Calls a save had booked are timed once on its first opening (`timeTheCalls`). Later that day, before it left its branch and so part of it rather than a twelfth (brief 10, the judge area's second phase): the full drain 0.4 where it was 0.3 (`PIECE.drain`), so stamina's specialist leads on work of its own; a night's part's text read by its time on stage, half a unit of a long brief's two for each hour past the first (`PART_TEXT`), so memory's reaches the nights; and a night before a house at stakes 1.5 where a play read 1 (`NIGHT_STAKES`), the direction from performance-anxiety research and the size SLATE's, so composure's does. | `docs/verification/remaining-10/stamina-result.json`, `docs/verification/decisions-2026-10-16/stamina/`, `docs/verification/remaining-10/judge-result.json`, `docs/verification/decisions-2026-10-16/integrated/after/` |
 
 Material added under a ruleset doesn't move it: no rule changes, so no kept result reads differently. Under `evaluation-9`
 the integration pass added four drama scenes (`content/scenes-public.ts`) and brief 09, later on 2026-10-16, four

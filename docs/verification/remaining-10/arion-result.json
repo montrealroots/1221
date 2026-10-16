@@ -1,0 +1,1208 @@
+{
+ "key": "arion",
+ "on": "2026-10-16",
+ "against": "619fd63f (claude/peaceful-hamilton-59zdbb: f17ae369, the areas’ instructions, and the coordinator’s commit after it, which changed tools/completion-matrix.mjs alone) and the working tree after it, this area’s changes only. The checklist said f17ae369, read before the coordinator’s commit; that commit touches no file this area reads or changed.",
+ "checklist": "docs/verification/remaining-10/arion-checklist.json",
+ "testFile": "tests/decisions-arion.test.ts",
+ "tests": "tests/decisions-arion.test.ts: 16 tests, all passing. Changed beside it, each with a dated comment: tests/remaining-09-banking.test.ts (banking.5’s journey renamed, the rename in docs/verification/pipeline/inputs/renames.json, its last assertion now the refund); tests/bank-fees.test.ts (Arion’s card: two years begun in 366 days, title unchanged); tests/scope-health.test.ts and tests/remaining-banking.test.ts (the one-time steps’ list with cardYears, titles unchanged).",
+ "statusTotals": {
+  "Implemented And Verified": 11
+ },
+ "research": {
+  "searched": "A focused search on 2026-10-16 for when Arion charges its debit card’s yearly fee, and what a close owes: Arion’s own documents, the law that binds it, its incorporation, and the regulator’s guidance. Every source below was read that day; every quote was checked against the file as fetched (saved in the scratchpad’s arion/research, not in the repository).",
+  "sources": [
+   {
+    "source": "Arion banki, Gjaldskrá greiðslureikninga, Veltureikningur (the payment-account fee sheet), “Dagsetning gjaldskrár/verðskrár: 07.05.2026”",
+    "address": "https://www.arionbanki.is/themes/arionbanki/arionbanki/documents/05_Bankinn/Fleira/Vextir-og-verdskra/Gjaldskrar-greidslureikninga/Gjaldskr%c3%a1%20grei%c3%b0slureikninga%20Veltureikningur.pdf",
+    "read": "2026-10-16",
+    "confirms": "“Árgjald debetkorts: Árgjald viðskiptavina 24 ára og eldri 950 kr.; Árgjald viðskiptavina 23 ára og yngri 0 kr.”; debit purchases 19 kr from 24, 0 kr under; reissue 1,290 kr.",
+    "doesNotConfirm": "When in the year the fee is charged, ahead or behind, or anything of a close."
+   },
+   {
+    "source": "Arion banki, Verðskrá einstaklinga (the price list for individuals), “Gildir frá 07.05.2026”, items 13.1 and 13.1.1",
+    "address": "https://docs.arionbanki.is/themes/arionbanki/arionbanki/documents/05_Bankinn/Fleira/Vextir-og-verdskra/Verdskra/Almenn%20ver%C3%B0skr%C3%A1%20einstaklinga.pdf",
+    "read": "2026-10-16",
+    "confirms": "“13.1 Árgjald debetkorts 950 kr.”; “13.1.1 Árgjald debetkorts 23 ára og yngri 0 kr.”",
+    "doesNotConfirm": "The timing; a close."
+   },
+   {
+    "source": "Arion banki, Almennir viðskiptaskilmálar (general terms) 18.7.1.15, “Gildistaka: 15. apríl 2026” (in force 15 June 2026, 15 April for a customer who confirms them)",
+    "address": "https://docs.arionbanki.is/themes/arionbanki/arionbanki/documents/05_Bankinn/Starfsemi/Stjornarhaettir/Reglur-og-skilmalar/Skilmalar/18.7.1.15-15april2026.pdf",
+    "read": "2026-10-16",
+    "confirms": "Ch. 1.1: the terms within Act 114/2021’s scope, “þ.m.t. ákvæði um … greiðslureikninga og greiðslukort”, are a framework contract for payment services in the Act’s sense, of indefinite term. Ch. 5: “Reikningseigandi greiðir kostnað vegna útgáfu og notkunar korts í samræmi við verðskrá bankans … Gjöld vegna korta, svo sem árgjald korta og gjald fyrir útgáfu og endurnýjun, er samkvæmt verðskrá bankans og er skuldfært af reikningi reikningseiganda.” Ch. 4.2 repeats the Act’s first sentence of art. 57(4) (“Ef samið hefur verið um reglubundnar greiðslur skal hlutfallslega tekið tillit til gildistíma uppsagnar við innheimtu greiðslna eftir uppsögn samnings”). Ch. 4.7: fees owed may be debited before an account closes, and “Ef neikvæð staða er á reikningi viðskiptavinar við lokun, t.d. vegna kostnaðarfærslna, getur bankinn jafnframt leitað fullnustu kröfunnar með innheimtu.” Ch. 5.6(k): the bank may close a card whose “árgjald korts hefur ekki verið greitt”. Ch. 11: with these terms “falla úr gildi almennir skilmálar innlánsreikninga, debetkortaskilmálar, kreditkortaskilmálar …”: there are no separate debit-card or deposit-account terms in force to read.",
+    "doesNotConfirm": "When in the year the card fee is charged, or whether it pays for the year ahead; the terms don’t repeat art. 57(4)’s second sentence (a fee paid ahead refunded)."
+   },
+   {
+    "source": "Arion banki, debit-card pages, Icelandic (“Almenn gjöld: Árgjald 950 kr. Færslugjald 19 kr. Viðskiptavinir okkar sem eru 23 ára og yngri greiða hvorki árgjald né færslugjöld af debetkortum.”) and English (“Annual fee 950 kr. … Our customers who are 23 years old and younger pay neither annual fees nor transaction fees”)",
+    "address": "https://www.arionbanki.is/einstaklingar/einstaklingar-kort/debetkort; https://www.arionbanki.is/en/individuals/individuals-cards/debitcards",
+    "read": "2026-10-16",
+    "confirms": "The amount and the age again.",
+    "doesNotConfirm": "The timing. No card FAQ was found: the terms page (https://www.arionbanki.is/bankinn/regluverk/reglur-og-skilmalar) and its summary are drawn by script, and their HTML lists no document."
+   },
+   {
+    "source": "The official glossary of payment-account terms (Lokaskrá – hugtakalisti), the annex to no. 485/2023, 17 May 2023, Stjórnartíðindi B, published 22 May 2023, as Arion hosts it",
+    "address": "https://www.arionbanki.is/themes/arionbanki/arionbanki/documents/05_Bankinn/Fleira/Vextir-og-verdskra/Gjaldskrar-greidslureikninga/Hugtakalisti.pdf",
+    "read": "2026-10-16",
+    "confirms": "“Árgjald debetkorts: Gjald sem viðskiptavinur greiðir reikningsveitanda einu sinni á ári fyrir debetkort.” A fee paid once a year.",
+    "doesNotConfirm": "When in the year, or for which year."
+   },
+   {
+    "source": "Lög um greiðsluþjónustu nr. 114/2021 (Iceland’s Act on Payment Services), as published in Stjórnartíðindi A, signed 25 June 2021, published 15 July 2021 (the Official Journal’s text as enacted)",
+    "address": "https://island.is/stjornartidindi/nr/8cccb35c-82e9-4d75-8b76-59d05b7f0086",
+    "read": "2026-10-16",
+    "confirms": "Art. 57(4): “Ef samið hefur verið um reglubundnar greiðslur á samningstímanum fyrir greiðsluþjónustu samkvæmt rammasamningi skal hlutfallslega tekið tillit til gildistíma uppsagnar við innheimtu greiðslna eftir uppsögn samnings. Ef gjöld vegna greiðsluþjónustu samkvæmt rammasamningi eru greidd fyrir fram skulu þau endurgreidd notanda hlutfallslega, með tilliti til gildistíma uppsagnar.” Art. 57(1): the user may terminate at any time, any agreed notice no longer than a month; 57(2): termination free of charge to the user; 57(3): the provider’s notice at least two months. Art. 41(2): chapter IV (arts. 41 to 60) may be derogated from by contract only where the user isn’t a consumer. Art. 113: the Act implements Directive (EU) 2015/2366 “eins og hún var tekin upp í samninginn um Evrópska efnahagssvæðið með ákvörðun sameiginlegu EES-nefndarinnar nr. 165/2019 frá 14. júní 2019”. Art. 115: in force 1 November 2021, repealing Act 120/2011.",
+    "doesNotConfirm": "When a card fee is charged; it names no card fee, so that a debit card’s yearly fee is a “gjald vegna greiðsluþjónustu samkvæmt rammasamningi” is SLATE’s reading, supported by Arion’s terms 1.1 putting its cards in the framework contract. It doesn’t say how the share is counted (days or months)."
+   },
+   {
+    "source": "The Official Journal’s search, A-deild, “greiðsluþjónustu”, 2022 to 2026; the amending acts it found read: 5/2023 (Lög um greiðslureikninga, art. 30), 62/2024 (art. 48), 27/2025 (art. 10), 78/2025",
+    "address": "https://island.is/stjornartidindi/leit?q=greiðsluþjónustu&year=2023 (and 2022, 2024, 2025, 2026, deild=a-deild); https://island.is/stjornartidindi/nr/36686240-fc18-4e8b-a00e-9bcef62ecbbe; https://island.is/stjornartidindi/nr/52444fa3-ab57-4a34-8018-5e3134344652; https://island.is/stjornartidindi/nr/6ded9657-d5db-4958-98d0-51952b79995a; https://island.is/stjornartidindi/nr/e498ac4d-95e6-4293-b482-024fe7b77cd8",
+    "read": "2026-10-16",
+    "confirms": "None of them amends art. 57: they amend arts. 14 and 97 (5/2023), 5 (62/2024), 82 (27/2025) and 2, 4, 18, 99 and others (78/2025). Act 5/2023 art. 10(3) refers a payment account’s closing fee to art. 57.",
+    "doesNotConfirm": "That no amendment exists: the search shows its first page only, and the consolidated text (althingi.is/lagas/nuna/2021114.html) couldn’t be read."
+   },
+   {
+    "source": "EFTA, EEA-Lex: Directive (EU) 2015/2366 (PSD II)",
+    "address": "https://www.efta.int/eea-lex/32015L2366",
+    "read": "2026-10-16",
+    "confirms": "Incorporated into the EEA Agreement by Joint Committee Decision 165/2019, Annex IX, “In force in the EEA: Yes”; the Directive in Icelandic in the EEA Supplement No 87, 17.12.2020, pp. 180 to 272.",
+    "doesNotConfirm": "Anything about Arion; it isn’t taken as Iceland’s law: the Act is."
+   },
+   {
+    "source": "Directive (EU) 2015/2366, art. 55, as legislation.gov.uk (The National Archives) publishes the Directive",
+    "address": "https://www.legislation.gov.uk/eudr/2015/2366/article/55",
+    "read": "2026-10-16",
+    "confirms": "Art. 55(4): “Charges for payment services levied on a regular basis shall be payable by the payment service user only proportionally up to the termination of the contract. If such charges are paid in advance, they shall be reimbursed proportionally.” Art. 55(6) allows more favourable national rules, which Iceland’s free termination (57(2)) is.",
+    "doesNotConfirm": "Anything about Arion, or a card fee’s timing."
+   },
+   {
+    "source": "Seðlabanki Íslands (the Central Bank), Spurt og svarað – greiðsluþjónustuveitendur, 2. útgáfa, March 2025",
+    "address": "https://fme.is/media/spurt-og-svarad/Spurt_og_svarad_greidsluthjonustuveitendur_2_utg.pdf (redirected to sedlabanki.is)",
+    "read": "2026-10-16",
+    "confirms": "Nothing on the point: its three pages address providers, not a close’s charges.",
+    "doesNotConfirm": "The timing or a close."
+   }
+  ],
+  "notRead": [
+   "althingi.is (the consolidated Act and its bill): HTTP 403, a Cloudflare challenge, on every request on 2026-10-16, as in brief 09: https://www.althingi.is/lagas/nuna/2021114.html, https://www.althingi.is/lagasafn/pdf/157c/2021114.pdf.",
+   "web.archive.org’s copies of the consolidated Act (153c, archived 28 October 2023) and of the Act in Stjórnartíðindi (archived 5 October 2024): found by archive.org’s availability service, but the copies themselves blocked by this container’s egress policy.",
+   "The Central Bank’s English translation of Act 114/2021 (https://english.sedlabanki.is/library/Skraarsafn---EN/Laws/Act%20No.%20114%202021%20on%20Payment%20Services.pdf): it now redirects to a 404; cb.is’s law pages are drawn by script, with no document in their HTML.",
+   "EUR-Lex (https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32015L2366): HTTP 202 with a challenge and no text; the Directive was read from legislation.gov.uk instead.",
+   "Arion’s debit-card terms and deposit-account terms as separate documents: none in force (general terms ch. 11), and no earlier copy found.",
+   "The Consumer Agency’s (Neytendastofa’s) guidance: a search found none on card fees or a close."
+  ],
+  "confirmed": [
+   "The amount and the age: 950 kr a year from 24, 0 kr at 23 and under (the fee sheet and price list, from 7 May 2026; the debit-card pages).",
+   "A fee paid once a year (the official glossary, no. 485/2023).",
+   "Who pays and from where: the account holder, debited from the account (the general terms, ch. 5).",
+   "That Arion’s card terms are a framework contract in the Act’s sense (the general terms, 1.1), and that no separate debit-card terms are in force (ch. 11).",
+   "What a close owes whatever the timing, for a consumer: a fee paid ahead comes back in proportion, and a regular one collected after is owed only in proportion to the termination’s effective date (Act 114/2021 art. 57(4), from the Official Journal’s text as enacted; arts. 41, 113, 115).",
+   "That the Act carries Directive (EU) 2015/2366 into Icelandic law as incorporated by EEA Joint Committee Decision 165/2019 (the Act’s art. 113; EEA-Lex)."
+  ],
+  "notConfirmed": [
+   "Whether the 950 kr pays for the card year ahead or the year past.",
+   "The day in the year it’s charged (the card’s issue, its renewal, the account’s opening, a fixed date).",
+   "How Arion counts a share on a close (days or months), and at whose clock.",
+   "Whether art. 57 has been amended since 2021 (the consolidated text couldn’t be read; the amending acts found don’t touch it).",
+   "That a debit card’s yearly fee is a fee “vegna greiðsluþjónustu samkvæmt rammasamningi” in art. 57(4)’s sense: SLATE’s reading, as above."
+  ]
+ },
+ "rule": {
+  "fromASource": "What a close owes, whatever the timing: Act 114/2021 art. 57(4), a fee paid ahead refunded in proportion, a regular one collected after only in proportion to the close (with SLATE’s reading that the card’s yearly fee is such a fee).",
+  "simulationAssumption": "The timing, which no source settles: ARION_CARD_YEAR in src/engine/content/banks-thirteen.ts, labelled in its comment “SLATE SIMULATION ASSUMPTION, UNVERIFIED”, kept apart from the confirmed amount and age (Bank.card.yearly and freeUnder, from the price list). Default: paid ahead, the first on the account’s first night in the life, renewed on the same date a year on by Reykjavík’s calendar (the month’s last day where the date doesn’t exist); on a close the fee paid × the days of that card year left after the closing day ÷ the year’s days (365 or 366) comes back, rounded half up once to the whole króna, against Bank Fees. That the share is counted in days is SLATE’s design choice too.",
+  "whyThisDefault": [
+   "It changes least of what every played life already did: a kept Arion account was charged on its first night, and the opening float counts the same three years (feesToGraduation, unchanged under it).",
+   "It is the form Berliner Sparkasse’s price list states for its card (footnote 45, § 675h(3) BGB), so one model serves both banks, and that model was already built and tested.",
+   "Under art. 57(4) the holder pays for the same days held either way: the assumption moves when the krónur leave and whether a close gives back or charges, not what a year costs."
+  ],
+  "configurable": "ARION_CARD_YEAR.paid is one word: 'behind' (each charge pays for the card year it ends; a close charges the days used) is implemented and tested beside the default. Each card year is settled by the rule it was opened under (Account.cardYearRule), so changing the setting never charges or refunds a year twice (tested). When a source settles the timing, set paid to it and delete simulated, and the label leaves the screen and the guide.",
+  "labelled": "On the account’s panel (cardYearWords), under Close It and Cancel It (closingFeesWords), in Other Charges for a primary Arion account, and in the guide’s A Bank At Home: “Its timing is SLATE’s simulation, unverified: Arion’s price list and terms don’t say when in the year it’s charged.” The amount and age are said first, as the price list’s.",
+  "edges": "A close between Reykjavík’s midnight and New Haven’s on the year’s date, when SLATE’s night opens the next year, finds the last year used up and the next not begun: nothing back, nothing charged (tested). An account that can’t cover the fee is charged it all the same and goes below zero by what’s short, as every SLATE fee takes it, under Arion’s overdraft rule (15.75%, 60 days to the bank’s close), consistent with Arion’s terms 4.7 and 5.6(k); said on the panel."
+ },
+ "items": [
+  {
+   "id": "arion.AR0.research",
+   "status": "Implemented And Verified",
+   "disposition": "verified (the research recorded: the timing not established, so recorded as unknown)",
+   "before": "Brief 09 read Arion’s price list and general terms; Act 114/2021 not read (althingi.is 403); banking.5.arion-card Decision Required.",
+   "after": "The Act read from the Official Journal, with its art. 57(4), its incorporation (art. 113, EEA-Lex) and the Directive’s art. 55(4); Arion’s five documents and pages; the amending acts found; every source with its address and the date read, what it confirms and what it doesn’t (research, above).",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s simulation, and Berliner Sparkasse’s from…",
+     "kind": "engine (GUARD)",
+     "proves": "The code carries the record’s conclusion: Arion’s card year is labelled simulated with the reason the record gives, and names the statute the record read; Berliner Sparkasse’s sourced year unchanged."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > the guide’s A Bank At Home says Arion’s 950 kr from 24 as its price list’s, and the year paid ahead as SLATE’s simulation, unverified",
+     "kind": "content",
+     "proves": "The guide says the confirmed amount and age as the price list’s and the timing as SLATE’s simulation, unverified."
+    }
+   ],
+   "assumptions": [
+    "Verified by reading: each quote checked against the source as fetched on 2026-10-16. That the card’s yearly fee falls under art. 57(4) is SLATE’s reading, said as such."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (year.simulated) said.push(` Its timing is SLATE’s simulation, unverified: ${year.simulated}.`);",
+     "replace": "(taken out)",
+     "killed": true,
+     "note": "M12: the panel's label taken out; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight in New…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR0.assumption",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "No timing modeled as such: the fee charged on each anniversary of the account’s opening or its last charge, 365 days apart; nothing on any screen or in the guide said when, or what a close did (probe-before: the panel and Close It said nothing of the card).",
+   "after": "ARION_CARD_YEAR (paid ahead by default, labelled unverified and simulated), its other value implemented and tested, each year settled by its own rule, the label on the panel, under Close It, in Other Charges and in the guide.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight in New Haven on 25 August 2026, 04:00 in…",
+     "kind": "render, clock",
+     "proves": "The panel says the confirmed 950 kr from 24 first, then the card year, the close, a short account and the label."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: paid behind): the Reykjavík-raised student’s account opens with two years’ fees, 1,900 kr, nothing is charged on her first…",
+     "kind": "command, clock, render (FIXTURE, TEST SETUP)",
+     "proves": "paid behind: the float 1,900 kr (two years at their ends to May 2029), nothing on the first night, a close on 14 October 2026 charging 133 kr (95,000 × 51 / 365 = 13,274.0), said first with the Act’s rule, the year charged at its end on 25 August 2027, once."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25 August 2026 is still given back on a…",
+     "kind": "command, clock (FIXTURE, TEST SETUP)",
+     "proves": "The setting changed mid-year: the year charged ahead still refunded (817 kr), nothing charged at its end, the next year (behind) charged at its end on 25 August 2028: each year paid once."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > GUARD (TEST SETUP: paid behind): a second settling of a Veltureikningur’s fees charges nothing of the card’s year again",
+     "kind": "engine (GUARD, TEST SETUP)",
+     "proves": "paid behind: a second settling charges nothing more (143 kr once)."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s simulation, and Berliner Sparkasse’s from…",
+     "kind": "engine (GUARD)",
+     "proves": "Every bank with a yearly card fee says its card year; Arion’s is the setting."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Bank.card.year (CardYear: paid ahead or behind, length 365 or to the date, zone, place, simulated, law) replaced Bank.card.ahead; ARION_CARD_YEAR the one setting; Berliner Sparkasse’s year written as { paid: ahead, length: 365 }, its figures unchanged (brief 09’s 17 tests pass).",
+     "where": "src/engine/content/banks.ts, src/engine/content/banks-thirteen.ts, src/engine/systems/banking.ts (cardYearOf, cardYearWords, closingFeesWords), src/ui/workspaces/BankWorkspace.tsx (the account panel, Other Charges), src/engine/content/guide/money.ts, src/engine/systems/homeaccount.ts (feesToGraduation counts a year charged behind from its end)",
+     "failingTest": "M6, M9, M12, M13"
+    }
+   ],
+   "assumptions": [
+    "It changes least of what every played life already did: a kept Arion account was charged on its first night, and the opening float counts the same three years (feesToGraduation, unchanged under it).",
+    "It is the form Berliner Sparkasse’s price list states for its card (footnote 45, § 675h(3) BGB), so one model serves both banks, and that model was already built and tested.",
+    "Under art. 57(4) the holder pays for the same days held either way: the assumption moves when the krónur leave and whether a close gives back or charges, not what a year costs."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  account.cardYearRule = year.paid;\n  account.cardFeePaid = year.paid === 'ahead' ? fee : 0;\n  if (year.paid === 'ahead' && fee > 0)",
+     "replace": "  account.cardYearRule = 'ahead';\n  account.cardFeePaid = fee;\n  if (fee > 0)",
+     "killed": true,
+     "note": "M6: the setting's 'behind' ignored: every year opened ahead; tests/decisions-arion.test.ts exit 1, 3 failed | 13 passed (16)",
+     "caughtBy": [
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: paid behind): the Reykjavík-raised student’s account opens with two years’ fees, 1,900…",
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25…",
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > GUARD (TEST SETUP: paid behind): a second settling of a Veltureikningur’s fees charges nothing of the card’s…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (account.cardYearRule === 'ahead') {\n    const paid",
+     "replace": "  if (year.paid === 'ahead') {\n    const paid",
+     "killed": true,
+     "note": "M9: a year settled by the setting now, not the rule it opened under; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  if (account.cardFeeAt !== undefined && account.cardYearRule === 'behind' && fee > 0) {",
+     "replace": "  if (false && account.cardFeeAt !== undefined && account.cardYearRule === 'behind' && fee > 0) {",
+     "killed": true,
+     "note": "M13: a year charged behind never charged at its end; tests/decisions-arion.test.ts exit 1, 2 failed | 14 passed (16)",
+     "caughtBy": [
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: paid behind): the Reykjavík-raised student’s account opens with two years’ fees, 1,900…",
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > FIXTURE (TEST SETUP: the setting changed to behind on 1 September 2026): the year she was charged ahead on 25…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR1.first-charge",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "A kept account charged 950 kr on its first night (25 August 2026, −95,000 in its own figure, −$6.88); one opened in the life first charged 365 days after opening (tests/bank-fees.test.ts asserted one charge in 366 days).",
+   "after": "Every Arion account’s first card year opens, paid ahead, on its first night in the life: 950 kr from 24, nothing under (its year begun with nothing paid).",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight in New Haven on 25 August 2026, 04:00 in…",
+     "kind": "clock, render",
+     "proves": "950 kr exactly at 00:00 New Haven = 04:00 Reykjavík on 25 August 2026, $6.88 (95,000 / 138 = 688.4), balanced against Bank Fees; one born in 2006 charged nothing, cardFeePaid 0."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR1: Arion’s debit card, its first year charged on the first night > FIXTURE, Mosfellsbær: an Arion account a life opens is charged its first night, 6 January 2026, and renewed on 6 January 2027, where until brief 10…",
+     "kind": "clock (FIXTURE)",
+     "proves": "An account opened in a Mosfellsbær life charged its first night, 6 January 2026, and on 6 January 2027."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "cardYearNight in the day loop: the first night opens the first card year; cardYearOver true where no year has begun.",
+     "where": "src/engine/systems/lending.ts, src/engine/systems/banking.ts (cardYearOver, cardFeeFor)",
+     "failingTest": "M15"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (account.cardFeeAt === undefined) return true;\n  if (year.length === 365)",
+     "replace": "  if (account.cardFeeAt === undefined) return false;\n  if (year.length === 365)",
+     "killed": true,
+     "note": "M15: no first year opened on the first night; tests/decisions-arion.test.ts exit 1, 13 failed | 3 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight in New…",
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > FIXTURE, Mosfellsbær: an Arion account a life opens is charged its first night, 6 January 2026, and renewed…",
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR2.renewal",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "365 days from the last charge: 25 August 2027, then 24 August 2028, a day early across 29 February 2028 (probe-before).",
+   "after": "On the same date a year on by Reykjavík’s calendar: 25 August 2027 and 25 August 2028; a year from 29 February renews on 28 February.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day…",
+     "kind": "clock, render",
+     "proves": "Three charges to 1 September 2028, each 25 August; none on 24 August 2028; jump, day by day with a reload on the 24th, and minute by minute across the night with a reload in it give the same postings; the panel’s next year to 24 August 2029."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > FIXTURE, Mosfellsbær: an Arion account opened on Monday 28 February 2028 is charged on its first night, 29 February, and renewed on 28 February 2029,…",
+     "kind": "clock (FIXTURE)",
+     "proves": "A first night on 29 February 2028 renews on 28 February 2029, not 1 March."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "cardYearSpan: the year to the same date a year on in the bank’s zone, clamped to the month.",
+     "where": "src/engine/systems/banking.ts",
+     "failingTest": "M2, M10"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/banks-thirteen.ts",
+     "find": "  length: 'anniversary',\n  zone: 'Atlantic/Reykjavik',",
+     "replace": "  length: 365,\n  zone: 'Atlantic/Reykjavik',",
+     "killed": true,
+     "note": "M2: Arion's year 365 days, not to its date; tests/decisions-arion.test.ts exit 1, 5 failed | 11 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028,…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "Math.min(p.day, daysInMonth(p.year + 1, p.month))",
+     "replace": "p.day",
+     "killed": true,
+     "note": "M10: a year from 29 February not clamped to the month; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > FIXTURE, Mosfellsbær: an Arion account opened on Monday 28 February 2028 is charged on its first night, 29…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR3.close",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "Close It posted nothing for the card and said nothing of it (probe-before; banking.5 asserted no refund).",
+   "after": "settleFees settles the card year by its rule; the line under Close It says the figure, the days, the Act and the label first; the refusal’s figure nets it.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its…",
+     "kind": "render, command, clock",
+     "proves": "On 14 October 2026 the line: “Closing it now refunds 817 kr ($5.92) of its debit card’s 950 kr for the year, paid ahead: the 314 of its 365 days left. Iceland’s Act on Payment Services, art. 57, gives a fee paid ahead back in proportion. Its timing is SLATE’s simulation, unverified: …”; pressed, posted once, balanced; everything that left at the close what it held and the refund; a second press refused; reloaded to 1 September 2027, nothing more."
+    },
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.5.arion-card: Arion’s yearly debit-card fee in its own figure > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on…closing on 26 August 2027 gives back 945 kr of the year paid ahead, as SLATE simulates when Arion charges it",
+     "kind": "clock, command",
+     "proves": "Brief 09’s journey, renamed: a close on 26 August 2027 gives back 945 kr (95,000 × 364 / 366 = 94,480.9)."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "cardYearDue (replacing cardRefundDue) gives the share by the year’s rule; settleFees posts it, “Debit card yearly fee refunded: …” or “Debit card yearly fee to the closing day: …”, against Bank Fees; closingFeesWords says it; closingFeesOf nets it.",
+     "where": "src/engine/systems/banking.ts",
+     "failingTest": "M1, M14, M16"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (card) {\n    const signed",
+     "replace": "  if (false && card) {\n    const signed",
+     "killed": true,
+     "note": "M1: the close settles nothing of the card year; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  return (closingFeesDue(sim, account)?.total ?? 0) + (card ? (card.kind === 'charge' ? card.save : -card.save) : 0);",
+     "replace": "  return closingFeesDue(sim, account)?.total ?? 0;",
+     "killed": true,
+     "note": "M14: a refusal's figure not netting the card year; tests/decisions-arion.test.ts exit 0, 16 passed (16); tests/remaining-09-banking.test.ts exit 1, 1 failed | 16 passed (17)",
+     "caughtBy": [
+      "banking.4.sparkassen-card: on a Giro Digital opened in Berlin > FIXTURE, Berlin: a Giro Digital opened beside Deutsche Bank on Monday 5 January is charged its card’s €12.00…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const share = card && bank ? `${card.kind",
+     "replace": "  const share = false && card && bank ? `${card.kind",
+     "killed": true,
+     "note": "M16: nothing said of the card year under Close It; tests/decisions-arion.test.ts exit 1, 4 failed | 12 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…",
+      "arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in…"
+     ]
+    }
+   ],
+   "rowText": {
+    "bank.close_current": {
+     "evidence (add)": "From brief 10 (2026-10-16): Arion’s card year, paid ahead by SLATE’s labelled simulation, gives back its days left on the close by Reykjavík’s calendar, said under Close It first: tests/decisions-arion.test.ts ‘arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 …’."
+    }
+   }
+  },
+  {
+   "id": "arion.AR4.refund",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "None.",
+   "after": "The fee paid × the days left after the closing day ÷ the card year’s days, rounded half up once to the whole króna (ISK is written without decimals, content/currency.ts), the dollars SLATE’s rate.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its…",
+     "kind": "render, command",
+     "proves": "51 days used, 314 left: 817 kr."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25 August 2027, which holds 29 February: 189…",
+     "kind": "render, command",
+     "proves": "29 February 2028: 189 used of the 366-day year from 25 August 2027, 177 left: 95,000 × 177 / 366 = 45,942.6, 459 kr ($3.33)."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in Reykjavík, the Veltureikningur refunds 612 kr,…",
+     "kind": "render, command",
+     "proves": "9 PM New Haven on 31 December 2026, 2 AM 1 January in Reykjavík: 130 used, 235 left, 612 kr ($4.43), not New Haven’s 614 kr."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again…",
+     "kind": "engine (GUARD)",
+     "proves": "807 kr once (95,000 × 310 / 365 = 80,684.9)."
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const unit = 10 ** (2 - currencyInfo(bank.currency).decimals);",
+     "replace": "  const unit = 1;",
+     "killed": true,
+     "note": "M4: the share rounded to the eyrir, not the whole króna; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "dayIn(sim.now, year.zone ?? sim.homeZone) - span.from + 1);",
+     "replace": "dayIn(sim.now, year.zone ?? sim.homeZone) - span.from);",
+     "killed": true,
+     "note": "M11: the closing day not counted used; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR5.insufficient-funds",
+   "status": "Implemented And Verified",
+   "disposition": "implemented (the rule unchanged, said)",
+   "before": "charge() posted the whole fee whatever the account held; nothing said so for the card.",
+   "after": "Unchanged rule, said on the account’s panel: “An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.” Close It is refused while it’s below zero; paid in, the close refunds the year’s days left.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETUP), the year’s 950 kr is taken all the same, −650 kr, as the panel says;…",
+     "kind": "clock, render, command (TEST SETUP)",
+     "proves": "300 kr on the eve: the renewal takes 950 kr, −650 kr held, −$4.71; the panel’s words; “It’s overdrawn by $4.71. The bank closes it only once that’s paid.”; 1,000 kr paid in, closed on 27 August 2027, 942 kr back (95,000 × 363 / 366 = 94,221.3)."
+    }
+   ],
+   "assumptions": [
+    "SLATE’s, consistent with Arion’s terms: 4.7 has the bank collect a negative balance from cost postings at a close, 5.6(k) lets it close a card whose fee is unpaid. SLATE doesn’t block the card for an unpaid fee; the overdraft rule (15.75%, 60 days) runs as for any fee."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  said.push(' An account that can’t cover the year’s fee is charged it all the same, and goes below zero by what’s short.');",
+     "replace": "(taken out)",
+     "killed": true,
+     "note": "M17: the panel not saying what a short account comes to; tests/decisions-arion.test.ts exit 1, 2 failed | 14 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly at midnight in New…",
+      "arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETUP), the year’s 950 kr is taken all…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "  if (year.paid === 'ahead' && fee > 0) charge(sim, account, inSaveMoney(sim, fee, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', fee);",
+     "replace": "  if (year.paid === 'ahead' && fee > 0 && (account.held ?? account.balance) >= fee) charge(sim, account, inSaveMoney(sim, fee, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', fee);",
+     "killed": true,
+     "note": "M18: the year's fee skipped where the account can't cover it; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR5: an account that can’t cover the year’s fee > PLAYER JOURNEY: with 300 kr left on the eve of 25 August 2027 (TEST SETUP), the year’s 950 kr is taken all…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR6.duplicates",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "One charge per 365 days; no refund to duplicate; a close tried again on an account left overdrawn would have charged its next year on the anniversary.",
+   "after": "The charge keyed on the card year (cardFeeAt, cardYearRule); the year ends with the fees (feesEndedAt): nothing settled again, no year charged after.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its…",
+     "kind": "command, clock",
+     "proves": "A second press refused; a reload past the next date: no charge, no second refund."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day…",
+     "kind": "clock",
+     "proves": "Minute by minute across the renewal night with a reload in it: one charge."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE: only a home bank’s close tried again…",
+     "kind": "engine (GUARD)",
+     "proves": "settleFees twice: one refund; 6 January 2027 passes with nothing charged."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > GUARD (TEST SETUP: paid behind): a second settling of a Veltureikningur’s fees charges nothing of the card’s year again",
+     "kind": "engine (GUARD, TEST SETUP)",
+     "proves": "paid behind: settleFees twice charges once."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "cardYearNight charges nothing once the account’s fees have ended (feesEndedAt); cardYearDue nothing after.",
+     "where": "src/engine/systems/lending.ts, src/engine/systems/banking.ts",
+     "failingTest": "M5, M8"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "account.kind !== 'checking' || account.feesEndedAt !== undefined || account.cardYearRule === undefined) return undefined;",
+     "replace": "account.kind !== 'checking' || account.cardYearRule === undefined) return undefined;",
+     "killed": true,
+     "note": "M5: a second settling not guarded by the fees ended; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR0: the setting, `ARION_CARD_YEAR.paid`, replaced by its other value > GUARD (TEST SETUP: paid behind): a second settling of a Veltureikningur’s fees charges nothing of the card’s…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/lending.ts",
+     "find": "if (!card?.yearly || !year || account.feesEndedAt !== undefined || !cardYearOver(sim, account, year)) return;",
+     "replace": "if (!card?.yearly || !year || !cardYearOver(sim, account, year)) return;",
+     "killed": true,
+     "note": "M8: an account whose fees ended still charged its next year; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR7.save-and-calendar",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "A 365-day year counted in New Haven’s calendar.",
+   "after": "The card year and a close’s days by Reykjavík’s calendar (Atlantic/Reykjavik, UTC all year); a year holding 29 February is 366 days; jump and day by day identical; every posting balanced, breaches 0.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in Reykjavík, the Veltureikningur refunds 612 kr,…",
+     "kind": "render, command, clock",
+     "proves": "The year’s turn and Reykjavík’s time: 612 kr, not 614; and at 9 PM New Haven on 24 August 2027 (1 AM the 25th in Reykjavík) nothing back and no new year charged."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25 August 2027, which holds 29 February: 189…",
+     "kind": "render, command",
+     "proves": "29 February counted in a 366-day year."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day…",
+     "kind": "clock",
+     "proves": "One jump against day by day and minute by minute, with reloads."
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/content/banks-thirteen.ts",
+     "find": "  zone: 'Atlantic/Reykjavik',\n  place:",
+     "replace": "  place:",
+     "killed": true,
+     "note": "M3: the days counted in New Haven's calendar; tests/decisions-arion.test.ts exit 1, 2 failed | 14 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s…",
+      "arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "Math.min(p.day, daysInMonth(p.year + 1, p.month))",
+     "replace": "p.day",
+     "killed": true,
+     "note": "M10: a year from 29 February not clamped to the month; tests/decisions-arion.test.ts exit 1, 1 failed | 15 passed (16)",
+     "caughtBy": [
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > FIXTURE, Mosfellsbær: an Arion account opened on Monday 28 February 2028 is charged on its first night, 29…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR7.older-save",
+   "status": "Implemented And Verified",
+   "disposition": "older-save compatibility kept and tested",
+   "before": "An Arion account in a save from before kept cardFeeAt and no record of what its year paid.",
+   "after": "ONCE_ON_OPENING’s `cardYears` (src/engine/index.ts): a year an older build charged is taken as paid ahead with what its posting took; an account not yet charged has the year from its opening taken as settled, its next charge on the opening’s date; Berliner Sparkasse’s years marked ahead as they were; nothing posted. Schema unchanged (94): a field added, none whose meaning changed.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP): the Reykjavík-raised student’s save of 1 September 2026, charged 950 kr on her first night by a build that kept no record of…",
+     "kind": "command, clock (OLDER SAVE, TEST SETUP)",
+     "proves": "Opened: transactions and balances unchanged, the year paid ahead with 950 kr; Close It on 14 October then 817 kr back; reopened, the step not run again."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP), Mosfellsbær: an Arion account an older build opened on 5 January 2026 and hadn’t charged yet opens with the year from its…",
+     "kind": "clock (OLDER SAVE, TEST SETUP)",
+     "proves": "An account an older build hadn’t charged: nothing for the year from its opening, its next charge on 5 January 2027."
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "cardYears, a fourth one-time step; tests/scope-health.test.ts and tests/remaining-banking.test.ts list it, with dated comments.",
+     "where": "src/engine/index.ts, src/engine/core/ledger.ts (Account.cardYearRule)",
+     "failingTest": "M7"
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/index.ts",
+     "find": "    cardYears(universe);\n    opened.push('cardYears');",
+     "replace": "    opened.push('cardYears');",
+     "killed": true,
+     "note": "M7: the older-save step not run; tests/decisions-arion.test.ts exit 1, 2 failed | 14 passed (16)",
+     "caughtBy": [
+      "arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP): the Reykjavík-raised student’s save of 1 September 2026, charged 950 kr on her first…",
+      "arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP), Mosfellsbær: an Arion account an older build opened on 5 January 2026 and hadn’t…"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "arion.AR8.verified-as-specified",
+   "status": "Implemented And Verified",
+   "disposition": "verified (against the simulation specification; the real-world timing still unverified)",
+   "before": "Decision Required (banking.5.arion-card).",
+   "after": "The lifecycle (first charge, renewal, close, refund, a short account, duplicates, save and load, the calendar’s edges, an older save, the setting’s other value) is verified against ARION_CARD_YEAR as specified: 16 tests in tests/decisions-arion.test.ts and brief 09’s renamed journey, 18 mutations killed. What isn’t verified, and can’t be from here: that Arion charges the year ahead, on that day, or counts a share in days. It stays in the setting’s comment, this record, on the panel, under Close It and in the guide. What would settle it: Arion’s answer, or a copy of its earlier debetkortaskilmálar; with it, ARION_CARD_YEAR.paid set and simulated deleted.",
+   "evidence": [
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr ($5.92) of the card’s 950 kr, the 314 of its…",
+     "kind": "render, command, clock",
+     "proves": "The close as specified."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028, not on 24 August 2028, where the 365-day…",
+     "kind": "clock",
+     "proves": "The renewal as specified."
+    },
+    {
+     "file": "tests/decisions-arion.test.ts",
+     "title": "arion.AR7: a save from before brief 10 opens with its card year as it was charged > OLDER SAVE (TEST SETUP): the Reykjavík-raised student’s save of 1 September 2026, charged 950 kr on her first night by a build that kept no record of…",
+     "kind": "OLDER SAVE",
+     "proves": "The older save as specified."
+    }
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  if (card) {\n    const signed",
+     "replace": "  if (false && card) {\n    const signed",
+     "killed": true,
+     "note": "M1: the close settles nothing of the card year; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/content/banks-thirteen.ts",
+     "find": "  length: 'anniversary',\n  zone: 'Atlantic/Reykjavik',",
+     "replace": "  length: 365,\n  zone: 'Atlantic/Reykjavik',",
+     "killed": true,
+     "note": "M2: Arion's year 365 days, not to its date; tests/decisions-arion.test.ts exit 1, 5 failed | 11 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: kept, the year is renewed at midnight in New Haven on 25 August 2027 and on 25 August 2028,…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/content/banks-thirteen.ts",
+     "find": "  zone: 'Atlantic/Reykjavik',\n  place:",
+     "replace": "  place:",
+     "killed": true,
+     "note": "M3: the days counted in New Haven's calendar; tests/decisions-arion.test.ts exit 1, 2 failed | 14 passed (16)",
+     "caughtBy": [
+      "arion.AR1: Arion’s debit card, its first year charged on the first night > GUARD: every bank with a yearly card fee says how its card year runs (`Bank.card.year`): Arion’s as SLATE’s…",
+      "arion.AR7: the close’s days by Reykjavík’s calendar > PLAYER JOURNEY: closed at 9 PM in New Haven on New Year’s Eve 2026, already 2 AM on 1 January 2027 in…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "  const unit = 10 ** (2 - currencyInfo(bank.currency).decimals);",
+     "replace": "  const unit = 1;",
+     "killed": true,
+     "note": "M4: the share rounded to the eyrir, not the whole króna; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    },
+    {
+     "file": "src/engine/systems/banking.ts",
+     "find": "dayIn(sim.now, year.zone ?? sim.homeZone) - span.from + 1);",
+     "replace": "dayIn(sim.now, year.zone ?? sim.homeZone) - span.from);",
+     "killed": true,
+     "note": "M11: the closing day not counted used; tests/decisions-arion.test.ts exit 1, 9 failed | 7 passed (16)",
+     "caughtBy": [
+      "arion.AR3: a close gives back the card year’s days left > PLAYER JOURNEY: on Wednesday 14 October 2026 Your Banks says closing the Veltureikningur refunds 817 kr…",
+      "arion.AR3: a close gives back the card year’s days left > GUARD: a second settling of a Veltureikningur’s fees gives nothing of the card’s year back again (FIXTURE:…",
+      "arion.AR2: the card year renewed once a year, on its date in Reykjavík > PLAYER JOURNEY: closed on Tuesday 29 February 2028, the Veltureikningur refunds 459 kr of the year from 25…"
+     ]
+    }
+   ]
+  }
+ ],
+ "filesChanged": [
+  "src/engine/content/banks.ts",
+  "src/engine/content/banks-thirteen.ts",
+  "src/engine/core/ledger.ts",
+  "src/engine/systems/banking.ts",
+  "src/engine/systems/lending.ts",
+  "src/engine/systems/homeaccount.ts",
+  "src/engine/index.ts",
+  "src/ui/workspaces/BankWorkspace.tsx",
+  "src/engine/content/guide/money.ts",
+  "tests/decisions-arion.test.ts (new)",
+  "tests/remaining-09-banking.test.ts",
+  "tests/bank-fees.test.ts",
+  "tests/scope-health.test.ts",
+  "tests/remaining-banking.test.ts",
+  "docs/verification/pipeline/inputs/renames.json",
+  "docs/DEVMAP.md and docs/TRACEABILITY.md (regenerated by their tools: the new test file named)",
+  "docs/verification/remaining-10/arion-checklist.json (new)",
+  "docs/verification/remaining-10/arion-result.json (new)"
+ ],
+ "checks": [
+  {
+   "command": "npx tsc -b --noEmit",
+   "exit": 0,
+   "said": ""
+  },
+  {
+   "command": "npx eslint . --ext .ts,.tsx --max-warnings=0",
+   "exit": 0,
+   "said": ""
+  },
+  {
+   "command": "node tools/title-case.mjs --check",
+   "exit": 0,
+   "said": "0 strings in 0 files would change"
+  },
+  {
+   "command": "node tools/label-sweep.mjs",
+   "exit": 0,
+   "said": "0 labels with a lowercase word"
+  },
+  {
+   "command": "node tools/plural-check.mjs",
+   "exit": 0,
+   "said": "0 counts printed in front of a plural noun without agreeing with it."
+  },
+  {
+   "command": "node tools/voice-check.mjs --check",
+   "exit": 0,
+   "said": "      1  src/ui/looks/money.tsx",
+   "note": "Exit 1 first (42 uncontracted forms, budget 40: my “… charges it is SLATE’s simulation”); reworded to “Its timing is SLATE’s simulation, unverified: …”, then exit 0."
+  },
+  {
+   "command": "node tools/tics.mjs --check",
+   "exit": 0,
+   "said": "61 in all, across 9 habits."
+  },
+  {
+   "command": "node tools/doc-refs.mjs --check",
+   "exit": 0,
+   "said": "Every one of them is there."
+  },
+  {
+   "command": "node tools/wired.mjs --check",
+   "exit": 0,
+   "said": "2 declared words that nothing reads."
+  },
+  {
+   "command": "node tools/deciders.mjs --check",
+   "exit": 0,
+   "said": "24 registered: weather.day, life.end, bank.number, bank.fraud, documents.start, attributes.presence, school.class, school.attendance, school.cabaret_mates, school.night, school.understudy, production.direction, bank.chex, health.illness, health.chronic, health.onset, body.draw, health.injury, health"
+  },
+  {
+   "command": "node tools/spelling.mjs",
+   "exit": 0,
+   "said": "0 British spellings in 0 files."
+  },
+  {
+   "command": "node tools/typos.mjs",
+   "exit": 0,
+   "said": "0 misspellings or doubled words."
+  },
+  {
+   "command": "npx vite-node tools/geo-check.mjs",
+   "exit": 0,
+   "said": "The world holds."
+  },
+  {
+   "command": "node tools/inventory.mjs --check",
+   "exit": 0,
+   "said": "Inventory matches the code: 158 commands, 96 scheduled kinds, 2 passage reactors, 3 events, 1 listener, 0 scenes, 5 routes."
+  },
+  {
+   "command": "node tools/devmap.mjs --check",
+   "exit": 0,
+   "said": "docs/DEVMAP.md matches the code: 158 commands.",
+   "note": "Exit 1 first (the new test file not named); regenerated with --write, then exit 0."
+  },
+  {
+   "command": "node tools/traceability.mjs",
+   "exit": 0,
+   "said": "docs/TRACEABILITY.md matches the code: 158 commands, 96 scheduled kinds.",
+   "note": "Exit 1 first (the same); regenerated with --write, then exit 0."
+  },
+  {
+   "command": "node tools/capabilities.mjs --check",
+   "exit": 0,
+   "said": "64 capabilities: Missing 0, Partial 11, Implemented 31, Verified 3, Blocked 0, Retired 19. 158 player commands, every one in a live row, and docs/GAMEPLAY-COVERAGE.md agreed with on the 158 both name."
+  },
+  {
+   "command": "node tools/coverage.mjs --check",
+   "exit": 0,
+   "said": "docs/capabilities.json agrees on the 158 commands both name."
+  },
+  {
+   "command": "node tools/student-matrix.mjs --check",
+   "exit": 0,
+   "said": "docs/verification/STUDENT-MATRIX.md matches: 57 of 57 verified."
+  },
+  {
+   "command": "node tools/completion-matrix.mjs --check",
+   "exit": 1,
+   "said": "3 problems, none an arion.* row’s: banking.5.arion-card cites the title brief 10 renamed (renames.json holds old and new); the handoff’s completion line; the matrix files behind their sources. With this result in place (computed in the scratchpad clone): 490 of 555 rows in scope Implemented And Verified (88.2%), the 11 arion.* rows Implemented And Verified, and six measurements (F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs, INT-gate) Implemented, Verification Incomplete, as src/engine has changed since they were made.",
+   "onCleanHead": "exit 0 on a clean clone of 619fd63f (485 of 544)."
+  }
+ ],
+ "testRuns": [
+  {
+   "file": "tests/decisions-arion.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "file": "tests/remaining-09-banking.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "17 passed (17)"
+  },
+  {
+   "file": "tests/accountlife.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "30 passed (30)"
+  },
+  {
+   "file": "tests/bank-fees.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "32 passed (32)"
+  },
+  {
+   "file": "tests/bank-moves-card-line.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "6 passed (6)"
+  },
+  {
+   "file": "tests/banking.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "19 passed (19)"
+  },
+  {
+   "file": "tests/body.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "file": "tests/cardlife.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "20 passed (20)"
+  },
+  {
+   "file": "tests/cards.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "17 passed (17)"
+  },
+  {
+   "file": "tests/cash.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "10 passed (10)"
+  },
+  {
+   "file": "tests/citizenship.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "13 passed (13)"
+  },
+  {
+   "file": "tests/commands-kept.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "15 passed (15)"
+  },
+  {
+   "file": "tests/defects-g14-1.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "4 passed (4)"
+  },
+  {
+   "file": "tests/defects-g20-1.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "2 passed (2)"
+  },
+  {
+   "file": "tests/defects-g22-1.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "6 passed (6)"
+  },
+  {
+   "file": "tests/defects-g4-2.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "file": "tests/defects-r5-1.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "2 passed (2)"
+  },
+  {
+   "file": "tests/evidence-g10-money.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "19 passed (19)"
+  },
+  {
+   "file": "tests/evidence-g11-money.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "21 passed (21)"
+  },
+  {
+   "file": "tests/evidence-g14-money.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "18 passed (18)"
+  },
+  {
+   "file": "tests/evidence-g27-ui.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "23 passed (23)"
+  },
+  {
+   "file": "tests/evidence-g29-ui.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "27 passed (27)"
+  },
+  {
+   "file": "tests/evidence-g33-ui.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "35 passed (35)"
+  },
+  {
+   "file": "tests/evidence2-b04.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "file": "tests/evidence2-b12.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "21 passed (21)"
+  },
+  {
+   "file": "tests/guide-examples-craft.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "10 passed (10)"
+  },
+  {
+   "file": "tests/guide-examples-money.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "file": "tests/home-account-abroad.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "file": "tests/home-account-creation.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "file": "tests/home-account-idle.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "4 passed (4)"
+  },
+  {
+   "file": "tests/home-account-screens.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "3 passed (3)"
+  },
+  {
+   "file": "tests/home-account-setoff.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "4 passed (4)"
+  },
+  {
+   "file": "tests/home-account-tax.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "6 passed (6)"
+  },
+  {
+   "file": "tests/home-account-transfers.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "8 passed (8)"
+  },
+  {
+   "file": "tests/integration-home-lending.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "2 passed (2)"
+  },
+  {
+   "file": "tests/integration-savings-notice.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "3 passed (3)"
+  },
+  {
+   "file": "tests/interest.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "11 passed (11)"
+  },
+  {
+   "file": "tests/lending.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "19 passed (19)"
+  },
+  {
+   "file": "tests/payments.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "9 passed (9)"
+  },
+  {
+   "file": "tests/remaining-banking.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "23 passed (23)"
+  },
+  {
+   "file": "tests/remaining-judge.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "16 passed (16)"
+  },
+  {
+   "file": "tests/roundups.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "24 passed (24)"
+  },
+  {
+   "file": "tests/school.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "54 passed (54)"
+  },
+  {
+   "file": "tests/scope-health.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "15 passed (15)"
+  },
+  {
+   "file": "tests/scope-money.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "31 passed (31)"
+  },
+  {
+   "file": "tests/statements.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "17 passed (17)"
+  },
+  {
+   "file": "tests/weather.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "36 passed (36)"
+  },
+  {
+   "file": "tests/whynot-profile.test.ts",
+   "ran": "the whole file, VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1, on the final tree",
+   "exit": 0,
+   "tests": "3 passed (3)"
+  }
+ ],
+ "mutationsRun": "18 mutations, each in a clone of the repository under the scratchpad (arion/clone, node_modules linked), applied to one file, the test files named run one at a time, the file restored from a pristine copy: 18 killed, 0 survived. M14 survived tests/decisions-arion.test.ts and was killed by brief 09’s Giro Digital cancel (tests/remaining-09-banking.test.ts).",
+ "seeds": [
+  "ar10-first",
+  "ar10-young",
+  "ar10-opened",
+  "ar10-close",
+  "ar10-twice",
+  "ar10-renew",
+  "ar10-leap",
+  "ar10-feb29",
+  "ar10-turn",
+  "ar10-short",
+  "ar10-behind",
+  "ar10-switch",
+  "ar10-behind-twice",
+  "ar10-older",
+  "ar10-older-opened",
+  "probe-arion and probe-mos (the before-probe, scratchpad only)"
+ ],
+ "foundOutside": [
+  {
+   "what": "The completion matrix’s banking.5.arion-card (brief 09’s group) still says Decision Required and cites the journey’s old title, which brief 10 renamed; tools/completion-matrix.mjs --check fails on it.",
+   "recommend": "The coordinator’s close-out: an override in docs/verification/integration-2026-10-16/criteria.json marking it superseded by arion.AR0 to AR8 (the owner’s decision 3), with the renamed title (docs/verification/pipeline/inputs/renames.json) as its citation; brief 09’s result left as it was written, since its “proves” describes the behavior brief 10 replaced."
+  },
+  {
+   "what": "Six measured criteria (F2-A, MA5, INT-skipped, INT-navigation, INT-long-runs, INT-gate) read src/engine, which this area changed: the matrix turns them Implemented, Verification Incomplete until they’re measured again.",
+   "recommend": "Measure them on the integrated code, as brief 10 section 5 asks."
+  },
+  {
+   "what": "Berliner Sparkasse’s card year is still 365 days, as brief 09 set it (its price list gives no day): its third charge falls on 24 August 2028, a day early across 29 February, and a close in that year divides by 365.",
+   "recommend": "Left as brief 09 decided. `length: 'anniversary'` on its year would align it with Arion’s; it would change no figure brief 09’s tests hold (they end in September 2027)."
+  },
+  {
+   "what": "ONCE_ON_OPENING gains a fourth step, `cardYears`; tests/scope-health.test.ts and tests/remaining-banking.test.ts list the steps exactly. Another area adding a step (the stamina area’s migration) will change the same line in src/engine/index.ts and the same eight assertions.",
+   "recommend": "At the merge, keep every step in the order added and each list with all of them."
+  },
+  {
+   "what": "Other Charges (BankWorkspace) is drawn only for the primary account’s bank, so a kept home bank’s card, returned-payment and dormant fees were said nowhere on its screens; this area added the card’s year to every current account’s panel, but not the others.",
+   "recommend": "Not changed beyond the card: a line for a kept bank’s other charges would be the banking area’s next item."
+  }
+ ],
+ "decision4": "Untouched: no audit row, no matrix row, no file of the twelve rows’ commands changed; bank.cancel_new’s row gets no rowText (its Cancel It line reads closingFeesWords, whose Arion words are new, but no Arion account is in a cooling-off in play).",
+ "testRunsSummary": "48 test files, each run alone on the final tree (the last change before them: the label’s rewording), every one exit 0: 743 tests passed, none failed or skipped. The whole suite (npm run gate) wasn’t run here: the CPU is shared, and the gate is the coordinator’s on the integrated tree."
+}

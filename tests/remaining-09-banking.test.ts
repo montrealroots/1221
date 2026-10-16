@@ -608,7 +608,14 @@ function closeKonto2(sim: Simulation, bankId: string) {
 // ---------------------------------------------------------------------------
 
 describe('banking.5.arion-card: Arion’s yearly debit-card fee in its own figure', () => {
-  it('PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing gives nothing of it back, as SLATE can’t say from Arion’s terms whether the year was paid ahead', async () => {
+  // Renamed on 2026-10-16 (brief 10): until then “PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is
+  // charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is
+  // charged nothing; closing gives nothing of it back, as SLATE can’t say from Arion’s terms whether the year was paid
+  // ahead”, asserting no refund: the owner's decision was then open (banking-result.json, banking.5.arion-card). Brief 10
+  // authorized a labelled simulation, `ARION_CARD_YEAR`, paid ahead, under which a close gives the card year's days left
+  // back (tests/decisions-arion.test.ts); the title and the last assertion say that now, the rename recorded in
+  // docs/verification/pipeline/inputs/renames.json.
+  it('PLAYER JOURNEY: a Reykjavík-raised student of 26 keeping Arion is charged 950 kr exactly on her first night and a year on, the krónur held falling by 950 kr each time; one of 20 is charged nothing; closing on 26 August 2027 gives back 945 kr of the year paid ahead, as SLATE simulates when Arion charges it', async () => {
     const sim = await keeping('rb9-arion', 'is-39-reykjavik', 'is-arion', 2000);
     const arion = currentAt(sim, 'is-arion');
     const before = arion.held!;
@@ -618,11 +625,12 @@ describe('banking.5.arion-card: Arion’s yearly debit-card fee in its own figur
     expect(arion.held).toBe(before - 950_00);
     sim.advanceTo(at(2027, 8, 26, 9));
     expect(dated(sim, 'Debit card yearly fee', arion.id).map(([, , native]) => native)).toEqual([-950_00, -950_00]);
-    // Closed: neither refunded nor charged to the day (banking-result.json, banking.5.arion-card: the owner's decision).
+    // Closed: until brief 10 neither refunded nor charged (the owner's decision then open). The year from 25 August 2027
+    // holds 29 February 2028, 366 days; 2 used to the 26th, 364 left: 95,000 × 364 / 366 = 94,480.9, 945 kr.
     const saver = mine(sim).find((a) => a.bankId === 'is-arion' && a.kind === 'savings');
     if (saver) ok(sim, 'bank.close_savings', { accountId: saver.id });
     expect(closeKonto2(sim, 'is-arion').ok).toBe(true);
-    expect(sim.universe.transactions.filter((t) => t.memo.startsWith('Debit card yearly fee refunded'))).toEqual([]);
+    expect(heldBy(sim, 'Debit card yearly fee refunded: Veltureikningur', arion.id)).toEqual([945_00]);
     expect(breaches(sim.universe)).toEqual([]);
     const young = await keeping('rb9-arion-young', 'is-39-reykjavik', 'is-arion', 2006);
     young.advanceTo(at(2027, 8, 26, 9));

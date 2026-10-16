@@ -1,0 +1,51 @@
+import { ABILITY_DEFS, type AbilityId } from '../src/engine/content/abilities';
+import { PIECE } from '../src/engine/content/piece';
+import { WORKLOAD } from '../src/engine/content/workload';
+import type { Performer } from '../src/engine/systems/evaluation';
+import { PLAY_MATERIAL } from '../src/engine/content/material';
+import { nightPiece } from '../src/engine/systems/piece';
+import { runningOf } from '../src/engine/systems/workload';
+const drain = Number(process.argv[2]), fullMul = Number(process.argv[3]);
+Object.assign(PIECE as unknown as Record<string, number>, { drain });
+const full0 = WORKLOAD.full;
+Object.assign(WORKLOAD as unknown as Record<string, number>, { full: full0 * fullMul });
+const { ALL_PIECES, workPiece } = await import('../tools/pieces');
+const AB = ABILITY_DEFS.map((d) => d.id);
+const actor = (f: (id: AbilityId) => number): Performer => ({ ability: f, full: () => 100, technique: () => 50 });
+const EVEN = actor(() => 50);
+const P = ALL_PIECES;
+const ev = P.map((pc) => pc.judge(EVEN).exact!);
+const eff = Object.fromEntries(AB.map((a) => [a, P.map((pc, i) => pc.judge(actor((id) => (id === a ? 60 : 50))).exact! - ev[i]!)]));
+const spec = Object.fromEntries(AB.map((a) => [a, P.map((pc, i) => pc.judge(actor((id) => (id === a ? 85 : 515 / 11))).exact! - ev[i]!)]));
+const res: Record<string, string> = {};
+let aOk = 0, bOk = 0;
+for (const a of AB) {
+  const own = P.map((_, i) => i).filter((i) => eff[a]![i]! >= 0.05 && AB.every((b) => b === a || eff[b]![i]! < eff[a]![i]!));
+  const kinds = [...new Set(own.map((i) => P[i]!.kind))];
+  const adv = own.map((i) => spec[a]![i]!).sort((x, y) => x - y);
+  const med = adv.length ? (adv.length % 2 ? adv[(adv.length - 1) / 2]! : (adv[adv.length / 2 - 1]! + adv[adv.length / 2]!) / 2) : NaN;
+  const ahead = adv.filter((x) => x > 0.05).length;
+  if (own.length >= 5 && kinds.length >= 2) aOk += 1;
+  if (adv.length && ahead >= 0.6 * adv.length && med >= 0.3) bOk += 1;
+  if (a === 'stamina' || a === 'memory' || a === 'composure' || own.length < 5 || kinds.length < 2) res[a] = `${own.length} in ${kinds.map((k) => `${k}:${own.filter((i) => P[i]!.kind === k).length}`).join('/')} ahead ${ahead} med ${med.toFixed(2)}`;
+}
+const best: Record<string, Record<string, number>> = {};
+P.forEach((pc, i) => { let top = 'even', s = ev[i]!; for (const a of AB) if (ev[i]! + spec[a]![i]! > s + 1e-9) { s = ev[i]! + spec[a]![i]!; top = a; } (best[pc.kind] ??= {})[top] = (best[pc.kind]![top] ?? 0) + 1; });
+const h2 = Object.entries(best).map(([k, m]) => { const n = Object.values(m).reduce((t, x) => t + x, 0); const t = Object.entries(m).sort((x, y) => y[1] - x[1])[0]!; return `${k} ${t[0]} ${t[1]}/${n}${t[1] > n / 2 && n >= 30 ? ' FAIL' : ''}`; }).join('; ');
+const h5 = P.filter((_, i) => AB.filter((a) => spec[a]![i]! < -0.05).length >= 6).length;
+const nightIdx = P.map((pc, i) => [pc, i] as const).filter(([pc]) => pc.kind === 'night').map(([, i]) => i);
+const a1n = nightIdx.reduce((t, i) => t + eff.stamina![i]!, 0) / nightIdx.length;
+// A night at a lead's part, for A1's other reading.
+const lead = PLAY_MATERIAL.map((m) => { const pc = { ...workPiece(m, 'night') }; void pc; return m; });
+void lead; void nightPiece; void runningOf;
+const kinds = ['brief', 'scene', 'night', 'casting', 'coursework'];
+const a1 = Object.fromEntries(kinds.map((k) => { const ix = P.map((pc, i) => [pc, i] as const).filter(([pc]) => pc.kind === k).map(([, i]) => i); return [k, +(ix.reduce((t, i) => t + eff.stamina![i]!, 0) / ix.length).toFixed(3)]; }));
+// The stamina specialist against the even actor over whole nights, as a supporting part and as a lead.
+const { judgePiece } = await import('../src/engine/systems/piece');
+const { materialContext } = await import('../src/engine/systems/material');
+const { TASK_PROFILES } = await import('../src/engine/content/tasks');
+const { NIGHT_DIFFICULTY } = await import('../src/engine/systems/school');
+const nightAs = (m: (typeof PLAY_MATERIAL)[number], size: 'supporting' | 'lead', p: Performer) => { const task = TASK_PROFILES.performance!; const read = materialContext(task, m); return judgePiece('ag-baseline', p, { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: { lines: 1, blocking: 1, notes: 1 }, required: { lines: 0.9, blocking: 0.9, notes: 0.9 }, difficulty: NIGHT_DIFFICULTY.school[size], condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'x', expected: true }, nightPiece(m, runningOf({ play: m.id }), size)).exact!; };
+const ST = actor((id) => (id === 'stamina' ? 85 : 515 / 11));
+const nights = Object.fromEntries((['supporting', 'lead'] as const).map((size) => { const d = PLAY_MATERIAL.map((m) => nightAs(m, size, ST) - nightAs(m, size, EVEN)); return [size, `${d.filter((x) => x > 0.05).length}/30 best ${Math.max(...d).toFixed(2)}`]; }));
+console.log(JSON.stringify({ drain, full: +(full0 * fullMul).toFixed(3), aOk, bOk, res, h2, h5: `${h5}/${P.length}`, staminaMeanEffect: a1, nightsMean: +a1n.toFixed(3), staminaSpecialistOnWholeNights: nights }));

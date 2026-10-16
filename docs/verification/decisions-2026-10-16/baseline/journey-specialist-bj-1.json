@@ -1,0 +1,194 @@
+{
+ "profile": "specialist",
+ "seed": "bj-1",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 76.6,
+  "training": 80,
+  "study": 36
+ },
+ "takes": 19,
+ "briefs": 11,
+ "readings": 17,
+ "genres": 10,
+ "purposes": {
+  "first": 11,
+  "another-reading": 6,
+  "callback": 2
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 63.4,
+   "min": 61.7,
+   "max": 65.1
+  },
+  "m2": {
+   "n": 3,
+   "mean": 63.2,
+   "min": 60.6,
+   "max": 67
+  },
+  "m3": {
+   "n": 14,
+   "mean": 62.3,
+   "min": 57.7,
+   "max": 68.3
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 11,
+  "mean": 1.65,
+  "max": 3.7,
+  "over1": 7
+ },
+ "notes": {
+  "takes": 19,
+  "distinct": 6,
+  "longestSame": 2,
+  "sameAgainInAnotherGenre": 2,
+  "withConcern": 14,
+  "concerns": [
+   "rhythm",
+   "stylized",
+   "exactness",
+   "heightened",
+   "spontaneity"
+  ],
+  "asShown": {
+   "distinct": 11,
+   "longestSame": 2,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 61.7: Focus held back the execution: absurdist’s rhythm",
+   "d13 silent_film first 65.1: Physical Expression held back the execution: silent_film’s stylized",
+   "d61 absurdist another-reading 60.6: Focus held back the execution: absurdist’s rhythm",
+   "d62 historical_drama first 67: Memory held back the execution",
+   "d76 historical_drama callback 62: Memory held back the execution",
+   "d96 silent_film another-reading 64.1: Physical Expression held back the execution: silent_film’s stylized",
+   "d97 anime first 59.9: Focus held back the execution: anime’s exactness",
+   "d103 animated first 64.8: Vocal Expression held back the execution: animated’s heightened",
+   "d104 historical_drama another-reading 68.3: Memory held back the execution",
+   "d107 historical_drama callback 60.2: Memory held back the execution",
+   "d109 action_comedy first 57.7: Focus held back the execution: action_comedy’s rhythm",
+   "d110 anime another-reading 58.6: Focus held back the execution: anime’s exactness",
+   "d111 dance first 63.2: Physical Expression held back the execution: dance’s heightened",
+   "d113 horror first 64.3: Listening And Responsiveness held back the responsiveness",
+   "d113 animated another-reading 60.7: Vocal Expression held back the execution: animated’s heightened",
+   "d116 social_realism first 64: Adaptability held back the responsiveness: social_realism’s spontaneity",
+   "d117 absurdist first 63.5: Adaptability held back the responsiveness: absurdist’s rhythm",
+   "d117 action_comedy another-reading 59.6: Focus held back the execution: action_comedy’s rhythm",
+   "d118 hangout first 63.8: Adaptability held back the responsiveness: hangout’s spontaneity"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 4,
+  "longestSameTarget": 3,
+  "sequence": [
+   "7:adaptability@50",
+   "14:adaptability@50",
+   "21:focus@50",
+   "28:focus@50",
+   "35:focus@50",
+   "42:physical@51",
+   "49:listening@53",
+   "56:focus@51",
+   "63:focus@52",
+   "70:focus@52",
+   "77:physical@53",
+   "84:focus@53",
+   "91:physical@54",
+   "98:focus@54",
+   "105:physical@55",
+   "112:physical@57",
+   "119:adaptability@52"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 56,
+  "imagination": 90,
+  "focus": 55,
+  "memory": 52,
+  "adaptability": 53,
+  "composure": 90,
+  "vocal": 53,
+  "physical": 59,
+  "discipline": 55,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 113,
+   "brief": "brief-horror",
+   "genre": "horror",
+   "reading": "trust",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64.3,
+   "chief": "Listening And Responsiveness held back the responsiveness by 28.4 points"
+  },
+  {
+   "day": 113,
+   "brief": "brief-animated",
+   "genre": "animated",
+   "reading": "brag",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 60.7,
+   "chief": "Vocal Expression held back the execution by 22.1 points",
+   "concern": "heightened"
+  },
+  {
+   "day": 116,
+   "brief": "brief-social_realism",
+   "genre": "social_realism",
+   "reading": "tired",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64,
+   "chief": "Adaptability held back the responsiveness by 30.4 points",
+   "concern": "spontaneity"
+  },
+  {
+   "day": 117,
+   "brief": "brief-absurdist-2",
+   "genre": "absurdist",
+   "reading": "relief",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.5,
+   "chief": "Adaptability held back the responsiveness by 29.9 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 117,
+   "brief": "brief-action_comedy",
+   "genre": "action_comedy",
+   "reading": "cake",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 59.6,
+   "chief": "Focus held back the execution by 13.3 points",
+   "concern": "rhythm"
+  },
+  {
+   "day": 118,
+   "brief": "brief-hangout-2",
+   "genre": "hangout",
+   "reading": "alone",
+   "sides": "",
+   "purpose": "first",
+   "overall": 63.8,
+   "chief": "Adaptability held back the responsiveness by 29.6 points",
+   "concern": "spontaneity"
+  }
+ ]
+}

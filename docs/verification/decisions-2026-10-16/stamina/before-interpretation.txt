@@ -1,0 +1,298 @@
+{
+ "strength": 0.3,
+ "prep": 0.1,
+ "I2": {
+  "pace": {
+   "genresWithTwo": 149,
+   "differs": 26.8,
+   "betterSide": {
+    "measured": 48,
+    "driven": 50.7
+   }
+  },
+  "scale": {
+   "genresWithTwo": 149,
+   "differs": 23.5,
+   "betterSide": {
+    "restrained": 55.7,
+    "expansive": 43
+   }
+  },
+  "structure": {
+   "genresWithTwo": 149,
+   "differs": 35.6,
+   "betterSide": {
+    "set": 55.4,
+    "open": 44.6
+   }
+  }
+ },
+ "designed": {
+  "briefs": 149,
+  "I1": {
+   "checked": 8010,
+   "at100": 8010,
+   "holds": true
+  },
+  "I3": {
+   "n": 148,
+   "sd": 1.28,
+   "restrainedAhead": 70.3,
+   "expansiveAhead": 27,
+   "min": -2.4,
+   "max": 4.2
+  },
+  "I4": {
+   "restrainedSuitsMore": 94,
+   "specialistExpansiveWins": 54.3,
+   "bandApart": 84,
+   "evenActorFollowsSuitability": 100
+  },
+  "I5": {
+   "atLeastTwoWithinAPoint": 99.3
+  }
+ },
+ "heldOut": {
+  "briefs": 149,
+  "I1": {
+   "checked": 9378,
+   "at100": 9378,
+   "holds": true
+  },
+  "I3": {
+   "n": 148,
+   "sd": 1.15,
+   "restrainedAhead": 51.4,
+   "expansiveAhead": 42.6,
+   "min": -2.9,
+   "max": 3.1
+  },
+  "I4": {
+   "restrainedSuitsMore": 70,
+   "specialistExpansiveWins": 47.1,
+   "bandApart": 86,
+   "evenActorFollowsSuitability": 100
+  },
+  "I5": {
+   "atLeastTwoWithinAPoint": 97.3
+  }
+ },
+ "stage": {
+  "ST1": {
+   "n": 94,
+   "restrainedAhead": 50,
+   "expansiveAhead": 42,
+   "holds": true
+  },
+  "ST2": {
+   "houseSignalOnAnyMaterial": false,
+   "bandApart": 80,
+   "restsOnTheScene": 80,
+   "holds": true
+  },
+  "ST3": {
+   "cases": 189,
+   "specialistBetterOnStage": 189,
+   "evenActorSame": 178,
+   "holds": false
+  },
+  "ST4": {
+   "genres": {
+    "drama": {
+     "r": 25,
+     "e": 5,
+     "n": 30
+    },
+    "comedy": {
+     "r": 14,
+     "e": 16,
+     "n": 30
+    },
+    "tragedy": {
+     "r": 4,
+     "e": 18,
+     "n": 24
+    }
+   },
+   "holds": true
+  },
+  "ST5": {
+   "checked": 2520,
+   "at100": 2520,
+   "holds": true
+  },
+  "ST6": {
+   "expansiveSpecialistWinsAgainstTheGrain": "22 of 50",
+   "restrainedSpecialistWinsAgainstTheGrain": "9 of 42",
+   "holds": false
+  },
+  "ST7": {
+   "materials": 95,
+   "atLeastTwoWithinAPoint": 95,
+   "share": 100,
+   "holds": true
+  },
+  "ST8": {
+   "n": 80,
+   "follow": 80,
+   "share": 100,
+   "holds": true
+  },
+  "F1": {
+   "task": "performance",
+   "ST1": {
+    "n": 29,
+    "restrainedAhead": 16,
+    "expansiveAhead": 13,
+    "holds": true
+   },
+   "ST5": {
+    "checked": 783,
+    "at100": 783,
+    "holds": true
+   },
+   "ST7": {
+    "materials": 30,
+    "atLeastTwoWithinAPoint": 30,
+    "share": 100,
+    "holds": true
+   },
+   "ST8": {
+    "n": 27,
+    "follow": 27,
+    "share": 100,
+    "holds": true
+   }
+  },
+  "F2": {
+   "at40": {
+    "ST1": {
+     "n": 94,
+     "restrainedAhead": 50,
+     "expansiveAhead": 42,
+     "holds": true
+    },
+    "ST8": {
+     "n": 80,
+     "follow": 80,
+     "share": 100,
+     "holds": true
+    }
+   },
+   "at75": {
+    "ST1": {
+     "n": 94,
+     "restrainedAhead": 51,
+     "expansiveAhead": 41,
+     "holds": true
+    },
+    "ST8": {
+     "n": 80,
+     "follow": 80,
+     "share": 100,
+     "holds": true
+    }
+   }
+  },
+  "bySide": [
+   "seagull-4: restrained 0.32, expansive -0.37",
+   "dollhouse-3: restrained 0.19, expansive -0.25",
+   "earnest-2: restrained 0.13, expansive 0.25",
+   "vanya-2: restrained 0.44, expansive -0.5",
+   "trifles: restrained 0.69, expansive -0.75",
+   "julie: restrained 0.07, expansive -0.12",
+   "cherry-orchard-4: restrained 0.69, expansive -0.68",
+   "pygmalion-4: restrained -0.25, expansive 0.56",
+   "playboy-3: restrained 0.25, expansive 0.07",
+   "machinal-2: restrained 0.56, expansive -0.43",
+   "muchado-4-1: restrained 0, expansive 0.04",
+   "romeo-2-2: restrained 0, expansive 0",
+   "macbeth-1-7: restrained 0.38, expansive -0.37",
+   "twelfth-1-5: restrained 0.38, expansive -0.31",
+   "shrew-2-1: restrained -0.37, expansive 0.5",
+   "scandal-2-1: restrained -0.12, expansive 0.5",
+   "richard3-1-2: restrained -0.62, expansive 0.82",
+   "hamlet-3-1: restrained -0.12, expansive 0.13",
+   "othello-4-3: restrained 0.13, expansive -0.12",
+   "measure-2-4: restrained 0.32, expansive -0.37",
+   "antigone-441: restrained -1, expansive 1",
+   "oedipus-300: restrained -1, expansive 1",
+   "electra-328: restrained -0.5, expansive 0.75",
+   "medea-446: restrained -0.62, expansive 0.63",
+   "bacchae-451: restrained -0.37, expansive 0.56",
+   "agamemnon-855: restrained -0.37, expansive 0.38",
+   "hedda-2: restrained 0.82, expansive -0.87",
+   "arms-1: restrained 0.38, expansive 0",
+   "proposal: restrained -0.37, expansive 0.5",
+   "windermere-1: restrained 0.38, expansive -0.06",
+   "suppressed-2: restrained 0.13, expansive 0",
+   "rising-moon: restrained 0.69, expansive -0.46",
+   "creditors: restrained 0.69, expansive -0.75",
+   "anna-christie-1: restrained 0.56, expansive -0.56",
+   "hamlet-3-4: restrained -0.5, expansive 0.5",
+   "caesar-4-3: restrained -0.25, expansive 0.25",
+   "caesar-2-1: restrained 0.25, expansive -0.25",
+   "lear-4-7: restrained 0, expansive 0",
+   "asyoulike-3-2: restrained 0.38, expansive 0",
+   "dream-3-2: restrained -0.37, expansive 0.5",
+   "twelfth-2-4: restrained 0.63, expansive -0.62",
+   "faustus-3: restrained -0.5, expansive 0.5",
+   "malfi-1: restrained 0.38, expansive -0.37",
+   "wayoftheworld-4: restrained 0.13, expansive 0.25",
+   "stoops-2: restrained 0.13, expansive 0.25",
+   "ghosts-1: restrained 0.32, expansive -0.37",
+   "masterbuilder-1: restrained 0.32, expansive -0.31",
+   "riders-sea: restrained 0.82, expansive -0.62",
+   "orig-night-desk: restrained 0.13, expansive -0.06",
+   "orig-bed-fourteen: restrained 0.69, expansive -0.75",
+   "orig-what-we-keep: restrained 0.07, expansive -0.06",
+   "orig-runway: restrained -0.12, expansive 0.19",
+   "orig-hundred-questions: restrained 0.25, expansive -0.18",
+   "orig-office-hours: restrained 0.32, expansive -0.37",
+   "orig-two-time-zones: restrained 0.63, expansive -0.56",
+   "orig-the-reception: restrained 0.32, expansive -0.33",
+   "enemy-2: restrained -0.06, expansive 0",
+   "strife-1: restrained -0.56, expansive 0.5",
+   "justice-2: restrained -0.43, expansive 0.38",
+   "weavers-1: restrained -0.43, expansive 0.38",
+   "caesar-3-2: restrained -0.62, expansive 0.63",
+   "henry5-4-3: restrained -0.31, expansive 0.25",
+   "oedipus-1: restrained -0.75, expansive 0.75",
+   "dream-5-1: restrained -0.37, expansive 0.6",
+   "scapin-3-2: restrained 0.25, expansive -0.12",
+   "Hedda Gabler: restrained 0.69, expansive -0.75",
+   "The Importance Of Being Earnest: restrained 0.25, expansive 0.13",
+   "Woyzeck: restrained -0.62, expansive 0.82",
+   "Three Sisters: restrained 0.56, expansive -0.58",
+   "Blood Wedding: restrained -0.75, expansive 1",
+   "The Cherry Orchard: restrained 0.44, expansive -0.43",
+   "Major Barbara: restrained -0.5, expansive 0.82",
+   "Ghosts: restrained 0.69, expansive -0.75",
+   "The Wild Duck: restrained 0.44, expansive -0.43",
+   "Spring Awakening: restrained 0.26, expansive -0.12",
+   "Twelfth Night: restrained 0.38, expansive -0.33",
+   "Measure For Measure: restrained 0.19, expansive -0.18",
+   "The Winter’s Tale: restrained -0.37, expansive 0.42",
+   "Julius Caesar: restrained -1, expansive 1",
+   "A Midsummer Night’s Dream: restrained -0.25, expansive 0.32",
+   "Macbeth: restrained -0.37, expansive 0.38",
+   "As You Like It: restrained 0.25, expansive -0.18",
+   "Much Ado About Nothing: restrained -0.12, expansive 0.19",
+   "A Doll’s House: restrained 0.56, expansive -0.56",
+   "Uncle Vanya: restrained 0.44, expansive -0.43",
+   "Tartuffe: restrained 0.25, expansive -0.12",
+   "An Enemy Of The People: restrained -0.62, expansive 0.75",
+   "The Playboy Of The Western World: restrained -0.37, expansive 0.79",
+   "Mrs Warren’s Profession: restrained 0.32, expansive -0.12",
+   "Miss Julie: restrained 0.07, expansive -0.12",
+   "Trifles: restrained 0.5, expansive -0.37",
+   "The Bear: restrained -0.37, expansive 0.5",
+   "A Marriage Proposal: restrained -0.37, expansive 0.5",
+   "Salomé: restrained -0.62, expansive 1"
+  ]
+ }
+}
+
+real	0m19.966s
+user	0m22.618s
+sys	0m0.852s

@@ -1,0 +1,6 @@
+at 9c40be73, 0 tracked files uncommitted, 2026-10-16T22:49:38Z
+build exit=0 secs=44 cmd: npm run build
+saves exit=0 secs=133 cmd: node tools/scenario-saves.mjs <scratch>/saves
+acceptance-1440 exit=0 secs=859 cmd: env SLATE_BASE=http://localhost:4183 node tools/acceptance-ui.mjs <scratch>/acc-1440 1440 <scratch>/saves
+acceptance-390 exit=0 secs=693 cmd: env SLATE_BASE=http://localhost:4183 node tools/acceptance-ui.mjs <scratch>/acc-390 390 <scratch>/saves
+DONE 2026-10-16T23:18:33Z

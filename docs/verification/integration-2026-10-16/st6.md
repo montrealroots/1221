@@ -188,3 +188,14 @@ Measured again after `evaluation-10` and Scapin's sack scene (`followup-09/`, `h
 specialist's lift as built 1.132 and the expansive's 1.496 (1.145 and 1.571 before); the readings considered above move
 as little (`followup-09/st6-cases.json`, `considered`). ST4 and ST7 hold (comedy 14 / 16; 95 of 95). ST6 as written isn't
 met; ST6′ is as proposed.
+
+## Brief 10: The Budgets Weren't Equal (2026-10-16, Later Still)
+
+Brief 10's criterion ST6-R (`../decisions-2026-10-16/criteria.md`) asks for the specialists on the even actor's budget,
+printed. Checked first, they weren't: `tools/interpretation.ts` built each as three abilities and `fill(235)`, with
+`fill = (600 − n) / 8`, where nine abilities are left, so each totalled 645.6 against the even actor's 600. Every figure
+above was measured that way, ST6′'s "equal-budget even actor" among them: the even actor was at 600 and the specialist
+at 645.6. Corrected to `(600 − n) / 9` (`94548b55`), ST6 as written is restrained 10 of 42 and expansive 24 of 50 (9 and
+22 at 645.6), ST6′ **5 of 42** where it was 26, and ST6-R's (a) 3 of 42 where at 645.6 it would be 24
+(`../decisions-2026-10-16/baseline/README.md`). Brief 10's two public meetings (`content/scenes-meeting.ts`) suit size and
+make the restrained half 44 materials; ST6-R (a) is 3 of 44 (`../decisions-2026-10-16/judge/`).

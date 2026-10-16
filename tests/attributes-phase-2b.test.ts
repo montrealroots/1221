@@ -7,7 +7,9 @@
  * 2. What a piece demands decides which abilities count (`BASE_INPUTS`, `DEMAND_EFFECT`): a longer text asks memory, more
  *    at stake composure, less of a partner presence, more beats discipline, a grave piece emotional depth, a comic one
  *    focus, an invented world imagination; and no one ability is best on most of a kind of work.
- * 3. Stamina's load by a piece's length (`PIECE.load`): a night draws on it more than a light brief or scene.
+ * 3. Stamina's load by a piece's length (`PIECE.load`): a night draws on it more than a light brief or scene. From
+ *    2026-10-16's brief 10 a night's is its workload (`systems/workload.ts`): its running time, its part and its
+ *    intensity, so a one-act asks less of it than a whole evening, where until then every night was a whole evening.
  * 4. Listening speeds a brief rehearsed against its reader (and an evening with a partner or a reader); adaptability a
  *    director's note on the blocking worked into a part (`stepSpeed`).
  * TEST SETUP throughout: levels and parts written directly where a block says so, and the clock's own commitments
@@ -29,7 +31,9 @@ import { attributesOf } from '@/engine/systems/attributes';
 import { BRIEF, briefContext, briefPiece, practiceShare, prepareBrief, recordOf, requiredOf, prepareRefusal } from '@/engine/systems/briefs';
 import type { Performer } from '@/engine/systems/evaluation';
 import { materialContext } from '@/engine/systems/material';
-import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, unitSegments } from '@/engine/systems/piece';
+import { nightLoad, runningOf, type Participation } from '@/engine/systems/workload';
+import { RUNNING_TIMES } from '@/engine/content/workload';
 import { hasProcess, type Process } from '@/engine/systems/production';
 import { CALL_KIND, NIGHT_DIFFICULTY } from '@/engine/systems/school';
 import { PREP_DIMS } from '@/engine/content/coursework';
@@ -146,15 +150,18 @@ let variants = 0;
 const like = (b: Brief, over: Partial<Brief>): Brief => ({ ...b, ...over, id: `${b.id}~p2b-${(variants += 1)}` });
 const beatsOf = (n: number, tone: 'grave' | 'comic' | 'lyric') => Array.from({ length: n }, () => ({ what: 'A beat.', tones: [tone] }));
 
-/** A scene shown in class or a night of a play, fully prepared, as the baseline judges one (TEST SETUP: the parts set). */
-function work(m: MaterialProfile, night: boolean, p: Performer): number {
+/**
+ * A scene shown in class or a night of a play, fully prepared, as the baseline judges one (TEST SETUP: the parts set). A
+ * night as a supporting part's workload over its play's running time from 2026-10-16 (brief 10), or the part given.
+ */
+function work(m: MaterialProfile, night: boolean, p: Performer, size: Participation = 'supporting'): number {
   const task = night ? TASK_PROFILES.performance! : TASK_PROFILES.scene!;
   const read = materialContext(task, m);
   const parts = night ? ['lines', 'blocking', 'notes'] : ['familiarity', 'memorization', 'interpretation', 'rehearsal', 'partner'];
   return judgePiece('p2b', p, {
     task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep: Object.fromEntries(parts.map((k) => [k, 1])), required: Object.fromEntries(parts.map((k) => [k, 0.9])),
     difficulty: night ? NIGHT_DIFFICULTY.school.supporting : -0.3, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'p2b', expected: true,
-  }, { segments: unitSegments(m, 2), work: [], part: night ? 'blocking' : 'rehearsal', perTurn: night ? 0 : PIECE.scene.perTurn, perBlend: 0, most: night ? 1 : PIECE.scene.most, load: loadOf(m, night ? 'night' : 'scene') }).overall;
+  }, night ? nightPiece(m, runningOf({ play: m.id }), size) : { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).overall;
 }
 
 describe('what a piece demands decides which abilities count', () => {
@@ -168,7 +175,12 @@ describe('what a piece demands decides which abilities count', () => {
     const rise = (a: AbilityId) => effectOn(like(base, { stakes: 3 }), a) - effectOn(like(base, { stakes: 0 }), a);
     // Measured: composure 1.1 and discipline 0 from stakes 0 to 3; with the lean alone, 0.6 and 0.2.
     expect(rise('composure')).toBeGreaterThan(rise('discipline') + 0.6);
-    expect(effectOn(like(base, { partner: 0 }), 'presence')).toBeGreaterThan(effectOn(like(base, { partner: 3 }), 'presence') + 0.3);
+    // At full precision from later on 2026-10-16. Shown, presence's +10 came to 0.5 with no partner and 0.2 with a partner
+    // at 3 while the full drain was 0.3, and 0.6 and 0.3 once it was 0.4 (`PIECE.drain`): 0.3 apart to the tenth either way,
+    // so the comparison rested on the floating point's last digit, and failed on it at 0.4. Exact, 0.587 and 0.277, then
+    // 0.584 and 0.275: 0.31 apart.
+    const exactOn = (b: Brief, a: AbilityId) => take(b, plus(EVEN, a, 10), 1).exact! - take(b, EVEN, 1).exact!;
+    expect(exactOn(like(base, { partner: 0 }), 'presence')).toBeGreaterThan(exactOn(like(base, { partner: 3 }), 'presence') + 0.3);
   });
 
   it('asks discipline more of more beats, emotional depth of a grave piece, focus of a comic one, imagination of a lyric one', () => {
@@ -203,16 +215,25 @@ describe('what a piece demands decides which abilities count', () => {
 // ---------------------------------------------------------------------------------------------------------------
 
 describe('stamina counts by how long and how hard a piece is', () => {
-  it('loads a night as a whole evening, and a long brief more than a medium one', () => {
-    expect(loadOf({ physical: 0, vocal: 0 }, 'night')).toBe(PIECE.load.night);
-    expect(PIECE.load.night).toBeGreaterThanOrEqual(0.6);
+  // Until 2026-10-16 (brief 10) this was 'loads a night as a whole evening, and a long brief more than a medium one', and
+  // held a night's load at 0.6 or more whatever the play: the owner's decision 5 made a night's its running time's.
+  it('loads a night by its running time, a one-act less than a whole evening, and a long brief more than a medium one', () => {
+    const oneActs = ['The Bear', 'A Marriage Proposal', 'Riders To The Sea', 'Salomé', 'Trifles', 'Miss Julie'];
+    const of = (title: string) => nightLoad(RUNNING_TIMES[title]!, { physical: 2, vocal: 1 }, 'lead').workload;
+    for (const a of oneActs) for (const m of PLAY_MATERIAL.filter((x) => !oneActs.includes(x.id) && RUNNING_TIMES[x.id]!.minutes >= 150)) expect(of(a), `${a} against ${m.id}`).toBeLessThan(of(m.id));
     const b = BRIEF_BY_ID['brief-drama']!;
     expect(briefPiece(like(b, { size: 'long' }), {}).load).toBeGreaterThan(briefPiece(like(b, { size: 'medium' }), {}).load + 0.1);
   });
 
-  it('gives +10 stamina half a point or more on a night, on the mean of the plays, and a tenth or less on a light brief', () => {
-    const plays = PLAY_MATERIAL.map((m) => work(m, true, plus(EVEN, 'stamina', 10)) - work(m, true, EVEN));
-    expect(plays.reduce((a, x) => a + x, 0) / plays.length).toBeGreaterThanOrEqual(0.5);
+  // Until 2026-10-16 (brief 10) this was 'gives +10 stamina half a point or more on a night, on the mean of the plays, and
+  // a tenth or less on a light brief', of a supporting part's night, which every night was then as to stamina: a whole
+  // evening's lead. A night reads its part's share of the evening since, and the claim, a whole evening's, is a lead's:
+  // 0.50 on the mean of the 30 plays, where a supporting part's is 0.32 and a featured part's 0.14 (measured 2026-10-16).
+  it('gives +10 stamina half a point or more on a lead’s night, on the mean of the plays, less in a smaller part, and a tenth or less on a light brief', () => {
+    const effect = (size: Participation) => { const xs = PLAY_MATERIAL.map((m) => work(m, true, plus(EVEN, 'stamina', 10), size) - work(m, true, EVEN, size)); return xs.reduce((a, x) => a + x, 0) / xs.length; };
+    expect(effect('lead')).toBeGreaterThanOrEqual(0.5);
+    expect(effect('supporting')).toBeLessThan(effect('lead'));
+    expect(effect('featured')).toBeLessThan(effect('supporting'));
     const light = like(BRIEF_BY_ID['brief-drama']!, { size: 'short', physical: 0, vocal: 0 });
     // At the precision a take is kept to (from 2026-10-16: the genre's register left it at 0.1 and a float's remainder).
     expect(Math.round(effectOn(light, 'stamina') * 1000) / 1000).toBeLessThanOrEqual(0.1);

@@ -70,7 +70,7 @@ import { abilityFull, abilityOf, developmentOf } from '@/engine/systems/attribut
 import { classesGrow, conditionAt, reachOf, STANDING_LABEL, termStart, yearOfStudy } from '@/engine/systems/school';
 import { practicedToday, practicePreview, practiceRefusal } from '@/engine/systems/practice';
 import { studyRefusal } from '@/engine/systems/engagement';
-import { BRIEF } from '@/engine/systems/briefs';
+import { BRIEF, atFull, genreMastered } from '@/engine/systems/briefs';
 import { DEVELOPMENT } from '@/engine/content/abilities';
 import { BAND_WORD } from '@/ui/looks/actor';
 import { EVERYDAY_FITNESS, FITNESS, fitnessHeldUntil, lookAfterRefusal, readiness } from '@/engine/systems/life';
@@ -259,7 +259,10 @@ function PracticeControl({ exercise }: { exercise: string }) {
 /**
  * What to work on next, from what cost recent work, dropping a weakness once it's addressed (`recommendations`), and
  * from 2026-10-12 the weakness the work so far keeps coming back to (`Identity.recurring`), said with the pieces it has
- * held back for life and what that rests on, and first within half a point of the top.
+ * held back for life and what that rests on, and first within half a point of the top. From 2026-10-16 it's forecast
+ * (`adviceFor`, `systems/advice.ts`): what each input's hours of practice would be worth; from brief 10, later that day,
+ * the recurring weakness is said where its forecast puts it, and where everything the recent work read that an exercise
+ * trains is at full, the first line says so (`full:all`, no exercise).
  */
 function NextWork() {
   const { sim } = useGame();
@@ -333,9 +336,12 @@ function AbilitiesPanel() {
                 const full = abilityFull(sim, person, d.id);
                 const today = todayFor(sim, person, d.id);
                 const h = last(d.id);
+                // At its full, by the game's own rule (`atFull`), as the Techniques panel marks a technique at MASTERED (from
+                // 2026-10-16, at the owner's word): until then the row said only its two figures, side by side.
+                const mastered = atFull(now, d.id, full);
                 return (
                   <tr key={d.id}>
-                    <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open></td>
+                    <td className="nowrap"><Open subject={at('ability', d.id)}>{d.label}</Open>{mastered && <>{' '}<span className="chip chip-positive" title={d.id === 'stamina' ? `At full fitness for your age, ${one(full)}: it falls again without workouts` : `At its full, ${one(full)}: work that reads it asks nothing more of it`}>Mastered</span></>}</td>
                     <td className="num mono">{one(now)}</td>
                     <td className="num mono">{one(full)}</td>
                     <td className="num mono" title={classesGrow(d.id) ? undefined : 'Classes don’t build it'}>{classesGrow(d.id) ? one(Math.min(full, reachOf(person, d.id))) : '—'}</td>
@@ -352,7 +358,7 @@ function AbilitiesPanel() {
         <p className="small" style={{ margin: 0 }}>
           <strong>Stamina is your fitness.</strong> It’s full at the most a body your age can be brought to, {one(staminaFull)} now, so at full fitness it counts as full, and work that reads it asks nothing more. A workout builds it, and holds it for {FITNESS.heldDays} days, and so does a class that trains the body as hard (Movement Invention, stage combat): two a week keep it (Hickson &amp; Rosenkoetter, 1981). Past that it falls {FITNESS.perDay} a day toward {EVERYDAY_FITNESS}, what an everyday life keeps (Mujika &amp; Padilla, 2000, on detraining); the rate is SLATE’s. A second workout the same day builds half. It’s the one ability that fades without use: the others keep what they’ve earned.
         </p>
-        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993).</Fine>
+        <Fine>Classes and the work grow an ability toward its reach; deliberate practice goes past it to full, and reaching full sets it exactly. The same exercise again the same day gives half; past {PRACTICE.dailyHours} hours a day, practice stops counting (Ericsson et al., 1993). An ability at its full is marked Mastered; stamina’s mark goes when its fitness falls, and the others keep what they’ve earned.</Fine>
       </div>
     </Panel>
   );
@@ -440,9 +446,12 @@ function GenresPanel() {
                 const tags = genreTags(g.id);
                 const d = GENRE_DEMANDS[g.id];
                 const study = studyRefusal(sim, person, g.id);
+                // A genre one of whose briefs was taped at full mastery (from 2026-10-16, `genreMastered`): until then its
+                // row said nothing of it, and mastery showed only as the brief's hundreds and the School Journey's milestone.
+                const mastered = genreMastered(person, g.id);
                 return (
                   <tr key={g.id}>
-                    <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}</td>
+                    <td className="nowrap"><Open subject={at('genre', g.id)}>{g.label}</Open>{(person.genres ?? []).includes(g.id) ? ', Loved' : ''}{mastered && <>{' '}<span className="chip chip-positive" title={`${mastered.brief.title} taped at full mastery on ${formatDate(mastered.at, sim.zone)}`}>Mastered</span></>}</td>
                     <td className="xs">{tags.length ? tags.map((t) => `${DEMAND_LABEL[t]} (${TECHNIQUE_LABEL[DEMAND_TECHNIQUE[t]]} ${one(person.craft![DEMAND_TECHNIQUE[t]])} of ${MASTERED})`).join('; ') : d && !applied(g.id) && d.tags.length ? 'Not established: the research rests on one example' : 'Nothing past the camera’s own'}</td>
                     <td className="num mono">{one(e?.familiarity ?? 0)}</td>
                     <td className="num mono">{one(e?.practice ?? 0)}</td>
@@ -458,7 +467,7 @@ function GenresPanel() {
           </table>
         </LookRegion>
         {list.length > limit && <button type="button" className="btn btn-sm btn-ghost" onClick={() => setLimit(limit + PAGE)}>{`Show ${Math.min(PAGE, list.length - limit)} More`}</button>}
-        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}, and Study It builds it. Loving a genre makes a day of work in it better and caps nothing; material met before (its features, not its genre) makes a brief quicker to prepare.</Fine>
+        <Fine>Every genre has a practice brief, an original scene written for SLATE: open it to read the scene, prepare it, choose a reading and how to play it, and tape it. What a genre asks for is a technique its brief stages, shown before you begin: mastered at {MASTERED}, it asks nothing more. A taped brief also asks you to know the genre: the better of what you’ve studied and what you’ve worked in it, complete at {Math.round(BRIEF.complete.genre * 100)}, and Study It builds it. Loving a genre makes a day of work in it better and caps nothing; material met before (its features, not its genre) makes a brief quicker to prepare. A genre is marked Mastered once a take of its brief is judged at full mastery: every ability and technique the take reads at full, its preparation complete, and the day’s condition enough.</Fine>
       </div>
     </Panel>
   );

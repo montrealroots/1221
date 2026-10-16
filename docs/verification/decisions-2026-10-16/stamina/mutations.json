@@ -1,0 +1,292 @@
+[
+ {
+  "clause": "W1",
+  "file": "src/engine/content/workload.ts",
+  "find": "  'Trifles': at(35, [], ",
+  "replace": "  'Trifles (cut)': at(35, [], ",
+  "what": "a play without a running time",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W1: every play has a running time, with its basis > gives every play the catalog stages a running time, its breaks and its basis, a cited production’s figure read on 2026-10-16 or SLATE’s estimate said so",
+   "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+   "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+  ]
+ },
+ {
+  "clause": "W1",
+  "file": "src/engine/content/workload.ts",
+  "find": "  'The Bear': at(55, [], ",
+  "replace": "  'The Bear': at(150, [], ",
+  "what": "a one-act loaded as a whole evening",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand"
+  ]
+ },
+ {
+  "clause": "W2",
+  "file": "src/engine/systems/workload.ts",
+  "find": "const workload = Math.min(WORKLOAD.cap, (playing / 60) * share * intensity);",
+  "replace": "const workload = Math.min(WORKLOAD.cap, share * intensity);",
+  "what": "the running time taken out of the workload",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+   "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+   "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+  ]
+ },
+ {
+  "clause": "W2",
+  "file": "src/engine/systems/workload.ts",
+  "find": "const share = WORKLOAD.share[size];",
+  "replace": "const share = WORKLOAD.share.lead;",
+  "what": "the part’s size taken out of the workload",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+   "the part and its piece > reads the part’s own size in its piece and its hours on stage"
+  ]
+ },
+ {
+  "clause": "W3",
+  "file": "src/engine/content/workload.ts",
+  "find": "  perLevel: PER_LEVEL,",
+  "replace": "  perLevel: 0,",
+  "what": "the intensity’s step at nothing",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W1: every play has a running time, with its basis > runs every one-act shorter than every full-length play, and loads no one-act lead as a whole evening’s at the same intensity",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives more intensity more workload at the same running time, and a short intense lead at least a long light one’s: Salomé against Three Sisters",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was"
+  ]
+ },
+ {
+  "clause": "W4",
+  "file": "src/engine/content/workload.ts",
+  "find": "  staminaSpares: 0.5,",
+  "replace": "  staminaSpares: 1,",
+  "what": "full stamina as unlimited energy",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+   "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+   "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+  ]
+ },
+ {
+  "clause": "W4",
+  "file": "src/engine/systems/workload.ts",
+  "find": "PIECE.drain * share * (1 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+  "replace": "PIECE.drain * share * conditionFactor(readiness)",
+  "what": "stamina no protection within",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+   "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+  ]
+ },
+ {
+  "clause": "W5",
+  "file": "src/engine/systems/workload.ts",
+  "find": "    energy: WORKLOAD.energy * n.workload * (1 - WORKLOAD.staminaSpares * s) * g,",
+  "replace": "    energy: WORKLOAD.energy * endShare(n) * WORKLOAD.full * (1 - WORKLOAD.staminaSpares * s) * g,",
+  "what": "recovery credited again in the energy after",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > gives longer participation a greater workload, drain and energy, never less, holding every other input",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+  ]
+ },
+ {
+  "clause": "W5",
+  "file": "src/engine/systems/workload.ts",
+  "find": "export const recovered = (minutes: number): number => WORKLOAD.recovers * clamp(minutes / WORKLOAD.recoversFullAt, 0, 1);",
+  "replace": "export const recovered = (minutes: number): number => (minutes > 0 ? 0 : 0) * WORKLOAD.recovers;",
+  "what": "a break recovering nothing",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was"
+  ]
+ },
+ {
+  "clause": "W6",
+  "file": "src/engine/systems/workload.ts",
+  "find": "export const holdOf = (holder: Parameters<typeof runningOf>[0]): number => runningOf(holder).minutes + WORKLOAD.curtainCall;",
+  "replace": "export const holdOf = (holder: Parameters<typeof runningOf>[0]): number => (runningOf(holder).minutes > 0 ? 150 : 150);",
+  "what": "every call held two and a half hours again",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W1: every play has a running time, with its basis > PLAYER JOURNEY: books the Carlotta’s performances for its new play’s running time and the curtain call, where every School performance held two and a half hours",
+   "W5: a break recovers, once > PLAYER JOURNEY: holds the interval on the clock as waking time charged as any, and a night’s sleep after restores from the dials by its own rule, whatever the interval gave back",
+   "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+   "W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone",
+   "the part and its piece > reads the part’s own size in its piece and its hours on stage"
+  ]
+ },
+ {
+  "clause": "W6",
+  "file": "src/engine/systems/school.ts",
+  "find": "        const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');\n        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));\n        tire(person, energy);",
+  "replace": "        const { energy } = reckonNight(s, person, casting, item, item.payload.which === 'rep');\n        grewFrom(s, person, `night:${casting.production}`, focusAt(s, person, item.at) * nightFactor(casting), nightWeights(castingReads(casting)));\n        tire(person, energy);\n        tire(person, energy);",
+  "what": "the night’s fatigue taken twice",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+  ]
+ },
+ {
+  "clause": "W6",
+  "file": "src/engine/systems/school.ts",
+  "find": "    if (clash) continue;\n    item.durationMinutes = minutes;",
+  "replace": "    void clash;\n    item.durationMinutes = minutes;",
+  "what": "an older save’s call re-timed over another call",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W6: the evening’s time and fatigue, once > times the performance calls a save from before booked, once, on its first opening, and keeps one whose new span would meet another call (GUARD)"
+  ]
+ },
+ {
+  "clause": "W7",
+  "file": "src/engine/systems/workload.ts",
+  "find": "export const segmentShares = (n: NightLoad, segments: readonly SegmentSpec[]): number[] => spansOf(n, segments).map(([u, v]) => meanShare(n, u, v));",
+  "replace": "export const segmentShares = (n: NightLoad, segments: readonly SegmentSpec[]): number[] => spansOf(n, segments).map(([u]) => shareAt(n, u));",
+  "what": "a segment sampled at its start",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+   "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath"
+  ]
+ },
+ {
+  "clause": "W8",
+  "file": "src/engine/systems/workload.ts",
+  "find": "export const conditionFactor = (readiness: number): number => 1 + WORKLOAD.condition * (1 - clamp(readiness, 0, 100) / 100);",
+  "replace": "export const conditionFactor = (readiness: number): number => 1 + WORKLOAD.condition * (clamp(readiness, 0, 100) / 100);",
+  "what": "the condition read the wrong way round",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: a short night and a long one at the same curtain, The Bear and Salomé (each one act, the body 3 and the voice 2), the longer costing more, by hand",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins differing only in the condition they came to the curtain in, the more tired draining more and spending more by g, bounded at half again",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W5: a break recovers, once > gives back a quarter of the drain at a 20-minute interval for what follows, a shorter pause in proportion, and leaves the energy the evening costs as it was",
+   "W6: the evening’s time and fatigue, once > PLAYER JOURNEY: holds the clock for the running time and the curtain call, and takes the night’s energy once at the curtain, by hand",
+   "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+   "W9: bounded, and said > PLAYER JOURNEY: says the workload before the curtain under A Night Now and in the night’s record after it, from the engine’s own figures",
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+  ]
+ },
+ {
+  "clause": "W9",
+  "file": "src/engine/systems/workload.ts",
+  "find": "const workload = Math.min(WORKLOAD.cap, (playing / 60) * share * intensity);",
+  "replace": "const workload = (playing / 60) * share * intensity;",
+  "what": "no bound on the workload",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time"
+  ]
+ },
+ {
+  "clause": "W10",
+  "file": "src/engine/content/tasks.ts",
+  "find": "export const RULESET = 'evaluation-11 (2026-10-16)';",
+  "replace": "export const RULESET = 'evaluation-10 (2026-10-16)';",
+  "what": "the ruleset not moved",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "W10: a night kept under the ruleset before is shown as it was > opens a save from before with its nights as they were judged under evaluation-10, replays none, names the ruleset, and judges the next by its workload"
+  ]
+ },
+ {
+  "clause": "M1",
+  "file": "src/engine/systems/workload.ts",
+  "find": "PIECE.drain * share * (1 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+  "replace": "PIECE.drain * share * (1.02 - clamp(stamina, 0, 1)) * conditionFactor(readiness)",
+  "what": "a drain at full stamina",
+  "tests": "tests/decisions-stamina.test.ts",
+  "exit": 1,
+  "killed": true,
+  "failed": [
+   "M1: mastery is kept > gives a mastered actor 100 on the heaviest night the catalog holds, as a lead, at the least sufficient readiness, every movement holding",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > PLAYER JOURNEY: twins at the same curtain differing only in stamina, the fitter draining less in every movement and spending less after, by hand; at full, no drain and half the energy still spent",
+   "W2 to W4 and W8: the workload and what it does, worked by hand > works a lead’s Hedda Gabler: 140 minutes of playing, 0.75 of it on stage, intensity 1 + 2/9 × 2, its interval at 70 minutes giving back a quarter",
+   "W7: a performance judged in its units comes to what the whole does > gives the same drain and fatigue judged in its units and processed whole, under 1e-9, on every play, part, break and breath",
+   "W9: bounded, and said > bounds the workload at its cap and the drain at 45% off, whatever the running time",
+   "a run of nights > PLAYER JOURNEY: starts each night’s drain from nothing, reads each night’s own curtain, and is restored between by the night’s sleep alone"
+  ]
+ }
+]

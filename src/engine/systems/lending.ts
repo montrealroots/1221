@@ -85,7 +85,7 @@ import { redirectAway } from './routing';
 import { LENDING, SWITCHING, type Lending, type Loan, type Overdraft, type Unarranged } from '../content/banks-lending';
 import { accountNumber } from './banknumber';
 import { endTerm, idleAccounts } from './accountlife';
-import { bankOf, banksFor, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
+import { bankOf, banksFor, cardFeeFor, cardYearOf, cardYearOver, endedWords, endOrdersOf, inSaveMoney, interestTaxFor, isoOf, monthStartOf, savingsNotice, settleFees, settleInterest, SAVINGS_NOTICE_KIND } from './banking';
 import type { StandingOrder } from './payments';
 import { savingsLeftThisMonth } from './cash';
 import { homeOf, recordInterest } from './earnings';
@@ -537,6 +537,32 @@ function charge(sim: Simulation, account: Account, amount: Money, memo: string, 
     { accountId: account.id, amount: -amount, ...(native !== undefined && account.currency ? { native: -native } : {}) },
     { accountId: sim.nominalAccount('expense', expense).id, amount },
   ]);
+}
+
+/**
+ * The debit card's year at the night's turn (from brief 10, 2026-10-16): on an account's first night in the life its first
+ * card year opens, and on the night its year ends (`cardYearOver`) the year just ended is settled by the rule it was
+ * opened under and the next opens under the bank's rule now (`CardYear.paid`). Paid ahead, opening a year charges it, at
+ * the age the price list reads that day, and keeps what it took for a close's refund (`cardFeePaid`, `cardYearDue`);
+ * charged behind, opening one charges nothing and its end charges it. Nothing once the account's fees have ended
+ * (`feesEndedAt`): a close tried again on an account left overdrawn charged the year again on its anniversary until then.
+ * Until then each anniversary of the account's opening or its last charge, 365 days apart, charged the fee, and, where
+ * the bank charged it ahead (`Bank.card.ahead`, Berliner Sparkasse's, from earlier on 2026-10-16), the account's first
+ * night: Arion's account opened in the life waited a year for its first, and its renewal fell on 24 August 2028, a day
+ * early across 29 February (docs/verification/remaining-10/arion-result.json).
+ */
+function cardYearNight(sim: Simulation, person: Person, account: Account, bank: Bank): void {
+  const card = bank.card;
+  const year = cardYearOf(bank);
+  if (!card?.yearly || !year || account.feesEndedAt !== undefined || !cardYearOver(sim, account, year)) return;
+  const fee = cardFeeFor(sim, person, bank);
+  if (account.cardFeeAt !== undefined && account.cardYearRule === 'behind' && fee > 0) {
+    charge(sim, account, inSaveMoney(sim, fee, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', fee);
+  }
+  account.cardFeeAt = sim.now;
+  account.cardYearRule = year.paid;
+  account.cardFeePaid = year.paid === 'ahead' ? fee : 0;
+  if (year.paid === 'ahead' && fee > 0) charge(sim, account, inSaveMoney(sim, fee, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', fee);
 }
 
 /** The overdraft interest an account has built since the 1st and not yet been charged, in whole cents. */
@@ -1203,19 +1229,10 @@ export function registerLending(sim: Simulation): void {
           closeForOverdraft(s, person, bank);
           continue;
         }
-        // The debit card's yearly fee: on each anniversary of the account's opening or its last charge; or, where the bank
-        // charges it for the year ahead (`Bank.card.ahead`, Berliner Sparkasse's, from 2026-10-16), on the account's first
-        // night and each 365 days after, kept for its refund on a close (`cardFeePaid`, `cardRefundDue`). In the bank's
-        // own figure from 2026-10-16: until then it went in dollars, converted back, and Arion's 950 kr took 949 kr from
-        // an account kept in krónur (docs/verification/remaining-09/banking-checklist.json, banking.5.arion-card).
-        const card = bank?.card;
-        const since = current?.cardFeeAt ?? (card?.ahead ? undefined : current?.openedAt);
-        if (current && bank && card?.yearly !== undefined && (since === undefined || s.now - since >= 365 * MS_DAY)) {
-          current.cardFeeAt = s.now;
-          const free = card.freeUnder !== undefined && ageOn(s, person, s.now) < card.freeUnder;
-          if (card.ahead) current.cardFeePaid = free ? 0 : card.yearly;
-          if (!free) charge(s, current, inSaveMoney(s, card.yearly, bank.currency), 'Debit card yearly fee', 'bank_fee', 'Bank Fees', card.yearly);
-        }
+        // The debit card's year (`Bank.card.year`, `cardYearNight`). In the bank's own figure from 2026-10-16: until then it
+        // went in dollars, converted back, and Arion's 950 kr took 949 kr from an account kept in krónur
+        // (docs/verification/remaining-09/banking-checklist.json, banking.5.arion-card).
+        if (current && bank) cardYearNight(s, person, current, bank);
         if (current && bank) refundInterestTax(s, person, current, bank);
       }
       for (const term of termsOf(s, person)) {

@@ -1,0 +1,18 @@
+# Each held-out batch, run once in the foreground in this order (npx vite-node tools/advice.ts -- --cases <range> --held-out --out held-out-<id>.json). Batches 04 and 08 stopped at adv-h-10 and adv-h-57, which the harness could not build (a take refused in hospital); a2fcbf8b fixed only that path, and 04 and 08b (adv-h-57 to 59) ran then; no src/ or tests/ file differs between 5c06fd7a and a2fcbf8b.
+batch 00 (adv-10..19) exit=0 18s
+batch 01 (adv-20..29) exit=0 15s
+batch 02 (adv-30..39) exit=0 17s
+batch 03 (adv-h-0..9) exit=0 17s
+batch 04 (adv-h-10..19) exit=1 6s
+batch 05 (adv-h-20..29) exit=0 41s
+batch 06 (adv-h-30..39) exit=0 18s
+batch 07 (adv-h-40..49) exit=0 25s
+batch 08 (adv-h-50..59) exit=1 26s
+batch 04 (adv-h-10..19) exit=0 23s
+batch 08b (adv-h-57..59) exit=0 14s
+batch 09 (adv-h-60..69) exit=0 15s
+batch 10 (adv-h-70..79) exit=0 23s
+batch 11 (adv-h-80..89) exit=0 30s
+batch 12 (adv-h-90..99) exit=0 13s
+batch 13 (adv-h-100..109) exit=0 29s
+batch 14 (adv-h-110..119) exit=0 40s

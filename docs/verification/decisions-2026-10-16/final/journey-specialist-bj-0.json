@@ -1,0 +1,191 @@
+{
+ "profile": "specialist",
+ "seed": "bj-0",
+ "days": 120,
+ "reloads": 3,
+ "hours": {
+  "brief": 91.7,
+  "training": 86,
+  "study": 27
+ },
+ "takes": 17,
+ "briefs": 9,
+ "readings": 12,
+ "genres": 8,
+ "purposes": {
+  "first": 9,
+  "callback": 5,
+  "another-reading": 3
+ },
+ "sameTakeTwiceInARow": 0,
+ "quality": {
+  "m0": {
+   "n": 2,
+   "mean": 65.2,
+   "min": 61.4,
+   "max": 69
+  },
+  "m2": {
+   "n": 1,
+   "mean": 62.1,
+   "min": 62.1,
+   "max": 62.1
+  },
+  "m3": {
+   "n": 14,
+   "mean": 64.5,
+   "min": 60.4,
+   "max": 69.6
+  }
+ },
+ "readingSpreadAtEnd": {
+  "n": 9,
+  "mean": 1.46,
+  "max": 2.6,
+  "over1": 7
+ },
+ "notes": {
+  "takes": 17,
+  "distinct": 5,
+  "longestSame": 4,
+  "sameAgainInAnotherGenre": 5,
+  "withConcern": 13,
+  "concerns": [
+   "rhythm",
+   "spontaneity",
+   "exactness",
+   "command",
+   "tension"
+  ],
+  "asShown": {
+   "distinct": 9,
+   "longestSame": 2,
+   "sameAgainInAnotherGenre": 0
+  },
+  "sequence": [
+   "d2 absurdist first 61.4: Focus held back the execution: absurdist’s rhythm",
+   "d13 coming_of_age first 69: Adaptability held back the responsiveness: coming_of_age’s spontaneity",
+   "d62 coming_of_age callback 62.1: Adaptability held back the responsiveness: coming_of_age’s spontaneity",
+   "d91 concert_film first 67.8: Focus held back the execution",
+   "d97 concert_film callback 60.8: Focus held back the execution",
+   "d97 absurdist another-reading 61.4: Focus held back the execution: absurdist’s rhythm",
+   "d102 anime first 64.2: Focus held back the execution: anime’s exactness",
+   "d104 prison_film first 69.6: Listening And Responsiveness held back the responsiveness: prison_film’s spontaneity",
+   "d107 prison_film callback 63.2: Listening And Responsiveness held back the connection: prison_film’s spontaneity",
+   "d109 sea_adventure first 60.4: Physical Expression held back the execution: sea_adventure’s command",
+   "d111 hangout first 63.9: Adaptability held back the responsiveness: hangout’s spontaneity",
+   "d111 coming_of_age another-reading 69.6: Adaptability held back the responsiveness: coming_of_age’s spontaneity",
+   "d113 coming_of_age callback 63.1: Adaptability held back the responsiveness: coming_of_age’s spontaneity",
+   "d115 spy first 64.5: Focus held back the execution: spy’s tension",
+   "d116 concert_film another-reading 68.2: Focus held back the execution",
+   "d118 concert_film callback 60.5: Focus held back the execution",
+   "d119 absurdist first 66.4: Focus held back the execution: absurdist’s rhythm"
+  ]
+ },
+ "recommendations": {
+  "weeks": 17,
+  "distinctTargets": 3,
+  "longestSameTarget": 8,
+  "sequence": [
+   "7:adaptability@50",
+   "14:adaptability@50",
+   "21:focus@50",
+   "28:focus@50",
+   "35:vocal@50",
+   "42:focus@50",
+   "49:vocal@51",
+   "56:focus@51",
+   "63:focus@52",
+   "70:focus@52",
+   "77:focus@52",
+   "84:focus@52",
+   "91:focus@53",
+   "98:focus@54",
+   "105:focus@55",
+   "112:adaptability@52",
+   "119:adaptability@55"
+  ]
+ },
+ "abilities": {
+  "emotionalDepth": 90,
+  "presence": 90,
+  "listening": 58,
+  "imagination": 90,
+  "focus": 56,
+  "memory": 52,
+  "adaptability": 55,
+  "composure": 90,
+  "vocal": 52,
+  "physical": 55,
+  "discipline": 56,
+  "stamina": 35
+ },
+ "breaches": 0,
+ "unbalanced": 0,
+ "lastTakes": [
+  {
+   "day": 111,
+   "brief": "brief-coming_of_age",
+   "genre": "coming_of_age",
+   "reading": "loyal",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 69.6,
+   "chief": "Adaptability held back the responsiveness by 32.5 points",
+   "concern": "spontaneity"
+  },
+  {
+   "day": 113,
+   "brief": "brief-coming_of_age",
+   "genre": "coming_of_age",
+   "reading": "loyal",
+   "sides": "restrained",
+   "purpose": "callback",
+   "overall": 63.1,
+   "chief": "Adaptability held back the responsiveness by 40.4 points",
+   "concern": "spontaneity"
+  },
+  {
+   "day": 115,
+   "brief": "brief-spy",
+   "genre": "spy",
+   "reading": "tradecraft",
+   "sides": "",
+   "purpose": "first",
+   "overall": 64.5,
+   "chief": "Focus held back the execution by 20.8 points",
+   "concern": "tension"
+  },
+  {
+   "day": 116,
+   "brief": "brief-concert_film",
+   "genre": "concert_film",
+   "reading": "decided",
+   "sides": "",
+   "purpose": "another-reading",
+   "overall": 68.2,
+   "chief": "Focus held back the execution by 16.1 points"
+  },
+  {
+   "day": 118,
+   "brief": "brief-concert_film",
+   "genre": "concert_film",
+   "reading": "decided",
+   "sides": "open",
+   "purpose": "callback",
+   "overall": 60.5,
+   "chief": "Focus held back the execution by 19.9 points"
+  },
+  {
+   "day": 119,
+   "brief": "brief-absurdist-2",
+   "genre": "absurdist",
+   "reading": "relief",
+   "sides": "",
+   "purpose": "first",
+   "overall": 66.4,
+   "chief": "Focus held back the execution by 20.6 points",
+   "concern": "rhythm"
+  }
+ ]
+}
