@@ -1,0 +1,261 @@
+{
+ "key": "genres",
+ "on": "2026-10-16",
+ "against": "d7127819 (branch genres, the clone of main at 64b69fc7 plus the owner’s brief 09), read before any code of this area changed",
+ "brief": "docs/verification/integration-2026-10-16/prompts-09/genres.md and section 3 of docs/verification/briefs-2026-10-16/09-remaining-integration-gaps-and-completion-evidence.txt",
+ "items": [
+  {
+   "id": "genres.1-count",
+   "item": "The genres whose two briefs suit the same sides on every axis, counted again from tools/genre-audit.ts",
+   "requirement": "The owner’s brief 09, section 3 (“Audit the 54 genres …”); genres.md: count them again from tools/genre-audit.ts on the clone first.",
+   "currentBehavior": "npx vite-node tools/genre-audit.ts on d7127819: 55 genres, every one of them two briefs suiting the same sides (closeout/genre-audit.md lists the same 55). The 54 in the README, the closeout README and the handoff came from “55, down from 56 … The 54 left”: the one that went (drama’s stage scenes) had already gone before the 55 were counted, so all 55 are same-sides genres.",
+   "affectedSystems": [
+    "tools/genre-audit.ts (read only)"
+   ],
+   "plan": "Report 55, with the arithmetic slip, and audit all 55.",
+   "acceptance": "tools/genre-audit.ts output before and after (genres-09.md).",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.2-compare",
+   "item": "Compare each genre’s two briefs as the engine reads them: dramatic circumstances, objectives and obstacles, technique demands, preparation actions, valid interpretations, feedback and consequences",
+   "requirement": "Brief 09 section 3: “Matching preferences alone do not prove identical gameplay. Compare their actual …”; genres.md item 1: as the engine reads them, not their wording.",
+   "currentBehavior": "No tool compares a genre’s two briefs in what the engine reads. tests/briefs-content.test.ts “two situations for every genre” holds their wording apart and two of eight setting axes different; tests/briefs-situations.test.ts holds four actors’ results apart by 0.5; neither reads the readings, the preparation or what the take names.",
+   "affectedSystems": [
+    "tools/genre-pairs.ts (new, read only)"
+   ],
+   "plan": "A read-only tool reading each genre’s two briefs through the engine’s own functions (briefMaterial, sceneOf, suitabilityOf, briefContext, judgePiece, taskOf, rehearseTrains, rehearseSpeed, stepMinutes, turnsOf, heartOf, chiefLimit) in six parts, each “the same” by a rule written here before any brief changed: circumstances (medium and language the same, stakes within one); objectives and obstacles (the reader’s behavior the same, and the changes of tone plus beats held two ways within one); technique demands (the same task, the same techniques, the five features within 2 in all); preparation (the same length, what rehearsal trains and what speeds it); valid interpretations (two or more readings of one matching a reading of the other in the dimension it leans most and the ability it draws most); feedback and consequences (the specialist rewarded most and the dimension the half-prepared take names as its limit). Substantively repetitive: the same in three of the six or more (half of what the engine reads). Measured with the rule before any change: 14 of the 55 (0 same: 7, 1: 15, 2: 19, 3: 9, 4: 3, 5: 2).",
+   "acceptance": "tools/genre-pairs.ts output before and after; tests/remaining-genres.test.ts holds the rule’s verdict on the 55.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-animated",
+   "item": "animated: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "4 of 6 the same: both recorded at a microphone, no reader, short, the voice trained by rehearsal, the voice specialist rewarded most on every reading (+4.9, +4.5) and the execution named as the limit.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A third situation on camera: live-action reference for the animators, voice and body together, a reader playing the other part, physical work the take reads (on its feet), character work staged; readings drawing the body, discipline and listening, not the voice alone. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > animated: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-christmas",
+   "item": "christmas: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday, stakes 1 and 2; the same features within 1 and no technique; two readings that match (belief through emotional depth, consistency through composure).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A situation the season’s stories hold that asks something else: a store Santa’s last hour on Christmas Eve against an unpredictable child, improvised in character, the voice kept; readings drawing adaptability, vocal and discipline. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > christmas: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-conspiracy_thriller",
+   "item": "conspiracy_thriller: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday; the same features within 1, no technique; the composure specialist rewarded and consistency named the limit.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A voice situation: a statement recorded alone for a reporter, long, everything that rides on it at stake, exact names and figures in order; readings drawing memory, discipline and imagination. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > conspiracy_thriller: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-farce",
+   "item": "farce: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday, stakes 1 and 2; comedy and clown on both (the genre’s applied demands) and the same features; the physical specialist rewarded and the execution named the limit; two readings the same numbers (Never Let Them See, Dignity At All Costs).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A door farce: long, an unpredictable reader playing three people through three doors, the partner at its fullest, stories to keep straight; readings drawing memory, adaptability and emotional depth. Comedy and clown stay, as the genre’s demands require. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > farce: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-film_noir",
+   "item": "film_noir: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: voiceover on both, the same features within 1; three readings mirrored (composure, emotional depth, imagination); composure rewarded and consistency named the limit on both.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A camera situation with a pressing reader and more on its feet: a long scene, the narration kept (the genre’s voice-led demand), readings drawing presence, adaptability and stamina. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > film_noir: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-gothic_horror",
+   "item": "gothic_horror: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: the same features within 2, no technique; two readings identical in the numbers (consistency through composure and focus; belief through emotional depth and imagination); memory rewarded most on both.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A voice situation: a journal kept through one night, read alone at a microphone in period prose, no one to play off; readings drawing discipline, vocal and imagination. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > gothic_horror: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-jukebox_musical",
+   "item": "jukebox_musical: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday, stakes 1 and 1; both medium, the voice trained by rehearsal and listening speeding it; the vocal specialist rewarded most and the execution named the limit.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A different number: a wedding medley led on the dance floor, long, the body as much as the voice (dance staged), a pressing reader; readings drawing physical, stamina and listening. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > jukebox_musical: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-new_wave",
+   "item": "new_wave: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "4 of 6 the same: on camera, everyday, short both, the same preparation; two readings matching (responsiveness through adaptability, belief through emotional depth); adaptability rewarded and responsiveness named the limit.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A long single take with a written narration laid over improvised talk (the genre’s improvisation staged, and voiceover), a withholding reader, heightened prose in the narration; readings drawing imagination, vocal, listening and composure. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > new_wave: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-psychological_thriller",
+   "item": "psychological_thriller: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday, stakes 1 and 2; the same features within 2, no technique; composure rewarded and consistency named the limit.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "An interview against a pressing detective, long, stakes 3, an account given in the same exact words each time (the register’s exactness made the scene’s); readings drawing memory, adaptability and focus. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > psychological_thriller: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-samurai",
+   "item": "samurai: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, heightened, stakes 1 and 2; combat on both, the same features within 2; both medium, the body trained by rehearsal; two readings the same (Duty First and Being Judged; The Old Debt and A Debt Owed).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A short, comic situation of the period: a masterless swordsman haggling his fee with a pressing merchant, then a brief fight; readings drawing adaptability, stamina and presence. Combat stays, as the genre’s demands require. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > samurai: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-silent_film",
+   "item": "silent_film: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "5 of 6 the same: on camera, everyday, short, steady readers, the same features (t2 p3 pa1 v0 i0), the same preparation; both readings of each the same numbers (execution through physical and presence; belief through emotional depth and imagination); physical rewarded on both.",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A take on a silent set with the director calling through a megaphone, an unpredictable reader, improvisation to his calls, the film running out; readings drawing adaptability, imagination and presence. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > silent_film: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-sword_and_sorcery",
+   "item": "sword_and_sorcery: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "4 of 6 the same: on camera, everyday, short, combat 2, the same features within 2; two readings the same (The Blade Decides and Her Sword Says It: execution through physical and stamina).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A long oath scene before a silent queen, heightened, an invented tongue spoken exactly, a formal first-blood bout (combat 1), a withholding reader; readings drawing memory, vocal, imagination and listening. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > sword_and_sorcery: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-tragicomedy",
+   "item": "tragicomedy: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "3 of 6 the same: on camera, everyday, steady readers both, the turns within 1; two readings matching (execution through presence; belief through emotional depth).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A voice situation: the last episode of a two-person show recorded alone, both halves of the running bit, long, stakes 3; readings drawing imagination, discipline and composure. Comedy stays, as the genre’s demand requires. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > tragicomedy: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.3-yakuza",
+   "item": "yakuza: two briefs substantively repetitive as the engine reads them",
+   "requirement": "Brief 09 section 3: revise or expand with genre-appropriate, original material the engine reads; keep the genre’s identity (its register is unchanged, and its applied demands staged).",
+   "currentBehavior": "5 of 6 the same: on camera, everyday, short, steady readers, turns within 1, the same features within 1, the same preparation, both readings the same numbers (consistency through composure; belief through emotional depth and listening).",
+   "affectedSystems": [
+    "src/engine/content/briefs/second-*.ts"
+   ],
+   "plan": "A ceremony: the go-between at a truce between two families, long, stakes 3, heightened ceremonial speech, set movements on its feet, a pressing boss; readings drawing discipline, presence and adaptability. The second brief written on 2026-10-12 is retired, and the new scene takes a new id (-3) in its place in the list, so a save that prepared the old scene keeps its record and starts this one fresh (genres.5).",
+   "acceptance": "tools/genre-pairs.ts: fewer than three of the six the same; tests/remaining-genres.test.ts “the genres revised on 2026-10-16 > yakuza: …” on its figures; tests/briefs-content.test.ts and tests/briefs-situations.test.ts as they stand.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.4-kept",
+   "item": "The 41 genres kept as they were, each with its reason",
+   "requirement": "Brief 09 section 3: “Explain any retained matching preferences”; genres.md item 2: where the two agree because the genre’s conventions agree, keep it and say why.",
+   "currentBehavior": "The audit says only that “their registers agree”, for all 55 alike.",
+   "affectedSystems": [
+    "tools/genre-pairs.ts"
+   ],
+   "plan": "For each kept genre: the parts its briefs differ in, with the figures; and whether the sides agree because of the register (the sides with the register’s concerns set aside, scene by scene) or because both scenes say so.",
+   "acceptance": "genres-09.md table, from tools/genre-pairs.ts output.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.5-saves",
+   "item": "An older save that prepared or taped a retired brief",
+   "requirement": "CLAUDE.md rule 10 (preserve what a save holds) and the brief’s section 6/7 (persistence, migration): nothing a player did is lost, and no record reads as another scene’s.",
+   "currentBehavior": "No brief has been retired before. A record keyed by an id BRIEF_BY_ID doesn’t have: suggestions skip it (briefs.ts suggestions), artistry counts its takes without a reading (artistry.ts:159-166), workpieces return nothing (workpieces.ts:48), the actor look drops its tapes from the genre (ui/looks/actor.tsx:171).",
+   "affectedSystems": [
+    "src/engine/content/briefs/index.ts",
+    "src/ui/looks/actor.tsx"
+   ],
+   "plan": "Keep each retired brief’s id, title and genres in a table (RETIRED_BRIEFS), so the work record still names its genre; the old record stays in the save untouched. Test on a FIXTURE person holding a retired record with takes, a reading and a callback: suggestions, artistry and the work pieces run, nothing offers it, and the new brief starts from nothing.",
+   "acceptance": "tests/remaining-genres.test.ts “a save that prepared a retired brief > …” (FIXTURE, GUARD).",
+   "classification": "older-save compatibility"
+  },
+  {
+   "id": "genres.6-table",
+   "item": "The per-genre table, before and after",
+   "requirement": "Brief 09 section 3; genres.md item 3.",
+   "currentBehavior": "None.",
+   "affectedSystems": [
+    "docs/verification/integration-2026-10-16/genres-09.md"
+   ],
+   "plan": "Written from tools/genre-pairs.ts before and after.",
+   "acceptance": "genres-09.md.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.7-measured",
+   "item": "Measured again after the changes",
+   "requirement": "Brief 09 section 3 (“Re-run genre differentiation, mastery, cross-genre isolation, and fresh held-out validation”); genres.md item 4: S1 to S4 on all four samples, G2, the audit, M1, G3 to G5, the suite’s genre tests; a criterion that held and fails now is fixed or reported with its cause. Criteria never weakened (common.md).",
+   "currentBehavior": "Measured on d7127819 before any change (scratchpad genres-runs/before): S1 0.901/0.883/0.904/0.880 (least 0.842/0.809/0.845/0.785), S2 revised 1.599/1.612/1.598/1.613, nearest shares a concern 98.7%, S3 revised 88.8%/82.9%/87.4%/82.0%, S3 validate 87.9%; G2 0 pairs; audit 149 of 149 helped, 0 leaks; M1 4,495 of 4,495 briefs, 60 scenes, 30 nights, 30 castings, 13 coursework; G3 53 of 149, 8 actors on 10 or more; G4 2 briefs, 4 readings, 4 behaviors; G5 51.22 to 53.86; I1 every case; I2 pace 24.2%, scale 20.8%, structure 32.9%.",
+   "affectedSystems": [
+    "tools (read only)"
+   ],
+   "plan": "The same commands after, the same seeds (the tools’ own: signature, ag-baseline, interpretation).",
+   "acceptance": "genres-09.md measurements; tests/genre-*.test.ts, briefs*.test.ts, interpretation*.test.ts, integration-mastery.test.ts, mastery-*.test.ts one at a time.",
+   "classification": "required reachable behavior"
+  },
+  {
+   "id": "genres.8-docs",
+   "item": "docs/GENRE-COVERAGE.md and guide text that names a brief’s scene",
+   "requirement": "genres.md: they follow the change.",
+   "currentBehavior": "GENRE-COVERAGE.md names each genre’s first brief only; the guide names brief-drama.",
+   "affectedSystems": [
+    "docs/GENRE-COVERAGE.md"
+   ],
+   "plan": "Regenerate with tools/genre-coverage.ts; grep the guide and tutorial for each retired title.",
+   "acceptance": "tests/genre-coverage.test.ts; node tools/doc-refs.mjs --check.",
+   "classification": "required reachable behavior"
+  }
+ ]
+}
