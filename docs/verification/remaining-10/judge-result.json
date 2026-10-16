@@ -1,0 +1,1204 @@
+{
+ "key": "judge",
+ "on": "2026-10-16",
+ "against": "f17ae369 (the criteria 2e8e4db3 and the instructions); this area's commits on top, in the judge clone, before the stamina area's model",
+ "checklist": "docs/verification/remaining-10/judge-checklist.json",
+ "testFile": "tests/decisions-judge.test.ts",
+ "criteria": "docs/verification/decisions-2026-10-16/criteria.md (section 1, unchanged)",
+ "measurements": {
+  "baseline": "docs/verification/decisions-2026-10-16/baseline",
+  "after": "docs/verification/decisions-2026-10-16/judge"
+ },
+ "items": [
+  {
+   "id": "judge.baseline",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "no tool measured ST3-R, ST6-R, H4-R or L3-R as written; no generalist journeys, fixed set, monotonicity sweep or mutation runner",
+   "after": "every clause measured as written by committed tools, on the engine as 44dcd973 left it, into the baseline folder, before any change to the judge",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/baseline/README.md",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <baseline> <part>",
+     "kind": "measurement",
+     "proves": "each command, seed, file and exit (all 0)"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "tools/acting-criteria.ts (ST3-R, ST6-R), tools/pieces.ts (the pieces), the H4-R section of tools/ag-baseline.ts and its verdicts in tools/ag-criteria.mjs, tools/h4-indirect.ts (H4-R (d)), the generalist and the fixed set in tools/brief-journeys.ts, tools/monotonicity.ts, tools/l3r.mjs, tools/judge-mutations.mjs",
+     "commit": "94548b55, c2a4b694, b3df7fdb"
+    }
+   ]
+  },
+  {
+   "id": "judge.budget",
+   "status": "Implemented And Verified",
+   "disposition": "fixed",
+   "before": "both ST6 specialists totalled 235 + 9 × 45.625 = 645.6 against the even actor's 600 (fill divided by 8 where 9 abilities are left); ST6′ \"26 of 42\" (brief 09) compared those budgets",
+   "after": "fill (600 − n) / 9; every ST6-R and H4-R output prints its budgets (600 each). What it changed, at 600 against 645.6: ST6 as written restrained 10 of 42 (9), expansive 24 of 50 (22); ST6′ 5 of 42 (24 on this engine, 26 in brief 09); ST6-R (a) 3 of 42 (24)",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/baseline/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R and ST6RAtTheBudgetBefore)",
+     "kind": "measurement",
+     "proves": "the same criteria on both budgets"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the profiles are on one budget: 600 each, the nine abilities left at 40.56, where until brief 10 the tool gave each specialist 645.6",
+     "kind": "static (TEST SETUP profiles)",
+     "proves": "each profile totals 600, and the old fill 645.625"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "tools/interpretation.ts: fill (600 − n) / 9 in --stage's ST6 and in --st6, each with a dated comment",
+     "commit": "94548b55"
+    }
+   ]
+  },
+  {
+   "id": "ST3-R.a",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST3 as written: 178 of 189 the same as shown (integrated-09), not met; superseded by ST3-R",
+   "before": "met on 189: 0 apart judged twice, replayed, drawn and after a save and a load; even and undrained 2.8e-14 apart, the same as shown on 189",
+   "after": "met on 193 (with the two meetings): the same, 2.8e-14, 193 the same as shown",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: identical effective inputs give identical results (brief 10) > the same scene judged twice, replayed from its own record, replayed with its draw, and replayed after a save and a load comes to the same exact result on every case",
+     "kind": "played save and load (TEST SETUP records in a created save)",
+     "proves": "judged twice, replayed, drawn replay and after serialise, deserialise and loadSave: the same exact result on every case"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: identical effective inputs give identical results (brief 10) > an actor even in everything the formula reads, undrained, is 100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown",
+     "kind": "static, worked by hand",
+     "proves": "100 × n^(1 + difficulty) on stage and at a close frame, at full precision and as shown"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)",
+     "kind": "measurement",
+     "proves": "ST3-R (a) on every case"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "st3-grain-leak",
+     "clause": "ST3-R (a)",
+     "edits": [
+      {
+       "file": "src/engine/systems/interpretation.ts",
+       "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+       "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.a.met",
+     "figure": 0.9861423476289986
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The drain is the stamina area's; ST3-R is measured finally there."
+  },
+  {
+   "id": "ST3-R.b",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST3 as written: 178 of 189 the same as shown (integrated-09), not met; superseded by ST3-R",
+   "before": "met: the specialist better on stage on 189 of 189 (least 0.115); the drain on both media on 189 (least 0.599), its part of the difference above 1e-9 on 189 (least 4.7e-6)",
+   "after": "met on 193 of 193 both ways",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the voice-and-body specialist is better on stage than at a close frame on every case, and a stamina at 55 costs on both, at a budget of 600",
+     "kind": "static",
+     "proves": "the stage's demand and the drain on both media, on every case"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)",
+     "kind": "measurement",
+     "proves": "ST3-R (b) on every case"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "st3-leans",
+     "clause": "ST3-R (b)",
+     "edits": [
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };",
+       "replace": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1 };"
+      },
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };",
+       "replace": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1 };"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.b.met",
+     "figure": 0
+    },
+    {
+     "id": "st3-drain",
+     "clause": "ST3-R (b)",
+     "edits": [
+      {
+       "file": "src/engine/content/piece.ts",
+       "find": "  drain: 0.3,",
+       "replace": "  drain: 0,"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.b.met",
+     "figure": 0
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The drain is the stamina area's; ST3-R is measured finally there."
+  },
+  {
+   "id": "ST3-R.c",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST3 as written: 178 of 189 the same as shown (integrated-09), not met; superseded by ST3-R",
+   "before": "met: techniques ≤ 0.0026, stamina ≤ 0.0170, left ≤ 2.8e-14",
+   "after": "met: the same largest parts",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > the criterion’s even actor’s difference is its techniques’ part and its stamina’s part, and what’s left is floating point",
+     "kind": "static",
+     "proves": "what's left of the difference under 1e-9, each part present"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)",
+     "kind": "measurement",
+     "proves": "ST3-R (c) on every case"
+    }
+   ],
+   "mutations": [],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The drain is the stamina area's; ST3-R is measured finally there."
+  },
+  {
+   "id": "ST3-R.d",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST3 as written: 178 of 189 the same as shown (integrated-09), not met; superseded by ST3-R",
+   "before": "met: 0 defects on 756 judgments",
+   "after": "met: 0 defects on 772 judgments, each whole worked by hand from its parts",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST3-R: the stage and a close frame differ where they should, and only there (brief 10) > every shown figure is its own exact value rounded once, and each whole is worked by hand from its parts’ exact values",
+     "kind": "static, worked by hand",
+     "proves": "every shown figure its exact value rounded once; each whole worked by hand from its parts' exact values"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)",
+     "kind": "measurement",
+     "proves": "ST3-R (d) on every case"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "st3-floor",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+       "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    },
+    {
+     "id": "st3-twice",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+       "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    },
+    {
+     "id": "st3-segments-twice",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/piece.ts",
+       "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+       "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The drain is the stamina area's; ST3-R is measured finally there."
+  },
+  {
+   "id": "ST3-R.e",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST3 as written: 178 of 189 the same as shown (integrated-09), not met; superseded by ST3-R",
+   "before": "6 of 6 killed (the first form of (d) missed a whole from rounded dimensions; corrected in b3df7fdb before the baseline was taken)",
+   "after": "6 of 6 killed",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st3 <file> (ST3R)",
+     "kind": "measurement",
+     "proves": "ST3-R (e) on every case"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "st3-floor",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+       "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    },
+    {
+     "id": "st3-twice",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+       "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    },
+    {
+     "id": "st3-segments-twice",
+     "clause": "ST3-R (d)",
+     "edits": [
+      {
+       "file": "src/engine/systems/piece.ts",
+       "find": "  const overall = results.reduce((s, r, i) => s + r.overall * spec.segments[i]!.weight, 0) / W;",
+       "replace": "  const overall = results.reduce((s, r, i) => s + r1(r.overall) * spec.segments[i]!.weight, 0) / W;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.d.met",
+     "figure": 193
+    },
+    {
+     "id": "st3-leans",
+     "clause": "ST3-R (b)",
+     "edits": [
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };",
+       "replace": "export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1 };"
+      },
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1.2 };",
+       "replace": "export const STAGE_LEAN: Partial<Record<Dimension, number>> = { execution: 1 };"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.b.met",
+     "figure": 0
+    },
+    {
+     "id": "st3-drain",
+     "clause": "ST3-R (b)",
+     "edits": [
+      {
+       "file": "src/engine/content/piece.ts",
+       "find": "  drain: 0.3,",
+       "replace": "  drain: 0,"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.b.met",
+     "figure": 0
+    },
+    {
+     "id": "st3-grain-leak",
+     "clause": "ST3-R (a)",
+     "edits": [
+      {
+       "file": "src/engine/systems/interpretation.ts",
+       "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+       "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST3R.verdict.a.met",
+     "figure": 0.9861423476289986
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The drain is the stamina area's; ST3-R is measured finally there."
+  },
+  {
+   "id": "ST3.asWritten",
+   "status": "Not Implemented",
+   "disposition": "superseded by ST3-R (the owner's approval, brief 10); kept as the record, not counted met",
+   "before": "178 of 189 the same as shown",
+   "after": "182 of 193 the same as shown, 11 a tenth apart, 0 rounding defects",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st3.json",
+     "title": "tools/interpretation.ts -- --st3 (ST3R.st3AsWritten)",
+     "kind": "measurement",
+     "proves": "the record"
+    }
+   ]
+  },
+  {
+   "id": "ST6-R.a",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "3 of 42 (7.1%) at 600; 24 of 42 at 645.6",
+   "after": "3 of 44 (6.8%): earnest-2, wayoftheworld-4, orig-runway",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > a restrained take can carry a scene that leans the other way, where the lean is slight: the specialist playing Earnest’s garden scene restrained is ahead of the even actor playing it expansive, and isn’t once the choice is only half rehearsed in",
+     "kind": "static",
+     "proves": "a win where the grain is slight, lost when the choice is half rehearsed; the even actor doesn't make it work"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (a) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "ownerDecision": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.b",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "94 of 94",
+   "after": "96 of 96",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > restraint’s own craft pays: the restrained specialist’s lift over the even actor is larger playing restrained than expansive wherever both fit, and restraint’s draws are part of it on every one",
+     "kind": "static",
+     "proves": "the lift larger restrained than expansive on every material, and restraint's own draws 0.3 or more of it on each"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (b) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.c",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "not met: the even actor 0 of 42, against (a) − 10 points below 0; half rehearsed 0 against 3 (met); smaller-gap half 14.3% against 0% (20 points asked); every win allowed (met)",
+   "after": "not met: 0 of 44; 0 against 3 (met); 13.6% against 0%; every win allowed (met)",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > success depends on the scene: every win against the grain is on a material where the grain is slighter than on any of the limits",
+     "kind": "static",
+     "proves": "every win at a slighter grain than any limit; the even actor never ahead restrained against the grain"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (c) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "ownerDecision": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.d",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "37 of 42 behind (88%); the expansive specialist ahead on 30 of them",
+   "after": "39 of 44 behind (89%); ahead on 32",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > where size is what the scene is built on, restraint has its limits: before Thebes, at Antigone’s defiance and in the two meetings the restrained take is behind the even actor’s expansive one, and the expansive specialist is ahead of it",
+     "kind": "static",
+     "proves": "Oedipus 300, Antigone 441 and the two meetings: the restrained take behind, the expansive specialist ahead"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (d) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.e",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "not met: wins from 3 works and 1 family (comedy); limits from 30 works",
+   "after": "the same: 3 works, 1 family; limits from 30 works",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (e) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "ownerDecision": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.f",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "24 of 50 (48%; 24 as shown)",
+   "after": "24 of 50",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "ST6-R: restrained and expansive interpretations, the wins and the limits (brief 10) > the other half is kept: the expansive specialist playing expansive is ahead of its own restrained take on at least a quarter of the materials restraint suits better",
+     "kind": "static",
+     "proves": "the expansive specialist ahead on its own side on a quarter or more"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (f) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [],
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6-R.g",
+   "status": "Decision Required",
+   "disposition": "owner decision",
+   "original": "ST6 as written: restrained 9 of 42, expansive 22 of 50 (integrated-09, at 645.6), not met; superseded by ST6-R",
+   "before": "restraint's draws removed: survived, (b) 94 of 94 (92 of 94 with its lean removed too); suitability forced to its least and the grain 0: killed, but (a) and (c) fail unmutated",
+   "after": "the same: (b) 96 of 96 with the draws removed",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/st6.json",
+     "title": "npx vite-node tools/interpretation.ts -- --st6 <file> (ST6R)",
+     "kind": "measurement",
+     "proves": "ST6-R (g) as written, its budgets and its cases"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "st6-no-draws",
+     "clause": "ST6-R (b)",
+     "edits": [
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+       "replace": "inputs: {} },"
+      }
+     ],
+     "killed": false,
+     "verdict": "o.ST6R.verdict.b.met",
+     "figure": 96
+    },
+    {
+     "id": "st6-least",
+     "clause": "ST6-R (a) or (c)",
+     "edits": [
+      {
+       "file": "src/engine/systems/interpretation.ts",
+       "find": "  const s = r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));",
+       "replace": "  const s = side === 'restrained' ? -1 : r2(clamp(signals.reduce((t, x) => t + x.v, 0) / 2, -1, 1));"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST6R.verdict.a.met && o.ST6R.verdict.c.met",
+     "figure": 23
+    },
+    {
+     "id": "st6-no-grain",
+     "clause": "ST6-R (c) or (d)",
+     "edits": [
+      {
+       "file": "src/engine/content/interpretation.ts",
+       "find": "export const GRAIN = { strength: 0.3,",
+       "replace": "export const GRAIN = { strength: 0,"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.ST6R.verdict.c.met && o.ST6R.verdict.d.met",
+     "figure": 31
+    }
+   ],
+   "ownerDecision": "ST6-R (a) asks the restrained specialist (emotional depth 85, composure 75, focus 75, the other nine at 40.56 to keep 600) to beat the even actor (every ability 50) playing the better-suited side, against the grain, on a quarter of 44 materials. Measured at that budget it does on 3. The cause, measured: where restraint suits, with both playing restrained, it's ahead of the even actor on only 13 of 50 (ST6R.diagnostics), because a whole reads a little of every ability its dimensions concern and a quarter of it is the weakest dimension, which for this profile is connection and responsiveness (listening, presence, adaptability at 40.56): one strength doesn't erase an unrelated weakness, which H4-R (c) and the owner's H4 requirement ask. Restraint's own draws add 0.33 to 0.91 to its lift (mean 0.63). Considered, each measured in-process and none adopted for want of a source: the weakest-dimension term removed (11 of 42, meets (a): contrary to the owner's H4 requirement and to H2's history); restraint's control doubled (5 of 42); focus or composure drawn on connection (6 to 7 of 42); focus on connection and responsiveness (13 of 42). The criterion's threshold was set beside ST6′'s 26 of 42, which compared a 645.6 specialist with a 600 even actor; at 645.6 ST6-R is met in full. Other profiles, measured in-process for this decision: the single emotional-depth specialist at 600 (85, the other eleven at 46.82) wins 2 of 44; the criteria's profile with its nine at the even actor's 50 (685) wins 44 of 44 and leaves no limit, so no fair-budget profile meets (a) and an over-budget one erases (d). Options: (1) keep the judge and accept ST6-R (a), (c) and (e) as measured, with their cause: the restrained specialist's craft pays on its own side ((b), restraint's draws 0.33 to 0.91 of its lift) and against slight grain (3 wins), and its limits are kept ((d), 39 of 44); (2) authorize, with a stated basis, a change to the weakest-dimension term, the one change measured to reach (a) (11 of 42 with it removed), measured first against H2, H4-R (c) and every interpretation and stage criterion; (3) restate (a)'s comparison or threshold. Recommended: (1), with the threshold reconsidered by the owner, since it was set beside a figure measured on unequal budgets; the brief rules out an unexplained restraint bonus, and the evidence found no reading of restraint, sourced, that carries a specialist weaker than the even actor on its own side. (g): (b) can't catch a restraint that draws nothing, since expansive's draws read this specialist's weakest abilities, so its lift playing expansive is lower whatever restraint does; a (b) comparing the restrained lift with restraint's draws against without them would, and tests/decisions-judge.test.ts holds that comparison (0.3 or more on every material).",
+   "waitsOn": "A scene's load is the stamina area's: ST6-R is measured again on the integrated code."
+  },
+  {
+   "id": "ST6.asWritten",
+   "status": "Not Implemented",
+   "disposition": "superseded by ST6-R; kept as the record, not counted met",
+   "before": "restrained 9 of 42, expansive 22 of 50 at 645.6",
+   "after": "restrained 10 of 44, expansive 24 of 50 at 600",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/stage.json",
+     "title": "tools/interpretation.ts -- --stage (ST6)",
+     "kind": "measurement",
+     "proves": "the record"
+    }
+   ]
+  },
+  {
+   "id": "H4-R.a",
+   "status": "Partially Implemented",
+   "disposition": "implemented (presence), owner decision (memory, composure), waits on the stamina model (stamina)",
+   "original": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R. H5 beside it holds.",
+   "before": "8 of 12: presence 3 own pieces; memory 119 and composure 92, briefs only; stamina 1",
+   "after": "9 of 12: presence 5 in scene, night and coursework; memory and composure briefs only; stamina 1",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > the two public meetings are presence’s own work: its +10 effect the largest of the twelve on each, played to the meeting with the partner barely there, and its specialist ahead of the even actor",
+     "kind": "static",
+     "proves": "presence's +10 effect the largest on each meeting, its specialist ahead"
+    },
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > a student meets them in play: Scene Study in Acting I sets Strife’s meeting, a play from 1909, once the prose scenes before it are studied, and Acting III’s sets the Enemy’s, from 1882, which Acting I’s never does",
+     "kind": "static (the course's own draw)",
+     "proves": "Acting I sets Strife's, Acting III the Enemy's, once the earlier prose scenes are studied"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+     "kind": "measurement",
+     "proves": "H4-R (a) on 797 pieces, the budgets printed"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Two public meetings for scene study, read from Sharp's An Enemy of the People (1911) and Galsworthy's Strife (1909), committed before they were measured (src/engine/content/scenes-meeting.ts, their profiles in content/material.ts, appended last in SCENES)",
+     "commit": "6db8f797, 2b7d3427"
+    }
+   ],
+   "mutations": [],
+   "ownerDecision": "Memory's and composure's own work is all briefs (119 and 92 pieces): no other kind of work in the catalog varies what memory or composure is about. Memory reads a brief's length (DEMAND_EFFECT.text) and not a class scene's, though the catalog holds each scene's length (Scene.size); read at a brief's sizes, memory would be best on 42 of 65 scenes and H2 would fail (measured in-process, not adopted). A night reads every line of a part at one weight; the stamina area's running times and participation would give a night's text its length. Composure reads what rides on a piece (DEMAND_EFFECT.stakes), which is a brief's 0 to 3 and 1 for every scene and play by design. Options: (1) once the running times are integrated, read a night's and a casting's text by the part's share of the running time (memory's second kind), measured against H2 and every criterion; (2) read what rides on a performance outside briefs (a Rep night, an understudy sent on, the showcase), a new rule for composure, the owner's to authorize; (3) accept memory's and composure's roles as briefs and the night's consistency, and H4-R (a) as measured. Recommended: (1) for memory after the integration, and (2) for composure only on the owner's word.",
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). Stamina's own work, its specialist's advantage there and its benefit after a night are the stamina model's."
+  },
+  {
+   "id": "H4-R.b",
+   "status": "Partially Implemented",
+   "disposition": "verified as it stands; stamina's waits on the stamina model",
+   "original": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R. H5 beside it holds.",
+   "before": "11 of 12 (stamina 0 of 1, median −0.063; presence 2 of 3, median 0.972)",
+   "after": "11 of 12 (presence 4 of 5, median 0.972; stamina 0 of 1)",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > each specialist is on the even actor’s budget, and on its own work (the pieces where its ability’s +10 effect is the largest of the twelve) eleven of the twelve are ahead on at least 60% by a median of 0.3 or more; stamina’s waits on the stamina model",
+     "kind": "static",
+     "proves": "eleven of twelve ahead on 60% of own work by a median of 0.3 or more"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+     "kind": "measurement",
+     "proves": "H4-R (b) on 797 pieces, the budgets printed"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). Stamina's own work, its specialist's advantage there and its benefit after a night are the stamina model's."
+  },
+  {
+   "id": "H4-R.c",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R. H5 beside it holds.",
+   "before": "0 of 6,418 pairs ahead; H2 holds on the set and as written",
+   "after": "0 of 6,435; H2 holds",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > no strength erases an unrelated weakness: where an ability carries under a tenth of what a piece’s abilities move, its specialist is never ahead of the even actor",
+     "kind": "static",
+     "proves": "never ahead where the ability carries under a tenth (every third piece)"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+     "kind": "measurement",
+     "proves": "H4-R (c) on 797 pieces, the budgets printed"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "waitsOn": "Measured again on the integrated code."
+  },
+  {
+   "id": "H4-R.d",
+   "status": "Partially Implemented",
+   "disposition": "verified as it stands; stamina's waits on the stamina model",
+   "original": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R. H5 beside it holds.",
+   "before": "12 of 13 claimed benefits shown by twin lives; stamina's (a night leaves 89.9 energy at 20 and at 80) not",
+   "after": "12 of 13, the same",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "H4-R: every ability’s contribution on its own work (brief 10) > PLAYER JOURNEY: what an ability does outside the piece shows in twin lives through the commands: nerves before a performance add less stress with more composure, by the rule, and an hour of practice grows more with more discipline",
+     "kind": "played (twin lives through the commands and the clock)",
+     "proves": "composure's nerves by the rule's 6 × 0.6 × stress gain; discipline's practice by 1.06 / 0.94"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/h4-indirect.json",
+     "title": "npx vite-node tools/h4-indirect.ts -- --out <file>",
+     "kind": "measurement",
+     "proves": "thirteen claimed benefits, each a line"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+     "kind": "measurement",
+     "proves": "H4-R (d) on 797 pieces, the budgets printed"
+    }
+   ],
+   "fixes": [],
+   "mutations": [],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). Stamina's own work, its specialist's advantage there and its benefit after a night are the stamina model's."
+  },
+  {
+   "id": "H4-R.e",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "H4 as written: 1 of 12 (integrated-09), not met; superseded by H4-R. H5 beside it holds.",
+   "before": "listening cut to a tenth: killed; a specialist over twelve: killed",
+   "after": "the same",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "npx vite-node tools/ag-baseline.ts -- --out <file>; node tools/ag-criteria.mjs <file>",
+     "kind": "measurement",
+     "proves": "H4-R (e) on 797 pieces, the budgets printed"
+    }
+   ],
+   "fixes": [],
+   "mutations": [
+    {
+     "id": "h4-tenth",
+     "clause": "H4-R (a) or (b), for the ability cut",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight,",
+       "replace": "if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight * (input.ability === 'listening' ? 0.1 : 1),"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.h4r.abilities.listening.own.n >= 5 && Object.keys(o.h4r.abilities.listening.own.kinds).length >= 2 && o.h4r.abilities.listening.own.ahead >= 0.6 * o.h4r.abilities.listening.own.n && o.h4r.abilities.listening.own.median >= 0.3",
+     "figure": "listening: 0 own pieces in 0 kinds, ahead on 0, median null"
+    },
+    {
+     "id": "h4-budget",
+     "clause": "H4-R budgets",
+     "edits": [
+      {
+       "file": "tools/ag-baseline.ts",
+       "find": "const specialist = (a: Ab, budget = 600, at = 85): Performer => actor({ [a]: at }, (budget - at) / (ABILITIES.length - 1));",
+       "replace": "const specialist = (a: Ab, budget = 600, at = 85): Performer => actor({ [a]: at }, (budget - at) / (ABILITIES.length));"
+      }
+     ],
+     "killed": true,
+     "verdict": "Object.values(o.h4r.budgets.specialists).every((b) => Math.abs(b - o.h4r.budgets.even) < 1e-9)",
+     "figure": "even 600, a specialist 557.0833333333334"
+    }
+   ],
+   "waitsOn": "Measured again on the integrated code."
+  },
+  {
+   "id": "H4.asWritten",
+   "status": "Not Implemented",
+   "disposition": "superseded by H4-R; kept as the record, not counted met. H5 holds (438 of 438, 29.2% within a point; on H4-R's set 797 of 797)",
+   "before": "1 of 12",
+   "after": "1 of 12",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "node tools/ag-criteria.mjs (H4, H5)",
+     "kind": "measurement",
+     "proves": "the record"
+    }
+   ]
+  },
+  {
+   "id": "L3-R.a",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "L3 as written: specialist 65.5 → 64.3 not met, beginner 54.0 → 56.8 met (integrated-09); superseded by L3-R",
+   "before": "24 pieces, named in the checklist before measurement",
+   "after": "24 pieces, named in the checklist before measurement",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>",
+     "kind": "measurement",
+     "proves": "L3-R (a)"
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The journeys' nights and the fixed set's four nights read the drain."
+  },
+  {
+   "id": "L3-R.b",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "L3 as written: specialist 65.5 → 64.3 not met, beginner 54.0 → 56.8 met (integrated-09); superseded by L3-R",
+   "before": "8 journeys: beginner, developing, specialist, generalist on bj-0 and bj-1, 120 days",
+   "after": "8 journeys: beginner, developing, specialist, generalist on bj-0 and bj-1, 120 days",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>",
+     "kind": "measurement",
+     "proves": "L3-R (b)"
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The journeys' nights and the fixed set's four nights read the drain."
+  },
+  {
+   "id": "L3-R.c",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "L3 as written: specialist 65.5 → 64.3 not met, beginner 54.0 → 56.8 met (integrated-09); superseded by L3-R",
+   "before": "growth 1.353 (generalist bj-1) to 3.193 (beginner bj-0); 35 falls, every one stamina's, every one gone with stamina held",
+   "after": "growth 1.353 (generalist bj-1) to 3.193 (beginner bj-0); 35 falls, every one stamina's, every one gone with stamina held",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > PLAYER JOURNEY: a specialist and a generalist, each played through a month of the first term, judge L3-R’s fixed set higher at the month’s end than at its start, and no piece falls but where stamina, which they never trained, fell",
+     "kind": "played (the attentive policy through the clock, a month)",
+     "proves": "the fixed set higher at the month's end; a fall only where stamina fell, gone with it held"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>",
+     "kind": "measurement",
+     "proves": "L3-R (c)"
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The journeys' nights and the fixed set's four nights read the drain."
+  },
+  {
+   "id": "L3-R.d",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "L3 as written: specialist 65.5 → 64.3 not met, beginner 54.0 → 56.8 met (integrated-09); superseded by L3-R",
+   "before": "362,520 checks on 795 pieces, no fall (worst 0)",
+   "after": "363,432 checks on 797 pieces, no fall",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "L3-R: real progress, controlled (brief 10) > more never makes it worse: raising any one ability, by ten or to full, never lowers a result, on every fourth piece for the even actor, a specialist, a beginner and a near-master",
+     "kind": "static",
+     "proves": "no fall on every fourth piece for four actors, +10 and to full"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/monotonicity.json",
+     "title": "npx vite-node tools/monotonicity.ts -- --part k --of 4; --merge",
+     "kind": "measurement",
+     "proves": "the catalog-wide sweep"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>",
+     "kind": "measurement",
+     "proves": "L3-R (d)"
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The journeys' nights and the fixed set's four nights read the drain."
+  },
+  {
+   "id": "L3-R.e",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "original": "L3 as written: specialist 65.5 → 64.3 not met, beginner 54.0 → 56.8 met (integrated-09); superseded by L3-R",
+   "before": "per journey and month: takes, purposes, difficulty, stakes, genres; L3 as written beside (fails on specialist bj-0 65.5 → 64.3, bj-1 63.4 → 62.3, generalist bj-0 62.4 → 62.3)",
+   "after": "per journey and month: takes, purposes, difficulty, stakes, genres; L3 as written beside (fails on specialist bj-0 65.5 → 64.3, bj-1 63.4 → 62.3, generalist bj-0 62.4 → 62.3)",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "node tools/l3r.mjs <folder> after tools/brief-journeys.ts -- --profile <p> --seed <s> --days 120 --trace <file>",
+     "kind": "measurement",
+     "proves": "L3-R (e)"
+    }
+   ],
+   "waitsOn": "The stamina area's workload model (running times, participation, intensity, the drain and the energy after a night) isn't in this clone: the final measurement is on the integrated code (`docs/verification/decisions-2026-10-16/measure.sh <folder> stage|ag|indirect|journeys-a|journeys-b|mono-0..3|mono-merge|l3r|mutations|test-mutations`). The journeys' nights and the fixed set's four nights read the drain."
+  },
+  {
+   "id": "L3.asWritten",
+   "status": "Not Implemented",
+   "disposition": "superseded by L3-R; kept as the record, its figures in L3-R (e)",
+   "before": "fails on 3 of 8 journeys",
+   "after": "fails on 3 of 8 journeys (the same)",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/l3r.json",
+     "title": "tools/l3r.mjs (verdict.e)",
+     "kind": "measurement",
+     "proves": "the record beside the controlled measure"
+    }
+   ]
+  },
+  {
+   "id": "M1",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "before": "every case 100: briefs 4,560, scenes 65, nights 30, casting 30, coursework 13, 0 drawn off; H4-R's set 3,180; ST5 2,520; F1 783",
+   "after": "every case 100: briefs 4,560, scenes 67, nights 30, casting 30, coursework 13, 0 drawn off; H4-R's set 3,188; ST5 2,574; F1 783",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "title": "M1: mastery at 100 (brief 10) > every judged piece and reading comes to 100 for a mastered actor, prepared, on a sufficient day, with no draw and with a draw; and every class scene and play on every way of playing that fits",
+     "kind": "static",
+     "proves": "every piece and reading, with and without a draw, and every fitting way on every class scene and play"
+    },
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/criteria.txt",
+     "title": "node tools/ag-criteria.mjs (M1, M1 on H4-R's set)",
+     "kind": "measurement",
+     "proves": "mastery"
+    }
+   ],
+   "waitsOn": "The criteria: measured on the integrated code with the stamina model in place."
+  },
+  {
+   "id": "judge.together",
+   "status": "Implemented, Verification Incomplete",
+   "disposition": "verified as it stands",
+   "before": "every criterion of section 5 as integrated-09 had it",
+   "after": "every criterion that held holds (judge/README.md): ST1 50 / 44 of 96, ST2 82 of 82, ST4, ST5 2,574, ST7 97 of 97, ST8 82 of 82, F1, F2, I1 to I5, A1 to A3, T2, T3, G3 to G5, M1, M3, O1, O2, H2, H5, H7; S1 to S4 and G2 byte for byte integrated-09's; the audit's isolation as it was",
+   "evidence": [
+    {
+     "file": "docs/verification/decisions-2026-10-16/judge/README.md",
+     "title": "docs/verification/decisions-2026-10-16/measure.sh <judge> <part>",
+     "kind": "measurement",
+     "proves": "every command and exit"
+    }
+   ],
+   "waitsOn": "The integrated code."
+  },
+  {
+   "id": "judge.tests",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "before": "none",
+   "after": "tests/decisions-judge.test.ts: 19 tests, exit 0; nine mutations in copies each fail it",
+   "evidence": [
+    {
+     "file": "tests/decisions-judge.test.ts",
+     "ran": "VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/decisions-judge.test.ts: 19 passed, exit 0",
+     "kind": "test file",
+     "proves": "the file passes alone"
+    }
+   ],
+   "mutations": [
+    {
+     "id": "t-restraint-draws",
+     "clause": "tests: restraint’s own craft pays",
+     "edits": [
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "inputs: { believability: [{ ability: 'emotionalDepth', weight: 1 }, { ability: 'composure', weight: 0.5 }], consistency: [{ ability: 'focus', weight: 0.5 }] } },",
+       "replace": "inputs: {} },"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "a restrained take can carry a scene that leans the other way, where the lean is ",
+      "restraint’s own craft pays: the restrained specialist’s lift over the even actor",
+      "success depends on the scene: every win against the grain is on a material where"
+     ]
+    },
+    {
+     "id": "t-whole-rounded",
+     "clause": "tests: every shown figure rounded once",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "const q = (x: { quality: number; exact?: number }) => x.exact ?? x.quality;",
+       "replace": "const q = (x: { quality: number; exact?: number }) => Math.round((x.exact ?? x.quality) * 10) / 10;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "an actor even in everything the formula reads, undrained, is 100 × n^(1 + diffic",
+      "every shown figure is its own exact value rounded once, and each whole is worked"
+     ]
+    },
+    {
+     "id": "t-solo-presence",
+     "clause": "tests: the meetings are presence’s own work",
+     "edits": [
+      {
+       "file": "src/engine/content/approaches.ts",
+       "find": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 2 }] } },",
+       "replace": "  solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 0 }] } },"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "each specialist is on the even actor’s budget, and on its own work (the pieces w",
+      "the two public meetings are presence’s own work: its +10 effect the largest of t"
+     ]
+    },
+    {
+     "id": "t-discipline-lift",
+     "clause": "tests: discipline’s practice",
+     "edits": [
+      {
+       "file": "src/engine/content/abilities.ts",
+       "find": "  disciplineLift: 0.1,",
+       "replace": "  disciplineLift: 0.1 * 0 + 0.2,"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+     ]
+    },
+    {
+     "id": "t-nerves",
+     "clause": "tests: composure’s nerves",
+     "edits": [
+      {
+       "file": "src/engine/systems/attributes.ts",
+       "find": "  const unsettled = 1 - a.composure / 100;",
+       "replace": "  const unsettled = 1 - a.composure / 200;"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+     ]
+    },
+    {
+     "id": "t-drain",
+     "clause": "tests: stamina at 55 costs on both media",
+     "edits": [
+      {
+       "file": "src/engine/content/piece.ts",
+       "find": "  drain: 0.3,",
+       "replace": "  drain: 0,"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "the voice-and-body specialist is better on stage than at a close frame on every "
+     ]
+    },
+    {
+     "id": "t-monotone",
+     "clause": "tests: more never makes it worse",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: clamp(level(input.ability) / full(input.ability), 0, 1) });",
+       "replace": "    if ('ability' in input) out.push({ kind: 'ability', what: input.ability, label: abilityDef(input.ability).label, weight: input.weight, n: input.ability === 'listening' ? Math.min(1, clamp(level(input.ability) / full(input.ability), 0, 1) * (1.5 - level(input.ability) / 200)) : clamp(level(input.ability) / full(input.ability), 0, 1) });"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "an actor even in everything the formula reads, undrained, is 100 × n^(1 + diffic",
+      "the criterion’s even actor’s difference is its techniques’ part and its stamina’",
+      "where size is what the scene is built on, restraint has its limits: before Thebe"
+     ]
+    },
+    {
+     "id": "t-replay-inputs",
+     "clause": "tests: replayed after a save and a load",
+     "edits": [
+      {
+       "file": "src/engine/systems/evaluation.ts",
+       "find": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {}), ...(i.inputs ? { inputs: i.inputs } : {})",
+       "replace": "  const ctx: EvalContext = { task: profile, techniques: i.techniques, prep: i.prep, required: i.required, difficulty: i.difficulty, condition: i.condition, families: i.families, key: i.key, ...(i.lean ? { lean: i.lean } : {})"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "the same scene judged twice, replayed from its own record, replayed with its dra"
+     ]
+    },
+    {
+     "id": "t-event-weight",
+     "clause": "tests: composure’s nerves",
+     "edits": [
+      {
+       "file": "src/engine/systems/attributes.ts",
+       "find": "  eventWeight: { performance: 6 },",
+       "replace": "  eventWeight: { performance: 7 },"
+      }
+     ],
+     "killed": true,
+     "verdict": "o.numFailedTests === 0",
+     "figure": [
+      "PLAYER JOURNEY: what an ability does outside the piece shows in twin lives throu"
+     ]
+    }
+   ]
+  }
+ ],
+ "commits": [
+  "4ad8c26c The judge area's checklist for brief 10, written before any code changes",
+  "94548b55 The acting criteria's tools, measuring ST3-R, ST6-R, H4-R and L3-R as written",
+  "c2a4b694 L3-R judged from the journeys' traces, and the measuring script in parts",
+  "b3df7fdb ST3-R (d) works each whole by hand, so a whole from rounded parts can't pass",
+  "d1c7d14d Brief 10's acting criteria measured on the engine before any change to it",
+  "6db8f797 Two public meetings for scene study, read from their texts before measuring",
+  "bdc80bf6 The acting criteria's tests, and what ST6-R's restrained specialist lacks",
+  "1ba7e30c Two record-keeping tests know the public meetings came after them",
+  "3abea596 The measuring script runs the test mutations, and the genres in two parts",
+  "2b7d3427 The meetings' readings in the house's voice and spelling",
+  "a3fd9988 Brief 10's acting criteria measured after this area's changes",
+  "fdedb8a3 ST3-R's attribution test holds what the criterion says, and not the sizes"
+ ],
+ "filesChanged": [
+  "src/engine/systems/piece.ts (judgePieceExact split out; no figure moved)",
+  "src/engine/content/scenes-meeting.ts (new)",
+  "src/engine/content/material.ts (two profiles appended)",
+  "src/engine/content/coursework.ts (MEETING_SCENES appended to SCENES)",
+  "src/engine/content/scenes-public.ts (a dated comment)",
+  "tools/pieces.ts, tools/acting-criteria.ts, tools/monotonicity.ts, tools/h4-indirect.ts, tools/judge-mutations.mjs, tools/l3r.mjs (new)",
+  "tools/interpretation.ts, tools/ag-baseline.ts, tools/ag-criteria.mjs, tools/brief-journeys.ts",
+  "tsconfig.app.json (tools/pieces.ts listed)",
+  "tests/decisions-judge.test.ts (new)",
+  "tests/remaining-judge.test.ts, tests/integration-stage.test.ts (the meetings left out of two record-keeping sets, dated)",
+  "docs/ENGINE-MODEL.md, docs/COVERAGE-MATRIX.md (67 scenes)",
+  "docs/DEVMAP.md, docs/TRACEABILITY.md (regenerated: the new test file against practice.exercise and the performance call)",
+  "docs/verification/integration-2026-10-16/st6.md, h4.md (dated sections)",
+  "docs/verification/decisions-2026-10-16/measure.sh, mutations.json, test-mutations.json, baseline/, judge/ (new)",
+  "docs/verification/remaining-10/judge-checklist.json, judge-result.json (new)"
+ ],
+ "ruleset": "unchanged, evaluation-10 (2026-10-16): no rule of the judge changed; new material is judged by the rules as they were",
+ "checks": {
+  "npx tsc -p tsconfig.app.json --noEmit (private build info)": 0,
+  "npm run lint": 0,
+  "node tools/title-case.mjs --check": 0,
+  "node tools/label-sweep.mjs": 0,
+  "node tools/plural-check.mjs": 0,
+  "node tools/voice-check.mjs --check": "0 (1 before three quotations in the meetings were rephrased)",
+  "node tools/tics.mjs --check": 0,
+  "node tools/doc-refs.mjs --check": 0,
+  "node tools/wired.mjs --check": 0,
+  "node tools/deciders.mjs --check": 0,
+  "node tools/spelling.mjs": "0 (1 before amongst and grey were rephrased)",
+  "node tools/typos.mjs": 0,
+  "npx vite-node tools/geo-check.mjs": 0,
+  "node tools/inventory.mjs --check": 0,
+  "node tools/devmap.mjs --check": "0 after --write (1 before: the new test file)",
+  "node tools/traceability.mjs": "0 after --write",
+  "node tools/capabilities.mjs --check": 0,
+  "node tools/coverage.mjs --check": 0,
+  "node tools/student-matrix.mjs --check": 0,
+  "node tools/completion-matrix.mjs --check": "1, the same at f17ae369 (an export of the starting commit): the matrix gives 443 of 544 where the handoff states 485, not this area's"
+ },
+ "testFiles": {
+  "tests/decisions-judge.test.ts": "19 passed, exit 0",
+  "tests/remaining-judge.test.ts": "16 passed, exit 0 (1 failed before its record-keeping set left out the meetings)",
+  "tests/integration-stage.test.ts": "4 passed, exit 0 (1 failed before the same)",
+  "tests/scenes.test.ts": "4, exit 0",
+  "tests/material.test.ts": "16, exit 0",
+  "tests/briefs.test.ts": "30, exit 0",
+  "tests/piece.test.ts": "8, exit 0",
+  "tests/guide-examples-coursework.test.ts": "9, exit 0",
+  "tests/evidence-g23-school.test.ts": "34, exit 0",
+  "tests/learning.test.ts": "7, exit 0",
+  "tests/rounding-once.test.ts": "4, exit 0",
+  "tests/integration-mastery.test.ts": "6, exit 0",
+  "tests/connected-properties.test.ts": "4, exit 0",
+  "tests/attributes-complete.test.ts": "12, exit 0",
+  "tests/attributes-phase-2b.test.ts": "13, exit 0",
+  "tests/engine-properties.test.ts": "11, exit 0",
+  "tests/stage-interpretation.test.ts": "12, exit 0",
+  "tests/mastery-contract.test.ts": "4, exit 0",
+  "tests/playreading.test.ts": "8, exit 0",
+  "tests/remaining-genres.test.ts": "21, exit 0",
+  "tests/defects-g3-1.test.ts": "7, exit 0"
+ },
+ "seeds": {
+  "journeys": "bj-0 and bj-1, 120 days, four profiles",
+  "stage and acting criteria": "interpretation (no draw); ST3-R's drawn replays st3r:<material>:<side>:drawn; its save st3r",
+  "attribute baseline": "ag-baseline (draws ag-a-<k>, ag-b-<k>, ag-m-<k>, --draws 60); H4-R's mastery keys h4r-m-0 to h4r-m-2",
+  "monotonicity": "mono-0 to mono-3 (drawn actors)",
+  "H4-R (d)": "h4d-<claim> twin lives",
+  "tests": "dj-st3, dj-drawn:<material>:<side>, dj-nerves, dj-practice, dj-l3-specialist, dj-l3-generalist, dj-m1, dj-ways:<material>"
+ },
+ "waitsOnTheStaminaModel": [
+  "H4-R (a) and (b): stamina's own work and its specialist's advantage there (1 own piece, a near tie it loses)",
+  "H4-R (d): stamina's benefit after a night and across a run (the energy a night leaves is 89.9 at stamina 20 and at 80)",
+  "H4-R (a): memory's second kind, if the owner takes option (1): a night's text read from its running time and the part's share",
+  "ST3-R (a) to (e), L3-R, M1: the final measurement on the integrated code (the drain, the journeys' nights, the fixed set's nights)",
+  "Every criterion of section 5 on the integrated code",
+  "The mutations: st3-drain edits PIECE.drain, which the stamina model may rename"
+ ],
+ "outsideThisArea": [
+  "The typecheck's build info is kept in node_modules/.tmp, and every clone here links the same node_modules, so `tsc -b` can read another clone's build as its own; checked here with a private --tsBuildInfoFile.",
+  "node tools/completion-matrix.mjs --check exits 1 at f17ae369 (the starting commit, exported): the matrix's line is 443 of 544 where the handoff's is 485, and its files are behind their sources.",
+  "The stamina area changes tools/ag-baseline.ts and systems/piece.ts too; this area's hunks are the H4-R section at the end of ag-baseline.ts and judgePiece's first and last lines in piece.ts.",
+  "tests/defects-g3-1.test.ts reads tools/brief-journeys.ts's weakness filter as text (brief 09's finding); it was left untouched and passes."
+ ],
+ "deviations": [
+  "The first form of ST3-R (d)'s check compared each figure with an exact value the same code had worked out, and one of its mutations survived; it was corrected (b3df7fdb) and the baseline's stage part and mutations measured again before any change to the judge.",
+  "The voice and spelling wording of the meetings changed after the judge/ measurement (2b7d3427): no level, so no figure."
+ ]
+}
