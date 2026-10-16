@@ -1,0 +1,93 @@
+{
+ "blind": false,
+ "designed": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.901,
+   "least": 0.842,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.208,
+    "1": 4.213,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.474,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.735,
+   "one": 4.213,
+   "opposedOverOne": 1.599,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 14350,
+   "differing": 12744,
+   "differ": 0.888,
+   "holds": true
+  },
+  "S3": {
+   "cases": 29250,
+   "differing": 24061,
+   "differ": 0.823,
+   "holds": true
+  }
+ },
+ "heldOut": {
+  "scenes": 50,
+  "genres": 149,
+  "S1": {
+   "meanCos": 0.883,
+   "least": 0.809,
+   "under07": [],
+   "holds": true
+  },
+  "S2": {
+   "meanDistanceBySharedConcerns": {
+    "0": 6.087,
+    "1": 4.153,
+    "2": 0
+   },
+   "pairs": {
+    "0": 8534,
+    "1": 2391,
+    "2": 101
+   },
+   "noneOverOne": 1.466,
+   "nearestSharesAConcern": 0.987,
+   "holds": false
+  },
+  "S2revised": {
+   "opposedPairs": 4168,
+   "opposed": 6.695,
+   "one": 4.153,
+   "opposedOverOne": 1.612,
+   "nearestSharesAConcern": 0.987,
+   "holds": true
+  },
+  "S3revised": {
+   "cases": 14350,
+   "differing": 11890,
+   "differ": 0.829,
+   "holds": true
+  },
+  "S3": {
+   "cases": 29250,
+   "differing": 21459,
+   "differ": 0.734,
+   "holds": false
+  }
+ }
+}

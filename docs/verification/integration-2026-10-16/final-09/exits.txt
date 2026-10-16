@@ -1,0 +1,11 @@
+at e48f0b68
+stage exit=0
+ag exit=0
+criteria exit=0
+journey-specialist exit=0
+journey-beginner exit=0
+signature exit=0
+signature-fresh exit=0
+identity exit=0
+audit exit=0
+DONE

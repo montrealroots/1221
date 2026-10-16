@@ -1,0 +1,394 @@
+{
+ "key": "judge",
+ "on": "2026-10-16",
+ "against": "d7127819 (baseline-09/), measured again at the final commit of this area (final-09/README.md names it)",
+ "checklist": "docs/verification/remaining-09/judge-checklist.json",
+ "testFile": "tests/remaining-judge.test.ts",
+ "tests": 7,
+ "criteria": [
+  {
+   "id": "ST3",
+   "asWritten": "Not met: the even actor the same on 165 of 179 before, 173 of 187 after (the eight new cases each the same)",
+   "proposed": "ST3′ (st3.md): (a) 187 of 187, (b) 187 of 187 at 3×10⁻¹⁴, (c) 187 of 187, the largest 0.021. Proposed, not counted",
+   "status": "Decision Required"
+  },
+  {
+   "id": "ST6",
+   "asWritten": "Not met: restrained 8 of 38 before, 8 of 42 after (four new expansive-suited scenes); expansive 21 of 49 both",
+   "proposed": "ST6′ (st6.md): against the grain, ahead of an equal-budget even actor playing the better-suited side: restrained 26 of 42, expansive 21 of 49. Proposed, not counted",
+   "status": "Decision Required"
+  },
+  {
+   "id": "H4",
+   "asWritten": "Not met: 2 of 12 before and after (presence 9.5% → 10.5%, vocal 49.7% → 56.2%)",
+   "proposed": "H4′ (h4.md): 10 of 12 before, 11 of 12 after on own work; stamina 29 of 30 nights' last segments; not met on stamina's one own piece. Proposed, not counted",
+   "status": "Decision Required"
+  },
+  {
+   "id": "L3",
+   "asWritten": "Not met for the specialist (65.5 → 64.1), met for the beginner (54.0 → 56.6), before and after",
+   "proposed": "L3′ (l3.md): the same work at each later month's levels at or over the month before's: 0 falls in 68 and 76 steps. Proposed, not counted",
+   "status": "Decision Required"
+  }
+ ],
+ "items": [
+  {
+   "id": "judge.baseline",
+   "before": "not reproduced on this pass's code",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/baseline-09/README.md",
+     "title": "every command, seed, file and exit code",
+     "kind": "measurement (seeded, no draw)",
+     "proves": "ST3 165 of 179, ST6 8 of 38, H4 2 of 12, L3 65.5 → 64.1 and 54.0 → 56.6 on d7127819; the signature, identity and audit files byte-identical to closeout/'s"
+    },
+    {
+     "file": "judge-logs (the session's scratchpad)",
+     "title": "the judge's 51 test files run one at a time on d7127819",
+     "kind": "suite",
+     "proves": "51 of 51 files exit 0, 1,036 tests passed, before any change"
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  },
+  {
+   "id": "judge.ST3",
+   "before": "explained in aggregate (st3.md); no case-by-case account; ST3 not met",
+   "status": "Decision Required",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "ST3 case by case: the stage and a close frame (brief 09) > identical effective inputs give identical results: an actor even in everything the formula reads, its stamina undrained, comes out on stage, at a close frame and replayed at 100 × n^(1 + difficulty), whatever the weights",
+     "kind": "static (TEST SETUP performers, every stage material)",
+     "proves": "identical effective inputs give identical results, at full precision and as shown, worked by hand from Scene Study's par"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "ST3 case by case: the stage and a close frame (brief 09) > every case’s shown result is its exact result rounded once, and every case a tenth apart is a real difference under half a tenth whose two sides straddle a rounding point",
+     "kind": "static",
+     "proves": "no rounding defect on any case"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "ST3 case by case: the stage and a close frame (brief 09) > each case’s difference is its techniques’ part and its stamina’s part and nothing else: even in everything read and undrained it’s nothing, and each uneven input alone makes its own part",
+     "kind": "static",
+     "proves": "the remaining difference is the drain on the dimensions naming fatigue, weighed differently by the stage and a close frame, and the techniques' 50 of 90"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/st3/st3-cases.json",
+     "title": "tools/interpretation.ts -- --st3",
+     "kind": "measurement",
+     "proves": "179 cases: 0 rounding defects, 14 a tenth apart at 0.0017 to 0.0208 exact, stamina the larger part on 163"
+    }
+   ],
+   "fixes": [],
+   "sources": [],
+   "assumptions": [
+    "The criterion's even actor is as tools/interpretation.ts --stage defines it: abilities 55, techniques 50, stamina 55, the grain held at nothing."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/interpretation.ts",
+     "find": "grain[d] = { d: r2((had?.d ?? 0) - GRAIN.strength * x.s",
+     "replace": "grain[d] = { d: r2((had?.d ?? 0) - (GRAIN.strength || 0.3) * x.s",
+     "killed": true,
+     "failed": 3
+    },
+    {
+     "file": "src/engine/systems/evaluation.ts",
+     "find": "return { ...e, dimensions, overall: r1(e.overall), exact: e.overall",
+     "replace": "return { ...e, dimensions, overall: Math.floor(e.overall * 10) / 10, exact: e.overall",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "file": "src/engine/systems/evaluation.ts",
+     "find": "if (ctx.drain && ctx.drain.f < 1 && reaches.includes('fatigue'))",
+     "replace": "if (ctx.drain && ctx.drain.f < 1)",
+     "killed": true,
+     "failed": 1
+    }
+   ],
+   "rowText": {},
+   "tutorial": "unchanged (no mechanic changed)",
+   "guide": "unchanged (no mechanic changed)",
+   "ownerDecision": "Accept ST3′ (st3.md) in place of ST3's second clause, or keep ST3 as the record. The clause asks two results that differ by up to 0.021 (the drain the stage weighs differently, which ST3's own first clause and the piece's continuity read) to show the same tenth; no boundary of rounding can, and removing the difference would remove the stage's execution weight or stamina's drain."
+  },
+  {
+   "id": "judge.ST6",
+   "before": "8 of 38, explained in part (st6.md); no per-case trace in the tool",
+   "status": "Decision Required",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/st6-09.json",
+     "title": "tools/interpretation.ts -- --st6",
+     "kind": "measurement",
+     "proves": "every case of both halves traced; the grain's swing per unit gap 2.04 (restrained half) against 2.40; 32 of 42 cases at a gap of 0.57 or more; the lift 1.15 against 1.57, the draws 0.52 against 0.94, the leans 0.56 against 0.51; restrained ahead of an equal-budget even actor's better-suited side on 26 of 42"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/st6-09.json",
+     "title": "considered",
+     "kind": "measurement (in-process alternatives, put back)",
+     "proves": "the control doubled 10 of 42; the control in place of emotional depth 8 of 42; any draw on connection 16 of 42, through the weakest-dimension term"
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Restraint draws the control that holds the feeling (already the basis of APPROACH_EFFECT.restrained)",
+     "citation": "Stanislavski, An Actor's Work, tr. Benedetti, 2008, 'Internal and External Control and the Finishing Touches', pp. 536–542, as quoted in content/approaches.ts",
+     "effective": "n/a",
+     "read": "2026-10-16 (the quotation in the code; no new source found that sizes the draw or places it elsewhere)"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged",
+   "ownerDecision": "ST6's second half asks a restrained specialist to beat itself playing expansive, and the judge reads the feeling it's strong in on both sides. Recommended: adopt ST6′ (st6.md) for that half and keep the judge; or name a reading of restraint to adopt (its feeling read on the connection, or its control drawn larger), to be measured against I1 to I5 and the stage criteria before it's kept."
+  },
+  {
+   "id": "judge.H4",
+   "before": "2 of 12; no per-ability account at full precision; no scene or play with a partner under level 2",
+   "status": "Decision Required",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level under 2; the speeches to a crowd have 1, and the rule reaches them: presence 2 more on connection and its lean half again, by each level under 2",
+     "kind": "static",
+     "proves": "the solo demand reaches the three speeches, worked from its sizes"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > a specialist in presence comes out ahead of an even actor of the same budget on each speech to many with the partner barely there, and behind on every scene played off a partner",
+     "kind": "static (TEST SETUP performers)",
+     "proves": "presence's specialist has real advantages on fitting work and not everywhere"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > a mastered, prepared actor reaches 100 on each of the four, on every way of playing that fits",
+     "kind": "static",
+     "proves": "the mastery guarantee on the new material, 108 cases"
+    },
+    {
+     "file": "tests/remaining-judge.test.ts",
+     "title": "H4: presence’s own work, scenes played out to a house (brief 09) > a student meets them in play: once every earlier verse scene is studied, the Heightened Text course sets one of the three, and once every earlier Greek scene is, The Greeks sets the speech before the suppliants",
+     "kind": "static (the course's own draw, scenesFor)",
+     "proves": "the development path: the courses that set verse and Greek scenes reach the new ones, appended last"
+    },
+    {
+     "file": "tests/integration-stage.test.ts",
+     "title": "ST4: drama suits each side somewhere, from what its scenes are > the catalog’s drama has scenes where restraint suits better and scenes where size does, and every one of the 25 before 2026-10-16 still suits restraint",
+     "kind": "static",
+     "proves": "unchanged claim; its set of the 25 earlier drama materials now leaves out Henry V's 4.3, filed as drama, which isn't one of them"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/h4-09/",
+     "title": "ag-before-house-scenes.json, ag-after-house-scenes.json, criteria-*.txt, stage-after-house-scenes.json",
+     "kind": "measurement",
+     "proves": "H4 2 of 12 before and after; H2 and H5 hold after (scene: listening 20 of 64; H5 27.6%); a specialist ahead on 0 of 3,463 (ability, piece) pairs under a tenth's share and 564 of 564 at 15% or more"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "Four class scenes played out to a house, read from public-domain texts and committed before measurement (e4c271ed): Julius Caesar 3.2, Henry V 4.3, Oedipus Tyrannus vv. 1–86 (Murray), A Midsummer Night's Dream 5.1",
+     "where": "src/engine/content/scenes-house.ts (new), src/engine/content/material.ts (four profiles appended), src/engine/content/coursework.ts (appended to SCENES)",
+     "failingTest": "H4: presence’s own work, scenes played out to a house (brief 09) > before brief 09 no class scene or play had a partner level under 2; the speeches to a crowd have 1, and the rule reaches them: presence 2 more on connection and its lean half again, by each level under 2"
+    }
+   ],
+   "sources": [
+    {
+     "rule": "Julius Caesar 3.2, Henry V 4.3, A Midsummer Night's Dream 5.1",
+     "citation": "Project Gutenberg #1522, #1521, #1514 (the PG Shakespeare Team's texts)",
+     "effective": "public domain",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Oedipus, King of Thebes, vv. 1–86",
+     "citation": "Sophocles, tr. Gilbert Murray (1911), Project Gutenberg #27673",
+     "effective": "public domain",
+     "read": "2026-10-16"
+    },
+    {
+     "rule": "Read and left out for discipline: the sack scene",
+     "citation": "Molière, The Impostures of Scapin 3.2, tr. Charles Heron Wall, Project Gutenberg #8776",
+     "effective": "public domain",
+     "read": "2026-10-16"
+    }
+   ],
+   "assumptions": [
+    "The profiles' levels are SLATE's reading of each text, as every profile's are; each reason is in its `why`."
+   ],
+   "mutations": [
+    {
+     "file": "src/engine/systems/material.ts",
+     "find": "solo: Math.max(0, 2 - m.partner),",
+     "replace": "solo: Math.max(0, 1 - m.partner),",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "file": "src/engine/content/approaches.ts",
+     "find": "solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 2 }] } },",
+     "replace": "solo: { lean: { connection: 0.5 }, inputs: { connection: [{ ability: 'presence', weight: 0.5 }] } },",
+     "killed": true,
+     "failed": 2
+    },
+    {
+     "file": "src/engine/content/coursework.ts",
+     "find": "  ...CLASSICAL_SCENES,\n  ...MODERN_SCENES,",
+     "replace": "  ...HOUSE_SCENES,\n  ...CLASSICAL_SCENES,\n  ...MODERN_SCENES,",
+     "killed": true,
+     "failed": 1
+    }
+   ],
+   "rowText": {},
+   "tutorial": "unchanged (no mechanic changed; the scenes show their own demands and reasons on the screen, MaterialDemands)",
+   "guide": "unchanged (no mechanic changed); docs/ENGINE-MODEL.md counts 64 scenes and says why the ruleset stayed",
+   "ownerDecision": "H4 as written counts as an ability's own the top half of everything it moves, so an ability read a little everywhere is asked to lead where little of it is asked. Recommended: adopt H4′ (h4.md) beside H4 kept as the record. Discipline and stamina can't be given whole-piece work by content under the judge as built (stamina is read only as the late drain, capped by PIECE.drain and the load's clamp; discipline's long-score demand reaches only briefs, since a scene is cut by its tones); giving it would mean judging a run of nights as one piece, weighing the drain more, or reading a scene's units as a brief's beats are, each a new mechanic or a weight to be argued with a source first."
+  },
+  {
+   "id": "judge.L3",
+   "before": "the trace replayed each take at the run's start and end only",
+   "status": "Decision Required",
+   "disposition": "implemented",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/l3-09/l3-trace-specialist-bj-0.json",
+     "title": "tools/brief-journeys.ts -- --profile specialist --seed bj-0 --days 120 --trace",
+     "kind": "played (public commands, seed bj-0)",
+     "proves": "every take at each month's levels: 61.56, 62.45, 62.93, 63.55, 65.14; 0 falls in 68 steps; the mix by month apart from it"
+    },
+    {
+     "file": "docs/verification/integration-2026-10-16/l3-09/l3-trace-beginner-bj-0.json",
+     "title": "the same, --profile beginner",
+     "kind": "played (seed bj-0)",
+     "proves": "54.42, 55.14, 55.54, 56.10, 57.44; 0 falls in 76 steps"
+    },
+    {
+     "file": "tests/defects-g3-1.test.ts",
+     "title": "a brief’s What To Work On > is the same weakness the journeys tool suggests a brief for",
+     "kind": "static (reads the tool's source)",
+     "proves": "the journeys' weakness filter unchanged by the trace's extension"
+    }
+   ],
+   "fixes": [],
+   "sources": [
+    {
+     "rule": "Fitness held three days after a workout, then lost toward an everyday 35",
+     "citation": "FITNESS, systems/life.ts (Hickson & Rosenkoetter 1981; Mujika & Padilla 2000)",
+     "effective": "n/a",
+     "read": "2026-10-16, as the code cites them"
+    }
+   ],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged",
+   "ownerDecision": "L3 as written measures what was taped as much as how well; a student who earns callbacks fails it. Recommended: adopt L3′ (l3.md) beside the journey metric, both kept."
+  },
+  {
+   "id": "judge.remeasure",
+   "before": "baseline-09/",
+   "status": "Implemented And Verified",
+   "disposition": "verified as it stands",
+   "evidence": [
+    {
+     "file": "docs/verification/integration-2026-10-16/final-09/README.md",
+     "title": "every criterion before and after, with each command's exit",
+     "kind": "measurement",
+     "proves": "no criterion that held fails; the changes in the stage criteria are the four new scenes' (ST1 49 / 41 of 93, ST6 8 of 42)"
+    },
+    {
+     "file": "tests/genre-coverage.test.ts",
+     "title": "the coverage record > is what the tables say, and accounts for every genre once",
+     "kind": "static (the generated record against its tables)",
+     "proves": "failed once after the new scenes (each genre's count of coursework scenes moved: Comedy 6 → 7, Fairy Tale 1 → 2, Historical Drama 3 → 4, Political Drama 2 → 3) and passed with docs/GENRE-COVERAGE.md regenerated from the tables"
+    },
+    {
+     "file": "the session's judge-logs/tests/final/summary.txt",
+     "title": "57 test files one at a time",
+     "kind": "suite (one file at a time)",
+     "proves": "56 exit 0 at once, genre-coverage 0 after its record was regenerated; 1,074 passed, 0 failed"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "docs/GENRE-COVERAGE.md regenerated from the tables after the four scenes changed four genres' counts of coursework scenes",
+     "where": "docs/GENRE-COVERAGE.md (npx vite-node tools/genre-coverage.ts)",
+     "failingTest": "the coverage record > is what the tables say, and accounts for every genre once"
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {},
+   "tutorial": "unchanged",
+   "guide": "unchanged"
+  }
+ ],
+ "mutationsRun": 6,
+ "outsideThisArea": [
+  "A movement class at the School doesn't hold fitness; only a workout does (systems/life.ts FITNESS, fitnessHeldUntil), so a student who attends every movement class still falls to an everyday 35 over a term. Whether a movement class should count is the body and school areas' question, with research on its intensity.",
+  "docs/COVERAGE-MATRIX.md line 77 says 56 scenes; the catalog had 60 after the integration pass and 64 now.",
+  "tests/defects-g3-1.test.ts reads tools/brief-journeys.ts's source to find its weakness filter: an edit to that function's text breaks the test without changing behavior."
+ ],
+ "checks": {
+  "npx tsc -b --noEmit": "0 (2 before tests/remaining-judge.test.ts's types were corrected)",
+  "npm run lint": 0,
+  "node tools/title-case.mjs --check": 0,
+  "node tools/label-sweep.mjs": 0,
+  "node tools/plural-check.mjs": 0,
+  "node tools/voice-check.mjs --check": 0,
+  "node tools/tics.mjs --check": 0,
+  "node tools/doc-refs.mjs --check": 0,
+  "node tools/wired.mjs --check": 0,
+  "node tools/deciders.mjs --check": 0,
+  "node tools/spelling.mjs": "0 (after --write Americanized seven quoted spellings in scenes-house.ts)",
+  "node tools/typos.mjs": 0,
+  "npx vite-node tools/geo-check.mjs": 0,
+  "node tools/inventory.mjs --check": 0,
+  "node tools/devmap.mjs --check": 0,
+  "node tools/traceability.mjs": 0,
+  "node tools/capabilities.mjs --check": 0,
+  "node tools/coverage.mjs --check": 0,
+  "node tools/student-matrix.mjs --check": 0,
+  "the measurements": "final-09/exits.txt: every tool 0"
+ },
+ "seeds": {
+  "journeys": "bj-0 (120 days, specialist and beginner)",
+  "attribute baseline": "ag-baseline (draws ag-a-<k>, ag-b-<k>, ag-m-<k>, --draws 60)",
+  "stage and interpretation": "interpretation (no draw)",
+  "H4 tests": "h4 (no draw)",
+  "ST3 tests": "rng 9_2026_10_16 for the drawn shares; interpretation (no draw)"
+ },
+ "filesChanged": [
+  "src/engine/content/scenes-house.ts (new)",
+  "src/engine/content/material.ts",
+  "src/engine/content/coursework.ts",
+  "tools/interpretation.ts",
+  "tools/ag-baseline.ts",
+  "tools/ag-criteria.mjs",
+  "tools/brief-journeys.ts",
+  "tests/remaining-judge.test.ts (new)",
+  "tests/integration-stage.test.ts",
+  "docs/GENRE-COVERAGE.md (regenerated)",
+  "docs/ENGINE-MODEL.md",
+  "docs/verification/integration-2026-10-16/{st3.md, st6.md, h4.md, l3.md}",
+  "docs/verification/integration-2026-10-16/{baseline-09, h4-09, l3-09, final-09}/, st3/st3-cases.json, st6-09.json",
+  "docs/verification/remaining-09/judge-checklist.json, judge-result.json"
+ ]
+}
