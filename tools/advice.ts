@@ -74,15 +74,12 @@ function readInputs(sim: Simulation): string[] {
   return [...ids].sort();
 }
 
-/** Each part of every take's preparation complete, its segments' own parts too: the takes as prepared, for (f). */
-const asPrepared = (work: readonly WorkRecord[]): WorkRecord[] => work.map((w) => ({
-  ...w,
-  inputs: {
-    ...w.inputs,
-    prep: Object.fromEntries(Object.keys(w.inputs.prep).map((k) => [k, 1])),
-    ...(w.inputs.piece ? { piece: { ...w.inputs.piece, ...(w.inputs.piece.own ? { own: w.inputs.piece.own.map((o) => (o?.prep ? { ...o, prep: Object.fromEntries(Object.keys(o.prep).map((k) => [k, 1])) } : o)) } : {}) } } : {}),
-  },
-}));
+/** Each part of the chosen takes' preparation complete, their segments' own parts too: the takes as prepared, for (f). */
+const asPrepared = (work: readonly WorkRecord[], which: (w: WorkRecord) => boolean, keep: readonly string[] = []): WorkRecord[] => work.map((w) => {
+  if (!which(w)) return w;
+  const done = (prep: Record<string, number>) => Object.fromEntries(Object.entries(prep).map(([k, x]) => [k, keep.includes(k) ? x : 1]));
+  return { ...w, inputs: { ...w.inputs, prep: done(w.inputs.prep), ...(w.inputs.piece ? { piece: { ...w.inputs.piece, ...(w.inputs.piece.own ? { own: w.inputs.piece.own.map((o) => (o?.prep ? { ...o, prep: done(o.prep) } : o)) } : {}) } } : {}) } };
+});
 
 /** An input's full for the work: an ability's own, a technique's `MASTERED`, past which no piece reads more. */
 const fullFor = (sim: Simulation, id: string) => (isAbility(id as never) ? abilityFull(sim, sim.player, id as AbilityId) : MASTERED);
@@ -145,18 +142,33 @@ function measure(spec: CaseSpec) {
   const e = first && pf !== undefined ? { predicted: r3(pf), realized: r3(firstGain!), within: Math.abs(pf - firstGain!) <= Math.max(0.3, 0.25 * Math.abs(firstGain!)) } : {};
 
   // (f) diminishing returns: each input's predicted gain at its level, a third and two thirds of the way to full.
+  // At full precision: compared exact, shown to a thousandth (until brief 10's tuning they were compared shown, and
+  // three equal thousandths read as not falling).
   const ladderOf = (id: string): number[] => {
     const from = levelOf(sim, sim.player, id as never);
     const to = fullFor(sim, id);
-    return [0, 1, 2].map((k) => { if (k === 0) return r3(pointsOf(predicted.get(id)) ?? 0); const x = clone(sim); setLevel(x, id, from + ((to - from) * k) / 3); return r3(pointsOf(trainingForecast(x, x.player).get(id)) ?? 0); });
+    return [0, 1, 2].map((k) => { if (k === 0) return pointsOf(predicted.get(id)) ?? 0; const x = clone(sim); setLevel(x, id, from + ((to - from) * k) / 3); return pointsOf(trainingForecast(x, x.player).get(id)) ?? 0; });
   };
   const falling = (l: number[]) => l.every((x, i) => i === 0 || x < l[i - 1]!);
-  const ladder = first ? ladderOf(first.target) : undefined;
-  const everyLadder = spec.band === 'nearMastery' ? Object.fromEntries([...predicted.keys()].filter((k) => !isFull(sim, k)).map((k) => [k, ladderOf(k)])) : undefined;
-  const prepLimited = last.some((w) => w.limits.some((l) => l.kind === 'preparation'));
-  const prepared = trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? []));
-  const prepGap = Math.max(0, ...[...new Set([...predicted.keys(), ...prepared.keys()])].map((k) => Math.abs((pointsOf(predicted.get(k)) ?? 0) - (pointsOf(prepared.get(k)) ?? 0))));
-  const f = { ladder, falls: ladder ? falling(ladder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.join(' → ')}`) } : undefined, prep: { limited: prepLimited, largest: r3(prepGap), same: prepGap < 1e-9 } };
+  const drop = (l: number[]) => Math.min(...l.slice(1).map((x, i) => l[i]! - x));
+  const exactLadder = first ? ladderOf(first.target) : undefined;
+  const ladder = exactLadder?.map(r3);
+  const exactEvery = spec.band === 'nearMastery' ? Object.fromEntries([...predicted.keys()].filter((k) => !isFull(sim, k)).map((k) => [k, ladderOf(k)])) : undefined;
+  const everyLadder = exactEvery;
+  // Two readings of "where a take's preparation, not an ability, held it back": the criterion's words, where what held
+  // the take back most (its chief limit, `limits[0]`) is preparation (`chief`), which the advice implements; and the
+  // checklist's first, broader reading, any take with a preparation limit at all (`any`), kept and reported beside it.
+  const gap = (a: Map<string, Forecast>, b: Map<string, Forecast>) => Math.max(0, ...[...new Set([...a.keys(), ...b.keys()])].map((k) => Math.abs((pointsOf(a.get(k)) ?? 0) - (pointsOf(b.get(k)) ?? 0))));
+  const prepChief = last.some((w) => w.limits[0]?.kind === 'preparation');
+  const chiefGap = gap(predicted, trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? [], (w) => w.limits[0]?.kind === 'preparation')));
+  // And the reading the advice implements (from brief 10's tuning): where a step of the take's own preparation held it
+  // back most, the forecast the same as with those steps complete, knowing the genre as it stood.
+  const ownStep = (w: WorkRecord) => w.limits[0]?.kind === 'preparation' && w.limits[0].what !== 'genre';
+  const prepSteps = last.some(ownStep);
+  const stepsGap = gap(predicted, trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? [], ownStep, ['genre'])));
+  const prepAny = last.some((w) => w.limits.some((l) => l.kind === 'preparation'));
+  const anyGap = gap(predicted, trainingForecast(sim, sim.player, asPrepared(sim.player.work ?? [], () => true)));
+  const f = { ladder, falls: exactLadder ? falling(exactLadder) : undefined, leastDrop: exactLadder ? drop(exactLadder) : undefined, every: everyLadder ? { n: Object.keys(everyLadder).length, falling: Object.values(everyLadder).filter(falling).length, rising: Object.entries(everyLadder).filter(([, l]) => !falling(l)).map(([k, l]) => `${k} ${l.map((x) => x.toFixed(5)).join(' → ')}`) } : undefined, prep: { limited: prepChief, largest: r3(chiefGap), same: chiefGap < 1e-9, stepsLimited: prepSteps, stepsLargest: r3(stepsGap), stepsSame: stepsGap < 1e-9, anyLimited: prepAny, anyLargest: r3(anyGap), anySame: anyGap < 1e-9 } };
 
   // (g) the reason: the gain it expects, how many of the pieces it read, and a piece by name.
   const titles = [...new Set(takes.slice(-RECENT).map((t) => BRIEF_BY_ID[t.brief]!.title))];
@@ -199,7 +211,7 @@ function summarize(cases: readonly CaseOut[]) {
     c: { named: named.length, atOrAboveMedian: named.filter((x) => x.c.atOrAboveMedian).length, share: r3(named.filter((x) => x.c.atOrAboveMedian).length / Math.max(1, named.length)), firstMean: r3(firstMean), randomMean: r3(randomMean), ratio: r3(firstMean / (randomMean || 1)) },
     d: { casesWithViolation: cases.filter((x) => x.d.violations.length).length, nearMastery: near.length, allFullSaid: near.filter((x) => x.d.allFull.says && !x.d.allFull.named.length).length, allFullSaidEveryCase: cases.filter((x) => x.d.allFull.says && !x.d.allFull.named.length).length },
     e: { named: named.length, within: named.filter((x) => (x.e as { within?: boolean }).within).length, share: r3(named.filter((x) => (x.e as { within?: boolean }).within).length / Math.max(1, named.length)), meanError: r3(mean(named.map((x) => ((x.e as { realized: number }).realized - (x.e as { predicted: number }).predicted)))) },
-    f: { nearMastery: near.length, ladderFalls: near.filter((x) => x.f.falls).length, everyCandidate: near.reduce((t, x) => t + (x.f.every?.falling ?? 0), 0), ofCandidates: near.reduce((t, x) => t + (x.f.every?.n ?? 0), 0), prepLimited: cases.filter((x) => x.f.prep.limited).length, prepSame: cases.filter((x) => x.f.prep.limited && x.f.prep.same).length },
+    f: { nearMastery: near.length, ladderFalls: near.filter((x) => x.f.falls).length, everyCandidate: near.reduce((t, x) => t + (x.f.every?.falling ?? 0), 0), ofCandidates: near.reduce((t, x) => t + (x.f.every?.n ?? 0), 0), prepLimited: cases.filter((x) => x.f.prep.limited).length, prepSame: cases.filter((x) => x.f.prep.limited && x.f.prep.same).length, prepStepsLimited: cases.filter((x) => x.f.prep.stepsLimited).length, prepStepsSame: cases.filter((x) => x.f.prep.stepsLimited && x.f.prep.stepsSame).length, prepAnyLimited: cases.filter((x) => x.f.prep.anyLimited).length, prepAnySame: cases.filter((x) => x.f.prep.anyLimited && x.f.prep.anySame).length },
     g: { recs: cases.reduce((t, x) => t + x.g.recs, 0), ok: cases.reduce((t, x) => t + x.g.ok, 0) },
     h: { cases: hs.length, fell: hs.filter((x) => (x.h as { fell: boolean }).fell).length, leads: leads.length, changedWhereLed: leads.filter((x) => (x.h as { ok: boolean }).ok).length, leadsWithinATie: leads.filter((x) => (x.h as { tieLead: boolean }).tieLead).length },
     i: { same: cases.filter((x) => x.i.same).length },
