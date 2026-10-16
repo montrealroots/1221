@@ -206,6 +206,35 @@
    "check": "node tools/completion-matrix.mjs --check",
    "exit": 1,
    "note": "the launching session’s matrix (see foundOutside)"
+  },
+  {
+   "check": "the journeys fold (coverage09.5), 09:54 to 09:56 on 2026-10-16: the pipeline in the README’s order in the tree, every step",
+   "exit": 0,
+   "result": "10 results; 40 batches, 271 tests on 51 rows; 57 fields of row text; no item unmapped"
+  },
+  {
+   "check": "the journeys fold: node tools/coverage.mjs, and --check",
+   "exit": 0,
+   "result": "339 items, the same by status and class as at 11933d55"
+  },
+  {
+   "check": "the journeys fold: node tools/capabilities.mjs --write, and --check",
+   "exit": 0,
+   "result": "64 capabilities; 158 player commands, agreed on the 158 both name"
+  },
+  {
+   "check": "the journeys fold: VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 npx vitest run tests/remaining-09-journeys.test.ts",
+   "exit": 0,
+   "result": "15 passed, the journeys area’s file as the tree had it at 09:55"
+  },
+  {
+   "check": "the journeys fold: title-case, spelling, typos, tics, voice-check, doc-refs, plural-check, label-sweep, wired --check, inventory --check",
+   "exit": 0
+  },
+  {
+   "check": "the journeys fold: node tools/coverage.mjs --check at 11933d55 (git archive into the scratchpad)",
+   "exit": 0,
+   "result": "the before totals’ audit, checked where it was committed"
   }
  ],
  "items": [
@@ -851,6 +880,395 @@
    "rowText": {},
    "tutorial": "",
    "guide": ""
+  },
+  {
+   "id": "coverage09.5-journeys-fold",
+   "before": "The journeys area’s 17 items (journeys-result.json, committed at 11933d55) were unmapped: remaining-fold.cjs listed each, and none of their tests reached a row. Each item’s tests reach several commands, and the same test is cited by several items (its journey, its defect, played-*, actions), so no one list of rows per item would be true of every test in it.",
+   "status": "Implemented And Verified",
+   "disposition": "implemented",
+   "folded": {
+    "result": "docs/verification/remaining-09/journeys-result.json",
+    "state": "as committed at 11933d55 (blob dd8433e40d1a), unchanged in the tree when the fold ran: the journeys area’s resumed work on d-aid-past-balance and d-medicaid-start hadn’t written its result yet",
+    "renames": "inputs/renames.json as at 11933d55: no journeys rename had been written when the fold ran",
+    "items": [
+     {
+      "id": "journeys.known-graduated-school-page",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The School page once the School has ended, played to the degree, a withdrawal and a dismissal: each test to the row whose end it plays (Commencement, the withdrawal, the evaluation that dismisses)."
+     },
+     {
+      "id": "journeys.x1-yale-payment-savings-hold-registration",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A leave’s returned aid paid from savings, the hold and its fees, and registration under it: each test to the commands it presses and checks."
+     },
+     {
+      "id": "journeys.x2-leave-affiliate-bill",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A leave’s lapse, Affiliate cover, an appointment and a prescription in the lapse: each test to the commands and the appointment it plays."
+     },
+     {
+      "id": "journeys.x3-withdrawal-health-tax-papers",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A withdrawal, then health cover, status and the return: each test to what it presses and what the clock brings (the month’s look, the US status, the refund)."
+     },
+     {
+      "id": "journeys.x4-document-expiring",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A license run out under a bank’s opening: the Papers row, the ID card, the account."
+     },
+     {
+      "id": "journeys.played-school",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The area’s summary of school journeys: its tests are x1’s and the School page’s, mapped by test as there; remaining-school-term.test.ts and remaining-school.test.ts are cited by file alone, run again, and add no title."
+     },
+     {
+      "id": "journeys.played-money",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The area’s summary of money journeys: x1’s and x4’s tests, mapped by test as there."
+     },
+     {
+      "id": "journeys.played-papers",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The area’s summary of papers journeys: x3’s and x4’s tests, mapped by test as there."
+     },
+     {
+      "id": "journeys.played-health",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The area’s summary of health journeys: x2’s and x3’s tests, mapped by test as there."
+     },
+     {
+      "id": "journeys.actions",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "Every action the journeys pressed, with its refusals: each test mapped as in the item it belongs to."
+     },
+     {
+      "id": "journeys.d-aid-past-balance",
+      "status": "Decision Required",
+      "rows": [],
+      "why": "The owner’s decision on aid applied to the Yale account; its test is x1’s, mapped by test as there, and moves no row’s words."
+     },
+     {
+      "id": "journeys.d-cover-ended-notice",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The cover-ended notice’s window, from the loss: health.month’s notice, and the commands the tests press (the withdrawal, Enroll, File It); the four other files cited by file alone add no title."
+     },
+     {
+      "id": "journeys.d-medicaid-start",
+      "status": "Not Implemented",
+      "rows": [],
+      "why": "Not implemented: HUSKY D’s start on its application’s month. Its test is x3’s, mapped by test as there; no row’s words change."
+     },
+     {
+      "id": "journeys.d-hardship-ended-renewal",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A renewal’s notice once its program is dropped or ending: health.drop and health.request_hardship; the hardship test cited by file alone adds no title."
+     },
+     {
+      "id": "journeys.d-expired-license-next-step",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "The run-out line on a document’s Papers row (DocumentList), with the commands its test presses: the ID card it points to and the bank that takes it. Not documents.report_lost or documents.replace_license, which the test doesn’t press."
+     },
+     {
+      "id": "journeys.d-lapse-appointment",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "An appointment outside the cover said when Affiliate cover is bought: school.buy_affiliate, the appointment, and what the test presses to be seen at Yale Health."
+     },
+     {
+      "id": "journeys.d-lapse-prescription",
+      "status": "Implemented And Verified",
+      "rows": [],
+      "why": "A fill in the lapse repriced when Affiliate cover is bought back to its start: school.buy_affiliate’s repricing, and the health week that fills it (its log, HealthRecord.fills)."
+     }
+    ],
+    "byTest": [
+     {
+      "test": "DEFECT: a life played to the degree",
+      "rows": [
+       "school.commencement"
+      ],
+      "read": "Played to Commencement on 21 May 2029: the Standing, Casting and Coursework tabs rendered after the degree, before and after a reload."
+     },
+     {
+      "test": "PLAYER JOURNEY: a withdrawal in the first fall says how it ended",
+      "rows": [
+       "school.withdraw"
+      ],
+      "read": "school.withdraw refused unconfirmed and again, the course record kept, the three tabs after it."
+     },
+     {
+      "test": "PLAYER JOURNEY: a student who never prepares her coursework",
+      "rows": [
+       "standing/term evaluation"
+      ],
+      "read": "Concern, warning, dismissed at Fall Term 2027’s evaluation by the clock; the tabs after it."
+     },
+     {
+      "test": "PLAYER JOURNEY: a Modest student’s personal leave sends half",
+      "rows": [
+       "school.request_leave",
+       "school.buy_affiliate",
+       "school.pay_balance",
+       "bank.transfer"
+      ],
+      "read": "The leave asked twice and granted, half the scholarship returned; her own transfer into savings; Affiliate cover refused unconfirmed, bought from both accounts, refused again; a part paid, over and nothing refused; the hold and $375 of late fees, one jump against six-hour steps."
+     },
+     {
+      "test": "PLAYER JOURNEY: back for Spring Term 2028 under the hold",
+      "rows": [
+       "school.return_notice",
+       "school.reregister",
+       "school.pay_balance"
+      ],
+      "read": "Notice given and refused twice; registration refused under the hold with nothing moved; paid from both accounts, the hold lifted once; registered, refused again; the first class day counted, through a reload."
+     },
+     {
+      "test": "DEFECT: a doctor’s visit booked at Fair Haven",
+      "rows": [
+       "school.buy_affiliate",
+       "health.appointment",
+       "health.cancel_appointment",
+       "health.book"
+      ],
+      "read": "Affiliate cover bought in the lapse says the Fair Haven visit is outside Yale Health; a twin keeps it and is billed as the uninsured; the visit called off and booked again at Yale Health, seen for nothing."
+     },
+     {
+      "test": "DEFECT: withdrawn on 15 February 2027",
+      "rows": [
+       "school.withdraw",
+       "health.month",
+       "health.enroll",
+       "tax.file"
+      ],
+      "read": "The cover-ended notice of 1 April names 16 May; Enroll refused on 20 May with nothing moved, a twin enrolled on 10 May; the 2026 return filed and refused again."
+     },
+     {
+      "test": "PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen",
+      "rows": [
+       "health.month",
+       "health.enroll"
+      ],
+      "read": "The notice names the window’s last day and HUSKY D; Enroll from 1 January, refused again; one jump against six-hour steps."
+     },
+     {
+      "test": "PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026",
+      "rows": [
+       "school.withdraw",
+       "health.month"
+      ],
+      "read": "An early withdrawal cancels Yale Health back to 1 August; the notice counts the 60 days from the withdrawal; one jump."
+     },
+     {
+      "test": "PLAYER JOURNEY: an F-1 student from London withdraws",
+      "rows": [
+       "school.withdraw",
+       "documents.us_status",
+       "health.month",
+       "health.enroll",
+       "documents.apply_idcard",
+       "tax.file",
+       "tax.refund"
+      ],
+      "read": "Fifteen days’ grace, Out Of Status on 20 October, the notice saying neither the marketplace nor Covered Connecticut takes her; Enroll and the DMV refused in their words; the 1040-NR’s refund once, seventy days on, through a reload."
+     },
+     {
+      "test": "DEFECT: a New Yorker whose one photo ID is her license",
+      "rows": [
+       "documents.apply_idcard",
+       "bank.open_current"
+      ],
+      "read": "The license run out says on its Papers row what replaces it (DocumentList; Report Lost isn’t pressed, so documents.report_lost takes nothing); Citi refuses without a photo ID, nothing moved; the Connecticut ID card for $28.00, refused again; the account opened, its $100.00 in transit until it lands, through a reload."
+     },
+     {
+      "test": "DEFECT: a generic filled uninsured on 8 February 2027",
+      "rows": [
+       "school.buy_affiliate",
+       "health.week"
+      ],
+      "read": "The fill of 8 February had by the clock’s health week, paid uninsured; Affiliate cover bought back to the lapse’s start reprices the fill at Yale Health’s $10.00 copay, the rest paid back once on a line of its own, through a reload."
+     },
+     {
+      "test": "DEFECT: HUSKY D dropped on Papers on 2 November 2027",
+      "rows": [
+       "health.drop",
+       "health.request_hardship"
+      ],
+      "read": "Drop The Plan pressed on Papers with a renewal’s notice waiting: the notice goes with it, the hardship refused in its words with nothing moved, a second Drop refused; ended on 1 December, nothing renewed, through a reload."
+     },
+     {
+      "test": "GUARD: a renewal’s notice waiting while its program has ended",
+      "rows": [
+       "health.request_hardship"
+      ],
+      "read": "FIXTURE (the program’s end set by hand): the hardship refused in words that say so, nothing moved, Papers drawing no button."
+     }
+    ]
+   },
+   "evidence": [
+    {
+     "file": "docs/verification/pipeline/remaining-fold.cjs",
+     "title": "a test of an item mapped to rows of its own (byTest)",
+     "kind": "static (tools)",
+     "proves": "Run in the README’s order: no item unmapped; each of the journeys’ 14 tests reaches the rows its own map names (every command it presses and checks, or what the clock does that it checks), and none an item’s other test reaches. A test cited again by a later item takes that item’s words for what it closes where the first said only “As the item says.” (the actions item)."
+    },
+    {
+     "file": "tests/remaining-09-journeys.test.ts",
+     "kind": "read",
+     "proves": "Each test read to choose its rows, never the item’s name: documents.report_lost and documents.replace_license take nothing from the run-out license (neither is pressed); health.week takes the fill the clock has in the lapse.",
+     "ran": "the 14 tests the items cite; the fifteenth, a guard for a loop once a life has ended, added in the tree since 11933d55, is cited by none of them"
+    }
+   ],
+   "fixes": [
+    {
+     "summary": "remaining-fold.cjs: an area’s byTest map in remaining-rows.json sends each test to its own rows (from 2026-10-16: until then every test of an item went to every row of it), and a repeated citation keeps the specific words for what it closes.",
+     "where": "docs/verification/pipeline/remaining-fold.cjs"
+    }
+   ],
+   "sources": [],
+   "assumptions": [],
+   "mutations": [],
+   "rowText": {
+    "school.commencement": {
+     "explanation": "SchoolWorkspace.tsx / Home.tsx. From 2026-10-16 (brief 09’s journeys) the Standing tab’s Courses And The Degree says the degree was conferred and its day, its three figures read Last Term with their floors in the past and ‘In the casting pool.’ goes (SchoolWorkspace.tsx:149, :593), Casting draws No Casting Ahead (:473) and Coursework says no course sets work now (CourseworkPane.tsx:69): until then a graduate read ‘Only the terms to come stand between you and the degree.’, ‘so far’, each floor ahead, Not Cast Yet and Nothing set yet."
+    },
+    "school.withdraw": {
+     "explanation": "The confirmation; ‘Care Billed Again’. From 2026-10-16 (brief 09’s journeys) the Standing tab says she withdrew, with what wasn’t passed and that SLATE doesn’t model a return, a course left in the middle reads Not Finished and isn’t listed with the term’s meetings, and Casting and Coursework say none comes (SchoolWorkspace.tsx:584-600, :473; CourseworkPane.tsx:69): until then such a course read In Progress with its meetings, and a year with a course failed ‘can be repeated, below’, which nothing offered."
+    },
+    "standing/term evaluation": {
+     "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term. From 2026-10-16 (brief 09’s journeys), once a dismissal ends the School, Courses And The Degree says she was dismissed, with what wasn’t passed and no way back, the three figures read Last Term, and Casting and Coursework say none comes (SchoolWorkspace.tsx:149, :593-597; CourseworkPane.tsx:69): until then the tab read This Term with each floor ahead, as for a student still at the School."
+    },
+    "health.month": {
+     "changes": "onset, renewals, premiums, keepUp lapsed, covered, report; lostAt at the look only for a plan’s end, Yale Health’s loss counted from its own hour (health.ts:902, from 2026-10-16: until then the look’s hour was kept for Yale Health’s too, and the marketplace’s 60 days ran from the look)",
+     "explanation": "Papers, notices. From 2026-10-16 (brief 09’s journeys) ‘Your Health Cover Ended’ names the marketplace’s last day, 60 days from the loss (Yale Health’s own end, or a cover canceled back counted from when it was made, lapseKnown, 45 CFR 155.420(c)(5)), on the loss’s own day its 60 days, and, where mayEnroll finds HUSKY D, Covered Connecticut or the Essential Plan for her, that it takes her at any time (health.ts:895-912): until then it said ‘You have 60 days to enroll in the marketplace’ whenever it came, a month after the loss with 33 left, and nothing of HUSKY D."
+    },
+    "health.enroll": {
+     "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:647-653), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May"
+    },
+    "school.buy_affiliate": {
+     "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1227 at 11933d55), which from 2026-10-16 prices again a prescription filled at the counter in the lapse too (HealthRecord.fills, health.ts:1923), paying back the difference on a line of its own; tellOutsideTheCover (leave.ts:177). The row cited leave.ts:1154 until 2026-10-16 and :1104 until 2026-10-13. Until 2026-10-16 (brief 09’s journeys) a fill in the lapse kept the pharmacy’s cash price ($42.26 for a generic, where Yale Health’s copay is $10.00), and an appointment booked in it was said to be outside Yale Health only by its bill.",
+     "explanation": "The quote in the confirmation; ‘Care Credited’, a prescription filled in the lapse among what it credits (from 2026-10-16); ‘Your Appointment Is Outside Yale Health’ for an appointment booked in the lapse at a practice Yale Health doesn’t pay for, with the way to be seen at its Health Center (from 2026-10-16, brief 09’s journeys)"
+    },
+    "health.week": {
+     "changes": "illness tolls, fluUntil, inHospitalUntil, bills, bookings, fills (each kept on HealthRecord.fills as long as the care log keeps care, health.ts:1769, so a cover bought back over it prices it again; from 2026-10-16: until then a fill was its paid bill alone), untreated tolls"
+    },
+    "health.appointment": {
+     "explanation": "Papers appointments, notices. From 2026-10-16 (brief 09’s journeys) an appointment booked in a lapse at a practice the cover, once back, won’t pay for (outsideTheCover, appointments.ts:94) is said when Affiliate cover is bought or the leave ends (‘Your Appointment Is Outside Yale Health’, leave.ts:177) and on its Your Doctor line (PapersWorkspace.tsx:967), with the way to be seen at Yale Health: until then only its bill said so, $187.20 for a visit at Fair Haven."
+    },
+    "documents.apply_idcard": {
+     "explanation": "toast with fee and expiry; DocumentList row, where from 2026-10-16 a license or an ID card run out says what replaces it (an ID card applied for under Your ID; for a license, that nothing in SLATE renews one, Documents.tsx:76-81): until then the row said nothing past Run Out, and a New Yorker whose license ran out mid-program met it first as a new bank’s refusal (brief 09’s journeys); document look"
+    },
+    "health.drop": {
+     "entry": "PapersWorkspace.tsx:560 at 11933d55 (Drop The Plan; :547 until 2026-10-16, when the Dropped line went in above it). Until 2026-10-13 this said :215.",
+     "reads": "marketplace/program; a plan already dropped, refused ‘It’s dropped: it ends on …’ (health.ts:2224, from 2026-10-16, brief 09’s journeys: until then a second press set the same day again and said so again)",
+     "changes": "until = next month, ended voluntary; a renewal’s notice of noncompliance waiting (HealthRecord.pending) and its decision taken with the program (health.ts:2229-2233, from 2026-10-16: until then the notice stayed, Papers said she was covered until its decision, and a hardship asked on it was said granted while nothing was renewed)",
+     "explanation": "Papers: The Marketplace’s ‘Dropped: it ends on …’ in place of Drop The Plan (PapersWorkspace.tsx:559, from 2026-10-16: until then Drop The Plan stayed drawn)"
+    }
+   },
+   "rowWords": "health.request_hardship’s are kept in inputs/added-rows.json, corrected there: its reads name the renewal refused on a program ended or ending (health.ts:1094-1098), and its line citations are 11933d55’s.",
+   "capabilities": [
+    "health-cover: health.drop played on Papers on HUSKY D with a renewal’s notice waiting, and the marketplace window from the loss, dated 2026-10-16.",
+    "doctor-and-appointments: health.book was said to be checked only for a rebooking’s date; corrected, dated, with the journeys’ visit called off and booked again at Yale Health; health.book and health.choose_clinic called verified, as the page calls them.",
+    "passport-and-id: no test was said to have a new bank take the ID card, a document reported lost, a replaced card or license; corrected, dated, with the run-out license and the ID card Citi opens on; the four called verified, as the page calls them."
+   ],
+   "totals": {
+    "countedBy": "docs/verification/audit/*.json counted by status and by verification.class, as node tools/coverage.mjs counts them for docs/GAMEPLAY-COVERAGE.md’s two tables (its --check exit 0 on each)",
+    "before": {
+     "at": "11933d55, the journeys commit, before this fold (node tools/coverage.mjs --check exit 0 there)",
+     "rows": 339,
+     "statuses": {
+      "verified": 299,
+      "partial": 1,
+      "deferred": 16,
+      "unresolved": 12,
+      "legacy": 3,
+      "informational": 8
+     },
+     "verifiedOfWhatCanBe": "299 of 312, 96%",
+     "classes": {
+      "Player Journey": {
+       "rows": 299,
+       "verified": 298,
+       "partial": 1
+      },
+      "Deferred Scope": {
+       "rows": 16,
+       "deferred": 16
+      },
+      "Retained Engine, On Labelled Fixtures": {
+       "rows": 12,
+       "unresolved": 12
+      },
+      "Older Saves Only": {
+       "rows": 3,
+       "legacy": 3
+      },
+      "Said Back, Deciding Nothing": {
+       "rows": 8,
+       "informational": 8
+      },
+      "Documentation And Static Checks": {
+       "rows": 1,
+       "verified": 1
+      }
+     }
+    },
+    "after": {
+     "at": "the tree regenerated at 09:54 on 2026-10-16 over 11933d55 with this fold (journeys-result.json as committed there; the banking and journeys areas’ resumed work in the tree), node tools/coverage.mjs and --check exit 0",
+     "rows": 339,
+     "statuses": {
+      "verified": 299,
+      "partial": 1,
+      "deferred": 16,
+      "unresolved": 12,
+      "legacy": 3,
+      "informational": 8
+     },
+     "verifiedOfWhatCanBe": "299 of 312, 96%",
+     "classes": {
+      "Player Journey": {
+       "rows": 299,
+       "verified": 298,
+       "partial": 1
+      },
+      "Deferred Scope": {
+       "rows": 16,
+       "deferred": 16
+      },
+      "Retained Engine, On Labelled Fixtures": {
+       "rows": 12,
+       "unresolved": 12
+      },
+      "Older Saves Only": {
+       "rows": 3,
+       "legacy": 3
+      },
+      "Said Back, Deciding Nothing": {
+       "rows": 8,
+       "informational": 8
+      },
+      "Documentation And Static Checks": {
+       "rows": 1,
+       "verified": 1
+      }
+     }
+    },
+    "moved": "No row changed status or class: the journeys’ tests were added to rows already verified, and to health.enroll, partial for HUSKY D kept at renewal through work, which they don’t play."
+   },
+   "tutorial": "",
+   "guide": ""
   }
  ],
  "foundOutside": [
@@ -859,6 +1277,8 @@
   "node tools/devmap.mjs --check and node tools/traceability.mjs exit 1: docs/DEVMAP.md and docs/TRACEABILITY.md list the test files that issue each command, and the banking area’s, the journeys area’s and this area’s new tests are in neither (--write regenerates them). Generated files of the whole tree; left for the end.",
   "The banking area gives the eight bank rows “Implemented, Verification Incomplete” (banking-result.json, banking.2.*) where this area gives them “Decision Required”: both read them as implemented on fixtures and out of every current player’s reach. This area’s reason: nothing in scope can verify them without restoring the travel the owner removed, so only the owner’s decision moves them.",
   "docs/capabilities.json’s limits for look-after-yourself and tax-liens-and-waivers still said rows were partial or unresolved that have been verified since 2026-10-13 and 2026-10-15; the sentences this area’s rows and tests touched are dated and corrected, and what each limits says isn’t checked is otherwise as it stood (the coverage page’s rows are the current record).",
+  "The journeys fold (coverage09.5): docs/capabilities.json’s health-cover limits still say docs/GAMEPLAY-COVERAGE.md calls health.dental, health.apply_aid and health.pay_bill partial, which it calls verified; no journeys fix touches them, so the sentence was left as it stood (health.enroll, which it names with them, is partial).",
+  "The journeys fold: standing/term evaluation’s explanation was written by the school area’s item school.d-coursework-shown and again by this fold, which keeps its words and adds the dismissal’s page (the fold lists it as twice).",
   "The fold lists, as at 7e531122, two health-billing citations of describes rather than tests (tests/scope-health.test.ts ‘health.choose_clinic, New Haven’s two practices’ and ‘health.enroll and health.appointment: …’) and health-eligibility’s health.dental.why as no field; the last pass’s, left out as before."
  ]
 }

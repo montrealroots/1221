@@ -144,14 +144,25 @@ for (const { resultFile, key } of files) {
     // Evidence, to the rows it's for.
     const rows = ids.has(item.id) ? [item.id, ...(map.items?.[`${key}/${item.id}`]?.rows ?? []).filter((r) => r !== item.id)] : map.items?.[`${key}/${item.id}`]?.rows;
     if (!rows) { if ((item.evidence ?? []).length) said.unmapped.push(`${key}/${item.id} (${item.evidence.length} tests)`); continue; }
-    for (const row of rows) if (!ids.has(row)) said.notARow.push(`remaining-rows.json: ${key}/${item.id} maps to ${row}`);
+    // A test of the item's mapped to rows of its own (from 2026-10-16, brief 09): an item's `tests`, or its area's in
+    // remaining-rows.json's `byTest`, each a title's start and its rows, where an area's tests reach different rows (the
+    // journeys area's, each journey several commands, cited by several items). A test none names goes to the item's rows.
+    // Until then every test of an item went to every row of it.
+    const byTest = map.items?.[`${key}/${item.id}`]?.tests ?? map.byTest?.[key] ?? [];
+    for (const row of [...rows, ...byTest.flatMap((t) => t.rows)]) if (!ids.has(row)) said.notARow.push(`remaining-rows.json: ${key}/${item.id} maps to ${row}`);
     for (const e of item.evidence ?? []) {
       const file = String(e.file ?? '').replace(/\\/g, '/');
-      if (!/^tests\/[\w.-]+\.test\.ts$/.test(file) || !landsAsNamed(file, String(e.title ?? ''))) { if (rows.length) said.notATest.push(`${key}/${item.id}: ${file} ‘${String(e.title).slice(0, 90)}’`); continue; }
-      for (const row of rows.filter((r) => ids.has(r))) {
+      const own = byTest.find((t) => plain(String(e.title ?? '').split(' > ').pop()).startsWith(plain(t.title)));
+      const these = own ? own.rows : rows;
+      if (!/^tests\/[\w.-]+\.test\.ts$/.test(file) || !landsAsNamed(file, String(e.title ?? ''))) { if (these.length) said.notATest.push(`${key}/${item.id}: ${file} ‘${String(e.title).slice(0, 90)}’`); continue; }
+      for (const row of these.filter((r) => ids.has(r))) {
         const batch = (byFile[`${key}|${file}`] ??= { key: `remaining-${key}`, testFile: file, rows: {} });
         const rec = (batch.rows[row] ??= { id: row, testsAdded: [], gapsClosed: [], gapsOpen: undefined, defects: [] });
-        if (rec.testsAdded.some((t) => t.title === e.title)) continue;
+        // A test cited again by a later item: what it closes is the later item's where the first said only “As the item
+        // says.” (from 2026-10-16: the journeys area's `actions` item cites every journey so, ahead of the items whose
+        // `proves` says what each test shows, and until then the first citation's words were kept).
+        const had = rec.testsAdded.find((t) => t.title === e.title);
+        if (had) { if (/^(As the item says\.?)?$/.test(String(had.closes ?? '').trim()) && e.proves) had.closes = e.proves; continue; }
         // A test the row already cites, in its review or an earlier round's record, isn't added again by brief 09's results
         // (from 2026-10-16): the banking area's readings of the eight bank rows cite the rows' own tests beside the one they
         // added. The last pass's records are folded as they were.

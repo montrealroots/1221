@@ -9,7 +9,7 @@
       "changes": "pays the fee; a citizen’s card in force at once and REAL ID; somebody not a citizen’s Limited Term card waiting on SAVE’s ten federal workdays, to the end of their lawful presence, non-verified (Not For Federal Identification, from 2026-10-16: until then marked REAL ID)",
       "downstream": "photoIdOf, read by an account at a new bank (bank.open_current, bankmoves.ts) and by bank.switch (lending.ts); idCardRefusal blocks a second one",
       "persistent": "person.documents",
-      "explanation": "toast with fee and expiry; DocumentList row; document look",
+      "explanation": "toast with fee and expiry; DocumentList row, where from 2026-10-16 a license or an ID card run out says what replaces it (an ID card applied for under Your ID; for a license, that nothing in SLATE renews one, Documents.tsx:76-81): until then the row said nothing past Run Out, and a New Yorker whose license ran out mid-program met it first as a new bank’s refusal (brief 09’s journeys); document look",
       "tests": "tests/evidence-g15-papers.test.ts ‘PLAYER JOURNEY: every other photo ID lost, Citi turns her away; $28 leaves the bank for a card in force at once…, and Citi then opens her account’ (bank.open_current takes the card), ‘PLAYER JOURNEY: a British student’s Limited Term card, $28, waits on SAVE’s ten business days…’, the refusals in their words (a second card, a Connecticut license, out of status, a bank short of $28) and IdPanel’s button pressed; tests/defects3-50-70.test.ts ‘…limited-term card applied for at noon on Thursday 5 November 2026 comes ten federal workdays on, Friday the 20th, Veterans Day not among them’ and its 9 PM twin; tests/papers-transitions.test.ts ‘waits for the Social Security number, then for SAVE’s ten business days…’; tests/defects-g24-1.test.ts ‘is issued on OPT in force, and runs to OPT’s end, not the program’s’; tests/defects-r7-1.test.ts and tests/defects-r3d-1.test.ts (the Social Security refusal’s three wordings); tests/guide-examples-papers.test.ts PLAYS['documents.passport-id']. Until 2026-10-13 this said no test had a bank take the ID card",
       "status": "verified",
       "issue": "A CT-born holder of a CT license is refused ('It serves as your ID'), which is correct.",
@@ -107,7 +107,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g15-papers.test.ts",
@@ -178,6 +178,20 @@
             "kind": "command",
             "closes": "reordered: the card asked for with the passport in force, the passport lost after, and a twin without the card refused by Wells Fargo",
             "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+            "kind": "render",
+            "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -1999,7 +2013,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 8,
+        "rounds": 9,
         "tests": [
           {
             "file": "remaining-health-eligibility.test.ts",
@@ -2091,6 +2105,20 @@
             "kind": "command",
             "closes": "the LT11 reached from the due date",
             "round": "remaining-tax"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -2830,8 +2858,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 3,
+        "on": "2026-10-16",
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g16-papers.test.ts",
@@ -2874,6 +2902,13 @@
             "title": "PLAYER JOURNEY: the plan she lost out of status never began, and the 1 November notice says it won’t, as Covered Connecticut’s does, not that it has ended; with Yale Health still covering her that morning, her cover isn’t counted lost",
             "kind": "command",
             "closes": "Nothing open. It is a new defect: the notice’s words for a plan that never began. It FAILS on the tree."
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -4335,6 +4370,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {

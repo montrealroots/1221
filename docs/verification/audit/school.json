@@ -5095,7 +5095,7 @@
       "changes": "standing graduated (or withheld; or awaitingDegree with ‘The Diploma Is Held’ / ‘Not At Commencement’); through setStanding (school.ts:1813): endedAt, the last runs’ credits (keepCredit), every pending school.* item called off, the US status looked at again. Until 2026-10-13 this listed ‘filmed’, which went on 2026-10-10",
       "downstream": "Yale Health to 1 August (yaleUntil, health.ts:226-234); copyAt (playreading.ts:62: no library copy after school). Until 2026-10-13 this put the health plan’s end at health.ts:187",
       "persistent": "school",
-      "explanation": "SchoolWorkspace.tsx / Home.tsx",
+      "explanation": "SchoolWorkspace.tsx / Home.tsx. From 2026-10-16 (brief 09’s journeys) the Standing tab’s Courses And The Degree says the degree was conferred and its day, its three figures read Last Term with their floors in the past and ‘In the casting pool.’ goes (SchoolWorkspace.tsx:149, :593), Casting draws No Casting Ahead (:473) and Coursework says no course sets work now (CourseworkPane.tsx:69): until then a graduate read ‘Only the terms to come stand between you and the degree.’, ‘so far’, each floor ahead, Not Cast Yet and Nothing set yet.",
       "tests": "tests/evidence-g21-school.test.ts ‘school.commencement’: ‘graduates a student with nothing outstanding at Commencement: the degree, its end, the calendar let go, the last run’s credit, Yale Health to 31 July, no library copy after’ (Yale Health on a September graduation, the month ≥ 8 branch; a May graduate’s only on fixtures), ‘withholds the degree at Commencement from a student whose last-term Incomplete ran out its month before it’; school.test.ts ‘holds no Commencement for a student dismissed at the last evaluation’",
       "status": "verified",
       "issue": "Until 2026-10-10 school.filmed was set at the degree and read nowhere; it went that day (school.ts:3024).",
@@ -5170,7 +5170,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g21-school.test.ts",
@@ -5197,6 +5197,13 @@
             "kind": "command",
             "closes": "g26-l3: both attempts of Movement Invention III kept against program term 4; withheld once, no Commencement, nothing left on the calendar; twins equal.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)",
+            "kind": "render",
+            "closes": "At school on 1 October 2026 the page keeps “so far. Only the terms to come …”, “This Term”, “is the floor”, “In the casting pool.”; graduated at Commencement, Monday 21 May 2029 at ten (the Monday before Memorial Day), before and after a reload: “N of N courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.”, Last Term with “was the floor”, No Casting Ahead, “Nothing is set: your degree is conferred, and no course sets work now.”, none of the seven stale phrases.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -7973,7 +7980,7 @@
       "changes": "standing, castable, history",
       "downstream": "cabaret/summer/rep eligibility, dismissal, commencement",
       "persistent": "school",
-      "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term",
+      "explanation": "SchoolWorkspace.tsx, the Evaluations panel on the Standing tab (from 2026-10-16 with each review’s coursework count), and Your Standing’s Coursework This Term. From 2026-10-16 (brief 09’s journeys), once a dismissal ends the School, Courses And The Degree says she was dismissed, with what wasn’t passed and no way back, the three figures read Last Term, and Casting and Coursework say none comes (SchoolWorkspace.tsx:149, :593-597; CourseworkPane.tsx:69): until then the tab read This Term with each floor ahead, as for a student still at the School.",
       "tests": "tests/evidence3-school.test.ts ‘standing/term evaluation’ (the two PLAYER JOURNEYs above); tests/evidence2-b08.test.ts ‘standing/term evaluation’; tests/evidence-g24-school.test.ts (the six cited); tools/acceptance-ui.mjs:707 (outside the gate). Until 2026-10-13 this cited school.test.ts standing, casting.test.ts’s run off, school-fixes.test.ts and term-growth.test.ts, which set bands, runs and growth by hand.",
       "status": "verified",
       "issue": "Until 2026-10-13 this said coursework quality was absent and the Carlotta excluded; evaluate reads both (school.ts:2851-2860, :2842), through the clock in evidence-g24. Until 2026-10-14 no test worked the ‘behind’ verdict from termGrowth’s room-relative pace (school.ts:2812-2827); evidence2-b08 supported it with raw class growth over twice the player’s, which the rule doesn’t read. evidence3-school works it from the rule on two played falls where raw points and the pace disagree, each way.",
@@ -8052,7 +8059,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 4,
+        "rounds": 5,
         "tests": [
           {
             "file": "evidence-g24-school.test.ts",
@@ -8149,6 +8156,13 @@
             "kind": "render",
             "closes": "The missed revision is said.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: a dismissal > PLAYER JOURNEY: a student who never prepares her coursework (jd-1, the dials tended and no work done) is dismissed at Fall Term 2027’s evaluation, concern then warning before it; the page says so, with no way back, no casting and no work, through a reload",
+            "kind": "render",
+            "closes": "jd-1, no work done: concern, warning, dismissed on 10 December 2027; “You were dismissed… Once dismissed, a student isn’t eligible to come back.”, no casting, no work, none of the stale phrases.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9020,7 +9034,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9072,6 +9086,13 @@
             "kind": "fixture",
             "closes": "Where the branch decides: on a three-term leave it counts 8 and offers the year’s end; the other path counts 10 and doesn’t.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9451,6 +9472,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -9513,7 +9556,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 2,
+        "rounds": 3,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9533,6 +9576,13 @@
             "kind": "command",
             "closes": "$49,944.30 owed (two terms past six at $24,784.65, worked in scope-school from the Bulletin’s figures, and the first’s late fees to their $375 cap) named in the notice; paid and registered, the next class counts.",
             "round": "remaining-school"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9580,10 +9630,10 @@
       "kind": "command",
       "entry": "The leave panel’s Buy It (StudyPlanPanels.tsx:87)",
       "reads": "a leave on, no Affiliate cover, by affiliateBy; affiliateQuote; from 2026-10-16 the primary current account and the easy-access savings at its bank (fromBankToYale)",
-      "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1154). Until 2026-10-13 this cited leave.ts:1104.",
+      "changes": "pays; leave.affiliate; the lapse closed (school.uncovered); repriceCare (leave.ts:1227 at 11933d55), which from 2026-10-16 prices again a prescription filled at the counter in the lapse too (HealthRecord.fills, health.ts:1923), paying back the difference on a line of its own; tellOutsideTheCover (leave.ts:177). The row cited leave.ts:1154 until 2026-10-16 and :1104 until 2026-10-13. Until 2026-10-16 (brief 09’s journeys) a fill in the lapse kept the pharmacy’s cash price ($42.26 for a generic, where Yale Health’s copay is $10.00), and an appointment booked in it was said to be outside Yale Health only by its bill.",
       "downstream": "coverOn back to the day student cover ended; care had in the lapse billed again as Yale Health’s",
       "persistent": "school.leave.affiliate, ledger",
-      "explanation": "The quote in the confirmation; ‘Care Credited’",
+      "explanation": "The quote in the confirmation; ‘Care Credited’, a prescription filled in the lapse among what it credits (from 2026-10-16); ‘Your Appointment Is Outside Yale Health’ for an appointment booked in the lapse at a practice Yale Health doesn’t pay for, with the way to be seen at its Health Center (from 2026-10-16, brief 09’s journeys)",
       "tests": "tests/evidence-g25-school.test.ts ‘PLAYER JOURNEY: quoted at the leave’s two terms less the spring’s fee, $8,950; refused while the bank can’t cover it, the lapse and the bill as they were; bought on Buy It once it can, the cover back to the day student cover ended and the urgent care had in the lapse billed as Yale Health’s, $0; kept through a reload, and not bought twice’ (Buy It pressed, the lapse closed and its bill repriced to $0, “You have it.” after a reload), ‘past its deadline it’s refused in its words, with the money there...’, ‘on a medical leave the School pays for it...’; tests/leave.test.ts ‘PLAYER JOURNEY: asked on the third day of spring classes...’; tests/defects-g8-2.test.ts ‘shows and charges the leave’s own three terms, the same figure’ (money put in by hand)",
       "status": "verified",
       "issue": "Through the command, Affiliate cover is bought for both terms less the fee paid, Yale Health covers back to the lapse, and a bill had in it is brought down.",
@@ -9634,7 +9684,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "evidence-g25-school.test.ts",
@@ -9674,6 +9724,27 @@
             "kind": "render",
             "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+            "kind": "render",
+            "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
+            "kind": "command",
+            "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -9719,7 +9790,7 @@
       "changes": "standing withdrawn (setStanding, school.ts:1813); the place given up; a leave ended with it (:1824); a Summer Cabaret week under way paid for its days worked (from 2026-10-13, :1832-1840); an early withdrawal cancels Yale Health to the insurance term’s start and reprices the care had since (school.ts:3807-3811), refunding the premium paid or owed",
       "downstream": "TERM_KIND called off; coverOn; care in a canceled term billed again; the F-1 grace and OPT (permission.ts)",
       "persistent": "school.standing, withdrewEarly",
-      "explanation": "The confirmation; ‘Care Billed Again’",
+      "explanation": "The confirmation; ‘Care Billed Again’. From 2026-10-16 (brief 09’s journeys) the Standing tab says she withdrew, with what wasn’t passed and that SLATE doesn’t model a return, a course left in the middle reads Not Finished and isn’t listed with the term’s meetings, and Casting and Coursework say none comes (SchoolWorkspace.tsx:584-600, :473; CourseworkPane.tsx:69): until then such a course read In Progress with its meetings, and a year with a course failed ‘can be repeated, below’, which nothing offered.",
       "tests": "tests/leave.test.ts ‘ends the leave with the place’, ‘cancels Yale Health back to the insurance term’s start...’; tests/student-experience.test.ts ‘PLAYER JOURNEY: a withdrawal by the fifteenth day of classes cancels Yale Health back to the term...’, ‘a withdrawal later in the term keeps Yale Health thirty days, with nothing refunded’; tests/defects-g8-4.test.ts ‘PLAYER JOURNEY: in a fall it goes back to 1 August...’; tests/journey-class-left-behind.test.ts (the New Haven student, born in New York)",
       "status": "verified",
       "issue": "Through the command, withdrawal ends the place and a leave with it, calls off the next term, and by the fifteenth day of classes cancels Yale Health back to the term’s start, bills the care had in it again and refunds the premium; later, cover runs thirty days.",
@@ -9807,7 +9878,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 3,
+        "rounds": 4,
         "tests": [
           {
             "file": "remaining-health-billing.test.ts",
@@ -9850,6 +9921,34 @@
             "kind": "command",
             "closes": "“Care Billed Again” once.",
             "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.known-graduated-school-page: the School page once the School has ended > PLAYER JOURNEY: a withdrawal in the first fall says how it ended, offers no repeat, no casting and no work, and keeps saying so through a reload; the course record stays as it was",
+            "kind": "render",
+            "closes": "Withdraw refused unconfirmed and again after; the record unchanged; “You withdrew. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.”; the fall’s courses Not Finished, not In Progress, not listed with their meetings; no casting, no work.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump",
+            "kind": "command",
+            "closes": "A cover canceled back to 1 August by a withdrawal in orientation’s week: the notice of 1 September counts from the withdrawal, “until October 24, 2026, 60 days from when it was canceled back”, in one jump as in steps; Enroll open on 22 October.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -10925,7 +11024,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 4,
+        "rounds": 5,
         "tests": [
           {
             "file": "evidence-g26-school.test.ts",
@@ -10971,6 +11070,20 @@
             "kind": "render",
             "closes": "Updated 2026-10-16 to the bank’s new words for an emptied bank.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+            "kind": "command",
+            "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [

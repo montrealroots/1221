@@ -3507,7 +3507,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "remaining-banking.test.ts",
@@ -3571,6 +3571,13 @@
             "kind": "fixture",
             "closes": "Integer minor units and exact emptying in two currencies.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -7571,7 +7578,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 5,
+        "rounds": 6,
         "tests": [
           {
             "file": "evidence-g14-money.test.ts",
@@ -7660,6 +7667,13 @@
             "kind": "command",
             "closes": "Review days and the opening deposit as the bank publishes them.",
             "round": "remaining-banking"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+            "kind": "render",
+            "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [

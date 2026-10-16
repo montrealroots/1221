@@ -2380,8 +2380,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -2412,6 +2412,13 @@
             "title": "LIFE FIXTURE (Vancouver, where a prescription runs out after two years): a renewal called off and booked again is kept and the medicine filled again; a twin who left it owed has it booked again by the next week’s fill, kept, and filled again too",
             "kind": "fixture",
             "closes": "renewPrescriptions downstream checked where it is read: the booked renewal kept on the clock renews prescribedAt and the next health week fills; the twin is Out Of Medicine on Papers"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+            "kind": "render",
+            "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -2530,6 +2537,28 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+            "kind": "render",
+            "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
@@ -3160,12 +3189,12 @@
     {
       "id": "health.drop",
       "kind": "command",
-      "entry": "PapersWorkspace.tsx:547 (Drop The Plan). Until 2026-10-13 this said :215.",
-      "reads": "marketplace/program",
-      "changes": "until = next month",
+      "entry": "PapersWorkspace.tsx:560 at 11933d55 (Drop The Plan; :547 until 2026-10-16, when the Dropped line went in above it). Until 2026-10-13 this said :215.",
+      "reads": "marketplace/program; a plan already dropped, refused ‘It’s dropped: it ends on …’ (health.ts:2224, from 2026-10-16, brief 09’s journeys: until then a second press set the same day again and said so again)",
+      "changes": "until = next month, ended voluntary; a renewal’s notice of noncompliance waiting (HealthRecord.pending) and its decision taken with the program (health.ts:2229-2233, from 2026-10-16: until then the notice stayed, Papers said she was covered until its decision, and a hardship asked on it was said granted while nothing was renewed)",
       "downstream": "coverOn -> shareOf, healthMonth lostAt/uncovered",
       "persistent": "cover",
-      "explanation": "Papers",
+      "explanation": "Papers: The Marketplace’s ‘Dropped: it ends on …’ in place of Drop The Plan (PapersWorkspace.tsx:559, from 2026-10-16: until then Drop The Plan stayed drawn)",
       "tests": "commands-kept.test.ts ‘drops a plan of one’s own at the month’s end’ (coverOn through the month’s end; on a New York life no new one lives, its marketplace plan put in by hand); tests/defects-g8-5.test.ts ‘PLAYER JOURNEY: dropped in January, nothing covers February, and the marketplace waits for open enrollment’ (a New Haven life, its marketplace plan put in: through the clock, no cover in February, and healthMonth opens no special enrollment, lostAt unset)",
       "status": "verified",
       "issue": "",
@@ -3206,13 +3235,35 @@
       "verification": {
         "class": "journey",
         "label": "Player Journey"
+      },
+      "after": {
+        "on": "2026-10-16",
+        "rounds": 1,
+        "tests": [
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+            "kind": "command",
+            "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+            "round": "remaining-09-journeys"
+          }
+        ],
+        "gapsClosed": [],
+        "gapsOpen": [],
+        "defects": [],
+        "mutations": {
+          "run": 0,
+          "killed": 0,
+          "survived": []
+        },
+        "verdict": "verified"
       }
     },
     {
       "id": "health.enroll",
       "kind": "command",
       "entry": "PapersWorkspace.tsx:548 (Enroll). Until 2026-10-13 this said :216.",
-      "reads": "mayEnroll, programFor",
+      "reads": "mayEnroll, programFor; the marketplace’s 60 days from the loss (marketplaceOpen: Yale Health’s end at its hour, or a lapse reaching back from when it was made, lapseKnown, health.ts:647-653), from 2026-10-16: until then the month’s look’s hour was kept as the loss for Yale Health’s too, so a student withdrawn on 15 February 2027, uncovered from 17 March, was sold a plan until 31 May, not 16 May",
       "changes": "program or marketplace from next month",
       "downstream": "coverOn/planOf -> every share, on the clock's bill (careFor), with the plan's own part on the bill (covered.planPaid, Papers' Plan Paid, from 2026-10-15); healthMonth premium",
       "persistent": "cover",
@@ -3281,7 +3332,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 12,
+        "rounds": 13,
         "tests": [
           {
             "file": "evidence-g03-life.test.ts",
@@ -3524,6 +3575,27 @@
             "kind": "fixture",
             "closes": "$700 of benefit and $20 of interest in June renew her (\"by its income, $580.00 or more\"); $500 and $20 bring the notice, covered.",
             "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -4032,9 +4104,9 @@
     {
       "id": "health.request_hardship",
       "kind": "command",
-      "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:582), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
-      "reads": "hardshipRefusal (health.ts:1045): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, and a stay in hospital (the care log’s stay) in a month it read",
-      "changes": "the notice answered and cleared by grantPending (health.ts:1024): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2115)",
+      "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:585 at 11933d55; :582 until then), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
+      "reads": "hardshipRefusal (health.ts:1086 at 11933d55; :1045 until then): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, for a renewal a program neither ended nor ending (:1094-1098, from 2026-10-16, brief 09’s journeys: until then a renewal’s hardship was taken on HUSKY D dropped, said granted, and nothing renewed; health.drop takes the notice since, so this is a guard for an end that comes some other way), and a stay in hospital (the care log’s stay) in a month it read",
+      "changes": "the notice answered and cleared by grantPending (health.ts:1065 at 11933d55; :1024 until then): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2183; :2115 until then)",
       "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
       "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
       "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",
@@ -4077,7 +4149,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 1,
+        "rounds": 2,
         "tests": [
           {
             "file": "remaining-09-hardship.test.ts",
@@ -4092,6 +4164,20 @@
             "kind": "render",
             "closes": "No stay: Papers says “No month it assessed, May to October 2027, had a stay in hospital, the hardship SLATE keeps.” and draws no button; the command is refused in those words with the save as it was.",
             "round": "remaining-09-coverage"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+            "kind": "command",
+            "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > GUARD: a renewal’s notice waiting while its program has ended some other way, which no played life reaches (TEST SETUP: HUSKY D’s end set on the record by hand, the notice left), refuses the hardship in words that say so, and nothing is renewed or moved",
+            "kind": "fixture",
+            "closes": "A renewal’s notice with HUSKY D’s end on the record and the notice left (TEST SETUP): “HUSKY D has ended, so there’s no renewal left to answer.”, from the command and on Papers, no button, nothing moved.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [],
@@ -5689,7 +5775,7 @@
       "changes": "visit billed or missed + owedVisit",
       "downstream": "careFor’s bill at the practice booked (with the plan's part, from 2026-10-15); renewPrescriptions -> fillMedicine, read where a place's rule ends a prescription (British Columbia's two years, RX.validYears); Connecticut sets none (CGS 20-616(b), read 2026-10-15), so in New Haven a renewal changes no fill, rightly; reviewed -> the next review's due date; mayRefer -> a specialist the referral’s wait away. A missed visit sets owedVisit, which the health week books with the next visit it draws. An appointment at a practice for its members that no longer sees them (Yale Health after its cover ends) isn't kept and is owed. Until 2026-10-15 this said in New Haven the renewal is read by nothing without the rule read.",
       "persistent": "bills, prescribedAt",
-      "explanation": "Papers appointments, notices",
+      "explanation": "Papers appointments, notices. From 2026-10-16 (brief 09’s journeys) an appointment booked in a lapse at a practice the cover, once back, won’t pay for (outsideTheCover, appointments.ts:94) is said when Affiliate cover is bought or the leave ends (‘Your Appointment Is Outside Yale Health’, leave.ts:177) and on its Your Doctor line (PapersWorkspace.tsx:967), with the way to be seen at Yale Health: until then only its bill said so, $187.20 for a visit at Fair Haven.",
       "tests": "tests/scope-health.test.ts (the prescription past its first year; the insured visit's bill, payment and ledger; the practice booked; not kept at Yale Health after its cover); tests/evidence2-b02.test.ts (referral through the week; a year of fills; the owed visit); tests/evidence-g05-life.test.ts (kept laid up, missed in hospital); tests/evidence3-lifepapers.test.ts (owed and booked on a family-made life)",
       "status": "verified",
       "issue": "Settled 2026-10-15: Connecticut's rule was read (research-health-visits.json prescriptionValidity): no expiry for a prescription that isn't controlled. docs/UNBITTEN.md's entry 'A doctor’s visit and a condition’s review' said until the recheck of that day that the rule was unresearched and offered RX.validYears['us-ct'] as a candidate; it says now, in the past tense, that the rule was read and the candidate fell.",
@@ -5774,7 +5860,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -5869,6 +5955,13 @@
             "kind": "command",
             "closes": "HUSKY D's renewal and its notices (the trace's Renewal → Notice).",
             "round": "remaining-health-billing"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+            "kind": "render",
+            "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -6187,10 +6280,10 @@
       "kind": "scheduled",
       "entry": "armHealth",
       "reads": "income, cover, chronic, dental",
-      "changes": "onset, renewals, premiums, keepUp lapsed, covered, report",
+      "changes": "onset, renewals, premiums, keepUp lapsed, covered, report; lostAt at the look only for a plan’s end, Yale Health’s loss counted from its own hour (health.ts:902, from 2026-10-16: until then the look’s hour was kept for Yale Health’s too, and the marketplace’s 60 days ran from the look)",
       "downstream": "coverOn shares, keptUp tolls",
       "persistent": "health record, ledger",
-      "explanation": "Papers, notices",
+      "explanation": "Papers, notices. From 2026-10-16 (brief 09’s journeys) ‘Your Health Cover Ended’ names the marketplace’s last day, 60 days from the loss (Yale Health’s own end, or a cover canceled back counted from when it was made, lapseKnown, 45 CFR 155.420(c)(5)), on the loss’s own day its 60 days, and, where mayEnroll finds HUSKY D, Covered Connecticut or the Essential Plan for her, that it takes her at any time (health.ts:895-912): until then it said ‘You have 60 days to enroll in the marketplace’ whenever it came, a month after the loss with 33 left, and nothing of HUSKY D.",
       "tests": "tests/evidence-g05-life.test.ts health.month ‘PLAYER JOURNEY: diagnoses high blood pressure on the 1st…’, ‘PLAYER JOURNEY: uninsured, a drained twin’s month of care for depression lapses…’, ‘PLAYER JOURNEY: three unpaid sessions’ $720 of medical debt is reported…’, ‘PLAYER JOURNEY: HUSKY D ends at its renewal on 1 September 2027 for no work…’ (since 2026-10-16 the renewal sends a notice of noncompliance and HUSKY D ends on 31 October 2027, said on 6 October; the work a salary posting put in by hand, whose $600 passes the income test too, so the 80 hours aren’t what it holds); tests/evidence-g03-life.test.ts health.enroll (the marketplace’s $706 charged on the 1st); guide-examples-papers.test.ts papers.health-cover; tests/defects-g8-5.test.ts; tests/remaining-health-eligibility.test.ts (the notice, the thirty days, the ending said ten days ahead, one jump against day by day); checking less: carried.test.ts, safetynet.test.ts, medicaluis.",
       "status": "verified",
       "issue": "Closed 2026-10-13: onsetMonth is played end to end through the clock’s month (tests/evidence-g05-life.test.ts ‘diagnoses high blood pressure on the 1st…’, tests/evidence-g07-life.test.ts chronic, tests/evidence2-b03.test.ts body), its draw forced or its seed chosen.",
@@ -6254,7 +6347,7 @@
       },
       "after": {
         "on": "2026-10-16",
-        "rounds": 6,
+        "rounds": 7,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -6349,6 +6442,34 @@
             "kind": "fixture",
             "closes": "A March 2027 renewal reads September 2026 to February 2027; August's work, outside, doesn't count.",
             "round": "remaining-health-eligibility"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+            "kind": "command",
+            "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+            "kind": "command",
+            "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+            "kind": "command",
+            "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+            "round": "remaining-09-journeys"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump",
+            "kind": "command",
+            "closes": "A cover canceled back to 1 August by a withdrawal in orientation’s week: the notice of 1 September counts from the withdrawal, “until October 24, 2026, 60 days from when it was canceled back”, in one jump as in steps; Enroll open on 22 October.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [
@@ -6567,7 +6688,7 @@
       "kind": "scheduled",
       "entry": "armHealth",
       "reads": "catching (sleepDebt, stress), flu weeks, chronic, appointments",
-      "changes": "illness tolls, fluUntil, inHospitalUntil, bills, bookings, fills, untreated tolls",
+      "changes": "illness tolls, fluUntil, inHospitalUntil, bills, bookings, fills (each kept on HealthRecord.fills as long as the care log keeps care, health.ts:1769, so a cover bought back over it prices it again; from 2026-10-16: until then a fill was its paid bill alone), untreated tolls",
       "downstream": "school.ts call_in_sick (fluUntil), present(), coursework conditions, mortality frailty",
       "persistent": "dials, record",
       "explanation": "notices; wellbeing.tsx condition look",
@@ -6648,8 +6769,8 @@
         ]
       },
       "after": {
-        "on": "2026-10-13",
-        "rounds": 1,
+        "on": "2026-10-16",
+        "rounds": 2,
         "tests": [
           {
             "file": "evidence-g05-life.test.ts",
@@ -6674,6 +6795,13 @@
             "title": "health.week > the week’s flu draw is 4.5 times likelier at ten hours’ sleep debt and full stress (2.5 × 1.8), as the clock draws it",
             "kind": "command",
             "closes": "catching() changing a draw the week makes: with the flu draw forced to 4.4 and 4.6 times the rested chance, the worn body (12 hours' debt, stress 100) catches it at 4.4 and not 4.6; the rested at 0.9 and not 1.1"
+          },
+          {
+            "file": "remaining-09-journeys.test.ts",
+            "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
+            "kind": "command",
+            "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+            "round": "remaining-09-journeys"
           }
         ],
         "gapsClosed": [

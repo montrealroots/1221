@@ -36,9 +36,9 @@
    "added": "2026-10-16",
    "row": {
     "kind": "command",
-    "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:582), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
-    "reads": "hardshipRefusal (health.ts:1045): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, and a stay in hospital (the care log’s stay) in a month it read",
-    "changes": "the notice answered and cleared by grantPending (health.ts:1024): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2115)",
+    "entry": "Papers, Health Cover: Request A Hardship Exception (PapersWorkspace.tsx:585 at 11933d55; :582 until then), on the line of a notice of noncompliance, drawn only where hardshipRefusal finds nothing (from 2026-10-16)",
+    "reads": "hardshipRefusal (health.ts:1086 at 11933d55; :1045 until then): a notice waiting on an answer (HealthRecord.pending), its thirty days not ended, for a renewal a program neither ended nor ending (:1094-1098, from 2026-10-16, brief 09’s journeys: until then a renewal’s hardship was taken on HUSKY D dropped, said granted, and nothing renewed; health.drop takes the notice since, so this is a guard for an end that comes some other way), and a stay in hospital (the care log’s stay) in a month it read",
+    "changes": "the notice answered and cleared by grantPending (health.ts:1065 at 11933d55; :1024 until then): an application approved, HUSKY D from the first of the month it would have begun, a marketplace plan bought meanwhile ending as it begins; a renewal renewed as it would have been at its date (applyRenewal), with no gap (the command at health.ts:2183; :2115 until then)",
     "downstream": "coverOn HUSKY D from its first, every share and bill after it; armHealth’s premiums, none for HUSKY D and the marketplace’s never taken; the decision of the notice’s day finds nothing waiting and passes it by; Papers draws no hardship or Apply after",
     "persistent": "HealthRecord.program, marketplace.until, pending cleared; Public Cover Approved",
     "explanation": "The notice’s line on Papers (‘A stay in hospital in a month it assessed counts if you ask for it.’, or why not); Public Cover Approved",

@@ -1,5 +1,5 @@
 {
- "about": "The audit rows each item of docs/verification/remaining/<key>-result.json is evidence for, read on 2026-10-16 by the coverage area (remaining-fold.cjs reads it). An item whose id is an audit row's maps to that row without an entry here. rows [] means its tests are evidence for no single row's claim, with why. `fragments`: a row-text value an area wrote as a fragment of the field, with what in the field it replaces.",
+ "about": "The audit rows each item of docs/verification/remaining/<key>-result.json is evidence for, read on 2026-10-16 by the coverage area (remaining-fold.cjs reads it). An item whose id is an audit row's maps to that row without an entry here. rows [] means its tests are evidence for no single row's claim, with why. `fragments`: a row-text value an area wrote as a fragment of the field, with what in the field it replaces. `byTest` (from 2026-10-16, brief 09): an area’s tests by a title’s start, each with the rows it reaches, read with what each was read to reach, for an area whose items share tests that reach different rows.",
  "items": {
   "banking/banking.1": {
    "rows": [
@@ -348,6 +348,10 @@
    "rows": [],
    "why": "The coverage area’s own item, the pipeline’s: no test of it is a row’s evidence."
   },
+  "09-coverage/coverage09.5-journeys-fold": {
+   "rows": [],
+   "why": "The coverage area’s fold of the journeys’ result: the pipeline and its reading of the journeys’ tests, which reach their rows through the 09-journeys entries; its row text is folded, and no test of it is a row’s evidence."
+  },
   "09-banking/banking.1.pro-rata": {
    "rows": [
     "bank.close_current",
@@ -523,6 +527,74 @@
   "09-genres/genres.8-docs": {
    "rows": [],
    "why": "The genres area’s work on the genre briefs’ content (brief 09, section 3): what each brief asks, read and measured; no audit row’s claim is the briefs’ own content (the brief rows claim the commands), so its tests are no row’s new evidence."
+  },
+  "09-journeys/journeys.known-graduated-school-page": {
+   "rows": [],
+   "why": "The School page once the School has ended, played to the degree, a withdrawal and a dismissal: each test to the row whose end it plays (Commencement, the withdrawal, the evaluation that dismisses)."
+  },
+  "09-journeys/journeys.x1-yale-payment-savings-hold-registration": {
+   "rows": [],
+   "why": "A leave’s returned aid paid from savings, the hold and its fees, and registration under it: each test to the commands it presses and checks."
+  },
+  "09-journeys/journeys.x2-leave-affiliate-bill": {
+   "rows": [],
+   "why": "A leave’s lapse, Affiliate cover, an appointment and a prescription in the lapse: each test to the commands and the appointment it plays."
+  },
+  "09-journeys/journeys.x3-withdrawal-health-tax-papers": {
+   "rows": [],
+   "why": "A withdrawal, then health cover, status and the return: each test to what it presses and what the clock brings (the month’s look, the US status, the refund)."
+  },
+  "09-journeys/journeys.x4-document-expiring": {
+   "rows": [],
+   "why": "A license run out under a bank’s opening: the Papers row, the ID card, the account."
+  },
+  "09-journeys/journeys.played-school": {
+   "rows": [],
+   "why": "The area’s summary of school journeys: its tests are x1’s and the School page’s, mapped by test as there; remaining-school-term.test.ts and remaining-school.test.ts are cited by file alone, run again, and add no title."
+  },
+  "09-journeys/journeys.played-money": {
+   "rows": [],
+   "why": "The area’s summary of money journeys: x1’s and x4’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.played-papers": {
+   "rows": [],
+   "why": "The area’s summary of papers journeys: x3’s and x4’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.played-health": {
+   "rows": [],
+   "why": "The area’s summary of health journeys: x2’s and x3’s tests, mapped by test as there."
+  },
+  "09-journeys/journeys.actions": {
+   "rows": [],
+   "why": "Every action the journeys pressed, with its refusals: each test mapped as in the item it belongs to."
+  },
+  "09-journeys/journeys.d-aid-past-balance": {
+   "rows": [],
+   "why": "The owner’s decision on aid applied to the Yale account; its test is x1’s, mapped by test as there, and moves no row’s words."
+  },
+  "09-journeys/journeys.d-cover-ended-notice": {
+   "rows": [],
+   "why": "The cover-ended notice’s window, from the loss: health.month’s notice, and the commands the tests press (the withdrawal, Enroll, File It); the four other files cited by file alone add no title."
+  },
+  "09-journeys/journeys.d-medicaid-start": {
+   "rows": [],
+   "why": "Not implemented: HUSKY D’s start on its application’s month. Its test is x3’s, mapped by test as there; no row’s words change."
+  },
+  "09-journeys/journeys.d-hardship-ended-renewal": {
+   "rows": [],
+   "why": "A renewal’s notice once its program is dropped or ending: health.drop and health.request_hardship; the hardship test cited by file alone adds no title."
+  },
+  "09-journeys/journeys.d-expired-license-next-step": {
+   "rows": [],
+   "why": "The run-out line on a document’s Papers row (DocumentList), with the commands its test presses: the ID card it points to and the bank that takes it. Not documents.report_lost or documents.replace_license, which the test doesn’t press."
+  },
+  "09-journeys/journeys.d-lapse-appointment": {
+   "rows": [],
+   "why": "An appointment outside the cover said when Affiliate cover is bought: school.buy_affiliate, the appointment, and what the test presses to be seen at Yale Health."
+  },
+  "09-journeys/journeys.d-lapse-prescription": {
+   "rows": [],
+   "why": "A fill in the lapse repriced when Affiliate cover is bought back to its start: school.buy_affiliate’s repricing, and the health week that fills it (its log, HealthRecord.fills)."
   }
  },
  "fragments": {
@@ -538,5 +610,129 @@
    "with": "tests/scope-money.test.ts ‘bank.cancel_new’ (New Haven: no Cancel It, refused, kept; London FIXTURE: a Barclays card canceled owing nothing and owing £120 (Toronto’s RBC card refused); Toronto FIXTURE: a new RBC chequing account’s Cancel It drawn grayed with the reason under it for a payment set for a date and for C$20 overdrawn, then pressed, its C$50 sent to TD in RBC’s days; RBC’s C$16.95 refunded; Berlin FIXTURE: Commerzbank’s month’s fee to the day, 16 cents on the day it opened, refused on the panel with the figure said and then charged; Reykjavík FIXTURE: Landsbankinn’s interest paid on canceling); tests/defects5.test.ts and money-fixes.test.ts (Toronto). From 2026-10-15’s recheck: Berlin, the Flexgeld’s tax posted back and a FestzinsSparen’s taken interest refused out of an empty primary; Toronto, the overdraft interest kept out of the refund; Mexico City, a Banorte saver’s interest returned on the tenth día hábil and a Santander charge refunded, unused, and refused once used; tests/accountlife.test.ts re-dated to fourteen business days. From 2026-10-15’s second recheck: Berlin, two FestzinsSparen, the newer canceled without the older’s interest, and the €6.30 term refused a cent short; Toronto and Berlin, a saver canceled at 11:30 PM on its last day and refused at 12:01 AM the day after; tests/accountlife.test.ts’s comment re-dated. From brief 09 (2026-10-16): tests/remaining-09-banking.test.ts ‘FIXTURE, Berlin: a Commerzbank GiroKonto opened on Monday 5 January beside Deutsche Bank, €100 under that day and paid back on the 16th…’ (12 of January’s 31 days, €1.90, with 43 cents of overdraft interest in one refusal).",
    "read": "2026-10-16 (brief 09), against tests/scope-money.test.ts’s renamed Berlin title and tests/remaining-09-banking.test.ts: the banking area’s fragment named the Berlin fixture’s new words and the test it added; the field’s other words kept as they stood."
   }
+ },
+ "byTest": {
+  "09-journeys": [
+   {
+    "title": "DEFECT: a life played to the degree",
+    "rows": [
+     "school.commencement"
+    ],
+    "read": "Played to Commencement on 21 May 2029: the Standing, Casting and Coursework tabs rendered after the degree, before and after a reload."
+   },
+   {
+    "title": "PLAYER JOURNEY: a withdrawal in the first fall says how it ended",
+    "rows": [
+     "school.withdraw"
+    ],
+    "read": "school.withdraw refused unconfirmed and again, the course record kept, the three tabs after it."
+   },
+   {
+    "title": "PLAYER JOURNEY: a student who never prepares her coursework",
+    "rows": [
+     "standing/term evaluation"
+    ],
+    "read": "Concern, warning, dismissed at Fall Term 2027’s evaluation by the clock; the tabs after it."
+   },
+   {
+    "title": "PLAYER JOURNEY: a Modest student’s personal leave sends half",
+    "rows": [
+     "school.request_leave",
+     "school.buy_affiliate",
+     "school.pay_balance",
+     "bank.transfer"
+    ],
+    "read": "The leave asked twice and granted, half the scholarship returned; her own transfer into savings; Affiliate cover refused unconfirmed, bought from both accounts, refused again; a part paid, over and nothing refused; the hold and $375 of late fees, one jump against six-hour steps."
+   },
+   {
+    "title": "PLAYER JOURNEY: back for Spring Term 2028 under the hold",
+    "rows": [
+     "school.return_notice",
+     "school.reregister",
+     "school.pay_balance"
+    ],
+    "read": "Notice given and refused twice; registration refused under the hold with nothing moved; paid from both accounts, the hold lifted once; registered, refused again; the first class day counted, through a reload."
+   },
+   {
+    "title": "DEFECT: a doctor’s visit booked at Fair Haven",
+    "rows": [
+     "school.buy_affiliate",
+     "health.appointment",
+     "health.cancel_appointment",
+     "health.book"
+    ],
+    "read": "Affiliate cover bought in the lapse says the Fair Haven visit is outside Yale Health; a twin keeps it and is billed as the uninsured; the visit called off and booked again at Yale Health, seen for nothing."
+   },
+   {
+    "title": "DEFECT: withdrawn on 15 February 2027",
+    "rows": [
+     "school.withdraw",
+     "health.month",
+     "health.enroll",
+     "tax.file"
+    ],
+    "read": "The cover-ended notice of 1 April names 16 May; Enroll refused on 20 May with nothing moved, a twin enrolled on 10 May; the 2026 return filed and refused again."
+   },
+   {
+    "title": "PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen",
+    "rows": [
+     "health.month",
+     "health.enroll"
+    ],
+    "read": "The notice names the window’s last day and HUSKY D; Enroll from 1 January, refused again; one jump against six-hour steps."
+   },
+   {
+    "title": "PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026",
+    "rows": [
+     "school.withdraw",
+     "health.month"
+    ],
+    "read": "An early withdrawal cancels Yale Health back to 1 August; the notice counts the 60 days from the withdrawal; one jump."
+   },
+   {
+    "title": "PLAYER JOURNEY: an F-1 student from London withdraws",
+    "rows": [
+     "school.withdraw",
+     "documents.us_status",
+     "health.month",
+     "health.enroll",
+     "documents.apply_idcard",
+     "tax.file",
+     "tax.refund"
+    ],
+    "read": "Fifteen days’ grace, Out Of Status on 20 October, the notice saying neither the marketplace nor Covered Connecticut takes her; Enroll and the DMV refused in their words; the 1040-NR’s refund once, seventy days on, through a reload."
+   },
+   {
+    "title": "DEFECT: a New Yorker whose one photo ID is her license",
+    "rows": [
+     "documents.apply_idcard",
+     "bank.open_current"
+    ],
+    "read": "The license run out says on its Papers row what replaces it (DocumentList; Report Lost isn’t pressed, so documents.report_lost takes nothing); Citi refuses without a photo ID, nothing moved; the Connecticut ID card for $28.00, refused again; the account opened, its $100.00 in transit until it lands, through a reload."
+   },
+   {
+    "title": "DEFECT: a generic filled uninsured on 8 February 2027",
+    "rows": [
+     "school.buy_affiliate",
+     "health.week"
+    ],
+    "read": "The fill of 8 February had by the clock’s health week, paid uninsured; Affiliate cover bought back to the lapse’s start reprices the fill at Yale Health’s $10.00 copay, the rest paid back once on a line of its own, through a reload."
+   },
+   {
+    "title": "DEFECT: HUSKY D dropped on Papers on 2 November 2027",
+    "rows": [
+     "health.drop",
+     "health.request_hardship"
+    ],
+    "read": "Drop The Plan pressed on Papers with a renewal’s notice waiting: the notice goes with it, the hardship refused in its words with nothing moved, a second Drop refused; ended on 1 December, nothing renewed, through a reload."
+   },
+   {
+    "title": "GUARD: a renewal’s notice waiting while its program has ended",
+    "rows": [
+     "health.request_hardship"
+    ],
+    "read": "FIXTURE (the program’s end set by hand): the hardship refused in words that say so, nothing moved, Papers drawing no button."
+   }
+  ]
  }
 }

@@ -2158,5 +2158,345 @@
     "defects": []
    }
   ]
+ },
+ {
+  "key": "remaining-09-journeys",
+  "testFile": "tests/remaining-09-journeys.test.ts",
+  "rows": [
+   {
+    "id": "school.commencement",
+    "testsAdded": [
+     {
+      "title": "journeys.known-graduated-school-page: the School page once the School has ended > DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)",
+      "closes": "At school on 1 October 2026 the page keeps “so far. Only the terms to come …”, “This Term”, “is the floor”, “In the casting pool.”; graduated at Commencement, Monday 21 May 2029 at ten (the Monday before Memorial Day), before and after a reload: “N of N courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.”, Last Term with “was the floor”, No Casting Ahead, “Nothing is set: your degree is conferred, and no course sets work now.”, none of the seven stale phrases.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "standing/term evaluation",
+    "testsAdded": [
+     {
+      "title": "journeys.known-graduated-school-page: a dismissal > PLAYER JOURNEY: a student who never prepares her coursework (jd-1, the dials tended and no work done) is dismissed at Fall Term 2027’s evaluation, concern then warning before it; the page says so, with no way back, no casting and no work, through a reload",
+      "closes": "jd-1, no work done: concern, warning, dismissed on 10 December 2027; “You were dismissed… Once dismissed, a student isn’t eligible to come back.”, no casting, no work, none of the stale phrases.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.withdraw",
+    "testsAdded": [
+     {
+      "title": "journeys.known-graduated-school-page: the School page once the School has ended > PLAYER JOURNEY: a withdrawal in the first fall says how it ended, offers no repeat, no casting and no work, and keeps saying so through a reload; the course record stays as it was",
+      "closes": "Withdraw refused unconfirmed and again after; the record unchanged; “You withdrew. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.”; the fall’s courses Not Finished, not In Progress, not listed with their meetings; no casting, no work.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+      "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump",
+      "closes": "A cover canceled back to 1 August by a withdrawal in orientation’s week: the notice of 1 September counts from the withdrawal, “until October 24, 2026, 60 days from when it was canceled back”, in one jump as in steps; Enroll open on 22 October.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.request_leave",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+      "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.buy_affiliate",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+      "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+      "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+      "evidenceKind": "render"
+     },
+     {
+      "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
+      "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.pay_balance",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+      "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.transfer",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: a Modest student’s personal leave sends half the spring’s scholarship back to her Yale account; she moves her money into savings, buys Affiliate cover from both accounts and pays $100.00 from savings; unpaid, the hold comes at thirty days with $125.00 a month to $375.00, the same in one jump as in six-hour steps",
+      "closes": "jy-1, Modest: the spring’s $15,200.50 scholarship less the $1,882.00 plan; a personal leave decided at noon on 27 January 2027 (five Yale working days, MLK Day before), half the scholarship, $7,600.25, back on the Yale account (16 of 103 class days gone: the rebate schedule’s half); the player’s bank.transfer leaves $500.00 in Chase Total Checking; Affiliate cover’s quote refused unconfirmed with nothing moved; bought, $8,950.00 (2 × $5,416.00 − $1,882.00): $500.00 from checking, $8,450.00 from savings; a second refused; $100.00 paid from savings, more than owed and nothing refused; the hold on 26 February at noon, $125.00 on 26 February, 28 March and 27 April, $375.00 the cap; the Yale account’s five postings, the hold’s notices and the leave identical in one jump and in steps; breaches 0, ledger balanced.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.return_notice",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "school.reregister",
+    "testsAdded": [
+     {
+      "title": "journeys.x1: a Yale payment drawing on savings, then the hold, then registration > PLAYER JOURNEY: back for Spring Term 2028 under the hold, registration is refused in its words; she moves her money into savings again and pays it from both, the hold lifts once, she registers, and the term’s first class day counts her, through a reload",
+      "closes": "Notice of return given, a second refused in its words; back on 3 January 2028 with registration to do; refused “A financial hold stops registration: $7,875.25 is owed on your Yale account.”, nothing moved; the player moves all but $1,000.00 into savings; paid: $1,000.00 from checking, $6,875.25 from savings; the hold lifted, said once; registered, a second refused; reloaded, Monday 10 January counts every course at its meeting; no Not Registered notice.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.appointment",
+    "testsAdded": [
+     {
+      "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+      "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.cancel_appointment",
+    "testsAdded": [
+     {
+      "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+      "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.book",
+    "testsAdded": [
+     {
+      "title": "journeys.x2: a leave and its Affiliate cover, then a bill > DEFECT: a doctor’s visit booked at Fair Haven in a personal leave’s lapse is said to be outside Yale Health once Affiliate cover is bought, in a notice and on Papers, and the way to be seen at Yale Health is taken: called off, booked again, seen the next weekday for nothing; kept, it’s billed as the uninsured’s, as Papers priced it (until 2026-10-16 nothing said so until the bill)",
+      "closes": "jl-1: uncovered from 27 January, a visit booked at Fair Haven for 4 March at ten; Affiliate cover bought on 10 February; the appointment’s notice once (once through a reload); Papers’ line; a twin that keeps it is billed at Fair Haven at the price Papers gave and told why; called off, Book An Appointment books Yale Health’s Student Health for 11 February at ten, a second refused, seen for nothing.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.week",
+    "testsAdded": [
+     {
+      "title": "journeys.d-lapse-prescription: a prescription filled in a leave’s lapse, and Affiliate cover bought back to its start > DEFECT: a generic filled uninsured on 8 February 2027 is billed again as Yale Health pays it once Affiliate cover is bought on 18 February: Yale Health’s $10.00 copay, the rest paid back to the bank once, on a line of its own, through a reload (until 2026-10-16 the fill stayed at the pharmacy’s cash price)",
+      "closes": "jl-12: a prescription filled in the lapse priced again as Yale Health pays it once Affiliate cover is bought.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.month",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+      "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn on Tuesday 25 August 2026, in orientation’s week before classes begin on 31 August, Yale Health is canceled back to 1 August; the notice of 1 September counts the 60 days from the withdrawal, the day she learned of it, to 24 October, and Enroll is open on 22 October, the same in one jump",
+      "closes": "A cover canceled back to 1 August by a withdrawal in orientation’s week: the notice of 1 September counts from the withdrawal, “until October 24, 2026, 60 days from when it was canceled back”, in one jump as in steps; Enroll open on 22 October.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.enroll",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+      "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: withdrawn in the first fall on 5 October 2026, a citizen is told HUSKY D takes her on the notice that her cover ended, enrolls, and is covered from 1 January; the notice and the cover are the same in one jump as in six-hour steps",
+      "closes": "jw-1: withdrawn 5 October 2026; on 1 December, in both twins, “You’re uncovered from November 4, 2026. You can enroll in the marketplace until January 3, 2027, 60 days from losing cover; HUSKY D takes you at any time on last month’s income, with no premium.”; Enroll gives HUSKY D from 1 January 2027, a second refused “You’re enrolled from January 1, 2027.”",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.file",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > DEFECT: withdrawn on 15 February 2027, Yale Health out on 17 March, the notice of 1 April names the marketplace’s last day, 16 May, 60 days from the loss; on 20 May Enroll refuses it, HUSKY D asking for March’s work; a twin enrolls on 10 May (until 2026-10-16 the 60 days ran from the look of 1 April, to 31 May, and the notice said “You have 60 days”)",
+      "closes": "See journeys.d-cover-ended-notice; also the 2026 return filed and paid at filing, a second refused.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.us_status",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "documents.apply_idcard",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+      "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "tax.refund",
+    "testsAdded": [
+     {
+      "title": "journeys.x3: a withdrawal, then health eligibility, then tax and Papers > PLAYER JOURNEY: an F-1 student from London withdraws on 5 October 2026: fifteen days’ grace, out of status on 20 October, the marketplace and the DMV refuse her in their words, her cover-ended notice says so, and her 2026 return, a 1040-NR filed without a Social Security number, pays its refund once seventy days on, through a reload; the status and health notices are the same in one jump",
+      "closes": "jw-2: fifteen days’ grace; Out Of Status on 20 October; the cover-ended notice on 1 December says neither the marketplace nor Covered Connecticut will take her; the same in one jump; Enroll and the DMV refuse in their words; the 1040-NR filed 1 March 2027 with no Social Security number, its refund seventy days on to the hour, landed once through a reload.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "bank.open_current",
+    "testsAdded": [
+     {
+      "title": "journeys.x4: a document running out under a payment > DEFECT: a New Yorker whose one photo ID is her license sees it run out on 14 June 2028, mid-program; Papers says what replaces it on its row; a new bank refuses her, nothing moved; the Connecticut ID card applied for on Papers, $28.00, is in force at once, and the bank opens, its $100.00 in transit until it lands, through a reload (until 2026-10-16 the row said nothing past Run Out)",
+      "closes": "je-5: a New York license 14 June 2020 to 14 June 2028, no passport; in force on 13 June, none on 20 June; the row’s words; Citi refuses in its words, nothing moved; the Connecticut ID $28.00 from Chase, a second refused “You hold one in force.”; reloaded, in force to 20 June 2034; Citi opens, $100.00 in transit, landed on its day; breaches 0, ledger balanced.",
+      "evidenceKind": "render"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.drop",
+    "testsAdded": [
+     {
+      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+      "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+      "evidenceKind": "command"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   },
+   {
+    "id": "health.request_hardship",
+    "testsAdded": [
+     {
+      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > DEFECT: HUSKY D dropped on Papers on 2 November 2027, its renewal’s notice of 1 November waiting: the notice goes with it, Papers draws neither its line nor Request A Hardship Exception, the hardship is refused in its words with nothing moved, and a second Drop is refused; HUSKY D ends on 1 December as dropped, nothing renewed or decided after, through a reload (until 2026-10-16 the hardship was taken and said “The hardship is granted, and the work rules met.” while nothing was renewed)",
+      "closes": "Drop The Plan pressed on Papers: the end 1 December, voluntary; the notice and its decision gone; Papers draws no notice line, no hardship button and no Drop, and says “Dropped: it ends on December 1, 2027.”; the hardship refused “No notice of noncompliance waits on an answer.” and a second drop “It’s dropped: it ends on December 1, 2027.”, nothing moved; reloaded, covered to 30 November and not on 1 December, nothing renewed, no ending decided, and the cover-ended notice of 1 December says a plan dropped opens no special enrollment.",
+      "evidenceKind": "command"
+     },
+     {
+      "title": "journeys.d-hardship-ended-renewal: a renewal’s notice once the program it would renew is ending > GUARD: a renewal’s notice waiting while its program has ended some other way, which no played life reaches (TEST SETUP: HUSKY D’s end set on the record by hand, the notice left), refuses the hardship in words that say so, and nothing is renewed or moved",
+      "closes": "A renewal’s notice with HUSKY D’s end on the record and the notice left (TEST SETUP): “HUSKY D has ended, so there’s no renewal left to answer.”, from the command and on Papers, no button, nothing moved.",
+      "evidenceKind": "fixture"
+     }
+    ],
+    "gapsClosed": [],
+    "defects": []
+   }
+  ]
  }
 ]

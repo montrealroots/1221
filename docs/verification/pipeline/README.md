@@ -25,7 +25,9 @@ keyed `09-<key>/<id>` in `inputs/remaining-rows.json`; it follows `inputs/rename
 since (until then such a title was listed as no test and left out); and a row added through `inputs/added-rows.json` takes
 evidence as any row does, its words kept in `added-rows.json` alone (row text an area writes for one is listed and left
 out). A test a row already cites, in its review or an earlier pass's round, isn't added again by that pass's results
-(listed as already cited); the last pass's records are folded as they were.
+(listed as already cited); the last pass's records are folded as they were. From the journeys area's fold of the same day
+an area's tests can be mapped one by one (`byTest` in `remaining-rows.json`, by a title's start): each goes to the rows
+its own map names, where until then every test of an item went to every row of the item.
 
 Where `resolve-titles.cjs` says it fixed row text, run `merge-review.cjs` (and `resolve-titles.cjs`) once more: it corrects
 `doc-fields.json`, which the merge reads, after the merge has run (found on 2026-10-16, when a regeneration left two

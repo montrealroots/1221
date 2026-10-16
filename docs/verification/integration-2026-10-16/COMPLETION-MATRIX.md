@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 431 of 526 rows in scope Implemented And Verified (81.9%); 83 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
+**Completion, by the matrix:** 431 of 527 rows in scope Implemented And Verified (81.7%); 84 Implemented, Verification Incomplete, 3 Partially Implemented, 1 Not Implemented, 0 Blocked Externally, 8 Decision Required, 17 Explicitly Deferred.
 
 ## Totals
 
@@ -36,7 +36,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Remaining Area: school | 10 | 10 |  |  |  |  |  |  |
 | Remaining Area: tax | 18 | 11 | 7 |  |  |  |  |  |
 | Brief 09 Area: banking | 16 | 6 | 8 |  |  |  | 2 |  |
-| Brief 09 Area: coverage | 12 | 10 | 1 |  |  |  | 1 |  |
+| Brief 09 Area: coverage | 13 | 10 | 2 |  |  |  | 1 |  |
 | Brief 09 Area: genres | 21 | 18 | 3 |  |  |  |  |  |
 | Brief 09 Area: journeys | 17 | 15 |  |  | 1 |  | 1 |  |
 | Criteria: The Stage | 11 |  | 9 | 1 |  |  | 1 |  |
@@ -47,7 +47,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Criteria: The Genres | 5 |  | 5 |  |  |  |  |  |
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 4 | 2 |  |  |  | 1 |  |
-| **All** | **543** | **431** | **83** | **3** | **1** | **0** | **8** | **17** |
+| **All** | **544** | **431** | **84** | **3** | **1** | **0** | **8** | **17** |
 
 ## Life, Health And Time
 
@@ -545,6 +545,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `coverage09.2-hardship-renewal` | health.request_hardship's renewal branch played: a member's renewal notice answered by a hardship (the notice, the command as Papers issues… | Implemented And Verified | verified as it stands | tests/remaining-09-hardship.test.ts ‘health.request_hardship: a member’s renewal notice answered by a stay in hospital > PLAYER JOURNEY: a stay in hospital in … |
 | `coverage09.3-unresolved` | The 13 unresolved rows, each read again: what a Yale player meets now, what can be implemented in scope, and what's unreachable because the… | Decision Required | implemented (tax.federal_lien_withdraw,… | tests/remaining-09-coverage.test.ts ‘tax.federal_lien_withdraw: an Inherited family’s student who files nothing > PLAYER JOURNEY: at Capital One’s 3.00% on the… |
 | `coverage09.4-fold` | The banking area's result (docs/verification/remaining-09/banking-result.json) and the others in remaining-09/ folded in: remaining-fold.cj… | Implemented, Verification Incomplete | implemented | docs/verification/pipeline/remaining-fold.cjs ‘reads remaining/ and then remaining-09/’ (static (tools)) |
+| `coverage09.5-journeys-fold` | The journeys area’s 17 items (journeys-result.json, committed at 11933d55) were unmapped: remaining-fold.cjs listed each, and none of their… | Implemented, Verification Incomplete | implemented | docs/verification/pipeline/remaining-fold.cjs ‘a test of an item mapped to rows of its own (byTest)’ (static (tools)); tests/remaining-09-journeys.test.ts (rea… |
 
 ## Brief 09 Area: genres
 
@@ -711,7 +712,7 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (83)
+### Implemented, Verification Incomplete (84)
 
 - **`health.enroll`** (Life, Health And Time): Fixed 2026-10-10: an enrollment waiting for its month is refused ‘You’re enrolled from …’ (mayEnroll), through the command across a reload in tests/evidence-g03-life.test.ts. 2026-10-16: HUSKY D kept at renewal through work is held on a FIXTURE (tests/remaining-health-billing.test.ts, wages by hand, as no played life on HUSKY D has any). / The duplicate-enrollment refusal 'You’re enrolled from …' (mayEnroll :373-374, fixed 2026-10-10) is tested nowhere, by command or by function.; 'You’re enrolled.' while a plan is active is not tested through the command.; No marketplace enrollment through t…
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
@@ -743,6 +744,7 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.take_overrun_loan`** (Brief 09 Area: banking): owner decision
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
 - **`coverage09.4-fold`** (Brief 09 Area: coverage): the area called it implemented and cites no gate test that holds it
+- **`coverage09.5-journeys-fold`** (Brief 09 Area: coverage): the area called it implemented and cites no gate test that holds it
 - **`genres.4-kept`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it
 - **`genres.6-table`** (Brief 09 Area: genres): the area called it implemented and cites no gate test that holds it
 - **`genres.7-measured`** (Brief 09 Area: genres): the area called it verified as it stands and cites no gate test that holds it / The criteria that failed before (G1 as written, S2 and S3 as first written, H4, F2 as written, ST3, ST6) fail after as they did; none of them is this area’s, and none is counted met.; S3 revised fell on the held-out samples (82.9% to 81.4%, 82.0% to 81.7%) and holds: the new scenes’ own signals decide more of their sides and their rewarded specialist than the retired ones’ did (§5).
