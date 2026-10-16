@@ -10,10 +10,13 @@ worked on `claude/peaceful-hamilton-59zdbb` from `main` at `44dcd973` (#36's mer
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `44dcd973`.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 10's commits on `44dcd973`
   (`git log --oneline 44dcd973..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #37
-  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), which the owner hasn't merged. **The tested commit is `fdf4bf1d`**: the gate passed on it, and the build,
-  the saves, the built app, the long runs and the advice's held-out set ran on `57b64401`, whose `src`, `tools`,
-  `index.html` and `vite.config.ts` are its own, and the criteria on `567d27dd`, no file they read different. What came
-  after is the gate's record, this handoff and the matrix.
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/37), which the owner hasn't merged. **The tested code is `9c40be73`'s.**
+  - The gate passed on `d9b631ba`, the same code.
+  - The build, the saves and the built app ran on `9c40be73`.
+  - The long runs and the advice's held-out set ran on `57b64401`, whose engine is the same.
+  - The criteria were measured on `567d27dd`, and no file they read is different.
+
+  What came after is the gate's record, this handoff and the matrix.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees.
   Two stray files outside the repository, `/lint.txt` and `/tsc-node.txt`, each `exit=0`, were written by a check the
@@ -47,10 +50,12 @@ after, the regression, the final verification and the owner's decisions. In shor
 - **Outside the brief, at the owner's word:** a genre's row on the Player Profile says **Mastered** once one of its
   briefs is taped at full mastery (`BriefRecord.mastered`, `genreMastered`; an older save marked once on opening,
   `briefsMastered`).
+- **Outside the brief, at the owner's word:** an ability's row says **Mastered** at its full (`atFull`), as a technique's
+  does at 90; stamina's mark goes with its fitness.
 - **Found on the way:** Table Work's select took an answer it then refused when the text wasn't read; grayed with the
   reason now (`tableWorkRefusal`, `tests/table-work-unread.test.ts`).
 
-**Completion, by the matrix:** 527 of 608 rows in scope Implemented And Verified (86.6%); 66 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
+**Completion, by the matrix:** 530 of 608 rows in scope Implemented And Verified (87.1%); 63 Implemented, Verification Incomplete, 0 Partially Implemented, 4 Not Implemented, 0 Blocked Externally, 11 Decision Required, 27 Explicitly Deferred.
 
 ## 3. The Owner's Decisions
 
@@ -77,7 +82,7 @@ Mastered). `ONCE_ON_OPENING` holds six.
 
 | Check | Result |
 |---|---|
-| `npm run gate`, exit from a file | **exit 0 on `fdf4bf1d`**: 374 files, 4,477 tests, none skipped; typecheck, lint and all eighteen checks, the completion matrix last |
+| `npm run gate`, exit from a file | **exit 0 on `d9b631ba`**: 375 files, 4,479 tests, none skipped; typecheck, lint and all eighteen checks, the completion matrix last |
 | `npm run build` | exit 0 |
 | `tools/scenario-saves.mjs` | 14 of 14, each breaches 0, unbalanced 0 |
 | The built app, 1440 and 390 | 72 passed, 0 failed, 0 skipped, 0 errors, 0 overflows at each width |

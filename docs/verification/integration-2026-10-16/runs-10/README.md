@@ -2,8 +2,8 @@
 
 The checks section 5 of brief 10's criteria and the brief itself ask for, on the tested code: the build, the scenario
 saves, the built app at 1440 and 390, the long runs, the mastery plans and F2-A's 40 cases. They ran on `57b64401`, in a
-clone of the branch, in four lanes at once. Each step's exit was recorded (`exits-A.txt` to `exits-D.txt`), so a container
-restart would cost one step. None restarted, and every one of the 60 steps exited 0. `figures.py` reads each figure from
+clone of the branch, in four lanes at once, and the built app again on `9c40be73`. Each step's exit was recorded (`exits-A.txt` to `exits-D.txt`), so a container
+restart would cost one step. None restarted, and every step exited 0. `figures.py` reads each figure from
 these outputs into `figures.json`, which `../criteria.py` reads for the completion matrix. The gate ran after, on the
 commit that holds these (`gate.txt`, its commit on its first line).
 
@@ -17,6 +17,9 @@ They ran three times, and these are the last:
   going were stopped.
 - **On `57b64401`,** these. The 24 lives, the workloads, the mastery plans, variety and freshness came out byte for byte
   as the first run's, and the advice case for case (its files differ only in the commit they name).
+- **On `9c40be73`,** the build, the saves and the built app once more (`exits-A2.txt`). An ability's row came to say
+  Mastered, at the owner's word, which changed a screen and no engine file. So the runs that read only the engine stand on
+  `57b64401`, and `build.log`, `saves/` and `acceptance/` are these.
 
 | Output | Command | Result |
 |---|---|---|

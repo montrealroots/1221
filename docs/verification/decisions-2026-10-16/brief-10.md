@@ -10,12 +10,16 @@ any change (`criteria.md`, `2e8e4db3`). Four areas worked it, each from instruct
 - the advice and the stamina, each in its own clone;
 - Arion, in the shared tree.
 
-Each clone's commits came onto the branch by cherry-pick or fast-forward. **The tested code is `57b64401`'s**. It holds
-the four areas and, at the owner's word later that day, a genre row's Mastered (section 8). It also holds a fix the built
-app's acceptance run found on the way (section 8). The build, the built app, the long runs and the advice's held-out set
-ran on it (`../integration-2026-10-16/runs-10/`). **The gate passed on `fdf4bf1d`**, which holds those runs' records
-and differs from `57b64401` in no file under `src`, `tools` or `tests`. The criteria were measured on `567d27dd`
-(`final/`), and no file they read differs from it on either. Nothing is merged or deployed.
+Each clone's commits came onto the branch by cherry-pick or fast-forward. **The tested code is `9c40be73`'s.** It holds the
+four areas and, at the owner's word later that day, the Mastered of a genre's row and of an ability's (section 8). It also
+holds a fix the built app's acceptance run found on the way (section 8).
+
+- **The gate passed on `d9b631ba`,** which differs from `9c40be73` in no file under `src`, `tools` or `tests`.
+- **The build and the built app** ran on `9c40be73`.
+- **The long runs and the advice's held-out set** ran on `57b64401`, whose engine is the same.
+- **The criteria** were measured on `567d27dd` (`final/`), and no file they read differs.
+
+The runs are in `../integration-2026-10-16/runs-10/`. Nothing is merged or deployed.
 
 ## Every Decision, And Its Status
 
@@ -160,7 +164,7 @@ recommendation: read L1 on a journey that follows the advice, as F2-A10 (h) does
 
 | Check | Command | Result |
 |---|---|---|
-| The gate | `npm run gate`, its exit read from a file | **exit 0 on `fdf4bf1d`**: 374 files, 4,477 tests, none skipped; typecheck, lint and all eighteen checks, the completion matrix last |
+| The gate | `npm run gate`, its exit read from a file | **exit 0 on `d9b631ba`**: 375 files, 4,479 tests, none skipped; typecheck, lint and all eighteen checks, the completion matrix last (and on `fdf4bf1d` before the ability's Mastered: 374 files, 4,477 tests) |
 | The build | `npm run build` | exit 0 |
 | Scenario saves | `node tools/scenario-saves.mjs <dir>` | 14 of 14 exit 0, each breaches 0, unbalanced 0 |
 | The built app, 1440 | `node tools/acceptance-ui.mjs <out> 1440 <saves>` on the build | 72 passed, 0 failed, 0 skipped, 0 errors, 0 overflows |
@@ -206,7 +210,7 @@ None of these is counted met, and none was changed without the owner's word:
 Decision 4 is unchanged, its twelve rows Unresolved in the audit and Implemented, Verification Incomplete in the
 matrix, its three decision rows Decision Required.
 
-## 8. Outside The Brief: A Genre's Mastered
+## 8. Outside The Brief: A Genre's And An Ability's Mastered
 
 Asked for by the owner on 2026-10-16, after seeing a mastered career's screens: until then a genre's row on the Player
 Profile said nothing of mastery. A genre is marked **Mastered** once one of its briefs is taped at full mastery, the
@@ -218,6 +222,12 @@ through the commands; seven mutations in a copy each fail it (`567d27dd`).
 It touched two engine files the measurements read (`systems/briefs.ts`, `index.ts`), so every measurement was made again
 on `567d27dd`. The criteria's outputs came out byte for byte as on `167f996b`, and so did the workload runs and the
 mastery plans.
+
+**An ability's Mastered**, asked for next. An ability's row says Mastered at its full, by the game's own rule (`atFull`),
+as the Techniques panel marks a technique at 90. Reaching full by practice sets an ability exactly, so the mark comes with
+the session that reaches it. Stamina's mark goes when its fitness falls. `tests/ability-mastered.test.ts` plays it
+through `practice.exercise`, and four mutations in a copy each fail it (`9c40be73`). It changed a screen and no engine
+file, so the build, the built app and the gate ran again.
 
 **Found on the way: Table Work's select.** The built app's acceptance run on `567d27dd` failed one step of 72. Its new
 life's first open work was a play not yet read, and Table Work's select took an answer that `school.choose` then refused

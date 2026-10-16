@@ -2349,7 +2349,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (57b64401): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): no step skipped at either width: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows / 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
    "status": "Implemented And Verified",
@@ -2372,7 +2372,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "57b64401",
+    "commit": "9c40be73",
     "watch": "app"
    }
   },
@@ -2391,7 +2391,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (57b64401): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
+   "failure": "Each refusal says why, and what comes next; brief 09 (bcd75970): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; brief 10 (9c40be73): the built app at 1440: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows; at 390: 72 passed, 0 failed, 0 skipped; 0 errors; 0 overflows",
    "implementation": "src/engine, src/ui",
    "evidence": "tools/acceptance-ui.mjs; docs/verification/integration-2026-10-16/runs/acceptance/1440.log; docs/verification/integration-2026-10-16/runs/acceptance/390.log; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
    "status": "Implemented And Verified",
@@ -2411,7 +2411,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "57b64401",
+    "commit": "9c40be73",
     "watch": "app"
    }
   },
@@ -2475,7 +2475,7 @@
    "systems": "Every retained system the journey passes through",
    "sees": "The screens the journey plays",
    "saveLoad": "Saved and opened again where the evidence says",
-   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (fdf4bf1d): npm run gate on fdf4bf1d: 374 of 374 files, 4477 of 4477 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
+   "failure": "Exit 0 on f68516b0: 361 files, 4,316 tests, none skipped, and all seventeen checks; the build exit 0 on the same commit. What came after it is the account and the handoff, documents the gate’s text checks were run on again; brief 09 (7c1198a2): npm run gate on 7c1198a2: 368 of 368 files, 4401 of 4401 tests passed, none skipped, exit=0, the last check, the completion matrix, holding; brief 10 (d9b631ba): npm run gate on d9b631ba: 375 of 375 files, 4479 of 4479 tests passed, none skipped, exit=0, the last check, the completion matrix, holding",
    "implementation": "src/engine, src/ui",
    "evidence": "docs/verification/integration-2026-10-16/runs/gate.txt; docs/verification/integration-2026-10-16/runs/README.md; docs/verification/integration-2026-10-16/runs-09/README.md; docs/verification/integration-2026-10-16/runs-10/README.md",
    "status": "Implemented And Verified",
@@ -2498,7 +2498,7 @@
    ],
    "sourceStatus": "Met",
    "measured": {
-    "commit": "fdf4bf1d",
+    "commit": "d9b631ba",
     "watch": "app"
    }
   },

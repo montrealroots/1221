@@ -202,7 +202,8 @@ for r in rows:
 # Until the runs' figures are there, these rows stay brief 09's, and the matrix calls them unverified.
 FIG10R = json.load(open(f'{D}/runs-10/figures.json', encoding='utf-8')) if os.path.exists(f'{D}/runs-10/figures.json') else {}
 GATE10 = re.search(r'^at (\w+)', open(f'{D}/runs-10/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG10R else None
-RUNS10, BUILT10 = {'commit': '57b64401', 'watch': 'engine'}, {'commit': '57b64401', 'watch': 'app'}
+# The built app and the saves it opens ran again on 9c40be73, whose ability's Mastered changed a screen and no engine file.
+RUNS10, BUILT10 = {'commit': '57b64401', 'watch': 'engine'}, {'commit': '9c40be73', 'watch': 'app'}
 for r in rows:
     m = r.get('measured')
     if m in (RUNS09, BUILT09, GATE09):
