@@ -52,13 +52,14 @@ they're reported as measured, and the revised definitions are what's counted.
 
 **The audit** (`genre-audit.md`, `tools/genre-audit.ts`), every genre (149, counted from the code): knowing a genre
 helps its own brief in 149 of 149 and moves another genre's brief in none. Found by the figures, to weigh: 55, down from
-56. The one that went is drama's stage scenes all suiting restraint, which ST4 settled. The 54 left are genres whose two
-briefs suit the same sides on every axis: their registers agree, which the audit doesn't count a fault, and variation
+56. The one that went is drama's stage scenes all suiting restraint, which ST4 settled. The 55 are genres whose two
+briefs suit the same sides on every axis (this said “the 54 left” until 2026-10-16, taking drama off twice, when brief
+09's genre area counted them again, `../genres-09.md`): their registers agree, which the audit doesn't count a fault, and variation
 across the catalog is I2's, which holds (pace 24.2%, scale 20.8%, structure 32.9%).
 
 **Weak genres and subgroups.** Where a genre is weakest is its own table row in `genre-audit.md` (what its register
 reads, what its briefs suit, what knowing it is worth). The aggregate holds; the subgroups that don't are the ones named
-here: the 54 genres whose two briefs agree on every axis, G1 as written, the original S2 and S3, and on the stage the
+here: the 55 genres whose two briefs agree on every axis, G1 as written, the original S2 and S3, and on the stage the
 restrained specialist against strongly expansive scenes (ST6).
 
 ## Mastery

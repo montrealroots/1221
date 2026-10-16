@@ -299,10 +299,16 @@ function titled(c) {
   // A title is cited as vitest names it, its describes before it (`describe > it`), and cut short anywhere with “…” or
   // "...": each piece of it, cut at those, is in the file. Until later on 2026-10-16 the title's first 60 characters had
   // to be, which no `describe > it` citation was.
+  // A piece written by a template (`${g}: its briefs are different situations`) is there where it's the whole of one of
+  // the file's template titles, each `${…}` standing for any words; until the genres of brief 09 came in on 2026-10-16
+  // only a title written out was, and none of the fourteen genres' was.
   if (c.title && file.endsWith('.ts')) {
     const text = readFileSync(file, 'utf8');
+    const templates = [...text.matchAll(/\b(?:it|test|describe)(?:\.\w+)*\(\s*`((?:[^`\\]|\\.)*)`/g)]
+      .filter((m) => m[1].includes('${'))
+      .map((m) => new RegExp(`^${m[1].split(/\$\{[^}]*\}/).map((s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('.+')}$`));
     const pieces = c.title.split(' > ').flatMap((p) => p.split(/…|\.\.\./)).map((p) => p.trim()).filter((p) => p.length >= 8);
-    const missing = pieces.find((p) => !text.includes(p));
+    const missing = pieces.find((p) => !text.includes(p) && !templates.some((t) => t.test(p)));
     if (!pieces.length || missing) return `${file} has no test titled ‘${(missing ?? c.title).slice(0, 60)}’`;
   }
   return '';

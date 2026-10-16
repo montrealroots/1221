@@ -2312,13 +2312,22 @@
    "systems": "Not recorded",
    "sees": "Not recorded",
    "saveLoad": "Not recorded",
-   "failure": "54 genres’ two briefs suit the same sides on every axis (closeout/genre-audit.md); whether they’re the same work isn’t yet read (brief 09, section 3)",
+   "failure": "Settled under brief 09, section 3 (genres-09.md): the genres were 55, not the 54 the close-out counted, drama’s stage scenes taken off twice. Read in six parts as the engine reads them (tools/genre-pairs.ts), 14 were the same in three or more; each had its second situation replaced by a new scene under a new id, and none of the 55 is the same in three or more now. Until 2026-10-16 this row was Partially Implemented: whether the 54 were the same work wasn’t read",
    "implementation": "Not recorded",
-   "evidence": "Not recorded",
-   "status": "Partially Implemented",
+   "evidence": "docs/verification/integration-2026-10-16/genres-09.md; docs/verification/remaining-09/genres-result.json",
+   "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area",
-   "citations": [],
-   "gap": "54 genres’ two briefs suit the same sides on every axis (closeout/genre-audit.md); whether they’re the same work isn’t yet read (brief 09, section 3)"
+   "citations": [
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > none of the 55 genres whose briefs suited the same sides on 2026-10-16 is the same in three of the six parts or more"
+    },
+    {
+     "file": "tests/remaining-genres.test.ts",
+     "title": "a genre’s two briefs, read as the engine reads them > a brief against itself renamed is the same in all six parts: a renamed description is caught, never passed"
+    }
+   ],
+   "note": "Settled under brief 09, section 3 (genres-09.md): the genres were 55, not the 54 the close-out counted, drama’s stage scenes taken off twice. Read in six parts as the engine reads them (tools/genre-pairs.ts), 14 were the same in three or more; each had its second situation replaced by a new scene under a new id, and none of the 55 is the same in three or more now. Until 2026-10-16 this row was Partially Implemented: whether the 54 were the same work wasn’t read"
   },
   {
    "id": "KS-bank-rows-scope",
@@ -2362,13 +2371,18 @@
    "systems": "Not recorded",
    "sees": "Not recorded",
    "saveLoad": "Not recorded",
-   "failure": "`homeCloses` (systems/abroad.ts) settles fees again on each daily retry at a bank with quarterly fees; unreachable when found (banking-result.json); being read under brief 09, section 4",
+   "failure": "Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented",
    "implementation": "Not recorded",
-   "evidence": "Not recorded",
-   "status": "Not Implemented",
+   "evidence": "docs/verification/remaining-09/banking-result.json",
+   "status": "Implemented And Verified",
    "sourceStatus": "listed by the handoff or an area",
-   "citations": [],
-   "gap": "`homeCloses` (systems/abroad.ts) settles fees again on each daily retry at a bank with quarterly fees; unreachable when found (banking-result.json); being read under brief 09, section 4"
+   "citations": [
+    {
+     "file": "tests/remaining-09-banking.test.ts",
+     "title": "banking.3: a home bank’s own close settles the fees once > GUARD: Deutsche Bank given Barclays’ kind of rule"
+    }
+   ],
+   "note": "Fixed under brief 09, section 4 (banking-result.json, banking.3): the settling is stamped (`feesEndedAt`), so the daily tries after a close finding the account overdrawn charge no more fees. No New Haven life reaches it, since no German bank closes a home account, so a GUARD holds it. Until 2026-10-16 this row was Not Implemented"
   },
   {
    "id": "KS-ct-idcard",

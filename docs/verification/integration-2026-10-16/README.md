@@ -238,7 +238,8 @@ None of these is counted met, and none is changed without your word:
 4. **L3′** (`l3.md`): the same work rises. L3 as written fails a student who earns callbacks.
 5. **Germany's month's fee on a close** (`../remaining/banking-result.json`, `banking.1.pro-rata`): BGB § 675h(3) owes it
    pro rata; SLATE charges it whole, and three test titles the audit cites say so.
-6. **The 54 genres whose two briefs suit the same sides on every axis** (`closeout/genre-audit.md`): their registers agree,
-   which the audit doesn't count a fault; variation across the catalog is I2's, which holds.
+6. **The 55 genres whose two briefs suit the same sides on every axis** (`closeout/genre-audit.md`): their registers agree,
+   which the audit doesn't count a fault; variation across the catalog is I2's, which holds. This said 54 until 2026-10-16,
+   when brief 09's genre area counted them again (`genres-09.md`): the close-out had taken drama's stage scenes off twice.
 
 Merged to `main` at the owner's word ("Merge it all.", 2026-10-16), after this section was first written; not deployed. Until then this said nothing here was merged.
