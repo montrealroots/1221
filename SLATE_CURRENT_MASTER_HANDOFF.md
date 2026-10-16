@@ -9,8 +9,8 @@ on `claude/peaceful-hamilton-59zdbb` from `main` at `64b69fc7` (#35's merge). **
 
 - **Repository:** https://github.com/yvcbcjhsy7-prog/1221, the remote `origin`. `main` is at `64b69fc7`.
 - **The working branch,** `claude/peaceful-hamilton-59zdbb`, carries brief 09's commits on `64b69fc7`
-  (`git log --oneline 64b69fc7..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in a pull request
-  the owner hasn't merged. **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
+  (`git log --oneline 64b69fc7..origin/claude/peaceful-hamilton-59zdbb`), pushed, never force-pushed, in pull request #36
+  (https://github.com/yvcbcjhsy7-prog/1221/pull/36), which the owner hasn't merged. **The tested commit is `7c1198a2`**; what came after it is the account, this handoff and the
   runs' records.
 - **Stashes, worktrees and local files.** This container had no stash and one worktree. The owner's machine's stash,
   worktrees and untracked root files are untouched: never apply, pop or drop the stash; never merge the worktrees. Two
