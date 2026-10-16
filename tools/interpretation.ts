@@ -17,7 +17,8 @@ import type { Axis, AxisValue } from '../src/engine/content/material';
 import type { Person } from '../src/engine/domain/model';
 import { briefContext, briefMaterial, briefPiece, sceneOf, readingOf, type BriefRecord } from '../src/engine/systems/briefs';
 import type { EvalContext, Evaluation, Performer } from '../src/engine/systems/evaluation';
-import { judgePiece, loadOf, unitSegments } from '../src/engine/systems/piece';
+import { judgePiece, loadOf, nightPiece, unitSegments } from '../src/engine/systems/piece';
+import { runningOf, withPart } from '../src/engine/systems/workload';
 import { PIECE } from '../src/engine/content/piece';
 import { PLAY_MATERIAL, SCENE_MATERIAL, type MaterialProfile } from '../src/engine/content/material';
 import { TASK_PROFILES } from '../src/engine/content/tasks';
@@ -215,6 +216,9 @@ function measureStage() {
     if (e.s > r.s) { st6bn += 1; if (judgeAs(sceneTask, m, RES, { scale: 'restrained' }) > judgeAs(sceneTask, m, RES, { scale: 'expansive' })) st6b += 1; }
   }
   const perf = TASK_PROFILES.performance!;
+  // F1's plays with a supporting part's text, as the game reads a night from later on 2026-10-16 (brief 10, `withPart`):
+  // the night's own task, a supporting part as every measuring tool reads one.
+  const parts = PLAY_MATERIAL.map((m) => withPart(m, nightPiece(m, runningOf({ play: m.id }), 'supporting').night!));
   return {
     ST1: ahead(sceneTask, mats, EVEN),
     ST2: { houseSignalOnAnyMaterial: house, bandApart: st2n, restsOnTheScene: st2ok, holds: !house && st2ok === st2n },
@@ -224,7 +228,7 @@ function measureStage() {
     ST6: { expansiveSpecialistWinsAgainstTheGrain: `${st6a} of ${st6an}`, restrainedSpecialistWinsAgainstTheGrain: `${st6b} of ${st6bn}`, holds: st6a >= 0.25 * st6an && st6b >= 0.25 * st6bn },
     ST7: several(sceneTask, mats),
     ST8: follows(sceneTask, mats, EVEN),
-    F1: { task: 'performance', ST1: ahead(perf, PLAY_MATERIAL, EVEN), ST5: mastery(perf, PLAY_MATERIAL), ST7: several(perf, PLAY_MATERIAL), ST8: follows(perf, PLAY_MATERIAL, EVEN) },
+    F1: { task: 'performance', ST1: ahead(perf, parts, EVEN), ST5: mastery(perf, parts), ST7: several(perf, parts), ST8: follows(perf, parts, EVEN) },
     F2: { at40: { ST1: ahead(sceneTask, mats, actor({}, 40)), ST8: follows(sceneTask, mats, actor({}, 40)) }, at75: { ST1: ahead(sceneTask, mats, actor({}, 75)), ST8: follows(sceneTask, mats, actor({}, 75)) } },
     bySide: mats.filter(both).map((m) => { const { r, e } = suit(m); return `${m.id}: restrained ${r.s}, expansive ${e.s}`; }),
   };

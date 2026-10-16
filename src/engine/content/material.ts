@@ -61,10 +61,17 @@ export interface MaterialProfile {
   /**
    * A practice brief's length and what rides on it (from 2026-10-16, `briefMaterial`), which what a piece demands reads
    * (`DEMAND_EFFECT`, `content/approaches.ts`). A scene's and a play's aren't given: a scene is a class scene's length,
-   * and a play's night is read as a whole evening by its own task.
+   * and a play's night is read by its own task, and from later on 2026-10-16 its part's text by the part (`text`).
    */
   size?: 'short' | 'medium' | 'long';
-  stakes?: 0 | 1 | 2 | 3;
+  /** A brief's 0 to 3 in steps; a night's before a house 1.5 (`NIGHT_STAKES`, from later on 2026-10-16), set with its part. */
+  stakes?: number;
+  /**
+   * The text a night's part holds, in what a piece demands' units of it (from 2026-10-16, the owner's brief 10), set where
+   * the part is known, by its time on stage (`partText`, `systems/workload.ts`). A brief's comes from its size; a scene's
+   * and a play's aren't given, and a play read with no part reads none (`demandsOf`).
+   */
+  text?: number;
   techniques?: Partial<Record<Skill, number>>;
   allows?: Partial<Record<Axis, readonly AxisValue[]>>;
   /**

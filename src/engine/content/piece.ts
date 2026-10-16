@@ -43,8 +43,21 @@ export const PIECE = {
    * The stamina drain at the last segment of a brief or scene of load 1, and at the curtain's fall of a night whose work
    * so far reaches `WORKLOAD.full` (from 2026-10-16, brief 10), by an actor with none on a good day: a factor of 1 − drain
    * on what tiring reaches.
+   *
+   * SLATE's choice, balanced through testing as brief 10's section 4 asks of the workload's coefficients: it was 0.3
+   * until later on 2026-10-16. At 0.3, on the integrated code, the stamina specialist (85, the other eleven at 515/11,
+   * H4-R's budget) owned one of the 797 pieces H4-R reads and was ahead on none, and no kind of work moved stamina by 0.5
+   * a +10 on average (A1). Tried on those 797 pieces: 0.35 gave stamina 6 pieces of its own, scenes only; 0.37 gave 12 in
+   * two kinds (briefs 5, scenes 7), ahead on 11, median 0.63, a brief's mean effect 0.511; 0.4 gave 37 (briefs 24, scenes
+   * 13), ahead on all 37, median 0.81, a brief's mean effect 0.552, a scene's 0.533, with H2 and H5 holding and memory's
+   * own work 119 pieces to 111. 0.4 was taken: a third more than it was, and a margin over each target. A night's drain
+   * reaches all of it at `WORKLOAD.full`, which went to 4/3 of itself with it, so a night short of the anchor there drains
+   * as it did (that comment says why); with `WORKLOAD.full` as it was, the specialist led a whole night as a lead in 5 of
+   * the 30 plays, and now in none (the closest, −0.21, where it was −0.28). `WORKLOAD.full` at 0.6 of itself, the other
+   * way to a deeper drain, reached A1 on nights alone (0.552) and left stamina one piece of its own, a scene: on no night
+   * is stamina the largest input (docs/verification/decisions-2026-10-16/integrated/after/README.md).
    */
-  drain: 0.3,
+  drain: 0.4,
   /** A segment this many points under what it was expected to come to, with no draw, is a slip. */
   slipAt: 3,
   /** The share of a slip carried into the next segment, before composure and adaptability recover it. */

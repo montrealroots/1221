@@ -614,9 +614,9 @@ describe('fitness', () => {
     expect(t.inputs.abilities.discipline).toBe(i.inputs.abilities.discipline);
     expect(t.inputs.condition).toEqual(i.inputs.condition);
     // A piece in segments reads stamina through its drain (`systems/piece.ts`): nothing in the first, and in each after it
-    // 0.3 × the piece's load × its place × (1 − stamina over its full), on each dimension tiredness reaches (`conditions` in
-    // content/tasks.ts: all of a scene's but interpretation). Full, it drains nothing. From evaluation-10 the scene is its
-    // units, its one tone cut at its two turns, three; until then it was its two halves.
+    // 0.4 (0.3 until later on 2026-10-16) × the piece's load × its place × (1 − stamina over its full), on each dimension
+    // tiredness reaches (`conditions` in content/tasks.ts: all of a scene's but interpretation). Full, it drains nothing.
+    // From evaluation-10 the scene is its units, its one tone cut at its two turns, three; until then it was its two halves.
     expect(t.inputs.piece!.segments.map((s: { label: string }) => s.label)).toEqual(['The Opening', 'The Middle', 'The Close']);
     for (const d of ['believability', 'connection', 'execution', 'consistency', 'responsiveness'] as const) expect(t.dims[d]!, d).toBeGreaterThan(i.dims[d]!);
     expect(t.dims.interpretation).toBe(i.dims.interpretation);

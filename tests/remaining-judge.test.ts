@@ -196,17 +196,19 @@ describe('H4: presence’s own work, scenes played out to a house (brief 09)', (
     expect(materialContext(task, byId('dream-5-1')).inputs.connection?.find((x) => x.ability === 'presence')).toBeUndefined();
   });
 
-  it('a specialist in presence comes out ahead of an even actor of the same budget on the speeches to many of four units or fewer that hold no long score, level on the Forum, whose turns make one, and behind on every scene played off a partner', () => {
+  it('a specialist in presence comes out ahead of an even actor of the same budget on the speeches to many of four units or fewer that hold no long score, not on the Forum, whose turns make one, and behind on every scene played off a partner', () => {
     for (const id of ['henry5-4-3', 'oedipus-1']) {
       const m = byId(id);
       expect(scene(m, PRESENCE).exact! - scene(m, EVEN).exact!, id).toBeGreaterThan(0.05);
     }
     // Under evaluation-9 the Forum (one tone, three turns) was cut in two and presence's specialist led it by 0.12. From
     // evaluation-10 its three turns make four units, one past three, so its long score reads discipline (`DEMAND_EFFECT.beats`)
-    // and presence's share of the scene falls: level, within 0.05. Without its turns the same speech is presence's again.
+    // and presence's share of the scene falls: level, within 0.05, until later on 2026-10-16. Then the full drain went from
+    // 0.3 to 0.4 (`PIECE.drain`), and the Forum's load, 0.82, drains the specialist's stamina, 515/11 against the even
+    // actor's 50, more: 0.12 behind, where it was 0.04. Not presence's either way. Without its turns it's presence's again.
     const forum = byId('caesar-3-2');
     expect(demandsOf(forum).beats).toBe(1);
-    expect(Math.abs(scene(forum, PRESENCE).exact! - scene(forum, EVEN).exact!)).toBeLessThan(0.05);
+    expect(scene(forum, PRESENCE).exact! - scene(forum, EVEN).exact!).toBeLessThan(-0.05);
     const turnless = { ...forum, turns: 0 };
     expect(demandsOf(turnless).beats).toBe(0);
     expect(scene(turnless, PRESENCE).exact! - scene(turnless, EVEN).exact!).toBeGreaterThan(0.05);
@@ -277,8 +279,8 @@ describe('a scene’s units: its tone sections and its turns (evaluation-10, the
     const p: Performer = { ability: (id) => (id === 'stamina' ? STAMINA : 60), full: () => 100, technique: () => 50 };
     const drains = (segs: typeof segments) => judgePiece('units', p, { task, techniques: { scene: 1 }, prep: {}, required: {}, difficulty: 0, condition: { readiness: 100 }, key: 'units', expected: true }, { segments: segs, work: [], part: 'rehearsal', perTurn: 0, perBlend: 0, most: 1, load: LOAD }).piece!.segments.map((x) => x.drain);
     // Places 0, 0.5 / 2, 1 / 2 and 2 / 2 (the running before each over the 2 before the last), each drained by
-    // PIECE.drain (0.3) × load × place × (1 − stamina).
-    const byHand = (places: number[]) => places.map((place) => Math.round((1 - 0.3 * LOAD * place * (1 - STAMINA / 100)) * 1000) / 1000);
+    // PIECE.drain (0.4; 0.3 until later on 2026-10-16) × load × place × (1 − stamina).
+    const byHand = (places: number[]) => places.map((place) => Math.round((1 - 0.4 * LOAD * place * (1 - STAMINA / 100)) * 1000) / 1000);
     expect(drains(segments)).toEqual(byHand([0, 0.25, 0.5, 1]));
     // A brief's four beats, its heart the second at `BRIEF.readingHeart`'s 1.6, no length given: each one long, so the
     // places are a third apart, as they were before evaluation-10, whatever the heart weighs.

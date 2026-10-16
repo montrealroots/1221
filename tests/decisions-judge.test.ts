@@ -27,14 +27,18 @@
  * - mastery at 100 on every piece and reading and every way of playing that fits.
  *
  * Every performer is TEST SETUP (levels set directly); the stage cases are judged as `tools/interpretation.ts --stage`
- * judges them, and the pieces as `tools/pieces.ts` does. Stamina's own work, and H4-R (a) for memory and composure, wait on
- * the stamina area's model or an owner's decision (judge-result.json) and aren't asserted here as met.
+ * judges them, and the pieces as `tools/pieces.ts` does. Stamina's own work, and H4-R (a) for memory and composure,
+ * waited on the stamina area's model or an owner's decision until the judge area's second phase, later on 2026-10-16, and
+ * weren't asserted here. That phase, under evaluation-11 before it left its branch: the full drain 0.4 where it was 0.3,
+ * and a night's reaching it at 4/3 of the work it did (`PIECE.drain`, `WORKLOAD.full`); a night's part's text by its
+ * time on stage (`PART_TEXT`), which the owner authorized; and a night before a house at stakes 1.5 (`NIGHT_STAKES`), from
+ * performance-anxiety research. Each is held here by hand, and H4-R's own work for all twelve.
  */
 import { describe, expect, it } from 'vitest';
 import { createSave, loadSave } from '@/engine';
 import { newLifeConfig } from '@/engine/world/bootstrap';
 import type { Simulation } from '@/engine/core/simulation';
-import { MS_DAY } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { ABILITY_DEFS, DEVELOPMENT, MASTERED, type AbilityId } from '@/engine/content/abilities';
 import { APPROACH_EFFECT, AXES } from '@/engine/content/approaches';
@@ -45,8 +49,11 @@ import { EVALUATION, TASK_PROFILES, type Dimension } from '@/engine/content/task
 import { SCENES, templateById } from '@/engine/content/coursework';
 import { difficultyOf } from '@/engine/systems/coursework';
 import { frozenPerformer, leanedWeights, replay, replayAs, type EvalContext, type Evaluation, type Performer, type WorkRecord } from '@/engine/systems/evaluation';
-import { judgePiece, judgePieceExact, loadOf, unitSegments } from '@/engine/systems/piece';
-import { materialContext, misfitOf, type Playing } from '@/engine/systems/material';
+import { judgePiece, judgePieceExact, loadOf, nightPiece, unitSegments } from '@/engine/systems/piece';
+import { demandsOf, materialContext, misfitOf, type Playing } from '@/engine/systems/material';
+import { eveningCost, nightLoad, partText, withPart } from '@/engine/systems/workload';
+import { RUNNING_TIMES } from '@/engine/content/workload';
+import { CALL_KIND } from '@/engine/systems/school';
 import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation';
 import { scenesFor, type Worked } from '@/engine/systems/learning';
 import { abilityFull, abilityOf, attributesOf, ATTRIBUTES } from '@/engine/systems/attributes';
@@ -251,14 +258,17 @@ describe('H4-R: every ability’s contribution on its own work (brief 10)', () =
   const specialist = (a: AbilityId) => actor({ [a]: 85 }, (600 - 85) / 11);
   const bump = (a: AbilityId) => actor({ [a]: 60 }, 50);
 
-  it('each specialist is on the even actor’s budget, and on its own work (the pieces where its ability’s +10 effect is the largest of the twelve) eleven of the twelve are ahead on at least 60% by a median of 0.3 or more; stamina’s waits on the stamina model', () => {
+  it('each specialist is on the even actor’s budget, and its own work (the pieces where its ability’s +10 effect is the largest of the twelve) is five pieces or more in two kinds or more, where all twelve are ahead on at least 60% by a median of 0.3 or more', () => {
     for (const a of ABILITIES) expect(budget(specialist(a)), a).toBeCloseTo(600, 9);
     const even = ALL_PIECES.map((pc) => pc.judge(EVEN).exact!);
     const eff = Object.fromEntries(ABILITIES.map((a) => [a, ALL_PIECES.map((pc, i) => pc.judge(bump(a)).exact! - even[i]!)]));
-    for (const a of ABILITIES.filter((x) => x !== 'stamina')) {
+    // All twelve from the judge area's second phase (later on 2026-10-16): until then stamina owned one piece, a scene,
+    // and memory's and composure's were briefs alone, and this read the other eleven's count without their kinds.
+    for (const a of ABILITIES) {
       const own = ALL_PIECES.map((_, i) => i).filter((i) => eff[a]![i]! >= 0.05 && ABILITIES.every((b) => b === a || eff[b]![i]! < eff[a]![i]!));
       const adv = own.map((i) => ALL_PIECES[i]!.judge(specialist(a)).exact! - even[i]!).sort((x, y) => x - y);
       expect(own.length, a).toBeGreaterThanOrEqual(5);
+      expect(new Set(own.map((i) => ALL_PIECES[i]!.kind)).size, a).toBeGreaterThanOrEqual(2);
       expect(adv.filter((x) => x > 0.05).length / adv.length, a).toBeGreaterThanOrEqual(0.6);
       const med = adv.length % 2 ? adv[(adv.length - 1) / 2]! : (adv[adv.length / 2 - 1]! + adv[adv.length / 2]!) / 2;
       expect(med, a).toBeGreaterThanOrEqual(0.3);
@@ -322,6 +332,99 @@ describe('H4-R: every ability’s contribution on its own work (brief 10)', () =
     // 0.1 × 30 / 50, at 20 by the same less.
     expect(DEVELOPMENT.disciplineLift).toBe(0.1);
     expect(practice(80).x / practice(20).x).toBeCloseTo((1 + 0.1 * 0.6) / (1 - 0.1 * 0.6), 6);
+  });
+});
+
+describe('The judge area’s second phase: stamina’s, memory’s and composure’s second kind of work (brief 10)', () => {
+  const PERF = TASK_PROFILES.performance!;
+  const play = (title: string) => PLAY_MATERIAL.find((m) => m.id === title)!;
+  const weightOf = (read: { inputs: Partial<Record<Dimension, readonly { ability: AbilityId; weight: number }[]>> }, d: Dimension, a: AbilityId) => read.inputs[d]?.find((x) => x.ability === a)?.weight ?? 0;
+
+  it('the full drain is 0.4, and a night reaches it at 4/3 of the anchor’s work: the anchor’s lead still drains 0.3 at its curtain, and the heaviest lead the catalog holds more than that', () => {
+    expect(PIECE.drain).toBe(0.4);
+    // FIXTURE: the anchor's evening, 150 minutes with a 20-minute interval at its middle, a lead, four levels of the body
+    // and the voice. Its work at the curtain: half of it, a quarter given back at the interval, then the other half.
+    const W = (130 / 60) * 0.75 * (1 + 4 * (2 / 9));
+    const anchor = nightLoad({ minutes: 150, breaks: [20], basis: 'estimate', from: 'FIXTURE' }, { physical: 2, vocal: 2 }, 'lead');
+    expect(anchor.workload).toBeCloseTo(W, 12);
+    const FULL = W * (1 - 0.25 / 2) * (4 / 3);
+    // At no stamina on a good day: 0.4 × (0.875 W ÷ (0.875 W × 4/3)), 0.3, what the anchor drained when the full drain was
+    // 0.3 at its own work.
+    expect(eveningCost(anchor, 0, 100).drainEnd).toBeCloseTo(0.4 * 0.75, 12);
+    expect(eveningCost(anchor, 0, 100).drainEnd).toBeCloseTo(0.3, 12);
+    // Julius Caesar's lead, past the anchor: 135 minutes of playing, a 15-minute interval giving back 0.25 × 15/20 of the
+    // first half, so 0.4 × (1 − 0.09375) × its workload ÷ FULL, where until then it held at 0.3.
+    const jc = play('Julius Caesar');
+    const Wjc = (135 / 60) * 0.75 * (1 + (jc.physical + jc.vocal) * (2 / 9));
+    const n = nightLoad(RUNNING_TIMES['Julius Caesar']!, jc, 'lead');
+    expect(n.workload).toBeCloseTo(Wjc, 12);
+    expect(eveningCost(n, 0, 100).drainEnd).toBeCloseTo(0.4 * ((1 - 0.25 * (15 / 20) / 2) * Wjc) / FULL, 12);
+    expect(eveningCost(n, 0, 100).drainEnd).toBeGreaterThan(0.3);
+  });
+
+  it('a night reads memory by its part’s time on stage: half a unit of text for each hour past the first, so a lead in Major Barbara holds more than a supporting part, and a featured part or a one-act’s lead none', () => {
+    const mb = play('Major Barbara');
+    // 195 minutes with a 20-minute interval: 175 of playing. A lead on for 0.75 of it, 2.1875 hours: (2.1875 − 1) × 0.5.
+    const units = { lead: (175 * 0.75 / 60 - 1) * 0.5, supporting: (175 * 0.5 / 60 - 1) * 0.5, featured: 0 };
+    expect(units.lead).toBeCloseTo(0.59375, 12);
+    const at = (size: 'lead' | 'supporting' | 'featured') => nightLoad(RUNNING_TIMES['Major Barbara']!, mb, size);
+    for (const size of ['lead', 'supporting', 'featured'] as const) {
+      expect(partText(at(size)), size).toBeCloseTo(units[size], 12);
+      expect(demandsOf(withPart(mb, at(size))).text, size).toBeCloseTo(units[size], 12);
+    }
+    // Salomé, 75 minutes straight through: a lead is on for 56 of them, under the first hour.
+    expect(partText(nightLoad(RUNNING_TIMES['Salomé']!, play('Salomé'), 'lead'))).toBe(0);
+    // What it reads: memory 5 a unit on execution, execution leant by 1 + 0.7 a unit (`DEMAND_EFFECT.text`).
+    const lead = materialContext(PERF, withPart(mb, at('lead'))), featured = materialContext(PERF, withPart(mb, at('featured')));
+    expect(weightOf(lead, 'execution', 'memory') - weightOf(featured, 'execution', 'memory')).toBeCloseTo(5 * 0.59375, 12);
+    expect(lead.lean.execution! / featured.lean.execution!).toBeCloseTo(1 + 0.7 * 0.59375, 12);
+    // So +10 memory moves the lead's night more than the featured part's, the workload, difficulty and day held.
+    const EVEN = actor({}, 50), MORE = actor({ memory: 60 }, 50);
+    const night = (size: 'lead' | 'featured', p: Performer) => {
+      const spec = nightPiece(mb, RUNNING_TIMES['Major Barbara']!, size);
+      const read = materialContext(PERF, withPart(mb, spec.night!));
+      return judgePiece('dj-text', p, { task: PERF, techniques: { scene: 1, ...(mb.techniques ?? {}) }, prep: { lines: 1, blocking: 1, notes: 1 }, required: { lines: 0.9, blocking: 0.9, notes: 0.9 }, difficulty: 0, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, key: 'dj-text', expected: true }, spec).exact!;
+    };
+    expect(night('lead', MORE) - night('lead', EVEN)).toBeGreaterThan(night('featured', MORE) - night('featured', EVEN) + 0.05);
+  });
+
+  it('a night before a house rides on 1.5 where a class scene rides on 1, from performance-anxiety research, and reads composure half a step more', () => {
+    const m = play('Hedda Gabler');
+    const featured = nightLoad(RUNNING_TIMES['Hedda Gabler']!, m, 'featured');
+    expect(demandsOf(m).stakes).toBe(1);
+    expect(demandsOf(withPart(m, featured)).stakes).toBe(1.5);
+    // A featured part holds no text past its first hour (140 × 0.2 = 28 minutes), so only the stakes differ: composure 1.5
+    // a step on consistency and 0.4 on believability, consistency leant by 1 + 0.6 a step (`DEMAND_EFFECT.stakes`).
+    expect(partText(featured)).toBe(0);
+    const night = materialContext(PERF, withPart(m, featured)), inClass = materialContext(PERF, m);
+    expect(weightOf(night, 'consistency', 'composure') - weightOf(inClass, 'consistency', 'composure')).toBeCloseTo(1.5 * 0.5, 12);
+    expect(weightOf(night, 'believability', 'composure') - weightOf(inClass, 'believability', 'composure')).toBeCloseTo(0.4 * 0.5, 12);
+    expect(night.lean.consistency! / inClass.lean.consistency!).toBeCloseTo((1 + 0.6 * 1.5) / (1 + 0.6 * 1), 12);
+  });
+
+  it('PLAYER JOURNEY: twins at the first Carlotta’s first curtain, a lead and a featured part in Major Barbara, each night’s record reading the text its part holds and the same stakes', () => {
+    const zone = 'America/New_York';
+    const sim = createSave(1, 'dj-part-text', { ...newLifeConfig(), homeRegionId: 'us-ny-newyork', firstName: 'Ada', lastName: 'Cole', pronouns: 'she/her' });
+    sim.advanceTo(instantFromZoned({ year: 2027, month: 1, day: 4, hour: 9 }, zone) + 60_000);
+    const curtain = sim.universe.scheduled.filter((i) => i.kind === CALL_KIND && i.payload.which !== 'rep' && i.payload.call === 'performance' && i.payload.personId === sim.player.id).sort((a, b) => a.at - b.at)[0]!;
+    // TEST SETUP: the day's dials a life keeps by its own commands, as the journeys play them, to an hour before it.
+    while (sim.now < curtain.at - MS_HOUR) {
+      Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 });
+      sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+      sim.advanceTo(Math.min(curtain.at - MS_HOUR, sim.now + 6 * MS_HOUR));
+    }
+    const twin = loadSave(structuredClone(sim.universe));
+    // TEST SETUP: the play set where the festival's new play is unnamed, and the part's size in each twin.
+    Object.assign(sim.player.school!.casting!, { play: 'Major Barbara', size: 'lead' });
+    Object.assign(twin.player.school!.casting!, { play: 'Major Barbara', size: 'featured' });
+    for (const x of [sim, twin]) x.advanceTo(curtain.at + 1);
+    const [lead, featured] = [sim, twin].map((x) => x.player.work!.at(-1)!);
+    expect([lead!.task, featured!.task]).toEqual(['performance', 'performance']);
+    expect([lead!.inputs.piece!.night!.share, featured!.inputs.piece!.night!.share]).toEqual([0.75, 0.2]);
+    const read = (w: WorkRecord) => ({ inputs: w.inputs.inputs ?? {} });
+    expect(weightOf(read(lead!), 'execution', 'memory') - weightOf(read(featured!), 'execution', 'memory')).toBeCloseTo(5 * 0.59375, 9);
+    expect(lead!.inputs.lean!.execution! / featured!.inputs.lean!.execution!).toBeCloseTo(1 + 0.7 * 0.59375, 9);
+    expect(weightOf(read(lead!), 'consistency', 'composure')).toBeCloseTo(weightOf(read(featured!), 'consistency', 'composure'), 12);
   });
 });
 

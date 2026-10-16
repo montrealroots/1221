@@ -128,11 +128,22 @@ export const WORKLOAD = {
    * and rightly, a lead through an ordinary full-length evening (150 minutes with a 20-minute interval at its middle, the
    * catalog’s middle running time) in a play whose body’s and voice’s work come to four levels between them (where the
    * load before, 0.6 and 0.12 a level, reached 1). That is 130 / 60 × 0.75 × (1 + 4 × 2/9) × (1 − 0.25 / 2), about 2.69
-   * stage hours at acting’s intensity. A lead in a longer or harder evening reaches it before the curtain, and holds there.
-   * SLATE’s design, on the load before’s own anchor; a first draft put it at 3.5, the heaviest lead’s, which left every
-   * ordinary lead well short of what the drain was said to reach.
+   * stage hours at acting’s intensity, where the drain was all of `PIECE.drain`, 0.3, until later on 2026-10-16. SLATE’s
+   * design, on the load before’s own anchor; a first draft put it at 3.5, the heaviest lead’s, which left every ordinary
+   * lead well short of what the drain was said to reach.
+   *
+   * From later on 2026-10-16 it’s 4/3 of that, about 3.58, SLATE’s choice set by testing: the full drain went from 0.3 to
+   * 0.4 (`PIECE.drain`, which says what testing set it) to give stamina’s specialist work of its own in briefs and scenes,
+   * and the anchor’s lead keeps the 0.3 it reached at its curtain. So no night drains more than it did short of the
+   * anchor, and a lead whose work by the curtain passes it, in a longer or harder evening, drains more, toward all of 0.4
+   * at 3.58 (the heaviest part the catalog holds, a lead in Julius Caesar, is a workload of 3.56). It’s near the first
+   * draft’s 3.5 without its fault: at the anchor’s curtain the drain still reaches what it was said to, 0.3. With the
+   * anchor at all of 0.4 instead, every night drained a third more, and a played journey’s student who keeps up
+   * (tests/remaining-school.test.ts, ur-1) went from good standing to dismissal: two runs’ nights fell to 47.3 to 49.9,
+   * where solid is 50, and the faculty read the work as short (docs/verification/decisions-2026-10-16/integrated/after/
+   * README.md).
    */
-  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2),
+  full: (130 / 60) * SHARE.lead * (1 + 4 * PER_LEVEL) * (1 - RECOVERS / 2) * (4 / 3),
   /** The most a workload can be, whatever a new play were: SLATE’s bound, above every part the catalog holds (3.6 at most, a lead in Julius Caesar). */
   cap: 8,
   /**

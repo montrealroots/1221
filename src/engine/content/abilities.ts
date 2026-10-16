@@ -97,7 +97,8 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Learning lines, the recall drill, and learning a part.',
     // From 2026-10-16 it speeds every step that learns lines (`STEP_SPEED`); until then this said so, and nothing read it.
     // From 2026-10-16 execution reads it more the more text there is: a longer brief, verse, a night's whole part (`DEMAND_EFFECT`).
-    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken, more the longer the text: a medium or long brief, verse, and a whole part on a night.',
+    // From later that day (brief 10) a night's part more the longer it's on stage (`PART_TEXT`); until then every part alike.
+    affects: 'How far a step learning lines goes (a scene’s, a brief’s, a part’s), and execution wherever lines are spoken, more the longer the text: a medium or long brief, verse, and a whole part on a night, more the longer the part is on stage.',
     derivedFrom: 'The craft’s Memorization, which it is.',
     source: 'Noice & Noice (2006) on actors’ elaborative learning; Roediger & Karpicke (2006) on retrieval practice; kept in the craft as Memorization until 2026-10-09',
   },
@@ -118,8 +119,9 @@ export const ABILITY_DEFS: readonly AbilityDef[] = [
     develops: 'Every night in front of a house and a solo showing, a little, as performance anxiety falls with exposure; the graded-exposure exercise, and what concentration and a showing for classmates carry over.',
     // From 2026-10-16 more the more rides on a piece, and believability a little where it does (`DEMAND_EFFECT`); and from
     // the integration pass of that day believability in any piece played Restrained, the calm that lets a held feeling read
-    // (`APPROACH_EFFECT`).
-    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
+    // (`APPROACH_EFFECT`). From later that day (brief 10) a night before a house rides on more than a class scene
+    // (`NIGHT_STAKES`); until then a night read the same stakes as a scene, and only its own profile's composure.
+    affects: 'Consistency under pressure, more the more rides on the piece (a brief’s stakes) and on a night in front of a house, more than in class, and a little of believability where the stakes are high; believability in any piece played Restrained, the calm that lets a held feeling read; recovering from a slip; and the stress nerves add before a performance.',
     derivedFrom: 'At the start, by emotional stability: 25 to 60.',
     source: 'Kept since 2026-09-27 (`systems/attributes.ts`)',
   },

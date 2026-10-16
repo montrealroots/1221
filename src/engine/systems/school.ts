@@ -98,7 +98,7 @@ import { armHealth, healthOf, inHospital, repriceCare } from './health';
 import { chanceOver, injuryOf, laidUp, mayHurt } from './injury';
 import { bandOfQuality, countTogether, judge, leanedWeights, milestone, performerOf, recordWork, type Condition, type Evaluation, type Performer } from './evaluation';
 import { evaluatePiece, judgePiece, nightPiece, pieceWeights, withBook, type PieceSpec } from './piece';
-import { energyOfNight, holdOf, runningOf, type Participation } from './workload';
+import { energyOfNight, holdOf, runningOf, withPart, type Participation } from './workload';
 import { sharedOf, type PartnerRead, type SharedResult } from './ensemble';
 import { TASK_PROFILES } from '../content/tasks';
 import { familiesOf } from '../content/genres';
@@ -2326,18 +2326,20 @@ export function nightEvaluation(sim: Simulation, person: Person, key: string, ho
   const required: Record<string, number> = par ? { lines: Math.max(par.lines, NIGHT_LEAST.lines), blocking: Math.max(par.blocking, NIGHT_LEAST.blocking), notes: par.notes } : {};
   // The play's material and the way the part is played (from 2026-10-10): its lean, what it asks, the choice's
   // rehearsal and whether it fits the play and the director's request. A play with no profile leans by its kinds.
+  // From later on 2026-10-16 (brief 10) the material carries the part's text, by its time on stage (`withPart`).
+  const piece = playPiece(holder, size);
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
   const playing = proc?.playing;
   const prepWith: Record<string, number> = { ...prep };
-  const read = material || playing ? materialContext(E, material, playing, proc?.direction) : undefined;
+  const read = material || playing ? materialContext(E, material && withPart(material, piece.night!), playing, proc?.direction) : undefined;
   if (playing && (playing.pace || playing.scale || playing.structure)) { prepWith.approach = playing.prep; required.approach = read?.required ?? PLAYING.complete; }
   const ctx = {
     task: E, techniques: castingReads(holder), prep: prepWith, required, difficulty: NIGHT_DIFFICULTY[where][size],
     condition: conditionAt(sim, person, at), ...(read ? { lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain } : { families: familiesOf(genresOfPlay(holder.play) ?? []) }), key: `night:${person.id}:${key}`,
     ...(expected ? { expected: true } : {}),
   };
-  return evaluatePiece(sim, person, ctx, playPiece(holder, size));
+  return evaluatePiece(sim, person, ctx, piece);
 }
 
 /**
@@ -2364,7 +2366,9 @@ export function nightTogether(sim: Simulation, person: Person, holder: NightHold
   if (!read) return undefined;
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
-  const lean = material || proc?.playing ? materialContext(TASK_PROFILES.performance!, material, proc?.playing, proc?.direction).lean : undefined;
+  // The part's text as the night read it (from 2026-10-16, brief 10): its own night where it kept one, a supporting part's where not.
+  const night = evaluation.inputs.piece?.night ?? playPiece(holder).night!;
+  const lean = material || proc?.playing ? materialContext(TASK_PROFILES.performance!, material && withPart(material, night), proc?.playing, proc?.direction).lean : undefined;
   const weights = lean ? pieceWeights(TASK_PROFILES.performance!, lean, playPiece(holder)) : leanedWeights(TASK_PROFILES.performance!, familiesOf(genresOfPlay(holder.play) ?? []));
   const norm = (id: AbilityId) => Math.min(1, abilityOf(sim, person, id) / Math.max(1, abilityFull(sim, person, id)));
   return sharedOf(evaluation, read, sim.universe.meta.seed, evaluation.inputs.key, (norm('listening') + norm('adaptability')) / 2, weights);
@@ -2380,10 +2384,11 @@ export function partPreview(sim: Simulation, person: Person, holder: NightHolder
   const material = materialOf(holder.play);
   const proc = hasProcess(holder) ? holder.process : undefined;
   const chosen = { ...playing, chosenAt: sim.now, prep: 1 } as Playing;
-  const read = materialContext(E, material, chosen, proc?.direction);
+  const piece = playPiece(holder, 'supporting');
+  const read = materialContext(E, material && withPart(material, piece.night!), chosen, proc?.direction);
   const ctx = { task: E, techniques: castingReads(holder), prep: { lines: 1, blocking: 1, notes: 1, approach: 1 }, required: { lines: 1, blocking: 1, notes: 1, approach: 1 }, difficulty: NIGHT_DIFFICULTY.school.supporting, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `preview:${holder.play ?? ''}`, expected: true };
-  // A supporting part's workload, as its difficulty is (from 2026-10-16, brief 10): the same for every choice compared.
-  return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, playPiece(holder, 'supporting'));
+  // A supporting part's workload and text, as its difficulty is (from 2026-10-16, brief 10): the same for every choice compared.
+  return judgePiece(sim.universe.meta.seed, performerOf(sim, person), ctx, piece);
 }
 
 /** The least a night's lines and blocking must be at to count complete, however few the calls: off book (`PROCESS.offBook`), and the blocking set. */
@@ -2578,14 +2583,16 @@ export const castingPerformer = (p: Performer): Performer => ({
  */
 export function castFit(sim: Simulation, perf: Performer, reads: Partial<Craft>, kinds: readonly string[], key: string, title?: string): number {
   // The play's material as a night reads it (from 2026-10-10), before anyone has chosen how to play it.
+  // From later on 2026-10-16 (brief 10) with a supporting part's text, as its workload is (`withPart`).
   const material = materialOf(title);
-  const read = material ? materialContext(TASK_PROFILES.performance!, material) : undefined;
+  const piece = playPiece({ ...(title ? { play: title } : {}) });
+  const read = material ? materialContext(TASK_PROFILES.performance!, withPart(material, piece.night!)) : undefined;
   const ctx = {
     task: TASK_PROFILES.performance!, techniques: reads, prep: {}, required: {}, difficulty: 0,
     condition: { readiness: 100 }, ...(read ? { lean: read.lean, inputs: read.inputs } : { families: familiesOf(kinds) }), key, expected: true,
   };
   // Judged in its movements as a night is (from 2026-10-12).
-  return judgePiece(sim.universe.meta.seed, castingPerformer(perf), ctx, playPiece({ ...(title ? { play: title } : {}) })).overall;
+  return judgePiece(sim.universe.meta.seed, castingPerformer(perf), ctx, piece).overall;
 }
 
 /**

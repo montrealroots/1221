@@ -25,6 +25,7 @@
  */
 
 import { PIECE } from '../content/piece';
+import { NIGHT_STAKES, PART_TEXT } from '../content/approaches';
 import { RUNNING_TIMES, UNNAMED_RUNNING, WORKLOAD, type RunningTime } from '../content/workload';
 import type { PartSize } from '../content/plays';
 import type { Evaluation } from './evaluation';
@@ -57,6 +58,19 @@ export interface NightLoad {
 }
 
 const clamp = (x: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, x));
+
+/**
+ * A part's text in what a piece demands' units (`DEMAND_EFFECT.text`), half a unit for each hour on stage past the first,
+ * to two at most (`PART_TEXT`; from 2026-10-16, brief 10). A night read none until then.
+ */
+export const partText = (n: Pick<NightLoad, 'playing' | 'share'>): number => clamp(((n.playing * n.share) / 60 - PART_TEXT.from) * PART_TEXT.perHour, 0, PART_TEXT.most);
+
+/**
+ * A play's material as a night of a part reads it (from 2026-10-16, brief 10): the part's text (`partText`) and what rides
+ * on a night before a house (`NIGHT_STAKES`). A night, its preview, the company's share of it and casting's read of it
+ * each read it so.
+ */
+export const withPart = <M extends object>(m: M, n: Pick<NightLoad, 'playing' | 'share'>): M & { text: number; stakes: number } => ({ ...m, text: partText(n), stakes: NIGHT_STAKES });
 
 /** What a break of so many minutes gives back of the drain so far: a quarter at 20 minutes or more, a shorter one in proportion. */
 export const recovered = (minutes: number): number => WORKLOAD.recovers * clamp(minutes / WORKLOAD.recoversFullAt, 0, 1);

@@ -175,7 +175,12 @@ describe('what a piece demands decides which abilities count', () => {
     const rise = (a: AbilityId) => effectOn(like(base, { stakes: 3 }), a) - effectOn(like(base, { stakes: 0 }), a);
     // Measured: composure 1.1 and discipline 0 from stakes 0 to 3; with the lean alone, 0.6 and 0.2.
     expect(rise('composure')).toBeGreaterThan(rise('discipline') + 0.6);
-    expect(effectOn(like(base, { partner: 0 }), 'presence')).toBeGreaterThan(effectOn(like(base, { partner: 3 }), 'presence') + 0.3);
+    // At full precision from later on 2026-10-16. Shown, presence's +10 came to 0.5 with no partner and 0.2 with a partner
+    // at 3 while the full drain was 0.3, and 0.6 and 0.3 once it was 0.4 (`PIECE.drain`): 0.3 apart to the tenth either way,
+    // so the comparison rested on the floating point's last digit, and failed on it at 0.4. Exact, 0.587 and 0.277, then
+    // 0.584 and 0.275: 0.31 apart.
+    const exactOn = (b: Brief, a: AbilityId) => take(b, plus(EVEN, a, 10), 1).exact! - take(b, EVEN, 1).exact!;
+    expect(exactOn(like(base, { partner: 0 }), 'presence')).toBeGreaterThan(exactOn(like(base, { partner: 3 }), 'presence') + 0.3);
   });
 
   it('asks discipline more of more beats, emotional depth of a grave piece, focus of a comic one, imagination of a lyric one', () => {

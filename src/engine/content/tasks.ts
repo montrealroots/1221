@@ -51,6 +51,9 @@ import type { AbilityId } from './abilities';
 // the day at the curtain, each segment the mean over its own stretch of the running (`systems/workload.ts`,
 // `content/workload.ts`); until then a night's load was 0.6 and 0.12 a level, clamped at 1, read by a segment's place,
 // so a one-act and a featured part were a whole evening's lead. A night kept under evaluation-10 is shown as it was.
+// Later still that day, before evaluation-11 left its branch and so part of it (brief 10, the judge area's second phase):
+// the full drain 0.4 where it was 0.3 (`PIECE.drain`), a night's part's text read by its time on stage (`PART_TEXT`), and
+// a night before a house at stakes 1.5 where a play read 1 (`NIGHT_STAKES`).
 export const RULESET = 'evaluation-11 (2026-10-16)';
 
 export type Dimension = 'believability' | 'interpretation' | 'connection' | 'execution' | 'consistency' | 'responsiveness';

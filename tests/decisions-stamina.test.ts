@@ -15,8 +15,10 @@
  *
  * Every expected figure is worked by hand from the rule as `content/workload.ts` states it: 2/9 a level (the Compendium's
  * 3.0 METs for acting to 5.0 for a dance performance over three levels), a lead 0.75 of the playing time, a supporting
- * part 0.5 and a featured 0.2, the full drain 0.3 at the work done at the curtain of a lead's 150-minute evening with a
- * 20-minute interval in a play of four levels, a quarter given back at a 20-minute break, half again at no readiness,
+ * part 0.5 and a featured 0.2, the full drain 0.4 at 4/3 of the work done at the curtain of a lead's 150-minute evening
+ * with a 20-minute interval in a play of four levels, so 0.3 there (until later on 2026-10-16, when the judge area's
+ * second phase raised both, content/piece.ts and content/workload.ts, the full drain was 0.3 at that curtain's work
+ * itself), a quarter given back at a 20-minute break, half again at no readiness,
  * 5 energy a unit of workload and half of it spared at full stamina, and 5 minutes of curtain call. The engine's own
  * helpers set things up and are what's checked; they never give an expected figure.
  *
@@ -64,12 +66,16 @@ const { resolveLook } = await import('@/ui/looks/registry');
 
 const STEP = 2 / 9;
 const SHARE: Record<Participation, number> = { lead: 0.75, supporting: 0.5, featured: 0.2, solo: 1 };
-const FULL = (130 / 60) * 0.75 * (1 + 4 * STEP) * (1 - 0.25 / 2);
+// 4/3 of the anchor's work at its curtain, where it was the anchor's work itself until later on 2026-10-16: with the full
+// drain at 0.4 the anchor's curtain drains the 0.3 it did (content/workload.ts says why).
+const FULL = (130 / 60) * 0.75 * (1 + 4 * STEP) * (1 - 0.25 / 2) * (4 / 3);
 const G = (r: number) => 1 + 0.5 * (1 - r / 100);
 const intensityOf = (physical: number, vocal: number) => 1 + STEP * (physical + vocal);
 const workloadOf = (playing: number, size: Participation, physical: number, vocal: number) => (playing / 60) * SHARE[size] * intensityOf(physical, vocal);
 const energyOf = (w: number, stamina: number, r: number) => 5 * w * (1 - 0.5 * stamina) * G(r);
-const drainOf = (share: number, stamina: number, r: number) => 0.3 * share * (1 - stamina) * G(r);
+// The full drain 0.4: it was 0.3 until later on 2026-10-16 (content/piece.ts says what testing set it), and every figure
+// worked through this and FULL, W4's, W7's, W8's and W9's, was worked again at 0.4 and 4/3 of the anchor.
+const drainOf = (share: number, stamina: number, r: number) => 0.4 * share * (1 - stamina) * G(r);
 
 const zone = 'America/New_York';
 const at = (year: number, month: number, day: number, hour = 9) => instantFromZoned({ year, month, day, hour }, zone);
@@ -201,7 +207,8 @@ describe('W2 to W4 and W8: the workload and what it does, worked by hand', () =>
     expect(wholeShare(n)).toBeCloseTo((((0 + W / 2) / 2) * 0.5 + ((W * 3 / 8 + W * 7 / 8) / 2) * 0.5) / FULL, 12);
     const cost = eveningCost(n, 0.5, 80);
     expect(cost.energy).toBeCloseTo(5 * W * 0.75 * 1.1, 12);
-    expect(cost.drainEnd).toBeCloseTo(0.3 * (atEnd / FULL) * 0.5 * 1.1, 12);
+    // 0.4 × the share at the curtain × (1 − 0.5) × 1.1; it was 0.3 × until later on 2026-10-16.
+    expect(cost.drainEnd).toBeCloseTo(0.4 * (atEnd / FULL) * 0.5 * 1.1, 12);
   });
 
   it('gives longer participation a greater workload, drain and energy, never less, holding every other input', () => {
@@ -469,13 +476,15 @@ describe('W7: a performance judged in its units comes to what the whole does', (
 // ---------------------------------------------------------------------------------------------------------------------
 
 describe('W9: bounded, and said', () => {
-  it('bounds the workload at its cap and the drain at 45% off, whatever the running time', () => {
+  it('bounds the workload at its cap and the drain at 60% off, whatever the running time', () => {
     // FIXTURE: a running time no play has.
     const n = nightLoad({ minutes: 2000, breaks: [], basis: 'estimate', from: 'FIXTURE' }, { physical: 3, vocal: 3 }, 'solo');
     expect(n.workload).toBe(8);
     expect(WORKLOAD.cap).toBe(8);
     expect(endShare(n)).toBe(1);
-    expect(eveningCost(n, 0, 0).drainEnd).toBeCloseTo(0.45, 12);
+    // All of the full drain, 0.4, at no stamina, half again at no readiness: 0.6. It was 0.45, 0.3 × 1.5, until later on
+    // 2026-10-16.
+    expect(eveningCost(n, 0, 0).drainEnd).toBeCloseTo(0.6, 12);
     expect(eveningCost(n, 0, 0).energy).toBeCloseTo(5 * 8 * 1.5, 12);
     // Every part the catalog holds is under the cap, so none is clamped there.
     for (const m of PLAY_MATERIAL) expect(nightLoad(RUNNING_TIMES[m.id]!, m, 'lead').workload, m.id).toBeLessThan(8);

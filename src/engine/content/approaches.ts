@@ -147,10 +147,12 @@ export const LANGUAGE_EFFECT = {
  *   one; a scene or a play built on its partners at 2 or 3 none): with little to play off, the connection is to the
  *   lens or the house, which is presence. Rodenburg ties presence to a voice and a body fully there (research-acting-engine.json,
  *   voice pedagogy); a monologue or a direct address is where it shows most. The sizes are SLATE's.
- * - **text**, a medium brief 1 and a long one 2: more lines to hold. Noice and Noice found actors learn a role by
- *   working out its meaning, not by rote, a skill that holds more text the better it is (Noice & Noice 2006; "How Actors
- *   Remember Their Lines", MIT Press Reader). The sizes are SLATE's.
- * - **stakes**, a brief's 0 to 3 (a scene's and a play's 1): more riding on it is more pressure to hold steady through.
+ * - **text**, a medium brief 1 and a long one 2, and from later on 2026-10-16 a night's part by its time on stage
+ *   (`PART_TEXT`): more lines to hold. Noice and Noice found actors learn a role by working out its meaning, not by rote,
+ *   a skill that holds more text the better it is (Noice & Noice 2006; "How Actors Remember Their Lines", MIT Press
+ *   Reader). The sizes are SLATE's.
+ * - **stakes**, a brief's 0 to 3 (a scene's 1, and a night's before a house 1.5 from later on 2026-10-16, `NIGHT_STAKES`;
+ *   a play's was 1 on a night until then): more riding on it is more pressure to hold steady through.
  *   Stage fright was a moderate or severe problem for 46% of senior drama students (Steptoe et al. 1995), predicted by
  *   low emotional stability (Goodman & Kaufman 2014), and relaxation is what lets an actor recover a line or take a
  *   change of direction in an audition (Backstage, a psychology professional on audition anxiety): composure, in
@@ -177,6 +179,45 @@ export const DEMAND_EFFECT: Readonly<Record<'solo' | 'text' | 'stakes' | 'beats'
   invented: { lean: { interpretation: 0.3 }, inputs: { interpretation: [{ ability: 'imagination', weight: 2.5 }] } },
   comic: { lean: { execution: 0.3 }, inputs: { execution: [{ ability: 'focus', weight: 3 }] } },
 };
+
+/**
+ * A night's part's text, in `DEMAND_EFFECT.text`'s units (from 2026-10-16, the owner's brief 10, its judge area's second
+ * phase): half a unit for each hour the part is on stage past its first, to a long brief's two at most (`partText`,
+ * `systems/workload.ts`). The part's time on stage is the workload's participation, the playing time by its share for
+ * the part's size (`nightLoad`), so a longer part in a longer play is more to hold, as a longer brief is. The first hour
+ * is what every night's own memory reads already (`BASE_INPUTS.night`, the lines of the part). Until then a night read
+ * no text of its own: a featured part in a one-act held as much as a lead in Major Barbara, and memory's specialist was
+ * ahead on briefs alone. The most any part the catalog holds reaches is 0.59, a lead in Major Barbara; the two is a bound.
+ *
+ * SLATE's choice, measured on the 797 pieces H4-R reads before it was taken, against H2, H5 and every ability's own
+ * work: a whole unit an hour from the start made memory's specialist best on 22 of the 30 nights and 24 of the 30
+ * casting reads, past H2's half; a unit an hour past the first kept H2 (emotional depth 6 of 30 at most) but put memory
+ * past presence on the Major Barbara night, presence's fifth piece of its own; half a unit past the first kept both,
+ * memory's own work then 111 briefs, 3 nights and 2 casting reads, before a night's stakes (`NIGHT_STAKES`) were measured
+ * with it (docs/verification/decisions-2026-10-16/integrated/after/README.md).
+ */
+export const PART_TEXT = { from: 1, perHour: 0.5, most: 2 } as const;
+
+/**
+ * What rides on a night before a house, in `DEMAND_EFFECT.stakes`'s units (from 2026-10-16, the owner's brief 10, its
+ * judge area's second phase): 1.5, where a class scene's is 1. A performance before an audience carries more pressure than
+ * work shown without one. Epinephrine, norepinephrine, cortisol, heart rate and rated distress all rose from private to
+ * public performance (Fredrikson & Gunnarsson, Psychobiology of stage fright, Biol Psychol 1992;33:51–61); skilled
+ * pianists reported more anxiety, and their heart rate and sweat rate rose, in a competition against a rehearsal (Yoshie,
+ * Kudo, Murakoshi & Ohtsuki, Exp Brain Res 2009;199:117–126); singers' and flautists' heart rate rose from 95 to 99 in
+ * rehearsal to 117 to 126 before an audience of 50 to 250 (Harmat & Theorell, Music and Medicine 2010;2:10–17); and
+ * anticipated stage fright grew as a power of the audience's size, near 0.6, and with its standing (Latané & Harkins,
+ * Perception & Psychophysics 1976;20:482–488), so a house asks more than a class. Casting's read of a part is the night it
+ * forecasts, so it reads the same. As every stakes does, it scales what a way of playing's suitability moves too
+ * (`stakesScale`).
+ *
+ * The research settles the direction, not the size: half a step is SLATE's choice, measured before it was taken on the
+ * 797 pieces H4-R reads, against H2, H5 and every ability's own work. A whole step (2) put composure past presence on
+ * the Major Barbara night, presence's fifth piece of its own; three steps made composure's specialist best on 20 of the
+ * 30 nights and 24 of the 30 casting reads, past H2's half; 1.75 cost presence the same night; 1.25 gave composure none
+ * (docs/verification/decisions-2026-10-16/integrated/after/README.md).
+ */
+export const NIGHT_STAKES = 1.5;
 
 /** The camera: what a close frame weighs most. */
 export const CAMERA_LEAN: Partial<Record<Dimension, number>> = { believability: 1.2 };
