@@ -103,7 +103,10 @@ defects = [
      'rerun': f"lane A again on {lane_at('A')}, the game's code unchanged: {a_steps} steps, " + (f"not exit 0: {', '.join(a_bad)}" if a_bad else 'every one exit 0') + ' (runs/exits-A.txt)'},
 ]
 journeys_open = [{'what': x['what'], 'why': x['why']} for x in journeys.get('findingsNotFixed', []) if not x['what'].startswith('OPT approved')]
-limitations = journeys_open + [{'what': x, 'why': 'the interface area'} for x in interface.get('remaining', []) if 'stale' not in x]
+# A journey that didn't end as its expectation said, in the area's words (J21's life ended by the mortality draw).
+unexpected = [{'what': f"{x['id']}: {i}", 'why': 'a journey not ended as expected, recorded by the journeys area'}
+              for x in journeys.get('playthroughs', []) for i in (x.get('issues') or []) if i.startswith('Not as expected')]
+limitations = unexpected + journeys_open + [{'what': x, 'why': 'the interface area'} for x in interface.get('remaining', []) if 'stale' not in x]
 
 json.dump({'area': 'verification', 'on': '2026-10-17', 'journeys': j_said, 'interface': u_said, 'rows': rows, 'defectsFound': defects, 'limitations': limitations},
           open(f'{B}/verification-result.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)

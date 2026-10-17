@@ -29,3 +29,31 @@ Three areas, each in its own clone, from instructions written before their work 
 
 The coordinator integrates them and checks the guarantees (section 7). It runs the final verification on the integrated
 code (section 8) and writes the close-out (section 9): this folder's receipt, the handoff and the pull request.
+
+## Where It Ended
+
+Each figure here is read from a file in this folder, and `RECEIPT.md` and `GUARANTEES.md` are written by scripts from
+them. The tested code is `7e7a3af6`'s.
+
+- **ST6-R2.c: Implemented And Verified** (`acting-criteria.md`, `acting-result.json`, `acting/`).
+  - The ten readings at ±0.01 are `grainOf`'s hundredth, not display rounding and not a limit.
+  - "Unrelated" is read from the engine's dependency path, piece by piece, and 1/12 wasn't adopted.
+  - The 65 pairs are the equal budget's arithmetic, each with a path into the take.
+  - Brief 12's (c2) and (c4) stay not met as written.
+- **ST6-R2.e: Decision Required.** (e1) holds. (e2) and (e3) aren't met as written, and the area's question for the
+  owner is in its row.
+- **The journeys:** 25 runs, 23 complete journeys and 2 focused scenarios (`journeys-result.json`, `journeys/`).
+  - The area fixed five game defects, D1 to D5, each with a test.
+  - Played again on the tested commit (`journeys-final/`): all ten checks passed on all 25, each ending as the area's
+    run ended.
+  - J21 ended at 26 by the mortality draw, before its degree; J23 was added to the same profile.
+- **The interface:** three playthroughs at 1440 and 390 (`interface-result.json`, `interface/`), and again on the
+  tested commit (`interface-final/`), every step passed. The area fixed two defects. `PLAYTEST.md` is the owner's
+  route, and no automated run is a judgment of how the game feels.
+- **The coordinator's fixes:**
+  - OPT approved after the degree was withheld (`fa36c201`);
+  - the acceptance step that relied on D3 (`51cdd7d6`);
+  - the matrix's fold dropping a later result's measurement.
+- **The guarantees** (section 7): `GUARANTEES.md`.
+- **The final runs:** `runs/README.md`, `final/README.md`. The gate is `runs/gate.txt`.
+- **Decision 4's 23 rows are unchanged.** Merging and deploying are the owner's.

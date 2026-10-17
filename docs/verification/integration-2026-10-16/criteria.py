@@ -472,7 +472,10 @@ for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x
             x.update({'status': status, 'citations': x['citations'] + cites, 'evidence': f"{x['evidence']}; {d}/{f}", **extra})
             if status == IAV:
                 # Verified by the tests it cites, not by the measurement it carried, and no longer a decision (L1, brief 11).
-                x.pop('measured', None)
+                # A result that measures it again keeps its own measurement (brief 13's verify.py, from 2026-10-17): until
+                # then this dropped it, and a row its area had verified by a run lost what verified it.
+                if not r.get('measured'):
+                    x.pop('measured', None)
                 x.pop('decision', None)
             continue
         # It replaces an earlier override of the same item (stamina.A1's of brief 10), since the matrix reads the first.

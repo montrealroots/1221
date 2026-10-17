@@ -1,0 +1,9 @@
+ui-build exit=0 secs=18 cmd: npm run build
+ui-save-workload exit=0 secs=24 cmd: npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves/workload.json
+ui-save-specialist exit=0 secs=6 cmd: npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves/specialist.json
+ui-normal-1440 exit=0 secs=192 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves
+ui-normal-390 exit=0 secs=204 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves
+ui-setback-1440 exit=0 secs=124 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves
+ui-setback-390 exit=0 secs=129 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves
+ui-specialist-1440 exit=0 secs=66 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves
+ui-specialist-390 exit=0 secs=70 cmd: env SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 /tmp/claude-0/-home-user-1221/ae4b55a6-159b-5760-be37-d57f1bd5bd30/scratchpad/f13-UI-work/ui-saves

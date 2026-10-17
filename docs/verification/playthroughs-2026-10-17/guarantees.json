@@ -1,0 +1,485 @@
+{
+ "on": "",
+ "guarantees": [
+  {
+   "guarantee": "Maximum-quality prepared mastery",
+   "held": false,
+   "rows": [
+    {
+     "id": "M1",
+     "group": "Criteria: The Attributes",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "M1",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "MA5",
+     "group": "Criteria: Mastery Through Play",
+     "status": "Implemented, Verification Incomplete",
+     "held": false,
+     "why": "It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again"
+    },
+    {
+     "id": "MA6",
+     "group": "Criteria: Mastery Through Play",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-mastery",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [
+    {
+     "figure": "the mastery plans (runs13.sh D)",
+     "said": "not run",
+     "held": false
+    }
+   ],
+   "open": [
+    "MA5 (Implemented, Verification Incomplete: It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again)",
+    "the mastery plans (runs13.sh D): not run"
+   ],
+   "beside": []
+  },
+  {
+   "guarantee": "Relevant attribute improvement without unintended regression",
+   "held": true,
+   "rows": [
+    {
+     "id": "MA1",
+     "group": "Criteria: Mastery Through Play",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "MA2",
+     "group": "Criteria: Mastery Through Play",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "A5",
+     "group": "Criteria: The Attributes",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "L3-R.d",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-attributes",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [
+    {
+     "figure": "L3-R (d), every ability raised alone on every piece (runs13.sh M3, M4, MF)",
+     "said": "363,432 checks on 797 pieces, 0 falls, worst 0",
+     "held": true
+    }
+   ],
+   "open": [],
+   "beside": []
+  },
+  {
+   "guarantee": "Genre-specific benefits without unrelated leakage",
+   "held": true,
+   "rows": [
+    {
+     "id": "S3",
+     "group": "Criteria: The Genres",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "S4",
+     "group": "Criteria: The Genres",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "genres.7-measured",
+     "group": "Brief 09 Area: genres",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-genres",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [],
+   "open": [],
+   "beside": []
+  },
+  {
+   "guarantee": "Specialist opportunities and valid limitations",
+   "held": true,
+   "rows": [
+    {
+     "id": "H4-R.a",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "H4-R.b",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "H4-R.c",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "H4-R.d",
+     "group": "Brief 10 Area: judge",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "ST6-R2.c",
+     "group": "Brief 12: Replacement Criteria",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-specialists",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [],
+   "open": [],
+   "beside": [
+    {
+     "id": "ST6-R2.e",
+     "group": "Brief 12: Replacement Criteria",
+     "status": "Decision Required",
+     "held": false,
+     "why": "{'question': \"Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with"
+    }
+   ]
+  },
+  {
+   "guarantee": "Accurate advice forecasts",
+   "held": false,
+   "rows": [
+    {
+     "id": "advice.F2A10-b",
+     "group": "Brief 10 Area: advice",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "advice.F2A10-c",
+     "group": "Brief 10 Area: advice",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "advice.F2A10-e",
+     "group": "Brief 10 Area: advice",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "advice.heldout",
+     "group": "Brief 10 Area: advice",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-advice-forecasts",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [
+    {
+     "figure": "F2-A’s forty cases (runs13.sh ADVR)",
+     "said": "not run",
+     "held": false
+    }
+   ],
+   "open": [
+    "F2-A’s forty cases (runs13.sh ADVR): not run"
+   ],
+   "beside": []
+  },
+  {
+   "guarantee": "Stamina’s duration, participation, intensity and recovery",
+   "held": true,
+   "rows": [
+    {
+     "id": "stamina.W1",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W2",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W3",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W4",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W5",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W6",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W7",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W8",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W9",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W10",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.A1",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-stamina",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [],
+   "open": [],
+   "beside": []
+  },
+  {
+   "guarantee": "Ledger balance",
+   "held": false,
+   "rows": [
+    {
+     "id": "journeys.7-ledger",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [
+    {
+     "figure": "the long runs (runs13.sh B, C, D)",
+     "said": "not run",
+     "held": false
+    },
+    {
+     "figure": "the journeys’ check on money (check 6, the ledger balanced at every reload)",
+     "said": "25 of 25 passed on the tested commit (6 money)",
+     "held": true
+    }
+   ],
+   "open": [
+    "the long runs (runs13.sh B, C, D): not run"
+   ],
+   "beside": []
+  },
+  {
+   "guarantee": "Save compatibility and historical results",
+   "held": true,
+   "rows": [
+    {
+     "id": "INT-migration",
+     "group": "Integration",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "INT-determinism",
+     "group": "Integration",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "stamina.W10",
+     "group": "Brief 10 Area: stamina",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "genres.5-saves",
+     "group": "Brief 09 Area: genres",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "journeys.7-save",
+     "group": "Brief 13 Area: journeys",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    }
+   ],
+   "figures": [
+    {
+     "figure": "the save schema, pinned in two places",
+     "said": "SAVE_SCHEMA_VERSION 94 in src/engine/domain/model.ts, SUPPORTED_SCHEMA_VERSION 94 in base44/shared/guard.js",
+     "held": true
+    },
+    {
+     "figure": "the journeys’ check on save and reload (check 10)",
+     "said": "25 of 25 passed on the tested commit (10 save and reload)",
+     "held": true
+    }
+   ],
+   "open": [],
+   "beside": []
+  },
+  {
+   "guarantee": "Decision #4’s unchanged protected rows",
+   "held": true,
+   "rows": [],
+   "figures": [
+    {
+     "figure": "receipt.py, against brief 11’s frozen baseline",
+     "said": "23 rows, 0 moved",
+     "held": true
+    }
+   ],
+   "open": [],
+   "beside": []
+  },
+  {
+   "guarantee": "Nothing advertised as a functioning mechanic is decoration",
+   "held": false,
+   "rows": [
+    {
+     "id": "A4",
+     "group": "Criteria: The Attributes",
+     "status": "Implemented And Verified",
+     "held": true,
+     "why": ""
+    },
+    {
+     "id": "INT-gate",
+     "group": "Integration",
+     "status": "Implemented, Verification Incomplete",
+     "held": false,
+     "why": "It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again"
+    }
+   ],
+   "figures": [
+    {
+     "figure": "tools/wired.mjs --check, in the gate",
+     "said": "the gate not run",
+     "held": false
+    },
+    {
+     "figure": "tools/capabilities.mjs --check, in the gate",
+     "said": "the gate not run",
+     "held": false
+    }
+   ],
+   "open": [
+    "INT-gate (Implemented, Verification Incomplete: It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again)",
+    "tools/wired.mjs --check, in the gate: the gate not run",
+    "tools/capabilities.mjs --check, in the gate: the gate not run"
+   ],
+   "beside": []
+  }
+ ]
+}

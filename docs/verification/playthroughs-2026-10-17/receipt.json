@@ -14,8 +14,8 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 574 of 599 rows in scope Implemented And Verified (95.8%); 20 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 5 Decision Required, 40 Explicitly Deferred.",
- "againstTheFullBaseline": "572 of 608 (94.0%)",
+ "matrix": "Completion, by the matrix: 606 of 636 rows in scope Implemented And Verified (95.2%); 26 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.",
+ "againstTheFullBaseline": "566 of 608 (93.0%)",
  "actionable": {
   "closed": 39,
   "superseded": 4,
@@ -105,7 +105,7 @@
    "id": "ST6-R2.c",
    "replaces": "ST6-R.c",
    "criterion": "docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.c: carries R3 and R6. (c1) preparation in its direction; (c2) each circumstance one level up or down, and the scene’s grain read or not, strictly unless the grain’s floor holds it; (c3) a valid interpretation (a callback asking for size); (c4) H4-R (c)’s rule on restrained takes at its 1%, and the restrained specialist’s nine raised to 50.",
-   "status": "Decision Required",
+   "status": "Implemented And Verified",
    "evidence": [
     {
      "file": "tests/decisions-judge.test.ts",
@@ -161,8 +161,7 @@
      "kind": "player journey",
      "proves": "cited as it stands: a class scene’s forecast follows its circumstances, kept through a reload"
     }
-   ],
-   "lacks": "Should (c2)’s strict reading name the grain’s hundredth (`grainOf`) beside its floor as a documented limit, and should (c4) read “unrelated” on restrained takes as an ability carrying under the equal budget’s even share (1/12) rather than under a tenth?"
+   ]
   },
   {
    "id": "ST6-R2.e",
@@ -201,7 +200,7 @@
      "proves": "cited as it stands: the even actor’s restrained take never ahead of its expansive one against the grain"
     }
    ],
-   "lacks": "Should (e2) and (e3)’s “more than the even actor” be read only where the even actor’s opportunities fall short of every suitable piece (tape, where both hold), or should R4 and R5 rest on (e1)’s and (e3)’s floors with (d) and (f)?"
+   "lacks": "Should (e2.3), (e3.3) and (e4)'s margins be read on the abilities' part alone, both takes judged with the scene's grain at nothing, with the margins as played kept as the record; and should (e3.5) on stage be read on the size counterparts' own opportunities (varied on every actor) with their 10 gains reported, rather than the gains alone?"
   },
   {
    "id": "ST6-R2.g",
@@ -264,7 +263,14 @@
    ]
   }
  ],
- "problems": [],
+ "problems": [
+  "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now",
+  "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now",
+  "INT-gate (Integration): verified at the baseline, Implemented, Verification Incomplete now"
+ ],
  "rows": [
   {
    "id": "life.sleep",
@@ -3733,7 +3739,7 @@
    "baseline": "Implemented, Verification Incomplete",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+   "by": "docs/verification/playthroughs-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-d",
@@ -3755,7 +3761,7 @@
    "baseline": "Decision Required",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+   "by": "docs/verification/playthroughs-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-g",
@@ -3770,7 +3776,7 @@
    "baseline": "Decision Required",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+   "by": "docs/verification/playthroughs-2026-10-17/final-result.json"
   },
   {
    "id": "advice.F2A10-i",
@@ -3793,7 +3799,7 @@
    "baseline": "Implemented, Verification Incomplete",
    "now": "Implemented And Verified",
    "disposition": "closed",
-   "by": "docs/verification/resolution-2026-10-17/final-result.json"
+   "by": "docs/verification/playthroughs-2026-10-17/final-result.json"
   },
   {
    "id": "advice.harness-hospital",
@@ -4476,7 +4482,7 @@
    "id": "F2-A",
    "group": "Criteria: The Attributes",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
@@ -4602,7 +4608,7 @@
    "id": "MA5",
    "group": "Criteria: Mastery Through Play",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
@@ -4686,28 +4692,28 @@
    "id": "INT-skipped",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-navigation",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-long-runs",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
    "id": "INT-gate",
    "group": "Integration",
    "baseline": "Implemented And Verified",
-   "now": "Implemented And Verified",
+   "now": "Implemented, Verification Incomplete",
    "disposition": "verified at the baseline"
   },
   {
