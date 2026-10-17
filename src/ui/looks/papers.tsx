@@ -28,6 +28,7 @@ import { LICENSES } from '@/engine/content/licenses';
 import {
   documentsOf, inForce, mayDrive, mayEnter, passportOf, theCountry, type PersonDocument,
 } from '@/engine/systems/documents';
+import { idCardOnItsWay } from '@/engine/systems/identity';
 import { VISITS } from '@/engine/systems/papervisits';
 import type { Person } from '@/engine/domain/model';
 import type { Simulation } from '@/engine';
@@ -164,8 +165,11 @@ defineLook<ThePaper>('document', {
 
     // The interview or biometrics it waits on, from 2026-10-06 (`systems/papervisits.ts`).
     const visit = doc.visit && doc.visit.keptAt === undefined ? `It’s waiting on your ${VISITS[doc.visit.rule].what.toLowerCase()} in ${CITIES.get(doc.visit.cityId)?.name ?? 'town'} on ${formatDate(doc.visit.at, zone)}. Be there, or ${VISITS[doc.visit.rule].again && !doc.visit.missed ? 'it’s booked once more, and if you miss that too, the application' : 'the application'} ends. ` : '';
+    // An ID card past every check is being made and mailed, not decided (from 2026-10-17, `idCardOnItsWay`): until then
+    // a citizen's said "it’s being decided" while the toast said it was on its way.
+    const mailed = idCardOnItsWay(doc, sim.now);
     const summary = state === 'pending'
-      ? `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
+      ? mailed ? `You’ve applied and paid, and the card is on its way. It should arrive by ${formatDate(doc.readyAt!, zone)}.` : `${visit}You’ve applied, and it’s being decided. It should be ready ${doc.readyAt ? `by ${formatDate(doc.readyAt, zone)}` : 'soon'}.`
       : state === 'lost' ? `You reported it lost, so the number ending ${last} is canceled.`
         : state === 'cancelled' ? `It’s canceled, so the number ending ${last} is no use to you now.`
           : state === 'expired' ? `It ran out on ${formatDate(doc.expiresAt!, zone)} and no longer counts for anything.`
@@ -211,12 +215,13 @@ defineLook<ThePaper>('document', {
           </p>
           <div className="grid grid-3">
             <Stat label="Number Ends" value={<span className="mono">{last}</span>} note="The last digits of its number" />
-            <Stat label="Issued" value={doc.issuedAt ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
+            {/* Not yet while pending (from 2026-10-17), as the row: a replacement carries the lost card's date until it comes. */}
+            <Stat label="Issued" value={doc.issuedAt && state !== 'pending' ? formatDate(doc.issuedAt, zone) : 'Not Yet'} note={doc.appliedAt ? `Applied for ${formatDate(doc.appliedAt, zone)}` : 'Issued directly, with no application on record'} />
             <Stat
               label={state === 'expired' ? 'Ran Out' : 'Runs Out'}
               value={doc.expiresAt ? formatDate(doc.expiresAt, zone) : 'No End Date'}
               tone={state === 'valid' ? undefined : 'warning'}
-              note={state === 'valid' ? 'In force until then' : state === 'pending' ? 'Being decided' : 'No longer in force'}
+              note={state === 'valid' ? 'In force until then' : state === 'pending' ? (mailed ? 'On its way' : 'Being decided') : 'No longer in force'}
             />
           </div>
         </>

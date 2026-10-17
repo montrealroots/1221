@@ -354,6 +354,30 @@ describe('documents.apply_idcard', () => {
     expect(back.execute(APPLY_ID).error).toBe('You already hold one in force.');
   });
 
+  // From 2026-10-17 (brief 14's document journey, `idCardOnItsWay`): until then every pending card read Being Decided to
+  // the day it came, a citizen's, which waits on no check, and a non-citizen's in the mail after SAVE's approval alike.
+  it('PLAYER JOURNEY: a British student’s Limited Term card reads Being Decided while SAVE decides and On Its Way once it has, on its row and in its look', async () => {
+    const { resolveLook } = await import('@/ui/looks/registry');
+    const { at: lookAt } = await import('@/ui/looks/subject');
+    const sim = life('g15-save-words', 'uk-eng-london');
+    tended(sim, at(2026, 9, 8, 19));
+    sim.must({ kind: 'documents.apply_ssn', payload: {} });
+    tended(sim, Date.UTC(2026, 9, 19, 14));
+    sim.must(APPLY_ID);
+    const card = held(sim, 'idcard')[0]!;
+    const row = /Non-Driver Identification Card, Limited Term ID\d{8} — May 31, 2029 (Being Decided|On Its Way)/;
+    const said = () => {
+      const look = resolveLook(sim, lookAt('document', card.id));
+      if (!look || 'gone' in look) throw new Error('the card’s look didn’t resolve');
+      return { row: papers(sim, 'passport').text.match(row)?.[1], summary: (look as { summary?: string }).summary };
+    };
+    // SAVE's last day is Monday 2 November: a day before it, being decided.
+    tended(sim, Date.UTC(2026, 10, 1, 14));
+    expect(said()).toEqual({ row: 'Being Decided', summary: 'You’ve applied, and it’s being decided. It should be ready by December 2, 2026.' });
+    tended(sim, Date.UTC(2026, 10, 2, 15));
+    expect(said()).toEqual({ row: 'On Its Way', summary: 'You’ve applied and paid, and the card is on its way. It should arrive by December 2, 2026.' });
+  });
+
   // Renamed on 2026-10-17 (brief 11's KS-ct-idcard, inputs/renames.json): until then 'on Passport And ID, Get Non-Driver
   // Identification Card pressed says “$28.00; good until August 24, 2032”, lists the card, and is then shut with the
   // reason; a Connecticut license holder sees why it is shut', when the card was in force at once for six years.
@@ -368,7 +392,9 @@ describe('documents.apply_idcard', () => {
     expect(before - checking(sim).balance).toBe(28_00);
     const after = papers(sim, 'passport');
     expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is already on its way.' });
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 Being Decided/);
+    // A citizen's card waits on no check, so its row says On Its Way, as the toast and the refusal do. Until 2026-10-17 it
+    // said Being Decided (brief 14's document journey, `idCardOnItsWay`).
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 On Its Way/);
     tended(sim, COMES + MS_HOUR);
     const come = papers(sim, 'passport');
     expect(button(come, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'You already hold one in force.' });
@@ -600,7 +626,9 @@ describe('documents.replace_idcard', () => {
     expect(replace).toMatchObject({ feature: 'documents.replace_idcard', disabled: false });
     expect(press(replace)).toEqual(['Replacement ordered. The card comes October 22, 2026.']);
     const after = papers(sim, 'passport');
-    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Being Decided/);
+    // The replacement is made and mailed, with nothing to decide: On Its Way, from 2026-10-17 (Being Decided until then).
+    // It isn't issued until it comes: until that day its row showed the lost card's issue date, September 22, 2026.
+    expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} — June 14, 2034 On Its Way/);
     expect(after.text).toMatch(/Non-Driver Identification Card ID\d{8} September 22, 2026 June 14, 2034 Canceled/);
     expect(after.buttons.filter((b) => b.feature === 'documents.replace_idcard')).toEqual([]);
     expect(button(after, 'Get Non-Driver Identification Card')).toMatchObject({ disabled: true, title: 'One is already on its way.' });

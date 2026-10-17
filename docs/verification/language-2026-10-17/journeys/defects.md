@@ -50,6 +50,16 @@ screen; the rest are for the coordinator, with where each is and what fixing it 
   kinds this journey didn't play.
 - **Proposed:** for a pending ID card, "On Its Way" on the row and "You’ve applied and paid, and the card is on its way.
   It should arrive by October 9, 2026." in its look; the present words kept for kinds that are decided.
+- **Fixed at the merge** (the coordinator, 2026-10-17), as proposed, for the card alone: `idCardOnItsWay`
+  (`systems/identity.ts`) says a pending card waits on nothing but its making and the mail, which is true of a card
+  no check stands before (a citizen's or a permanent resident's, and one outside the US) and of a non-citizen's once
+  SAVE's days have run. Its row reads On Its Way, its look "You’ve applied and paid, and the card is on its way. It
+  should arrive by …" and its Runs Out note "On its way". Other kinds keep their words. One case stays as it was: a
+  non-citizen's replacement copies the lost card, so for SAVE's days it reads Being Decided, though no check is made.
+  Found beside it: a pending replacement showed the lost card's issue date on its row and as Issued in its look,
+  since it copies the lost card's fields until it comes. Nothing pending is shown as issued now. In
+  `tests/evidence-g15-papers.test.ts` two older tests hold the new words, their titles unchanged, and a new one holds
+  the British student's card through SAVE's days and after. Four mutations each failed them.
 
 ### 3. On The Way can't see next week's classes before Sunday evening
 

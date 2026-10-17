@@ -132,6 +132,19 @@ export function idCardHere(person: Person): { jurisdiction: string; card: (typeo
   return j && card ? { jurisdiction: j, card } : undefined;
 }
 
+/**
+ * Whether an ID card applied for waits on nothing but its making and the mail (from 2026-10-17, brief 14's document
+ * journey): a card no check stands before (a citizen's or a permanent resident's, `realId`, and one outside the US),
+ * or a non-citizen's once SAVE's days since the application have run. Until then its row and its look said "Being
+ * Decided" while the toast and the refusal said it was on its way, and for a citizen nothing was being decided. A
+ * non-citizen's replacement copies the lost card, so it reads as checked for SAVE's days although no check is made on
+ * one: the words it had before, for those days only.
+ */
+export function idCardOnItsWay(doc: PersonDocument, at: Instant): boolean {
+  if (doc.kind !== 'idcard' || doc.status !== 'pending' || doc.appliedAt === undefined || doc.readyAt === undefined) return false;
+  return doc.realId !== false || at >= businessDaysOn(doc.appliedAt, NONCITIZEN_ID.saveBusinessDays, true);
+}
+
 export function idCardRefusal(person: Person, at: Instant): string | undefined {
   const here = idCardHere(person);
   if (!here) return 'In the game, ID cards are issued only in New York, Connecticut, California, Ontario, British Columbia, Mexico City and Ireland.';

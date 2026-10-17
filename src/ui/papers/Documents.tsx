@@ -38,7 +38,7 @@ import {
   authorizationFor, isoOfCountry, documentsOf, isoOfCity, mayEnter,
   LOSABLE, citizenOf, passportOf, passportOffice, passportRefusal, passportRuleFor, type PersonDocument, policeReportRefusal } from '@/engine/systems/documents';
 import { VISAS } from '@/engine/content/visas';
-import { idCardHere, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
+import { idCardHere, idCardOnItsWay, idCardRefusal, idReplaceFee, idReplaceRefusal, licenseReplaceFee, licenseReplaceRefusal, noncitizenTermNote } from '@/engine/systems/identity';
 import { f1Of, optRefusal, programEnd, usStatusEnds } from '@/engine/systems/permission';
 import { hasSsn, ssnRefusal } from '@/engine/systems/taxid';
 import { WORK_RULES } from '@/engine/content/workrules';
@@ -70,9 +70,12 @@ function DocumentList({ kinds }: { kinds: readonly PersonDocument['kind'][] }) {
               <tr key={d.id}>
                 <td><Open subject={at('document', d.id)}>{d.name}</Open>{d.destination ? <>, <Open subject={at('country', countryIdOf(d.destination))}>{countryName(d.destination)}</Open></> : ''}</td>
                 <td className="mono"><Open subject={at('document', d.id)}>{d.number}</Open></td>
-                <td>{d.issuedAt ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
+                {/* Nothing pending is issued yet (from 2026-10-17): a replacement copies the lost card's fields, and until then its
+                    row showed the lost card's issue date while it was on its way. */}
+                <td>{d.issuedAt && d.status !== 'pending' ? <Open subject={at('day', dateKey(d.issuedAt, sim.homeZone))}>{formatDate(d.issuedAt, sim.zone)}</Open> : '—'}</td>
                 <td>{d.expiresAt ? <Open subject={at('day', dateKey(d.expiresAt, sim.homeZone))}>{formatDate(d.expiresAt, sim.zone)}</Open> : d.readyAt ? <>Ready <Open subject={at('day', dateKey(d.readyAt, sim.homeZone))}>{formatDate(d.readyAt, sim.zone)}</Open></> : '—'}</td>
-                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : STATUS_WORD[d.status]}</Open></td>
+                {/* An ID card past every check is on its way, not being decided (from 2026-10-17, `idCardOnItsWay`). */}
+                <td><Open subject={at('document', d.id)}>{expired ? 'Run Out' : idCardOnItsWay(d, sim.now) ? 'On Its Way' : STATUS_WORD[d.status]}</Open></td>
                 <td>
                   {/* What replaces a document run out, said on its row (from 2026-10-16: until then its action cell was empty,
                       and a New Yorker whose license ran out mid-program met it first as a new bank's refusal; found playing
