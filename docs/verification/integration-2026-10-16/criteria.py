@@ -309,6 +309,21 @@ B11_ADMIN = {
 }
 for id, why in B11_ADMIN.items():
     OVERRIDES.append({'id': id, 'status': ED, 'deferredBy': why, 'why': 'Reconciled administratively under brief 11, section 3; not counted as progress', 'citations': [{'file': f'{B11}/classification.json'}]})
+# Brief 11's criteria on its tested commit (completion-2026-10-16/final/, figures.json read from the outputs, none typed):
+# the areas' changes to systems/material.ts, systems/briefs.ts and systems/leave.ts left every judge measurement stale, so
+# each was made again there. Every output is brief 10's, byte for byte, but for fields this pass added to two tools, so a
+# figure the same as brief 10's is said to be. Until then these rows stood on brief 10's 567d27dd.
+B11F = f'{B11}/final'
+if os.path.exists(f'{B11F}/figures.json'):
+    FIG11 = json.load(open(f'{B11F}/figures.json', encoding='utf-8'))
+    B11AT = re.search(r'^at (\w+)', open(f'{B11F}/exits.txt', encoding='utf-8').read(), re.M).group(1)
+    for r in rows:
+        if r.get('measured') == INTEGRATED10:
+            assert r['id'] in FIG11, r['id']
+            r['measured'] = {'commit': B11AT, 'watch': 'judge'}
+            r['failure'] = f"{r['failure']}; on brief 11's tested commit ({B11AT}): {'the same' if FIG11[r['id']] == FIG10.get(r['id']) else FIG11[r['id']]}"
+            r['evidence'] = f"{r['evidence']}; {B11F}/README.md"
+            r['citations'] = r['citations'] + [{'file': f'{B11F}/figures.json'}]
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their

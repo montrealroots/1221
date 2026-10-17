@@ -14,9 +14,9 @@
    "Explicitly Deferred": 27
   }
  },
- "matrix": "Completion, by the matrix: 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.",
+ "matrix": "Completion, by the matrix: 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.",
  "completion": {
-  "againstTheFullBaseline": "522 of 608 (85.8%)",
+  "againstTheFullBaseline": "557 of 608 (91.6%)",
   "ofTheActionablePortion": "33 of 46 (71.7%)",
   "verifiedAtTheBaseline": 530
  },
@@ -474,43 +474,8 @@
  ],
  "addedRows": [],
  "problems": [
-  "ST1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST4 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST5 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST7 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST8 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "ST9 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "Stage F1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "Stage F2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "I1 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "I2 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "I3 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "I4 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "I5 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "A1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "A2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "A3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "T2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "T3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "G3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "G4 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "G5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "M1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "M3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "O1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "O2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "H2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "H5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "H7 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "L2 (Criteria: Long-Term Continuity): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
-  "S1 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "S2 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "S3 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "S4 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
-  "Genre Audit (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t",
   "INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
   "INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
   "INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g",
@@ -4528,16 +4493,14 @@
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST2",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST3",
@@ -4552,16 +4515,14 @@
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST5",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST6",
@@ -4576,200 +4537,175 @@
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST8",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "ST9",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "Stage F1",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "Stage F2",
    "group": "Criteria: The Stage",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "I1",
    "group": "Criteria: Interpretation",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "I2",
    "group": "Criteria: Interpretation",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "I3",
    "group": "Criteria: Interpretation",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "I4",
    "group": "Criteria: Interpretation",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "I5",
    "group": "Criteria: Interpretation",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "A1",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "A2",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "A3",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "T2",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "T3",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "G3",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "G4",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "G5",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "M1",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "M3",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "O1",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "O2",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "H2",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "H5",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "H7",
    "group": "Criteria: The Attributes",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "H4",
@@ -4857,8 +4793,7 @@
    "group": "Criteria: Long-Term Continuity",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "L3",
@@ -4930,40 +4865,35 @@
    "group": "Criteria: The Genres",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "S2",
    "group": "Criteria: The Genres",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "S3",
    "group": "Criteria: The Genres",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "S4",
    "group": "Criteria: The Genres",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "Genre Audit",
    "group": "Criteria: The Genres",
    "category": "verified at the baseline",
    "baseline": "Implemented And Verified",
-   "now": "Implemented, Verification Incomplete",
-   "lacks": "It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.ts, …): measure it again"
+   "now": "Implemented And Verified"
   },
   {
    "id": "INT-determinism",

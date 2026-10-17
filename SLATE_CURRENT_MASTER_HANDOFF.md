@@ -31,7 +31,7 @@ kept verbatim) is being worked on `claude/peaceful-hamilton-59zdbb`, restarted f
 - **The matrix** may now carry an area item's measurement through an override (`measured`), held current as a
   criterion's is.
 
-**Completion, by the matrix:** 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.
+**Completion, by the matrix:** 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred.
 
 Against the frozen baseline's 608, the figure is 522 (85.8%). It fell from 542 because the attributes' change to
 `systems/material.ts` and the advice's to `systems/briefs.ts` left 41 judge measurements stale until the final run.

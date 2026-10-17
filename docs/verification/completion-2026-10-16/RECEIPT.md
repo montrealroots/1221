@@ -2,17 +2,17 @@
 
 Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0e7ff7c2`) and the matrix as it stands. Nothing here is typed.
 
-- **Against the original full baseline:** 522 of 608 (85.8%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
+- **Against the original full baseline:** 557 of 608 (91.6%) rows in scope Implemented And Verified (at the baseline, 530 of 608).
 - **Of the actionable portion:** 33 of 46 (71.7%) closed by implementation or verification.
-- **The matrix’s own count:** 522 of 599 rows in scope Implemented And Verified (87.1%); 68 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
+- **The matrix’s own count:** 557 of 599 rows in scope Implemented And Verified (92.9%); 33 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 2 Blocked Externally, 7 Decision Required, 36 Explicitly Deferred. Its denominator is smaller than 608 by the administrative rows, which aren’t progress.
 - **Not complete:** decision 4’s rows stay as authorized, and every remaining row is listed below with what it lacks.
 
 ## Status Now, Of The Baseline’s Rows
 
 | Status | At The Baseline | Now |
 |---|---|---|
-| Implemented And Verified | 530 | 522 |
-| Implemented, Verification Incomplete | 63 | 68 |
+| Implemented And Verified | 530 | 557 |
+| Implemented, Verification Incomplete | 63 | 33 |
 | Partially Implemented | 0 | 0 |
 | Not Implemented | 4 | 0 |
 | Blocked Externally | 0 | 2 |
@@ -121,45 +121,10 @@ Written by `receipt.py` from `baseline.json` (the matrix frozen at `main`’s `0
 
 None: the baseline wasn’t changed.
 
-## What The Receipt Found (41)
+## What The Receipt Found (6)
 
-- ST1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST4 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST5 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST7 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST8 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- ST9 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- Stage F1 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- Stage F2 (Criteria: The Stage): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- I1 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- I2 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- I3 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- I4 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- I5 (Criteria: Interpretation): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- A1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- A2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- A3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- T2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- T3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- G3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- G4 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- G5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- M1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- M3 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- O1 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- O2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- H2 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- H5 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- H7 (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
 - F2-A (Criteria: The Attributes): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- L2 (Criteria: Long-Term Continuity): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
 - MA5 (Criteria: Mastery Through Play): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
-- S1 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- S2 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- S3 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- S4 (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
-- Genre Audit (Criteria: The Genres): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 567d27dd, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/systems/attributes.ts, src/engine/systems/briefs.t
 - INT-skipped (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
 - INT-navigation (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 9c40be73, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
 - INT-long-runs (Integration): verified at the baseline, Implemented, Verification Incomplete now: It was measured on 57b64401, and what it reads has changed since (src/engine/content/abilities.ts, src/engine/content/attributes-matrix.ts, src/engine/content/g
@@ -731,37 +696,37 @@ None: the baseline wasn’t changed.
 | `stamina.M1` | Brief 10 Area: stamina | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `stamina.measure` | Brief 10 Area: stamina | historical-record | Implemented, Verification Incomplete | Explicitly Deferred |
 | `stamina.A1` | Brief 10 Area: stamina | verification | Implemented, Verification Incomplete | Implemented And Verified |
-| `ST1` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `ST2` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `ST1` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `ST2` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `ST3` | Criteria: The Stage | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
-| `ST4` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `ST5` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `ST4` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `ST5` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `ST6` | Criteria: The Stage | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
-| `ST7` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `ST8` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `ST9` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `Stage F1` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `Stage F2` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `I1` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `I2` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `I3` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `I4` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `I5` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `A1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `A2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `A3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `T2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `T3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `G3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `G4` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `G5` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `M1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `M3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `O1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `O2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `H2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `H5` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `H7` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `ST7` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `ST8` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `ST9` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `Stage F1` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `Stage F2` | Criteria: The Stage | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `I1` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `I2` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `I3` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `I4` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `I5` | Criteria: Interpretation | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `A1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `A2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `A3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `T2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `T3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `G3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `G4` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `G5` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `M1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `M3` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `O1` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `O2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `H2` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `H5` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `H7` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `H4` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `F2` | Criteria: The Attributes | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `F2-A` | Criteria: The Attributes | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
@@ -773,7 +738,7 @@ None: the baseline wasn’t changed.
 | `F1` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `F3` | Criteria: The Attributes | verification | Implemented, Verification Incomplete | Implemented And Verified |
 | `L1` | Criteria: Long-Term Continuity | design-or-gameplay | Decision Required | Implemented And Verified |
-| `L2` | Criteria: Long-Term Continuity | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `L2` | Criteria: Long-Term Continuity | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `L3` | Criteria: Long-Term Continuity | deferred at the baseline | Explicitly Deferred | Explicitly Deferred |
 | `MA1` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA2` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
@@ -783,11 +748,11 @@ None: the baseline wasn’t changed.
 | `MA7` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `MA5` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
 | `MA8` | Criteria: Mastery Through Play | verified at the baseline | Implemented And Verified | Implemented And Verified |
-| `S1` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `S2` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `S3` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `S4` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
-| `Genre Audit` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented, Verification Incomplete |
+| `S1` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `S2` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `S3` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `S4` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
+| `Genre Audit` | Criteria: The Genres | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-determinism` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-time` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
 | `INT-duplicates` | Integration | verified at the baseline | Implemented And Verified | Implemented And Verified |
