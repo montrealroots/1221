@@ -807,9 +807,10 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
   }, 240_000);
 
   it('PLAYER JOURNEY: the forecast’s growth is the progression model’s: on the first-named’s ladder it never rises with the level and falls below three quarters of full; the forecast is within (e)’s tolerance of what twenty sessions brought, read under its own assumptions', () => {
-    // adv-t-1, developing, its first-named below three quarters; adv-t-19, near mastery, past it.
-    for (const seed of ['adv-t-1', 'adv-t-19']) {
-      const { sim } = tuning(seed);
+    // adv-t-1, developing, its first-named below three quarters; adv-t-19, near mastery, past it; adv-t-6, advanced, where
+    // (e) as written missed in brief 10 and brief 11.
+    for (const seed of ['adv-t-1', 'adv-t-6', 'adv-t-19']) {
+      const { sim, takes } = tuning(seed);
       const first = firstOf(sim);
       const ladder = growthLadder(sim, first.target);
       expect(ladder.ok, `${seed} ${ladder.growth.join(' ')}`).toBe(true);
@@ -823,6 +824,9 @@ describe('F2-A10 (f) and (h), as the owner resolved them (brief 12)', () => {
       const like = likeForLike(sim, trainedCopy, base);
       expect(like, seed).toBeGreaterThan(0);
       expect(Math.abs(exact(first.forecast) - like), `${seed}: forecast ${exact(first.forecast)}, brought ${like}`).toBeLessThanOrEqual(Math.max(0.3, 0.25 * Math.abs(like)));
+      // The same sessions read on each brief as its record stands now ((e) as written): on adv-t-6 not the forecast's
+      // assumptions, and outside the tolerance, played, not assumed.
+      if (seed === 'adv-t-6') { const asWritten = worthOf(trainedCopy, takes) - worthOf(base, takes); expect(Math.abs(exact(first.forecast) - asWritten)).toBeGreaterThan(Math.max(0.3, 0.25 * Math.abs(asWritten))); }
     }
   }, 240_000);
 });
