@@ -178,7 +178,7 @@
    {
     "what": "Two Contrasting Monologues",
     "own": 61.18,
-    "atStart": 53.4,
+    "atStart": 52.93,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -190,12 +190,16 @@
      "focus",
      "presence",
      "listening"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 61.73
    },
    {
     "what": "Your Showcase Scene",
     "own": 61.82,
-    "atStart": 54.46,
+    "atStart": 54.2,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -208,12 +212,16 @@
      "physical",
      "focus",
      "discipline"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 62.12
    },
    {
     "what": "Your Showcase Scene, revised",
     "own": 61.83,
-    "atStart": 54.47,
+    "atStart": 54.21,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -226,57 +234,77 @@
      "physical",
      "focus",
      "discipline"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 62.13
    },
    {
     "what": "Directions In Daily Life",
     "own": 66.77,
-    "atStart": 63.37,
+    "atStart": 60.1,
     "rose": [
      "physical",
      "discipline",
      "focus",
      "imagination"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 70.44
    },
    {
     "what": "Sound Changes And A Text",
     "own": 72.43,
-    "atStart": 69.16,
+    "atStart": 66.96,
     "rose": [
      "vocal",
      "focus",
      "discipline",
      "imagination"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 74.55
    },
    {
     "what": "A Song Worked Through",
     "own": 71.79,
-    "atStart": 67.15,
+    "atStart": 65.66,
     "rose": [
      "vocal",
      "emotionalDepth",
      "imagination",
      "composure",
      "discipline"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 73.24
    },
    {
     "what": "A Movement Score",
     "own": 67.26,
-    "atStart": 65.71,
+    "atStart": 62.35,
     "rose": [
      "physical",
      "discipline",
      "focus",
      "imagination"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 70.57
    },
    {
     "what": "A Self-Tape",
     "own": 62.96,
-    "atStart": 56.41,
+    "atStart": 55.45,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -287,12 +315,16 @@
      "physical",
      "discipline",
      "vocal"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 64.05
    },
    {
     "what": "A Self-Tape",
     "own": 63.41,
-    "atStart": 57.22,
+    "atStart": 56.43,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -303,23 +335,31 @@
      "physical",
      "discipline",
      "vocal"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 64.31
    },
    {
     "what": "A Voice Sequence",
     "own": 71.78,
-    "atStart": 66.79,
+    "atStart": 64.77,
     "rose": [
      "vocal",
      "focus",
      "discipline",
      "imagination"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 74.15
    },
    {
     "what": "Two Contrasting Monologues",
     "own": 62.84,
-    "atStart": 54.25,
+    "atStart": 54.03,
     "rose": [
      "emotionalDepth",
      "adaptability",
@@ -331,12 +371,16 @@
      "focus",
      "presence",
      "listening"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 63.08
    },
    {
     "what": "Your Showcase Scene",
     "own": 58.47,
-    "atStart": 51.25,
+    "atStart": 50.98,
     "rose": [
      "emotionalDepth",
      "imagination",
@@ -349,7 +393,11 @@
      "physical",
      "focus",
      "discipline"
-    ]
+    ],
+    "fell": [
+     "stamina"
+    ],
+    "fallsUndone": 58.78
    }
   ],
   "keptReplayed": 160,
@@ -402,6 +450,12 @@
    "unknown": "absurdist",
    "speedUnknown": 1
   },
+  "firstLimits": {
+   "ability": 301,
+   "preparation": 55,
+   "technique": 7,
+   "condition": 2
+  },
   "afterEnd": [],
   "memos": {
    "Yale Health plan, the fall term of 2026": 1,
@@ -445,7 +499,9 @@
    "pass": true,
    "evidence": [
     "abilities emotionalDepth 55.3→70.4, presence 65.9→67.5, listening 52.6→69, imagination 54→67.5, focus 54.9→63.6, memory 53→65.4, adaptability 53.4→58.3, composure 44.3→52.8, vocal 60.1→73.8, physical 51.1→66.6, discipline 57.5→60.4, stamina 50→35",
-    "last pieces at their own levels against the start's: 61.18/53.4 61.82/54.46 61.83/54.47 66.77/63.37 72.43/69.16 71.79/67.15 67.26/65.71 62.96/56.41 63.41/57.22 71.78/66.79 62.84/54.25 58.47/51.25",
+    "last pieces at their own levels, then with what rose put back: 61.18/52.93 61.82/54.2 61.83/54.21 66.77/60.1 72.43/66.96 71.79/65.66 67.26/62.35 62.96/55.45 63.41/56.43 71.78/64.77 62.84/54.03 58.47/50.98",
+    "with what fell put back up: 61.18→61.73 (stamina) 61.82→62.12 (stamina) 61.83→62.13 (stamina) 66.77→70.44 (stamina) 72.43→74.55 (stamina) 71.79→73.24 (stamina) 67.26→70.57 (stamina) 62.96→64.05 (stamina) 63.41→64.31 (stamina) 71.78→74.15 (stamina) 62.84→63.08 (stamina) 58.47→58.78 (stamina)",
+    "first limits short of mastery: {\"ability\":301,\"preparation\":55,\"technique\":7,\"condition\":2}",
     "genres known 8; drama speed 1.07, unmet absurdist 1",
     "fell: stamina 50→35 (stamina falls unworked: `settleTheBody`)"
    ],
@@ -484,7 +540,7 @@
    "evidence": [
     "photo ID in force 23 of 37 months; the bank's asks: Bank of America: would open | Bank of America: Bank of America asks a new customer for a photo ID in force: a passport, ",
     "OPT: OPT is for a student on an F-1; you’re a citizen.; applied 0, approved 0; out of status never",
-    "passports applied 0, issued 0; documents at the end: license Class D (Operator) driver license valid to 2028-06-14"
+    "passports applied 0, issued 0, pending 0; documents at the end: license Class D (Operator) driver license valid to 2028-06-14"
    ],
    "fails": []
   },

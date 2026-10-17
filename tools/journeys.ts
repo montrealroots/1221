@@ -211,7 +211,9 @@ function counterfactual(spec: Spec, base: ReturnType<typeof creationRead>) {
   const b = read({ personality: { openness: 55, conscientiousness: consc, extraversion: 55, agreeableness: 55, emotionalStability: 55, ambition: 60, riskTolerance: 50 } });
   const home = base.f1 ? 'us-ny-newyork' : 'uk-eng-london';
   const c = read({ homeRegionId: home });
-  const pron = spec.config.pronouns === 'she/her' ? 'he/him' : 'she/her';
+  // Across the title: an actress made an actor, an actor an actress (J13's first finish changed they/them to she/her, which
+  // left its actress an actress and tested nothing).
+  const pron = base.title === 'actress' ? 'he/him' : 'she/her';
   const d = read({ pronouns: pron, performerTitle: undefined });
   return {
     family: { to: fam, need: [base.need, a.need], bank: [base.bank, a.bank], moved: base.need !== a.need && base.bank !== a.bank },
@@ -650,10 +652,13 @@ function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
   const startTech = (rec.setup?.techniques ?? undefined) as Record<string, number> | undefined;
   const replays = work.filter((w) => w.ruleset === RULESET && w.inputs.seed !== undefined && TASK_PROFILES[w.task]).slice(-12).map((w) => {
     const own = frozenPerformer(w.inputs);
-    const began: Performer = { ability: (id) => start?.[id] ?? own.ability(id), full: (id) => own.full(id), technique: (k) => startTech?.[k] ?? own.technique(k) };
-    const a = replayAs(w, TASK_PROFILES[w.task]!, own)?.exact, b = replayAs(w, TASK_PROFILES[w.task]!, began)?.exact;
-    const rose = Object.keys(w.inputs.abilities).filter((id) => (w.inputs.abilities[id as AbilityId] ?? 0) > (start?.[id] ?? 0) + 0.05);
-    return { what: w.what, own: a !== undefined ? r2(a) : undefined, atStart: b !== undefined ? r2(b) : undefined, rose };
+    // What the rises did: each ability that rose since the start put back to where it began, the rest as they were.
+    // And apart, what the falls did (stamina unworked, `settleTheBody`): each that fell put back up.
+    const rose = Object.keys(w.inputs.abilities).filter((id) => (w.inputs.abilities[id as AbilityId] ?? 0) > (start?.[id] ?? 0) + 0.05) as AbilityId[];
+    const fell = Object.keys(w.inputs.abilities).filter((id) => (w.inputs.abilities[id as AbilityId] ?? 0) < (start?.[id] ?? 0) - 0.05) as AbilityId[];
+    const back = (ids: AbilityId[], tech: boolean): Performer => ({ ability: (id) => (ids.includes(id) ? start![id]! : own.ability(id)), full: (id) => own.full(id), technique: (k) => (tech && startTech?.[k] !== undefined && startTech[k]! < own.technique(k) ? startTech[k]! : own.technique(k)) });
+    const a = replayAs(w, TASK_PROFILES[w.task]!, own)?.exact, b = replayAs(w, TASK_PROFILES[w.task]!, back(rose, true))?.exact, c = fell.length ? replayAs(w, TASK_PROFILES[w.task]!, back(fell, false))?.exact : undefined;
+    return { what: w.what, own: a !== undefined ? r2(a) : undefined, atStart: b !== undefined ? r2(b) : undefined, rose, ...(fell.length ? { fell, fallsUndone: c !== undefined ? r2(c) : undefined } : {}) };
   });
   // Every kept result replayed from its own inputs (check 10: historical results).
   let kept = 0, mismatched = 0;
@@ -675,6 +680,8 @@ function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
     abilities: Object.fromEntries(ABILITY_DEFS.map((d) => [d.id, r1(abilityOf(sim, p, d.id))])), startAbilities: start,
     replays, keptReplayed: kept, keptMismatched: mismatched,
     genres: genres.slice(0, 8), genreSpeed: known ? { known, speed: r2(genreSpeed(p, [known])), unknown: unknownGenre, speedUnknown: unknownGenre ? r2(genreSpeed(p, [unknownGenre])) : undefined } : undefined,
+    // The first limit on each piece judged short of mastery, by kind (J13 and J14's expectation reads it).
+    firstLimits: rec.work.filter((w) => !w.mastery).reduce((o, w) => { const k = (w.limit ?? 'none').split(':')[0]!; o[k] = (o[k] ?? 0) + 1; return o; }, {} as Record<string, number>),
     afterEnd: after, memos, yaleOwed: accountOwed(sim, p), hold: s?.hold !== undefined, lateFees: s?.lateFees,
     bank: Math.round(inTheBank(sim, p) / 100), audit: sim.ledger.audit().length, breaches: breaches(sim.universe).length,
     outOfStatus: p.usOutOfStatus !== undefined ? day(p.usOutOfStatus) : undefined, cover: coverOn(p, sim.now) ?? 'none', documents: documentsOf(p).map((d) => `${d.kind} ${d.name} ${d.status}${d.expiresAt ? ` to ${day(d.expiresAt)}` : ''}`),
@@ -733,8 +740,8 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
   // 3. Attributes and genres.
   {
     const fails: string[] = [];
-    const reps = (e.replays as { what: string; own?: number; atStart?: number; rose: string[] }[]) ?? [];
-    for (const r of reps) if (r.own !== undefined && r.atStart !== undefined && r.atStart > r.own + 1e-6) fails.push(`${r.what}: higher at the starting levels (${r.atStart}) than at its own (${r.own})`);
+    const reps = (e.replays as { what: string; own?: number; atStart?: number; rose: string[]; fell?: string[]; fallsUndone?: number }[]) ?? [];
+    for (const r of reps) if (r.own !== undefined && r.atStart !== undefined && r.atStart > r.own + 1e-6) fails.push(`${r.what}: higher with its risen abilities put back to the start (${r.atStart}) than at its own (${r.own})`);
     if (spec.setup !== 'mastered' && reps.length && !reps.some((r) => r.own !== undefined && r.atStart !== undefined && r.own > r.atStart + 0.05)) fails.push('no recent piece better for the development since the start');
     const start = e.startAbilities as Record<string, number>; const end = e.abilities as Record<string, number>;
     const fell = Object.keys(end).filter((k) => end[k]! < (start?.[k] ?? 0) - 0.5);
@@ -743,7 +750,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     const gs = e.genreSpeed as { known: string; speed: number; unknown?: string; speedUnknown?: number } | undefined;
     if (gs && gs.speedUnknown !== undefined && !(gs.speed > gs.speedUnknown)) fails.push(`a known genre (${gs.known}) no faster than an unmet one (${gs.unknown})`);
     if (gs && gs.speedUnknown !== undefined && gs.speedUnknown !== 1) fails.push(`an unmet genre (${gs.unknown}) at ${gs.speedUnknown}, not 1`);
-    put('3 development', fails, [`abilities ${Object.keys(end).map((k) => `${k} ${start?.[k]}→${end[k]}`).join(', ')}`, `last pieces at their own levels against the start's: ${reps.map((r) => `${r.own}/${r.atStart}`).join(' ')}`, `genres known ${(e.genres as unknown[]).length}; ${gs ? `${gs.known} speed ${gs.speed}, unmet ${gs.unknown} ${gs.speedUnknown}` : 'none'}`, ...(fell.length ? [`fell: ${fell.map((k) => `${k} ${start[k]}→${end[k]}`).join(', ')} (stamina falls unworked: \`settleTheBody\`)`] : [])]);
+    put('3 development', fails, [`abilities ${Object.keys(end).map((k) => `${k} ${start?.[k]}→${end[k]}`).join(', ')}`, `last pieces at their own levels, then with what rose put back: ${reps.map((r) => `${r.own}/${r.atStart}`).join(' ')}`, `with what fell put back up: ${reps.filter((r) => r.fell).map((r) => `${r.own}→${r.fallsUndone} (${r.fell!.join(',')})`).join(' ') || 'nothing fell'}`, `first limits short of mastery: ${JSON.stringify(e.firstLimits)}`, `genres known ${(e.genres as unknown[]).length}; ${gs ? `${gs.known} speed ${gs.speed}, unmet ${gs.unknown} ${gs.speedUnknown}` : 'none'}`, ...(fell.length ? [`fell: ${fell.map((k) => `${k} ${start[k]}→${end[k]}`).join(', ')} (stamina falls unworked: \`settleTheBody\`)`] : [])]);
   }
 
   // 4. Advice.
@@ -966,6 +973,8 @@ function summarize(dir: string): void {
 function recheck(spec: Spec, stateDir: string, out: string): void {
   const sim = loadSave(deserialise(readFileSync(join(stateDir, `${spec.id}.save`), 'utf8')) as never);
   const { rec, st } = JSON.parse(readFileSync(join(stateDir, `${spec.id}.state.json`), 'utf8')) as { rec: Rec; st: PolicyState };
+  // The creation's counterfactual is made again too: it plays nothing, and reads only creation.
+  rec.counterfactual = counterfactual(spec, rec.creation as ReturnType<typeof creationRead>);
   rec.end = { ...(rec.end?.error ? { error: rec.end.error } : {}), ...finish(sim, rec) };
   rec.checks = checks(spec, sim, rec);
   rec.continuity = continuity(rec);
