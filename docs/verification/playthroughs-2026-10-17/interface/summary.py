@@ -36,7 +36,8 @@ for play in ['normal', 'setback', 'specialist']:
             'failed': [{'n': s['n'], 'name': s['name'], 'why': s.get('why')} for s in t['steps'] if not s['ok']],
             'exercised': {k: [s['n'] for s in t['steps'] if s['ok'] and k in s['exercises']] for k in SIX},
             'sixMissing': [k for k in SIX if not any(s['ok'] and k in s['exercises'] for s in t['steps'])],
-            'gameFrom': f"{t['steps'][0].get('date', '')} {t['steps'][0].get('clock', '')}".strip() if t['steps'] else '',
+            # The first step with the game's clock on the screen: a new life's first steps are the slots and creation.
+            'gameFrom': next((f"{s['date']} {s.get('clock', '')}".strip() for s in t['steps'] if s.get('date')), ''),
             'gameTo': f"{t['steps'][-1].get('date', '')} {t['steps'][-1].get('clock', '')}".strip() if t['steps'] else '',
             'dialogsGoneThrough': len(t.get('dialogs', [])),
             'errors': len(t.get('errors', [])),
