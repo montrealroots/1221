@@ -177,12 +177,15 @@ function IdPanel() {
   return (
     <Panel title="Your ID" subtitle={card ? card.card.name : 'None issued where you live'} help="documents.passport-id">
       <LookRegion className="col gap-3">
-        <div className="row gap-2" style={{ flexWrap: 'wrap' }}>
+        <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
           <Gated feature="documents.apply_idcard" className="btn btn-sm" disabled={Boolean(idNo)} title={idNo} onClick={() => {
             const a = run<{ expiresAt?: number; fee: number; readyAt?: number }>('documents.apply_idcard', {});
             // The day a card on its way comes, where it isn't handed over (from 2026-10-17: Connecticut mails it).
             if (a.ok) toast(`${card?.card.name ?? 'An ID card'}: you paid ${formatMoney(a.value!.fee, saveCurrency(sim.universe))}.${a.value!.readyAt ? ` The card comes ${formatDate(a.value!.readyAt, sim.zone)}.` : ''}${a.value!.expiresAt ? ` It’s good until ${formatDate(a.value!.expiresAt, sim.zone)}.` : ''}`, 'positive');
           }}>Get {card?.card.name ?? 'An ID Card'}</Gated>
+          {/* Why it's grayed, in words beside it (from 2026-10-17, brief 14's document journey): until then only its tooltip
+              said "One is already on its way." or "You already hold one in force.", which a phone never shows. */}
+          {idNo && <span className="xs dim">{idNo}</span>}
         </div>
         <DocumentList kinds={['idcard', 'license', 'idp']} />
         {/* Where the card's term is SLATE's assumption, said (from 2026-10-17, brief 12's KS-ct-idcard: until then only the guide said it). */}
