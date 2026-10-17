@@ -801,7 +801,7 @@
   "status": "Rewritten And Verified",
   "hash": "077f9dca15c6",
   "on": "2026-10-17",
-  "evidence": "docs/verification/language-2026-10-17/health/render-after-2.txt (London: a pharmacy chosen outside the United States)"
+  "evidence": "tests/carevisits.test.ts “fills an uninsured generic at its own cash price, and nothing else changes” (London refused, /only in the United States/); docs/verification/language-2026-10-17/health/render-after-2.txt (London: the refusal whole)"
  },
  "src/engine/systems/health.ts#registerHealth <health.dental>": {
   "status": "Rewritten And Verified",

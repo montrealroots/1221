@@ -47,6 +47,6 @@ describe('a pharmacy', () => {
     // A brand is the median still.
     expect(rxShareOf(p, true, sim.now, 'USD')).toBeGreaterThan(400_00);
     const ldn = life('uk-eng-london', 'rx-uk');
-    expect(ldn.execute({ kind: 'health.choose_pharmacy', payload: { chain: 'walmart' } }).error).toMatch(/only in America/);
+    expect(ldn.execute({ kind: 'health.choose_pharmacy', payload: { chain: 'walmart' } }).error).toMatch(/only in the United States/);
   });
 });

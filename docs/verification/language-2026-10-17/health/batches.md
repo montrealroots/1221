@@ -168,14 +168,14 @@ been moved to it) when the guide's test held it.
 - "You're out of status, so neither the marketplace nor Covered Connecticut will take you": no way back is named,
   because `mayEnroll` refuses both.
 
-**Tests updated (assertions kept as exact as before, titles unchanged):** 36 files, 193 lines changed for 193, every
+**Tests updated (assertions kept as exact as before, titles unchanged):** 37 files, 194 lines changed for 194, every
 file's count of each matcher the same as before (checked by script), every regex as narrow (the Appeal Won regex's stop
 escaped, as the old one's colon was literal): tests/carried, claims, clinics, commands-kept, costs, coverage-gaps-life,
 defects-g8-13, defects-g8-4, defects-g8-5, defects-g8-6, defects3-50-70, defects4, evidence-g01-life (its negative
 assertion moved to the new phrase, "Your share of its care", so it still says no cost is named), evidence-g02-life,
 evidence-g03-life, evidence-g04-life, evidence-g05-life, evidence-g07-life, evidence-g09-life, evidence-g16-papers
 (the papers area's), evidence-g30-ui, evidence2-b01, evidence2-b02, evidence2-b03, evidence2-b06, evidence3-lifepapers,
-guide-examples-papers (the papers area's), need-paths, remaining-09-hardship, remaining-09-journeys,
+guide-examples-papers (the papers area's), carevisits (found by the whole suite, below), need-paths, remaining-09-hardship, remaining-09-journeys,
 remaining-health-billing, remaining-health-eligibility, safetynet, scope-cover, scope-health, whynot-papers. The first
 session's mapping had also rewritten six historical comments in these files, which quote what the game said on their
 day; they were put back. No tool matcher held these words (`tools/acceptance-ui.mjs`, `tools/playthroughs-ui.mjs`: none).
@@ -207,6 +207,15 @@ tests/remaining-health-billing.test.ts after the rebilling notice went back to o
 Bills) and Home's notices, in the built app (The Built App, below). The labels the notices name (Book An Appointment,
 Call It Off, Pay It Off, Appeal It, Let It Go, Keep It Up, Request A Hardship Exception, Enroll, Apply For Assistance,
 Begin A Course Of 8, Drop The Plan) were found on `PapersWorkspace.tsx`, and Call In Sick on `SchoolWorkspace.tsx`.
+
+## The Whole Suite
+
+`npx vitest run > full-suite.txt 2>&1; echo "exit=$?" >> full-suite.txt` (in the session's scratchpad), on the tree of
+commit `8e129aa3`, on a machine shared with the other areas' runs: 376 files, 4,587 tests, 4,586 passed and 1 failed,
+exit 1, in 4,714 seconds. The one failure was an old word batch 2 hadn't reached: tests/carevisits.test.ts “fills an
+uninsured generic at its own cash price, and nothing else changes” held the pharmacy refusal by `/only in America/`,
+which is now `/only in the United States/`, as narrow; that file again, 3 of 3, exit 0. So all 4,587 pass on this
+branch's last commit.
 
 ## The Built App
 
