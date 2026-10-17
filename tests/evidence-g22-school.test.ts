@@ -151,13 +151,13 @@ const noteSentence = (nights: Partial<Record<'off' | 'solid' | 'strong' | 'remar
   const all = Object.entries(nights) as [keyof typeof value, number][];
   const n = all.reduce((s, [, c]) => s + c, 0);
   const mean = all.reduce((s, [b, c]) => s + value[b] * c, 0) / n;
-  return mean >= 1.25 ? 'Remarkable work: you held the house night after night, and it’s been noticed.'
-    : mean >= 0.5 ? 'Strong, reliable work. The part was yours by the second night.'
-      : mean >= -0.25 ? 'Solid, sound nights. The next step is to risk more in them.'
-        : 'Uneven. Some nights got away from you: come in rested, and have the part in your body before the house does.';
+  return mean >= 1.25 ? 'Remarkable work, night after night.'
+    : mean >= 0.5 ? 'Strong, reliable work across the run.'
+      : mean >= -0.25 ? 'Solid, sound nights. The next step is to take more risks in them.'
+        : 'Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.';
 };
 /** The note in full: the sentence, and what held the nights back most where something did. */
-const noteFor = (nights: Parameters<typeof noteSentence>[0]) => new RegExp(`^${escape(noteSentence(nights))}( Work on your [a-z -]+: it held the nights back most\\.)?$`);
+const noteFor = (nights: Parameters<typeof noteSentence>[0]) => new RegExp(`^${escape(noteSentence(nights))}( Work on your [a-z -]+: it held your nights back most\\.)?$`);
 /** The nights as the Casting tab lists them, strongest first. */
 const nightsWords = (nights: Partial<Record<'off' | 'solid' | 'strong' | 'remarkable', number>>) =>
   (['remarkable', 'strong', 'solid', 'off'] as const).filter((b) => nights[b]).map((b) => `${{ remarkable: 'Remarkable', strong: 'Strong', solid: 'Solid', off: 'Off' }[b]} ${nights[b]}`).join(', ');
@@ -767,7 +767,7 @@ describe('school.orientation (kind)', () => {
     expect(back.execute({ kind: 'school.orientation', payload: { task: 'tour' } }).error).toBe('Done on August 28, 2026.');
     // The library known: what refuses the research now is the work's own order, not the building.
     const ctx = courseworkOf(back, back.player)!.assignments.find((x) => x.id === context.id)!;
-    expect(back.execute({ kind: 'school.prepare', payload: { assignmentId: ctx.id, activity: 'research' } }).error).toBe('Read the play first: research needs questions.');
+    expect(back.execute({ kind: 'school.prepare', payload: { assignmentId: ctx.id, activity: 'research' } }).error).toBe('Read the play first. You need questions before you can research it.');
   }, 60_000);
 });
 

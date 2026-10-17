@@ -234,16 +234,16 @@ describe('PLAYER JOURNEY: a way at a note put back', () => {
     const change = ways.find((o) => o.adjustment === 'beat-way')!;
     expect(change).toBeDefined();
     const html = () => { h.sim = sim; return renderToStaticMarkup(createElement(RehearsalProcess, { casting: sim.player.school!.casting! as Holder, which: 'school' })).replace(/<!-- -->/g, ''); };
-    expect(html()).toContain('aria-label="A Way At The Note"');
+    expect(html()).toContain('aria-label="A Way To Work On The Note"');
     // Worked a way that changes how it's played, then put back.
     sim.must({ kind: 'school.work_note', payload: { solution: change.adjustment, option: change.option } });
-    expect(html()).not.toContain('aria-label="A Way At The Note"');
+    expect(html()).not.toContain('aria-label="A Way To Work On The Note"');
     sim.must({ kind: 'work.settle', payload: { piece: 'part:school', keep: false } });
     expect(reworkable(proc(sim))).toBe(true);
     const left = solutionsOf(workPiece(sim, sim.player, 'part:school'), note);
     expect(left.some((o) => o.adjustment === change.adjustment && o.option === change.option)).toBe(false);
     const markup = html();
-    const select = markup.match(/<select aria-label="A Way At The Note"[^>]*>(.*?)<\/select>/)?.[1];
+    const select = markup.match(/<select aria-label="A Way To Work On The Note"[^>]*>(.*?)<\/select>/)?.[1];
     expect(select).toBeDefined();
     expect([...select!.matchAll(/<option[^>]*>([^<]*)<\/option>/g)].map((m) => m[1])).toEqual(left.map((o) => o.label));
     expect(markup).toContain(`Work On The Note: ${left[0]!.label}`);

@@ -825,7 +825,7 @@ async function specialist() {
   await step('Nordic Noir’s brief: the scene, what the take weighs, its readings; Tape It refused until a reading is chosen', ['unavailable'], async () => {
     await openBrief('Nordic Noir');
     const text = clean(await briefPane().innerText());
-    for (const want of ['The Scene', 'What The Take Weighs', 'Your Reading']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
+    for (const want of ['The Scene', 'What The Tape Is Judged On', 'Your Reading']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
     const tape = briefPane().getByRole('button', { name: /^Tape It/ }).first();
     const why = await refused(tape, async () => (/Choose a reading first\./.test(clean(await briefPane().innerText())) ? 'Choose a reading first.' : ''));
     await shot('brief-before-the-take');
@@ -846,7 +846,7 @@ async function specialist() {
     const side = re === 'suits' ? 'Restrained' : ex === 'suits' ? 'Expansive' : '';
     must(side, `neither side of the scale suits the scene: Restrained ${re}, Expansive ${ex}`);
     await row(side).locator('input[type=radio]').check(); cur.pressed.push(`${side} (the side that suits)`); await wait(300);
-    const mark = clean(await briefPane().innerText()).match(/This one is complete at (\d+)% rehearsed in: ([^.]+)/);
+    const mark = clean(await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
     must(mark && /with the grain/.test(mark[2]), `the side’s mark isn’t said with the grain: ${mark?.[0]}`);
     said(mark[0]);
     said(await briefButton(/^Play It This Way$/));

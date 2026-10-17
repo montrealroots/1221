@@ -12,7 +12,7 @@ import { instantFromZoned } from '@/engine/core/time';
 import { PREP_DIMS } from '@/engine/content/coursework';
 import { courseworkOf, feedbackWords, mateBusy, meetingWeight, meetingsFrom, noteText, questionsFor, remedyWords, revisitWords, setWork, type Assignment } from '@/engine/systems/coursework';
 import { chiefLimit, type Limit } from '@/engine/systems/evaluation';
-import { shortTermWords, type SchoolRecord } from '@/engine/systems/school';
+import { directorsNote, shortTermWords, teachersNotes, type SchoolRecord } from '@/engine/systems/school';
 
 const out: string[] = [];
 const say = (head: string, s: string | undefined) => out.push(`${head}: ${s ?? '(nothing)'}`);
@@ -110,4 +110,16 @@ for (let d = 24; d <= 31 + 21; d += 1) {
   fresh.advanceTo(instantFromZoned({ year: 2026, ...day, hour: 23 }, zone));
 }
 for (const n of fresh.universe.notifications) { if (seen2.has(n.id)) continue; seen2.add(n.id); if (n.category === 'school') out.push(`MONTH ${n.title}\n    ${n.body}`); }
+
+// 6. The director's note on a run, by how its nights went (directorsNote), and the teachers' notes on a term (teachersNotes).
+for (const mean of [1.5, 0.8, 0, -1]) say(`director's note, nights averaging ${mean}`, directorsNote(mean));
+const t = fresh.player.school!.tally;
+if (t.classCraftAtStart) {
+  const base = { ...fresh.player.craft! };
+  for (const [name, by] of [['ahead', 6], ['in step', 0.4], ['behind', -0.01]] as const) {
+    fresh.player.craft = Object.fromEntries(Object.entries(t.craftAtStart).map(([k, v]) => [k, (v as number) + (by === 0.4 ? (base[k as keyof typeof base]! - (v as number)) : by)])) as never;
+    for (const n of teachersNotes(fresh.player, 0).slice(0, 3)) say(`teacher's note, ${name}, ${n.course}`, n.note);
+  }
+  fresh.player.craft = base;
+}
 console.log(out.join('\n'));

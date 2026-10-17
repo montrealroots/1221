@@ -90,7 +90,7 @@ describe('a Rep understudy’s part', () => {
     expect(rep.kind).toBe('understudy');
     expect(rep.size).toBeUndefined();
     // The casting notice reads in American spelling (the spelling defect, below).
-    expect(sim.universe.notifications.find((n) => n.title.startsWith('Cast: '))?.body).toMatch(/Once cast, you fulfill the casting\.$/);
+    expect(sim.universe.notifications.find((n) => n.title.startsWith('Cast: '))?.body).toMatch(/Once cast, you play the part through the run, and a missed call counts against you\.$/);
     const run = repCalls(sim, 'runthrough')[0]!;
     expect(run).toBeDefined();
     tended(sim, run.at - MS_HOUR);
@@ -220,8 +220,8 @@ describe('a side’s stamina in a piece judged in its movements', () => {
     const row = (html: string) => html.split('<tr').find((r) => r.includes('<strong>Driven</strong>'))?.match(/<td class="xs">([^<]*)<\/td>/)?.[1];
     const chooser = (e: Evaluation) => () => createElement(PlayingChooser, { preview: () => e, feature: 'school.choose_part_playing', onChoose: () => undefined });
     expect(row(markup(sim, chooser(piece)))).toBe('Adaptability');
-    expect(drawn(sim, chooser(piece))).toContain('Judged in its movements, the work reads stamina only as tiring late in it');
+    expect(drawn(sim, chooser(piece))).toContain('Judged movement by movement, the piece only counts stamina as tiring late in it');
     expect(row(markup(sim, chooser(whole)))).toBe('Adaptability, Stamina');
-    expect(drawn(sim, chooser(whole))).not.toContain('Judged in its movements');
+    expect(drawn(sim, chooser(whole))).not.toContain('Judged movement by movement');
   });
 });

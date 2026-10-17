@@ -78,7 +78,7 @@ describe('the last term', () => {
     shortTerm(sim);
     expect(evaluate(sim, sim.player, 5)!.standing).toBe('concern');
     expect(sim.universe.scheduled.some((i) => i.kind === COMMENCEMENT_KIND && i.status === 'pending')).toBe(true);
-    expect(sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern')!.body).toMatch(/doesn’t stand in the way of the degree/);
+    expect(sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern')!.body).toMatch(/doesn’t stand in the way of your degree/);
   });
 });
 

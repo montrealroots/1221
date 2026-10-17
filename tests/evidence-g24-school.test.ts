@@ -292,7 +292,7 @@ describe('classmate trust/bonds', () => {
     go(sim, 'school.respond', { momentId: m.id, choice: 'respect' });
     expect(personOf(mateOf(sim, work(sim, a.id))).boundary).toBeDefined();
     const now = sim.now;
-    expect(ask(sim, a.id, now + 24 * MS_HOUR - 60_000)).toEqual({ accepted: false, reason: 'Hannah asked to be asked a day ahead, after last time.' });
+    expect(ask(sim, a.id, now + 24 * MS_HOUR - 60_000)).toEqual({ accepted: false, reason: 'Hannah wants a day’s notice after last time. Ask for an evening at least a day ahead.' });
     expect(work(sim, a.id).rehearsals.filter((r) => r.status === 'booked')).toEqual([]);
     expect(ask(sim, a.id, now + 24 * MS_HOUR)).toMatchObject({ accepted: true });
     expect(work(sim, a.id).rehearsals.filter((r) => r.status === 'booked').map((r) => r.at)).toEqual([now + 24 * MS_HOUR]);
@@ -452,7 +452,7 @@ describe('casting (castFit/castScore)', () => {
     expect(text).toContain(`You ${y.fit.toFixed(1)} ${Math.round(y.delivery * 100)}% -2 ${y.score.toFixed(1)} Barbara Undershaft`);
     const sam = row(K, 'Samuel Park');
     expect(text).toContain(`Samuel Park ${sam.fit.toFixed(1)} ${Math.round(sam.delivery * 100)}% ${sam.balance > 0 ? `+${sam.balance}` : sam.balance} ${sam.score.toFixed(1)} ${sam.part}`);
-    expect(text).toContain(`Your ${Math.round(y.delivery * 100)}% delivered is read from The Seagull, Yale Rep, 1 night`);
+    expect(text).toContain(`Your ${Math.round(y.delivery * 100)}% delivered comes from The Seagull, Yale Rep, 1 night`);
   });
 });
 
@@ -505,7 +505,7 @@ describe('standing/term evaluation', () => {
     // Both cast in the spring's School production all the same: the pool is the castable, not the good.
     for (const s of [plain, done]) expect(s.player.school!.casting).toMatchObject({ production: CARLOTTA });
     for (const s of [plain, done]) s.advanceTo(at(2027, 2, 1, 12));
-    expect(no(plain, 'school.summer_cabaret')).toBe('The Summer Cabaret’s company takes a student in good standing.');
+    expect(no(plain, 'school.summer_cabaret')).toBe('The Summer Cabaret only takes students in good standing.');
     expect(go<{ from: number }>(done, 'school.summer_cabaret').from).toBe(at(2027, 6, 4, 13));
   });
 
@@ -575,13 +575,13 @@ describe('standing/term evaluation', () => {
     const plain = fallAsItComes();
     const [review] = plain.player.school!.history;
     const { text } = drawn(plain, SchoolWorkspace, 'standing');
-    expect(text).toContain('Evaluations');
+    expect(text).toContain('Term Reviews');
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${review!.growth.toFixed(1)} ${review!.classGrowth.toFixed(1)} ${review!.coursework ? `${review!.coursework.unready} of ${review!.coursework.shown} unready or not shown` : 'None counted'} ${review!.reason}`);
+    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${review!.growth.toFixed(1)} ${review!.classGrowth.toFixed(1)} ${review!.coursework ? `${review!.coursework.unready} of ${review!.coursework.shown} Unready or not shown` : 'None counted'} ${review!.reason}`);
     const done = fallWorked();
     const ok = done.player.school!.history[0]!;
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(drawn(done, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${ok.growth.toFixed(1)} ${ok.classGrowth.toFixed(1)} ${ok.coursework ? `${ok.coursework.unready} of ${ok.coursework.shown} unready or not shown` : 'None counted'} ${ok.reason}`);
+    expect(drawn(done, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${ok.growth.toFixed(1)} ${ok.classGrowth.toFixed(1)} ${ok.coursework ? `${ok.coursework.unready} of ${ok.coursework.shown} Unready or not shown` : 'None counted'} ${ok.reason}`);
   });
 });
 
@@ -777,12 +777,12 @@ describe('notes and feedback', () => {
     // Working until 2026-10-16; the craft set so Character Work holds it (`characterHolds`) shows it Strong.
     expect(text).toContain(`Feedback: ${BAND_LABEL[shown.band]}, ${Math.round(shown.score * 100)} Of 100 · A New Note`);
     expect(text).toContain('It asked for more character work than you have yet. That’s what to build in class over the next few weeks.');
-    expect(text).toContain('Character Work · Given 1 time');
+    expect(text).toContain('Character Work · Given once, on ');
     for (let day = 19; day <= 25; day += 1) { sim.advanceTo(at(2026, 10, day, 19)); dials(sim); go(sim, 'practice.exercise', { exercise: 'character-work' }); }
     sim.advanceTo(at(2026, 10, 26, 15, 30));
     ({ text } = drawn(sim, CourseworkPane));
     expect(text).toContain(`Note Taken, Shown Again ${{ unready: 'Unready', working: 'Working', strong: 'Strong', exceptional: 'Exceptional' }[work(sim, a.id).revision!.band!]}`);
-    expect(text).toMatch(/Character Work · Given 1 time, first [^·]+ Taken /);
+    expect(text).toMatch(/Character Work · Given once, on [^·]+ Taken /);
     // The objective a note put first, on the third scene's card.
     const third = probeAug28();
     third.advanceTo(at(2026, 9, 22, 15, 30));
@@ -858,7 +858,7 @@ describe('preparation dims', () => {
     for (let i = 0; i < 2; i += 1) { dials(sim); go(sim, 'school.prepare', { assignmentId: a.id, activity: 'read' }); }
     dials(sim);
     let { text } = drawn(sim, CourseworkPane);
-    expect(text).toContain('Lines 0% Counts for');
+    expect(text).toContain('Lines 0% Note priority');
     const learn = buttons('school.prepare', 'Learn Lines');
     expect(learn.length).toBeGreaterThan(0);
     expect(learn[0]!.disabled).toBe(false);
@@ -868,7 +868,7 @@ describe('preparation dims', () => {
     // The Cherry Orchard's fourth act is a short scene: its lines take 45 minutes.
     expect(toasts).toEqual([`Learn Lines: 45 minutes, Lines up ${pct}%.`]);
     ({ text } = drawn(sim, CourseworkPane));
-    expect(text).toContain(`Lines ${pct}% Counts for`);
+    expect(text).toContain(`Lines ${pct}% Note priority`);
   });
 });
 

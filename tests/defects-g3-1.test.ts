@@ -155,7 +155,7 @@ describe('a brief’s What To Work On', () => {
     const html = pane(sim, 'drama', 'brief-drama');
     expect(html).not.toContain('data-practice="condition:');
     expect(html).not.toContain('>What To Work On<');
-    expect(html).not.toContain('(0% of the work)');
+    expect(html).not.toContain('(0% of what its tape is judged on)');
   });
 
   it('still names an ability or technique that cost the work, with its practice', () => {

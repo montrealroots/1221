@@ -122,7 +122,7 @@ describe('The Classes tab, a year behind or past the sixth term', () => {
     expect(text).toContain(`Your Week, ${termLabel(6)}`);
     expect(text).toContain('Year 3: nine to three on class days');
     expect(sorted(weekNames(html))).toEqual(sorted(timetableNames(3, 'fall')));
-    expect(text).toContain(`This term’s classes run ${formatDate(instantFromZoned({ ...classPeriod(6).from, hour: 12 }, zone), zone)}`);
+    expect(text).toContain(`This term’s classes run from ${formatDate(instantFromZoned({ ...classPeriod(6).from, hour: 12 }, zone), zone)}`);
   });
 
   it('in an additional term, shows only the courses retaken, on their own days, as `coursesFor` schedules them', () => {

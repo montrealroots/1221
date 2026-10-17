@@ -653,17 +653,17 @@ describe('standing/term evaluation', () => {
     expect(driven.player.school!.standing).toBe('concern');
     // The Standing tab, as the player has it.
     const { text } = drawn(driven, SchoolWorkspace, 'standing');
-    expect(text).toContain('Evaluations');
+    expect(text).toContain('Term Reviews');
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${b!.growth.toFixed(1)} ${b!.classGrowth.toFixed(1)} ${b!.coursework ? `${b!.coursework.unready} of ${b!.coursework.shown} unready or not shown` : 'None counted'} ${b!.reason}`);
+    expect(text).toContain(`Fall Term 2026 Academic Concern 100% ${b!.growth.toFixed(1)} ${b!.classGrowth.toFixed(1)} ${b!.coursework ? `${b!.coursework.unready} of ${b!.coursework.shown} Unready or not shown` : 'None counted'} ${b!.reason}`);
     // The Evaluations table’s Coursework column, the review’s own count, from 2026-10-16 (tests/remaining-school-term.test.ts).
-    expect(drawn(plain, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${a!.growth.toFixed(1)} ${a!.classGrowth.toFixed(1)} ${a!.coursework ? `${a!.coursework.unready} of ${a!.coursework.shown} unready or not shown` : 'None counted'} ${a!.reason}`);
+    expect(drawn(plain, SchoolWorkspace, 'standing').text).toContain(`Fall Term 2026 Good Standing 100% ${a!.growth.toFixed(1)} ${a!.classGrowth.toFixed(1)} ${a!.coursework ? `${a!.coursework.unready} of ${a!.coursework.shown} Unready or not shown` : 'None counted'} ${a!.reason}`);
     // What the standing gates: the Rep's understudy at the spring's casting, and the Summer Cabaret's company.
     for (const s of [plain, driven]) s.advanceTo(at(2027, 1, 4, 9, 1));
     expect(plain.player.school!.rep).toMatchObject({ production: 'The Seagull', role: 'Nina', kind: 'understudy' });
     expect(driven.player.school!.rep).toBeUndefined();
     for (const s of [plain, driven]) s.advanceTo(at(2027, 2, 1, 12));
-    expect(no(driven, 'school.summer_cabaret')).toBe('The Summer Cabaret’s company takes a student in good standing.');
+    expect(no(driven, 'school.summer_cabaret')).toBe('The Summer Cabaret only takes students in good standing.');
     expect(go<{ from: number }>(plain, 'school.summer_cabaret').from).toBe(at(2027, 6, 4, 13));
   }, 60_000);
 });
@@ -702,8 +702,8 @@ describe('preparation dims', () => {
     expect([...new Set(four.kept.map((x) => `${x.id} ${x.source}`))]).toEqual(['focus prepare:familiarity']);
     expect(four.familiarity).toBeGreaterThan(two.familiarity);
     // The Coursework tab's figure for the part, as each twin has it before the meeting.
-    expect(drawn(four.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(four.familiarity * 100)}% Counts for`);
-    expect(drawn(two.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(two.familiarity * 100)}% Counts for`);
+    expect(drawn(four.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(four.familiarity * 100)}% Note priority`);
+    expect(drawn(two.s, CourseworkPane).text).toContain(`Knows The Scene ${Math.round(two.familiarity * 100)}% Note priority`);
     for (const t of [four, two]) toMeeting(t.s, '2026-09-08');
     const [f] = shownRecords(four.s, work(four.s, four.id));
     const [n] = shownRecords(two.s, work(two.s, two.id));

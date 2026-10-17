@@ -39,7 +39,7 @@ the review, kept on warning by a faculty review: keep you on academic warning
 partner busy, too early: Ethan won’t rehearse before 7 in the morning or after 10 at night.
 partner busy, in class: Ethan is in class until three.
 NOTICE Welcome To The Class Of 2029
-    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with fifteen others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes from August 31, 2026 at 9 a.m.
+    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with the 15 others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
 NOTICE Acting I: Scene Study
     Trifles, the one act, the Wright kitchen. You play Mrs. Hale, and Ethan Kim plays Mrs. Peters. Put Knows The Scene first: it counts for more when this piece is shown. It’s due in class on September 14, 2026.
 NOTICE Shown: Scene Study, Unready
@@ -81,7 +81,7 @@ a note on the partner part, 2 kept, 1 with a reader: The two of you weren’t pl
 a note on the partner part, 3 kept, 3 with a reader: The two of you weren’t playing the same scene yet: it needed time together. You and Sofia had rehearsed together 3 times. You ran it with a reader 3 times. (With Your Partner: 10% prepared.) You played Mrs. Hale in Trifles.
 meetings left: 38
 MONTH Welcome To The Class Of 2029
-    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with fifteen others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes from August 31, 2026 at 9 a.m.
+    You’re one of the 16 actors in the MFA in Acting at the David Geffen School of Drama at Yale University, chosen from this year’s auditions with the 15 others you’ll be cast beside and against. Tuition is covered, as it is for every student. The fall term begins with registration, then orientation until August 29, 2026, and classes start on August 31, 2026, at 9 a.m.
 MONTH Fall Term 2026 Begins
     Tuition, $20,375.00 a term, is covered by the tuition scholarship. Yale’s aid for living costs goes by need, and none was found, so this term’s Yale Health plan, $1,882.00, was paid from your bank, and living costs are yours.
 MONTH Registration And Your Account
@@ -172,3 +172,16 @@ MONTH Play: A Game Played Through
     An improvised game played in class. Put Built On first: it counts for more when this piece is shown. It’s due in class on October 8, 2026.
 MONTH Shown: Scene Study, Unready
     Unready again, as on the course’s last piece, shown September 8, 2026. Simulated note from Acting I: You had the same note in Acting I on September 8, 2026, and it’s still there. The lines weren’t secure, so the attention went to remembering, not to the other person. (Lines: 0% prepared.) You played Mrs. Peters in Trifles.
+director's note, nights averaging 1.5: Remarkable work, night after night.
+director's note, nights averaging 0.8: Strong, reliable work across the run.
+director's note, nights averaging 0: Solid, sound nights. The next step is to take more risks in them.
+director's note, nights averaging -1: Uneven: some nights got away from you. Come in rested, and have the part in your body before the house does.
+teacher's note, ahead, Acting I: Real progress this term: you’re pulling ahead of the class in scene study, character work and emotional depth.
+teacher's note, ahead, Voice I: Real progress this term: you’re pulling ahead of the class in vocal expression.
+teacher's note, ahead, Speech And Accents I: Real progress this term: you’re pulling ahead of the class in speech, and accents and dialects.
+teacher's note, in step, Acting I: Real progress this term: you’re pulling ahead of the class in scene study, character work and emotional depth.
+teacher's note, in step, Voice I: Steady work, in step with the class. Keep at your vocal expression.
+teacher's note, in step, Speech And Accents I: Steady work, in step with the class. Keep at your speech, and accents and dialects.
+teacher's note, behind, Acting I: You’ve grown less than the class in scene study, character work and emotional depth this term. Come to class rested, and do the work between classes.
+teacher's note, behind, Voice I: You’ve grown less than the class in vocal expression this term. Come to class rested, and do the work between classes.
+teacher's note, behind, Speech And Accents I: You’ve grown less than the class in speech, and accents and dialects this term. Come to class rested, and do the work between classes.

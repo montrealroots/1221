@@ -137,7 +137,7 @@ function AssignmentCard({ a }: { a: Assignment }) {
           </div>
         )}
         <div className="grid grid-3">
-          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Counts for ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
+          {dims.map((d) => <Stat key={d} label={t.dims[d]!.label} value={pct(parts[d] ?? 0)} note={`Note priority ${pct(weights[d] ?? 0)}; complete at ${pct(EVALUATION.complete.coursework)}`} />)}
         </div>
         {/* What the showing would make of it today (from 2026-10-16, `showingForecast`): until then a part at nothing that
             "weighed 15%" said nothing of holding the dimensions that read it to a third of themselves. */}
@@ -312,7 +312,7 @@ function NotesLedger() {
       <div className="col gap-1">
         {sorted.map((n) => (
           <div key={n.key} className="row-between small">
-            <span>{noteSubject(n.key)} <span className="xs dim">· Given {n.given} {n.given === 1 ? 'time' : 'times'}, first {dayOfKey(n.first)}, last {dayOfKey(n.last)}</span></span>
+            <span>{noteSubject(n.key)} <span className="xs dim">· {n.given === 1 ? `Given once, on ${dayOfKey(n.first)}` : `Given ${n.given === 2 ? 'twice' : `${n.given} times`}, first ${dayOfKey(n.first)}, last ${dayOfKey(n.last)}`}</span></span>
             <span className="xs">{n.status === 'resolved' ? `Taken ${dayOfKey(n.resolvedOn!)}` : n.history.at(-1)?.kind === 'partial' ? 'Better, Not There Yet' : 'Open'}</span>
           </div>
         ))}

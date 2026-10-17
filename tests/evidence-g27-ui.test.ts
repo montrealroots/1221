@@ -234,7 +234,7 @@ describe('c-performerTitle', () => {
     // Trifles writes its leads for two actresses: the actor's part in it is a supporting one, the actress's a lead.
     expect(partOf(SUMMER_PLAYS, 'Trifles', 'Mrs Hale')).toMatchObject({ size: 'lead', for: 'actress' });
     // Joined once: asked again, refused in its words, the parts as they were, through a reload.
-    expect(her.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re in this summer’s company.');
+    expect(her.execute({ kind: 'school.summer_cabaret', payload: {} }).error).toBe('You’re already in this summer’s company.');
     const kept = reload(her);
     expect(kept.player.performerTitle).toBe('actress');
     expect(shows(kept)).toEqual(shows(her));

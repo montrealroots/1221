@@ -93,6 +93,6 @@ describe('original material, through the work', () => {
     show(sim, sim.player, a, '2026-10-01', sim.now);
     expect(a.feedback!.focus).toEqual({ kind: 'choice', question: q.q.id });
     expect(a.feedback!.text).toContain(q.options.find((o) => !o.supported)!.why!);
-    expect(a.feedback!.text).toContain(`As ${scene.roles[a.role!].name} in ${scene.play}.`);
+    expect(a.feedback!.text).toContain(`You played ${scene.roles[a.role!].name} in ${scene.play}.`);
   });
 });

@@ -321,7 +321,7 @@ describe('what the record makes of it', () => {
     go(sim, 'brief.choose', { brief: 'brief-drama', reading: 'guarded' });
     go(sim, 'practice.self_tape', { genre: 'drama' });
     const s = suggestions(sim.player);
-    const fresh = s.findIndex((x) => /knows least/.test(x.why));
+    const fresh = s.findIndex((x) => /is the genre you know least/.test(x.why));
     const again = s.findIndex((x) => /another reading/.test(x.why));
     expect(fresh).toBeGreaterThanOrEqual(0);
     expect(again).toBeGreaterThan(fresh);

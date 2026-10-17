@@ -116,3 +116,280 @@ school subsystem 159 to 152. The test files above, run together: see the batch's
 
 **Screens.** The Coursework tab is drawn by the tests above (`drawn(sim)` on the workspace: the Orientation panel, a
 piece's card, Rehearsing With, Your Partners, the note and Your Notes). The built app's walk is the area's last step.
+
+## Batch 2: The School's Notices, Leave, Courses, Classmates, Briefs And The Work-Through
+
+**Sources:** the rest of `src/engine/systems/school.ts` (all 54 and `shortTermWords`), all of
+`src/engine/systems/courserecord.ts` (9), `leave.ts` (43), `classmates.ts` (26), `production.ts` (7), `briefs.ts`
+(13), `playreading.ts` (8), `workbook.ts` (12), `workpieces.ts` (4), `ensemble.ts` (2), `piece.ts` (2),
+`material.ts` (1), `systems/workload.ts` (3), `content/concerns.ts` (1) and `content/workload.ts` (2).
+
+**What changed.**
+- *Refusals* say the obstacle, then what's possible: “You can’t take part in the Cabaret while you’re on academic
+  warning.”, “There’s no Cabaret week left this term that’s at least three weeks away and clear of your recesses and
+  calls.”, “Today’s classes are over, so calling in sick now wouldn’t excuse anything.”, “It costs $X, and your bank
+  can’t cover it. You haven’t been charged.”, “You can ask to repeat a year only at its end, after the spring’s term
+  review.” “Evaluation” became “term review” throughout, as the glossary has it.
+- *The casting pool*: “Missed calls this term: the chair takes you out of the casting pool to reacquire the
+  discipline…” became “You’ve missed two calls this term, so the chair of Acting has taken you out of the casting pool.
+  You still play what you’re cast in now, but you won’t be cast again until a term review finds you in good standing.”
+  The count is `ESTIMATE.missedCallsOut`'s.
+- *Notes from the faculty and directors*: the teachers' term notes name every skill the course trains, as their growth
+  is measured over all of them, where they named the first alone; “the room” is “the class”. The director's note on a
+  run lost two observations the game doesn't make (“it’s been noticed”, “The part was yours by the second night”).
+- *Courses*: a Fail is “You didn’t pass Clown: you came to 7 of the 11 classes you weren’t excused from.” An Incomplete
+  names its button (Make Up A Session, on the Standing tab) and Ask For A Month More.
+- *Leave*: the six sentences that named SLATE inside them (“SLATE’s estimate”, “SLATE’s faculty model”, “SLATE’s
+  office”, “which SLATE can’t play”) say “estimated” or “the decision is the game’s”; two titles that said only
+  “Refused” say “Isn’t Granted”, with the reason in the body as before.
+- *Partners and classmates*: a missed evening says what it cost (“It cost some of their trust, and they’ll remember it.
+  You can make amends under Your Partners.”), a boundary says what to do (“Ask for an evening at least a day ahead.”).
+- *A self-tape's refusals and suggestions* and *the play reading*: “Choose a reading first. A self-tape plays the scene
+  one way, so decide which before the camera rolls.”; “the genre you know least” for “the genre your work knows least”;
+  “You read it again. Your last read was …”.
+- *Work It Through* (`workbook.ts`): each problem in plain sentences, the qualities by their screen names, “Working on
+  it trains it a little, and playing one part of the scene another way can lean on a different ability.” where it said
+  “a segment played another way draws on something else”.
+- *An evening's workload* (`workloadWords`): the same figures, said as demands (“Its physical demand is 2 of 3 and its
+  vocal demand 1 of 3, an intensity of 1.40, so its workload is …”).
+- *Running times*: three sources that opened on “SLATE’s estimate” open on “Estimated”.
+- *Lists*: a list whose item has an “and” of its own takes a comma before the last (“speech, and accents and
+  dialects”), in the teachers' notes and the strengths of a showing.
+
+**What stayed.** The standings' names and the notices' titles (A Notice Of Academic Concern, Academic Warning and the
+rest), ledger memos and account names (Scholarship, Tax Withheld, Wages: statements read them), the classmates' names,
+the in-world lines of classmates, directors and partners (in their voices, and already specific), “There’s nothing at
+school today to miss.” (the Classes tab compares it, `SchoolWorkspace.tsx`), “Not from a hospital bed.” (the same
+refusal in eight systems and five guides), the term-begins notices (plain, and asserted exactly in eleven tests), and
+the concerns' words (the genre looks show them; their `principle` lines no screen reads).
+
+**Meaning-sensitive changes, and how each was checked.**
+- *Out of the casting pool until a term review finds you in good standing*: `evaluate` sets `castable` where the term
+  isn't short, which is where it returns good standing (`!short ? 'good'`); the old words said “a good evaluation”.
+- *Teachers' notes over every skill*: `teachersNotes` already measured the mean over `c.skills`; only the naming moved.
+  Rendered for ahead, in step and behind (`rendered.txt`).
+- *The director's note*: same four bands by the same means (`directorsNote`), rendered; the words lost only what no
+  record holds.
+- *“You haven’t been charged”* on the protective equipment (“Nothing was charged” at first; the tics check holds sentences opening on “Nothing” at none): `buyPpe` charges only where the bank covers it, and the refusal
+  is thrown before it.
+- *Leave decisions “the game’s”*: the aid office's and the faculty's decisions in `leave.ts` are the game's own rules
+  where the Bulletin sets none, as the comments there say; the words say so without naming SLATE mid-sentence.
+
+**Tests updated:** casting, classmate-moments, decisions-stamina, defects-g8-12, evidence-g18/g19/g20/g21/g22/g23/g24/
+g25/g26-school, evidence-g31-ui, evidence2-b07, evidence2-b08, evidence2-b09, evidence3-school, guide-examples-
+coursework, guide-examples-productions, leave, need-paths, playreading, remaining-09-journeys, remaining-school,
+school, school-everyday, scope-school, whynot-school, whynot-studyplan, and four more of the life files that call the
+School's sick and shift refusals (evidence-g05/g06/g07-life, defects-g8-1, defects-g8-14). A literal shared with
+another area's code was caught and put back: “Pay something.” is also the tax area's, so the four tax tests a first
+pass changed were restored, and only `tests/leave.test.ts` asserts the School's new words. **Tool matchers:**
+`tools/acceptance-ui.mjs` (a part's way of playing, “rehearsed to N%”).
+
+## Batch 3: The School Screen, Its Looks And Its Panels
+
+**Sources:** all of `src/ui/workspaces/SchoolWorkspace.tsx` (20), `src/ui/looks/school.tsx` (4), `looks/classmate.tsx`
+(1), `src/ui/components/StudyPlanPanels.tsx` (8), `BriefPane.tsx` (6), `PlayingChooser.tsx` (5),
+`RehearsalProcess.tsx` (4), `WorkThrough.tsx` (3), `ClassMoments.tsx` (1), and the Coursework card's share again
+(`CourseworkPane.tsx`).
+
+**What changed.**
+- *The Standing tab* says what the review does in sentences a player can act on: “At the term review, a term falls
+  short if your attendance or your growth is under its minimum, if a run on stage went mostly off, if you fail a course,
+  or if half or more of your coursework due was Unready or not shown … A term that falls short moves your standing one
+  step: from good standing to academic concern, then to academic warning, then to dismissal.” A failed course was
+  missing from the list it gave (`evaluate`'s `failedNow`). The figures' notes say “You need 90% or more” where they
+  said “90% is the floor”, and the growth figure names the class's middle student.
+- *Source lines* (“Fine”) open on “Source:” where a source is named, and say “estimated” where SLATE's estimate was
+  named mid-sentence: twenty-two places across the screen and its panels.
+- *Choosing a way of playing* (`PlayingChooser`) teaches the brief's distinction: “Choosing a way to play it isn’t
+  rehearsing it: once you choose, work on your feet rehearses it.” The rehearsing is said as how far it's gone (“You’ve
+  rehearsed your current choice to 40% so far (it’s complete at 90%)”), and suiting the scene replaces the grain (“it
+  suits the scene, so it asks less”). The table's “Axis” and “What It Draws On” are “Aspect” and “Abilities It Uses”.
+- *The part's share* was “Weighs” and, on batch 1, “Counts for”; it chooses the teacher's note and reaches no result
+  (`noteCandidates`, and the look's own source line), so it's “Note priority” on the card and “Note Priority” on the
+  look. Batch 1's “Counts for” was wrong in this, and was put right here.
+- *The brief pane*: “What The Tape Is Judged On, Read This Way”, its qualities by name, “There’s nothing holding it
+  back”, its taped-now line in the present tense (`chiefLimit(now, 'now')`).
+- *Work It Through*, *the rehearsal process* and *the class moments*: “Pick one to work on”, “Kept. Everything from now
+  on includes it.”, “Ways to work on it”, “A forecast: what a night would come to if it opened now, without good or bad
+  luck”.
+
+**What stayed.** Every tab, panel title, button and column heading not named above (they're plain Title Case and the
+tutorial area's text names them); the courses table; the casting table's headings; the Yale account table; the plays to
+read.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *Note Priority*: read from `noteCandidates` (`short = weight × (1 − part)`), which picks the note, and from the
+  look's provenance and the guide (“a dimension held back by the least prepared of its parts and never by Weighs”).
+  The Put First line still says the part “counts for more when this piece is shown”: the objective leans the result's
+  qualities by `LEARNING.objectiveWeight` (`tests/coursework-objective.test.ts`).
+- *A failed course in the standing paragraph*: `evaluate`'s `shortOtherwise` includes `failedNow.length > 0`.
+- *The grave breach*: `breach` steps a student to warning, or from warning to dismissal, as the paragraph says.
+- *“Choosing … isn’t rehearsing it”*: a choice is made at `prep` 0 and rehearsed by work on the feet (`rehearseChoice`).
+
+**Tests updated:** decisions-stamina, defects-g8-3, defects-g8-13, defects-g10-1, defects-r8-1, evidence-g19/g20/g21/
+g24/g25/g26-school, evidence2-b08, evidence3-school, leave, remaining-09-journeys, remaining-school-term,
+school-everyday. **Tool matchers:** `tools/acceptance-ui.mjs` (casting's way back, a way to work on the note, a part's
+choice and its rehearsing, the brief pane's headings, keeping a way), `tools/playthroughs-ui.mjs` (the brief pane),
+`tools/captures.mjs` (a choice's rehearsing).
+
+### Batches 2 And 3: What Their Test Run Found, And The Follow-Ups
+
+The batch 2 and 3 run (55 files, 852 tests) failed 23, every one an assertion of the old words in a test the first map
+missed: a regex fragment (`/been and gone/`, `/No Cabaret week/`, `/after one term completed/`, `/knows least/`,
+`/rehearsal you agree with them/`), a tool's matcher (`tools/acceptance-ui.mjs`'s `/Read it first/`), or another area's
+test reading a label of this area's (`decisions-advice`, `defects-g30-1`, `genre-identity-screens`). Each now asserts the
+new words as exactly. A search for test literals whose words had left the code (`stale2.py` in the scratch folder: every
+string or regex fragment of nine characters or more in `toMatch`, `toContain`, `toBe` and `toEqual` that the baseline's
+`src` held and today's doesn't) found four more, in files the run hadn't listed: `defects-g8-10`, `defects-g9-1`,
+`remaining-school-term` and `school-journey-gaps`.
+
+Changed in the code with them, each read against what it says:
+- *The notice of concern* reads its next step from `shortTermWords(school, school.termsBegun)` (defect 9).
+- *A failed course's way on* (`remedy`) is a sentence of its own: “The degree needs every course passed. At the year’s
+  end you can ask to repeat the year on the Standing tab.”
+- *A brief suggested for a weakness* says what its share is of: “(7% of what its tape is judged on)”, where batch 2
+  had “of the tape” and the baseline “of the work”. “A take” was avoided: it's the engine-speak list's.
+- *The chooser's small print*: “Each way of playing shifts what counts most in your work toward what it is”, where batch
+  3 had “what your teacher looks for”, which isn't true of a part in a production.
+- *The Permanent Incomplete and the dismissed Standing tab*: the run's two remaining assertions named words that were
+  already right; the tests followed.
+
+Rerun: the 33 failing and affected files, then the 6 left, then 22 more after the guides (below): all passed.
+
+## Batch 4: The School's Content Files
+
+**Sources:** `src/engine/content/coursework.ts` (68), `material.ts` (98), `school.ts` (31), `roundups.ts` (22),
+`tasks.ts` (16), `plays.ts` (6), `workbook.ts` (6), `concerns.ts` (1), `replacements.ts` (1), `workload.ts` (2).
+
+**What changed.**
+- *The steps' reasons* (`requires.why`, content/coursework.ts, which the judge reads: words only, no figure, id or
+  order touched): “Read the scene first: you learn lines from a scene you know.”, “Read the scene first.”, “Read the
+  play first. You need questions before you can research it.”, “Agree how you’ll work first: there’s no partner work
+  until the boundaries are set.” The play reading's research refusal says the same as the coursework step's.
+- *What The School Asks* (`SCHOOL_POLICIES`): “If you’re ill, email your teachers …”, “In the game, press Call In
+  Sick …”, “The game counts two missed calls …”, “The steps are a notice of concern, then academic warning, then
+  dismissal …”. Two sources' provenance lines lost an internal file name (`research-yale-leave*.json`).
+- *Work It Through's ways* (`content/workbook.ts`): “part” for “segment”, as the screen says; “shape” for “fix”.
+- *The round-ups' notes* (`content/roundups.ts`) said SLATE inside a sentence fifty-seven times (“SLATE moves nothing”, “SLATE
+  drops it”, “SLATE’s reading”); each says “the game”, and the two shared sentences (`OFF`, `DROPPED_UNSAID`) open on
+  “In the game”. A Mexican meta is “a goal kept inside the current account”, where it was “a segment”.
+- *A self-tape's material*: “(Michael Caine, Acting in Film, 1990)”, without the research file's name.
+
+**What stayed.** The scene and play material (`material.ts`: ninety-seven literary descriptions, plain and specific,
+read whole), the plays and their parts (`plays.ts`), the tasks' descriptions and the qualities' meanings (`tasks.ts`,
+whose preparation labels batch 1 changed), the concerns (`concerns.ts`: their `principle` lines, with “topic 1” and
+the like, are the research record and no screen reads them), the licence replacements (`replacements.ts`), the courses,
+skills, labs and faculty (`school.ts`: names and the Bulletin's titles), and the other step reasons (“Learn the song
+first.”, “Make the score first.” and the rest: short, and they say what to do).
+
+**Meaning-sensitive changes:** none moved a figure. The round-ups' “the game drops it” sentences say what
+`systems/roundups.ts` does, as “SLATE drops it” did.
+
+**Tests updated:** `evidence-g18-school` (Learn Lines' reason, the boundaries), `evidence-g22-school` (research
+refused). **Tool matchers:** `tools/acceptance-ui.mjs` (Table Work's reason: “Read the text first”).
+
+## Batch 5: The Three Guides, Rewritten To The Eight Questions
+
+**Sources:** `src/engine/content/guide/school.ts` (25: seven entries), `coursework.ts` (22: eight), `productions.ts`
+(22: seven, and `axisFact`).
+
+**What changed.** Every one of the 22 entries:
+- *What it's for* (`short`) opens on the purpose in a plain sentence (“Your standing is how the faculty judge each
+  term, and it decides whether you stay, whether you’re cast and whether you get your degree.”), then what happens.
+- *What to press* (`steps`) names the screen's own labels, read against the code and the built app's text walk: Note
+  Priority, Rehearsing With, Shown Today, Still to finish, Mark As Read, Catch Up The Blocking, “Ways to work on it:”,
+  Abilities It Uses, Aspect.
+- *What to do next* (`next`, new): two or three steps on every entry, each a control or a place on the screen.
+- *If you can't* (`unavailable`): sixty-nine quoted refusals set against the code and replaced with today's words
+  (defect 11).
+- *The engine's words* went: Weighs (now Note Priority, and “What does Note Priority mean?” where the questions asked
+  about Weighs), dimensions (the qualities your teacher looks for, or what counts most), “rehearsed in”, “draws on”,
+  “leans on”, the draw (luck), meetings (classes), the evaluation (the term review), “SLATE’s rule”, “SLATE’s faculty
+  model” and “SLATE’s estimate” (the game’s rule, the game’s model of the faculty, estimated).
+- *The worked examples* keep their figures and structure: the tests play them and read their numbers by regex. Their
+  words changed only where they said Weighs, “rehearsed in”, “at the meeting” or “evaluation”, and each test's regex
+  changed with them (`guide-examples-coursework`: Note Priority under Lines, “count … times as much”, “of a usual one”,
+  “it’s at … of the … it needs”; `guide-examples-productions`: “already rehearsed keeps”, “the calls left rehearse it”,
+  “counts what it favors as short of preparation”, the Summer Cabaret's refusal).
+
+**What stayed.** Every entry's id, covers, goal, where, related, connections' targets and kinds, and the questions
+(but the one about Weighs); every figure, still read from the rules' constants.
+
+**Meaning-sensitive changes, and how each was checked.**
+- *Note Priority*: “how much the part counts when the teacher picks what to note”, read from `noteCandidates`; Put
+  First “counts for more in both”, read from `LEARNING.objectiveWeight` in `weightsOf` and the result's lean.
+- *Whose rules these are* (`school.standing`, `school.repeat`): the same split between the Bulletin and the game, said
+  without SLATE; `tests/remaining-school.test.ts` (school.s6.policy) asserts the new words.
+- *The degree “isn’t recommended”* where the old words said withheld: `withheld`'s notice is The Degree Isn’t
+  Recommended, as the glossary has it.
+
+**Tests updated:** `guide-examples-coursework`, `guide-examples-productions`, `remaining-school` (school.s6.policy),
+`need-paths` (the guide's Need).
+
+**Checks:** `npx tsc -b --noEmit` exit 0; eslint on every changed `.ts`/`.tsx` exit 0; title-case, label-sweep,
+plural-check, voice-check (38 of 40 after the guides), tics, doc-refs, deciders, spelling and typos all exit 0. The 22
+guide-reading and affected test files: 217 tests, all passed after two example regexes followed (rerun 18 of 18).
+
+## The Built App
+
+`npm run build` exit 0; served with `npx vite preview --port 4203 --strictPort`, stopped by its process id. Walked with
+`tools/text-walk.mjs` at 1440 and 390 on seven of brief 13's saves (rehearsal, leave, withdraw, workload, brief,
+direction, missed-plan: `after-1440`, `after-390`, 25 screens each), and on four saves written again with this code
+(`tools/scenarios.ts`, the same seeds and lengths as `tools/scenario-saves.mjs`: rehearsal, leave, withdraw, workload;
+`after-new-1440`, `after-new-390`), since a save keeps its notices and its feedback in the words of the day it was
+played. `tools/text-render-check.mjs`:
+- on brief 13's saves, exit 1, 6 distinct faults: “You and Hannah had rehearsed together 1 times” and “Better than on
+  …, not there yet” on the workload save's Coursework tab are that save's stored feedback (defect 1 fixed the words it
+  would print now); the rest are other areas' (“Sleep owed 1 hours”; money written “-$3”).
+- on the saves written with this code, exit 1, 1 distinct fault, not this area's: “Sleep owed 1 hours” (Player
+  Profile).
+
+What the walk found, and what changed for it: “Given 1 time, first September 14, 2026, last September 14, 2026” under
+Your Notes (now “Given once, on …”); “What held most of them back was with your partner” in A Word On Your Coursework
+and the term review's reason (now the card's label, quoted: “With Your Partner”); Your Standing's subtitle “Evaluation
+On …” (now “Term Review On …”); “The running time: Estimated: no Carlotta …” (now “Estimated, since no Carlotta …:”).
+Each guide label was set against the walk and the UI code: every one exists (`labels.mts` in the scratch folder).
+
+Screens read: School's Standing And Craft, Classes, Coursework, Casting, Shifts And Pay and Terms And Award on each
+save, and Home's notices; at 390 the same words. The walk records words, not layout: `tools/acceptance-ui.mjs`, which
+measures overflow at 390, wasn't run in this area.
+
+## The Coordinator's Notes, Answered
+
+- **The term review's calendar entries** were titled “Fall Term 2026 Evaluation” (`registerSchool`, and `rescind` in
+  `leave.ts`). They're “Term Review, Fall Term 2026” now: one name for one thing, the glossary's. The label is display
+  only (the entry's kind, `school.evaluation`, is what the code reads), and a save keeps its scheduled entries' labels,
+  so an old save shows the old title until its next term is scheduled. The Standing tab's table of past reviews,
+  “Evaluations”, became “Term Reviews” with it, and the guide, three tests and `tools/acceptance-ui.mjs`'s heading
+  matcher followed. The Calendar legend's School row (the frame area's) should say “each term’s review”.
+- **“Your School”**: the School screen's eyebrow and its tab list's accessible name say “School”, as the rail and the
+  breadcrumbs do. The Profile's button (“Your School”) and `ROUTE_LABELS` in `game-context.tsx` aren't this area's.
+- **“You and Hannah had rehearsed together 1 times”** is the workload save's stored feedback, written before this pass.
+  `noteText` prints “once”, “twice” and “N times” since batch 1 (defect 1, `rendered.txt`); on the workload save written
+  again with this code, the render check finds no such line.
+
+## Statuses
+
+Every source of the area's, marked with `node tools/text-inventory.mjs --mark … --by school` after the last word changed:
+213 Rewritten And Verified (a source whose text differs from the baseline's, with the tests and screens that hold it),
+402 Reviewed And Retained (read and kept, with why), none Pending or Blocked. `node tools/text-inventory.mjs --check`
+exit 0. The area's engine-speak hits went from 90 to 11. What's left: a take where it is one (a practice brief's “The Take”,
+“Record A Take” on a camera piece, the take of a brief in two guide lines); a run's weight in casting (“carried at …
+of its weight”, which is what it is); four “refused” the matcher reads without the reason that follows them in the same
+sentence (“refused, because the classes have already counted you”), one of them Chekhov's Nina (“he hopes, is refused”);
+and the movement score's part label “Rehearsed In The Body”, a card label in a file the judge reads.
+
+## The Whole Suite, And The Gate's Checks
+
+`npx vitest run` once over everything (376 files, 4,587 tests): 6 failed, each an assertion of words this pass changed
+that the targeted runs hadn't reached (`evidence-g11-money` round-up notes, `genre-identity` “Your Composure held back”,
+`looks` the look's provenance over 220 characters, `scenes` “You played Theo in The Night Desk.”, `work-limits` two
+conversion refusals) or a test that ran while its source and its assertion were being changed together
+(`remaining-school-term`, Term Reviews). Each was fixed (the provenance shortened, the rest asserting the new words) and
+its file rerun with nine more the last edits touch: 13 files, 224 tests, then `work-limits` alone, all passed.
+
+The gate's checks on the final tree: `tsc -b --noEmit`, eslint on every changed `.ts`/`.tsx`, title-case, label-sweep,
+plural-check, voice-check, tics, doc-refs, wired, deciders, spelling, typos, geo-check, inventory, devmap,
+capabilities, coverage, student-matrix and text-inventory all exit 0. `traceability.mjs` exited 1 until
+`--write` (the School's rows quote refusals); `completion-matrix.mjs --check` exits 1 (see defects.md, For The
+Coordinator).

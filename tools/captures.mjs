@@ -135,7 +135,7 @@ async function brief(base, file, name) {
   if (await which.count()) { await which.selectOption({ index: 1 }); await wait(800); }
   const rehearse = pane.getByRole('button', { name: /^Rehearse/ }).first();
   log(name, 'rehearse button:', (await rehearse.count()) ? `${(await rehearse.isDisabled()) ? 'grayed' : 'open'}; ${await rehearse.getAttribute('title')}` : 'none');
-  log(name, 'says:', ((await pane.innerText()).replace(/\s+/g, ' ').match(/rehearsed in to \d+% \(complete at \d+%\)[^.]*\./) ?? ['(no rehearsed-in line)'])[0]);
+  log(name, 'says:', ((await pane.innerText()).replace(/\s+/g, ' ').match(/rehearsed your current choice to \d+% so far \(it’s complete at \d+%\)[^.]*\./) ?? ['(no rehearsed-in line)'])[0]);
   await shot(pane, name);
 }
 if (BEFORE) await brief(BEFORE, join(MARKS, 'rock-mid.json'), '5a-brief-before-the-sweep-rehearse-refused');

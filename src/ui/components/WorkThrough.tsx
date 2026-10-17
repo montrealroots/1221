@@ -46,7 +46,7 @@ export function Segments({ e, caption }: { e: Evaluation; caption?: string }) {
           </tbody>
         </table>
       </div>
-      <p className="xs dim" style={{ margin: 0 }}>Continuity, how evenly the character held from part to part: {p.continuity.toFixed(1)}. The whole is the parts’ mean; continuity is read from them, not added to it.</p>
+      <p className="xs dim" style={{ margin: 0 }}>Continuity, how evenly the character held from part to part: {p.continuity.toFixed(1)}. The whole is the average of the parts; continuity comes from them, and isn’t added to it.</p>
     </div>
   );
 }
@@ -75,7 +75,7 @@ export function WorkThrough({ piece: key }: { piece: string }) {
       {pending ? (
         <div className="callout small">
           <strong>{name(pending)}</strong>, tried on “{pending.label}”: {pending.before} before, {pending.after} after.{' '}
-          <Gated feature="work.settle" className="btn btn-sm btn-primary" onClick={() => { if (run('work.settle', { piece: key, keep: true }).ok) toast('Kept: everything after reads it.', 'positive'); }}>Keep It</Gated>{' '}
+          <Gated feature="work.settle" className="btn btn-sm btn-primary" onClick={() => { if (run('work.settle', { piece: key, keep: true }).ok) toast('Kept. Everything from now on includes it.', 'positive'); }}>Keep It</Gated>{' '}
           <Gated feature="work.settle" className="btn btn-sm" onClick={() => { if (run('work.settle', { piece: key, keep: false }).ok) toast('Put back as it was. It won’t be offered for this again.', 'neutral'); }}>Put It Back</Gated>
         </div>
       ) : current ? (
@@ -93,14 +93,14 @@ export function WorkThrough({ piece: key }: { piece: string }) {
                 );
               })}
             </ul>
-          ) : <p className="xs dim" style={{ margin: 0 }}>No way at it is left here: its own step of preparation answers it, or the ways tried were put back.</p>}
+          ) : <p className="xs dim" style={{ margin: 0 }}>There’s no way left to work on it here: its own preparation step works on it, or the ways you tried were put back.</p>}
           <WhyNot reasons={options.map((o) => [o.label, tryRefusal(sim, person, piece, o.adjustment, o.option)] as const)} />
         </div>
       ) : null}
       {!pending && (
         problems.length ? (
           <div className="col gap-1">
-            <p className="xs dim" style={{ margin: 0 }}>{current ? 'Or name another problem:' : 'What the forecast shows, worst first. Name one to work on it:'}</p>
+            <p className="xs dim" style={{ margin: 0 }}>{current ? 'Or pick another problem:' : 'What the forecast shows, worst first. Pick one to work on:'}</p>
             <ul className="small" style={{ margin: 0, paddingLeft: 'var(--s4)' }}>
               {problems.filter((p) => p.id !== current?.id).map((p) => {
                 const no = identifyRefusal(piece, p.id);
@@ -113,7 +113,7 @@ export function WorkThrough({ piece: key }: { piece: string }) {
               })}
             </ul>
           </div>
-        ) : <p className="xs dim" style={{ margin: 0 }}>The forecast shows nothing to work through: every part of it is where it asks.</p>
+        ) : <p className="xs dim" style={{ margin: 0 }}>The forecast shows nothing to work through: every part of it is where it needs to be.</p>
       )}
       {tries.length > 0 && (
         <div className="table-scroll">
@@ -129,7 +129,7 @@ export function WorkThrough({ piece: key }: { piece: string }) {
           <ul className="xs" style={{ margin: 0 }}>{discoveries.map((d) => <li key={d}>{d}</li>)}</ul>
         </div>
       )}
-      <Fine>A problem is read from the work’s own forecast, the expected result with no draw, so the same way tried the same day shows the same evidence. A way of playing a part of it, or places to breathe, is kept or put back; work done is kept. Working a part slowly moves its own rehearsal by {pct(WORKBOOK.workGain)} of what’s left; a part a turn leads into asks up to {pct(PIECE.brief.perTurn)} more of a brief’s rehearsal. The sizes are SLATE’s design.</Fine>
+      <Fine>Problems come from the piece’s own forecast, its expected result without luck, so the same way tried on the same day shows the same result. A way of playing part of it, or places to breathe, is kept or put back; work done is kept. Working a part slowly moves its own rehearsal by {pct(WORKBOOK.workGain)} of what’s left, and a part a turn leads into asks up to {pct(PIECE.brief.perTurn)} more of a brief’s rehearsal. The sizes are estimated.</Fine>
     </div>
   );
 }

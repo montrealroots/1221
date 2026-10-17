@@ -189,7 +189,7 @@ defineLook<TheSchool>('school', {
         </>
       ),
       ways,
-      provenance: 'The school, its courses and its teachers are the Yale Bulletin’s; how often each meets is SLATE’s estimate.',
+      provenance: 'Source: the Yale Bulletin, for the school, its courses and its teachers. How often each course meets is estimated.',
     };
   },
 });
@@ -256,7 +256,7 @@ defineLook<TheCourse>('course', {
         </>
       ),
       ways,
-      provenance: 'Its code, its name and its teachers are the Bulletin’s; the week it’s placed in is SLATE’s estimate.',
+      provenance: 'Source: the Yale Bulletin, for its code, name and teachers. Where it falls in the week is estimated.',
     };
   },
 });
@@ -268,7 +268,7 @@ defineLook<TheCourse>('course', {
 interface TheSkill { skill: Skill; label: string; person: Person | undefined }
 
 defineLook<TheSkill>('skill', {
-  gone: 'That isn’t part of an actor’s craft as the school reads it.',
+  gone: 'That isn’t part of an actor’s craft as the school teaches it.',
   resolve: (sim, id) => {
     const found = SKILLS.find((s) => s.id === id);
     return found ? { skill: found.id, label: found.label, person: student(sim) } : undefined;
@@ -314,7 +314,7 @@ defineLook<TheSkill>('skill', {
           <p className="small">
             {taught} Rehearsals, performances and later the work grow it too, more when you come rested and less the nearer you are to what you can reach.
             {/* Where the work stops reading it, said (from 2026-10-16): a technique counts mastered at MASTERED, and no piece asks more. */}
-            {TECHNIQUES.includes(skill) ? ` Work reads it against ${MASTERED}: past that no piece asks more, so ${mine >= MASTERED ? 'what it adds from here moves no result' : `the last ${100 - MASTERED} points move no result`}.` : ''}
+            {TECHNIQUES.includes(skill) ? ` A piece counts it up to ${MASTERED}, and no piece asks for more, so ${mine >= MASTERED ? 'growing it further changes no result' : `the last ${100 - MASTERED} points change no result`}.` : ''}
           </p>
           <div className="grid grid-3">
             <Stat label="You" value={mine.toFixed(1)} note={`Can reach ${reach.toFixed(1)}`} />
@@ -324,7 +324,7 @@ defineLook<TheSkill>('skill', {
         </>
       ),
       ways,
-      provenance: 'How much a session adds, and the scale, are SLATE’s; the ceiling is fitted to published studies of practice.',
+      provenance: 'How much a session adds, and the scale, are estimated; the ceiling is fitted to published studies of practice.',
     };
   },
 });
@@ -335,7 +335,7 @@ defineLook<TheSkill>('skill', {
 
 interface TheWork { person: Person; a: Assignment }
 
-const STATUS_WORD: Record<Assignment['status'], string> = { open: 'Open', revising: 'To Show Again', done: 'Shown', missed: 'Missed', lapsed: 'Let Lapse', excused: 'Excused' };
+const STATUS_WORD: Record<Assignment['status'], string> = { open: 'Open', revising: 'To Show Again', done: 'Shown', missed: 'Missed', lapsed: 'Not Shown Before The Term Ended', excused: 'Excused' };
 
 defineLook<TheWork>('assignment', {
   gone: 'That work isn’t set, or was never yours.',
@@ -357,7 +357,7 @@ defineLook<TheWork>('assignment', {
     const ways: Way[] = [];
     if (course) ways.push({ to: at('course', course.code), label: course.name, detail: 'The course that set it, and what it trains' });
     ways.push({ to: at('day', due), label: `Due ${formatDate(dueAt, schoolZone())}`, detail: 'The day it’s shown, and what else is on it' });
-    ways.push({ to: at('readiness', person.id), label: 'Readiness', detail: 'How sharp you come to the work, which each step of preparing it reads' });
+    ways.push({ to: at('readiness', person.id), label: 'Readiness', detail: 'Your sharpness for the work, which affects each step of preparing it' });
     return {
       name: `${course?.name ?? a.course}: ${t.title}`,
       kind: 'A Piece Of Coursework',
@@ -365,7 +365,7 @@ defineLook<TheWork>('assignment', {
       parent: course ? at('course', course.code) : undefined,
       body: (
         <table>
-          <thead><tr><th scope="col">Part</th><th scope="col" className="num">Prepared</th><th scope="col" className="num">Weighs</th></tr></thead>
+          <thead><tr><th scope="col">Part</th><th scope="col" className="num">Prepared</th><th scope="col" className="num">Note Priority</th></tr></thead>
           <tbody>
             {dims.map((k) => (
               <tr key={k}>
@@ -384,7 +384,7 @@ defineLook<TheWork>('assignment', {
       // it bears on, each held to its least prepared part; the weights only choose the note (`noteCandidates`). Weighs
       // is the coursework panel’s name for the same figure. Under a line long, as `tests/looks.test.ts` holds every
       // look’s provenance.
-      provenance: 'Prepared is how far each part stands now; nothing fades. Weighs is its share when the showing chooses its note; the result reads each part through the dimensions it bears on. Its steps are on the School’s coursework.',
+      provenance: 'Prepared is how far each part stands now; nothing fades. Note Priority is how much a part counts when the teacher picks what to note. Its steps are on the Coursework tab.',
     };
   },
 });

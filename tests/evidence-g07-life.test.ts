@@ -514,7 +514,7 @@ describe('seasons/flu', () => {
     // Monday 9 November, well and over 55: staying away would be unexcused.
     sim.advanceTo(Date.UTC(2026, 10, 9, 12));
     expect(sim.player.wellbeing.condition).toBeGreaterThanOrEqual(55);
-    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go: staying away would be an unexcused absence.');
+    expect(sim.execute({ kind: 'school.call_in_sick', payload: {} }).error).toBe('You’re well enough to go. Staying away would count as an unexcused absence.');
   });
 
   it('New Haven’s flu weeks are its cold ones: a draw that is a flu in any November week brings none on 7 September', () => {

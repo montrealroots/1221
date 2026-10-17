@@ -85,8 +85,8 @@ export function readerPlaysWords(b: import('@/engine/content/briefs').Brief): st
   const leans = (Object.keys(plays.lean) as (keyof typeof DIMENSION_LABEL)[]).map((d) => DIMENSION_LABEL[d].toLowerCase());
   const draws = [...new Set(Object.values(plays.inputs).flatMap((xs) => (xs ?? []).map((x) => ABILITY_DEFS.find((d) => d.id === x.ability)?.label.toLowerCase() ?? x.ability)))];
   const and = (xs: string[]) => (xs.length > 1 ? `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}` : xs[0] ?? '');
-  if (!leans.length && !draws.length) return `${plays.label}: playing against it asks nothing past the scene’s own.`;
-  return `${plays.label}: playing against it, the take weighs ${and(leans)} more${draws.length ? `, and draws on your ${and(draws)}` : ''}.`;
+  if (!leans.length && !draws.length) return `${plays.label}: playing opposite it asks nothing more than the scene does.`;
+  return `${plays.label}: playing opposite it, the tape counts ${and(leans)} for more${draws.length ? ` and leans on your ${and(draws)}` : ''}.`;
 }
 
 /**
@@ -171,16 +171,16 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <ol className="small" style={{ margin: 0 }}>
           {b.beats.map((beat, i) => <li key={i}>{beat.what} <span className="xs dim">({beat.tones.map((t) => TONE[t]).join(' and ')}{beat.tones.length > 1 ? ', held at once' : ''})</span></li>)}
         </ol>
-        <p className="xs dim" style={{ margin: 0 }}>{turns.transitions} change{turns.transitions === 1 ? '' : 's'} of tone between beats and {turns.blends} beat{turns.blends === 1 ? '' : 's'} held two ways. Rehearsal counts complete at {pct(req.rehearsal!)} in a beat, and at up to {pct(PIECE.brief.perTurn)} more in a beat a change leads into, {pct(PIECE.brief.perBlend)} more in one held two ways. {b.why.beats}</p>
+        <p className="xs dim" style={{ margin: 0 }}>{turns.transitions} change{turns.transitions === 1 ? '' : 's'} of tone between beats and {turns.blends} beat{turns.blends === 1 ? '' : 's'} held two ways. Rehearsal is complete at {pct(req.rehearsal!)} in a beat, up to {pct(PIECE.brief.perTurn)} more in a beat a change leads into, and {pct(PIECE.brief.perBlend)} more in one held two ways. {b.why.beats}</p>
       </div>
 
       <MaterialDemands material={material} />
 
       <div className="col gap-1">
-        <div className="eyebrow">What The Take Weighs, Read This Way</div>
+        <div className="eyebrow">What The Tape Is Judged On, Read This Way</div>
         <div className="table-scroll">
           <table>
-            <thead><tr><th scope="col">Dimension</th><th scope="col" className="num">Share</th><th scope="col">What It Reads, Yours Now</th></tr></thead>
+            <thead><tr><th scope="col">Quality</th><th scope="col" className="num">Share</th><th scope="col">What It Uses, Yours Now</th></tr></thead>
             <tbody>
               {asksOf(person, b, draftReading).map((a) => (
                 <tr key={a.dimension}><td className="nowrap">{a.label}</td><td className="num mono">{pct(a.share)}</td><td className="xs">{a.reads.map(levelLabel).join(', ')}</td></tr>
@@ -223,12 +223,12 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <div>
           <Gated feature="brief.choose" className="btn btn-sm" disabled={rec?.reading === draftReading} onClick={() => { const r = run<{ interpretation: number; readingChanged: boolean }>('brief.choose', { brief: b.id, reading: draftReading, ...(rec?.playing ? { pace: rec.playing.pace, scale: rec.playing.scale, structure: rec.playing.structure } : {}) }); if (r.ok) toast(`Reading it as ${readingOf(b, draftReading)!.label}.${r.value!.readingChanged ? ` The breakdown keeps ${pct(BRIEF.readingKept)} of what it was: ${pct(r.value!.interpretation)} now.` : ''}`, 'positive'); }}>{rec?.reading ? 'Change The Reading' : 'Read It This Way'}</Gated>
         </div>
-        <Fine>Every reading here is one the brief supports; none is the right answer. A reading leans what the take counts for and draws on different abilities, and moves weight without adding any. Changing it keeps {pct(BRIEF.readingKept)} of the breakdown.</Fine>
+        <Fine>Every reading here is one the brief supports, and none is the right answer. Each reading shifts what the tape is judged on toward different abilities, without adding to the total. Changing it keeps {pct(BRIEF.readingKept)} of your breakdown.</Fine>
       </div>
 
       {rec?.callback && <p className="small" style={{ margin: 0 }}><strong>A Callback.</strong> {rec.callback.why} It’s pitched harder than a first take.</p>}
       {rec?.reading && (
-        <PlayingChooser material={material} scene={sceneOf(b, readingOf(b, rec.reading))} current={rec.playing} direction={rec.callback ? { [rec.callback.axis]: rec.callback.side } as Partial<Record<Axis, typeof rec.callback.side>> : undefined} feature="brief.choose" preview={(c) => preview(sim, person, b, rec.reading!, c)} onChoose={(c) => { const r = run('brief.choose', { brief: b.id, reading: rec.reading, ...c }); if (r.ok) toast('Chosen: rehearse it in on your feet.', 'positive'); }} />
+        <PlayingChooser material={material} scene={sceneOf(b, readingOf(b, rec.reading))} current={rec.playing} direction={rec.callback ? { [rec.callback.axis]: rec.callback.side } as Partial<Record<Axis, typeof rec.callback.side>> : undefined} feature="brief.choose" preview={(c) => preview(sim, person, b, rec.reading!, c)} onChoose={(c) => { const r = run('brief.choose', { brief: b.id, reading: rec.reading, ...c }); if (r.ok) toast('Chosen. Rehearse it on your feet to make it work.', 'positive'); }} />
       )}
 
       {b.medium !== 'voice' && <ReaderChoice b={b} />}
@@ -236,7 +236,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
       <div className="col gap-1">
         <div className="row-between"><div className="eyebrow">The Take</div><HowItWorks help="practice.self_tape" /></div>
         <p className="small" style={{ margin: 0 }}>
-          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now) ? withConcern(chiefLimit(now), nowConcern) : 'Every part of it is where the take asks.'} {grainWords(grainRead(now))} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
+          {rec?.reading ? <>Taped now, with today’s preparation and condition, it would come to about <strong>{now.overall.toFixed(1)}</strong> ({BAND_LABEL[bandOfQuality(now.overall)]}). {chiefLimit(now, 'now') ? withConcern(chiefLimit(now, 'now'), nowConcern) : 'There’s nothing holding it back.'} {grainWords(grainRead(now))} {purpose ? PURPOSE_WORDS[purpose] : ''}</> : 'Choose a reading first.'}
         </p>
         <div>
           <Gated feature="practice.self_tape" className="btn btn-sm" disabled={Boolean(tape)} title={tape ?? `An hour: ${b.title}, ${readingOf(b, rec?.reading)?.label ?? ''}`} onClick={() => { const r = run<{ overall: number; purpose: string; band: string }>('practice.self_tape', { genre, brief: b.id }); if (r.ok) toast(`Taped: ${r.value!.overall.toFixed(1)}, ${BAND_LABEL[r.value!.band as keyof typeof BAND_LABEL]}.`, 'positive'); }}>Tape It (60 Min)</Gated>
@@ -251,17 +251,17 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
         <div className="col gap-1">
           <div className="eyebrow">The Last Take, {formatDate(last.at, sim.zone)}</div>
           <p className="small" style={{ margin: 0 }}><strong>{last.overall.toFixed(1)}</strong>, {BAND_LABEL[last.band as keyof typeof BAND_LABEL]}: {readingOf(b, last.reading)?.label}{last.sides.length ? `, played ${last.sides.join(' and ')}` : ''}. {PURPOSE_WORDS[last.purpose]} {withConcern(last.chief, last.concern)}{last.grain ? ` ${takeGrainWords(last.grain)}` : ''}{last.callback ? (last.answered ? ' The callback’s note was answered.' : ' Played against the callback’s note: the callback is still yours.') : ''}</p>
-          {last.together && <p className="small" style={{ margin: 0 }}><strong>With {last.together.reader}.</strong> {last.together.words} A casting office sees the take with its reader: that’s what a callback reads.</p>}
+          {last.together && <p className="small" style={{ margin: 0 }}><strong>With {last.together.reader}.</strong> {last.together.words} A casting office sees the tape with its reader, and that’s what decides a callback.</p>}
           {lastEval && <Segments e={lastEval} caption="The Last Take, Beat By Beat" />}
           {lastWork && (
             <div className="table-scroll">
               <table>
-                <thead><tr><th scope="col">Dimension</th><th scope="col" className="num">Result</th></tr></thead>
+                <thead><tr><th scope="col">Quality</th><th scope="col" className="num">Result</th></tr></thead>
                 <tbody>{Object.entries(lastWork.dims).map(([d, q]) => <tr key={d}><td>{DIMENSION_LABEL[d as keyof typeof DIMENSION_LABEL]}</td><td className="num mono">{(q ?? 0).toFixed(1)}</td></tr>)}</tbody>
               </table>
             </div>
           )}
-          {lastWork && lastWork.limits.length > 0 && <ul className="xs" style={{ margin: 0 }}>{lastWork.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points of the {DIMENSION_LABEL[l.dimension].toLowerCase()}</li>)}</ul>}
+          {lastWork && lastWork.limits.length > 0 && <ul className="xs" style={{ margin: 0 }}>{lastWork.limits.map((l, i) => <li key={i}>{l.label}: {l.by} points of {DIMENSION_LABEL[l.dimension]}</li>)}</ul>}
         </div>
       )}
 
@@ -274,7 +274,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
           {top.assumes && <p className="xs" style={{ margin: 0 }} data-assumes="">{top.assumes}</p>}
           {top.attention && <p className="xs" style={{ margin: 0 }} data-attention="">{top.attention}</p>}
           {heldVersusNext(person, recs) && <p className="xs" style={{ margin: 0 }}>{heldVersusNext(person, recs)}</p>}
-          {unread && <p className="xs dim" style={{ margin: 0 }}>No practice brief reads {top.label.toLowerCase()}, so a take won’t show it and none is suggested for it.</p>}
+          {unread && <p className="xs dim" style={{ margin: 0 }}>No practice brief calls on {top.label.toLowerCase()}, so a tape won’t show it and none is suggested for it.</p>}
           <div>{practice(top.target)}</div>
         </div>
       )}
@@ -300,7 +300,7 @@ export function BriefPane({ genre, brief, onOpen, practice }: { genre: string; b
           </div>
         </div>
       )}
-      <Fine>A brief’s preparation is the breakdown, the lines and rehearsal on your feet, each step going further the less is left and half as far again the same day; a beat a change of tone leads into asks more rehearsal than the rest. A take is judged beat by beat (each beat’s rehearsal, where stamina tells, a slip and its recovery), and the take is the beats’ mean. A Strong take with its reader earns a callback: a harder pitch, with a note on how to play it said before you tape, answered only by a take played that way. The sizes are SLATE’s design; the shape of a breakdown (where and when, the relationship, what you want, what’s in the way, where it turns) is the acting texts’.</Fine>
+      <Fine>A brief’s preparation is the breakdown, the lines and rehearsal on your feet. Each step goes further the less is left, and half as far again the same day, and a beat a change of tone leads into needs more rehearsal than the rest. A tape is judged beat by beat (each beat’s rehearsal, where stamina tells, a slip and its recovery), and the whole is the average of its beats. A Strong tape with a reader earns a callback: a harder pitch, with a note on how to play it given before you tape, answered only by a tape played that way. The sizes are estimated; the shape of a breakdown (where and when, the relationship, what you want, what’s in the way, where it turns) is the acting texts’.</Fine>
     </div>
   );
 }

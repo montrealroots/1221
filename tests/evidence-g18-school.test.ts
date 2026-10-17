@@ -403,10 +403,10 @@ describe('school.prepare', () => {
     expect(text).toContain('The Cherry Orchard');
     const read = only('school.prepare', 'Read The Scene');
     expect(read).toMatchObject({ disabled: false, title: '40 minutes' });
-    expect(only('school.prepare', 'Learn Lines')).toMatchObject({ disabled: true, title: 'Read it first: lines are learned from a scene you know.' });
+    expect(only('school.prepare', 'Learn Lines')).toMatchObject({ disabled: true, title: 'Read the scene first: you learn lines from a scene you know.' });
     expect(only('school.prepare', 'Rehearse Alone')).toMatchObject({ disabled: true, title: 'Learn some of the lines first.' });
     expect(only('school.prepare', 'Work On The Note')).toMatchObject({ disabled: true, title: 'You can revise once it’s been shown and you have a note to work on.' });
-    expect(text).toContain('Learn Lines: Read it first: lines are learned from a scene you know.');
+    expect(text).toContain('Learn Lines: Read the scene first: you learn lines from a scene you know.');
     const t0 = sim.now;
     const toasts = press(read);
     expect(sim.now - t0).toBe(40 * 60_000);
@@ -704,7 +704,7 @@ describe('school.ask_partner', () => {
     // The intimacy scene with Grace: not before the practice is reviewed past half.
     const close = byTemplate(sim, 'intimacy-practice');
     expect(mateOf(sim, close).name).toBe('Grace Park');
-    expect(no(sim, 'school.ask_partner', { assignmentId: close.id, at: at(8, 31, 19) })).toBe('Agree how you’ll work first: no partner work without the boundaries set.');
+    expect(no(sim, 'school.ask_partner', { assignmentId: close.id, at: at(8, 31, 19) })).toBe('Agree how you’ll work first: there’s no partner work until the boundaries are set.');
     let reviews = 0;
     while (work(sim, close.id).prep.familiarity < 0.5 && reviews < 4) { step(sim, close.id, 'protocol'); reviews += 1; }
     expect(reviews).toBeGreaterThan(0);
@@ -1037,15 +1037,15 @@ describe('school.respond', () => {
     expect(m).toMatchObject({ mate: work(sim, id).partner });
     mateRecord(mateOf(sim, work(sim, id))).reliability = 1; // TEST SETUP: Hannah comes when she says.
     for (const [choice, done, trust, b, lifts] of [
-      ['argue', 'Hannah holds to it, and things are cooler between you: 4 rehearsals kept before it lifts.', 31, -9, 4],
-      ['respect', 'From now, ask Hannah a day ahead; 2 rehearsals kept, and it lifts.', 36, -5, 2],
+      ['argue', 'Hannah holds to it, and things are cooler between you. It lifts after 4 rehearsals kept.', 31, -9, 4],
+      ['respect', 'From now on, ask Hannah a day ahead. It lifts after 2 rehearsals kept.', 36, -5, 2],
     ] as const) {
       const s = reload(sim);
       const mate = () => mateOf(s, work(s, id));
       expect(go<{ done: string }>(s, 'school.respond', { momentId: m.id, choice }).done).toBe(done);
       expect([trustOf(mate()), mate().bond]).toEqual([trust, b]);
       // Less than a day ahead: declined in the boundary's words.
-      expect(ask(s, id, at(8, 31, 19))).toEqual({ accepted: false, reason: 'Hannah asked to be asked a day ahead, after last time.' });
+      expect(ask(s, id, at(8, 31, 19))).toEqual({ accepted: false, reason: 'Hannah wants a day’s notice after last time. Ask for an evening at least a day ahead.' });
       // Evenings a day and more ahead, each kept by the clock.
       for (const day of [1, 2, 3, 4]) expect(ask(s, id, at(9, day, 19)).accepted).toBe(true);
       const held: boolean[] = [];

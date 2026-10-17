@@ -130,7 +130,7 @@ const still = (sim: Simulation) => JSON.stringify([sim.now, sim.universe.transac
 // journeys.known-graduated-school-page
 // ---------------------------------------------------------------------------
 
-const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'In the casting pool.', 'is the floor', 'or more is short', 'Not Cast Yet', 'Nothing is set yet'];
+const STALE = ['Only the terms to come stand between you and the degree.', 'courses passed so far', 'You’re in the casting pool.', 'You need 90% or more', 'is short of what’s asked', 'Not Cast Yet', 'Nothing is set yet'];
 
 describe('journeys.known-graduated-school-page: the School page once the School has ended', () => {
   it('DEFECT: a life played to the degree reads it on its Standing, Casting and Coursework tabs, before and after a reload: the degree conferred at Commencement on Monday 21 May 2029, every course passed, the last term’s figures with their floors in the past, no casting and no work ahead (until 2026-10-16 “Only the terms to come stand between you and the degree.”, “so far”, “In the casting pool.”, each floor ahead, Not Cast Yet and Nothing set yet)', () => {
@@ -140,8 +140,8 @@ describe('journeys.known-graduated-school-page: the School page once the School 
     const first = drawn(sim, SchoolWorkspace, 'standing');
     expect(first).toContain('courses passed so far. Only the terms to come stand between you and the degree.');
     expect(first).toContain('Attendance This Term');
-    expect(first).toContain('90% is the floor');
-    expect(first).toContain('In the casting pool.');
+    expect(first).toContain('You need 90% or more');
+    expect(first).toContain('You’re in the casting pool.');
     tend(sim, at(2029, 6, 2, 12));
     expect(sim.player.school!.standing).toBe('graduated');
     // Commencement, the Monday before Memorial Day (28 May 2029), at ten.
@@ -152,12 +152,12 @@ describe('journeys.known-graduated-school-page: the School page once the School 
       expect(all.every((r) => r.result === 'pass')).toBe(true);
       expect(standing).toContain(`${all.length} of ${all.length} courses passed. Every course the degree needs was passed, and it was conferred on May 21, 2029.`);
       expect(standing).toContain('Attendance Last Term');
-      expect(standing).toContain('90% was the floor');
-      expect(standing).toContain('half its pace was the floor');
-      expect(standing).toContain('half of 3 or more was short');
+      expect(standing).toContain('90% was the minimum');
+      expect(standing).toContain('half its pace was the minimum');
+      expect(standing).toContain('Once 3 or more are due, half or more was short of what’s asked');
       const casting = drawn(s, SchoolWorkspace, 'casting');
       expect(casting).toContain('No Casting Ahead');
-      expect(casting).toContain('The chair casts students at the School, and your degree is conferred: no casting comes now. The productions you played stay on your Profile.');
+      expect(casting).toContain('The chair casts students at the School, and your degree is conferred, so there’s no casting now. The productions you played stay on your Profile.');
       const coursework = drawn(s, SchoolWorkspace, 'coursework');
       expect(coursework).toContain('Your degree is conferred, so no course sets work now.');
       for (const page of [standing, casting, coursework]) for (const stale of STALE) expect(page, stale).not.toContain(stale);
@@ -177,13 +177,13 @@ describe('journeys.known-graduated-school-page: the School page once the School 
     const standing = drawn(sim, SchoolWorkspace, 'standing');
     const all = Object.values(sim.player.school!.courses ?? {});
     const passed = all.filter((r) => r.result === 'pass').length;
-    expect(standing).toContain(`${passed} of ${all.length} courses passed. You withdrew. The Bulletin lets a student who withdrew apply to come back; SLATE doesn’t model a return.`);
+    expect(standing).toContain(`${passed} of ${all.length} courses passed. You withdrew. The Bulletin lets a student who withdrew apply to come back, but the game doesn’t offer a return.`);
     expect(standing).toContain('Attendance Last Term');
     // The fall's courses, left in the middle: Not Finished, and not listed with the term's meetings as if still taken.
     expect(standing).toContain('Fall Term 2026, DRAM 103a/b Acting I: Not Finished');
     expect(standing).not.toContain('In Progress');
     expect(standing).not.toMatch(/Acting I: at \d+ of \d+ meetings/);
-    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
+    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it, so there’s no casting now.');
     expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 120_000);
@@ -200,8 +200,8 @@ describe('journeys.known-graduated-school-page: a dismissal', () => {
     const standing = drawn(sim, SchoolWorkspace, 'standing');
     const all = Object.values(sim.player.school!.courses ?? {});
     const passed = all.filter((r) => r.result === 'pass').length;
-    expect(standing).toMatch(new RegExp(`${passed} of ${all.length} courses passed\\. You were dismissed(, with [^.]+ not passed)?\\. Once dismissed, a student isn’t eligible to come back\\.`));
-    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it: no casting comes now.');
+    expect(standing).toMatch(new RegExp(`${passed} of ${all.length} courses passed\\. You were dismissed(, with [^.]+ not passed)?\\. A dismissed student can’t return to the School\\.`));
+    expect(drawn(sim, SchoolWorkspace, 'casting')).toContain('The chair casts students at the School, and you’ve left it, so there’s no casting now.');
     expect(drawn(sim, SchoolWorkspace, 'coursework')).toContain('You’ve left the School, so no course sets work now.');
     for (const tab of ['standing', 'casting', 'coursework']) for (const stale of STALE) expect(drawn(sim, SchoolWorkspace, tab), stale).not.toContain(stale);
   }, 300_000);
@@ -242,7 +242,7 @@ const leaveTaken = (() => {
     const period = classPeriod(1);
     expect([period.from, period.to]).toEqual([{ year: 2027, month: 1, day: 11 }, { year: 2027, month: 4, day: 23 }]);
     expect(accountOwed(sim, sim.player)).toBe(7_600_25);
-    expect(titled(sim, 'Your Leave Has Begun')[0]!.body).toContain('$7,600.25 of the term’s scholarship goes back on the rebate schedule, on your Yale account, due by February 26, 2027. Yale Health’s student cover ended today. Affiliate cover, $5,416.00 a term, can be bought until February 19, 2027.');
+    expect(titled(sim, 'Your Leave Has Begun')[0]!.body).toContain('$7,600.25 of the term’s scholarship has to be returned on the rebate schedule. It’s on your Yale account, due by February 26, 2027. Yale Health’s student cover ended today. Affiliate cover, $5,416.00 a term, can be bought until February 19, 2027.');
     expect(coverOn(sim.player, sim.now)).toBeUndefined();
     // The player's own move: all but $500.00 of the current account into the savings beside it, at once at one bank.
     const checking = account(sim, 'Chase Total Checking');
@@ -259,11 +259,11 @@ const leaveTaken = (() => {
     // $500.00 from the current account, the rest from the savings beside it (banking.s7.school).
     expect(checking.balance).toBe(0);
     expect(saved - savings.balance).toBe(8_450_00);
-    expect(refused(sim, 'school.buy_affiliate', { confirm: true })).toBe('You have it.');
+    expect(refused(sim, 'school.buy_affiliate', { confirm: true })).toBe('You already have it.');
     expect(coverOn(sim.player, sim.now)).toBe('yale');
     // A part of the Yale account paid, from savings now; more than owed, and nothing, refused in their words.
-    expect(refused(sim, 'school.pay_balance', { amount: 7_600_26 })).toBe('$7,600.25 is owed; pay that or less.');
-    expect(refused(sim, 'school.pay_balance', { amount: 0 })).toBe('Pay something.');
+    expect(refused(sim, 'school.pay_balance', { amount: 7_600_26 })).toBe('$7,600.25 is owed. Pay that or less.');
+    expect(refused(sim, 'school.pay_balance', { amount: 0 })).toBe('Enter an amount to pay.');
     expect(ok(sim, 'school.pay_balance', { amount: 100_00 })).toEqual({ owed: 7_500_25, held: false });
     expect(saved - savings.balance).toBe(8_550_00);
     expect(breaches(sim.universe)).toEqual([]);
@@ -316,7 +316,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     tend(sim, at(2027, 10, 1, 12));
     const notice = ok<{ noticeAt: Instant; returnsAt: Instant }>(sim, 'school.return_notice');
     expect(notice).toEqual({ noticeAt: sim.now, returnsAt: at(2028, 1, 3, 9) });
-    expect(refused(sim, 'school.return_notice')).toBe('You gave notice on October 1, 2027.');
+    expect(refused(sim, 'school.return_notice')).toBe('You already gave notice on October 1, 2027.');
     expect(accountOwed(sim, sim.player)).toBe(7_875_25);
     // The twin: nothing in checking since the cover was bought, $1,000.00 moved back into it from savings, and the account
     // paid from both.
@@ -359,7 +359,7 @@ describe('journeys.x1: a Yale payment drawing on savings, then the hold, then re
     // The return asks registration again; the hold gone, it's taken.
     expect(school().mustRegister).toBe(true);
     expect(ok<{ registeredAt: Instant }>(sim, 'school.reregister').registeredAt).toBe(sim.now);
-    expect(refused(sim, 'school.reregister')).toBe('You’re registered.');
+    expect(refused(sim, 'school.reregister')).toBe('You’re already registered.');
     sim = reload(sim);
     // Monday 10 January 2028, the term's first class day: counted.
     tend(sim, at(2028, 1, 10, 18));

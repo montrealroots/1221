@@ -66,7 +66,7 @@ describe('Call In Sick, grayed, says why under the week’s head', () => {
   it('PLAYER JOURNEY: well on a class-day morning, and then called in sick, each in words, not only in the tooltip', () => {
     const sim = student('whynot-school-sick');
     tended(sim, at(2026, 9, 8, 7));
-    const well = 'You’re well enough to go: staying away would be an unexcused absence.';
+    const well = 'You’re well enough to go. Staying away would count as an unexcused absence.';
     expect(sickRefusal(sim, sim.player)).toBe(well);
     const before = drawn(sim, 'classes');
     expect(grayed(before.html, 'Call In Sick', well)).toHaveLength(1);

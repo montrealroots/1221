@@ -428,7 +428,7 @@ describe('school.learn_part', () => {
     // An hour at a time whenever there's one free, until the lines are known.
     for (let n = 0; proc(sim).lines < 0.97 && n < 60; n += 1) if (!sim.execute(learn).ok) tended(sim, sim.now + MS_HOUR);
     expect(proc(sim).lines).toBeGreaterThanOrEqual(0.97);
-    unchanged({}, 'You know the part.');
+    unchanged({}, 'You already know the part.');
     // The closing night played: nothing left to rehearse for.
     tended(sim, nights.at(-1)!.at + 4 * MS_HOUR);
     expect(sim.player.school!.casting!.performed).toBe(4);
@@ -936,7 +936,7 @@ describe('school.cabaret', () => {
     expect(you.from).toContainEqual({ what: SEASON, source: 'cabaret', nights: 5, delivery, weight });
     // A fifth of the fit by the delivery, as the chair reads it.
     expect(Math.abs(you.score - (you.fit * (0.8 + 0.2 * delivery) + you.balance))).toBeLessThanOrEqual(0.15);
-    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, weighted 2.5)`);
+    expect(drawn(sim, 'casting').shown).toContain(`${SEASON}, the Yale Cabaret, 5 nights (${Math.round(delivery * 100)}%, counted ×2.5)`);
     // Never joined: nothing to read, everything delivered.
     expect(never.player.school!.lastWork?.from ?? []).toEqual([]);
     expect(never.player.school!.castRead!.rows.find((r) => r.you)!.delivery).toBe(1);

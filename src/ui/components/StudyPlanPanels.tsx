@@ -60,16 +60,16 @@ export function LeavePanel() {
           <div className="grid grid-3">
             <Stat label="Your Leave" value={STATUS[l.status]} note={`${l.kind === 'medical' ? 'Medical' : 'Personal'}, ${LEAVE_REASONS[l.reason].label}`} />
             <Stat label="From" value={termLabel(l.firstTerm)} note={l.startedAt ? `Began ${formatDate(l.startedAt, sim.zone)}` : l.status === 'pending' ? `Decided by ${formatDate(l.decideAt, sim.zone)}` : undefined} />
-            <Stat label="Back For" value={termLabel(l.returnTerm)} note={`${formatDate(at9(l.returnTerm), sim.zone)}${termStart(l.returnTerm).estimate ? ', SLATE’s estimate' : ''}`} />
+            <Stat label="Back For" value={termLabel(l.returnTerm)} note={`${formatDate(at9(l.returnTerm), sim.zone)}${termStart(l.returnTerm).estimate ? ' (estimated)' : ''}`} />
           </div>
           {l.status === 'on' && (
             <div className="col gap-2">
               <p className="small" style={{ margin: 0 }}>
                 {l.withdrawnCourses?.length ? `Left unfinished, to take again: ${l.withdrawnCourses.join(', ')}. ` : ''}
-                {l.aidReturned ? `${money(l.aidReturned)} of the term’s scholarship went back on the rebate schedule, on your Yale account. ` : ''}
+                {l.aidReturned ? `${money(l.aidReturned)} of the term’s scholarship was returned on the rebate schedule, through your Yale account. ` : ''}
                 {l.kind === 'medical' ? 'Yale Health covers you as Affiliate cover the School pays for. ' : l.affiliate ? `Affiliate cover bought on ${formatDate(l.affiliate.at, sim.zone)}, ${money(l.affiliate.cost)}. ` : `Yale Health’s student cover ${l.coverEnds! > sim.now ? `ends ${formatDate(l.coverEnds!, sim.zone)}` : `ended ${formatDate(l.coverEnds!, sim.zone)}`}${l.retro ? ', back to the insurance term’s start, with the fee refunded' : ''}. `}
                 {l.f1Extended ? 'Your I-20 runs a year longer, as a reduced course load. ' : ''}
-                {l.noticeAt ? `You gave notice of your return on ${formatDate(l.noticeAt, sim.zone)}.` : `Give notice of your return by ${formatDate(l.noticeBy!, sim.zone)}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}; without it the leave ends in dismissal.`}
+                {l.noticeAt ? `You gave notice of your return on ${formatDate(l.noticeAt, sim.zone)}.` : `Give notice of your return by ${formatDate(l.noticeBy!, sim.zone)}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}. Without it, the leave ends in dismissal.`}
               </p>
               {l.mandatory && <DeanLeave />}
               <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'center' }}>
@@ -106,7 +106,7 @@ export function LeavePanel() {
       {/* Not on a leave, from 2026-10-17: the return asks for registration again (`school.reregister`). */}
       {school.mustRegister && !ended && l?.status !== 'on' && (
         <div className="row gap-2" style={{ alignItems: 'center', flexWrap: 'wrap' }}>
-          <span className="small">Register for {termLabel(Math.max(0, school.termsBegun - 1))}: until you do, classes don’t count you and shifts can’t be worked.{school.hold !== undefined ? ' A financial hold stops it until your Yale account is paid.' : ''}</span>
+          <span className="small">Register for {termLabel(Math.max(0, school.termsBegun - 1))}: until you do, classes don’t count your attendance and you can’t work shifts.{school.hold !== undefined ? ' A financial hold stops it until your Yale account is paid.' : ''}</span>
           <Gated feature="school.reregister" className="btn btn-sm" disabled={school.hold !== undefined} onClick={() => { if (run('school.reregister').ok) toast('Registered.', 'positive'); }}>Register</Gated>
         </div>
       )}
@@ -150,7 +150,7 @@ export function LeavePanel() {
           <ul style={{ margin: 0 }}>{school.leaves!.map((x) => <li key={x.id}>{x.kind === 'medical' ? 'Medical' : 'Personal'} ({LEAVE_REASONS[x.reason].label}), asked {formatDate(x.requestedAt, sim.zone)}: {STATUS[x.status]}{x.why ? `. ${x.why}` : ''}{x.returnedAt ? `, back ${formatDate(x.returnedAt, sim.zone)}` : ''}.</li>)}</ul>
         </details>
       )}
-      <Fine>A mandatory medical leave (p.159) is recommended by Yale Health and decided by the dean, on an individual assessment of risk and of the modifications the School can make; you can appeal in writing within {MANDATORY_LEAVE.appealDays} days, and the leave stands while it’s heard. What starts an assessment in SLATE is how you’re managing (stays in hospital, class days missed ill), never a diagnosis; the rest of its process is SLATE’s model where the Bulletin is silent. The Bulletin’s leave (pp.157–160): one, two or three terms, personal after a term completed and current with requirements and normally not after the tenth day, medical on a Yale Health physician’s recommendation, no aid, Yale Health’s student cover ending the day it’s granted or back to the insurance term’s start before classes, Affiliate cover at $5,416 a term, notice eight weeks before return, and dismissal for not returning. SLATE’s: a leave’s length must return you in the season you left, since most acting courses run fall to spring; five working days to decide; the physician’s view read from care, injury or illness in the last thirty days; the rebate schedule applied to the living scholarship. An F-1 student’s personal leave ends their status and needs travel SLATE doesn’t have, so it’s refused, with why. Used: {leaveTermsUsed(school)} of {LEAVE_RULES.maxTerms} terms. Source: {LEAVE_RULES.source}.</Fine>
+      <Fine>A mandatory medical leave (p.159) is recommended by Yale Health and decided by the dean, on an individual assessment of risk and of the modifications the School can make; you can appeal in writing within {MANDATORY_LEAVE.appealDays} days, and the leave stands while it’s heard. What starts an assessment in the game is how you’re managing (stays in hospital, class days missed ill), never a diagnosis; where the Bulletin is silent, the rest of its process is the game’s own. The Bulletin’s leave (pp.157–160): one, two or three terms, personal after a term completed and current with requirements and normally not after the tenth day, medical on a Yale Health physician’s recommendation, no aid, Yale Health’s student cover ending the day it’s granted or back to the insurance term’s start before classes, Affiliate cover at $5,416 a term, notice eight weeks before return, and dismissal for not returning. The game’s own rules: a leave’s length must return you in the season you left, since most acting courses run fall to spring; five working days to decide; the physician’s view read from care, injury or illness in the last thirty days; the rebate schedule applied to the living scholarship. An F-1 student’s personal leave ends their status and needs travel the game doesn’t have, so it’s refused, with the reason. Used: {leaveTermsUsed(school)} of {LEAVE_RULES.maxTerms} terms. Source: {LEAVE_RULES.source}.</Fine>
     </div>
   );
 }
@@ -241,7 +241,7 @@ export function RepeatPanel() {
         </div>
       )}
       {no && failed.length > 0 && !r && <p className="xs dim" style={{ margin: 0 }}>{no}</p>}
-      <Fine>No rule for repeating a failed acting course was found in the Bulletin; this is SLATE’s faculty model, under the Bulletin’s nine semesters for the degree, six terms of tuition support and its disqualification at two Fails in a term or seven in all (pp.148, 182, 194). A year is approved once, asked at its end or within thirty days of the last year’s evaluation; after the last year, what’s unpassed can be retaken in an additional term of its season instead. The faculty review a disqualification rather than apply it: the first time, academic warning and the year to repeat. Source: {EXTENDED_STUDY.source}.</Fine>
+      <Fine>No rule for repeating a failed acting course was found in the Bulletin, so this is the game’s own, under the Bulletin’s nine semesters for the degree, six terms of tuition support and its disqualification at two Fails in a term or seven in all (pp.148, 182, 194). A year is approved once, asked at its end or within thirty days of the last year’s term review; after the last year, what’s unpassed can be retaken in an additional term of its season instead. The faculty review a disqualification rather than apply it: the first time, academic warning and the year to repeat. Source: {EXTENDED_STUDY.source}.</Fine>
     </div>
   );
 }
@@ -296,7 +296,7 @@ export function YaleAccountPanel() {
           {!reviewNo && <Gated feature="school.request_aid_review" className="btn btn-sm btn-ghost" onClick={() => { const a = run<{ decideAt: number }>('school.request_aid_review'); if (a.ok) toast(`Asked: decided by ${formatDate(a.value!.decideAt, sim.zone)}.`, 'positive'); }}>Ask For An Aid Review</Gated>}
         </div>
       )}
-      <Fine>Tuition support ordinarily covers six terms (p.182); a term past it is billed tuition and the Yale Health fee, due in thirty days, SLATE’s estimate. Unpaid, the Bulletin’s late fee, {money(inSaveMoney(sim, EXTENDED_STUDY.lateFee, 'USD'))} a month to {money(inSaveMoney(sim, EXTENDED_STUDY.lateFeeTermCap, 'USD'))} a term, and a hold on registration and the diploma (p.184). A scholarship returned on a leave is charged here too. The balance is the sum of the account’s postings.</Fine>
+      <Fine>Tuition support ordinarily covers six terms (p.182); a term past it is billed tuition and the Yale Health fee, due in thirty days (estimated). Unpaid, the Bulletin’s late fee, {money(inSaveMoney(sim, EXTENDED_STUDY.lateFee, 'USD'))} a month to {money(inSaveMoney(sim, EXTENDED_STUDY.lateFeeTermCap, 'USD'))} a term, and a hold on registration and the diploma (p.184). A scholarship returned on a leave is charged here too. The balance is the sum of the account’s postings.</Fine>
     </div>
   );
 }
@@ -326,7 +326,7 @@ export function WorkLimitsBlock() {
         <HowItWorks help="school.request_conversion" />
         {no && <span className="xs dim">{no}</span>}
       </div>
-      <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is refused, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found; SLATE’s is Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>
+      <Fine>Yale’s cap: no more than {WORK_LIMITS.weekHours} hours a week across all its jobs in an academic term, {WORK_LIMITS.recessWeekHours} in recess, summer or on leave; a booking past it is refused, and a shift that would pass it is worked to the cap. How Yale bounds the week wasn’t found, so the game counts Monday to Sunday. A student on aid short of the {WORK_STUDY.assignedHours} assigned hours through illness, injury or the School’s calls, or never assigned them, can ask for up to {WORK_LIMITS.convertibleHours} hours converted to grant-in-aid, processed in January and May (Bulletin p.189); it’s a scholarship for living costs, taxable. Hours missed absent, late or before the I-9 can’t be. Each shift carries its work’s own risk of injury, BLS’s rates: the crew’s in the shops higher than front of house. In {YALE_DRAMA.name}’s year {Math.floor(academicTerm(school, term) / 2) + 1}. Source: {WORK_LIMITS.source}.</Fine>
     </div>
   );
 }
@@ -352,7 +352,7 @@ export function ClassesPanel() {
         </details>
       ))}
       {(school.joinedHistory ?? []).length > 0 && (() => { const plays = school.joinedHistory!.filter((p) => !p.name.startsWith('Yale Cabaret')).map((p) => p.play ?? p.name); const shows = school.joinedHistory!.length - plays.length; const said = [...plays, ...(shows ? [shows === 1 ? 'a Cabaret show' : `${shows} Cabaret shows`] : [])]; return <p className="small" style={{ margin: 0 }}>Before you joined, the class of {school.classOf} played {said.join(' and ')}.</p>; })()}
-      <Fine>A class you’ve left is played forward through every term it has, to its degree, whether or not you’re still at the School: its classes, as a class day grows a classmate, and its productions, cast by the chair’s rule and grown by their rehearsals and nights, its third year’s Rep company and a Cabaret show a term among them. How many of a class take a Cabaret show is SLATE’s estimate.</Fine>
+      <Fine>A class you’ve left is played forward through every term it has, to its degree, whether or not you’re still at the School: its classes, as a class day grows a classmate, and its productions, cast by the chair’s rule and grown by their rehearsals and nights, its third year’s Rep company and a Cabaret show a term among them. How many of a class take a Cabaret show is estimated.</Fine>
     </div>
   );
 }

@@ -70,7 +70,7 @@ describe('a genre’s register, on the brief', () => {
     press('brief.choose', { brief: noir.id, reading: noir.readings[0]!.id });
     for (const step of ['read', 'lines', 'rehearse', 'read', 'lines', 'rehearse']) press('brief.prepare', { brief: noir.id, step });
     // Before the take: the forecast's line already names it.
-    expect(pane(sim, 'nordic_noir')).toMatch(/Your Composure held back [A-Z][a-z]+ by [\d.]+ points: Nordic Noir’s Feeling Held In asks for it\./);
+    expect(pane(sim, 'nordic_noir')).toMatch(/Your Composure holds back [A-Z][a-z]+ by [\d.]+ points: Nordic Noir’s Feeling Held In asks for it\./);
     press('practice.self_tape', { genre: 'nordic_noir', brief: noir.id });
     const after = pane(sim, 'nordic_noir');
     expect(after).toContain('The Last Take');

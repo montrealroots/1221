@@ -386,8 +386,8 @@ export function meetingsFrom(course: string, from: SchoolDate, school?: SchoolRe
 
 const termWord = (term: number): 'fall' | 'spring' => (termStart(term).fall ? 'fall' : 'spring');
 
-/** A list in words: “a”, “a and b”, “a, b and c”. */
-const andList = (xs: readonly string[]): string => (xs.length < 2 ? xs[0] ?? '' : `${xs.slice(0, -1).join(', ')} and ${xs.at(-1)}`);
+/** A list in words: “a”, “a and b”, “a, b and c”, with a comma before the last where an item has an “and” of its own. */
+const andList = (xs: readonly string[]): string => (xs.length < 2 ? xs[0] ?? '' : `${xs.slice(0, -1).join(', ')}${xs.some((x) => x.includes(' and ')) ? ', and' : ' and'} ${xs.at(-1)}`);
 /** An hour of the day in words that can end a sentence: 7 in the morning, noon, 10 at night. */
 const hourWords = (h: number): string => (h === 12 ? 'noon' : h === 0 || h === 24 ? 'midnight' : h < 12 ? `${h} in the morning` : h < 17 ? `${h - 12} in the afternoon` : h < 21 ? `${h - 12} in the evening` : `${h - 12} at night`);
 /** A scene's place, as it reads inside a sentence: “The one act, the Wright kitchen” as “the one act, the Wright kitchen”. */
@@ -1307,7 +1307,7 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   (cw.warned ??= []).push(a.term);
   const top = shortCause(person, tally.unreadyShown);
   const of = tally.unreadyShown.length === 1 ? 'the one you showed' : `${top?.kind === 'part' ? top.n : 0} of the ${tally.unreadyShown.length} you showed`;
-  const cause = top?.kind === 'part' ? ` What held most of them back was ${top.label.toLowerCase()}, unfinished on ${of}. To work on it, use ${top.remedy}.`
+  const cause = top?.kind === 'part' ? ` What held most of them back was “${top.label}”, unfinished on ${of}. To work on it, use ${top.remedy}.`
     : top?.kind === 'every' ? ' Every part of each one was unfinished, so it’s the preparation as a whole, not one part. Work through each piece’s steps.'
       : top?.kind === 'scattered' ? ' Each was short on a different part, so there’s no single pattern. Each one’s feedback says what held it back.' : ' Each one’s feedback says what held it back.';
   const set = tally.work.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;

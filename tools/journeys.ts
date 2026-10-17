@@ -891,7 +891,7 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     }
     // The cause a warning names is among the parts short on the pieces it counts.
     for (const w of words) {
-      const m = /What held most of them back was ([^,]+), unfinished on/.exec(w[3]);
+      const m = /What held most of them back was “([^”]+)”, unfinished on/.exec(w[3]);
       if (!m) continue;
       const label = m[1]!.toLowerCase();
       const shortLabels = new Set((rec.showings as { at: string; shortLabels: string[]; band: string }[]).filter((x) => x.at <= w[0] && x.band === 'unready').flatMap((x) => x.shortLabels.map((l) => String(l).toLowerCase())));

@@ -48,7 +48,7 @@ describe('a classmate’s invitation to run lines', () => {
     sim.advanceTo(m.until + 60_000);
     expect(m.status).toBe('lapsed');
     expect(trustOf(mate)).toBe(before + CLASS.study.unanswered);
-    expect(sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice: 'yes' } }).error).toBe('It’s too late to answer: the moment passed.');
+    expect(sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice: 'yes' } }).error).toBe('It’s too late to answer. The moment has passed.');
   });
 });
 

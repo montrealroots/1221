@@ -269,13 +269,13 @@ export function clearedToReturn(person: Person, now: Instant): string | undefine
 export function leaveRefusal(sim: Simulation, person: Person, kind: LeaveKind, reason?: LeaveReason): string | undefined {
   const school = person.school;
   if (!school || schoolEnded(school.standing)) return 'You’re not at school.';
-  if (school.termsBegun === 0) return 'A leave is from the program, and your first term hasn’t begun.';
+  if (school.termsBegun === 0) return 'You can’t take a leave before your first term has begun.';
   const l = school.leave;
   if (l?.status === 'pending') return `Your request is with the chair and the dean, decided by ${formatDate(l.decideAt, sim.zone)}.`;
   if (l?.status === 'granted') return `Your leave is granted, from ${termLabel(l.firstTerm)}.`;
   if (l?.status === 'on') return 'You’re on leave.';
   if (school.repeat?.status === 'pending') return 'Your request to repeat the year is being decided.';
-  if (school.awaitingDegree || school.repeatBy !== undefined) return 'Your terms are done; what’s left is the degree.';
+  if (school.awaitingDegree || school.repeatBy !== undefined) return 'Your terms are done. All that’s left is the degree.';
   if (reason && LEAVE_REASONS[reason].kind !== kind) return `${LEAVE_REASONS[reason].label} is a reason for a ${LEAVE_REASONS[reason].kind} leave.`;
   if (reason === 'professional') return 'The School doesn’t normally grant a leave to take on a professional commitment.';
   const lengths = leaveLengths(sim, school, kind);
@@ -283,13 +283,13 @@ export function leaveRefusal(sim: Simulation, person: Person, kind: LeaveKind, r
   const start = leaveStart(sim, school, kind);
   if (academicTerm(school, start.term) >= YALE_DRAMA.terms) return 'Your terms in the program are done.';
   if (kind === 'personal') {
-    if (f1Of(person)) return 'On an F-1, a personal leave ends your status: the School would report it, and you’d have fifteen days to leave the United States, which SLATE can’t play. A medical leave keeps your status, as a reduced course load.';
-    if (academicTerm(school, termNow(school)) === 0 && !evaluated(school, termNow(school))) return 'A personal leave comes after one term completed.';
+    if (f1Of(person)) return 'On an F-1, a personal leave ends your status: the School would report it, and you’d have fifteen days to leave the United States, which the game doesn’t play out. A medical leave keeps your status, as a reduced course load.';
+    if (academicTerm(school, termNow(school)) === 0 && !evaluated(school, termNow(school))) return 'You can take a personal leave only after you’ve completed one term.';
     const open = degreeShortfall(school);
-    if (open.incomplete.length) return `A personal leave asks you to be current with your requirements: make up ${open.incomplete.map((r) => r.name).join(', ')} first.`;
-    if (open.failed.length) return `A personal leave asks you to be current with your requirements, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'isn’t' : 'aren’t'} passed.`;
+    if (open.incomplete.length) return `For a personal leave you need to be current with your requirements. Make up ${open.incomplete.map((r) => r.name).join(', ')} first.`;
+    if (open.failed.length) return `For a personal leave you need to be current with your requirements, and ${open.failed.map((r) => r.name).join(', ')} ${open.failed.length === 1 ? 'isn’t' : 'aren’t'} passed.`;
   } else if (!physicianRecommends(person, sim.now)) {
-    return `A medical leave is on a Yale Health physician’s written recommendation, and nothing in the last ${LEAVE_RULES.medicalLookbackDays} days would bring one: no illness, injury or stay in hospital.`;
+    return `A medical leave needs a Yale Health physician’s written recommendation, and nothing in the last ${LEAVE_RULES.medicalLookbackDays} days would lead to one: no illness, injury or stay in hospital.`;
   }
   return undefined;
 }
@@ -420,12 +420,12 @@ export function startLeave(sim: Simulation, person: Person, begun = true): void 
   sim.schedule({ at: Math.max(l.noticeBy, sim.now + 60_000), kind: LEAVE_NOTICE_KIND, label: 'Your Leave: Notice Of Return Due', category: 'school', priority: 33, payload: { personId: person.id } });
   sim.schedule({ at: Math.max(back, sim.now + 120_000), kind: TERM_KIND, label: termBegins(l.returnTerm), category: 'school', priority: 30, payload: { personId: person.id, term: l.returnTerm } });
   notify(sim, person, 'Your Leave Has Begun', [
-    `You’re on a ${l.kind} leave until ${termLabel(l.returnTerm)}, ${formatDate(back, zone())}${termStart(l.returnTerm).estimate ? ', SLATE’s estimate' : ''}.`,
+    `You’re on a ${l.kind} leave until ${termLabel(l.returnTerm)}, ${formatDate(back, zone())}${termStart(l.returnTerm).estimate ? ' (an estimated date)' : ''}.`,
     left.length ? `${left.join(', ')} ${left.length === 1 ? 'is' : 'are'} left unfinished, to be taken again when you’re back.` : '',
-    l.aidReturned ? `${money(sim, l.aidReturned)} of the term’s scholarship goes back on the rebate schedule, on your Yale account, due by ${formatDate(sim.now + EXTENDED_STUDY.dueDays * MS_DAY, zone())}.` : '',
+    l.aidReturned ? `${money(sim, l.aidReturned)} of the term’s scholarship has to be returned on the rebate schedule. It’s on your Yale account, due by ${formatDate(sim.now + EXTENDED_STUDY.dueDays * MS_DAY, zone())}.` : '',
     l.kind === 'medical' ? 'Yale Health keeps covering you as Affiliate cover, which the School pays for.' : `Yale Health’s student cover ${l.retro ? 'is canceled back to the insurance term’s start, and its fee refunded' : l.coverEnds! > sim.now ? `ends on ${formatDate(l.coverEnds!, zone())}` : 'ended today'}. Affiliate cover, ${money(sim, usd(sim, LEAVE_RULES.affiliatePerTerm))} a term, can be bought until ${formatDate(l.affiliateBy!, zone())}.`,
     l.f1Extended ? 'Your I-20 is extended a year, as an authorized reduced course load.' : '',
-    `Give notice of your return by ${formatDate(l.noticeBy, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}, or the leave ends in dismissal.`,
+    `Give notice of your return by ${formatDate(l.noticeBy, zone())}${l.kind === 'medical' ? ', with a Yale Health physician’s clearance' : ''}, on the Standing tab. Without it, the leave ends in dismissal.`,
   ].filter(Boolean).join(' '), 85);
 }
 
@@ -440,7 +440,7 @@ export function returnFromLeave(sim: Simulation, person: Person): void {
   delete school.leave;
   school.mustRegister = true;
   planWeek(sim, person, sim.now);
-  notify(sim, person, 'Back From Your Leave', `Welcome back for ${termLabel(l.returnTerm)}. Register on the Standing tab before classes: until you do, they don’t count you. You’re in year ${yearOfTerm(academicTerm(school, l.returnTerm))} again, with the courses you left, in the class of ${school.classOf}.`, 85);
+  notify(sim, person, 'Back From Your Leave', `Welcome back for ${termLabel(l.returnTerm)}. Register on the Standing tab before classes: until you do, classes don’t count your attendance. You’re in year ${yearOfTerm(academicTerm(school, l.returnTerm))} again, with the courses you left, in the class of ${school.classOf}.`, 85);
   tellOutsideTheCover(sim, person);
 }
 
@@ -614,12 +614,12 @@ export function extraRefusal(sim: Simulation, person: Person): { why?: string; t
   if (school.extra) return { why: `Your additional term is ${termLabel(school.extra.term)}.` };
   if (school.repeat?.status === 'pending') return { why: 'Your request to repeat the year is being decided.' };
   const t = termNow(school);
-  if (school.repeatBy === undefined && !school.awaitingDegree) return { why: 'An additional term comes after your last year’s evaluation, for what it left unpassed.' };
+  if (school.repeatBy === undefined && !school.awaitingDegree) return { why: 'You can ask for an additional term after your last year’s term review, to retake what you didn’t pass.' };
   // Past the thirty days nothing is left to ask in: a request pending at their end is refused above, its decision or
   // its calling off ends them (`school.cancel_repeat`). Until 2026-10-13 “Its thirty days have run out.” stood here,
   // said only to a student whose repeat was called off after them, who has been withheld since that day.
   const plan = extraCourses(school);
-  if (!plan.length) return { why: 'Every course is passed: there’s nothing to retake.' };
+  if (!plan.length) return { why: 'You’ve passed every course, so there’s nothing to retake.' };
   // The next term whose season has retakes.
   let term = t + 1;
   while (!plan.some((p) => (p.season === 'fall') === termStart(term).fall)) term += 1;
@@ -657,7 +657,7 @@ export function considerWelfare(sim: Simulation, person: Person): void {
   const assessAt = businessDaysOn(sim.now, MANDATORY_LEAVE.assessWorkingDays, 'yale');
   school.welfare = { at: sim.now, trigger, assessAt, status: 'scheduled' };
   sim.schedule({ at: assessAt, kind: WELFARE_KIND, label: 'Yale Health: An Assessment', category: 'school', priority: 34, requiresPlayer: true, durationMinutes: MANDATORY_LEAVE.assessMinutes, locationId: YALE_DRAMA.cityId, payload: { personId: person.id } });
-  notify(sim, person, 'Yale Health Asks To See You', `With ${trigger}, Yale Health has asked to assess whether you can go on with your studies for now, on ${formatDate(assessAt, zone())}. It’s an individual assessment of how you’re managing and what the School can adjust for you, not of any diagnosis; it can end with nothing changed, with modifications, or with a recommendation of a medical leave that the dean decides. You can ask for a medical leave yourself first. Refusing the assessment is itself a ground the Bulletin names.`, 90);
+  notify(sim, person, 'Yale Health Asks To See You', `With ${trigger}, Yale Health has asked to assess whether you can go on with your studies for now, on ${formatDate(assessAt, zone())}. It’s an individual assessment of how you’re managing and what the School can adjust for you, not of any diagnosis; it can end with nothing changed, with modifications, or with a recommendation of a medical leave that the dean decides. You can ask for a medical leave yourself first. Not coming to the assessment is itself a ground the Bulletin names for a leave.`, 90);
 }
 
 /** What an assessment finds now: fit; back within two weeks, so the modifications are enough; or not, so a leave. */
@@ -667,7 +667,7 @@ export function assess(sim: Simulation, person: Person): { outcome: 'fit' | 'mod
   const soon = sim.now + MANDATORY_LEAVE.soonDays * MS_DAY;
   const back = Math.max(h.inHospitalUntil ?? 0, h.fluUntil ?? 0, injuryOf(person, sim.now)?.offWorkUntil ?? 0);
   if (back > sim.now && back <= soon) return { outcome: 'modifications', why: `You should be back on your feet by ${formatDate(back, zone())}: excused absences and Incompletes, which the School already gives, are enough.` };
-  return { outcome: 'leave', why: back > soon ? `You won’t be able to take part in classes before ${formatDate(back, zone())}, past what excused absences and Incompletes can carry.` : 'You aren’t able to take part in classes, and nothing says when you will be.' };
+  return { outcome: 'leave', why: back > soon ? `You won’t be able to take part in classes before ${formatDate(back, zone())}, past what excused absences and Incompletes can carry.` : 'You aren’t able to take part in classes, and there’s no knowing yet when you can.' };
 }
 
 /**
@@ -682,7 +682,7 @@ function rescindable(sim: Simulation, person: Person, l: Leave): string | undefi
   if (l.status === 'granted') return undefined;
   const period = classPeriod(l.firstTerm);
   const from = at(period.from, 0), to = at(period.to, 23);
-  if ((to - sim.now) / Math.max(1, to - from) < MANDATORY_LEAVE.resumeWithin) return 'Too much of the term has gone to resume it.';
+  if ((to - sim.now) / Math.max(1, to - from) < MANDATORY_LEAVE.resumeWithin) return 'Too much of the term has passed to resume it.';
   if (termNow(person.school!) !== l.firstTerm) return 'The term it began in is over.';
   return undefined;
 }
@@ -704,7 +704,7 @@ function rescind(sim: Simulation, person: Person, l: Leave): void {
   (school.leaves ??= []).push(l);
   delete school.leave;
   planWeek(sim, person, sim.now);
-  schedule(sim, person, at(classPeriod(l.firstTerm).to, 17), { kind: EVALUATION_KIND, label: `${termLabel(l.firstTerm)} Evaluation`, minutes: 0, payload: { term: l.firstTerm }, requiresPlayer: false });
+  schedule(sim, person, at(classPeriod(l.firstTerm).to, 17), { kind: EVALUATION_KIND, label: `Term Review, ${termLabel(l.firstTerm)}`, minutes: 0, payload: { term: l.firstTerm }, requiresPlayer: false });
   if (academicTerm(school, l.firstTerm) + 1 < YALE_DRAMA.terms) sim.schedule({ at: Math.max(at(termStart(l.firstTerm + 1).date, 9), sim.now + 60_000), kind: TERM_KIND, label: termBegins(l.firstTerm + 1), category: 'school', priority: 30, payload: { personId: person.id, term: l.firstTerm + 1 } });
 }
 
@@ -858,8 +858,8 @@ function bankShortWords(sim: Simulation, person: Person, amount: Money, inFull: 
 export function payBalanceRefusal(sim: Simulation, person: Person, amount: Money): string | undefined {
   const owed = accountOwed(sim, person);
   if (owed <= 0) return 'Your Yale account owes no balance.';
-  if (!(amount > 0)) return 'Pay something.';
-  if (amount > owed) return `${money(sim, owed)} is owed; pay that or less.`;
+  if (!(amount > 0)) return 'Enter an amount to pay.';
+  if (amount > owed) return `${money(sim, owed)} is owed. Pay that or less.`;
   return bankShortWords(sim, person, amount, false);
 }
 
@@ -948,17 +948,17 @@ export function repeatRefusal(sim: Simulation, person: Person): string | undefin
   // be granted for one course; found by that day's evidence pass).
   if (school.extraRequest?.status === 'pending') return `Your request for an additional term is with the chair and the dean, decided by ${formatDate(school.extraRequest.decideAt, sim.zone)}.`;
   if (school.extra) return `Your additional term is ${termLabel(school.extra.term)}.`;
-  if (school.leave && ['pending', 'granted', 'on'].includes(school.leave.status)) return 'Not with a leave under way.';
+  if (school.leave && ['pending', 'granted', 'on'].includes(school.leave.status)) return 'Not while a leave is under way.';
   const t = termNow(school);
   const academic = academicTerm(school, t);
-  if (academic < 1 || academic % 2 === 0 || !evaluated(school, t)) return 'A year is repeated from its end, after the spring’s evaluation.';
-  if (school.repeatBy === undefined && academic === YALE_DRAMA.terms - 1) return 'Your last year’s evaluation is past.';
+  if (academic < 1 || academic % 2 === 0 || !evaluated(school, t)) return 'You can ask to repeat a year only at its end, after the spring’s term review.';
+  if (school.repeatBy === undefined && academic === YALE_DRAMA.terms - 1) return 'Your last year’s term review is past.';
   // “Its thirty days have run out.” stood here until 2026-10-13, past them, where a request pending at their end is
   // refused above and its decision or its calling off ends them (as `extraRefusal` says).
   if (school.repeatBy === undefined && sim.now >= at(termStart(t + 1).date, 0)) return 'The next year has begun.';
-  if (!repeatCourses(school, t).length) return 'Every course this year was passed: there’s nothing to repeat it for.';
+  if (!repeatCourses(school, t).length) return 'You passed every course this year, so there’s nothing to repeat it for.';
   // SLATE's faculty grant a year once (from 2026-10-10: until then one repeat in all, whatever the year).
-  if ((school.repeatedYears ?? []).includes(yearOfTerm(academic))) return `SLATE’s faculty don’t approve year ${yearOfTerm(academic)} a second time.`;
+  if ((school.repeatedYears ?? []).includes(yearOfTerm(academic))) return `In the game, the faculty don’t approve repeating year ${yearOfTerm(academic)} a second time.`;
   const would = withRepeat(school, academic);
   if (would > EXTENDED_STUDY.maxSemesters) return `Repeating would make ${would} semesters, past the nine the Bulletin allows for the degree.`;
   return undefined;
@@ -1021,7 +1021,7 @@ export function offerRepeat(sim: Simulation, person: Person): boolean {
   if (!repeat && extra.why) { delete school.repeatBy; return false; }
   sim.schedule({ at: school.repeatBy, kind: REPEAT_DUE_KIND, label: 'Finishing The Degree: Last Day To Ask', category: 'school', priority: 33, payload: { personId: person.id } });
   const unpassed = degreeShortfall(school).failed.map((r) => r.name);
-  notify(sim, person, 'Your Degree Isn’t Complete', `${unpassed.join(', ')} ${unpassed.length === 1 ? 'isn’t' : 'aren’t'} passed, and the degree needs every course. By ${formatDate(school.repeatBy, zone())} you can ask ${[repeat ? 'to repeat the year' : '', !extra.why ? `for an additional term, ${termLabel(extra.term!)}, to retake ${extra.courses!.length === 1 ? 'it' : 'them'}` : ''].filter(Boolean).join(' or ')}, on the Standing tab: a term past the sixth has no tuition support unless the aid office grants it. Not asked for, the degree is withheld.`, 90);
+  notify(sim, person, 'Your Degree Isn’t Complete', `${unpassed.join(', ')} ${unpassed.length === 1 ? 'isn’t' : 'aren’t'} passed, and the degree needs every course. By ${formatDate(school.repeatBy, zone())} you can ask ${[repeat ? 'to repeat the year' : '', !extra.why ? `for an additional term, ${termLabel(extra.term!)}, to retake ${extra.courses!.length === 1 ? 'it' : 'them'}` : ''].filter(Boolean).join(' or ')}, on the Standing tab. A term past the sixth has no tuition support unless the aid office grants it. If you don’t ask, the degree is withheld.`, 90);
   return true;
 }
 
@@ -1042,7 +1042,7 @@ export function registerLeave(sim: Simulation): void {
   sim.onCommand<{ kind: LeaveKind; reason: LeaveReason; terms?: number }, { decideAt: Instant; firstTerm: number; startsNow: boolean }>('school.request_leave', (p, { sim: s }) => {
     const kind = p?.kind === 'medical' ? 'medical' : 'personal';
     const reason = (p?.reason ?? (kind === 'medical' ? 'illness' : 'personal')) as LeaveReason;
-    if (!(reason in LEAVE_REASONS)) throw new CommandError('Give a reason.');
+    if (!(reason in LEAVE_REASONS)) throw new CommandError('Choose a reason for the leave.');
     const leave = requestLeave(s, s.player, kind, reason, p?.terms === undefined ? LEAVE_RULES.terms : Number(p.terms));
     return { decideAt: leave.decideAt, firstTerm: leave.firstTerm, startsNow: leave.firstTerm === termNow(s.player.school!) && !evaluated(s.player.school!, leave.firstTerm) };
   });
@@ -1171,7 +1171,7 @@ export function registerLeave(sim: Simulation): void {
     for (const i of s.universe.scheduled) if (i.status === 'pending' && i.payload.personId === person.id && (i.kind === REPEAT_DUE_KIND || i.kind === 'school.commencement')) s.timeline.cancel(i.id, s.now);
     s.schedule({ at: Math.max(at(termStart(r.term).date, 9), s.now + 60_000), kind: TERM_KIND, label: termBegins(r.term), category: 'school', priority: 30, payload: { personId: person.id, term: r.term } });
     extendF1(s, person);
-    notify(s, person, 'An Additional Term Granted', `The chair and the dean granted it: in ${termLabel(r.term)} you retake ${r.courses.map((c) => c.name).join(', ')}, and only those, with the class then in that year. ${termStart(r.term).fall ? 'Passed, the degree is conferred at Yale’s December conferral.' : 'Passed, the degree comes at Commencement in May.'} A term past six has no tuition support unless the aid office grants an exception: ask for its review. This is SLATE’s faculty model: the Bulletin sets no rule for it.`, 85);
+    notify(s, person, 'An Additional Term Granted', `The chair and the dean granted it: in ${termLabel(r.term)} you retake ${r.courses.map((c) => c.name).join(', ')}, and only those, with the class then in that year. ${termStart(r.term).fall ? 'Passed, the degree is conferred at Yale’s December conferral.' : 'Passed, the degree comes at Commencement in May.'} A term past six has no tuition support unless the aid office grants an exception: ask for its review. The Bulletin sets no rule for this; the decision is the game’s.`, 85);
   });
 
   sim.onCommand<Record<string, never>, { decideAt: Instant }>('school.request_aid_review', (_p, { sim: s }) => {
@@ -1194,14 +1194,14 @@ export function registerLeave(sim: Simulation): void {
     r.status = 'decided';
     r.tuition = medical;
     r.living = hasNeed(person);
-    r.why = `${medical ? 'An exception to the six terms of tuition support, since a medical leave made the extra terms.' : 'No exception to the six terms of tuition support: the Bulletin calls them extremely rare, and SLATE’s office grants one only where a medical leave made the extra terms.'} ${r.living ? 'Your need-based living aid continues for the approved terms.' : 'No living aid: none was found for you before.'}`;
-    notify(s, person, 'The Aid Office’s Review', `${r.why} These are the aid office’s decisions in SLATE’s model, not rules the Bulletin states.`, 80);
+    r.why = `${medical ? 'An exception to the six terms of tuition support, since a medical leave made the extra terms.' : 'No exception to the six terms of tuition support: the Bulletin calls them extremely rare, and in the game the office grants one only where a medical leave made the extra terms.'} ${r.living ? 'Your need-based living aid continues for the approved terms.' : 'No living aid: none was found for you before.'}`;
+    notify(s, person, 'The Aid Office’s Review', `${r.why} These decisions are the game’s, not rules the Bulletin states.`, 80);
   });
 
   sim.onCommand<{ confirm?: boolean }, { canceled: true }>('school.cancel_leave', (p, { sim: s }) => {
     const school = s.player.school;
     const l = school?.leave;
-    if (!school || !l || (l.status !== 'pending' && l.status !== 'granted')) throw new CommandError(l?.status === 'on' ? 'You’re on leave: you come back at the term it ends, with notice. To leave for good, withdraw.' : 'No leave is asked for.');
+    if (!school || !l || (l.status !== 'pending' && l.status !== 'granted')) throw new CommandError(l?.status === 'on' ? 'You’re on leave: you come back at the term it ends, with notice. To leave for good, withdraw.' : 'You haven’t asked for a leave.');
     // A leave the dean imposed isn't the student's to call off (Bulletin 2026–27 p.159: the dean's decision, appealed in
     // writing). From 2026-10-16: until then one granted from the next term, the dean's decision having come after its
     // term's evaluation, was called off here, and the Leave panel drew Call Off The Leave… for it.
@@ -1229,7 +1229,7 @@ export function registerLeave(sim: Simulation): void {
       l.why = why;
       (school.leaves ??= []).push(l);
       delete school.leave;
-      notify(s, person, 'Your Leave Is Refused', `The chair and the dean refused it. ${why} You stay at the School as you are.`, 85);
+      notify(s, person, 'Your Leave Isn’t Granted', `The chair and the dean refused it. ${why} You stay at the School as you are.`, 85);
       return;
     }
     l.status = 'granted';
@@ -1252,7 +1252,7 @@ export function registerLeave(sim: Simulation): void {
     const person = s.player;
     const l = person.school?.leave;
     if (!l || l.status !== 'on') throw new CommandError('You’re not on leave.');
-    if (l.noticeAt !== undefined) throw new CommandError(`You gave notice on ${formatDate(l.noticeAt, s.zone)}.`);
+    if (l.noticeAt !== undefined) throw new CommandError(`You already gave notice on ${formatDate(l.noticeAt, s.zone)}.`);
     if (s.now > l.noticeBy!) throw new CommandError('Its deadline has passed.');
     if (l.kind === 'medical') { const no = clearedToReturn(person, s.now); if (no) throw new CommandError(no); }
     l.noticeAt = s.now;
@@ -1264,8 +1264,8 @@ export function registerLeave(sim: Simulation): void {
     const school = person.school;
     const l = school?.leave;
     if (!school || !l || l.status !== 'on') throw new CommandError('Affiliate cover is for a student on leave.');
-    if (l.affiliate) throw new CommandError(l.affiliate.by === 'school' ? 'The School pays for your Affiliate cover.' : 'You have it.');
-    if (s.now > (l.affiliateBy ?? 0)) throw new CommandError(`It could be bought until ${formatDate(l.affiliateBy ?? s.now, s.zone)}.`);
+    if (l.affiliate) throw new CommandError(l.affiliate.by === 'school' ? 'The School pays for your Affiliate cover.' : 'You already have it.');
+    if (s.now > (l.affiliateBy ?? 0)) throw new CommandError(`It could only be bought until ${formatDate(l.affiliateBy ?? s.now, s.zone)}.`);
     const { terms, cost, credit } = affiliateQuote(s, l);
     if (!p?.confirm) throw new CommandError(`Affiliate cover for the leave’s ${termsInWords(terms)} is ${formatMoney(cost, saveCurrency(s.universe))}${credit ? `, with the ${formatMoney(credit, saveCurrency(s.universe))} student fee you paid credited` : ''}, paid in full now. Confirm to buy it.`);
     // From the current account and then the savings beside it, as a payment to Yale is taken (`fromBankToYale`, from
@@ -1290,8 +1290,8 @@ export function registerLeave(sim: Simulation): void {
     // (brief 11) a term begun under a hold and then left kept its Register on Standing, which, the hold paid on the leave,
     // registered her for the term she was away from.
     if (school.leave?.status === 'on') throw new CommandError('You’re on leave: you register for the term you come back to, when it begins.');
-    if (!school.mustRegister) throw new CommandError('You’re registered.');
-    if (school.hold !== undefined) throw new CommandError(`A financial hold stops registration: ${formatMoney(accountOwed(s, s.player), saveCurrency(s.universe))} is owed on your Yale account.`);
+    if (!school.mustRegister) throw new CommandError('You’re already registered.');
+    if (school.hold !== undefined) throw new CommandError(`A financial hold stops registration: ${formatMoney(accountOwed(s, s.player), saveCurrency(s.universe))} is owed on your Yale account. Pay it on the Terms And Award tab.`);
     delete school.mustRegister;
     school.registeredAt = s.now;
     return { registeredAt: s.now };
@@ -1301,7 +1301,7 @@ export function registerLeave(sim: Simulation): void {
 
   sim.onCommand<{ confirm?: boolean }, { canceled: true }>('school.cancel_repeat', (p, { sim: s }) => {
     const school = s.player.school;
-    if (school?.repeat?.status !== 'pending') throw new CommandError('No repeat is asked for.');
+    if (school?.repeat?.status !== 'pending') throw new CommandError('You haven’t asked to repeat the year.');
     if (!p?.confirm) throw new CommandError(`${cancelRepeatWarning(s, school)} Confirm to go ahead.`);
     for (const i of s.universe.scheduled) if (i.status === 'pending' && i.kind === REPEAT_DECIDE_KIND && i.payload.personId === s.player.id) s.timeline.cancel(i.id, s.now);
     school.repeat.status = 'canceled';
@@ -1329,7 +1329,7 @@ export function registerLeave(sim: Simulation): void {
       r.status = 'refused';
       r.why = why;
       if (school.repeatBy !== undefined) { setStanding(s, person, 'withheld', `The chair and the dean refused your request to repeat the year. ${why}`); return; }
-      notify(s, person, 'Your Repeat Is Refused', `The chair and the dean refused it. ${why}`, 85);
+      notify(s, person, 'Your Repeat Isn’t Granted', `The chair and the dean refused it. ${why}`, 85);
       return;
     }
     r.status = 'granted';
@@ -1348,7 +1348,7 @@ export function registerLeave(sim: Simulation): void {
     }
     // The terms past six by the count the decision read, the program’s terms still to come among them (`withRepeat`).
     const past = would - EXTENDED_STUDY.supportedTerms;
-    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, and with the year again the degree takes ${would}: ${past === 1 ? 'one term' : `${past} terms`} will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}This is SLATE’s faculty model: the Bulletin sets no rule for repeating a course.`, 85);
+    notify(s, person, 'You’ll Repeat The Year', `The chair and the dean granted it: from ${termLabel(t + 1)} you take year ${r.year}’s courses again, and what you did the first time stays on your record. ${past > 0 ? `The tuition scholarship supports six terms, and with the year again the degree takes ${would}: ${past === 1 ? 'one term' : `${past} terms`} will be billed to your Yale account. ` : ''}${f1Of(person) ? 'Your I-20 is extended a year. ' : ''}The Bulletin sets no rule for repeating a course; the decision is the game’s.`, 85);
   });
 
   sim.onSchedule(REPEAT_DUE_KIND, (item, s) => {

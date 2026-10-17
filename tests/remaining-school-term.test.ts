@@ -290,12 +290,12 @@ describe('the missed-work term, played', () => {
     // The review's mark, half of three or more, decides its words (`ESTIMATE.coursework`).
     const short = end.due >= 3 && end.unready >= 0.5 * end.due;
     if (short) expect(review.reason).toContain(`${end.unready} of the ${end.due} pieces due in class were Unready or not shown. That’s short of what the program asks.`);
-    else expect(review.reason).not.toContain('pieces due in class were unready');
+    else expect(review.reason).not.toContain('pieces due in class were Unready');
     // On the screen: the Evaluations table's Coursework for Fall Term 2026, from the review's own count.
     const shown = text(drawn(sim, 'standing'));
-    const row = shown.slice(shown.indexOf('Evaluations'));
+    const row = shown.slice(shown.indexOf('Term Reviews'));
     expect(row).toContain(`Fall Term 2026`);
-    expect(row).toContain(`${end.unready} of ${end.due} unready or not shown`);
+    expect(row).toContain(`${end.unready} of ${end.due} Unready or not shown`);
   }, 300_000);
 });
 

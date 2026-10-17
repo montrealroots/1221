@@ -152,10 +152,10 @@ describe('the assignment look says what its figures are', () => {
     sim.must({ kind: 'school.prepare', payload: { assignmentId: a.id, activity: act.id } });
     const l = look(sim, 'assignment', a.id);
     const heads = elements(l.body).filter((e) => e.type === 'th').map((e) => text(e.props.children as ReactNode));
-    expect(heads).toEqual(['Part', 'Prepared', 'Weighs']);
+    expect(heads).toEqual(['Part', 'Prepared', 'Note Priority']);
     expect(l.provenance).not.toMatch(/fades by then|weighs each part by its share/);
     expect(l.provenance).toMatch(/nothing fades/);
-    expect(l.provenance).toMatch(/chooses its note/);
+    expect(l.provenance).toMatch(/when the teacher picks what to note/);
 
     // What the provenance says, measured. Nothing fades: a part reads the same today as on the day it's due.
     const today = dateKey(sim.now, zone);

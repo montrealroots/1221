@@ -93,9 +93,9 @@ export const RUNNING_TIMES: Readonly<Record<string, RunningTime>> = {
  */
 export const UNNAMED_RUNNING = {
   seagull: at(140, [20], 'Yale Rep hasn’t published its 2027 production’s running time; this is Teatr Narodowy’s, Warsaw, 2010: 2 h 20 with one interval', 'https://teatr.narodowy.pl/en,whats_on,past_seasons,68,the_seagull.html', true),
-  newPlay: { minutes: 100, breaks: [], basis: 'estimate', from: 'SLATE’s estimate: no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16), so a new play of an hour and forty minutes, run straight through' },
-  cabaret: { minutes: 60, breaks: [], basis: 'estimate', from: 'SLATE’s estimate from the Cabaret’s own format, a show about an hour long, as the Daily Nutmeg describes a Yale Cabaret production (https://dailynutmeg.com/blogs/blog/this-yale-cabaret-play-by-ear, read 2026-10-16), run straight through' },
-  solo: { minutes: 20, breaks: [], basis: 'estimate', from: 'SLATE’s estimate: the Bulletin doesn’t give a solo piece’s length for You Are The Creator, so 20 minutes, the one actor on stage throughout' },
+  newPlay: { minutes: 100, breaks: [], basis: 'estimate', from: 'Estimated, since no Carlotta or Langston Hughes festival play’s running time is published (searched 2026-10-16): a new play of an hour and forty minutes, run straight through' },
+  cabaret: { minutes: 60, breaks: [], basis: 'estimate', from: 'Estimated from the Cabaret’s own format, a show about an hour long, as the Daily Nutmeg describes a Yale Cabaret production (https://dailynutmeg.com/blogs/blog/this-yale-cabaret-play-by-ear, read 2026-10-16), run straight through' },
+  solo: { minutes: 20, breaks: [], basis: 'estimate', from: 'Estimated, since the Bulletin doesn’t give a solo piece’s length for You Are The Creator: 20 minutes, the one actor on stage throughout' },
 } as const satisfies Record<string, RunningTime>;
 
 /**

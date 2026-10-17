@@ -474,9 +474,9 @@ describe('Preparing Coursework, played', () => {
     expect(pct(r.prep.rehearsal)).toBe(figure(result, new RegExp(`and ${t.dims.rehearsal!.label} (\\d+)%`)));
     // Put first: the Weighs, against its own, and the dimensions that read the lines leaning by the figure said.
     const own = { ...r.a, objective: undefined };
-    expect(pct(weightsOf(r.a).memorization!)).toBe(figure(result, /Weighs under Lines reads (\d+)%/));
+    expect(pct(weightsOf(r.a).memorization!)).toBe(figure(result, /Note Priority under Lines reads (\d+)%/));
     expect(pct(weightsOf(own).memorization!)).toBe(figure(result, /in place of its own (\d+)%/));
-    const lean = Number(said(result, /lean ([\d.]+) times as far/)[0]);
+    const lean = Number(said(result, /count ([\d.]+) times as much/)[0]);
     const task = TASK_PROFILES[TEMPLATE_TASK['scene-study'] ?? 'scene']!;
     const first = workContext(r.a, {}, {}).lean!;
     const none = workContext(own, {}, {}).lean!;
@@ -562,7 +562,7 @@ describe('Feedback And Your Notes, played', () => {
     // Taken wherever the part stands: the lines as they were shown.
     expect(r.lines).toBe(r.shown.memorization);
     expect(r.applied).toBe(true);
-    expect(pct(r.again)).toBe(figure(result, /grows the course’s skills (\d+)% of an ordinary one/));
+    expect(pct(r.again)).toBe(figure(result, /grows the course’s skills (\d+)% of a usual one/));
   });
 });
 
@@ -616,7 +616,7 @@ describe('Your Class, played', () => {
     expect(r.amended.trust).toBe(figure(result, /making amends to (\d+)/));
     expect(r.amended.bond).toBe(figure(result, /the bond (\d+) closer/));
     expect(r.soon.accepted).toBe(false);
-    expect(r.soon.reason).toMatch(/asked to be asked a day ahead/);
+    expect(r.soon.reason).toMatch(/wants a day’s notice after last time\. Ask for an evening at least a day ahead\./);
     expect(r.lifts).toBe(wordNum(said(result, /stays until (\w+) rehearsals are kept/)[0]!));
     expect(r.kept).toHaveLength(r.lifts);
     expect(r.boundaryAfterKept).toEqual([...Array.from({ length: r.lifts - 1 }, () => true), false]);
@@ -630,9 +630,9 @@ describe('Working A Problem Through, played', () => {
     const { setup, steps, result } = example('coursework.workbook');
     // From evaluation-10 the setup counts the parts by its tones and its turns, where it counted them in its tones.
     expect(r.segments).toHaveLength(wordNum(said(setup, /: (\w+) parts by its tones and its turns/)[0]!));
-    const [label, from, asks] = said(steps[0]!, /shows “(.+?)”: (\d+)% of the (\d+)% it asks/);
+    const [label, from, asks] = said(steps[0]!, /shows “(.+?)”: it’s at (\d+)% of the (\d+)% it needs/);
     expect(r.turn.label).toBe(label);
-    expect(r.turn.why).toContain(`${from}% of the ${asks}% it asks`);
+    expect(r.turn.why).toContain(`it’s at ${from}% of the ${asks}% it needs`);
     expect(r.tries).toHaveLength(wordNum(said(steps[1]!, /, (\w+)(?: times)?\.$/)[0]!));
     const middle = r.segments[r.turn.segment!]!.label;
     expect(r.parts.map(pct)).toEqual(said(result, new RegExp(`${middle}’s own rehearsal reads ([\\d%, then]+?): past`))[0]!.split(', then ').map((x) => Number(x.replace('%', ''))));

@@ -221,6 +221,6 @@ export function workloadWords(e: Parameters<typeof nightOfRecord>[0]): string | 
   const cost = eveningCost(n, stamina, readiness);
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const breaks = n.breaks.length ? `with ${WORDS[n.breaks.length] ?? n.breaks.length} ${n.breaks.length === 1 ? 'break' : 'breaks'} of ${n.breaks.map((b) => `${b} minutes`).join(' and ')}` : 'straight through';
-  const estimate = n.basis === 'estimate' ? ', an estimate' : '';
-  return `The evening runs ${minutesWords(n.running)} ${breaks}${estimate}. As ${SIZE_WORDS[n.size]} you’re on for about ${pct(n.share)} of its ${minutesWords(n.playing)} of playing; the body’s work is ${n.physical} of 3 and the voice’s ${n.vocal}, an intensity of ${n.intensity.toFixed(2)}: a workload of ${n.workload.toFixed(2)}, of at most ${WORKLOAD.cap}. At the curtain’s fall tiring takes ${pct(cost.drainEnd)} off what it reaches, at your stamina and readiness ${Math.round(readiness)}; the evening costs ${Math.round(cost.energy)} energy.`;
+  const estimate = n.basis === 'estimate' ? ' (estimated)' : '';
+  return `The evening runs ${minutesWords(n.running)} ${breaks}${estimate}. As ${SIZE_WORDS[n.size]}, you’re on stage for about ${pct(n.share)} of its ${minutesWords(n.playing)} of playing. Its physical demand is ${n.physical} of 3 and its vocal demand ${n.vocal} of 3, an intensity of ${n.intensity.toFixed(2)}, so its workload is ${n.workload.toFixed(2)} of a possible ${WORKLOAD.cap}. By the final curtain, tiring takes ${pct(cost.drainEnd)} off the parts of your performance it affects, with your stamina as it is and readiness at ${Math.round(readiness)}. The evening costs ${Math.round(cost.energy)} energy.`;
 }

@@ -64,7 +64,7 @@ function briefWork(sim: Simulation, person: Person, id: string): WorkPiece | und
     together: (e) => { const r = rec(); return r ? takeTogether(sim, person, b, r, e)?.overall : undefined; },
     ...(rec()?.reader && person.school?.classmates[rec()!.reader!.mate] ? { partner: { name: person.school.classmates[rec()!.reader!.mate]!.name, get: () => rec()?.reader?.prep ?? 0, set: (v: number) => { const r = recordOf(person, id).reader; if (r) r.prep = Math.round(v * 1000) / 1000; } } } : {}),
     refusal: () => {
-      if (!rec()?.reading) return 'Choose a reading first: the work is on the scene played one way.';
+      if (!rec()?.reading) return 'Choose a reading first. Working it through means working on the scene played one way.';
       if ((rec()?.prep.memorization ?? 0) < BRIEF.rehearseNeeds) return 'Learn some of the lines first: there’s nothing to rehearse without them.';
       return away(sim, person);
     },

@@ -361,7 +361,7 @@ describe('school.request_leave', () => {
     expect(acting.result).toBe('fail');
     expect(school.leave).toBeUndefined();
     expect(school.leaves!.at(-1)).toMatchObject({ status: 'refused', why: 'You weren’t current with your requirements: Acting I.' });
-    expect(titled(sim, 'Your Leave Is Refused').map((n) => n.body)).toEqual(['The chair and the dean refused it. You weren’t current with your requirements: Acting I. You stay at the School as you are.']);
+    expect(titled(sim, 'Your Leave Isn’t Granted').map((n) => n.body)).toEqual(['The chair and the dean refused it. You weren’t current with your requirements: Acting I. You stay at the School as you are.']);
     expect(pendingOf(sim, LEAVE_DECIDE_KIND)).toHaveLength(0);
     expect(twin.player.school!.leave).toMatchObject({ status: 'granted', firstTerm: 2, returnTerm: 4 });
     expect(titled(twin, 'Your Leave Is Granted')).toHaveLength(1);
@@ -383,7 +383,7 @@ describe('school.request_leave', () => {
     const sim = student('g25-f1', londoner);
     tended(sim, at(2026, 12, 18));
     expect(f1Of(sim.player)).toBeDefined();
-    expect(sim.execute({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } }).error).toBe('On an F-1, a personal leave ends your status: the School would report it, and you’d have fifteen days to leave the United States, which SLATE can’t play. A medical leave keeps your status, as a reduced course load.');
+    expect(sim.execute({ kind: 'school.request_leave', payload: { kind: 'personal', reason: 'family' } }).error).toBe('On an F-1, a personal leave ends your status: the School would report it, and you’d have fifteen days to leave the United States, which the game doesn’t play out. A medical leave keeps your status, as a reduced course load.');
     expect(sim.player.school!.leave).toBeUndefined();
     expect(pendingOf(sim, LEAVE_DECIDE_KIND)).toHaveLength(0);
   }, 60_000);
@@ -438,7 +438,7 @@ describe('school.cancel_leave', () => {
     pressed('school.cancel_leave')[0]!.onClick!();
     expect(sim.player.school!.leave).toBeUndefined();
     expect(sim.player.school!.leaves!.at(-1)).toMatchObject({ status: 'canceled', firstTerm: 1 });
-    expect(sim.execute({ kind: 'school.cancel_leave', payload: { confirm: true } }).error).toBe('No leave is asked for.');
+    expect(sim.execute({ kind: 'school.cancel_leave', payload: { confirm: true } }).error).toBe('You haven’t asked for a leave.');
     sim = reload(sim);
     tended(sim, at(2027, 1, 12, 12));
     tended(twin, at(2027, 1, 12, 12));
@@ -585,11 +585,11 @@ describe('school.reregister', () => {
     // the bank and the $15,575.50 stayed owed.
     expect(accountOwed(sim, sim.player)).toBe(15_200_50 + 375_00 - 14_093_64);
     expect(accountOwed(sim, sim.player)).toBe(1_481_86);
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,481.86 is owed on your Yale account.');
+    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,481.86 is owed on your Yale account. Pay it on the Terms And Award tab.');
     expect(school.mustRegister).toBe(true);
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(false);
     let shown = drawn(sim, LeavePanel);
-    expect(shown.text).toContain('Register for Spring Term 2028: until you do, classes don’t count you and shifts can’t be worked. A financial hold stops it until your Yale account is paid.');
+    expect(shown.text).toContain('Register for Spring Term 2028: until you do, classes don’t count your attendance and you can’t work shifts. A financial hold stops it until your Yale account is paid.');
     expect(button(shown.html, 'Register')).toContain('disabled=""');
     // The first class day, Monday 10 January: classes don't count the student.
     tended(sim, at(2028, 1, 10, 16));
@@ -612,7 +612,7 @@ describe('school.reregister', () => {
     expect(school.mustRegister).toBeUndefined();
     expect(school.registeredAt).toBe(sim.now);
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(true);
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('You’re registered.');
+    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('You’re already registered.');
     sim = reload(sim);
     // Tuesday 18 January (Monday the 17th is Martin Luther King Jr. Day): counted.
     tended(sim, at(2028, 1, 18, 16));
@@ -638,9 +638,9 @@ describe('school.reregister', () => {
     expect(school.termsBegun).toBe(2);
     expect(school.mustRegister).toBe(true);
     expect(registered(school, courseworkOf(sim, sim.player))).toBe(false);
-    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,125.00 is owed on your Yale account.');
+    expect(sim.execute({ kind: 'school.reregister', payload: {} }).error).toBe('A financial hold stops registration: $1,125.00 is owed on your Yale account. Pay it on the Terms And Award tab.');
     const shown = drawn(sim, LeavePanel);
-    expect(shown.text).toContain('Register for Spring Term 2027: until you do, classes don’t count you and shifts can’t be worked. A financial hold stops it until your Yale account is paid.');
+    expect(shown.text).toContain('Register for Spring Term 2027: until you do, classes don’t count your attendance and you can’t work shifts. A financial hold stops it until your Yale account is paid.');
     expect(button(shown.html, 'Register')).toContain('disabled=""');
     tended(sim, at(2027, 1, 11, 16));
     expect(classesOn(sim, '2027-01-11')).toEqual(['missed']);
@@ -703,7 +703,7 @@ describe('school.buy_affiliate', () => {
     sim = reload(sim);
     expect(sim.player.school!.leave!.affiliate).toMatchObject({ by: 'self', cost: 8_950_00 });
     expect(coverOn(sim.player, at(2027, 1, 25))).toBe('yale');
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('You have it.');
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('You already have it.');
     expect(memoed(sim, 'Yale Health Affiliate Coverage, a leave of absence')).toHaveLength(1);
     expect(titled(sim, 'Care Credited')).toHaveLength(1);
     drawn(sim, LeavePanel);
@@ -716,7 +716,7 @@ describe('school.buy_affiliate', () => {
     // TEST SETUP: money put in, so the deadline alone refuses it.
     fund(sim, 9_000_00);
     expect(button(drawn(sim, LeavePanel).html, 'Buy Affiliate Cover…')).toBeUndefined();
-    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('It could be bought until February 11, 2027.');
+    expect(sim.execute({ kind: 'school.buy_affiliate', payload: { confirm: true } }).error).toBe('It could only be bought until February 11, 2027.');
     expect(sim.player.school!.leave!.affiliate).toBeUndefined();
     expect(memoed(sim, 'Yale Health Affiliate Coverage, a leave of absence')).toHaveLength(0);
     expect(coverOn(sim.player, at(2027, 1, 25))).not.toBe('yale');
@@ -789,7 +789,7 @@ describe('school.make_up', () => {
     // Sunday 10 January 2027 at four: an hour of the month left, and a session takes two.
     tended(sim, at(2027, 1, 10, 16));
     const made = sim.execute<{ passed: boolean }>({ kind: 'school.make_up', payload: { key: KEY } });
-    expect(made.error).toBe('Its month runs out at 5:00 PM: there isn’t the time for a session before it.');
+    expect(made.error).toBe('Its deadline is at 5:00 PM, and there isn’t time for a session before then.');
     expect(sim.now).toBe(at(2027, 1, 10, 16));
     expect(sim.player.school!.courses![KEY]!.madeUp).toBe(0);
     tended(sim, at(2027, 1, 10, 18));

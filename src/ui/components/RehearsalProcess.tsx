@@ -69,10 +69,10 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
     <div className="col gap-2">
       <div className="row-between"><div className="eyebrow">The Rehearsal Process</div><HowItWorks help="school.learn_part" /></div>
       <div className="grid grid-3">
-        <Stat label="Lines" value={pct(p?.lines ?? 0)} note={`Asked off book ${pct(PROCESS.blockingShare)} of the way through`} />
+        <Stat label="Lines" value={pct(p?.lines ?? 0)} note={`You’re asked to be off book ${pct(PROCESS.blockingShare)} of the way through`} />
         <Stat label="Blocking" value={pct(p?.blocking ?? 0)} note={p?.blockingMissed ? `${p.blockingMissed} Missed To Catch Up` : 'Set at the blocking calls'} />
-        <Stat label="Growth From A Night" value={`${Math.round(nightFactor(casting) * 100)}%`} note="What a night would grow your craft by, against every call kept and no more: it doesn’t change the night’s result" />
-        {forecast && <Stat label="A Night Now" value={forecast.overall.toFixed(1)} note="What a night would come to if it opened now, with no draw" />}
+        <Stat label="Growth From A Night" value={`${Math.round(nightFactor(casting) * 100)}%`} note="How much a night would grow your craft, against keeping every call. It doesn’t change the night’s result" />
+        {forecast && <Stat label="A Night Now" value={forecast.overall.toFixed(1)} note="A forecast: what a night would come to if it opened now, without good or bad luck" />}
       </div>
       {forecast && workloadWords(forecast) && (
         <div className="small" data-workload="">
@@ -81,7 +81,7 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
         </div>
       )}
       {p?.dress && <div className="small">The dress rehearsal: {DRESS_WORD[p.dress] ?? p.dress}.</div>}
-      {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company the nights have come to {Math.round(p.together.sum / p.together.n)} on average{p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered by you` : ''}` : ''}. How the show went together is what a night leaves you feeling; your own night is your result.</div>}
+      {p?.together && p.together.n > 0 && <div className="small"><strong>The Nights Together.</strong> With the company the nights have come to {Math.round(p.together.sum / p.together.n)} on average{p.together.slips ? `, ${p.together.slips} with a slip in the company${p.together.covered ? `, ${p.together.covered} of them covered by you` : ''}` : ''}. How the show went together shapes how a night leaves you feeling; your own night is your result.</div>}
       {p?.reflection && <div className="small"><strong>Looking Back.</strong> {p.reflection.text} <span className="xs dim">Simulated: the game’s reading of the process.</span></div>}
       {last && (
         <div className="small col gap-1">
@@ -100,8 +100,8 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
               The Note worked whatever place was last chosen in the shorter list of the ways left. */}
           {ways.length > 0 && (!last.worked || (p !== undefined && reworkable(p))) && (
             <label className="row gap-2 wrap xs" style={{ alignItems: 'center' }}>
-              <span>The ways at it:</span>
-              <select aria-label="A Way At The Note" value={Math.min(way, ways.length - 1)} onChange={(e) => setWay(Number(e.target.value))}>
+              <span>Ways to work on it:</span>
+              <select aria-label="A Way To Work On The Note" value={Math.min(way, ways.length - 1)} onChange={(e) => setWay(Number(e.target.value))}>
                 {ways.map((o, i) => <option key={`${o.adjustment}:${o.option ?? ''}`} value={i}>{o.label}</option>)}
               </select>
               <span className="dim">{chosen?.words}</span>
@@ -140,9 +140,9 @@ export function RehearsalProcess({ casting, which }: { casting: Holder; which: W
       {!partPlayingRefusal(sim, person, which) && (
         <PlayingChooser material={materialOf((casting as { play?: string }).play)} current={p?.playing} direction={p?.direction} feature="school.choose_part_playing" help="school.choose_part_playing"
           preview={(c) => partPreview(sim, person, casting as never, c)}
-          onChoose={(c) => { const r = run<{ prep: number }>('school.choose_part_playing', { which, ...c }); if (r.ok) toast(`Chosen: rehearsed in to ${pct(r.value!.prep)}.`, 'positive'); }} />
+          onChoose={(c) => { const r = run<{ prep: number }>('school.choose_part_playing', { which, ...c }); if (r.ok) toast(`Chosen. You’ve rehearsed this way of playing it to ${pct(r.value!.prep)} so far.`, 'positive'); }} />
       )}
-      <Fine>The stages and their order are a rehearsal’s; how far a call or an hour moves the lines and blocking, what a note asks and what answers it, and what they make of a night, are SLATE’s estimate. A night is judged in the play’s movements: each movement’s blocking, where stamina tells late in the evening, and a slip carried into the next.</Fine>
+      <Fine>The stages and their order are a rehearsal’s; how far a call or an hour moves the lines and blocking, what a note asks and what answers it, and what they make of a night, are estimated. A night is judged movement by movement: each movement’s blocking, where stamina tells late in the evening, and a slip carried into the next.</Fine>
     </div>
   );
 }

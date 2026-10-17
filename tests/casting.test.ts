@@ -229,7 +229,7 @@ describe('a night’s reading', () => {
     expect(c.note).toContain(directorsNote(nightsMean(c.nights!)));
     // And names what held the run's nights back most, by the evaluation (from 2026-10-12: until then the play's weakest
     // raw craft skill, named even where nothing held the nights back).
-    expect(c.note).toMatch(/ Work on your [a-z -]+: it held the nights back most\.$/);
+    expect(c.note).toMatch(/ Work on your [a-z -]+: it held your nights back most\.$/);
     expect(sim.universe.notifications.some((n) => n.title.startsWith('The Director’s Note'))).toBe(true);
     play(sim, on(2027, 9, 15));
     expect(sim.player.school!.lastWork).toMatchObject({ size: c.size });
@@ -320,7 +320,7 @@ describe('the teachers’ notes', () => {
     const tally = sim.player.school!.tally;
     tally.craftAtStart = { ...sim.player.craft! };
     const still = teachersNotes(sim.player, 0);
-    expect(still.every((n) => /hasn’t moved/.test(n.note))).toBe(true);
+    expect(still.every((n) => /You’ve grown less than the class in /.test(n.note))).toBe(true);
   }, 120_000);
 });
 

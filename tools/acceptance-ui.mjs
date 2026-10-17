@@ -305,7 +305,7 @@ await step('coursework: table work answered from its select', async () => {
   if (!sel) {
     const card = () => selects().first().locator('xpath=ancestor::section[contains(@class,"card")][1]');
     const why = await card().locator('.why-not').first().innerText().catch(() => '');
-    must(/Read it first/.test(why), `the table work select is grayed with no reason on the screen: ${why || 'none'}`);
+    must(/Read the text first/.test(why), `the table work select is grayed with no reason on the screen: ${why || 'none'}`);
     const read = () => card().getByRole('button', { name: /^(Read The Scene|Read The Play)/ }).first();
     must(await read().count(), 'grayed till the text is read, and no way to read it on its card');
     for (let n = 0; n < 4 && await selects().first().isDisabled(); n += 1) {
@@ -611,7 +611,7 @@ await step('casting: with no part yet, the tab says when casting comes; with one
     must(await page.getByText(/^Not Cast Yet$/).count(), 'no part, and nothing saying so');
     const panel = page.getByText(/^Not Cast Yet$/).first().locator('xpath=ancestor::section[1]');
     const said = (await panel.innerText()).replace(/\s+/g, ' ');
-    must(/casts every student each term from the first spring|A good evaluation puts you back/.test(said), `doesn’t say when casting comes: ${said.slice(0, 200)}`);
+    must(/casts every student each term from the first spring|A term review that finds you in good standing puts you back/.test(said), `doesn’t say when casting comes: ${said.slice(0, 200)}`);
     return said.slice(0, 200);
   }
   await learn.click(); await wait(1200);
@@ -867,8 +867,8 @@ if (DIR && existsSync(`${DIR}/leave.json`)) {
     const productions = await played.locator('li').allInnerTexts();
     must(productions.length > 0 && productions.every((p) => /, [A-Z][a-z]+ \d{1,2}, \d{4}: \d+ of them/.test(p)), `the first class’s productions: ${productions.join(' | ').slice(0, 200) || 'none'}`);
     // Back from a leave, a term has been evaluated: the panel lists it, each row with its standing.
-    const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Evaluations$/ }) }).first();
-    must(await evaluations.count(), 'no Evaluations panel');
+    const evaluations = page.locator('section.card').filter({ has: page.getByRole('heading', { name: /^Term Reviews$/ }) }).first();
+    must(await evaluations.count(), 'no Term Reviews panel');
     const rows = await evaluations.locator('tbody tr').allInnerTexts();
     must(rows.length > 0, `no term evaluated on a save back from a leave: ${(await evaluations.innerText()).slice(0, 160)}`);
     must(rows.every((r) => /Good Standing|Academic Concern|Academic Warning/.test(r)), `a row with no standing: ${rows.join(' | ').slice(0, 200)}`);
@@ -911,7 +911,7 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     const work = page.getByRole('button', { name: /^Work On The Note/ }).first();
     must(await work.count() && !(await work.isDisabled()), 'Work On The Note not available');
     // A note on the craft (from 2026-10-12) offers its ways; the second, where there is one, is chosen.
-    const ways = page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+    const ways = page.getByRole('combobox', { name: 'A Way To Work On The Note' }).first();
     const offered = (await ways.count()) ? await ways.locator('option').allInnerTexts() : [];
     if (offered.length > 1) { await ways.selectOption({ index: 1 }); await wait(300); }
     await work.click(); await wait(1200);
@@ -933,8 +933,8 @@ if (DIR && existsSync(`${DIR}/rehearsal.json`)) {
     must(!(await choose.isDisabled()), 'Play It This Way still grayed after a choice');
     await choose.click(); await wait(1200);
     const said = await toast();
-    must(/Chosen: rehearsed in to \d+%/.test(said), `no confirmation: ${said}`);
-    const prepAt = async () => pctIn(((await page.getByText(/Your choice now is rehearsed in to \d+%/).first().innerText().catch(() => '')).match(/rehearsed in to \d+%/) ?? [''])[0]);
+    must(/Chosen\. You’ve rehearsed this way of playing it to \d+% so far/.test(said), `no confirmation: ${said}`);
+    const prepAt = async () => pctIn(((await page.getByText(/You’ve rehearsed your current choice to \d+%/).first().innerText().catch(() => '')).match(/current choice to \d+%/) ?? [''])[0]);
     const before = await prepAt();
     // On to the next call, gone to as a player does: Advance, and Go at the commitment. The save is a Saturday and its
     // next call the Tuesday afternoon, so up to five mornings: three stopped short of it (run of 2026-10-11).
@@ -984,7 +984,7 @@ if (DIR) {
 // directory of saves, a missing direction save is a failure too.
 if (DIR) {
   const noteLine = () => page.getByText(/^The director’s last note,/).first();
-  const ways = () => page.getByRole('combobox', { name: 'A Way At The Note' }).first();
+  const ways = () => page.getByRole('combobox', { name: 'A Way To Work On The Note' }).first();
   const workNote = () => page.getByRole('button', { name: /^Work On The Note/ }).first();
   const partBook = () => page.locator('[data-workbook^="part:"]').first();
   const history = () => page.locator('details[data-notes]').first();
@@ -1047,8 +1047,8 @@ if (DIR) {
     const keep = partBook().getByRole('button', { name: /^Keep It$/ }).first();
     must(await keep.count(), 'no Keep It for the change tried');
     await keep.click(); await wait(800);
-    must(/Kept: everything after reads it\./.test(await toast()), 'keeping it said nothing');
-    const found = (await partBook().innerText()).match(/(\d+)% rehearsed in/);
+    must(/Kept\. Everything from now on includes it\./.test(await toast()), 'keeping it said nothing');
+    const found = (await partBook().innerText()).match(/rehearsed to (\d+)%/);
     rehearsedIn = Number(found?.[1] ?? NaN);
     return `"${tried}" of ${options.length}; ${t0} → ${await clock()}: ${said.slice(0, 120)}; kept${Number.isNaN(rehearsedIn) ? '' : `, ${rehearsedIn}% rehearsed in`}`;
   });
@@ -1082,7 +1082,7 @@ if (DIR) {
       outcome = items.find((x) => /Worked /.test(x) && OUTCOME.test(x)) ?? '';
     }
     must(/at the next call/.test(outcome) && /· (Resolved|Taken: Better|Tried: Learned From, Not Moved|Not Taken|Taken)/.test(outcome), `the worked note’s outcome isn’t said: ${outcome || last}`);
-    const after = Number(((await partBook().innerText()).match(/(\d+)% rehearsed in/) ?? [])[1] ?? NaN);
+    const after = Number(((await partBook().innerText()).match(/rehearsed to (\d+)%/) ?? [])[1] ?? NaN);
     if (!Number.isNaN(rehearsedIn)) must(after > rehearsedIn, `the kept change wasn’t rehearsed in at the call: ${rehearsedIn}% → ${after}%`);
     const nowNight = await nightNow();
     must(!Number.isNaN(nowNight), 'no A Night Now');
@@ -1315,7 +1315,7 @@ if (DIR && existsSync(`${DIR}/roundups.json`)) {
     await page.getByRole('button', { name: /^Save & Exit$/ }).first().click(); await wait(1500);
     await page.getByRole('button', { name: /^Continue$/ }).first().click({ timeout: 8000 }); await wait(4000);
     await rail('School'); await tab('Coursework');
-    must(/rehearsed in to \d+% \(complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
+    must(/rehearsed your current choice to \d+% so far \(it’s complete at \d+%\)/.test((await page.locator('body').innerText()).replace(/\s+/g, ' ')), 'the choice wasn’t kept through the reload');
     return picked;
   });
   await overflow('school coursework (roundups save)');
@@ -1375,7 +1375,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     await openSave('brief.json');
     await openBrief('Drama');
     const text = await briefPane().innerText();
-    for (const want of ['The Scene', 'What You Want', 'What’s In The Way', 'Where It Turns', 'What The Take Weighs', 'Preparation', 'Your Reading', 'an original scene written for SLATE']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
+    for (const want of ['The Scene', 'What You Want', 'What’s In The Way', 'Where It Turns', 'What The Tape Is Judged On', 'Preparation', 'Your Reading', 'an original scene written for SLATE']) must(text.toLowerCase().includes(want.toLowerCase()), `no “${want}”`);
     must(/Choose a reading first/.test(text), 'the take isn’t held until a reading is chosen');
     const tape = briefPane().getByRole('button', { name: /^Tape It/ }).first();
     must(await tape.isDisabled(), 'Tape It offered before a reading is chosen');
@@ -1541,7 +1541,7 @@ if (DIR && existsSync(`${DIR}/brief.json`)) {
     must(ex && re, 'no The Scene column');
     must(ex === 'suits' && re !== 'suits', `Melodrama’s scene: expansive ${ex}, restrained ${re}`);
     await briefPane().locator('input[type=radio][name="axis-scale"]').nth(1).check(); await wait(300);
-    const mark = (await briefPane().innerText()).match(/This one is complete at (\d+)% rehearsed in: ([^.]+)/);
+    const mark = (await briefPane().innerText()).match(/This choice is complete once it’s rehearsed to (\d+)%: ([^.]+)/);
     must(mark && Number(mark[1]) < 90 && /with the grain/.test(mark[2]), `the mark isn’t said lower with the grain: ${mark?.[0]}`);
     await briefButton(/^Play It This Way$/);
     await briefButton(/^Rehearse It On Your Feet/);
