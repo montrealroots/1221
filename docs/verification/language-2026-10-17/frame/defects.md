@@ -17,6 +17,8 @@ was found, and whether it was fixed here.
   Play) changes what the page does, and a test of it needs the real provider in a React root with a faked window and
   timers (as `tests/evidence2-b01.test.ts` holds one). It's for the coordinator to decide; the words it would say are
   `CLOCK_FAULT`'s.
+- **Fixed** on 2026-10-17 by the cross-area pass (`crossarea/defects.md`, 1): the tick pauses the save and toasts
+  `LIVE_CLOCK_FAULT`, `CLOCK_FAULT`'s words with Play named as the way to try again. What's above was true until then.
 
 ## 2. The entry rules' builder cut "Visa exemption" to "Ion"
 
