@@ -209,7 +209,7 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
   // "will end at the end of the month that the student ... withdraws" (42 CFR 435.552(c)(3), CMS-2454-IFC, read
   // 2026-10-15), so her 1 to 19 January at the School are January enrolled, and the refusal is February's, a month wholly
   // on the leave. Her 6 hours of January are still short of the work.
-  it('PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with 80 hours’ work in February she’s given HUSKY D; past the 60 days Enroll isn’t drawn', () => {
+  it('PLAYER JOURNEY: a student with need on a personal leave from 20 January 2027 is given HUSKY D on 1 February for January at the School, refused it on 1 March for a February wholly on the leave, in The Marketplace’s words, and Enroll buys the marketplace; with $600 of wages in February (TEST SETUP) she’s given HUSKY D; past the 60 days Enroll isn’t drawn', () => {
     const january = thaw(leave());
     january.advanceTo(at(2027, 2, 1, 9));
     // January: under HUSKY D's $1,835.40, and 6 hours of work-study, $138.00, short of 80 hours and of $580; but at the
@@ -237,7 +237,7 @@ describe('health.enroll: HUSKY D asks an applicant for the month before’s work
     expect(pressEnroll()).toEqual(['Enrolled in the marketplace, from April 1, 2027.']);
     expect(healthOf(idle.player).program).toBeUndefined();
 
-    // Change the input: 80 hours' work in February (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 March,
+    // Change the input: $600 of wages in February, 80 hours' pay (TEST SETUP: no played life on a leave has it). HUSKY D, from 1 March,
     // the month she enrolls in, renewed six months on (until 2026-10-16 from 1 April).
     const worked = thaw(leave());
     wagesPosted(worked, at(2027, 2, 26, 17), 600_00, 80);

@@ -3469,7 +3469,7 @@
     "testsAdded": [
      {
       "title": "HUSKY D’s work test reads last month’s work: its hours and its pay until 2026-10-17, and since then its pay as income > until 2026-10-17 it read: until 2026-10-16 it read: renews on 80 hours, whatever the pay, and not on 79; work paid in May or July isn’t June’s; since then any of the six months before the renewal counts, May among them, and July, its own month, still doesn’t; since then the hours aren’t read: 80 hours paid $400 in June bring a notice of noncompliance, and May’s 80 paid $1,840 renew her by their income",
-      "closes": "The removal held: 80 hours paid $400 in June, an input no save can hold, no longer meets the work rules (a notice of noncompliance, covered while she answers), where until 2026-10-17 the work branch renewed her; May’s 80 paid $1,840 renew her by their income. FIXTURE: HUSKY D and the wages written by hand. Failed before 15a24e9d, passed after.",
+      "closes": "The removal held: 80 hours paid $400 in June, an input no save can hold, no longer meets the work rules (a notice of noncompliance, covered while she answers), where until 2026-10-17 the work branch renewed her; May’s 80 paid $1,840 renew her by their income. FIXTURE: HUSKY D and the wages written by hand. Failed before 6d9fe683, passed after.",
       "evidenceKind": "fixture"
      },
      {
@@ -3496,7 +3496,7 @@
     "id": "health.enroll",
     "testsAdded": [
      {
-      "title": "HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice",
+      "title": "HUSKY D kept at its renewal through work, read over Connecticut’s six months > FIXTURE: $600 of wages in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with the same wages in August, outside the six months, the same notice",
       "closes": "Purpose: the income test reads wages posted that the pay record doesn’t hold (`paid - recordedPay`, src/engine/systems/health.ts:447-450), which is what carries a save from the day-job builds of 24 to 26 September 2026, whose migration kept the paychecks and took the pay record off. $600 posted for 80 hours keeps HUSKY D at renewal, said “by its income, $580.00 or more” since 2026-10-17; taking that term out in a copy fails it (M8).",
       "evidenceKind": "fixture"
      }

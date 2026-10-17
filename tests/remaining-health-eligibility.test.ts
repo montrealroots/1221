@@ -417,7 +417,7 @@ describe('HUSKY D’s renewal: the six months before read, then a notice and thi
 
   // Renamed on 2026-10-16 (brief 09's journeys, inputs/renames.json; until then “PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 November to 1 May 2028, said once; the same work in April, outside May to October, brings a notice of noncompliance”): renewed on 1 October 2027,
   // a month earlier, the six months read are April to September, so the twin's month outside them is March.
-  it('PLAYER JOURNEY: 80 hours’ work in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same work in March, outside April to September, brings a notice of noncompliance', () => {
+  it('PLAYER JOURNEY: $600 of wages in June 2027 (TEST SETUP) renew her on 1 October to 1 April 2028, said once; the same wages in March, outside April to September, bring a notice of noncompliance', () => {
     const june = enrolled();
     wagesPosted(june, at(2027, 6, 25, 17), 600_00, 80); // TEST SETUP: June's work, which no withdrawn life has
     june.advanceTo(at(2027, 10, 1, 9));

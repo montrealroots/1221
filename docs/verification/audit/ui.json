@@ -1239,11 +1239,10 @@
         "gapsClosed": [
           "Twins at ambition 5 and 95 meet the same performance (a TEST SETUP call fired by the clock): stress goes to 22.33853 and 23.32110, the nerves in the ratio 1.358011. With energy at the empty line, two hours take stress to 41.90466 and 42.84549. With energy left, the same two hours clear both alike to 39.27672.",
           "The creation sentence ('adds to how quickly every stress arrives, work’s and money’s alike') and the Profile's 'Ambition 95, how fast every stress comes' are rendered.",
-          "The first round's evidence covered two readers, a performance's nerves and two hours on empty. This round adds two more: money's worry through the clock (3.285 against 4.461) and an injury through the command (14.300 against 16.064, with a run that hurts nothing as the control). That holds the page's 'every stress …, work’s and money’s alike' at four of the six stressGain readers. The other two, a turn (enjoyment.ts:112) and a rival's lead (school.ts:2489), are held for the same knob by tests/evidence-g29-ui.test.ts > trait-stressGain."
+          "The first round's evidence covered two readers, a performance's nerves and two hours on empty. This round adds two more: money's worry through the clock (3.285 against 4.461) and an injury through the command (14.300 against 16.064, with a run that hurts nothing as the control). That holds the page's 'every stress …, work’s and money’s alike' at four of the six stressGain readers. The other two, a turn (enjoyment.ts:112) and a rival's lead (school.ts:2489), are held for the same knob by tests/evidence-g29-ui.test.ts > trait-stressGain.",
+          "Settled at the final check: [needs engine change] The src/engine/systems/personality.ts:11 header still says ambition leans 'how much running on empty costs'. The engine leans stressGain (personality.ts:78), which every stress reads. This needs a src comment edit, and the header test in this file fails until it is made."
         ],
-        "gapsOpen": [
-          "[needs engine change] The src/engine/systems/personality.ts:11 header still says ambition leans 'how much running on empty costs'. The engine leans stressGain (personality.ts:78), which every stress reads. This needs a src comment edit, and the header test in this file fails until it is made."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -1615,12 +1614,11 @@
           "A Cabaret rehearsal and a Carlotta festival rehearsal now each compare lives differing only in openness, through the clock: 3.6 morale between 5 and 95, stress alike.",
           "The slider is driven in the rendered interface and its value read back on Review and the Profile.",
           "Stale school.ts lines: corrected in claimCorrection.",
-          "The decision the first round left to the owner is taken here, by the owner's standing instruction to decide and report: the page's 'rehearsing new work' stands. The festival curtain already follows it, so the Cabaret curtain is the defect. A clock test holds it on lives slid on the page, and its rehearsal half (3.6 apart, stress alike) passes now."
+          "The decision the first round left to the owner is taken here, by the owner's standing instruction to decide and report: the page's 'rehearsing new work' stands. The festival curtain already follows it, so the Cabaret curtain is the defect. A clock test holds it on lives slid on the page, and its rehearsal half (3.6 apart, stress alike) passes now.",
+          "Settled at the final check: [needs engine change] WorkDay.away is declared (enjoyment.ts:55) and read (enjoyment.ts:82) but no call sets it. The 'road' assertion in tests/arrears.test.ts:73-75 therefore tests a branch no game path reaches. 'declares no WorkDay field that no call of enjoyWork sets' fails on it.",
+          "Settled at the final check: [needs engine change] The Cabaret's performance calls enjoyWork(person, { novel: true }) (school.ts:3485), so a curtain reads openness. The page (CharacterCreation.tsx:631-632) and the Profile say 'rehearsing new work', and the festival curtain (school.ts:3344) reads none. The curtain test fails with the two lives 3.6 apart."
         ],
-        "gapsOpen": [
-          "[needs engine change] WorkDay.away is declared (enjoyment.ts:55) and read (enjoyment.ts:82) but no call sets it. The 'road' assertion in tests/arrears.test.ts:73-75 therefore tests a branch no game path reaches. 'declares no WorkDay field that no call of enjoyWork sets' fails on it.",
-          "[needs engine change] The Cabaret's performance calls enjoyWork(person, { novel: true }) (school.ts:3485), so a curtain reads openness. The page (CharacterCreation.tsx:631-632) and the Profile say 'rehearsing new work', and the festival curtain (school.ts:3344) reads none. The curtain test fails with the two lives 3.6 apart."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -4102,11 +4100,10 @@
           "No test shows the Review line moving with the trait: creation's Review rendered with react-dom/server for frugal, none, spender and generous.",
           "The reviewer's probe (429, 500, 608 cents) asserted, with the plain 500 worked from $4 x New Haven's 127, untaxed, rather than from foodAt.",
           "Round one closed every behavior gap: a frugal meal and the day's groceries through the command and the clock, the Review line rendered for each trait, and the reviewer's 429/500/608 probe asserted. The skeptic confirmed it.",
-          "New this round: Review's Going Out A Month is tied to what play actually charges. The rendered figure equals the clock's first Groceries posting for the same pick, × 365/12. The test does not use foodAt or monthOf."
+          "New this round: Review's Going Out A Month is tied to what play actually charges. The rendered figure equals the clock's first Groceries posting for the same pick, × 365/12. The test does not use foodAt or monthOf.",
+          "Settled at the final check: [needs engine change] src/ui/creation/CharacterCreation.tsx:1023-1024 still says 'Every figure is the engine's own sum (`costsAt`)'. No `costsAt` exists; monthOf (1033-1039) uses foodAt × the spending knob. Fixing it is a source-comment change, outside this file. The fix is under defects."
         ],
-        "gapsOpen": [
-          "[needs engine change] src/ui/creation/CharacterCreation.tsx:1023-1024 still says 'Every figure is the engine's own sum (`costsAt`)'. No `costsAt` exists; monthOf (1033-1039) uses foodAt × the spending knob. Fixing it is a source-comment change, outside this file. The fix is under defects."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -5995,11 +5992,10 @@
           "Milestones: first-strong, first-exceptional and first-mastery are now read, each matched to the first piece past its band line in the work kept.",
           "The fix's filter (a closed run already filed) ran in no test. It now runs on a played dismissal where the closed casting and its credit stand together.",
           "The fix's school.rep branch ran in no test. It now runs through a TEST SETUP Rep run. Only a fixture reaches it here: the first-year Rep understudy is cast only for a student in good standing at the spring casting (school.ts:2643). All 40 seeds b11-rep-0..39, played by the clock alone, were under academic concern on 20 January 2027. Even in good standing, an understudy goes on at 2% a performance (ESTIMATE.goesOn).",
-          "The Rep reached by play: a played student cast as The Seagull's understudy, sent on once, her Nina on School Journey from the credit filed in August 2027."
+          "The Rep reached by play: a played student cast as The Seagull's understudy, sent on once, her Nina on School Journey from the credit filed in August 2027.",
+          "Settled at the final check: [needs engine change] JourneyPanel's closed-Rep branch (`school.rep` with `closed`, ProfileWorkspace.tsx:497-500) is reached by no understudy: an understudy's Rep calls are 'oncall', never 'performance', so the run's last call is never marked last and closeRun never sets `closed` (school.ts:2725-2726). evidence2-b11's fixture is still its only evidence; a company member's Rep run (third year, at a director's invitation) would reach it, and no played life here was invited."
         ],
-        "gapsOpen": [
-          "[needs engine change] JourneyPanel's closed-Rep branch (`school.rep` with `closed`, ProfileWorkspace.tsx:497-500) is reached by no understudy: an understudy's Rep calls are 'oncall', never 'performance', so the run's last call is never marked last and closeRun never sets `closed` (school.ts:2725-2726). evidence2-b11's fixture is still its only evidence; a company member's Rep run (third year, at a director's invitation) would reach it, and no played life here was invited."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -6831,11 +6827,10 @@
           "No test renders Where You Are (names, 'Home.' vs distance from home, Local Time, Daylight, placeLine).",
           "No test renders Weather (temperature/unit, high/low, humidity, wind in mph for °F, climate) or the forecast strip's days.",
           "Round one closed Where You Are and the Weather on screen, and the skeptic confirmed it: names, Home., 130K, Local Time, Daylight against the sunrise equation, °F/mph and °C/km/h, the strip against the next day.",
-          "New this round: the away branch's one remaining input (birthplace) is shown not to reach Home, and the test holds that Home measures from where the player lives."
+          "New this round: the away branch's one remaining input (birthplace) is shown not to reach Home, and the test holds that Home measures from where the player lives.",
+          "Settled at the final check: [deferred or removed] The away branch (distance and hours from home, Home.tsx:355-357 and the Local Time note at :365) is reached by no life. The owner's scope of 2026-10-09 (bcc30c88) removed the home: person.home, with its rent and bills. With it went every way a player stood apart from where they live: jobs on location, sublets, relocation, and the Travel panel Home.tsx's header says went that day. Since then homeCityOf (src/engine/world/place.ts:102-105) returns CITIES.get(currentLocationId) first, and nothing writes currentLocationId after creation (bootstrap.ts:354, decided.ts:154 only). So placeProfile's `away` is always false for the city Home profiles. A currentLocationId moved by hand reads 'Home.' in the new city, so not even a fixture reaches it. The branch and the stale docstring are reported for removal under defects."
         ],
-        "gapsOpen": [
-          "[deferred or removed] The away branch (distance and hours from home, Home.tsx:355-357 and the Local Time note at :365) is reached by no life. The owner's scope of 2026-10-09 (bcc30c88) removed the home: person.home, with its rent and bills. With it went every way a player stood apart from where they live: jobs on location, sublets, relocation, and the Travel panel Home.tsx's header says went that day. Since then homeCityOf (src/engine/world/place.ts:102-105) returns CITIES.get(currentLocationId) first, and nothing writes currentLocationId after creation (bootstrap.ts:354, decided.ts:154 only). So placeProfile's `away` is always false for the city Home profiles. A currentLocationId moved by hand reads 'Home.' in the new city, so not even a fixture reaches it. The branch and the stale docstring are reported for removal under defects."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -8520,11 +8515,10 @@
           "Untested: dismissing twice ('It’s dismissed already.', world.ts:39) and 'No such decision.'.",
           "Untested: deleting a dismissed row 180 days on, and keeping a closed row whose dueAt is still ahead (world.ts:145).",
           "weakTest smoke 'stops asking once the row is waved away': a real raiser's row (the 2026 tax return), once dismissed, is not asked again through its due date and after.",
-          "weakTests simulation.test.ts 'sorts overdue items' and 'never shows a resolved or dismissed item': the same behaviour is now held without vacuity, on Home and in openDecisions."
+          "weakTests simulation.test.ts 'sorts overdue items' and 'never shows a resolved or dismissed item': the same behaviour is now held without vacuity, on Home and in openDecisions.",
+          "Settled at the final check: The two vacuous tests in tests/simulation.test.ts (the if-guard at 'sorts overdue items above everything else' and the empty loop at 'never shows a resolved or dismissed item') are still in that file as written. Removing the guard or planting rows there needs an edit to another file, which this task does not make. Their behaviour is held in this file."
         ],
-        "gapsOpen": [
-          "The two vacuous tests in tests/simulation.test.ts (the if-guard at 'sorts overdue items above everything else' and the empty loop at 'never shows a resolved or dismissed item') are still in that file as written. Removing the guard or planting rows there needs an edit to another file, which this task does not make. Their behaviour is held in this file."
-        ],
+        "gapsOpen": [],
         "defects": [],
         "mutations": {
           "run": 3,
@@ -9119,11 +9113,7 @@
           "The 'tests' field: given as rowText.",
           "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
           "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
-          "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
-          "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
-          "The rule was tightened in both files. ONE names the possessive and adjective singulars. REMOVAL doesn't take a removal verb after a present or future auxiliary, and counts 'went' only where it ends a clause or says when or with what. A PRESENT clause with the interests as subject of a present verb fails a sentence whatever else it says. b13's NAMES and HISTORY were replaced by the same rule, and its namingIn strips money's phrases first, as evidence3's does. Five sentences the possessive singular found in the tree were read and listed true: two scene briefs and three money uses.",
-          "The second pass, from the recheck of 2026-10-15. PRESENT's plural takes any word after 'interests' but the past (-ed and the irregular forms) and the words in NOT_PRESENT (function words, nouns they compound with, 'too', and 'is', which a plural subject never takes), where it was a closed list of 46 verbs; a clause set off by commas may stand between subject and verb; the future and the modals count; and the present perfect ('have been removed') is the past's. REMOVAL's 'went' is the removal's only before a date, 'with', 'that day' or 'when', or at a clause's end, no longer before 'on', 'in the' or 'at'. ONE takes two adjectives after a possessive; after 'a' or 'the' it keeps the narrower list, since 'the last interest day' is money's. Both files carry the same rule.",
-          "Settled after the check: partial: the prose holds and its rule holds, by every skeptic’s check (2026-10-15): every must-catch example is caught, every must-accept passes, and both tree walks are green in the gate. But the row is about the repository’s own text, not a player’s action, and the page’s standard verifies a row only on a test that issues a command, runs the clock or renders a screen; a test that reads the tree is recorded as a fixture, as it was at bef4bde5. Recording it as a command to make the row verified was considered on 2026-10-15 and not done: it would stretch the word. Whether a gate test that reads the repository may verify a row whose claim is that repository’s text is the owner’s decision."
+          "Settled at the final check: partial: the prose holds and its rule holds, by every skeptic’s check (2026-10-15): every must-catch example is caught, every must-accept passes, and both tree walks are green in the gate. But the row is about the repository’s own text, not a player’s action, and the page’s standard verifies a row only on a test that issues a command, runs the clock or renders a screen; a test that reads the tree is recorded as a fixture, as it was at bef4bde5. Recording it as a command to make the row verified was considered on 2026-10-15 and not done: it would stretch the word. Whether a gate test that reads the repository may verify a row whose claim is that repository’s text is the owner’s decision."
         ],
         "gapsOpen": [],
         "disposition": "Every first-round problem was worked. I ran the file's own regexes (evidence3-person.test.ts:602-665) in node. All ten new must-catch examples are flagged: an open plural verb, 'went on/in/at', an appositive or relative aside, the future and future perfect, and 'Her own favourite interest'. 'Interests have been removed since 2026-10-10.' now passes. The rule in evidence2-b13 is byte-identical, compared constant by constant over MONEYS through dated. READ_TRUE and READ_AND_TRUE hold 32 each, and rowText now says 32. b13's two titles were retitled, with a past-tense comment at :584/:596 saying what they said. The rowText explanation and issue now say it is a heuristic that catches the shapes its tests name, and that a present claim in another shape can still pass, which is the honest claim. The handoff's line 9 names `git merge-base --is-ancestor`. Both tree walks and both example tests are green. The heuristic's remaining limits are disclosed by the rowText, so they don't refute it.",

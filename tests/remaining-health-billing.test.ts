@@ -322,7 +322,7 @@ describe('HUSKY D kept at its renewal through work, read over Connecticut’s si
     return sim;
   };
 
-  it('FIXTURE: 80 hours’ work in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with work in August, outside the six months, the same notice', () => {
+  it('FIXTURE: $600 of wages in November 2026 (posted by hand) keeps HUSKY D on 1 March 2027: no gap, renewed to 1 September 2027, no premium, said once across a reload; with none, a notice, covered to 30 April, ended with April; with the same wages in August, outside the six months, the same notice', () => {
     const worked = holding('rhb-kept');
     wagesPosted(worked, at(2026, 11, 20, 17), 600_00, 80); // FIXTURE: November's work
     for (const m of ['2026-09', '2026-10', '2026-11', '2026-12', '2027-01', '2027-02']) expect(earningsOf(worked.player).months[m] ?? 0).toBeLessThan(580_00);

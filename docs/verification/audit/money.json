@@ -516,11 +516,10 @@
           "UI: BankAccountLife's quote words, Break It Early, Give 35 Days’ Notice and its grayed state are drawn and pressed.",
           "The row's references were stale; see claimCorrection.",
           "No test closed a notice-term at a second bank (the check). Both branches are now closed by the clock on a London life: into NatWest's own current account when one is kept, and into the Barclays primary at once when none is. The second branch also reads the downstream: the money buys a meal that an emptied account was refused.",
-          "The check's weak test matched the NatWest notice's charge with a regex. It is now a figure worked from NatWest's terms and its published 4.11%: £39.41, the interest earned, which is lower than 90 days' £101.34. The deposit therefore comes back whole, £10,000."
+          "The check's weak test matched the NatWest notice's charge with a regex. It is now a figure worked from NatWest's terms and its published 4.11%: £39.41, the interest earned, which is lower than 90 days' £101.34. The deposit therefore comes back whole, £10,000.",
+          "Settled at the final check: [needs engine change] The refusal 'You need a current account for the money.' (accountlife.ts:258) and the day handler's `&& currentOf(s, person)` guard (accountlife.ts:224) cannot be reached by any played life. Every life is given a primary current account at creation (index.ts:190, banking.ts:107). The player cannot close the primary or the only current account (closeRefusal, bankmoves.ts:268-269). Every close by a bank moves the primary first (lending.ts:952; bankmoves.ts:310; completeSwitch at lending.ts:707). Only a fixture that deletes person.primaryAccountId reaches the branch. Under THE ONE RULE it goes."
         ],
-        "gapsOpen": [
-          "[needs engine change] The refusal 'You need a current account for the money.' (accountlife.ts:258) and the day handler's `&& currentOf(s, person)` guard (accountlife.ts:224) cannot be reached by any played life. Every life is given a primary current account at creation (index.ts:190, banking.ts:107). The player cannot close the primary or the only current account (closeRefusal, bankmoves.ts:268-269). Every close by a bank moves the primary first (lending.ts:952; bankmoves.ts:310; completeSwitch at lending.ts:707). Only a fixture that deletes person.primaryAccountId reaches the branch. Under THE ONE RULE it goes."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -916,20 +915,6 @@
           }
         ],
         "gapsClosed": [
-          "A current account canceled in its cooling-off was asked only whether anything used it (linkedTo), so one overdrawn closed with its debt, and one with money on its way, card payments pending or savings beside it closed too. It's asked Close It's own refusals (closeRefusal) now.",
-          "Your Accounts Over Time offered Cancel It for savings and cards only, so the command's current-account branch had no control. A new current account other than the primary is offered, its Close It refusal said under it with the button grayed out.",
-          "A current account canceled in its cooling-off closed with no interest paid and no fees charged, and its overdraft limit left on it, where Close It (closeNow) settles both and the guide said it “closes the same way”. It is settled as Close It settles one now: settleInterest, settleFees, the limit cleared; in Canada the charges for its operation while it was open come back (SOR/2021-181 s.5(2)), where Britain (BCOBS 6.3.2R) and Germany (BGB § 357b(2)) let the bank charge for the service provided. Fees past what it holds with its interest are refused (cancelRefusal), which the panel reads too. Its words on the panel say what comes back.",
-          "Canceling kept a savings account’s or term deposit’s interest from it everywhere, and paid a current account’s everywhere. It follows the country’s rule now: kept in Britain and Canada; returned, any already paid posted back with its tax and off the year’s income, in the EU/EEA countries and Mexico.",
-          "Canada’s refund of charges covered only a current account; it covers any deposit account now, and Mexico’s with it.",
-          "Korea’s deposits had a 14-day cooling-off its rule (금융소비자보호법 제46조) doesn’t give; removed, cards kept.",
-          "Close It closed a German account overdrawn by its closing fees; refused now, as Cancel It refuses it.",
-          "A term’s interest taken during the term (bank.take_term_interest) went into the primary account, and Cancel It took it back out of there, but cancelRefusal counted only interest paid into the term itself, so nothing refused it and a Commerzbank primary was left at −€6.30 (Postbank −€6.08). interestBackOf now counts each payment by the holder’s account it went into, and cancelRefusal refuses while any of those holds less than goes back out of it. Deutsche Bank’s own terms say only that each side repays what it received within 30 days (its ZinsMarkt Widerrufsfolgen), nothing of keeping it back from the deposit, so it’s refused rather than taken from the term.",
-          "Canada’s refund took every bank fee since opening, overdraft interest among them (it’s posted as a bank fee against Overdraft Interest), where SOR/2021-181 s.5(2)(b) refunds charges “other than interest charges”; and it was all credited against Bank Fees. chargesBackOf now leaves out a charge against Overdraft Interest and returns each charge by the expense line it was charged to, which the refund credits.",
-          "Canada’s 14 and Mexico’s 10 days were counted as calendar days; their rules count business days (SOR/2021-181 s.5(1); LTOSF art. 11 Bis 1, “diez días hábiles”). coolingOffEnds counts them with afterBusinessDays in the bank’s country and the holder’s region; inCoolingOff and the panel’s “until” date read it (the panel had used the panel bank’s country’s days).",
-          "A Canadian card had a 14-day cooling-off. Bank Act s.627.11 lets a credit card agreement be canceled “in accordance with any prescribed requirements”, and SOR/2021-181 prescribes them for a retail deposit account (s.5), a deposit-type instrument (s.6) and the products s.4 lists, no card among them (read 2026-10-15). inCoolingOff is false for a Canadian card.",
-          "Mexico’s right holds only “siempre y cuando el Cliente no haya utilizado u operado los productos o servicios financieros contratados” (art. 11 Bis 1, read 2026-10-15 at diputados.gob.mx, last reform 14 November 2025); SLATE didn’t ask. SLATE can tell: usedSince counts a payment out of the account by its holder, a card’s purchase among them, and not the bank’s fees, its interest or its tax; money paid in isn’t counted, an account being funded to be opened (SLATE’s reading). A used Mexican account is out of its cooling-off.",
-          "A term’s interest taken during the term was found on canceling by its memo alone, “Interest: FestzinsSparen”, which every term at the bank shares, so canceling a new term took back what an older one had paid: out of the primary, off the year’s income, and counted in the refusal (€6.93 in the skeptic’s probe). bank.take_term_interest now carries the term itself in a posting of nothing, interestPaidSince finds a term’s payments by that posting, and the reversal leaves the zero posting out. Interest taken before the fix carries no such posting and isn’t found on canceling (in a save from before it, that interest gets no refusal and no reversal).",
-          "The cooling-off period ended at the hour the account opened on its last day (openedAt + days, or afterBusinessDays at the same hour), though Directive 2002/65/EC art. 6(1) gives 14 calendar days, SOR/2021-181 s.5(1) “within 14 business days after the day on which [it] is opened”, and LTOSF art. 11 Bis 1 “diez días hábiles posteriores”, and the panel named the day: an RBC account “until January 23” was refused at 11:30 AM on the 23rd. coolingOffEnds returns the last moment of that day in the save’s zone (endOfDay), and the panel names the date in that zone.",
           "A current account canceled in its cooling-off was asked only whether anything used it (linkedTo), so one overdrawn closed with its debt, and one with money on its way, card payments pending or savings beside it closed too. It's asked Close It's own refusals (closeRefusal) now.",
           "Your Accounts Over Time offered Cancel It for savings and cards only, so the command's current-account branch had no control. A new current account other than the primary is offered, its Close It refusal said under it with the button grayed out.",
           "A current account canceled in its cooling-off closed with no interest paid and no fees charged, and its overdraft limit left on it, where Close It (closeNow) settles both and the guide said it “closes the same way”. It is settled as Close It settles one now: settleInterest, settleFees, the limit cleared; in Canada the charges for its operation while it was open come back (SOR/2021-181 s.5(2)), where Britain (BCOBS 6.3.2R) and Germany (BGB § 357b(2)) let the bank charge for the service provided. Fees past what it holds with its interest are refused (cancelRefusal), which the panel reads too. Its words on the panel say what comes back.",
@@ -4007,11 +3992,10 @@
           "A lock survives save and reload: plastic.locked, cardRoom 0, the ATM refused in its words and the counter paying.",
           "The stopped-card refusal is asserted in its words after card.report, and the new card can be locked once it arrives.",
           "The credit-card lock is checked through a meal with The Day's Spending on the credit card and only it locked: paid by debit card, on the card once unlocked, refused ('You can’t afford it.') with the bank empty.",
-          "With one card locked, somebody else's use was never shown steered to the unlocked card (the check). Twins now hold it both ways through the clock, to the day and the cent, with the lock pressed on the rendered Your Cards."
+          "With one card locked, somebody else's use was never shown steered to the unlocked card (the check). Twins now hold it both ways through the clock, to the day and the cent, with the lock pressed on the rendered Your Cards.",
+          "Settled at the final check: [needs engine change] The phone-only refusal (security.ts:288, lockInApp === false) cannot be reached. No bank in content/security.ts sets lockInApp to false: 55 say true, and 5 leave it out (mx-banorte, de-deutsche-bank, de-postbank, jp-mizuho, kr-nh). Nothing reads lockInApp: true either. Only a fixture can reach the branch."
         ],
-        "gapsOpen": [
-          "[needs engine change] The phone-only refusal (security.ts:288, lockInApp === false) cannot be reached. No bank in content/security.ts sets lockInApp to false: 55 say true, and 5 leave it out (mx-banorte, de-deutsche-bank, de-postbank, jp-mizuho, kr-nh). Nothing reads lockInApp: true either. Only a fixture can reach the branch."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -4462,11 +4446,10 @@
           "The ATM refusal for a stopped card ('Your debit card is stopped; the counter can still pay out.'), with the counter paying",
           "A plain report at Chase, a New Haven bank, through to its replacement: fee 0, 7 business days, new last4, next purchase on checking",
           "Save and load with the stopped state and its scheduled replacement, which arrives once",
-          "UI: the report controls and the fee/days line, rendered and pressed"
+          "UI: the report controls and the fee/days line, rendered and pressed",
+          "Settled at the final check: [needs engine change] Wells Fargo's rushDays (1) and Capital One's (3), and kr-shinhan's, in content/security.ts are still read by nothing. card.report refuses any rush where the bank lists no rushFee (security.ts:304), and Your Cards draws the rush button only where it does (BankSecurity.tsx:81). This round decided the rush is offered. Capital One's page offers 'Expedited Delivery by FedEx Priority Overnight, 2-3 business days' with no fee stated; Wells Fargo's offers 'as little as 24 hours'. SLATE charges no fee a bank doesn't list (security.ts:9-12, and the screen's 'The bank lists no fee'). The defect test asserts this and fails until the engine and the screen read the days."
         ],
-        "gapsOpen": [
-          "[needs engine change] Wells Fargo's rushDays (1) and Capital One's (3), and kr-shinhan's, in content/security.ts are still read by nothing. card.report refuses any rush where the bank lists no rushFee (security.ts:304), and Your Cards draws the rush button only where it does (BankSecurity.tsx:81). This round decided the rush is offered. Capital One's page offers 'Expedited Delivery by FedEx Priority Overnight, 2-3 business days' with no fee stated; Wells Fargo's offers 'as little as 24 hours'. SLATE charges no fee a bank doesn't list (security.ts:9-12, and the screen's 'The bank lists no fee'). The defect test asserts this and fails until the engine and the screen read the days."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -7557,11 +7540,10 @@
         "gapsClosed": [
           "The entry is a screen, and no render showed the periods, the lines, the labels ('(Rebuilt)', 'To Its Closing', 'So Far') or the minimum warning",
           "Because of the set_statement_day starvation defect, a card's 'So Far' period never closed if the day moved every day (fixed in the engine on 2026-10-13: the transition period closes at the next statement, rendered)",
-          "The running balance on each statement line (the check): worked by hand and read off the rendered screen, for a savings account and for a card."
+          "The running balance on each statement line (the check): worked by hand and read off the rendered screen, for a savings account and for a card.",
+          "Settled at the final check: [deferred or removed] cardPeriods reads sim.zone (statements.ts:148) and periodsOf reads sim.homeZone (:97). Both are set to one zone at creation (bootstrap.ts:265-266), and nothing has written either since travel went in the owner's scope reset of 2026-10-09 (the journeys, per src/engine/index.ts's header). No played life can tell them apart. Reading sim.homeZone in cardPeriods, as periodsOf does ('the bank's own zone'), would settle it before travel returns."
         ],
-        "gapsOpen": [
-          "[deferred or removed] cardPeriods reads sim.zone (statements.ts:148) and periodsOf reads sim.homeZone (:97). Both are set to one zone at creation (bootstrap.ts:265-266), and nothing has written either since travel went in the owner's scope reset of 2026-10-09 (the journeys, per src/engine/index.ts's header). No played life can tell them apart. Reading sim.homeZone in cardPeriods, as periodsOf does ('the bank's own zone'), would settle it before travel returns."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -7795,11 +7777,10 @@
           "A review turned down on its day, reached by play rather than with documents lapsed by hand; the deposit sent back, with a twin opened",
           "Citi's 90 days at zero reached by play, and the adult case's $5-fee overdraft, charge-off and report pinned in literal figures (the skeptic's related consequence)",
           "Round one's closures stand: the charged-off debt, the minimum age, the busy-schedule branch hour, the funding refusals, and Apply pressed",
-          "Stale line references: see claimCorrection"
+          "Stale line references: see claimCorrection",
+          "Settled at the final check: [needs engine change] The branch refusal 'Without a Social Security number, <bank> opens your account in a branch where you live.' (bankmoves.ts:109) can never fire. Its condition `person.currentLocationId !== homeOf(person)` compares currentLocationId with homeOf, which is currentLocationId (earnings.ts:286), and nothing in src/engine writes currentLocationId after bootstrap (decided.ts:154 builds a copy for a decider). No command, clock or fixture reaches it. The line should go."
         ],
-        "gapsOpen": [
-          "[needs engine change] The branch refusal 'Without a Social Security number, <bank> opens your account in a branch where you live.' (bankmoves.ts:109) can never fire. Its condition `person.currentLocationId !== homeOf(person)` compares currentLocationId with homeOf, which is currentLocationId (earnings.ts:286), and nothing in src/engine writes currentLocationId after bootstrap (decided.ts:154 builds a copy for a decider). No command, clock or fixture reaches it. The line should go."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -8179,11 +8160,10 @@
           "linkedTo refusing a close for the order, and allowing it once the order moved back (round one)",
           "Refusals 'is closing', 'No such standing order.' and 'not an open current account' (round one, 'is closing' reached by play). That covers what the weak bank-lifecycle test's title promised; its title can't be corrected from this file",
           "UI: Pay From There pressed (round one)",
-          "Stale line references: see claimCorrection"
+          "Stale line references: see claimCorrection",
+          "Settled at the final check: [needs engine change] 'It pays into that account.' (bankmoves.ts:438) can never fire. A standing order's toId is always a savings account (payments.ts:267, unchanged since it was written), and set_order_source accepts only a current account. The only remaps are in the switching service (lending.ts:719-722, savings to savings; :761, which matches a current-account id no toId can hold), and the US has no switching service. The second test shows that no order can point into a current account. The line should go."
         ],
-        "gapsOpen": [
-          "[needs engine change] 'It pays into that account.' (bankmoves.ts:438) can never fire. A standing order's toId is always a savings account (payments.ts:267, unchanged since it was written), and set_order_source accepts only a current account. The only remaps are in the switching service (lending.ts:719-722, savings to savings; :761, which matches a current-account id no toId can hold), and the US has no switching service. The second test shows that no order can point into a current account. The line should go."
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {
@@ -8693,12 +8673,11 @@
           "The 'history kept' assertion that couldn't fail, replaced by the period list and the August statement's equality",
           "banking-complete's hand-set depositTo and pending fixtures, replaced by bank.redirect_deposits and the clock's groceries",
           "The remainder's arrival asserted with no guard, once, across reloads (round one, and again here). The `if (held > 0)` in tests/bank-moves.test.ts can go, but this file may not edit it",
-          "Stale line references: see claimCorrection"
+          "Stale line references: see claimCorrection",
+          "Settled at the final check: [needs engine change] A closed account's last statement leaves out what posted at its closing: the remainder sent, and any interest and fees settled on closing. Its closing balance reads what the account held before, not $0.00 (statements.ts:74 drops `txn.at >= to`, and the closing period's `to` is closedAt, the closing's own instant). Reported below, with a failing test",
+          "Settled at the final check: [needs engine change] 'A standing order pays into it' (routing.ts:98) can never name a current account. A standing order goes only into savings (payments.ts:267), and every caller of linkedTo passes a current account (bankmoves.ts:272 and :419, accountlife.ts:316, BankMoves.tsx:114). The line should go"
         ],
-        "gapsOpen": [
-          "[needs engine change] A closed account's last statement leaves out what posted at its closing: the remainder sent, and any interest and fees settled on closing. Its closing balance reads what the account held before, not $0.00 (statements.ts:74 drops `txn.at >= to`, and the closing period's `to` is closedAt, the closing's own instant). Reported below, with a failing test",
-          "[needs engine change] 'A standing order pays into it' (routing.ts:98) can never name a current account. A standing order goes only into savings (payments.ts:267), and every caller of linkedTo passes a current account (bankmoves.ts:272 and :419, accountlife.ts:316, BankMoves.tsx:114). The line should go"
-        ],
+        "gapsOpen": [],
         "disposition": "verified",
         "defects": [
           {

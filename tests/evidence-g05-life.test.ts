@@ -672,7 +672,7 @@ describe('health.month', () => {
   // 2027; the notice received five days on, 6 August, answered by the thirtieth day from then, 4 September, decided on 5
   // September, and ten days on, 15 September, it ends with September. Her six months before the renewal, February to July
   // 2027, had no work and under $580 of income in each; the working twin's 80 hours are in July.
-  it('PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where 80 hours of work in July renews it six months', () => {
+  it('PLAYER JOURNEY: HUSKY D enrolled on 25 August 2026 runs from 1 August, the month of application; its renewal on 1 August 2027 sends a notice of noncompliance for no work, and it ends on 30 September 2027, where $600 of wages in July (TEST SETUP) renews it six months', () => {
     const twin = (work: boolean) => {
       const sim = student(SEED.renew);
       withdraw(sim);

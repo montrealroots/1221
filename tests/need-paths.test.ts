@@ -549,7 +549,7 @@ describe('the marketplace, offered on income the clock paid (health.enroll, heal
 
 /**
  * HUSKY D enrolled in 2026 is renewed twelve months from its start, and from 2027 Connecticut asks a Medicaid adult for
- * 80 hours' work or $580 of earnings in the month before (SLATE reads the $580, of any income, alone from 2026-10-17), besides last month's income under 138% of the year's poverty
+ * 80 hours' work or $580 of income in the month before (SLATE reads the $580, of any income, alone from 2026-10-17), besides last month's income under 138% of the year's poverty
  * line (2026's $15,960, the last SLATE keeps, so 2027 reads it too: $1,835.40 a month). Until 2026-10-15 a renewal was
  * reached only on wages posted by hand. Here a life with need reaches it by the clock alone, withdrawn, enrolled on
  * Papers, and played thirteen months across a reload. She passes the income test on the bank's interest and fails the
@@ -694,7 +694,7 @@ describe('health.enroll: a renewal between HUSKY D and Covered Connecticut, reac
   // refusal is played on a third twin who moves her savings down on 30 April 2027 to $182,500, so May to October each
   // earn about 182,500 × 0.03 × 31 ÷ 365 = $465.00 (or × 30 ÷ 365 = $450.00), under $580: a notice of noncompliance, her
   // Covered Connecticut kept while she answers, and ended with December, said on 6 December.
-  it('PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with 80 hours’ work she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over', () => {
+  it('PLAYER JOURNEY: on Covered Connecticut from 1 November 2026 on September’s $2,052.00, her October 2027 is $930.00, under HUSKY D’s line: with $600 of October’s wages posted by hand she is renewed into HUSKY D from 1 November 2027 with no gap; with none she is told HUSKY D’s work test is why, not that her income was over, until 2026-10-16; since then $930.00 is itself $580 of income and she is renewed into HUSKY D without the work, and a twin with under $580 in each of May to October is sent a notice of noncompliance, not told her income was over', () => {
     const twin = (work: boolean | 'low') => {
       const sim = enrolled(work === true ? 'need-r2' : work === false ? 'need-r3' : 'need-r5', 832_200_00, 'Enrolled in Covered Connecticut, from November 1, 2026.');
       expect(interest(sim, 2026, 9)).toEqual([2_052_00]);
