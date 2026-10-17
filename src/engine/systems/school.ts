@@ -110,7 +110,7 @@ import { INJURY, INJURY_KIND } from '../content/injury';
 import { exerts } from './body';
 import { BODY } from '../content/body';
 import { payeeAccount } from './cash';
-import { courseworkOf, lapseTerm, meetingWeight, mateRecord, mostShort, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, termTally, type Assignment } from './coursework';
+import { courseworkOf, lapseTerm, meetingWeight, mateRecord, shortCause, partnerAsks, reliabilityOf, reliabilityFor, scheduleOrientation, setWork, termTally, type Assignment } from './coursework';
 import { f1Of, scheduleUsStatus } from './permission';
 import { connecticutTax, nonresidentFor } from './taxreturn';
 import { MOMENT_KIND, momentInClass } from './classmates';
@@ -2960,8 +2960,10 @@ export function evaluate(sim: Simulation, person: Person, term: number): TermRev
   const pct = (x: number) => `${Math.round(x * 100)}%`;
   const onStage = work === undefined ? '' : workedPoorly ? ` Your work in ${plays} fell short of what the program asks.` : work >= 1 ? ` The faculty noted your strong work in ${plays}.` : '';
   // What held the unready ones back, and what answers it (from 2026-10-16): until then the notice gave the count alone.
-  const most = mostShort(person, tally.unreadyShown);
-  const why = most ? ` Most often short on them: ${most.label.toLowerCase()}, on ${most.n}; ${most.remedy} answers it.` : '';
+  // From 2026-10-17 (`shortCause`): every part of each short, or no part short on more than one, said as that, and not a
+  // part named by its tie.
+  const most = shortCause(person, tally.unreadyShown);
+  const why = most?.kind === 'part' ? ` Most often short on them: ${most.label.toLowerCase()}, on ${most.n}; ${most.remedy} answers it.` : most?.kind === 'every' ? ' On each of them every part was short of complete.' : most?.kind === 'scattered' ? ' No one part was short on more than one of them.' : '';
   const inClass = unreadyWork ? ` ${cw.unready} of the ${cw.shown} pieces due in class were unready or not shown, short of what the program asks.${why}` : strongWork ? ` The faculty noted your coursework: ${cw.strong} of ${cw.shown} pieces strong or better.` : '';
   const notPassed = failedNow.length ? ` Not passed: ${failedNow.map((r) => r.name).join(', ')}.` : '';
   const breached = t.breaches > 0 ? ' A grave breach of professionalism this term keeps you from good standing.' : '';

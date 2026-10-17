@@ -1,0 +1,10 @@
+{
+ "id": "J15",
+ "part": 1,
+ "from": "2026-08-24",
+ "to": "2027-06-01",
+ "secs": 6,
+ "reloads": 9,
+ "done": false,
+ "rewritten": "from the finished record; the counts at the part’s end are in its log"
+}

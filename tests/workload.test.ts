@@ -12,7 +12,7 @@ import type { Simulation } from '@/engine/core/simulation';
 import { MS_HOUR, formatDate, instantFromZoned } from '@/engine/core/time';
 import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { EVALUATION } from '@/engine/content/tasks';
-import { bandFor, courseworkOf, mostShort, remedyWords, shortParts, showingForecast, termTally, termWarning, urgentWork, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
+import { bandFor, courseworkOf, mostShort, remedyWords, shortCause, shortParts, showingForecast, termTally, termWarning, urgentWork, weightsOf, READER, TERM_CHECK, type Assignment } from '@/engine/systems/coursework';
 import { templateById } from '@/engine/content/coursework';
 import { classPeriod, ESTIMATE } from '@/engine/systems/school';
 import { chiefLimit } from '@/engine/systems/evaluation';
@@ -33,7 +33,7 @@ const life = (seed: string) => createSave(1, seed, { ...newLifeConfig(), homeReg
 const warnings = (sim: Simulation) => sim.universe.notifications.filter((n) => n.title === 'A Word On Your Coursework');
 
 describe('school workload, said before it’s held against you', () => {
-  it('PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, with the part most often short, its remedy and the review’s day; kept through a reload', () => {
+  it('PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload', () => {
     let sim = life('workload-warned');
     tended(sim, at(2026, 10, 20));
     const ws = warnings(sim);
@@ -43,8 +43,12 @@ describe('school workload, said before it’s held against you', () => {
     const shown = cw.assignments.filter((a) => a.term === term && a.shown);
     expect(shown.length).toBeGreaterThanOrEqual(TERM_CHECK.after);
     // Its figures are the term's own at the moment it was given: at least the mark less the margin, Unready.
-    const said = /^(\d+) of the (\d+) pieces shown this term so far were Unready\. Most often short on them: ([a-z ’]+), on (\d+) of the \d+ shown\. (.+?) answers it\./.exec(ws[0]!.body)!;
+    // Nothing was prepared, so each piece was short on every part: that's said, and not one part named by its tie (from
+    // 2026-10-17, `shortCause`; until then "Most often short on them: …, on 1 of the 6 shown", brief 13's journey J15).
+    const said = /^(\d+) of the (\d+) pieces shown this term so far were Unready\. On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it\./.exec(ws[0]!.body)!;
     expect(said).not.toBeNull();
+    expect(ws[0]!.body).not.toContain('Most often short');
+    expect(shown.filter((a) => a.shown!.band === 'unready').every((a) => shortParts(sim.player, a).length === Object.keys(templateById(a.template)!.dims).filter((d) => d in weightsOf(a)).length)).toBe(true);
     expect(Number(said[1])).toBeGreaterThanOrEqual((ESTIMATE.coursework.unready - TERM_CHECK.margin) * Number(said[2]));
     expect(ws[0]!.body).toContain(`The faculty reviews the term on ${formatDate(instantFromZoned({ ...classPeriod(term).to, hour: 17 }, NY), NY)}`);
     // Once a term, and still once after a reload and a week more.
@@ -111,12 +115,13 @@ describe('school workload, said before it’s held against you', () => {
     expect(v.find((x) => x.a.id === first!.a.id)!.forecast).toBeGreaterThan(v[0]!.forecast);
   }, 120_000);
 
-  it('PLAYER JOURNEY: the term’s review names what held the Unready pieces back, and what answers it', () => {
+  it('PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared', () => {
     const sim = life('workload-review');
     tended(sim, at(2027, 1, 2));
     const concern = sim.universe.notifications.find((n) => n.title === 'A Notice Of Academic Concern');
     expect(concern, 'a term with every piece unprepared draws a concern').toBeDefined();
-    expect(concern!.body).toMatch(/pieces due in class were unready or not shown, short of what the program asks\. Most often short on them: [a-z ’]+, on \d+; .+ answers it\./);
+    expect(concern!.body).toMatch(/pieces due in class were unready or not shown, short of what the program asks\. On each of them every part was short of complete\./);
+    expect(concern!.body).not.toContain('Most often short');
   }, 300_000);
 });
 
@@ -163,6 +168,59 @@ describe('school workload, found by the sweep (2026-10-16)', () => {
     const keys = new Set(pieces.flatMap((a) => shortParts(sim.player, a).filter((d) => templateById(a.template)!.dims[d]!.label === top.label)));
     const byKey = Math.max(...[...keys].map((d) => pieces.filter((a) => shortParts(sim.player, a).includes(d)).length));
     expect(byKey).toBeGreaterThanOrEqual(top.n);
+  }, 180_000);
+
+  it('FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)', () => {
+    const sim = life('workload-warned');
+    tended(sim, at(2026, 10, 20));
+    const cw = courseworkOf(sim, sim.player)!;
+    const pieces = termTally(cw.assignments, cw.warned![0]!).unreadyShown;
+    expect(shortCause(sim.player, pieces)).toEqual({ kind: 'every' });
+    // Solo pieces, whose parts are their own preparation alone (no partner part, no table work).
+    const solo = pieces.filter((a) => !Object.keys(templateById(a.template)!.dims).some((d) => d === 'partner' || d === 'interpretation'));
+    const [a, b] = [solo[0]!, solo.find((x) => x.template !== solo[0]!.template)!];
+    expect(a && b).toBeTruthy();
+    const allBut = (x: Assignment, short: string): Assignment => { const c = structuredClone(x); for (const d of Object.keys(c.prep) as (keyof Assignment['prep'])[]) c.prep[d] = d === short ? 0 : 1; return c; };
+    const [da, db] = [Object.keys(weightsOf(a))[0]!, Object.keys(weightsOf(b)).find((d) => templateById(b.template)!.dims[d as keyof Assignment['prep']]!.label !== templateById(a.template)!.dims[Object.keys(weightsOf(a))[0]! as keyof Assignment['prep']]!.label)!];
+    // The same part short on two: named, with its remedy, on 2.
+    const two = shortCause(sim.player, [allBut(a, da), allBut(a, da)]);
+    expect(two).toMatchObject({ kind: 'part', label: templateById(a.template)!.dims[da as keyof Assignment['prep']]!.label, n: 2, remedy: remedyWords(a, da as keyof Assignment['prep']) });
+    // Two different parts short, one on each: none named.
+    expect(shortCause(sim.player, [allBut(a, da), allBut(b, db)])).toEqual({ kind: 'scattered' });
+    // One piece, one part: that part.
+    expect(shortCause(sim.player, [allBut(b, db)])).toMatchObject({ kind: 'part', n: 1 });
+    expect(shortCause(sim.player, [])).toBeUndefined();
+  }, 180_000);
+
+  it('FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)', () => {
+    const sim = life('workload-warned');
+    tended(sim, at(2026, 10, 20), 1);
+    expect(warnings(sim)).toHaveLength(0);
+    const cw = courseworkOf(sim, sim.player)!;
+    const term = cw.assignments.find((a) => a.shown)!.term;
+    const shown = cw.assignments.filter((a) => a.term === term && a.shown && !a.revision);
+    // The rest of the term Working, so the Unready ones are those picked below (the twin's own scene studies came out
+    // Unready on their table work, which this twin never answered).
+    for (const a of cw.assignments.filter((x) => x.term === term && x.shown)) { a.shown!.band = 'working'; if (a.revision) a.revision.band = 'working'; }
+    const need = Math.ceil((ESTIMATE.coursework.unready - TERM_CHECK.margin) * termTally(cw.assignments, term).shown);
+    const labels = new Set<string>();
+    const picked: Assignment[] = [];
+    // Solo pieces, whose parts are their own preparation alone (no partner part, no table work), each short on one.
+    for (const a of shown.filter((x) => shortParts(sim.player, x).length === 0)) {
+      const t = templateById(a.template)!;
+      const d = (Object.keys(weightsOf(a)) as (keyof Assignment['prep'])[]).find((k) => k !== 'partner' && k !== 'interpretation' && !labels.has(t.dims[k]!.label));
+      if (!d || picked.length >= need) continue;
+      labels.add(t.dims[d]!.label);
+      a.prep[d] = 0;
+      a.shown!.band = 'unready';
+      picked.push(a);
+    }
+    expect(picked).toHaveLength(need);
+    expect(shortCause(sim.player, termTally(cw.assignments, term).unreadyShown)).toEqual({ kind: 'scattered' });
+    termWarning(sim, sim.player, picked[0]!);
+    expect(warnings(sim)).toHaveLength(1);
+    expect(warnings(sim)[0]!.body).toContain(`${need} of the ${termTally(cw.assignments, term).shown} pieces shown this term so far were Unready. No one part was short on more than one of them: each one’s own forecast says what held it back.`);
+    expect(warnings(sim)[0]!.body).not.toContain('Most often short');
   }, 180_000);
 
   it('a scene’s table work is answered by the Table Work’s questions, not by “its own step”', () => {

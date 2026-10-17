@@ -4,9 +4,10 @@
  * classmate's ability grown as a session grows the player's, never past 100.
  */
 import { describe, expect, it } from 'vitest';
-import { createSave } from '@/engine';
+import { createSave, loadSave } from '@/engine';
+import { deserialise, serialise } from '@/engine/persistence/adapter';
 import { newLifeConfig } from '@/engine/world/bootstrap';
-import { MS_DAY, instantFromZoned, zonedParts } from '@/engine/core/time';
+import { MS_DAY, MS_HOUR, instantFromZoned, zonedParts } from '@/engine/core/time';
 import { CLASS, MOMENT_KIND, STUDY_KIND, momentsOf, type Moment } from '@/engine/systems/classmates';
 import { courseworkOf, prepareRefusal, trustOf, type Assignment } from '@/engine/systems/coursework';
 import { templateById } from '@/engine/content/coursework';
@@ -49,6 +50,45 @@ describe('a classmate’s invitation to run lines', () => {
     expect(trustOf(mate)).toBe(before + CLASS.study.unanswered);
     expect(sim.execute({ kind: 'school.respond', payload: { momentId: m.id, choice: 'yes' } }).error).toBe('It’s too late to answer: the moment passed.');
   });
+});
+
+/**
+ * An invitation still open when the School ends (from 2026-10-17, brief 13's journeys,
+ * docs/verification/playthroughs-2026-10-17/journeys-criteria.md, check 9): the moment keeps its own lapse and can be
+ * declined, as `setStanding` keeps it, but the evening it asks for is the School's, and every one of those is called off
+ * at the end. Until then a yes after the end put the evening on the calendar and it was played: journey J02's first run
+ * (seed j13-2) said yes three hours after its degree was withheld and ran a classmate's lines the next evening.
+ */
+describe('a classmate’s invitation to run lines, once the School has ended', () => {
+  it('PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)', () => {
+    let sim = life('study-after-end');
+    let m: Moment | undefined;
+    while (!m && sim.now < instantFromZoned({ year: 2026, month: 9, day: 20, hour: 0 }, sim.zone)) {
+      Object.assign(sim.player.wellbeing, { energy: 90, stress: 10, sleepDebt: 0, nourishment: 80, morale: 75 });
+      sim.player.awakeSince = Math.min(sim.player.awakeSince ?? sim.now, sim.now);
+      sim.advanceTo(sim.now + 2 * MS_HOUR);
+      m = momentsOf(courseworkOf(sim, sim.player)!).find((x) => x.kind === 'study' && x.status === 'open');
+    }
+    expect(m, 'an invitation to run lines, brought in class').toBeDefined();
+    expect(zonedParts(sim.now, sim.zone)).toMatchObject({ year: 2026, month: 9, day: 3 });
+    // The twin answers before the end: the evening is booked.
+    const twin = loadSave(deserialise(serialise(sim.universe)));
+    expect(twin.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'yes' } }).ok).toBe(true);
+    expect(twin.universe.scheduled.filter((i) => i.kind === STUDY_KIND && i.status === 'pending')).toHaveLength(1);
+    // This one withdraws first, by the command.
+    expect(sim.execute({ kind: 'school.withdraw', payload: { confirm: true } }).ok).toBe(true);
+    expect(sim.player.school!.standing).toBe('withdrawn');
+    const open = () => momentsOf(courseworkOf(sim, sim.player)!).find((x) => x.id === m!.id)!;
+    expect(open().status).toBe('open');
+    const words = 'Your terms at the School are over: there’s no scene left to run lines for. Say no instead.';
+    expect(sim.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'yes' } }).error).toBe(words);
+    sim = loadSave(deserialise(serialise(sim.universe)));
+    expect(sim.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'yes' } }).error).toBe(words);
+    expect(sim.execute({ kind: 'school.respond', payload: { momentId: m!.id, choice: 'no' } }).ok).toBe(true);
+    expect(open().status).not.toBe('open');
+    sim.advanceTo(m!.when! + 2 * MS_HOUR);
+    expect(sim.universe.scheduled.filter((i) => i.kind === STUDY_KIND)).toHaveLength(0);
+  }, 120_000);
 });
 
 describe('new feedback', () => {

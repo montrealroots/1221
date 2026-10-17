@@ -668,7 +668,10 @@ function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
   const unknownGenre = Object.keys(GENRE_DEFS).find((g) => !genres.some((x) => x.g === g));
   // What of the school's is done or pending after its end (check 9).
   const ended = s?.endedAt;
-  const after = ended === undefined ? [] : sim.universe.scheduled.filter((i) => i.kind.startsWith('school.') && i.at > ended + 60_000 && (i.status === 'done' || i.status === 'pending') && i.payload.personId === p.id).map((i) => `${day(i.at)} ${i.kind} ${i.status}`);
+  // Less what `setStanding` keeps on purpose: the class going on without them (`leaveClassBehind`), a classmate's moment's
+  // own lapse, and a company's calls the class keeps (J15's first finish counted the class's own next term).
+  const keptOn = (i: { kind: string; payload: Record<string, unknown> }) => i.kind === 'school.former_class' || i.kind === 'school.moment' || (i.kind === 'school.company' && i.payload.classOf !== undefined);
+  const after = ended === undefined ? [] : sim.universe.scheduled.filter((i) => i.kind.startsWith('school.') && !keptOn(i) && i.at > ended + 60_000 && (i.status === 'done' || i.status === 'pending') && i.payload.personId === p.id).map((i) => `${day(i.at)} ${i.kind} ${i.status}`);
   // Each term's money by memo (check 6).
   const memos: Record<string, number> = {};
   for (const t of sim.universe.transactions) if (/^(Living-expense scholarship|Yale Health plan|Late fee|Yale account|Tuition|Payment to your Yale account)/i.test(t.memo)) memos[t.memo] = (memos[t.memo] ?? 0) + 1;

@@ -1199,10 +1199,34 @@ export function mostShort(person: Person, pieces: readonly Assignment[]): { labe
 }
 
 /**
+ * What the Unready pieces were short on, as the term's warning and its review say it (from 2026-10-17, brief 13's journeys):
+ * - **`every`:** each piece was short of complete on every part its showing reads, so no one part held them back;
+ * - **`scattered`:** no part was short on more than one of them, so none is a pattern;
+ * - **`part`:** the part most often short, where one is short on two or more (`mostShort`).
+ *
+ * Until then the part most often short was named whatever its count. A term left wholly unprepared (journey J15, seed
+ * j13-9) was told "Most often short on them: knows the scene, on 1 of the 6 shown. Read The Scene answers it." of six
+ * pieces each short on every part, its review "knows the scene, on 8" of 47. And a term whose three Unready pieces were
+ * short on three different parts (J02, j13-2) was told "Most often short on them: lines, on 1 of the 3 shown." Both named
+ * a part by its tie broken in the list's order, and a remedy that answered one piece.
+ */
+export function shortCause(person: Person, pieces: readonly Assignment[]): { kind: 'every' } | { kind: 'scattered' } | { kind: 'part'; label: string; remedy: string; n: number } | undefined {
+  if (!pieces.length) return undefined;
+  // A piece of no template the catalog has reads no parts, as `mostShort` passes it by.
+  const judged = (a: Assignment) => { if (!templateById(a.template)) return 0; const w = weightsOf(a); return Object.keys(preparedParts(person, a, a.status === 'revising' ? a.revision!.dueOn : a.dueOn)).filter((d) => w[d as PrepDim] !== undefined).length; };
+  if (pieces.every((a) => judged(a) > 0 && shortParts(person, a).length === judged(a))) return { kind: 'every' };
+  const top = mostShort(person, pieces);
+  if (!top) return undefined;
+  if (top.n < 2 && pieces.length > 1) return { kind: 'scattered' };
+  return { kind: 'part', ...top };
+}
+
+/**
  * A warning in the term, early enough to act on (from 2026-10-16, the owner's brief "Finish School Workload Balance"):
  * once `TERM_CHECK.after` of a term's pieces have been due and the share unready reaches the review's mark less
- * `TERM_CHECK.margin`, a notice says how many, the part most often short across them, the steps that answer it, the
- * pieces set and not yet shown, and the day the faculty reviews the term. Once a term. It counts as the review does
+ * `TERM_CHECK.margin`, a notice says how many, what they were short on (`shortCause`: the part most often short and the
+ * steps that answer it, or, from 2026-10-17, that every part of each was short, or that no part was short on more than
+ * one), the pieces set and not yet shown, and the day the faculty reviews the term. Once a term. It counts as the review does
  * (`termTally`), and is looked at after every piece due, shown, shown again or missed. Until later on 2026-10-16 it
  * counted the pieces shown alone and was looked at only when one was shown first; it said the pieces set and not yet
  * shown were "still to come", when one is set at a time in each course, so a term with weeks of work left could read
@@ -1221,8 +1245,10 @@ export function termWarning(sim: Simulation, person: Person, a: Assignment): voi
   const mark = ESTIMATE.coursework.unready;
   if (tally.unready < (mark - TERM_CHECK.margin) * tally.shown) return;
   (cw.warned ??= []).push(a.term);
-  const top = mostShort(person, tally.unreadyShown);
-  const cause = top ? ` Most often short on them: ${top.label.toLowerCase()}, on ${top.n} of the ${tally.unreadyShown.length} shown. ${top.remedy.charAt(0).toUpperCase()}${top.remedy.slice(1)} answers it.` : ' Each one’s own forecast says what held it back.';
+  const top = shortCause(person, tally.unreadyShown);
+  const cause = top?.kind === 'part' ? ` Most often short on them: ${top.label.toLowerCase()}, on ${top.n} of the ${tally.unreadyShown.length} shown. ${top.remedy.charAt(0).toUpperCase()}${top.remedy.slice(1)} answers it.`
+    : top?.kind === 'every' ? ` On each of them every part was short of complete: it’s the preparation as a whole, not one part, and each one’s steps answer it.`
+      : top?.kind === 'scattered' ? ' No one part was short on more than one of them: each one’s own forecast says what held it back.' : ' Each one’s own forecast says what held it back.';
   const set = tally.work.filter((x) => !x.shown && (x.status === 'open' || x.status === 'revising')).length;
   const counted = tally.notShown ? `${tally.unready} of the ${tally.shown} pieces due this term so far were Unready or not shown` : `${tally.unready} of the ${tally.shown} pieces shown this term so far were Unready`;
   const review = at(classPeriod(a.term).to, 17);
