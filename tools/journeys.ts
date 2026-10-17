@@ -402,7 +402,7 @@ function weeklyAdvice(sim: Simulation, rec: Rec): void {
   const recs = adviceFor(sim, sim.player);
   const first = recs.find((r) => r.forecast) ?? recs[0];
   rec.advice.push({
-    day: day(sim.now), ...(first ? { target: first.target, level: r1(levelOf(sim, sim.player, first.target.includes(':') ? 'focus' : first.target as never)), forecast: first.forecast ? r2(first.forecast.exact ?? first.forecast.points) : undefined, standing: first.standing?.slice(0, 300), next: first.next?.slice(0, 300), attention: first.attention?.slice(0, 300), why: first.why.slice(0, 200) } : {}),
+    day: day(sim.now), ...(first ? { target: first.target, level: r2(levelOf(sim, sim.player, first.target.includes(':') ? 'focus' : first.target as never)), forecast: first.forecast ? r2(first.forecast.exact ?? first.forecast.points) : undefined, standing: first.standing?.slice(0, 300), next: first.next?.slice(0, 300), attention: first.attention?.slice(0, 300), why: first.why.slice(0, 200) } : {}),
     full: recs[0]?.target === 'all-full' || /full/i.test(recs[0]?.label ?? '') && recs[0]?.exercise === undefined,
     recs: recs.slice(0, 5).map((r) => `${r.target}${r.forecast ? ` ${r2(r.forecast.exact ?? r.forecast.points)}` : ''}`),
   });
@@ -649,7 +649,7 @@ function finish(sim: Simulation, rec: Rec): Record<string, unknown> {
   };
 }
 
-const messageOf = (x: Rec['advice'][number]) => `${x.why ?? ''} ${x.standing ?? ''} ${x.next ?? ''}`;
+const messageOf = (x: Rec['advice'][number]) => `${x.why ?? ''} ${x.standing ?? ''} ${x.next ?? ''} ${x.attention ?? ''}`;
 const has = (rec: Rec, title: string | RegExp) => rec.notices.filter((n) => (typeof title === 'string' ? n[2] === title : title.test(n[2])));
 
 function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
@@ -720,15 +720,18 @@ function checks(spec: Spec, sim: Simulation, rec: Rec): Rec['checks'] {
     // Stale: the whole message (why, standing and next) the same week after week while what it shows moved: the level as
     // the screen rounds it, or the forecast to a tenth. A move under what's shown, with the same words, is the display's
     // precision, counted apart (`belowShown`).
-    let run = 1, belowShown = 0;
-    for (let i = 1; i < a.length; i += 1) {
-      const x = a[i]!, y = a[i - 1]!;
-      const sameWords = x.target === y.target && messageOf(x) === messageOf(y);
-      const shownMoved = x.target === y.target && (Math.round(x.level ?? 0) !== Math.round(y.level ?? 0) || Math.round((x.forecast ?? 0) * 10) !== Math.round((y.forecast ?? 0) * 10));
-      const anyMoved = x.target === y.target && ((x.level ?? 0) !== (y.level ?? 0) || (x.forecast ?? 0) !== (y.forecast ?? 0));
-      run = sameWords ? run + 1 : 1;
-      if (sameWords && shownMoved) fails.push(`${x.day}: ${x.target} said in the same words while its shown level or forecast moved`);
-      if (sameWords && anyMoved && !shownMoved) belowShown += 1;
+    let start = 0, belowShown = 0;
+    for (let i = 1; i <= a.length; i += 1) {
+      const x = a[i], y = a[i - 1]!;
+      if (x && x.target === y.target && messageOf(x) === messageOf(y)) continue;
+      // A run of the same words, a[start..i-1]: stale where it's over four weeks and what it's about moved by what the
+      // screen shows (a whole point of the level, a tenth of the forecast) across it.
+      const run = a.slice(start, i);
+      const span = (f: (z: Rec['advice'][number]) => number) => Math.max(...run.map(f)) - Math.min(...run.map(f));
+      const levelSpan = span((z) => z.level ?? 0), forecastSpan = span((z) => z.forecast ?? 0);
+      if (run.length > 4 && run[0]!.target && (levelSpan >= 1 || forecastSpan >= 0.1)) fails.push(`${run[0]!.day} to ${run.at(-1)!.day}: ${run[0]!.target} in the same words ${run.length} weeks while it moved ${r2(levelSpan)} (forecast ${r2(forecastSpan)})`);
+      if (run.length > 1 && (levelSpan > 0 || forecastSpan > 0)) belowShown += run.length - 1;
+      start = i;
     }
     const targets = new Set(a.map((x) => x.target).filter(Boolean));
     if (spec.player === 'follows' && spec.setup !== 'mastered' && targets.size < 2) fails.push(`a follower's first target never changed: ${[...targets].join(', ')}`);
@@ -873,7 +876,7 @@ function continuity(rec: Rec): Record<string, unknown> {
     if (last && b && last.target === a.target) {
       last.to = a.day; last.weeks += 1;
       if (messageOf(a) !== messageOf(b)) last.newWords += 1;
-      if (Math.round(a.level ?? 0) !== Math.round(b.level ?? 0) || Math.round((a.forecast ?? 0) * 10) !== Math.round((b.forecast ?? 0) * 10)) last.moved += 1;
+      if ((a.level ?? 0) !== (b.level ?? 0) || (a.forecast ?? 0) !== (b.forecast ?? 0)) last.moved += 1;
       if (strip(messageOf(a)) === strip(messageOf(b)) && messageOf(a) !== messageOf(b)) last.stripped += 1;
     } else runs.push({ from: a.day, to: a.day, target: a.target ?? 'none', weeks: 1, newWords: 0, moved: 0, stripped: 0 });
   });
@@ -919,7 +922,27 @@ function summarize(dir: string): void {
   console.log(JSON.stringify(rows, null, 1));
 }
 
+/**
+ * `--recheck`: the checks and the continuity record worked out again from a finished journey's record and save, nothing
+ * played, for a change to the checks alone; the last part's output is written again with them.
+ */
+function recheck(spec: Spec, stateDir: string, out: string): void {
+  const sim = loadSave(deserialise(readFileSync(join(stateDir, `${spec.id}.save`), 'utf8')) as never);
+  const { rec, st } = JSON.parse(readFileSync(join(stateDir, `${spec.id}.state.json`), 'utf8')) as { rec: Rec; st: PolicyState };
+  rec.end = { ...(rec.end?.error ? { error: rec.end.error } : {}), ...finish(sim, rec) };
+  rec.checks = checks(spec, sim, rec);
+  rec.continuity = continuity(rec);
+  writeFileSync(join(stateDir, `${spec.id}.state.json`), JSON.stringify({ rec, st }));
+  writeFileSync(out, `${JSON.stringify({ ...rec, done: true }, null, 1)}\n`);
+  console.log(JSON.stringify({ id: spec.id, rechecked: true, checks: Object.fromEntries(Object.entries(rec.checks!).map(([k, v]) => [k, v.pass ? 'pass' : v.fails.slice(0, 2)])) }));
+}
+
 if (process.argv.includes('--summarize')) summarize(arg('summarize'));
+else if (process.argv.includes('--recheck')) {
+  const spec = JOURNEYS.find((j) => j.id === arg('journey'));
+  if (!spec) throw new Error(`No journey "${arg('journey')}"`);
+  recheck(spec, arg('state'), arg('out'));
+}
 else {
   const named = JOURNEYS.find((j) => j.id === arg('journey'));
   if (!named) throw new Error(`No journey "${arg('journey')}": ${JOURNEYS.map((j) => j.id).join(', ')}`);
