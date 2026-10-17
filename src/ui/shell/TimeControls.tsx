@@ -34,6 +34,13 @@ const DIAL_LABEL: Partial<Record<string, string>> = {
   energy: 'Energy', stress: 'Stress', sleepDebt: 'Sleep Debt', nourishment: 'Nourishment', morale: 'Morale', hygiene: 'Hygiene', condition: 'Condition', fitness: 'Fitness',
 };
 
+/**
+ * A dial as the menu says it: a whole number, and fitness, stamina's own figure, to the tenth the Player Profile keeps it
+ * to (from 2026-10-17, brief 11, T1). Until then a workout's gain under a point read as none: at 50.6 a run building 0.8
+ * said "Fitness 51 → 51".
+ */
+const dialFigure = (dial: string, x: number): string => (dial === 'fitness' ? x.toFixed(1) : String(Math.round(x)));
+
 export function TimeControls() {
   // Why sleep can't start now, as the command has it: in the middle of a commitment.
   const sleepBusy = useWorld((s) => { const busy = occupiedAt(s, s.now); return busy ? `You’re at ${busy.label} until ${formatTime(busy.at + busy.durationMinutes! * 60_000, s.zone)}.` : undefined; });
@@ -598,7 +605,7 @@ function LookAfterMenu() {
                 </span>
                 {!refused && o.changes.length > 0 && (
                   <span className="menu-item-detail">
-                    {o.changes.map((c) => `${DIAL_LABEL[c.dial] ?? c.dial} ${Math.round(c.from)} → ${Math.round(c.to)}`).join(' · ')}
+                    {o.changes.map((c) => `${DIAL_LABEL[c.dial] ?? c.dial} ${dialFigure(c.dial, c.from)} → ${dialFigure(c.dial, c.to)}`).join(' · ')}
                     {o.gain !== 0 ? ` · readiness ${o.gain > 0 ? '+' : ''}${o.gain.toFixed(1)}` : ''}
                   </span>
                 )}
