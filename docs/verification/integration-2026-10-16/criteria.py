@@ -347,6 +347,28 @@ if FIG11R:
         r['failure'] = f"{r['failure']}; brief 11 ({r['measured']['commit']}): {'the same' if FIG11R[r['id']] == FIG10R.get(r['id']) else FIG11R[r['id']]}"
         r['evidence'] = f"{r['evidence']}; {B11R}/README.md"
         r['citations'] = r['citations'] + [{'file': f'{B11R}/figures.json'}] + ([{'file': f'{B11R}/gate.txt'}] if gate else [])
+# Brief 12's final runs (resolution-2026-10-17/runs/, figures.json read from their outputs by its runs/figures.py, none
+# typed), as brief 11's: the advice area's change to systems/advice.ts and next-steps.ts left brief 11's stale. Each row
+# brief 11's runs measured moves to the commit its lane ran on, the gate's to the commit gate.txt names, and its figure is
+# said beside brief 11's, or "the same".
+B12R = 'docs/verification/resolution-2026-10-17/runs'
+FIG12R = json.load(open(f'{B12R}/figures.json', encoding='utf-8')) if os.path.exists(f'{B12R}/figures.json') else {}
+if FIG12R and FIG11R:
+    lane12 = lambda name: re.search(r'^at (\w+)', open(f'{B12R}/exits-{name}.txt', encoding='utf-8').read(), re.M).group(1)
+    R12 = {'app': lane12('A'), 'engine': lane12('B')}
+    GATE12 = re.search(r'^at (\w+)', open(f'{B12R}/gate.txt', encoding='utf-8').read(), re.M).group(1) if 'INT-gate' in FIG12R else None
+    for r in rows:
+        m = r.get('measured')
+        gate = r['id'] == 'INT-gate'
+        if not (m and r['id'] in FIG11R and (gate or m.get('commit') == R11.get(m.get('watch')))):
+            continue
+        if gate and not GATE12:
+            continue  # the gate's figure, folded in once it has run
+        assert r['id'] in FIG12R, r['id']
+        r['measured'] = {'commit': GATE12, 'watch': 'app'} if gate else {'commit': R12[m['watch']], 'watch': m['watch']}
+        r['failure'] = f"{r['failure']}; brief 12 ({r['measured']['commit']}): {'the same' if FIG12R[r['id']] == FIG11R.get(r['id']) else FIG12R[r['id']]}"
+        r['evidence'] = f"{r['evidence']}; {B12R}/README.md"
+        r['citations'] = r['citations'] + [{'file': f'{B12R}/figures.json'}] + ([{'file': f'{B12R}/gate.txt'}] if gate else [])
 # Brief 11's areas' results (completion-2026-10-16/<area>-result.json, the coordinator's integration-result.json among
 # them): each row an area worked, its status and the tests it cites, read onto the matrix, never typed here. An area's
 # item takes an override; a criterion or shortfall row here is changed in place. The audit's rows aren't taken: their

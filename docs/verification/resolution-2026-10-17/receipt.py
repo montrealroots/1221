@@ -114,6 +114,49 @@ receipt = {
 json.dump(receipt, open(f'{B12}/receipt.json', 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 
 esc = lambda s: str(s).replace('|', '/').replace('\n', ' ')
+
+# Section 8's other parts, each read from its record: health.enroll's playable journeys apart from its internal
+# safeguards (health-result.json), the documents' verified facts apart from SLATE's assumptions (research-result.json),
+# and the final runs, the walkthrough's steps and whether main holds this branch (runs/, git).
+def health_md():
+    h = json.load(open(f'{B12}/health-result.json', encoding='utf-8'))['rows'][0]
+    out = ['## health.enroll: Verified Playable Journeys, Then Internally Tested Safeguards', '',
+           f'A scope resolution, {next((r["status"] for r in matrix["rows"] if r["id"] == "health.enroll"), "not in the matrix")} in the matrix: {esc(h["scopeResolution"]["decision"])}', '']
+    for path, tests in h['playableJourneys'].items():
+        out.append(f'- **{path}, played:** ' + '; '.join(f'`{t["file"]}` ‘{esc(t["title"])[:160]}’' for t in tests))
+    out.append('- **Internal safeguards, not a player’s route:** ' + '; '.join(f'`{t["file"]}` ‘{esc(t["title"])[:160]}’' for t in h['internalSafeguards']))
+    return out + ['']
+def research_md():
+    r = json.load(open(f'{B12}/research-result.json', encoding='utf-8'))
+    out = ['## Documents: Verified Facts, Then SLATE’s Assumptions', '', '| Fact | Jurisdiction | Service | Amount | Effective | Retrieved |', '|---|---|---|---|---|---|']
+    out += [f'| {f["id"]} | {esc(f.get("jurisdiction", ""))} | {esc(f.get("service", ""))[:140]} | {esc(f.get("currency", ""))} {esc(f.get("amount", ""))} | {esc(f.get("effective", ""))[:90]} | {esc(f.get("retrieved", ""))} |' for f in r['verifiedFacts']]
+    out += ['', '| Assumption | Label | Value | Constant | Default |', '|---|---|---|---|---|']
+    out += [f'| {a["id"]} | {esc(a.get("label", ""))} | {esc(a.get("value", ""))[:160]} | `{a.get("constant", "")}` | {esc(a.get("default", ""))} |' for a in r['assumptions']]
+    return out + ['']
+def runs_md():
+    import glob, re, subprocess
+    R = f'{B12}/runs'
+    out = ['## The Final Runs, The Walkthrough And Merging', '']
+    for f in sorted(glob.glob(f'{R}/exits-*.txt')):
+        lines = open(f, encoding='utf-8').read().splitlines()
+        steps = [l for l in lines if ' exit=' in l]
+        bad = [l.split(' ')[0] for l in steps if not re.search(r' exit=0 ', l)]
+        out.append(f'- **{os.path.basename(f)[6:-4]}:** {lines[0]}; {len(steps)} steps, {"every one exit 0" if not bad else "not exit 0: " + ", ".join(bad)}.')
+    fig = json.load(open(f'{R}/figures.json', encoding='utf-8')) if os.path.exists(f'{R}/figures.json') else {}
+    out += [f'- **{k}:** {esc(v)}' for k, v in fig.items()]
+    for w in ('1440', '390'):
+        p = f'{R}/acceptance/{w}-report.json'
+        if not os.path.exists(p): continue
+        rep = json.load(open(p, encoding='utf-8'))
+        walk = [s for s in rep['steps'] if re.match(r'^(health:|stamina and recovery:|papers: a Connecticut ID card|\[save: brief scenario\] advice:)', s['name'])]
+        out.append(f'- **The walkthrough’s own steps at {w}** (PLAYTEST.md): ' + '; '.join(f'{"passed" if s.get("ok") else "FAILED" if s.get("ok") is False else "skipped"}: {esc(s["name"])[:90]}' for s in walk))
+    try:
+        merged = subprocess.run(['git', 'merge-base', '--is-ancestor', 'HEAD', 'origin/main'], capture_output=True).returncode == 0
+        out.append(f'- **Merged:** {"main holds this branch’s head" if merged else "not into main, which is the owner’s word to give"} (git merge-base, as this was written). **Deployed:** nothing; Base44 deployment is the owner’s word after the gate (rule 14).')
+    except OSError:
+        pass
+    return out + ['']
+
 md = [
     '# Brief 12’s Completion Receipt',
     '',
@@ -144,6 +187,9 @@ md = [
     '| Row | Group | At The Baseline | Now |', '|---|---|---|---|',
     *[f'| `{r["id"]}` | {esc(r["group"])} | {r["baseline"]} | {r["now"]} |' for r in rows if r['disposition'] == 'decision 4'],
     '',
+    *health_md(),
+    *research_md(),
+    *runs_md(),
     f'## What The Receipt Found ({len(problems)})',
     '',
     *([f'- {esc(p)}' for p in problems] or ['Nothing: no baseline row is gone, decision 4 is unchanged, every closed, resolved or assumed row is verified in the matrix, every superseded row is deferred with its replacement, and no row verified at the baseline has fallen back.']),
