@@ -178,7 +178,7 @@ describe('round-ups', () => {
   // go into savings held at it.
   it('won’t be turned on without savings at the current account’s bank, and stop, what was counted dropped, when it closes', () => {
     const { sim, citi } = citiThenBankOfAmerica('g4-2-roundups-none-there', false);
-    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error).toBe('Round-ups go into savings at Bank of America: open easy-access savings there first.');
+    expect(sim.execute({ kind: 'bank.set_round_ups', payload: { on: true } }).error).toBe('Round-ups go into savings at Bank of America. Open easy-access savings there first.');
     expect(spend(sim, sim.player, 12_34, 'Groceries', 'food')).toBe(true);
     expect(sim.player.roundUps?.pending ?? 0).toBe(0);
     sim.must({ kind: 'bank.open_savings', payload: { bankId: 'us-bank-of-america' } });

@@ -70,14 +70,14 @@ export function homeAccountRefusal(config: NewSaveConfig, bankId: string | undef
   if (there === undefined) return `Choose where you lived before ${before(config)}.`;
   // 2. Before Yale in the country Yale is in: the account there is the one here.
   if (there === isoOfPlace(config.startLocationId)) {
-    return `You lived in ${countryWord(isoOfPlace(config.startLocationId))} before ${before(config)}; your account is the one here.`;
+    return `You lived in ${countryWord(isoOfPlace(config.startLocationId))} before ${before(config)}, so your account is the one here.`;
   }
   // 3. A bank there, and research SLATE can act on.
   const bank = bankId ? bankById(bankId) : undefined;
   if (!bank) return 'Choose the bank you kept the account at.';
   if (bank.iso !== there) return `${bank.name} isn’t a bank in ${countryWord(there)}.`;
   const terms = homeTerms(bank.id);
-  if (!terms) return `SLATE has no research on what ${bank.name} does when a customer moves to America.`;
+  if (!terms) return `There’s no research on what ${bank.name} does when a customer moves to America, so the game can’t offer it.`;
   if (terms.unusable) return terms.unusable;
   // 4. Open before Yale began.
   const start = keyOf(config.startYear, config.startMonth, config.startDay);
@@ -85,7 +85,7 @@ export function homeAccountRefusal(config: NewSaveConfig, bankId: string | undef
     const age = ageOnDate({ year: config.birthYear, month: config.birthMonth, day: config.birthDay }, { year: config.startYear, month: config.startMonth, day: config.startDay });
     return keyOf(prior.fromYear, prior.fromMonth, 1) >= start
       ? `You began living there after ${before(config)} began.`
-      : `${bank.name} opens an account from ${terms.openFromAge}; you left at ${age}.`;
+      : `${bank.name} opens an account from age ${terms.openFromAge}, and you left at ${age}.`;
   }
   // 5. The birthplace, read only as the citizenship it gives.
   if (terms.usPersons === 'refuses' && citizenshipFor(config.homeRegionId) === 'us') {
@@ -146,7 +146,7 @@ export function whatFollows(config: NewSaveConfig, bankId: string): string[] {
   // From 2026-10-16: until then the current account opened at nothing, and the bank's own fees overdrew it.
   const float = feesToGraduation(config, bank);
   if (float > 0) out.push(`Its ${bank.current.name} opens with what its fees come to until you graduate in May ${config.startYear + GRADUATES.years}, ${formatMoney(float, bank.currency)}, ${config.savingsAtHome === false ? 'from your money here' : 'from your savings'}, as far as that goes: move more in before it runs low.`);
-  if (terms.ageAssumed) out.push(`SLATE takes it ${bank.name} opened accounts from ${terms.openFromAge}: the research read no age.`);
+  if (terms.ageAssumed) out.push(`The research found no opening age for ${bank.name}, so the game assumes ${terms.openFromAge}.`);
   return out;
 }
 

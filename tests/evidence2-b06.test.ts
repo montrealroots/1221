@@ -788,7 +788,7 @@ describe('documents.apply_ssn', () => {
     held.advanceTo(card.arrivesAt + MS_MINUTE);
     expect(hasSsn(held.player)).toBe(true);
     // Played: her wages are work-study's, under the line; the number lets her past its first ask and no further.
-    expect(borrow(held)).toMatchObject({ ok: false, error: 'Discover Personal Loans lends on $25,000 a year of income or more, and last month’s wages come to less, a year of them.' });
+    expect(borrow(held)).toMatchObject({ ok: false, error: 'Discover Personal Loans lends on $25,000 a year of income or more, and the last 30 days’ wages come to less than that over a year.' });
     // TEST SETUP: a month's wages of $2,100, a year of them $25,200, which no played life earns (the Summer Cabaret's
     // most in thirty days is five Fridays, $1,875).
     paidWages(held, 2_100_00);

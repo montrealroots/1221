@@ -143,18 +143,18 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   'us-wells-fargo': {
     overdraft: { kind: 'per_item', fee: 35_00, maxPerDay: 3, graceUpTo: 10_00, nextDay: true, debitCard: 'opt_in', smallItemsFree: 10_00, ties: 'low', source: 'wellsfargo.com overdraft services; Debit Card Overdraft Service, opted into or not; Extra Day Grace Period: no fees if the balance is back by 11:59 PM ET the next business day; Wells Fargo Deposit Account Agreement eff. 2026-07-28: no fee on an item of $10 or less, items posted by time, ties lowest first' },
-    loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (research-tax-switch-lending.json, 2026-10-10)' },
+    loan: { from: 0.0674, to: 0.2674, minAmount: 3_000_00, maxAmount: 100_000_00, minMonths: 12, maxMonths: 84, customerMonths: 12, source: 'wellsfargo.com personal loans: 6.74% to 26.74% APR, $3,000 to $100,000, 12 to 84 months, for customers of 12 months or more (read 2026-10-10)' },
     term: { rate: 0.0389, months: 11, called: 'CD', source: 'Wells Fargo 11-month CD, via fortune.com, 24 September 2026' },
   },
   'us-citi': {
-    loan: { from: 0.1024, to: 0.1849, minAmount: 2_000_00, maxAmount: 50_000_00, newCustomerMax: 30_000_00, source: 'citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (research-tax-switch-lending.json, 2026-10-10)' },
+    loan: { from: 0.1024, to: 0.1849, minAmount: 2_000_00, maxAmount: 50_000_00, newCustomerMax: 30_000_00, source: 'citi.com personal loans: 10.24% to 18.49% APR; $2,000 to $30,000 for a new customer, to $50,000 for an existing one (read 2026-10-10)' },
     term: { rate: 0.0425, months: 12, called: 'CD', source: 'Citi 12-month CD, via fortune.com, 24 September 2026' },
   },
   'us-capital-one': {
     // Capital One's own name sells no personal loan; since it bought Discover (May 2025) it lends through Discover
     // Personal Loans, "a division of Capital One, N.A.". Discover doesn't publish its APR on its pages; Credible's
     // July 2026 figure is used and said so. Not for a post-secondary education expense, by Discover's terms.
-    loan: { from: 0.0799, to: 0.2499, minAmount: 2_500_00, maxAmount: 40_000_00, minMonths: 36, maxMonths: 84, newCustomerMax: 40_000_00, lender: 'Discover Personal Loans', rateSource: 'third-party', minIncome: 25_000_00, ssn: true, notFor: ['education'], source: 'discover.com/personal-loans (a division of Capital One, N.A.): $2,500 to $40,000, 36 to 84 months, no fees, a Social Security number and $25,000 of income, not for education expenses; APR 7.99% to 24.99% per Credible, July 2026 (research-switch-loans-plans.json)' },
+    loan: { from: 0.0799, to: 0.2499, minAmount: 2_500_00, maxAmount: 40_000_00, minMonths: 36, maxMonths: 84, newCustomerMax: 40_000_00, lender: 'Discover Personal Loans', rateSource: 'third-party', minIncome: 25_000_00, ssn: true, notFor: ['education'], source: 'discover.com/personal-loans (a division of Capital One, N.A.): $2,500 to $40,000, 36 to 84 months, no fees, a Social Security number and $25,000 of income, not for education expenses; APR 7.99% to 24.99% per Credible, July 2026' },
     term: { rate: 0.043, months: 11, called: 'CD', source: 'Capital One 11-month CD, via fortune.com, 24 September 2026' },
   },
   // --- Canada
@@ -188,12 +188,12 @@ export const LENDING: Readonly<Record<string, Lending>> = {
   },
   'gb-natwest': {
     overdraft: { kind: 'arranged', rate: 0.3949, source: 'natwest.com: 39.49% EAR representative' },
-    loan: { from: 0.072, minAmount: 7_500_00, maxAmount: 50_000_00, newCustomerMax: 35_000_00, source: 'NatWest: 7.2% APR representative on £7,500 to £19,950; to £50,000, and £35,000 for a new customer; the rate under £7,500 wasn’t found, so SLATE lends from there (research-switch-loans-plans.json)' },
+    loan: { from: 0.072, minAmount: 7_500_00, maxAmount: 50_000_00, newCustomerMax: 35_000_00, source: 'NatWest: 7.2% APR representative on £7,500 to £19,950; to £50,000, and £35,000 for a new customer; the rate under £7,500 wasn’t found, so the game lends from there' },
     term: { rate: 0.0411, months: 12, called: 'Fixed-Term Savings', source: 'natwest.com: 4.11% AER' },
   },
   'gb-hsbc': {
     overdraft: { kind: 'arranged', rate: 0.399, buffer: 25_00, source: 'hsbc.co.uk: 39.9% EAR above a £25 buffer' },
-    loan: { from: 0.068, to: 0.229, minAmount: 1_000_00, maxAmount: 30_000_00, newCustomerMax: 30_000_00, minIncome: 10_000_00, source: 'HSBC UK: 6.8% APR representative on £7,500 to £20,000, up to 22.9%; £1,000 to £30,000; lends to non-customers living in the UK earning £10,000 or more (research-switch-loans-plans.json)' },
+    loan: { from: 0.068, to: 0.229, minAmount: 1_000_00, maxAmount: 30_000_00, newCustomerMax: 30_000_00, minIncome: 10_000_00, source: 'HSBC UK: 6.8% APR representative on £7,500 to £20,000, up to 22.9%; £1,000 to £30,000; lends to non-customers living in the UK earning £10,000 or more' },
   },
   'gb-santander': {
     overdraft: { kind: 'arranged', rate: 0.3994, source: 'santander.co.uk: 39.94% EAR representative' },
@@ -247,7 +247,7 @@ export const LENDING: Readonly<Record<string, Lending>> = {
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-credit-agricole': {
-    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2339, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; on an unauthorized overdraft the usury ceiling itself (Code de la consommation L314-6; Charente-Périgord’s tariffs, 1 March 2026), 23.39% for an overdraft to €3,000, the Banque de France’s figure from 1 July 2025, the latest SLATE has' },
+    overdraft: { kind: 'per_item', fee: 8_00, maxPerMonth: 10, rate: 0.2339, source: 'an €8 commission d’intervention an operation, €80 a month at most (the legal cap), via moneyvox.fr; on an unauthorized overdraft the usury ceiling itself (Code de la consommation L314-6; Charente-Périgord’s tariffs, 1 March 2026), 23.39% for an overdraft to €3,000, the Banque de France’s figure from 1 July 2025, the latest found' },
     loan: FR_LOAN, term: FR_TERM,
   },
   'fr-la-banque-postale': {

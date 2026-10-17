@@ -79,7 +79,7 @@ export function unclaimedLaw(iso: string): (typeof UNCLAIMED)[string] | undefine
     ...law,
     to: 'the state’s unclaimed-property office',
     claimBack: 'It can be claimed back from that office.',
-    source: 'each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13), and SLATE takes the three years for every state',
+    source: 'each state’s own law: in Connecticut a deposit untouched three years is presumed abandoned (Conn. Gen. Stat. §3-57a) and can be claimed back from the State Treasurer at any time (§3-70a; cga.ct.gov, 2026-10-13); the game uses the three years for every state',
   };
 }
 
@@ -552,7 +552,7 @@ export function registerAccountLife(sim: Simulation): void {
     // A bank that needs notice closes it when the notice has run, at the penalty then.
     const notice = BREAK_NOTICE[term.bankId ?? ''];
     if (notice) {
-      if (term.breakAt !== undefined) throw new CommandError(`It closes on ${formatDate(term.breakAt, s.zone)}, on the notice given.`);
+      if (term.breakAt !== undefined) throw new CommandError(`It already closes on ${formatDate(term.breakAt, s.zone)}, on the notice you gave.`);
       term.breakAt = s.now + notice * MS_DAY;
       s.schedule({ at: term.breakAt, kind: TERM_NOTICE_KIND, label: `${term.name} Closes`, category: 'home', priority: 36, payload: { personId: person.id, accountId: term.id } });
       return { paid: 0, penalty: quote.penalty, at: term.breakAt };
@@ -568,7 +568,7 @@ export function registerAccountLife(sim: Simulation): void {
     const done = breakTerm(s, person, account);
     // What’s paid is after the charge (`breakTerm`): until 2026-10-13 this said “£10,000.00 … less £39.41”, where
     // £10,000.00 was what arrived, the £39.41 already kept back (found by that day’s third round of defects).
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `On the notice given: ${formatMoney(done.paid, saveCurrency(s.universe))} to your current account, after ${formatMoney(done.penalty, saveCurrency(s.universe))} taken for closing early.`, importance: 50, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${account.name} Closed`, body: `Your notice period ended: ${formatMoney(done.paid, saveCurrency(s.universe))} went to your current account, after a ${formatMoney(done.penalty, saveCurrency(s.universe))} penalty for closing early.`, importance: 50, route: '/workspace/bank' });
   });
 
   sim.onCommand<{ accountId: string }, { paid: Money }>('bank.take_term_interest', (p, { sim: s }) => {
@@ -617,7 +617,7 @@ export function registerAccountLife(sim: Simulation): void {
       if (account.balance >= 0) { account.closedAt = s.now; ensurePrimary(s, person); }
       return { refunded: 0 };
     }
-    if (!into || into.id === account.id) throw new CommandError('Your primary current account can’t be canceled. Make another primary first.');
+    if (!into || into.id === account.id) throw new CommandError('Your primary current account can’t be canceled. Make another account primary first.');
     // A current account canceled like any close, on Close It's own refusals (`closeRefusal`, from 2026-10-15): until then
     // only what still used it was asked (`linkedTo`, from 2026-10-10), so one overdrawn closed with its debt, and one
     // with money on its way, card payments pending or savings beside it closed too; found by that day's scope pass. A
@@ -707,7 +707,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
     if (rules?.inactiveMonths !== undefined) account.inactive = idle >= rules.inactiveMonths * month;
     if (rules?.dormantMonths !== undefined && idle >= rules.dormantMonths * month && !account.dormant) {
       account.dormant = true;
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.name} Is Dormant`, body: `Untouched for ${rules.dormantMonths} months. ${account.institution ?? 'The bank'} has blocked it until you use it again.`, importance: 55, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `${account.name} Is Dormant`, body: `It hasn’t been used for ${rules.dormantMonths} months, so ${account.institution ?? 'the bank'} has blocked it. Reactivate it on Money, under Your Accounts Over Time, to use it again.`, importance: 55, route: '/workspace/bank' });
     }
     const iso = bankById(account.bankId)?.iso;
     const law = iso ? unclaimedLaw(iso) : undefined;
@@ -720,7 +720,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
         const by = sim.now + (due - idle);
         sim.requireDecision({
           urgency: 85, category: 'bank', title: `${account.institution ?? 'Your Bank'} Is About To Hand ${account.name} To The State`,
-          detail: `${formatMoney(account.balance, saveCurrency(sim.universe))} in ${account.name} has been untouched for nearly ${law.years} years. Unless you get in touch by ${formatDate(by, sim.zone)}, it goes to ${law.to ?? 'the state'} as unclaimed money.`,
+          detail: `${formatMoney(account.balance, saveCurrency(sim.universe))} in ${account.name} hasn’t been used for nearly ${law.years} years. Unless you tell the bank to keep the account by ${formatDate(by, sim.zone)}, it goes to ${law.to ?? 'the state'} as unclaimed money.`,
           route: '/workspace/bank', dueAt: by, refType: 'unclaimed-notice', refId: account.id,
           actions: [{ label: 'Keep The Account', commandKind: 'bank.reactivate', payload: { accountId: account.id } }],
         });
@@ -732,7 +732,7 @@ export function idleAccounts(sim: Simulation, person: Person, lastUsed: (account
       account.closedAt = sim.now;
       dropPaymentsFor(sim, person, account);
       person.unclaimed = [...(person.unclaimed ?? []), { amount, to: law.to ?? 'the state', at: sim.now }];
-      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left untouched in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}. ${law.claimBack ?? ''}`, importance: 60, route: '/workspace/bank' });
+      if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: 'Unclaimed Money', body: `${formatMoney(amount, saveCurrency(sim.universe))} left unused in ${account.name} for ${law.years} years went to ${law.to ?? 'the state'}.${law.claimBack ? ` ${law.claimBack}` : ''}`, importance: 60, route: '/workspace/bank' });
     }
   }
 }

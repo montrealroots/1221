@@ -95,7 +95,7 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   if (pay.depositTo === accountId) out.push(paidInto(sim, pay, accountId));
   if (pay.depositChange?.to === accountId) out.push(`Your wages and other payments are being moved to it${movingDays(sim, pay.depositChange, 'from')}`);
   for (const o of pay.standingOrders) {
-    if (orderSource(sim, person, o)?.id === accountId) out.push(`A standing order pays from it on the ${o.day}`);
+    if (orderSource(sim, person, o)?.id === accountId) out.push(`A standing order pays from it on the ${ordinal(o.day)}`);
   }
   // A card's autopay not yet pinned follows the primary account, as it pays (`autopaySource`), and a closed card's pays
   // nothing. Until 2026-10-16 only a pinned one was named, so Your Banks gained the line after a reload once something
@@ -115,6 +115,9 @@ export function linkedTo(sim: Simulation, person: Person, accountId: string): st
   }
   return out;
 }
+
+/** A day of the month as it's said, “the 5th” (from 2026-10-17: until then “on the 5”). */
+const ordinal = (n: number): string => { const t = n % 100; return `${n}${t >= 11 && t <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] ?? 'th')}`; };
 
 /** The payers a change of deposit names apart from the rest, in the words for them. */
 const PAYER_NAMES: Readonly<Record<string, string>> = { 'yale-payroll': 'Yale’s payroll' };
@@ -161,7 +164,7 @@ export function closeHold(sim: Simulation, person: Person, accountId: string): s
   const links = linkedTo(sim, person, accountId);
   if (links.length === 0) return undefined;
   const leaves = depositsLeave(sim, person, accountId);
-  if (leaves !== undefined) return `${links.join('. ')}. ${links.length === 1 ? 'Close it' : 'Move the others first, and close it'} from ${formatDate(leaves, sim.zone)}.`;
+  if (leaves !== undefined) return `${links.join('. ')}. ${links.length === 1 ? 'You can close it' : 'Move the others first, and then you can close it'} from ${formatDate(leaves, sim.zone)}.`;
   return `${links.join('. ')}. Move ${links.length === 1 ? 'it' : 'them'} first.`;
 }
 

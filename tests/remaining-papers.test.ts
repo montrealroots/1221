@@ -168,7 +168,7 @@ describe('tax.s8.inventory', () => {
     sim.must({ kind: 'documents.report_lost', payload: { documentId: passport.id } });
     expect([passport.status, f1Of(sim.player)?.status]).toEqual(['lost', 'valid']);
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     expect(idCardRefusal(sim.player, sim.now)).toBe('The DMV asks for a primary identity document in force: your passport, with your I-94 and I-20. Apply for a passport or renew it under Your Passport first.');
   });
 
@@ -180,7 +180,7 @@ describe('tax.s8.inventory', () => {
     expect(photoIdOf(sim.player, sim.now)?.id).toBe(license.id);
     sim.advanceTo(license.expiresAt! + MS_HOUR);
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     // Its page says it's out of force; nothing in SLATE renews a license since the cars went, and the ID card is drawn.
     expect(page(sim, license.id)).toContain('It ran out on June 14, 2028 and no longer counts for anything.');
     const screen = drawn(sim, PassportPane);
@@ -196,7 +196,7 @@ describe('tax.s8.inventory', () => {
     // force at once).
     expect(card.status).toBe('pending');
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     sim.advanceTo(card.readyAt! + MS_HOUR);
     // A citizen's card is REAL ID, and its page says so.
     expect(card.status).toBe('valid');
@@ -598,7 +598,7 @@ describe('tax.s8.f1_status', () => {
     // The passport out of force, read so by what reads it.
     expect(passportOf(sim.player, sim.now)).toBeUndefined();
     expect(photoIdOf(sim.player, sim.now)).toBeUndefined();
-    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refusal(sim, 'bank.open_current', { bankId: 'us-wells-fargo' })).toBe('Wells Fargo needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     // The F-1 and the status as they were.
     expect([f1().status, inForce(f1(), sim.now)]).toEqual(['valid', true]);
     expect(sim.player.school!.standing).toBe('good');

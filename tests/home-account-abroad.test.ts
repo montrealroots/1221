@@ -88,7 +88,7 @@ describe('nothing new at a bank abroad', () => {
     expect(refused(sim, 'bank.open_term', { bankId: 'gb-hsbc', amount: 100_000 })).toBe(words);
     expect(refused(sim, 'bank.borrow', { bankId: 'gb-hsbc', amount: 100_000, months: 12 })).toBe(words);
     expect(refused(sim, 'bank.arrange_overdraft', { accountId: hsbc.id, limit: 50_000 })).toBe(words);
-    expect(refused(sim, 'bank.redirect_deposits', { accountId: hsbc.id })).toBe('Yale pays into an account in America.');
+    expect(refused(sim, 'bank.redirect_deposits', { accountId: hsbc.id })).toBe('Yale only pays wages into an account in America.');
     run(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' });
     expect(refused(sim, 'cash.deposit', { amount: 5_000, toId: hsbc.id, at: 'counter' })).toBe('HSBC UK takes cash only at its own counters and machines, in its country.');
     // Where they live, the same day: Chase opens savings beside its current account.
@@ -162,7 +162,7 @@ describe('the bank’s fee for a customer abroad, on its schedule, in its own mo
     expect(little).toBeLessThan(44_000);
     expect(smbc.feeOwedHeld).toBe(44_000);
     // Nor is it closed with the fee owed, as an overdrawn account isn't.
-    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('Its fee for a customer abroad, ¥440, is owed. The bank closes it only once that’s paid.');
+    expect(refused(sim, 'bank.close_current', { accountId: smbc.id })).toBe('You owe its fee for customers abroad, ¥440. The bank only closes it once that’s paid.');
     expect(refused(sim, 'bank.transfer', { fromId: smbc.id, toId: chase.id, amount: 100, in: 'JPY' }))
       .toBe('SMBC stops its payments abroad while the Global Service fee can’t be taken. ¥440 of it is owed, taken the first night an account there holds it.');
     // $100 more: the night it lands both months are taken together, and payments abroad go again.
@@ -306,7 +306,7 @@ describe('a card from home, as the everyday card here', () => {
     expect(postingsOn(sim, current, 'Cash withdrawal fee').at(-1)!.native).toBe(-392);
     expect(refused(sim, 'cash.withdraw', { amount: 10_000, from: 'atm' })).toBe('HSBC UK’s own machines and counters are in its country. Here, its card works only at another bank’s machine.');
     // More than it holds, said in pounds, the dollars beside (until 2026-10-16 in dollars alone).
-    expect(refused(sim, 'cash.withdraw', { amount: 500_000, from: 'other_atm' })).toMatch(/^HSBC Bank Account holds £[\d,]+\.\d\d \(\$[\d,]+\.\d\d\)\.$/);
+    expect(refused(sim, 'cash.withdraw', { amount: 500_000, from: 'other_atm' })).toMatch(/^HSBC Bank Account only has £[\d,]+\.\d\d \(\$[\d,]+\.\d\d\) in it\.$/);
     expect(refused(sim, 'card.apply', {})).toBe('HSBC UK opens its accounts for people living in the UK; for a customer abroad it has HSBC Expat, from £75,000.');
     expect(sim.ledger.audit()).toEqual([]);
   });
@@ -388,7 +388,7 @@ describe('Barclays’ closing of an account overdrawn on its day', () => {
     expect(current.closedAt).toBeDefined();
     expect(sim.player.credit!.late.length).toBe(late);
     const closed = titled(sim, 'Barclays Closed Your Account').map((n) => n.body).find((b) => b.includes('collections'))!;
-    expect(closed).toContain('went to collections; pay it from Your Bank.');
+    expect(closed).toContain('went to collections. You can pay it on Money, under Borrowing.');
   });
 });
 

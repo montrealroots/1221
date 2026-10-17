@@ -37,7 +37,7 @@ export function RoundUps({ bankId }: { bankId: string }) {
   const money = (n: number) => roundUpMoney(bankId, n);
   const on = mine && Boolean(r?.on);
   const counting = here && roundUpsOn(sim, person);
-  const why = here ? roundUpRefusal(sim, person, choice) : `Round-ups at ${name} run from a ${name} current account made your primary one.`;
+  const why = here ? roundUpRefusal(sim, person, choice) : `Round-ups at ${name} only work when a ${name} current account is your primary account.`;
   const way = wayOf(rule, choice);
   const changed = on && !same(choice, pick(r));
   const wayNow = wayOf(rule, r);
@@ -61,7 +61,7 @@ export function RoundUps({ bankId }: { bankId: string }) {
       <div className="row gap-2" style={{ flexWrap: 'wrap', alignItems: 'flex-end', marginBottom: 4 }}>
         {rule.ways.length > 1 && select('How It Counts', 'way', rule.ways.map((w, i) => [i, w.kind === 'change' ? 'Rounded Up' : 'A Set Amount'] as const))}
         {way?.kind === 'change' && way.units.length > 1 && select('Round Up To', 'unit', way.units.map((u) => [u, `The next ${money(u)}`] as const))}
-        {way?.kind === 'change' && way.multipliers && select('Multiplier', 'multiplier', way.multipliers.map((m) => [m, `×${m}${m === rule.defaultMultiplier ? ', the plain change' : ''}`] as const))}
+        {way?.kind === 'change' && way.multipliers && select('Multiplier', 'multiplier', way.multipliers.map((m) => [m, `×${m}${m === rule.defaultMultiplier ? ', just the change' : ''}`] as const))}
         {way?.kind === 'flat' && way.amounts && way.amounts.length > 1 && select('Each Purchase', 'amount', way.amounts.map((a) => [a, money(a)] as const))}
         {way?.kind === 'changePlus' && select('Amount', 'amount', way.amounts.map((a) => [a, money(a)] as const))}
         {way?.kind === 'flat' && way.range && (
@@ -84,37 +84,37 @@ export function RoundUps({ bankId }: { bankId: string }) {
         </Gated>
         {changed && (
           <Gated feature="bank.set_round_ups" className="btn btn-sm btn-ghost" disabled={Boolean(why)} onClick={() => run('bank.set_round_ups', { on: true, ...choice })}>
-            Save The Choices
+            Save These Choices
           </Gated>
         )}
         <HowItWorks help="bank.round-ups" />
       </div>
       {!on && <WhyNot reasons={[['Turn On', why]]} />}
-      {changed && <WhyNot reasons={[['Save The Choices', why]]} />}
-      {on && !counting && <p className="xs dim" style={{ margin: 0 }}>Not counting: {roundUpRefusal(sim, person, pick(r)) ?? 'not at this bank'}</p>}
+      {changed && <WhyNot reasons={[['Save These Choices', why]]} />}
+      {on && !counting && <p className="xs dim" style={{ margin: 0 }}>Round-ups aren’t counting right now. {roundUpRefusal(sim, person, pick(r)) ?? 'Your primary account isn’t at this bank.'}</p>}
       {mine && ((r?.pending ?? 0) > 0 || (r?.due ?? 0) > 0) && (
         <p className="xs" style={{ margin: 0 }} data-roundups-waiting="">
-          Counted, not yet moved: {formatMoney(r!.pending, cur)}{(r?.due ?? 0) > 0 ? `, and ${formatMoney(r!.due!, cur)} to move at the next business day’s start` : ''}.
+          Counted but not moved yet: {formatMoney(r!.pending, cur)}{(r?.due ?? 0) > 0 ? `, and ${formatMoney(r!.due!, cur)} moves at the start of the next business day` : ''}.
         </p>
       )}
       {mine && (r?.whole ?? 0) > 0 && (
         <p className="xs dim" style={{ margin: 0 }} data-roundups-whole="">
-          {r!.whole === 1 ? 'One purchase' : `${r!.whole} purchases`} since the last transfer {r!.whole === 1 ? 'was' : 'were'} already a multiple of {money(unitNow)}, so rounded up to nothing.
+          {r!.whole === 1 ? 'One purchase' : `${r!.whole} purchases`} since the last transfer {r!.whole === 1 ? 'was' : 'were'} already a multiple of {money(unitNow)}, so {r!.whole === 1 ? 'it' : 'they'} added nothing.
         </p>
       )}
       {mine && r?.last && (
         <p className="xs" style={{ margin: 0 }} data-roundups-last="">
-          {r.last.moved !== undefined ? `Last moved: ${formatMoney(r.last.moved, cur)} into savings, ${formatDate(r.last.at, sim.zone)}.` : `Not moved: ${formatMoney(r.last.notMoved ?? 0, cur)}, ${formatDate(r.last.at, sim.zone)}, because ${r.last.why}.`}
+          {r.last.moved !== undefined ? `Last moved to savings: ${formatMoney(r.last.moved, cur)}, on ${formatDate(r.last.at, sim.zone)}.` : `Not moved on ${formatDate(r.last.at, sim.zone)}: ${formatMoney(r.last.notMoved ?? 0, cur)}, because ${r.last.why}.`}
         </p>
       )}
       <p className="xs dim" style={{ margin: '2px 0 0' }}>When the account is short: {rule.short}</p>
       <details className="xs" style={{ marginTop: 2 }}>
-        <summary className="dim">What The Bank Leaves Open, And What SLATE Leaves Out</summary>
+        <summary className="dim">What The Bank Leaves Open, And What The Game Leaves Out</summary>
         <ul style={{ margin: 'var(--s1) 0 0', paddingLeft: 'var(--s4)' }}>
           {rule.open.map((o) => <li key={o}>{o}</li>)}
-          {rule.notHere.map((o) => <li key={o}>Not in SLATE: {o}</li>)}
+          {rule.notHere.map((o) => <li key={o}>Not in the game: {o}</li>)}
         </ul>
-        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Read from {rule.source}; checked {rule.checked}.</p>
+        <p className="dim" style={{ margin: 'var(--s1) 0 0' }}>Source: {rule.source}, checked {rule.checked}.</p>
       </details>
     </div>
   );

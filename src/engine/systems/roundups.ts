@@ -96,7 +96,7 @@ export function roundUpRefusal(sim: Simulation, person: Person, choice: RoundUpC
   const current = currentOf(sim, person);
   const at = roundUpRuleAt(sim, person);
   if (!at) return `${current?.institution ?? 'Your bank'} doesn’t round purchases up into savings.`;
-  if (!roundUpSavings(sim, person, at.bankId)) return `Round-ups go into savings at ${current?.institution ?? 'your bank'}: open easy-access savings there first.`;
+  if (!roundUpSavings(sim, person, at.bankId)) return `Round-ups go into savings at ${current?.institution ?? 'your bank'}. Open easy-access savings there first.`;
   return roundUpChoiceRefusal(at.bankId, at.rule, choice);
 }
 
@@ -263,7 +263,7 @@ export function moveRoundUps(s: Simulation, person: Person): void {
       if (r.below >= 3) {
         r.on = false;
         dropRoundUps(person, s.now, 'the balance was under your minimum three days running, and Citi turned Spend & Save off');
-        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Spend & Save Turned Off', body: 'Your checking account was under the minimum balance you set three days running, so Citi turned Spend & Save off. The tally that hadn’t moved was dropped.', importance: 45, route: '/workspace/bank' });
+        if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: 'Spend & Save Turned Off', body: 'Your checking account was under the minimum balance you set three days running, so Citi turned Spend & Save off. What it had counted but not yet moved stays in your checking account. Turn it on again under Your Accounts Over Time.', importance: 45, route: '/workspace/bank' });
       }
       return;
     }

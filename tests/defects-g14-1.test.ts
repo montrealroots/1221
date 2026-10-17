@@ -117,7 +117,7 @@ describe('PLAYER JOURNEY: Open Savings at each bank kept', () => {
     const text = screen(sim);
     // Until 2026-10-12 no Open button showed: savings at Capital One hid it.
     expect(openButtons().map((b) => b.says)).toEqual([`Open A ${chase.savings.name}`]);
-    expect(text).toContain(`${chase.name}, not opened`);
+    expect(text).toContain(`At ${chase.name}, not open yet`);
     openButtons()[0]!.press();
     expect(savingsAt(sim, 'us-chase')?.name).toBe(chase.savings.name);
     expect(bankAccountsOf(sim, sim.player).filter((a) => a.kind === 'savings' && a.bankId === capitalOne.id)).toHaveLength(1);
@@ -132,7 +132,7 @@ describe('PLAYER JOURNEY: Open Savings at each bank kept', () => {
     const text = screen(sim);
     // Until 2026-10-12 none showed: Chase's savings hid it, and the one Open button there was ran with no bank, so Chase's.
     expect(openButtons().map((b) => b.says)).toEqual([`Open A ${capitalOne.savings.name}`]);
-    expect(text).toContain(`${capitalOne.name}, not opened`);
+    expect(text).toContain(`At ${capitalOne.name}, not open yet`);
     openButtons()[0]!.press();
     expect(savingsAt(sim, 'us-capital-one')?.name).toBe(capitalOne.savings.name);
     expect(bankAccountsOf(sim, sim.player).filter((a) => a.kind === 'savings')).toHaveLength(2);
@@ -151,7 +151,7 @@ describe('PLAYER JOURNEY: Move Money’s withdrawal-fee note reads the savings a
     expect(fee).toBeGreaterThan(0);
     const said = formatMoney(fee, saveCurrency(sim.universe));
     // Until 2026-10-12 the note read ASB's rules, which have no fee, and said nothing.
-    expect(screen(sim, anz.id)).toContain(`The month’s free withdrawals are used: this one costs ${said}, from savings beside it.`);
+    expect(screen(sim, anz.id)).toContain(`You’ve used this month’s free withdrawals, so this one costs ${said}, taken from the savings on top of the amount.`);
     const before = anz.balance;
     run(sim, 'bank.transfer', { fromId: anz.id, toId: currentAt(sim, 'nz-anz').id, amount: 10_00 });
     expect(sim.universe.accounts[anz.id]!.balance).toBe(before - 10_00 - fee);
@@ -162,14 +162,14 @@ describe('PLAYER JOURNEY: Move Money’s withdrawal-fee note reads the savings a
     const asb = savingsAt(sim, 'nz-asb')!;
     const anz = savingsAt(sim, 'nz-anz')!;
     // Until 2026-10-12 the note read ANZ's rules and said "past the month's free ones each costs the bank's fee" of ASB.
-    expect(screen(sim, asb.id)).not.toMatch(/free withdrawals are used|This withdrawal is free/);
+    expect(screen(sim, asb.id)).not.toMatch(/used this month’s free withdrawals|This withdrawal is free/);
     // ANZ's own savings, untouched this month: its free one is still there, and the note says so.
-    expect(screen(sim, anz.id)).toContain('This withdrawal is free; past the month’s free ones each costs the bank’s fee.');
+    expect(screen(sim, anz.id)).toContain('This withdrawal is free. Once the month’s free ones are used, each costs the bank’s fee.');
     // Two out of ASB savings, and neither is charged.
     const before = asb.balance;
     run(sim, 'bank.transfer', { fromId: asb.id, toId: currentAt(sim, 'nz-asb').id, amount: 10_00 });
     run(sim, 'bank.transfer', { fromId: asb.id, toId: currentAt(sim, 'nz-asb').id, amount: 10_00 });
     expect(sim.universe.accounts[asb.id]!.balance).toBe(before - 20_00);
-    expect(screen(sim, asb.id)).not.toMatch(/free withdrawals are used|This withdrawal is free/);
+    expect(screen(sim, asb.id)).not.toMatch(/used this month’s free withdrawals|This withdrawal is free/);
   });
 });

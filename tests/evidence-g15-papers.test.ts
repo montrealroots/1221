@@ -182,7 +182,7 @@ const memos = (sim: Simulation, memo: string | RegExp, from = 0) => sim.universe
 /** What a transaction took from the player's own accounts. */
 const taken = (sim: Simulation, t: { postings: { accountId: string; amount: number }[] }) => -t.postings.filter((p) => sim.universe.accounts[p.accountId]?.ownerId === sim.player.id).reduce((s, p) => s + p.amount, 0);
 
-const CITI_REFUSES = 'Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.';
+const CITI_REFUSES = 'Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.';
 /** An account at a New Haven bank she doesn't bank with: Citi, online, for a US citizen, no opening deposit. */
 const openAtCiti = (sim: Simulation) => sim.execute<{ accountId: string }>({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
 const APPLY_ID = { kind: 'documents.apply_idcard', payload: {} };

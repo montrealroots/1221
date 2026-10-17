@@ -86,11 +86,11 @@ describe('net worth, after the rent deposit went', () => {
     sim.post({ memo: 'test', category: 'test', postings: [{ accountId: owed.id, amount: -120_00 }, { accountId: sim.nominalAccount('expense', 'Test').id, amount: 120_00 }] });
     const bills = look(sim, 'account', owed.id);
     expect(bills.summary).not.toMatch(/rent|landlord|by hand/);
-    expect(bills.summary).toMatch(/the account you spend from/);
+    expect(bills.summary).toMatch(/the first money in your primary account/);
     const savings = sim.ledger.accountsOf(sim.player.id).find((a) => a.kind === 'savings')!;
     const set = look(sim, 'account', savings.id);
     expect(set.summary).not.toMatch(/landlord/);
-    expect(set.summary).toMatch(/for what went unpaid\.$/);
+    expect(set.summary).toMatch(/and it pays off anything left unpaid\.$/);
   });
 
   it('documents what `held` and `cash` hold now, and names the rent and work files in the past tense', () => {

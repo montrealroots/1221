@@ -97,7 +97,7 @@ describe('journey: a student’s money through a first year', () => {
     ok(sim, 'bank.cancel_standing_order', { id: paymentsOf(sim.player).standingOrders[0]!.id });
     expect(paymentsOf(sim.player).standingOrders).toEqual([]);
     // No American bank arranges an overdraft (`bank.arrange_overdraft` is Britain's and Europe's), and it says so.
-    expect(sim.execute({ kind: 'bank.arrange_overdraft', payload: { limit: 500_00 } }).error).toMatch(/doesn’t arrange one/);
+    expect(sim.execute({ kind: 'bank.arrange_overdraft', payload: { limit: 500_00 } }).error).toMatch(/doesn’t arrange overdrafts/);
     ok(sim, 'card.redeem_rewards');
 
     // The February after: the year's return, filed.

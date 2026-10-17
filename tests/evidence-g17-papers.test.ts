@@ -811,7 +811,7 @@ describe('documents.apply_ssn', () => {
     const arrives = sim.must<{ arrivesAt: number }>({ kind: 'documents.apply_ssn', payload: {} }).arrivesAt;
     sim.advanceTo(arrives + MS_MINUTE);
     expect(hasSsn(sim.player)).toBe(true);
-    expect(borrow().error).toBe('Discover Personal Loans lends on $25,000 a year of income or more, and last month’s wages come to less, a year of them.');
+    expect(borrow().error).toBe('Discover Personal Loans lends on $25,000 a year of income or more, and the last 30 days’ wages come to less than that over a year.');
     expect(loans()).toEqual([]);
   });
 });

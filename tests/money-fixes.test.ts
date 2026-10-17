@@ -38,7 +38,7 @@ describe('a moved statement day', () => {
     for (let d = 0; d < 60; d += 1) {
       const r = sim.execute({ kind: 'card.set_statement_day', payload: { day: ((d + 3) % 28) + 1 } });
       if (r.ok) moved += 1;
-      else { refused += 1; expect(r.error).toBe('You moved the statement day since the last statement: it can move again once the next one comes.'); }
+      else { refused += 1; expect(r.error).toBe('You’ve moved the statement day since the last statement. You can move it again once the next statement comes.'); }
       expect(nextStatement(sim) - cuts.at(-1)!).toBeGreaterThanOrEqual(MIN_CYCLE_DAYS * MS_DAY);
       sim.advanceBy(MS_DAY);
       const at = stateOf(sim.player, card).statementAt!;
@@ -76,7 +76,7 @@ describe('a hardship plan', () => {
     const sim = lifeIn('us-ny-newyork', { wealth: 'wealthy' }, 'mf-hardship');
     const c = cardOf(sim, sim.player)!;
     give(sim, c.id, -50_00);
-    expect(sim.execute({ kind: 'card.request_hardship', payload: {} }).error).toBe('You could pay it off today: a hardship plan is for when you can’t.');
+    expect(sim.execute({ kind: 'card.request_hardship', payload: {} }).error).toBe('You could pay it off today. A hardship plan is for when you can’t.');
     broke(sim);
     expect(sim.execute({ kind: 'card.request_hardship', payload: {} }).ok).toBe(true);
   });

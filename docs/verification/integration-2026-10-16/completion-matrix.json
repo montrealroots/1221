@@ -1576,10 +1576,10 @@
    "source": "audit",
    "goal": "Choose how the day’s spending is paid, and set up standing orders and scheduled payments | From How You Pay (button BankPayments.tsx:113, run at :47) the player sets an amount and a day of the month into one of their own open easy-access savings accounts. The command validates the target (own, open, savings, not a term deposit), the amount and the day, records the order in person.payments.standingOrders and schedules bank.standing_order for the next such day at 9 AM. Each month the handler moves the amount from the account it pays from (orderSource: the primary when first read, pinned on a change of primary) into the savings: at once at the same bank, or out on the day and in on the sending bank's days at another bank. It skips the month with 'A Standing Order Didn't Go' when the account is short, closed, dormant, closing, blocked by a switch or a term deposit, then re-arms for the next month. armPayments re-arms orders when a save loads.",
    "entry": "BankPayments.tsx:113 (Set Up A Standing Order Into Savings; run at :47) | guide: Your Bank | BankPayments.tsx",
-   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: A standing order of your own goes into one of your savings accounts.; … is a term deposit, locked until its end: a standing order goes into easy-access savings.; Say how much each month.; Pick a day of the month, 1 to 31.",
+   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: A standing order can only go into one of your savings accounts.; … is a term deposit, locked until its end. A standing order goes into easy-access savings.; Enter how much to pay each month.; Pick a day of the month, 1 to 31.",
    "reads": "to account (own open savings), amount, day",
    "decisions": "chooses: toId, amount, day, id",
-   "validation": "refusals: A standing order of your own goes into one of your savings accounts.; … is a term deposit, locked until its end: a standing order goes into easy-access savings.; Say how much each month.; Pick a day of the month, 1 to 31. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
+   "validation": "refusals: A standing order can only go into one of your savings accounts.; … is a term deposit, locked until its end. A standing order goes into easy-access savings.; Enter how much to pay each month.; Pick a day of the month, 1 to 31. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
    "changes": "person.payments.standingOrders[]; schedules bank.standing_order (payments.ts:264-278) | standingOrders (added to)",
    "later": "bank.standing_order",
    "systems": "payments.ts:198-219 STANDING_ORDER handler moves the amount monthly from orderSource into the savings: at once at the same bank, or sendAcross in the sending bank’s days at another; skips the month with 'A Standing Order Didn’t Go' when short, closed or blocked; armPayments (:316-324) re-arms on load; savings balance then read by spending.ts:drawFromBank/savingsDebit | spend and drawFromBank (systems/spending.ts); linkCovers, which How You Pay lists account by account and bank.set_payments reads before the link goes On (systems/payments.ts); the standing order’s monthly handler (systems/payments.ts); the card’s autopay reaching savings linked at its autopay account’s bank (payCard and autopayReach, systems/credit.ts); a loan’s payment drawn from savings linked at its repayment account’s bank (systems/lending.ts)",
@@ -1598,10 +1598,10 @@
    "source": "audit",
    "goal": "Arrange an overdraft, borrow and repay a personal loan, and pay a debt in collections | Arranges an overdraft limit on a named current account, or the primary, within overdraftOffer's range: a month of wages less what other banks have arranged, the bank's min and max, and a rate by the record. Sets overdraftLimit, overdraftRate, overdraftPerUse and overdraftSince, and charges the set-up fee or the facility fee on the first arrangement. A limit of 0 closes it unless overdrawn. Downstream: overdraftRoom and overdraftHeadroom give room to spend; lending_day accrues interest past the buffer and charges the monthly, yearly and per-use fees; leftOverdrawn closes the account only once it is past the arranged limit for 60 days.",
    "entry": "BankLending.tsx:187-190 (Arrange It), :201-203 (Close The Overdraft, limit 0) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: That isn’t an open current account of yours.; There’s no current account to arrange one on.; No overdraft is arranged on it.; Pay the overdraft back before closing it.; and 2 more",
+   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: That isn’t an open current account of yours.; There’s no current account to arrange an overdraft on.; No overdraft is arranged on it.; Pay the overdraft back before closing it.; and 2 more",
    "reads": "overdraftOffer (score, wagesLastMonth, other banks’ arranged limits, bank terms) lending.ts:430-445",
    "decisions": "chooses: limit, perUse, accountId, rate",
-   "validation": "refusals: That isn’t an open current account of yours.; There’s no current account to arrange one on.; No overdraft is arranged on it.; Pay the overdraft back before closing it.; and 2 more | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
+   "validation": "refusals: That isn’t an open current account of yours.; There’s no current account to arrange an overdraft on.; No overdraft is arranged on it.; Pay the overdraft back before closing it.; and 2 more | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
    "changes": "current.overdraftLimit/Rate/PerUse/Since; set-up or facility fee on the first arrangement; limit 0 closes it unless overdrawn, and is refused where nothing is arranged (from 2026-10-15: until then it answered as closed). bank.arrange_overdraft in systems/lending.ts.",
    "later": "Not recorded",
    "systems": "lending.ts:overdraftRoom/overdraftHeadroom (372-388, 390-394) -> spending.ts:drawFromBank/canPay; lending_day interest past the buffer (lending.ts:1014-1021); leftOverdrawn (lending.ts:907-917, read at :1074); monthly/yearly fee (lending.ts:1054-1056, 1066-1070) | spend’s room (systems/spending.ts); the monthly loan payment and the overdraft’s fees (systems/lending.ts); arrears and collections (systems/lending.ts); the debt look",
@@ -1643,10 +1643,10 @@
    "source": "audit",
    "goal": "Put money away for a term, choose what happens at its end, break it, or take its interest | Breaks a term deposit before its end, at breakQuote's price. The penalty is days of interest by band, capped at the interest earned where the bank caps it, at least a week's interest in the first week, MUFG's early rate, or the interest forfeited as SLATE's estimate. It is free in a grace window or a cooling-off period, and refused where the bank doesn't allow breaking. breakTerm pays principal − (penalty beyond the interest) + kept interest − tax, closes the term and posts an Early Withdrawal Penalty expense. At NatWest it sets breakAt instead, and account_life closes the term when the 35 days' notice runs.",
    "entry": "BankAccountLife.tsx:75 (Break It Early or Give 35 Days’ Notice, disabled when quote.refused or notice given; the notice line at :66) | guide: Your Bank | BankAccountLife.tsx",
-   "preconditions": "Money in the current account; the bank’s end choices; a break the bank allows | refused where: That isn’t one of your term deposits.; It closes on …, on the notice given.",
+   "preconditions": "Money in the current account; the bank’s end choices; a break the bank allows | refused where: That isn’t one of your term deposits.; It already closes on …, on the notice you gave.",
    "reads": "breakQuote accountlife.ts:97-126 (rules, accrued, cooling-off, grace)",
    "decisions": "chooses: accountId, paid, penalty, at",
-   "validation": "refusals: That isn’t one of your term deposits.; It closes on …, on the notice given. | costs: The amount is held for the term at its rate. At the end it’s paid out or renewed, as chosen. Broken early, it costs the bank’s penalty in days of interest. Interest earned so far can be taken out",
+   "validation": "refusals: That isn’t one of your term deposits.; It already closes on …, on the notice you gave. | costs: The amount is held for the term at its rate. At the end it’s paid out or renewed, as chosen. Broken early, it costs the bank’s penalty in days of interest. Interest earned so far can be taken out",
    "changes": "breakTerm accountlife.ts:199-226 pays principal+kept-interest-tax-penalty into the current account at the term’s own bank, or with none there sends it to the primary in that bank’s days (sendBetweenBanks, :221), and closes the term (until 2026-10-13 into the primary at once, whatever bank it was at); or, at NatWest, the command (:264-279) sets breakAt and puts the close on the clock (:272-276)",
    "later": "bank.term_notice",
    "systems": "current balance -> spending/affordability; the bank.term_notice item put on the clock at breakAt (accountlife.ts:275, handled at :282) closes it the moment the notice runs out, on the day the screen names (until 2026-10-13 the first midnight after, a day late) | the maturity handler (systems/accountlife.ts); the interest accrual (systems/lending.ts)",
@@ -1665,10 +1665,10 @@
    "source": "audit",
    "goal": "A new account canceled in its cooling-off period, a French overrun loan, a card’s money transfer | Within the country's cooling-off period (inCoolingOff), cancels a newly opened account. Savings or a term deposit: its balance back whole into the primary, closed, accrued zeroed, its standing orders and scheduled payments dropped (dropPaymentsFor). A card: set to closing, and closed if nothing is owed. A current account: refused while anything uses it (linkedTo). The primary can't be canceled. Shown as Cancel It in BankAccountLife.",
    "entry": "BankAccountLife.tsx Cancel It, beside a savings account, term deposit, card or (from 2026-10-15) current account other than the primary, in its cooling-off (until the date its country’s count ends, Canada’s and Mexico’s in business days, from 2026-10-15); a current account’s refusal (Close It’s, or its fees past what it holds) said under it and the button grayed out with the same words | guide: Your Bank | BankAccountLife.tsx",
-   "preconditions": "A country with a cooling-off period; a French bank three months past an overdraft; a card whose terms offer a money transfer (NatWest’s, Santander Spain’s, Bankinter’s) | refused where: That isn’t one of your accounts.; Its cooling-off period has passed, or there isn’t one here for it.; You don’t have a card.; Your primary current account can’t be canceled. Make another primary first. (also cancelRefusal)",
+   "preconditions": "A country with a cooling-off period; a French bank three months past an overdraft; a card whose terms offer a money transfer (NatWest’s, Santander Spain’s, Bankinter’s) | refused where: That isn’t one of your accounts.; Its cooling-off period has passed, or there isn’t one here for it.; You don’t have a card.; Your primary current account can’t be canceled. Make another account primary first. (also cancelRefusal)",
    "reads": "inCoolingOff accountlife.ts:128-135",
    "decisions": "chooses: accountId, refunded",
-   "validation": "refusals: That isn’t one of your accounts.; Its cooling-off period has passed, or there isn’t one here for it.; You don’t have a card.; Your primary current account can’t be canceled. Make another primary first. (also cancelRefusal) | moves money through the ledger | costs: Canceled, the account comes out whole; the overrun becomes a loan at the top of the bank’s personal rates; a money transfer moves credit into the current account for the card’s fee",
+   "validation": "refusals: That isn’t one of your accounts.; Its cooling-off period has passed, or there isn’t one here for it.; You don’t have a card.; Your primary current account can’t be canceled. Make another account primary first. (also cancelRefusal) | moves money through the ledger | costs: Canceled, the account comes out whole; the overrun becomes a loan at the top of the bank’s personal rates; a money transfer moves credit into the current account for the card’s fee",
    "changes": "savings/term: balance back whole into a current account at its own bank, or with none there sent to the primary in the bank’s days, closedAt, its standing orders and scheduled payments dropped; card: closing, closed if nothing owed; current account: on Close It’s refusals, which count the overdraft interest built since the 1st and its fees past what it holds (cancelRefusal), settled as Close It settles (interest paid, overdraft interest and fees charged, the limit cleared; in Canada fees refunded, never the overdraft interest; from 2026-10-15: until then neither, and the overdraft interest from 2026-10-16: until then it was dropped), its money on as savings’ goes; primary refused (accountlife.ts bank.cancel_new) From 2026-10-15’s recheck: Canada’s refund leaves out overdraft interest and credits each charge to its own line; a term’s interest taken into another account is refused back out of it while that holds less; Canada’s and Mexico’s periods are business days, the panel’s “until” date too; no Canadian card is offered it; a Mexican account once used isn’t. From 2026-10-15’s second recheck: a term’s taken interest is found on canceling by the term itself, not its name; the period runs to the end of its last day in the save’s zone, the panel’s “until” date named there.",
    "later": "Not recorded",
    "systems": "current balance; card closing -> cardRoom 0 | inCoolingOff (systems/accountlife.ts); the loan’s monthly payment (systems/lending.ts); the card’s balance and interest (systems/credit.ts)",
@@ -1688,10 +1688,10 @@
    "source": "audit",
    "goal": "Choose how the day’s spending is paid, and set up standing orders and scheduled payments | From Payments Set For A Date (BankPayments.tsx:124), cancels one of the player's pending bank.scheduled_payment items (timeline.cancel). Its handler never runs, so nothing moves on its date. Refused for an id that isn't the player's pending scheduled payment.",
    "entry": "BankPayments.tsx:124 | guide: Your Bank | BankPayments.tsx",
-   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: There’s no payment waiting by that name.",
+   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: That payment is no longer scheduled.",
    "reads": "pending bank.scheduled_payment of player",
    "decisions": "chooses: id",
-   "validation": "refusals: There’s no payment waiting by that name. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
+   "validation": "refusals: That payment is no longer scheduled. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
    "changes": "timeline.cancel (payments.ts:307-312)",
    "later": "Not recorded",
    "systems": "payments.ts:222-245 handler never runs; balances untouched | spend and drawFromBank (systems/spending.ts); linkCovers, which How You Pay lists account by account and bank.set_payments reads before the link goes On (systems/payments.ts); the standing order’s monthly handler (systems/payments.ts); the card’s autopay reaching savings linked at its autopay account’s bank (payCard and autopayReach, systems/credit.ts); a loan’s payment drawn from savings linked at its repayment account’s bank (systems/lending.ts)",
@@ -1710,10 +1710,10 @@
    "source": "audit",
    "goal": "Choose how the day’s spending is paid, and set up standing orders and scheduled payments | From the Standing Orders list (BankPayments.tsx:98), removes the order from person.payments.standingOrders and cancels its pending bank.standing_order items. No further STANDING_ORDER posting follows, and armPayments won't re-arm it on load. Refused for an unknown id.",
    "entry": "BankPayments.tsx:98 | guide: Your Bank | BankPayments.tsx",
-   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: There’s no standing order by that name.",
+   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: That standing order no longer exists.",
    "reads": "standingOrders",
    "decisions": "chooses: id",
-   "validation": "refusals: There’s no standing order by that name. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
+   "validation": "refusals: That standing order no longer exists. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
    "changes": "removes order, cancels pending items (payments.ts:280-288)",
    "later": "Not recorded",
    "systems": "no further STANDING_ORDER postings (the handler, payments.ts:198-219, returns for a missing order at :201); armPayments (:316-324) won’t re-arm | spend and drawFromBank (systems/spending.ts); linkCovers, which How You Pay lists account by account and bank.set_payments reads before the link goes On (systems/payments.ts); the standing order’s monthly handler (systems/payments.ts); the card’s autopay reaching savings linked at its autopay account’s bank (payCard and autopayReach, systems/credit.ts); a loan’s payment drawn from savings linked at its repayment account’s bank (systems/lending.ts)",
@@ -1754,10 +1754,10 @@
    "source": "audit",
    "goal": "Move money between your own accounts, and open or close a savings account | Close It on a savings row (BankWorkspace.tsx:141). For Germany past the month's allowance, it schedules bank.savings_notice three months out and refuses a second close while notice runs. Otherwise closeSavings pays the month's interest less tax, settles quarterly fees, moves the balance into the current account at its own bank (sent across in the bank's days if there's none there), closes the account and drops its standing orders and scheduled payments.",
    "entry": "BankWorkspace.tsx:141-142 | guide: Your Bank | BankWorkspace.tsx",
-   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: Only a savings account of yours can be closed here.; There’s no current account to move the money into.; Notice is given: … closes on ….",
+   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: Only a savings account of yours can be closed here.; There’s no current account to move the money into.; You’ve already given notice: … closes on ….",
    "reads": "savings, notice, Germany allowance",
    "decisions": "chooses: accountId, closed, on",
-   "validation": "refusals: Only a savings account of yours can be closed here.; There’s no current account to move the money into.; Notice is given: … closes on …. | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
+   "validation": "refusals: Only a savings account of yours can be closed here.; There’s no current account to move the money into.; You’ve already given notice: … closes on …. | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
    "changes": "bank.close_savings banking.ts:625-642: closeSavings (:430-447) pays interest/fees, moves balance to the current account at its bank (or sends it to the primary in the bank’s days, :436-437), closes, calls off orders/payments (dropPaymentsFor :454-466); or past Germany’s allowance schedules bank.savings_notice (closed at :644-651)",
    "later": "bank.savings_notice",
    "systems": "spending.ts:savingsRoom (120-123) no longer reaches it; standing orders canceled; round-ups find no savings (roundUpSavings roundups.ts:89-92) and are turned off (:210-211) | spend, which pays the day’s food and every payment (systems/spending.ts); statements (systems/statements.ts); the interest accrual (systems/lending.ts); mexicanSolvency (systems/residence.ts)",
@@ -1776,10 +1776,10 @@
    "source": "audit",
    "goal": "Arrange an overdraft, borrow and repay a personal loan, and pay a debt in collections | At a US bank that pays items into an overdraft and asks a debit card opt-in (Chase, Wells Fargo), toggles current.debitOverdraft on the primary. It is refused at Bank of America ('never') and at a bank without per-item terms (Citi, Capital One). Opted in, purchaseMayOverdraw lets an everyday food purchase go below zero (spend, spendRefusal), and chargeForItem then holds the item fee and charges it after the next business day if the account is still past the grace. Opted out, the card takes it or it isn't bought, at no fee. Bills overdraw either way.",
    "entry": "BankLending.tsx:130-143 (the Opt In / Opt Out button at :138-140; only per_item opt_in banks, on the primary) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: Your bank doesn’t ask you this.; … never pays a debit card purchase into an overdraft. (also abroadRefusal)",
+   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: Your bank doesn’t offer this choice.; … never pays a debit card purchase into an overdraft. (also abroadRefusal)",
    "reads": "bank overdraft terms",
    "decisions": "chooses: on",
-   "validation": "refusals: Your bank doesn’t ask you this.; … never pays a debit card purchase into an overdraft. (also abroadRefusal) | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
+   "validation": "refusals: Your bank doesn’t offer this choice.; … never pays a debit card purchase into an overdraft. (also abroadRefusal) | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
    "changes": "primary current.debitOverdraft (lending.ts:1216-1225)",
    "later": "Not recorded",
    "systems": "purchaseMayOverdraw (lending.ts:317-323) -> spend (spending.ts:320-386) and spendRefusal (:263-289), a food purchase may overdraw -> chargeForItem (lending.ts:526-581) holds the item fee, settlePendingItems (:848-875) charges it after the next business day | spend’s room (systems/spending.ts); the monthly loan payment and the overdraft’s fees (systems/lending.ts); arrears and collections (systems/lending.ts); the debt look",
@@ -1798,10 +1798,10 @@
    "source": "audit",
    "goal": "Lock a card, report it lost or stolen, dispute a charge, and move to a new account number | At a bank that moves a compromised account to a new number (SECURITY[bank].newNumberOnFraud, Bank of America), moves the primary current account to a new number and last4, and stops and replaces the debit card. It is refused at other banks. The exposure from a debit card's fraud stays on the old number, and attemptOnNumber declines attempts on it ('A Debit On Your Old Number Declined') until the exposure's year ends. A card's own fraud draw is unaffected.",
    "entry": "BankSecurity.tsx:119 (only newNumberOnFraud banks) | guide: Your Bank | BankSecurity.tsx",
-   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: You have no current account.; … doesn’t say it moves an account to a new number; closing it and opening another does.",
+   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: You have no current account.; … doesn’t offer to move an account to a new number. Closing it and opening another account",
    "reads": "SECURITY[bank].newNumberOnFraud",
    "decisions": "issued with no choice beyond the control",
-   "validation": "refusals: You have no current account.; … doesn’t say it moves an account to a new number; closing it and opening another does. | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
+   "validation": "refusals: You have no current account.; … doesn’t offer to move an account to a new number. Closing it and opening another account | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
    "changes": "current.number/last4; debit plastic stopped + replacement scheduled (bank.new_number, security.ts:329-339, replace :147)",
    "later": "Not recorded",
    "systems": "attemptOnNumber (security.ts:416-441): attempts on the exposed old number declined ('A Debit On Your Old Number Declined') until the exposure’s year ends; card.dispute (liabilityFor :182, via 'number') | cardRoom (systems/credit.ts), which a locked or stopped card leaves at nothing; cardWorks (systems/security.ts), which the day’s fraud draw reads to spare a card that doesn’t work; spend (systems/spending.ts); cash.withdraw; attemptOnNumber (systems/security.ts), the day’s attempt on an account’s number",
@@ -1820,10 +1820,10 @@
    "source": "audit",
    "goal": "Move money between your own accounts, and open or close a savings account | From the Open panel for each bank kept with a current account and no savings there (BankWorkspace.tsx:157), opens easy-access savings at that bank (or at the primary's bank when none is named) with a balance of 0. It is refused without a current account at that bank, or with savings already there. The account then earns daily interest (bank.day), is charged or spared the month-end fee, takes transfers and standing orders, and receives round-ups.",
    "entry": "BankWorkspace.tsx:157, an Open panel for each bank kept with a current account and no savings there, the command run with that bank (from 2026-10-12; until then one panel, shown only with no savings at any bank, and run with no bank) | guide: Your Bank | BankWorkspace.tsx",
-   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: Savings opens beside a current account of yours at that bank.; You already have a savings account at …. (also abroadRefusal)",
+   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: You can only open savings at a bank where you have a current account.; You already have a savings account at …. (also abroadRefusal)",
    "reads": "the bank asked for, or the primary’s (bankOf); a current account kept there (checkingAt), and no savings already there; one savings account at each bank since 2026-10-10",
    "decisions": "chooses: bankId, accountId",
-   "validation": "refusals: Savings opens beside a current account of yours at that bank.; You already have a savings account at …. (also abroadRefusal) | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
+   "validation": "refusals: You can only open savings at a bank where you have a current account.; You already have a savings account at …. (also abroadRefusal) | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
    "changes": "opens savings at 0 (bank.open_savings, banking.ts:615)",
    "later": "Not recorded",
    "systems": "bank.day interest banking.ts:508; month_end fee/interest; transfer/standing order targets; round-ups | spend, which pays the day’s food and every payment (systems/spending.ts); statements (systems/statements.ts); the interest accrual (systems/lending.ts); mexicanSolvency (systems/residence.ts)",
@@ -1842,10 +1842,10 @@
    "source": "audit",
    "goal": "Put money away for a term, choose what happens at its end, break it, or take its interest | From the term deposit panel of each bank kept (BankLending.tsx:241-242), opens a term deposit at that bank (or the primary's), funded from the current account there. It is refused with no term rate, no current account there, an amount of 0 or less, under the bank's minimum, or more than the account holds. The account opens at the bank's fixed rate, maturing after its months. lending_day then accrues interest and at the end renews, moves into savings or pays out (less tax). It is kept from spending, refuses standing orders and scheduled payments, can be broken, and backs MUFG's secured overdraft.",
    "entry": "BankLending.tsx:247-250 (Put It Away, in the term panel at :226-255, drawn for the primary’s bank and each other bank kept with a current account by TermDeposits, BankLending.tsx:425-436, at BankWorkspace.tsx:200; until 2026-10-13 the primary’s bank’s alone) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "Money in the current account; the bank’s end choices; a break the bank allows | refused where: … publishes no term deposit rate SLATE has.; A term deposit at … is funded from your current account there: open one first.; Say how much to put in.; It takes …)} or more.; and 1 more (also abroadRefusal)",
+   "preconditions": "Money in the current account; the bank’s end choices; a break the bank allows | refused where: No term deposit rate was found for ….; A term deposit at … is paid for from your current account there. Open a current account at; Enter how much to put away.; A term deposit there needs at least …)}.; and 1 more (also abroadRefusal)",
    "reads": "lendingOf(bank).term, current balance",
    "decisions": "chooses: amount, bankId, accountId, maturesAt",
-   "validation": "refusals: … publishes no term deposit rate SLATE has.; A term deposit at … is funded from your current account there: open one first.; Say how much to put in.; It takes …)} or more.; and 1 more (also abroadRefusal) | costs: The amount is held for the term at its rate. At the end it’s paid out or renewed, as chosen. Broken early, it costs the bank’s penalty in days of interest. Interest earned so far can be taken out",
+   "validation": "refusals: No term deposit rate was found for ….; A term deposit at … is paid for from your current account there. Open a current account at; Enter how much to put away.; A term deposit there needs at least …)}.; and 1 more (also abroadRefusal) | costs: The amount is held for the term at its rate. At the end it’s paid out or renewed, as chosen. Broken early, it costs the bank’s penalty in days of interest. Interest earned so far can be taken out",
    "changes": "term account + transfer from the current account at that bank (lending.ts:1368-1391, checkingAt :1373)",
    "later": "savings",
    "systems": "lending_day accrual/maturity lending.ts:1088-1126 (endTerm accountlife.ts:457); secured overdraft room lending.ts:385-386 in overdraftRoom (:372-388); break/end commands | the maturity handler (systems/accountlife.ts); the interest accrual (systems/lending.ts)",
@@ -1908,10 +1908,10 @@
    "source": "audit",
    "goal": "Arrange an overdraft, borrow and repay a personal loan, and pay a debt in collections | Pay It Off pays the loan's balance plus interest to date (computed from the days into the month before the next LOAN_DUE) from its repayment account, with linked savings at that bank. It's refused when the bank can't cover it all. It closes the loan and cancels its pending LOAN_DUE, so no more payments fall due and a new loan at that bank becomes possible.",
    "entry": "BankLending.tsx:300-302 (Pay It Off, in the Personal Loan panel at :285-351) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: You don’t have a loan to pay off.; Paying it off takes …)}, and the bank can’t cover it all.",
+   "preconditions": "The bank’s quote not refused (credit score, income); a loan to repay; a collections balance | refused where: You don’t have a loan to pay off.; Paying it off takes …)}, and the repayment account can’t cover it all.",
    "reads": "loan balance, days since last due",
    "decisions": "chooses: loanId, paid",
-   "validation": "refusals: You don’t have a loan to pay off.; Paying it off takes …)}, and the bank can’t cover it all. | moves money through the ledger | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
+   "validation": "refusals: You don’t have a loan to pay off.; Paying it off takes …)}, and the repayment account can’t cover it all. | moves money through the ledger | costs: An overdraft’s limit and fees; a loan paid into the current account at its APR and repaid monthly; paid off at once; collections paid down from the bank",
    "changes": "posts interest-to-date + payoff from the repayment account, closes loan, cancels loan_due (lending.ts:1342-1366); interest counts the days since the last payment date, a month before the next LOAN_DUE, or since opening where later (:1347-1353; until 2026-10-13 30 less the days to the next, so 20 days into a 31-day month charged 19)",
    "later": "Not recorded",
    "systems": "loanOf undefined -> new borrow/overrun loan allowed; no more LOAN_DUE | spend’s room (systems/spending.ts); the monthly loan payment and the overdraft’s fees (systems/lending.ts); arrears and collections (systems/lending.ts); the debt look",
@@ -1930,10 +1930,10 @@
    "source": "audit",
    "goal": "Choose how the day’s spending is paid, and set up standing orders and scheduled payments | Set The Payment schedules a bank.scheduled_payment between two of the holder's own current or easy-access savings accounts on a future day. A term deposit, a past day, someone else's account and the same account are refused. On the day the handler posts it (same bank) or sends it across in the sending bank's days (another bank), held to the bank's limits. It isn't made, and a notice says why, when the account is short, blocked, dormant, closing or closed. A cancelled one doesn't go.",
    "entry": "BankPayments.tsx:144 | guide: Your Bank | BankPayments.tsx",
-   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: A scheduled payment goes between two of your own accounts.; … is a term deposit, locked until its end: a payment set for a date goes between your curr; Say how much.; Pick a day ahead.",
+   "preconditions": "An amount and a day for a standing order; an amount, accounts and a date ahead for a scheduled payment | refused where: A payment set for a date goes between two of your own accounts.; … is a term deposit, locked until its end. A payment set for a date goes between your curr; Enter an amount.; Choose a date in the future.",
    "reads": "two of the holder’s own open current or easy-access savings accounts (a term deposit refused), a day ahead",
    "decisions": "chooses: fromId, toId, amount, at, id",
-   "validation": "refusals: A scheduled payment goes between two of your own accounts.; … is a term deposit, locked until its end: a payment set for a date goes between your curr; Say how much.; Pick a day ahead. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
+   "validation": "refusals: A payment set for a date goes between two of your own accounts.; … is a term deposit, locked until its end. A payment set for a date goes between your curr; Enter an amount.; Choose a date in the future. | costs: The day’s spending goes on the debit card, the credit card or cash; savings linked covers a current account short of a payment, every payment drawing on easy-access savings at the bank of the current account it comes from: the primary for the day’s spending, the account a card’s autopay is set on for that autopay, a loan’s repayment account for the loan, none of which a change of primary moves; a standing order moves its amount into savings each month on its day; a scheduled payment moves once on its date",
    "changes": "schedules bank.scheduled_payment (payments.ts:290-305)",
    "later": "bank.scheduled_payment",
    "systems": "payments.ts:222-245 handler posts it on the day (same bank) or sendAcross in the sending bank’s days, with savings’ room and fee; 'A Scheduled Payment Didn’t Go' when short, blocked or closed | spend and drawFromBank (systems/spending.ts); linkCovers, which How You Pay lists account by account and bank.set_payments reads before the link goes On (systems/payments.ts); the standing order’s monthly handler (systems/payments.ts); the card’s autopay reaching savings linked at its autopay account’s bank (payCard and autopayReach, systems/credit.ts); a loan’s payment drawn from savings linked at its repayment account’s bank (systems/lending.ts)",
@@ -1952,10 +1952,10 @@
    "source": "audit",
    "goal": "Set alerts and round-ups, keep a dormant account, and claim money back from the state | The Alerts form sets lowBalance and largePayment (null turns either off), statements and upcoming. lowBalance sends a Low Balance notice for each current account that ends a day under the line, once until it's back over. upcoming=false silences Short For A Payment. statements tells of every statement ready (one with a payment due is told anyway). largePayment sends 'A Large Payment' at the day's rollover for a non-transfer payment over the line, and for a stranger's use it sets learnedAt=now, which picks the liability tier at dispute.",
    "entry": "BankStatements.tsx:229 Save Alerts (run at :213), :230 Statement Ready, :233 Short For A Payment | guide: Your Bank | BankStatements.tsx",
-   "preconditions": "A bank with round-ups, savings there and its choices made; an account dormant; money handed to the state | refused where: Set the … as an amount, or turn it off.",
+   "preconditions": "A bank with round-ups, savings there and its choices made; an account dormant; money handed to the state | refused where: Enter the … alert as an amount, or leave it blank to turn it off.",
    "reads": "person.alerts",
    "decisions": "chooses: lowBalance, largePayment, statements, upcoming, alerts",
-   "validation": "refusals: Set the … as an amount, or turn it off. | costs: Alerts notify a low balance, a large payment or a statement; round-ups move into savings at the same bank by the bank’s own way and on its own day (content/roundups.ts), all or nothing when the account is short; an account untouched for three years goes to the state’s unclaimed-property office, warned first, and comes back when claimed",
+   "validation": "refusals: Enter the … alert as an amount, or leave it blank to turn it off. | costs: Alerts notify a low balance, a large payment or a statement; round-ups move into savings at the same bank by the bank’s own way and on its own day (content/roundups.ts), all or nothing when the account is short; an account untouched for three years goes to the state’s unclaimed-property office, warned first, and comes back when claimed",
    "changes": "lowBalance/largePayment/statements/upcoming (bank.set_alerts, statements.ts:495). Until 2026-10-13 this left out upcoming, which the command sets and accountAlerts (obligations.ts:71) reads for Short For A Payment, and said statements.ts:457. | alerts",
    "later": "Not recorded",
    "systems": "largePayment -> learnedAt=now where the alert caught it (security.ts:406, 437) -> liabilityFor’s tier at dispute (security.ts:182, daysLateOn :168, from the use’s own clocks; holder carries less); largePayment -> A Large Payment at the day’s end, transfers skipped (statements.ts:479-490; until 2026-10-13 it lowercased the whole of what was paid, inSentence :467 now keeps a name); statements -> statementReady statements.ts:457; lowBalance and upcoming -> the Low Balance and Short For A Payment notices, accountAlerts obligations.ts:71 | spend, for round-ups (systems/spending.ts), and the day’s rollover that moves them (systems/roundups.ts); the statement and alert handlers (systems/statements.ts); the dormancy and unclaimed handlers (systems/accountlife.ts); cash, lending and banking, which refuse a dormant account",
@@ -2040,10 +2040,10 @@
    "source": "audit",
    "goal": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | Where the country has a switching service (SWITCHING), Switch schedules bank.switch_complete on the service's working days, or a later chosen working day, with a review the next working day and a cancel window. On the day, the new bank's accounts receive the balances, standing orders and scheduled payments are re-pointed, and so on. Where there's no service it's refused with the steps to take. Refused too for a ChexSystems report, collections, no photo ID, an overdraft, or a switch already under way.",
    "entry": "US: none; Accounts, Open An Account At Another Bank (BankMoves.tsx) says there's no switching service and gives the steps. Abroad: BankLending.tsx Switch, in the Switch Bank panel drawn only where SWITCHING lists the home's country | guide: Your Bank | BankLending.tsx",
-   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: That isn’t a bank where you live.; You already bank with ….; You keep an account at … already: make it primary, move what pays from the old one, and cl; … won’t open an account for somebody who owes it a charged-off debt.; and 8 more (also switchApplicationRefusal)",
+   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: You can only switch to a bank where you live.; You already bank with ….; You already have an account at …. Make it your primary account, move the payments from the; … won’t open an account for you while you owe it a debt it has charged off.; and 8 more (also switchApplicationRefusal)",
    "reads": "banksFor, chex, collections, photo ID, overdraft, SWITCHING",
    "decisions": "chooses: bankId, on, partial, at, cancellableUntil",
-   "validation": "refusals: That isn’t a bank where you live.; You already bank with ….; You keep an account at … already: make it primary, move what pays from the old one, and cl; … won’t open an account for somebody who owes it a charged-off debt.; and 8 more (also switchApplicationRefusal) | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
+   "validation": "refusals: You can only switch to a bank where you live.; You already bank with ….; You already have an account at …. Make it your primary account, move the payments from the; … won’t open an account for you while you owe it a debt it has charged off.; and 8 more (also switchApplicationRefusal) | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
    "changes": "schedules bank.switch_complete on the service’s working days where the country has a switching service; refused with the steps to take where it hasn’t (from 2026-10-10) (bank.switch, lending.ts:1408)",
    "later": "bank.switch_complete; bank.switch_review",
    "systems": "new current/savings receive balances; standing orders/scheduled payments re-pointed; overdraft limit dropped; fees/interest by new bank's product | the switch’s handler, completeSwitch (systems/lending.ts); the new bank’s first look and an old account’s debt (SWITCH_REVIEW_KIND, SWITCH_DEBT_KIND)",
@@ -2108,10 +2108,10 @@
    "source": "audit",
    "goal": "Move money between your own accounts, and open or close a savings account | Move Money moves an amount between two of the holder's own current or easy-access savings accounts. It's refused past the balance, for the same account, from an account a switch left in debt, when dormant, past Germany's allowance, past room after the withdrawal fee, or when closing. At one bank it posts at once; between banks it goes out now and lands in the sending bank's days, held to its limits. Past the free withdrawals it charges the fee. It counts as a withdrawal, and its balance effect feeds the fee waivers (lowest/average) and the no-withdrawals bonus.",
    "entry": "BankWorkspace.tsx:192 | guide: Your Bank | BankWorkspace.tsx",
-   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: Money moves here between your own current and savings accounts.; That’s the same account.; Say how much to move.; … is kept in ….; and 6 more",
+   "preconditions": "Accounts of your own, open, with the balance to move; one savings account at a time | refused where: Move Money only moves money between your own current and savings accounts.; From and To are the same account. Choose another account to move it to.; Enter how much to move.; … is kept in ….; and 6 more",
    "reads": "balances, dormant, savingsDebit, Germany allowance",
    "decisions": "chooses: fromId, toId, amount, in, moved, arrivesAt, sent, sentIn",
-   "validation": "refusals: Money moves here between your own current and savings accounts.; That’s the same account.; Say how much to move.; … is kept in ….; and 6 more | moves money through the ledger | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
+   "validation": "refusals: Move Money only moves money between your own current and savings accounts.; From and To are the same account. Choose another account to move it to.; Enter how much to move.; … is kept in ….; and 6 more | moves money through the ledger | costs: Ledger postings between your accounts, none instant across banks’ own rules; a savings account at the bank’s own product and rate; closing pays the balance into the current account, on notice where the bank asks it",
    "changes": "posting + withdrawal fee (bank.transfer, banking.ts:577-612; the fee at :611, and at :604 between banks)",
    "later": "Not recorded",
    "systems": "withdrawalsThisMonth counts it (accountlife.ts:143); bonusEarned’s no_withdrawals (banking.ts:326; only NAB’s and ANZ NZ’s savings, where no New Haven life banks); fee waivers via lowest/average | spend, which pays the day’s food and every payment (systems/spending.ts); statements (systems/statements.ts); the interest accrual (systems/lending.ts); mexicanSolvency (systems/residence.ts)",
@@ -2130,10 +2130,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | Apply (BankCard) applies for a card at a bank in the country you bank in, with an optional balance transfer. It's refused while one is on its way, for a bank with no card, for another country, and for a bank whose card is already held. The application costs 5 points (a hard inquiry), approved or not. It's declined, with the reason in a notice, for a score under 620, a debt in collections, or no means. Approved, the limit is set by the score band and the card arrives in a week priced by the record. A transfer marks the old card closing and moves its balance on arrival.",
    "entry": "BankCard.tsx:106 (disabled on transferRefusal) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; SLATE doesn’t know that bank.; and 3 more (also abroadRefusal, transferRefusal)",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal)",
    "reads": "score, collections, inTheBank, held cards",
    "decisions": "chooses: transfer, bankId, fromId, approved, limit",
-   "validation": "refusals: You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; SLATE doesn’t know that bank.; and 3 more (also abroadRefusal, transferRefusal) | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You have no credit record to apply with.; A card is already on its way.; You need a bank to apply to.; That bank isn’t in the game.; and 3 more (also abroadRefusal, transferRefusal) | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "inquiry -5, credit.applied, old card closing, schedules card.arrives (cardlife.ts:99)",
    "later": "card.arrives",
    "systems": "cardlife.ts:70 opens card; score feeds later approvals/pricing | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2196,10 +2196,10 @@
    "source": "audit",
    "goal": "Lock a card, report it lost or stolen, dispute a charge, and move to a new account number | Lock It / Unlock It (BankSecurity.tsx:68, the row says 67) runs card.lock {which, locked, accountId}. The command refuses a stopped card and a bank that locks only by phone, then sets plastic.locked (security.ts:273-281), which persists on the account's plastic. Readers of the lock: cardRoom returns 0 (credit.ts:557); spend's locked-debit path puts the day's food on the credit card or cash, or doesn't buy it (spending.ts:328-339), and spendRefusal gives the reason (spending.ts:272-276); withdrawalQuote refuses a machine and the counter still pays out (cash.ts:122); fraudOn's cardWorks spares a locked card (security.ts:111, 346).",
    "entry": "BankSecurity.tsx:68 (Lock It / Unlock It) | guide: Your Bank | BankSecurity.tsx",
-   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: That card is stopped; a new one is on its way.",
+   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: That card is stopped, and a new one is on its way.",
    "reads": "plastic",
    "decisions": "chooses: which, locked, accountId",
-   "validation": "refusals: That card is stopped; a new one is on its way. | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
+   "validation": "refusals: That card is stopped, and a new one is on its way. | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
    "changes": "plastic.locked (card.lock, security.ts:293-302; a stopped card refused, :299). Until 2026-10-13 a bank that locked only by phone was refused here; no researched bank was one, and the refusal and its lockInApp field went that day.",
    "later": "Not recorded",
    "systems": "cardRoom 0 (credit.ts:572); spend’s locked-debit-card path (spending.ts:341), which spendRefusal reads too (:274); the machine refused (withdrawalQuote, cash.ts:122; a deposit, :233); fraudOn draws among the cards that work (security.ts:374-376, cardWorks :119), so a locked card’s share falls on the other. Until 2026-10-13 the credit card was drawn half the days whatever the debit card’s lock, so a locked debit card halved a stranger’s use. | cardRoom (systems/credit.ts), which a locked or stopped card leaves at nothing; cardWorks (systems/security.ts), which the day’s fraud draw reads to spare a card that doesn’t work; spend (systems/spending.ts); cash.withdraw; attemptOnNumber (systems/security.ts), the day’s attempt on an account’s number",
@@ -2218,10 +2218,10 @@
    "source": "audit",
    "goal": "A new account canceled in its cooling-off period, a French overrun loan, a card’s money transfer | Move It (BankCardOffers.tsx:88) shows only where cardTerms has a moneyTransferFee. card.money_transfer moves the amount from the card into the current account, takes the card's fee, and pushes a transfers[] entry {kind:'money', owed: amount + fee, apr: the transfer rate} (cardoffers.ts:241-259). It refuses when there's no offer, no current account, no amount, or not enough room. Downstream, the transfer accrues daily at transferRate (credit.ts:937-939) and is left out of purchase interest (credit.ts:940). statementOffers charges its interest (cardoffers.ts:157-164), and allocatePayment treats it as a bucket (cash.ts:160).",
    "entry": "BankCardOffers.tsx:88 (Move It) | guide: Your Bank | BankCardOffers.tsx",
-   "preconditions": "A country with a cooling-off period; a French bank three months past an overdraft; a card whose terms offer a money transfer (NatWest’s, Santander Spain’s, Bankinter’s) | refused where: You don’t have a card.; The … doesn’t offer money transfers.; You need a current account for the money.; Say how much.; and 1 more",
+   "preconditions": "A country with a cooling-off period; a French bank three months past an overdraft; a card whose terms offer a money transfer (NatWest’s, Santander Spain’s, Bankinter’s) | refused where: You don’t have a card.; The … doesn’t offer money transfers.; You need a current account for the money.; Enter an amount.; and 1 more",
    "reads": "terms.moneyTransferFee, cardRoom",
    "decisions": "chooses: amount, accountId, fee",
-   "validation": "refusals: You don’t have a card.; The … doesn’t offer money transfers.; You need a current account for the money.; Say how much.; and 1 more | moves money through the ledger | costs: Canceled, the account comes out whole; the overrun becomes a loan at the top of the bank’s personal rates; a money transfer moves credit into the current account for the card’s fee",
+   "validation": "refusals: You don’t have a card.; The … doesn’t offer money transfers.; You need a current account for the money.; Enter an amount.; and 1 more | moves money through the ledger | costs: Canceled, the account comes out whole; the overrun becomes a loan at the top of the bank’s personal rates; a money transfer moves credit into the current account for the card’s fee",
    "changes": "card->current posting + fee; transfers[] bucket (card.money_transfer, cardoffers.ts:241)",
    "later": "money",
    "systems": "the transfer’s daily accrual at transferRate (credit.ts); statementOffers interest; allocatePayment buckets (cash.ts) | inCoolingOff (systems/accountlife.ts); the loan’s monthly payment (systems/lending.ts); the card’s balance and interest (systems/credit.ts)",
@@ -2241,10 +2241,10 @@
    "source": "audit",
    "goal": "Pay part of a card off in a plan, and redeem its rewards | Make The Plan (BankCardOffers.tsx:114) runs card.plan {amount, months}. It reads planRoom, the bank's plan terms (planFeeShare or INTEREST_PLANS) and planFreeIfMadeNow. It refuses the wrong length, an amount beyond room, and a card with no plan. It pushes credit.plans[] with the fee set for the plan's life (cardoffers.ts:261-287): no fee on Chase's card in its introduction, 1.72% after. statementOffers charges each plan's fee, interest and month (cardoffers.ts:166-177). minimumDue adds planDue (credit.ts:582-591). planLeftOf keeps the plan's balance out of purchase interest (credit.ts:940).",
    "entry": "BankCardOffers.tsx:114 (Make The Plan) | guide: Your Bank | BankCardOffers.tsx",
-   "preconditions": "A card whose bank charges a plan fee (Chase’s, Bank of America’s 1.72%); rewards earned | refused where: You don’t have a card.; The … has no plan SLATE has terms for.; A plan runs … months.; Purchases owe … that can go into a plan.; and 1 more",
+   "preconditions": "A card whose bank charges a plan fee (Chase’s, Bank of America’s 1.72%); rewards earned | refused where: You don’t have a card.; No payment plan terms were found for the ….; A plan runs for ${lengths.length < 2 ? lengths.join('') : ; Only … of purchases can go into a plan.; and 1 more",
    "reads": "planRoom, INTEREST_PLANS/planFeeShare, planFreeIfMadeNow (PLAN_FREE_IN_INTRO, Chase’s introductory purchase rate in force, from 2026-10-12)",
    "decisions": "chooses: amount, months, accountId, plan",
-   "validation": "refusals: You don’t have a card.; The … has no plan SLATE has terms for.; A plan runs … months.; Purchases owe … that can go into a plan.; and 1 more | costs: Part of the purchase balance paid in equal months for a fixed fee instead of interest, the fee set as the plan is made and kept until it’s paid, nothing for a plan made on Chase’s card in its introduction (PLAN_FREE_IN_INTRO, from 2026-10-12); rewards counted at each statement and redeemed onto the card",
+   "validation": "refusals: You don’t have a card.; No payment plan terms were found for the ….; A plan runs for ${lengths.length < 2 ? lengths.join('') : ; Only … of purchases can go into a plan.; and 1 more | costs: Part of the purchase balance paid in equal months for a fixed fee instead of interest, the fee set as the plan is made and kept until it’s paid, nothing for a plan made on Chase’s card in its introduction (PLAN_FREE_IN_INTRO, from 2026-10-12); rewards counted at each statement and redeemed onto the card",
    "changes": "credit.plans[] (card.plan, cardoffers.ts:261), its fee set for the plan’s life as it’s made: nothing on one made on Chase’s card in its introduction, which until 2026-10-12 paid its 1.72% from its first statement",
    "later": "Not recorded",
    "systems": "statementOffers (cardoffers.ts:156) charges the fee, interest and month each plan carries; minimumDue’s planDue (credit.ts); excluded from purchase interest by planLeftOf (credit.ts) | the card’s statement: the plan’s month and fee asked in the minimum, and interest on the purchases outside it alone (systems/credit.ts, systems/cardoffers.ts); the card’s balance, which a redemption brings down (systems/credit.ts)",
@@ -2307,10 +2307,10 @@
    "source": "audit",
    "goal": "Lock a card, report it lost or stolen, dispute a charge, and move to a new account number | Report It and Report It, Rush The New One (BankSecurity.tsx:77, 82; the row says 76, 81) run card.report {which, why, rush}. The command reads the bank's fees and days from SECURITY. It refuses a card already stopped, a reason other than lost, stolen or damaged, and a rush the bank has no fee for. It stops the plastic, schedules REPLACED_KIND at the bank's business days, and posts the fee unless the bank replaces free for that reason (security.ts:283-303, replace 139-148). Downstream: cardRoom is 0 while stopped; a stopped debit card sends food to the credit card or cash (spend and spendRefusal); the ATM is refused; the arrival restores the card with a new number (security.ts:220-241).",
    "entry": "BankSecurity.tsx:77 Report It, :85 Report It, Rush The New One (drawn where the bank lists a rush fee or rush days, :84; not for Wells Fargo, whose rush fee is unpublished) | guide: Your Bank | BankSecurity.tsx",
-   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: Lost, stolen or damaged.; That card is stopped already; a new one is on its way.; … doesn’t publish what it charges for a rush, so SLATE can’t send one.; … has no rush replacement SLATE knows of.",
+   "preconditions": "A card; a charge in the dispute window (disputeRefusal) | refused where: Choose why: lost, stolen or damaged.; That card is already stopped, and a new one is on its way.; … doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.; No rushed replacement was found for ….",
    "reads": "SECURITY (content/security.ts): replacement fees and the reasons it’s free, rushFee, rushDays, rushUnpublished",
    "decisions": "chooses: which, why, rush, accountId, arrivesAt, fee",
-   "validation": "refusals: Lost, stolen or damaged.; That card is stopped already; a new one is on its way.; … doesn’t publish what it charges for a rush, so SLATE can’t send one.; … has no rush replacement SLATE knows of. | moves money through the ledger | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
+   "validation": "refusals: Choose why: lost, stolen or damaged.; That card is already stopped, and a new one is on its way.; … doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.; No rushed replacement was found for …. | moves money through the ledger | costs: Locked, nothing new goes on it; reported, it’s stopped and a new one arrives on its date, rushed for a fee; a disputed charge refunded by a date, less what the law leaves the holder; a new account number",
    "changes": "plastic.stopped, replacement scheduled (replace, security.ts:147-154), fee (card.report, security.ts:304-327). A rush is refused where the bank lists neither rush fee nor rush days (:316) or charges for one it doesn’t publish (Wells Fargo, :315). Until 2026-10-13 a rush was refused wherever no rush fee was listed, so Capital One’s free rush days were read by nothing.",
    "later": "Not recorded",
    "systems": "cardRoom 0 / debit path; card.replaced restores (security.ts:228) | cardRoom (systems/credit.ts), which a locked or stopped card leaves at nothing; cardWorks (systems/security.ts), which the day’s fraud draw reads to spare a card that doesn’t work; spend (systems/spending.ts); cash.withdraw; attemptOnNumber (systems/security.ts), the day’s attempt on an account’s number",
@@ -2329,10 +2329,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | Ask For Help With Payments (BankCard.tsx:246, shown when owed > 0 and no plan; the row says :238) runs card.request_hardship. It reads what's owed and what the checking and savings accounts hold. It refuses a card already on a plan, a card owing nothing, and a holder whose accounts could clear the card today. Otherwise it sets hardship {payment: owed/48 rounded up to the dollar, since} and suspended='hardship' (cardlife.ts:213-228). Downstream: daily accrual is skipped (credit.ts:928); autopay asks the plan payment, and that payment is what's due (autopayAsk credit.ts:1046-1048); paying it counts on time and lifts the score (credit.ts:884-902); cardRoom is 0 while suspended (credit.ts:553); the plan ends when the card is paid off (credit.ts:899-902).",
    "entry": "BankCard.tsx:255 (owed>0 and no plan standing, :254) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; You’re on a plan already.; The card owes nothing.; You could pay it off today: a hardship plan is for when you can’t.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; You’re already on a payment plan.; You don’t owe anything on the card.; You could pay it off today. A hardship plan is for when you can’t.",
    "reads": "owed; what the checking and savings hold (refused where they could clear the card today, from 2026-10-10)",
    "decisions": "chooses: accountId, payment",
-   "validation": "refusals: You don’t have a card.; You’re on a plan already.; The card owes nothing.; You could pay it off today: a hardship plan is for when you can’t. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You don’t have a card.; You’re already on a payment plan.; You don’t owe anything on the card.; You could pay it off today. A hardship plan is for when you can’t. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "hardship {payment=owed/48 rounded up to the dollar, since}, suspended='hardship' (cardlife.ts:227-228); refused on a plan already, owing nothing, or where the checking and savings could clear it (:220-226); a statement whose due date is still to come is restated at the plan’s payment (:232-237)",
    "later": "Not recorded",
    "systems": "card.interest skips accrual on a plan (credit.ts:992); autopayAsk (credit.ts:1110-1118) makes the plan’s payment what autopay asks and what the due date judges; met, the month counts on time (+3) and missed goes back to none (credit.ts:948-949); the plan ends once nothing is owed, at a due date (:963-966) or a statement (:832); cardRoom 0 while suspended (credit.ts:568); the statement’s notice (:843), its issued record (:816) and the Statements page (BankStatements.tsx:125-126) ask the plan’s payment. Until 2026-10-13 this cited credit.ts:891 and :764 | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2351,10 +2351,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | A Different Limit and Ask For It (BankCard.tsx:276; the row says :268) run card.request_limit {limit}. A lower limit is always granted, never below what's owed. A higher one is granted up to a fifth more when the score is 700 or above, nothing was late in the year, the card isn't suspended and the holder has money in the bank. Otherwise the limit is kept and a 'Limit Increase Declined' notice gives the rule (cardlife.ts:171-193). Downstream: cardRoom; utilization in reportMonth; the cash limit share.",
    "entry": "BankCard.tsx:286 (Ask For It) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; Say the limit you want.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; Enter the limit you want.",
    "reads": "score, late, suspended, heldInBanks",
    "decisions": "chooses: limit, accountId, granted",
-   "validation": "refusals: You don’t have a card.; Say the limit you want. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You don’t have a card.; Enter the limit you want. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "creditLimit: lowered as asked, never under what’s owed (cardlife.ts:186); raised by a fifth at most (:194); declined with the rule (:190-192)",
    "later": "Not recorded",
    "systems": "cardRoom (credit.ts:566-577), so the room a purchase and a cash advance have (cash.ts:110); reportMonth’s utilization at the due date (credit.ts:1238-1249). Until 2026-10-13 this also said a cash limit share: no card product sets cashLimitShare (content/cards.ts:44), so no limit sets a cash limit | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2395,10 +2395,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | Make It The Everyday Card (BankCard.tsx:240, shown with several cards, on a card that isn't the everyday one and isn't closing; the row says :232) runs card.set_everyday {accountId}. makeEveryday swaps the card's state into the record's fields and keeps the old card's state apart (credit.ts:981-987, 220-231). Downstream: the day's spending goes on cardOf (spending.ts:89); fraudOn draws on the everyday credit card (security.ts:345).",
    "entry": "BankCard.tsx:249 (offered with several cards, on one not everyday and not being closed, :248) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t hold that card.; That card is being closed, and takes nothing new.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t hold that card.; That card is being closed, so nothing new can go on it.",
    "reads": "cards",
    "decisions": "chooses: accountId, everyday",
-   "validation": "refusals: You don’t hold that card.; That card is being closed, and takes nothing new. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You don’t hold that card.; That card is being closed, so nothing new can go on it. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "makeEveryday swaps state (credit.ts:236,1027); a card being closed refused (:1053, from 2026-10-13)",
    "later": "Not recorded",
    "systems": "spending.ts:90 cardOf -> which card the day’s food goes on; fraudOn (security.ts:367-386) draws somebody else’s use on the everyday credit card. Until 2026-10-13 this said spending.ts:84 | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2417,10 +2417,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | Going Over The Limit: Allowed or Declined (BankCard.tsx:287, shown for US cards only; the row says :279) runs card.set_over_limit {on}. Outside the US it refuses. It sets overLimitOptIn and resets overLimitCycles when turned off (cardlife.ts:202-211). Downstream: cardRoom allows a tenth over the limit (credit.ts:559), and the statement charges the card's over-limit fee, three cycles at most (credit.ts:752-758).",
    "entry": "BankCard.tsx:297 (US only, :296) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; Opting in to going over the limit is a US card’s choice.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; Only a US card lets you opt in to going over the limit.",
    "reads": "bank iso",
    "decisions": "chooses: on, accountId",
-   "validation": "refusals: You don’t have a card.; Opting in to going over the limit is a US card’s choice. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You don’t have a card.; Only a US card lets you opt in to going over the limit. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "overLimitOptIn (cardlife.ts:211); refused off a US card (:209)",
    "later": "Not recorded",
    "systems": "cardRoom a tenth over the limit for a holder who opted in (credit.ts:574), so a purchase goes past the limit. Until 2026-10-13 the statement also charged an over-limit fee (credit.ts:729); no card here publishes one, only a test’s product reached it, and it was taken out (credit.ts:796-798) | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2461,10 +2461,10 @@
    "source": "audit",
    "goal": "Take cash out and pay it in | Pay It In (BankCash.tsx:94, shown when there's cash in hand) runs cash.deposit {amount, toId, at}. It reads the wallet's balance, the target (the holder's own open current or easy-access savings account, never a term deposit) and the Post Office rule (CASH[bank].postOffice === 'both'). It posts wallet → account (cash.ts:214-226). Downstream, the account's balance is what spending, fees and interest read.",
    "entry": "BankCash.tsx:94 | guide: Your Bank | BankCash.tsx",
-   "preconditions": "An amount the account or card allows; a machine or a branch; cash in hand to pay in | refused where: You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office.; … is dormant; use Reactivate first.; and 1 more",
+   "preconditions": "An amount the account or card allows; a machine or a branch; cash in hand to pay in | refused where: You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office.; … is dormant. Reactivate it first, under Your Accounts Over Time.; and 1 more",
    "reads": "wallet balance; the target, the holder’s own open current or easy-access savings account, never a term deposit (cash.ts:220); the Post Office rule (:222); the target’s dormancy (:226); at a machine, the debit card of the bank taking the money, the primary’s only where no current account is open there (:231-233). Until 2026-10-13 it read neither dormancy nor the card, and then, until later that day, the primary’s card wherever the money went",
    "decisions": "chooses: amount, toId, at, paid",
-   "validation": "refusals: You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office.; … is dormant; use Reactivate first.; and 1 more | moves money through the ledger | costs: Cash in hand rises and the account falls, with the bank’s and the machine owner’s fees where charged; a cash advance on a credit card at its rate; paid in, cash goes back to the account",
+   "validation": "refusals: You have … in cash.; Cash goes into your current account or savings.; …’s customers can’t pay cash in at the Post Office.; … is dormant. Reactivate it first, under Your Accounts Over Time.; and 1 more | moves money through the ledger | costs: Cash in hand rises and the account falls, with the bank’s and the machine owner’s fees where charged; a cash advance on a credit card at its rate; paid in, cash goes back to the account",
    "changes": "wallet -> account (cash.ts:235)",
    "later": "Not recorded",
    "systems": "account balance -> spending/fees/interest | spend, which pays from cash when the day’s spending is set to it (systems/spending.ts); allocatePayment for a card’s cash balance (systems/cash.ts)",
@@ -2483,10 +2483,10 @@
    "source": "audit",
    "goal": "Take cash out and pay it in | Take It Out (BankCash.tsx:70, disabled when the quote is refused) runs cash.withdraw {amount, from}. withdrawalQuote (cash.ts:103-135) reads the fees, the daily machine limit, a locked or stopped debit card, a dormant account, the Post Office rule, the balance, and for a cash advance the card's room and cash limit. The command posts account → wallet plus the bank's fee and the machine owner's average fee, or for a cash advance card → wallet plus the card's fee and adds to cashOwed (cash.ts:189-212). Downstream: spend spends the wallet only on food, first for a cash payer and behind a locked or stopped debit card for anybody, and spendRefusal counts it only there. cashOwed draws cash interest daily (credit.ts:934-935) and at the statement (credit.ts:717-722). allocatePayment pays the cash balance first.",
    "entry": "BankCash.tsx:70 (disabled on quote.refused) | guide: Your Bank | BankCash.tsx",
-   "preconditions": "An amount the account or card allows; a machine or a branch; cash in hand to pay in | refused where: Say how much.; From your bank’s ATM, another bank’s, the counter, the Post Office or the card.",
+   "preconditions": "An amount the account or card allows; a machine or a branch; cash in hand to pay in | refused where: Enter an amount.; Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Offic",
    "reads": "withdrawalQuote cash.ts:103 (fees, daily limit, lock, dormant, cash limit)",
    "decisions": "chooses: amount, from, accountId, fee, ownerFee, ownerCharge",
-   "validation": "refusals: Say how much.; From your bank’s ATM, another bank’s, the counter, the Post Office or the card. | moves money through the ledger | costs: Cash in hand rises and the account falls, with the bank’s and the machine owner’s fees where charged; a cash advance on a credit card at its rate; paid in, cash goes back to the account",
+   "validation": "refusals: Enter an amount.; Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Offic | moves money through the ledger | costs: Cash in hand rises and the account falls, with the bank’s and the machine owner’s fees where charged; a cash advance on a credit card at its rate; paid in, cash goes back to the account",
    "changes": "account/card -> wallet + fees; cashOwed (cash.ts:203)",
    "later": "Not recorded",
    "systems": "the wallet, which spend spends only on food: first for somebody paying the day in cash, and behind a locked or stopped debit card for anybody, and spendRefusal counts only there (spending.ts; until 2026-10-12 canPay counted it for every payer and every payment); card cashOwed -> cash interest (credit.ts), and allocatePayment, which pays a card’s cash balance first | spend, which pays from cash when the day’s spending is set to it (systems/spending.ts); allocatePayment for a card’s cash balance (systems/cash.ts)",
@@ -2505,10 +2505,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | The Pay Card button (BankCard.tsx:233, disabled when payable, BankCard.tsx:131, is 0) runs finance.pay_card. The command pays from the primary account and its savings (payCard, credit.ts:594-627). The payment raises paidSinceStatement (credit.ts:615). It holds the freed room for the card bank's days when it is drawn from another bank (credit.ts:620-622). It allocates across balances (allocatePayment, credit.ts:624). The due date then asks the statement less what was paid (autopayAsk, credit.ts:1041-1049) and judges late or not, carrying and grace (credit.ts:815-828), and cardRoom reads the holds (credit.ts:560).",
    "entry": "BankCard.tsx:242 (disabled when nothing payable) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; You don’t owe anything on it.; Pay something, or nothing.; There’s nothing in the bank to pay it with.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: You don’t have a card.; You don’t owe anything on it.; Enter an amount to pay.; There’s nothing in the bank to pay it with.",
    "reads": "owed, inTheBank",
    "decisions": "chooses: amount, accountId, paid",
-   "validation": "refusals: You don’t have a card.; You don’t owe anything on it.; Pay something, or nothing.; There’s nothing in the bank to pay it with. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: You don’t have a card.; You don’t owe anything on it.; Enter an amount to pay.; There’s nothing in the bank to pay it with. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "payCard (credit.ts:609-644) posts from the primary and, by hand, its savings whatever linkSavings says (:619); paidSinceStatement (:630), and what a statement still waiting for its due date has been paid (waiting, :632, from 2026-10-13); a hold where paid from another bank (:639); allocatePayment (:641). ‘minimum’ on a hardship plan pays the plan’s payment (credit.ts:1028, from 2026-10-13)",
    "later": "Not recorded",
    "systems": "card.due (credit.ts:848) asks the statement less what was paid since (autopayAsk, credit.ts:1110-1118) and checks it late or not; carrying/grace (credit.ts:879-889); cardRoom (credit.ts:566), less a payment from another bank held for its days (paymentHolds, :575). Until 2026-10-13 this cited credit.ts:789, :1038, :818 and :551 | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2527,10 +2527,10 @@
    "source": "audit",
    "goal": "Apply for a card, pay it, set its autopay and statement day, ask for a limit or help, and close it | The autopay toggle (BankCard.tsx:248-256, hidden for charge cards) runs finance.set_autopay. The command writes the card's state.autopay (credit.ts:977) and refuses 'minimum' on a charge card (credit.ts:974-976). At the due date autopayAsk wants the statement or the minimum (credit.ts:1047). That decides carrying, and carrying decides interest.",
    "entry": "BankCard.tsx:259 (hidden for charge cards, :257) | guide: Your Bank | BankCard.tsx",
-   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month; the … can’t carry a balance.",
+   "preconditions": "Approved by the bank on the credit record; a balance owed to pay; going over the limit only in the US | refused where: Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month. The … can’t carry a balance.",
    "reads": "terms.kind",
    "decisions": "chooses: mode, accountId",
-   "validation": "refusals: Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month; the … can’t carry a balance. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
+   "validation": "refusals: Autopay pays the minimum or the whole statement.; You don’t have a card.; … takes the whole statement from your account each month. The … can’t carry a balance. | costs: A card at its bank’s terms, its statement each month with interest and a minimum; payments from the current account, by hand or by autopay; a limit raised when asked or when the record earns it; a hardship plan’s lower payment; a credit balance sent back",
    "changes": "state.autopay (credit.ts:1044); the minimum refused on a charge card (:1041-1043)",
    "later": "Not recorded",
    "systems": "autopayAsk (credit.ts:1116) want = statement or minimum -> carrying (credit.ts:885) -> interest | cardRoom (systems/credit.ts); the statement and interest (systems/credit.ts); spend, for the everyday card (systems/spending.ts); the credit score",
@@ -2880,10 +2880,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | A current account opens at another bank where you live, either at once or after the bank's review. The application is refused if you already keep an account there or one is under review, if you owe that bank a charged-off debt, if a ChexSystems report turns you away, without a photo ID in force, under the bank's minimum age, at Capital One or Citi for anyone not a US person, or in a branch you can't get to. Opened accounts start at nothing; the opening deposit is sent in the sending bank's days; the debit card arrives in the bank's days. A refused application sends the deposit back, and an account left unfunded past the bank's days is closed.",
    "entry": "Bank, Open An Account At Another Bank: Apply (BankMoves.tsx:244), its handler open at :61. Until 2026-10-13 this said Your Banks: Open An Account at BankMoves.tsx:62 | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal)",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Pay the opening deposit from one of your own current or savings accounts.; That account is already at …. Pay the deposit from an account at another bank.; … asks for an opening deposit of …)}, sent from another of your accounts.; Enter how much to pay in.; and 1 more (also openRefusal)",
    "reads": "openRefusal: a bank where you live, none kept or waited on, no charged-off debt or ChexSystems report it turns away, a photo ID in force, Capital One and Citi only for citizens and permanent residents, without a number a branch hour",
    "decisions": "chooses: bankId, fundFrom, amount, accountId, decidedAt, arrivesAt, cardAt",
-   "validation": "refusals: Fund it from one of your own current or savings accounts.; That account is at … already.; … asks for an opening deposit of …)}, sent from another of your accounts.; Say how much to put in.; and 1 more (also openRefusal) | moves money through the ledger | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: Pay the opening deposit from one of your own current or savings accounts.; That account is already at …. Pay the deposit from an account at another bank.; … asks for an opening deposit of …)}, sent from another of your accounts.; Enter how much to pay in.; and 1 more (also openRefusal) | moves money through the ledger | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "a current account, at once or after the bank’s review; its opening deposit sent in the sending bank’s days; its debit card (bankmoves.ts:319) | status",
    "later": "bank.application; card.arrives",
    "systems": "a second current account: set_primary, redirect_deposits, the transfers, linkedTo; a review that turns the application down sends the deposit back | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -2902,10 +2902,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | Makes another open current account primary. Every instruction already set (wages, standing orders, each card's autopay) is pinned where it is first, so none moves. The primary then carries the debit card's purchases, cash from a machine, and bills paid by hand, and card.apply's home bank reads it.",
    "entry": "Your Banks: Make Primary (BankMoves.tsx:130) | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Only an open current account of yours can be primary.; … is primary already.; … is closing. (also cardAbroadRefusal)",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Only an open current account of yours can be primary.; … is already your primary account.; … is closing, so it can’t be your primary account. (also cardAbroadRefusal)",
    "reads": "an open current account of yours",
    "decisions": "chooses: accountId, affects, unchanged",
-   "validation": "refusals: Only an open current account of yours can be primary.; … is primary already.; … is closing. (also cardAbroadRefusal) | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: Only an open current account of yours can be primary.; … is already your primary account.; … is closing, so it can’t be your primary account. (also cardAbroadRefusal) | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "primaryAccountId; no instruction already set moves (bankmoves.ts:411, pinInstructions at :418) | primaryAccountId",
    "later": "Not recorded",
    "systems": "the debit card’s purchases, cash from a machine and bills paid by hand; card.apply’s other-bank check; payeeAccount and standing orders left where they were | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -2924,10 +2924,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | Wages and other payments go to the named open account from DEPOSIT_LEAD (14 days) on, and Yale's payroll after its 7-day cycle. Payments before then still go to the old account.",
    "entry": "Your Banks: Have Wages Paid Here (BankMoves.tsx:135) | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Wages are paid into an open current or savings account of yours.; … is closing.; Yale pays into an account in America.",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Wages are paid into an open current or savings account of yours.; … is closing, so wages can’t be paid into it.; Yale only pays wages into an account in America.",
    "reads": "an open current or savings account of yours, not closing; DEPOSIT_LEAD (routing.ts:31) and Yale’s PAYER_LEAD (:38)",
    "decisions": "chooses: accountId, at",
-   "validation": "refusals: Wages are paid into an open current or savings account of yours.; … is closing.; Yale pays into an account in America. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: Wages are paid into an open current or savings account of yours.; … is closing, so wages can’t be paid into it.; Yale only pays wages into an account in America. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "depositTo from fourteen days on, Yale’s payroll from seven (changeDeposits routing.ts:69, from bankmoves.ts:425)",
    "later": "Not recorded",
    "systems": "payeeAccount and depositAccount, where wages and a scholarship are paid | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -2946,10 +2946,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | A standing order's Pay From moves to another open current account (not closing, and not the account it pays into). The STANDING_ORDER handler then pays from it, and linkedTo stops refusing the old account's close for that order.",
    "entry": "What Pays From Where: a standing order’s Pay From There (BankMoves.tsx:184). Until 2026-10-13 this said Your Banks, at BankMoves.tsx:172 | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: No such standing order.; A standing order pays from an open current account of yours.; … is closing.",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: That standing order no longer exists.; A standing order pays from an open current account of yours.; … is closing, so a standing order can’t pay from it.",
    "reads": "a standing order; an open current account",
    "decisions": "chooses: orderId, accountId, fromId",
-   "validation": "refusals: No such standing order.; A standing order pays from an open current account of yours.; … is closing. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: That standing order no longer exists.; A standing order pays from an open current account of yours.; … is closing, so a standing order can’t pay from it. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "the order’s fromId (bankmoves.ts:433, set at :442) | fromId",
    "later": "Not recorded",
    "systems": "the STANDING_ORDER handler paying from it; linkedTo refusing a close while an order pays from an account | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -2968,10 +2968,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | A card's autopay pays from the named open current account that is not closing. On the due date it pays from there; it is held for the card bank's days where that account is at another bank, and not where it is at the card's bank. The upcoming-payment alert warns of that account's shortfall, and linkedTo refuses the account's close while autopay pays from it.",
    "entry": "What Pays From Where: a card’s Autopay Pays From, Pay From There (BankMoves.tsx:198) | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: That isn’t one of your cards.; Autopay pays from an open current account of yours.; … is closing.",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: That isn’t one of your cards.; Autopay pays from an open current account of yours.; … is closing, so autopay can’t pay from it.",
    "reads": "a card; an open current account not closing",
    "decisions": "chooses: cardId, accountId, fromId",
-   "validation": "refusals: That isn’t one of your cards.; Autopay pays from an open current account of yours.; … is closing. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: That isn’t one of your cards.; Autopay pays from an open current account of yours.; … is closing, so autopay can’t pay from it. | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "the card’s autopayFrom (bankmoves.ts:446, set at :457)",
    "later": "Not recorded",
    "systems": "autopaySource, which the due date pays from; a payment hold where the account is another bank’s; the upcoming-payment alert; linkedTo | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -3012,10 +3012,10 @@
    "source": "audit",
    "goal": "Open a current account at another bank, make it primary, move wages, standing orders, card autopay and a loan’s repayments to it, and close the old one | Closes a current account, refusing while it is the only one or the primary, overdrawn, with money on its way, with anything paid from or into it, with savings beside it, or with a card payment pending (except at Citi, which keeps it open and restricted up to 21 days). It settles interest and fees, sends what it holds to the named account (in the transfer's days to another bank), keeps its history, and ends its statements at the closing.",
    "entry": "Your Banks: Close It (BankMoves.tsx:148). Until 2026-10-13 this said Close at BankMoves.tsx:136 | guide: Your Bank | BankMoves.tsx",
-   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal)",
+   "preconditions": "A bank where you live, none you keep already or are waiting on, no charged-off debt to it or ChexSystems report it turns away; a photo ID in force (31 CFR 1020.220, from 2026-10-09); Capital One and Citi only for US citizens and permanent residents; without a Social Security number, a branch where the bank opens for international students, and an hour there (openRefusal). Closing: not the only or the primary account, not overdrawn, no money on its way, nothing still paid from or into it, no savings beside it, no card payment pending (closeRefusal, linkedTo) | refused where: Only a current account of yours can be closed here.; … is already closing on ….; Choose which of your accounts the … goes to. (also closeRefusal)",
    "reads": "closeRefusal (bankmoves.ts:282) and linkedTo (routing.ts:91), through closeHold (routing.ts:160, from 2026-10-16): not the only or the primary, not overdrawn, no money on its way, nothing paid from it, wages not paid or being moved into it, no payment set for a date using it, no savings beside it, no card payment pending (Citi keeps it open, restricted, while they post). Wages already on their way elsewhere hold it until the day the last payer moves, and the refusal says that day and each payer’s (from 2026-10-16; until then it said “Move it first.” of a move already asked for, and this cited closeRefusal at bankmoves.ts:268). Until 2026-10-13 linkedTo also named a standing order paying into it, which no order could be",
    "decisions": "chooses: accountId, remainderTo, closedAt, arrivesAt",
-   "validation": "refusals: Only a current account of yours can be closed here.; … closes … already.; Say which account of yours … goes to. (also closeRefusal) | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
+   "validation": "refusals: Only a current account of yours can be closed here.; … is already closing on ….; Choose which of your accounts the … goes to. (also closeRefusal) | costs: An account opens at once, or after the bank’s review (Bank of America’s, one to two business days), at nothing; its opening deposit arrives in the sending bank’s days and its debit card in its own. The primary account takes the debit card’s purchases, cash from a machine and bills paid by hand, and moves no instruction already set. Wages move after the payroll’s fourteen days (DEPOSIT_LEAD); a standing order, a card’s autopay and a loan’s repayments move when asked. Closed, what it holds goes by transfer to the account named; an account Capital One or Citi says it closes unfunded or idle at zero, it closes",
    "changes": "closedAt; interest, the overdraft interest built since the 1st (from 2026-10-16, settleOverdraftInterest) and fees settled; what it holds sent to the account named (bankmoves.ts closeNow)",
    "later": "bank.current_closes",
    "systems": "the remainder arriving in the transfer’s days; the account’s history kept; a closed account’s statements ending at its closing, at nothing, with what posted at the closing in them (statements.ts:77; until 2026-10-13 the last statement closed at the balance before those postings) | payeeAccount and depositAccount, where wages and a scholarship are paid (systems/cash.ts, systems/routing.ts); orderSource and autopaySource (systems/routing.ts, systems/credit.ts); the loan’s monthly payment (systems/lending.ts); spend, from the primary account (systems/spending.ts); linkedTo, which refuses a close while anything uses the account (systems/routing.ts)",
@@ -3034,10 +3034,10 @@
    "source": "audit",
    "goal": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | A pending switch can be called off, with confirmation, until seven working days before its date (Britain's CASS). The SWITCH_KIND item and its review are cancelled and the switch noted 'canceled', and nothing moves: accounts and payments stay where they were.",
    "entry": "Bank, a switch under way: Call Off The Switch…, then Call It Off (BankLending.tsx:382) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: No switch is under way.; This country’s switching service publishes no right to call a switch off: it runs to its d; It could be called off until …, seven working days before its date; it’s under way now. It; Calling it off leaves your accounts and payments where they are. Confirm to go ahead.",
+   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: No switch is under way.; This country’s switching service doesn’t let you call a switch off. It goes ahead on its d; You could call it off until …, seven working days before its date, and it’s under way now.; Calling it off leaves your accounts and payments where they are. Confirm to go ahead.",
    "reads": "a switch pending; the service’s right to call it off, until seven working days before its date (Britain’s); confirm",
    "decisions": "chooses: id, confirm, cancelled",
-   "validation": "refusals: No switch is under way.; This country’s switching service publishes no right to call a switch off: it runs to its d; It could be called off until …, seven working days before its date; it’s under way now. It; Calling it off leaves your accounts and payments where they are. Confirm to go ahead. | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
+   "validation": "refusals: No switch is under way.; This country’s switching service doesn’t let you call a switch off. It goes ahead on its d; You could call it off until …, seven working days before its date, and it’s under way now.; Calling it off leaves your accounts and payments where they are. Confirm to go ahead. | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
    "changes": "SWITCH_KIND and its review canceled; noted (lending.ts:1393, canceled and noted at :1401-1404)",
    "later": "Not recorded",
    "systems": "nothing moves: accounts and payments stay where they were | the switch’s handler, completeSwitch (systems/lending.ts); the new bank’s first look and an old account’s debt (SWITCH_REVIEW_KIND, SWITCH_DEBT_KIND)",
@@ -3057,10 +3057,10 @@
    "source": "audit",
    "goal": "Switch banks through a country’s switching service, call the switch off, or stop its balance transfer | Until close of business on the working day before a pending switch's date, with confirmation, the balance transfer alone can be stopped (keepBalance). The switch then moves the payments and leaves the old account open with its money.",
    "entry": "Bank, a switch under way: Stop The Balance Transfer…, then Keep The Balance There (BankLending.tsx:379) | guide: Your Bank | BankLending.tsx",
-   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: No switch is under way.; This country’s switching service publishes no such step.; Its balance transfer is stopped already.; The transfer could be stopped until close of business ….; and 1 more",
+   "preconditions": "A country with a switching service (SWITCHING: Britain, Ireland, Germany, France, Spain, Iceland, New Zealand); another bank where you live that takes you, a photo ID in force, no overdraft, no switch under way; called off until seven working days before its date where the service gives that right (Britain’s); its balance transfer stopped until close of business the working day before | refused where: No switch is under way.; This country’s switching service has no such step.; Its balance transfer is already stopped.; The transfer could be stopped until close of business ….; and 1 more",
    "reads": "a switch pending with the step; until close of business the working day before; confirm",
    "decisions": "chooses: confirm, kept",
-   "validation": "refusals: No switch is under way.; This country’s switching service publishes no such step.; Its balance transfer is stopped already.; The transfer could be stopped until close of business ….; and 1 more | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
+   "validation": "refusals: No switch is under way.; This country’s switching service has no such step.; Its balance transfer is already stopped.; The transfer could be stopped until close of business ….; and 1 more | costs: On its date, after the service’s working days, payments and the balance move to the new bank and the old account closes; a partial switch, Britain’s, moves the payments and leaves it open. Called off, nothing moves; with its balance transfer stopped, payments move and the old account keeps its money, open. Overdrawn on the day, it fails part-way: the new account opens and payments move, and the old account, blocked to all but repayment, closes itself once repaid",
    "changes": "the switch’s keepBalance (lending.ts:1199, set at :1212) | payload",
    "later": "Not recorded",
    "systems": "completeSwitch moving the payments and leaving the old account open with its money | the switch’s handler, completeSwitch (systems/lending.ts); the new bank’s first look and an old account’s debt (SWITCH_REVIEW_KIND, SWITCH_DEBT_KIND)",
@@ -11132,7 +11132,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-d",
@@ -11207,7 +11207,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-g",
@@ -11259,7 +11259,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "id": "advice.F2A10-i",
@@ -11335,7 +11335,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "id": "advice.harness-hospital",
@@ -13749,7 +13749,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14169,7 +14169,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14475,7 +14475,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14502,7 +14502,7 @@
     "commit": "51cdd7d6",
     "watch": "app"
    },
-   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 51cdd7d6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14529,7 +14529,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14556,7 +14556,7 @@
     "commit": "0cf3a9bc",
     "watch": "app"
    },
-   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 0cf3a9bc, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14839,7 +14839,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14866,7 +14866,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14893,7 +14893,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14920,7 +14920,7 @@
     "commit": "7e7a3af6",
     "watch": "app"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/briefs/briefs-a.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/app/SlateApp.tsx, src/app/game-context.tsx, src/engine/content/bankopening.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14947,7 +14947,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -14974,7 +14974,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15001,7 +15001,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15028,7 +15028,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15055,7 +15055,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15082,7 +15082,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15109,7 +15109,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15136,7 +15136,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15163,7 +15163,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15190,7 +15190,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15217,7 +15217,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15244,7 +15244,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15271,7 +15271,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15298,7 +15298,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15325,7 +15325,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15352,7 +15352,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15379,7 +15379,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15406,7 +15406,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15433,7 +15433,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15460,7 +15460,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15487,7 +15487,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15514,7 +15514,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15541,7 +15541,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15568,7 +15568,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15617,7 +15617,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15644,7 +15644,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15671,7 +15671,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15698,7 +15698,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15725,7 +15725,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15752,7 +15752,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15779,7 +15779,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   },
   {
    "source": "docs/verification/integration-2026-10-16/criteria.json",
@@ -15806,7 +15806,7 @@
     "commit": "7e7a3af6",
     "watch": "engine"
    },
-   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/briefs/briefs-a.ts, src/engine/content/briefs/briefs-b.ts, src/engine/content/briefs/briefs-c.ts, …): measure it again"
+   "missing": "It was measured on 7e7a3af6, and what it reads has changed since (src/engine/content/bankopening.ts, src/engine/content/banks-lending.ts, src/engine/content/banks-thirteen.ts, …): measure it again"
   }
  ]
 }

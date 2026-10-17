@@ -144,7 +144,7 @@ describe('a hardship plan’s statement', () => {
     expect(stateOf(sim.player, card).hardship).toBeUndefined();
     const october = draw(sim, createElement(BankStatements), [card.id, 1]);
     expect(october).toContain('New Balance $4,830.00');
-    expect(october).toContain('The least to pay is $101.00, the plan’s payment, by November 10, 2026.');
+    expect(october).toContain('The least you can pay is $101.00, the plan’s payment, by November 10, 2026.');
   });
 
   it('says on the Statements tab what the plan’s payment takes to clear it, with no interest, not what paying the card’s minimum would at its rate', () => {
@@ -152,7 +152,7 @@ describe('a hardship plan’s statement', () => {
     const october = draw(sim, createElement(BankStatements), [card.id, 1]);
     // $4,830 at $101 a month: 47.8 payments, forty-eight, four years; nothing draws interest on a plan.
     expect(Math.ceil(4_830_00 / 101_00)).toBe(48);
-    expect(october).toContain('On the plan nothing draws interest and nothing new goes on the card: $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, so long as none is missed.');
+    expect(october).toContain('On the plan there’s no interest, and nothing new goes on the card. Paying $101.00 a month clears the $4,830.00 in 4 years, $4,830.00 in all, as long as no payment is missed.');
     expect(october).not.toContain('Paying only the minimum');
     // The statement before the plan keeps the card’s warning.
     const september = draw(sim, createElement(BankStatements), [card.id, 2]);
@@ -173,7 +173,7 @@ describe('a hardship plan’s statement', () => {
     // $4,800 over forty-eight months: $100 exactly.
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 100_00 });
     expect(stateOf(sim.player, card).issued!.at(-1)).toMatchObject({ at: edt(9, 20, 9), minimum: 100_00, plan: true });
-    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The least to pay is $100.00, the plan’s payment, by October 11, 2026.');
+    expect(draw(sim, createElement(BankStatements), [card.id, 1])).toContain('The least you can pay is $100.00, the plan’s payment, by October 11, 2026.');
     // Its due date: autopay asks the $100, not the whole statement it’s set to, and it’s on time.
     sim.advanceTo(edt(10, 11, 12, 5));
     expect(moved(sim, card, 'Paid Chase Freedom Unlimited')).toEqual([100_00]);
@@ -201,10 +201,10 @@ describe('the card’s panel on a hardship plan', () => {
   it('gives the plan’s payment as what the statement asks and the late fee’s measure, and when the plan ends', () => {
     const { sim } = lateThenPlan('plan-least-panel');
     const panel = draw(sim, createElement(BankCard, { bankId: 'us-chase' }));
-    expect(panel).toContain('On a plan since October 11, 2026: no interest, and each statement asks the plan’s $101 in the minimum’s place: $101 on this one. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.');
-    expect(panel).toContain('The least a statement asks once the plan ends is');
-    expect(panel).not.toMatch(/The least a statement asks once the plan ends is [^.]*on this one/);
-    expect(panel).toContain('A payment short of the plan’s payment costs $30 the first time and $40 again within 6 billing periods, never more than the plan’s payment.');
+    expect(panel).toContain('It’s been on a payment plan since October 11, 2026. There’s no interest, and each statement asks for the plan’s $101 instead of the minimum, $101 on this one. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
+    expect(panel).toContain('The minimum payment once the plan ends is');
+    expect(panel).not.toMatch(/The minimum payment once the plan ends is [^.]*\. On this statement it’s/);
+    expect(panel).toContain('Paying less than the plan’s payment by the due date costs $30 the first time, and $40 if it happens again within 6 billing periods, but never more than the plan’s payment itself.');
     expect(panel).not.toContain('short of the minimum');
     expect(panel).not.toContain('The card can’t be used until then.');
   });

@@ -126,12 +126,12 @@ function noteSwitch(person: Person, r: NonNullable<NonNullable<Person['payments'
  * applied for online, so a branch's hour isn't asked.
  */
 export function switchApplicationRefusal(sim: Simulation, person: Person, to: Bank): string | undefined {
-  if (collectionsOf(sim, person, to.name)) return `${to.name} won’t open an account for somebody who owes it a charged-off debt.`;
-  if (declines(sim, person, to)) return `${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
-  if (!photoIdOf(person, sim.now)) return `${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`;
+  if (collectionsOf(sim, person, to.name)) return `${to.name} won’t open an account for you while you owe it a debt it has charged off.`;
+  if (declines(sim, person, to)) return `${to.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, sim.zone)}.`;
+  if (!photoIdOf(person, sim.now)) return `${to.name} needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.`;
   const rules = openingOf(to);
-  if (rules?.minimumAge !== undefined && ageOn(sim, person, sim.now) < rules.minimumAge) return `${to.name} opens an account on your own from ${rules.minimumAge}.`;
-  if (rules?.usPersonsOnly && !usPerson(person, sim.now)) return `${to.name} opens this account for US citizens and permanent residents.`;
+  if (rules?.minimumAge !== undefined && ageOn(sim, person, sim.now) < rules.minimumAge) return `${to.name} only opens an account in your own name from age ${rules.minimumAge}.`;
+  if (rules?.usPersonsOnly && !usPerson(person, sim.now)) return `${to.name} only opens this account for US citizens and permanent residents.`;
   return undefined;
 }
 
@@ -269,7 +269,7 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
     current.overrunInformed = true;
     const terms = lendingOf(bank).overdraft;
     const rate = terms && 'rate' in terms && terms.rate !== undefined ? ` at ${(terms.rate * 100).toFixed(2)}% a year` : '';
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `A month past your overdraft: ${money(past)} beyond it${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Wrote About Your Overrun`, body: `Your account has been past its overdraft limit for a month, by ${money(past)}${rate}, with the charges each month brings. French law has the bank tell you after a month.`, importance: 70 });
   }
   const loan = lendingOf(bank).loan;
   // Not where a loan is held at this bank (from 2026-10-12: until then a loan at any bank stopped the offer, though a
@@ -278,11 +278,11 @@ function frenchOverrun(sim: Simulation, person: Person, current: Account, bank: 
   if (days >= FRANCE.offerAfterDays && !current.creditOffered && loan && past > 0 && !loanOf(sim, person, bank.id) && !abroadRefusal(person, bank)) {
     const apr = loan.to ?? loan.from;
     current.creditOffered = { amount: past, apr, months: FRANCE.offerMonths };
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Three months past your overdraft, the law has it offer another credit: ${money(past)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${money(monthlyPayment(past, apr, FRANCE.offerMonths))} a month. Take it from Your Bank.`, importance: 75 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Offered A Loan For The Overrun`, body: `Your account has been past its overdraft limit for three months, so French law has the bank offer you a loan: ${money(past)} over ${FRANCE.offerMonths} months at ${(apr * 100).toFixed(2)}%, ${money(monthlyPayment(past, apr, FRANCE.offerMonths))} a month. You can take it on Money, under Borrowing.`, importance: 75 });
   }
   if (days >= ESTIMATE.closeAfterDays && !current.closingNoticed) {
     current.closingNoticed = true;
-    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Overdrawn past the limit for ${ESTIMATE.closeAfterDays} days, the account closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it’s back within it.`, importance: 85 });
+    if (player) sim.notify({ category: 'bank', title: `${bank.name} Gave Notice To Close`, body: `Your account has been past its overdraft limit for ${ESTIMATE.closeAfterDays} days, so it closes in two months, on ${formatDate(sim.now + FRANCE.closingNoticeDays * MS_DAY, sim.zone)}, unless it’s back within the limit by then.`, importance: 85 });
   }
 }
 
@@ -448,15 +448,15 @@ export function overdraftOffer(sim: Simulation, person: Person, account?: Accoun
   const away = abroadRefusal(person, bank);
   if (away) return { refused: away };
   const terms = lendingOf(bank).overdraft;
-  if (!bank || !terms) return { refused: `${bank?.name ?? 'Your bank'} doesn’t offer an overdraft SLATE has terms for.` };
-  if (terms.kind !== 'arranged') return { refused: `${bank.name} doesn’t arrange one: it runs overdrafts its own way, and the bank screen says how.` };
+  if (!bank || !terms) return { refused: `No overdraft terms were found for ${bank?.name ?? 'your bank'}.` };
+  if (terms.kind !== 'arranged') return { refused: `${bank.name} doesn’t arrange overdrafts. It handles them its own way, as the Overdraft panel says.` };
   const score = person.credit?.score ?? 0;
-  if (score < ESTIMATE.scoreFloor) return { refused: 'The bank turns down a credit record this poor.' };
+  if (score < ESTIMATE.scoreFloor) return { refused: 'Your credit record isn’t strong enough for the bank.' };
   const pay = wagesLastMonth(sim, person);
   const elsewhere = checkingsOf(sim, person).filter((a) => a.id !== current!.id).reduce((sum, a) => sum + (a.overdraftLimit ?? 0), 0);
   const max = Math.min(Math.round(pay * ESTIMATE.overdraftOfPay) - elsewhere, terms.maxLimit !== undefined ? inSaveMoney(sim, terms.maxLimit, bank.currency) : Number.POSITIVE_INFINITY);
   const min = terms.minLimit !== undefined ? inSaveMoney(sim, terms.minLimit, bank.currency) : 1_00;
-  if (max < min) return { refused: 'The bank arranges one against wages paid in, and not enough has been paid in this month.' };
+  if (max < min) return { refused: 'The bank arranges an overdraft against wages paid in over the last 30 days, and not enough has been paid in.' };
   return { min, max, rate: rateForRecord(terms.rate, terms.rateTo, score) };
 }
 
@@ -472,42 +472,42 @@ export function loanOffer(sim: Simulation, person: Person, amount: Money, months
   const away = abroadRefusal(person, bank);
   if (away) return { refused: away };
   const terms = lendingOf(bank).loan;
-  if (!bank || !terms) return { refused: `${bank?.name ?? 'Your bank'} publishes no personal loan rate SLATE has.` };
+  if (!bank || !terms) return { refused: `No personal loan rate was found for ${bank?.name ?? 'your bank'}.` };
   // The lender's own conditions (from 2026-10-10): a purpose it won't lend for, a Social Security number, an income.
   const lender = terms.lender ?? bank.name;
   if (purpose !== 'other' && terms.notFor?.includes(purpose)) return { refused: `${lender} doesn’t lend for a post-secondary education expense.` };
   if (terms.ssn && !hasSsn(person)) return { refused: `${lender} asks for a Social Security number.` };
-  if (terms.minIncome !== undefined && wagesLastMonth(sim, person) * 12 < inSaveMoney(sim, terms.minIncome, bank.currency)) return { refused: `${lender} lends on ${formatMoney(inSaveMoney(sim, terms.minIncome, bank.currency), saveCurrency(sim.universe), { cents: false })} a year of income or more, and last month’s wages come to less, a year of them.` };
+  if (terms.minIncome !== undefined && wagesLastMonth(sim, person) * 12 < inSaveMoney(sim, terms.minIncome, bank.currency)) return { refused: `${lender} lends on ${formatMoney(inSaveMoney(sim, terms.minIncome, bank.currency), saveCurrency(sim.universe), { cents: false })} a year of income or more, and the last 30 days’ wages come to less than that over a year.` };
   // Its customers, as the bank says: a current account there (for so many months where it says), unless it lends to
   // new customers too, to a lower ceiling (Citi). SLATE's reading where a bank says nothing: its customers.
   const there = checkingAt(sim, person, bank.id);
-  if (!there && terms.newCustomerMax === undefined) return { refused: `${bank.name} lends to its customers: open a current account there first.` };
-  if (there && terms.customerMonths !== undefined && sim.now - there.openedAt < terms.customerMonths * 30.44 * MS_DAY) return { refused: `${bank.name} lends to customers of ${terms.customerMonths} months or more; your account there opened ${formatDate(there.openedAt, sim.zone)}.` };
+  if (!there && terms.newCustomerMax === undefined) return { refused: `${bank.name} only lends to its customers. Open a current account there first.` };
+  if (there && terms.customerMonths !== undefined && sim.now - there.openedAt < terms.customerMonths * 30.44 * MS_DAY) return { refused: `${bank.name} lends to customers of ${terms.customerMonths} months or more, and your account there opened ${formatDate(there.openedAt, sim.zone)}.` };
   if (!there && terms.newCustomerMax !== undefined && amount > inSaveMoney(sim, terms.newCustomerMax, bank.currency)) return { refused: `${bank.name} lends a new customer up to ${formatMoney(inSaveMoney(sim, terms.newCustomerMax, bank.currency), saveCurrency(sim.universe), { cents: false })}.` };
   if (loanOf(sim, person, bank.id)) return { refused: `You already have a loan with ${bank.name}.` };
   const score = person.credit?.score ?? 0;
-  if (score < ESTIMATE.scoreFloor) return { refused: 'The bank turns down a credit record this poor.' };
+  if (score < ESTIMATE.scoreFloor) return { refused: 'Your credit record isn’t strong enough for the bank.' };
   if (terms.to === undefined && !terms.market && score < ESTIMATE.scoreGood) {
-    return { refused: `${bank.name} publishes only its lowest rate, and SLATE lends at it only to a good record.` };
+    return { refused: `${bank.name} publishes only its lowest rate, so in the game it lends only to a good credit record.` };
   }
   const [least, most] = [terms.minMonths ?? ESTIMATE.loanMonths[0], terms.maxMonths ?? ESTIMATE.loanMonths[1]];
-  if (months < least || months > most) return { refused: `The bank lends over ${least} to ${most} months.` };
+  if (months < least || months > most) return { refused: `The bank lends for ${least} to ${most} months.` };
   const cur = saveCurrency(sim.universe);
   if (terms.minAmount !== undefined && amount < inSaveMoney(sim, terms.minAmount, bank.currency)) {
-    return { refused: `The bank lends ${formatMoney(inSaveMoney(sim, terms.minAmount, bank.currency), cur, { cents: false })} or more.` };
+    return { refused: `The bank lends at least ${formatMoney(inSaveMoney(sim, terms.minAmount, bank.currency), cur, { cents: false })}.` };
   }
   if (terms.maxAmount !== undefined && amount > inSaveMoney(sim, terms.maxAmount, bank.currency)) {
     return { refused: `The bank lends up to ${formatMoney(inSaveMoney(sim, terms.maxAmount, bank.currency), cur, { cents: false })}.` };
   }
-  if (!(amount > 0)) return { refused: 'Say how much to borrow.' };
+  if (!(amount > 0)) return { refused: 'Enter how much to borrow.' };
   const apr = terms.market ? terms.from : rateForRecord(terms.from, terms.to, score);
   const payment = monthlyPayment(amount, apr, months);
   const pay = wagesLastMonth(sim, person);
-  if (pay <= 0) return { refused: 'The bank lends against wages paid in, and none has been paid in this month.' };
+  if (pay <= 0) return { refused: 'The bank lends against wages paid in over the last 30 days, and none has been paid in.' };
   const existing = loansOf(sim, person).reduce((sum, l) => sum + (l.loanPayment ?? 0), 0);
   if (payment + existing > pay * ESTIMATE.loanShareOfPay) {
     return { refused: existing > 0
-      ? `A payment of ${formatMoney(payment, cur, { cents: false })} a month with the ${formatMoney(existing, cur, { cents: false })} you pay on loans already is more than a loan may take of ${formatMoney(pay, cur, { cents: false })} of wages.`
+      ? `A payment of ${formatMoney(payment, cur, { cents: false })} a month with the ${formatMoney(existing, cur, { cents: false })} you already pay on loans is more than the bank lets loans take of ${formatMoney(pay, cur, { cents: false })} of wages.`
       : `A payment of ${formatMoney(payment, cur, { cents: false })} a month is more than the bank lets a loan take of ${formatMoney(pay, cur, { cents: false })} of wages.` };
   }
   return { apr, payment, terms };
@@ -747,7 +747,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   if ((how.keepBalance || how.partial) && !quietly) {
     const fresh = openBeside(sim, person, to, old, secondChance);
     noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: how.partial ? 'partial' : 'balance-kept', on: sim.now });
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: how.partial ? `A Partial Switch To ${to.name}` : `Switched To ${to.name}, The Balance Left`, body: `Your ${fresh.name} is open and your wages, standing orders and autopay move to it. ${old.name} stays open with ${formatMoney(old.balance, saveCurrency(sim.universe))}${how.partial ? ': a partial switch keeps the old account' : ', as you asked'}. Move it and close it on Your Banks when you want.`, importance: 70, route: '/workspace/bank' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: how.partial ? `A Partial Switch To ${to.name}` : `Switched To ${to.name}, The Balance Left`, body: `Your ${fresh.name} is open and your wages, standing orders and autopay move to it. ${old.name} stays open with ${formatMoney(old.balance, saveCurrency(sim.universe))}${how.partial ? ': a partial switch keeps the old account' : ', as you asked'}. Move it and close the account on Money, under Your Banks, whenever you want.`, importance: 70, route: '/workspace/bank' });
     return;
   }
   // Card payments still pending on the day: the old bank holds back what covers them and sends the rest once they post
@@ -765,7 +765,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
     old.switchDebt = true;
     sim.schedule({ at: sim.now + CASS.debtCheckDays * MS_DAY, kind: SWITCH_DEBT_KIND, label: `${old.name}: Owed`, category: 'home', priority: 36, payload: { personId: person.id, accountId: old.id } });
     noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: 'debt', why: `overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}`, on: sim.now });
-    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `The Switch To ${to.name} Is Only Part Done`, body: `Your ${to.current.name} is open and your wages, standing orders and autopay move to it. ${old.name} was overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}, so ${old.institution} keeps it open, blocked to everything but paying it off, on its overdraft’s terms; it closes once it’s repaid. Pay it in on Your Banks.`, importance: 85, route: '/workspace/bank' });
+    if (person.id === sim.universe.playerId) sim.notify({ category: 'bank', title: `The Switch To ${to.name} Is Only Part Done`, body: `Your ${to.current.name} is open and your wages, standing orders and autopay move to it. ${old.name} was overdrawn by ${formatMoney(-old.balance, saveCurrency(sim.universe))}, so ${old.institution} keeps it open, blocked to everything but paying it off, on its overdraft’s terms. It closes once it’s repaid. Move money into it on Money, under Move Money.`, importance: 85, route: '/workspace/bank' });
     return;
   }
   const oldSavings = Object.values(sim.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'savings' && a.category !== 'term' && a.bankId === old.bankId);
@@ -840,7 +840,7 @@ function completeSwitch(sim: Simulation, person: Person, to: Bank, quietly = fal
   }
   if (!quietly) noteSwitch(person, { at: sim.now, fromBank: old.institution, toBank: to.name, outcome: 'complete', on: sim.now });
   if (person.id === sim.universe.playerId && !quietly) {
-    sim.notify({ category: 'bank', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Wages and bills go through it from today.`, importance: 60 });
+    sim.notify({ category: 'bank', title: `Switched To ${to.name}`, body: `Your money is at ${to.name} now, in a ${to.current.name}. Your wages and payments go through it from today.`, importance: 60 });
   }
 }
 
@@ -1136,7 +1136,7 @@ export function closeForOverdraft(sim: Simulation, person: Person, bank: Bank): 
   if (person.id === sim.universe.playerId) {
     sim.notify({
       category: 'bank', title: `${bank.name} Closed Your Account`,
-      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your record' : ''}; pay it from Your Bank. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.${endedWords(sim, ended)}`,
+      body: `It was overdrawn for ${ESTIMATE.closeAfterDays} days. ${formatMoney(owed, cur)} it couldn’t recover went to collections${onRecord ? ' and onto your credit record' : ''}. You can pay it on Money, under Borrowing. Your money is at ${to.name} now${secondChance ? ', in a second-chance account: every other bank here turned you away on the ChexSystems report' : ''}.${endedWords(sim, ended)}`,
       importance: 90,
     });
   }
@@ -1245,7 +1245,7 @@ export function registerLending(sim: Simulation): void {
         // Renewed, or moved into easy-access savings, where that's how it ends (B7).
         const ended = endTerm(s, person, term);
         if (ended === 'renews') {
-          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${term.name} Renewed`, body: `For the same term at ${((term.fixedRate ?? 0) * 100).toFixed(2)}%, with its interest in it.${term.graceUntil ? ` Until ${formatDate(term.graceUntil, s.zone)} it can be taken without a penalty.` : ''}`, importance: 50 });
+          if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `Your ${term.name} Renewed`, body: `It renewed for the same term at ${((term.fixedRate ?? 0) * 100).toFixed(2)}%, with its interest added.${term.graceUntil ? ` Until ${formatDate(term.graceUntil, s.zone)} you can take it out without a penalty.` : ''}`, importance: 50 });
           continue;
         }
         if (ended === 'savings') {
@@ -1309,7 +1309,7 @@ export function registerLending(sim: Simulation): void {
       if (person.id === s.universe.playerId) {
         s.notify({
           category: 'bank', title: 'A Missed Loan Payment',
-          body: `${formatMoney(due, saveCurrency(s.universe))} was due and ${formatMoney(paid, saveCurrency(s.universe))} was there to pay it. It’s on your record, and what’s left is still owed.`,
+          body: `${formatMoney(due, saveCurrency(s.universe))} was due, and there was only ${formatMoney(paid, saveCurrency(s.universe))} to pay it with. It’s on your credit record, and what’s left is still owed.`,
           importance: 80,
         });
       }
@@ -1334,7 +1334,7 @@ export function registerLending(sim: Simulation): void {
     if (!no) return;
     s.timeline.cancel(pending.id, s.now);
     noteSwitch(person, { at: s.now, toBank: to.name, outcome: 'declined', why: no });
-    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${to.name} Declined The Switch`, body: `${no} Nothing has moved: your accounts and payments are where they were.`, importance: 80, route: '/workspace/bank' });
+    if (person.id === s.universe.playerId) s.notify({ category: 'bank', title: `${to.name} Declined The Switch`, body: `${no} Your accounts and payments haven’t changed.`, importance: 80, route: '/workspace/bank' });
   });
 
   // An old account a switch left in debt: closed, its remainder sent across, once it's repaid.
@@ -1352,8 +1352,8 @@ export function registerLending(sim: Simulation): void {
     const person = s.player;
     const item = s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending' && one.payload.personId === person.id);
     if (!item) throw new CommandError('No switch is under way.');
-    if (item.payload.cancellableUntil === undefined) throw new CommandError('This country’s switching service publishes no such step.');
-    if (item.payload.keepBalance === true) throw new CommandError('Its balance transfer is stopped already.');
+    if (item.payload.cancellableUntil === undefined) throw new CommandError('This country’s switching service has no such step.');
+    if (item.payload.keepBalance === true) throw new CommandError('Its balance transfer is already stopped.');
     // Up to close of business the working day before the switch date.
     let lastDay = addDays(item.at, -1, s.homeZone);
     for (let n = 0; n < 4; n += 1) { const q = zonedParts(lastDay, s.homeZone); const wd = new Date(Date.UTC(q.year, q.month - 1, q.day)).getUTCDay(); if (wd !== 0 && wd !== 6) break; lastDay = addDays(lastDay, -1, s.homeZone); }
@@ -1370,7 +1370,7 @@ export function registerLending(sim: Simulation): void {
     const current = currentOf(s, person);
     const bank = current?.bankId ? bankById(current.bankId) : undefined;
     const terms = lendingOf(bank).overdraft;
-    if (!current || !bank || terms?.kind !== 'per_item' || !terms.debitCard) throw new CommandError('Your bank doesn’t ask you this.');
+    if (!current || !bank || terms?.kind !== 'per_item' || !terms.debitCard) throw new CommandError('Your bank doesn’t offer this choice.');
     const away = abroadRefusal(person, bank);
     if (away) throw new CommandError(away);
     if (terms.debitCard === 'never') throw new CommandError(`${bank.name} never pays a debit card purchase into an overdraft.`);
@@ -1400,7 +1400,7 @@ export function registerLending(sim: Simulation): void {
     const named = p.accountId ? checkingsOf(s, person).find((a) => a.id === p.accountId) : undefined;
     if (p.accountId && !named) throw new CommandError('That isn’t an open current account of yours.');
     const current = named ?? currentOf(s, person);
-    if (!current) throw new CommandError('There’s no current account to arrange one on.');
+    if (!current) throw new CommandError('There’s no current account to arrange an overdraft on.');
     const limit = Math.round(Number(p.limit));
     if (limit === 0) {
       // Nothing arranged, nothing to close (from 2026-10-15: until then it answered as closed and changed nothing, at a
@@ -1417,7 +1417,7 @@ export function registerLending(sim: Simulation): void {
     if ('refused' in offer) throw new CommandError(offer.refused);
     if (limit < offer.min || limit > offer.max) {
       const cur = saveCurrency(s.universe);
-      throw new CommandError(`The bank arranges between ${formatMoney(offer.min, cur, { cents: false })} and ${formatMoney(offer.max, cur, { cents: false })}.`);
+      throw new CommandError(`The bank arranges an overdraft of ${formatMoney(offer.min, cur, { cents: false })} to ${formatMoney(offer.max, cur, { cents: false })}.`);
     }
     if (current.balance < -limit) throw new CommandError('You’re overdrawn by more than that already.');
     const first = current.overdraftLimit === undefined;
@@ -1527,7 +1527,7 @@ export function registerLending(sim: Simulation): void {
     const interest = Math.round(-loan.balance * (loan.apr ?? 0) * days / 365);
     const owed = -loan.balance + interest;
     const bank = payFromBank(s, person, owed, repaymentAccount(s, person, loan));
-    if (bank.short > 0) throw new CommandError(`Paying it off takes ${formatMoney(owed, saveCurrency(s.universe), { cents: false })}, and the bank can’t cover it all.`);
+    if (bank.short > 0) throw new CommandError(`Paying it off takes ${formatMoney(owed, saveCurrency(s.universe), { cents: false })}, and the repayment account can’t cover it all.`);
     if (interest > 0) {
       post(s, `Interest: ${loan.name}`, 'loan_interest', [
         { accountId: loan.id, amount: -interest }, { accountId: s.nominalAccount('expense', 'Loan Interest').id, amount: interest },
@@ -1546,16 +1546,16 @@ export function registerLending(sim: Simulation): void {
     const term = lendingOf(bank).term;
     const away = abroadRefusal(person, bank);
     if (away) throw new CommandError(away);
-    if (!bank || !term) throw new CommandError(`${bank?.name ?? 'Your bank'} publishes no term deposit rate SLATE has.`);
+    if (!bank || !term) throw new CommandError(`No term deposit rate was found for ${bank?.name ?? 'your bank'}.`);
     const current = checkingAt(s, person, bank.id);
-    if (!current) throw new CommandError(`A term deposit at ${bank.name} is funded from your current account there: open one first.`);
+    if (!current) throw new CommandError(`A term deposit at ${bank.name} is paid for from your current account there. Open a current account at ${bank.name} first.`);
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much to put in.');
+    if (!(amount > 0)) throw new CommandError('Enter how much to put away.');
     const cur = saveCurrency(s.universe);
     if (term.minAmount !== undefined && amount < inSaveMoney(s, term.minAmount, bank.currency)) {
-      throw new CommandError(`It takes ${formatMoney(inSaveMoney(s, term.minAmount, bank.currency), cur, { cents: false })} or more.`);
+      throw new CommandError(`A term deposit there needs at least ${formatMoney(inSaveMoney(s, term.minAmount, bank.currency), cur, { cents: false })}.`);
     }
-    if (amount > current.balance) throw new CommandError(`${current.name} holds ${formatMoney(Math.max(0, current.balance), cur, { cents: false })}.`);
+    if (amount > current.balance) throw new CommandError(`${current.name} only has ${formatMoney(Math.max(0, current.balance), cur, { cents: false })} in it.`);
     const number = accountNumber(s, person, bank, 'savings');
     const maturesAt = addMonths(s.now, term.months, s.homeZone);
     const account = s.openAccount({
@@ -1571,8 +1571,8 @@ export function registerLending(sim: Simulation): void {
     const item = s.universe.scheduled.find((one) => one.kind === SWITCH_KIND && one.status === 'pending' && one.payload.personId === person.id);
     if (!item) throw new CommandError('No switch is under way.');
     const until = item.payload.cancellableUntil as number | undefined;
-    if (until === undefined) throw new CommandError('This country’s switching service publishes no right to call a switch off: it runs to its date.');
-    if (s.now > until) throw new CommandError(`It could be called off until ${formatDate(until, s.zone)}, seven working days before its date; it’s under way now. Its balance transfer alone can still be stopped, until the working day before.`);
+    if (until === undefined) throw new CommandError('This country’s switching service doesn’t let you call a switch off. It goes ahead on its date.');
+    if (s.now > until) throw new CommandError(`You could call it off until ${formatDate(until, s.zone)}, seven working days before its date, and it’s under way now. You can still stop its balance transfer until the working day before.`);
     if (!p?.confirm) throw new CommandError('Calling it off leaves your accounts and payments where they are. Confirm to go ahead.');
     s.timeline.cancel(item.id, s.now);
     for (const one of s.universe.scheduled) if (one.kind === SWITCH_REVIEW_KIND && one.status === 'pending' && one.payload.personId === person.id) s.timeline.cancel(one.id, s.now);
@@ -1585,24 +1585,24 @@ export function registerLending(sim: Simulation): void {
     const person = s.player;
     const from = bankOf(s, person);
     const to = banksFor(homeOf(person)).find((b) => b.id === p.bankId);
-    if (!to) throw new CommandError('That isn’t a bank where you live.');
+    if (!to) throw new CommandError('You can only switch to a bank where you live.');
     if (from?.id === to.id) throw new CommandError(`You already bank with ${to.name}.`);
     // Already keeping an account there, there's nothing to switch to (from 2026-10-10: until then a second one opened).
-    if (checkingAt(s, person, to.id)) throw new CommandError(`You keep an account at ${to.name} already: make it primary, move what pays from the old one, and close it.`);
-    if (collectionsOf(s, person, to.name)) throw new CommandError(`${to.name} won’t open an account for somebody who owes it a charged-off debt.`);
-    if (declines(s, person, to)) throw new CommandError(`${to.name} turned you away on the ChexSystems report ${person.chex!.bank} made, which stands until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
+    if (checkingAt(s, person, to.id)) throw new CommandError(`You already have an account at ${to.name}. Make it your primary account, move the payments from the old one, and close it.`);
+    if (collectionsOf(s, person, to.name)) throw new CommandError(`${to.name} won’t open an account for you while you owe it a debt it has charged off.`);
+    if (declines(s, person, to)) throw new CommandError(`${to.name} won’t open an account for you because of the ChexSystems report ${person.chex!.bank} filed, which stays on your record until ${formatDate(person.chex!.at + CHEX.years * 365 * MS_DAY, s.zone)}.`);
     if (s.universe.scheduled.some((one) => one.kind === SWITCH_KIND && one.status === 'pending')) throw new CommandError('A switch is already under way.');
     // A new bank identifies a new customer (31 CFR 1020.220, and its like elsewhere), from 2026-10-09 (`photoIdOf`).
-    if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.`);
+    if (!photoIdOf(person, s.now)) throw new CommandError(`${to.name} needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.`);
     const current = currentOf(s, person);
-    if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching; the new bank won’t take it on.');
+    if (current && current.balance < 0) throw new CommandError('Clear the overdraft before switching. The new bank won’t take it on.');
     // The new bank's own opening rules, as its application reads them (from 2026-10-10).
     const declined = switchApplicationRefusal(s, person, to);
     if (declined) throw new CommandError(declined);
     const iso = isoOf(homeOf(person)) ?? '';
     const rule = SWITCHING[iso];
     // A partial switch is the Current Account Switch Service's (Britain's); no other service here publishes one.
-    if (p.partial && iso !== 'GB') throw new CommandError('A partial switch is a Current Account Switch Service step, in Britain only.');
+    if (p.partial && iso !== 'GB') throw new CommandError('A partial switch is only available through Britain’s Current Account Switch Service.');
     // With no switching service, there's nothing to run: until 2026-10-10 this opened the new bank's accounts, moved
     // everything into them and closed the old ones the same day, as no bank does (docs/verification/BANKING-SWITCH.md).
     if (!rule) {
@@ -1623,7 +1623,7 @@ export function registerLending(sim: Simulation): void {
       const chosen = instantFromZoned({ year: y!, month: m!, day: dd!, hour: 9 }, s.homeZone);
       if (!(chosen >= at - 12 * 3_600_000)) throw new CommandError(`The earliest date it can be is ${formatDate(at, s.zone)}.`);
       const wd = new Date(Date.UTC(y!, m! - 1, dd!)).getUTCDay();
-      if (wd === 0 || wd === 6) throw new CommandError('A switch date is a working day.');
+      if (wd === 0 || wd === 6) throw new CommandError('Choose a working day for the switch date.');
       at = chosen;
     }
     const d = zonedParts(at, s.homeZone);

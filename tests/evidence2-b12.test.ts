@@ -273,7 +273,7 @@ describe('h-money', () => {
     expect(sim.must({ kind: 'bank.close_savings', payload: { accountId: savings.id } })).toEqual({ closed: savings.id });
     expect(sim.must({ kind: 'card.close', payload: { accountId: own(sim, 'credit_card').id } })).toEqual({ closing: true });
     expect(sim.execute({ kind: 'bank.close_current', payload: { accountId: checking.id } }).error)
-      .toBe('It’s your only current account. Open another first: SLATE keeps every life a current account to be paid into.');
+      .toBe('It’s your only current account. Open another one first: you always need a current account to be paid into.');
     expect(sim.ledger.accountsOf(sim.player.id).map((a) => a.name)).toEqual(['Chase Total Checking']);
     // $92,391.00 and the savings' $413,043.00 (the profile's 380,000 € at 0.92, to the dollar) in one account, written to the
     // dollar from $100,000.

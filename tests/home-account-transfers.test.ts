@@ -172,7 +172,7 @@ describe('from America to home', () => {
     sim.advanceTo(day(sim, 8, 28));
     const quote = abroadQuote(sim, sim.player, chase, hsbc, 100_000);
     expect(quote).toMatchObject({ fee: 500, marginSave: 2_600, marginAssumed: true, incoming: 500, incomingSave: 633, received: 76_446, receivedSave: 96_767, daysAssumed: true });
-    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under the game’s exchange rate (SLATE’s assumption: the bank publishes no margin, so SLATE takes the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (SLATE’s assumption: the bank publishes no time, so SLATE takes three business days).');
+    expect(quoteWords(sim, quote as never)).toBe('Chase sends $1,000.00 for a $5.00 fee. At 2.6% under the game’s exchange rate (an estimate: the bank publishes no margin, so the game uses the FSB’s 2024 average cost of a payment abroad, 2.6%), HSBC UK receives £764.46 after its £5.00 fee for a payment from abroad, on Thursday, September 3, 2026 (an estimate: the bank publishes no time, so the game uses three business days).');
     const before = chase.balance;
     const sent = run<{ arrivesAt: number }>(sim, 'bank.transfer', { fromId: chase.id, toId: hsbc.id, amount: 100_000 });
     expect(iso(sent.arrivesAt)).toBe('2026-09-03T21:00:00.000Z');
@@ -216,7 +216,7 @@ describe('refusals, in words', () => {
   it('says what the bank or the research leaves out', async () => {
     const barclays = await make(london('gb-barclays'));
     expect(refused(barclays, 'bank.transfer', { fromId: at(barclays, 'gb-barclays', 'checking').id, toId: at(barclays, 'us-chase', 'checking').id, amount: 100_000, in: 'GBP' }))
-      .toBe('Barclays Bank Account holds £0.');
+      .toBe('Barclays Bank Account only has £0 in it.');
     const mizuho = await make(life({ homeRegionId: 'jp-13-tokyo', priorResidence: { cityId: 'jp-13-tokyo', fromYear: 2005, fromMonth: 4 }, homeBankId: 'jp-mizuho' }));
     expect(refused(mizuho, 'bank.transfer', { fromId: at(mizuho, 'jp-mizuho', 'savings').id, toId: at(mizuho, 'us-chase', 'checking').id, amount: 100_000, in: 'JPY' }))
       .toBe('Mizuho’s app and Direct banking aren’t open to a non-resident, and its counters are in Japan.');
@@ -251,7 +251,7 @@ describe('the Move Money panel', () => {
     expect(words).toContain('Barclays sends £1,000.00 for no fee. At its rate, 2.75% under the game’s exchange rate, Chase receives $1,216.01 after its $15.00 fee for a payment from abroad, on Wednesday, September 2, 2026.');
     const press = h.elements.find((e) => e.text === 'Move It')!;
     (press.props.onClick as () => void)();
-    expect(h.toasts.at(-1)).toBe('Sent £1,000.00: it arrives September 2, 2026.');
+    expect(h.toasts.at(-1)).toBe('Sent £1,000.00. It arrives September 2, 2026.');
     expect(current.held).toBe(10_000);
   });
 });

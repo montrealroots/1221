@@ -368,7 +368,7 @@ describe('banking.1.pro-rata: a German account’s month’s fee on a close, to 
     const words = `Its fees, $4.84, are more than it holds. Pay in ${usd(4_84 - k.balance)} first.`;
     const text = drawn(sim, createElement(BankMoves));
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, words]]);
-    expect(text).toContain(`To close it: ${words} Closing it now charges its fees to the day, €4.45 ($4.84): October’s €6.90 for the 20 days of its 31 it’s been open, €4.45.`);
+    expect(text).toContain(`You can’t close it yet. ${words} Closing it now charges its fees to the day, €4.45 ($4.84): October’s €6.90 for the 20 days of its 31 it’s been open, €4.45.`);
     expect(refusal(sim, 'bank.close_current', { accountId: k.id, remainderTo: chase.id })).toBe(words);
     expect([k.closedAt, heldBy(sim, 'Closing fees: AktivKonto', k.id)]).toEqual([undefined, []]);
     // $50 from Chase, a payment abroad, lands in Deutsche Bank's days; pressed on Monday 26 October.
@@ -650,7 +650,7 @@ describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Comm
     sim.advanceTo(at(2026, 10, 25, 9));
     const snap = freeze(sim);
     // October's €4.90, not waived (no €1,000 paid in, and 30): charged on 1 November, as ING's conditions have it.
-    expect(drawn(sim, createElement(BankWorkspace))).toContain('This month’s is charged November 1, 2026 unless that changes.');
+    expect(drawn(sim, createElement(BankWorkspace))).toContain('It isn’t waived this month so far. Unless one of those conditions is met, it’s charged November 1, 2026.');
     const jump = thaw(snap);
     jump.advanceTo(at(2027, 1, 5, 9));
     let steps = thaw(snap);
@@ -688,7 +688,7 @@ describe('banking.6.fee-schedule: ING’s month’s fee in the month after, Comm
     const sim = await keeping('rb9-commerz', 'de-be-berlin', 'de-commerzbank', 2004);
     const giro = currentAt(sim, 'de-commerzbank');
     sim.advanceTo(at(2026, 10, 14, 9));
-    expect(drawn(sim, createElement(BankWorkspace))).toContain('This month’s is due October 31, 2026 unless that changes.');
+    expect(drawn(sim, createElement(BankWorkspace))).toContain('It isn’t waived this month so far. Unless one of those conditions is met, it’s due October 31, 2026.');
     sim.advanceTo(at(2027, 1, 5, 9));
     const ends = [at(2026, 8, 31, 23), at(2026, 9, 30, 23), at(2026, 10, 31, 23), at(2026, 11, 30, 23), at(2026, 12, 31, 23)];
     expect(dated(sim, 'Monthly fee: GiroKonto', giro.id)).toEqual(ends.map((m) => [m, -5_33, -4_90]));
@@ -727,12 +727,12 @@ describe('banking.2: what a student keeping an account at home meets at the eigh
       expect([bankId, refusal(sim, 'bank.cancel_new', { accountId: home.id })]).toEqual([bankId, 'Its cooling-off period has passed, or there isn’t one here for it.']);
       expect(refusal(sim, 'bank.arrange_overdraft', { limit: 100_00, accountId: home.id })).toBe(overdraft);
       // Born abroad, not a US citizen: Citi's opening refuses first; a bank abroad isn't one where she lives.
-      expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi opens this account for US citizens and permanent residents.');
-      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('That isn’t a bank where you live.');
+      expect(refusal(sim, 'bank.switch', { bankId: 'us-citi' })).toBe('Citi only opens this account for US citizens and permanent residents.');
+      expect(refusal(sim, 'bank.switch', { bankId: other })).toBe('You can only switch to a bank where you live.');
       expect(refusal(sim, 'bank.cancel_switch', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.stop_balance_transfer', {})).toBe('No switch is under way.');
       expect(refusal(sim, 'bank.take_overrun_loan', { accountId: home.id })).toBe('Your bank has offered no loan for an overrun.');
-      expect(refusal(sim, 'card.apply', { bankId })).toBe(`A card is applied for in the country you bank in; ${name} is elsewhere.`);
+      expect(refusal(sim, 'card.apply', { bankId })).toBe(`You can only apply for a card in the country you bank in, and ${name} is elsewhere.`);
       expect(refusal(sim, 'card.money_transfer', { amount: 100_00 })).toBe('The Chase Freedom Unlimited doesn’t offer money transfers.');
       expect(sim.universe.transactions.length).toBe(lines);
       expect(sim.universe.scheduled.filter((i) => i.kind === 'bank.switch_complete' && i.status === 'pending')).toEqual([]);
@@ -761,10 +761,10 @@ describe('banking.7.redirect-close: Close It says when the wages stop arriving',
     press('Have Wages Paid Here');
     expect(h.answers.at(-1)).toMatchObject({ kind: 'bank.redirect_deposits', ok: true });
     // Yale's payroll in one pay cycle, seven days; every other payer in SLATE's fourteen (routing.ts): 1 and 8 October.
-    expect(h.toasts.at(-1)).toBe('Wages and other payments go to 360 Checking from October 8, 2026.');
-    const shut = 'Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. Close it from October 8, 2026.';
+    expect(h.toasts.at(-1)).toBe('Your wages and other payments go to 360 Checking from October 8, 2026.');
+    const shut = 'Your wages and other payments are paid into it until they move to 360 Checking: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026. You can close it from October 8, 2026.';
     const text = drawn(sim, createElement(BankMoves));
-    expect(text).toContain(`To close it: ${shut}`);
+    expect(text).toContain(`You can’t close it yet. ${shut}`);
     expect(text).toContain('Your wages and other payments are being moved to it: Yale’s payroll from October 1, 2026, and the rest from October 8, 2026.');
     expect(buttons('Close It').map((b) => [b.disabled, b.title])).toEqual([[true, shut]]);
     expect(refusal(sim, 'bank.close_current', { accountId: chase.id, remainderTo: cap.id })).toBe(shut);

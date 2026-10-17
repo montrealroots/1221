@@ -257,9 +257,9 @@ describe('card.report', () => {
     expect(account.plastic!.stopped).toBe('lost');
     const old = account.plastic!.last4;
     // Reported again: refused, and nothing sent twice. A reason that isn't one of the three: refused.
-    expect(run(sim, 'card.report', { which: 'debit', why: 'stolen' }).error).toBe('That card is stopped already; a new one is on its way.');
+    expect(run(sim, 'card.report', { which: 'debit', why: 'stolen' }).error).toBe('That card is already stopped, and a new one is on its way.');
     expect(arrivals(sim, account)).toHaveLength(1);
-    expect(run(sim, 'card.report', { which: 'credit', why: 'bent' }).error).toBe('Lost, stolen or damaged.');
+    expect(run(sim, 'card.report', { which: 'credit', why: 'bent' }).error).toBe('Choose why: lost, stolen or damaged.');
 
     // The credit card locked as well, and no cash: the meal isn't bought, and says why.
     must(sim, 'card.lock', { which: 'credit', locked: true });
@@ -271,7 +271,7 @@ describe('card.report', () => {
     expect(card.balance).toBe(-MEAL);
 
     // A machine needs the debit card; the counter doesn't.
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card is stopped; the counter can still pay out.');
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
     expect(inHand(sim)).toBe(0);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' })).toEqual({ fee: 0 });
     expect(account.balance).toBe(before - 20_00);
@@ -288,7 +288,7 @@ describe('card.report', () => {
     expect(account.plastic!.stopped).toBeUndefined();
     expect(account.plastic!.last4).not.toBe(old);
     expect(account.plastic!.issued).toBe(2);
-    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toEqual([`Ending ${account.plastic!.last4}.`]);
+    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toEqual([`The new card ends in ${account.plastic!.last4}, and you can use it now.`]);
     // The next midnight's groceries draw on checking again, and the credit card takes nothing more.
     sim.advanceTo(edt(9, 3, 0, 1));
     expect(moved(sim, account, 'Groceries')).toEqual([-GROCERIES]);
@@ -304,8 +304,8 @@ describe('card.report', () => {
     const account = checking(loaded);
     expect(account.plastic).toMatchObject({ stopped: 'damaged', replacementAt: answer.arrivesAt, last4: old });
     expect(arrivals(loaded, account)).toHaveLength(1);
-    expect(run(loaded, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card is stopped; the counter can still pay out.');
-    expect(run(loaded, 'card.report', { which: 'debit', why: 'lost' }).error).toBe('That card is stopped already; a new one is on its way.');
+    expect(run(loaded, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
+    expect(run(loaded, 'card.report', { which: 'debit', why: 'lost' }).error).toBe('That card is already stopped, and a new one is on its way.');
     loaded.advanceTo(answer.arrivesAt + 60_000);
     expect(account.plastic!.stopped).toBeUndefined();
     expect(account.plastic!.issued).toBe(2);
@@ -344,7 +344,7 @@ describe('card.report', () => {
     // agreement naming a Rush Plastic Fee with no amount. Refused on a twin now, in words that say so, and nothing stopped.
     const twin = reload(sim);
     const twinWf = twin.universe.accounts[wf.id]!;
-    expect(twin.execute({ kind: 'card.report', payload: { which: 'debit', why: 'lost', rush: true, accountId: wf.id } }).error).toBe('Wells Fargo doesn’t publish what it charges for a rush, so SLATE can’t send one.');
+    expect(twin.execute({ kind: 'card.report', payload: { which: 'debit', why: 'lost', rush: true, accountId: wf.id } }).error).toBe('Wells Fargo doesn’t publish what it charges to rush a card, so the game can’t send a rushed one.');
     expect(twinWf.plastic!.stopped).toBeUndefined();
     expect(twinWf.balance).toBe(wf.balance);
     const plain = must<{ arrivesAt: number; fee: number }>(sim, 'card.report', { which: 'debit', why: 'lost', accountId: wf.id });
@@ -359,16 +359,16 @@ describe('card.report', () => {
     const account = checking(sim);
     const before = drawn(sim, () => createElement(BankSecurity, { bankId: 'us-chase' }));
     expect(before.text).toContain('Debit card ending');
-    expect(before.text).toContain('A new card is free. Sent in a rush, $15.00 more.');
+    expect(before.text).toContain('A new card is free. A rushed one costs $15.00 more.');
     expect(before.count('Report It')).toBe(2);
-    expect(before.count('Report It, Rush The New One')).toBe(2);
+    expect(before.count('Report It And Rush The New One')).toBe(2);
     // The first is the debit card's, with Lost chosen as the screen starts.
     before.press('Report It');
     expect(account.plastic!.stopped).toBe('lost');
     const after = drawn(sim, () => createElement(BankSecurity, { bankId: 'us-chase' }));
     expect(after.text).toContain('Lost: stopped. A new one arrives September 2, 2026.');
     expect(after.count('Report It')).toBe(1);
-    expect(after.count('Report It, Rush The New One')).toBe(1);
+    expect(after.count('Report It And Rush The New One')).toBe(1);
   });
 });
 
@@ -390,15 +390,15 @@ describe('card.request_hardship', () => {
   it('is refused a card owing nothing and a holder whose bank could clear it, then sets a forty-eighth of what’s owed, and the card takes nothing: the meal goes to checking, and behind a locked debit card isn’t bought', () => {
     const sim = settled('g12-plan');
     const card = chaseCard(sim);
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('The card owes nothing.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You don’t owe anything on the card.');
     purchases(sim, card, 4_800_00); // TEST SETUP
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('You could pay it off today: a hardship plan is for when you can’t.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You could pay it off today. A hardship plan is for when you can’t.');
     expect(stateOf(sim.player, card).hardship).toBeUndefined();
     setBalance(sim, checking(sim), 3_000_00); // TEST SETUP
     setBalance(sim, savings(sim), 0); // TEST SETUP
     // $4,800 over forty-eight months.
     expect(must(sim, 'card.request_hardship', {})).toEqual({ payment: 100_00 });
-    expect(run(sim, 'card.request_hardship', {}).error).toBe('You’re on a plan already.');
+    expect(run(sim, 'card.request_hardship', {}).error).toBe('You’re already on a payment plan.');
     expect(cardRoom(sim.player, card)).toBe(0);
     must(sim, 'bank.set_payments', { everyday: 'credit' });
     must(sim, 'card.lock', { which: 'debit', locked: true });
@@ -451,7 +451,7 @@ describe('card.request_hardship', () => {
 
   it('is late when less than the plan’s $100 is paid, though the card’s $48 minimum was: autopay asks the $52 left, bounces, and the $30 safe harbor fee is the one fee', () => {
     const { sim, card } = shortOfThePlan('g12-plan-short');
-    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00 and the current account couldn’t cover it. It’s late now, and the late fee is the one fee for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(notes(sim, 'A Card Payment Bounced').map((n) => n.body)).toEqual(['Autopay asked for $52.00, and the current account couldn’t cover it. The payment is late now, and the late fee is the only fee charged for it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     // A US card's first late fee, the $30 safe harbor, under the $100 due; no returned payment's fee beside it.
     expect(moved(sim, card, 'Late fee')).toEqual([-30_00]);
     expect(moved(sim, card, 'Returned payment fee')).toEqual([]);
@@ -468,7 +468,7 @@ describe('card.request_hardship', () => {
     // $48; fixed that day).
     expect(statement).toContain('$100.00');
     expect(statement).not.toContain('at least $48.00');
-    expect(late.body).toContain('was $100.00 and only $48.00 went in');
+    expect(late.body).toContain('was $100.00, and only $48.00 was paid');
   });
 
   it('ends at the due date once the card is paid off before it: the suspension lifts and the card takes the day again', () => {
@@ -554,7 +554,7 @@ describe('card.request_hardship', () => {
     const on = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
     // Until 2026-10-13 this held “… and $100 a month until it’s cleared. The card can’t be used until then.”; a plan ends,
     // and the card works again, only at the first statement or due date after it’s paid off.
-    expect(on.text).toContain('On a plan since August 24, 2026: no interest, and each statement asks the plan’s $100 in the minimum’s place. The card can’t be used until the first statement or due date after it’s paid off, when the plan ends.');
+    expect(on.text).toContain('It’s been on a payment plan since August 24, 2026. There’s no interest, and each statement asks for the plan’s $100 instead of the minimum. You can’t use the card until the plan ends, at the first statement or due date after it’s paid off.');
     expect(on.text).toContain('Left To Spend $0 Of a $65,217 limit');
     expect(on.count('Ask For Help With Payments')).toBe(0);
   });
@@ -569,15 +569,15 @@ describe('card.request_limit', () => {
     const sim = settled('g12-limit');
     const card = chaseCard(sim);
     purchases(sim, card, 500_00); // TEST SETUP
-    expect(run(sim, 'card.request_limit', { limit: 0 }).error).toBe('Say the limit you want.');
+    expect(run(sim, 'card.request_limit', { limit: 0 }).error).toBe('Enter the limit you want.');
     expect(must(sim, 'card.request_limit', { limit: 1_00 })).toEqual({ limit: 500_00, granted: true });
     expect(card.creditLimit).toBe(500_00);
-    expect(run(sim, 'card.request_limit', { limit: 500_00 }).error).toBe('Say the limit you want.');
+    expect(run(sim, 'card.request_limit', { limit: 500_00 }).error).toBe('Enter the limit you want.');
     expect(cardRoom(sim.player, card)).toBe(0);
     must(sim, 'card.lock', { which: 'debit', locked: true });
     expect(eat(sim).error).toBe('Your debit card is locked, and there isn’t enough on the credit card or in cash.');
     // $20 in cash costs Chase's least fee, $10.
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'card' }).error).toBe('The card has $0.00 free, and this takes $30.00 with its fee.');
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'card' }).error).toBe('The card has $0.00 of its limit left, and this needs $30.00 with its fee.');
 
     // A record of 795, nothing late, $3,000 and more in the bank: a fifth more than $500, though $1,000 was asked.
     expect(must(sim, 'card.request_limit', { limit: 1_000_00 })).toEqual({ limit: 600_00, granted: true });
@@ -598,7 +598,7 @@ describe('card.request_limit', () => {
       expect(must(sim, 'card.request_limit', { limit })).toEqual({ limit: card.creditLimit, granted: false });
       const notice = notes(sim, 'Limit Increase Declined').at(-1)!;
       expect(notice.at).toBe(sim.now);
-      expect(notice.body).toBe(`The bank kept the limit at ${kept}: it raises one for a record of 700 or more, nothing late in a year, and means to repay.`);
+      expect(notice.body).toBe(`The bank kept your limit at ${kept}. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.`);
     };
     expect(must(sim, 'card.request_limit', { limit: 5_000_00 })).toEqual({ limit: 5_000_00, granted: true });
 
@@ -653,16 +653,16 @@ describe('card.request_limit', () => {
     const card = chaseCard(sim);
     purchases(sim, card, 500_00); // TEST SETUP
     // TEST SETUP: $1 typed into A Different Limit (the first useState of the card's panel).
-    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1', h.keep]).press('Ask For It');
+    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
     const lowered = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(lowered.text).toContain('A Different Limit (USD), Now $500');
+    expect(lowered.text).toContain('New Limit (USD), Now $500');
     expect(lowered.text).toContain('Left To Spend $0 Of a $500 limit');
-    expect(lowered.button('Ask For It')!.disabled).toBe(true);
+    expect(lowered.button('Ask For This Limit')!.disabled).toBe(true);
     sim.player.credit!.late = [sim.now - 30 * MS_DAY]; // TEST SETUP: a payment late a month ago
-    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For It');
+    drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }), ['1000', h.keep]).press('Ask For This Limit');
     expect(card.creditLimit).toBe(500_00);
-    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept the limit at $500.00: it raises one for a record of 700 or more, nothing late in a year, and means to repay.']);
+    expect(notes(sim, 'Limit Increase Declined').map((n) => n.body)).toEqual(['The bank kept your limit at $500.00. It raises a limit only with a credit score of 700 or more, no late payment in the last year, and money in the bank to repay it.']);
   });
 });
 
@@ -683,6 +683,7 @@ describe('card.set_everyday', () => {
     const { sim, chase, citi } = twoCards('g12-everyday');
     // Citi's arrived beside the everyday card, which stays Chase's.
     expect(cardsOf(sim, sim.player).map((c) => c.id)).toEqual([chase.id, citi.id]);
+    expect(notes(sim, 'Your New Card Arrived').map((n) => n.body)).toContain(`Your ${citi.name} has arrived, with a $5,000.00 limit.`);
     expect(run(sim, 'card.set_everyday', { accountId: 'account_none' }).error).toBe('You don’t hold that card.');
     expect(run(sim, 'card.set_everyday', {}).error).toBe('You don’t hold that card.');
     must(sim, 'bank.set_payments', { everyday: 'credit' });
@@ -739,15 +740,15 @@ describe('card.set_everyday', () => {
     expect(cardRoom(sim.player, citi)).toBe(0);
     const asked = run(sim, 'card.set_everyday', { accountId: citi.id });
     expect(asked.ok).toBe(false);
-    expect(asked.error).toMatch(/being closed/);
+    expect(asked.error).toBe('That card is being closed, so nothing new can go on it.');
     expect(cardsOf(sim, sim.player)[0]!.id).toBe(chase.id);
   });
 
   it('is offered on the card that isn’t everyday and not on one being closed, and Make It The Everyday Card pressed swaps the two panels’ words', () => {
     const { sim, chase, citi } = twoCards('g12-everyday-screen');
     const before = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(before.text).toContain('The everyday card: the day’s spending goes on it.');
-    expect(before.text).toContain('Beside the everyday card: the day’s spending goes on that one, and nothing goes on this unless you make it the everyday card.');
+    expect(before.text).toContain('This is your everyday card: the day’s spending goes on it.');
+    expect(before.text).toContain('The day’s spending goes on your everyday card, not this one, unless you make this the everyday card.');
     expect(before.text).toContain(`The everyday card, ···${chase.last4}`);
     expect(before.count('Make It The Everyday Card')).toBe(1);
     before.press('Make It The Everyday Card');
@@ -764,7 +765,7 @@ describe('card.set_everyday', () => {
     expect(cardsOf(sim, sim.player)[0]!.id).toBe(chase.id);
     must(sim, 'card.close', { accountId: citi.id });
     const closing = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
-    expect(closing.text).toContain('Closed to anything new. What’s owed is paid down as before, and then the account closes.');
+    expect(closing.text).toContain('It’s closed to new spending. You keep paying off what’s owed as before, and then the account closes.');
     expect(closing.count('Make It The Everyday Card')).toBe(0);
   });
 });
@@ -814,7 +815,7 @@ describe('card.set_over_limit', () => {
     expect(stateOf(sim.player, card).overLimitOptIn).toBe(true);
     const after = drawn(sim, () => createElement(BankCard, { bankId: 'us-chase' }));
     expect(after.count('Going Over The Limit: Allowed')).toBe(1);
-    expect(after.text).toContain('Opted in to going over the limit: a purchase can take it up to a tenth over, SLATE’s estimate of what a bank allows, and this card charges nothing for it.');
+    expect(after.text).toContain('You’ve opted in to going over the limit: a purchase can take it up to a tenth over, and this card charges nothing for it.');
     expect(after.text).toContain('Left To Spend $50 Of a $500 limit');
   });
 });
@@ -876,8 +877,8 @@ describe('cash.deposit', () => {
     const sv = savings(sim);
     const kept = sv.balance;
     sv.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
-    expect(run(sim, 'cash.deposit', { amount: 40_00, toId: sv.id, at: 'counter' }).error).toBe('Chase Savings is dormant; use Reactivate first.');
-    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant; use Reactivate first.');
+    expect(run(sim, 'cash.deposit', { amount: 40_00, toId: sv.id, at: 'counter' }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(run(sim, 'bank.transfer', { fromId: checking(sim).id, toId: sv.id, amount: 40_00 }).error).toBe('Chase Savings is dormant. Reactivate it first, under Your Accounts Over Time.');
     expect(sv.balance).toBe(kept);
     expect(inHand(sim)).toBe(100_00);
     must(sim, 'bank.reactivate', { accountId: sv.id });
@@ -894,16 +895,16 @@ describe('cash.deposit', () => {
     const atm = (toId = account.id) => run(sim, 'cash.deposit', { amount: 10_00, toId, at: 'atm' });
     const counter = (toId = account.id) => must(sim, 'cash.deposit', { amount: 10_00, toId, at: 'counter' });
     must(sim, 'card.lock', { which: 'debit', locked: true });
-    expect(atm().error).toBe('Your debit card is locked; the counter can still take it.');
+    expect(atm().error).toBe('Your debit card is locked. You can still pay cash in at the counter.');
     counter();
     must(sim, 'card.lock', { which: 'debit', locked: false });
     must(sim, 'card.report', { which: 'debit', why: 'lost' });
-    expect(atm().error).toBe('Your debit card is stopped; the counter can still take it.');
+    expect(atm().error).toBe('Your debit card is stopped. You can still pay cash in at the counter.');
     counter();
     // A Wells Fargo account opened and made primary: its first card is on its way.
     const opened = must<{ accountId: string; cardAt: number }>(sim, 'bank.open_current', { bankId: 'us-wells-fargo', fundFrom: account.id, amount: 100_00 });
     must(sim, 'bank.set_primary', { accountId: opened.accountId });
-    expect(atm(opened.accountId).error).toBe('Your debit card hasn’t arrived yet; the counter can still take it.');
+    expect(atm(opened.accountId).error).toBe('Your debit card hasn’t arrived yet. You can still pay cash in at the counter.');
     counter(opened.accountId);
     expect(inHand(sim)).toBe(70_00);
     sim.advanceTo(opened.cardAt + 60_000);
@@ -917,11 +918,11 @@ describe('cash.deposit', () => {
     const sim = settled('g12-deposit-screen');
     const account = checking(sim);
     const empty = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }));
-    expect(empty.text).toContain('$0.00 in hand.');
+    expect(empty.text).toContain('You have $0.00 in cash.');
     expect(empty.count('Pay It In')).toBe(0);
     must(sim, 'cash.withdraw', { amount: 100_00, from: 'atm' });
     const held = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }));
-    expect(held.text).toContain('$100.00 in hand.');
+    expect(held.text).toContain('You have $100.00 in cash.');
     expect(held.text).toContain('Chase Total Checking');
     expect(held.text).toContain('Chase Savings');
     expect(held.text).toContain('An ATM');
@@ -972,18 +973,18 @@ describe('cash.withdraw', () => {
     const account = checking(sim);
     const card = chaseCard(sim);
     const out = (amount: number, from: string) => run(sim, 'cash.withdraw', { amount, from });
-    expect(out(0, 'atm').error).toBe('Say how much.');
-    expect(out(20_00, 'bank').error).toBe('From your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
+    expect(out(0, 'atm').error).toBe('Enter an amount.');
+    expect(out(20_00, 'bank').error).toBe('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
     expect(out(20_00, 'post_office').error).toBe('Chase’s customers can’t use the Post Office for cash.');
     setBalance(sim, account, 250_00); // TEST SETUP
-    expect(out(300_00, 'counter').error).toBe('Chase Total Checking holds $250.00.');
+    expect(out(300_00, 'counter').error).toBe('Chase Total Checking only has $250.00 in it.');
     account.dormant = true; // TEST SETUP: dormant, as thirty months untouched at Chase would make it
-    expect(out(20_00, 'atm').error).toBe('Chase Total Checking is dormant; use Reactivate first.');
-    expect(out(20_00, 'counter').error).toBe('Chase Total Checking is dormant; use Reactivate first.');
+    expect(out(20_00, 'atm').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
+    expect(out(20_00, 'counter').error).toBe('Chase Total Checking is dormant. Reactivate it first, under Your Accounts Over Time.');
     must(sim, 'bank.reactivate', { accountId: account.id });
     must(sim, 'card.report', { which: 'debit', why: 'stolen' });
-    expect(out(20_00, 'atm').error).toBe('Your debit card is stopped; the counter can still pay out.');
-    expect(out(20_00, 'other_atm').error).toBe('Your debit card is stopped; the counter can still pay out.');
+    expect(out(20_00, 'atm').error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
+    expect(out(20_00, 'other_atm').error).toBe('Your debit card is stopped. You can still take cash out at the counter.');
     expect(inHand(sim)).toBe(0);
     expect(account.balance).toBe(250_00);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' })).toEqual({ fee: 0 });
@@ -991,7 +992,7 @@ describe('cash.withdraw', () => {
     // $1,000 owed on a limit brought to $1,100: $100 free, and $100 in cash takes $110 with Chase's least fee.
     purchases(sim, card, 1_000_00); // TEST SETUP
     must(sim, 'card.request_limit', { limit: 1_100_00 });
-    expect(out(100_00, 'card').error).toBe('The card has $100.00 free, and this takes $110.00 with its fee.');
+    expect(out(100_00, 'card').error).toBe('The card has $100.00 of its limit left, and this needs $110.00 with its fee.');
     expect(must(sim, 'cash.withdraw', { amount: 90_00, from: 'card' })).toEqual({ fee: 10_00 });
     expect(cardRoom(sim.player, card)).toBe(0);
     expect(inHand(sim)).toBe(110_00);
@@ -1002,12 +1003,12 @@ describe('cash.withdraw', () => {
     const opened = must<{ accountId: string; arrivesAt: number; cardAt: number }>(sim, 'bank.open_current', { bankId: 'us-wells-fargo', fundFrom: checking(sim).id, amount: 100_00 });
     must(sim, 'bank.set_primary', { accountId: opened.accountId });
     const wf = sim.universe.accounts[opened.accountId]!;
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet; the counter can still pay out.');
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} holds $0.00.`);
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet. You can still take cash out at the counter.');
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' }).error).toBe(`${wf.name} only has $0.00 in it.`);
     sim.advanceTo(opened.arrivesAt + 60_000);
     expect(wf.balance).toBe(100_00);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'counter' })).toEqual({ fee: 0 });
-    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet; the counter can still pay out.');
+    expect(run(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' }).error).toBe('Your debit card hasn’t arrived yet. You can still take cash out at the counter.');
     sim.advanceTo(opened.cardAt + 60_000);
     expect(must(sim, 'cash.withdraw', { amount: 20_00, from: 'atm' })).toEqual({ fee: 0 });
     expect(wf.balance).toBe(60_00);
@@ -1044,9 +1045,9 @@ describe('cash.withdraw', () => {
   it('stops at a Kiwibank card’s NZ$1,000 cash limit, the only kind of cash limit a card in SLATE has', () => {
     // LIFE FIXTURE: Auckland at Kiwibank, since none of the American cards a New Haven life holds has a cash limit.
     const sim = quickSave({ startLocationId: 'nz-akl-auckland', homeRegionId: 'nz-akl-auckland', livesWhereBorn: true, wealth: 'comfortable', bankId: 'nz-kiwibank' }, 'g12-cash-limit');
-    expect(run(sim, 'cash.withdraw', { amount: 1_000_01, from: 'card' }).error).toBe('The card lets NZ$1,000.00 out as cash, and NZ$0.00 is out already.');
+    expect(run(sim, 'cash.withdraw', { amount: 1_000_01, from: 'card' }).error).toBe('The card lets you take NZ$1,000.00 out as cash, and NZ$0.00 is out already.');
     must(sim, 'cash.withdraw', { amount: 600_00, from: 'card' });
-    expect(run(sim, 'cash.withdraw', { amount: 400_01, from: 'card' }).error).toBe('The card lets NZ$1,000.00 out as cash, and NZ$600.00 is out already.');
+    expect(run(sim, 'cash.withdraw', { amount: 400_01, from: 'card' }).error).toBe('The card lets you take NZ$1,000.00 out as cash, and NZ$600.00 is out already.');
     must(sim, 'cash.withdraw', { amount: 400_00, from: 'card' });
     expect(stateOf(sim.player, cardsOf(sim, sim.player)[0]!).cashOwed).toBe(1_000_00);
   });
@@ -1056,16 +1057,16 @@ describe('cash.withdraw', () => {
     const card = chaseCard(sim);
     // TEST SETUP: $300 typed into Take Out, and A Cash Advance On The Card chosen (the first two useStates).
     const advance = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }), ['300', 'card']);
-    expect(advance.text).toContain('$15.00 for it. It draws 28.49% a year from today, with no grace period.');
+    expect(advance.text).toContain('It costs $15.00. A cash advance is charged 28.49% a year from today, with no interest-free period.');
     advance.press('Take It Out');
     expect(stateOf(sim.player, card).cashOwed).toBe(300_00);
     expect(card.balance).toBe(-315_00);
     must(sim, 'card.report', { which: 'debit', why: 'stolen' });
     const machine = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }), ['20', 'atm']);
-    expect(machine.text).toContain('Your debit card is stopped; the counter can still pay out.');
+    expect(machine.text).toContain('Your debit card is stopped. You can still take cash out at the counter.');
     expect(machine.button('Take It Out')!.disabled).toBe(true);
     const counter = drawn(sim, () => createElement(BankCash, { bankId: 'us-chase' }), ['20', 'counter']);
-    expect(counter.text).toContain('Free.');
+    expect(counter.text).toContain('It’s free.');
     expect(counter.button('Take It Out')!.disabled).toBe(false);
   });
 });

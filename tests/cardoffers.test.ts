@@ -192,7 +192,7 @@ describe('a plan', () => {
     const rest = Math.round((credit.statementBalance - 2_103_20) * terms.minimumShare) + (terms.minimumPlusInterest ? credit.statementInterest ?? 0 : 0);
     expect(minimumDue(sim, credit.statementBalance, terms, credit.statementInterest ?? 0, credit.statementPlanDue)).toBe(Math.max(terms.minimumFloor, rest) + 2_103_20);
     const nat = lifeIn('uk-eng-london', { bankId: 'gb-natwest' }, 'co-plan-gb');
-    expect(run(nat, 'card.plan', { amount: 100_00, months: 3 }).error).toMatch(/no plan/);
+    expect(run(nat, 'card.plan', { amount: 100_00, months: 3 }).error).toMatch(/No payment plan terms were found/);
   });
 });
 
@@ -201,7 +201,7 @@ describe('a plan charged as interest', () => {
     const sim = lifeIn('ie-lei-dublin', { bankId: 'ie-bank-of-ireland' }, 'co-plan-boi');
     const c = card(sim);
     give(sim, c.id, -c.balance - 2_000_00);
-    expect(run(sim, 'card.plan', { amount: 1_000_00, months: 3 }).error).toMatch(/6, 12, 24 months/);
+    expect(run(sim, 'card.plan', { amount: 1_000_00, months: 3 }).error).toMatch(/6, 12 or 24 months/);
     expect(run(sim, 'card.plan', { amount: 200_00, months: 12 }).error).toMatch(/at least/);
     sim.must({ kind: 'card.plan', payload: { amount: 1_000_00, months: 12 } });
     const credit = sim.player.credit!;

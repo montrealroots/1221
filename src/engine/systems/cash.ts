@@ -116,18 +116,18 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
     const terms = cardTerms(sim, card, person.credit.score);
     const fee = Math.max(terms.cashFeeMin, Math.round(amount * terms.cashFeeShare));
     const room = cardRoom(person, card);
-    if (room < amount + fee) return { fee, refused: `The card has ${formatMoney(room, cur)} free, and this takes ${formatMoney(amount + fee, cur)} with its fee.` };
+    if (room < amount + fee) return { fee, refused: `The card has ${formatMoney(room, cur)} of its limit left, and this needs ${formatMoney(amount + fee, cur)} with its fee.` };
     const cashOwed = stateOf(person, card).cashOwed ?? 0;
-    if (terms.cashLimit !== undefined && cashOwed + amount > terms.cashLimit) return { fee, refused: `The card lets ${formatMoney(terms.cashLimit, cur)} out as cash, and ${formatMoney(cashOwed, cur)} is out already.` };
+    if (terms.cashLimit !== undefined && cashOwed + amount > terms.cashLimit) return { fee, refused: `The card lets you take ${formatMoney(terms.cashLimit, cur)} out as cash, and ${formatMoney(cashOwed, cur)} is out already.` };
     return { fee };
   }
   const current = currentOf(sim, person);
   const bank = current?.bankId ? bankById(current.bankId) : undefined;
   const rules = bank ? CASH[bank.id] : undefined;
   if (!current || !bank) return { fee: 0, refused: 'You need a bank account to take cash out of.' };
-  if (current.dormant) return { fee: 0, refused: `${current.name} is dormant; use Reactivate first.` };
+  if (current.dormant) return { fee: 0, refused: `${current.name} is dormant. Reactivate it first, under Your Accounts Over Time.` };
   // A machine needs the debit card; the counter doesn't.
-  if (from !== 'counter' && current.plastic && (current.plastic.locked || current.plastic.stopped)) return { fee: 0, refused: current.plastic.stopped === 'new' ? 'Your debit card hasn’t arrived yet; the counter can still pay out.' : current.plastic.stopped ? 'Your debit card is stopped; the counter can still pay out.' : 'Your debit card is locked.' };
+  if (from !== 'counter' && current.plastic && (current.plastic.locked || current.plastic.stopped)) return { fee: 0, refused: current.plastic.stopped === 'new' ? 'Your debit card hasn’t arrived yet. You can still take cash out at the counter.' : current.plastic.stopped ? 'Your debit card is stopped. You can still take cash out at the counter.' : 'Your debit card is locked. Unlock it under Your Cards, or take cash out at the counter.' };
   // A card from a bank kept at home (from 2026-10-16): another bank's machine here, for its fee abroad in its own money,
   // and the machine's owner's fee where it's published for the country the machine is in.
   const abroad = atmAbroad(sim, current, amount, from);
@@ -136,7 +136,7 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
     const here = OWNER_SURCHARGE[isoHere(person) ?? ''];
     const owner = here ? inSave(sim, here.fee, here.currency) : 0;
     // In its own money, the dollars beside (from 2026-10-16: until then in dollars alone).
-    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} holds ${balanceText(sim, current, Math.max(0, current.balance), Math.max(0, current.held ?? 0))}.` };
+    if (current.balance < amount + abroad.fee + owner) return { fee: abroad.fee, refused: `${current.name} only has ${balanceText(sim, current, Math.max(0, current.balance), Math.max(0, current.held ?? 0))} in it.` };
     return { fee: abroad.fee, feeNative: abroad.native, ...(owner ? { ownerCharge: owner } : { ownerFee: true }) };
   }
   if (from === 'post_office' && !rules?.postOffice) return { fee: 0, refused: `${bank.name}’s customers can’t use the Post Office for cash.` };
@@ -144,11 +144,11 @@ export function withdrawalQuote(sim: Simulation, person: Person, amount: Money, 
   if (from !== 'counter' && rules?.daily !== undefined) {
     const daily = inSave(sim, rules.daily, bank.currency);
     const used = atmToday(sim, person);
-    if (used + amount > daily) return { fee, refused: `${bank.name} lets ${formatMoney(daily, cur)} out of machines in a day, and ${formatMoney(used, cur)} has come out today.` };
+    if (used + amount > daily) return { fee, refused: `${bank.name} lets you take ${formatMoney(daily, cur)} a day out of machines, and you’ve taken ${formatMoney(used, cur)} today.` };
   }
   const owner = from === 'other_atm' && rules?.surcharge ? OWNER_SURCHARGE[bank.iso] : undefined;
   const ownerCharge = owner ? inSave(sim, owner.fee, owner.currency) : 0;
-  if (current.balance < amount + fee + ownerCharge) return { fee, refused: `${current.name} holds ${formatMoney(Math.max(0, current.balance), cur)}.` };
+  if (current.balance < amount + fee + ownerCharge) return { fee, refused: `${current.name} only has ${formatMoney(Math.max(0, current.balance), cur)} in it.` };
   if (ownerCharge) return { fee, ownerCharge };
   return { fee, ...(from === 'other_atm' && rules?.surcharge ? { ownerFee: true } : {}) };
 }
@@ -208,9 +208,9 @@ export function registerCash(sim: Simulation): void {
   sim.onCommand<{ amount: Money; from: CashFrom; accountId?: string }, { fee: Money; ownerFee?: boolean; ownerCharge?: Money }>('cash.withdraw', (p, { sim: s }) => {
     const person = s.player;
     const amount = Math.round(Number(p.amount));
-    if (!(amount > 0)) throw new CommandError('Say how much.');
+    if (!(amount > 0)) throw new CommandError('Enter an amount.');
     const from = p.from;
-    if (!['atm', 'other_atm', 'counter', 'post_office', 'card'].includes(from)) throw new CommandError('From your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
+    if (!['atm', 'other_atm', 'counter', 'post_office', 'card'].includes(from)) throw new CommandError('Choose where to take it from: your bank’s ATM, another bank’s, the counter, the Post Office or the card.');
     const quote = withdrawalQuote(s, person, amount, from, p.accountId);
     if (quote.refused) throw new CommandError(quote.refused);
     const wallet = walletOf(s, person, true)!;
@@ -242,7 +242,7 @@ export function registerCash(sim: Simulation): void {
     // A dormant account takes nothing until it's reactivated, as Move Money into it is refused; and a machine needs the
     // debit card, as one paying out does (from 2026-10-13: until then cash went into a dormant account and it stayed
     // dormant, and an ATM took a deposit with the card locked; found by the review of that day).
-    if (to.dormant) throw new CommandError(`${to.name} is dormant; use Reactivate first.`);
+    if (to.dormant) throw new CommandError(`${to.name} is dormant. Reactivate it first, under Your Accounts Over Time.`);
     // A bank kept at home takes cash only at its own counters and machines, in its country.(from 2026-10-16).
     if (heldFromAbroad(s, to)) throw new CommandError(`${bank?.name ?? 'That bank'} takes cash only at its own counters and machines, in its country.`);
     // The card is the one the bank taking the money issued: the current account’s own, or for savings the current
@@ -251,7 +251,7 @@ export function registerCash(sim: Simulation): void {
     // Chase’s (found by that day’s third round of defects).
     const atBank = to.kind === 'checking' ? to : Object.values(s.universe.accounts).find((a) => a.ownerId === person.id && !a.closedAt && a.kind === 'checking' && a.bankId === to.bankId);
     const card = (atBank ?? (person.primaryAccountId ? s.universe.accounts[person.primaryAccountId] : undefined))?.plastic;
-    if (p.at === 'atm' && card && (card.locked || card.stopped)) throw new CommandError(card.stopped === 'new' ? 'Your debit card hasn’t arrived yet; the counter can still take it.' : card.stopped ? 'Your debit card is stopped; the counter can still take it.' : 'Your debit card is locked; the counter can still take it.');
+    if (p.at === 'atm' && card && (card.locked || card.stopped)) throw new CommandError(card.stopped === 'new' ? 'Your debit card hasn’t arrived yet. You can still pay cash in at the counter.' : card.stopped ? 'Your debit card is stopped. You can still pay cash in at the counter.' : 'Your debit card is locked. You can still pay cash in at the counter.');
     const where = p.at === 'atm' ? 'ATM' : p.at === 'post_office' ? 'Post Office' : 'Counter';
     s.post({ memo: `Cash in: ${where}`, category: 'cash', postings: [{ accountId: wallet.id, amount: -amount }, { accountId: to.id, amount }] });
     return { paid: amount };

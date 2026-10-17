@@ -600,7 +600,7 @@ describe('journeys.x4: a document running out under a payment', () => {
     // A new bank asks for a photo ID in force.
     const chase = account(sim, 'Chase Total Checking');
     const before = still(sim);
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     expect(still(sim)).toBe(before);
     // Connecticut's non-driver ID, where she lives: $28.00, mailed within twenty business days of Tuesday 20 June, the
     // Fourth not among them, Wednesday 19 July; to her first birthday at least seven years on, 14 June 2036 (Connecticut
@@ -611,7 +611,7 @@ describe('journeys.x4: a document running out under a payment', () => {
     expect(dated(got.readyAt)).toBe('July 19, 2028');
     expect(held - chase.balance).toBe(28_00);
     expect(refused(sim, 'documents.apply_idcard')).toBe('One is already on its way.');
-    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi asks a new customer for a photo ID in force: a passport, a license or an ID card. Papers has each.');
+    expect(refused(sim, 'bank.open_current', { bankId: 'us-citi', fundFrom: chase.id, amount: 100_00 })).toBe('Citi needs a valid photo ID from a new customer: a passport, a driver’s license or an ID card. You can apply for a passport or an ID card on Papers, under Passport And ID.');
     sim = reload(sim);
     tend(sim, got.readyAt + MS_HOUR);
     expect(refused(sim, 'documents.apply_idcard')).toBe('You already hold one in force.');

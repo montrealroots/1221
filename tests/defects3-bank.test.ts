@@ -119,7 +119,7 @@ describe('cash.deposit at a machine reads the card of the bank taking the money'
     const atm = (to: Account) => sim.execute({ kind: 'cash.deposit', payload: { amount: 10_00, toId: to.id, at: 'atm' } });
 
     must(sim, 'card.lock', { which: 'debit', locked: true, accountId: wf.id });
-    expect(atm(wf).error).toBe('Your debit card is locked; the counter can still take it.');
+    expect(atm(wf).error).toBe('Your debit card is locked. You can still pay cash in at the counter.');
     const w0 = wf.balance;
     must(sim, 'cash.deposit', { amount: 10_00, toId: wf.id, at: 'counter' });
     expect(wf.balance).toBe(w0 + 10_00);
@@ -130,7 +130,7 @@ describe('cash.deposit at a machine reads the card of the bank taking the money'
     expect(atm(wf).ok).toBe(true);
     expect(wf.balance).toBe(w0 + 20_00);
     // Savings at Chase reads the card of the Chase account beside it.
-    expect(atm(mine(sim, 'savings', 'us-chase')).error).toBe('Your debit card is locked; the counter can still take it.');
+    expect(atm(mine(sim, 'savings', 'us-chase')).error).toBe('Your debit card is locked. You can still pay cash in at the counter.');
   });
 });
 
@@ -245,7 +245,7 @@ describe('card.report rushes only what the bank’s own words make a rush', () =
     const sim = quickSave({ startLocationId: 'kr-11-seoul', homeRegionId: 'kr-11-seoul', livesWhereBorn: true, wealth: 'comfortable', bankId: 'kr-shinhan' }, 'd3-shinhan');
     const checking = primary(sim);
     expect(checking.bankId).toBe('kr-shinhan');
-    expect(refused(sim, 'card.report', { which: 'debit', why: 'lost', rush: true })).toBe(`${checking.institution} has no rush replacement SLATE knows of.`);
+    expect(refused(sim, 'card.report', { which: 'debit', why: 'lost', rush: true })).toBe(`No rushed replacement was found for ${checking.institution}.`);
     expect(checking.plastic?.stopped).toBeUndefined();
     expect(onScreen(sim, createElement(BankSecurity, { bankId: 'kr-shinhan' }))).not.toContain('Rush The New One');
   });

@@ -412,7 +412,7 @@ describe('turning off, switching banks, and a save from before', () => {
     expect(tdOpened.player.roundUps).toMatchObject({ on: true, pending: 0, last: { notMoved: 50, why: 'Choose the amount each purchase, C$0.50 to C$5.00.' } });
     h.sim = tdOpened;
     const text = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'ca-td' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(text).toContain('Not counting: Choose the amount each purchase, C$0.50 to C$5.00.');
+    expect(text).toContain('Round-ups aren’t counting right now. Choose the amount each purchase, C$0.50 to C$5.00.');
   });
 });
 
@@ -470,7 +470,7 @@ describe('a purchase already a whole unit', () => {
     expect(sim.player.roundUps!.whole).toBe(2);
     h.sim = sim;
     const text = () => renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'us-citi' })).replace(/<!-- -->/g, '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(text()).toContain('2 purchases since the last transfer were already a multiple of $1.00, so rounded up to nothing.');
+    expect(text()).toContain('2 purchases since the last transfer were already a multiple of $1.00, so they added nothing.');
     sim.advanceTo(after(sim, 6));
     expect(moves(sim)[0]!.amount).toBeGreaterThanOrEqual(75);
     // The night's groceries, whole dollars too, count toward the next transfer's.
@@ -495,19 +495,19 @@ describe('the panel', () => {
     const rule = ROUND_UPS['gb-natwest']!;
     expect(words()).toContain(`Round-Ups, ${rule.product}. ${rule.words}`);
     expect(shown()).toContain('aria-label="Multiplier"');
-    for (const m of [1, 2, 3, 4, 5]) expect(shown()).toContain(`>×${m}${m === 1 ? ', the plain change' : ''}</option>`);
+    for (const m of [1, 2, 3, 4, 5]) expect(shown()).toContain(`>×${m}${m === 1 ? ', just the change' : ''}</option>`);
     expect(words()).toContain('Round-Ups: Off');
     on(sim, { multiplier: 3 });
     counts(sim, 2_30);
     expect(words()).toContain('Round-Ups: On');
-    expect(words()).toMatch(/Counted, not yet moved: £\d+\.\d\d\./);
+    expect(words()).toMatch(/Counted but not moved yet: £\d+\.\d\d\./);
     sim.advanceTo(after(sim, 6));
-    expect(words()).toMatch(/Last moved: £\d+\.\d\d into savings, /);
+    expect(words()).toMatch(/Last moved to savings: £\d+\.\d\d, on /);
     for (const o of rule.open) expect(words()).toContain(o);
-    expect(words()).toContain(`Read from ${rule.source}; checked ${rule.checked}.`);
+    expect(words()).toContain(`Source: ${rule.source}, checked ${rule.checked}.`);
     expect(words()).toContain(`When the account is short: ${rule.short}`);
     // A bank that isn't the primary one's: its words, and why it can't be turned on here.
     const other = renderToStaticMarkup(createElement(BankAccountLife, { bankId: 'gb-lloyds' })).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
-    expect(other).toContain('Round-ups at Lloyds Bank run from a Lloyds Bank current account made your primary one.');
+    expect(other).toContain('Round-ups at Lloyds Bank only work when a Lloyds Bank current account is your primary account.');
   });
 });

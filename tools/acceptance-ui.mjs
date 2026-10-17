@@ -668,7 +668,7 @@ await step('money: a transfer refused for more than the account holds, in the en
   await amount.fill('99999999'); await wait(200);
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   const refused = await toast();
-  must(/holds|can’t|more than/i.test(refused), `refusal said: ${refused}`);
+  must(/only has|holds|can’t|more than/i.test(refused), `refusal said: ${refused}`);
   await amount.fill('1'); await wait(200);
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   return `${refused} / ${await toast()}`;
@@ -1180,11 +1180,11 @@ if (DIR) {
     const last = (await panel().locator('[data-roundups-last]').innerText().catch(() => '')).replace(/\s+/g, ' ');
     const whole = (await panel().locator('[data-roundups-whole]').innerText().catch(() => '')).replace(/\s+/g, ' ');
     if (last) {
-      const moved = Number((last.match(/^Last moved: \$(\d+\.\d\d) into savings/) ?? [])[1] ?? NaN);
+      const moved = Number((last.match(/^Last moved to savings: \$(\d+\.\d\d), on /) ?? [])[1] ?? NaN);
       must(moved > 0 && moved <= 15, `not a transfer of up to $15: ${last}`);
       return last;
     }
-    const n = Number((whole.match(/^(\d+) purchases since the last transfer were already a multiple of \$1\.00, so rounded up to nothing\.$/) ?? [])[1] ?? NaN);
+    const n = Number((whole.match(/^(\d+) purchases since the last transfer were already a multiple of \$1\.00, so they added nothing\.$/) ?? [])[1] ?? NaN);
     must(n >= 7, `a week, and neither a transfer nor whole purchases said: ${whole || '(nothing)'}`);
     return whole;
   });
@@ -1698,7 +1698,7 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   await rail('Money'); await tab('Accounts');
   const panels = await page.locator('section.card').filter({ hasText: 'Held From Abroad' }).allInnerTexts();
   must(panels.length >= 2, `${panels.length} panels held from abroad`);
-  must(panels.every((p) => /£[\d,]+/.test(p) && /in dollars, at SLATE’s rate/.test(p)), 'a home account’s panel without both currencies');
+  must(panels.every((p) => /£[\d,]+/.test(p) && /at an estimated exchange rate/.test(p)), 'a home account’s panel without both currencies');
   await page.locator('#move-from').selectOption({ label: (await page.locator('#move-from option', { hasText: 'Chase Total Checking' }).first().innerText()).trim() }); await wait(400);
   await page.locator('#move-to').selectOption({ label: (await page.locator('#move-to option', { hasText: 'HSBC Bank Account' }).first().innerText()).trim() }); await wait(400);
   await page.locator('#move-amount').fill('100'); await wait(500);
@@ -1707,7 +1707,7 @@ await step('home account: a London-raised F-1 keeps HSBC UK through Before Yale,
   await overflow('money move abroad');
   await page.getByRole('button', { name: /^Move It/ }).first().click(); await wait(800);
   const sent = await toast();
-  must(/Sent \$100(\.00)?: it arrives/.test(sent), `the toast said: ${sent}`);
+  must(/Sent \$100(\.00)?\. It arrives/.test(sent), `the toast said: ${sent}`);
   await rail('Home');
   const line = (await page.locator('body').innerText()).match(/Chase Total Checking: [^\n]*/)?.[0] ?? '';
   must(/at HSBC UK/.test(line) && /£/.test(line) && /\$/.test(line), `Home's money line said: ${line}`);

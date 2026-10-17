@@ -37,7 +37,7 @@ describe('a card’s plans, as the debt look prices them', () => {
     stateOf(sim.player, card).plans = [{ left: owed, monthly: Math.ceil(owed / 12), fee: 0, monthsLeft: 12, apr: 0.067 }];
     const words = owedWords(sim);
     expect(words).not.toContain('They’re charged no interest today.');
-    expect(words).toMatch(/would come to about \$\d+(\.\d\d)? a year/);
+    expect(words).toMatch(/would cost about \$\d+(\.\d\d)? a year/);
   });
 
   it('counts a plan with a fee at no interest, its fee in place of it', () => {

@@ -110,8 +110,8 @@ describe('an account kept at home, in its own money on every screen', () => {
 
     // The bank: each account's balance in pounds with its dollars, Held From Abroad, its card's fees, its own rate.
     expect(s.bank).toContain(`HSBC UK ${saver.number}, Held From Abroad`);
-    expect(s.bank).toContain(`Balance ${held(saver.held!)} $${(saver.balance / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} in dollars, at SLATE’s rate`);
-    expect(s.bank).toContain('Balance £100.00 $126.58 in dollars, at SLATE’s rate');
+    expect(s.bank).toContain(`Balance ${held(saver.held!)} About $${(saver.balance / 100).toLocaleString('en-US', { minimumFractionDigits: 2 })} at an estimated exchange rate`);
+    expect(s.bank).toContain('Balance £100.00 About $126.58 at an estimated exchange rate');
     expect(s.bank).toContain('Its debit card costs 2.75% of each purchase in dollars, and 2.75% and 2% (at least £1.75, at most £5.00) of the cash at another bank’s machine here, with the machine’s own fee.');
     expect(s.bank).toContain('Pays 1.05% a year (1.055% APY).');
     expect(s.bank).toMatch(/at your other banks, £5,\d{3} of it at HSBC UK\./);
@@ -123,7 +123,7 @@ describe('an account kept at home, in its own money on every screen', () => {
     expect(s.bankLook).toContain(`You have ${held(saver.held! + current.held!)} ($`);
     // August's statement, in pounds: the split brought in on the first morning, £100 out, its interest in (139¢ for the
     // seven nights on 693,798¢ at 1.05%, 109.81p, so 110p).
-    expect(s.statement).toContain('In GBP, as HSBC UK keeps it, with the dollars at SLATE’s rate under each figure.');
+    expect(s.statement).toContain('In GBP, as HSBC UK keeps it, with its value in dollars, at an estimated exchange rate, under each figure.');
     expect(s.statement).toContain('Opening Balance £0.00 $0.00 in dollars Money In £5,582.10 $7,065.95 in dollars Money Out £100.00 $126.58 in dollars');
     expect([paid.amount, paid.native]).toEqual([139, 110]);
     expect(s.statement).toContain('Opening balance: Flexible Saver +£5,581.00 £5,581.00');

@@ -19,6 +19,7 @@ import type { Account } from '@/engine/core/ledger';
 import { dueAt, stateOf } from '@/engine/systems/credit';
 import { pendingOn } from '@/engine/systems/pending';
 import { PENDING } from '@/engine/content/pending';
+import { LOOKAHEAD_DAYS } from '@/engine/systems/obligations';
 import {
   accountStatement, alertsOf, cardStatement, periodsOf, yearSummary, type StatementLine,
 } from '@/engine/systems/statements';
@@ -40,7 +41,7 @@ export function BankStatements() {
 
   return (
     <>
-      <Panel title="Statements" subtitle="Every entry on each account, with the balance after it.">
+      <Panel title="Statements" subtitle="Every payment in and out of each account, with the balance after it.">
         <div className="field-row">
           <div className="field">
             <label htmlFor="statement-account">Account</label>
@@ -57,7 +58,7 @@ export function BankStatements() {
             </select>
           </div>
         </div>
-        {period.rebuilt && <p className="xs dim" style={{ margin: 0 }}>Rebuilt: this statement is from before the card’s statements were kept, so its dates are drawn on the statement day of the earliest one kept. If the day was moved before then, they may be a few days off.</p>}
+        {period.rebuilt && <p className="xs dim" style={{ margin: 0 }}>Rebuilt: this statement comes from before the card’s statements were kept, so its dates are set from the statement day of the earliest one kept. If the statement day was moved before then, they may be a few days off.</p>}
         {account.kind === 'credit_card' ? <CardStatementView account={account} period={period} /> : <AccountStatementView account={account} period={period} />}
       </Panel>
       <YearView />
@@ -79,7 +80,7 @@ function AccountStatementView({ account, period }: { account: Account; period: R
   const own = (native: number, dollars: number) => (h && account.currency ? { value: formatMoney(native, account.currency), note: `${money(dollars)} in dollars` } : { value: money(dollars) });
   return (
     <LookRegion className="col gap-3">
-      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with the dollars at SLATE’s rate under each figure.</p>}
+      {h && account.currency && <p className="xs dim" style={{ margin: 0 }}>In {account.currency}, as {account.institution ?? 'the bank'} keeps it, with its value in dollars, at an estimated exchange rate, under each figure.</p>}
       <div className="grid grid-3">
         <Figure look={look} label={owed ? 'Owed At The Start' : 'Opening Balance'} {...own(h?.opening ?? 0, st.opening)} />
         <Figure look={look} label={owed ? 'Paid Off' : 'Money In'} {...own(h?.moneyIn ?? 0, owed ? st.moneyOut : st.moneyIn)} />
@@ -87,9 +88,9 @@ function AccountStatementView({ account, period }: { account: Account; period: R
         {!owed && <Figure look={look} label="Interest, After Tax" {...own(h?.interest ?? 0, st.interest)} />}
         {!owed && <Figure look={look} label="Fees" {...own(h?.fees ?? 0, st.fees)} />}
         <Figure look={look} label={owed ? 'Owed At The End' : period.to > sim.now ? 'Available Now' : 'Closing Balance'} {...own(h?.closing ?? 0, st.closing)} />
-        {!owed && period.to > sim.now && pending !== 0 && <Figure look={look} label="Posted Balance" value={money(st.closing - pending)} note="Completed items only; what’s pending is still to post" />}
+        {!owed && period.to > sim.now && pending !== 0 && <Figure look={look} label="Posted Balance" value={money(st.closing - pending)} note="Posted payments only: what’s pending hasn’t posted yet" />}
       </div>
-      <Lines lines={st.lines} sign={1} empty="The account stood still in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} currency={account.currency} />
+      <Lines lines={st.lines} sign={1} empty="No money went in or out of the account in this period." card={owed} valueDated={Boolean(account.bankId && PENDING[account.bankId]?.valueDating)} currency={account.currency} />
       {!owed && account.bankId && PENDING[account.bankId] && <PendingTerms bankId={account.bankId} />}
     </LookRegion>
   );
@@ -105,7 +106,7 @@ function PendingTerms({ bankId }: { bankId: string }) {
   ].filter(Boolean);
   return (
     <Fine>
-      {said.join(' ')}{said.length ? ' ' : ''}{terms.pendingDays === undefined ? 'The bank doesn’t say how long a card payment stays pending, so SLATE’s estimate holds it. ' : ''}Source: {terms.source}.
+      {said.join(' ')}{said.length ? ' ' : ''}Source: {terms.source}.{terms.pendingDays === undefined ? ' How long a card payment stays pending is estimated: the bank doesn’t say.' : ''}
     </Fine>
   );
 }
@@ -138,13 +139,13 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
         <Figure look={look} label="Fees" value={money(st.fees)} />
         <Figure look={look} label="Interest" value={money(st.interest)} />
         <Figure look={look} label={closed ? 'New Balance' : 'Balance Now'} value={money(st.newBalance)} note={!closed && pendingOn(sim, account) !== 0 ? `${money(-pendingOn(sim, account))} of it pending` : undefined} />
-        <Figure look={look} label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is worked on" />
+        <Figure look={look} label="Average Daily Balance" value={money(st.averageDaily)} note="What interest is charged on" />
       </div>
       {closed && st.newBalance > 0 && st.minimum !== undefined && (
         <p className="small" style={{ margin: 0 }}>
           {st.terms.kind === 'charge'
             ? `${st.terms.issuer ?? 'The bank'} takes the whole ${money(st.newBalance)} from your current account${due ? ` on ${formatDate(due, sim.zone)}` : ''}.`
-            : `The least to pay is ${money(least!)}${onPlan ? ', the plan’s payment' : ''}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new draws interest, though what built up since this statement comes on the next one' : 'none of it draws interest'}.`}
+            : `The least you can pay is ${money(least!)}${onPlan ? ', the plan’s payment' : ''}${due ? `, by ${formatDate(due, sim.zone)}` : ''}. Pay the whole ${money(st.newBalance)} and ${carried ? 'nothing new is charged interest, though the interest built up since this statement comes on the next one' : 'none of it is charged interest'}.`}
         </p>
       )}
       {/* On a plan nothing draws interest and nothing new goes on the card, so paying the plan’s payment clears it in so many
@@ -152,7 +153,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
           at the card’s rate, which a plan doesn’t charge; found by that day’s guide audit). */}
       {closed && onPlan && least !== undefined && least > 0 && st.newBalance > 0 && st.terms.kind !== 'charge' && (
         <div className="callout small">
-          {`On the plan nothing draws interest and nothing new goes on the card: ${money(least)} a month clears the ${money(st.newBalance)} in ${yearsAndMonths(Math.ceil(st.newBalance / least))}, ${money(st.newBalance)} in all, so long as none is missed.`}
+          {`On the plan there’s no interest, and nothing new goes on the card. Paying ${money(least)} a month clears the ${money(st.newBalance)} in ${yearsAndMonths(Math.ceil(st.newBalance / least))}, ${money(st.newBalance)} in all, as long as no payment is missed.`}
         </div>
       )}
       {closed && !onPlan && st.minimumOnly && st.terms.kind !== 'charge' && (
@@ -165,7 +166,7 @@ function CardStatementView({ account, period }: { account: Account; period: Retu
       {st.nextInterest !== undefined && (
         <p className="xs dim" style={{ margin: 0 }}>If none of it is paid, next month’s interest will be about {money(st.nextInterest)}.</p>
       )}
-      <Lines lines={st.lines} sign={1} empty="The card went unused and unpaid in this period." card />
+      <Lines lines={st.lines} sign={1} empty="The card wasn’t used or paid in this period." card />
     </LookRegion>
   );
 }
@@ -181,7 +182,7 @@ function YearView() {
   const [year, setYear] = useState(last);
   const y = yearSummary(sim, sim.player.id, year);
   return (
-    <Panel title="The Year" subtitle="Interest, the tax taken off it, and every fee, as the bank reports them.">
+    <Panel title="The Year" subtitle="Interest, the tax taken off it, and every fee, as the bank reports them for the year.">
       <div className="field" style={{ maxWidth: 240 }}>
         <label htmlFor="statement-year">Year</label>
         <select id="statement-year" value={year} onChange={(e) => setYear(Number(e.target.value))}>
@@ -218,7 +219,7 @@ function AlertsView() {
     if (answer.ok) toast('Alerts saved.', 'positive');
   };
   return (
-    <Panel title="Alerts" subtitle="What the bank tells you, in What Needs You. Short For A Payment tells you, once, when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next three days (SLATE’s design)." help="bank.set_alerts">
+    <Panel title="Alerts" subtitle={`What the bank tells you, in What Needs You. Short For A Payment tells you once when an account can’t cover a standing order, a payment set for a date, card autopay or a loan payment due from it in the next ${['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'][LOOKAHEAD_DAYS] ?? LOOKAHEAD_DAYS} days. That alert is the game’s own, not a feature of a real bank.`} help="bank.set_alerts">
       <div className="field-row">
         <div className="field">
           <label htmlFor="alert-low">Any Current Account Under ({cur})</label>
@@ -246,9 +247,9 @@ function AlertsView() {
 function Figure({ label, value, note, look }: { label: string; value: string; note?: string; look?: Subject }) {
   const inner = (
     <>
-      <span className="stat-label">{label}</span>
+      <span className="stat-label">{label}</span>{' '}
       <span className="stat-value mono" style={{ fontSize: 'var(--size-md)' }}>{value}</span>
-      {note && <span className="stat-note">{note}</span>}
+      {note && <>{' '}<span className="stat-note">{note}</span></>}
     </>
   );
   return <div className="stat">{look ? <Open subject={look}>{inner}</Open> : inner}</div>;

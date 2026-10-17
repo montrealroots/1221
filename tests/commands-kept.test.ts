@@ -268,7 +268,7 @@ describe('what papers open, in the kept world (from 2026-10-09)', () => {
     for (const d of documentsOf(sim.player)) d.status = 'cancelled';
     // An account opened at a new bank (`bank.open_current`; a US switch, which asked the same, has no service to run since 2026-10-10).
     const r = sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } });
-    expect(r.error).toMatch(/asks a new customer for a photo ID in force/);
+    expect(r.error).toMatch(/needs a valid photo ID from a new customer/);
     const a = sim.must<{ readyAt: number }>({ kind: 'documents.apply_passport', payload: {} });
     sim.advanceTo(a.readyAt + MS_HOUR);
     expect(sim.execute({ kind: 'bank.open_current', payload: { bankId: 'us-citi' } }).ok).toBe(true);

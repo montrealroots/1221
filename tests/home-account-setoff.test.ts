@@ -61,7 +61,7 @@ describe('the set-off against an overdraft', () => {
     emptied(sim, current);
     sim.advanceTo(Date.UTC(2026, 11, 29, 12));
     // France's letters in euros, the dollars beside: €15 twice and 24 cents of interest by 1 October.
-    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['A month past your overdraft: €30.24 ($32.86) beyond it at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.']);
+    expect(titled(sim, 'BNP Paribas Wrote About Your Overrun')).toEqual(['Your account has been past its overdraft limit for a month, by €30.24 ($32.86) at 18.40% a year, with the charges each month brings. French law has the bank tell you after a month.']);
     // No loan for the overrun from a bank abroad, which opens nothing new for a customer abroad: until 2026-10-16 it
     // offered one, and lent it.
     expect(titled(sim, 'BNP Paribas Offered A Loan For The Overrun')).toEqual([]);
@@ -71,7 +71,7 @@ describe('the set-off against an overdraft', () => {
     current.creditOffered = { amount: 4_970, apr: 0.0607, months: 12 };
     expect(sim.execute({ kind: 'bank.take_overrun_loan', payload: { accountId: current.id } }).error).toBe('No way to open anything new at BNP Paribas from America was found, so the game assumes there’s none.');
     delete current.creditOffered;
-    expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Overdrawn past the limit for 60 days, the account closes in two months, on December 29, 2026, unless it’s back within it.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
+    expect(titled(sim, 'BNP Paribas Gave Notice To Close')).toEqual(['Your account has been past its overdraft limit for 60 days, so it closes in two months, on December 29, 2026, unless it’s back within the limit by then.']); // Until 2026-10-16 (brief 09's banking follow-up) this asserted the notice's straight apostrophe (\').
     const owedHeld = -current.held!;
     expect(owedHeld).toBeGreaterThan(0);
     const owedThen = -current.balance;
