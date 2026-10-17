@@ -16,7 +16,7 @@ repository stops it. *Decision Required*: the question, the evidence and the rec
 an area's disposition, a criterion's Met or Not Met). Until brief 09 the page carried those words alone and said "none
 open"; documenting, classifying or giving a row to the owner never made it done.
 
-**Completion, by the matrix:** 526 of 599 rows in scope Implemented And Verified (87.8%); 69 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
+**Completion, by the matrix:** 562 of 636 rows in scope Implemented And Verified (88.3%); 70 Implemented, Verification Incomplete, 0 Partially Implemented, 0 Not Implemented, 0 Blocked Externally, 4 Decision Required, 40 Explicitly Deferred.
 
 ## Totals
 
@@ -53,7 +53,9 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | Integration | 9 | 5 | 4 |  |  |  |  |  |
 | Known Shortfalls And Missing Tests | 7 | 6 |  |  |  |  | 1 |  |
 | Brief 12: Replacement Criteria | 4 | 3 |  |  |  |  | 1 |  |
-| **All** | **639** | **526** | **69** | **0** | **0** | **0** | **4** | **40** |
+| Brief 13 Area: interface | 4 | 4 |  |  |  |  |  |  |
+| Brief 13 Area: journeys | 33 | 32 | 1 |  |  |  |  |  |
+| **All** | **676** | **562** | **70** | **0** | **0** | **0** | **4** | **40** |
 
 ## Life, Health And Time
 
@@ -839,11 +841,58 @@ Only Implemented And Verified counts as done, out of every row not Explicitly De
 | `ST6-R2.e` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.e: carries R4 and R5. (e1) where the scene favors restraint, restraint t… | Decision Required | docs/verification/resolution-2026-10-17… | tests/decisions-judge.test.ts ‘ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (e1) to (e3), opportunities: wherever… |
 | `ST6-R2.g` | docs/verification/resolution-2026-10-17/acting-criteria.md, ST6-R2.g: carries R7. Each mutation in a copy runs the ST6-R2 gate tests; caugh… | Implemented And Verified | docs/verification/resolution-2026-10-17… | docs/verification/resolution-2026-10-17/acting/mutations.json ‘VITEST_MAX_FORKS=1 VITEST_MIN_FORKS=1 node tools/judge-mutations.mjs --list docs/verification/re… |
 
+## Brief 13 Area: interface
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `B13-UI.normal` | interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its … | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json |
+| `B13-UI.setback` | interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and follo… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json |
+| `B13-UI.specialist` | interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brie… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json |
+| `B13-UI.walkthrough` | interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carry… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/interface-result.json |
+
+## Brief 13 Area: journeys
+
+| Row | Goal | Status | Source's Word | Evidence |
+|---|---|---|---|---|
+| `journeys.4-complete-journeys` | Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appr… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-profiles` | Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow adv… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-expected-first` | Set expected outcomes before running each scenario. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-neglect` | A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count … | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-recovery` | At least some journeys must recover from setbacks through available gameplay. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-1` | Creation choices affect the intended state. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-2` | Classes, preparation, rehearsal, interpretation, and showings connect. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-3` | Attributes and genres develop and influence applicable work. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-4` | Advice responds to progress and changing circumstances. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-5` | Health, stamina, and energy remain distinct and interact correctly. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-6` | Money, school charges, holds, and payments reconcile. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-7` | Papers and document status affect the appropriate actions. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-8` | Warnings arrive consistently with later evaluations. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-9` | Term progression and the school endpoint work. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-check-10` | Saving, exiting, reloading, and continuing preserve the journey. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.4-focused` | Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-completed-stay` | Previously completed actions remain completed. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-once` | Consequences and scheduled events occur once. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-advice-acknowledges` | Advice acknowledges what has changed. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-feedback-current` | Repeated feedback reflects the current state. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-variety` | Exercises and situations vary where the current catalog supports variation. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-words-alone` | Repetition is not disguised by changing words alone. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-repetition-record` | Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just t… | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-defects-fixed` | Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.6-interpretations` | Different suitable interpretations produce understandable differences. | Implemented, Verification Incomplete | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-mastery` | Maximum-quality prepared mastery. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-attributes` | Relevant attribute improvement without unintended regression. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-genres` | Genre-specific benefits without unrelated leakage. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-specialists` | Specialist opportunities and valid limitations. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-advice-forecasts` | Accurate advice forecasts. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-stamina` | Stamina's duration, participation, intensity, and recovery behavior. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-ledger` | Ledger balance. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+| `journeys.7-save` | Save compatibility and historical results. | Implemented And Verified | docs/verification/playthroughs-2026-10-… | docs/verification/playthroughs-2026-10-17/journeys-result.json |
+
 ## What's Left
 
 Every row in scope not Implemented And Verified, with what its status says it needs.
 
-### Implemented, Verification Incomplete (69)
+### Implemented, Verification Incomplete (70)
 
 - **`bank.arrange_overdraft`** (Money): Unreachable as an arrangement. No New Haven bank arranges an overdraft (Chase, Bank of America and Wells Fargo charge by the item; Citi and Capital One have no overdraft terms), so a student’s request is refused in her bank’s words with nothing set or posted, across a reload, and Chase’s panel draws no Arrange It (tests/scope-money.test.ts ‘PLAYER JOURNEY: at each New Haven bank the request is refused in the bank’s words…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: a bank abroad …
 - **`bank.cancel_new`** (Money): Unreachable. Canceling needs an account in its cooling-off, and the US gives none (content/accountlife.ts), so a New Haven account draws no Cancel It and the command is refused with the account kept (tests/scope-money.test.ts ‘PLAYER JOURNEY: a New Haven savings account opened that morning can’t be canceled new…’). From 2026-10-16 a student may keep an account at a bank in the country she lived in before Yale (systems/homeaccount.ts), and it doesn’t reach this either: it was opened before Yale (openingDayOf; homeAccountRefusal refuses one opened on or after the first day of the term), on 1 Au…
@@ -867,10 +916,10 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`banking.2.money_transfer`** (Brief 09 Area: banking): owner decision
 - **`genres.7-measured`** (Brief 09 Area: genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`advice.F2`** (Brief 10 Area: advice): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`advice.heldout`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
+- **`advice.F2A10-c`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`advice.F2A10-f`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`advice.F2A10-h`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`advice.heldout`** (Brief 10 Area: advice): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
 - **`L3-R.b`** (Brief 10 Area: judge): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`judge.together`** (Brief 10 Area: judge): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`ST1`** (Criteria: The Stage): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
@@ -902,18 +951,19 @@ Every row in scope not Implemented And Verified, with what its status says it ne
 - **`H2`** (Criteria: The Attributes): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`H5`** (Criteria: The Attributes): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`H7`** (Criteria: The Attributes): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`F2-A`** (Criteria: The Attributes): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
+- **`F2-A`** (Criteria: The Attributes): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
 - **`L2`** (Criteria: Long-Term Continuity): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`MA5`** (Criteria: Mastery Through Play): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
+- **`MA5`** (Criteria: Mastery Through Play): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
 - **`S1`** (Criteria: The Genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`S2`** (Criteria: The Genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`S3`** (Criteria: The Genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`S4`** (Criteria: The Genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
 - **`Genre Audit`** (Criteria: The Genres): It was measured on 81eadac9, and what it reads has changed since (src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`INT-skipped`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts, …): measure it again
-- **`INT-navigation`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts, …): measure it again
-- **`INT-long-runs`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts): measure it again
-- **`INT-gate`** (Integration): It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/day.ts, src/engine/systems/briefs.ts, src/engine/systems/interpretation.ts, …): measure it again
+- **`INT-skipped`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`INT-navigation`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`INT-long-runs`** (Integration): It was measured on ed24ff3b, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`INT-gate`** (Integration): It was measured on ac79bf4a, and what it reads has changed since (src/engine/content/guide/coursework.ts, src/engine/content/guide/day.ts, src/engine/content/guide/documents.ts, …): measure it again
+- **`journeys.6-interpretations`** (Brief 13 Area: journeys): The 78 previews that differ with no fit or grain named differ, by the rules, by the way's own inputs (`APPROACH_EFFECT.inputs`), which the chooser names in "What It Draws On" (src/ui/components/PlayingChooser.tsx). The harness recorded fit and grain only and didn't separate that term, so the criterion's "no named reason fails" isn't shown met for these 78. What closes it: the harness records each preview's inputs' contribution and the 78 come out equal to it.
 
 ### Partially Implemented (0)
 

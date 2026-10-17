@@ -27,6 +27,7 @@ import { sceneOfMaterial, suitabilityOf } from '@/engine/systems/interpretation'
 import { replay, type EvalContext, type Performer } from '@/engine/systems/evaluation';
 import { judgePiece, loadOf, unitSegments } from '@/engine/systems/piece';
 import { PIECE } from '@/engine/content/piece';
+import { APPROACH_EFFECT } from '@/engine/content/approaches';
 
 const ALL = [...SCENE_MATERIAL, ...PLAY_MATERIAL];
 const byId = (id: string) => ALL.find((m) => m.id === id)!;
@@ -176,4 +177,70 @@ describe('the stage reads the scene, played', () => {
     expect(back.playing?.scale).toBe(other);
     expect(playingPreview(sim, sim.player, back, day, { scale: other }).overall).toBe(against);
   }, 180_000);
+});
+
+describe('a way of playing’s difference where the scene names no fit and no grain (brief 13)', () => {
+  // Brief 13's journeys found 78 of 888 previews of a way differing from leaving it open, by 0.19 points on average and at
+  // most 1.02, with no fit and no grain named (journeys-result.json, journeys.6-interpretations), and couldn't show what
+  // made them. The chooser says it: "Each side leans the work’s quality dimensions toward what it is and draws on the
+  // abilities shown" (PlayingChooser, What It Draws On). Here, on every class scene, each such difference is shown to be
+  // that lean and those draws alone: with the side's lean and draws taken out, the take is the open one's exactly.
+  const SIDES = { scale: ['restrained', 'expansive'], pace: ['measured', 'driven'], structure: ['set', 'open'] } as const;
+  type Way = Partial<Record<keyof typeof SIDES, string>>;
+  function judgeWay(m: MaterialProfile, p: Performer, way?: Way): number {
+    const read = materialContext(task, m, way ? { ...way, chosenAt: 0, prep: 1 } as never : undefined);
+    const prep = { familiarity: 1, memorization: 1, interpretation: 1, rehearsal: 1, partner: 1, ...(way ? { approach: 1 } : {}) };
+    const ctx: EvalContext = { task, techniques: { scene: 1, ...(m.techniques ?? {}) }, prep, required: Object.fromEntries(Object.keys(prep).map((k) => [k, 0.9])), difficulty, condition: { readiness: 100 }, lean: read.lean, inputs: read.inputs, extraPrep: read.prep, fit: read.fit, grain: read.grain, key: `way-test:${m.id}`, expected: true };
+    return judgePiece('way-test', p, ctx, { segments: unitSegments(m, 2), work: [], part: 'rehearsal', perTurn: PIECE.scene.perTurn, perBlend: 0, most: PIECE.scene.most, load: loadOf(m, 'scene') }).exact!;
+  }
+  /** The side's lean and draws taken out for the length of `f`, and put back. */
+  function without<T>(side: string, f: () => T): T {
+    const e = APPROACH_EFFECT[side as keyof typeof APPROACH_EFFECT] as unknown as { lean: unknown; inputs: unknown };
+    const was = { lean: e.lean, inputs: e.inputs };
+    e.lean = {}; e.inputs = {};
+    try { return f(); } finally { e.lean = was.lean; e.inputs = was.inputs; }
+  }
+  // TEST SETUP: two uneven actors, each ability set by hand, so a lean or a draw has something to move.
+  const UNEVEN: Performer[] = [
+    actor({ emotionalDepth: 82, presence: 38, listening: 71, imagination: 44, focus: 63, memory: 52, adaptability: 35, composure: 77, vocal: 41, physical: 68, discipline: 58, stamina: 60 }, 55),
+    actor({ emotionalDepth: 36, presence: 84, listening: 45, imagination: 79, focus: 40, memory: 66, adaptability: 73, composure: 39, vocal: 81, physical: 42, discipline: 50, stamina: 70 }, 55),
+  ];
+
+  it('FIXTURE: on every class scene, for two uneven actors, a way that names no fit and no grain differs from leaving it open only by its lean and its draws: taken out, the take is the open one’s exactly', () => {
+    let unnamed = 0, differed = 0;
+    for (const m of SCENE_MATERIAL) for (const p of UNEVEN) {
+      const open = judgeWay(m, p);
+      for (const [axis, sides] of Object.entries(SIDES)) for (const side of sides) {
+        const way = { [axis]: side } as Way;
+        const read = materialContext(task, m, { ...way, chosenAt: 0, prep: 1 } as never);
+        if (Object.keys(read.fit).length || Object.keys(read.grain).length) continue;
+        unnamed += 1;
+        if (Math.abs(judgeWay(m, p, way) - open) > 1e-9) differed += 1;
+        expect(without(side, () => judgeWay(m, p, way)), `${m.id} ${axis} ${side}`).toBe(open);
+      }
+    }
+    // Measured on 2026-10-17: 52 ways name nothing on this catalog for these two actors, and every one of them moves the
+    // take, by its lean and its draws and by nothing else.
+    expect(unnamed).toBeGreaterThan(0);
+    expect(differed).toBe(unnamed);
+  });
+
+  it('FIXTURE: on every class scene, for the same two actors, every way that names no misfit differs from leaving it open by its lean, its draws and the scene’s grain alone: all three taken out, the take is the open one’s exactly', () => {
+    const G = GRAIN as unknown as { strength: number };
+    const strength = G.strength;
+    let ways = 0;
+    for (const m of SCENE_MATERIAL) for (const p of UNEVEN) {
+      const open = judgeWay(m, p);
+      for (const [axis, sides] of Object.entries(SIDES)) for (const side of sides) {
+        const way = { [axis]: side } as Way;
+        if (Object.keys(materialContext(task, m, { ...way, chosenAt: 0, prep: 1 } as never).fit).length) continue;
+        ways += 1;
+        G.strength = 0;
+        try { expect(without(side, () => judgeWay(m, p, way)), `${m.id} ${axis} ${side}`).toBe(open); } finally { G.strength = strength; }
+      }
+    }
+    // Every side of every axis, pace's included, which always names a grain: 800 ways on this catalog for the two actors,
+    // measured on 2026-10-17 (the two that name a misfit left out).
+    expect(ways).toBe(800);
+  });
 });

@@ -455,6 +455,15 @@ for d, brief, f in [(d, brief, f) for d, brief in PASSES for f in sorted(x for x
             said = {**said, 'evidence': f'{d}/{f}'}
         extra = {**({need: said} if need else {}), **({'measured': r['measured']} if r.get('measured') else {})}
         crit = [x for x in rows if x['id'] == r['id'] and x['group'] == r['group']]
+        # A clause of brief 13's own (its journeys' and its interface's, from 2026-10-17), which no earlier brief made a row
+        # of: a row of its own, in its area's group, the first result to write it making it and a later one changing it.
+        if not crit and brief == 'Brief 13' and str(r.get('group', '')).startswith('Brief 13'):
+            rows.append({'id': r['id'], 'group': r['group'], 'kind': 'criterion', 'goal': r.get('ownersWords') or r.get('criterion', 'Not recorded'),
+                         'entry': r.get('exercised', 'Not recorded'), 'preconditions': f"The owner's brief 13 ({d}/{f})", 'reads': 'Not recorded',
+                         'decisions': 'None: a measurement of play, not a player decision', 'validation': r.get('criterion', 'Not recorded'), 'changes': 'Not recorded',
+                         'later': 'None', 'systems': 'Not recorded', 'sees': 'Not recorded', 'saveLoad': 'Not recorded', 'failure': r.get('statusNote', 'Not recorded'),
+                         'implementation': 'Not recorded', 'evidence': f'{d}/{f}', 'status': status, 'sourceStatus': f'{d}/{f}', 'citations': cites, **extra})
+            continue
         if crit:
             x = crit[0]
             # What its old status asked goes with it (KS-ct-idcard's missing, once it's Blocked Externally).

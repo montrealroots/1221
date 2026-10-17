@@ -3429,6 +3429,1290 @@
      "title": "ST6-R2: restrained acting judged by what it does for a player (brief 12) > FIXTURE: ST6-R2 (c4), a strength doesn’t erase a weakness: the restrained specialist’s nine others raised from 40.56 to the even actor’s 50 raise its restrained take by more than 0.05 on every piece, so its weaknesses still cost it where its strength is drawn on"
     }
    ]
+  },
+  {
+   "id": "B13-UI.normal",
+   "group": "Brief 13 Area: interface",
+   "kind": "criterion",
+   "goal": "interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its feedback read, then Papers, Money and save and continue, every step showing what it says, at 1440 and at 390, each of the six exercised by a passed step.",
+   "entry": "tools/playthroughs-ui.mjs normal at 1440 and at 390 on the built app (npx vite preview, port 4187), through its visible controls only; a new life in a browser with no saves, its seed read from the save afterwards.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/interface-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "interface-criteria.md, Playthrough 1: a new life made through creation, through orientation week to the first Acting I scene shown and its feedback read, then Papers, Money and save and continue, every step showing what it says, at 1440 and at 390, each of the six exercised by a passed step.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel"
+    },
+    {
+     "file": "tests/evidence-g32-ui.test.ts",
+     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning"
+    }
+   ]
+  },
+  {
+   "id": "B13-UI.setback",
+   "group": "Brief 13 Area: interface",
+   "kind": "criterion",
+   "goal": "interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and followed to the scene it names, its remedy worked each day until the scene is shown Working or better where it stood Unready, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "entry": "tools/playthroughs-ui.mjs setback at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/interface-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "interface-criteria.md, Playthrough 2: the workload scenario’s save (no TEST SETUP), the term’s warning on coursework read, opened and followed to the scene it names, its remedy worked each day until the scene is shown Working or better where it stood Unready, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR, on 695683c4"
+    }
+   ]
+  },
+  {
+   "id": "B13-UI.specialist",
+   "group": "Brief 13 Area: interface",
+   "kind": "criterion",
+   "goal": "interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brief prepared, played on the side its scene suits, taped and read, What To Work On read (naming none of the four strengths), its exercise trained to the day’s limit and again the next day, the brief taped again higher, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "entry": "tools/playthroughs-ui.mjs specialist at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/interface-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "interface-criteria.md, Playthrough 3: the specialist scenario’s save (TEST SETUP: four abilities at 90, the rest at 49), Nordic Noir’s brief prepared, played on the side its scene suits, taped and read, What To Work On read (naming none of the four strengths), its exercise trained to the day’s limit and again the next day, the brief taped again higher, then saved and continued, at 1440 and at 390, each of the six exercised.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR, on 695683c4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
+     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR, on 695683c4"
+    }
+   ]
+  },
+  {
+   "id": "B13-UI.walkthrough",
+   "group": "Brief 13 Area: interface",
+   "kind": "criterion",
+   "goal": "interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carrying a setback the game gives and its recovery, and a specialist’s training, each step saying what to press, what to expect and what to report, and saying plainly that the automated runs aren’t a judgment of how the game feels.",
+   "entry": "Its steps are the normal playthrough’s through orientation and the first showing (the runs above); its leaning, its unprepared scene and the note taken, and its four hours of Graded Exposure were played in the engine through the commands to check the document’s figures (probes in the scratchpad: Composure 58.3 at Emotional Stability 95; the scene left alone Shown Unready at 22 of 100 on 8 September, the note taken the next day and the band still Unready; 58.3 to 58.6 after four hours, the fifth refused in the day’s words). Those probes check the document, not the interface.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/interface-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "interface-criteria.md, The Owner’s Walkthrough: PLAYTEST.md, a different route from brief 12’s, about twenty minutes from a new life, carrying a setback the game gives and its recovery, and a specialist’s training, each step saying what to press, what to expect and what to report, and saying plainly that the automated runs aren’t a judgment of how the game feels.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Not recorded",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/interface-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/PLAYTEST.md",
+     "title": "the walkthrough"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-complete-journeys",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Run at least twelve complete school journeys across multiple seeds and distinct player profiles. Reuse existing simulation tools where appropriate, but play through normal commands and progression rather than directly assigning successful outcomes.",
+   "entry": "tools/journeys.ts (beside tools/lives.ts, with tools/policy.ts's players) played J01 to J23 and F1, F2 on 25 seeds (j13-1 to j13-17, j13-f1, j13-f2), each in four foreground parts under ten minutes, saving and opening every thirty days. 23 journeys and 2 focused scenarios: 22 graduated (J20 and J22 in 2030), J15 and J16 dismissed, J21's life ended by the mortality draw in its third year.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"How A Journey Is Played\" and \"The Journeys\": each journey played hour by hour through sim.execute and the clock by a public-command player, nothing after creation written by hand except what a profile names TEST SETUP, run to the end the game gives it.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/exits.txt",
+     "title": "each part's command, exit and seconds on 0bc829ec"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-profiles",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Include: Beginners. Balanced generalists. Specialists with different strengths. Highly developed or mastered actors. Players who follow advice. Players who partly follow or ignore advice. Players who experience missed work, financial restrictions, or health interruptions.",
+   "entry": "Beginners J01, J02 (and J03 to J08 as made); generalists J09, J10; specialists J11 (feeling) and J12 (voice and body), each on its generalist's seed and budget; mastered J13, J14; follows J03, J06, J09 to J12; partly J04, J07; ignores J05, J08; missed work J15 to J18, J20; financial restriction J16, J18, J19, J20 and F2; health J21, J22, J23.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Journeys\": each kind on two seeds or more, a hand-set start named TEST SETUP in the profile.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-expected-first",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Set expected outcomes before running each scenario.",
+   "entry": "Every outcome read against its expectation. Defects: D1 to D5. Expectations that were wrong, each kept as written: J02's path (stage work, a warning), the partly-follower's favorite at the scale's top (J03 to J05), the specialists' 49s rising past 90 and a 90 named in 6 and 15 weeks (J11, J12), stamina as the ability that limits a mastered actor (J13, J14), J21's life ended, F2's plan paid from savings.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md committed at 546bb26e, before the harness (baf5fa4f) and before any journey; J23's at 1b7431cc before it ran. A difference is a defect (fixed, tested, run again) or an expectation that was wrong (said so, not moved).",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md",
+     "title": "the plan, each journey's expected outcome and the ten checks, committed at 546bb26e before any journey ran"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the 25 journeys on 0bc829ec: profile, seed, played, expected, actual, the ten checks"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-neglect",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "A deliberate neglect scenario may legitimately fail academically; the game must explain and apply the consequences correctly. Do not count every dismissal as a defect or force every player to graduate.",
+   "entry": "Both played to 23 February 2028. Each as written; nothing of the school's after the end; J16 out of status on 10 December 2027 and its cover ended; J15 refused OPT as a citizen. D2 and D4 were found in their notices and fixed.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, J15 and J16: a concern in December 2026, a warning in April 2027, dismissed at the third review on 10 December 2027, each review warned in its term, every notice saying what was short and what follows; J16's F-1 status ending with no grace, OPT refused for leaving without the degree.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: reviews, warnings, standings"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: reviews, warnings, status and OPT"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-recovery",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "At least some journeys must recover from setbacks through available gameplay.",
+   "entry": "J17 good after its first-term warning; J18 good at the review after its concern; J20 repeated the year, paid its holds, graduated in 2030; J22 returned from the dean's medical leave and graduated in 2030; J02 back to good after a warning; J19, J21 and F2 back to good after a concern; J23 through the flu and a broken bone.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J17 (warned, then keeps up), J18 (a concern, then keeps up), J20 (a course failed, a repeat, a hold), J22 (a medical leave), J21's illnesses.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J17-p4.json",
+     "title": "J17: the warning and the review after it"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J18-p4.json",
+     "title": "J18: the concern and the review after it"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the repeat, the holds, the degree"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: the leave and the return"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-1",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Creation choices affect the intended state.",
+   "entry": "At creation: bank by family, need, citizenship and F-1, discipline from conscientiousness, the title from the pronouns; at the first term, the scholarship or the plan paid. The same seed made again with one choice changed (family across the line of need, conscientiousness +20, home across the US border, pronouns) moved need, discipline by 10, the visa and the title in all 25.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 1: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 1, creation, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 1"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: check 1"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-2",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Classes, preparation, rehearsal, interpretation, and showings connect.",
+   "entry": "Every showing has its one record with its band; each term's last piece judged again with preparation at nothing comes out lower and complete no lower (a neglect journey's higher); table-work answers and ways of playing on the records; class days and calls kept.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 2: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 2, classes to showings, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: check 2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 2"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-3",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Attributes and genres develop and influence applicable work.",
+   "entry": "Every ability at creation and the end; the last twelve pieces judged again at the levels the journey began with (`replayAs`): what rose never lowers the work, and what fell is costed apart (only stamina fell, unworked, `settleTheBody`); genres met known better, unmet ones not (speed 1 for an unmet genre).",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 3: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 3, development, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 3"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: check 3"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-4",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Advice responds to progress and changing circumstances.",
+   "entry": "Weekly: the first recommendation, level, forecast, standing, next and attention. No run of the same words over four weeks while the level moved a point or the forecast a tenth; no input at full named first; a follower's target moves on once raised; conditions and preparation named where work was judged ill, hurt or unprepared.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 4: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 4, advice, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: check 4"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: check 4"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-5",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Health, stamina, and energy remain distinct and interact correctly.",
+   "entry": "Each morning: energy, stamina, condition, stress. Daily changes of energy and stamina never correlate at 0.9 (-0.01 to 0.07 in the 25); illness tolls condition and energy, not stamina; every class day in hospital, laid up or called in sick excused; work ill or hurt recorded so and lower than well work.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 5: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 5, health, stamina, energy, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: check 5"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J23-p4.json",
+     "title": "J23: check 5"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-6",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Money, school charges, holds, and payments reconcile.",
+   "entry": "At every reload and the end: the ledger's audit and the save's laws (0 unbalanced, 0 breaches in all 25); each term's scholarship or plan once by memo; holds only with a sum owed past due, lifted when paid; nothing owed at the end.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 6: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 6, money, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 6"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: check 6"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-7",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Papers and document status affect the appropriate actions.",
+   "entry": "Monthly: documents, photo ID in force, the bank's ask of a new customer, OPT's refusal, status and cover. The bank asks only while no photo ID is in force; OPT refused to citizens, before its window and after leaving without the degree, allowed in its window; status ends by its rule's day; a passport applied for is issued and the old cancelled.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 7: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 7, papers, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 7"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: check 7"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-8",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Warnings arrive consistently with later evaluations.",
+   "entry": "Each coursework warning, missed-class, not-registered and not-passed notice against its term's review: no step down for coursework unwarned in its term, no warning counting above the review, each concern or warning followed by what its notice said, the named cause among the parts short on the pieces it counts.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 8: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 8, warnings, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J15-p4.json",
+     "title": "J15: check 8"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J02-p4.json",
+     "title": "J02: check 8"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-9",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Term progression and the school endpoint work.",
+   "entry": "Each term begun once and in order, each review once, the degree on its rule's day to a student in standing, nothing of the school's done or pending after the end except what `setStanding` keeps on purpose, the standing still after it.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 9: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 9, terms and the end, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J22-p4.json",
+     "title": "J22: check 9"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J16-p4.json",
+     "title": "J16: check 9"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-check-10",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Saving, exiting, reloading, and continuing preserve the journey.",
+   "entry": "At every reload (every thirty days and each part) the save serialised, opened and serialised again: 931 reloads, every one the same to the byte; 160 kept results replayed from their inputs in each journey, 0 different.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"The Ten Checks\", check 10: what it reads and what fails it, written before any journey ran.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "check 10, save and reload, on J01 to J23, F1, F2"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: check 10"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: check 10"
+    }
+   ]
+  },
+  {
+   "id": "journeys.4-focused",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Use additional focused scenarios where a full school journey cannot naturally reach an important financial, document, or health branch.",
+   "entry": "F1 and F2 played to 4 August 2029, every check passed (see focusedScenarios). No F3 was needed: the hold and its late fee (J20), the medical leave (J22), the status ended by a dismissal (J16) and after the program with no OPT (J19), OPT approved (J14, J20 and others) and need at $43 (J18, J19) were reached in complete journeys.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Focused Scenarios\": F1 (a passport running out in the first fall), F2 (the spring plan unpayable from checking); F3 and after for a branch no journey reaches.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F1-p4.json",
+     "title": "F1: documents, photo ID, the bank's ask, monthly"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the plan owed and paid, the ledger"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-completed-stay",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Previously completed actions remain completed.",
+   "entry": "continuity.perJourney[*].undone: 0 in all 25, across 931 reloads.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Completed stays completed: a piece shown, a course passed or failed, a credit, a document issued is never undone by a term, a reload or a part's boundary.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-once",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Consequences and scheduled events occur once.",
+   "entry": "No coursework warning, concern or warning twice in a term in any journey; memos once a term (check 6); nothing of the school's done after the end (check 9) once D1 was fixed.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each term's begin notice, review, scholarship and plan, each casting's notice, Commencement once; the coursework warning at most once a term; every scheduled item done at most once.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-advice-acknowledges",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Advice acknowledges what has changed.",
+   "entry": "3,741 weekly reads; check 4 passed on all 25; the 7 runs the cruder count flags each kept its words over a move of hundredths, under what the screen shows.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A week whose first recommendation's input moved says something different; a week where nothing moved may say the same, counted justified (check 4's rule: no run over four weeks of the same words while its level moved a point or its forecast a tenth).",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the vocal run of May to September 2028"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-feedback-current",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Repeated feedback reflects the current state.",
+   "entry": "1,194 recurring notes of 6,607, 0 on a part not short, read as the showing read it (after D4, the round shown).",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": A note given again (`recurring`) is on a part short on the piece it's given on, or a choice unsupported there.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-variety",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Exercises and situations vary where the current catalog supports variation.",
+   "entry": "18 templates in every complete journey, 62 to 64 scenes; a scene comes back only once every fitting one was studied (`scenesFor`, `revisitOf`). The ignorers' one exercise for up to 669 sessions is the profile, not the catalog.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Distinct templates, scenes, plays, exercises, moments and targets; the longest run of one, and whether the catalog had another.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-words-alone",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Repetition is not disguised by changing words alone.",
+   "entry": "1,094 advice changes in words alone, each a figure moving under the same recommendation; 99 notices the same twice, each a different piece, day or classmate's moment. None hid the same recommendation under new words.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Advice and notices compared with figures and dates taken out: the same words over a changed state, or new words over an unchanged one, counted and read.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-repetition-record",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Record repeated situations and recommendations, their frequency, and whether they remain justified. Do not rotate to inferior advice just to make a repetition count smaller.",
+   "entry": "continuityAndFreshness: per journey and in total, each long run read. Nothing in the advice changed.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Every repetition recorded with its count and whether it stays justified; nothing in the advice changed to shrink a count.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-defects-fixed",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Fix concrete defects found during these journeys. Add regression tests and rerun the affected scenarios.",
+   "entry": "D1 to D5 fixed, each with its PLAYER JOURNEY or FIXTURE, every mutation tried in a copy caught (one after the FIXTURE was strengthened); all 25 journeys run again on 0bc829ec, after the last fix.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness, Across The Journeys\": Each defect fixed with a test that fails before and passes after, labeled as the house does; every journey it could touch run again.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/summary.json",
+     "title": "the continuity record of all 25 (each final record's continuity)"
+    },
+    {
+     "file": "tests/classmate-moments.test.ts",
+     "title": "a classmate’s invitation to run lines, once the School has ended > PLAYER JOURNEY: brought in class on 3 September 2026 and the student withdrawn that morning by the command, Say Yes is refused in words that say why and leave Say No, which is taken; nothing goes on the calendar, through a reload; the twin who answers before withdrawing has the evening booked (TEST SETUP: kept rested while the clock runs)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: a term of pieces left unprepared is warned in the term, once, saying every part of each was short and that each one’s steps answer it, with the review’s day; kept through a reload"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, said before it’s held against you > PLAYER JOURNEY: the term’s review says what held the Unready pieces back: every part of each, where nothing was prepared"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: what the Unready pieces were short on is said as it is (brief 13’s journeys, `shortCause`): every part of each, as left; a part short on two of them, named with its remedy; and where no part is short on more than one, none named (TEST SETUP: copies of the warned term’s solo pieces given preparation by hand)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > FIXTURE: a term warned over Unready pieces each short on a different part names none of them, and says each one’s forecast says what held it back (TEST SETUP: a prepared twin’s term marked Working by hand, then solo pieces marked Unready, each with one part of its own taken back to nothing)"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    },
+    {
+     "file": "tests/workload.test.ts",
+     "title": "school workload, found by the sweep (2026-10-16) > PLAYER JOURNEY with FIXTURE: a Simulated Rehearsal shown Unready At The Table is short, as its warning and review read it, on that round’s parts, not the next round’s it has gone on to; and a copy with the next round done and the table not is named for the table (brief 13’s journeys, `shortAtShowing`; TEST SETUP: the copy’s parts set by hand)"
+    },
+    {
+     "file": "tests/evidence-g22-school.test.ts",
+     "title": "school.partner_rehearsal > PLAYER JOURNEY: hurt before asking, an evening the School would excuse is refused at the ask in the injury’s words, by the command and nothing booked: in hospital, or laid up with a broken bone, any evening before it ends; a sprain, which stops training and keeps nobody off work, only work on its feet; once mended, booked (from 2026-10-17, brief 13’s journey J23: until then each was booked and called off on the night; TEST SETUP: the stay and the injuries put on)"
+    }
+   ]
+  },
+  {
+   "id": "journeys.6-interpretations",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Different suitable interpretations produce understandable differences.",
+   "entry": "J11 to J14 chose the way previewed highest; every journey's previews recorded. 888 previews on performed scenes: 810 equal to leaving it open or with a fit or grain named; 78 differ (mean 0.19, at most 1.02 points) with neither. Written work no longer takes a way (D3).",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "docs/verification/playthroughs-2026-10-17/journeys-criteria.md, \"Continuity And Freshness\": at each scene a chooser comes to, every way's preview and the fit or grain it names; a difference with no named reason fails.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented, Verification Incomplete",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: interpretations"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > PLAYER JOURNEY: the Table Work the clock sets in January 2027, on a scene, is refused a way of playing in its words, by the command and by the gate the Coursework pane draws its choice behind, and through a reload; shown by the clock, its record reads no way, as its twin’s who never asked"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    }
+   ],
+   "missing": "The 78 previews that differ with no fit or grain named differ, by the rules, by the way's own inputs (`APPROACH_EFFECT.inputs`), which the chooser names in \"What It Draws On\" (src/ui/components/PlayingChooser.tsx). The harness recorded fit and grain only and didn't separate that term, so the criterion's \"no named reason fails\" isn't shown met for these 78. What closes it: the harness records each preview's inputs' contribution and the 78 come out equal to it."
+  },
+  {
+   "id": "journeys.7-mastery",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Maximum-quality prepared mastery.",
+   "entry": "J13 43 of 377 pieces at mastery (overall 100), J14 42 of 379. Short of it: preparation 98 and 102, condition 112 and 115, and stamina 124 and 120, the only ability ever a first limit, detrained unworked from 99.4 to 35; put back up, the last twelve come to 95.8 to 100.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J13 and J14: a piece shown complete on a sufficient day judged at mastery; one short of it limited by preparation, condition, fit or suitability.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J14-p4.json",
+     "title": "J14: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-attributes",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Relevant attribute improvement without unintended regression.",
+   "entry": "All 25: the last twelve judged at the starting levels with what rose put back never higher; the only fall stamina's, by `settleTheBody`.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: what rose never lowers the work; a fall only by a recorded cause.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-genres",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Genre-specific benefits without unrelated leakage.",
+   "entry": "All 25: the best-known genre's steps faster (1.04 to 1.13), a genre never met (absurdist) at 1.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 3: genres met known better; a genre never met known no better (speed 1).",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-specialists",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Specialist opportunities and valid limitations.",
+   "entry": "At the setup levels 24 of 24 and 24 of 24; at the final levels 24 of 24 and 21 of 24, the three within 0.39 points. The 49s did rise past some 90s under the advice (an expectation that was wrong).",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J11 and J12 against J09 and J10 on brief 10's fixed 24 pieces: above where strengths are read, below where weaknesses are.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J11-p4.json",
+     "title": "J11: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J12-p4.json",
+     "title": "J12: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-advice-forecasts",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Accurate advice forecasts.",
+   "entry": "Advised rises 222 / 188.7 / 169.9 and 227 / 223 / 209.1; the last twelve 77.55 / 75.36 / 71.98 and 76.79 / 74.47 / 71.39; the favorite +1.7 / +32.7 / +32.6 and +2.6 / +36.8 / +36.9.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: J03 to J05 and J06 to J08: the advised inputs rise most for the follower, the ignorer's favorite most for the ignorer, and the follower's last twelve, judged again, highest at the follower's levels.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/compare.json",
+     "title": "the advice triples and the specialists against their generalists"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J03-p4.json",
+     "title": "J03: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J06-p4.json",
+     "title": "J06: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-stamina",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Stamina's duration, participation, intensity, and recovery behavior.",
+   "entry": "Daily changes of energy and stamina correlated at -0.01 to 0.07 over 549 to 1,441 mornings; stamina detrains to its floor unworked and limits a mastered actor's work.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 5: stamina distinct from energy, its moves by its own rules, illness not tolling it.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J21-p4.json",
+     "title": "J21: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J13-p4.json",
+     "title": "J13: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-ledger",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Ledger balance.",
+   "entry": "At every reload of all 25: 0 unbalanced, 0 breaches.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 6.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/F2-p4.json",
+     "title": "F2: the records the clause reads"
+    }
+   ]
+  },
+  {
+   "id": "journeys.7-save",
+   "group": "Brief 13 Area: journeys",
+   "kind": "criterion",
+   "goal": "Save compatibility and historical results.",
+   "entry": "931 reloads the same to the byte; 160 kept results per journey replayed, 0 different; a save from before D3 opens through `writtenUnplayed` (FIXTURE). The schema stayed 94 in both places.",
+   "preconditions": "The owner's brief 13 (docs/verification/playthroughs-2026-10-17/journeys-result.json)",
+   "reads": "Not recorded",
+   "decisions": "None: a measurement of play, not a player decision",
+   "validation": "Brief 13, section 7, where a journey shows it; docs/verification/playthroughs-2026-10-17/journeys-criteria.md: Check 10, and an older save opened through the new opening step.",
+   "changes": "Not recorded",
+   "later": "None",
+   "systems": "Not recorded",
+   "sees": "Not recorded",
+   "saveLoad": "Not recorded",
+   "failure": "Measured on 0bc829ec (the engine as 905c39d1 left it; the last commit adds outputs only). It stays Implemented And Verified where the coordinator's run on the integrated commit (forTheCoordinator.measurements) passes the same checks; a journey that doesn't makes it remaining, with that journey.",
+   "implementation": "Not recorded",
+   "evidence": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "status": "Implemented And Verified",
+   "sourceStatus": "docs/verification/playthroughs-2026-10-17/journeys-result.json",
+   "citations": [
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J20-p4.json",
+     "title": "J20: the records the clause reads"
+    },
+    {
+     "file": "docs/verification/playthroughs-2026-10-17/journeys/J01-p4.json",
+     "title": "J01: the records the clause reads"
+    },
+    {
+     "file": "tests/remaining-09-coverage.test.ts",
+     "title": "written work: no way of playing to choose > FIXTURE: a save from before 2026-10-17 that kept a way of playing on its Table Work still to be shown has it taken off on opening, once; a performed piece’s way, chosen by the command, is kept, and so is a shown one’s (TEST SETUP: the way put on as that build let the command put it, a shown copy of the piece with its way, and the opening step marked not yet taken)"
+    }
+   ]
   }
  ],
  "overrides": [
@@ -4655,70 +5939,6 @@
     "commit": "ed24ff3b",
     "watch": "engine"
    }
-  },
-  {
-   "id": "B13-UI.normal",
-   "status": "Implemented And Verified",
-   "why": "Brief 13, the interface area (docs/verification/playthroughs-2026-10-17/interface-result.json): tools/playthroughs-ui.mjs normal at 1440 and at 390 on the built app (npx vite preview, port 4187), through its visible controls only; a new life in a browser with no saves, its seed read from the save afterwards.",
-   "citations": [
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-1440/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 1440 SAVEDIR, on 695683c4"
-    },
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/normal-390/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs normal 390 SAVEDIR, on 695683c4"
-    },
-    {
-     "file": "tests/evidence-g32-ui.test.ts",
-     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: more unread than the panel"
-    },
-    {
-     "file": "tests/evidence-g32-ui.test.ts",
-     "title": "h-needs: What Needs You on Home > PLAYER JOURNEY: the first morning"
-    }
-   ]
-  },
-  {
-   "id": "B13-UI.setback",
-   "status": "Implemented And Verified",
-   "why": "Brief 13, the interface area (docs/verification/playthroughs-2026-10-17/interface-result.json): tools/playthroughs-ui.mjs setback at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario workload --seed sc-0 --save SAVEDIR/workload.json",
-   "citations": [
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-1440/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 1440 SAVEDIR, on 695683c4"
-    },
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/setback-390/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs setback 390 SAVEDIR, on 695683c4"
-    }
-   ]
-  },
-  {
-   "id": "B13-UI.specialist",
-   "status": "Implemented And Verified",
-   "why": "Brief 13, the interface area (docs/verification/playthroughs-2026-10-17/interface-result.json): tools/playthroughs-ui.mjs specialist at 1440 and at 390, from npx vite-node tools/scenarios.ts -- --scenario specialist --seed sc-0 --save SAVEDIR/specialist.json",
-   "citations": [
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-1440/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 1440 SAVEDIR, on 695683c4"
-    },
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/interface/specialist-390/trace.json",
-     "title": "SLATE_BASE=http://localhost:4187 node tools/playthroughs-ui.mjs specialist 390 SAVEDIR, on 695683c4"
-    }
-   ]
-  },
-  {
-   "id": "B13-UI.walkthrough",
-   "status": "Implemented And Verified",
-   "why": "Brief 13, the interface area (docs/verification/playthroughs-2026-10-17/interface-result.json): Its steps are the normal playthrough’s through orientation and the first showing (the runs above); its leaning, its unprepared scene and the note taken, and its four hours of Graded Exposure were played in the engine through the commands to check the document’s figures (probes in the scratchpad: Composure 58.3 at Emotional Stability 95; the scene left alone Shown Unready at 22 of 100 on 8 September, the note taken the next day and the band still Unready; 58.3 to 58.6 after four hours, the fifth refused in the day’s words). Those probes check the document, not the interface.",
-   "citations": [
-    {
-     "file": "docs/verification/playthroughs-2026-10-17/PLAYTEST.md",
-     "title": "the walkthrough"
-    }
-   ]
   }
  ]
 }
